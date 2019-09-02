@@ -53,7 +53,8 @@ public class NetworkNotificationManager {
         NO_INTERNET(SystemMessage.NOTE_NETWORK_NO_INTERNET),
         LOGGED_IN(SystemMessage.NOTE_NETWORK_LOGGED_IN),
         PARTIAL_CONNECTIVITY(SystemMessage.NOTE_NETWORK_PARTIAL_CONNECTIVITY),
-        SIGN_IN(SystemMessage.NOTE_NETWORK_SIGN_IN);
+        SIGN_IN(SystemMessage.NOTE_NETWORK_SIGN_IN),
+        PRIVATE_DNS_BROKEN(SystemMessage.NOTE_NETWORK_PRIVATE_DNS_BROKEN);
 
         public final int eventId;
 
@@ -182,6 +183,13 @@ public class NetworkNotificationManager {
             title = r.getString(R.string.wifi_no_internet,
                     WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID()));
             details = r.getString(R.string.wifi_no_internet_detailed);
+        } else if (notifyType == NotificationType.PRIVATE_DNS_BROKEN) {
+            title = r.getString(R.string.wifi_no_internet,
+                    WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID()));
+            if (transportType == TRANSPORT_CELLULAR) {
+                title = r.getString(R.string.mobile_no_internet);
+            }
+            details = r.getString(R.string.private_dns_broken_detailed);
         } else if (notifyType == NotificationType.PARTIAL_CONNECTIVITY
                 && transportType == TRANSPORT_WIFI) {
             title = r.getString(R.string.network_partial_connectivity,
@@ -357,8 +365,10 @@ public class NetworkNotificationManager {
         }
         switch (t) {
             case SIGN_IN:
-                return 5;
+                return 6;
             case PARTIAL_CONNECTIVITY:
+                return 5;
+            case PRIVATE_DNS_BROKEN:
                 return 4;
             case NO_INTERNET:
                 return 3;

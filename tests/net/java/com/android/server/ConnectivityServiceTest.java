@@ -33,6 +33,7 @@ import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_DNS;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_FALLBACK;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_HTTP;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_HTTPS;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_PRIVDNS;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_PARTIAL;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
@@ -484,6 +485,8 @@ public class ConnectivityServiceTest {
         private INetworkMonitor mNetworkMonitor;
         private INetworkMonitorCallbacks mNmCallbacks;
         private int mNmValidationResult = VALIDATION_RESULT_BASE;
+        private int mProbesCompleted;
+        private int mProbesSucceeded;
         private String mNmValidationRedirectUrl = null;
         private boolean mNmProvNotificationRequested = false;
 
@@ -551,6 +554,7 @@ public class ConnectivityServiceTest {
 
             mNmCallbacks.notifyNetworkTested(
                     mNmValidationResult, mNmValidationRedirectUrl);
+            mNmCallbacks.notifyProbeStatusChanged(mProbesCompleted, mProbesSucceeded);
 
             if (mNmValidationRedirectUrl != null) {
                 mNmCallbacks.showProvisioningNotification(
@@ -654,6 +658,11 @@ public class ConnectivityServiceTest {
         void setNetworkPartialValid() {
             mNmValidationResult = VALIDATION_RESULT_PARTIAL | VALIDATION_RESULT_VALID;
             mNmValidationRedirectUrl = null;
+        }
+
+        void setProbesStatus(int probesCompleted, int probesSucceeded) {
+            mProbesCompleted = probesCompleted;
+            mProbesSucceeded = probesSucceeded;
         }
 
         public String waitForRedirectUrl() {
@@ -4522,6 +4531,45 @@ public class ConnectivityServiceTest {
         assertTrue(ArrayUtils.containsAll(resolvrParams.servers,
                 new String[]{"2001:db8::1", "192.0.2.1"}));
         reset(mMockDnsResolver);
+    }
+
+    @Test
+    public void testPrivateDnsNotification() throws Exception {
+        // Bring up wifi.
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(false);
+        int probesCompleted = NETWORK_VALIDATION_PROBE_DNS | NETWORK_VALIDATION_PROBE_HTTPS
+                | NETWORK_VALIDATION_PROBE_PRIVDNS;
+        int privateDnsSucceeded = NETWORK_VALIDATION_PROBE_DNS | NETWORK_VALIDATION_PROBE_HTTPS
+                | NETWORK_VALIDATION_PROBE_PRIVDNS;
+        int privateDnsFailed = NETWORK_VALIDATION_PROBE_DNS | NETWORK_VALIDATION_PROBE_HTTPS;
+        // Private DNS resolution failed, checking if the notification will be shown or not.
+        mWiFiNetworkAgent.setProbesStatus(probesCompleted, privateDnsFailed);
+        mWiFiNetworkAgent.mNetworkMonitor.forceReevaluation(Process.myUid());
+        waitForIdle();
+        // If network validation failed, NetworkMonitor will re-evaluate the network.
+        // ConnectivityService should filter the redundant notification. This part is trying to
+        // simulate that situation and check if ConnectivityService could filter that case.
+        mWiFiNetworkAgent.mNetworkMonitor.forceReevaluation(Process.myUid());
+        waitForIdle();
+        verify(mNotificationManager, timeout(TIMEOUT_MS).times(1)).notifyAsUser(anyString(),
+                eq(NotificationType.PRIVATE_DNS_BROKEN.eventId), any(), eq(UserHandle.ALL));
+        // If private DNS resolution successful, the PRIVATE_DNS_BROKEN notification shouldn't be
+        // shown.
+        mWiFiNetworkAgent.setNetworkValid();
+        mWiFiNetworkAgent.setProbesStatus(probesCompleted, privateDnsSucceeded);
+        mWiFiNetworkAgent.mNetworkMonitor.forceReevaluation(Process.myUid());
+        waitForIdle();
+        verify(mNotificationManager, timeout(TIMEOUT_MS).times(1)).cancelAsUser(anyString(),
+                eq(NotificationType.PRIVATE_DNS_BROKEN.eventId), eq(UserHandle.ALL));
+        // If private DNS resolution failed again, the PRIVATE_DNS_BROKEN notification should be
+        // shown again.
+        mWiFiNetworkAgent.setNetworkInvalid();
+        mWiFiNetworkAgent.setProbesStatus(probesCompleted, privateDnsFailed);
+        mWiFiNetworkAgent.mNetworkMonitor.forceReevaluation(Process.myUid());
+        waitForIdle();
+        verify(mNotificationManager, timeout(TIMEOUT_MS).times(2)).notifyAsUser(anyString(),
+                eq(NotificationType.PRIVATE_DNS_BROKEN.eventId), any(), eq(UserHandle.ALL));
     }
 
     @Test
