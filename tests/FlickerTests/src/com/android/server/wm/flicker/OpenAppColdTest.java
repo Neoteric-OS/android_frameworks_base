@@ -64,9 +64,9 @@ public class OpenAppColdTest extends FlickerTestBase {
     @Test
     public void checkVisibility_wallpaperWindowBecomesInvisible() {
         checkResults(result -> assertThat(result)
-                .showsBelowAppWindow("wallpaper")
+                .showsBelowAppWindow("Wallpaper")
                 .then()
-                .hidesBelowAppWindow("wallpaper")
+                .hidesBelowAppWindow("Wallpaper")
                 .forAllEntries());
     }
 
@@ -74,7 +74,7 @@ public class OpenAppColdTest extends FlickerTestBase {
     public void checkZOrder_appWindowReplacesLauncherAsTopWindow() {
         checkResults(result -> assertThat(result)
                 .showsAppWindowOnTop(
-                        "com.google.android.apps.nexuslauncher/.NexusLauncherActivity")
+                        "com.android.launcher3/.Launcher")
                 .then()
                 .showsAppWindowOnTop(mTestApp.getPackage())
                 .forAllEntries());
@@ -101,9 +101,9 @@ public class OpenAppColdTest extends FlickerTestBase {
     @Test
     public void checkVisibility_wallpaperLayerBecomesInvisible() {
         checkResults(result -> LayersTraceSubject.assertThat(result)
-                .showsLayer("wallpaper")
+                .showsLayer("Wallpaper")
                 .then()
-                .hidesLayer("wallpaper")
+                .hidesLayer("Wallpaper")
                 .forAllEntries());
     }
 }
