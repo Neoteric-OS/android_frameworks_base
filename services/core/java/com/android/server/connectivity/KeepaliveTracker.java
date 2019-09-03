@@ -134,6 +134,7 @@ public class KeepaliveTracker {
         private final NetworkAgentInfo mNai;
         private final int mType;
         private final FileDescriptor mFd;
+        private int mStopReason = SUCCESS;
 
         public static final int TYPE_NATT = 1;
         public static final int TYPE_TCP = 2;
@@ -365,6 +366,9 @@ public class KeepaliveTracker {
                     Log.e(TAG, "Cannot stop unowned keepalive " + mSlot + " on " + mNai.network);
                 }
             }
+
+            // Store the reason of stopping, and report it after the keepalive is fully stopped.
+            mStopReason = reason;
             Log.d(TAG, "Stopping keepalive " + mSlot + " on " + mNai.name() + ": " + reason);
             switch (mStartedState) {
                 case NOT_STARTED:
@@ -402,24 +406,6 @@ public class KeepaliveTracker {
                     Log.wtf(TAG, "Error closing fd for keepalive " + mSlot + ": " + e);
                 }
             }
-
-            if (reason == SUCCESS) {
-                try {
-                    mCallback.onStopped();
-                } catch (RemoteException e) {
-                    Log.w(TAG, "Discarded onStop callback: " + reason);
-                }
-            } else if (reason == DATA_RECEIVED) {
-                try {
-                    mCallback.onDataReceived();
-                } catch (RemoteException e) {
-                    Log.w(TAG, "Discarded onDataReceived callback: " + reason);
-                }
-            } else {
-                notifyErrorCallback(mCallback, reason);
-            }
-
-            unlinkDeathRecipient();
         }
 
         void onFileDescriptorInitiatedStop(final int socketKeepaliveReason) {
@@ -504,12 +490,35 @@ public class KeepaliveTracker {
             Log.e(TAG, "Attempt to remove nonexistent keepalive " + slot + " on " + networkName);
             return;
         }
+
+        // Remove the keepalive from hash table so the slot can be considered available when reusing
+        // it.
         networkKeepalives.remove(slot);
         Log.d(TAG, "Remove keepalive " + slot + " on " + networkName + ", "
                 + networkKeepalives.size() + " remains.");
         if (networkKeepalives.isEmpty()) {
             mKeepalives.remove(nai);
         }
+
+        // Notify app that the keepalive is stopped.
+        final int reason = ki.mStopReason;
+        if (reason == SUCCESS) {
+            try {
+                ki.mCallback.onStopped();
+            } catch (RemoteException e) {
+                Log.w(TAG, "Discarded onStop callback: " + reason);
+            }
+        } else if (reason == DATA_RECEIVED) {
+            try {
+                ki.mCallback.onDataReceived();
+            } catch (RemoteException e) {
+                Log.w(TAG, "Discarded onDataReceived callback: " + reason);
+            }
+        } else {
+            notifyErrorCallback(ki.mCallback, reason);
+        }
+
+        ki.unlinkDeathRecipient();
     }
 
     public void handleCheckKeepalivesStillValid(NetworkAgentInfo nai) {
