@@ -80,11 +80,13 @@ import android.os.Process;
 import android.os.RemoteCallback;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
+import android.os.ServiceManager;
 import android.os.ShellCallback;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.platformcompat.DummyApi;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
@@ -95,6 +97,7 @@ import android.util.SparseBooleanArray;
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.compat.IPlatformCompat;
 import com.android.internal.content.PackageMonitor;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
 import com.android.internal.notification.SystemNotificationChannels;
@@ -4654,6 +4657,27 @@ public class AccountManagerService
             }
         } finally {
             Binder.restoreCallingIdentity(identity);
+        }
+    }
+    @Override
+    public String testFunc() {
+        final int uid = Binder.getCallingUid();
+        String[] packagesForUid = mPackageManager.getPackagesForUid(uid);
+        if (packagesForUid.length != 1) {
+            return "There are " + packagesForUid.length + " packages with this uid";
+        }
+        IPlatformCompat platformCompat = (IPlatformCompat)ServiceManager.getService(Context.PLATFORM_COMPAT_SERVICE);
+        if (platformCompat == null) {
+            return "null platformCompat";
+        }
+        try {
+            ApplicationInfo ai = mPackageManager.getApplicationInfo(packagesForUid[0], 0);
+            if (platformCompat.isChangeEnabled(DummyApi.CHANGE_SYSTEM_SERVER, ai)) {
+                return "True";
+            }
+            return "False";
+        } catch(NameNotFoundException | RemoteException e) {
+            return e.getMessage();
         }
     }
 

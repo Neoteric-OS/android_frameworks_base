@@ -438,6 +438,14 @@ public class AccountManager {
         return result;
     }
 
+    public String testFunc() {
+        try {
+            return mService.testFunc();
+        } catch(RemoteException e) {
+            return "Oh no " + e.getMessage();
+        }
+    }
+
     /**
      * Gets an AccountManager instance associated with a Context.
      * The {@link Context} will be used as long as the AccountManager is

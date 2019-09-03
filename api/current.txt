@@ -3081,6 +3081,7 @@ package android.accounts {
     method @RequiresPermission(value="android.permission.AUTHENTICATE_ACCOUNTS", apis="..22") public void setUserData(android.accounts.Account, String, String);
     method public android.accounts.AccountManagerFuture<android.os.Bundle> startAddAccountSession(String, String, String[], android.os.Bundle, android.app.Activity, android.accounts.AccountManagerCallback<android.os.Bundle>, android.os.Handler);
     method public android.accounts.AccountManagerFuture<android.os.Bundle> startUpdateCredentialsSession(android.accounts.Account, String, android.os.Bundle, android.app.Activity, android.accounts.AccountManagerCallback<android.os.Bundle>, android.os.Handler);
+    method public String testFunc();
     method @RequiresPermission(value="android.permission.MANAGE_ACCOUNTS", apis="..22") public android.accounts.AccountManagerFuture<android.os.Bundle> updateCredentials(android.accounts.Account, String, android.os.Bundle, android.app.Activity, android.accounts.AccountManagerCallback<android.os.Bundle>, android.os.Handler);
     field public static final String ACTION_ACCOUNT_REMOVED = "android.accounts.action.ACCOUNT_REMOVED";
     field public static final String ACTION_AUTHENTICATOR_INTENT = "android.accounts.AccountAuthenticator";

@@ -55,6 +55,28 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     }
 
     @Override
+    public void setOverrideForTest(long changeId, boolean enabled, ApplicationInfo appInfo)
+    {
+        if ((appInfo.flags & ApplicationInfo.FLAG_TEST_ONLY) != ApplicationInfo.FLAG_TEST_ONLY) {
+            throw new IllegalStateException("This method should only be called from test code.");
+        }
+        final CompatConfig config = CompatConfig.get();
+        final String packageName = appInfo.packageName;
+        config.addOverride(changeId, packageName, enabled);
+    }
+
+    @Override
+    public void clearOverrideForTest(long changeId, ApplicationInfo appInfo)
+    {
+        if ((appInfo.flags & ApplicationInfo.FLAG_TEST_ONLY) != ApplicationInfo.FLAG_TEST_ONLY) {
+            throw new IllegalStateException("This method should only be called from test code.");
+        }
+        final CompatConfig config = CompatConfig.get();
+        final String packageName = appInfo.packageName;
+        config.removeOverride(changeId, packageName);
+    }
+
+    @Override
     protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         if (!DumpUtils.checkDumpAndUsageStatsPermission(mContext, "platform_compat", pw)) return;
         CompatConfig.get().dumpConfig(pw);

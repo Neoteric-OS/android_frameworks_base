@@ -58,4 +58,14 @@ interface IPlatformCompat
      * @return {@code true} if the change is enabled for the current app.
      */
     boolean isChangeEnabled(long changeId, in ApplicationInfo appInfo);
+
+    /**
+     * TODO
+     */
+    void setOverrideForTest(long change, boolean enabled, in ApplicationInfo appInfo);
+
+    /**
+     * TODO
+     */
+    void clearOverrideForTest(long change, in ApplicationInfo appInfo);
 }

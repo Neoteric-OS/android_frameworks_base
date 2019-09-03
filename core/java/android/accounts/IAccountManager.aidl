@@ -129,4 +129,5 @@ interface IAccountManager {
         String packageName, in UserHandle userHandle);
 
     void onAccountAccessed(String token);
+    String testFunc();
 }
