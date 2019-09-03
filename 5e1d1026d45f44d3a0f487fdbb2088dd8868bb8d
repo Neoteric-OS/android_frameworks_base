@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "3b12808d_9df28bba",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-03T12:20:04Z",
+      "side": 1,
+      "message": "Nit: extra line in l.55",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 2
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d98d336_fb8bc094",
         "filename": "packages/Tethering/AndroidManifest.xml",
         "patchSetId": 1
@@ -209,6 +232,29 @@
     },
     {
       "key": {
+        "uuid": "4b8c8a13_a0386b64",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-03T12:20:04Z",
+      "side": 1,
+      "message": "Nit: @NonNull?",
+      "range": {
+        "startLine": 62,
+        "startChar": 45,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3db892df_1469c4ef",
         "filename": "services/net/java/android/net/TetheringManager.java",
         "patchSetId": 1
@@ -225,6 +271,29 @@
         "startChar": 2,
         "endLine": 90,
         "endChar": 3
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a26c579_16eec55f",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-03T12:20:04Z",
+      "side": 1,
+      "message": "Nit: do you like to align the doc as log() and logi()?\n\nAlso for loge",
+      "range": {
+        "startLine": 99,
+        "startChar": 17,
+        "endLine": 99,
+        "endChar": 23
       },
       "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
