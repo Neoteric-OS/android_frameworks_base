@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb4563d5_5562c116",
+        "filename": "core/java/android/text/util/Linkify.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2019-09-03T21:34:18Z",
+      "side": 1,
+      "message": "For the backward compatibility, we should use SIM country code first, then fallback to network country code next.",
+      "range": {
+        "startLine": 833,
+        "startChar": 8,
+        "endLine": 836,
+        "endChar": 9
+      },
+      "revId": "426de98b253270c734c703f2a9b133dc9a2bd054",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
