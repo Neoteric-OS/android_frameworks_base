@@ -19,6 +19,8 @@ java_defaults {
     platform_apis: true,
     srcs: [
         "src/**/*.java",
+        ":framework-tethering-shared-srcs",
+        ":services-tethering-shared-srcs",
     ],
     static_libs: [
         "androidx.annotation_annotation",
