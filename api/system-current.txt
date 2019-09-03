@@ -4617,6 +4617,7 @@ package android.provider {
     field public static final String INSTALL_CARRIER_APP_NOTIFICATION_PERSISTENT = "install_carrier_app_notification_persistent";
     field public static final String INSTALL_CARRIER_APP_NOTIFICATION_SLEEP_MILLIS = "install_carrier_app_notification_sleep_millis";
     field public static final String OTA_DISABLE_AUTOMATIC_UPDATE = "ota_disable_automatic_update";
+    field public static final String TETHER_ENABLE_LEGACY_DHCP_SERVER = "tether_enable_legacy_dhcp_server";
     field public static final String THEATER_MODE_ON = "theater_mode_on";
     field public static final String WEBVIEW_MULTIPROCESS = "webview_multiprocess";
     field public static final String WIFI_BADGING_THRESHOLDS = "wifi_badging_thresholds";
@@ -6257,6 +6258,7 @@ package android.telephony {
   public class SubscriptionManager {
     method public java.util.List<android.telephony.SubscriptionInfo> getAvailableSubscriptionInfoList();
     method @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public int getEnabledSubscriptionId(int);
+    method public static android.content.res.Resources getResourcesForSubId(android.content.Context, int);
     method @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public boolean isSubscriptionEnabled(int);
     method public void requestEmbeddedSubscriptionInfoListRefresh();
     method public void requestEmbeddedSubscriptionInfoListRefresh(int);
@@ -6339,6 +6341,7 @@ package android.telephony {
     method @Nullable @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public java.util.Locale getSimLocale();
     method @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public long getSupportedRadioAccessFamily();
     method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public java.util.List<android.telephony.TelephonyHistogram> getTelephonyHistograms();
+    method public boolean getTetherApnRequired(int);
     method @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public android.telephony.UiccSlotInfo[] getUiccSlotsInfo();
     method @Nullable public android.os.Bundle getVisualVoicemailSettings();
     method @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public int getVoiceActivationState();

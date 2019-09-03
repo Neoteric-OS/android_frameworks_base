@@ -2279,7 +2279,7 @@ public class SubscriptionManager {
      * @return Resources associated with Subscription.
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public static Resources getResourcesForSubId(Context context, int subId) {
         return getResourcesForSubId(context, subId, false);
     }

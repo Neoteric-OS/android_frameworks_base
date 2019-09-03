@@ -26,6 +26,7 @@ android_library {
     defaults: ["TetheringCommon"],
     srcs: [
         "src/**/*.java",
+        ":framework-tethering-shared-srcs",
 	":services-tethering-shared-srcs",
     ],
     static_libs: [

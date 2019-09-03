@@ -7305,6 +7305,7 @@ public class TelephonyManager {
      * @return {@code true} if DUN APN is required for tethering.
      * @hide
      */
+    @SystemApi
     public boolean getTetherApnRequired(int subId) {
         try {
             ITelephony telephony = getITelephony();

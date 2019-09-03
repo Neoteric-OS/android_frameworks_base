@@ -9500,6 +9500,7 @@ public final class Settings {
          * is interpreted as |false|.
          * @hide
          */
+        @SystemApi
         public static final String TETHER_ENABLE_LEGACY_DHCP_SERVER =
                 "tether_enable_legacy_dhcp_server";
 
