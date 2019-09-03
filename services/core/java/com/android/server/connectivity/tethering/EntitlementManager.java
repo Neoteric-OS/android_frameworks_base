@@ -56,6 +56,7 @@ import android.util.SparseIntArray;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.StateMachine;
 import com.android.server.connectivity.MockableSystemProperties;
+import com.android.server.connectivity.TetheringConfiguration;
 
 import java.io.PrintWriter;
 
