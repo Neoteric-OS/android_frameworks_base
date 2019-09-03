@@ -58,6 +58,7 @@ import com.android.internal.util.StateMachine;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.internal.util.test.FakeSettingsProvider;
 import com.android.server.connectivity.MockableSystemProperties;
+import com.android.server.connectivity.TetheringConfiguration;
 
 import org.junit.After;
 import org.junit.Before;
