@@ -24,6 +24,7 @@ import android.os.Handler;
 
 import com.android.internal.util.StateMachine;
 import com.android.server.connectivity.MockableSystemProperties;
+import com.android.server.connectivity.TetheringConfiguration;
 
 import java.util.ArrayList;
 
