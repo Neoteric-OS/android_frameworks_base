@@ -140,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "504daebe_04d963a6",
+        "filename": "packages/Tethering/AndroidManifestBase.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-09-03T16:41:03Z",
+      "side": 1,
+      "message": "Question: This app is in the initial state. Why is the version code not \"1\"?",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1de1ea46_733925c7",
         "filename": "packages/Tethering/src/com/android/server/connectivity/TetheringService.java",
         "patchSetId": 1
@@ -294,6 +317,29 @@
         "startChar": 17,
         "endLine": 99,
         "endChar": 23
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af14c2af_dd290aca",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-09-03T16:41:03Z",
+      "side": 1,
+      "message": "NetworkStackClient alreay dump ConnectivityModuleConnector. Do we really need to dump it again?\nhttps://cs.corp.google.com/aosp-master/frameworks/base/services/net/java/android/net/NetworkStackClient.java?type\u003dcs\u0026q\u003d\"ConnectivityModuleConnector.getInstance().dump\"\u0026sq\u003dpackage:aosp-master\u0026g\u003d0\u0026l\u003d331",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 59
       },
       "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
