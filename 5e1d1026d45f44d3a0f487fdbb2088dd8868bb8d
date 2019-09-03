@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2ca403a_6fe48b01",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-03T09:26:57Z",
+      "side": 1,
+      "message": "Naming is changed in aosp/1014349, maybe this CL should be consistent with that",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b0a07f_fdd88aff",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-03T09:26:57Z",
+      "side": 1,
+      "message": "It might be easier to move the code first, then set sdk_version to system_current",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec79c4c_d002fbd3",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-03T09:26:57Z",
+      "side": 1,
+      "message": "Tab ?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 1
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ba3e9c_ae4d6865",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-03T09:26:57Z",
+      "side": 1,
+      "message": "Also tab ?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 1
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d98d336_fb8bc094",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-03T09:26:57Z",
+      "side": 1,
+      "message": "Add MAINLINE_NETWORK_STACK permission to restrict binding to the service here",
+      "range": {
+        "startLine": 35,
+        "startChar": 80,
+        "endLine": 35,
+        "endChar": 81
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de1ea46_733925c7",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/TetheringService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-03T09:26:57Z",
+      "side": 1,
+      "message": "I don\u0027t think this should be public (NetworkStack version is still public for legacy reasons)",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 10
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5cf259_8f449992",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-03T09:26:57Z",
+      "side": 1,
+      "message": "This should be defined in the module folder, similarly to aosp/1098177",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 52
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff50a25_93a57f37",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-03T09:26:57Z",
+      "side": 1,
+      "message": "Hopefully this will not be needed; androidx.annotation can be used instead of the framework annotations too.",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 1
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f99ba4_63c09bc5",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-03T09:26:57Z",
+      "side": 1,
+      "message": "Looks like this is unused",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 65
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db892df_1469c4ef",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-03T09:26:57Z",
+      "side": 1,
+      "message": "Nit: missing a space :)\nsee aosp/1110414",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 3
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
