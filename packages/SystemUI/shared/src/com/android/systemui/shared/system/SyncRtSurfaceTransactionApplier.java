@@ -67,7 +67,10 @@ public class SyncRtSurfaceTransactionApplier {
         });
 
         // Make sure a frame gets scheduled.
-        mTargetViewRootImpl.getView().invalidate();
+        View view = mTargetViewRootImpl.getView();
+        if (view != null) {
+            view.invalidate();
+        }
     }
 
     public static void applyParams(TransactionCompat t, SurfaceParams params) {
