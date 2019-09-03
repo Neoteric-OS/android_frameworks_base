@@ -22,6 +22,30 @@
       "revId": "426de98b253270c734c703f2a9b133dc9a2bd054",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed20538b_ab00d596",
+        "filename": "core/java/android/text/util/Linkify.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-09-03T23:25:42Z",
+      "side": 1,
+      "message": "Thanks. Btw,I think the network country code should be used to create the links for dialable phone numbers on current network always if the nw country code is available since the the links are useful on current nw.",
+      "parentUuid": "fb4563d5_5562c116",
+      "range": {
+        "startLine": 833,
+        "startChar": 8,
+        "endLine": 836,
+        "endChar": 9
+      },
+      "revId": "426de98b253270c734c703f2a9b133dc9a2bd054",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
