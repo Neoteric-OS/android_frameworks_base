@@ -446,7 +446,9 @@ public final class BroadcastQueue {
         mHandler.removeCallbacksAndMessages(msgToken);
         // ...then schedule the removal of the token after the extended timeout
         mHandler.postAtTime(() -> {
-            app.removeAllowBackgroundActivityStartsToken(r);
+            synchronized (mService) {
+                app.removeAllowBackgroundActivityStartsTokenLocked(r);
+            }
         }, msgToken, (r.receiverTime + mConstants.ALLOW_BG_ACTIVITY_START_TIMEOUT));
     }
 
@@ -464,7 +466,7 @@ public final class BroadcastQueue {
             if (elapsed > mConstants.ALLOW_BG_ACTIVITY_START_TIMEOUT) {
                 // if the receiver has run for more than allowed bg activity start timeout,
                 // just remove the token for this process now and we're done
-                r.curApp.removeAllowBackgroundActivityStartsToken(r);
+                r.curApp.removeAllowBackgroundActivityStartsTokenLocked(r);
             } else {
                 // It gets more time; post the removal to happen at the appropriate moment
                 postActivityStartTokenRemoval(r.curApp, r);
@@ -827,7 +829,7 @@ public final class BroadcastQueue {
             Slog.w(TAG, "Failure sending broadcast " + r.intent, e);
             // Clean up ProcessRecord state related to this broadcast attempt
             if (filter.receiverList.app != null) {
-                filter.receiverList.app.removeAllowBackgroundActivityStartsToken(r);
+                filter.receiverList.app.removeAllowBackgroundActivityStartsTokenLocked(r);
                 if (ordered) {
                     filter.receiverList.app.curReceivers.remove(r);
                 }
@@ -1671,7 +1673,7 @@ public final class BroadcastQueue {
         // that request - we don't want the token to be swept from under our feet...
         mHandler.removeCallbacksAndMessages(msgToken);
         // ...then add the token
-        proc.addAllowBackgroundActivityStartsToken(r);
+        proc.addAllowBackgroundActivityStartsTokenLocked(r);
     }
 
     final void setBroadcastTimeoutLocked(long timeoutTime) {

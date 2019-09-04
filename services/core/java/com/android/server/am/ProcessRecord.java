@@ -24,6 +24,7 @@ import static com.android.server.am.ActivityManagerDebugConfig.TAG_AM;
 import static com.android.server.am.ActivityManagerDebugConfig.TAG_WITH_CLASS_NAME;
 import static com.android.server.am.ActivityManagerService.MY_PID;
 
+import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.app.ApplicationErrorReport;
 import android.app.Dialog;
@@ -55,6 +56,7 @@ import android.util.StatsLog;
 import android.util.TimeUtils;
 import android.util.proto.ProtoOutputStream;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.app.procstats.ProcessState;
 import com.android.internal.app.procstats.ProcessStats;
@@ -258,6 +260,7 @@ class ProcessRecord implements WindowProcessListener {
     final ArrayList<ContentProviderConnection> conProviders = new ArrayList<>();
     // A set of tokens that currently contribute to this process being temporarily whitelisted
     // to start activities even if it's not in the foreground
+    @GuardedBy("mService")
     final ArraySet<Binder> mAllowBackgroundActivityStartsTokens = new ArraySet<>();
     // a set of UIDs of all bound clients
     private ArraySet<Integer> mBoundClientUids = new ArraySet<>();
@@ -1173,13 +1176,15 @@ class ProcessRecord implements WindowProcessListener {
         return mUsingWrapper;
     }
 
-    void addAllowBackgroundActivityStartsToken(Binder entity) {
+    @GuardedBy("mService")
+    void addAllowBackgroundActivityStartsTokenLocked(@Nullable Binder entity) {
         if (entity == null) return;
         mAllowBackgroundActivityStartsTokens.add(entity);
         mWindowProcessController.setAllowBackgroundActivityStarts(true);
     }
 
-    void removeAllowBackgroundActivityStartsToken(Binder entity) {
+    @GuardedBy("mService")
+    void removeAllowBackgroundActivityStartsTokenLocked(@Nullable Binder entity) {
         if (entity == null) return;
         mAllowBackgroundActivityStartsTokens.remove(entity);
         mWindowProcessController.setAllowBackgroundActivityStarts(

@@ -3497,7 +3497,7 @@ PLcom/android/server/am/ProcessRecord$PackageList;->keyAt(I)Ljava/lang/String;
 HSPLcom/android/server/am/ProcessRecord$PackageList;->size()I
 HSPLcom/android/server/am/ProcessRecord$PackageList;->valueAt(I)Lcom/android/internal/app/procstats/ProcessStats$ProcessStateHolder;
 HSPLcom/android/server/am/ProcessRecord;-><init>(Lcom/android/server/am/ActivityManagerService;Landroid/content/pm/ApplicationInfo;Ljava/lang/String;I)V
-HSPLcom/android/server/am/ProcessRecord;->addAllowBackgroundActivityStartsToken(Landroid/os/Binder;)V
+HSPLcom/android/server/am/ProcessRecord;->addAllowBackgroundActivityStartsTokenLocked(Landroid/os/Binder;)V
 HSPLcom/android/server/am/ProcessRecord;->addPackage(Ljava/lang/String;J)V
 HSPLcom/android/server/am/ProcessRecord;->addPackage(Ljava/lang/String;JLcom/android/server/am/ProcessStatsService;)Z
 PLcom/android/server/am/ProcessRecord;->appNotResponding(Ljava/lang/String;Landroid/content/pm/ApplicationInfo;Ljava/lang/String;Lcom/android/server/wm/WindowProcessController;ZLjava/lang/String;)V
@@ -3546,7 +3546,7 @@ HSPLcom/android/server/am/ProcessRecord;->makeAdjReason()Ljava/lang/String;
 HSPLcom/android/server/am/ProcessRecord;->makeInactive(Lcom/android/server/am/ProcessStatsService;)V
 HSPLcom/android/server/am/ProcessRecord;->modifyRawOomAdj(I)I
 HSPLcom/android/server/am/ProcessRecord;->onStartActivity(IZ)V
-HSPLcom/android/server/am/ProcessRecord;->removeAllowBackgroundActivityStartsToken(Landroid/os/Binder;)V
+HSPLcom/android/server/am/ProcessRecord;->removeAllowBackgroundActivityStartsTokenLocked(Landroid/os/Binder;)V
 HSPLcom/android/server/am/ProcessRecord;->resetPackageList(Lcom/android/server/am/ProcessStatsService;)V
 PLcom/android/server/am/ProcessRecord;->scheduleCrash(Ljava/lang/String;)V
 HSPLcom/android/server/am/ProcessRecord;->setCrashing(Z)V

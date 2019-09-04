@@ -549,7 +549,7 @@ final class ServiceRecord extends Binder implements ComponentName.WithComponentN
             if (mAppForStartedWhitelistingBgActivityStarts != null) {
                 if (mAppForStartedWhitelistingBgActivityStarts != _proc) {
                     mAppForStartedWhitelistingBgActivityStarts
-                            .removeAllowBackgroundActivityStartsToken(this);
+                            .removeAllowBackgroundActivityStartsTokenLocked(this);
                     ams.mHandler.removeCallbacks(mStartedWhitelistingBgActivityStartsCleanUp);
                 }
             }
@@ -558,9 +558,9 @@ final class ServiceRecord extends Binder implements ComponentName.WithComponentN
                     ? _proc : null;
             if (mHasStartedWhitelistingBgActivityStarts
                     || mHasBindingWhitelistingBgActivityStarts) {
-                _proc.addAllowBackgroundActivityStartsToken(this);
+                _proc.addAllowBackgroundActivityStartsTokenLocked(this);
             } else {
-                _proc.removeAllowBackgroundActivityStartsToken(this);
+                _proc.removeAllowBackgroundActivityStartsTokenLocked(this);
             }
         }
         if (app != null && app != _proc) {
@@ -568,7 +568,7 @@ final class ServiceRecord extends Binder implements ComponentName.WithComponentN
             // the cleanup callback runs. Otherwise we can remove it from the whitelist immediately
             // (it can't be bound now).
             if (!mHasStartedWhitelistingBgActivityStarts) {
-                app.removeAllowBackgroundActivityStartsToken(this);
+                app.removeAllowBackgroundActivityStartsTokenLocked(this);
             }
             app.updateBoundClientUids();
         }
@@ -672,7 +672,7 @@ final class ServiceRecord extends Binder implements ComponentName.WithComponentN
                         // The process we whitelisted is not running the service. It therefore
                         // can't be bound so we can unconditionally remove the whitelist.
                         mAppForStartedWhitelistingBgActivityStarts
-                                .removeAllowBackgroundActivityStartsToken(ServiceRecord.this);
+                                .removeAllowBackgroundActivityStartsTokenLocked(ServiceRecord.this);
                     }
                     mAppForStartedWhitelistingBgActivityStarts = null;
                 }
@@ -708,9 +708,9 @@ final class ServiceRecord extends Binder implements ComponentName.WithComponentN
         if (mHasStartedWhitelistingBgActivityStarts || mHasBindingWhitelistingBgActivityStarts) {
             // if the token is already there it's safe to "re-add it" - we're dealing with
             // a set of Binder objects
-            app.addAllowBackgroundActivityStartsToken(this);
+            app.addAllowBackgroundActivityStartsTokenLocked(this);
         } else {
-            app.removeAllowBackgroundActivityStartsToken(this);
+            app.removeAllowBackgroundActivityStartsTokenLocked(this);
         }
     }
 
