@@ -827,6 +827,7 @@ public class ZygoteInit {
             TimingsTraceLog bootTimingsTraceLog = new TimingsTraceLog(bootTimeTag,
                     Trace.TRACE_TAG_DALVIK);
             bootTimingsTraceLog.traceBegin("ZygoteInit");
+            RuntimeInit.commonInit();
             RuntimeInit.enableDdms();
 
             boolean startSystemServer = false;
@@ -876,7 +877,6 @@ public class ZygoteInit {
             // Disable tracing so that forked processes do not inherit stale tracing tags from
             // Zygote.
             Trace.setTracingEnabled(false, 0);
-
 
             Zygote.initNativeState(isPrimaryZygote);
 
@@ -963,7 +963,6 @@ public class ZygoteInit {
         Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "ZygoteInit");
         RuntimeInit.redirectLogStreams();
 
-        RuntimeInit.commonInit();
         ZygoteInit.nativeZygoteInit();
         return RuntimeInit.applicationInit(targetSdkVersion, argv, classLoader);
     }
