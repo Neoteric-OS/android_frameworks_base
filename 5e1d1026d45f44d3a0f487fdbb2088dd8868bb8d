@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1edd2ace_c6474a73",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c2ca403a_6fe48b01",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16b0a07f_fdd88aff",
         "filename": "packages/Tethering/Android.bp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "face5d5d_9e1ddae1",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "16b0a07f_fdd88aff",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c8ab72c9_9501af05",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3ec79c4c_d002fbd3",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 1
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06ba3e9c_ae4d6865",
         "filename": "packages/Tethering/Android.bp",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d1ff54_7e6b808d",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "06ba3e9c_ae4d6865",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 1
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "40e3276d_0c137857",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3b12808d_9df28bba",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 2
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d98d336_fb8bc094",
         "filename": "packages/Tethering/AndroidManifest.xml",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "26d42876_e8e7ef57",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0d98d336_fb8bc094",
+      "range": {
+        "startLine": 35,
+        "startChar": 80,
+        "endLine": 35,
+        "endChar": 81
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "504daebe_04d963a6",
         "filename": "packages/Tethering/AndroidManifestBase.xml",
         "patchSetId": 1
@@ -151,6 +295,30 @@
       "writtenOn": "2019-09-03T16:41:03Z",
       "side": 1,
       "message": "Question: This app is in the initial state. Why is the version code not \"1\"?",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe52885b_9fd747be",
+        "filename": "packages/Tethering/AndroidManifestBase.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "Hmm, point this out. Looking at the definition of versionCode again. Apparently I use wrongly. Original I teat it as target Os Version.",
+      "parentUuid": "504daebe_04d963a6",
       "range": {
         "startLine": 21,
         "startChar": 31,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "30bb2bee_412bd140",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/TetheringService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1de1ea46_733925c7",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 10
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d5cf259_8f449992",
         "filename": "services/net/Android.bp",
         "patchSetId": 1
@@ -206,6 +398,30 @@
       "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232b9446_02d09305",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3d5cf259_8f449992",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 52
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "b0c00824_521b471f",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8ff50a25_93a57f37",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 1
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0f99ba4_63c09bc5",
         "filename": "services/net/java/android/net/TetheringManager.java",
         "patchSetId": 1
@@ -252,6 +492,30 @@
       "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac5f91a_a4dab64d",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a0f99ba4_63c09bc5",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 65
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "9b288d77_273ccc01",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4b8c8a13_a0386b64",
+      "range": {
+        "startLine": 62,
+        "startChar": 45,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3db892df_1469c4ef",
         "filename": "services/net/java/android/net/TetheringManager.java",
         "patchSetId": 1
@@ -298,6 +586,30 @@
       "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d956bd_a084645a",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3db892df_1469c4ef",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 3
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -335,6 +647,30 @@
       "writtenOn": "2019-09-03T16:41:03Z",
       "side": 1,
       "message": "NetworkStackClient alreay dump ConnectivityModuleConnector. Do we really need to dump it again?\nhttps://cs.corp.google.com/aosp-master/frameworks/base/services/net/java/android/net/NetworkStackClient.java?type\u003dcs\u0026q\u003d\"ConnectivityModuleConnector.getInstance().dump\"\u0026sq\u003dpackage:aosp-master\u0026g\u003d0\u0026l\u003d331",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 59
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec25a71_96ebf727",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T03:41:16Z",
+      "side": 1,
+      "message": "This is a good question. It would depend TetheringManager would be run on which process finally(Maybe be it would be called by ConnectivityManager directly). But now it live runing on system process. Thus, It would be better to move ConnectivityModuleConnector dump to ConnectivityService or other better place it seems there are three user for ConnectivityModuleConnector currently(networkStack, tethering, wifi).",
+      "parentUuid": "af14c2af_dd290aca",
       "range": {
         "startLine": 128,
         "startChar": 8,
