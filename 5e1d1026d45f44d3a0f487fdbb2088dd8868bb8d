@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "9238c4c4_2f3407a4",
+        "filename": "packages/Tethering/AndroidManifestBase.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T15:33:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe52885b_9fd747be",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1de1ea46_733925c7",
         "filename": "packages/Tethering/src/com/android/server/connectivity/TetheringService.java",
         "patchSetId": 1
@@ -636,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "d88e7c88_b1fa4159",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T15:33:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a26c579_16eec55f",
+      "range": {
+        "startLine": 99,
+        "startChar": 17,
+        "endLine": 99,
+        "endChar": 23
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af14c2af_dd290aca",
         "filename": "services/net/java/android/net/TetheringManager.java",
         "patchSetId": 1
@@ -680,6 +728,30 @@
       "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84712b1e_f5781588",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-04T15:33:25Z",
+      "side": 1,
+      "message": "As my previous comment, I remove it first due to TetheringManager is on system process currently. If we have different plan, it is better to change it when it happen.",
+      "parentUuid": "5ec25a71_96ebf727",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 59
+      },
+      "revId": "5e1d1026d45f44d3a0f487fdbb2088dd8868bb8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
