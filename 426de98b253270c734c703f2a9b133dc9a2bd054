@@ -46,6 +46,30 @@
       "revId": "426de98b253270c734c703f2a9b133dc9a2bd054",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bdbf1fa_44ed2f98",
+        "filename": "core/java/android/text/util/Linkify.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2019-09-04T21:21:00Z",
+      "side": 1,
+      "message": "My concern is backward compatibility.\nThis code lives from 2017 and some app may already depend on this behavior.\n\nAdding fallback is fine since it is simple improvement and has limited effect, but changing the priority is questionable.\nI recommend to keep using the SIM country code first, then use network country code as a fallback.\n\nIf you strongly want to change the behavior, please 1) file a bug and explain why network country code is better than SIM country code and why opposite ordering is bad, then 2) decide the fallback scenario\n - Always use network country code as the first priority.\n - Use network country code as the first priority only on SDK API level is 30 or later.",
+      "parentUuid": "ed20538b_ab00d596",
+      "range": {
+        "startLine": 833,
+        "startChar": 8,
+        "endLine": 836,
+        "endChar": 9
+      },
+      "revId": "426de98b253270c734c703f2a9b133dc9a2bd054",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
