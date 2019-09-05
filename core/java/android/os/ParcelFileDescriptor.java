@@ -584,9 +584,10 @@ public class ParcelFileDescriptor implements Parcelable, Closeable {
         if (data.length > 0) {
             file.writeBytes(data, 0, 0, data.length);
         }
-        file.deactivate();
         FileDescriptor fd = file.getFileDescriptor();
-        return fd != null ? ParcelFileDescriptor.dup(fd) : null;
+        ParcelFileDescriptor pfd = fd != null ? ParcelFileDescriptor.dup(fd) : null;
+        file.close();
+        return pfd;
     }
 
     /**
