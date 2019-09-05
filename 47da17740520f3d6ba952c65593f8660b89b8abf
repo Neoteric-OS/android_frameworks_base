@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c62ac505_6de00f1a",
+        "filename": "core/java/android/net/LocalSocketImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-09-05T14:51:52Z",
+      "side": 0,
+      "message": "Why is this being removed? It doesn\u0027t look like a no-op to me. It\u0027s testing every 10ms whether the result of the TIOCOUTQ ioctl is nonzero. Do we know that that is actually not useful? I agree that 10ms is probably much too long, but even so... if we think this method is not useful, then... can we simply not call it?",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 48
+      },
+      "revId": "47da17740520f3d6ba952c65593f8660b89b8abf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
