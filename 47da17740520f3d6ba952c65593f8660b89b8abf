@@ -22,6 +22,30 @@
       "revId": "47da17740520f3d6ba952c65593f8660b89b8abf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721696af_fbf661d6",
+        "filename": "core/java/android/net/LocalSocketImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-09-05T16:28:28Z",
+      "side": 0,
+      "message": "This is being removed because it occurs in the boot and application critical startup paths, is unexpected (no one I talked to thought that this is what the function would or should do), is unnecessary, and is misleading.\n\nFrom the man page for fflush:\n\n\u003e For  output streams, fflush() forces a write of all user-space buffered\n\u003e data for the given output or update stream via the stream\u0027s  underlying\n\u003e write function.\n\nFor Unix domain sockets there appear to be no user-space buffers to write back (please correct me if I\u0027m wrong) and this function doesn\u0027t force anything.  Instead it just waits until the reader has woken up and read the buffer.  And given that there isn\u0027t a way to \"flush\" a Unix domain socket natively, I think adding a Java Language wrapper that claims to do that can lead to confusion.  I began using this function because I assumed it behaved like other flush implementations I\u0027d seen.\n\nI know for sure that this isn\u0027t useful in the System Server.  I talked with Zach Johnson and he was of the opinion that this wasn\u0027t necessary in the Bluetooth stack.  The recovery tool owner did not know that this occurred, was surprised by the behavior, and said it could be removed.\n\nWe can\u0027t just not call it because this output stream object is often wrapped inside another writer, such as a BufferedWriter.  The flush() function on those classes actually has effects, so calling them makes sense, but they also transitively call the flush function of the underlying object.  Leaving it in also adds to the bitrot of the codebase.  I think it is good policy to remove unused functions.\n\nThe one test suite that broke did so because this sleep was hiding a bug in the test, which is one of the big dangers in unexpected behavior.  In addition, I don\u0027t think sleep should be used as a concurrency primitive.",
+      "parentUuid": "c62ac505_6de00f1a",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 48
+      },
+      "revId": "47da17740520f3d6ba952c65593f8660b89b8abf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
