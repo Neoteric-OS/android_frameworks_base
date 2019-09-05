@@ -70,6 +70,30 @@
       "revId": "426de98b253270c734c703f2a9b133dc9a2bd054",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0583579a_2085f0ca",
+        "filename": "core/java/android/text/util/Linkify.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-09-05T00:18:24Z",
+      "side": 1,
+      "message": "Thank you and I understood about your concern.\n\nActually, there is no bug reported about it. I\u0027ve just made this CL for small improvement.\nI think that the link on phone number based on N/W country code is reasonable more.\nCould you kindly check below two cases?\n\n1. In roaming case,(SIM and N/W country are different.)\n - It will provider the link for the phone numbers dialable on current N/W only.\n - If SIM country is used instead, It will not provider the link for some dialable numbers on current N/W.\n2. No SIM case,\n - Only N/W country is available.",
+      "parentUuid": "8bdbf1fa_44ed2f98",
+      "range": {
+        "startLine": 833,
+        "startChar": 8,
+        "endLine": 836,
+        "endChar": 9
+      },
+      "revId": "426de98b253270c734c703f2a9b133dc9a2bd054",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
