@@ -94,6 +94,30 @@
       "revId": "426de98b253270c734c703f2a9b133dc9a2bd054",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a35323e_6f77eba1",
+        "filename": "core/java/android/text/util/Linkify.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2019-09-06T04:12:02Z",
+      "side": 1,
+      "message": "I meant, if you change the behavior, at least WE should file a bug ticket for opening discussions and recording purpose. Especially, I\u0027d like to get opinion from i18n expert. I\u0027m hesitate to say OK without confirming with i18n experts.\n\nPlease file a bug ticket for changing the behavior and cc-ing me.\nhttps://b.corp.google.com/issues/new?component\u003d192715\n\nThank you.",
+      "parentUuid": "0583579a_2085f0ca",
+      "range": {
+        "startLine": 833,
+        "startChar": 8,
+        "endLine": 836,
+        "endChar": 9
+      },
+      "revId": "426de98b253270c734c703f2a9b133dc9a2bd054",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
