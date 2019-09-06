@@ -118,6 +118,30 @@
       "revId": "426de98b253270c734c703f2a9b133dc9a2bd054",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1093560_08e9aa84",
+        "filename": "core/java/android/text/util/Linkify.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-09-06T04:17:59Z",
+      "side": 1,
+      "message": "I cannot access the link.\nI\u0027ll register new bug in issue tracker.\nThank you.",
+      "parentUuid": "9a35323e_6f77eba1",
+      "range": {
+        "startLine": 833,
+        "startChar": 8,
+        "endLine": 836,
+        "endChar": 9
+      },
+      "revId": "426de98b253270c734c703f2a9b133dc9a2bd054",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
