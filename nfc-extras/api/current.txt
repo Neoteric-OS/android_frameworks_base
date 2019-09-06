@@ -38,8 +38,10 @@ package com.android.nfc_extras {
     method public String getDriverName();
     method public com.android.nfc_extras.NfcExecutionEnvironment getEmbeddedExecutionEnvironment();
     method public void setCardEmulationRoute(com.android.nfc_extras.NfcAdapterExtras.CardEmulationRoute);
+    field public static final String ACTION_REQUEST_PREFERRED_PAYMENT_INFO = "com.android.nfc_extras.action.REQUEST_PREFERRED_PAYMENT_INFO";
     field public static final String ACTION_RF_FIELD_OFF_DETECTED = "com.android.nfc_extras.action.RF_FIELD_OFF_DETECTED";
     field public static final String ACTION_RF_FIELD_ON_DETECTED = "com.android.nfc_extras.action.RF_FIELD_ON_DETECTED";
+    field public static final String ACTION_SEND_PREFERRED_PAYMENT_INFO = "com.android.nfc_extras.action.SEND_PREFERRED_PAYMENT_INFO";
   }
 
   public static final class NfcAdapterExtras.CardEmulationRoute {

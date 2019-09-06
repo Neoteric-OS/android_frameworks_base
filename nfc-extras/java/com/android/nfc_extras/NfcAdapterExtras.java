@@ -56,6 +56,26 @@ public final class NfcAdapterExtras {
     public static final String ACTION_RF_FIELD_OFF_DETECTED =
             "com.android.nfc_extras.action.RF_FIELD_OFF_DETECTED";
 
+    /**
+     * Broadcast Action: request preferred payment service information.
+     *
+     * <p class="note">
+     * Requires the {@link android.Manifest.permission#NFC_PREFERRED_PAYMENT_INFO} permission
+     * to receive.
+     */
+    public static final String ACTION_REQUEST_PREFERRED_PAYMENT_INFO =
+            "com.android.nfc_extras.action.REQUEST_PREFERRED_PAYMENT_INFO";
+
+    /**
+     * Broadcast Action: send preferred payment service information.
+     *
+     * <p class="note">
+     * Requires the {@link android.Manifest.permission#NFC_PREFERRED_PAYMENT_INFO} permission
+     * to receive.
+     */
+    public static final String ACTION_SEND_PREFERRED_PAYMENT_INFO =
+            "com.android.nfc_extras.action.SEND_PREFERRED_PAYMENT_INFO";
+
     // protected by NfcAdapterExtras.class, and final after first construction,
     // except for attemptDeadServiceRecovery() when NFC crashes - we accept a
     // best effort recovery

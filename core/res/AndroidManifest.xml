@@ -314,6 +314,7 @@
     <protected-broadcast android:name="com.android.nfc_extras.action.RF_FIELD_ON_DETECTED" />
     <protected-broadcast android:name="com.android.nfc_extras.action.RF_FIELD_OFF_DETECTED" />
     <protected-broadcast android:name="com.android.nfc_extras.action.AID_SELECTED" />
+    <protected-broadcast android:name="com.android.nfc_extras.action.SEND_PREFERRED_PAYMENT_INFO" />
     <!-- For NFC to BT handover -->
     <protected-broadcast android:name="android.btopp.intent.action.WHITELIST_DEVICE" />
     <protected-broadcast android:name="android.btopp.intent.action.STOP_HANDOVER_TRANSFER" />
@@ -1754,6 +1755,12 @@
          <p>Protection level: normal
     -->
     <permission android:name="android.permission.NFC_TRANSACTION_EVENT"
+      android:protectionLevel="normal" />
+
+    <!-- Allows applications to receive NFC preferred payment service information.
+         <p>Protection level: normal
+    -->
+    <permission android:name="android.permission.NFC_PREFERRED_PAYMENT_INFO"
         android:protectionLevel="normal" />
 
     <!-- @SystemApi Allows an internal user to use privileged ConnectivityManager APIs.
