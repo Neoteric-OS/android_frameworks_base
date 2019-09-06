@@ -24,6 +24,32 @@ aidl_interface {
 }
 
 aidl_interface {
+    name: "dhcpserver-aidl-interfaces",
+    local_include_dir: "java",
+    srcs: [
+        "java/android/net/INetworkStackStatusCallback.aidl",
+        "java/android/net/dhcp/DhcpServingParamsParcel.aidl",
+        "java/android/net/dhcp/IDhcpServer.aidl",
+        "java/android/net/dhcp/IDhcpServerCallbacks.aidl",
+    ],
+    backend: {
+        ndk: {
+            enabled: false,
+        },
+        cpp: {
+            enabled: false,
+        },
+    },
+    api_dir: "aidl/dhcpserver",
+    versions: [
+        "1",
+        "2",
+        "3",
+    ],
+
+}
+
+aidl_interface {
     name: "networkstack-aidl-interfaces",
     local_include_dir: "java",
     include_dirs: ["frameworks/base/core/java"], // For framework parcelables.
@@ -32,15 +58,11 @@ aidl_interface {
         "java/android/net/INetworkMonitor.aidl",
         "java/android/net/INetworkMonitorCallbacks.aidl",
         "java/android/net/INetworkStackConnector.aidl",
-        "java/android/net/INetworkStackStatusCallback.aidl",
         "java/android/net/InitialConfigurationParcelable.aidl",
         "java/android/net/NattKeepalivePacketDataParcelable.aidl",
         "java/android/net/PrivateDnsConfigParcel.aidl",
         "java/android/net/ProvisioningConfigurationParcelable.aidl",
         "java/android/net/TcpKeepalivePacketDataParcelable.aidl",
-        "java/android/net/dhcp/DhcpServingParamsParcel.aidl",
-        "java/android/net/dhcp/IDhcpServer.aidl",
-        "java/android/net/dhcp/IDhcpServerCallbacks.aidl",
         "java/android/net/ip/IIpClient.aidl",
         "java/android/net/ip/IIpClientCallbacks.aidl",
     ],
@@ -53,7 +75,10 @@ aidl_interface {
         },
     },
     api_dir: "aidl/networkstack",
-    imports: ["ipmemorystore-aidl-interfaces"],
+    imports: [
+        "ipmemorystore-aidl-interfaces",
+        "dhcpserver-aidl-interfaces",
+    ],
     versions: [
         "1",
         "2",
@@ -100,6 +125,10 @@ filegroup {
     name: "services-tethering-shared-srcs",
     srcs: [
         ":framework-annotations",
-        "java/android/net/util/SharedLog.java"
+        "java/android/net/ConnectivityModuleConnector.java",
+        "java/android/net/NetworkStackClientBase.java",
+        "java/android/net/util/NetworkConstants.java",
+        "java/android/net/util/SharedLog.java",
+        "java/android/net/util/VersionedBroadcastListener.java",
     ],
 }

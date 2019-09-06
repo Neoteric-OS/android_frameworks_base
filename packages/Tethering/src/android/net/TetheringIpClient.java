@@ -17,10 +17,11 @@ package android.net;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.net.dhcp.ConnectivityModuleConnector;
 import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.IDhcpServerCallbacks;
-import android.net.ip.IIpClientCallbacks;
 import android.net.util.SharedLog;
+import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Slog;
 
@@ -32,18 +33,35 @@ import java.io.PrintWriter;
  * Service used to communicate with the network stack, which is running in a separate module.
  * @hide
  */
-public class NetworkStackClient extends NetworkStackClientBase {
+public class TetheringIpClient extends NetworkStackClientBase {
     private static final String TAG = NetworkStackClient.class.getSimpleName();
 
-    private static NetworkStackClient sInstance;
+    private static TetheringIpClient sInstance;
 
     @VisibleForTesting
-    protected NetworkStackClient(@NonNull Dependencies dependencies) {
+    protected TetheringIpClient(@NonNull Dependencies dependencies) {
         super(dependencies, new SharedLog(TAG));
     }
 
-    private NetworkStackClient() {
+    private TetheringIpClient() {
         this(makeDependencies());
+    }
+
+    private static class DependenciesImpl implements Dependencies {
+        @Override
+        public void addToServiceManager(@NonNull IBinder service) {
+            // Expect service is added by NetworkStackClient in system server.
+        }
+
+        @Override
+        public void checkCallerUid() {
+            // TetheringIpClient should only be used for Tethering module.
+        }
+
+        @Override
+        public ConnectivityModuleConnector getConnectivityModuleConnector() {
+            return ConnectivityModuleConnector.getInstance();
+        }
     }
 
     /**
@@ -61,57 +79,11 @@ public class NetworkStackClient extends NetworkStackClientBase {
      *
      * <p>The server will be returned asynchronously through the provided callbacks.
      */
-    // TODO: Move this when tethering module is ready to swtich.
     public void makeDhcpServer(final String ifName, final DhcpServingParamsParcel params,
             final IDhcpServerCallbacks cb) {
         requestConnector(connector -> {
             try {
                 connector.makeDhcpServer(ifName, params, cb);
-            } catch (RemoteException e) {
-                e.rethrowFromSystemServer();
-            }
-        });
-    }
-
-    /**
-     * Create an IpClient on the specified interface.
-     *
-     * <p>The IpClient will be returned asynchronously through the provided callbacks.
-     */
-    public void makeIpClient(String ifName, IIpClientCallbacks cb) {
-        requestConnector(connector -> {
-            try {
-                connector.makeIpClient(ifName, cb);
-            } catch (RemoteException e) {
-                e.rethrowFromSystemServer();
-            }
-        });
-    }
-
-    /**
-     * Create a NetworkMonitor.
-     *
-     * <p>The INetworkMonitor will be returned asynchronously through the provided callbacks.
-     */
-    public void makeNetworkMonitor(Network network, String name, INetworkMonitorCallbacks cb) {
-        requestConnector(connector -> {
-            try {
-                connector.makeNetworkMonitor(network, name, cb);
-            } catch (RemoteException e) {
-                e.rethrowFromSystemServer();
-            }
-        });
-    }
-
-    /**
-     * Get an instance of the IpMemoryStore.
-     *
-     * <p>The IpMemoryStore will be returned asynchronously through the provided callbacks.
-     */
-    public void fetchIpMemoryStore(IIpMemoryStoreCallbacks cb) {
-        requestConnector(connector -> {
-            try {
-                connector.fetchIpMemoryStore(cb);
             } catch (RemoteException e) {
                 e.rethrowFromSystemServer();
             }
