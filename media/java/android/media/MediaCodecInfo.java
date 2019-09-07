@@ -19,6 +19,7 @@ package android.media;
 import static android.media.Utils.intersectSortedDistinctRanges;
 import static android.media.Utils.sortDistinctRanges;
 
+import android.app.ActivityManager;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.TestApi;
@@ -196,7 +197,7 @@ public final class MediaCodecInfo {
     private static final Range<Integer> SIZE_RANGE = Range.create(1, 32768);
     private static final Range<Integer> FRAME_RATE_RANGE = Range.create(0, 960);
     private static final Range<Integer> BITRATE_RANGE = Range.create(0, 500000000);
-    private static final int DEFAULT_MAX_SUPPORTED_INSTANCES = 32;
+    private static final int DEFAULT_MAX_SUPPORTED_INSTANCES = ActivityManager.isLowRamDeviceStatic() ? 16 : 32;
     private static final int MAX_SUPPORTED_INSTANCES_LIMIT = 256;
 
     // found stuff that is not supported by framework (=> this should not happen)
