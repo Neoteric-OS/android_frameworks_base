@@ -24,6 +24,8 @@ java_defaults {
     ],
     static_libs: [
         "androidx.annotation_annotation",
+        "netd_aidl_interface-java",
+        "networkstack-aidl-interfaces-java",
         "tethering-library",
     ],
     manifest: "AndroidManifestBase.xml",
