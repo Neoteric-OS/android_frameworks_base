@@ -60,6 +60,7 @@ import android.net.RouteInfo;
 import android.net.TetherStatsParcel;
 import android.net.UidRange;
 import android.net.UidRangeParcel;
+import android.net.shared.RouteUtils;
 import android.net.util.NetdService;
 import android.os.BatteryStats;
 import android.os.Binder;
@@ -897,26 +898,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
 
         final String ifName = route.getInterface();
         final String dst = route.getDestination().toString();
-        final String nextHop;
+        final String nextHop = RouteUtils.findNextHop(route);
 
-        switch (route.getType()) {
-            case RouteInfo.RTN_UNICAST:
-                if (route.hasGateway()) {
-                    nextHop = route.getGateway().getHostAddress();
-                } else {
-                    nextHop = INetd.NEXTHOP_NONE;
-                }
-                break;
-            case RouteInfo.RTN_UNREACHABLE:
-                nextHop = INetd.NEXTHOP_UNREACHABLE;
-                break;
-            case RouteInfo.RTN_THROW:
-                nextHop = INetd.NEXTHOP_THROW;
-                break;
-            default:
-                nextHop = INetd.NEXTHOP_NONE;
-                break;
-        }
         try {
             if (add) {
                 mNetdService.networkAddRoute(netId, ifName, dst, nextHop);
