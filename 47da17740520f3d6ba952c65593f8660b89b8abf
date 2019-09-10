@@ -46,6 +46,30 @@
       "revId": "47da17740520f3d6ba952c65593f8660b89b8abf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16cc6e8_41b13ac9",
+        "filename": "core/java/android/net/LocalSocketImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-09-10T15:18:49Z",
+      "side": 0,
+      "message": "Ah, I see. I was missing the fact that this is automatically called by OutputStream, but that should have been obvious from the @Override.\n\nChanges in Vpn.java LGTM - it looks like right after calling flush, the code just blocks again on read(), so it\u0027s explicitly synchronizing on the other end of the socket anyway.",
+      "parentUuid": "721696af_fbf661d6",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 48
+      },
+      "revId": "47da17740520f3d6ba952c65593f8660b89b8abf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
