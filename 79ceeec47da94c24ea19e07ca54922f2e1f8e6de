@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7afc3694_d36cced4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-10T10:15:42Z",
+      "side": 1,
+      "message": "Wifi P2P is local only, so it should not be restricted by entitlement.",
+      "parentUuid": "ee098ab2_d114c491",
+      "range": {
+        "startLine": 481,
+        "startChar": 28,
+        "endLine": 481,
+        "endChar": 46
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f89355e_5651f64e",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
@@ -197,6 +221,30 @@
       "writtenOn": "2019-09-10T07:29:42Z",
       "side": 1,
       "message": "How do you plan to order this with respect to the events that update mTetherStates ? I get that this is under mutual exclusion so you\u0027ll always see a state that is consistent, but I don\u0027t think it\u0027s enough here. You actually need to have the state updated before this method runs.\n\nHowever IIUC the state is updated in response to an netd event and this method is called as a response to a broadcast, and either of these can be arbitrarily delayed. How do you make sure the broadcast always comes only after the state has been updated ?\n\nMark : isn\u0027t this the reason the current state is passed inside the intent in handleWifiAction ?",
+      "range": {
+        "startLine": 821,
+        "startChar": 20,
+        "endLine": 821,
+        "endChar": 86
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47181448_03e75110",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-10T10:15:42Z",
+      "side": 1,
+      "message": "The current state in handleWifiAction just indicate the state of wifi. It don\u0027t reflect tethering\u0027s state. But this intent base architecture seems would have race problem. \nIn current architecture, p2p and tethering run at different threads. And they don\u0027t check each other synchronously. If p2p off/on very quickly, it seems below flow may happen.\nwifi p2p enable in wifi\u0027s code --\u003ep2p enable intent--\u003e tethering enable --\u003e\nwifi p2p disable in wifi --\u003e wifi p2p quickly enable in wifi again --\u003ep2p disable intent--\u003e tethering disable --\u003ep2p enable intent--\u003e tethering enable.\n\nFor handleWifiAction(wifi tethering), I plan to replace intent as SoftApCallback. But p2p seems just rely on intent. If p2p also have callback, it would be better to pass p2p\u0027s state via callback.",
+      "parentUuid": "b5f2237c_db4a7bbb",
       "range": {
         "startLine": 821,
         "startChar": 20,
