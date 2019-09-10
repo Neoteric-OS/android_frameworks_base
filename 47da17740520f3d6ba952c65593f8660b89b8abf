@@ -70,6 +70,30 @@
       "revId": "47da17740520f3d6ba952c65593f8660b89b8abf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb9b8bf_a05fb767",
+        "filename": "core/java/android/net/LocalSocketImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-09-10T21:14:52Z",
+      "side": 0,
+      "message": "No problem.  Thanks for the review.",
+      "parentUuid": "f16cc6e8_41b13ac9",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 48
+      },
+      "revId": "47da17740520f3d6ba952c65593f8660b89b8abf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
