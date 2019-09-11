@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "bbe2dc23_a2e1de43",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-09-11T08:53:29Z",
+      "side": 1,
+      "message": "It would not trigger entitlement because P2P don\u0027t call #startTethering to tell EntitlementManager that TETHERING_WIFI_P2P need provisioning. And cellular upstream would be restricted in this case. And it is fine because wifi P2P already claim it is local only(refer Tethering.java line.825) which means wifi P2P would not request upstream(Tethering#upstreamWanted() would return false).\n\nNormal tethering enable flow: Settings -\u003e Tethering#startTethering() -\u003e WifiManager#startSoftap() -\u003e wifi send intent to tell tethering wifi driver is ready.\nHow wifi P2P start tethering ? No #startTethering(), wifi p2p just send the intent to tell tethering p2p driver is ready. Only local only mode is allowed to use this way.",
+      "parentUuid": "a1d7bf81_d3c6c8fe",
+      "range": {
+        "startLine": 481,
+        "startChar": 28,
+        "endLine": 481,
+        "endChar": 46
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f89355e_5651f64e",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
