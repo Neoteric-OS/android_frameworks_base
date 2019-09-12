@@ -16,6 +16,24 @@
       "revId": "1ef5e0529ccbcabefb6682ba9d875390672b70be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191631d5_e618e3fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2019-09-12T22:16:28Z",
+      "side": 1,
+      "message": "Fixed on Madhava\u0027s behalf (because of timezone round trip)\n\nNb. tv development branches are set up to not merge to internal master, so as long as nobody manually cherrypicks, this should be fine either way.",
+      "parentUuid": "2336bf81_f4843cb9",
+      "revId": "1ef5e0529ccbcabefb6682ba9d875390672b70be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
