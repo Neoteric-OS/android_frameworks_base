@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2336bf81_f4843cb9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2019-09-12T21:53:18Z",
+      "side": 1,
+      "message": "add the following to prevent merge conflicts when it reaches internal master:\n\nMerged-In: Iaf83a45206be076858e13d113ba772ed5c59ef60",
+      "revId": "1ef5e0529ccbcabefb6682ba9d875390672b70be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
