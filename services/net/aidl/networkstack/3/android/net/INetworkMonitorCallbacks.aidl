@@ -22,4 +22,5 @@ interface INetworkMonitorCallbacks {
   oneway void notifyPrivateDnsConfigResolved(in android.net.PrivateDnsConfigParcel config);
   oneway void showProvisioningNotification(String action, String packageName);
   oneway void hideProvisioningNotification();
+  oneway void notifyProbeStatusChanged(int probesCompleted, int probesSucceeded);
 }
