@@ -23,11 +23,13 @@ import android.util.Slog;
 import android.util.StatsLog;
 
 import com.android.internal.compat.ChangeReporter;
+import com.android.internal.compat.CompatConfigOverrides;
 import com.android.internal.compat.IPlatformCompat;
 import com.android.internal.util.DumpUtils;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.util.Map;
 
 /**
  * System server internal API for gating and reporting compatibility changes.
@@ -78,6 +80,18 @@ public class PlatformCompat extends IPlatformCompat.Stub {
             return true;
         }
         return isChangeEnabled(changeId, appInfo);
+    }
+
+    @Override
+    public Map setOverrides(CompatConfigOverrides overrides) {
+        return CompatConfig.get().addAppOverrides(
+                getApplicationInfo(overrides.packageName), overrides);
+    }
+
+    @Override
+    public Map clearOverrides(ApplicationInfo applicationInfo) {
+        CompatConfig config = CompatConfig.get();
+        return config.removePackageOverrides(applicationInfo);
     }
 
     @Override

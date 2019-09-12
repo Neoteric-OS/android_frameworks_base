@@ -19,6 +19,7 @@ package android.app;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -26,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.hardware.input.InputManager;
 import android.net.Uri;
@@ -44,6 +46,7 @@ import android.os.SystemClock;
 import android.os.TestLooperManager;
 import android.os.UserHandle;
 import android.util.AndroidRuntimeException;
+import android.util.ArraySet;
 import android.util.Log;
 import android.view.IWindowManager;
 import android.view.InputDevice;
@@ -55,6 +58,8 @@ import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManagerGlobal;
 
+import com.android.internal.compat.CompatConfigOverrides;
+import com.android.internal.compat.IPlatformCompat;
 import com.android.internal.content.ReferrerIntent;
 
 import java.io.File;
@@ -62,6 +67,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Base class for implementing application instrumentation code.  When running
@@ -2194,6 +2201,63 @@ public class Instrumentation {
                 startPerformanceSnapshot();
             }
             onStart();
+        }
+    }
+
+    /**
+     * {@hide}
+     * Sets overrides for compatibility changes in the system server at test time.
+     *
+     * <p>Instead of using this method directly, consider using
+     * {@code android.compat.CompatChangeRule} and its annotations instead.
+     *
+     * @param enabled {@link ArraySet} containing the compat changes to be enabled.
+     * @param disabled {@link ArraySet} containing the compat changes to be disabled.
+     *
+     * @return {@link Map} containing the compat changes config prior to setting the overrides.
+     */
+    @TestApi
+    public Map<Long, Boolean> setCompatChanges(
+            ArraySet<Long> enabled, ArraySet<Long> disabled) {
+        ApplicationInfo applicationInfo = getTargetContext().getApplicationInfo();
+        IPlatformCompat platformCompat = IPlatformCompat.Stub
+                .asInterface(ServiceManager.getService(Context.PLATFORM_COMPAT_SERVICE));
+        if (platformCompat == null) {
+            throw new IllegalStateException("Could not get IPlatformCompat service!");
+        }
+        Map<Long, Boolean> previousConfig;
+        try {
+            previousConfig = platformCompat.setOverrides(
+                    new CompatConfigOverrides(enabled, disabled, applicationInfo.packageName));
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+        return previousConfig;
+    }
+
+    /**
+     * {@hide}
+     * Removes overrides set at test time. Instead of using this method directly, consider using
+     * {@code android.compat.CompatChangeRule} and its annotations instead.
+     *
+     */
+    @TestApi
+    public void clearCompatChanges(Map<Long, Boolean> oldState) {
+        ApplicationInfo applicationInfo = getTargetContext().getApplicationInfo();
+        IPlatformCompat platformCompat = IPlatformCompat.Stub.asInterface(ServiceManager
+                .getService(Context.PLATFORM_COMPAT_SERVICE));
+        try {
+            Map<Long, Boolean> newState = platformCompat.clearOverrides(applicationInfo);
+            for (Long change: newState.keySet()) {
+                if (!oldState.containsKey(change)) {
+                    continue;
+                } else if (!Objects.equals(oldState.get(change), newState.get(change))) {
+                    throw new IllegalStateException("Change id " + change + " is different! Was "
+                            + oldState.get(change) + " and now is " + newState.get(change) + ".");
+                }
+            }
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 
