@@ -215,6 +215,7 @@ cc_library_shared {
         "fd_utils.cpp",
         "android_hardware_input_InputWindowHandle.cpp",
         "android_hardware_input_InputApplicationHandle.cpp",
+        "com_android_internal_os_KernelCpuUidBpfMapReader.cpp",
     ],
 
     include_dirs: [
@@ -304,6 +305,7 @@ cc_library_shared {
         "libdl_android",
         "libstatslog",
         "server_configurable_flags",
+        "libtimeinstate",
     ],
 
     generated_sources: ["android_util_StatsLogInternal.cpp"],
