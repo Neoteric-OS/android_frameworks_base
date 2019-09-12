@@ -229,6 +229,7 @@ extern int register_com_android_internal_content_NativeLibraryHelper(JNIEnv *env
 extern int register_com_android_internal_os_AtomicDirectory(JNIEnv *env);
 extern int register_com_android_internal_os_ClassLoaderFactory(JNIEnv* env);
 extern int register_com_android_internal_os_FuseAppLoop(JNIEnv* env);
+extern int register_com_android_internal_os_KernelCpuUidBpfMapReader(JNIEnv *env);
 extern int register_com_android_internal_os_Zygote(JNIEnv *env);
 extern int register_com_android_internal_os_ZygoteInit(JNIEnv *env);
 extern int register_com_android_internal_util_VirtualRefBasePtr(JNIEnv *env);
@@ -1639,6 +1640,7 @@ static const RegJNIRec gRegJNI[] = {
     REG_JNI(register_com_android_internal_content_NativeLibraryHelper),
     REG_JNI(register_com_android_internal_os_AtomicDirectory),
     REG_JNI(register_com_android_internal_os_FuseAppLoop),
+    REG_JNI(register_com_android_internal_os_KernelCpuUidBpfMapReader),
 };
 
 /*
