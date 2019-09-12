@@ -317,6 +317,11 @@ package android.app {
     field public static final String COLUMN_MEDIASTORE_URI = "mediastore_uri";
   }
 
+  public class Instrumentation {
+    method public void clearCompatChanges(java.util.Map<java.lang.Long,java.lang.Boolean>);
+    method public java.util.Map<java.lang.Long,java.lang.Boolean> setCompatChanges(android.util.ArraySet<java.lang.Long>, android.util.ArraySet<java.lang.Long>);
+  }
+
   public final class NotificationChannel implements android.os.Parcelable {
     method public boolean isImportanceLockedByCriticalDeviceFunction();
     method public boolean isImportanceLockedByOEM();
