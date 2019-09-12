@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "d4bc3ef1_27a4be69",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-09-12T08:38:04Z",
+      "side": 1,
+      "message": "Normally, this type is not invoked from startTethering. It should not notify entitlement app, there is nothing to shown for this on status bar.",
+      "parentUuid": "ee098ab2_d114c491",
+      "range": {
+        "startLine": 481,
+        "startChar": 28,
+        "endLine": 481,
+        "endChar": 46
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f89355e_5651f64e",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
@@ -117,6 +141,30 @@
       "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e08697_d9f5ec22",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-09-12T08:38:04Z",
+      "side": 1,
+      "message": "move to TetheringConfiguration.",
+      "parentUuid": "0f89355e_5651f64e",
+      "range": {
+        "startLine": 207,
+        "startChar": 20,
+        "endLine": 207,
+        "endChar": 45
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "95b4d957_8dce276e",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-09-12T08:38:04Z",
+      "side": 1,
+      "message": "move to TetheringConfiguration",
+      "parentUuid": "fd5e9720_0c9cdb8b",
+      "range": {
+        "startLine": 239,
+        "startChar": 21,
+        "endLine": 239,
+        "endChar": 44
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "612099d7_b00e880c",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
@@ -163,6 +235,30 @@
       "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7b1614_8f37cb2b",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-09-12T08:38:04Z",
+      "side": 1,
+      "message": "move to TetheringConfiguration and use a function named isWifiP2pLegacyTetheringMode().",
+      "parentUuid": "612099d7_b00e880c",
+      "range": {
+        "startLine": 241,
+        "startChar": 12,
+        "endLine": 241,
+        "endChar": 37
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +308,54 @@
     },
     {
       "key": {
+        "uuid": "2486e553_c5aa1013",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-09-12T08:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4a254af_fe928bc8",
+      "range": {
+        "startLine": 308,
+        "startChar": 19,
+        "endLine": 308,
+        "endChar": 28
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d089ce26_f38ec631",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-09-12T08:38:04Z",
+      "side": 1,
+      "message": "I am not sure what is protected broadcast, but this is claimed as a SDK constant.\n\n    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)\n    public static final String WIFI_P2P_CONNECTION_CHANGED_ACTION \u003d\n        \"android.net.wifi.p2p.CONNECTION_STATE_CHANGE\";",
+      "parentUuid": "af5cf5c0_77cbe686",
+      "range": {
+        "startLine": 308,
+        "startChar": 44,
+        "endLine": 308,
+        "endChar": 78
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37996ebd_44f29c53",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
@@ -235,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "9f3883e6_5b75aa9c",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-09-12T08:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37996ebd_44f29c53",
+      "range": {
+        "startLine": 808,
+        "startChar": 12,
+        "endLine": 808,
+        "endChar": 50
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e6455d_0b0bab54",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
@@ -246,6 +414,30 @@
       "writtenOn": "2019-09-10T07:29:42Z",
       "side": 1,
       "message": "For my education, what is the difference between p2pInfo.isGroupOwner and group.isGroupOwner() ?",
+      "range": {
+        "startLine": 815,
+        "startChar": 34,
+        "endLine": 815,
+        "endChar": 54
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0034058f_1eec7ed9",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-09-12T08:38:04Z",
+      "side": 1,
+      "message": "The only different is the p2p info is cleared upon leaving a  group. (or say, the life time follows the group).\nIn other words, when I got a disconnection broadcast, p2pInfo.isGroupOwner is always false, but group is still valid for detecting whether this device is group owner.",
+      "parentUuid": "45e6455d_0b0bab54",
       "range": {
         "startLine": 815,
         "startChar": 34,
@@ -328,6 +520,30 @@
     },
     {
       "key": {
+        "uuid": "029d4c10_54dc9d06",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-09-12T08:38:04Z",
+      "side": 1,
+      "message": "When framework handles group formed event, it ensures group ifname is not null.\nThis ifname is generated from native daemon (supplicant) with an incremental index, ex. p2p-p2p0-1.\nThis index is reset only when wifi is turned off via airplane mode.",
+      "parentUuid": "da3920d3_e402b7fb",
+      "range": {
+        "startLine": 825,
+        "startChar": 56,
+        "endLine": 825,
+        "endChar": 68
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d078f3c2_6717cc51",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
@@ -348,6 +564,30 @@
       "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2b431c_30712fe5",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-09-12T08:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d078f3c2_6717cc51",
+      "range": {
+        "startLine": 877,
+        "startChar": 29,
+        "endLine": 877,
+        "endChar": 43
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -374,6 +614,30 @@
     },
     {
       "key": {
+        "uuid": "b16ba679_a16f321b",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-09-12T08:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e74ac566_b021bba4",
+      "range": {
+        "startLine": 1082,
+        "startChar": 11,
+        "endLine": 1082,
+        "endChar": 15
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3269831d_004eeaa4",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 7
@@ -397,6 +661,30 @@
     },
     {
       "key": {
+        "uuid": "e1dd5b02_2d232717",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-09-12T08:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3269831d_004eeaa4",
+      "range": {
+        "startLine": 1092,
+        "startChar": 11,
+        "endLine": 1092,
+        "endChar": 15
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9947a2fb_24b3bb9a",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 7
@@ -417,6 +705,30 @@
       "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3b2340_e9c88a86",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-09-12T08:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9947a2fb_24b3bb9a",
+      "range": {
+        "startLine": 1101,
+        "startChar": 60,
+        "endLine": 1101,
+        "endChar": 78
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
