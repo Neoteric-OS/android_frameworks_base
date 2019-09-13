@@ -1767,8 +1767,17 @@ class AlarmManagerService extends SystemService {
                                 + ", callingPackage: " + callingPackage;
                 mHandler.obtainMessage(AlarmHandler.UNREGISTER_CANCEL_LISTENER,
                         operation).sendToTarget();
-                Slog.w(TAG, errorMsg);
-                throw new IllegalStateException(errorMsg);
+                Slog.e(TAG, errorMsg);
+		long identity = Binder.clearCallingIdentity();
+                try {
+                    ActivityManager.getService().killUid(UserHandle.getAppId(callingUid)
+                            , UserHandle.getUserId(callingUid), "Too many Alarm set to SYSTEM");
+                    removeLocked(callingUid);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
             }
             setImplLocked(type, triggerAtTime, triggerElapsed, windowLength, maxElapsed,
                     interval, operation, directReceiver, listenerTag, flags, true, workSource,
