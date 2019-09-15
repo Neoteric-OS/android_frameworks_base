@@ -16,6 +16,7 @@
 
 
 #include <android/multinetwork.h>
+#include <DnsClient.h>
 #include <errno.h>
 #include <NetdClient.h>    // the functions that communicate with netd
 #include <resolv_netid.h>  // android_getaddrinfofornet()
@@ -91,6 +92,7 @@ int android_res_nquery(net_handle_t network, const char *dname,
         return -ENONET;
     }
 
+    netid = getNetworkForResolv(netid);
     return resNetworkQuery(netid, dname, ns_class, ns_type, flags);
 }
 
@@ -105,6 +107,7 @@ int android_res_nsend(net_handle_t network, const uint8_t *msg, size_t msglen,
         return -ENONET;
     }
 
+    netid = getNetworkForResolv(netid);
     return resNetworkSend(netid, msg, msglen, flags);
 }
 

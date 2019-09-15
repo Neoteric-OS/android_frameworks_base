@@ -36,6 +36,7 @@
 #include <nativehelper/JNIHelp.h>
 #include <nativehelper/ScopedLocalRef.h>
 
+#include "DnsClient.h"
 #include "NetdClient.h"
 #include "core_jni_helpers.h"
 #include "jni.h"
@@ -246,6 +247,7 @@ static jobject android_net_utils_resNetworkQuery(JNIEnv *env, jobject thiz, jint
     std::vector<char> queryname(byteCountUTF8 + 1, 0);
 
     env->GetStringUTFRegion(dname, 0, javaCharsCount, queryname.data());
+    netId = getNetworkForResolv(netId);
     int fd = resNetworkQuery(netId, queryname.data(), ns_class, ns_type, flags);
 
     if (fd < 0) {
@@ -261,6 +263,7 @@ static jobject android_net_utils_resNetworkSend(JNIEnv *env, jobject thiz, jint 
     uint8_t data[MAXCMDSIZE];
 
     checkLenAndCopy(env, msg, msgLen, data);
+    netId = getNetworkForResolv(netId);
     int fd = resNetworkSend(netId, data, msgLen, flags);
 
     if (fd < 0) {
@@ -306,6 +309,7 @@ static void android_net_utils_resNetworkCancel(JNIEnv *env, jobject thiz, jobjec
 
 static jobject android_net_utils_getDnsNetwork(JNIEnv *env, jobject thiz) {
     unsigned dnsNetId = 0;
+    dnsNetId = getNetworkForResolv(dnsNetId);
     if (int res = getNetworkForDns(&dnsNetId) < 0) {
         throwErrnoException(env, "getDnsNetId", -res);
         return nullptr;

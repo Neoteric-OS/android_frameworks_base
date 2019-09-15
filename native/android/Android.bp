@@ -68,6 +68,7 @@ cc_library_shared {
         "libsensor",
         "libandroid_runtime",
         "libminikin",
+        "libdns_client",
         "libnetd_client",
         "libhwui",
         "libxml2",
@@ -99,7 +100,10 @@ cc_library_shared {
     defaults: ["libandroid_defaults"],
     srcs: ["net.c"],
 
-    shared_libs: ["libnetd_client"],
+    shared_libs: [
+        "libdns_client",
+        "libnetd_client",
+    ],
 
     include_dirs: ["bionic/libc/dns/include"],
 }
