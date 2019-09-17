@@ -538,7 +538,7 @@ final class WiredAccessoryManager implements WiredAccessoryCallbacks {
             synchronized (mLock) {
                 int mask = maskAndState.first;
                 int state = maskAndState.second;
-                updateLocked(name, mHeadsetState | (mask & state) & ~(mask & ~state));
+                updateLocked(name, (mHeadsetState | (mask & state)) & ~(mask & ~state));
                 return;
             }
         }
