@@ -16,6 +16,8 @@
 package com.android.server;
 
 import android.annotation.Nullable;
+import android.annotation.StringDef;
+import android.os.FileUtils;
 import android.os.UEventObserver;
 import android.util.ArrayMap;
 import android.util.Slog;
@@ -23,6 +25,7 @@ import android.util.Slog;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -85,11 +88,75 @@ public abstract class ExtconUEventObserver extends UEventObserver {
         }
     }
 
+
     /** An External Connection to watch. */
     public static final class ExtconInfo {
+
+        /* Copied from drivers/extcon/extcon.c */
+
+        /* USB external connector */
+        public static final String EXTCON_USB = "USB";
+        public static final String EXTCON_USB_HOST = "USB-HOST";
+
+        /* Charger external connector */
+        public static final String EXTCON_TA = "TA";
+        public static final String EXTCON_FAST_CHARGER = "FAST-CHARGER";
+        public static final String EXTCON_SLOW_CHARGER = "SLOW-CHARGER";
+        public static final String EXTCON_CHARGE_DOWNSTREAM = "CHARGE-DOWNSTREAM";
+
+        /* Audio/Video external connector */
+        public static final String EXTCON_LINE_IN = "LINE-IN";
+        public static final String EXTCON_LINE_OUT = "LINE-OUT";
+        public static final String EXTCON_MICROPHONE = "MICROPHONE";
+        public static final String EXTCON_HEADPHONE = "HEADPHONE";
+
+        public static final String EXTCON_HDMI = "HDMI";
+        public static final String EXTCON_MHL = "MHL";
+        public static final String EXTCON_DVI = "DVI";
+        public static final String EXTCON_VGA = "VGA";
+        public static final String EXTCON_SPDIF_IN = "SPDIF-IN";
+        public static final String EXTCON_SPDIF_OUT = "SPDIF-OUT";
+        public static final String EXTCON_VIDEO_IN = "VIDEO-IN";
+        public static final String EXTCON_VIDEO_OUT = "VIDEO-OUT";
+
+        /* Etc external connector */
+        public static final String EXTCON_DOCK = "DOCK";
+        public static final String EXTCON_JIG = "JIG";
+        public static final String EXTCON_MECHANICAL = "MECHANICAL";
+
+        @StringDef({
+                EXTCON_USB,
+                EXTCON_USB_HOST,
+                EXTCON_TA,
+                EXTCON_FAST_CHARGER,
+                EXTCON_SLOW_CHARGER,
+                EXTCON_CHARGE_DOWNSTREAM,
+                EXTCON_LINE_IN,
+                EXTCON_LINE_OUT,
+                EXTCON_MICROPHONE,
+                EXTCON_HEADPHONE,
+                EXTCON_HDMI,
+                EXTCON_MHL,
+                EXTCON_DVI,
+                EXTCON_VGA,
+                EXTCON_SPDIF_IN,
+                EXTCON_SPDIF_OUT,
+                EXTCON_VIDEO_IN,
+                EXTCON_VIDEO_OUT,
+                EXTCON_DOCK,
+                EXTCON_JIG,
+                EXTCON_MECHANICAL,
+        })
+        public @interface ExtconDeviceType {
+        }
+
         private static final String TAG = "ExtconInfo";
 
-        /** Returns a new list of all external connections whose name matches {@code regex}. */
+        /**
+         * Returns a new list of all external connections whose name matches {@code regex}.
+         *
+         * @Deprecated
+         */
         public static List<ExtconInfo> getExtconInfos(@Nullable String regex) {
             if (!extconExists()) {
                 return new ArrayList<>(0);  // Always return a new list.
@@ -112,6 +179,49 @@ public abstract class ExtconUEventObserver extends UEventObserver {
                         if (LOG) Slog.d(TAG, name + " matches " + regex);
                     } else {
                         if (LOG) Slog.d(TAG, name + " does not match " + regex);
+                    }
+                }
+                return list;
+            }
+        }
+
+        /**
+         * Returns a new list of all external connections for the types given.
+         */
+        public static List<ExtconInfo> getExtconInfoForTypes(
+                @ExtconDeviceType String[] extconTypes) {
+            if (!extconExists()) {
+                return new ArrayList<>(0);  // Always return a new list.
+            }
+            File extconDir = new File("/sys/class/extcon");
+            File[] extconNodes = extconDir.listFiles();
+            if (extconNodes == null) {
+                Slog.wtf(TAG, extconDir + " exists " + extconDir.exists() + " isDir "
+                        + extconDir.isDirectory()
+                        + " but listFiles returns null. "
+                        + SELINUX_POLICIES_NEED_TO_BE_CHANGED);
+                return new ArrayList<>(0);  // Always return a new list.
+            } else {
+                ArrayList list = new ArrayList(extconNodes.length);
+                for (File extconNode : extconNodes) {
+                    String name = extconNode.getName();
+                    File cableNameFile = new File(extconNode, "cable.0/name");
+                    if (!cableNameFile.exists()) {
+                        Slog.w(TAG, extconDir + " exists but there is not a cable.0/name file");
+                        continue;
+                    }
+
+                    String dev_type = null;
+                    try {
+                        dev_type = FileUtils.readTextFile(cableNameFile, 0, null);
+                    } catch (IOException e) {
+                        Slog.w(TAG, "Unable to find extcon cable type reading"
+                                + cableNameFile.getAbsolutePath(), e);
+                    }
+                    if (Arrays.binarySearch(extconTypes, dev_type) >= 0) {
+                        ExtconInfo uei = new ExtconInfo(name);
+                        list.add(uei);
+                        if (LOG) Slog.d(TAG, name + " is type  " + dev_type);
                     }
                 }
                 return list;

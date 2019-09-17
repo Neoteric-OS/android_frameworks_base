@@ -16,33 +16,33 @@
 
 package com.android.server;
 
+import static com.android.server.input.InputManagerService.SW_HEADPHONE_INSERT;
+import static com.android.server.input.InputManagerService.SW_HEADPHONE_INSERT_BIT;
+import static com.android.server.input.InputManagerService.SW_LINEOUT_INSERT;
+import static com.android.server.input.InputManagerService.SW_LINEOUT_INSERT_BIT;
+import static com.android.server.input.InputManagerService.SW_MICROPHONE_INSERT;
+import static com.android.server.input.InputManagerService.SW_MICROPHONE_INSERT_BIT;
+
 import android.content.Context;
+import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.UEventObserver;
+import android.util.Log;
 import android.util.Pair;
 import android.util.Slog;
-import android.media.AudioManager;
-import android.util.Log;
 import android.view.InputDevice;
 
 import com.android.internal.R;
 import com.android.server.input.InputManagerService;
 import com.android.server.input.InputManagerService.WiredAccessoryCallbacks;
 
-import static com.android.server.input.InputManagerService.SW_HEADPHONE_INSERT;
-import static com.android.server.input.InputManagerService.SW_MICROPHONE_INSERT;
-import static com.android.server.input.InputManagerService.SW_LINEOUT_INSERT;
-import static com.android.server.input.InputManagerService.SW_HEADPHONE_INSERT_BIT;
-import static com.android.server.input.InputManagerService.SW_MICROPHONE_INSERT_BIT;
-import static com.android.server.input.InputManagerService.SW_LINEOUT_INSERT_BIT;
-
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -490,7 +490,13 @@ final class WiredAccessoryManager implements WiredAccessoryCallbacks {
         private final List<ExtconInfo> mExtconInfos;
 
         WiredAccessoryExtconObserver() {
-            mExtconInfos = ExtconInfo.getExtconInfos(".*audio.*");
+            mExtconInfos = ExtconInfo.getExtconInfoForTypes(new String[]{
+                    ExtconInfo.EXTCON_HEADPHONE,
+                    ExtconInfo.EXTCON_MICROPHONE,
+                    ExtconInfo.EXTCON_HDMI,
+                    ExtconInfo.EXTCON_LINE_OUT,
+
+            });
 
         }
 
@@ -521,15 +527,15 @@ final class WiredAccessoryManager implements WiredAccessoryCallbacks {
         @Override
         public Pair<Integer, Integer> parseState(ExtconInfo extconInfo, String status) {
             if (LOG) Slog.v(TAG, "status  " + status);
-            int []maskAndState = {0,0};
+            int[] maskAndState = {0, 0};
             // extcon event state changes from kernel4.9
             // new state will be like STATE=MICROPHONE=1\nHEADPHONE=0
-            updateBit(maskAndState, BIT_HEADSET_NO_MIC, status, "HEADPHONE") ;
-            updateBit(maskAndState, BIT_HEADSET, status,"MICROPHONE") ;
-            updateBit(maskAndState, BIT_HDMI_AUDIO, status,"HDMI") ;
-            updateBit(maskAndState, BIT_LINEOUT, status,"LINE-OUT") ;
+            updateBit(maskAndState, BIT_HEADSET_NO_MIC, status, "HEADPHONE");
+            updateBit(maskAndState, BIT_HEADSET, status, "MICROPHONE");
+            updateBit(maskAndState, BIT_HDMI_AUDIO, status, "HDMI");
+            updateBit(maskAndState, BIT_LINEOUT, status, "LINE-OUT");
             if (LOG) Slog.v(TAG, "mask " + maskAndState[0] + " state " + maskAndState[1]);
-            return Pair.create(maskAndState[0],maskAndState[1]);
+            return Pair.create(maskAndState[0], maskAndState[1]);
         }
 
         @Override
