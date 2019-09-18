@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72c4e5ab_88171b7f",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-18T07:05:30Z",
+      "side": 0,
+      "message": "This is now unused then ? It doesn\u0027t seem to have a mirror in the new files.",
+      "range": {
+        "startLine": 76,
+        "startChar": 11,
+        "endLine": 76,
+        "endChar": 24
+      },
+      "revId": "4339cf3402ce579b470eebd611601f85d408cf04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
