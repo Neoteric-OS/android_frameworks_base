@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49938f32_df20aa7b",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-18T12:24:57Z",
+      "side": 1,
+      "message": "28 is Android P. Ultimately this should probably be 30 (or whatever the SDK version is of the first platform supporting this), but for now it should be 29 or maybe \"current\" ?\n\nLikewise for the target",
+      "range": {
+        "startLine": 22,
+        "startChar": 37,
+        "endLine": 22,
+        "endChar": 39
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e011ad3e_e3bb87ba",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-18T12:24:57Z",
+      "side": 1,
+      "message": "Question (mostly for Rémi) : the networkstack process is already persistent by virtue of being declared persistent in the NetworkStack manifest. Do you think we should list this here (which means it has to stay in sync, but someone reading this sees it\u0027s persistent), or that we shouldn\u0027t (which means it\u0027s not clear immediately here, but at least there is not duplication) ?",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c50530b4_c899c266",
+        "filename": "packages/Tethering/AndroidManifestBase.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-18T12:24:57Z",
+      "side": 1,
+      "message": "Are you sure Tethering needs to be direct boot aware ? I don\u0027t think tethering can be turned on before storage is unlocked first after boot.\nhttps://developer.android.com/training/articles/direct-boot",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce24adef_1670d317",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-18T12:24:57Z",
+      "side": 1,
+      "message": "Do you know on what thread this runs ?\n\nRight now because it\u0027s not used you can\u0027t do anything wrong with this obviously, but since it\u0027s not final, not volatile and not locked any use of it must either be on the same thread or be prepared to never observe this write.",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 18
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
