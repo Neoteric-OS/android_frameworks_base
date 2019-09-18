@@ -2022,7 +2022,7 @@ public class ResolverActivity extends Activity {
 
         public final View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
-            if (view == null) {
+            if (view == null || view.getTag() == null) {
                 view = createView(parent);
             }
             onBindView(view, getItem(position));
