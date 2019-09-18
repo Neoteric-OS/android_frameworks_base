@@ -74,6 +74,11 @@ final class DelayedMessageBuffer {
         }
     }
 
+    void clearAllMessages(){
+        HdmiLogger.debug("DelayedMessage : Remove all buffered " + mBuffer.size() + "messages before Standby");
+        mBuffer.clear();
+    }
+
     boolean isBuffered(int opcode) {
         for (HdmiCecMessage message : mBuffer) {
             if (message.getOpcode() == opcode) {

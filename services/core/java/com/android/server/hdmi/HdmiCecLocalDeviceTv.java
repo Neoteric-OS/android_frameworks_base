@@ -454,18 +454,23 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         int physicalAddress = HdmiUtils.twoBytesToInt(message.getParams());
         HdmiDeviceInfo info = getCecDeviceInfo(logicalAddress);
         if (info == null) {
-            if (!handleNewDeviceAtTheTailOfActivePath(physicalAddress)) {
+            if (!handleNewDeviceAtTheTailOfActivePath(physicalAddress) && !isPowerStandbyOrTransient()) {
                 HdmiLogger.debug("Device info %X not found; buffering the command", logicalAddress);
                 mDelayedMessageBuffer.add(message);
+            } else{
+                mService.maySendFeatureAbortCommand(message, Constants.ABORT_REFUSED);
             }
         } else if (isInputReady(info.getId())
                 || info.getDeviceType() == HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM) {
             updateDevicePowerStatus(logicalAddress, HdmiControlManager.POWER_STATUS_ON);
             ActiveSource activeSource = ActiveSource.of(logicalAddress, physicalAddress);
             ActiveSourceHandler.create(this, null).process(activeSource, info.getDeviceType());
-        } else {
+        } else if (!isPowerStandbyOrTransient()){
             HdmiLogger.debug("Input not ready for device: %X; buffering the command", info.getId());
             mDelayedMessageBuffer.add(message);
+        } else {
+            HdmiLogger.debug("Input not ready for device: %X; Not buffering due to PowerStatus", info.getId());
+            mService.maySendFeatureAbortCommand(message, Constants.ABORT_REFUSED);
         }
         return true;
     }
@@ -1070,8 +1075,12 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         if (!canStartArcUpdateAction(message.getSource(), true)) {
             HdmiDeviceInfo avrDeviceInfo = getAvrDeviceInfo();
             if (avrDeviceInfo == null) {
-                // AVR may not have been discovered yet. Delay the message processing.
-                mDelayedMessageBuffer.add(message);
+                if(!isPowerStandbyOrTransient()){
+                    // AVR may not have been discovered yet. Delay the message processing.
+                    mDelayedMessageBuffer.add(message);
+                } else {
+                    mService.maySendFeatureAbortCommand(message, Constants.ABORT_REFUSED); 
+                }
                 return true;
             }
             mService.maySendFeatureAbortCommand(message, Constants.ABORT_REFUSED);
@@ -1132,8 +1141,12 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         boolean systemAudioStatus = HdmiUtils.parseCommandParamSystemAudioStatus(message);
         if (!isMessageForSystemAudio(message)) {
             if (getAvrDeviceInfo() == null) {
-                // AVR may not have been discovered yet. Delay the message processing.
-                mDelayedMessageBuffer.add(message);
+                if(!isPowerStandbyOrTransient()){
+                    // AVR may not have been discovered yet. Delay the message processing.
+                    mDelayedMessageBuffer.add(message);
+                } else {
+                    mService.maySendFeatureAbortCommand(message, Constants.ABORT_REFUSED);
+                }
             } else {
                 HdmiLogger.warning("Invalid <Set System Audio Mode> message:" + message);
                 mService.maySendFeatureAbortCommand(message, Constants.ABORT_REFUSED);
@@ -1623,6 +1636,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         getActiveSource().invalidate();
         setActivePath(Constants.INVALID_PHYSICAL_ADDRESS);
         checkIfPendingActionsCleared();
+        mDelayedMessageBuffer.clearAllMessages();
     }
 
     @ServiceThreadOnly
