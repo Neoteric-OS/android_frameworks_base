@@ -1774,7 +1774,14 @@ public class AudioService extends IAudioService.Stub
             }
         } else {
             // convert one UI step (+/-1) into a number of internal units on the stream alias
-            step = rescaleIndex(10, streamType, streamTypeAlias);
+            // rescale source step (10) because min index is not always 0
+            int srcRange =
+                mStreamStates[streamType].getMaxIndex() - mStreamStates[streamType].getMinIndex();
+            int dstRange = mStreamStates[streamTypeAlias].getMaxIndex()
+                - mStreamStates[streamTypeAlias].getMinIndex();
+            int rescaleStep = 10 + mStreamStates[streamType].getMinIndex()
+                - (mStreamStates[streamTypeAlias].getMinIndex() * srcRange + dstRange / 2) / dstRange;
+            step = rescaleIndex(rescaleStep, streamType, streamTypeAlias);
         }
 
         // If either the client forces allowing ringer modes for this adjustment,
