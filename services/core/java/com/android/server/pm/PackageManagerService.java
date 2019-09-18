@@ -6098,9 +6098,14 @@ public class PackageManagerService extends IPackageManager.Stub
 
     @Override
     public void addOnPermissionsChangeListener(IOnPermissionsChangeListener listener) {
-        mContext.enforceCallingOrSelfPermission(
+        final long identity = Binder.clearCallingIdentity();
+        try {
+            mContext.enforceCallingOrSelfPermission(
                 Manifest.permission.OBSERVE_GRANT_REVOKE_PERMISSIONS,
                 "addOnPermissionsChangeListener");
+        } finally {
+            Binder.restoreCallingIdentity(identity);
+        }
 
         synchronized (mPackages) {
             mOnPermissionChangeListeners.addListenerLocked(listener);
