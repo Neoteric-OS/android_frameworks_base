@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed930291_a5ae7456",
+        "filename": "services/core/java/com/android/server/am/OomAdjuster.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2019-09-19T16:24:40Z",
+      "side": 1,
+      "message": "Might need add below after line 211 here, since if this process is gone, the other app\u0027s procstate/adj could get impacted due to this\n\nif (oomAdjAll) {\n    updateOomAdjLocked(oomAdjReason);\n}",
+      "revId": "bea3b2d0753bcf0513fc2534f3d7ed678adfb828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
