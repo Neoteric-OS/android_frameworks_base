@@ -186,6 +186,7 @@ final class FieldClassificationStrategy {
                     if (sVerbose) Slog.v(TAG, "onServiceDisconnected(): " + name);
                     synchronized (mLock) {
                         mRemoteService = null;
+                        mServiceConnection = null;
                     }
                 }
 
@@ -194,6 +195,7 @@ final class FieldClassificationStrategy {
                     if (sVerbose) Slog.v(TAG, "onBindingDied(): " + name);
                     synchronized (mLock) {
                         mRemoteService = null;
+                        mServiceConnection = null;
                     }
                 }
 
@@ -202,6 +204,7 @@ final class FieldClassificationStrategy {
                     if (sVerbose) Slog.v(TAG, "onNullBinding(): " + name);
                     synchronized (mLock) {
                         mRemoteService = null;
+                        mServiceConnection = null;
                     }
                 }
             };
