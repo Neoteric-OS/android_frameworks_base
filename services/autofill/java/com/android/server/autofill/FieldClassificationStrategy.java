@@ -156,7 +156,7 @@ final class FieldClassificationStrategy {
             if (sVerbose) Slog.v(TAG, "creating connection");
 
             // Create the connection
-            mServiceConnection = new ServiceConnection() {
+            final ServiceConnection connection = new ServiceConnection() {
                 @Override
                 public void onServiceConnected(ComponentName name, IBinder service) {
                     if (sVerbose) Slog.v(TAG, "onServiceConnected(): " + name);
@@ -213,9 +213,12 @@ final class FieldClassificationStrategy {
                 intent.setComponent(component);
                 final long token = Binder.clearCallingIdentity();
                 try {
-                    mContext.bindServiceAsUser(intent, mServiceConnection, Context.BIND_AUTO_CREATE,
-                            UserHandle.of(mUserId));
-                    if (sVerbose) Slog.v(TAG, "bound");
+                    boolean bound = mContext.bindServiceAsUser(intent, mServiceConnection,
+                            Context.BIND_AUTO_CREATE, UserHandle.of(mUserId));
+                    if (bound) {
+                        mServiceConnection = connection;
+                    }
+                    if (sVerbose) Slog.v(TAG, bound ? "bound" : "unbound");
                 } finally {
                     Binder.restoreCallingIdentity(token);
                 }

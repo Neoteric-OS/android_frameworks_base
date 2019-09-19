@@ -555,7 +555,11 @@ public final class AutofillManagerService
         final FieldClassificationStrategy strategy =
                 new FieldClassificationStrategy(getContext(), UserHandle.USER_CURRENT);
 
-        strategy.calculateScores(callback, Arrays.asList(AutofillValue.forText(value1)),
+        strategy.calculateScores(new RemoteCallback((result) -> {
+                    callback.sendResult(result);
+                    // Release the connection when we are done
+                    strategy.reset();
+                }), Arrays.asList(AutofillValue.forText(value1)),
                 new String[] { value2 }, new String[] { null }, algorithmName, null, null, null);
     }
 
