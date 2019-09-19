@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffe918ed_d29fd40f",
+        "filename": "tests/FlickerTests/src/com/android/server/wm/flicker/OpenAppColdTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2019-09-19T18:00:10Z",
+      "side": 1,
+      "message": "is tapl available now in aosp? can we get the launcher info from there?",
+      "range": {
+        "startLine": 79,
+        "startChar": 25,
+        "endLine": 79,
+        "endChar": 56
+      },
+      "revId": "527ee2e14580b7aa76a8408d56b9ef526b9659e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
