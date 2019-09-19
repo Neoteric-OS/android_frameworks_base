@@ -208,6 +208,13 @@ public final class OomAdjuster {
     @GuardedBy("mService")
     boolean updateOomAdjLocked(ProcessRecord app, boolean oomAdjAll,
             String oomAdjReason) {
+        if (app == null || app.thread == null) {
+            if (oomAdjAll) {
+                updateOomAdjLocked(oomAdjReason);
+            }
+            return false;
+        }
+
         final ProcessRecord TOP_APP = mService.getTopAppLocked();
         final boolean wasCached = app.cached;
 
