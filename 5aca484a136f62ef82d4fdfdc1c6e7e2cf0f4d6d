@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "04786d57_0f8fa3aa",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-09-19T06:14:54Z",
+      "side": 1,
+      "message": "I am sorry that the comment misled you. What I want to explain in the comment is why we need to overwrite even though the target is found in the map. Let me modify the comment.",
+      "parentUuid": "f2290352_87a06909",
+      "range": {
+        "startLine": 282,
+        "startChar": 11,
+        "endLine": 282,
+        "endChar": 82
+      },
+      "revId": "5aca484a136f62ef82d4fdfdc1c6e7e2cf0f4d6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6adb27e3_115f4778",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e93a7e72_1402e467",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-09-19T06:14:54Z",
+      "side": 1,
+      "message": "Modified the comment.",
+      "parentUuid": "6adb27e3_115f4778",
+      "range": {
+        "startLine": 284,
+        "startChar": 16,
+        "endLine": 284,
+        "endChar": 18
+      },
+      "revId": "5aca484a136f62ef82d4fdfdc1c6e7e2cf0f4d6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "149b8b71_aea0d70e",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2019-09-18T08:21:49Z",
       "side": 1,
       "message": "Style : we prefer to write our code in a return-fast style.\n\nif (mDnsTlsChecks.containsKey(target) \u0026\u0026 TextUtils.isEmpty(hostname)) return;\n\nNote that in this case it\u0027s much clearer with the reversed check that it\u0027s really a bizarre thing to test. You want to overwrite, except if the hostname is empty ? Why ?",
+      "range": {
+        "startLine": 286,
+        "startChar": 8,
+        "endLine": 286,
+        "endChar": 10
+      },
+      "revId": "5aca484a136f62ef82d4fdfdc1c6e7e2cf0f4d6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d091937_189a832f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-09-19T06:14:54Z",
+      "side": 1,
+      "message": "TextUtils.isEmpty(hostname) makes sure we always carry the SNI during SSL handshake if we can, and this function is independent of the loops that call it.\n\nFor example:\nDNS servers: 8.8.8.8\nPrivate DNS servers: 8.8.8.8 (dns.google)\n\nIf we iterate LinkProperties.getDnsServers() and then PrivateDnsCfg.ips:\nprepareIcmpMeasurement(\"8.8.8.8\")\nprepareDnsMeasurement(\"8.8.8.8\")\nprepareDnsTlsMeasurement(null, \"8.8.8.8\")  --- a.1\nprepareDnsTlsMeasurement(\"dns.google\", \"8.8.8.8\")  --- a.2\n\nIf we iterate PrivateDnsCfg.ips and then LinkProperties.getDnsServers():\nprepareDnsTlsMeasurement(\"dns.google\", \"8.8.8.8\")  --- b.1\nprepareIcmpMeasurement(\"8.8.8.8\")\nprepareDnsMeasurement(\"8.8.8.8\")\nprepareDnsTlsMeasurement(null, \"8.8.8.8\")  --- b.2\n\nIf we don\u0027t filter empty hostname, b.1 will be overwritten by b.2, then we are unable to set \"dns.google\" to SNI.",
+      "parentUuid": "149b8b71_aea0d70e",
       "range": {
         "startLine": 286,
         "startChar": 8,
@@ -94,6 +166,54 @@
     },
     {
       "key": {
+        "uuid": "c0a79cd6_9f5445d9",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-09-19T06:14:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53683ed6_2e4f30de",
+      "range": {
+        "startLine": 469,
+        "startChar": 26,
+        "endLine": 469,
+        "endChar": 52
+      },
+      "revId": "5aca484a136f62ef82d4fdfdc1c6e7e2cf0f4d6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea7950f0_25d39bce",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-09-19T06:14:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53683ed6_2e4f30de",
+      "range": {
+        "startLine": 469,
+        "startChar": 26,
+        "endLine": 469,
+        "endChar": 52
+      },
+      "revId": "5aca484a136f62ef82d4fdfdc1c6e7e2cf0f4d6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cf2652b_a6819041",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 6
@@ -114,6 +234,30 @@
       "revId": "5aca484a136f62ef82d4fdfdc1c6e7e2cf0f4d6d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd1db82_f369ed71",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2019-09-19T06:14:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cf2652b_a6819041",
+      "range": {
+        "startLine": 712,
+        "startChar": 15,
+        "endLine": 712,
+        "endChar": 73
+      },
+      "revId": "5aca484a136f62ef82d4fdfdc1c6e7e2cf0f4d6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
