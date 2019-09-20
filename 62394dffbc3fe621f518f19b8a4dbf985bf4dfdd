@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13d1ac0b_c965ac88",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-20T07:49:17Z",
+      "side": 1,
+      "message": "Nit: Could you annotate the nullability? It can increase the readility.",
+      "range": {
+        "startLine": 183,
+        "startChar": 48,
+        "endLine": 183,
+        "endChar": 78
+      },
+      "revId": "62394dffbc3fe621f518f19b8a4dbf985bf4dfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e04e946_37b143f4",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-20T07:49:17Z",
+      "side": 1,
+      "message": "It may cause issue like b/137295355 if device is under VPN.",
+      "range": {
+        "startLine": 226,
+        "startChar": 16,
+        "endLine": 226,
+        "endChar": 58
+      },
+      "revId": "62394dffbc3fe621f518f19b8a4dbf985bf4dfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6295d94f_45a01b5d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-20T07:49:17Z",
+      "side": 1,
+      "message": "Nit: Could you annotate the nullability?",
+      "range": {
+        "startLine": 457,
+        "startChar": 48,
+        "endLine": 457,
+        "endChar": 70
+      },
+      "revId": "62394dffbc3fe621f518f19b8a4dbf985bf4dfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7979b2_4f046d4f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-20T07:49:17Z",
+      "side": 1,
+      "message": "Nit: These two are assumed NonNull. Better to annotate them.",
+      "range": {
+        "startLine": 676,
+        "startChar": 54,
+        "endLine": 676,
+        "endChar": 97
+      },
+      "revId": "62394dffbc3fe621f518f19b8a4dbf985bf4dfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410f5c40_a7bb63ad",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-20T07:49:17Z",
+      "side": 1,
+      "message": "May I know why this is set to only 2 seconds? Default timeout for AndroidHttpClient is even 60s. Should it be longer?",
+      "range": {
+        "startLine": 692,
+        "startChar": 35,
+        "endLine": 692,
+        "endChar": 49
+      },
+      "revId": "62394dffbc3fe621f518f19b8a4dbf985bf4dfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515a49af_ea216c1f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-20T07:49:17Z",
+      "side": 1,
+      "message": "I am not fully understand this. If it might be unnecessary, why do we do so? Anything wrong w/o it?",
+      "range": {
+        "startLine": 696,
+        "startChar": 16,
+        "endLine": 696,
+        "endChar": 54
+      },
+      "revId": "62394dffbc3fe621f518f19b8a4dbf985bf4dfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d88ee11_286187e6",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-20T07:49:17Z",
+      "side": 1,
+      "message": "Maybe InetAddressUtils.parseNumericAddress to assign the value? or you would also like to test getByname?",
+      "range": {
+        "startLine": 265,
+        "startChar": 37,
+        "endLine": 265,
+        "endChar": 57
+      },
+      "revId": "62394dffbc3fe621f518f19b8a4dbf985bf4dfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
