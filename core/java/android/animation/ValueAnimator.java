@@ -1449,6 +1449,8 @@ public class ValueAnimator extends Animator implements AnimationHandler.Animatio
         }
 
         if (!mRunning) {
+            //If animation had been called cancel, end it, do nothing.
+            if(mAnimationEndRequested) return true;
             // If not running, that means the animation is in the start delay phase of a forward
             // running animation. In the case of reversing, we want to run start delay in the end.
             if (mStartTime > frameTime && mSeekFraction == -1) {
