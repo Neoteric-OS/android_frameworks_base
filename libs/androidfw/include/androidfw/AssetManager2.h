@@ -271,6 +271,34 @@ class AssetManager2 {
  private:
   DISALLOW_COPY_AND_ASSIGN(AssetManager2);
 
+  struct GetResourceKey {
+    uint32_t resid;
+    bool may_be_bag;
+    uint16_t density_override;
+
+    struct hash {
+      size_t operator()(const GetResourceKey& key) const {
+        return std::hash<decltype(key.resid)>{}(key.resid) ^
+               std::hash<decltype(key.may_be_bag)>{}(key.may_be_bag) ^
+               std::hash<decltype(key.density_override)>{}(key.density_override);
+      }
+    };
+
+    bool operator==(const GetResourceKey& rhs) const {
+      return resid == rhs.resid && may_be_bag == rhs.may_be_bag &&
+             density_override == rhs.density_override;
+    }
+  };
+
+  struct GetResourceValue {
+    ApkAssetsCookie cookie;
+    Res_value value;
+    ResTable_config selected_config;
+    uint32_t flags;
+  };
+
+  std::unordered_map<GetResourceKey, GetResourceValue, GetResourceKey::hash> get_resource_cache_;
+
   // Finds the best entry for `resid` from the set of ApkAssets. The entry can be a simple
   // Res_value, or a complex map/bag type. If successful, it is available in `out_entry`.
   // Returns kInvalidCookie on failure. Otherwise, the return value is the cookie associated with

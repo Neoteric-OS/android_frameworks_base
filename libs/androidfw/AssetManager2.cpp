@@ -692,6 +692,15 @@ ApkAssetsCookie AssetManager2::GetResource(uint32_t resid, bool may_be_bag,
                                            uint16_t density_override, Res_value* out_value,
                                            ResTable_config* out_selected_config,
                                            uint32_t* out_flags) const {
+  GetResourceKey key{resid, may_be_bag, density_override};
+  if (get_resource_cache_.find(key) != get_resource_cache_.end()) {
+    const auto& it = get_resource_cache_.find(key)->second;
+    *out_value = it.value;
+    *out_selected_config = it.selected_config;
+    *out_flags = it.flags;
+    return it.cookie;
+  }
+
   FindEntryResult entry;
   ApkAssetsCookie cookie = FindEntry(resid, density_override, false /* stop_at_first_match */,
                                      false /* ignore_configuration */, &entry);
@@ -710,6 +719,9 @@ ApkAssetsCookie AssetManager2::GetResource(uint32_t resid, bool may_be_bag,
     out_value->data = resid;
     *out_selected_config = entry.config;
     *out_flags = entry.type_flags;
+
+    const_cast<AssetManager2*>(this)->get_resource_cache_.emplace(
+        key, GetResourceValue{cookie, *out_value, entry.config, entry.type_flags});
     return cookie;
   }
 
@@ -722,6 +734,9 @@ ApkAssetsCookie AssetManager2::GetResource(uint32_t resid, bool may_be_bag,
 
   *out_selected_config = entry.config;
   *out_flags = entry.type_flags;
+
+  const_cast<AssetManager2*>(this)->get_resource_cache_.emplace(
+      key, GetResourceValue{cookie, *out_value, entry.config, entry.type_flags});
   return cookie;
 }
 
@@ -1061,6 +1076,10 @@ void AssetManager2::RebuildFilterList(bool filter_incompatible_configs) {
 
 void AssetManager2::InvalidateCaches(uint32_t diff) {
   cached_bag_resid_stacks_.clear();
+
+  // TODO: we may not need to be so aggressive about clearing the GetResource
+  // cache here.
+  get_resource_cache_.clear();
 
   if (diff == 0xffffffffu) {
     // Everything must go.
