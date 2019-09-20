@@ -26,12 +26,14 @@ import static android.app.AlarmManager.RTC_WAKEUP;
 import android.annotation.UserIdInt;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.ActivityManagerInternal;
 import android.app.AlarmManager;
 import android.app.AppOpsManager;
 import android.app.BroadcastOptions;
 import android.app.IAlarmCompleteListener;
 import android.app.IAlarmListener;
 import android.app.IAlarmManager;
+import android.app.IProcessObserver;
 import android.app.IUidObserver;
 import android.app.PendingIntent;
 import android.app.usage.UsageStatsManager;
@@ -93,6 +95,7 @@ import android.util.proto.ProtoOutputStream;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
+import com.android.internal.util.CollectionUtils;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.LocalLog;
@@ -1582,6 +1585,22 @@ class AlarmManagerService extends SystemService {
             } catch (RemoteException e) {
                 // ignored; both services live in system_server
             }
+
+            ActivityManagerInternal internal = LocalServices.getService(ActivityManagerInternal.class);
+            internal.registerProcessObserver(new IProcessObserver.Stub() {
+                @Override
+                public void onForegroundActivitiesChanged(int pid, int uid, boolean foregroundActivities){
+                }
+                @Override
+                public void onForegroundServicesChanged(int pid, int uid, int serviceTypes) {
+                }
+
+                @Override
+                public void onProcessDied(int pid, int uid) {
+                    mHandler.postRemoveForDead(uid);
+
+                }
+            });
         }
         publishLocalService(AlarmManagerInternal.class, new LocalService());
         publishBinderService(Context.ALARM_SERVICE, mService);
@@ -3229,6 +3248,55 @@ class AlarmManagerService extends SystemService {
         }
     }
 
+    private boolean isAlarmUnstableAndListenerDead(Alarm a, int uid) {
+        return a.uid == uid && a.operation == null && a.listener != null
+                && !a.listener.asBinder().pingBinder();
+    }
+
+    void removeForDeadProcess(final int uid) {
+        boolean didRemove = false;
+        final Predicate<Alarm> whichAlarms = (Alarm a) -> isAlarmUnstableAndListenerDead(a, uid);
+        for (int i = mAlarmBatches.size() - 1; i >= 0; i--) {
+            Batch b = mAlarmBatches.get(i);
+            didRemove |= b.remove(whichAlarms , false);
+            if (b.size() == 0) {
+                mAlarmBatches.remove(i);
+            }
+        }
+        for (int i = mPendingWhileIdleAlarms.size() - 1; i >= 0; i--) {
+            final Alarm a = mPendingWhileIdleAlarms.get(i);
+            if (isAlarmUnstableAndListenerDead(a, uid)) {
+                // Don't set didRemove, since this doesn't impact the scheduled alarms.
+                mPendingWhileIdleAlarms.remove(i);
+                decrementAlarmCount(uid, 1);
+            }
+        }
+        final ArrayList<Alarm> toRemove = mPendingBackgroundAlarms.get(uid);
+        final int origSize = CollectionUtils.size(toRemove);
+        if (origSize > 0) {
+            for (int i1 = origSize - 1; i1 >= 0; i1--) {
+                Alarm a = toRemove.get(i1);
+                if (isAlarmUnstableAndListenerDead(a, uid)) {
+                    toRemove.remove(i1);
+                }
+            }
+            final int curSize = toRemove.size();
+            decrementAlarmCount(uid, origSize - curSize);
+            if (curSize == 0) {
+                mPendingBackgroundAlarms.remove(uid);
+            }
+        }
+
+        if (didRemove) {
+            if (DEBUG_BATCH) {
+                Slog.v(TAG, "remove dead alarms; rebatching");
+            }
+            rebatchAllAlarmsLocked(true);
+            rescheduleKernelAlarmsLocked();
+            updateNextAlarmClockLocked();
+        }
+    }
+
     // Only called for ephemeral apps
     void removeForStoppedLocked(final int uid) {
         if (uid == Process.SYSTEM_UID) {
@@ -4152,6 +4220,7 @@ class AlarmManagerService extends SystemService {
         public static final int APP_STANDBY_PAROLE_CHANGED = 6;
         public static final int REMOVE_FOR_STOPPED = 7;
         public static final int UNREGISTER_CANCEL_LISTENER = 8;
+        public static final int REMOVE_FOR_DEAD_PROCESS = 9;
 
         AlarmHandler() {
             super(Looper.myLooper());
@@ -4159,6 +4228,10 @@ class AlarmManagerService extends SystemService {
 
         public void postRemoveForStopped(int uid) {
             obtainMessage(REMOVE_FOR_STOPPED, uid, 0).sendToTarget();
+        }
+
+        public void postRemoveForDead(int uid) {
+            obtainMessage(REMOVE_FOR_DEAD_PROCESS, uid, 0).sendToTarget();
         }
 
         @Override
@@ -4238,6 +4311,12 @@ class AlarmManagerService extends SystemService {
                     final PendingIntent pi = (PendingIntent) msg.obj;
                     if (pi != null) {
                         pi.unregisterCancelListener(mOperationCancelListener);
+                    }
+                    break;
+
+                case REMOVE_FOR_DEAD_PROCESS:
+                    synchronized (mLock) {
+                        removeForDeadProcess(msg.arg1);
                     }
                     break;
 
