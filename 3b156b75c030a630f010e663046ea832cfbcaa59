@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1024fb14_5850da0c",
+        "filename": "services/core/java/com/android/server/am/ProcessRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1187,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2019-09-20T02:59:32Z",
+      "side": 1,
+      "message": "I tried to rename all defined methods in ProcecssRecord by taking doXXXLocked style, but that would make this patch much bigger, so just changed these two and leave those as they are. -_-||",
+      "range": {
+        "startLine": 1187,
+        "startChar": 9,
+        "endLine": 1187,
+        "endChar": 55
+      },
+      "revId": "3b156b75c030a630f010e663046ea832cfbcaa59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
