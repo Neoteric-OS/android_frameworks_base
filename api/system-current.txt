@@ -4106,8 +4106,22 @@ package android.net {
   }
 
   public final class NetworkCapabilities implements android.os.Parcelable {
+    ctor public NetworkCapabilities();
+    method @NonNull public android.net.NetworkCapabilities addCapability(int);
+    method @NonNull public android.net.NetworkCapabilities addTransportType(int);
+    method public void clearAll();
+    method @Nullable public android.net.NetworkSpecifier getNetworkSpecifier();
     method @NonNull public int[] getTransportTypes();
+    method public void maybeMarkCapabilitiesRestricted();
+    method @NonNull public android.net.NetworkCapabilities removeCapability(int);
     method public boolean satisfiedByNetworkCapabilities(@Nullable android.net.NetworkCapabilities);
+    method @NonNull public android.net.NetworkCapabilities setCapability(int, boolean);
+    method @NonNull public android.net.NetworkCapabilities setLinkDownstreamBandwidthKbps(int);
+    method @NonNull public android.net.NetworkCapabilities setLinkUpstreamBandwidthKbps(int);
+    method @NonNull public android.net.NetworkCapabilities setNetworkSpecifier(android.net.NetworkSpecifier);
+    method @NonNull public android.net.NetworkCapabilities setSSID(@Nullable String);
+    method @NonNull public android.net.NetworkCapabilities setSignalStrength(int);
+    method @NonNull public android.net.NetworkCapabilities setTransportInfo(android.net.TransportInfo);
     field public static final int NET_CAPABILITY_OEM_PAID = 22; // 0x16
     field public static final int NET_CAPABILITY_PARTIAL_CONNECTIVITY = 24; // 0x18
   }
