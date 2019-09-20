@@ -71,6 +71,7 @@ import java.util.concurrent.TimeUnit;
  * be notified.
  */
 public class PackageWatchdog {
+    // test
     private static final String TAG = "PackageWatchdog";
 
     static final String PROPERTY_WATCHDOG_TRIGGER_DURATION_MILLIS =
