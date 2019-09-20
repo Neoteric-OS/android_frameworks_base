@@ -59,6 +59,7 @@ import android.hardware.hdmi.HdmiAudioSystemClient;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiPlaybackClient;
 import android.hardware.hdmi.HdmiTvClient;
+import android.hardware.input.InputManager;
 import android.hardware.usb.UsbManager;
 import android.media.AudioAttributes;
 import android.media.AudioFocusInfo;
@@ -882,6 +883,13 @@ public class AudioService extends IAudioService.Stub
         mRoleObserver.register();
 
         onIndicateSystemReady();
+
+        InputManager im = mContext.getSystemService(InputManager.class);
+        final int isMicMuted = im.isMicMuted();
+        if (isMicMuted != InputManager.SWITCH_STATE_UNKNOWN) {
+            setMicrophoneMuteNoCallerCheck(im.isMicMuted() != InputManager.SWITCH_STATE_OFF,
+                    getCurrentUserId());
+        }
     }
 
     RoleObserver mRoleObserver;
@@ -1021,6 +1029,13 @@ public class AudioService extends IAudioService.Stub
 
         sendMsg(mAudioHandler, MSG_DISPATCH_AUDIO_SERVER_STATE,
                 SENDMSG_QUEUE, 1, 0, null, 0);
+
+        InputManager im = mContext.getSystemService(InputManager.class);
+        final int isMicMuted = im.isMicMuted();
+        if (isMicMuted != InputManager.SWITCH_STATE_UNKNOWN) {
+            setMicrophoneMuteNoCallerCheck(im.isMicMuted() != InputManager.SWITCH_STATE_OFF,
+                    getCurrentUserId());
+        }
     }
 
     private void onDispatchAudioServerStateChange(boolean state) {
