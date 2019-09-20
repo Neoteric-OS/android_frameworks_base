@@ -60,10 +60,6 @@ public final class NetworkCapabilities implements Parcelable {
     // Set to true when private DNS is broken.
     private boolean mPrivateDnsBroken;
 
-    /**
-     * @hide
-     */
-    @UnsupportedAppUsage
     public NetworkCapabilities() {
         clearAll();
         mNetworkCapabilities = DEFAULT_CAPABILITIES;
@@ -78,7 +74,6 @@ public final class NetworkCapabilities implements Parcelable {
     /**
      * Completely clears the contents of this object, removing even the capabilities that are set
      * by default when the object is constructed.
-     * @hide
      */
     public void clearAll() {
         mNetworkCapabilities = mTransportTypes = mUnwantedNetworkCapabilities = 0;
@@ -408,9 +403,7 @@ public final class NetworkCapabilities implements Parcelable {
      *
      * @param capability the capability to be added.
      * @return This NetworkCapabilities instance, to facilitate chaining.
-     * @hide
      */
-    @UnsupportedAppUsage
     public @NonNull NetworkCapabilities addCapability(@NetCapability int capability) {
         checkValidCapability(capability);
         mNetworkCapabilities |= 1 << capability;
@@ -445,9 +438,7 @@ public final class NetworkCapabilities implements Parcelable {
      *
      * @param capability the capability to be removed.
      * @return This NetworkCapabilities instance, to facilitate chaining.
-     * @hide
      */
-    @UnsupportedAppUsage
     public @NonNull NetworkCapabilities removeCapability(@NetCapability int capability) {
         checkValidCapability(capability);
         final long mask = ~(1 << capability);
@@ -460,7 +451,6 @@ public final class NetworkCapabilities implements Parcelable {
      * Sets (or clears) the given capability on this {@link NetworkCapabilities}
      * instance.
      *
-     * @hide
      */
     public @NonNull NetworkCapabilities setCapability(@NetCapability int capability,
             boolean value) {
@@ -722,9 +712,7 @@ public final class NetworkCapabilities implements Parcelable {
      *
      * @param transportType the transport type to be added.
      * @return This NetworkCapabilities instance, to facilitate chaining.
-     * @hide
      */
-    @UnsupportedAppUsage
     public @NonNull NetworkCapabilities addTransportType(@Transport int transportType) {
         checkValidTransportType(transportType);
         mTransportTypes |= 1 << transportType;
@@ -863,7 +851,6 @@ public final class NetworkCapabilities implements Parcelable {
      * fast backhauls and slow backhauls.
      *
      * @param upKbps the estimated first hop upstream (device to network) bandwidth.
-     * @hide
      */
     public @NonNull NetworkCapabilities setLinkUpstreamBandwidthKbps(int upKbps) {
         mLinkUpBandwidthKbps = upKbps;
@@ -893,7 +880,6 @@ public final class NetworkCapabilities implements Parcelable {
      * fast backhauls and slow backhauls.
      *
      * @param downKbps the estimated first hop downstream (network to device) bandwidth.
-     * @hide
      */
     public @NonNull NetworkCapabilities setLinkDownstreamBandwidthKbps(int downKbps) {
         mLinkDownBandwidthKbps = downKbps;
@@ -952,9 +938,9 @@ public final class NetworkCapabilities implements Parcelable {
      * @param networkSpecifier A concrete, parcelable framework class that extends
      *                         NetworkSpecifier.
      * @return This NetworkCapabilities instance, to facilitate chaining.
-     * @hide
      */
-    public @NonNull NetworkCapabilities setNetworkSpecifier(NetworkSpecifier networkSpecifier) {
+    public @NonNull NetworkCapabilities setNetworkSpecifier(
+            @NonNull NetworkSpecifier networkSpecifier) {
         if (networkSpecifier != null && Long.bitCount(mTransportTypes) != 1) {
             throw new IllegalStateException("Must have a single transport specified to use " +
                     "setNetworkSpecifier");
@@ -973,7 +959,8 @@ public final class NetworkCapabilities implements Parcelable {
      * @return This NetworkCapabilities instance, to facilitate chaining.
      * @hide
      */
-    public @NonNull NetworkCapabilities setTransportInfo(TransportInfo transportInfo) {
+    @SystemApi
+    public @NonNull NetworkCapabilities setTransportInfo(@NonNull TransportInfo transportInfo) {
         mTransportInfo = transportInfo;
         return this;
     }
@@ -983,9 +970,7 @@ public final class NetworkCapabilities implements Parcelable {
      *
      * @return The optional {@link NetworkSpecifier} specifying the bearer specific network
      *         specifier or {@code null}. See {@link #setNetworkSpecifier}.
-     * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public @Nullable NetworkSpecifier getNetworkSpecifier() {
         return mNetworkSpecifier;
     }
@@ -1054,9 +1039,7 @@ public final class NetworkCapabilities implements Parcelable {
      * effect when requesting a callback.
      *
      * @param signalStrength the bearer-specific signal strength.
-     * @hide
      */
-    @UnsupportedAppUsage
     public @NonNull NetworkCapabilities setSignalStrength(int signalStrength) {
         mSignalStrength = signalStrength;
         return this;
@@ -1282,6 +1265,7 @@ public final class NetworkCapabilities implements Parcelable {
      * Sets the SSID of this network.
      * @hide
      */
+    @SystemApi
     public @NonNull NetworkCapabilities setSSID(@Nullable String ssid) {
         mSSID = ssid;
         return this;
