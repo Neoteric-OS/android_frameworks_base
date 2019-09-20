@@ -22,6 +22,30 @@
       "revId": "4339cf3402ce579b470eebd611601f85d408cf04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143ea7f4_b8aafe5d",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-20T04:43:48Z",
+      "side": 0,
+      "message": "Right, I can\u0027t think of a good use-case for including only ipmemorystore-client, since the client would need to request IpMemoryStore through NetworkStackClient",
+      "parentUuid": "72c4e5ab_88171b7f",
+      "range": {
+        "startLine": 76,
+        "startChar": 11,
+        "endLine": 76,
+        "endChar": 24
+      },
+      "revId": "4339cf3402ce579b470eebd611601f85d408cf04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
