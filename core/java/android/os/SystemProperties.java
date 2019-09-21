@@ -38,6 +38,59 @@ import java.util.HashMap;
 /**
  * Gives access to the system properties store.  The system properties
  * store contains a list of string key-value pairs.
+ * <p>Use this class only for the system properties that are local. e.g., within
+ * an app, a partition, or a module. For system properties used across the
+ * boundaries, formally define them in <code>*.sysprop</code> files and use the
+ * auto-generated methods.</p>
+ *
+ * <p>For example, in <code>awesome.sysprop</code>, a bool-type system property
+ * named <code>ro.awesome.control_foo</code> can be specified as follows:</p>
+ *
+ * <pre>
+ * owner: Platform
+ * module: "android.sysprop.Awesome"
+ *
+ * prop {
+ *     prop_name: "ro.awesome.control_foo",
+ *     api_name: "control_foo",
+ *     type: Boolean
+ *     access: ReadWrite
+ *     scope: Public
+ * }
+ * </pre>
+ *
+ * <p><code>api_name</code> together with <code>module</code> defines the Java methods
+ * and the C++ functions for accessing the system property. In this case, the Java
+ * methods are <code>Optional$lt;Boolean$gt; android.sysprop.Awesome.control_foo()
+ * </code> and <code>void android.sysprop.Awesome.control_foo(boolean)</code>.</p>
+ *
+ * <p><code>type</code> specifies the type of the value of the system property and
+ * can be <code>Boolean</code>, <code>Integer</code>, <code>Long</code>,
+ * <code>Double</code>, <code>String</code>, <code>Enum</code>, or
+ * <code>TList</code>, where <code>T</code> can be other types.</p>
+ *
+ * <p><code>access</code> specifies the accessibility of the system property. It can be
+ * <code>Readonly</code>, <code>Writeonce</code>, or <code>ReadWrite</code>, all of which
+ * are self-describing.</p>
+ *
+ * <p><code>scope</code> specifies the visibility of the system property. It can be <code>
+ * Public</code> if the system property is to be visible outside of the module, or
+ * <code>Internal</code> if it is local or private to the module.</p>
+ *
+ * <p>To build the <code>.sysprop</code> files as Java or C++ libraries, use the
+ * <code>sysprop_library</code> Soong module type as follows:</p>
+ *
+ * <pre>
+ * sysprop_library {
+ *     name: "AwesomeProperties",
+ *     srcs: ["awesome.sysprop"],
+ *     api_packages: ["android.sysprop"],
+ *     property_owner: "Platform",
+ * }
+ * </pre>
+ *
+ * <p>Then the module <code>AwesomeProperties</code> can be used by statically linking
+ * to it. e.g. <code>static_libs: ["AwesomeProperties"]</code>.</p>
  *
  * {@hide}
  */
