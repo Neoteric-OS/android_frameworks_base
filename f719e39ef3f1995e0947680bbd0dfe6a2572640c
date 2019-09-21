@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f181216_b8eee5bb",
+        "filename": "core/java/android/hardware/input/InputManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2019-09-21T00:40:08Z",
+      "side": 1,
+      "message": "I don\u0027t think we can use annotation @SwitchState with a boolean.\nI let Michael advise if it is mroe appropriate to use @SwitchState int or a boolean here",
+      "range": {
+        "startLine": 529,
+        "startChar": 5,
+        "endLine": 529,
+        "endChar": 16
+      },
+      "revId": "f719e39ef3f1995e0947680bbd0dfe6a2572640c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
