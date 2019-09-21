@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c02c8f0a_3f5ff0ff",
+        "filename": "core/java/android/hardware/input/IInputManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000414
+      },
+      "writtenOn": "2019-09-21T00:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5cf88b8_f4096d2a",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 7
+      },
+      "revId": "475650d1d16068f9d9ba814ba8911ea3db5b88dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78e24fe9_3c6cbc28",
         "filename": "core/java/android/hardware/input/InputManager.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "475650d1d16068f9d9ba814ba8911ea3db5b88dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275b4385_63b3d2f8",
+        "filename": "core/java/android/hardware/input/InputManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1000414
+      },
+      "writtenOn": "2019-09-21T00:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78e24fe9_3c6cbc28",
+      "range": {
+        "startLine": 530,
+        "startChar": 11,
+        "endLine": 530,
+        "endChar": 14
+      },
+      "revId": "475650d1d16068f9d9ba814ba8911ea3db5b88dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
