@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.connectivity.tethering;
+package com.android.server.connectivity;
 
 import static android.net.ConnectivityManager.TETHERING_BLUETOOTH;
 import static android.net.ConnectivityManager.TETHERING_USB;
@@ -57,8 +57,6 @@ import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.internal.util.test.FakeSettingsProvider;
-import com.android.server.connectivity.MockableSystemProperties;
-import com.android.server.connectivity.TetheringConfiguration;
 
 import org.junit.After;
 import org.junit.Before;

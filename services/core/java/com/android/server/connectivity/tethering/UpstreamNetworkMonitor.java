@@ -41,6 +41,7 @@ import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.StateMachine;
+import com.android.server.connectivity.EntitlementManager;
 
 import java.util.HashMap;
 import java.util.HashSet;
