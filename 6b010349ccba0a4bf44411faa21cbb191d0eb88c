@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0e9cdb4_b34bd3bb",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-09-23T12:01:10Z",
+      "side": 1,
+      "message": "isn\u0027t it the long term plan?",
+      "range": {
+        "startLine": 712,
+        "startChar": 35,
+        "endLine": 712,
+        "endChar": 44
+      },
+      "revId": "6b010349ccba0a4bf44411faa21cbb191d0eb88c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
