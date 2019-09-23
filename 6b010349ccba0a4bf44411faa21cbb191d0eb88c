@@ -22,6 +22,29 @@
       "revId": "6b010349ccba0a4bf44411faa21cbb191d0eb88c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205e82f3_273842a9",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2019-09-23T12:09:45Z",
+      "side": 1,
+      "message": "You could refactor the logic here, to avoid adding the possibility of passing two boot image options to the runtime:\n\n    std::string use_apex_image \u003d\n        profile_boot_class_path ||\n        server_configurable_flags::GetServerConfigurableFlag(RUNTIME_NATIVE_BOOT_NAMESPACE,\n                                                             ENABLE_APEX_IMAGE,\n                                                             /*default_value\u003d*/ \"\");",
+      "range": {
+        "startLine": 715,
+        "startChar": 0,
+        "endLine": 719,
+        "endChar": 84
+      },
+      "revId": "6b010349ccba0a4bf44411faa21cbb191d0eb88c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
