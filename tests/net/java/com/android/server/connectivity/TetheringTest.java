@@ -114,7 +114,6 @@ import com.android.internal.util.test.FakeSettingsProvider;
 import com.android.server.connectivity.tethering.IPv6TetheringCoordinator;
 import com.android.server.connectivity.tethering.OffloadHardwareInterface;
 import com.android.server.connectivity.tethering.TetheringDependencies;
-import com.android.server.connectivity.tethering.UpstreamNetworkMonitor;
 
 import org.junit.After;
 import org.junit.Before;

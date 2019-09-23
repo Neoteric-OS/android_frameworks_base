@@ -47,6 +47,7 @@ filegroup {
     srcs: [
         "src/com/android/server/connectivity/EntitlementManagerTest.java",
         "src/com/android/server/connectivity/TetheringConfigurationTest.java",
+        "src/com/android/server/connectivity/UpstreamNetworkMonitorTest.java",
         "src/android/net/dhcp/DhcpServingParamsParcelExtTest.java",
         "src/android/net/ip/IpServerTest.java",
     ],

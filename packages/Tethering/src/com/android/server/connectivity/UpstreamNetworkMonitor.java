@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.connectivity.tethering;
+package com.android.server.connectivity;
 
 import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
 import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
@@ -41,7 +41,6 @@ import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.StateMachine;
-import com.android.server.connectivity.EntitlementManager;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -147,6 +146,7 @@ public class UpstreamNetworkMonitor {
         }
     }
 
+    /** Listen all networks. */
     public void startObserveAllNetworks() {
         stop();
 
@@ -156,6 +156,7 @@ public class UpstreamNetworkMonitor {
         cm().registerNetworkCallback(listenAllRequest, mListenAllCallback, mHandler);
     }
 
+    /** Stop tracking all networks except for default network. */
     public void stop() {
         releaseMobileNetworkRequest();
 
@@ -166,6 +167,7 @@ public class UpstreamNetworkMonitor {
         mNetworkMap.clear();
     }
 
+    /** Setup or teardown DUN connection according to |dunRequired|. */
     public void updateMobileRequiresDun(boolean dunRequired) {
         final boolean valueChanged = (mDunRequired != dunRequired);
         mDunRequired = dunRequired;
@@ -175,10 +177,12 @@ public class UpstreamNetworkMonitor {
         }
     }
 
+    /** Whether mobile network is requested. */
     public boolean mobileNetworkRequested() {
         return (mMobileNetworkCallback != null);
     }
 
+    /** Request mobile network if mobile upstream is permitted. */
     public void registerMobileNetworkRequest() {
         if (!isCellularUpstreamPermitted()) {
             mLog.i("registerMobileNetworkRequest() is not permitted");
@@ -210,6 +214,7 @@ public class UpstreamNetworkMonitor {
         cm().requestNetwork(mobileUpstreamRequest, mMobileNetworkCallback, 0, legacyType, mHandler);
     }
 
+    /** Release mobile network request. */
     public void releaseMobileNetworkRequest() {
         if (mMobileNetworkCallback == null) return;
 
@@ -217,11 +222,15 @@ public class UpstreamNetworkMonitor {
         mMobileNetworkCallback = null;
     }
 
-    // So many TODOs here, but chief among them is: make this functionality an
-    // integral part of this class such that whenever a higher priority network
-    // becomes available and useful we (a) file a request to keep it up as
-    // necessary and (b) change all upstream tracking state accordingly (by
-    // passing LinkProperties up to Tethering).
+    /**
+     * Select the first available network from |perferredTypes|.
+     *
+     * So many TODOs here, but chief among them is: make this functionality an
+     * integral part of this class such that whenever a higher priority network
+     * becomes available and useful we (a) file a request to keep it up as
+     * necessary and (b) change all upstream tracking state accordingly (by
+     * passing LinkProperties up to Tethering).
+     */
     public NetworkState selectPreferredUpstreamType(Iterable<Integer> preferredTypes) {
         final TypeStatePair typeStatePair = findFirstAvailableUpstreamByType(
                 mNetworkMap.values(), preferredTypes, isCellularUpstreamPermitted());
@@ -255,7 +264,11 @@ public class UpstreamNetworkMonitor {
         return typeStatePair.ns;
     }
 
-    // Returns null if no current upstream available.
+    /**
+     * Get current preferred upstream network. If default network is cellular and DUN is required,
+     * preferred upstream would be DUN otherwise preferred upstream is the same as default network.
+     * Returns null if no current upstream is available.
+     */
     public NetworkState getCurrentPreferredUpstream() {
         final NetworkState dfltState = (mDefaultInternetNetwork != null)
                 ? mNetworkMap.get(mDefaultInternetNetwork)
@@ -271,10 +284,12 @@ public class UpstreamNetworkMonitor {
         return findFirstDunNetwork(mNetworkMap.values());
     }
 
+    /** Tell UpstreamNetworkMonitor tethering is using |upstream| as upstream. */
     public void setCurrentUpstream(Network upstream) {
         mTetheringUpstreamNetwork = upstream;
     }
 
+    /** Return local prefixes. */
     public Set<IpPrefix> getLocalPrefixes() {
         return (Set<IpPrefix>) mLocalPrefixes.clone();
     }
@@ -502,8 +517,8 @@ public class UpstreamNetworkMonitor {
             try {
                 nc = ConnectivityManager.networkCapabilitiesForType(type);
             } catch (IllegalArgumentException iae) {
-                Log.e(TAG, "No NetworkCapabilities mapping for legacy type: " +
-                       ConnectivityManager.getNetworkTypeName(type));
+                Log.e(TAG, "No NetworkCapabilities mapping for legacy type: "
+                        + ConnectivityManager.getNetworkTypeName(type));
                 continue;
             }
             if (!isCellularUpstreamPermitted && isCellular(nc)) {
@@ -548,18 +563,18 @@ public class UpstreamNetworkMonitor {
     }
 
     private static boolean isCellular(NetworkCapabilities nc) {
-        return (nc != null) && nc.hasTransport(TRANSPORT_CELLULAR) &&
-               nc.hasCapability(NET_CAPABILITY_NOT_VPN);
+        return (nc != null) && nc.hasTransport(TRANSPORT_CELLULAR)
+               && nc.hasCapability(NET_CAPABILITY_NOT_VPN);
     }
 
     private static boolean hasCapability(NetworkState ns, int netCap) {
-        return (ns != null) && (ns.networkCapabilities != null) &&
-               ns.networkCapabilities.hasCapability(netCap);
+        return (ns != null) && (ns.networkCapabilities != null)
+               && ns.networkCapabilities.hasCapability(netCap);
     }
 
     private static boolean isNetworkUsableAndNotCellular(NetworkState ns) {
-        return (ns != null) && (ns.networkCapabilities != null) && (ns.linkProperties != null) &&
-               !isCellular(ns.networkCapabilities);
+        return (ns != null) && (ns.networkCapabilities != null) && (ns.linkProperties != null)
+               && !isCellular(ns.networkCapabilities);
     }
 
     private static NetworkState findFirstDunNetwork(Iterable<NetworkState> netStates) {
