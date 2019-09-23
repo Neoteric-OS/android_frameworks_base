@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "a842178d_dc452191",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-09-23T19:23:29Z",
+      "side": 1,
+      "message": "Yes, that\u0027s what I\u0027m suggesting :)",
+      "parentUuid": "cfac28f5_809c4e39",
+      "range": {
+        "startLine": 712,
+        "startChar": 35,
+        "endLine": 712,
+        "endChar": 44
+      },
+      "revId": "6b010349ccba0a4bf44411faa21cbb191d0eb88c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "205e82f3_273842a9",
         "filename": "core/jni/AndroidRuntime.cpp",
         "patchSetId": 1
