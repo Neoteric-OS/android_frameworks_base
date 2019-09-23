@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20302cfd_93b1be19",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2019-09-23T16:37:34Z",
+      "side": 1,
+      "message": "Style: Add parentheses around expression.",
+      "range": {
+        "startLine": 708,
+        "startChar": 41,
+        "endLine": 708,
+        "endChar": 79
+      },
+      "revId": "ebb1df18006bae2f93c345975d633bccfe850334",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1e1327_f5e2ba7a",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2019-09-23T16:37:34Z",
+      "side": 1,
+      "message": "Maybe also mention this change in the commit message?",
+      "range": {
+        "startLine": 710,
+        "startChar": 0,
+        "endLine": 711,
+        "endChar": 54
+      },
+      "revId": "ebb1df18006bae2f93c345975d633bccfe850334",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83206ec7_6bf07f50",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2019-09-23T16:37:34Z",
+      "side": 1,
+      "message": "I\u0027d add something like this here:\n\n  or when the APEX boot image is explicitly enabled via the corresponding configuration flags.",
+      "range": {
+        "startLine": 721,
+        "startChar": 94,
+        "endLine": 721,
+        "endChar": 95
+      },
+      "revId": "ebb1df18006bae2f93c345975d633bccfe850334",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678e55a9_0f559e4b",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2019-09-23T16:37:34Z",
+      "side": 1,
+      "message": "Style: Add parentheses around expression.",
+      "range": {
+        "startLine": 722,
+        "startChar": 59,
+        "endLine": 722,
+        "endChar": 88
+      },
+      "revId": "ebb1df18006bae2f93c345975d633bccfe850334",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
