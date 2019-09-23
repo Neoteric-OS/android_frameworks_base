@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "abfe1a0e_ce57bb34",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-09-23T16:30:11Z",
+      "side": 1,
+      "message": "Yes, the libcore part is AOTed but you can have a switch to not use the AOT code there. And you probably want an image to not regress too much on memory, so that discards image-less running.",
+      "parentUuid": "514e040b_edec091e",
+      "range": {
+        "startLine": 712,
+        "startChar": 35,
+        "endLine": 712,
+        "endChar": 44
+      },
+      "revId": "6b010349ccba0a4bf44411faa21cbb191d0eb88c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "205e82f3_273842a9",
         "filename": "core/jni/AndroidRuntime.cpp",
         "patchSetId": 1
