@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.connectivity.tethering;
+package com.android.server.connectivity;
 
 import static android.net.ConnectivityManager.EXTRA_ADD_TETHER_TYPE;
 import static android.net.ConnectivityManager.EXTRA_PROVISION_CALLBACK;
@@ -55,8 +55,6 @@ import android.util.SparseIntArray;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.StateMachine;
-import com.android.server.connectivity.MockableSystemProperties;
-import com.android.server.connectivity.TetheringConfiguration;
 
 import java.io.PrintWriter;
 
@@ -139,7 +137,7 @@ public class EntitlementManager {
         /**
          * Ui entitlement check fails in |downstream|.
          *
-         * @param downstream  tethering type from ConnectivityManager.TETHERING_{@code *}.
+         * @param downstream tethering type from ConnectivityManager.TETHERING_{@code *}.
          */
         void onUiEntitlementFailed(int downstream);
     }

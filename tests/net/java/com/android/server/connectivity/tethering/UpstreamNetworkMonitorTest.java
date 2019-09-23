@@ -60,6 +60,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.server.connectivity.EntitlementManager;
 
 import org.junit.After;
 import org.junit.Before;
