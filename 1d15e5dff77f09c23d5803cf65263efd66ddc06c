@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c92ef3ee_c5744ca9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-09-24T15:47:03Z",
+      "side": 1,
+      "message": "Question: When should we use \"fix\" and when should we use \"bug\"? Is there any rule to define the usage?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 4
+      },
+      "revId": "1d15e5dff77f09c23d5803cf65263efd66ddc06c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
