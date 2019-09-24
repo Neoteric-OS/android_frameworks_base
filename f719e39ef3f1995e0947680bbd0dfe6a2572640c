@@ -46,6 +46,30 @@
       "revId": "f719e39ef3f1995e0947680bbd0dfe6a2572640c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c5fb520_305a8805",
+        "filename": "core/java/android/hardware/input/InputManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-09-24T18:30:38Z",
+      "side": 1,
+      "message": "Correct, you cannot use @SwitchState with a boolean. I would recommend using an int just so the state is explicit (i.e. it isn\u0027t \"on\" on devices without a mute switch, it\u0027s really not known).",
+      "parentUuid": "4f181216_b8eee5bb",
+      "range": {
+        "startLine": 529,
+        "startChar": 5,
+        "endLine": 529,
+        "endChar": 16
+      },
+      "revId": "f719e39ef3f1995e0947680bbd0dfe6a2572640c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
