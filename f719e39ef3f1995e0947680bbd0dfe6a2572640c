@@ -94,6 +94,30 @@
       "revId": "f719e39ef3f1995e0947680bbd0dfe6a2572640c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f6e7c8_c8fe0306",
+        "filename": "core/java/android/hardware/input/InputManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000414
+      },
+      "writtenOn": "2019-09-24T19:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05b289ab_e502a9fc",
+      "range": {
+        "startLine": 529,
+        "startChar": 5,
+        "endLine": 529,
+        "endChar": 16
+      },
+      "revId": "f719e39ef3f1995e0947680bbd0dfe6a2572640c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
