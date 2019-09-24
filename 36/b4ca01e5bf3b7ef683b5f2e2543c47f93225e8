@@ -1,0 +1,8 @@
+Autosubmit+1: Varun Shah <varunshah@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Build-Cop-Override+1: Jinting Lin <jintinglin@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Tue, 24 Sep 2019 04:37:47 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1127164
+Project: platform/frameworks/base
+Branch: refs/heads/android10-tests-dev
