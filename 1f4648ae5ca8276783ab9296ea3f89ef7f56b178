@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73ff2f92_31343be6",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-09-24T22:07:23Z",
+      "side": 1,
+      "message": "System APIs typically require system permissions.  Will Dialer be able to access the system APIs as well?",
+      "range": {
+        "startLine": 1511,
+        "startChar": 5,
+        "endLine": 1511,
+        "endChar": 74
+      },
+      "revId": "1f4648ae5ca8276783ab9296ea3f89ef7f56b178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
