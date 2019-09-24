@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6a3305f6_8f6b3fdb",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-24T04:25:02Z",
+      "side": 1,
+      "message": "This \"-shared\" used to make sense for NetworkStack because it was applying to a shared library, but maybe not here - how about just \"jarjar-rules.txt\" ? Or just remove it until we actually need to use jarjar (ideally we won\u0027t)",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49938f32_df20aa7b",
         "filename": "packages/Tethering/AndroidManifest.xml",
         "patchSetId": 4
@@ -13,6 +36,30 @@
       "writtenOn": "2019-09-18T12:24:57Z",
       "side": 1,
       "message": "28 is Android P. Ultimately this should probably be 30 (or whatever the SDK version is of the first platform supporting this), but for now it should be 29 or maybe \"current\" ?\n\nLikewise for the target",
+      "range": {
+        "startLine": 22,
+        "startChar": 37,
+        "endLine": 22,
+        "endChar": 39
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53b2b98_56cce5a9",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-24T04:25:02Z",
+      "side": 1,
+      "message": "\"current\" is tricky since the Play store may not be ready to deliver APKs annotated with an unreleased version, but 29 is probably fine - even though technically it should be 30 (which doesn\u0027t exist yet so...).",
+      "parentUuid": "49938f32_df20aa7b",
       "range": {
         "startLine": 22,
         "startChar": 37,
@@ -48,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6fc09748_af8d8b43",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-24T04:25:02Z",
+      "side": 1,
+      "message": "I\u0027d rather have it declare \"persistent\" itself, since the contents of this APK need to be persistent regardless of the other APK: Tethering will have its own persistent service independently of NetworkStack.",
+      "parentUuid": "e011ad3e_e3bb87ba",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c50530b4_c899c266",
         "filename": "packages/Tethering/AndroidManifestBase.xml",
         "patchSetId": 4
@@ -59,6 +130,30 @@
       "writtenOn": "2019-09-18T12:24:57Z",
       "side": 1,
       "message": "Are you sure Tethering needs to be direct boot aware ? I don\u0027t think tethering can be turned on before storage is unlocked first after boot.\nhttps://developer.android.com/training/articles/direct-boot",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5418a211_d7e34711",
+        "filename": "packages/Tethering/AndroidManifestBase.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-24T04:25:02Z",
+      "side": 1,
+      "message": "I think it will have trouble being started by the SystemServer on boot otherwise, since the user will not have unlocked the phone yet. It should also be user-agnostic (I don\u0027t think we want to start it once per user), so it\u0027s probably tricky to tie it to user unlock.",
+      "parentUuid": "c50530b4_c899c266",
       "range": {
         "startLine": 26,
         "startChar": 8,
@@ -87,6 +182,29 @@
         "startChar": 8,
         "endLine": 71,
         "endChar": 18
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167b2ca4_6a6fadaa",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-24T04:25:02Z",
+      "side": 1,
+      "message": "How about \"in the network stack process\" ?",
+      "range": {
+        "startLine": 77,
+        "startChar": 62,
+        "endLine": 78,
+        "endChar": 31
       },
       "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
