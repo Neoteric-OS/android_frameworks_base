@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddb36c10_686cc748",
+        "filename": "media/java/android/media/tv/TvContentRating.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1105338
+      },
+      "writtenOn": "2019-09-24T22:30:22Z",
+      "side": 1,
+      "message": "I think this seems grammatically wrong.",
+      "range": {
+        "startLine": 777,
+        "startChar": 88,
+        "endLine": 777,
+        "endChar": 97
+      },
+      "revId": "927e6180a917808fb29793546ae2e90dde33a2aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
