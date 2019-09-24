@@ -216,6 +216,7 @@ cc_library_shared {
         "android_hardware_input_InputWindowHandle.cpp",
         "android_hardware_input_InputApplicationHandle.cpp",
         "com_android_internal_os_KernelCpuUidBpfMapReader.cpp",
+        "com_android_internal_os_KernelSingleUidTimeReader.cpp",
     ],
 
     include_dirs: [
