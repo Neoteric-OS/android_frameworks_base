@@ -16,6 +16,24 @@
       "revId": "6b667677f10d794a54df37cd8333a672b9a83ce8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bf1284_5fc52c6e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2019-09-25T19:20:40Z",
+      "side": 1,
+      "message": "Intentional. That is the master fix. This is the smaller fix for Q, which was cherry-picked from http://ag/9364737",
+      "parentUuid": "fd109c60_baba418e",
+      "revId": "6b667677f10d794a54df37cd8333a672b9a83ce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
