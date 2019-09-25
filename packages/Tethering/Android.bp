@@ -26,6 +26,7 @@ java_defaults {
         "androidx.annotation_annotation",
         "netd_aidl_interface-java",
         "networkstack-aidl-interfaces-java",
+        "android.hardware.tetheroffload.control-V1.0-java",
         "tethering-library",
     ],
     manifest: "AndroidManifestBase.xml",
@@ -37,15 +38,55 @@ android_library {
     defaults: ["TetheringAndroidLibraryDefaults"],
 }
 
+cc_library_shared {
+    name: "libtetheroffloadjni",
+    srcs: [
+        "jni/com_android_server_connectivity_OffloadHardwareInterface.cpp",
+    ],
+    shared_libs: [
+        "libnativehelper_compat_libc++",
+        "libcutils",
+        "android.hardware.tetheroffload.config@1.0",
+    ],
+    static_libs: [
+        "liblog",
+        "libbase",
+        "libhidlbase",
+        "libutils",
+    ],
+
+    // We cannot use plain "libc++" here to link libc++ dynamically because it results in:
+    //   java.lang.UnsatisfiedLinkError: dlopen failed: library "libc++_shared.so" not found
+    // even if "libc++" is added into jni_libs below. Adding "libc++_shared" into jni_libs doesn't
+    // build because soong complains of:
+    //   module NetworkStack missing dependencies: libc++_shared
+    //
+    // So, link libc++ statically. This means that we also need to ensure that all the C++ libraries
+    // we depend on do not dynamically link libc++. This is currently the case, because liblog is
+    // C-only and libnativehelper_compat_libc also uses stl: "c++_static".
+    //
+    // TODO: find a better solution for this in R.
+    //stl: "c++_static",
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+    ],
+}
+
 // Common defaults for compiling the actual APK.
 java_defaults {
     name: "TetheringAppDefaults",
     platform_apis: true,
     privileged: true,
+    jni_libs: [
+        "libtetheroffloadjni",
+    ],
     resource_dirs: [
         "res",
     ],
     jarjar_rules: "jarjar-rules-shared.txt",
+    use_embedded_native_libs: true,
     optimize: {
         proguard_flags_files: ["proguard.flags"],
     },

@@ -23,6 +23,7 @@ android_test {
     static_libs: [
         "androidx.test.rules",
         "frameworks-base-testutils",
+        "net-tests-utils",
         "mockito-target-extended-minus-junit4",
         "TetheringApiCurrentLib",
         "testables",
