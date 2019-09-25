@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd109c60_baba418e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2019-09-25T17:25:46Z",
+      "side": 1,
+      "message": "Wrong ID? I98... is http://ag/8708696.",
+      "revId": "6b667677f10d794a54df37cd8333a672b9a83ce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
