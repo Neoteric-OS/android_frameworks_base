@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bc809e4_23892882",
+        "filename": "core/res/res/values/config-tethering.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-25T09:57:54Z",
+      "side": 1,
+      "message": "Base file defining the resources.",
+      "revId": "c37e4f50dfad54ab8399f94b11d0ca4337e7a506",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a09cc17a_015b16c2",
+        "filename": "core/res/res/values/symbols.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-25T09:57:54Z",
+      "side": 1,
+      "message": "This file is only necessary because currently TetheringNotification depends on resources and Tethering depends on TetheringStateListener, forcing the resources to be in the framework. In a real implementation after Tethering is a module, this is not needed.",
+      "revId": "c37e4f50dfad54ab8399f94b11d0ca4337e7a506",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf4165c_b92b6708",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-25T09:57:54Z",
+      "side": 1,
+      "message": "Not needed ultimately, only needed now because Tethering is not migrated yet",
+      "revId": "c37e4f50dfad54ab8399f94b11d0ca4337e7a506",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d43a3b_2dca406c",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-25T09:57:54Z",
+      "side": 1,
+      "message": "I think this is maybe not what power saver refers to",
+      "range": {
+        "startLine": 1613,
+        "startChar": 46,
+        "endLine": 1613,
+        "endChar": 77
+      },
+      "revId": "c37e4f50dfad54ab8399f94b11d0ca4337e7a506",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a33fce49_47041516",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-25T09:57:54Z",
+      "side": 1,
+      "message": "Not needed ultimately, only needed now because Tethering is not migrated yet",
+      "revId": "c37e4f50dfad54ab8399f94b11d0ca4337e7a506",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
