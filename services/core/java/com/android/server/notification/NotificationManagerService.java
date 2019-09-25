@@ -1285,6 +1285,18 @@ public class NotificationManagerService extends SystemService {
                         }
 
                     }
+                    // for loop should only be performed when cancelNotifications is ture.
+                    // FAILED BINDER TRANSACTION can occur.
+                    if (cancelNotifications) {
+                        for (String pkgName : pkgList) {
+                            cancelAllNotificationsInt(MY_UID, MY_PID, pkgName, null, 0, 0,
+                                    !queryRestart, changeUserId, reason, null);
+                        }
+                    } else if (hideNotifications) {
+                        hideNotificationsForPackages(pkgList);
+                    } else if (unhideNotifications) {
+                        unhideNotificationsForPackages(pkgList);
+                    }
                 }
 
                 mHandler.scheduleOnPackageChanged(removingPackage, changeUserId, pkgList, uidList);
