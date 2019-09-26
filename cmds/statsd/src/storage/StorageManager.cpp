@@ -408,19 +408,28 @@ bool StorageManager::hasConfigMetricsReport(const ConfigKey& key) {
 
 void StorageManager::appendConfigMetricsReport(const ConfigKey& key, ProtoOutputStream* proto,
                                                bool erase_data, bool isAdb) {
-    unique_ptr<DIR, decltype(&closedir)> dir(opendir(STATS_DATA_DIR), closedir);
-    if (dir == NULL) {
+    struct dirent **namelist;
+    int n;
+    int index = 0;
+    n = scandir(STATS_DATA_DIR, &namelist, 0, alphasort);
+    if (n < 0) {
         VLOG("Path %s does not exist", STATS_DATA_DIR);
         return;
     }
 
-    dirent* de;
-    while ((de = readdir(dir.get()))) {
-        char* name = de->d_name;
+    while (index < n) {
+        struct dirent *entry = namelist[index];
+        index++;
+        char* name = entry->d_name;
         string fileName(name);
-        if (name[0] == '.') continue;
+        if (name[0] == '.') {
+            free(entry);
+            continue;
+        }
+
         FileName output;
         parseFileName(name, &output);
+        free(entry);
 
         if (output.mTimestampSec == -1 || (output.mIsHistory && !isAdb) ||
             output.mUid != key.GetUid() || output.mConfigId != key.GetId()) {
@@ -452,6 +461,7 @@ void StorageManager::appendConfigMetricsReport(const ConfigKey& key, ProtoOutput
             }
         }
     }
+    free(namelist);
 }
 
 bool StorageManager::readFileToString(const char* file, string* content) {
