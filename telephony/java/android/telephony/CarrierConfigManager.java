@@ -3185,6 +3185,47 @@ public class CarrierConfigManager {
     public static final String KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL =
             "prevent_clir_activation_and_deactivation_code_bool";
 
+    /**
+     * Determine whether support eCall on vowifi.
+     */
+    public static final String KEY_CARRIER_SUPPORTS_VOWIFI_ECALL =
+            "support_vowifi_ecall";
+
+    /**
+     * Determine whether try eCall on vowifi first.
+     */
+    public static final String KEY_CARRIER_ECALL_ON_VOWIFI_FIRST =
+            "ecall_on_vowifi_first";
+
+    /**
+     * Determine whether try eCall on vowifi when airplane mode on.
+     */
+    public static final String KEY_CARRIER_DIAL_ECALL_VOWIFI_WHEN_AIRPLANE =
+            "dial_ecall_vowifi_when_airplane_mode";
+
+    /**
+     * Determine whether retry on vowifi when eCall on CS failed.
+     */
+    public static final String KEY_CARRIER_RETRY_ECALL_VOWIFI =
+            "retry_ecall_vowifi";
+
+    /**
+     * Determine whether retry on CS when eCall on vowifi failed.
+     */
+    public static final String KEY_CARRIER_FALLBACK_TO_CS_RETYR_ECALL =
+            "fallback_to_cs_retry_ecall";
+    /**
+     * Determine whether de-register vowifi before eCall.
+     */
+    public static final String KEY_CARRIER_DEREG_VOWIFI_BEFORE_ECALL =
+            "deregister_vowifi_before_dial_ecall";
+
+    /**
+     * Determine whether de-register vowifi when cellular preffered.
+     */
+    public static final String KEY_CARRIER_DEREG_VOWIFI_WHEN_CELLULAR_PREFERRED =
+            "deregister_vowifi_when_cellular_preffered";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -3608,6 +3649,13 @@ public class CarrierConfigManager {
                         -89,  /* SIGNAL_STRENGTH_GREAT */
                 });
         sDefaults.putBoolean(KEY_SUPPORT_WPS_OVER_IMS_BOOL, true);
+        sDefaults.putBoolean(KEY_CARRIER_SUPPORTS_VOWIFI_ECALL, true);
+        sDefaults.putBoolean(KEY_CARRIER_ECALL_ON_VOWIFI_FIRST, false);
+        sDefaults.putBoolean(KEY_CARRIER_DIAL_ECALL_VOWIFI_WHEN_AIRPLANE, false);
+        sDefaults.putBoolean(KEY_CARRIER_RETRY_ECALL_VOWIFI, false);
+        sDefaults.putBoolean(KEY_CARRIER_FALLBACK_TO_CS_RETYR_ECALL, false);
+        sDefaults.putBoolean(KEY_CARRIER_DEREG_VOWIFI_BEFORE_ECALL, false);
+        sDefaults.putBoolean(KEY_CARRIER_DEREG_VOWIFI_WHEN_CELLULAR_PREFERRED, false);
         sDefaults.putAll(Ims.getDefaults());
         sDefaults.putStringArray(KEY_CARRIER_CERTIFICATE_STRING_ARRAY, null);
         sDefaults.putIntArray(KEY_DISCONNECT_CAUSE_PLAY_BUSYTONE_INT_ARRAY,
