@@ -47,6 +47,7 @@
 #include <signal.h>
 #include <dirent.h>
 #include <assert.h>
+#include <dlfcn.h>
 
 #include <string>
 #include <vector>
@@ -333,6 +334,14 @@ AndroidRuntime::~AndroidRuntime()
 /*static*/ int AndroidRuntime::registerNativeMethods(JNIEnv* env,
     const char* className, const JNINativeMethod* gMethods, int numMethods)
 {
+    for (int i = 0; i < numMethods; i++) {
+        Dl_info info;
+        if (dladdr(gMethods[i].fnPtr, &info) != 0) {
+            ALOGD("JNI Mapping: %s : %s%s", info.dli_sname, gMethods[i].name, gMethods[i].signature);
+        } else {
+            ALOGD("JNI Mapping: dladdr failed for %p: %s", gMethods[i].fnPtr, dlerror());
+        }
+    }
     return jniRegisterNativeMethods(env, className, gMethods, numMethods);
 }
 
