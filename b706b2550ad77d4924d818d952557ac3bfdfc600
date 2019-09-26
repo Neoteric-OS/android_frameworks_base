@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6635b8a7_b9741299",
+        "filename": "services/art-profile",
+        "patchSetId": 3
+      },
+      "lineNbr": 3500,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-09-26T02:07:25Z",
+      "side": 1,
+      "message": "FYI: There\u0027s no need to update this file by hand, it will be changed in the next automatic update.",
+      "revId": "b706b2550ad77d4924d818d952557ac3bfdfc600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
