@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "53bd5122_ecc23c86",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3315,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-26T19:48:56Z",
+      "side": 1,
+      "message": "grammar nits: \"does not satisfy any more the request\" should be \"when a Network no longer satisfies the request or callback\"; however that\u0027s somewhat ambiguous. I\u0027d suggest something like:\n\n\"Called when a Network which previously satisfied the criteria for this callback no longer satisfies those criteria.\"\n\nThen, I suggest we should add clarifications, because this is where the actual nastiness is IMO.\n\n\"If the callback was registered with requestNetwork(), it will only be invoked against the last network returned by onAvailable() when that network is lost and NO other network satisfies the criteria of the request\".\n\nIf the callback was registered with registerNetworkCallback() it will be called for each network which no longer satisfies the criteria of the callback\".",
+      "range": {
+        "startLine": 3314,
+        "startChar": 18,
+        "endLine": 3315,
+        "endChar": 24
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "657d1992_1a645758",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 4
