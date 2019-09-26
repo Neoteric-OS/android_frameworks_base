@@ -1677,6 +1677,7 @@ public final class TvContract {
                 TYPE_ATSC_T,
                 TYPE_ATSC_C,
                 TYPE_ATSC_M_H,
+                TYPE_ATSC3_T,
                 TYPE_ISDB_T,
                 TYPE_ISDB_TB,
                 TYPE_ISDB_S,
@@ -1799,6 +1800,13 @@ public final class TvContract {
          * @see #COLUMN_TYPE
          */
         public static final String TYPE_ATSC_M_H = "TYPE_ATSC_M_H";
+
+        /**
+         * The channel type for ATSC3.0 (terrestrial).
+         *
+         * @see #COLUMN_TYPE
+         */
+        public static final String TYPE_ATSC3_T = "TYPE_ATSC3_T";
 
         /**
          * The channel type for ISDB-T (terrestrial).
@@ -2022,6 +2030,7 @@ public final class TvContract {
          * {@link #TYPE_ATSC_C},
          * {@link #TYPE_ATSC_M_H},
          * {@link #TYPE_ATSC_T},
+         * {@link #TYPE_ATSC3_T},
          * {@link #TYPE_CMMB},
          * {@link #TYPE_DTMB},
          * {@link #TYPE_DVB_C},
@@ -2407,6 +2416,18 @@ public final class TvContract {
          */
         public static final String COLUMN_TRANSIENT = "transient";
 
+        /**
+         * The content ID of this TV channel.
+         *
+         * <p>A globally unique ID that identifies the current TV channel, if applicable. One may
+         * use the same coding as {@code globalServiceId} that appears in ATSC3 A/331.
+         *
+         * <p>Can be empty.
+         *
+         * <p>Type: TEXT
+         */
+        public static final String COLUMN_CONTENT_ID = "content_id";
+
         private Channels() {}
 
         /**
@@ -2561,6 +2582,49 @@ public final class TvContract {
          * <p>Type: INTEGER (boolean)
          */
         public static final String COLUMN_RECORDING_PROHIBITED = "recording_prohibited";
+
+        /**
+         * The event ID of this TV program.
+         *
+         * <p>It is used to identify the current TV program in the same channel, if applicable.
+         * Use the same coding for {@code event_id} in the underlying broadcast standard if it
+         * is defined there (e.g. ATSC A/65, ETSI EN 300 468 and ARIB STD-B10).
+         *
+         * <p>This is a required field only if the underlying broadcast standard defines the same
+         * name field. Otherwise, leave empty.
+         *
+         * <p>Type: INTEGER
+         */
+        public static final String COLUMN_EVENT_ID = "event_id";
+
+        /**
+         * The content ID of this TV program.
+         *
+         * <p>A globally unique ID that identifies the current TV program, if applicable. One may
+         * use the same coding as {@code crid://<CRIDauthority>/<data>} that appears in ETSI TS
+         * 102 323 or {@code globalContentId} that appears in ATSC3 A/332.
+         *
+         * <p>Can be empty.
+         *
+         * <p>Type: TEXT
+         */
+        public static final String COLUMN_CONTENT_ID = "content_id";
+
+        /**
+         * The split ID of this TV program for multi-part content.
+         *
+         * <p>A content may consist of multiple programs within the same channel or over several
+         * channels. For example, a film might be divided into two parts interrupted by a news in
+         * the middle or a longer sport event might be split into several parts over several
+         * channels. The split ID is used to identify all the programs in the same multi-part
+         * content. One may use the coding as {@code crid://<CRIDauthority>/<data>#<IMI>} that
+         * appears in ETSI TS 102 323.
+         *
+         * <p>Can be empty.
+         *
+         * <p>Type: TEXT
+         */
+        public static final String COLUMN_SPLIT_ID = "split_id";
 
         private Programs() {}
 
