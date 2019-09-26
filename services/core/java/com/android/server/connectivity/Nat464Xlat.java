@@ -331,7 +331,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
         if (!isRunning()) {
             return;
         }
-        if (lp == null || lp.getAllInterfaceNames().contains(mIface)) {
+        if (lp.getAllInterfaceNames().contains(mIface)) {
             return;
         }
 
@@ -434,7 +434,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
 
     @Override
     public void interfaceRemoved(String iface) {
-        mNetwork.handler().post(() -> { handleInterfaceRemoved(iface); });
+        mNetwork.handler().post(() -> handleInterfaceRemoved(iface));
     }
 
     @Override
