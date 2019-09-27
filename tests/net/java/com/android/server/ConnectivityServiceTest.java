@@ -264,7 +264,7 @@ public class ConnectivityServiceTest {
     // timeout. For this, our assertions should run fast enough to leave less than
     // (mService.mLingerDelayMs - TEST_CALLBACK_TIMEOUT_MS) between the time callbacks are
     // supposedly fired, and the time we call expectCallback.
-    private static final int TEST_CALLBACK_TIMEOUT_MS = 200;
+    private static final int TEST_CALLBACK_TIMEOUT_MS = 250;
     // Chosen to be less than TEST_CALLBACK_TIMEOUT_MS. This ensures that requests have time to
     // complete before callbacks are verified.
     private static final int TEST_REQUEST_TIMEOUT_MS = 150;
@@ -1466,6 +1466,10 @@ public class ConnectivityServiceTest {
      * received. assertNoCallback may be called at any time.
      */
     private class TestNetworkCallback extends TestableNetworkCallback {
+        TestNetworkCallback() {
+            super(TEST_CALLBACK_TIMEOUT_MS);
+        }
+
         @Override
         public void assertNoCallback() {
             // TODO: better support this use case in TestableNetworkCallback
