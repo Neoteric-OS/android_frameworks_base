@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "5bbfcf11_6c6c593d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3326,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-09-27T16:34:53Z",
+      "side": 1,
+      "message": "LGTM.",
+      "parentUuid": "69f6c066_02af0be3",
+      "range": {
+        "startLine": 3326,
+        "startChar": 20,
+        "endLine": 3326,
+        "endChar": 26
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62a7e9aa_50bf7a51",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 4
@@ -366,6 +390,54 @@
       "side": 1,
       "message": "I chose \"...if none satisfies the criteria\" to avoid implying that any connected network will be returned (in case at some point we have some networks that for some reason need to be invisible to some apps). Let me know if that works for you.",
       "parentUuid": "c1dc4091_11c21866",
+      "range": {
+        "startLine": 3649,
+        "startChar": 91,
+        "endLine": 3649,
+        "endChar": 96
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24d90319_d0d92045",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3649,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-09-27T16:34:53Z",
+      "side": 1,
+      "message": "NetworkRequest SGTM.",
+      "parentUuid": "8c133543_47854c46",
+      "range": {
+        "startLine": 3649,
+        "startChar": 14,
+        "endLine": 3649,
+        "endChar": 33
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a386b9e_a49c07d7",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3649,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-09-27T16:34:53Z",
+      "side": 1,
+      "message": "LGTM.",
+      "parentUuid": "08e63b06_f9865ab9",
       "range": {
         "startLine": 3649,
         "startChar": 91,
