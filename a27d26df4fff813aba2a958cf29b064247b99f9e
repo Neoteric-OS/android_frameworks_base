@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb55ae7c_bd2cf8db",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-09-27T08:05:01Z",
+      "side": 1,
+      "message": "nit: ditto.\nbut might not be worth to respin. please ignore.",
+      "range": {
+        "startLine": 329,
+        "startChar": 36,
+        "endLine": 329,
+        "endChar": 50
+      },
+      "revId": "a27d26df4fff813aba2a958cf29b064247b99f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
