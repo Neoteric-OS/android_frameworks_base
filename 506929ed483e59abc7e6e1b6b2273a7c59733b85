@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e8b69b8_91bbdbe3",
+        "filename": "mime/java/android/content/type/DefaultMimeMap.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-09-27T16:21:31Z",
+      "side": 1,
+      "message": "Suggestion: \"Creates the framework default {@link MimeMap}....\"",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 38
+      },
+      "revId": "506929ed483e59abc7e6e1b6b2273a7c59733b85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed96bb6_404552f0",
+        "filename": "mime/java/android/content/type/DefaultMimeMap.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-09-27T16:21:31Z",
+      "side": 1,
+      "message": "I know it sounds like a bit of a joke (ha ha, Java FooBarFactoryBuilderFactorySupplierFactory, etc.), but strictly this is a Factory class, so you should probably call it DefaultMimeMapFactory.",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "506929ed483e59abc7e6e1b6b2273a7c59733b85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
