@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0fba601c_1805bd14",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2377,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-27T07:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "303fea44_59c178b0",
+      "range": {
+        "startLine": 2377,
+        "startChar": 81,
+        "endLine": 2377,
+        "endChar": 89
+      },
+      "revId": "d3f15d9cf566e61ba81b6e77a7a7d159ad1e92ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51bb0b8d_e4880c1a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-09-26T13:42:14Z",
       "side": 1,
       "message": "do we also want to @NonNull these FDs?",
+      "range": {
+        "startLine": 7045,
+        "startChar": 31,
+        "endLine": 7045,
+        "endChar": 45
+      },
+      "revId": "d3f15d9cf566e61ba81b6e77a7a7d159ad1e92ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d92475_3de6c3d1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7045,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-27T07:30:29Z",
+      "side": 1,
+      "message": "I\u0027m not actually sure what these should be annotated as. `in` must not be null if you call getRawInputStream() on the shell command, but some callers pass null to this, but not to ConnectivityService.\n`out` ends up being passed to a @NonNull parameter when the default command is handled and dumping is not disabled.\n\nI don\u0027t know whether any of these are used or will be used in the past. I\u0027d prefer not to annotate if I don\u0027t know.",
+      "parentUuid": "51bb0b8d_e4880c1a",
       "range": {
         "startLine": 7045,
         "startChar": 31,
@@ -68,6 +116,30 @@
       "revId": "d3f15d9cf566e61ba81b6e77a7a7d159ad1e92ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff30e71_5dec92d6",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-27T07:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42662cc7_6ed91193",
+      "range": {
+        "startLine": 328,
+        "startChar": 58,
+        "endLine": 328,
+        "endChar": 72
+      },
+      "revId": "d3f15d9cf566e61ba81b6e77a7a7d159ad1e92ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
