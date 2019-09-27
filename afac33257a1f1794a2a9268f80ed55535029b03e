@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "30284eba_c1e41ede",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3269,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-27T09:40:13Z",
+      "side": 1,
+      "message": "Done, but I\u0027m not sure I\u0027ve done it right (I don\u0027t speak HTML)\nApparently this was the only place where I hadn\u0027t put it though",
+      "parentUuid": "f3ecf60e_72a7f14b",
+      "range": {
+        "startLine": 3269,
+        "startChar": 11,
+        "endLine": 3269,
+        "endChar": 12
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e466e3a_1e4c15aa",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961f0658_a74f55a1",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3272,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-27T09:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e466e3a_1e4c15aa",
+      "range": {
+        "startLine": 3272,
+        "startChar": 86,
+        "endLine": 3272,
+        "endChar": 94
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e3df6cc8_655141f4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3308,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-27T09:40:13Z",
+      "side": 1,
+      "message": "Done but it\u0027s just a matter of style",
+      "parentUuid": "ba562365_bfc94bf4",
+      "range": {
+        "startLine": 3308,
+        "startChar": 61,
+        "endLine": 3308,
+        "endChar": 62
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53bd5122_ecc23c86",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2019-09-26T19:48:56Z",
       "side": 1,
       "message": "grammar nits: \"does not satisfy any more the request\" should be \"when a Network no longer satisfies the request or callback\"; however that\u0027s somewhat ambiguous. I\u0027d suggest something like:\n\n\"Called when a Network which previously satisfied the criteria for this callback no longer satisfies those criteria.\"\n\nThen, I suggest we should add clarifications, because this is where the actual nastiness is IMO.\n\n\"If the callback was registered with requestNetwork(), it will only be invoked against the last network returned by onAvailable() when that network is lost and NO other network satisfies the criteria of the request\".\n\nIf the callback was registered with registerNetworkCallback() it will be called for each network which no longer satisfies the criteria of the callback\".",
+      "range": {
+        "startLine": 3314,
+        "startChar": 18,
+        "endLine": 3315,
+        "endChar": 24
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c6b239_ddda21b2",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3315,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-27T09:40:13Z",
+      "side": 1,
+      "message": "Simplified your suggestion to \"Called when a Network no longer satisfied the criteria for this request or callback\" on the assumption that \"no longer\" necessarily means that it used to. See if that works for you.\n\nAs for the clarifications, I took them with very minor edits, as I think they are good. (edits being adding requestDefaultNetworkCallback() where it belongs and downcasing the \"no\").",
+      "parentUuid": "53bd5122_ecc23c86",
       "range": {
         "startLine": 3314,
         "startChar": 18,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "69f6c066_02af0be3",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3326,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-27T09:40:13Z",
+      "side": 1,
+      "message": "I think the improvements suggested by Nathan do a good job at that, so I used them. Let me know if you have ideas to clarify more.",
+      "parentUuid": "657d1992_1a645758",
+      "range": {
+        "startLine": 3326,
+        "startChar": 20,
+        "endLine": 3326,
+        "endChar": 26
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62a7e9aa_50bf7a51",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a3d768_301a7182",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3362,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-27T09:40:13Z",
+      "side": 1,
+      "message": "That\u0027s actually intentional (though confusing in review). Apps tend to call getLinkProperties() in onCapabilitiesChanged() and getNetworkCapabilities() in onLinkPropertiesChanged() so that they get the missing piece. That\u0027s why these are the ones I called out, but I also do say \"or other synchronous methods\". Let me know if you think this should be made clearer.\n\n(well really what apps tend to do is call getNetworkCapabilities() in onAvailable(). But still.)",
+      "parentUuid": "62a7e9aa_50bf7a51",
+      "range": {
+        "startLine": 3362,
+        "startChar": 34,
+        "endLine": 3362,
+        "endChar": 56
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,54 @@
     },
     {
       "key": {
+        "uuid": "8c133543_47854c46",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3649,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-27T09:40:13Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a good idea to call the NC out because the NC in NetworkRequest is hidden. You\u0027ll build one with NR.Builder() which has methods that cover a subset of NC.\n\nI changed that to NetworkRequest.",
+      "parentUuid": "af4c5128_8b311da4",
+      "range": {
+        "startLine": 3649,
+        "startChar": 14,
+        "endLine": 3649,
+        "endChar": 33
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08e63b06_f9865ab9",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3649,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-27T09:40:13Z",
+      "side": 1,
+      "message": "I chose \"...if none satisfies the criteria\" to avoid implying that any connected network will be returned (in case at some point we have some networks that for some reason need to be invisible to some apps). Let me know if that works for you.",
+      "parentUuid": "c1dc4091_11c21866",
+      "range": {
+        "startLine": 3649,
+        "startChar": 91,
+        "endLine": 3649,
+        "endChar": 96
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2407b33_3b381af2",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 4
@@ -206,6 +398,30 @@
       "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30bf6310_1d373d37",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3655,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-27T09:40:13Z",
+      "side": 1,
+      "message": "...no ?\n\"dispose of a network\", so a network is disposed of\n\nThat being said, replaced with \"disconnected\" in hopes it is easier to understand.",
+      "parentUuid": "b2407b33_3b381af2",
+      "range": {
+        "startLine": 3655,
+        "startChar": 82,
+        "endLine": 3655,
+        "endChar": 84
+      },
+      "revId": "afac33257a1f1794a2a9268f80ed55535029b03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
