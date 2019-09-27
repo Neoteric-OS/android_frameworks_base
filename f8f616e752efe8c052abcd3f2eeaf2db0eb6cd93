@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f9b28cb_a3e7fcdf",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2420,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-09-27T18:20:00Z",
+      "side": 1,
+      "message": "The content ID of this TV channel, as a URI.",
+      "range": {
+        "startLine": 2420,
+        "startChar": 15,
+        "endLine": 2420,
+        "endChar": 25
+      },
+      "revId": "f8f616e752efe8c052abcd3f2eeaf2db0eb6cd93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1e333c_df31c338",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2422,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-09-27T18:20:00Z",
+      "side": 1,
+      "message": "A globally unique URI",
+      "range": {
+        "startLine": 2422,
+        "startChar": 16,
+        "endLine": 2422,
+        "endChar": 34
+      },
+      "revId": "f8f616e752efe8c052abcd3f2eeaf2db0eb6cd93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb042ce_1ca50ede",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2422,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-09-27T18:20:00Z",
+      "side": 1,
+      "message": "this",
+      "range": {
+        "startLine": 2422,
+        "startChar": 51,
+        "endLine": 2422,
+        "endChar": 62
+      },
+      "revId": "f8f616e752efe8c052abcd3f2eeaf2db0eb6cd93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2334abcc_3a114234",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2423,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-09-27T18:20:00Z",
+      "side": 1,
+      "message": "Suitable URIs include  \n\u003cul\u003e\n\u003cli\u003e{@code globalServiceId} from ATSC A/331. ex (please add one)\n\u003cli\u003e Other broadcast ID provider.  ex http://example.com/tv_channel/1234\n\u003c/ul\u003e",
+      "range": {
+        "startLine": 2423,
+        "startChar": 11,
+        "endLine": 2423,
+        "endChar": 85
+      },
+      "revId": "f8f616e752efe8c052abcd3f2eeaf2db0eb6cd93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e85f8825_2b56031c",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2429,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-09-27T18:20:00Z",
+      "side": 1,
+      "message": "COLUMN_URI",
+      "range": {
+        "startLine": 2429,
+        "startChar": 35,
+        "endLine": 2429,
+        "endChar": 67
+      },
+      "revId": "f8f616e752efe8c052abcd3f2eeaf2db0eb6cd93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
