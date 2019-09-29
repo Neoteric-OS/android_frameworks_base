@@ -600,10 +600,17 @@ public abstract class CompoundButton extends Button implements Checkable {
 
     @Override
     public void onRestoreInstanceState(Parcelable state) {
-        SavedState ss = (SavedState) state;
-
-        super.onRestoreInstanceState(ss.getSuperState());
-        setChecked(ss.checked);
+        if(state instanceof AbsSavedState){
+            AbsSavedState absState = (AbsSavedState) state;
+            super.onRestoreInstanceState(absState.getSuperState());
+            if(state instanceof SavedState){
+                SavedState ss = (SavedState) state;
+                setChecked(ss.checked);
+            }
+            requestLayout();
+            return;
+        }
+        super.onRestoreInstanceState(state);
         requestLayout();
     }
 
