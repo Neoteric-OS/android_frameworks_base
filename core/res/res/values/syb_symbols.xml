@@ -1,0 +1,6 @@
+<resources>
+
+    <!-- The location of the devices physical tri state switch -->
+    <java-symbol type="integer" name="config_alertSliderLocation" />
+
+</resources>
