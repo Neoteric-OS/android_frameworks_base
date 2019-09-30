@@ -375,6 +375,7 @@ package android.app {
   }
 
   public class UiModeManager {
+    method public void enableCarMode(@IntRange(from=0) int, int);
     method public boolean isNightModeLocked();
     method public boolean isUiModeLocked();
   }
