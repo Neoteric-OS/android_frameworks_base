@@ -1,0 +1,602 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e72baae_b61c5a19",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3272,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "Suggest to break the registerNetworkCallback description from the requestNetwork description via separate paragraphs to help readers see which descriptions apply to which.",
+      "range": {
+        "startLine": 3272,
+        "startChar": 82,
+        "endLine": 3272,
+        "endChar": 85
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4494c1e_54ade0ca",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3276,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "The thrust of this sentence is that the onAvailable() ceases to track or otherwise care about the previous onAvailable() network the moment this is invoked. If there\u0027s a way to emphasize that I think it would be good. See above comment to further clarify that this sentence only applies to requestNetwork() behavior.",
+      "range": {
+        "startLine": 3275,
+        "startChar": 10,
+        "endLine": 3276,
+        "endChar": 51
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b00cd97_6bcec454",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3296,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "is onLost() called when a network is *expected* to be lost (but could somehow survive), or is it only called when a network is guaranteed to be lost (providing a grace period)? If it\u0027s \"expected\" then I\u0027d suggest clarifying.",
+      "range": {
+        "startLine": 3296,
+        "startChar": 38,
+        "endLine": 3296,
+        "endChar": 43
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4edeb70d_1b00ac64",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3304,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "suggest \"within the callback: the behavior of this is undefined (due to potential race conditions).\"\n\nDevelopers are familiar with the concept of UBI, so leveraging that kind of terminology makes sense. I\u0027d like to start seeing it adopted in more places.",
+      "range": {
+        "startLine": 3303,
+        "startChar": 96,
+        "endLine": 3304,
+        "endChar": 61
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1069c702_e264cd7e",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3316,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "nit: remove comma.",
+      "range": {
+        "startLine": 3316,
+        "startChar": 53,
+        "endLine": 3316,
+        "endChar": 54
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c5438ac_0821c34f",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3328,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "nit space, and suggest to adopt the same sentence pattern for this as the one above (regardless of whether the one above is updated to use UBI language).",
+      "range": {
+        "startLine": 3328,
+        "startChar": 60,
+        "endLine": 3328,
+        "endChar": 62
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba952778_f5afe47c",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3353,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "same comment about ensuring the language is consistent across all UBI disclaimers.",
+      "range": {
+        "startLine": 3352,
+        "startChar": 35,
+        "endLine": 3353,
+        "endChar": 78
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316add1b_6733d95d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3386,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "It would be nice to give developers an idea of how they should behave in this case / what they should expect. Is this going to result in blocking sockets? EAGAIN? IOExceptions? Even if the language is informative/non-comprehensive I think that\u0027s still helpful.",
+      "range": {
+        "startLine": 3384,
+        "startChar": 11,
+        "endLine": 3386,
+        "endChar": 81
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7864c9_a90d180d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3658,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "preserve? maintain?",
+      "range": {
+        "startLine": 3658,
+        "startChar": 72,
+        "endLine": 3658,
+        "endChar": 79
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32284bb4_46e8e15f",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3659,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "while always attempting to match the request to a better network if available.",
+      "range": {
+        "startLine": 3659,
+        "startChar": 28,
+        "endLine": 3659,
+        "endChar": 66
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb5ac79_ea68c99f",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3661,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "do we use \"invoke\" or \"call\"? I don\u0027t really know.",
+      "range": {
+        "startLine": 3661,
+        "startChar": 29,
+        "endLine": 3661,
+        "endChar": 36
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf91995_f70387fd",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3661,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "provided?",
+      "range": {
+        "startLine": 3661,
+        "startChar": 89,
+        "endLine": 3661,
+        "endChar": 95
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c8d9c9_eff6671e",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3663,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "nit",
+      "range": {
+        "startLine": 3663,
+        "startChar": 41,
+        "endLine": 3663,
+        "endChar": 42
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a63c92d_32bbc5d2",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3665,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "A network not matching any networkRequest() may be disconnected at any time...",
+      "range": {
+        "startLine": 3663,
+        "startChar": 0,
+        "endLine": 3665,
+        "endChar": 14
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca49fed_f9a522de",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3669,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "I don\u0027t think this is true. Maybe I\u0027m reading something other than what was intended.",
+      "range": {
+        "startLine": 3667,
+        "startChar": 7,
+        "endLine": 3669,
+        "endChar": 77
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b06c1d6_fee79992",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3670,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "nit: remove comma.\n\nThis section could use an overall scrub of syntax/punctuation.",
+      "range": {
+        "startLine": 3670,
+        "startChar": 76,
+        "endLine": 3670,
+        "endChar": 77
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47428f0_2f235730",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3670,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "inform the system",
+      "range": {
+        "startLine": 3670,
+        "startChar": 13,
+        "endLine": 3670,
+        "endChar": 32
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aadb601_2667660b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3671,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "the word \"best\" is used a lot in this API documentation but there\u0027s never any explanation of what this very qualitative term means in this context. Even though it literally means \"whatever the ConnectivityService feels like declaring the winner\", it would probably be useful to explain that *somewhere*.",
+      "range": {
+        "startLine": 3671,
+        "startChar": 77,
+        "endLine": 3671,
+        "endChar": 81
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4a3212_f951169d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3674,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "\"Callers may/will learn\"",
+      "range": {
+        "startLine": 3674,
+        "startChar": 35,
+        "endLine": 3674,
+        "endChar": 73
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63233708_0af1770a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3678,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "nit: colloquial\n\nSomething like \"The {} will only invoked due to changes in the best network...\"",
+      "range": {
+        "startLine": 3678,
+        "startChar": 41,
+        "endLine": 3678,
+        "endChar": 45
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a4fa0f_aca58677",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3679,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "; therefore,",
+      "range": {
+        "startLine": 3679,
+        "startChar": 7,
+        "endLine": 3679,
+        "endChar": 16
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d845ab7b_46cc057a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3679,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "becomes available?",
+      "range": {
+        "startLine": 3679,
+        "startChar": 60,
+        "endLine": 3679,
+        "endChar": 68
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277da5ef_6e59e703",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3680,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "I don\u0027t think this says what\u0027s intended. It says that the only callback that will be invoked for the new network is onAvailable(), but instead I think it means that callbacks will only be invoked for the new network.",
+      "range": {
+        "startLine": 3680,
+        "startChar": 52,
+        "endLine": 3680,
+        "endChar": 89
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb3b04e_03e11bdd",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3682,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "Is the implementation detail of the \"Connectivity thread\" documented for users already? (just a ?)",
+      "range": {
+        "startLine": 3682,
+        "startChar": 34,
+        "endLine": 3682,
+        "endChar": 88
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a499c39_beef5ed5",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3728,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "suggest to use an @see annotation.",
+      "range": {
+        "startLine": 3728,
+        "startChar": 7,
+        "endLine": 3728,
+        "endChar": 41
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb45805_fa21fa7f",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3785,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-09-30T19:22:48Z",
+      "side": 1,
+      "message": "suggest @see",
+      "range": {
+        "startLine": 3785,
+        "startChar": 12,
+        "endLine": 3785,
+        "endChar": 18
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
