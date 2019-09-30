@@ -95,4 +95,11 @@ interface IPlatformCompat
      * @return {@code true} if the change is enabled for the current app.
      */
     boolean isChangeEnabledByPackageName(long changeId, in String packageName);
+
+    /**
+     * Clears information stored about events reported on behalf of an app.
+     * To be called once upon app start or end. A second call would be a no-op.
+     * @param appInfo the app to reset
+     */
+    void resetReporting(in ApplicationInfo appInfo);
 }

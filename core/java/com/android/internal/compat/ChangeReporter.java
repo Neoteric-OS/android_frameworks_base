@@ -22,7 +22,9 @@ import android.util.StatsLog;
 
 import com.android.internal.annotations.GuardedBy;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -36,12 +38,10 @@ public final class ChangeReporter {
     private int mSource;
 
     private final class ChangeReport {
-        int mUid;
         long mChangeId;
         int mState;
 
-        ChangeReport(int uid, long changeId, int state) {
-            mUid = uid;
+        ChangeReport(long changeId, int state) {
             mChangeId = changeId;
             mState = state;
         }
@@ -51,19 +51,18 @@ public final class ChangeReporter {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             ChangeReport that = (ChangeReport) o;
-            return mUid == that.mUid
-                    && mChangeId == that.mChangeId
+            return mChangeId == that.mChangeId
                     && mState == that.mState;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(mUid, mChangeId, mState);
+            return Objects.hash(mChangeId, mState);
         }
     }
 
     @GuardedBy("mReportedChanges")
-    private Set<ChangeReport> mReportedChanges =  new HashSet<>();
+    private Map<Integer, Set<ChangeReport>> mReportedChanges =  new HashMap<>();
 
     public ChangeReporter(int source) {
         mSource = source;
@@ -77,14 +76,28 @@ public final class ChangeReporter {
      * @param state    of the reported change - enabled/disabled/only logged
      */
     public void reportChange(int uid, long changeId, int state) {
-        ChangeReport report = new ChangeReport(uid, changeId, state);
+        ChangeReport report = new ChangeReport(changeId, state);
         synchronized (mReportedChanges) {
-            if (!mReportedChanges.contains(report)) {
+            mReportedChanges.putIfAbsent(uid, new HashSet<ChangeReport>());
+            Set<ChangeReport> reportedChangesForUid = mReportedChanges.get(uid);
+            if (!reportedChangesForUid.contains(report)) {
                 debugLog(uid, changeId, state);
                 StatsLog.write(StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED, uid, changeId,
                         state, mSource);
-                mReportedChanges.add(report);
+                reportedChangesForUid.add(report);
             }
+
+        }
+    }
+
+    /**
+     * Clears the saved information about a given uid.
+     * Requests to report uid again will be reported regardless to the past reports.
+     * @param uid to reset
+     */
+    public void resetReporting(int uid) {
+        synchronized (mReportedChanges) {
+            mReportedChanges.remove(uid);
         }
     }
 

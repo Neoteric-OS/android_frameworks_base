@@ -86,6 +86,11 @@ public class PlatformCompat extends IPlatformCompat.Stub {
         CompatConfig.get().dumpConfig(pw);
     }
 
+    @Override
+    public void resetReporting(ApplicationInfo appInfo) {
+        mChangeReporter.resetReporting(appInfo.uid);
+    }
+
     private ApplicationInfo getApplicationInfo(String packageName) {
         try {
             return mContext.getPackageManager().getApplicationInfo(packageName, 0);
