@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "311227fa_963db790",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-30T10:12:38Z",
+      "side": 1,
+      "message": "Strongly agree",
+      "parentUuid": "3dcfb6af_3eddce82",
+      "range": {
+        "startLine": 2223,
+        "startChar": 12,
+        "endLine": 2223,
+        "endChar": 24
+      },
+      "revId": "a27d26df4fff813aba2a958cf29b064247b99f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb55ae7c_bd2cf8db",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-09-27T08:05:01Z",
       "side": 1,
       "message": "nit: ditto.\nbut might not be worth to respin. please ignore.",
+      "range": {
+        "startLine": 329,
+        "startChar": 36,
+        "endLine": 329,
+        "endChar": 50
+      },
+      "revId": "a27d26df4fff813aba2a958cf29b064247b99f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7af3126f_f07680e8",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-30T10:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb55ae7c_bd2cf8db",
       "range": {
         "startLine": 329,
         "startChar": 36,
