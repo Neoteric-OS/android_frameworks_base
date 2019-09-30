@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3dcfb6af_3eddce82",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-30T09:03:58Z",
+      "side": 1,
+      "message": "Nit: I\u0027d personally prefer \"return\" here, then type could be final and uninitialized.\nBut that may just be a personal preference, so I\u0027m happy with this submitted as-is.",
+      "range": {
+        "startLine": 2223,
+        "startChar": 12,
+        "endLine": 2223,
+        "endChar": 24
+      },
+      "revId": "a27d26df4fff813aba2a958cf29b064247b99f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb55ae7c_bd2cf8db",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 2
