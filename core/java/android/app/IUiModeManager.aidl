@@ -25,12 +25,13 @@ interface IUiModeManager {
      * Enables the car mode. Only the system can do this.
      * @hide
      */
-    void enableCarMode(int flags);
+    void enableCarMode(int flags, int priority, String callingPackage);
 
     /**
-     * Disables the car mode.
+     * Disables car mode.
      */
-    void disableCarMode(int flags);
+    @UnsupportedAppUsage(maxTargetSdk = 28)
+    void disableCarMode(int flags, String callingPackage);
 
     /**
      * Return the current running mode.
