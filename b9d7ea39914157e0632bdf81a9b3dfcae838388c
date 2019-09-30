@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8589290f_6952fe35",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2433,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-09-30T21:02:47Z",
+      "side": 1,
+      "message": "Sorry for the churn.  COLUMN_CONTENT_ID was a better name.",
+      "range": {
+        "startLine": 2433,
+        "startChar": 35,
+        "endLine": 2433,
+        "endChar": 53
+      },
+      "revId": "b9d7ea39914157e0632bdf81a9b3dfcae838388c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "092c02d6_a21998b8",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2595,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-09-30T21:02:47Z",
+      "side": 1,
+      "message": "Use the same \u003cul\u003e formatting as channel?",
+      "range": {
+        "startLine": 2594,
+        "startChar": 12,
+        "endLine": 2595,
+        "endChar": 78
+      },
+      "revId": "b9d7ea39914157e0632bdf81a9b3dfcae838388c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d1fd5c_14a5eb8b",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2598,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-09-30T21:02:47Z",
+      "side": 1,
+      "message": "Is this always a URI?\n\nI would prefer this is included anytime a URI is available.",
+      "range": {
+        "startLine": 2598,
+        "startChar": 23,
+        "endLine": 2598,
+        "endChar": 46
+      },
+      "revId": "b9d7ea39914157e0632bdf81a9b3dfcae838388c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d840db_86826f8c",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2609,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-09-30T21:02:47Z",
+      "side": 1,
+      "message": "Use the same \u003cul\u003e formatting as channel.",
+      "range": {
+        "startLine": 2607,
+        "startChar": 9,
+        "endLine": 2609,
+        "endChar": 73
+      },
+      "revId": "b9d7ea39914157e0632bdf81a9b3dfcae838388c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec84c9d_877bc450",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2625,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-09-30T21:02:47Z",
+      "side": 1,
+      "message": "Use the same \u003cul\u003e formatting as channel.",
+      "range": {
+        "startLine": 2621,
+        "startChar": 21,
+        "endLine": 2625,
+        "endChar": 38
+      },
+      "revId": "b9d7ea39914157e0632bdf81a9b3dfcae838388c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
