@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adb3e40c_a833b3e2",
+        "filename": "tests/BootImageProfileTest/src/com/android/bootimageprofile/BootImageProfileTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2019-10-01T23:08:39Z",
+      "side": 1,
+      "message": "nit: there\u0027s an extra new line.",
+      "revId": "bafd39c1cb3ffc4210bf98baec9f61dfbbaa7ca8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
