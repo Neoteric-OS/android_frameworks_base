@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "529a5f95_929dea55",
+        "filename": "core/res/res/values-mcc440-mnc10-ja/config-tethering.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-10-01T03:21:59Z",
+      "side": 1,
+      "message": "\u003c/item\u003e",
+      "range": {
+        "startLine": 27,
+        "startChar": 22,
+        "endLine": 27,
+        "endChar": 28
+      },
+      "revId": "0f4ffe43a4c960e899f4ebac821ca7f72800debe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4b331d_30c40423",
+        "filename": "core/res/res/values/config-tethering.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-10-01T03:21:59Z",
+      "side": 1,
+      "message": "Could this be in the same plural as below, with quantity\u003d0 ?",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 58
+      },
+      "revId": "0f4ffe43a4c960e899f4ebac821ca7f72800debe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
