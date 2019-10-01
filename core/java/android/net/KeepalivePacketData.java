@@ -19,6 +19,7 @@ package android.net;
 import static android.net.SocketKeepalive.ERROR_INVALID_IP_ADDRESS;
 import static android.net.SocketKeepalive.ERROR_INVALID_PORT;
 
+import android.annotation.SystemApi;
 import android.net.SocketKeepalive.InvalidPacketException;
 import android.net.util.IpUtils;
 import android.os.Parcel;
@@ -33,6 +34,7 @@ import java.net.InetAddress;
  *
  * @hide
  */
+@SystemApi
 public class KeepalivePacketData implements Parcelable {
     private static final String TAG = "KeepalivePacketData";
 
@@ -51,11 +53,10 @@ public class KeepalivePacketData implements Parcelable {
     /** Packet data. A raw byte string of packet data, not including the link-layer header. */
     private final byte[] mPacket;
 
-    protected static final int IPV4_HEADER_LENGTH = 20;
-    protected static final int UDP_HEADER_LENGTH = 8;
-
-    // This should only be constructed via static factory methods, such as
-    // nattKeepalivePacket
+    /**
+     * This should only be constructed via static factory methods, such as
+     * nattKeepalivePacket.
+     */
     protected KeepalivePacketData(InetAddress srcAddress, int srcPort,
             InetAddress dstAddress, int dstPort, byte[] data) throws InvalidPacketException {
         this.srcAddress = srcAddress;
@@ -82,12 +83,20 @@ public class KeepalivePacketData implements Parcelable {
         return mPacket.clone();
     }
 
-    /* Parcelable Implementation */
+    /**
+     * Parcelable Implementation
+     *
+     * @hide
+     */
     public int describeContents() {
         return 0;
     }
 
-    /** Write to parcel */
+    /**
+     * Write to parcel
+     *
+     * @hide
+     */
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(srcAddress.getHostAddress());
         out.writeString(dstAddress.getHostAddress());
@@ -104,7 +113,11 @@ public class KeepalivePacketData implements Parcelable {
         mPacket = in.createByteArray();
     }
 
-    /** Parcelable Creator */
+    /**
+     * Parcelable Creator
+     *
+     * @hide
+     */
     public static final @android.annotation.NonNull Parcelable.Creator<KeepalivePacketData> CREATOR =
             new Parcelable.Creator<KeepalivePacketData>() {
                 public KeepalivePacketData createFromParcel(Parcel in) {

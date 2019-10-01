@@ -20,6 +20,7 @@ import android.annotation.IntDef;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.os.Binder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
@@ -152,6 +153,7 @@ public abstract class SocketKeepalive implements AutoCloseable {
      * See the error code for details.
      * @hide
      */
+    @SystemApi
     public static class InvalidPacketException extends ErrorCodeException {
         public InvalidPacketException(final int error) {
             super(error);
