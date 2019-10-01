@@ -22,8 +22,12 @@ import android.os.Build;
 import android.os.SystemProperties;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.ArrayMap;
 
 import com.android.internal.R;
+
+import java.util.Arrays;
+import java.util.Map;
 
 /**
  * AmbientDisplayConfiguration encapsulates reading access to the configuration of ambient display.
@@ -35,6 +39,20 @@ public class AmbientDisplayConfiguration {
 
     private final Context mContext;
     private final boolean mAlwaysOnByDefault;
+
+    /** Copied from android.provider.Settings.Secure since these keys are hidden. */
+    private static final String[] DOZE_SETTINGS = {
+            Settings.Secure.DOZE_ENABLED,
+            Settings.Secure.DOZE_ALWAYS_ON,
+            Settings.Secure.DOZE_PICK_UP_GESTURE,
+            Settings.Secure.DOZE_PULSE_ON_LONG_PRESS,
+            Settings.Secure.DOZE_DOUBLE_TAP_GESTURE,
+            Settings.Secure.DOZE_WAKE_LOCK_SCREEN_GESTURE,
+            Settings.Secure.DOZE_WAKE_DISPLAY_GESTURE,
+            Settings.Secure.DOZE_TAP_SCREEN_GESTURE
+    };
+
+    final Map<String, String> mInitialValues = new ArrayMap<>();
 
     /** {@hide} */
     @TestApi
@@ -240,5 +258,35 @@ public class AmbientDisplayConfiguration {
 
     private boolean boolSetting(String name, int user, int def) {
         return Settings.Secure.getIntForUser(mContext.getContentResolver(), name, def, user) != 0;
+    }
+
+    /** {@hide} */
+    @TestApi
+    public void disableDozeSettings() {
+        if (!mInitialValues.isEmpty()) {
+            throw new AssertionError("Don't call #disableDozeSettings more than once," +
+                    "without first calling #restoreDozeSettings");
+        }
+        Arrays.stream(DOZE_SETTINGS).forEach(name -> mInitialValues.put(name,
+                getDozeSetting(name)));
+        Arrays.stream(DOZE_SETTINGS).forEach(name -> putDozeSetting(name, "0"));
+    }
+
+    /** {@hide} */
+    @TestApi
+    public void restoreDozeSettings() {
+        if (!mInitialValues.isEmpty()) {
+            Arrays.stream(DOZE_SETTINGS).forEach(name -> putDozeSetting(name,
+                    mInitialValues.get(name)));
+            mInitialValues.clear();
+        }
+    }
+
+    private String getDozeSetting(String name) {
+        return Settings.Secure.getString(mContext.getContentResolver(), name);
+    }
+
+    private void putDozeSetting(String name, String value) {
+        Settings.Secure.putString(mContext.getContentResolver(), name, value);
     }
 }
