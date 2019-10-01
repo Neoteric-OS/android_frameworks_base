@@ -205,7 +205,7 @@ public class InetDiagSocketTest {
     public void testB141603906() throws Exception {
         final InetSocketAddress src = new InetSocketAddress(0);
         final InetSocketAddress dst = new InetSocketAddress(0);
-        for (int i = 1; i <= 100000; i++) {
+        for (int i = 1; i <= 20000; i++) {
             mCm.getConnectionOwnerUid(IPPROTO_TCP, src, dst);
         }
     }
