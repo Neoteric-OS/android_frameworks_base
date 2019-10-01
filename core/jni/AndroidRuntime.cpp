@@ -712,6 +712,7 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote, bool p
         addOption("-Xps-profile-boot-class-path");
         addOption("-Xps-profile-aot-code");
         addOption("-Xjitsaveprofilinginfo");
+        addOption("-XX:DeoptimizeBootImage");
     }
 
     std::string use_apex_image_flag =
