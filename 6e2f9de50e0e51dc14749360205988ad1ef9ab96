@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a210a939_6eb9d694",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-10-01T09:39:05Z",
+      "side": 1,
+      "message": "See my comment in the other CL. How about just using --count-hotness-in-compiled-code (or -Xps-profile-boot-class-path)?",
+      "range": {
+        "startLine": 715,
+        "startChar": 18,
+        "endLine": 715,
+        "endChar": 43
+      },
+      "revId": "6e2f9de50e0e51dc14749360205988ad1ef9ab96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
