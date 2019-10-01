@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
+import android.hardware.display.AmbientDisplayConfiguration;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Process;
@@ -631,21 +632,9 @@ public class UserRestrictionsUtils {
                     break;
                 case UserManager.DISALLOW_AMBIENT_DISPLAY:
                     if (newValue) {
-                        android.provider.Settings.Secure.putIntForUser(
-                                context.getContentResolver(),
-                                Settings.Secure.DOZE_ENABLED, 0, userId);
-                        android.provider.Settings.Secure.putIntForUser(
-                                context.getContentResolver(),
-                                Settings.Secure.DOZE_ALWAYS_ON, 0, userId);
-                        android.provider.Settings.Secure.putIntForUser(
-                                context.getContentResolver(),
-                                Settings.Secure.DOZE_PICK_UP_GESTURE, 0, userId);
-                        android.provider.Settings.Secure.putIntForUser(
-                                context.getContentResolver(),
-                                Settings.Secure.DOZE_PULSE_ON_LONG_PRESS, 0, userId);
-                        android.provider.Settings.Secure.putIntForUser(
-                                context.getContentResolver(),
-                                Settings.Secure.DOZE_DOUBLE_TAP_GESTURE, 0, userId);
+                        final AmbientDisplayConfiguration mConfiguration =
+                                new AmbientDisplayConfiguration(context);
+                        mConfiguration.disableDozeSettings();
                     }
                     break;
                 case UserManager.DISALLOW_CONFIG_LOCATION:
