@@ -45,6 +45,30 @@
       "revId": "0f4ffe43a4c960e899f4ebac821ca7f72800debe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e2c4f4_96b8a4c6",
+        "filename": "core/res/res/values/config-tethering.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-01T09:58:26Z",
+      "side": 1,
+      "message": "No. https://developer.android.com/guide/topics/resources/string-resource.html#Plurals\n\nThe entire thing is worth reading but the most illuminating paragraph on your very specific question is :\n\n  The selection of which string to use is made solely based on grammatical necessity. In\n  English, a string for zero is ignored even if the quantity is 0, because 0 isn\u0027t\n  grammatically different from 2, or any other number except 1 (\"zero books\", \"one book\", \"two\n  books\", and so on). Conversely, in Korean only the other string is ever used.",
+      "parentUuid": "bd4b331d_30c40423",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 58
+      },
+      "revId": "0f4ffe43a4c960e899f4ebac821ca7f72800debe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
