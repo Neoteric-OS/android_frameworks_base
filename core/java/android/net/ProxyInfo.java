@@ -16,8 +16,8 @@
 
 package android.net;
 
-
-import android.annotation.UnsupportedAppUsage;
+import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
@@ -90,10 +90,8 @@ public class ProxyInfo implements Parcelable {
 
     /**
      * Create a ProxyProperties that points at a HTTP Proxy.
-     * @hide
      */
-    @UnsupportedAppUsage
-    public ProxyInfo(String host, int port, String exclList) {
+    public ProxyInfo(@Nullable String host, int port, @Nullable String exclList) {
         mHost = host;
         mPort = port;
         mExclusionList = exclList;
@@ -103,9 +101,8 @@ public class ProxyInfo implements Parcelable {
 
     /**
      * Create a ProxyProperties that points at a PAC URL.
-     * @hide
      */
-    public ProxyInfo(Uri pacFileUrl) {
+    public ProxyInfo(@NonNull Uri pacFileUrl) {
         mHost = LOCAL_HOST;
         mPort = LOCAL_PORT;
         mExclusionList = LOCAL_EXCL_LIST;
@@ -160,10 +157,7 @@ public class ProxyInfo implements Parcelable {
     }
 
     // copy constructor instead of clone
-    /**
-     * @hide
-     */
-    public ProxyInfo(ProxyInfo source) {
+    public ProxyInfo(@Nullable ProxyInfo source) {
         if (source != null) {
             mHost = source.getHost();
             mPort = source.getPort();
@@ -226,6 +220,7 @@ public class ProxyInfo implements Parcelable {
      * comma separated
      * @hide
      */
+    @Nullable
     public String getExclusionListAsString() {
         return mExclusionList;
     }

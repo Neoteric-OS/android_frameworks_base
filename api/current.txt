@@ -28933,6 +28933,9 @@ package android.net {
   }
 
   public class ProxyInfo implements android.os.Parcelable {
+    ctor public ProxyInfo(@Nullable String, int, @Nullable String);
+    ctor public ProxyInfo(@NonNull android.net.Uri);
+    ctor public ProxyInfo(@Nullable android.net.ProxyInfo);
     method public static android.net.ProxyInfo buildDirectProxy(String, int);
     method public static android.net.ProxyInfo buildDirectProxy(String, int, java.util.List<java.lang.String>);
     method public static android.net.ProxyInfo buildPacProxy(android.net.Uri);
