@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0723a2c1_29bd2db0",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3276,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Addition LGTM.",
+      "parentUuid": "c7ae33d7_da2d403c",
+      "range": {
+        "startLine": 3275,
+        "startChar": 10,
+        "endLine": 3276,
+        "endChar": 51
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b00cd97_6bcec454",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "5f14d10f_af519061",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3296,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "If there\u0027s nothing stronger to say then this seems fine to me.",
+      "parentUuid": "8556fa7e_dc5cad5c",
+      "range": {
+        "startLine": 3296,
+        "startChar": 38,
+        "endLine": 3296,
+        "endChar": 43
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4edeb70d_1b00ac64",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "UBI has a pretty strict meaning in many contexts and I don\u0027t think this is it. This is guaranteed not to make demons fly out of you nose. That\u0027s why I don\u0027t like too much this wording here.\n\nUsed the wording in onLost, as I think it\u0027s the best we have.",
       "parentUuid": "4edeb70d_1b00ac64",
+      "range": {
+        "startLine": 3303,
+        "startChar": 96,
+        "endLine": 3304,
+        "endChar": 61
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa79b981_698cad21",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3304,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "LGTM",
+      "parentUuid": "b9816456_1d8cb7e9",
       "range": {
         "startLine": 3303,
         "startChar": 96,
@@ -284,6 +356,30 @@
     },
     {
       "key": {
+        "uuid": "08864671_9d8cbc9e",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3328,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78c5bd76_3a270d32",
+      "range": {
+        "startLine": 3328,
+        "startChar": 60,
+        "endLine": 3328,
+        "endChar": 62
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba952778_f5afe47c",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -319,6 +415,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "ba952778_f5afe47c",
+      "range": {
+        "startLine": 3352,
+        "startChar": 35,
+        "endLine": 3353,
+        "endChar": 78
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1442c75b_23b9914d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3353,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1413240_1ab76767",
       "range": {
         "startLine": 3352,
         "startChar": 35,
@@ -378,6 +498,30 @@
     },
     {
       "key": {
+        "uuid": "cde80e25_f76eedf8",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3386,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ca40215_58aa4b5f",
+      "range": {
+        "startLine": 3384,
+        "startChar": 11,
+        "endLine": 3386,
+        "endChar": 81
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e7864c9_a90d180d",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -425,6 +569,30 @@
     },
     {
       "key": {
+        "uuid": "2ed8a15b_a03a03c1",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3658,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a40ae90_ac1f2d39",
+      "range": {
+        "startLine": 3658,
+        "startChar": 72,
+        "endLine": 3658,
+        "endChar": 79
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32284bb4_46e8e15f",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -460,6 +628,30 @@
       "side": 1,
       "message": "Took your description, only replacing \"if available\" with \"if possible\" ; the nuance I see is that requestNetwork will actively try to bring up a better network, not just match it to a better one if a better one happens to be available.",
       "parentUuid": "32284bb4_46e8e15f",
+      "range": {
+        "startLine": 3659,
+        "startChar": 28,
+        "endLine": 3659,
+        "endChar": 66
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b44fa4fb_30bd8642",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3659,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67c628fa_5f26ff9b",
       "range": {
         "startLine": 3659,
         "startChar": 28,
@@ -566,6 +758,30 @@
     },
     {
       "key": {
+        "uuid": "474cee41_ef3cfd77",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3661,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "962ac0b0_545a923a",
+      "range": {
+        "startLine": 3661,
+        "startChar": 29,
+        "endLine": 3661,
+        "endChar": 36
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57c8d9c9_eff6671e",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -660,6 +876,30 @@
     },
     {
       "key": {
+        "uuid": "8bb8ce89_e026f654",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3665,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c0d1fa7_2c291965",
+      "range": {
+        "startLine": 3663,
+        "startChar": 0,
+        "endLine": 3665,
+        "endChar": 14
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ca49fed_f9a522de",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -704,6 +944,30 @@
       "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a17c147_15945a07",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3669,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "I think the part that isn\u0027t correct is that if the cellular radio is turned off, this won\u0027t turn it on. If the cellular radio is IDLE and doesn\u0027t have the requested logical connection, then this will attempt to establish a logical connection (which usually entails bringing the radio to ACTIVE before it potentially returns to IDLE). I now understand what you\u0027re saying, but in Android land cell radio power OFF is only done in Airplane Mode (and has specific semantic meaning). Otherwise it\u0027s ON and in some indeterminate power state which could be idle (RX-only) or one of a number of connected states... is just won\u0027t be OFF nor will this turn it on. I have a feeling that re-wording this to elide the implementation details of the cellular radio would suffice. If you want a note about power, you could add that too:\n\nMaybe:\n\"...use this method to obtain a cellular data connection, even if the already has a data connection over Ethernet. This may cause the cellular radio to consume additional power.\"",
+      "parentUuid": "87139497_9ecfeda0",
+      "range": {
+        "startLine": 3667,
+        "startChar": 7,
+        "endLine": 3669,
+        "endChar": 77
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
@@ -801,6 +1065,54 @@
     },
     {
       "key": {
+        "uuid": "6acaa7b2_d882f78b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3670,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Once it\u0027s all otherwise golden I can try a final pass on punctuation. It\u0027s not the most important thing, and I\u0027m sure to miss something anyway, but it\u0027s worth a shot (and happy to help in my monoglot capacity).",
+      "parentUuid": "cba41415_25fceb60",
+      "range": {
+        "startLine": 3670,
+        "startChar": 76,
+        "endLine": 3670,
+        "endChar": 77
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d40f4fa_943b001b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3670,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6a2bba_f503ff43",
+      "range": {
+        "startLine": 3670,
+        "startChar": 13,
+        "endLine": 3670,
+        "endChar": 32
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aadb601_2667660b",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -836,6 +1148,30 @@
       "side": 1,
       "message": "I think in this context \"best\" means exactly that : \"what the system thinks is the network you would prefer\". I also explicitly do not want to make any specific commitment. I thought \"best\" would be taken to mean that. Do you disagree and do you have any specific idea on how to improve ?",
       "parentUuid": "1aadb601_2667660b",
+      "range": {
+        "startLine": 3671,
+        "startChar": 77,
+        "endLine": 3671,
+        "endChar": 81
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f7599d8_44fc4c54",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3671,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "It might just be helpful to say somewhere that \"best\" is intentionally nebulous and subject to change. It puts folks on notice/sets expectations not to get fussy if the interpretation of \"best\" evolves over time.",
+      "parentUuid": "b70e43de_d2198560",
       "range": {
         "startLine": 3671,
         "startChar": 77,
@@ -895,6 +1231,30 @@
     },
     {
       "key": {
+        "uuid": "45476d55_5e8c5644",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3674,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcf24e56_4784d67f",
+      "range": {
+        "startLine": 3674,
+        "startChar": 35,
+        "endLine": 3674,
+        "endChar": 73
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63233708_0af1770a",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -930,6 +1290,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "63233708_0af1770a",
+      "range": {
+        "startLine": 3678,
+        "startChar": 41,
+        "endLine": 3678,
+        "endChar": 45
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2183dd2_881b87c0",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3678,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "608e6fb6_5700bb98",
       "range": {
         "startLine": 3678,
         "startChar": 41,
@@ -1036,6 +1420,54 @@
     },
     {
       "key": {
+        "uuid": "da79bb0f_18c7a9eb",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3679,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbb22a42_5ada3acc",
+      "range": {
+        "startLine": 3679,
+        "startChar": 60,
+        "endLine": 3679,
+        "endChar": 68
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c35032d3_f94b3cab",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3679,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54f3c750_410ee1b5",
+      "range": {
+        "startLine": 3679,
+        "startChar": 7,
+        "endLine": 3679,
+        "endChar": 16
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "277da5ef_6e59e703",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -1071,6 +1503,30 @@
       "side": 1,
       "message": "I made it :\n\"when a better network matching the request becomes available, the {} method is called with the new network after which no further updates are given about the previously-best network\"\nWhat do you think ?",
       "parentUuid": "277da5ef_6e59e703",
+      "range": {
+        "startLine": 3680,
+        "startChar": 52,
+        "endLine": 3680,
+        "endChar": 89
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "812a568a_c69e7f9f",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3680,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c86647e6_82546234",
       "range": {
         "startLine": 3680,
         "startChar": 52,
@@ -1130,6 +1586,30 @@
     },
     {
       "key": {
+        "uuid": "20b1cadf_3023ffe8",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3682,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "As long as the meaning of \"connectivity thread\" is documented then it seems fine.",
+      "parentUuid": "2494cb49_8fffea01",
+      "range": {
+        "startLine": 3682,
+        "startChar": 34,
+        "endLine": 3682,
+        "endChar": 88
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a499c39_beef5ed5",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -1177,6 +1657,30 @@
     },
     {
       "key": {
+        "uuid": "2f43f800_9a35411f",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3728,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Usually the @see are at the bottom, but this seems fine when I look at it now. Not sure why I flagged this.",
+      "parentUuid": "1b927b31_94388b61",
+      "range": {
+        "startLine": 3728,
+        "startChar": 7,
+        "endLine": 3728,
+        "endChar": 41
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eb45805_fa21fa7f",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -1212,6 +1716,30 @@
       "side": 1,
       "message": "Ditto",
       "parentUuid": "5eb45805_fa21fa7f",
+      "range": {
+        "startLine": 3785,
+        "startChar": 12,
+        "endLine": 3785,
+        "endChar": 18
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24989de3_e134d8a4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3785,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-02T22:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "794e9914_fc8fc759",
       "range": {
         "startLine": 3785,
         "startChar": 12,
