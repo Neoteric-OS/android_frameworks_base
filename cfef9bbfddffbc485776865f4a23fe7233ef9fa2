@@ -22,6 +22,30 @@
       "revId": "cfef9bbfddffbc485776865f4a23fe7233ef9fa2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa844259_9bdcd0f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-02T09:14:36Z",
+      "side": 1,
+      "message": "Had done it, but now it\u0027s in the cover comment",
+      "parentUuid": "5e1e54a2_8268608f",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "cfef9bbfddffbc485776865f4a23fe7233ef9fa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
