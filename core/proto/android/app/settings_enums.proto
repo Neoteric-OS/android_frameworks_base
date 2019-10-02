@@ -2259,6 +2259,11 @@ enum PageId {
     // OS: Q
     SETTINGS_GAME_DRIVER_DASHBOARD = 1613;
 
+    // OPEN: Settings > Developer Options > Platform Compat
+    // CATEGORY: SETTINGS
+    // OS: R
+    SETTINGS_PLATFORM_COMPAT_DASHBOARD = 1614;
+
     // OPEN: Settings > Accessibility > Vibration > Ring vibration
     // CATEGORY: SETTINGS
     // OS: Q
