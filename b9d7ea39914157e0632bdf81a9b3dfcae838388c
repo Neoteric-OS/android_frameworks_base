@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "977bdeba_40d13039",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2433,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-10-02T02:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8589290f_6952fe35",
+      "range": {
+        "startLine": 2433,
+        "startChar": 35,
+        "endLine": 2433,
+        "endChar": 53
+      },
+      "revId": "b9d7ea39914157e0632bdf81a9b3dfcae838388c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "092c02d6_a21998b8",
         "filename": "media/java/android/media/tv/TvContract.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-09-30T21:02:47Z",
       "side": 1,
       "message": "Use the same \u003cul\u003e formatting as channel?",
+      "range": {
+        "startLine": 2594,
+        "startChar": 12,
+        "endLine": 2595,
+        "endChar": 78
+      },
+      "revId": "b9d7ea39914157e0632bdf81a9b3dfcae838388c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74efce5d_645fd32c",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2595,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-10-02T02:10:17Z",
+      "side": 1,
+      "message": "It seems not proper to use ul format for this.\nCould you let me know more details?",
+      "parentUuid": "092c02d6_a21998b8",
       "range": {
         "startLine": 2594,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1a50493b_3b17ffd1",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2598,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-10-02T02:10:17Z",
+      "side": 1,
+      "message": "Programs.COLUMN_EVENT_ID is INTEGER that is defined in MPEG2-TS.",
+      "parentUuid": "b0d1fd5c_14a5eb8b",
+      "range": {
+        "startLine": 2598,
+        "startChar": 23,
+        "endLine": 2598,
+        "endChar": 46
+      },
+      "revId": "b9d7ea39914157e0632bdf81a9b3dfcae838388c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92d840db_86826f8c",
         "filename": "media/java/android/media/tv/TvContract.java",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8fcd9221_55b0c22d",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2609,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-10-02T02:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92d840db_86826f8c",
+      "range": {
+        "startLine": 2607,
+        "startChar": 9,
+        "endLine": 2609,
+        "endChar": 73
+      },
+      "revId": "b9d7ea39914157e0632bdf81a9b3dfcae838388c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ec84c9d_877bc450",
         "filename": "media/java/android/media/tv/TvContract.java",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "b9d7ea39914157e0632bdf81a9b3dfcae838388c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd0edd4_10f19c45",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2625,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-10-02T02:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ec84c9d_877bc450",
+      "range": {
+        "startLine": 2621,
+        "startChar": 21,
+        "endLine": 2625,
+        "endChar": 38
+      },
+      "revId": "b9d7ea39914157e0632bdf81a9b3dfcae838388c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
