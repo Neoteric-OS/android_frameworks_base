@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5147dd16_2c5b1c86",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-10-02T03:52:16Z",
+      "side": 1,
+      "message": "nit: I don\u0027t quite understand the title.\nmaybe just something like: rename CallbackRecord to CallbackEntry ?\nfeel free to ignore this if it is just me.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "129e6750fa6651caf4a24e24adb63097a5075397",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
