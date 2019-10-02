@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7927ff14_98bc0630",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsSmsImplBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-10-02T04:13:29Z",
+      "side": 1,
+      "message": "Message Id is 2 bytes for 3GPP2.",
+      "range": {
+        "startLine": 158,
+        "startChar": 35,
+        "endLine": 158,
+        "endChar": 64
+      },
+      "revId": "a85070e6b1ebbc1de1469f789d6257baf181d0f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015754c8_7f38519d",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsSmsImplBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-10-02T04:13:29Z",
+      "side": 1,
+      "message": "@IntRange()",
+      "range": {
+        "startLine": 247,
+        "startChar": 56,
+        "endLine": 247,
+        "endChar": 74
+      },
+      "revId": "a85070e6b1ebbc1de1469f789d6257baf181d0f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdb9926_dd670b78",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsSmsImplBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-10-02T04:13:29Z",
+      "side": 1,
+      "message": "@IntRange()",
+      "range": {
+        "startLine": 279,
+        "startChar": 49,
+        "endLine": 279,
+        "endChar": 68
+      },
+      "revId": "a85070e6b1ebbc1de1469f789d6257baf181d0f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
