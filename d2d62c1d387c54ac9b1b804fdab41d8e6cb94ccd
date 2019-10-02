@@ -22,6 +22,30 @@
       "revId": "d2d62c1d387c54ac9b1b804fdab41d8e6cb94ccd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7368265a_23d4bba3",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-10-02T02:44:55Z",
+      "side": 1,
+      "message": "Do you mean it should be handled as parcelFd at native either?\n(It seems parcelFd is not supported on native layer on android P.\nand /frameworks/native/libs/binder/ParcelFileDescriptor.cpp was released on Q.)",
+      "parentUuid": "78fd3018_25c79c5c",
+      "range": {
+        "startLine": 325,
+        "startChar": 41,
+        "endLine": 325,
+        "endChar": 64
+      },
+      "revId": "d2d62c1d387c54ac9b1b804fdab41d8e6cb94ccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
