@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78fd3018_25c79c5c",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1056365
+      },
+      "writtenOn": "2019-10-02T00:30:46Z",
+      "side": 1,
+      "message": "The change should also happen at the AIDL level:\nhttps://android.googlesource.com/platform/system/update_engine/+/refs/heads/master/binder_bindings/android/os/IUpdateEngine.aidl#29",
+      "range": {
+        "startLine": 325,
+        "startChar": 41,
+        "endLine": 325,
+        "endChar": 64
+      },
+      "revId": "d2d62c1d387c54ac9b1b804fdab41d8e6cb94ccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
