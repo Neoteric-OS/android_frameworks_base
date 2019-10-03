@@ -48,6 +48,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.function.Predicate;
+import android.provider.Settings;
+import android.provider.Settings.Global;
+import android.provider.Settings.SettingNotFoundException;
 
 /**
  * This class sets an alarm for the next expiring job, and determines whether a job's minimum
@@ -430,14 +433,66 @@ public final class TimeController extends StateController {
         }
     }
 
-    // Job/delay expiration alarm handling
+    private boolean isWolEnabled() {
+        int wolState = 0;
+        try {
+            wolState = Settings.Global.getInt(mContext.getContentResolver(), Settings.Global.NETWORK_WOL_AVAILABLE);
+            if (DEBUG) {
+                Slog.d(TAG, "Read WOL state: "+String.valueOf(wolState));
+            }
+        } catch (SettingNotFoundException e) {
+            if (DEBUG) {
+                Slog.d(TAG, "Can't find WOL setting");
+            }
+        }
+        if (wolState == 1) return true;
+        return false;
+    }
 
+    private boolean isWowEnabled() {
+        int wowState = 0;
+        try {
+            wowState = Settings.Global.getInt(mContext.getContentResolver(), Settings.Global.NETWORK_WOW_AVAILABLE);
+            if (DEBUG) {
+                Slog.d(TAG, "Read WOW state: "+String.valueOf(wowState));
+            }
+        } catch (SettingNotFoundException e) {
+            if (DEBUG) {
+                Slog.d(TAG, "Can't find WOW setting");
+            }
+        }
+        if (wowState == 1) return true;
+        return false;
+    }
+
+    // Job/delay expiration alarm handling
     private final OnAlarmListener mDeadlineExpiredListener = new OnAlarmListener() {
         @Override
         public void onAlarm() {
             if (DEBUG) {
                 Slog.d(TAG, "Deadline-expired alarm fired");
             }
+
+            if (isWolEnabled() == false || isWowEnabled() == false) {
+                try {
+                    // Sleep 2 secs to wait for DISCONNECT event -
+                    // so that the job won't be cancelled by network change
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    if (DEBUG) {
+                        Slog.d(TAG, "DeadlineListener can't sleep");
+                    }
+                } finally {
+                    if (DEBUG) {
+                        Slog.d(TAG, "DeadlineListener wakes up");
+                    }
+                }
+            } else {
+                if (DEBUG) {
+                   Slog.d(TAG, "WOL and WOW are enabled, no need to sleep");
+                }
+            }
+
             checkExpiredDeadlinesAndResetAlarm();
         }
     };
@@ -448,6 +503,25 @@ public final class TimeController extends StateController {
             if (DEBUG) {
                 Slog.d(TAG, "Delay-expired alarm fired");
             }
+
+            if (isWolEnabled() == false || isWowEnabled() == false) {
+                try {
+                    Thread.sleep(2000); // sleep 2 secs
+                } catch (InterruptedException e) {
+                    if (DEBUG) {
+                        Slog.d(TAG, "DelayListener can't sleep");
+                    }
+                } finally {
+                    if (DEBUG) {
+                        Slog.d(TAG, "DelayListener wakes up");
+                    }
+                }
+            } else {
+                if (DEBUG) {
+                    Slog.d(TAG, "WOL and WOW are enabled, no need to sleep");
+                }
+            }
+
             checkExpiredDelaysAndResetAlarm();
         }
     };
