@@ -104,7 +104,7 @@ public final class TelephonyScanManager {
 
     private final Looper mLooper;
     private final Messenger mMessenger;
-    private SparseArray<NetworkScanInfo> mScanInfo = new SparseArray<NetworkScanInfo>();
+    private final SparseArray<NetworkScanInfo> mScanInfo = new SparseArray<NetworkScanInfo>();
 
     public TelephonyScanManager() {
         HandlerThread thread = new HandlerThread(TAG);
@@ -204,13 +204,16 @@ public final class TelephonyScanManager {
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
-                int scanId = telephony.requestNetworkScan(
-                        subId, request, mMessenger, new Binder(), callingPackage);
-                if (scanId == INVALID_SCAN_ID) {
-                    Rlog.e(TAG, "Failed to initiate network scan");
-                    return null;
+                int scanId;
+                synchronized (mScanInfo) {
+                    scanId = telephony.requestNetworkScan(
+                            subId, request, mMessenger, new Binder(), callingPackage);
+                    if (scanId == INVALID_SCAN_ID) {
+                        Rlog.e(TAG, "Failed to initiate network scan");
+                        return null;
+                    }
+                    saveScanInfo(scanId, request, executor, callback);
                 }
-                saveScanInfo(scanId, request, executor, callback);
                 return new NetworkScan(scanId, subId);
             }
         } catch (RemoteException ex) {
@@ -223,9 +226,7 @@ public final class TelephonyScanManager {
 
     private void saveScanInfo(
             int id, NetworkScanRequest request, Executor executor, NetworkScanCallback callback) {
-        synchronized (mScanInfo) {
-            mScanInfo.put(id, new NetworkScanInfo(request, executor, callback));
-        }
+        mScanInfo.put(id, new NetworkScanInfo(request, executor, callback));
     }
 
     private ITelephony getITelephony() {
