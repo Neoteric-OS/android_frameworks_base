@@ -971,6 +971,30 @@
     },
     {
       "key": {
+        "uuid": "e0221629_7a3a1283",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3669,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-03T05:31:41Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8a17c147_15945a07",
+      "range": {
+        "startLine": 3667,
+        "startChar": 7,
+        "endLine": 3669,
+        "endChar": 77
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b06c1d6_fee79992",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -1172,6 +1196,30 @@
       "side": 1,
       "message": "It might just be helpful to say somewhere that \"best\" is intentionally nebulous and subject to change. It puts folks on notice/sets expectations not to get fussy if the interpretation of \"best\" evolves over time.",
       "parentUuid": "b70e43de_d2198560",
+      "range": {
+        "startLine": 3671,
+        "startChar": 77,
+        "endLine": 3671,
+        "endChar": 81
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8334d136_ec070fc2",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3671,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-03T05:31:41Z",
+      "side": 1,
+      "message": "Added a few words about this in the leading paragraph or requestNetwork().",
+      "parentUuid": "1f7599d8_44fc4c54",
       "range": {
         "startLine": 3671,
         "startChar": 77,
@@ -1598,6 +1646,30 @@
       "side": 1,
       "message": "As long as the meaning of \"connectivity thread\" is documented then it seems fine.",
       "parentUuid": "2494cb49_8fffea01",
+      "range": {
+        "startLine": 3682,
+        "startChar": 34,
+        "endLine": 3682,
+        "endChar": 88
+      },
+      "revId": "09230250de3fda7a4caa362eb236a8331f7966ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf096079_ecbd20d6",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3682,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-03T05:31:41Z",
+      "side": 1,
+      "message": "It\u0027s not really, but it\u0027s probably better than \"the default internal handler\". There is a thread called Connectivity in your app created by the framework. I tried to clarify.",
+      "parentUuid": "20b1cadf_3023ffe8",
       "range": {
         "startLine": 3682,
         "startChar": 34,
