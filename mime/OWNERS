@@ -1,0 +1,8 @@
+# Bug component: 25687
+
+# Main owner
+jsharkey@android.com
+
+# Backup owners
+tobiast@google.com
+include platform/libcore:/OWNERS
