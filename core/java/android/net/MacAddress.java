@@ -19,7 +19,7 @@ package android.net;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
-import android.annotation.UnsupportedAppUsage;
+import android.annotation.SystemApi;
 import android.net.wifi.WifiInfo;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -57,7 +57,7 @@ public final class MacAddress implements Parcelable {
      * <p>Not publicly exposed or treated specially since the OUI 00:00:00 is registered.
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public static final MacAddress ALL_ZEROS_ADDRESS = new MacAddress(0);
 
     /** @hide */
@@ -419,6 +419,7 @@ public final class MacAddress implements Parcelable {
      *
      * @hide
      */
+    @SystemApi
     public boolean matches(@NonNull MacAddress baseAddress, @NonNull MacAddress mask) {
         Preconditions.checkNotNull(baseAddress);
         Preconditions.checkNotNull(mask);
@@ -433,6 +434,7 @@ public final class MacAddress implements Parcelable {
      * @return A link-local Inet6Address constructed from the MAC address.
      * @hide
      */
+    @SystemApi
     public @Nullable Inet6Address getLinkLocalIpv6FromEui48Mac() {
         byte[] macEui48Bytes = toByteArray();
         byte[] addr = new byte[16];
