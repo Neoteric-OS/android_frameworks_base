@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab45a01_b939cc98",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2600,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-10-04T21:43:11Z",
+      "side": 1,
+      "message": "Are you sure this is always an integer in all broadcast standards?",
+      "range": {
+        "startLine": 2600,
+        "startChar": 20,
+        "endLine": 2600,
+        "endChar": 27
+      },
+      "revId": "7c1ca877502b4cfd386265bb7ed14396d7709c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bea0d54_324a64b3",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2611,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-10-04T21:43:11Z",
+      "side": 1,
+      "message": "Add example to each if you can\nAdd \n  * \u003cli\u003eOther broadcast ID provider. ex {@code http://example.com/tv_program/1234}",
+      "revId": "7c1ca877502b4cfd386265bb7ed14396d7709c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
