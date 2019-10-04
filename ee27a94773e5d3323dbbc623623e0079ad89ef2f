@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fee3e80_ab0a8375",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-04T08:41:27Z",
+      "side": 0,
+      "message": "Do you want to rename this now that it\u0027s only two source files ? Better yet, find them some new home where these two files are not awkwardly alone.",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 44
+      },
+      "revId": "ee27a94773e5d3323dbbc623623e0079ad89ef2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
