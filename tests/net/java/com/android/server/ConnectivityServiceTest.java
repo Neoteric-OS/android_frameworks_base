@@ -155,6 +155,7 @@ import android.net.ResolverParamsParcel;
 import android.net.RouteInfo;
 import android.net.SocketKeepalive;
 import android.net.UidRange;
+import android.net.Uri;
 import android.net.metrics.IpConnectivityLog;
 import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
@@ -200,6 +201,7 @@ import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.Nat464Xlat;
 import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
+import com.android.server.connectivity.PacManager;
 import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Tethering;
 import com.android.server.connectivity.Vpn;
@@ -283,6 +285,7 @@ public class ConnectivityServiceTest {
     private TestNetworkAgentWrapper mWiFiNetworkAgent;
     private TestNetworkAgentWrapper mCellNetworkAgent;
     private TestNetworkAgentWrapper mEthernetNetworkAgent;
+    private ProxyTracker mProxyTracker;
     private MockVpn mMockVpn;
     private Context mContext;
     private INetworkPolicyListener mPolicyListener;
@@ -1011,6 +1014,8 @@ public class ConnectivityServiceTest {
         mAlarmManagerThread.start();
         initAlarmManager(mAlarmManager, mAlarmManagerThread.getThreadHandler());
 
+        mProxyTracker = new ProxyTracker(mContext, mock(PacManager.class));
+
         mCsHandlerThread = new HandlerThread("TestConnectivityService");
         final ConnectivityService.Dependencies deps = makeDependencies();
         mService = new ConnectivityService(mServiceContext,
@@ -1053,7 +1058,7 @@ public class ConnectivityServiceTest {
         doReturn(mNetworkStack).when(deps).getNetworkStack();
         doReturn(systemProperties).when(deps).getSystemProperties();
         doReturn(mock(Tethering.class)).when(deps).makeTethering(any(), any(), any(), any(), any());
-        doReturn(mock(ProxyTracker.class)).when(deps).makeProxyTracker(any(), any());
+        doReturn(mProxyTracker).when(deps).makeProxyTracker(any(), any());
         doReturn(mMetricsService).when(deps).getMetricsLogger();
         doReturn(true).when(deps).queryUserAccess(anyInt(), anyInt());
         doReturn(mIpConnectivityMetrics).when(deps).getIpConnectivityMetrics();
@@ -5738,7 +5743,7 @@ public class ConnectivityServiceTest {
         final ProxyInfo testProxyInfo = ProxyInfo.buildDirectProxy("test", 8888);
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
         final Network wifiNetwork = mWiFiNetworkAgent.getNetwork();
-        when(mService.mProxyTracker.getGlobalProxy()).thenReturn(testProxyInfo);
+        mProxyTracker.setGlobalProxy(testProxyInfo);
         assertEquals(testProxyInfo, mService.getProxyForNetwork(wifiNetwork));
     }
 
@@ -5757,6 +5762,48 @@ public class ConnectivityServiceTest {
         waitForIdle();
 
         assertEquals(testProxyInfo, mService.getProxyForNetwork(null));
+    }
+
+    @Test
+    public void testPacProxy() throws Exception {
+        final Uri pacUrl = Uri.parse("https://pac-url");
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+
+        final ProxyInfo initialProxyInfo = ProxyInfo.buildPacProxy(pacUrl);
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(true);
+        final LinkProperties testLinkProperties = new LinkProperties();
+        testLinkProperties.setHttpProxy(initialProxyInfo);
+        mWiFiNetworkAgent.sendLinkProperties(testLinkProperties);
+        waitForIdle();
+
+        final ProxyInfo unstartedDefaultProxyInfo = mService.getProxyForNetwork(null);
+        final ProxyInfo unstartedWifiProxyInfo = mService.getProxyForNetwork(
+                mWiFiNetworkAgent.getNetwork());
+        final LinkProperties unstartedLp =
+                mService.getLinkProperties(mWiFiNetworkAgent.getNetwork());
+        assertEquals(initialProxyInfo, unstartedDefaultProxyInfo);
+        assertEquals(initialProxyInfo, unstartedWifiProxyInfo);
+        assertEquals(initialProxyInfo, unstartedLp.getHttpProxy());
+
+        // Make sure the cell network is unaffected
+        assertNull(mService.getLinkProperties(mCellNetworkAgent.getNetwork()).getHttpProxy());
+
+        final ProxyInfo servingProxyInfo = new ProxyInfo("localhost", 2097, "");
+        mService.updateProxyInfoForPac(servingProxyInfo);
+        waitForIdle();
+
+        final ProxyInfo startedDefaultProxyInfo = mService.getProxyForNetwork(null);
+        final ProxyInfo startedWifiProxyInfo = mService.getProxyForNetwork(
+                mWiFiNetworkAgent.getNetwork());
+        final LinkProperties startedLp = mService.getLinkProperties(mWiFiNetworkAgent.getNetwork());
+        assertEquals(servingProxyInfo, startedDefaultProxyInfo);
+        assertEquals(servingProxyInfo, startedWifiProxyInfo);
+        assertEquals(servingProxyInfo, startedLp.getHttpProxy());
+
+        // Make sure the cell network is still unaffected
+        assertNull(mService.getLinkProperties(mCellNetworkAgent.getNetwork()).getHttpProxy());
     }
 
     @Test

@@ -566,8 +566,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     // A helper object to track the current default HTTP proxy. ConnectivityService needs to tell
     // the world when it changes.
-    @VisibleForTesting
-    protected final ProxyTracker mProxyTracker;
+    private final ProxyTracker mProxyTracker;
 
     final private SettingsObserver mSettingsObserver;
 
@@ -1175,6 +1174,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @VisibleForTesting
     void updatePrivateDnsSettings() {
         mHandler.sendEmptyMessage(EVENT_PRIVATE_DNS_SETTINGS_CHANGED);
+    }
+
+    @VisibleForTesting
+    void updateProxyInfoForPac(@NonNull final ProxyInfo proxyInfo) {
+        Message.obtain(mHandler, EVENT_PROXY_HAS_CHANGED, proxyInfo).sendToTarget();
     }
 
     private void handleAlwaysOnNetworkRequest(
@@ -2663,6 +2667,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     final NetworkAgentInfo nai = getNetworkAgentInfoForNetId(msg.arg2);
                     if (nai == null) break;
 
+                    nai.linkProperties = mProxyTracker.fixupLinkProperties(nai.linkProperties);
                     final boolean wasPartial = nai.partialConnectivity;
                     nai.partialConnectivity = ((msg.arg1 & NETWORK_VALIDATION_RESULT_PARTIAL) != 0);
                     final boolean partialConnectivityChanged =
@@ -3808,7 +3813,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case EVENT_PROXY_HAS_CHANGED: {
-                    handleApplyDefaultProxy((ProxyInfo)msg.obj);
+                    handlePacProxyChanged((ProxyInfo) msg.obj);
                     break;
                 }
                 case EVENT_REGISTER_NETWORK_FACTORY: {
@@ -4243,12 +4248,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return mProxyTracker.getGlobalProxy();
     }
 
-    private void handleApplyDefaultProxy(ProxyInfo proxy) {
-        if (proxy != null && TextUtils.isEmpty(proxy.getHost())
-                && Uri.EMPTY.equals(proxy.getPacFileUrl())) {
-            proxy = null;
-        }
+    private void handlePacProxyChanged(ProxyInfo proxy) {
         mProxyTracker.setDefaultProxy(proxy);
+        for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
+            // It is fine to update the proxy in all NAI's link properties if they have been
+            // configured through PAC because at any given time there can only be one local
+            // proxy service on the system. Note that there is a small delay between the
+            // service starting/stopping and the LinkProperties being updated.
+            nai.linkProperties = mProxyTracker.fixupLinkProperties(nai.linkProperties);
+        }
     }
 
     // If the proxy has changed from oldLp to newLp, resend proxy broadcast. This method gets called
@@ -5570,6 +5578,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // whether there is a NAT64 prefix. Before we do anything else, make sure its LinkProperties
         // are accurate.
         networkAgent.clatd.fixupLinkProperties(oldLp, newLp);
+        newLp = mProxyTracker.fixupLinkProperties(newLp);
 
         updateInterfaces(newLp, oldLp, netId, networkAgent.networkCapabilities);
 
@@ -5595,7 +5604,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mDnsManager.updatePrivateDnsStatus(netId, newLp);
 
         if (isDefaultNetwork(networkAgent)) {
-            handleApplyDefaultProxy(newLp.getHttpProxy());
+            mProxyTracker.setDefaultProxy(newLp.getHttpProxy());
         } else {
             updateProxy(newLp, oldLp);
         }
@@ -6176,7 +6185,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         notifyLockdownVpn(newNetwork);
-        handleApplyDefaultProxy(newNetwork.linkProperties.getHttpProxy());
+        mProxyTracker.setDefaultProxy(newNetwork.linkProperties.getHttpProxy());
         updateTcpBufferSizes(newNetwork.linkProperties.getTcpBufferSizes());
         mDnsManager.setDefaultDnsSystemProperties(newNetwork.linkProperties.getDnsServers());
         notifyIfacesChangedForNetworkStats();

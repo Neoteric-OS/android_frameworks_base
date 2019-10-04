@@ -255,6 +255,14 @@ public class ProxyInfo implements Parcelable {
         return proxy;
     }
 
+    /**
+     * @hide
+     * @return whether this proxy uses a Proxy Auto Configuration URL.
+     */
+    public boolean isPacProxy() {
+        return mPacFileUrl != null;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
