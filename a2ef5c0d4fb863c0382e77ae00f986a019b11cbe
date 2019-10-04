@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "586995ab_bad62753",
+        "filename": "tools/aapt/pseudolocalize.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1133997
+      },
+      "writtenOn": "2019-10-04T11:16:17Z",
+      "side": 1,
+      "message": "I know it\u0027s been like 5 years, and it has been ported to multiple other places, but I\u0027ve tracked down this CL to ask - why? why fiveteen? ლ(ಠ益ಠლ)",
+      "range": {
+        "startLine": 8,
+        "startChar": 14,
+        "endLine": 8,
+        "endChar": 22
+      },
+      "revId": "a2ef5c0d4fb863c0382e77ae00f986a019b11cbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
