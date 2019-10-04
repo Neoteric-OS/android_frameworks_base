@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6047da20_bed2b1a1",
+        "filename": "tools/aapt/pseudolocalize.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133997
+      },
+      "writtenOn": "2019-10-04T11:18:45Z",
+      "side": 0,
+      "message": "Also what happened to F? :( \nF",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "ecdf9b199ac9659c37c34c0b23084199acea80bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
