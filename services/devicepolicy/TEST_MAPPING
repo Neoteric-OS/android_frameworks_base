@@ -1,5 +1,5 @@
 {
-  "postsubmit": [
+  "postsubmit-devicepolicy": [
     {
       "name": "CtsDevicePolicyManagerTestCases"
     }
