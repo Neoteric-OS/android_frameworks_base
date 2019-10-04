@@ -19,7 +19,7 @@ package android.webkit;
 import android.annotation.Nullable;
 import android.text.TextUtils;
 
-import libcore.content.type.MimeMap;
+import libcore.net.MimeMap;
 
 import java.util.regex.Pattern;
 

@@ -35,7 +35,7 @@ import com.android.server.NetworkManagementSocketTagger;
 import dalvik.system.RuntimeHooks;
 import dalvik.system.VMRuntime;
 
-import libcore.content.type.MimeMap;
+import libcore.net.MimeMap;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
