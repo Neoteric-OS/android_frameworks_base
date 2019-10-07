@@ -38,6 +38,7 @@ import android.text.TextUtils;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
+import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.Objects;
 
@@ -77,10 +78,15 @@ public class ProxyTracker {
     @NonNull
     private final PacManager mPacManager;
 
+    @VisibleForTesting
+    public ProxyTracker(@NonNull final Context context, @NonNull PacManager pacManager) {
+        mContext = context;
+        mPacManager = pacManager;
+    }
+
     public ProxyTracker(@NonNull final Context context,
             @NonNull final Handler connectivityServiceInternalHandler, final int pacChangedEvent) {
-        mContext = context;
-        mPacManager = new PacManager(context, connectivityServiceInternalHandler, pacChangedEvent);
+        this(context, new PacManager(context, connectivityServiceInternalHandler, pacChangedEvent));
     }
 
     // Convert empty ProxyInfo's to null as null-checks are used to determine if proxies are present
@@ -283,7 +289,7 @@ public class ProxyTracker {
     public void setDefaultProxy(@Nullable ProxyInfo proxyInfo) {
         synchronized (mProxyLock) {
             if (Objects.equals(mDefaultProxy, proxyInfo)) return;
-            if (proxyInfo != null &&  !proxyInfo.isValid()) {
+            if (proxyInfo != null && !proxyInfo.isValid()) {
                 if (DBG) Slog.d(TAG, "Invalid proxy properties, ignoring: " + proxyInfo);
                 return;
             }
