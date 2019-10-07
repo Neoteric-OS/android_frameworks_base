@@ -22,6 +22,30 @@
       "revId": "82533e1fbc6daeb671cc296f3730b134df1f244a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06034d13_ed8fe719",
+        "filename": "telephony/java/android/telephony/TelephonyScanManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-10-07T22:22:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79505b7e_39288bd2",
+      "range": {
+        "startLine": 217,
+        "startChar": 16,
+        "endLine": 217,
+        "endChar": 54
+      },
+      "revId": "82533e1fbc6daeb671cc296f3730b134df1f244a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
