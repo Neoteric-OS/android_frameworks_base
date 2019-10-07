@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5db0e02a_2f3478c7",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1319697
+      },
+      "writtenOn": "2019-10-07T12:33:56Z",
+      "side": 1,
+      "message": "Check the flow again, this should be unnecessary here, remove it. :)",
+      "parentUuid": "494b72e3_9607a893",
+      "range": {
+        "startLine": 501,
+        "startChar": 63,
+        "endLine": 501,
+        "endChar": 89
+      },
+      "revId": "f0777c7a17970fa86465ffb0fb6a07245df4a02d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e877ab0a_45e14487",
         "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "f0777c7a17970fa86465ffb0fb6a07245df4a02d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43eb3673_98a7c83a",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1319697
+      },
+      "writtenOn": "2019-10-07T12:33:56Z",
+      "side": 1,
+      "message": "Yes, make sense, mInterface.getPackageInfo(pckg, MATCH_APEX, userId) is most simple way to achieve.\nThanks for the suggestion.",
+      "parentUuid": "f442cf69_33ef4298",
+      "range": {
+        "startLine": 503,
+        "startChar": 17,
+        "endLine": 503,
+        "endChar": 37
+      },
+      "revId": "f0777c7a17970fa86465ffb0fb6a07245df4a02d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
