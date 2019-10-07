@@ -1,0 +1,7 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Junyu Lai <junyulai@google.com>
+Submitted-by: Chalard Jean <jchalard@google.com>
+Submitted-at: Mon, 07 Oct 2019 05:28:55 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1130099
+Project: platform/frameworks/base
+Branch: refs/heads/master
