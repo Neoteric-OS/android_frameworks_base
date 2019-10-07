@@ -350,6 +350,7 @@ public class SecureSettings {
         Settings.Secure.RAISE_TRIGGER_DEFAULT_ASSISTANT,
         Settings.Secure.BERRY_BLACK_THEME,
         Settings.Secure.DOZE_PICK_UP_GESTURE_AMBIENT,
-        Settings.Secure.DOZE_TAP_GESTURE_AMBIENT
+        Settings.Secure.DOZE_TAP_GESTURE_AMBIENT,
+        Settings.Secure.DOZE_ON_CHARGE
     };
 }
