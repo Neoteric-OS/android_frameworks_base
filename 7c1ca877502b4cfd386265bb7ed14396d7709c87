@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "444d5350_2ea86c8c",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2600,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-10-07T03:26:30Z",
+      "side": 1,
+      "message": "Yes, It is always an integer(uinit16_t) in MPEG Transport Stream(ATSC/DVB/DTMB/ISDB).\n\nProgram`s event_id is a same type as 3 ids(below) on Channels.\nCOLUMN_ORIGINAL_NETWORK_ID(original_network_id)\nCOLUMN_TRANSPORT_STREAM_ID(transport_stream_id)\nCOLUMN_SERVICE_ID(service_id)",
+      "parentUuid": "dab45a01_b939cc98",
+      "range": {
+        "startLine": 2600,
+        "startChar": 20,
+        "endLine": 2600,
+        "endChar": 27
+      },
+      "revId": "7c1ca877502b4cfd386265bb7ed14396d7709c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bea0d54_324a64b3",
         "filename": "media/java/android/media/tv/TvContract.java",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "7c1ca877502b4cfd386265bb7ed14396d7709c87",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0645c10e_0ad65954",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2611,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-10-07T03:26:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bea0d54_324a64b3",
+      "revId": "7c1ca877502b4cfd386265bb7ed14396d7709c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
