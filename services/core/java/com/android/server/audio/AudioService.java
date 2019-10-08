@@ -4579,6 +4579,17 @@ public class AudioService extends IAudioService.Stub
             flags &= ~AudioManager.FLAG_SHOW_UI;
         }
         mVolumeController.postVolumeChanged(streamType, flags);
+        if (mIsSingleVolume) {
+            if ((flags & AudioManager.FLAG_FIXED_VOLUME) == 0) {
+                oldIndex = (oldIndex + 5) / 10;
+                index = (index + 5) / 10;
+                Intent intent = new Intent(AudioManager.VOLUME_CHANGED_ACTION);
+                intent.putExtra(AudioManager.EXTRA_VOLUME_STREAM_TYPE, streamType);
+                intent.putExtra(AudioManager.EXTRA_VOLUME_STREAM_VALUE, index);
+                intent.putExtra(AudioManager.EXTRA_PREV_VOLUME_STREAM_VALUE, oldIndex);
+                sendBroadcastToAll(intent);
+            }
+        }
     }
 
     // Don't show volume UI when:
@@ -8294,10 +8305,14 @@ public class AudioService extends IAudioService.Stub
                     }
                 }
             }
+<<<<<<< PATCH SET (71000e Remove redundant broadcasts when adjusting volume)
+            if (changed && !mIsSingleVolume) {
+=======
             if (changed) {
                 // If associated to volume group, update group cache
                 updateVolumeGroupIndex(device, /* forceMuteState= */ false);
 
+>>>>>>> BASE      (6f0164 Merge "[Cherry-pick] Simplify platformprotos")
                 oldIndex = (oldIndex + 5) / 10;
                 index = (index + 5) / 10;
                 // log base stream changes to the event log
