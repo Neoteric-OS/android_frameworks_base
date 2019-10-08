@@ -60,7 +60,7 @@ java_genrule {
     tools: [
         "soong_zip",
     ],
-    srcs: [":mime.types"],
+    srcs: [":combined.mime.types.minimized"],
     out: ["mimemap-res.jar"],
     cmd: "mkdir $(genDir)/res/ && cp $(in) $(genDir)/res/ && $(location soong_zip) -C $(genDir) -o $(out) -D $(genDir)/res/",
 }
@@ -73,42 +73,51 @@ java_genrule {
     tools: [
         "soong_zip",
     ],
-    srcs: [":mime.types"],
+    srcs: [":combined.mime.types.minimized"],
     out: ["mimemap-testing-res.jar"],
     cmd: "mkdir $(genDir)/testres/ && cp $(in) $(genDir)/testres/ && $(location soong_zip) -C $(genDir) -o $(out) -D $(genDir)/testres/",
 }
 
 // Combination of all *mime.types resources.
-filegroup {
-    name: "mime.types",
+java_genrule {
+    name: "combined.mime.types.minimized",
     visibility: [
         "//visibility:private",
     ],
+    out: ["combined.mime.types"],
     srcs: [
-        ":debian.mime.types",
-        ":android.mime.types",
-        ":vendor.mime.types",
+        // Note: the order here matters - later entries can overwrite earlier ones
+        // (except that vendor.mime.types entries are prefixed with '?' which makes
+        // them never overwrite).
+        ":debian.mime.types.minimized",
+        ":android.mime.types.minimized",
+        ":vendor.mime.types.minimized",
     ],
+    cmd: "cat $(in) > $(out)"
 }
 
-filegroup {
-    name: "android.mime.types",
+java_genrule {
+    name: "android.mime.types.minimized",
     visibility: [
         "//visibility:private",
     ],
-    path: "java-res/",
+    out: ["android.mime.types"],
     srcs: [
         "java-res/android.mime.types",
     ],
+    //         strip comments       normalize whitepace       drop empty lines
+    cmd: "awk '{gsub(/#.*$$/,\"\"); $$1=$$1; print;}' $(in) | grep ' ' > $(out)",
 }
 
-filegroup {
-    name: "vendor.mime.types",
+java_genrule {
+    name: "vendor.mime.types.minimized",
     visibility: [
         "//visibility:private",
     ],
-    path: "java-res/",
+    out: ["vendor.mime.types"],
     srcs: [
         "java-res/vendor.mime.types",
     ],
+    //         strip comments       normalize whitepace       drop empty lines   prepend ? to fields that are missing it
+    cmd: "awk '{gsub(/#.*$$/,\"\"); $$1=$$1; print;}' $(in) | grep ' '         | awk '{for(i=1;i<=NF;i++) { sub(/^\\??/, \"?\", $$i); }; print}' > $(out)",
 }
