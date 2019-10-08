@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "10eb97b6_305a6c27",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-08T04:15:17Z",
+      "side": 1,
+      "message": "Agree with you that all tethering follow the same code patch would be better, but this would not happen in R time frame because it need existing 3rd party APP(using local only hotspot, P2P,....) change to call #startTethering().\nIn entitlement design, if upstream don\u0027t check entitlement it would be treat as provisioning denied implicitly.\n\nI think we don\u0027t for the presence of an upstream even for local only hotspot, but it is very easy to test. We just need to add few lines as below for testing(Tracking in b/142292441).\nIn TetheringTest.java\nverify(mUpstreamNetworkMonitor, never()).getCurrentPreferredUpstream();\nverify(mUpstreamNetworkNonitor, never()).selectPreferredUpstreamType(any());",
+      "parentUuid": "abb417a4_49533430",
+      "range": {
+        "startLine": 481,
+        "startChar": 28,
+        "endLine": 481,
+        "endChar": 46
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f89355e_5651f64e",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
