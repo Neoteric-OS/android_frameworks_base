@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5cd3707_703cbb86",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-08T02:37:49Z",
+      "side": 1,
+      "message": "ISTM that if tetherState is null, then the interface is not being tracked and IpServer not ready. I hope this never happens, but if it does, I argue we probably want to just return.",
+      "range": {
+        "startLine": 810,
+        "startChar": 24,
+        "endLine": 810,
+        "endChar": 43
+      },
+      "revId": "f9bd8b9e78e08b49ca0329638fd36fda413e3215",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "abb417a4_49533430",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-08T02:37:49Z",
+      "side": 1,
+      "message": "It sounds rather obscure to me that this difference is baked into the call graph rather than enforced in the relevant parts in the code. I take on board that p2p will never need entitlement because it never has an upstream, but I think this should be enforced by checks against upstreams rather than rely on the fact that today p2p never calls #startTethering. Hopefully in the future all tethering technologies will follow the same code path and I expect nobody will remember p2p needs this special case ; I think the code needs to not cause damage if someone makes it so that p2p starts calling #startTethering some time in the future.\n\nDo we already test for the presence of an upstream ? Or do we have checks for local-only hotspots enforcing this ? If we don\u0027t I think we should build that in this change – hopefully it\u0027s only one or two lines of code.",
+      "parentUuid": "d4bc3ef1_27a4be69",
+      "range": {
+        "startLine": 481,
+        "startChar": 28,
+        "endLine": 481,
+        "endChar": 46
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f89355e_5651f64e",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
@@ -356,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "e6f3ca3d_ecb9fdb0",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-08T02:37:49Z",
+      "side": 1,
+      "message": "Protected broadcasts can only be sent by system apps.\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/am/ActivityManagerService.java;l\u003d14910?q\u003dactivitymanagerservice.java\n\nI don\u0027t see this in the list of protected broadcasts :\nhttps://android.googlesource.com/platform/frameworks/base/+/master/core/res/AndroidManifest.xml\n\nUnless I\u0027m mistaken that means any app can send such a broadcast, and therefore tail their broadcast to your code to achieve a desired effect. I think you should check who sent you this broadcast before you act on it, and possibly list it in the protected broadcast list.\n\nDo however check this information as I\u0027m telling from memory and I\u0027m not an expert.",
+      "parentUuid": "d089ce26_f38ec631",
+      "range": {
+        "startLine": 308,
+        "startChar": 44,
+        "endLine": 308,
+        "endChar": 78
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37996ebd_44f29c53",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
@@ -450,6 +498,30 @@
     },
     {
       "key": {
+        "uuid": "340115f1_69dc98d0",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-08T02:37:49Z",
+      "side": 1,
+      "message": "I see. I think this warrants a short comment.",
+      "parentUuid": "0034058f_1eec7ed9",
+      "range": {
+        "startLine": 815,
+        "startChar": 34,
+        "endLine": 815,
+        "endChar": 54
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5f2237c_db4a7bbb",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
@@ -485,6 +557,30 @@
       "side": 1,
       "message": "The current state in handleWifiAction just indicate the state of wifi. It don\u0027t reflect tethering\u0027s state. But this intent base architecture seems would have race problem. \nIn current architecture, p2p and tethering run at different threads. And they don\u0027t check each other synchronously. If p2p off/on very quickly, it seems below flow may happen.\nwifi p2p enable in wifi\u0027s code --\u003ep2p enable intent--\u003e tethering enable --\u003e\nwifi p2p disable in wifi --\u003e wifi p2p quickly enable in wifi again --\u003ep2p disable intent--\u003e tethering disable --\u003ep2p enable intent--\u003e tethering enable.\n\nFor handleWifiAction(wifi tethering), I plan to replace intent as SoftApCallback. But p2p seems just rely on intent. If p2p also have callback, it would be better to pass p2p\u0027s state via callback.",
       "parentUuid": "b5f2237c_db4a7bbb",
+      "range": {
+        "startLine": 821,
+        "startChar": 20,
+        "endLine": 821,
+        "endChar": 86
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286948b0_ee705481",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-08T02:37:49Z",
+      "side": 1,
+      "message": "Are you saying it\u0027s fine because the broadcast is the only way to change the status at all ? If that\u0027s true then I think this code works (but maybe we want to unify in sending messages to the handler loop – I won\u0027t insist on that in this change though).",
+      "parentUuid": "47181448_03e75110",
       "range": {
         "startLine": 821,
         "startChar": 20,
