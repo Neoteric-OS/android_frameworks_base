@@ -1585,19 +1585,20 @@ public class AudioService extends IAudioService.Stub
     }
 
     private int rescaleIndex(int index, int srcStream, int dstStream) {
-        int srcRange =
-                mStreamStates[srcStream].getMaxIndex() - mStreamStates[srcStream].getMinIndex();
-        int dstRange =
-                mStreamStates[dstStream].getMaxIndex() - mStreamStates[dstStream].getMinIndex();
-
-        if (srcRange == 0) {
-            Log.e(TAG, "rescaleIndex : index range should not be zero");
-            return mStreamStates[dstStream].getMinIndex();
+        int max = mStreamStates[srcStream].getMaxIndex();
+        if (max == 0) {
+            Log.e(TAG, "rescaleIndex : Max index should not be zero");
+            return mStreamStates[srcStream].getMinIndex();
         }
-
-        return mStreamStates[dstStream].getMinIndex()
-                + ((index - mStreamStates[srcStream].getMinIndex()) * dstRange + srcRange / 2)
-                / srcRange;
+        final int rescaled =
+                (index * mStreamStates[dstStream].getMaxIndex()
+                        + mStreamStates[srcStream].getMaxIndex() / 2)
+                / mStreamStates[srcStream].getMaxIndex();
+        if (rescaled < mStreamStates[dstStream].getMinIndex()) {
+            return mStreamStates[dstStream].getMinIndex();
+        } else {
+            return rescaled;
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////
