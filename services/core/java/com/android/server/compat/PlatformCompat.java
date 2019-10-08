@@ -68,12 +68,16 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     @Override
     public boolean isChangeEnabled(long changeId, ApplicationInfo appInfo) {
         if (CompatConfig.get().isChangeEnabled(changeId, appInfo)) {
-            reportChange(changeId, appInfo.uid,
-                    StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__STATE__ENABLED);
+            if (!appInfo.isSystemApp()) {
+                reportChange(changeId, appInfo.uid,
+                        StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__STATE__ENABLED);
+            }
             return true;
         }
-        reportChange(changeId, appInfo.uid,
-                StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__STATE__DISABLED);
+        if (!appInfo.isSystemApp()) {
+            reportChange(changeId, appInfo.uid,
+                    StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__STATE__DISABLED);
+        }
         return false;
     }
 
