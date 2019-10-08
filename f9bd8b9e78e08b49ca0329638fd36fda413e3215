@@ -22,6 +22,30 @@
       "revId": "f9bd8b9e78e08b49ca0329638fd36fda413e3215",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00ce54a_0ed931f0",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-10-08T06:42:05Z",
+      "side": 1,
+      "message": "For local-only hotspot, it allows to start tethering without receiving interface change event.\nSince p2p is part of wifi service, I would like to follow the same behavior.\n\nplease refer this test: workingLocalOnlyHotspotEnrichedApBroadcastSansIfaceChanged\n\nhttps://cs.corp.google.com/aosp-master/frameworks/base/tests/net/java/com/android/server/connectivity/TetheringTest.java?q\u003dworkingLocalOnlyHotspotEnrichedApBroadcastSansIfaceChanged\u0026g\u003d0\u0026l\u003d723",
+      "parentUuid": "b5cd3707_703cbb86",
+      "range": {
+        "startLine": 810,
+        "startChar": 24,
+        "endLine": 810,
+        "endChar": 43
+      },
+      "revId": "f9bd8b9e78e08b49ca0329638fd36fda413e3215",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

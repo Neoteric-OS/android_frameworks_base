@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "bdb955a7_ad71005e",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-10-08T06:42:05Z",
+      "side": 1,
+      "message": "Current Wifi, Usb, and Bt tethering, they need to start from startTethering because this is the entry point of the function and the role is known.\n\nFor P2p, the entry point is p2p-pairing and the role is known in the middle of the whole p2p flow, not the beginning.\nI could still call startTethering after knowing the role, but there is nothing to do for Tethering, just a notification. Do you want this? This is still different from wifi/usb/bt cases unless we change the whole p2p flow from Settings.\n\nIn current design, if someone still call startTethering with TETHER_WIFI_P2P, it fails immediately with TETHER_ERROR_UNKNOWN_IFACE since there is no case for this type.\n\nI add upstream tests as Mark said for p2p tethering.",
+      "parentUuid": "abb417a4_49533430",
+      "range": {
+        "startLine": 481,
+        "startChar": 28,
+        "endLine": 481,
+        "endChar": 46
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f89355e_5651f64e",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
@@ -452,6 +476,30 @@
     },
     {
       "key": {
+        "uuid": "8f5a4bcc_19773059",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-10-08T06:42:05Z",
+      "side": 1,
+      "message": "It is a protected broadcast indeed. Thanks!\n\nhttps://developer.android.com/reference/android/net/wifi/p2p/WifiP2pManager#WIFI_P2P_CONNECTION_CHANGED_ACTION\n\n\u003cprotected-broadcast android:name\u003d\"android.net.wifi.p2p.CONNECTION_STATE_CHANGE\" /\u003e",
+      "parentUuid": "e6f3ca3d_ecb9fdb0",
+      "range": {
+        "startLine": 308,
+        "startChar": 44,
+        "endLine": 308,
+        "endChar": 78
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37996ebd_44f29c53",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
@@ -558,6 +606,30 @@
       "side": 1,
       "message": "I see. I think this warrants a short comment.",
       "parentUuid": "0034058f_1eec7ed9",
+      "range": {
+        "startLine": 815,
+        "startChar": 34,
+        "endLine": 815,
+        "endChar": 54
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "271d33e2_b45939eb",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-10-08T06:42:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "340115f1_69dc98d0",
       "range": {
         "startLine": 815,
         "startChar": 34,
