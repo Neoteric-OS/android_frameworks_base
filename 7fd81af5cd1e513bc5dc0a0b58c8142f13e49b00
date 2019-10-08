@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "632de8c9_9360047a",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2019-10-08T22:00:38Z",
+      "side": 1,
+      "message": "will this only ever be called for an apex? otherwise, for factory-only packages, we won\u0027t ever query APKs ... seems getPackageInfoInternal() in PackageManagerService needs updating ...\n\n[here or as a separate change]",
+      "range": {
+        "startLine": 486,
+        "startChar": 59,
+        "endLine": 486,
+        "endChar": 84
+      },
+      "revId": "7fd81af5cd1e513bc5dc0a0b58c8142f13e49b00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
