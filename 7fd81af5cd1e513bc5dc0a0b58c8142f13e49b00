@@ -70,6 +70,30 @@
       "revId": "7fd81af5cd1e513bc5dc0a0b58c8142f13e49b00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd14733a_bf6673f1",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1319697
+      },
+      "writtenOn": "2019-10-09T06:22:48Z",
+      "side": 1,
+      "message": "I go through the naming again, since 2.\"MATHC_APEX\" do not named with \"ONLY|FACTORY|ACTIVE\" and the name sounds like the union of both active and factory apexes, I think it\u0027s make sense to be refined as well.\n\n2. MATCH_APEX : Return both active apex and factory packages\n3. MATCH_FACTORY_ONLY | MATCH_APEX : Return both active \u0026 factory apex packages\n4. 0 (NONE) : Return all APK \u0026 active APEX \u0026 factory APEX\n\nThat said, I think it make sense to keep MATCH_APEX in this CL, and filed b/142365486 to \nrefine 2./3./4. WDYGT?",
+      "parentUuid": "25303b04_c02dc0f1",
+      "range": {
+        "startLine": 486,
+        "startChar": 59,
+        "endLine": 486,
+        "endChar": 84
+      },
+      "revId": "7fd81af5cd1e513bc5dc0a0b58c8142f13e49b00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
