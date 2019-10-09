@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a075038c_b65722a2",
+        "filename": "core/java/android/net/InterfaceConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:58:18Z",
+      "side": 1,
+      "message": "If this file is @SystemApi, then just remove @hide and @UnsupportedAppUsage. It\u0027s the same technically but a lot clearer.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 24
+      },
+      "revId": "da0919969297080bc18770efdd5dbf60fa103daa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17758e14_9a607361",
+        "filename": "core/java/android/net/InterfaceConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:58:18Z",
+      "side": 1,
+      "message": "If getFlags() is @SystemApi why hide this ?",
+      "range": {
+        "startLine": 60,
+        "startChar": 9,
+        "endLine": 60,
+        "endChar": 13
+      },
+      "revId": "da0919969297080bc18770efdd5dbf60fa103daa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9db6f6_65961d01",
+        "filename": "core/java/android/net/InterfaceConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:58:18Z",
+      "side": 1,
+      "message": "The setter is public, why hide this ?",
+      "range": {
+        "startLine": 107,
+        "startChar": 9,
+        "endLine": 107,
+        "endChar": 13
+      },
+      "revId": "da0919969297080bc18770efdd5dbf60fa103daa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2bea93_85176a23",
+        "filename": "core/java/android/net/InterfaceConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:58:18Z",
+      "side": 1,
+      "message": "I don\u0027t think this method is used anywhere. Let\u0027s remove it.",
+      "range": {
+        "startLine": 135,
+        "startChar": 19,
+        "endLine": 135,
+        "endChar": 27
+      },
+      "revId": "da0919969297080bc18770efdd5dbf60fa103daa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01100e2d_2be398f6",
+        "filename": "core/java/android/net/InterfaceConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:58:18Z",
+      "side": 1,
+      "message": "Will this work when called from a remote process ?",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 12
+      },
+      "revId": "da0919969297080bc18770efdd5dbf60fa103daa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
