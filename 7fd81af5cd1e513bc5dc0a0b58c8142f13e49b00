@@ -22,6 +22,30 @@
       "revId": "7fd81af5cd1e513bc5dc0a0b58c8142f13e49b00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e290c7b_0b30852e",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1566802
+      },
+      "writtenOn": "2019-10-09T01:01:31Z",
+      "side": 1,
+      "message": "IIUC, \"shell pm path\" should work for both APK and APEX. MATCH_APEX doesn\u0027t exclude APK but works as an union of APK and APEK.",
+      "parentUuid": "632de8c9_9360047a",
+      "range": {
+        "startLine": 486,
+        "startChar": 59,
+        "endLine": 486,
+        "endChar": 84
+      },
+      "revId": "7fd81af5cd1e513bc5dc0a0b58c8142f13e49b00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
