@@ -94,6 +94,30 @@
       "revId": "7fd81af5cd1e513bc5dc0a0b58c8142f13e49b00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38cd12a0_317a8cf1",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2019-10-09T14:49:24Z",
+      "side": 1,
+      "message": "Yes. \"path\" should work regardless.\n\nMy point was there is a logic inconsistency that means \"path\" will _not_ work for APKs if we specify \"FACTORY_ONLY | APEX\". This is theoretical since there\u0027s no current way to specify \"FACTORY_ONLY\" through adb. That\u0027s why I say it can be a separate change because the logic is not directly related to the path. But, it\u0027s a potential bug where we\u0027re not handling the flags consistently.",
+      "parentUuid": "bd14733a_bf6673f1",
+      "range": {
+        "startLine": 486,
+        "startChar": 59,
+        "endLine": 486,
+        "endChar": 84
+      },
+      "revId": "7fd81af5cd1e513bc5dc0a0b58c8142f13e49b00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
