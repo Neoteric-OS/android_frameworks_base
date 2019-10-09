@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31e3a579_582e3c74",
+        "filename": "core/java/android/net/IpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:16:07Z",
+      "side": 1,
+      "message": "Won\u0027t this change break apps that are using this ?",
+      "range": {
+        "startLine": 66,
+        "startChar": 9,
+        "endLine": 66,
+        "endChar": 13
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1687f2a7_0521738d",
+        "filename": "core/java/android/net/IpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:16:07Z",
+      "side": 1,
+      "message": "I\u0027m not sure what your reasoning is here : concretely this is a no-op : @hide but @UnsupportedAppUsage means it\u0027s still open.",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 86,
+        "endChar": 22
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf48263c_07613e28",
+        "filename": "core/java/android/net/IpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:16:07Z",
+      "side": 1,
+      "message": "I don\u0027t understand why you do this in this case only. This is greylist-max-o like the other methods",
+      "range": {
+        "startLine": 119,
+        "startChar": 9,
+        "endLine": 119,
+        "endChar": 13
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c802953_e030837f",
+        "filename": "core/java/android/net/IpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:16:07Z",
+      "side": 1,
+      "message": "Is this even going to work ? ISTM that this will prevent the module that wants to use this class from parceling this object, so it won\u0027t be able to send it across the process boundary. Worse, it will crash when it tries to call a binder method because the generated implementation of that will try to call this method.",
+      "range": {
+        "startLine": 190,
+        "startChar": 8,
+        "endLine": 190,
+        "endChar": 12
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ac22b6_e2d256ab",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:16:07Z",
+      "side": 1,
+      "message": "I think this can be public",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 14
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb685bc_3be18eb1",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:16:07Z",
+      "side": 1,
+      "message": "Can we instead update the callers to call ProxyInfo(Uri), make ProxyInfo(Uri) public, and remove this method ?",
+      "range": {
+        "startLine": 122,
+        "startChar": 5,
+        "endLine": 122,
+        "endChar": 14
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee021b6_6a0e1e87",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:16:07Z",
+      "side": 1,
+      "message": "I think this can just be public",
+      "range": {
+        "startLine": 166,
+        "startChar": 5,
+        "endLine": 166,
+        "endChar": 14
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca61db7_39ab2656",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:16:07Z",
+      "side": 1,
+      "message": "Can we instead update the callers to use getExclusionList and remove this method ?",
+      "range": {
+        "startLine": 230,
+        "startChar": 5,
+        "endLine": 230,
+        "endChar": 14
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3aede63_2e23f23b",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T07:16:07Z",
+      "side": 1,
+      "message": "As this class is already @SystemApi I think the recommended way to do this is to just remove @hide",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 14
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
