@@ -84,6 +84,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.SystemProperties;
 
 import com.android.settingslib.Utils;
 import com.android.systemui.Dependency;
@@ -1148,7 +1149,11 @@ public class VolumeDialogImpl implements VolumeDialog,
                     row.anim.setIntValues(progress, newProgress);
                 }
                 row.animTargetProgress = newProgress;
-                row.anim.setDuration(UPDATE_ANIMATION_DURATION);
+                int animation_duration = UPDATE_ANIMATION_DURATION;
+                if(!SystemProperties.getBoolean("ro.config.volume_row_slider_anim", true)) {
+                    animation_duration = 0;
+                }
+                row.anim.setDuration(animation_duration);
                 row.anim.start();
             } else {
                 // update slider directly to clamped value
