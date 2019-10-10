@@ -54,6 +54,21 @@ $(OUT_DOCS)/offline-sdk-timestamp: $(OUT_DOCS)/offline-sdk-docs-docs.zip
 .PHONY: docs offline-sdk-docs
 docs offline-sdk-docs: $(OUT_DOCS)/offline-sdk-timestamp
 
+SDK_METADATA_FILES := $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/framework-doc-stubs-metadata/activity_actions.txt \
+	 $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/framework-doc-stubs-metadata/broadcast_actions.txt \
+	 $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/framework-doc-stubs-metadata/categories.txt \
+	 $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/framework-doc-stubs-metadata/features.txt \
+	 $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/framework-doc-stubs-metadata/service_actions.txt \
+	 $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/framework-doc-stubs-metadata/widgets.txt
+
+$(SDK_METADATA_FILES): $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/framework-doc-stubs-metadata.zip
+	$(hide) rm -rf $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/framework-doc-stubs-metadata
+	$(hide) mkdir -p $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/framework-doc-stubs-metadata
+	( unzip -qo $< -d $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/framework-doc-stubs-metadata && touch -f $@ ) || exit 1
+
+.PHONY: framework-doc-stubs
+framework-doc-stubs: $(SDK_METADATA_FILES)
+
 # Run this for checkbuild
 checkbuild: doc-comment-check-docs
 
