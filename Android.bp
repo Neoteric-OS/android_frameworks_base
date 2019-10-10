@@ -1635,6 +1635,11 @@ droidstubs {
             api_file: ":last-released-public-api",
             removed_api_file: "api/removed.txt",
         },
+        api_lint: {
+            enabled: true,
+            new_since: ":last-released-public-api",
+            baseline_file: "api/lint-baseline.txt",
+        },
     },
     jdiff_enabled: true,
 }
@@ -1659,6 +1664,11 @@ droidstubs {
         last_released: {
             api_file: ":last-released-system-api",
             removed_api_file: "api/system-removed.txt",
+        },
+        api_lint: {
+            enabled: true,
+            new_since: ":last-released-system-api",
+            baseline_file: "api/system-lint-baseline.txt",
         },
     },
     jdiff_enabled: true,
