@@ -21,11 +21,14 @@ import android.os.ParcelFileDescriptor;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.util.SparseArray;
+
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.os.FuseUnavailableMountException;
 import com.android.internal.util.Preconditions;
 import com.android.server.NativeDaemonConnectorException;
+
 import libcore.io.IoUtils;
+
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -57,16 +60,15 @@ public class AppFuseBridge implements Runnable {
     public ParcelFileDescriptor addBridge(MountScope mountScope)
             throws FuseUnavailableMountException, NativeDaemonConnectorException {
         try {
+            if (mNativeLoop == 0) {
+                throw new FuseUnavailableMountException(mountScope.mountId);
+            }
+            final int fd = native_add_bridge(
+                    mNativeLoop, mountScope.mountId, mountScope.open().detachFd());
+            if (fd == -1) {
+                throw new FuseUnavailableMountException(mountScope.mountId);
+            }
             synchronized (this) {
-                Preconditions.checkArgument(mScopes.indexOfKey(mountScope.mountId) < 0);
-                if (mNativeLoop == 0) {
-                    throw new FuseUnavailableMountException(mountScope.mountId);
-                }
-                final int fd = native_add_bridge(
-                        mNativeLoop, mountScope.mountId, mountScope.open().detachFd());
-                if (fd == -1) {
-                    throw new FuseUnavailableMountException(mountScope.mountId);
-                }
                 final ParcelFileDescriptor result = ParcelFileDescriptor.adoptFd(fd);
                 mScopes.put(mountScope.mountId, mountScope);
                 mountScope = null;
@@ -74,6 +76,12 @@ public class AppFuseBridge implements Runnable {
             }
         } finally {
             IoUtils.closeQuietly(mountScope);
+        }
+    }
+
+    public boolean haveMountScope(MountScope mountScope) {
+        synchronized (this) {
+            return mScopes.indexOfKey(mountScope.mountId) >= 0;
         }
     }
 
