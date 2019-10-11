@@ -17,7 +17,6 @@
 package android.security;
 
 import android.annotation.UnsupportedAppUsage;
-import android.app.ActivityManager;
 import android.app.ActivityThread;
 import android.app.Application;
 import android.app.KeyguardManager;
@@ -44,24 +43,24 @@ import android.security.keystore.KeyExpiredException;
 import android.security.keystore.KeyNotYetValidException;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
-import android.security.keystore.KeyProtection;
 import android.security.keystore.KeystoreResponse;
-import android.security.keystore.StrongBoxUnavailableException;
 import android.security.keystore.UserNotAuthenticatedException;
 import android.util.Log;
+
 import com.android.org.bouncycastle.asn1.ASN1InputStream;
 import com.android.org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
-import java.math.BigInteger;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
 import sun.security.util.ObjectIdentifier;
 import sun.security.x509.AlgorithmId;
 
@@ -346,16 +345,6 @@ public class KeyStore {
 
     public String[] list(String prefix) {
         return list(prefix, UID_SELF);
-    }
-
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
-    public boolean reset() {
-        try {
-            return mBinder.reset() == NO_ERROR;
-        } catch (RemoteException e) {
-            Log.w(TAG, "Cannot connect to keystore", e);
-            return false;
-        }
     }
 
     /**

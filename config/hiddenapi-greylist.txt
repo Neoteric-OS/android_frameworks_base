@@ -678,7 +678,6 @@ Landroid/security/keystore/IKeystoreService;->getState(I)I
 Landroid/security/keystore/IKeystoreService;->insert(Ljava/lang/String;[BII)I
 Landroid/security/keystore/IKeystoreService;->is_hardware_backed(Ljava/lang/String;)I
 Landroid/security/keystore/IKeystoreService;->list(Ljava/lang/String;I)[Ljava/lang/String;
-Landroid/security/keystore/IKeystoreService;->reset()I
 Landroid/security/keystore/IKeystoreService;->ungrant(Ljava/lang/String;I)I
 Landroid/service/dreams/IDreamManager$Stub;->asInterface(Landroid/os/IBinder;)Landroid/service/dreams/IDreamManager;
 Landroid/service/euicc/IEuiccService$Stub;-><init>()V
