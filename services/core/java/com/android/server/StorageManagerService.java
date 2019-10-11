@@ -2929,8 +2929,12 @@ class StorageManagerService extends IStorageManager.Stub
                 try {
                     final int name = mNextAppFuseName++;
                     try {
+                        AppFuseMountScope fuseMountScope = new AppFuseMountScope(uid, name);
+                        if (mAppFuseBridge.haveMountScope(fuseMountScope)) {
+                            throw new IllegalArgumentException();
+                        }
                         return new AppFuseMount(
-                            name, mAppFuseBridge.addBridge(new AppFuseMountScope(uid, name)));
+                            name, mAppFuseBridge.addBridge(fuseMountScope));
                     } catch (FuseUnavailableMountException e) {
                         if (newlyCreated) {
                             // If newly created bridge fails, it's a real error.
@@ -2939,6 +2943,9 @@ class StorageManagerService extends IStorageManager.Stub
                         }
                         // It seems the thread of mAppFuseBridge has already been terminated.
                         mAppFuseBridge = null;
+                    } catch (IllegalArgumentException e) {
+                        Slog.e(TAG, "", e);
+                        return null;
                     }
                 } catch (NativeDaemonConnectorException e) {
                     throw e.rethrowAsParcelableException();
