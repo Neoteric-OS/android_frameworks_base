@@ -38,6 +38,7 @@ import android.net.DhcpInfo;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
+import android.net.NetworkStack;
 import android.net.wifi.hotspot2.IProvisioningCallback;
 import android.net.wifi.hotspot2.OsuProvider;
 import android.net.wifi.hotspot2.PasspointConfiguration;
@@ -536,7 +537,9 @@ public class WifiManager {
      *
      * @hide
      */
-    public static final String EXTRA_WIFI_AP_INTERFACE_NAME = "wifi_ap_interface_name";
+    @SystemApi
+    public static final String EXTRA_WIFI_AP_INTERFACE_NAME =
+            "android.net.wifi.extra.WIFI_AP_INTERFACE_NAME";
     /**
      * The intended ip mode for this softap.
      * @see #IFACE_IP_MODE_TETHERED
@@ -544,7 +547,8 @@ public class WifiManager {
      *
      * @hide
      */
-    public static final String EXTRA_WIFI_AP_MODE = "wifi_ap_mode";
+    @SystemApi
+    public static final String EXTRA_WIFI_AP_MODE = "android.net.wifi.extra.WIFI_AP_MODE";
 
     /** @hide */
     @IntDef(flag = false, prefix = { "WIFI_AP_STATE_" }, value = {
@@ -641,6 +645,7 @@ public class WifiManager {
      *
      * @hide
      */
+    @SystemApi
     public static final int IFACE_IP_MODE_UNSPECIFIED = -1;
 
     /**
@@ -650,6 +655,7 @@ public class WifiManager {
      *
      * @hide
      */
+    @SystemApi
     public static final int IFACE_IP_MODE_CONFIGURATION_ERROR = 0;
 
     /**
@@ -659,6 +665,7 @@ public class WifiManager {
      *
      * @hide
      */
+    @SystemApi
     public static final int IFACE_IP_MODE_TETHERED = 1;
 
     /**
@@ -668,6 +675,7 @@ public class WifiManager {
      *
      * @hide
      */
+    @SystemApi
     public static final int IFACE_IP_MODE_LOCAL_ONLY = 2;
 
     /**
@@ -2538,16 +2546,21 @@ public class WifiManager {
     /**
      * Call allowing ConnectivityService to update WifiService with interface mode changes.
      *
-     * The possible modes include: {@link IFACE_IP_MODE_TETHERED},
-     *                             {@link IFACE_IP_MODE_LOCAL_ONLY},
-     *                             {@link IFACE_IP_MODE_CONFIGURATION_ERROR}
-     *
-     * @param ifaceName String name of the updated interface
-     * @param mode int representing the new mode
+     * @param ifaceName String name of the updated interface, or null to represent all interfaces
+     * @param mode int representing the new mode, one of:
+     *             {@link #IFACE_IP_MODE_TETHERED},
+     *             {@link #IFACE_IP_MODE_LOCAL_ONLY},
+     *             {@link #IFACE_IP_MODE_CONFIGURATION_ERROR},
+     *             {@link #IFACE_IP_MODE_UNSPECIFIED}
      *
      * @hide
      */
-    public void updateInterfaceIpState(String ifaceName, int mode) {
+    @SystemApi
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.NETWORK_STACK,
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK
+    })
+    public void updateInterfaceIpState(@Nullable String ifaceName, @IfaceIpMode int mode) {
         try {
             mService.updateInterfaceIpState(ifaceName, mode);
         } catch (RemoteException e) {
@@ -2565,6 +2578,11 @@ public class WifiManager {
      *
      * @hide
      */
+    @SystemApi
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.NETWORK_STACK,
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK
+    })
     public boolean startSoftAp(@Nullable WifiConfiguration wifiConfig) {
         try {
             return mService.startSoftAp(wifiConfig);
@@ -2580,6 +2598,11 @@ public class WifiManager {
      *
      * @hide
      */
+    @SystemApi
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.NETWORK_STACK,
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK
+    })
     public boolean stopSoftAp() {
         try {
             return mService.stopSoftAp();
