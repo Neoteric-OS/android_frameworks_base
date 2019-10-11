@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "191aff1e_60ecb76f",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-10-11T08:31:00Z",
+      "side": 1,
+      "message": "Can you add a docstring with the description of the arguments ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836b8264_2ce72bc1",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-10-11T08:31:00Z",
+      "side": 1,
+      "message": "How about having a --warn-only flag, so that the Telecom script can be replaced by this one ?",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 13
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2ce03a_cf4d78bd",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-10-11T08:31:00Z",
+      "side": 1,
+      "message": "How about:\nmatch_list \u003d [f for f in files_list if _any_match(f)]",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401dd39a_1499c812",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-10-11T08:31:00Z",
+      "side": 1,
+      "message": "Would this work ?\nreturn any(re.search(pattern, file) for pattern in sys.argv[2:])",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
