@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96150258_75174df6",
+        "filename": "services/core/java/com/android/server/audio/BtHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-10-11T10:33:30Z",
+      "side": 1,
+      "message": "What is the plan to handle multiple requests from the same client after removing per client reference counting? Please see comments below in requestScoState() as every call to AudioManager.startBluetoothSco() should result in a broadcast.",
+      "range": {
+        "startLine": 360,
+        "startChar": 12,
+        "endLine": 360,
+        "endChar": 89
+      },
+      "revId": "52c5cf0a89c9f720e46629498fa7ad8ffacd0f7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f0a594_284d8122",
+        "filename": "services/core/java/com/android/server/audio/BtHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-10-11T10:33:30Z",
+      "side": 1,
+      "message": "regardless of the outcome, AudioManager.startBluetoothSco() should always generate a broadcast. In this case, if SCO is already active, we should just broadcast again saying that it is connected:\n\nbroadcastScoConnectionState(AudioManager.SCO_AUDIO_STATE_CONNECTED);\n\nif we don\u0027t send this broadcast, apps waiting for this intent will stuck on waiting or have to put a random timeout assuming the operation failed.",
+      "range": {
+        "startLine": 783,
+        "startChar": 24,
+        "endLine": 783,
+        "endChar": 98
+      },
+      "revId": "52c5cf0a89c9f720e46629498fa7ad8ffacd0f7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
