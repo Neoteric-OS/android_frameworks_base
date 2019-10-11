@@ -57,16 +57,15 @@ public class AppFuseBridge implements Runnable {
     public ParcelFileDescriptor addBridge(MountScope mountScope)
             throws FuseUnavailableMountException, NativeDaemonConnectorException {
         try {
+            // Preconditions.checkArgument(mScopes.indexOfKey(mountScope.mountId) < 0);
+            if (mNativeLoop == 0) {
+                throw new FuseUnavailableMountException(mountScope.mountId);
+            }
+            final int fd = native_add_bridge(mNativeLoop, mountScope.mountId, mountScope.open().detachFd());
+            if (fd == -1) {
+                throw new FuseUnavailableMountException(mountScope.mountId);
+            }
             synchronized (this) {
-                Preconditions.checkArgument(mScopes.indexOfKey(mountScope.mountId) < 0);
-                if (mNativeLoop == 0) {
-                    throw new FuseUnavailableMountException(mountScope.mountId);
-                }
-                final int fd = native_add_bridge(
-                        mNativeLoop, mountScope.mountId, mountScope.open().detachFd());
-                if (fd == -1) {
-                    throw new FuseUnavailableMountException(mountScope.mountId);
-                }
                 final ParcelFileDescriptor result = ParcelFileDescriptor.adoptFd(fd);
                 mScopes.put(mountScope.mountId, mountScope);
                 mountScope = null;
