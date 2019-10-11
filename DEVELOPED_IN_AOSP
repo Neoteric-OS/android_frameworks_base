@@ -1,0 +1,6 @@
+services/core/java/com/android/server/(ConnectivityService|net/NetworkStats.*|net/LockDownVpnTracker)\.java
+core/java/android/net/.*
+services/net/.*
+^packages/Shell/.*
+OWNERS$
+
