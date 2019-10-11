@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "58819564_2c33fe7b",
+        "filename": "PREUPLOAD.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2019-10-11T17:04:40Z",
+      "side": 1,
+      "message": "I can see this syntax growing larger and more unwieldy over time.  :(  Here\u0027s a completely different idea:\n\nDefine a new DEVELOPED_IN_AOSP marker file, similar to how we use MODULE_LICENSE_APACHE2, etc.  When it\u0027s an empty file, we assume it applies to an entire directory.  Otherwise, it contains the relative path regexes (one per line) that should trigger the warning.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 254
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0e1f9b_2a42c8c7",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2019-10-11T17:04:40Z",
+      "side": 1,
+      "message": "Should we focus this on python3 to ensure that we get a consistent execution environment?  (Some distros are still in the middle of migrating off python2 as their default.)",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b81a0008_442a9e04",
         "filename": "tools/aosp_hook/aosp_hook.py",
         "patchSetId": 1
