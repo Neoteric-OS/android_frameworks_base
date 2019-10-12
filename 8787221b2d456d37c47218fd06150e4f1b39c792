@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a16951c4_5e25f193",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-12T04:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a3305f6_8f6b3fdb",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49938f32_df20aa7b",
         "filename": "packages/Tethering/AndroidManifest.xml",
         "patchSetId": 4
@@ -69,6 +93,30 @@
       "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "923c71e9_c5385c25",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-12T04:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d53b2b98_56cce5a9",
+      "range": {
+        "startLine": 22,
+        "startChar": 37,
+        "endLine": 22,
+        "endChar": 39
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "61273e9a_0a1a721a",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-12T04:03:07Z",
+      "side": 1,
+      "message": "+1 to declare \"persistent\" here and I don\u0027t find any harmful reason.",
+      "parentUuid": "6fc09748_af8d8b43",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c50530b4_c899c266",
         "filename": "packages/Tethering/AndroidManifestBase.xml",
         "patchSetId": 4
@@ -166,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "4070c00a_51910b1c",
+        "filename": "packages/Tethering/AndroidManifestBase.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-12T04:03:07Z",
+      "side": 1,
+      "message": "Yes, just like Remi\u0027s explanation. SystemServer may try to start tethering service before unlocked and we would get the crash if we don\u0027t add directBootAware here.",
+      "parentUuid": "5418a211_d7e34711",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce24adef_1670d317",
         "filename": "services/net/java/android/net/TetheringManager.java",
         "patchSetId": 4
@@ -177,6 +273,30 @@
       "writtenOn": "2019-09-18T12:24:57Z",
       "side": 1,
       "message": "Do you know on what thread this runs ?\n\nRight now because it\u0027s not used you can\u0027t do anything wrong with this obviously, but since it\u0027s not final, not volatile and not locked any use of it must either be on the same thread or be prepared to never observe this write.",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 18
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e28738e_a92c7ddd",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-12T04:03:07Z",
+      "side": 1,
+      "message": "Currently, I don\u0027t too worry this. mConnector only expect to be assign once after SystemServer call #start() to create and bind TetheringService. And TetheringManager only be hold by ConnectivityService currently. But I agree with your point and want to let mConnector be final. I will have follow up change for this.",
+      "parentUuid": "ce24adef_1670d317",
       "range": {
         "startLine": 71,
         "startChar": 8,
@@ -209,6 +329,30 @@
       "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24e1fd2_d2d8e658",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-12T04:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "167b2ca4_6a6fadaa",
+      "range": {
+        "startLine": 77,
+        "startChar": 62,
+        "endLine": 78,
+        "endChar": 31
+      },
+      "revId": "8787221b2d456d37c47218fd06150e4f1b39c792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
