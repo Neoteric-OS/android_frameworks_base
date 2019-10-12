@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b7fccc0_93bbaf5a",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-12T04:14:59Z",
+      "side": 1,
+      "message": "Don\u0027t starting tethering service in this patch. This logic is better to add when tethering is ready to switch from framework to tethering service. Otherwise we will have redundant service running before tethering service switching.",
+      "range": {
+        "startLine": 2182,
+        "startChar": 0,
+        "endLine": 2188,
+        "endChar": 23
+      },
+      "revId": "f4d1ca2c1d27e934f27bdfbafffd615dee53b813",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
