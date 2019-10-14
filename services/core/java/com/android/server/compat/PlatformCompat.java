@@ -19,6 +19,7 @@ package com.android.server.compat;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.util.Slog;
 import android.util.StatsLog;
 
@@ -105,6 +106,16 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     @Override
     public void setOverrides(CompatibilityChangeConfig overrides, String packageName) {
         CompatConfig.get().addOverrides(overrides, packageName);
+    }
+
+    @Override
+    public void addChange(CompatibilityChangeInfo change) {
+        if (!Build.IS_DEBUGGABLE) {
+            return;
+        }
+        CompatChange compatChange = new CompatChange(change.changeId, change.name,
+                change.enableAfterTargetSdk, change.disabled);
+        CompatConfig.get().addChange(compatChange);
     }
 
     @Override

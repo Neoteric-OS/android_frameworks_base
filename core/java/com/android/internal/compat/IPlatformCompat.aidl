@@ -148,6 +148,15 @@ interface IPlatformCompat
     void clearOverrides(in String packageName);
 
     /**
+     * Dynamically add a compat change.
+     *
+     * <p>This will only work on userdebug or eng builds.
+     *
+     * @param change A {@link CompatibilityChangeInfo} that will be added if it does not exist.
+     */
+    void addChange(in CompatibilityChangeInfo change);
+
+    /**
      * Get configs for an application.
      *
      * @param appInfo The application whose config will be returned.
