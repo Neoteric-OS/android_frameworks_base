@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97d22eff_2e537f39",
+        "filename": "api/lint-baseline.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2019-10-14T10:28:04Z",
+      "side": 1,
+      "message": "red: here and everywhere else :P",
+      "revId": "487c646dc049b5309d4cbbaccbb3938520a3cddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
