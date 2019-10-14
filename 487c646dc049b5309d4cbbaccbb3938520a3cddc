@@ -16,6 +16,24 @@
       "revId": "487c646dc049b5309d4cbbaccbb3938520a3cddc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "208e27fb_e6b6a6b4",
+        "filename": "api/lint-baseline.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2019-10-14T13:15:36Z",
+      "side": 1,
+      "message": "Auto-generated - can\u0027t do anything about that in this CL :/",
+      "parentUuid": "97d22eff_2e537f39",
+      "revId": "487c646dc049b5309d4cbbaccbb3938520a3cddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
