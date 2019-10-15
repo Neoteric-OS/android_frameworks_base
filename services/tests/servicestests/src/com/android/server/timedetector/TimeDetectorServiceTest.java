@@ -28,7 +28,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import android.app.timedetector.TimeSignal;
+import android.app.timedetector.PhoneTimeSuggestion;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.util.TimestampedValue;
@@ -67,7 +67,7 @@ public class TimeDetectorServiceTest {
     public void testStubbedCall_withoutPermission() {
         doThrow(new SecurityException("Mock"))
                 .when(mMockContext).enforceCallingPermission(anyString(), any());
-        TimeSignal timeSignal = createNitzTimeSignal();
+        PhoneTimeSuggestion timeSignal = createPhoneTimeSuggestion();
 
         try {
             mTimeDetectorService.suggestTime(timeSignal);
@@ -81,7 +81,7 @@ public class TimeDetectorServiceTest {
     public void testSuggestTime() {
         doNothing().when(mMockContext).enforceCallingPermission(anyString(), any());
 
-        TimeSignal timeSignal = createNitzTimeSignal();
+        PhoneTimeSuggestion timeSignal = createPhoneTimeSuggestion();
         mTimeDetectorService.suggestTime(timeSignal);
 
         verify(mMockContext)
@@ -115,15 +115,16 @@ public class TimeDetectorServiceTest {
         mStubbedTimeDetectorStrategy.verifyHandleAutoTimeDetectionToggleCalled(false);
     }
 
-    private static TimeSignal createNitzTimeSignal() {
+    private static PhoneTimeSuggestion createPhoneTimeSuggestion() {
+        int phoneId = 1234;
         TimestampedValue<Long> timeValue = new TimestampedValue<>(100L, 1_000_000L);
-        return new TimeSignal(TimeSignal.SOURCE_ID_NITZ, timeValue);
+        return new PhoneTimeSuggestion(phoneId, timeValue);
     }
 
     private static class StubbedTimeDetectorStrategy implements TimeDetectorStrategy {
 
         // Call tracking.
-        private TimeSignal mLastSuggestedTime;
+        private PhoneTimeSuggestion mLastSuggestedTime;
         private Boolean mLastAutoTimeDetectionToggle;
         private boolean mDumpCalled;
 
@@ -132,9 +133,9 @@ public class TimeDetectorServiceTest {
         }
 
         @Override
-        public void suggestTime(TimeSignal timeSignal) {
+        public void suggestPhoneTime(PhoneTimeSuggestion timeSuggestion) {
             resetCallTracking();
-            mLastSuggestedTime = timeSignal;
+            mLastSuggestedTime = timeSuggestion;
         }
 
         @Override
@@ -155,7 +156,7 @@ public class TimeDetectorServiceTest {
             mDumpCalled = false;
         }
 
-        void verifySuggestTimeCalled(TimeSignal expectedSignal) {
+        void verifySuggestTimeCalled(PhoneTimeSuggestion expectedSignal) {
             assertEquals(expectedSignal, mLastSuggestedTime);
         }
 
