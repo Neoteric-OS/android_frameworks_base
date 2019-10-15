@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80dcacf3_91a83cd2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T15:10:29Z",
+      "side": 1,
+      "message": "serve",
+      "range": {
+        "startLine": 9,
+        "startChar": 30,
+        "endLine": 9,
+        "endChar": 37
+      },
+      "revId": "4e13d67005493eb1053d814f806a4c4ebe54066a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40384eeb_448affb4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T15:10:29Z",
+      "side": 1,
+      "message": "why this is specific noted? Isn\u0027t it a movement from frameworks/base/services/net/java/android/net/ip/IpServer.java?\nWhat does \"branch\" mean?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 62
+      },
+      "revId": "4e13d67005493eb1053d814f806a4c4ebe54066a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298c257e_ac4be010",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T15:10:29Z",
+      "side": 1,
+      "message": "May I know where can find the doc style guide?",
+      "range": {
+        "startLine": 80,
+        "startChar": 27,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "4e13d67005493eb1053d814f806a4c4ebe54066a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0279c22_fb3b6b8b",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T15:10:29Z",
+      "side": 1,
+      "message": "Style: space",
+      "range": {
+        "startLine": 114,
+        "startChar": 25,
+        "endLine": 114,
+        "endChar": 26
+      },
+      "revId": "4e13d67005493eb1053d814f806a4c4ebe54066a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94cf8dc9_2a2e0637",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T15:10:29Z",
+      "side": 1,
+      "message": "Style: space and ditto in other places",
+      "range": {
+        "startLine": 134,
+        "startChar": 52,
+        "endLine": 134,
+        "endChar": 53
+      },
+      "revId": "4e13d67005493eb1053d814f806a4c4ebe54066a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "331ecc45_c0a5fcea",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T15:10:29Z",
+      "side": 1,
+      "message": "One of?\nYou list all of them. Should it use \"e.g.\"?",
+      "range": {
+        "startLine": 256,
+        "startChar": 33,
+        "endLine": 256,
+        "endChar": 38
+      },
+      "revId": "4e13d67005493eb1053d814f806a4c4ebe54066a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33075852_582cb31c",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T15:10:29Z",
+      "side": 1,
+      "message": "If you would like to add comment, would it be better to note more context? Otherwise, it looks simply reflect the API name. It looks like there is no much benefit?",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 48
+      },
+      "revId": "4e13d67005493eb1053d814f806a4c4ebe54066a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90843af0_d09f907e",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T15:10:29Z",
+      "side": 1,
+      "message": "Is this a special term or this is \"local only\"?",
+      "range": {
+        "startLine": 270,
+        "startChar": 22,
+        "endLine": 270,
+        "endChar": 31
+      },
+      "revId": "4e13d67005493eb1053d814f806a4c4ebe54066a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a8768f_5a9eb393",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T15:10:29Z",
+      "side": 1,
+      "message": "is served?",
+      "range": {
+        "startLine": 275,
+        "startChar": 56,
+        "endLine": 275,
+        "endChar": 62
+      },
+      "revId": "4e13d67005493eb1053d814f806a4c4ebe54066a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a903170c_8099d813",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T15:10:29Z",
+      "side": 1,
+      "message": "available",
+      "range": {
+        "startLine": 286,
+        "startChar": 64,
+        "endLine": 286,
+        "endChar": 72
+      },
+      "revId": "4e13d67005493eb1053d814f806a4c4ebe54066a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1da93d4_23dcfb66",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T15:10:29Z",
+      "side": 1,
+      "message": "Though it\u0027s copied from the previous doc, I can not understand the comment here. What is Internals mean for startIPv4()?",
+      "range": {
+        "startLine": 293,
+        "startChar": 8,
+        "endLine": 293,
+        "endChar": 17
+      },
+      "revId": "4e13d67005493eb1053d814f806a4c4ebe54066a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98af333a_ce6a76c5",
+        "filename": "packages/Tethering/src/android/net/ip/RouterAdvertisementDaemon.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T15:10:29Z",
+      "side": 1,
+      "message": "Nit: The comment does not bring too much value to me. Probably doc something like\n\"Pack a new RA with prefix and DNS. Notify Multicast ...\" to explain what exact it does? Or No comment is also fine because I think the function name is clear.",
+      "range": {
+        "startLine": 252,
+        "startChar": 4,
+        "endLine": 252,
+        "endChar": 23
+      },
+      "revId": "4e13d67005493eb1053d814f806a4c4ebe54066a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
