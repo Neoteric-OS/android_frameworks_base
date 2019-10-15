@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ed59fce_5a477673",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T01:54:40Z",
+      "side": 1,
+      "message": "Nit: s/These/These APIs and fields",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 5
+      },
+      "revId": "689058746c5b22b47077d2eccba80c8cec6dd8af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
