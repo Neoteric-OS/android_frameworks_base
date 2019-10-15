@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af75bd31_7917203b",
+        "filename": "packages/Tethering/src/android/net/util/PrefixUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-10-15T00:59:56Z",
+      "side": 1,
+      "message": "Convert?",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 14
+      },
+      "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6d95f0_c6671e46",
+        "filename": "packages/Tethering/src/android/net/util/PrefixUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-10-15T00:59:56Z",
+      "side": 1,
+      "message": "Convert?",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 14
+      },
+      "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75229a0a_50d87467",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-10-15T00:59:56Z",
+      "side": 1,
+      "message": "preferred?",
+      "range": {
+        "startLine": 268,
+        "startChar": 19,
+        "endLine": 268,
+        "endChar": 26
+      },
+      "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e03cc27_05b33d86",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-10-15T00:59:56Z",
+      "side": 1,
+      "message": "is available?",
+      "range": {
+        "startLine": 269,
+        "startChar": 76,
+        "endLine": 269,
+        "endChar": 85
+      },
+      "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc466e3_4f83f02a",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-10-15T00:59:56Z",
+      "side": 1,
+      "message": "which network?",
+      "range": {
+        "startLine": 286,
+        "startChar": 55,
+        "endLine": 286,
+        "endChar": 65
+      },
+      "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
