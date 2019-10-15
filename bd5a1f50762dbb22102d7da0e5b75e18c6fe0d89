@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26ca846d_ca0a5391",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-15T07:13:14Z",
+      "side": 1,
+      "message": "s/prevent to repeat adding/not add/\n\nBut I also think this comment does not bring a lot of value.",
+      "range": {
+        "startLine": 61,
+        "startChar": 25,
+        "endLine": 61,
+        "endChar": 49
+      },
+      "revId": "bd5a1f50762dbb22102d7da0e5b75e18c6fe0d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

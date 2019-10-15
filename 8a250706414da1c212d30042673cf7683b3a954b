@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5d64ad4a_2f069f4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-15T07:13:14Z",
+      "side": 1,
+      "message": "s/repeated adding/added multiple times/\nor\nadded twice",
+      "range": {
+        "startLine": 7,
+        "startChar": 42,
+        "endLine": 7,
+        "endChar": 57
+      },
+      "revId": "8a250706414da1c212d30042673cf7683b3a954b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90df2b09_6b2624d2",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
