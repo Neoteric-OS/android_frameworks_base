@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "275c725f_e2543eca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2019-10-15T13:47:25Z",
+      "side": 1,
+      "message": "https://source.android.com/setup/contribute/submit-patches#make-your-change\nPlease format the commit message as \"hard-wrap at 72 characters\".",
+      "revId": "0981d815396f8ac5072c7110b4e880d8f9efacb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7001dca_dcd2d30a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2019-10-15T13:47:25Z",
+      "side": 1,
+      "message": "the same",
+      "range": {
+        "startLine": 10,
+        "startChar": 37,
+        "endLine": 10,
+        "endChar": 42
+      },
+      "revId": "0981d815396f8ac5072c7110b4e880d8f9efacb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57711fa_5718704b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2019-10-15T13:47:25Z",
+      "side": 1,
+      "message": "removed",
+      "range": {
+        "startLine": 17,
+        "startChar": 48,
+        "endLine": 17,
+        "endChar": 54
+      },
+      "revId": "0981d815396f8ac5072c7110b4e880d8f9efacb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
