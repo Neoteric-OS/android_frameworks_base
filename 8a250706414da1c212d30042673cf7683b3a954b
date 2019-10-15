@@ -46,6 +46,30 @@
       "revId": "8a250706414da1c212d30042673cf7683b3a954b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a103ad_c6939ff2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-15T02:06:12Z",
+      "side": 1,
+      "message": "Yes, I think it will be clearer and able to prevent others to do something similar.",
+      "parentUuid": "7d61126a_8079180b",
+      "range": {
+        "startLine": 11,
+        "startChar": 44,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "8a250706414da1c212d30042673cf7683b3a954b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
