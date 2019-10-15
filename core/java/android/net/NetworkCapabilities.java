@@ -58,6 +58,8 @@ public final class NetworkCapabilities implements Parcelable {
     private static final int INVALID_UID = -1;
 
     /**
+     * The caller should not add the network capabilities which DEFAULT_CAPABILITIES already
+     * included.
      * @hide
      */
     @UnsupportedAppUsage
