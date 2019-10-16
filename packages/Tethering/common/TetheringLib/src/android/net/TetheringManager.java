@@ -484,6 +484,17 @@ public class TetheringManager {
     }
 
     /**
+     * Getter for the array of local-only intrfaces
+     */
+    @NonNull
+    public String[] getLocalOnlyIfaces() {
+        mCallback.waitForStarted();
+        if (mTetherStatesParcel == null) return new String[0];
+
+        return mTetherStatesParcel.localOnlyList;
+    }
+
+    /**
      * Get the set of tethered dhcp ranges.
      *
      * @deprecated This API just return the default value which is not used in DhcpServer.

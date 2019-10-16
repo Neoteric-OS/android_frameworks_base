@@ -480,6 +480,13 @@ public class ConnectivityManager {
     public static final int TETHERING_WIFI_P2P = 3;
 
     /**
+     * Ncm local tethering type.
+     * need to start from #startTethering(int, boolean, OnStartTetheringCallback).
+     * @hide
+     */
+    public static final int TETHERING_NCM       = 4;
+
+    /**
      * Extra used for communicating with the TetherService. Includes the type of tethering to
      * enable if any.
      * @hide
@@ -2407,6 +2414,19 @@ public class ConnectivityManager {
     @UnsupportedAppUsage
     public String[] getTetheringErroredIfaces() {
         return getTetheringManager().getTetheringErroredIfaces();
+    }
+
+    /**
+     * Get the set of local_only interfaces.
+     *
+     * @return an array of 0 or more String of currently local_only interface names.
+     *
+     * {@hide}
+     */
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    @NonNull
+    public String[] getLocalOnlyIfaces() {
+        return getTetheringManager().getLocalOnlyIfaces();
     }
 
     /**
