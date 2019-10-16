@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "1ab98831_161e07c3",
+        "filename": "core/java/android/net/IpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-16T08:19:39Z",
+      "side": 1,
+      "message": "As per offline talk : I didn\u0027t understand this well. This @hide is necessary for this to stay out of system-current, but still be part of the greylist. Thanks for the explanation.",
+      "parentUuid": "1687f2a7_0521738d",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 86,
+        "endChar": 22
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf48263c_07613e28",
         "filename": "core/java/android/net/IpConfiguration.java",
         "patchSetId": 1
