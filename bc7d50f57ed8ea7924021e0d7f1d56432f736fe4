@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f765cb69_6d18d615",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2019-10-16T20:06:24Z",
+      "side": 1,
+      "message": "signature only",
+      "range": {
+        "startLine": 779,
+        "startChar": 39,
+        "endLine": 779,
+        "endChar": 50
+      },
+      "revId": "bc7d50f57ed8ea7924021e0d7f1d56432f736fe4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
