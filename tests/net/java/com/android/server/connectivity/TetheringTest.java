@@ -363,6 +363,8 @@ public class TetheringTest {
                 .thenReturn(new String[]{ "test_wlan\\d" });
         when(mResources.getStringArray(com.android.internal.R.array.config_tether_bluetooth_regexs))
                 .thenReturn(new String[0]);
+        when(mResources.getStringArray(com.android.internal.R.array.config_tether_ncm_regexs))
+                .thenReturn(new String[] { "test_ncm\\d" });
         when(mResources.getIntArray(com.android.internal.R.array.config_tether_upstream_types))
                 .thenReturn(new int[0]);
         when(mResources.getBoolean(com.android.internal.R.bool.config_tether_upstream_automatic))
