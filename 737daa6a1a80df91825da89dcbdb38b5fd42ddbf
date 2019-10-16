@@ -234,6 +234,30 @@
       "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea76d287_85fcfffb",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-10-16T09:20:07Z",
+      "side": 1,
+      "message": "Yes, I know that. But using \"upstream\" here is very confused to me(like \"using A as A\"). So I recommand that you should replace this comment.",
+      "parentUuid": "bae8b82a_517effe5",
+      "range": {
+        "startLine": 286,
+        "startChar": 55,
+        "endLine": 286,
+        "endChar": 65
+      },
+      "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
