@@ -17,14 +17,14 @@
 // ==========================================================
 // Build the library for use on the host
 // ==========================================================
-cc_library_host_shared {
+cc_library_host_static {
     name: "libstats_proto_host",
     srcs: [
         "src/atoms.proto",
         "src/atom_field_options.proto",
     ],
 
-    shared_libs: [
+    static_libs: [
         "libplatformprotos",
     ],
 
@@ -36,10 +36,9 @@ cc_library_host_shared {
         ],
     },
 
-    export_shared_lib_headers: [
+    export_static_lib_headers: [
         "libplatformprotos",
-    ]
-
+    ],
 }
 
 cc_defaults {
