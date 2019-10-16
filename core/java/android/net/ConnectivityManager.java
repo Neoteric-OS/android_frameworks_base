@@ -473,6 +473,13 @@ public class ConnectivityManager {
     public static final int TETHERING_BLUETOOTH = 2;
 
     /**
+     * Ethernet tethering type.
+     * @see #startTethering(int, boolean, OnStartTetheringCallback)
+     * @hide
+     */
+    public static final int TETHERING_NCM       = 3;
+
+    /**
      * Extra used for communicating with the TetherService. Includes the type of tethering to
      * enable if any.
      * @hide
@@ -2377,6 +2384,23 @@ public class ConnectivityManager {
     public String[] getTetheringErroredIfaces() {
         try {
             return mService.getTetheringErroredIfaces();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Get the set of local_only interfaces.
+     *
+     * @return an array of 0 or more String of currently local_only interface names.
+     *
+     * {@hide}
+     */
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    @SystemApi
+    public String[] getLocalOnlyIfaces() {
+        try {
+            return mService.getLocalOnlyIfaces();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

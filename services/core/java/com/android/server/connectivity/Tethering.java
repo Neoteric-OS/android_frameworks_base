@@ -18,6 +18,7 @@ package com.android.server.connectivity;
 
 import static android.hardware.usb.UsbManager.USB_CONFIGURED;
 import static android.hardware.usb.UsbManager.USB_CONNECTED;
+import static android.hardware.usb.UsbManager.USB_FUNCTION_NCM;
 import static android.hardware.usb.UsbManager.USB_FUNCTION_RNDIS;
 import static android.net.ConnectivityManager.ACTION_TETHER_STATE_CHANGED;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
@@ -28,6 +29,7 @@ import static android.net.ConnectivityManager.EXTRA_ERRORED_TETHER;
 import static android.net.ConnectivityManager.EXTRA_NETWORK_INFO;
 import static android.net.ConnectivityManager.TETHERING_BLUETOOTH;
 import static android.net.ConnectivityManager.TETHERING_INVALID;
+import static android.net.ConnectivityManager.TETHERING_NCM;
 import static android.net.ConnectivityManager.TETHERING_USB;
 import static android.net.ConnectivityManager.TETHERING_WIFI;
 import static android.net.ConnectivityManager.TETHER_ERROR_MASTER_ERROR;
@@ -358,6 +360,8 @@ public class Tethering extends BaseNetworkObserver {
             return TETHERING_USB;
         } else if (cfg.isBluetooth(iface)) {
             return TETHERING_BLUETOOTH;
+        } else if (cfg.isNcm(iface)) {
+            return TETHERING_NCM;
         }
         return TETHERING_INVALID;
     }
@@ -405,6 +409,10 @@ public class Tethering extends BaseNetworkObserver {
                 break;
             case TETHERING_BLUETOOTH:
                 setBluetoothTethering(enable, receiver);
+                break;
+            case TETHERING_NCM:
+                result = setNcmTethering(enable);
+                sendTetherResult(receiver, result);
                 break;
             default:
                 Log.w(TAG, "Invalid tether type.");
@@ -735,6 +743,7 @@ public class Tethering extends BaseNetworkObserver {
             final boolean usbConnected = intent.getBooleanExtra(USB_CONNECTED, false);
             final boolean usbConfigured = intent.getBooleanExtra(USB_CONFIGURED, false);
             final boolean rndisEnabled = intent.getBooleanExtra(USB_FUNCTION_RNDIS, false);
+            final boolean ncmEnabled = intent.getBooleanExtra(USB_FUNCTION_NCM, false);
 
             mLog.log(String.format("USB bcast connected:%s configured:%s rndis:%s",
                     usbConnected, usbConfigured, rndisEnabled));
@@ -762,6 +771,8 @@ public class Tethering extends BaseNetworkObserver {
                 } else if (usbConfigured && rndisEnabled) {
                     // Tether if rndis is enabled and usb is configured.
                     tetherMatchingInterfaces(IpServer.STATE_TETHERED, TETHERING_USB);
+                } else if (usbConnected && ncmEnabled) {
+                    tetherMatchingInterfaces(IpServer.STATE_LOCAL_ONLY, TETHERING_NCM);
                 }
                 mRndisEnabled = usbConfigured && rndisEnabled;
             }
@@ -980,6 +991,16 @@ public class Tethering extends BaseNetworkObserver {
         return TETHER_ERROR_NO_ERROR;
     }
 
+    private int setNcmTethering(boolean enable) {
+        if (VDBG) Log.d(TAG, "setNcmTethering(" + enable + ")");
+        UsbManager usbManager = (UsbManager) mContext.getSystemService(Context.USB_SERVICE);
+        synchronized (mPublicSync) {
+            usbManager.setCurrentFunctions(enable ? UsbManager.FUNCTION_NCM
+                    : UsbManager.FUNCTION_NONE);
+        }
+        return TETHER_ERROR_NO_ERROR;
+    }
+
     // TODO review API - figure out how to delete these entirely.
     public String[] getTetheredIfaces() {
         ArrayList<String> list = new ArrayList<String>();
@@ -1000,6 +1021,22 @@ public class Tethering extends BaseNetworkObserver {
             for (int i = 0; i < mTetherStates.size(); i++) {
                 TetherState tetherState = mTetherStates.valueAt(i);
                 if (tetherState.lastState == IpServer.STATE_AVAILABLE) {
+                    list.add(mTetherStates.keyAt(i));
+                }
+            }
+        }
+        return list.toArray(new String[list.size()]);
+    }
+
+    /**
+     * Getter for the array of local-only intrfaces
+     */
+    public String[] getLocalOnlyIfaces() {
+        ArrayList<String> list = new ArrayList<String>();
+        synchronized (mPublicSync) {
+            for (int i = 0; i < mTetherStates.size(); i++) {
+                TetherState tetherState = mTetherStates.valueAt(i);
+                if (tetherState.lastState == IpServer.STATE_LOCAL_ONLY) {
                     list.add(mTetherStates.keyAt(i));
                 }
             }
