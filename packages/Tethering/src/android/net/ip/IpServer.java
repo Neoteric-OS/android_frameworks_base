@@ -430,7 +430,8 @@ public class IpServer extends StateMachine {
         // config passed down to us by a higher layer IP-coordinating element.
         String ipAsString = null;
         int prefixLen = 0;
-        if (mInterfaceType == ConnectivityManager.TETHERING_USB) {
+        if (mInterfaceType == ConnectivityManager.TETHERING_USB
+                || mInterfaceType == ConnectivityManager.TETHERING_NCM) {
             ipAsString = USB_NEAR_IFACE_ADDR;
             prefixLen = USB_PREFIX_LENGTH;
         } else if (mInterfaceType == ConnectivityManager.TETHERING_WIFI) {
