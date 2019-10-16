@@ -258,6 +258,30 @@
       "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06e236d9_ccf8ffa5",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-16T17:21:52Z",
+      "side": 1,
+      "message": "Got it, done.",
+      "parentUuid": "ea76d287_85fcfffb",
+      "range": {
+        "startLine": 286,
+        "startChar": 55,
+        "endLine": 286,
+        "endChar": 65
+      },
+      "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
