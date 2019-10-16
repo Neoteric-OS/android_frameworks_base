@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f0eb24f1_16aa74be",
+        "filename": "packages/Tethering/src/android/net/util/PrefixUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-16T06:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af75bd31_7917203b",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 14
+      },
+      "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f6d95f0_c6671e46",
         "filename": "packages/Tethering/src/android/net/util/PrefixUtils.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61812e0e_d96b49e2",
+        "filename": "packages/Tethering/src/android/net/util/PrefixUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-16T06:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f6d95f0_c6671e46",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 14
+      },
+      "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "27c37cf5_4c9b10bf",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-16T06:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75229a0a_50d87467",
+      "range": {
+        "startLine": 268,
+        "startChar": 19,
+        "endLine": 268,
+        "endChar": 26
+      },
+      "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e03cc27_05b33d86",
         "filename": "packages/Tethering/src/com/android/server/connectivity/UpstreamNetworkMonitor.java",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b6b558bb_3254f710",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-16T06:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e03cc27_05b33d86",
+      "range": {
+        "startLine": 269,
+        "startChar": 76,
+        "endLine": 269,
+        "endChar": 85
+      },
+      "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fc466e3_4f83f02a",
         "filename": "packages/Tethering/src/com/android/server/connectivity/UpstreamNetworkMonitor.java",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae8b82a_517effe5",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-16T06:51:43Z",
+      "side": 1,
+      "message": "|upstream| means reference input parameter \"Network upstream\"",
+      "parentUuid": "9fc466e3_4f83f02a",
+      "range": {
+        "startLine": 286,
+        "startChar": 55,
+        "endLine": 286,
+        "endChar": 65
+      },
+      "revId": "737daa6a1a80df91825da89dcbdb38b5fd42ddbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
