@@ -501,6 +501,8 @@ public class CarrierConfigManager {
     public static final String KEY_NOTIFY_HANDOVER_VIDEO_FROM_LTE_TO_WIFI_BOOL =
             "notify_handover_video_from_lte_to_wifi_bool";
 
+    public static final String KEY_SUPPORT_SEND_USSD_OVER_VOWIFI = "support_send_ussd_over_vowifi";
+
     /**
      * Flag specifying whether the carrier supports downgrading a video call (tx, rx or tx/rx)
      * directly to an audio call.
@@ -3152,6 +3154,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_NOTIFY_HANDOVER_VIDEO_FROM_WIFI_TO_LTE_BOOL, false);
         sDefaults.putBoolean(KEY_ALLOW_MERGING_RTT_CALLS_BOOL, false);
         sDefaults.putBoolean(KEY_NOTIFY_HANDOVER_VIDEO_FROM_LTE_TO_WIFI_BOOL, false);
+        sDefaults.putBoolean(KEY_SUPPORT_SEND_USSD_OVER_VOWIFI, true);
         sDefaults.putBoolean(KEY_SUPPORT_DOWNGRADE_VT_TO_AUDIO_BOOL, true);
         sDefaults.putString(KEY_DEFAULT_VM_NUMBER_STRING, "");
         sDefaults.putString(KEY_DEFAULT_VM_NUMBER_ROAMING_STRING, "");
