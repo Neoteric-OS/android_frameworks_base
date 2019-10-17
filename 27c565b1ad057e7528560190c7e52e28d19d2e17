@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c914a9f3_21d1f4db",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-17T09:11:54Z",
+      "side": 1,
+      "message": "With Paul\u0027s work to remove CONNECTIVITY_INTERNAL will you still need this ?",
+      "range": {
+        "startLine": 28,
+        "startChar": 54,
+        "endLine": 28,
+        "endChar": 75
+      },
+      "revId": "27c565b1ad057e7528560190c7e52e28d19d2e17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
