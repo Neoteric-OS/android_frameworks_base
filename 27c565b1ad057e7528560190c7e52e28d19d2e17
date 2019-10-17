@@ -22,6 +22,75 @@
       "revId": "27c565b1ad057e7528560190c7e52e28d19d2e17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253b7c9d_723f5d41",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-10-17T10:11:02Z",
+      "side": 1,
+      "message": "com.android.networkstack.process",
+      "range": {
+        "startLine": 32,
+        "startChar": 25,
+        "endLine": 32,
+        "endChar": 49
+      },
+      "revId": "27c565b1ad057e7528560190c7e52e28d19d2e17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c7e2243_72076e56",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-10-17T10:11:02Z",
+      "side": 1,
+      "message": "This may not be applicable here; actually I\u0027d prefer to avoid this design in the future, so maybe remove this sentence.\nBackground: if built with an old SDK an overlay package can override any resource (even not declared \"overlayable\"), so the resources should just be configurable values.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "27c565b1ad057e7528560190c7e52e28d19d2e17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad425d9e_c4b7e7c2",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-10-17T10:11:02Z",
+      "side": 1,
+      "message": "For consistency, tethering-client ?",
+      "range": {
+        "startLine": 8,
+        "startChar": 19,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "27c565b1ad057e7528560190c7e52e28d19d2e17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
