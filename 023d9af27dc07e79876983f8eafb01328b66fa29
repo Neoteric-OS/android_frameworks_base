@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2cedbce_c76fb6c3",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-17T09:51:38Z",
+      "side": 1,
+      "message": "ETHERNET ? while you\u0027re here",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 7
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2b4428_3140f956",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-17T09:51:38Z",
+      "side": 1,
+      "message": "Not for this change : do we have plans to remove this method ? It\u0027s an anti-pattern to assume the last error is the one relevant at any time at all : this can\u0027t really be made correct. See how difficult it was to make errno work in any sense of the work at all. See how difficult it still is to use.",
+      "range": {
+        "startLine": 266,
+        "startChar": 15,
+        "endLine": 266,
+        "endChar": 24
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61214421_7e4d4286",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-17T09:51:38Z",
+      "side": 1,
+      "message": "Kind of same question : outside of this thread this can\u0027t really ever be current for any meaningful definition of the word.",
+      "range": {
+        "startLine": 271,
+        "startChar": 15,
+        "endLine": 271,
+        "endChar": 26
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72ab60de_c6222184",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-17T09:51:38Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 275,
+        "startChar": 26,
+        "endLine": 275,
+        "endChar": 27
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f604c728_61deaabd",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-17T09:51:38Z",
+      "side": 1,
+      "message": "serving ?",
+      "range": {
+        "startLine": 275,
+        "startChar": 59,
+        "endLine": 275,
+        "endChar": 65
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4d3efb_5fd13a72",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-17T09:51:38Z",
+      "side": 1,
+      "message": "This is an order to stop right ? Then how about :\n\nStop this IpServer. After this is called this IpServer should not be used any more.",
+      "range": {
+        "startLine": 280,
+        "startChar": 8,
+        "endLine": 280,
+        "endChar": 62
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd2578c_8f95ef9a",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-17T09:51:38Z",
+      "side": 1,
+      "message": "available",
+      "range": {
+        "startLine": 286,
+        "startChar": 64,
+        "endLine": 286,
+        "endChar": 71
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34016513_20d76fa0",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-17T09:51:38Z",
+      "side": 1,
+      "message": "unwanted\n\n(\"unrequested\" means that it has not been requested, not that the request has been withdrawn)",
+      "range": {
+        "startLine": 286,
+        "startChar": 20,
+        "endLine": 286,
+        "endChar": 31
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a72c870_a1f0aee9",
+        "filename": "packages/Tethering/src/android/net/ip/RouterAdvertisementDaemon.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-17T09:51:38Z",
+      "side": 1,
+      "message": "If you respin this change rename this to mSolicitation",
+      "range": {
+        "startLine": 678,
+        "startChar": 29,
+        "endLine": 678,
+        "endChar": 40
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
