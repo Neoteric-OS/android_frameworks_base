@@ -52,6 +52,24 @@
       "revId": "396bfedc3893230b36b9db78fc016ed7e09cef52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fde90d7_717b0d8a",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/PagedTileLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1090594
+      },
+      "writtenOn": "2019-10-17T00:18:32Z",
+      "side": 1,
+      "message": "Sure but it was abandoned cause of \u0027This has already been fixed internally so I will close this change.\u0027 which ended up being a slightly worse change committed day later...",
+      "parentUuid": "9ef72f77_929d5fea",
+      "revId": "396bfedc3893230b36b9db78fc016ed7e09cef52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
