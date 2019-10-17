@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "501452d7_20d45cc7",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-17T10:41:11Z",
+      "side": 1,
+      "message": "Style: space",
+      "range": {
+        "startLine": 265,
+        "startChar": 37,
+        "endLine": 265,
+        "endChar": 38
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa2b4428_3140f956",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 16
@@ -140,6 +163,29 @@
     },
     {
       "key": {
+        "uuid": "b95cb0ad_2f1058dd",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-17T10:41:11Z",
+      "side": 1,
+      "message": "Style: space",
+      "range": {
+        "startLine": 280,
+        "startChar": 62,
+        "endLine": 280,
+        "endChar": 64
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccd2578c_8f95ef9a",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 16
@@ -179,6 +225,29 @@
         "startChar": 20,
         "endLine": 286,
         "endChar": 31
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b12892_07622f0f",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-17T10:41:11Z",
+      "side": 1,
+      "message": "Style: space",
+      "range": {
+        "startLine": 293,
+        "startChar": 17,
+        "endLine": 293,
+        "endChar": 19
       },
       "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",

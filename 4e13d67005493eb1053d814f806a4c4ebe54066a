@@ -519,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "d1a1e574_81e4822b",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-17T10:41:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aff68207_ccc7269d",
+      "range": {
+        "startLine": 293,
+        "startChar": 8,
+        "endLine": 293,
+        "endChar": 17
+      },
+      "revId": "4e13d67005493eb1053d814f806a4c4ebe54066a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98af333a_ce6a76c5",
         "filename": "packages/Tethering/src/android/net/ip/RouterAdvertisementDaemon.java",
         "patchSetId": 15
