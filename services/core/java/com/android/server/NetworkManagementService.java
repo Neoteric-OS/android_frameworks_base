@@ -60,6 +60,7 @@ import android.net.RouteInfo;
 import android.net.TetherStatsParcel;
 import android.net.UidRange;
 import android.net.UidRangeParcel;
+import android.net.shared.RouteUtils;
 import android.net.util.NetdService;
 import android.os.BatteryStats;
 import android.os.Binder;
@@ -889,48 +890,12 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
 
     @Override
     public void addRoute(int netId, RouteInfo route) {
-        modifyRoute(MODIFY_OPERATION_ADD, netId, route);
+        RouteUtils.modifyRoute(mNetdService, MODIFY_OPERATION_ADD, netId, route);
     }
 
     @Override
     public void removeRoute(int netId, RouteInfo route) {
-        modifyRoute(MODIFY_OPERATION_REMOVE, netId, route);
-    }
-
-    private void modifyRoute(boolean add, int netId, RouteInfo route) {
-        mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
-
-        final String ifName = route.getInterface();
-        final String dst = route.getDestination().toString();
-        final String nextHop;
-
-        switch (route.getType()) {
-            case RouteInfo.RTN_UNICAST:
-                if (route.hasGateway()) {
-                    nextHop = route.getGateway().getHostAddress();
-                } else {
-                    nextHop = INetd.NEXTHOP_NONE;
-                }
-                break;
-            case RouteInfo.RTN_UNREACHABLE:
-                nextHop = INetd.NEXTHOP_UNREACHABLE;
-                break;
-            case RouteInfo.RTN_THROW:
-                nextHop = INetd.NEXTHOP_THROW;
-                break;
-            default:
-                nextHop = INetd.NEXTHOP_NONE;
-                break;
-        }
-        try {
-            if (add) {
-                mNetdService.networkAddRoute(netId, ifName, dst, nextHop);
-            } else {
-                mNetdService.networkRemoveRoute(netId, ifName, dst, nextHop);
-            }
-        } catch (RemoteException | ServiceSpecificException e) {
-            throw new IllegalStateException(e);
-        }
+        RouteUtils.modifyRoute(mNetdService, MODIFY_OPERATION_REMOVE, netId, route);
     }
 
     private ArrayList<String> readRouteList(String filename) {
@@ -2112,15 +2077,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     public void addInterfaceToLocalNetwork(String iface, List<RouteInfo> routes) {
         modifyInterfaceInNetwork(MODIFY_OPERATION_ADD, INetd.LOCAL_NET_ID, iface);
 
-        for (RouteInfo route : routes) {
-            if (!route.isDefaultRoute()) {
-                modifyRoute(MODIFY_OPERATION_ADD, INetd.LOCAL_NET_ID, route);
-            }
-        }
-
-        // IPv6 link local should be activated always.
-        modifyRoute(MODIFY_OPERATION_ADD, INetd.LOCAL_NET_ID,
-                new RouteInfo(new IpPrefix("fe80::/64"), null, iface));
+        RouteUtils.addRoutesToLocalNetwork(mNetdService, iface, routes);
     }
 
     @Override
@@ -2130,17 +2087,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
 
     @Override
     public int removeRoutesFromLocalNetwork(List<RouteInfo> routes) {
-        int failures = 0;
-
-        for (RouteInfo route : routes) {
-            try {
-                modifyRoute(MODIFY_OPERATION_REMOVE, INetd.LOCAL_NET_ID, route);
-            } catch (IllegalStateException e) {
-                failures++;
-            }
-        }
-
-        return failures;
+        return RouteUtils.removeRoutesFromLocalNetwork(mNetdService, routes);
     }
 
     @Override
