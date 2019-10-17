@@ -217,6 +217,30 @@
     },
     {
       "key": {
+        "uuid": "49e11fc2_004fc733",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-17T09:02:56Z",
+      "side": 1,
+      "message": "In any case I\u0027m not asking you to completely rehaul the architecture in this patch. I would like all upstreams to work in the same way ultimately, but that\u0027s an end goal.\n\nI think with Mark\u0027s suggestion we are in a better place though I meant testing for the thing in the main code – test coverage is never as high as you really think it is. But for now I think it\u0027s fine. In any case, with this the code certainly clears the \"make the codebase better than it used to be\" bar that it needs for +2 :)",
+      "parentUuid": "bdb955a7_ad71005e",
+      "range": {
+        "startLine": 481,
+        "startChar": 28,
+        "endLine": 481,
+        "endChar": 46
+      },
+      "revId": "79ceeec47da94c24ea19e07ca54922f2e1f8e6de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f89355e_5651f64e",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7

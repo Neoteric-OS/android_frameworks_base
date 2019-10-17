@@ -46,6 +46,30 @@
       "revId": "f9bd8b9e78e08b49ca0329638fd36fda413e3215",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda8d07a_30d8fb70",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-17T09:02:56Z",
+      "side": 1,
+      "message": "Got it. I still find this super confusing and would like some comments, but please don\u0027t bother respinning the change for this.",
+      "parentUuid": "b00ce54a_0ed931f0",
+      "range": {
+        "startLine": 810,
+        "startChar": 24,
+        "endLine": 810,
+        "endChar": 43
+      },
+      "revId": "f9bd8b9e78e08b49ca0329638fd36fda413e3215",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
