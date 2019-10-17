@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6c768b5_096ee4de",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-10-17T15:31:44Z",
+      "side": 1,
+      "message": "This is true of _all_ methods in IPlatformCompat.",
+      "parentUuid": "5c0b1416_74de4ca8",
+      "revId": "5da6e3449534f18c22a9c090ae89ac301be9199d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "115fa038_151663f0",
         "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2019-10-17T15:25:09Z",
       "side": 1,
       "message": "ughh.. this is the kind of methods that shouldn\u0027t be on the interface we expose to clients.. :-( Let\u0027s refactor at some point. :-(",
+      "range": {
+        "startLine": 157,
+        "startChar": 9,
+        "endLine": 157,
+        "endChar": 18
+      },
+      "revId": "5da6e3449534f18c22a9c090ae89ac301be9199d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8ddd450_fe768a58",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-10-17T15:31:44Z",
+      "side": 1,
+      "message": "I agree; like I said, I\u0027m not even sure this CL should be submitted.",
+      "parentUuid": "115fa038_151663f0",
       "range": {
         "startLine": 157,
         "startChar": 9,
