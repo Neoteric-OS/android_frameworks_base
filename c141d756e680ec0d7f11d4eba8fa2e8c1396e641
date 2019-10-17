@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c77518f_76fc4c6e",
+        "filename": "core/java/com/android/internal/compat/ChangeReporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-10-17T15:16:16Z",
+      "side": 1,
+      "message": "DebugLogAll, not just LogAll",
+      "range": {
+        "startLine": 72,
+        "startChar": 20,
+        "endLine": 72,
+        "endChar": 27
+      },
+      "revId": "c141d756e680ec0d7f11d4eba8fa2e8c1396e641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3bcb644_4fcb864e",
+        "filename": "core/java/com/android/internal/compat/ChangeReporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-10-17T15:16:16Z",
+      "side": 1,
+      "message": "nit: isReported? isAlreadyReported?",
+      "range": {
+        "startLine": 144,
+        "startChar": 20,
+        "endLine": 144,
+        "endChar": 31
+      },
+      "revId": "c141d756e680ec0d7f11d4eba8fa2e8c1396e641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc132db_327730ca",
+        "filename": "core/tests/PlatformCompatFramework/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-10-17T15:16:16Z",
+      "side": 1,
+      "message": "doesn\u0027t really need to be an android_test? how do you write a simple java_test with unit tests running on host?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "c141d756e680ec0d7f11d4eba8fa2e8c1396e641",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
