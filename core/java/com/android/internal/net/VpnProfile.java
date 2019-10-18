@@ -17,9 +17,9 @@
 package com.android.internal.net;
 
 import android.annotation.UnsupportedAppUsage;
-import android.os.Build;
 import android.net.ProxyInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
@@ -169,7 +169,8 @@ public class VpnProfile implements Cloneable, Parcelable {
                     profile.proxy = new ProxyInfo(host, port.isEmpty() ?
                             0 : Integer.parseInt(port), exclList);
                 } else {
-                    profile.proxy = new ProxyInfo(pacFileUrl);
+                    Uri uri = Uri.parse(pacFileUrl);
+                    profile.proxy = new ProxyInfo(uri);
                 }
             } // else profle.proxy = null
             profile.saveLogin = !profile.username.isEmpty() || !profile.password.isEmpty();
