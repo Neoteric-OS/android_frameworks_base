@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e881b48_ebbde3df",
+        "filename": "core/java/com/android/internal/compat/ChangeReporter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-10-18T12:37:21Z",
+      "side": 1,
+      "message": "Are these methods ({start,stop}DebugLogAll) intentionally public? Will they be used in future elsewhere, or are they meant exclusively for testing?",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 10
+      },
+      "revId": "947b83399b5c2b1ad5ec0fa7b96a39e60c77fbdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "300cb27f_6c756fe0",
+        "filename": "core/java/com/android/internal/compat/ChangeReporter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-10-18T12:37:21Z",
+      "side": 1,
+      "message": "Can this (and shouldWriteToDebug) be package private?",
+      "range": {
+        "startLine": 121,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 10
+      },
+      "revId": "947b83399b5c2b1ad5ec0fa7b96a39e60c77fbdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
