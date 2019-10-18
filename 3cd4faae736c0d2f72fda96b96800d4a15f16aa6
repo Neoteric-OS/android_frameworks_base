@@ -16,6 +16,24 @@
       "revId": "3cd4faae736c0d2f72fda96b96800d4a15f16aa6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea564ea8_932975f4",
+        "filename": "core/tests/PlatformCompatFramework/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-10-18T14:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8b28958_acfbb247",
+      "revId": "3cd4faae736c0d2f72fda96b96800d4a15f16aa6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
