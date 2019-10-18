@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62944e01_11c1d154",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 7221,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2019-10-18T09:25:14Z",
+      "side": 1,
+      "message": "follow-up CL: Needs @Nullable or @NonNull",
+      "range": {
+        "startLine": 7221,
+        "startChar": 60,
+        "endLine": 7221,
+        "endChar": 66
+      },
+      "revId": "4389205591b7b2b22bc5e003dbfbc8b27ec2295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26605ed7_d9287cc2",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 7222,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2019-10-18T09:25:14Z",
+      "side": 1,
+      "message": "follow-up CL: Needs @Nullable or @NonNull",
+      "range": {
+        "startLine": 7222,
+        "startChar": 59,
+        "endLine": 7222,
+        "endChar": 66
+      },
+      "revId": "4389205591b7b2b22bc5e003dbfbc8b27ec2295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6c463a_8c057380",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 7223,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2019-10-18T09:25:14Z",
+      "side": 1,
+      "message": "follow-up CL: Rename to SERVICE_INTERFACE and annotate with @SdkConstant per http://go/android-api-guidelines#1-handling-intents-in-system-bound-developer-services",
+      "range": {
+        "startLine": 7223,
+        "startChar": 37,
+        "endLine": 7223,
+        "endChar": 69
+      },
+      "revId": "4389205591b7b2b22bc5e003dbfbc8b27ec2295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
