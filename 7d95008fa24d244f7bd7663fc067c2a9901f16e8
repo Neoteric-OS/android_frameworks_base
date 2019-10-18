@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d73aacad_b659b754",
+        "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-10-18T21:54:00Z",
+      "side": 1,
+      "message": "2019",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "7d95008fa24d244f7bd7663fc067c2a9901f16e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb8871d_8efec14d",
+        "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-10-18T21:54:00Z",
+      "side": 1,
+      "message": "nit: spelling",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 33,
+        "endChar": 7
+      },
+      "revId": "7d95008fa24d244f7bd7663fc067c2a9901f16e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a73783b_ffb645f9",
+        "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-10-18T21:54:00Z",
+      "side": 1,
+      "message": "You probably want to make this @SystemApi for mainline efforts in Telephony",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 8
+      },
+      "revId": "7d95008fa24d244f7bd7663fc067c2a9901f16e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
