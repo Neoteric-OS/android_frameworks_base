@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8b28958_acfbb247",
+        "filename": "core/tests/PlatformCompatFramework/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-10-18T14:19:09Z",
+      "side": 1,
+      "message": "no need for bdc and narayan@ here",
+      "revId": "3cd4faae736c0d2f72fda96b96800d4a15f16aa6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
