@@ -8113,6 +8113,7 @@ package android.telephony {
     method public boolean disableCellBroadcastRange(int, int, int);
     method public boolean enableCellBroadcastRange(int, int, int);
     method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public void sendMultipartTextMessageWithoutPersisting(String, String, java.util.List<java.lang.String>, java.util.List<android.app.PendingIntent>, java.util.List<android.app.PendingIntent>);
+    method public int getSmsCapacityOnIcc();
     field public static final int RESULT_CANCELLED = 23; // 0x17
     field public static final int RESULT_ENCODING_ERROR = 18; // 0x12
     field public static final int RESULT_ERROR_FDN_CHECK_FAILURE = 6; // 0x6
