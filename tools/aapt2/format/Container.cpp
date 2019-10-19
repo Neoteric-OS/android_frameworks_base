@@ -28,6 +28,7 @@ namespace aapt {
 
 constexpr const static uint32_t kContainerFormatMagic = 0x54504141u;
 constexpr const static uint32_t kContainerFormatVersion = 1u;
+constexpr const static size_t kPaddingAlignment = 4u;
 
 ContainerWriter::ContainerWriter(ZeroCopyOutputStream* out, size_t entry_count)
     : out_(out), total_entry_count_(entry_count), current_entry_count_(0u) {
@@ -47,11 +48,17 @@ ContainerWriter::ContainerWriter(ZeroCopyOutputStream* out, size_t entry_count)
   }
 }
 
-inline static void WritePadding(int padding, CodedOutputStream* out) {
-  if (padding < 4) {
-    const uint32_t zero = 0u;
-    out->WriteRaw(&zero, padding);
-  }
+inline static size_t CalculatePaddingForAlignment(size_t size) {
+  size_t overage = size % kPaddingAlignment;
+  return overage == 0 ? 0 : kPaddingAlignment - overage;
+}
+
+inline static void WritePadding(size_t padding, CodedOutputStream* out) {
+  CHECK(padding < kPaddingAlignment);
+  const uint32_t zero = 0u;
+  static_assert(sizeof(zero) >= kPaddingAlignment, "Not enough source bytes for padding");
+
+  out->WriteRaw(&zero, padding);
 }
 
 bool ContainerWriter::AddResTableEntry(const pb::ResourceTable& table) {
@@ -68,7 +75,7 @@ bool ContainerWriter::AddResTableEntry(const pb::ResourceTable& table) {
 
   // Write the aligned size.
   const ::google::protobuf::uint64 size = table.ByteSize();
-  const int padding = 4 - (size % 4);
+  const int padding = CalculatePaddingForAlignment(size);
   coded_out.WriteLittleEndian64(size);
 
   // Write the table.
@@ -101,9 +108,9 @@ bool ContainerWriter::AddResFileEntry(const pb::internal::CompiledFile& file,
 
   // Write the aligned size.
   const ::google::protobuf::uint32 header_size = file.ByteSize();
-  const int header_padding = 4 - (header_size % 4);
+  const int header_padding = CalculatePaddingForAlignment(header_size);
   const ::google::protobuf::uint64 data_size = in->TotalSize();
-  const int data_padding = 4 - (data_size % 4);
+  const int data_padding = CalculatePaddingForAlignment(data_size);
   coded_out.WriteLittleEndian64(kResFileEntryHeaderSize + header_size + header_padding + data_size +
                                 data_padding);
 
