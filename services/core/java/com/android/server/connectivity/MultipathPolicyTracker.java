@@ -49,16 +49,14 @@ import android.net.NetworkRequest;
 import android.net.NetworkStats;
 import android.net.NetworkTemplate;
 import android.net.StringNetworkSpecifier;
+import android.net.Uri;
 import android.os.BestClock;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.net.Uri;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
-import android.util.DataUnit;
 import android.util.DebugUtils;
-import android.util.Pair;
 import android.util.Range;
 import android.util.Slog;
 
@@ -74,7 +72,6 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -123,6 +120,23 @@ public class MultipathPolicyTracker {
         public Clock getClock() {
             return new BestClock(ZoneOffset.UTC, SystemClock.currentNetworkTimeClock(),
                     Clock.systemUTC());
+        }
+    }
+
+    static class ZonedQuota {
+        public static final ZonedQuota UNKNOWN = new ZonedQuota(
+                OPPORTUNISTIC_QUOTA_UNKNOWN, ZoneId.of("UTC"));
+
+        public final long quota;
+        public final ZoneId zoneId;
+
+        ZonedQuota(long q, ZoneId z) {
+            quota = q;
+            zoneId = z;
+        }
+
+        boolean isUnknown() {
+            return quota == OPPORTUNISTIC_QUOTA_UNKNOWN;
         }
     }
 
@@ -188,7 +202,7 @@ public class MultipathPolicyTracker {
         final int subId;
         final String subscriberId;
 
-        private long mQuota;
+        private ZonedQuota mQuota;
         /** Current multipath budget. Nonzero iff we have budget and a UsageCallback is armed. */
         private long mMultipathBudget;
         private final NetworkTemplate mNetworkTemplate;
@@ -238,10 +252,9 @@ public class MultipathPolicyTracker {
             mNetworkCapabilities = new NetworkCapabilities(nc);
         }
 
-        // TODO: calculate with proper timezone information
-        private long getDailyNonDefaultDataUsage() {
+        private long getDailyNonDefaultDataUsage(ZoneId zoneId) {
             final ZonedDateTime end =
-                    ZonedDateTime.ofInstant(mClock.instant(), ZoneId.systemDefault());
+                    ZonedDateTime.ofInstant(mClock.instant(), zoneId);
             final ZonedDateTime start = end.truncatedTo(ChronoUnit.DAYS);
 
             final long bytes = getNetworkTotalBytes(
@@ -286,56 +299,61 @@ public class MultipathPolicyTracker {
             return remainingBytes / Math.max(1, remainingDays);
         }
 
-        private long getUserPolicyOpportunisticQuotaBytes() {
-            // Keep the most restrictive applicable policy
+        private ZonedQuota getUserPolicyOpportunisticQuotaBytes() {
+            // Keep the most restrictive applicable policy.
             long minQuota = Long.MAX_VALUE;
+            ZoneId minZoneId = null;  // Never used uninitialized, but the compiler can't tell.
             final NetworkIdentity identity = getTemplateMatchingNetworkIdentity(
                     mNetworkCapabilities);
 
             final NetworkPolicy[] policies = mNPM.getNetworkPolicies();
             for (NetworkPolicy policy : policies) {
                 if (policy.hasCycle() && policy.template.matches(identity)) {
-                    final long cycleStart = policy.cycleIterator().next().getLower()
-                            .toInstant().toEpochMilli();
+                    final Range<ZonedDateTime> cycle = policy.cycleIterator().next();
+                    final ZonedDateTime cycleStart = cycle.getLower();
+                    final long cycleStartMs = cycleStart.toInstant().toEpochMilli();
+
                     // Prefer user-defined warning, otherwise use hard limit
-                    final long activeWarning = getActiveWarning(policy, cycleStart);
+                    final long activeWarning = getActiveWarning(policy, cycleStartMs);
                     final long policyBytes = (activeWarning == WARNING_DISABLED)
-                            ? getActiveLimit(policy, cycleStart)
+                            ? getActiveLimit(policy, cycleStartMs)
                             : activeWarning;
 
                     if (policyBytes != LIMIT_DISABLED && policyBytes != WARNING_DISABLED) {
-                        final long policyBudget = getRemainingDailyBudget(policyBytes,
-                                policy.cycleIterator().next());
+                        final long policyBudget = getRemainingDailyBudget(policyBytes, cycle);
                         minQuota = Math.min(minQuota, policyBudget);
+                        minZoneId = cycleStart.getZone();
                     }
                 }
             }
 
             if (minQuota == Long.MAX_VALUE) {
-                return OPPORTUNISTIC_QUOTA_UNKNOWN;
+                return ZonedQuota.UNKNOWN;
             }
 
-            return minQuota / OPQUOTA_USER_SETTING_DIVIDER;
+            return new ZonedQuota(minQuota / OPQUOTA_USER_SETTING_DIVIDER, minZoneId);
         }
 
         void updateMultipathBudget() {
-            long quota = LocalServices.getService(NetworkPolicyManagerInternal.class)
-                    .getSubscriptionOpportunisticQuota(this.network, QUOTA_TYPE_MULTIPATH);
+            ZonedQuota quota = new ZonedQuota(
+                    LocalServices.getService(NetworkPolicyManagerInternal.class)
+                            .getSubscriptionOpportunisticQuota(this.network, QUOTA_TYPE_MULTIPATH),
+                    ZoneId.systemDefault());   // TODO: fix getSubscriptionOpportunisticQuota
             if (DBG) Slog.d(TAG, "Opportunistic quota from data plan: " + quota + " bytes");
 
             // Fallback to user settings-based quota if not available from phone plan
-            if (quota == OPPORTUNISTIC_QUOTA_UNKNOWN) {
+            if (quota.isUnknown()) {
                 quota = getUserPolicyOpportunisticQuotaBytes();
                 if (DBG) Slog.d(TAG, "Opportunistic quota from user policy: " + quota + " bytes");
             }
 
-            if (quota == OPPORTUNISTIC_QUOTA_UNKNOWN) {
-                quota = getDefaultDailyMultipathQuotaBytes();
+            if (quota.isUnknown()) {
+                quota = getDefaultDailyMultipathQuota();
                 if (DBG) Slog.d(TAG, "Setting quota: " + quota + " bytes");
             }
 
             // TODO: re-register if day changed: budget may have run out but should be refreshed.
-            if (haveMultipathBudget() && quota == mQuota) {
+            if (haveMultipathBudget() && quota.quota == mQuota.quota) {
                 // If there is already a usage callback pending , there's no need to re-register it
                 // if the quota hasn't changed. The callback will simply fire as expected when the
                 // budget is spent.
@@ -346,8 +364,8 @@ public class MultipathPolicyTracker {
 
             // If we can't get current usage, assume the worst and don't give
             // ourselves any budget to work with.
-            final long usage = getDailyNonDefaultDataUsage();
-            final long budget = (usage == -1) ? 0 : Math.max(0, quota - usage);
+            final long usage = getDailyNonDefaultDataUsage(quota.zoneId);
+            final long budget = (usage == -1) ? 0 : Math.max(0, quota.quota - usage);
 
             // Only consider budgets greater than MIN_THRESHOLD_BYTES, otherwise the callback will
             // fire late, after data usage went over budget. Also budget should be 0 if remaining
@@ -376,7 +394,7 @@ public class MultipathPolicyTracker {
 
         // For debugging only.
         public long getQuota() {
-            return mQuota;
+            return mQuota.quota;
         }
 
         // For debugging only.
@@ -425,19 +443,22 @@ public class MultipathPolicyTracker {
     private final ConcurrentHashMap <Network, MultipathTracker> mMultipathTrackers =
             new ConcurrentHashMap<>();
 
-    private long getDefaultDailyMultipathQuotaBytes() {
+    private ZonedQuota getDefaultDailyMultipathQuota() {
         final String setting = Settings.Global.getString(mContext.getContentResolver(),
                 NETWORK_DEFAULT_DAILY_MULTIPATH_QUOTA_BYTES);
+
         if (setting != null) {
             try {
-                return Long.parseLong(setting);
+                return new ZonedQuota(Long.parseLong(setting), ZoneId.systemDefault());
             } catch(NumberFormatException e) {
                 // fall through
             }
         }
 
-        return mContext.getResources().getInteger(
-                R.integer.config_networkDefaultDailyMultipathQuotaBytes);
+        return new ZonedQuota(
+                mContext.getResources().getInteger(
+                        R.integer.config_networkDefaultDailyMultipathQuotaBytes),
+                ZoneId.systemDefault());
     }
 
     // TODO: this races with app code that might respond to onAvailable() by immediately calling
