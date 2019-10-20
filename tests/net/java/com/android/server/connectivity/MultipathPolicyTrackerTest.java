@@ -89,6 +89,9 @@ public class MultipathPolicyTrackerTest {
     private static final Network TEST_NETWORK = new Network(123);
     private static final int POLICY_SNOOZED = -100;
 
+    // Pick an arbitrary timezone so the test doesn't fail when run across timezone switches.
+    private static final ZoneId TIMEZONE = ZoneId.of("Asia/Tokyo");
+
     @Mock private Context mContext;
     @Mock private Resources mResources;
     @Mock private Handler mHandler;
@@ -172,13 +175,12 @@ public class MultipathPolicyTrackerTest {
             long usedBytesToday, long subscriptionQuota, long policyWarning, long policyLimit,
             long defaultGlobalSetting, long defaultResSetting, boolean roaming) {
 
-        // TODO: tests should not use ZoneId.systemDefault() once code handles TZ correctly.
         final ZonedDateTime now = ZonedDateTime.ofInstant(
-                Instant.parse("2017-04-02T10:11:12Z"), ZoneId.systemDefault());
+                Instant.parse("2017-04-02T10:11:12Z"), TIMEZONE);
         final ZonedDateTime startOfDay = now.truncatedTo(ChronoUnit.DAYS);
         when(mClock.millis()).thenReturn(now.toInstant().toEpochMilli());
         when(mClock.instant()).thenReturn(now.toInstant());
-        when(mClock.getZone()).thenReturn(ZoneId.systemDefault());
+        when(mClock.getZone()).thenReturn(TIMEZONE);
 
         // Setup plan quota
         when(mNPMI.getSubscriptionOpportunisticQuota(TEST_NETWORK, QUOTA_TYPE_MULTIPATH))
@@ -188,9 +190,7 @@ public class MultipathPolicyTrackerTest {
         if (policyWarning != WARNING_DISABLED || policyLimit != LIMIT_DISABLED) {
             final Instant recurrenceStart = Instant.parse("2017-04-01T00:00:00Z");
             final RecurrenceRule recurrenceRule = new RecurrenceRule(
-                    ZonedDateTime.ofInstant(
-                            recurrenceStart,
-                            ZoneId.systemDefault()),
+                    ZonedDateTime.ofInstant(recurrenceStart, TIMEZONE),
                     null /* end */,
                     Period.ofMonths(1));
             final boolean snoozeWarning = policyWarning == POLICY_SNOOZED;
