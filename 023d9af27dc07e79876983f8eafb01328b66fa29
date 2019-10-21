@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f03b57ac_3a254ea6",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T12:07:50Z",
+      "side": 1,
+      "message": "Hmm, not sure whether suitable to add ETHERNET right now because the code is not merged yet that ConnectivityManager.TETHERING_ETHERNET is not exist yet.",
+      "parentUuid": "a2cedbce_c76fb6c3",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 7
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "501452d7_20d45cc7",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 16
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c8920e08_1a3afe18",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T12:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "501452d7_20d45cc7",
+      "range": {
+        "startLine": 265,
+        "startChar": 37,
+        "endLine": 265,
+        "endChar": 38
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa2b4428_3140f956",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 16
@@ -59,6 +107,30 @@
       "writtenOn": "2019-10-17T09:51:38Z",
       "side": 1,
       "message": "Not for this change : do we have plans to remove this method ? It\u0027s an anti-pattern to assume the last error is the one relevant at any time at all : this can\u0027t really be made correct. See how difficult it was to make errno work in any sense of the work at all. See how difficult it still is to use.",
+      "range": {
+        "startLine": 266,
+        "startChar": 15,
+        "endLine": 266,
+        "endChar": 24
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd978df_3a80cae7",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T12:07:50Z",
+      "side": 1,
+      "message": "If my understanding is correct, your opinion is we should not cache error code, right ??\nNormally tethering state is AVAILABLE \u003c-\u003e TETHERED. When tethering request is coming, mLastError would be reset to \"NO ERROR\" and transmit state from AVAILABLE to TETHERED. If any error happen, then state would back to AVAILABLE and cache the error code in mLastError.",
+      "parentUuid": "aa2b4428_3140f956",
       "range": {
         "startLine": 266,
         "startChar": 15,
@@ -140,6 +212,54 @@
     },
     {
       "key": {
+        "uuid": "3acf3d08_0a73dad7",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T12:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f604c728_61deaabd",
+      "range": {
+        "startLine": 275,
+        "startChar": 59,
+        "endLine": 275,
+        "endChar": 65
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1509c2d1_71f5e809",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T12:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72ab60de_c6222184",
+      "range": {
+        "startLine": 275,
+        "startChar": 26,
+        "endLine": 275,
+        "endChar": 27
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc4d3efb_5fd13a72",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 16
@@ -183,6 +303,54 @@
       "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3575922d_0364f29b",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T12:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc4d3efb_5fd13a72",
+      "range": {
+        "startLine": 280,
+        "startChar": 8,
+        "endLine": 280,
+        "endChar": 62
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e913434c_19f67b16",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T12:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b95cb0ad_2f1058dd",
+      "range": {
+        "startLine": 280,
+        "startChar": 62,
+        "endLine": 280,
+        "endChar": 64
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +400,54 @@
     },
     {
       "key": {
+        "uuid": "491d69ac_91949ea5",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T12:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34016513_20d76fa0",
+      "range": {
+        "startLine": 286,
+        "startChar": 20,
+        "endLine": 286,
+        "endChar": 31
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1dd36e9_c10837b3",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T12:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccd2578c_8f95ef9a",
+      "range": {
+        "startLine": 286,
+        "startChar": 64,
+        "endLine": 286,
+        "endChar": 71
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69b12892_07622f0f",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 16
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "ffeb2b85_0e71d2e1",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T12:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69b12892_07622f0f",
+      "range": {
+        "startLine": 293,
+        "startChar": 17,
+        "endLine": 293,
+        "endChar": 19
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a72c870_a1f0aee9",
         "filename": "packages/Tethering/src/android/net/ip/RouterAdvertisementDaemon.java",
         "patchSetId": 16
@@ -275,6 +515,30 @@
       "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce2a808_dacafa12",
+        "filename": "packages/Tethering/src/android/net/ip/RouterAdvertisementDaemon.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T12:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a72c870_a1f0aee9",
+      "range": {
+        "startLine": 678,
+        "startChar": 29,
+        "endLine": 678,
+        "endChar": 40
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
