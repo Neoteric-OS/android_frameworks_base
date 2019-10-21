@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "baecf274_f776e095",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-21T12:26:22Z",
+      "side": 1,
+      "message": "Ack, thanks for the precision. Let\u0027s merge in like this.",
+      "parentUuid": "ce8fe97b_e88ccc37",
+      "range": {
+        "startLine": 28,
+        "startChar": 54,
+        "endLine": 28,
+        "endChar": 75
+      },
+      "revId": "27c565b1ad057e7528560190c7e52e28d19d2e17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "253b7c9d_723f5d41",
         "filename": "packages/Tethering/AndroidManifest.xml",
         "patchSetId": 14
