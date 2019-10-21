@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c84e584c_abced9e0",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-21T12:42:13Z",
+      "side": 1,
+      "message": "It should be shortly. Even if it\u0027s not I don\u0027t think it\u0027s a bad idea to add it now – some devices actually do it already, and we do want it to work eventually.",
+      "parentUuid": "f03b57ac_3a254ea6",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 7
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "501452d7_20d45cc7",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 16
@@ -140,6 +164,30 @@
       "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0b3ada_3398097c",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-21T12:42:13Z",
+      "side": 1,
+      "message": "Yes, I think generally caching an error code is a bad idea. Clients don\u0027t know if anything changed the last error since they issued a command.",
+      "parentUuid": "fdd978df_3a80cae7",
+      "range": {
+        "startLine": 266,
+        "startChar": 15,
+        "endLine": 266,
+        "endChar": 24
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
