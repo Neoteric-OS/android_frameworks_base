@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d2b0c64c_832fb8a5",
+        "filename": "services/core/java/com/android/server/audio/BtHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1536847
+      },
+      "writtenOn": "2019-10-21T06:39:26Z",
+      "side": 1,
+      "message": "Good point!\nThe original code also has never been supportive of the multiple requests (from the same client or from clients).\n(If mStartcount is not 0 the requestScoState() does nothing)\nI think it should be improved in some way.\nDo you want me to cover in this CL?",
+      "parentUuid": "96150258_75174df6",
+      "range": {
+        "startLine": 360,
+        "startChar": 12,
+        "endLine": 360,
+        "endChar": 89
+      },
+      "revId": "52c5cf0a89c9f720e46629498fa7ad8ffacd0f7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53f0a594_284d8122",
         "filename": "services/core/java/com/android/server/audio/BtHelper.java",
         "patchSetId": 1
