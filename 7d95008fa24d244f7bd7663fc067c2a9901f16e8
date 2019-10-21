@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22bb06af_6d80a5e2",
+        "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-10-21T07:43:53Z",
+      "side": 1,
+      "message": "This was actually a rename of TimeSignal, but enough changed that git isn\u0027t able to detect that. I\u0027ll just change it here to 2019.",
+      "parentUuid": "d73aacad_b659b754",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "7d95008fa24d244f7bd7663fc067c2a9901f16e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efb8871d_8efec14d",
         "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "844e11f6_43b8c761",
+        "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-10-21T07:43:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efb8871d_8efec14d",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 33,
+        "endChar": 7
+      },
+      "revId": "7d95008fa24d244f7bd7663fc067c2a9901f16e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a73783b_ffb645f9",
         "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "7d95008fa24d244f7bd7663fc067c2a9901f16e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e76425_d81680d0",
+        "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-10-21T07:43:53Z",
+      "side": 1,
+      "message": "I\u0027d prefer that done as a separate change later - it won\u0027t be the only one.",
+      "parentUuid": "0a73783b_ffb645f9",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 8
+      },
+      "revId": "7d95008fa24d244f7bd7663fc067c2a9901f16e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
