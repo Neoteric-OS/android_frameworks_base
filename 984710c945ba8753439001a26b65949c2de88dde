@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "440f8738_2821414a",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/UpstreamNetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-21T12:53:10Z",
+      "side": 1,
+      "message": "It doesn\u0027t look to me like this is what this method does. It also clears the network map and nulls out mTetheringUpstreamNetwork. It\u0027s also called stop(), not stopObserveAllNetworks().\n\nIs this used when tethering is stopped ?",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 62
+      },
+      "revId": "984710c945ba8753439001a26b65949c2de88dde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7155ff66_e6559398",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/UpstreamNetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-21T12:53:10Z",
+      "side": 1,
+      "message": "Maybe this is not appropriate as Javadoc. Suggest keeping this part of the comment as simple // comments",
+      "range": {
+        "startLine": 228,
+        "startChar": 5,
+        "endLine": 232,
+        "endChar": 47
+      },
+      "revId": "984710c945ba8753439001a26b65949c2de88dde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
