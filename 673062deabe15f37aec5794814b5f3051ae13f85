@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94b1a0a3_f55837e6",
+        "filename": "services/core/java/com/android/server/connectivity/MultipathPolicyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-21T13:20:56Z",
+      "side": 1,
+      "message": "Nit : ZoneOffset.UTC",
+      "range": {
+        "startLine": 128,
+        "startChar": 45,
+        "endLine": 128,
+        "endChar": 60
+      },
+      "revId": "673062deabe15f37aec5794814b5f3051ae13f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7675f6e1_2c1325f2",
+        "filename": "services/core/java/com/android/server/connectivity/MultipathPolicyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-21T13:20:56Z",
+      "side": 1,
+      "message": "ISTM this is only correct if all cycles start with the same zone. Otherwise you want something like :\n\n  if (policyBudget \u003c minQuota) {\n    minQuota \u003d policyBudget;\n    minZoneId \u003d cycleStart.getZone();\n  }",
+      "range": {
+        "startLine": 325,
+        "startChar": 24,
+        "endLine": 325,
+        "endChar": 57
+      },
+      "revId": "673062deabe15f37aec5794814b5f3051ae13f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b720f459_a12e4f81",
+        "filename": "services/core/java/com/android/server/connectivity/MultipathPolicyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-21T13:20:56Z",
+      "side": 1,
+      "message": "I think for correctness you now also need to check for equality of the timezones, otherwise usage in l.367 would return something different.\n\nMaybe simply quota.equals(mQuota) ?",
+      "range": {
+        "startLine": 356,
+        "startChar": 41,
+        "endLine": 356,
+        "endChar": 68
+      },
+      "revId": "673062deabe15f37aec5794814b5f3051ae13f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
