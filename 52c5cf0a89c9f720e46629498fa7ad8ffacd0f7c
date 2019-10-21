@@ -69,6 +69,30 @@
       "revId": "52c5cf0a89c9f720e46629498fa7ad8ffacd0f7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93f5027_388eeed1",
+        "filename": "services/core/java/com/android/server/audio/BtHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1536847
+      },
+      "writtenOn": "2019-10-21T06:41:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53f0a594_284d8122",
+      "range": {
+        "startLine": 783,
+        "startChar": 24,
+        "endLine": 783,
+        "endChar": 98
+      },
+      "revId": "52c5cf0a89c9f720e46629498fa7ad8ffacd0f7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
