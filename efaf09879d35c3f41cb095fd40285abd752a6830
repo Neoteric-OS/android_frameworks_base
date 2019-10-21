@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0299a27_e3001381",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-21T12:12:33Z",
+      "side": 1,
+      "message": "Can you please add a few comments on why we are doing this ?",
+      "revId": "efaf09879d35c3f41cb095fd40285abd752a6830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
