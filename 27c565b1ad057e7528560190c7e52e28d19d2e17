@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ce8fe97b_e88ccc37",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T07:35:38Z",
+      "side": 1,
+      "message": "It would depend on this Paul\u0027s in-flight CL aosp/1099096. Since CONNECTIVITY_INTERNAL replaced is not merged yet, I still define it here. This is not needed and should be removed after aosp/1099096 merged.",
+      "parentUuid": "c914a9f3_21d1f4db",
+      "range": {
+        "startLine": 28,
+        "startChar": 54,
+        "endLine": 28,
+        "endChar": 75
+      },
+      "revId": "27c565b1ad057e7528560190c7e52e28d19d2e17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "253b7c9d_723f5d41",
         "filename": "packages/Tethering/AndroidManifest.xml",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "27c565b1ad057e7528560190c7e52e28d19d2e17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefd8f16_659daf17",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T07:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "253b7c9d_723f5d41",
+      "range": {
+        "startLine": 32,
+        "startChar": 25,
+        "endLine": 32,
+        "endChar": 49
+      },
+      "revId": "27c565b1ad057e7528560190c7e52e28d19d2e17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8b8a59e3_0f367dc9",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T07:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c7e2243_72076e56",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "27c565b1ad057e7528560190c7e52e28d19d2e17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad425d9e_c4b7e7c2",
         "filename": "services/net/Android.bp",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "27c565b1ad057e7528560190c7e52e28d19d2e17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e131256_f023b243",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-21T07:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad425d9e_c4b7e7c2",
+      "range": {
+        "startLine": 8,
+        "startChar": 19,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "27c565b1ad057e7528560190c7e52e28d19d2e17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
