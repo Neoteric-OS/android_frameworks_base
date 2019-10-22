@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c0d18ae2_b7e5f248",
+        "filename": "services/core/java/com/android/server/connectivity/MultipathPolicyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-10-22T06:52:42Z",
+      "side": 1,
+      "message": "nit: still don\u0027t have a clear picture about what is a quota with zoneID, maybe add some comment?",
+      "range": {
+        "startLine": 126,
+        "startChar": 17,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "673062deabe15f37aec5794814b5f3051ae13f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94b1a0a3_f55837e6",
         "filename": "services/core/java/com/android/server/connectivity/MultipathPolicyTracker.java",
         "patchSetId": 1
@@ -36,6 +59,30 @@
       "writtenOn": "2019-10-21T13:20:56Z",
       "side": 1,
       "message": "ISTM this is only correct if all cycles start with the same zone. Otherwise you want something like :\n\n  if (policyBudget \u003c minQuota) {\n    minQuota \u003d policyBudget;\n    minZoneId \u003d cycleStart.getZone();\n  }",
+      "range": {
+        "startLine": 325,
+        "startChar": 24,
+        "endLine": 325,
+        "endChar": 57
+      },
+      "revId": "673062deabe15f37aec5794814b5f3051ae13f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1cb4295_1f5526dd",
+        "filename": "services/core/java/com/android/server/connectivity/MultipathPolicyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-10-22T06:52:42Z",
+      "side": 1,
+      "message": "+1 with jean\nthey need to be assigned at the same condition.",
+      "parentUuid": "7675f6e1_2c1325f2",
       "range": {
         "startLine": 325,
         "startChar": 24,
