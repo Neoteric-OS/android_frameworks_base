@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "06be1738_d1f2fd98",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-22T07:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c84e584c_abced9e0",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 7
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "501452d7_20d45cc7",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 16
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "Yes, I think generally caching an error code is a bad idea. Clients don\u0027t know if anything changed the last error since they issued a command.",
       "parentUuid": "fdd978df_3a80cae7",
+      "range": {
+        "startLine": 266,
+        "startChar": 15,
+        "endLine": 266,
+        "endChar": 24
+      },
+      "revId": "023d9af27dc07e79876983f8eafb01328b66fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21d74d02_bf04604d",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-22T07:03:21Z",
+      "side": 1,
+      "message": "Ack, have b/143122247 to tracking this. But the priority would not be high.",
+      "parentUuid": "9f0b3ada_3398097c",
       "range": {
         "startLine": 266,
         "startChar": 15,
