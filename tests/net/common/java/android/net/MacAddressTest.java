@@ -37,8 +37,8 @@ import java.util.Random;
 public class MacAddressTest {
 
     static class AddrTypeTestCase {
-        byte[] addr;
-        int expectedType;
+        public byte[] addr;
+        public int expectedType;
 
         static AddrTypeTestCase of(int expectedType, int... addr) {
             AddrTypeTestCase t = new AddrTypeTestCase();
@@ -234,8 +234,8 @@ public class MacAddressTest {
 
         byte[][] invalidBytesAddresses = {
             {},
-            {1,2,3,4,5},
-            {1,2,3,4,5,6,7},
+            {1, 2, 3, 4, 5},
+            {1, 2, 3, 4, 5, 6, 7},
         };
 
         for (byte[] b : invalidBytesAddresses) {
