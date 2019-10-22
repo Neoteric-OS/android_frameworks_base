@@ -91,15 +91,16 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     @Override
     public boolean isChangeEnabledByUid(long changeId, int uid) {
         String[] packages = mContext.getPackageManager().getPackagesForUid(uid);
-        if (packages == null || packages.length == 0) {
+        if (packages == null) {
             return true;
         }
-        boolean enabled = true;
         for (String packageName : packages) {
-            enabled = enabled && isChangeEnabledByPackageName(changeId, packageName,
-                    UserHandle.getUserId(uid));
+            if (!isChangeEnabledByPackageName(changeId, packageName,
+                    UserHandle.getUserId(uid))) {
+                return false;
+            }
         }
-        return enabled;
+        return true;
     }
 
     @Override
