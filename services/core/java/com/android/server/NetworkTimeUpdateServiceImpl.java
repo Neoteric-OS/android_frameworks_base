@@ -46,8 +46,7 @@ import java.io.FileDescriptor;
 import java.io.PrintWriter;
 
 /**
- * Monitors the network time and updates the system time if it is out of sync
- * and there hasn't been any NITZ update from the carrier recently.
+ * Monitors the network time and updates the system time if it is out of sync.
  * If looking up the network time fails for some reason, it tries a few times with a short
  * interval and then resets to checking on longer intervals.
  * <p>
@@ -200,16 +199,11 @@ public class NetworkTimeUpdateServiceImpl extends Binder implements NetworkTimeU
 
     /**
      * Consider updating system clock based on current NTP fix, if requested by
-     * user, significant enough delta, and we don't have a recent NITZ.
+     * user and there is a significant enough delta.
      */
     private void updateSystemClock(int event) {
         final boolean forceUpdate = (event == EVENT_AUTO_TIME_CHANGED);
         if (!forceUpdate) {
-            if (getNitzAge() < mPollingIntervalMs) {
-                if (DBG) Log.d(TAG, "Ignoring NTP update due to recent NITZ");
-                return;
-            }
-
             final long skew = Math.abs(mTime.currentTimeMillis() - System.currentTimeMillis());
             if (skew < mTimeErrorThresholdMs) {
                 if (DBG) Log.d(TAG, "Ignoring NTP update due to low skew");
