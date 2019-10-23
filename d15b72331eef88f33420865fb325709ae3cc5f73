@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40cf46e7_200af40b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-23T00:01:18Z",
+      "side": 1,
+      "message": "hardcodes",
+      "range": {
+        "startLine": 11,
+        "startChar": 28,
+        "endLine": 11,
+        "endChar": 37
+      },
+      "revId": "d15b72331eef88f33420865fb325709ae3cc5f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b28823_dbdcaa3c",
+        "filename": "services/net/java/android/net/netlink/InetDiagMessage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-23T00:01:18Z",
+      "side": 1,
+      "message": "Suggest adding a word on how this will request diags for all sockets if any of local or remote is null.",
+      "range": {
+        "startLine": 66,
+        "startChar": 68,
+        "endLine": 67,
+        "endChar": 29
+      },
+      "revId": "d15b72331eef88f33420865fb325709ae3cc5f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0ef238_46a099dc",
+        "filename": "services/net/java/android/net/netlink/StructInetDiagReqV2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-23T00:01:18Z",
+      "side": 1,
+      "message": "Optional :\nIIUC passing null to either local or remote used to be illegal and crash somewhere down the line. Now you are allowing this, but if only one of them is null you ignore the other.\nMaybe you want to clarify the semantics by enforcing here that either both are null or neither by saying something like\n\n  if ((local \u003d\u003d null) !\u003d (remote \u003d\u003d null)) {\n    throw new NullPointerException(\"local and remote must be both null or both non-null\");\n  }\n\nAnother way to do this is to offer a constructor with both @NonNull and a constructor that doesn\u0027t take either local or remote.",
+      "range": {
+        "startLine": 63,
+        "startChar": 15,
+        "endLine": 63,
+        "endChar": 48
+      },
+      "revId": "d15b72331eef88f33420865fb325709ae3cc5f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc45ca68_75b653c7",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-23T00:01:18Z",
+      "side": 1,
+      "message": "This is a good illustration of my previous comment : does it actually make sense that local is ignored here ? It looks to me like anyone who would pass (local, null) is making a mistake. If you think this is valid usage that *should* return the same thing as when passed (null, null) then I think an explanation is necessary in comments.",
+      "range": {
+        "startLine": 371,
+        "startChar": 57,
+        "endLine": 371,
+        "endChar": 68
+      },
+      "revId": "d15b72331eef88f33420865fb325709ae3cc5f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
