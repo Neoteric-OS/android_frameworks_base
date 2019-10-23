@@ -48,7 +48,6 @@ java_library_static {
         "android.hardware.biometrics.face-V1.0-java",
         "android.hardware.biometrics.fingerprint-V2.1-java",
         "android.hardware.oemlock-V1.0-java",
-        "android.hardware.tetheroffload.control-V1.0-java",
         "android.hardware.vibrator-V1.4-java",
         "android.hardware.configstore-V1.0-java",
         "android.hardware.contexthub-V1.0-java",
