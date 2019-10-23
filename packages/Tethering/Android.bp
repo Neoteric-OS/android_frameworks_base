@@ -45,14 +45,19 @@ cc_library_shared {
         "jni/com_android_server_connectivity_tethering_OffloadHardwareInterface.cpp",
     ],
     shared_libs: [
-        "libnativehelper",
-        "libcutils",
-        "android.hardware.tetheroffload.config@1.0",
+        "libcgrouprc",
+        "libnativehelper_compat_libc++",
+        "libvndksupport",
     ],
     static_libs: [
+        "android.hardware.tetheroffload.config@1.0",
         "liblog",
         "libbase",
+        "libbinderthreadstate",
+        "libcutils",
         "libhidlbase",
+        "libjsoncpp",
+        "libprocessgroup",
         "libutils",
     ],
 
@@ -62,6 +67,8 @@ cc_library_shared {
         "-Wno-unused-parameter",
         "-Wthread-safety",
     ],
+
+    ldflags: ["-Wl,--exclude-libs=ALL,-error-limit=0"],
 }
 
 // Common defaults for compiling the actual APK.
