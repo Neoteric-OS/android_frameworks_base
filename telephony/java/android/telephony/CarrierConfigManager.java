@@ -3138,6 +3138,14 @@ public class CarrierConfigManager {
     public static final String KEY_DISCONNECT_CAUSE_PLAY_BUSYTONE_INT_ARRAY =
             "disconnect_cause_play_busytone_int_array";
 
+    /**
+     * Sets the default state for the "video calling" toggle set by the
+     * user. When this is {@code true}, this mode by default is on, otherwise if {@code false},
+     * this mode by default is off.
+     */
+    public static final String KEY_VIDEO_CALLING_ON_BY_DEFAULT_BOOL =
+            "video_calling_on_by_default_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
