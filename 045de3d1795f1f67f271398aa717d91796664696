@@ -22,6 +22,30 @@
       "revId": "045de3d1795f1f67f271398aa717d91796664696",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f19cb15_372db374",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3982,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-23T07:14:43Z",
+      "side": 1,
+      "message": "Also I would like there was some context here. Is this a no-op starting from Q because the bandwidth updates are always provided ? Because they never were implemented ? Because there is no meaningful data ?",
+      "parentUuid": "420e9314_5e4762c1",
+      "range": {
+        "startLine": 3982,
+        "startChar": 29,
+        "endLine": 3982,
+        "endChar": 44
+      },
+      "revId": "045de3d1795f1f67f271398aa717d91796664696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
