@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6683ffea_538d8d4c",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-23T07:08:23Z",
+      "side": 1,
+      "message": "Do you want to also set the setting and default resource to something to make sure the config is returned even when everything is set ?",
+      "range": {
+        "startLine": 593,
+        "startChar": 16,
+        "endLine": 593,
+        "endChar": 65
+      },
+      "revId": "13b07c1e7280a337f7b9b3065238564d9323374e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf56fa09_9ec31268",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-23T07:08:23Z",
+      "side": 1,
+      "message": "I am surprised this works : by my reading it should fail when the code is trying to getString() with R.string.config_captive_portal_https_url as it\u0027s not stubbed.",
+      "range": {
+        "startLine": 641,
+        "startChar": 57,
+        "endLine": 641,
+        "endChar": 87
+      },
+      "revId": "13b07c1e7280a337f7b9b3065238564d9323374e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
