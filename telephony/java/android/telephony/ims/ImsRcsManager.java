@@ -20,12 +20,19 @@ import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
+import android.annotation.SystemService;
+import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Binder;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.telephony.SubscriptionManager;
 import android.telephony.ims.aidl.IImsCapabilityCallback;
+import android.telephony.ims.aidl.IImsRcsController;
 import android.telephony.ims.feature.ImsFeature;
 import android.telephony.ims.feature.RcsFeature;
+import android.util.Log;
 
 import java.util.concurrent.Executor;
 
@@ -36,7 +43,9 @@ import java.util.concurrent.Executor;
  * Use {@link #createForSubscriptionId(Context, int)} to create an instance of this manager.
  * @hide
  */
+@SystemService(Context.TELEPHONY_RCS_SERVICE)
 public class ImsRcsManager {
+    private static final String TAG = "ImsRcsManager";
 
     /**
      * Receives RCS availability status updates from the ImsService.
@@ -109,7 +118,7 @@ public class ImsRcsManager {
 
     private final int mSubId;
     private final Context mContext;
-
+    private final ImsUceAdapter mUceAdapter;
 
     /**
      * Create an instance of ImsRcsManager for the subscription id specified.
@@ -128,12 +137,42 @@ public class ImsRcsManager {
         return new ImsRcsManager(context, subscriptionId);
     }
 
+    /** @hide */
+    @UnsupportedAppUsage
+    private ImsRcsManager() {
+        this(null, SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+    }
+
+    /** @hide */
+    @UnsupportedAppUsage
+    public ImsRcsManager(Context context) {
+        this(context, SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+    }
+
     /**
      * Use {@link #createForSubscriptionId(Context, int)} to create an instance of this class.
+     * @hide
      */
+    @UnsupportedAppUsage
     private ImsRcsManager(Context context, int subId) {
-        mContext = context;
         mSubId = subId;
+        Context appContext = context.getApplicationContext();
+        if (appContext != null) {
+            mContext = appContext;
+        } else {
+            mContext = context;
+        }
+
+        mUceAdapter = new ImsUceAdapter(mSubId);
+    }
+
+    /**
+     * @return A {@link ImsUceAdapter} used for User Capability Exchange (UCE) operations for
+     * this subscription.
+     */
+    @NonNull
+    public ImsUceAdapter getUceAdapter() {
+        return mUceAdapter;
     }
 
     /**
@@ -165,9 +204,19 @@ public class ImsRcsManager {
         if (executor == null) {
             throw new IllegalArgumentException("Must include a non-null Executor.");
         }
+
+        IImsRcsController imsRcsController = getIImsRcsController();
+        if (imsRcsController == null) {
+            Log.e(TAG, "Register availability callback: IImsRcsController is null");
+            throw new ImsException("IImsRcsController is null");
+        }
+
         c.setExecutor(executor);
-        throw new UnsupportedOperationException("registerRcsAvailabilityCallback is not"
-                + "supported.");
+        try {
+            imsRcsController.registerRcsAvailabilityCallback(c.getBinder());
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling IImsRcsController#registerRcsAvailabilityCallback", e);
+        }
     }
 
     /**
@@ -184,8 +233,18 @@ public class ImsRcsManager {
         if (c == null) {
             throw new IllegalArgumentException("Must include a non-null AvailabilityCallback.");
         }
-        throw new UnsupportedOperationException("unregisterRcsAvailabilityCallback is not"
-                + "supported.");
+
+        IImsRcsController imsRcsController = getIImsRcsController();
+        if (imsRcsController == null) {
+            Log.e(TAG, "Unregister availability callback: IImsRcsController is null");
+            return;
+        }
+
+        try {
+            imsRcsController.unregisterRcsAvailabilityCallback(c.getBinder());
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling IImsRcsController#unregisterRcsAvailabilityCallback", e);
+        }
     }
 
     /**
@@ -194,6 +253,7 @@ public class ImsRcsManager {
      * This only reports the status of RCS capabilities provided by the framework, not necessarily
      * RCS capabilities provided over-the-top by applications.
      *
+     * @param subId the subscription ID.
      * @param capability The RCS capability to query.
      * @return true if the RCS capability is capable for this subscription, false otherwise. This
      * does not necessarily mean that we are registered for IMS and the capability is available, but
@@ -202,8 +262,20 @@ public class ImsRcsManager {
      * @see android.telephony.CarrierConfigManager#KEY_USE_RCS_PRESENCE_BOOL
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    public boolean isCapable(@RcsFeature.RcsImsCapabilities.RcsImsCapabilityFlag int capability) {
-        throw new UnsupportedOperationException("isCapable is not supported.");
+    public boolean isCapable(int subId,
+            @RcsFeature.RcsImsCapabilities.RcsImsCapabilityFlag int capability) {
+        IImsRcsController imsRcsController = getIImsRcsController();
+        if (imsRcsController == null) {
+            Log.e(TAG, "isCapable: IImsRcsController is null");
+            return false;
+        }
+
+        try {
+            return imsRcsController.isCapable(subId, capability);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling IImsRcsController#isCapable", e);
+        }
+        return false;
     }
 
     /**
@@ -212,6 +284,7 @@ public class ImsRcsManager {
      * This only reports the status of RCS capabilities provided by the framework, not necessarily
      * RCS capabilities provided by over-the-top by applications.
      *
+     * @param subId the subscription ID.
      * @param capability the RCS capability to query.
      * @return true if the RCS capability is currently available for the associated subscription,
      * false otherwise. If the capability is available, IMS is registered and the service is
@@ -219,16 +292,28 @@ public class ImsRcsManager {
      * @see #isCapable(int)
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    public boolean isAvailable(@RcsFeature.RcsImsCapabilities.RcsImsCapabilityFlag int capability) {
-        throw new UnsupportedOperationException("isAvailable is not supported.");
+    public boolean isAvailable(int subId,
+            @RcsFeature.RcsImsCapabilities.RcsImsCapabilityFlag int capability) {
+        IImsRcsController imsRcsController = getIImsRcsController();
+        if (imsRcsController == null) {
+            Log.e(TAG, "isAvailable: IImsRcsController is null");
+            return false;
+        }
+
+        try {
+            return imsRcsController.isAvailable(subId, capability);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling IImsRcsController#isAvailable", e);
+        }
+        return false;
     }
 
     /**
-     * @return A new {@link RcsUceAdapter} used for User Capability Exchange (UCE) operations for
-     * this subscription.
+     * @hide
      */
-    @NonNull
-    public RcsUceAdapter getUceAdapter() {
-        return new RcsUceAdapter(mSubId);
+    @UnsupportedAppUsage
+    private IImsRcsController getIImsRcsController() {
+        IBinder binder = ServiceManager.getService(Context.TELEPHONY_RCS_SERVICE);
+        return IImsRcsController.Stub.asInterface(binder);
     }
 }

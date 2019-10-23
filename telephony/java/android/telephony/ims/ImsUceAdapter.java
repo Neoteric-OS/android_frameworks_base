@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The Android Open Source Project
+ * Copyright (C) 2019 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,16 @@ import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
+import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Binder;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.os.ServiceManager;
+import android.telephony.ims.aidl.IImsRcsController;
+import android.telephony.ims.aidl.IRcsUceControllerCallback;
+import android.util.Log;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -35,7 +43,8 @@ import java.util.concurrent.Executor;
  * @see ImsRcsManager#getUceAdapter() for information on creating an instance of this class.
  * @hide
  */
-public class RcsUceAdapter {
+public class ImsUceAdapter {
+    private static final String TAG = "ImsUceAdapter";
 
     /**
      * An unknown error has caused the request to fail.
@@ -191,7 +200,7 @@ public class RcsUceAdapter {
      * {@link ImsRcsManager#createForSubscriptionId(Context, int)} and
      * {@link ImsRcsManager#getUceAdapter()} to instantiate this manager class.
      */
-    RcsUceAdapter(int subId) {
+    ImsUceAdapter(int subId) {
         mSubId = subId;
     }
 
@@ -210,53 +219,115 @@ public class RcsUceAdapter {
      * @param c A one-time callback for when the request for capabilities completes or there is an
      *         error processing the request.
      * @throws ImsException if the subscription associated with this instance of
-     * {@link RcsUceAdapter} is valid, but the ImsService associated with the subscription is not
+     * {@link ImsUceAdapter} is valid, but the ImsService associated with the subscription is not
      * available. This can happen if the ImsService has crashed, for example, or if the subscription
      * becomes inactive. See {@link ImsException#getCode()} for more information on the error codes.
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    public void requestCapabilities(@CallbackExecutor Executor executor,
+    public void requestCapabilities(int subId, @CallbackExecutor Executor executor,
             @NonNull List<Uri> contactNumbers,
             @NonNull CapabilitiesCallback c) throws ImsException {
-        throw new UnsupportedOperationException("isUceSettingEnabled is not supported.");
+        if (c == null) {
+            throw new IllegalArgumentException("Must include a non-null AvailabilityCallback.");
+        }
+        if (executor == null) {
+            throw new IllegalArgumentException("Must include a non-null Executor.");
+        }
+        if (contactNumbers == null) {
+            throw new IllegalArgumentException("Must include non-null contact number list.");
+        }
+
+        IImsRcsController imsRcsController = getIImsRcsController();
+        if (imsRcsController == null) {
+            Log.e(TAG, "requestCapabilities: IImsRcsController is null");
+            return;
+        }
+
+        IRcsUceControllerCallback internalCallback = new IRcsUceControllerCallback.Stub() {
+            @Override
+            public void onCapabilitiesReceived(List<RcsContactUceCapability> contactCapabilities) {
+                Binder.withCleanCallingIdentity(() ->
+                        executor.execute(() ->
+                                c.onCapabilitiesReceived(contactCapabilities)));
+            }
+            @Override
+            public void onError(int errorCode) {
+                Binder.withCleanCallingIdentity(() ->
+                        executor.execute(() ->
+                                c.onError(errorCode)));
+            }
+        };
+
+        try {
+            imsRcsController.requestCapabilities(subId, contactNumbers, internalCallback);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling IImsRcsController#requestCapabilities", e);
+        }
     }
 
     /**
      * Gets the last publish result from the UCE service if the device is using an RCS presence
      * server.
+     *
+     * @param subId the subscription ID.
      * @return The last publish result from the UCE service. If the device is using SIP OPTIONS,
      * this method will return {@link #PUBLISH_STATE_200_OK} as well.
      * @throws ImsException if the subscription associated with this instance of
-     * {@link RcsUceAdapter} is valid, but the ImsService associated with the subscription is not
+     * {@link ImsUceAdapter} is valid, but the ImsService associated with the subscription is not
      * available. This can happen if the ImsService has crashed, for example, or if the subscription
      * becomes inactive. See {@link ImsException#getCode()} for more information on the error codes.
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    public @PublishState int getUcePublishState() throws ImsException {
-        throw new UnsupportedOperationException("getPublishState is not supported.");
+    public @PublishState int getUcePublishState(int subId) throws ImsException {
+        IImsRcsController imsRcsController = getIImsRcsController();
+        if (imsRcsController == null) {
+            Log.e(TAG, "getUcePublishState: IImsRcsController is null");
+            return PUBLISH_STATE_OTHER_ERROR;
+        }
+
+        try {
+            return imsRcsController.getUcePublishState(subId);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling IImsRcsController#getUcePublishState", e);
+        }
+        return PUBLISH_STATE_OTHER_ERROR;
     }
 
     /**
      * The user’s setting for whether or not Presence and User Capability Exchange (UCE) is enabled
      * for the associated subscription.
      *
+     * @param subId the subscription ID.
      * @return true if the user’s setting for UCE is enabled, false otherwise. If false,
      * {@link ImsRcsManager#isCapable(int)} will return false for
      * {@link RcsFeature.RcsImsCapabilities#CAPABILITY_TYPE_OPTIONS_UCE} and
      * {@link RcsFeature.RcsImsCapabilities#CAPABILITY_TYPE_PRESENCE_UCE}
      * @see #setUceSettingEnabled(boolean)
      * @throws ImsException if the subscription associated with this instance of
-     * {@link RcsUceAdapter} is valid, but the ImsService associated with the subscription is not
+     * {@link ImsUceAdapter} is valid, but the ImsService associated with the subscription is not
      * available. This can happen if the ImsService has crashed, for example, or if the subscription
      * becomes inactive. See {@link ImsException#getCode()} for more information on the error codes.
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    public boolean isUceSettingEnabled() throws ImsException {
-        // TODO: add SubscriptionController column for this property.
-        throw new UnsupportedOperationException("isUceSettingEnabled is not supported.");
+    public boolean isUceSettingEnabled(int subId) throws ImsException {
+        IImsRcsController imsRcsController = getIImsRcsController();
+        if (imsRcsController == null) {
+            Log.e(TAG, "isUceSettingEnabled: IImsRcsController is null");
+            return false;
+        }
+
+        try {
+            return imsRcsController.isUceSettingEnabled(subId);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling IImsRcsController#isUceSettingEnabled", e);
+        }
+        return false;
     }
+
     /**
      * Change the user’s setting for whether or not UCE is enabled for the associated subscription.
+     *
+     * @param subId the subscription ID.
      * @param isEnabled the user's setting for whether or not they wish for Presence and User
      *         Capability Exchange to be enabled. If false,
      *         {@link RcsFeature.RcsImsCapabilities#CAPABILITY_TYPE_OPTIONS_UCE} and
@@ -264,13 +335,31 @@ public class RcsUceAdapter {
      *         disabled, depending on which type of UCE the carrier supports.
      * @see #isUceSettingEnabled()
      * @throws ImsException if the subscription associated with this instance of
-     * {@link RcsUceAdapter} is valid, but the ImsService associated with the subscription is not
+     * {@link ImsUceAdapter} is valid, but the ImsService associated with the subscription is not
      * available. This can happen if the ImsService has crashed, for example, or if the subscription
      * becomes inactive. See {@link ImsException#getCode()} for more information on the error codes.
      */
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
-    public void setUceSettingEnabled(boolean isEnabled) throws ImsException {
-        // TODO: add SubscriptionController column for this property.
-        throw new UnsupportedOperationException("setUceSettingEnabled is not supported.");
+    public void setUceSettingEnabled(int subId, boolean isEnabled) throws ImsException {
+        IImsRcsController imsRcsController = getIImsRcsController();
+        if (imsRcsController == null) {
+            Log.e(TAG, "setUceSettingEnabled: IImsRcsController is null");
+            return;
+        }
+
+        try {
+            imsRcsController.setUceSettingEnabled(subId, isEnabled);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling IImsRcsController#setUceSettingEnabled", e);
+        }
+    }
+
+    /**
+     * @hide
+     */
+    @UnsupportedAppUsage
+    private IImsRcsController getIImsRcsController() {
+        IBinder binder = ServiceManager.getService(Context.TELEPHONY_RCS_SERVICE);
+        return IImsRcsController.Stub.asInterface(binder);
     }
 }
