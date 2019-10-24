@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fca8d8e_0a321767",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1584705
+      },
+      "writtenOn": "2019-10-24T19:09:30Z",
+      "side": 1,
+      "message": "As part of GSMA RCS 7.1 spec, few more capabilities have been added such as GeoSMS, CallComposer, PostCall, Shared Map etc. Please take them as well. They are tracked using b/129542328",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a0d4de_a3424b1a",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1584705
+      },
+      "writtenOn": "2019-10-24T19:09:30Z",
+      "side": 1,
+      "message": "Besides initial Publish, request to trigger Publish can be made during inter RAT mobility as well so clients would need to know Publish Trigger Types based on which can they can trigger publish. For Example if trigger type is UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_3G then clients need to publish services which can be enabled on 3G RAT only as some RCS services are RAT and operator specific. I couldn\u0027t find definition of Publish Trigger Types.",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
