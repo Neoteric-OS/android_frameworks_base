@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9623671d_f9406cbe",
+        "filename": "packages/Tethering/AndroidManifestBase.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-10-24T09:21:20Z",
+      "side": 1,
+      "message": "Might want to justify these manifest attributes. For example, does this app actually use cleartext traffic? If it doesn\u0027t, then we should not include this.",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 44
+      },
+      "revId": "017fef23a0012bc82d98bd570c1b06734ed53dbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626504b4_98f80fb2",
+        "filename": "packages/Tethering/proguard.flags",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-10-24T09:21:20Z",
+      "side": 1,
+      "message": "Is this actually used in a future CL? If not, I\u0027d just remove it from this CL.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 4
+      },
+      "revId": "017fef23a0012bc82d98bd570c1b06734ed53dbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
