@@ -660,8 +660,8 @@ class RecentTasks {
             final TaskRecord tr = mTasks.get(i);
             if (!profileIds.contains(tr.userId)) continue;
             if (isVisibleRecentTask(tr)) {
-                mTasks.remove(i);
                 notifyTaskRemoved(tr, true /* wasTrimmed */, true /* killProcess */);
+                mTasks.remove(i);
             }
         }
     }
