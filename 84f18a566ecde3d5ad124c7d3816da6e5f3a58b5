@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f914fc7_89873faa",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-24T05:32:32Z",
+      "side": 1,
+      "message": "Hmm, maybe I should add these permission white-list when the code actually use it. Move them to aosp/1131002 or later CL would be better.",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 26
+      },
+      "revId": "84f18a566ecde3d5ad124c7d3816da6e5f3a58b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
