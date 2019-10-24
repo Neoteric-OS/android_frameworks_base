@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9258225_41f68ce6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-10-24T12:36:10Z",
+      "side": 1,
+      "message": "Is there a bug id for this?",
+      "revId": "f32724193263bf043ad26645913ec4d760df30ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0ed916_cad48d57",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-10-24T12:36:10Z",
+      "side": 1,
+      "message": "Not sure I understand why this is more desirable? It looks like the packages for the same UID that would end up being logged is random (at most one package that has the change disabled, an arbitrary number of packages for which the change is enabled).",
+      "revId": "f32724193263bf043ad26645913ec4d760df30ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
