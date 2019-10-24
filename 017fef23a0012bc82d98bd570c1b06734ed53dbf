@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bbeda96c_cda7b1db",
+        "filename": "packages/Tethering/AndroidManifestBase.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-24T13:09:57Z",
+      "side": 1,
+      "message": "Ohh, I think you are right. Tethering don\u0027t send cleartext traffic by itself. Let me remove this in follow up in-flight CL.\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1125385/11..12/packages/Tethering/AndroidManifestBase.xml",
+      "parentUuid": "9623671d_f9406cbe",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 44
+      },
+      "revId": "017fef23a0012bc82d98bd570c1b06734ed53dbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "626504b4_98f80fb2",
         "filename": "packages/Tethering/proguard.flags",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "017fef23a0012bc82d98bd570c1b06734ed53dbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1377f0_1a3d5fd0",
+        "filename": "packages/Tethering/proguard.flags",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-24T13:09:57Z",
+      "side": 1,
+      "message": "We need this to exempt from ProGuard optimization for MessageUtils.\nI have below patch in my local side and would upload it in follow CL.\n\n+-keepclassmembers class com.android.server.connectivity.tethering.TetheringService.TetherMasterSM {\n+    static final int CMD_*;\n+    static final int EVENT_*;\n+}\n+\n+-keepclassmembers class android.net.ip.IpServer {\n+    static final int STATE__*;\n+    static final int CMD_*;\n+}",
+      "parentUuid": "626504b4_98f80fb2",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 4
+      },
+      "revId": "017fef23a0012bc82d98bd570c1b06734ed53dbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
