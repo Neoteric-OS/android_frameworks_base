@@ -46,6 +46,30 @@
       "revId": "023858dc14fdcc54a9620b34bffb156faa752589",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f9235b_a6ab8f57",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1783,
+      "author": {
+        "id": 1249565
+      },
+      "writtenOn": "2019-10-24T20:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "555c97da_4c3c9655",
+      "range": {
+        "startLine": 1778,
+        "startChar": 13,
+        "endLine": 1783,
+        "endChar": 100
+      },
+      "revId": "023858dc14fdcc54a9620b34bffb156faa752589",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
