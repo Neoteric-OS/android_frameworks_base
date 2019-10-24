@@ -22,6 +22,30 @@
       "revId": "84f18a566ecde3d5ad124c7d3816da6e5f3a58b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc83fdc_235aed99",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-24T09:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f914fc7_89873faa",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 26
+      },
+      "revId": "84f18a566ecde3d5ad124c7d3816da6e5f3a58b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
