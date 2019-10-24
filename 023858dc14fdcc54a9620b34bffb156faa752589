@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b4b57e2_4b99a3ee",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1783,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2019-10-24T19:10:38Z",
+      "side": 1,
+      "message": "Actually, seeing what needs to be changed here, I realize I was wrong in my initial  analysis.\nrescaling from index (min + 1) to (min + n) is not always the same thing as rescaling a single step.\nyou should restore your first idea of having a specific method to just rescale the step  and try to factor in common code between rescaleStep and rescalIndex",
+      "range": {
+        "startLine": 1778,
+        "startChar": 13,
+        "endLine": 1783,
+        "endChar": 100
+      },
+      "revId": "023858dc14fdcc54a9620b34bffb156faa752589",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
