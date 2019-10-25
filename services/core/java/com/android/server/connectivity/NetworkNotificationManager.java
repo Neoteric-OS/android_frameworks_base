@@ -18,6 +18,7 @@ package com.android.server.connectivity;
 
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 
 import android.app.Notification;
@@ -145,8 +146,10 @@ public class NetworkNotificationManager {
         final int eventId = notifyType.eventId;
         final int transportType;
         final String name;
+        final boolean isVpn;
         if (nai != null) {
             transportType = getFirstTransportType(nai);
+            isVpn = nai.networkCapabilities.hasTransport(TRANSPORT_VPN);
             final String extraInfo = nai.networkInfo.getExtraInfo();
             name = TextUtils.isEmpty(extraInfo) ? nai.networkCapabilities.getSSID() : extraInfo;
             // Only notify for Internet-capable networks.
@@ -154,6 +157,7 @@ public class NetworkNotificationManager {
         } else {
             // Legacy notifications.
             transportType = TRANSPORT_CELLULAR;
+            isVpn = false;
             name = null;
         }
 
@@ -171,8 +175,9 @@ public class NetworkNotificationManager {
 
         if (DBG) {
             Slog.d(TAG, String.format(
-                    "showNotification tag=%s event=%s transport=%s name=%s highPriority=%s",
-                    tag, nameOf(eventId), getTransportName(transportType), name, highPriority));
+                    "showNotification tag=%s event=%s transport=%s name=%s highPriority=%s"
+                    + " isVpn=%s", tag, nameOf(eventId), getTransportName(transportType), name,
+                    highPriority, isVpn));
         }
 
         Resources r = Resources.getSystem();
@@ -184,9 +189,9 @@ public class NetworkNotificationManager {
                     WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID()));
             details = r.getString(R.string.wifi_no_internet_detailed);
         } else if (notifyType == NotificationType.PRIVATE_DNS_BROKEN) {
-            if (transportType == TRANSPORT_CELLULAR) {
+            if (!isVpn && transportType == TRANSPORT_CELLULAR) {
                 title = r.getString(R.string.mobile_no_internet);
-            } else if (transportType == TRANSPORT_WIFI) {
+            } else if (!isVpn && transportType == TRANSPORT_WIFI) {
                 title = r.getString(R.string.wifi_no_internet,
                         WifiInfo.removeDoubleQuotes(nai.networkCapabilities.getSSID()));
             } else {
