@@ -17,6 +17,7 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.annotation.TestApi;
 
 /**
  * Thrown when parsing failed.
@@ -25,7 +26,9 @@ import android.annotation.NonNull;
 public class ParseException extends RuntimeException {
     public String response;
 
-    ParseException(@NonNull String response) {
+    /** @hide */
+    @TestApi
+    public ParseException(@NonNull String response) {
         super(response);
         this.response = response;
     }
