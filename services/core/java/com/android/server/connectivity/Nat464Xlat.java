@@ -59,6 +59,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
         ConnectivityManager.TYPE_MOBILE,
         ConnectivityManager.TYPE_WIFI,
         ConnectivityManager.TYPE_ETHERNET,
+        ConnectivityManager.TYPE_TEST,
     };
 
     // The network states in which running clatd is supported.

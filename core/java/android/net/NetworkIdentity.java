@@ -16,6 +16,7 @@
 
 package android.net;
 
+import static android.net.ConnectivityManager.TYPE_TEST;
 import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.net.ConnectivityManager.getNetworkTypeName;
 import static android.net.ConnectivityManager.isNetworkTypeMobile;
@@ -224,6 +225,11 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
                         Context.WIFI_SERVICE);
                 final WifiInfo info = wifi.getConnectionInfo();
                 networkId = info != null ? info.getSSID() : null;
+            }
+        } else if (type == TYPE_TEST) {
+            final NetworkSpecifier ns = state.networkCapabilities.getNetworkSpecifier();
+            if (ns != null && ns instanceof StringNetworkSpecifier) {
+                networkId = ns.toString();
             }
         }
 
