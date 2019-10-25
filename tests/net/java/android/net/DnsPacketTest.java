@@ -16,9 +16,16 @@
 
 package android.net;
 
+import static android.net.DnsResolver.CLASS_IN;
+import static android.net.DnsResolver.TYPE_AAAA;
+import static android.net.DnsResolver.TYPE_CNAME;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import android.annotation.NonNull;
+import android.annotation.Nullable;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -26,6 +33,10 @@ import androidx.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+import java.nio.BufferUnderflowException;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,11 +67,38 @@ public class DnsPacketTest {
             super(data);
         }
 
+        TestDnsPacket(@NonNull DnsHeader header, @Nullable ArrayList<DnsRecord> qd,
+                @Nullable ArrayList<DnsRecord> ans) {
+            super(header, qd, ans);
+        }
+
         public DnsHeader getHeader() {
             return mHeader;
         }
         public List<DnsRecord> getRecordList(int secType) {
             return mRecords[secType];
+        }
+    }
+
+    class TestDnsHeader extends DnsPacket.DnsHeader {
+        TestDnsHeader(ByteBuffer buf) throws ParseException {
+            super(buf);
+        }
+
+        TestDnsHeader(int id, int flags, int qcount, int anscount) {
+            super(id, flags, qcount, anscount);
+        }
+    }
+
+    class TestDnsRecord extends DnsPacket.DnsRecord {
+        TestDnsRecord(int rType, ByteBuffer buf)
+                throws BufferUnderflowException, ParseException {
+            super(rType, buf);
+        }
+
+        TestDnsRecord(int rType, String dName, int nsType, int nsClass, long ttl,
+                String rDataStr) throws IOException {
+            super(rType, dName, nsType, nsClass, ttl, rDataStr);
         }
     }
 
@@ -155,5 +193,54 @@ public class DnsPacketTest {
         assertRecordParses(anRecordList.get(0), "www.google.com", 28, 1, 0x37,
                 new byte[]{ 0x24, 0x04, 0x68, 0x00, 0x40, 0x05, 0x08, 0x0d,
                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x04 });
+    }
+
+    /** Verifies that the synthesized {@link DnsPacket.DnsHeader} can be parsed correctly. */
+    @Test
+    public void testDnsHeaderSynthesize() {
+        final TestDnsHeader testHeader = new TestDnsHeader(0x7722 /* id */,
+                0x8180 /* flags */, 3 /* qcount */, 5 /* anscount */);
+        final TestDnsHeader actualHeader = new TestDnsHeader(
+                ByteBuffer.wrap(testHeader.getBytes()));
+        assertEquals(testHeader, actualHeader);
+    }
+
+    /** Verifies that the synthesized {@link DnsPacket.DnsRecord} can be parsed correctly. */
+    @Test
+    public void testDnsRecordSynthesize() throws IOException {
+        assertDnsRecordRoundTrip(new TestDnsRecord(DnsPacket.ANSECTION /* rType */,
+                "test.com", TYPE_AAAA, CLASS_IN, 5 /* ttl */, "abcd::fedc"));
+        assertDnsRecordRoundTrip(new TestDnsRecord(DnsPacket.QDSECTION, "test.com",
+                TYPE_AAAA, CLASS_IN, 0 /* unused */, null));
+    }
+
+    private void assertDnsRecordRoundTrip(TestDnsRecord before)
+            throws IOException {
+        final TestDnsRecord after = new TestDnsRecord(before.rType,
+                ByteBuffer.wrap(before.getBytes()));
+        assertEquals(after, before);
+    }
+
+    /** Verifies that the synthesized {@link DnsPacket} can be parsed correctly. */
+    @Test
+    public void testDnsPacketSynthesize() throws IOException {
+        final TestDnsHeader testHeader = new TestDnsHeader(0x7722 /* id */,
+                0x8180 /* flags */, 1 /* qcount */, 3 /* anscount */);
+        final ArrayList<DnsPacket.DnsRecord> qlist = new ArrayList<>();
+        final ArrayList<DnsPacket.DnsRecord> alist = new ArrayList<>();
+        qlist.add(new TestDnsRecord(DnsPacket.QDSECTION, "test.com", TYPE_AAAA, CLASS_IN, 0,
+                null));
+        alist.add(new TestDnsRecord(DnsPacket.ANSECTION, "test.com", TYPE_AAAA, CLASS_IN,
+                7, "1234::5678"));
+        alist.add(new TestDnsRecord(DnsPacket.ANSECTION, "test.com", TYPE_CNAME, CLASS_IN,
+                9, "www.test.com"));
+        alist.add(new TestDnsRecord(DnsPacket.ANSECTION, "www.test.com", TYPE_AAAA, CLASS_IN,
+                11, "abcd::fedc"));
+
+        assertEquals(testHeader, new TestDnsHeader(ByteBuffer.wrap(testHeader.getBytes())));
+
+        final TestDnsPacket testPacket = new TestDnsPacket(testHeader, qlist, alist);
+        final TestDnsPacket actualPacket = new TestDnsPacket(testPacket.getBytes());
+        assertEquals(testPacket, actualPacket);
     }
 }

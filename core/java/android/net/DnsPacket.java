@@ -16,18 +16,29 @@
 
 package android.net;
 
+import static android.net.DnsResolver.TYPE_A;
+import static android.net.DnsResolver.TYPE_AAAA;
+import static android.net.DnsResolver.TYPE_CNAME;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.BitUtils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Defines basic data for DNS protocol based on RFC 1035.
@@ -36,8 +47,9 @@ import java.util.List;
  * @hide
  */
 public abstract class DnsPacket {
-    public class DnsHeader {
+    public static class DnsHeader {
         private static final String TAG = "DnsHeader";
+        public static final int SIZE = 12;
         public final int id;
         public final int flags;
         public final int rcode;
@@ -52,7 +64,8 @@ public abstract class DnsPacket {
          * advanced to the end of the DNS header record.
          * This is meant to chain with other methods reading a DNS response in sequence.
          */
-        DnsHeader(@NonNull ByteBuffer buf) throws BufferUnderflowException {
+        @VisibleForTesting
+        protected DnsHeader(@NonNull ByteBuffer buf) throws BufferUnderflowException {
             id = BitUtils.uint16(buf.getShort());
             flags = BitUtils.uint16(buf.getShort());
             rcode = flags & 0xF;
@@ -63,10 +76,44 @@ public abstract class DnsPacket {
         }
 
         /**
+         * Create a new DnsHeader from specified parameters, useful when synthesize dns response
+         * from query packet.
+         */
+        public DnsHeader(int id, int flags, int qcount, int anscount) {
+            this.id = id;
+            this.flags = flags;
+            this.rcode = flags & 0xF;
+            mRecordCount = new int[NUM_SECTIONS];
+            mRecordCount[QDSECTION] = qcount;
+            mRecordCount[ANSECTION] = anscount;
+        }
+
+        /**
          * Get record count by type.
          */
         public int getRecordCount(int type) {
             return mRecordCount[type];
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null) return false;
+            DnsHeader dnsHeader = (DnsHeader) o;
+            return id == dnsHeader.id
+                    && flags == dnsHeader.flags
+                    && rcode == dnsHeader.rcode
+                    && Arrays.equals(mRecordCount, dnsHeader.mRecordCount);
+        }
+
+        public @NonNull byte[] getBytes() {
+            final ByteBuffer buf = ByteBuffer.allocate(SIZE);
+            buf.putShort((short) id);
+            buf.putShort((short) flags);
+            for (int i = 0; i < NUM_SECTIONS; ++i) {
+                buf.putShort((short) mRecordCount[i]);
+            }
+            return buf.array();
         }
     }
 
@@ -76,7 +123,7 @@ public abstract class DnsPacket {
      * DNS questions (No TTL/RDATA)
      * DNS resource records (With TTL/RDATA)
      */
-    public class DnsRecord {
+    public static class DnsRecord {
         private static final int MAXNAMESIZE = 255;
         private static final int MAXLABELSIZE = 63;
         private static final int MAXLABELCOUNT = 128;
@@ -87,6 +134,7 @@ public abstract class DnsPacket {
 
         private static final String TAG = "DnsRecord";
 
+        public final int rType;
         public final String dName;
         public final int nsType;
         public final int nsClass;
@@ -102,10 +150,12 @@ public abstract class DnsPacket {
          * This is meant to chain with other methods reading a DNS response in sequence.
          *
          * @param ByteBuffer input of record, must be in network byte order
-         *         (which is the default).
+         *                   (which is the default).
          */
-        DnsRecord(int recordType, @NonNull ByteBuffer buf)
+        @VisibleForTesting
+        protected DnsRecord(int rType, @NonNull ByteBuffer buf)
                 throws BufferUnderflowException, ParseException {
+            this.rType = rType;
             dName = parseName(buf, 0 /* Parse depth */);
             if (dName.length() > MAXNAMESIZE) {
                 throw new ParseException(
@@ -114,7 +164,7 @@ public abstract class DnsPacket {
             nsType = BitUtils.uint16(buf.getShort());
             nsClass = BitUtils.uint16(buf.getShort());
 
-            if (recordType != QDSECTION) {
+            if (rType != QDSECTION) {
                 ttl = BitUtils.uint32(buf.getInt());
                 final int length = BitUtils.uint16(buf.getShort());
                 mRdata = new byte[length];
@@ -122,6 +172,34 @@ public abstract class DnsPacket {
             } else {
                 ttl = 0;
                 mRdata = null;
+            }
+        }
+
+        /**
+         * Create a new DnsRecord from specified parameters, useful when synthesize dns response.
+         */
+        public DnsRecord(int rType, @NonNull String dName, int nsType, int nsClass, long ttl,
+                @Nullable String rDataStr) throws IOException {
+            this.rType = rType;
+            this.dName = dName;
+            this.nsType = nsType;
+            this.nsClass = nsClass;
+            if (rType != QDSECTION) {
+                switch (nsType) {
+                    case TYPE_A:
+                    case TYPE_AAAA:
+                        mRdata = InetAddresses.parseNumericAddress(rDataStr).getAddress();
+                        break;
+                    case TYPE_CNAME:
+                        mRdata = stringToLabels(rDataStr);
+                        break;
+                    default:
+                        throw new ParseException("Unsupported nsType: " + nsType);
+                }
+                this.ttl = ttl;
+            } else {
+                mRdata = null;
+                this.ttl = 0;
             }
         }
 
@@ -160,6 +238,31 @@ public abstract class DnsPacket {
             return sb.toString();
         }
 
+        /**
+         * Simple implementation converts ascii string to labels according to RFC 1035.
+         *
+         * @param str ascii {@code String} that needs to be converted.
+         * @return An encoded byte array that constructed by labels, and ends with zero-length
+         * label.
+         */
+        private @NonNull byte[] stringToLabels(@NonNull String str) throws
+                IOException, ParseException {
+            if (TextUtils.isEmpty(str)) {
+                throw new ParseException("Fail to parse empty string");
+            }
+            final ByteArrayOutputStream buf = new ByteArrayOutputStream();
+            String[] labels = str.split("\\.");
+            for (String label : labels) {
+                if (label.length() > MAXLABELSIZE) {
+                    throw new ParseException("label is too long: " + label);
+                }
+                buf.write(label.length());
+                buf.write(label.getBytes(StandardCharsets.US_ASCII));
+            }
+            buf.write(0x00); // end with zero-length label
+            return buf.toByteArray();
+        }
+
         private String parseName(@NonNull ByteBuffer buf, int depth) throws
                 BufferUnderflowException, ParseException {
             if (depth > MAXLABELCOUNT) {
@@ -193,13 +296,56 @@ public abstract class DnsPacket {
                 return TextUtils.isEmpty(tail) ? head : head + "." + tail;
             }
         }
+
+        public @NonNull byte[] getBytes() throws IOException {
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            final DataOutputStream dos = new DataOutputStream(baos);
+            dos.write(stringToLabels(dName));
+            dos.writeShort(nsType);
+            dos.writeShort(nsClass);
+            if (rType != QDSECTION) {
+                dos.writeInt((int) ttl);
+                if (mRdata == null) {
+                    dos.writeShort(0);
+                } else {
+                    dos.writeShort(mRdata.length);
+                    dos.write(mRdata);
+                }
+            }
+            return baos.toByteArray();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null) return false;
+            DnsRecord dnsRecord = (DnsRecord) o;
+            return rType == dnsRecord.rType
+                    && nsType == dnsRecord.nsType
+                    && nsClass == dnsRecord.nsClass
+                    && ttl == dnsRecord.ttl
+                    && TextUtils.equals(dName, dnsRecord.dName)
+                    && Arrays.equals(mRdata, dnsRecord.mRdata);
+        }
+
+        @Override
+        public String toString() {
+            return "DnsRecord{"
+                    + "rType=" + rType
+                    + ", dName='" + dName + '\''
+                    + ", nsType=" + nsType
+                    + ", nsClass=" + nsClass
+                    + ", ttl=" + ttl
+                    + ", mRdata=" + Arrays.toString(mRdata)
+                    + '}';
+        }
     }
 
     public static final int QDSECTION = 0;
     public static final int ANSECTION = 1;
     public static final int NSSECTION = 2;
     public static final int ARSECTION = 3;
-    private static final int NUM_SECTIONS = ARSECTION + 1;
+    static final int NUM_SECTIONS = ARSECTION + 1;
 
     private static final String TAG = DnsPacket.class.getSimpleName();
 
@@ -231,5 +377,37 @@ public abstract class DnsPacket {
                 }
             }
         }
+    }
+
+    protected DnsPacket(@NonNull DnsHeader header, @Nullable ArrayList<DnsRecord> qd,
+            @Nullable ArrayList<DnsRecord> ans) {
+        mHeader = header;
+        mRecords = new ArrayList[NUM_SECTIONS];
+        mRecords[QDSECTION] = qd;
+        mRecords[ANSECTION] = ans;
+    }
+
+    public @NonNull byte[] getBytes() throws IOException {
+        final ByteArrayOutputStream buf = new ByteArrayOutputStream();
+        buf.write(mHeader.getBytes());
+
+        for (int i = 0; i < NUM_SECTIONS; ++i) {
+            final int count = mHeader.getRecordCount(i);
+            if (count > 0) {
+                for (int j = 0; j < count; ++j) {
+                    buf.write(mRecords[i].get(j).getBytes());
+                }
+            }
+        }
+        return buf.toByteArray();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        DnsPacket dnsPacket = (DnsPacket) o;
+        return Objects.equals(mHeader, dnsPacket.mHeader)
+                && Arrays.deepEquals(mRecords, dnsPacket.mRecords);
     }
 }

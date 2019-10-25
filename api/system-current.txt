@@ -4153,6 +4153,10 @@ package android.net {
     field public static final String PERMISSION_MAINLINE_NETWORK_STACK = "android.permission.MAINLINE_NETWORK_STACK";
   }
 
+  public class ParseException extends java.lang.RuntimeException {
+    ctor public ParseException(@NonNull String);
+  }
+
   public final class RouteInfo implements android.os.Parcelable {
     ctor public RouteInfo(@Nullable android.net.IpPrefix, @Nullable java.net.InetAddress, @Nullable String, int);
     method public int getType();
