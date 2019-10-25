@@ -20,6 +20,7 @@ import static android.net.ConnectivityManager.TYPE_BLUETOOTH;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_PROXY;
+import static android.net.ConnectivityManager.TYPE_TEST;
 import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.net.ConnectivityManager.TYPE_WIFI_P2P;
 import static android.net.ConnectivityManager.TYPE_WIMAX;
@@ -76,6 +77,7 @@ public class NetworkTemplate implements Parcelable {
     public static final int MATCH_WIFI_WILDCARD = 7;
     public static final int MATCH_BLUETOOTH = 8;
     public static final int MATCH_PROXY = 9;
+    public static final int MATCH_TEST = 10;
 
     /**
      * Include all network types when filtering. This is meant to merge in with the
@@ -103,6 +105,7 @@ public class NetworkTemplate implements Parcelable {
             case MATCH_WIFI_WILDCARD:
             case MATCH_BLUETOOTH:
             case MATCH_PROXY:
+            case MATCH_TEST:
                 return true;
 
             default:
@@ -207,6 +210,15 @@ public class NetworkTemplate implements Parcelable {
      */
     public static NetworkTemplate buildTemplateProxy() {
         return new NetworkTemplate(MATCH_PROXY, null, null);
+    }
+
+    /**
+     * Template to match {@link ConnectivityManager#TYPE_TEST} networks with the
+     * given specifier, or combine all {@link ConnectivityManager#TYPE_TEST} networks if not
+     * specified.
+     */
+    public static NetworkTemplate buildTemplateTest(String specifier) {
+        return new NetworkTemplate(MATCH_TEST, null, specifier);
     }
 
     private final int mMatchRule;
@@ -395,6 +407,8 @@ public class NetworkTemplate implements Parcelable {
                 return matchesBluetooth(ident);
             case MATCH_PROXY:
                 return matchesProxy(ident);
+            case MATCH_TEST:
+                return matchesTest(ident);
             default:
                 // We have no idea what kind of network template we are, so we
                 // just claim not to match anything.
@@ -548,6 +562,16 @@ public class NetworkTemplate implements Parcelable {
         return ident.mType == TYPE_PROXY;
     }
 
+    /**
+     * Check if matches Test network template.
+     */
+    private boolean matchesTest(NetworkIdentity ident) {
+        if (ident.mType == TYPE_TEST) {
+            return TextUtils.equals(mNetworkId, ident.mNetworkId);
+        }
+        return false;
+    }
+
     private static String getMatchRuleName(int matchRule) {
         switch (matchRule) {
             case MATCH_MOBILE:
@@ -564,6 +588,8 @@ public class NetworkTemplate implements Parcelable {
                 return "BLUETOOTH";
             case MATCH_PROXY:
                 return "PROXY";
+            case MATCH_TEST:
+                return "TEST";
             default:
                 return "UNKNOWN(" + matchRule + ")";
         }
