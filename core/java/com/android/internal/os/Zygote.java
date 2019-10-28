@@ -114,6 +114,13 @@ public final class Zygote {
      */
     public static final int DEBUG_IGNORE_APP_SIGNAL_HANDLER = 1 << 17;
 
+    /**
+     * Enable runtime access to {@link android.annotation.TestApi} annotated members.
+     *
+     * <p>This only takes effect if Hidden API access restrictions are enabled as well.
+     */
+    public static final int ENABLE_TEST_API_ACCESS = 1 << 18;
+
     /** No external storage should be mounted. */
     public static final int MOUNT_EXTERNAL_NONE = IVold.REMOUNT_MODE_NONE;
     /** Default external storage should be mounted. */
