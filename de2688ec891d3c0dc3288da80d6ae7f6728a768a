@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8609a944_4f7e3183",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 44164,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2019-10-28T23:35:23Z",
+      "side": 1,
+      "message": "make it hide@ API so this change is not needed",
+      "range": {
+        "startLine": 44164,
+        "startChar": 3,
+        "endLine": 44164,
+        "endChar": 147
+      },
+      "revId": "de2688ec891d3c0dc3288da80d6ae7f6728a768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d5f06c_2d535f79",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3167,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2019-10-28T23:35:23Z",
+      "side": 1,
+      "message": "make it hide@ API",
+      "range": {
+        "startLine": 3167,
+        "startChar": 6,
+        "endLine": 3167,
+        "endChar": 71
+      },
+      "revId": "de2688ec891d3c0dc3288da80d6ae7f6728a768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
