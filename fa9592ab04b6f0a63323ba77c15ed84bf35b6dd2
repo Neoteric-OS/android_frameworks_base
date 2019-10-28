@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3658bdf4_54963335",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-10-28T07:08:52Z",
+      "side": 1,
+      "message": "This is marked as deprecated. Should we add more code relying on it? Should we use NetworkCapabilities instead? It looks to me that this will keep us more far away from deprecating it.",
+      "range": {
+        "startLine": 864,
+        "startChar": 17,
+        "endLine": 864,
+        "endChar": 26
+      },
+      "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
