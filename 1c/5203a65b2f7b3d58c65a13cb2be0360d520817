@@ -1,0 +1,9 @@
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Yoshiaki Naka <yoshiaki.naka@sony.com>
+Code-Review+1: Yoshiaki Naka <yoshiaki.naka@sony.com>
+Code-Review+2: Chen Xu <fionaxu@google.com>
+Submitted-by: Jack Yu <jackyu@google.com>
+Submitted-at: Mon, 28 Oct 2019 22:06:39 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/930862
+Project: platform/frameworks/base
+Branch: refs/heads/master
