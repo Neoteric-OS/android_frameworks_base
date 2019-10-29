@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1017a6fe_09c05d88",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 44164,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-10-29T16:48:41Z",
+      "side": 1,
+      "message": "We should aim to put all carrier config keys into the API, especially with mainline.",
+      "parentUuid": "62036be9_4ef45487",
+      "range": {
+        "startLine": 44164,
+        "startChar": 3,
+        "endLine": 44164,
+        "endChar": 147
+      },
+      "revId": "de2688ec891d3c0dc3288da80d6ae7f6728a768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38d5f06c_2d535f79",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "de2688ec891d3c0dc3288da80d6ae7f6728a768a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "debfdc96_0cb3212f",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3167,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-10-29T16:48:41Z",
+      "side": 1,
+      "message": "We do want to include these in the API.",
+      "parentUuid": "e4257a44_52443238",
+      "range": {
+        "startLine": 3167,
+        "startChar": 6,
+        "endLine": 3167,
+        "endChar": 71
+      },
+      "revId": "de2688ec891d3c0dc3288da80d6ae7f6728a768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
