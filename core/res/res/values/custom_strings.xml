@@ -25,21 +25,6 @@
     <string name="pocket_view_top_tag_number1" translatable="false">1.\u0020</string>
     <string name="pocket_view_top_tag_number2" translatable="false">2.\u0020</string>
 
-    <!-- Button that copies the url to the log of a crashed application -->
-    <string name="aerr_copy">Copy crash log URL</string>
-    <string name="url_copy_success">URL copied successfully</string>
-    <string name="url_copy_failed">An error occured while uploading the log to stagbin</string>
-
-    <!-- Global actions -->
-    <string name="reboot_to_bootloader_title">Reboot bootloader</string>
-    <string name="reboot_to_bootloader_message">Rebooting to bootloader\u2026</string>
-    <string name="reboot_to_fastboot_title">Reboot fastboot</string>
-    <string name="reboot_to_fastboot_message">Rebooting to fastboot\u2026</string>
-    <string name="reboot_to_recovery_title">Reboot recovery</string>
-    <string name="reboot_to_recovery_message">Rebooting to recovery\u2026</string>
-    <string name="reboot_system_title">Restart system</string>
-    <string name="reboot_system_message">Restarting system\u2026</string>
-
     <!-- Face unlock -->
     <string name="face_unlock_disabled_idle">Face unlock disabled due to inactivity</string>
 

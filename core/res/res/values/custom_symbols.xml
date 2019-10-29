@@ -1,20 +1,6 @@
 <resources>
 
-    <!-- Whether device supports in-display fingerprint -->
-    <java-symbol type="bool" name="config_supportsUdfps" />
-
-    <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
-    <java-symbol type="bool" name="config_cleanupUnusedFingerprints" />
-
-  <!-- Package Manager -->
-  <java-symbol type="array" name="config_deviceDisabledComponents" />
-  <java-symbol type="array" name="config_globallyDisabledComponents" />
-  <java-symbol type="array" name="config_forceEnabledComponents" />
-
-    <!-- These are system packages exempted from privacy indicator -->
-    <java-symbol type="array" name="config_indicatorExemptedPackageNames" />
-
-    <!-- Pocket Lock -->
+    <!-- Pocket lock -->
     <java-symbol type="layout" name="pocket_lock_view" />
 
     <!-- Pocket bridge -->
@@ -25,22 +11,6 @@
     <!-- Pocket Service -->
     <java-symbol type="string" name="config_pocketJudgeVendorSensorName" />
     <java-symbol type="string" name="config_pocketJudgeVendorProximitySensorName" />
-
-    <!-- App error dialog -->
-    <java-symbol type="id" name="aerr_copy" />
-    <java-symbol type="string" name="url_copy_success" />
-    <java-symbol type="string" name="url_copy_failed" />
-
-    <!-- Power Menu Reboot -->
-    <java-symbol name="reboot_to_bootloader_title" type="string" />
-    <java-symbol name="reboot_to_bootloader_message" type="string" />
-    <java-symbol name="reboot_to_fastboot_title" type="string" />
-    <java-symbol name="reboot_to_fastboot_message" type="string" />
-    <java-symbol name="reboot_to_recovery_title" type="string" />
-    <java-symbol name="reboot_to_recovery_message" type="string" />
-    <java-symbol name="reboot_system_title" type="string" />
-    <java-symbol name="reboot_system_message" type="string" />
-    <java-symbol type="array" name="config_rebootActionsList" />
 
     <!-- Enable face auth only when swiping security view -->
     <java-symbol type="bool" name="config_faceAuthOnlyOnSecurityView" />
