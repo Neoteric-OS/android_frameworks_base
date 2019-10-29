@@ -22,6 +22,30 @@
       "revId": "83dc41938b5051d4dac824957669829f8d4e2def",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc88fe3_d7b134b4",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1424063
+      },
+      "writtenOn": "2019-10-29T05:37:07Z",
+      "side": 1,
+      "message": "entitlement is not triggered due to below codes, isn\u0027t it?\n\n    private static boolean isValidDownstreamType(int type) {\n        switch (type) {\n            case TETHERING_BLUETOOTH:\n            case TETHERING_USB:\n            case TETHERING_WIFI:\n                return true;\n            default:\n                return false;\n        }\n    }",
+      "parentUuid": "a3b38b24_5550691f",
+      "range": {
+        "startLine": 386,
+        "startChar": 8,
+        "endLine": 386,
+        "endChar": 76
+      },
+      "revId": "83dc41938b5051d4dac824957669829f8d4e2def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
