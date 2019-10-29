@@ -46,6 +46,30 @@
       "revId": "83dc41938b5051d4dac824957669829f8d4e2def",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73e0f3c8_026eb98a",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-10-29T06:32:47Z",
+      "side": 1,
+      "message": "Ohh yes, how I miss this.",
+      "parentUuid": "9fc88fe3_d7b134b4",
+      "range": {
+        "startLine": 386,
+        "startChar": 8,
+        "endLine": 386,
+        "endChar": 76
+      },
+      "revId": "83dc41938b5051d4dac824957669829f8d4e2def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
