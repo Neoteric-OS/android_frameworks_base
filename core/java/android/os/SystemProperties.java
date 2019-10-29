@@ -139,6 +139,7 @@ public class SystemProperties {
      * @hide
      */
     @SystemApi
+    @TestApi
     public static int getInt(@NonNull String key, int def) {
         if (TRACK_KEY_ACCESS) onKeyAccess(key);
         return native_get_int(key, def);
@@ -154,6 +155,7 @@ public class SystemProperties {
      * @hide
      */
     @SystemApi
+    @TestApi
     public static long getLong(@NonNull String key, long def) {
         if (TRACK_KEY_ACCESS) onKeyAccess(key);
         return native_get_long(key, def);
