@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62036be9_4ef45487",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 44164,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-10-29T02:35:29Z",
+      "side": 1,
+      "message": "As I commented other part, please check with Google Telephony/Brad whether remove or add the @hide.",
+      "parentUuid": "8609a944_4f7e3183",
+      "range": {
+        "startLine": 44164,
+        "startChar": 3,
+        "endLine": 44164,
+        "endChar": 147
+      },
+      "revId": "de2688ec891d3c0dc3288da80d6ae7f6728a768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38d5f06c_2d535f79",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-10-28T23:35:23Z",
       "side": 1,
       "message": "make it hide@ API",
+      "range": {
+        "startLine": 3167,
+        "startChar": 6,
+        "endLine": 3167,
+        "endChar": 71
+      },
+      "revId": "de2688ec891d3c0dc3288da80d6ae7f6728a768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4257a44_52443238",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3167,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-10-29T02:35:29Z",
+      "side": 1,
+      "message": "We removed @hide in this file from last year because Google Telephony(Brad) requested to remove it as below comment. Could you please check with Brad whether remove or add the @hide?\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/720220/2/telephony/java/android/telephony/CarrierConfigManager.java#1928\n\u003d\u003d\u003d\u003d\u003d\n\u003eBrad Ebinger\n\u003eJul 26, 2018\n\u003eRemove @hide annotation and run \"make update-api\" to generate API diff. We are trying to break the habit of adding hidden APIs in this file.\n\u003d\u003d\u003d\u003d\u003d",
+      "parentUuid": "38d5f06c_2d535f79",
       "range": {
         "startLine": 3167,
         "startChar": 6,
