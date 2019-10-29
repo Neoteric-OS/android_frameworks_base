@@ -2394,6 +2394,11 @@ public class SubscriptionManager {
      *            may not be displayed or used by decision making logic.
      * @throws SecurityException if the caller doesn't meet the requirements
      *             outlined above.
+<<<<<<< HEAD   (3d427f Handle 5G meteredness in telephony framework)
+=======
+     * @throws IllegalArgumentException if plans don't meet the requirements
+     *             defined in {@link SubscriptionPlan}.
+>>>>>>> CHANGE (c9e48d Update javadocs for API review)
      */
     public void setSubscriptionPlans(int subId, @NonNull List<SubscriptionPlan> plans) {
         try {
