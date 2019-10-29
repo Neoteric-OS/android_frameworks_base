@@ -17,6 +17,7 @@
 package android.hardware.biometrics;
 
 import android.annotation.NonNull;
+import android.security.identity.IdentityCredential;
 import android.security.keystore.AndroidKeyStoreProvider;
 
 import java.security.Signature;
@@ -44,6 +45,10 @@ public class CryptoObject {
         mCrypto = mac;
     }
 
+    public CryptoObject(@NonNull IdentityCredential credential) {
+        mCrypto = credential;
+    }
+
     /**
      * Get {@link Signature} object.
      * @return {@link Signature} object or null if this doesn't contain one.
@@ -69,11 +74,23 @@ public class CryptoObject {
     }
 
     /**
+     * Get {@link IdentityCredential} object.
+     * @return {@link IdentityCredential} object or null if this doesn't contain one.
+     */
+    public IdentityCredential getIdentityCredential() {
+        return mCrypto instanceof IdentityCredential ? (IdentityCredential) mCrypto : null;
+    }
+
+    /**
      * @hide
      * @return the opId associated with this object or 0 if none
      */
     public final long getOpId() {
-        return mCrypto != null
-                ? AndroidKeyStoreProvider.getKeyStoreOperationHandle(mCrypto) : 0;
+        if (mCrypto == null) {
+            return 0;
+        } else if (mCrypto instanceof IdentityCredential) {
+            return ((IdentityCredential) mCrypto).getCredstoreOperationHandle();
+        }
+        return AndroidKeyStoreProvider.getKeyStoreOperationHandle(mCrypto);
     }
 };
