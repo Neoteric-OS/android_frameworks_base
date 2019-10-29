@@ -1,0 +1,8 @@
+Autosubmit+1: nchalko <nchalko@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Eric Laurent <elaurent@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Tue, 29 Oct 2019 22:31:06 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1130472
+Project: platform/frameworks/base
+Branch: refs/heads/master
