@@ -40739,6 +40739,155 @@ package android.security {
 
 }
 
+package android.security.identity {
+
+  public class AccessControlProfile {
+    ctor public AccessControlProfile();
+  }
+
+  public static final class AccessControlProfile.Builder {
+    ctor public AccessControlProfile.Builder(int);
+    method @NonNull public android.security.identity.AccessControlProfile build();
+    method @NonNull public android.security.identity.AccessControlProfile.Builder setReaderCertificate(@NonNull java.security.cert.X509Certificate);
+    method @NonNull public android.security.identity.AccessControlProfile.Builder setUserAuthenticationRequired(boolean);
+    method @NonNull public android.security.identity.AccessControlProfile.Builder setUserAuthenticationTimeout(int);
+  }
+
+  public class AlreadyCalledException extends android.security.identity.IdentityCredentialException {
+    ctor public AlreadyCalledException(@NonNull String);
+    ctor public AlreadyCalledException(@NonNull String, @NonNull Throwable);
+  }
+
+  public class AlreadyPersonalizedException extends android.security.identity.IdentityCredentialException {
+    ctor public AlreadyPersonalizedException(@NonNull String);
+    ctor public AlreadyPersonalizedException(@NonNull String, @NonNull Throwable);
+  }
+
+  public class CipherSuiteNotSupportedException extends android.security.identity.IdentityCredentialException {
+    ctor public CipherSuiteNotSupportedException(@NonNull String);
+    ctor public CipherSuiteNotSupportedException(@NonNull String, @NonNull Throwable);
+  }
+
+  public class DocTypeNotSupportedException extends android.security.identity.IdentityCredentialException {
+    ctor public DocTypeNotSupportedException(@NonNull String);
+    ctor public DocTypeNotSupportedException(@NonNull String, @NonNull Throwable);
+  }
+
+  public class EntryNamespace {
+  }
+
+  public static final class EntryNamespace.Builder {
+    ctor public EntryNamespace.Builder(@NonNull String);
+    method @NonNull public android.security.identity.EntryNamespace.Builder addBooleanEntry(@NonNull String, @NonNull java.util.Collection<java.lang.Integer>, boolean);
+    method @NonNull public android.security.identity.EntryNamespace.Builder addBytestringEntry(@NonNull String, @NonNull java.util.Collection<java.lang.Integer>, @NonNull byte[]);
+    method @NonNull public android.security.identity.EntryNamespace.Builder addDateTimeEntry(@NonNull String, @NonNull java.util.Collection<java.lang.Integer>, @NonNull android.icu.util.Calendar);
+    method @NonNull public android.security.identity.EntryNamespace.Builder addEntry(@NonNull String, @NonNull java.util.Collection<java.lang.Integer>, @NonNull byte[]);
+    method @NonNull public android.security.identity.EntryNamespace.Builder addIntegerEntry(@NonNull String, @NonNull java.util.Collection<java.lang.Integer>, long);
+    method @NonNull public android.security.identity.EntryNamespace.Builder addStringEntry(@NonNull String, @NonNull java.util.Collection<java.lang.Integer>, @NonNull String);
+    method @NonNull public android.security.identity.EntryNamespace build();
+  }
+
+  public class EphemeralPublicKeyNotFoundException extends android.security.identity.IdentityCredentialException {
+    ctor public EphemeralPublicKeyNotFoundException(@NonNull String);
+    ctor public EphemeralPublicKeyNotFoundException(@NonNull String, @NonNull Throwable);
+  }
+
+  public abstract class IdentityCredential {
+    ctor public IdentityCredential();
+    method @NonNull public abstract java.security.KeyPair createEphemeralKeyPair();
+    method @NonNull public abstract byte[] decryptMessageFromReader(@NonNull byte[]) throws android.security.identity.MessageDecryptionException;
+    method @NonNull public abstract byte[] encryptMessageToReader(@NonNull byte[]);
+    method @NonNull public abstract java.util.Collection<java.security.cert.X509Certificate> getAuthKeysNeedingCertification();
+    method @NonNull public abstract int[] getAuthenticationDataUsageCount();
+    method @NonNull public abstract java.util.Collection<java.security.cert.X509Certificate> getCredentialKeyCertificateChain();
+    method @NonNull public abstract android.hardware.biometrics.BiometricPrompt.CryptoObject getCryptoObject();
+    method @NonNull public abstract android.security.identity.IdentityCredential.GetEntryResult getEntries(@Nullable byte[], @NonNull java.util.Collection<android.security.identity.RequestNamespace>, @Nullable byte[], @Nullable byte[], boolean) throws android.security.identity.AlreadyCalledException, android.security.identity.EphemeralPublicKeyNotFoundException, android.security.identity.InvalidReaderCertificateChainException, android.security.identity.NoAuthenticationKeyAvailableException;
+    method public abstract void setAvailableAuthenticationKeys(int, int);
+    method public abstract void setReaderEphemeralPublicKey(@NonNull java.security.PublicKey) throws java.security.InvalidKeyException;
+    method public abstract void storeStaticAuthenticationData(@NonNull java.security.cert.X509Certificate, @NonNull byte[]) throws android.security.identity.UnknownAuthenticationKeyException;
+  }
+
+  public static class IdentityCredential.GetEntryResult {
+    method @NonNull public byte[] getAuthenticatedData();
+    method @Nullable public byte[] getEcdsaSignature();
+    method @NonNull public java.util.Collection<android.security.identity.ResultNamespace> getEntryNamespaces();
+    method @Nullable public byte[] getMessageAuthenticationCode();
+    method @NonNull public byte[] getStaticAuthenticationData();
+  }
+
+  public class IdentityCredentialException extends java.lang.Exception {
+    ctor public IdentityCredentialException(@NonNull String);
+    ctor public IdentityCredentialException(@NonNull String, @NonNull Throwable);
+  }
+
+  public abstract class IdentityCredentialStore {
+    method @NonNull public abstract android.security.identity.WritableIdentityCredential createCredential(@NonNull String, @NonNull String) throws android.security.identity.AlreadyPersonalizedException, android.security.identity.DocTypeNotSupportedException;
+    method @Nullable public abstract byte[] deleteCredentialByName(@NonNull String);
+    method @Nullable public abstract android.security.identity.IdentityCredential getCredentialByName(@NonNull String, int) throws android.security.identity.CipherSuiteNotSupportedException;
+    method @Nullable public static android.security.identity.IdentityCredentialStore getDirectAccessInstance(@NonNull android.content.Context);
+    method @Nullable public static android.security.identity.IdentityCredentialStore getInstance(@NonNull android.content.Context);
+    method @NonNull public abstract String[] getSupportedDocTypes();
+    field public static final int CIPHERSUITE_ECDHE_HKDF_ECDSA_WITH_AES_256_GCM_SHA256 = 1; // 0x1
+  }
+
+  public class InvalidReaderCertificateChainException extends android.security.identity.IdentityCredentialException {
+    ctor public InvalidReaderCertificateChainException(@NonNull String);
+    ctor public InvalidReaderCertificateChainException(@NonNull String, @NonNull Throwable);
+  }
+
+  public class MessageDecryptionException extends android.security.identity.IdentityCredentialException {
+    ctor public MessageDecryptionException(@NonNull String);
+    ctor public MessageDecryptionException(@NonNull String, @NonNull Throwable);
+  }
+
+  public class NoAuthenticationKeyAvailableException extends android.security.identity.IdentityCredentialException {
+    ctor public NoAuthenticationKeyAvailableException(@NonNull String);
+    ctor public NoAuthenticationKeyAvailableException(@NonNull String, @NonNull Throwable);
+  }
+
+  public class RequestNamespace {
+  }
+
+  public static final class RequestNamespace.Builder {
+    ctor public RequestNamespace.Builder(@NonNull String);
+    method @NonNull public android.security.identity.RequestNamespace.Builder addEntryName(@NonNull String);
+    method @NonNull public android.security.identity.RequestNamespace.Builder addEntryNameNoAuthentication(@NonNull String);
+    method @NonNull public android.security.identity.RequestNamespace build();
+  }
+
+  public class ResultNamespace {
+    method public boolean getBooleanEntry(@NonNull String);
+    method @Nullable public byte[] getBytestringEntry(@NonNull String);
+    method @Nullable public android.icu.util.Calendar getDateTimeEntry(@NonNull String);
+    method @Nullable public byte[] getEntry(@NonNull String);
+    method @NonNull public java.util.Collection<java.lang.String> getEntryNames();
+    method public long getIntegerEntry(@NonNull String);
+    method @NonNull public String getNamespaceName();
+    method @NonNull public java.util.Collection<java.lang.String> getRetrievedEntryNames();
+    method public int getStatus(@NonNull String);
+    method @Nullable public String getStringEntry(@NonNull String);
+    field public static final int STATUS_NOT_IN_REQUEST_MESSAGE = 3; // 0x3
+    field public static final int STATUS_NOT_REQUESTED = 2; // 0x2
+    field public static final int STATUS_NO_ACCESS_CONTROL_PROFILES = 6; // 0x6
+    field public static final int STATUS_NO_SUCH_ENTRY = 1; // 0x1
+    field public static final int STATUS_OK = 0; // 0x0
+    field public static final int STATUS_READER_AUTHENTICATION_FAILED = 5; // 0x5
+    field public static final int STATUS_USER_AUTHENTICATION_FAILED = 4; // 0x4
+  }
+
+  public class UnknownAuthenticationKeyException extends android.security.identity.IdentityCredentialException {
+    ctor public UnknownAuthenticationKeyException(@NonNull String);
+    ctor public UnknownAuthenticationKeyException(@NonNull String, @NonNull Throwable);
+  }
+
+  public abstract class WritableIdentityCredential {
+    ctor public WritableIdentityCredential();
+    method @NonNull public abstract java.util.Collection<java.security.cert.X509Certificate> getCredentialKeyCertificateChain(@NonNull byte[]);
+    method @NonNull public abstract byte[] personalize(@NonNull java.util.Collection<android.security.identity.AccessControlProfile>, @NonNull java.util.Collection<android.security.identity.EntryNamespace>);
+  }
+
+}
+
 package android.security.keystore {
 
   public class KeyExpiredException extends java.security.InvalidKeyException {
