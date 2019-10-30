@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd63b38f_fb5087d5",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2086,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-10-30T17:40:24Z",
+      "side": 1,
+      "message": "You should not be adding new @UnsupportedAppUsage annotations. Is there a need?",
+      "range": {
+        "startLine": 2086,
+        "startChar": 5,
+        "endLine": 2086,
+        "endChar": 24
+      },
+      "revId": "c7dfb9bcbaebc6b2026e0e3e13e85a745edb19d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
