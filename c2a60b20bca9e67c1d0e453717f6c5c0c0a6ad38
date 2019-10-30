@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "07f056a1_32c16ef7",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2019-10-30T15:35:32Z",
+      "side": 1,
+      "message": "Keystone CL with GSMA RCS 7.1 spec spec changes and feature tags is as given. Please take them \n\nhttps://keystone-qcom-review.googlesource.com/c/platform/frameworks/base/+/183134",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2a0d4de_a3424b1a",
         "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
         "patchSetId": 16
@@ -30,6 +47,23 @@
       "writtenOn": "2019-10-24T19:09:30Z",
       "side": 1,
       "message": "Besides initial Publish, request to trigger Publish can be made during inter RAT mobility as well so clients would need to know Publish Trigger Types based on which can they can trigger publish. For Example if trigger type is UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_3G then clients need to publish services which can be enabled on 3G RAT only as some RCS services are RAT and operator specific. I couldn\u0027t find definition of Publish Trigger Types.",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f32085_fbd9d872",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsSipOptionsImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2019-10-30T15:35:32Z",
+      "side": 1,
+      "message": "Error response is also sent if requested contact is blacklisted. In new API, we don\u0027t see any parameter to specify if requested contact is blacklisted. Just wanted to understand how do we handle such a case. It is part of existing AIDL Option API.\n\nresponseIncomingOptions(int optionsServiceHandle,  int tId, int sipResponseCode,\n                                   String reasonPhrase, in OptionsCapInfo capInfo,\n                                       in boolean bContactInBL);",
       "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
