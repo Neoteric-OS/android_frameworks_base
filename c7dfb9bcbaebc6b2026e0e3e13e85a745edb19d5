@@ -22,6 +22,30 @@
       "revId": "c7dfb9bcbaebc6b2026e0e3e13e85a745edb19d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9ba4aa_49bba7b3",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2086,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-10-30T17:43:32Z",
+      "side": 1,
+      "message": "We will be refactoring our API surface such that we no longer want others using this method. We are also in the process of clearing out usages of our non-public and non-system APIs. I assumed the annotation would convey this to other teams, but I can remove it if that\u0027s not the case.",
+      "parentUuid": "bd63b38f_fb5087d5",
+      "range": {
+        "startLine": 2086,
+        "startChar": 5,
+        "endLine": 2086,
+        "endChar": 24
+      },
+      "revId": "c7dfb9bcbaebc6b2026e0e3e13e85a745edb19d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
