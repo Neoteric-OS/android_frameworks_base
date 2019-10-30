@@ -46,6 +46,30 @@
       "revId": "c7dfb9bcbaebc6b2026e0e3e13e85a745edb19d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94fc9c62_e9c90070",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2086,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-10-30T17:47:15Z",
+      "side": 1,
+      "message": "Ah, the annotation is actually used to declare APIs that *are* being used by 3p apps. (Perhaps we should\u0027ve chosen a different name for it. 😊) See more info on go/UnsupportedAppUsage.\n\nThis method has not been used by apps targeting P+, and by adding an annotation here you are opening it for apps with any targetSdk.",
+      "parentUuid": "ae9ba4aa_49bba7b3",
+      "range": {
+        "startLine": 2086,
+        "startChar": 5,
+        "endLine": 2086,
+        "endChar": 24
+      },
+      "revId": "c7dfb9bcbaebc6b2026e0e3e13e85a745edb19d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
