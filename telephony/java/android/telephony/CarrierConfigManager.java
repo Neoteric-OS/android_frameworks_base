@@ -2833,6 +2833,13 @@ public class CarrierConfigManager {
             "always_show_primary_signal_bar_in_opportunistic_network_boolean";
 
     /**
+     * Flag indicating whether to log the answered elsewhere call.
+     *
+     * @hide
+     */
+    public static final String KEY_LOG_ANSWER_ELSEWHERE_CALL = "log_answer_elsewhere_call";
+
+    /**
      * GPS configs. See android.hardware.gnss@1.0 IGnssConfiguration.
      * @hide
      */
@@ -3598,6 +3605,7 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_SMART_FORWARDING_CONFIG_COMPONENT_NAME_STRING, "");
         sDefaults.putBoolean(KEY_ALWAYS_SHOW_PRIMARY_SIGNAL_BAR_IN_OPPORTUNISTIC_NETWORK_BOOLEAN,
                 false);
+        sDefaults.putBoolean(KEY_LOG_ANSWER_ELSEWHERE_CALL, false);
         sDefaults.putString(KEY_SUBSCRIPTION_GROUP_UUID_STRING, "");
         sDefaults.putBoolean(KEY_IS_OPPORTUNISTIC_SUBSCRIPTION_BOOL, false);
         sDefaults.putIntArray(KEY_GSM_RSSI_THRESHOLDS_INT_ARRAY,
