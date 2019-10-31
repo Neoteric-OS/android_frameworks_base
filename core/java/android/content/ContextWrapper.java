@@ -926,6 +926,7 @@ public class ContextWrapper extends Context {
     }
 
     /** @hide */
+    @UnsupportedAppUsage
     @TestApi
     @Override
     public Display getDisplay() {
