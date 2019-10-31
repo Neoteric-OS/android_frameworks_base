@@ -17,6 +17,8 @@
 package android.telephony;
 
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -27,12 +29,15 @@ import java.util.Objects;
  * Class that stores information specific to voice network registration.
  * @hide
  */
-public class VoiceSpecificRegistrationInfo implements Parcelable{
+@SystemApi
+@TestApi
+public final class VoiceSpecificRegistrationInfo implements Parcelable{
     /**
      * oncurrent services support indicator. if
      * registered on a CDMA system.
      * false - Concurrent services not supported,
      * true - Concurrent services supported
+     * @hide
      */
     public final boolean cssSupported;
 
@@ -40,6 +45,7 @@ public class VoiceSpecificRegistrationInfo implements Parcelable{
      * TSB-58 Roaming Indicator if registered
      * on a CDMA or EVDO system or -1 if not.
      * Valid values are 0-255.
+     * @hide
      */
     public final int roamingIndicator;
 
@@ -47,6 +53,7 @@ public class VoiceSpecificRegistrationInfo implements Parcelable{
      * indicates whether the current system is in the
      * PRL if registered on a CDMA or EVDO system or -1 if
      * not. 0=not in the PRL, 1=in the PRL
+     * @hide
      */
     public final int systemIsInPrl;
 
@@ -54,6 +61,7 @@ public class VoiceSpecificRegistrationInfo implements Parcelable{
      * default Roaming Indicator from the PRL,
      * if registered on a CDMA or EVDO system or -1 if not.
      * Valid values are 0-255.
+     * @hide
      */
     public final int defaultRoamingIndicator;
 
@@ -86,7 +94,7 @@ public class VoiceSpecificRegistrationInfo implements Parcelable{
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeBoolean(cssSupported);
         dest.writeInt(roamingIndicator);
         dest.writeInt(systemIsInPrl);
