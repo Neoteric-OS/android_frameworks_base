@@ -17,6 +17,8 @@
 package android.telephony;
 
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -27,7 +29,9 @@ import java.util.Objects;
  * Class that stores information specific to voice network registration.
  * @hide
  */
-public class VoiceSpecificRegistrationInfo implements Parcelable{
+@SystemApi
+@TestApi
+public final class VoiceSpecificRegistrationInfo implements Parcelable{
     /**
      * oncurrent services support indicator. if
      * registered on a CDMA system.
@@ -86,7 +90,7 @@ public class VoiceSpecificRegistrationInfo implements Parcelable{
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeBoolean(cssSupported);
         dest.writeInt(roamingIndicator);
         dest.writeInt(systemIsInPrl);
