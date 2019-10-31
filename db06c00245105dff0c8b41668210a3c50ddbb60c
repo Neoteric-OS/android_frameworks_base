@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45a38c9b_64f1d82e",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-10-31T14:39:54Z",
+      "side": 1,
+      "message": "The \u0027disable\u0027 part makes it consistent with the disableHiddenApiChecks, but I worry may be confusing having to negate it and the Zygote having the flag being \"ENABLE\".",
+      "range": {
+        "startLine": 1572,
+        "startChar": 21,
+        "endLine": 1572,
+        "endChar": 41
+      },
+      "revId": "db06c00245105dff0c8b41668210a3c50ddbb60c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
