@@ -46,6 +46,30 @@
       "revId": "3c6c3cca24c55ff0c6cddb806fcdea40915529e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1840fa5_7a66c1d6",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2433,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2019-10-31T03:25:46Z",
+      "side": 1,
+      "message": "COLUMN_CONTENT_ID for different usages make me confused since\nsome classes like Programs and WatchNextPrograms that implement BaseTvColumns have COLUMN_CONTENT_ID, but the meaning could be different. \n\nMaybe it is because I don\u0027t have much background on it.\n\nI can give API-review +1 if Nick is fine on this.\nNick, please double check.",
+      "parentUuid": "ef094da1_6e2a407a",
+      "range": {
+        "startLine": 2433,
+        "startChar": 35,
+        "endLine": 2433,
+        "endChar": 52
+      },
+      "revId": "3c6c3cca24c55ff0c6cddb806fcdea40915529e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
