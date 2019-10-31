@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1220b8e_90144d63",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2838,
+      "author": {
+        "id": 1099423
+      },
+      "writtenOn": "2019-10-31T10:11:22Z",
+      "side": 1,
+      "message": "Hi Lei\n\nGoogle is going to make Carrier Config public API. So can you please remove the @hide and make update-api.\n\nThanks",
+      "range": {
+        "startLine": 2838,
+        "startChar": 0,
+        "endLine": 2838,
+        "endChar": 1
+      },
+      "revId": "8843c9b6f19d17751da81a1cd82f9a98f6bf673a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
