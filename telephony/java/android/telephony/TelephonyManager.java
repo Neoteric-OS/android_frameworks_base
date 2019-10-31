@@ -8341,6 +8341,20 @@ public class TelephonyManager {
     }
 
     /** @hide */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    public boolean setRadioPowerForSubscriber(int subId, boolean turnOn) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null)
+                return telephony.setRadioPowerForSubscriber(subId, turnOn);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling ITelephony#setRadioPowerForSubscriber", e);
+        }
+        return false;
+    }
+
+    /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(prefix = {"RADIO_POWER_"},
             value = {RADIO_POWER_OFF,

@@ -242,6 +242,12 @@ interface ITelephony {
     boolean setRadioPower(boolean turnOn);
 
     /**
+     * Set the radio to on or off unconditionally
+     * @param subId user preferred subId.
+     */
+    boolean setRadioPowerForSubscriber(int subId, boolean turnOn);
+
+    /**
      * Request to update location information in service state
      */
     @UnsupportedAppUsage
