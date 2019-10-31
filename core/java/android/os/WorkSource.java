@@ -89,6 +89,7 @@ public class WorkSource implements Parcelable {
     }
 
     /** @hide */
+    @UnsupportedAppUsage
     @TestApi
     public WorkSource(int uid) {
         mNum = 1;
@@ -135,12 +136,14 @@ public class WorkSource implements Parcelable {
     }
 
     /** @hide */
+    @UnsupportedAppUsage
     @TestApi
     public int size() {
         return mNum;
     }
 
     /** @hide */
+    @UnsupportedAppUsage
     @TestApi
     public int get(int index) {
         return mUids[index];
@@ -162,6 +165,7 @@ public class WorkSource implements Parcelable {
     }
 
     /** @hide */
+    @UnsupportedAppUsage
     @TestApi
     public String getName(int index) {
         return mNames != null ? mNames[index] : null;
@@ -416,6 +420,7 @@ public class WorkSource implements Parcelable {
     }
 
     /** @hide */
+    @UnsupportedAppUsage
     @TestApi
     public boolean add(int uid) {
         if (mNum <= 0) {
@@ -436,6 +441,7 @@ public class WorkSource implements Parcelable {
     }
 
     /** @hide */
+    @UnsupportedAppUsage
     @TestApi
     public boolean add(int uid, String name) {
         if (mNum <= 0) {
