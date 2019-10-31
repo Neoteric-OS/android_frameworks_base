@@ -22,6 +22,30 @@
       "revId": "3c6c3cca24c55ff0c6cddb806fcdea40915529e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef094da1_6e2a407a",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2433,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-10-31T00:52:24Z",
+      "side": 1,
+      "message": "According to the API documentation, \nPreviewPrograms.COLUMN_CONTENT_ID and WatchNextPrograms.COLUMN_CONTENT_ID is a public ID of the content which allows an application to apply the same operation to all the preview program copies in different channels.\nIt means that PreviewPrograms.COLUMN_CONTENT_ID and WatchNextPrograms.COLUMN_CONTENT_ID can be a locally unique ID for the specific application (not globally unique, not URI format).\n \nOn the other hand, \nChannels.COLUMN_CONTENT_ID and Programs.COLUMN_CONTENT_ID introduced in this CL are globally unique URI.\n \nThis is one of the difference and reason why Channels.COLUMN_CONTENT_ID and Programs.COLUMN_CONTENT_ID cannot be consolidated with PreviewProgramColumns.COLUMN_CONTENT_ID.\n \nAlso, in case of considering to move COLUMN_CONTENT_ID from PreviewProgramColumns to BaseTvColumns, we need to consider if COLUMN_CONTENT_IDs are really necessary for RecordedPrograms and WatchedPrograms.\n \nSony thinks that adding RecordedPrograms.COLUMN_CONTENT_ID which is same definition as Programs.COLUMN_CONTENT_ID is an appropriate improvement. So, Sony will update the CL if you agree with this.\n(@Nick, @Sungsoo Would you let me know your opinion?)\n\nBut at least adding WatchedPrograms.COLUMN_CONTENT_ID is not neccesary since a system application can get it from Channels.COLUMN_CONTENT_ID specified by WatchedPrograms.COLUMN_CHANNEL_ID.\n\nThis is another reason why we should not move COLUMN_CONTENT_ID from PreviewProgramColumns to BaseTvColumns.",
+      "parentUuid": "d71af576_439a8ed8",
+      "range": {
+        "startLine": 2433,
+        "startChar": 35,
+        "endLine": 2433,
+        "endChar": 52
+      },
+      "revId": "3c6c3cca24c55ff0c6cddb806fcdea40915529e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
