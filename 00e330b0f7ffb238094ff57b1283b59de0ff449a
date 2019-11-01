@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb4e114b_c1ca181d",
+        "filename": "services/net/java/android/net/ip/IpClientManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T14:40:00Z",
+      "side": 1,
+      "message": "While this is a good change we usually avoid doing unrelated cleanups in functional changes to avoid confusion.\n\n(don\u0027t bother changing this now)",
+      "range": {
+        "startLine": 237,
+        "startChar": 29,
+        "endLine": 237,
+        "endChar": 36
+      },
+      "revId": "00e330b0f7ffb238094ff57b1283b59de0ff449a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "491097ec_021000a0",
+        "filename": "services/net/java/android/net/ip/IpClientManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T14:40:00Z",
+      "side": 1,
+      "message": "Nit : Binder has a helper method that does this for you and avoids the risk to getting the restoring wrong.\n\nBinder.withClearCallingIdentity(() -\u003e\n  try {\n    mIpClient.abortPreDhcpConnection();\n    return true;\n  } catch (...) {\n    ...\n  });",
+      "range": {
+        "startLine": 280,
+        "startChar": 34,
+        "endLine": 280,
+        "endChar": 54
+      },
+      "revId": "00e330b0f7ffb238094ff57b1283b59de0ff449a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
