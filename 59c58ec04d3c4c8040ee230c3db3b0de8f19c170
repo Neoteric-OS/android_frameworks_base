@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "78679679_771c44cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1330244
+      },
+      "writtenOn": "2019-11-01T01:48:43Z",
+      "side": 1,
+      "message": "Is this a valid Bug ID?\nIt shows \"Issue 13080842 does not exist\"\n\nI think this not only needs code review, but also design review.\nSince tethering may have variant restriction due to carrier requirement (entitlement check is just one of them).\nIt would be better to describe your use cases clearly.\n\n1. If this is local network interface only, it might be confusing to use tethering (network forwarding to upstream network)\nIf it could be tether-able in the future, that would be better to add untether-able config / label / comment in current change for future maintenance.\nOr maybe just try to go through NetworkManagement API.\n\n2. Any corner case has been verified?\nI would suggest at least test if it\u0027s OK with below scenario:\nEnable NCM and WiFi tethering (hotspot) at the same time.\nMake sure routing \u0026 forwarding rule works fine in both functions.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "59c58ec04d3c4c8040ee230c3db3b0de8f19c170",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b28c728_1e7e9ada",
         "filename": "core/java/android/hardware/usb/UsbManager.java",
         "patchSetId": 3
