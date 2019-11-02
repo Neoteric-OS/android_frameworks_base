@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.util.SharedLog;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.os.Process;
@@ -58,6 +59,7 @@ public class ConnectivityModuleConnector {
     private static final String CONFIG_MIN_UPTIME_BEFORE_CRASH_MS = "min_uptime_before_crash";
     private static final String CONFIG_ALWAYS_RATELIMIT_NETWORKSTACK_CRASH =
             "always_ratelimit_networkstack_crash";
+    public static final String EXTRA_MODULE_BUNDLE = "android.net.extra.module_bundle";
 
     // Even if the network stack is lost, do not crash the system more often than this.
     // Connectivity would be broken, but if the user needs the device for something urgent
@@ -214,6 +216,14 @@ public class ConnectivityModuleConnector {
             @NonNull String serviceIntentBaseAction,
             @NonNull String servicePermissionName,
             @NonNull ModuleServiceCallback callback) {
+        startModuleService(serviceIntentBaseAction, servicePermissionName, null, callback);
+    }
+    public void startModuleService(
+            @NonNull String serviceIntentBaseAction,
+            @NonNull String servicePermissionName,
+            @Nullable Bundle extras,
+            @NonNull ModuleServiceCallback callback) {
+
         log("Starting networking module " + serviceIntentBaseAction);
 
         final PackageManager pm = mContext.getPackageManager();
@@ -238,6 +248,9 @@ public class ConnectivityModuleConnector {
 
         final String packageName = intent.getComponent().getPackageName();
 
+        if (extras != null) {
+            intent.putExtra(EXTRA_MODULE_BUNDLE, extras);
+        }
         // Start the network stack. The service will be added to the service manager by the
         // corresponding client in ModuleServiceCallback.onModuleServiceConnected().
         if (!mContext.bindServiceAsUser(

@@ -200,6 +200,12 @@ public class NetworkStackClient {
         mDependencies.addToServiceManager(service);
         log("Network stack service registered");
 
+        try {
+            TetheringManager.getInstance().start(service);
+        } catch(Throwable e) {
+            logWtf("BOOT FAILTURE start Tetherig ", e);
+        }
+
         final ArrayList<NetworkStackCallback> requests;
         synchronized (mPendingNetStackRequests) {
             requests = new ArrayList<>(mPendingNetStackRequests);
