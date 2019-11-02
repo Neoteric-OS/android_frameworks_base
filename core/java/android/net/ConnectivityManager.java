@@ -362,7 +362,7 @@ public class ConnectivityManager {
      * @hide
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
-    @UnsupportedAppUsage
+    @SystemApi
     public static final String ACTION_TETHER_STATE_CHANGED =
             "android.net.conn.TETHER_STATE_CHANGED";
 
@@ -446,6 +446,7 @@ public class ConnectivityManager {
      * @see #startTethering(int, boolean, OnStartTetheringCallback)
      * @hide
      */
+    @SystemApi
     public static final int TETHERING_INVALID   = -1;
 
     /**
@@ -478,6 +479,7 @@ public class ConnectivityManager {
      * need to start from #startTethering(int, boolean, OnStartTetheringCallback).
      * @hide
      */
+    @SystemApi
     public static final int TETHERING_WIFI_P2P = 3;
 
     /**
@@ -485,6 +487,7 @@ public class ConnectivityManager {
      * enable if any.
      * @hide
      */
+    @SystemApi
     public static final String EXTRA_ADD_TETHER_TYPE = "extraAddTetherType";
 
     /**
@@ -492,6 +495,7 @@ public class ConnectivityManager {
      * which to cancel provisioning.
      * @hide
      */
+    @SystemApi
     public static final String EXTRA_REM_TETHER_TYPE = "extraRemTetherType";
 
     /**
@@ -505,6 +509,7 @@ public class ConnectivityManager {
      * Tells the TetherService to run a provision check now.
      * @hide
      */
+    @SystemApi
     public static final String EXTRA_RUN_PROVISION = "extraRunProvision";
 
     /**
@@ -512,6 +517,7 @@ public class ConnectivityManager {
      * which will receive provisioning results. Can be left empty.
      * @hide
      */
+    @SystemApi
     public static final String EXTRA_PROVISION_CALLBACK = "extraProvisionCallback";
 
     /**
@@ -519,6 +525,7 @@ public class ConnectivityManager {
      * @hide
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 130143562)
+    @SystemApi
     public static final int TYPE_NONE        = -1;
 
     /**
@@ -752,6 +759,7 @@ public class ConnectivityManager {
      * Keep in sync with bionic/libc/dns/include/resolv_netid.h
      * @hide
      */
+    @SystemApi
     public static final int NETID_UNSET = 0;
 
     /**
@@ -820,7 +828,7 @@ public class ConnectivityManager {
      * {@hide}
      */
     @Deprecated
-    @UnsupportedAppUsage
+    @SystemApi
     public static String getNetworkTypeName(int type) {
         switch (type) {
           case TYPE_NONE:
@@ -1745,6 +1753,7 @@ public class ConnectivityManager {
      *     to find the network instead.
      * @hide
      */
+    @SystemApi
     public static NetworkCapabilities networkCapabilitiesForType(int type) {
         final NetworkCapabilities nc = new NetworkCapabilities();
 
@@ -2780,29 +2789,40 @@ public class ConnectivityManager {
     @SystemApi
     public static final int TETHER_ERROR_NO_ERROR           = 0;
     /** {@hide} */
+    @SystemApi
     public static final int TETHER_ERROR_UNKNOWN_IFACE      = 1;
     /** {@hide} */
+    @SystemApi
     public static final int TETHER_ERROR_SERVICE_UNAVAIL    = 2;
     /** {@hide} */
+    @SystemApi
     public static final int TETHER_ERROR_UNSUPPORTED        = 3;
     /** {@hide} */
+    @SystemApi
     public static final int TETHER_ERROR_UNAVAIL_IFACE      = 4;
     /** {@hide} */
+    @SystemApi
     public static final int TETHER_ERROR_MASTER_ERROR       = 5;
     /** {@hide} */
+    @SystemApi
     public static final int TETHER_ERROR_TETHER_IFACE_ERROR = 6;
     /** {@hide} */
+    @SystemApi
     public static final int TETHER_ERROR_UNTETHER_IFACE_ERROR = 7;
     /** {@hide} */
+    @SystemApi
     public static final int TETHER_ERROR_ENABLE_NAT_ERROR     = 8;
     /** {@hide} */
+    @SystemApi
     public static final int TETHER_ERROR_DISABLE_NAT_ERROR    = 9;
     /** {@hide} */
+    @SystemApi
     public static final int TETHER_ERROR_IFACE_CFG_ERROR      = 10;
     /** {@hide} */
     @SystemApi
     public static final int TETHER_ERROR_PROVISION_FAILED     = 11;
     /** {@hide} */
+    @SystemApi
     public static final int TETHER_ERROR_DHCPSERVER_ERROR     = 12;
     /** {@hide} */
     @SystemApi
@@ -3652,6 +3672,7 @@ public class ConnectivityManager {
      *
      * @hide
      */
+    @SystemApi
     public void requestNetwork(@NonNull NetworkRequest request,
             @NonNull NetworkCallback networkCallback, int timeoutMs, int legacyType,
             @NonNull Handler handler) {
