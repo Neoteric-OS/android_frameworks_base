@@ -37,7 +37,7 @@ aidl_interface {
 
 java_library {
     name: "tethering-client",
-    platform_apis: true,
+    sdk_version: "system_current",
     static_libs: [
         "tethering-aidl-interfaces-java",
     ],
