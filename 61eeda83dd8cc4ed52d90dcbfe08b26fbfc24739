@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7400507f_11c0f060",
+        "filename": "core/java/android/net/InterfaceConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-04T06:13:56Z",
+      "side": 1,
+      "message": "also for set LinkAddress, It looks like only NMS use this, do we need to export this?",
+      "range": {
+        "startLine": 108,
+        "startChar": 23,
+        "endLine": 108,
+        "endChar": 37
+      },
+      "revId": "61eeda83dd8cc4ed52d90dcbfe08b26fbfc24739",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5f7617_2bb3ad82",
+        "filename": "core/java/android/net/InterfaceConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-04T06:13:56Z",
+      "side": 1,
+      "message": "question: do we need to expose parcelable functions to get build pass?",
+      "range": {
+        "startLine": 132,
+        "startChar": 15,
+        "endLine": 132,
+        "endChar": 31
+      },
+      "revId": "61eeda83dd8cc4ed52d90dcbfe08b26fbfc24739",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
