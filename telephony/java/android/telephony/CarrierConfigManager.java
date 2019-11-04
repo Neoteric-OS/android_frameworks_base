@@ -3185,6 +3185,13 @@ public class CarrierConfigManager {
     public static final String KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL =
             "prevent_clir_activation_and_deactivation_code_bool";
 
+    /**
+     * Flag specifying whether tip turn off airplane mode when cs retry
+     * @hide
+     */
+    public static final String KEY_TIP_TRUNOFF_AIRPLANE_MODE_WHEN_CS_RETRY =
+            "tip_turnoff_airplane_mode_when_cs_retry";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -3613,6 +3620,7 @@ public class CarrierConfigManager {
         sDefaults.putIntArray(KEY_DISCONNECT_CAUSE_PLAY_BUSYTONE_INT_ARRAY,
                 new int[] {4 /* BUSY */});
         sDefaults.putBoolean(KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL, false);
+        sDefaults.putBoolean(KEY_TIP_TRUNOFF_AIRPLANE_MODE_WHEN_CS_RETRY, false);
     }
 
     /**
