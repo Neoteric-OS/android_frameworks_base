@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cac2264d_01db2671",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 44991,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-11-04T23:42:09Z",
+      "side": 1,
+      "message": "Ooopsies.",
+      "range": {
+        "startLine": 44991,
+        "startChar": 0,
+        "endLine": 44991,
+        "endChar": 91
+      },
+      "revId": "16abb90121b7d1cfed4d53c9686c201d88d98f0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
