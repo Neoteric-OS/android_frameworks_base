@@ -3178,6 +3178,12 @@ public class CarrierConfigManager {
             "disconnect_cause_play_busytone_int_array";
 
     /**
+     * Flag specifying whether Double press on the headset key is supported.
+     */
+    public static final String KEY_FEATURE_DOUBLE_PRESS_ON_HEADSET_KEY_BOOL =
+            "double_press_on_headset_key_bool";
+
+    /**
      * Flag specifying whether to prevent sending CLIR activation("*31#") and deactivation("#31#")
      * code only without dialing number.
      * When {@code true}, these are prevented, {@code false} otherwise.
@@ -3612,6 +3618,8 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_CARRIER_CERTIFICATE_STRING_ARRAY, null);
         sDefaults.putIntArray(KEY_DISCONNECT_CAUSE_PLAY_BUSYTONE_INT_ARRAY,
                 new int[] {4 /* BUSY */});
+        // Add for double press handset media button
+        sDefaultsEx.putBoolean(KEY_FEATURE_DOUBLE_PRESS_ON_HEADSET_KEY_BOOL, true);
         sDefaults.putBoolean(KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL, false);
     }
 
