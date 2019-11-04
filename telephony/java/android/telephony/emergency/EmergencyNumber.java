@@ -615,6 +615,15 @@ public final class EmergencyNumber implements Parcelable, Comparable<EmergencyNu
                             emergencyNumberList.get(i), emergencyNumberList.get(j)));
                     // Mark the emergency number has been merged
                     duplicatedEmergencyNumberPosition.add(j);
+                } else if (areSameEmergencyNumbersWithDiffCategory(
+                        emergencyNumberList.get(i), emergencyNumberList.get(j))) {
+                    Rlog.e(LOG_TAG, "Found unexpected duplicate numbers with different category: "
+                            + emergencyNumberList.get(i) + " vs " + emergencyNumberList.get(j));
+                    // Set the merged emergency number in the current position
+                    emergencyNumberList.set(i, mergeCategoryForSameEmergencyNumber(
+                            emergencyNumberList.get(i), emergencyNumberList.get(j)));
+                    // Mark the emergency number has been merged
+                    duplicatedEmergencyNumberPosition.add(j);
                 }
             }
         }
@@ -672,6 +681,50 @@ public final class EmergencyNumber implements Parcelable, Comparable<EmergencyNu
     }
 
     /**
+     * Check if two emergency numbers are the same but with different category.
+     *
+     * @param first first EmergencyNumber to compare
+     * @param second second EmergencyNumber to compare
+     * @return true if they are the same EmergencyNumbers but different category;
+     * false otherwise.
+     *
+     * @hide
+     */
+    private boolean areSameEmergencyNumbersWithDiffCategory(@NonNull EmergencyNumber first,
+            @NonNull EmergencyNumber second) {
+        if (!first.getNumber().equals(second.getNumber())) {
+            return false;
+        }
+        if (!first.getCountryIso().equals(second.getCountryIso())) {
+            return false;
+        }
+        if (!first.getMnc().equals(second.getMnc())) {
+            return false;
+        }
+        if (first.getEmergencyNumberSourceBitmask()
+                != second.getEmergencyNumberSourceBitmask()) {
+            return false;
+        }
+        if (!first.getEmergencyUrns().equals(second.getEmergencyUrns())) {
+            return false;
+        }
+        if (first.getEmergencyCallRouting() != second.getEmergencyCallRouting()) {
+            return false;
+        }
+        // Never merge two numbers if one of them is from test mode but the other one is not;
+        // This supports to remove a number from the test mode.
+        if (first.isFromSources(EmergencyNumber.EMERGENCY_NUMBER_SOURCE_TEST)
+                ^ second.isFromSources(EmergencyNumber.EMERGENCY_NUMBER_SOURCE_TEST)) {
+            return false;
+        }
+        if (first.getEmergencyServiceCategoryBitmask()
+                == second.getEmergencyServiceCategoryBitmask()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Get a merged EmergencyNumber from two same emergency numbers. Two emergency numbers are
      * the same if {@link #areSameEmergencyNumbers} returns {@code true}.
      *
@@ -690,6 +743,28 @@ public final class EmergencyNumber implements Parcelable, Comparable<EmergencyNu
                     first.getEmergencyNumberSourceBitmask()
                             | second.getEmergencyNumberSourceBitmask(),
                     first.getEmergencyCallRouting());
+        }
+        return null;
+    }
+
+    /**
+     * Get a merged EmergencyNumber from two emergency numbers with different category.
+     *
+     * @param first first EmergencyNumber to compare
+     * @param second second EmergencyNumber to compare
+     * @return a merged EmergencyNumber or null if they are not the same EmergencyNumber
+     *
+     * @hide
+     */
+    private EmergencyNumber mergeCategoryForSameEmergencyNumber(@NonNull EmergencyNumber first,
+            @NonNull EmergencyNumber second) {
+        if (areSameEmergencyNumbersWithDiffCategory(first, second)) {
+            return new EmergencyNumber(first.getNumber(), first.getCountryIso(), first.getMnc(),
+                first.getEmergencyServiceCategoryBitmask()
+                | second.getEmergencyServiceCategoryBitmask(),
+                first.getEmergencyUrns(),
+                first.getEmergencyNumberSourceBitmask(),
+                first.getEmergencyCallRouting());
         }
         return null;
     }
