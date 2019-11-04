@@ -1,0 +1,8 @@
+Code-Review+2: Adrian Roos <roosa@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+API-Review+1: Adrian Roos <roosa@google.com>
+Submitted-by: Adrian Roos <roosa@google.com>
+Submitted-at: Mon, 04 Nov 2019 16:22:19 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1156585
+Project: platform/frameworks/base
+Branch: refs/heads/master
