@@ -840,10 +840,11 @@ public class AppOpsManager {
     public static final int OP_READ_DEVICE_IDENTIFIERS = 89;
     /** @hide Read location metadata from media */
     public static final int OP_ACCESS_MEDIA_LOCATION = 90;
-
+    /** @hide Start a Platform VPN connection without user intervention. */
+    public static final int OP_ACTIVATE_PLATFORM_VPN = 91;
     /** @hide */
     @UnsupportedAppUsage
-    public static final int _NUM_OP = 91;
+    public static final int _NUM_OP = 92;
 
     /** Access to coarse location information. */
     public static final String OPSTR_COARSE_LOCATION = "android:coarse_location";
@@ -1122,6 +1123,8 @@ public class AppOpsManager {
     public static final String OPSTR_ACCESS_ACCESSIBILITY = "android:access_accessibility";
     /** @hide Read device identifiers */
     public static final String OPSTR_READ_DEVICE_IDENTIFIERS = "android:read_device_identifiers";
+    /** @hide Start Platform VPN without user intervention */
+    public static final String OPSTR_ACTIVATE_PLATFORM_VPN = "android:activate_platform_vpn";
 
     // Warning: If an permission is added here it also has to be added to
     // com.android.packageinstaller.permission.utils.EventLogger
@@ -1285,6 +1288,7 @@ public class AppOpsManager {
             OP_ACCESS_ACCESSIBILITY,            // ACCESS_ACCESSIBILITY
             OP_READ_DEVICE_IDENTIFIERS,         // READ_DEVICE_IDENTIFIERS
             OP_ACCESS_MEDIA_LOCATION,           // ACCESS_MEDIA_LOCATION
+            OP_ACTIVATE_PLATFORM_VPN,           // ACTIVATE_PLATFORM_VPN
     };
 
     /**
@@ -1382,6 +1386,7 @@ public class AppOpsManager {
             OPSTR_ACCESS_ACCESSIBILITY,
             OPSTR_READ_DEVICE_IDENTIFIERS,
             OPSTR_ACCESS_MEDIA_LOCATION,
+            OPSTR_ACTIVATE_PLATFORM_VPN,
     };
 
     /**
@@ -1480,6 +1485,7 @@ public class AppOpsManager {
             "ACCESS_ACCESSIBILITY",
             "READ_DEVICE_IDENTIFIERS",
             "ACCESS_MEDIA_LOCATION",
+            "ACTIVATE_PLATFORM_VPN"
     };
 
     /**
@@ -1579,6 +1585,7 @@ public class AppOpsManager {
             null, // no permission for OP_ACCESS_ACCESSIBILITY
             null, // no direct permission for OP_READ_DEVICE_IDENTIFIERS
             Manifest.permission.ACCESS_MEDIA_LOCATION,
+            null, // no permission for OP_ACTIVATE_PLATFORM_VPN
     };
 
     /**
@@ -1678,6 +1685,7 @@ public class AppOpsManager {
             null, // ACCESS_ACCESSIBILITY
             null, // READ_DEVICE_IDENTIFIERS
             null, // ACCESS_MEDIA_LOCATION
+            null, // ACTIVATE_PLATFORM_VPN
     };
 
     /**
@@ -1776,6 +1784,7 @@ public class AppOpsManager {
             false, // ACCESS_ACCESSIBILITY
             false, // READ_DEVICE_IDENTIFIERS
             false, // ACCESS_MEDIA_LOCATION
+            false, // ACTIVATE_PLATFORM_VPN
     };
 
     /**
@@ -1873,6 +1882,7 @@ public class AppOpsManager {
             AppOpsManager.MODE_ALLOWED, // ACCESS_ACCESSIBILITY
             AppOpsManager.MODE_ERRORED, // READ_DEVICE_IDENTIFIERS
             AppOpsManager.MODE_ALLOWED, // ALLOW_MEDIA_LOCATION
+            AppOpsManager.MODE_IGNORED, // ACTIVATE_PLATFORM_VPN
     };
 
     /**
@@ -1974,6 +1984,7 @@ public class AppOpsManager {
             false, // ACCESS_ACCESSIBILITY
             false, // READ_DEVICE_IDENTIFIERS
             false, // ACCESS_MEDIA_LOCATION
+            false, // ACTIVATE_PLATFORM_VPN
     };
 
     /**
