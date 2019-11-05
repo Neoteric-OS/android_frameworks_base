@@ -4464,6 +4464,51 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     /**
+     * Stores the given VPN profile based on the provisioning package name.
+     *
+     * <p>This is designed to serve the VpnManager only; settings-based VPN profiles are managed
+     * exclusively by the Settings app, and passed into the platform at startup time.
+     *
+     * @hide
+     */
+    @Override
+    public boolean provisionVpnProfile(VpnProfile profile, String packageName) {
+        int user = UserHandle.getUserId(Binder.getCallingUid());
+        synchronized (mVpns) {
+            throwIfLockdownEnabled();
+            return mVpns.get(user).provisionVpnProfile(packageName, profile, mKeyStore);
+        }
+    }
+
+    /**
+     * Starts the VPN based on the stored profile for the given package
+     *
+     * @hide
+     */
+    @Override
+    public void startVpnProfile(String packageName) {
+        int user = UserHandle.getUserId(Binder.getCallingUid());
+        synchronized (mVpns) {
+            throwIfLockdownEnabled();
+            mVpns.get(user).startVpnProfile(packageName, mKeyStore);
+        }
+    }
+
+    /**
+     * Stops the Platform VPN if the provided package is running one.
+     *
+     * @hide
+     */
+    @Override
+    public void stopVpnProfile(String packageName) {
+        int user = UserHandle.getUserId(Binder.getCallingUid());
+        synchronized (mVpns) {
+            throwIfLockdownEnabled();
+            mVpns.get(user).stopVpnProfile(packageName);
+        }
+    }
+
+    /**
      * Start legacy VPN, controlling native daemons as needed. Creates a
      * secondary thread to perform connection work, returning quickly.
      */

@@ -130,6 +130,12 @@ interface IConnectivityManager
 
     ParcelFileDescriptor establishVpn(in VpnConfig config);
 
+    boolean provisionVpnProfile(in VpnProfile profile, String packageName);
+
+    void startVpnProfile(String packageName);
+
+    void stopVpnProfile(String packageName);
+
     VpnConfig getVpnConfig(int userId);
 
     @UnsupportedAppUsage
