@@ -4464,6 +4464,74 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     /**
+     * Stores the given VPN profile based on the provisioning package name.
+     *
+     * <p>If there is already a VPN profile stored for the provisioning package, this call will
+     * overwrite the profile.
+     *
+     * <p>This is designed to serve the VpnManager only; settings-based VPN profiles are managed
+     * exclusively by the Settings app, and passed into the platform at startup time.
+     *
+     * @return {@code true} user consent has already been granted, {@code false} otherwise.
+     * @hide
+     */
+    @Override
+    public boolean provisionVpnProfile(@NonNull VpnProfile profile, @NonNull String packageName) {
+        final int user = UserHandle.getUserId(Binder.getCallingUid());
+        synchronized (mVpns) {
+            throwIfLockdownEnabled();
+            return mVpns.get(user).provisionVpnProfile(packageName, profile, mKeyStore);
+        }
+    }
+
+    /**
+     * Deletes the stored VPN profile for the provisioning package
+     *
+     * <p>If there are no profiles for the given package, this method will silently succeed.
+     *
+     * <p>This is designed to serve the VpnManager only; settings-based VPN profiles are managed
+     * exclusively by the Settings app, and passed into the platform at startup time.
+     *
+     * @hide
+     */
+    @Override
+    public void deleteVpnProfile(@NonNull String packageName) {
+        final int user = UserHandle.getUserId(Binder.getCallingUid());
+        synchronized (mVpns) {
+            throwIfLockdownEnabled();
+            mVpns.get(user).deleteVpnProfile(packageName, mKeyStore);
+        }
+    }
+
+    /**
+     * Starts the VPN based on the stored profile for the given package
+     *
+     * @hide
+     */
+    @Override
+    public void startVpnProfile(@NonNull String packageName) {
+        final int user = UserHandle.getUserId(Binder.getCallingUid());
+        synchronized (mVpns) {
+            throwIfLockdownEnabled();
+            mVpns.get(user).startVpnProfile(packageName, mKeyStore);
+        }
+    }
+
+    /**
+     * Stops the Platform VPN if the provided package is running one.
+     *
+     * @hide
+     */
+    @Override
+    public void stopVpnProfile(@NonNull String packageName) {
+        final int user = UserHandle.getUserId(Binder.getCallingUid());
+        synchronized (mVpns) {
+            throwIfLockdownEnabled();
+            mVpns.get(user).stopVpnProfile(packageName);
+        }
+    }
+
+    /**
      * Start legacy VPN, controlling native daemons as needed. Creates a
      * secondary thread to perform connection work, returning quickly.
      */
