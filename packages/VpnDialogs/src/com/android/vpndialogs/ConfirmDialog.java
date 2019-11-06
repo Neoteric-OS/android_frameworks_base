@@ -18,11 +18,13 @@ package com.android.vpndialogs;
 
 import static android.view.WindowManager.LayoutParams.SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS;
 
+import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.IConnectivityManager;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -54,7 +56,10 @@ public class ConfirmDialog extends AlertActivity
         mService = IConnectivityManager.Stub.asInterface(
                 ServiceManager.getService(Context.CONNECTIVITY_SERVICE));
 
-        if (prepareVpn()) {
+        // Result OK will be directly returned if and only if the prepare succeeded and the caller
+        // package has already had the user consent. Otherwise, the dialog will be launched to help
+        // the caller package to get the user consent.
+        if (isVpnUserPreConsented(mPackage) && prepareVpn()) {
             setResult(RESULT_OK);
             finish();
             return;
@@ -110,6 +115,14 @@ public class ConfirmDialog extends AlertActivity
         } catch (PackageManager.NameNotFoundException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    private boolean isVpnUserPreConsented(String packageName) {
+        AppOpsManager appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
+
+        // Verify that the caller matches the given package and has permission to activate VPNs.
+        return appOps.noteOpNoThrow(AppOpsManager.OP_ACTIVATE_VPN, Binder.getCallingUid(),
+            packageName) == AppOpsManager.MODE_ALLOWED;
     }
 
     @Override
