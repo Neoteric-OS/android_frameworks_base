@@ -29231,7 +29231,7 @@ package android.net {
 
   public class VpnManager {
     method public void deleteVpnProfile();
-    method @Nullable public android.content.Intent provisionVpn(@NonNull android.net.PlatformVpnProfile);
+    method @Nullable public android.content.Intent provisionVpn(@NonNull android.net.PlatformVpnProfile) throws java.io.IOException;
     method public void startVpn();
     method public void stopVpn();
   }
