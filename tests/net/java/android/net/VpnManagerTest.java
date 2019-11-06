@@ -16,7 +16,12 @@
 
 package android.net;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import android.test.mock.MockContext;
 
@@ -31,13 +36,15 @@ import org.junit.runner.RunWith;
 @SmallTest
 @RunWith(AndroidJUnit4.class)
 public class VpnManagerTest {
+    private static final String PKG_NAME = "fooPackage";
+
     private IConnectivityManager mMockCs;
     private VpnManager mVpnManager;
     private MockContext mMockContext =
             new MockContext() {
                 @Override
                 public String getOpPackageName() {
-                    return "fooPackage";
+                    return PKG_NAME;
                 }
             };
 
@@ -48,26 +55,34 @@ public class VpnManagerTest {
     }
 
     @Test
-    public void testProvisionVpn() throws Exception {
-        try {
-            mVpnManager.provisionVpn(mMockContext, mock(VpnProfile.class));
-        } catch (UnsupportedOperationException expected) {
-        }
+    public void testProvisionVpnWithPreconsent() throws Exception {
+        VpnProfile mockProfile = mock(VpnProfile.class);
+        when(mMockCs.provisionVpnProfile(eq(mockProfile), eq(PKG_NAME))).thenReturn(true);
+
+        assertNull(mVpnManager.provisionVpn(mMockContext, mockProfile));
+        verify(mMockCs).provisionVpnProfile(eq(mockProfile), eq(PKG_NAME));
+    }
+
+    @Test
+    public void testProvisionVpnNeedsConsent() throws Exception {
+        VpnProfile mockProfile = mock(VpnProfile.class);
+        when(mMockCs.provisionVpnProfile(eq(mockProfile), eq(PKG_NAME))).thenReturn(false);
+
+        assertNotNull(mVpnManager.provisionVpn(mMockContext, mockProfile));
+        verify(mMockCs).provisionVpnProfile(eq(mockProfile), eq(PKG_NAME));
     }
 
     @Test
     public void testStartVpn() throws Exception {
-        try {
-            mVpnManager.startVpn();
-        } catch (UnsupportedOperationException expected) {
-        }
+        mVpnManager.startVpn();
+
+        verify(mMockCs).startVpnProfile(eq(PKG_NAME));
     }
 
     @Test
     public void testStopVpn() throws Exception {
-        try {
-            mVpnManager.stopVpn();
-        } catch (UnsupportedOperationException expected) {
-        }
+        mVpnManager.stopVpn();
+
+        verify(mMockCs).stopVpnProfile(eq(PKG_NAME));
     }
 }

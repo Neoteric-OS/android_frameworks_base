@@ -20,8 +20,11 @@ import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.os.RemoteException;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;
@@ -61,6 +64,15 @@ public class VpnManager {
         }
     }
 
+    static Intent getIntentForConfirmation() {
+        Intent intent = new Intent();
+        ComponentName componentName = ComponentName.unflattenFromString(
+                Resources.getSystem().getString(
+                        com.android.internal.R.string.config_customVpnConfirmDialogComponent));
+        intent.setClassName(componentName.getPackageName(), componentName.getClassName());
+        return intent;
+    }
+
     /** @hide */
     public VpnManager(@NonNull Context ctx, @NonNull IConnectivityManager service) {
         mContext = checkNotNull(ctx, "missing Context");
@@ -76,7 +88,14 @@ public class VpnManager {
      */
     @Nullable
     public Intent provisionVpn(@NonNull Context ctx, @Nullable VpnProfile profile) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            if (mService.provisionVpnProfile(profile, mContext.getOpPackageName())) {
+                return null;
+            }
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+        return getIntentForConfirmation();
     }
 
     /**
@@ -86,11 +105,19 @@ public class VpnManager {
      *     prevent this VPN from being setup.
      */
     public void startVpn() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            mService.startVpnProfile(mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /** Tears down the VPN provided by this package (if any) */
     public void stopVpn() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            mService.stopVpnProfile(mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 }
