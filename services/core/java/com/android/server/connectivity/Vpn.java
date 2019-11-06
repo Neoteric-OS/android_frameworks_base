@@ -79,6 +79,8 @@ import android.os.UserManager;
 import android.provider.Settings;
 import android.security.Credentials;
 import android.security.KeyStore;
+import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
@@ -687,14 +689,15 @@ public class Vpn {
             // Package is not the same or old package was reinstalled.
             if (!isCurrentPreparedPackage(oldPackage)) {
                 // The package doesn't match. We return false (to obtain user consent) unless the
-                // user has already consented to that VPN package.
-                if (!oldPackage.equals(VpnConfig.LEGACY_VPN) && isVpnUserPreConsented(oldPackage)) {
+                // user has already consented to that VPN package or user's consented is not
+                // required.
+                if (!oldPackage.equals(VpnConfig.LEGACY_VPN) && hasVpnPrivilege(oldPackage)) {
                     prepareInternal(oldPackage);
                     return true;
                 }
                 return false;
             } else if (!oldPackage.equals(VpnConfig.LEGACY_VPN)
-                    && !isVpnUserPreConsented(oldPackage)) {
+                    && !hasVpnPrivilege(oldPackage)) {
                 // Currently prepared VPN is revoked, so unprepare it and return false.
                 prepareInternal(VpnConfig.LEGACY_VPN);
                 return false;
@@ -803,6 +806,26 @@ public class Vpn {
             Binder.restoreCallingIdentity(token);
         }
         return false;
+    }
+
+    private boolean hasVpnPrivilege(String packageName) {
+        // Carrier VPN without user consent cannot be prepared / established if there is prepared /
+        // running / upcoming user VPN since we don't want carrier VPN affect the behavior of user
+        // VPN. This means that, if there is user VPN information stored or the legacy VPN runner
+        // created, carrier VPN cannot be prepared / established, even the user VPN currently is not
+        // running.
+        boolean hasRunningOrComingVpn =
+                (!isNullOrLegacyVpn(mPackage) && !mPackage.equals(packageName))
+                        || mLegacyVpnRunner != null;
+        return (isDefaultCarrierPrivilegePackage(packageName) && !hasRunningOrComingVpn)
+                || isVpnUserPreConsented(packageName);
+    }
+
+    private boolean isDefaultCarrierPrivilegePackage(String packageName) {
+        int subId = SubscriptionManager.getDefaultDataSubscriptionId();
+        TelephonyManager tm = TelephonyManager.from(mContext).createForSubscriptionId(subId);
+        return tm.checkCarrierPrivilegesForPackage(packageName)
+                == TelephonyManager.CARRIER_PRIVILEGE_STATUS_HAS_ACCESS;
     }
 
     private boolean isVpnUserPreConsented(String packageName) {
@@ -1010,8 +1033,9 @@ public class Vpn {
         if (Binder.getCallingUid() != mOwnerUID) {
             return null;
         }
-        // Check to ensure consent hasn't been revoked since we were prepared.
-        if (!isVpnUserPreConsented(mPackage)) {
+        // Check to ensure consent hasn't been revoked and default data provider hasn't been changed
+        // since we were prepared.
+        if (!hasVpnPrivilege(mPackage)) {
             return null;
         }
         // Check if the service is properly declared.
@@ -1126,7 +1150,8 @@ public class Vpn {
         return tun;
     }
 
-    private boolean isRunningLocked() {
+    @VisibleForTesting
+    protected boolean isRunningLocked() {
         return mNetworkAgent != null && mInterface != null;
     }
 

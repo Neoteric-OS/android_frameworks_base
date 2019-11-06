@@ -28,10 +28,10 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
-import static android.net.RouteInfo.RTN_UNREACHABLE;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.AdditionalMatchers.aryEq;
 import static org.mockito.ArgumentMatchers.any;
@@ -58,21 +58,19 @@ import android.content.pm.ServiceInfo;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
-import android.net.IpPrefix;
-import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo.DetailedState;
-import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.VpnService;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.INetworkManagementService;
 import android.os.Looper;
-import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 
@@ -90,9 +88,6 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.net.Inet4Address;
-import java.net.Inet6Address;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -148,6 +143,7 @@ public class VpnTest {
     @Mock private NotificationManager mNotificationManager;
     @Mock private Vpn.SystemServices mSystemServices;
     @Mock private ConnectivityManager mConnectivityManager;
+    @Mock private TelephonyManager mTelephonyManager;
 
     @Before
     public void setUp() throws Exception {
@@ -163,6 +159,10 @@ public class VpnTest {
                 .thenReturn(mNotificationManager);
         when(mContext.getSystemService(eq(Context.CONNECTIVITY_SERVICE)))
                 .thenReturn(mConnectivityManager);
+        when(mContext.getSystemService(eq(Context.TELEPHONY_SERVICE)))
+                .thenReturn(mTelephonyManager);
+        int subId = SubscriptionManager.getDefaultSubscriptionId();
+        when(mTelephonyManager.createForSubscriptionId(subId)).thenReturn(mTelephonyManager);
         when(mContext.getString(R.string.config_customVpnAlwaysOnDisconnectedDialogComponent))
                 .thenReturn(Resources.getSystem().getString(
                         R.string.config_customVpnAlwaysOnDisconnectedDialogComponent));
@@ -472,6 +472,42 @@ public class VpnTest {
         vpn.prepare(null, VpnConfig.LEGACY_VPN);
         order.verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(exceptPkg0));
         order.verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(entireUser));
+    }
+
+    @Test
+    public void testStartCarrierVpnWithoutCarrierPrivilege() {
+        final Vpn vpn = createVpn(primaryUser.id);
+        when(mAppOps.noteOpNoThrow(anyInt(), anyInt(), anyString()))
+                .thenReturn(AppOpsManager.MODE_ERRORED);
+        when(mTelephonyManager.checkCarrierPrivilegesForPackage(eq(PKGS[0])))
+                .thenReturn(TelephonyManager.CARRIER_PRIVILEGE_STATUS_NO_ACCESS);
+
+        assertFalse(vpn.prepare(PKGS[0], null /* newPackage */));
+        assertNull(vpn.getNetworkInfo().getReason());
+    }
+
+    @Test
+    public void testStartCarrierVpnWithCarrierPrivilege() {
+        final Vpn vpn = createVpn(primaryUser.id);
+        when(mAppOps.noteOpNoThrow(anyInt(), anyInt(), anyString()))
+                .thenReturn(AppOpsManager.MODE_ERRORED);
+        when(mTelephonyManager.checkCarrierPrivilegesForPackage(eq(PKGS[0])))
+                .thenReturn(TelephonyManager.CARRIER_PRIVILEGE_STATUS_HAS_ACCESS);
+
+        assertTrue(vpn.prepare(PKGS[0], null));
+        assertEquals("prepare", vpn.getNetworkInfo().getReason());
+    }
+
+    @Test
+    public void testStartCarrierVpnWithPreparedUserVpn() {
+        final Vpn vpn = createVpn(primaryUser.id);
+        when(mAppOps.noteOpNoThrow(anyInt(), anyInt(), anyString()))
+                .thenReturn(AppOpsManager.MODE_ERRORED);
+        when(mTelephonyManager.checkCarrierPrivilegesForPackage(eq(PKGS[0])))
+                .thenReturn(TelephonyManager.CARRIER_PRIVILEGE_STATUS_HAS_ACCESS);
+        vpn.prepare(PKGS[0], null);
+
+        assertFalse(vpn.prepare(PKGS[1], null));
     }
 
     @Test
