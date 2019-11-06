@@ -958,6 +958,16 @@ package android.app.backup {
 
 }
 
+package android.app.compat {
+
+  public final class CompatChangesFramework {
+    method public static boolean isChangeEnabled(long);
+    method public static boolean isChangeEnabled(long, String, int) throws android.os.RemoteException;
+    method public static boolean isChangeEnabled(long, int) throws android.os.RemoteException;
+  }
+
+}
+
 package android.app.contentsuggestions {
 
   public final class ClassificationsRequest implements android.os.Parcelable {
