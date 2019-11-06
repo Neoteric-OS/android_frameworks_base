@@ -969,6 +969,21 @@ package android.app.backup {
 
 }
 
+package android.app.compat {
+
+  public class CompatChanges {
+    ctor public CompatChanges();
+    method public boolean isChangeEnabled(long);
+    method public boolean isChangeEnabled(long, @NonNull String, int) throws android.app.compat.CompatChangesException;
+    method public boolean isChangeEnabled(long, int) throws android.app.compat.CompatChangesException;
+  }
+
+  public final class CompatChangesException extends java.lang.Exception {
+    ctor public CompatChangesException(@Nullable String, Throwable);
+  }
+
+}
+
 package android.app.contentsuggestions {
 
   public final class ClassificationsRequest implements android.os.Parcelable {
