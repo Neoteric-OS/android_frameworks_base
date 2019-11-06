@@ -16,12 +16,20 @@
 
 package android.net;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import android.test.mock.MockContext;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
+
+import com.android.internal.net.VpnProfile;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +39,12 @@ import org.junit.runner.RunWith;
 @SmallTest
 @RunWith(AndroidJUnit4.class)
 public class VpnManagerTest {
-    private static final String VPN_PROFILE_KEY = "KEY";
+    private static final String PKG_NAME = "fooPackage";
+
+    private static final String SESSION_NAME_STRING = "testSession";
+    private static final String SERVER_ADDR_STRING = "1.2.3.4";
+    private static final String IDENTITY_STRING = "Identity";
+    private static final byte[] PSK_BYTES = "preSharedKey".getBytes();
 
     private IConnectivityManager mMockCs;
     private VpnManager mVpnManager;
@@ -39,7 +52,7 @@ public class VpnManagerTest {
             new MockContext() {
                 @Override
                 public String getOpPackageName() {
-                    return "fooPackage";
+                    return PKG_NAME;
                 }
             };
 
@@ -50,34 +63,48 @@ public class VpnManagerTest {
     }
 
     @Test
-    public void testProvisionVpn() throws Exception {
-        try {
-            mVpnManager.provisionVpn(mock(PlatformVpnProfile.class));
-        } catch (UnsupportedOperationException expected) {
-        }
+    public void testProvisionVpnPreconsented() throws Exception {
+        PlatformVpnProfile profile = getPlatformVpnProfile();
+        when(mMockCs.provisionVpnProfile(any(VpnProfile.class), eq(PKG_NAME))).thenReturn(true);
+
+        assertNull(mVpnManager.provisionVpn(profile));
+        verify(mMockCs).provisionVpnProfile(eq(profile.toVpnProfile()), eq(PKG_NAME));
+    }
+
+    @Test
+    public void testProvisionVpnNeedsConsent() throws Exception {
+        PlatformVpnProfile profile = getPlatformVpnProfile();
+        when(mMockCs.provisionVpnProfile(any(VpnProfile.class), eq(PKG_NAME))).thenReturn(false);
+
+        assertNotNull(mVpnManager.provisionVpn(profile));
+        verify(mMockCs).provisionVpnProfile(eq(profile.toVpnProfile()), eq(PKG_NAME));
     }
 
     @Test
     public void testDeleteVpnProfile() throws Exception {
-        try {
-            mVpnManager.deleteVpnProfile();
-        } catch (UnsupportedOperationException expected) {
-        }
+        mVpnManager.deleteVpnProfile();
+        verify(mMockCs).deleteVpnProfile(eq(PKG_NAME));
     }
 
     @Test
     public void testStartVpn() throws Exception {
-        try {
-            mVpnManager.startVpn();
-        } catch (UnsupportedOperationException expected) {
-        }
+        mVpnManager.startVpn();
+        verify(mMockCs).startVpnProfile(eq(PKG_NAME));
     }
 
     @Test
     public void testStopVpn() throws Exception {
-        try {
-            mVpnManager.stopVpn();
-        } catch (UnsupportedOperationException expected) {
-        }
+        mVpnManager.stopVpn();
+        verify(mMockCs).stopVpnProfile(eq(PKG_NAME));
+    }
+
+    private Ikev2VpnProfile getPlatformVpnProfile() throws Exception {
+        return new Ikev2VpnProfile.Builder(SERVER_ADDR_STRING, IDENTITY_STRING)
+                .setSessionName(SESSION_NAME_STRING)
+                .setBypassable(true)
+                .setMaxMtu(1300)
+                .setMetered(true)
+                .setAuthPsk(PSK_BYTES)
+                .build();
     }
 }
