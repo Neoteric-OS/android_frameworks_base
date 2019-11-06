@@ -333,10 +333,8 @@ public class PhoneStateListener {
      * Listen for call disconnect causes which contains {@link DisconnectCause} and
      * {@link PreciseDisconnectCause}.
      *
-     * @hide
      */
     @RequiresPermission((android.Manifest.permission.READ_PRECISE_PHONE_STATE))
-    @SystemApi
     public static final int LISTEN_CALL_DISCONNECT_CAUSES                  = 0x02000000;
 
     /**
@@ -356,10 +354,8 @@ public class PhoneStateListener {
      * {@link android.telephony.ims.ImsReasonInfo}
      *
      * @see #onImsCallDisconnectCauseChanged(ImsReasonInfo)
-     * @hide
      */
     @RequiresPermission((android.Manifest.permission.READ_PRECISE_PHONE_STATE))
-    @SystemApi
     public static final int LISTEN_IMS_CALL_DISCONNECT_CAUSES              = 0x08000000;
 
     /**
@@ -717,10 +713,8 @@ public class PhoneStateListener {
      *
      * @param imsReasonInfo {@link ImsReasonInfo} contains details on why IMS call failed.
      *
-     * @hide
      */
     @RequiresPermission((android.Manifest.permission.READ_PRECISE_PHONE_STATE))
-    @SystemApi
     public void onImsCallDisconnectCauseChanged(@NonNull ImsReasonInfo imsReasonInfo) {
         // default implementation empty
     }
