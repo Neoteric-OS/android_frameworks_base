@@ -43,9 +43,19 @@ public class ConfirmDialog extends AlertActivity
         implements DialogInterface.OnClickListener, ImageGetter {
     private static final String TAG = "VpnConfirm";
 
+    private final boolean mIsPlatformVpn;
+
     private String mPackage;
 
     private IConnectivityManager mService;
+
+    public ConfirmDialog() {
+        mIsPlatformVpn = false;
+    }
+
+    public ConfirmDialog(boolean isPlatformVpn) {
+        mIsPlatformVpn = isPlatformVpn;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +148,8 @@ public class ConfirmDialog extends AlertActivity
             if (mService.prepareVpn(null, mPackage, UserHandle.myUserId())) {
                 // Authorize this app to initiate VPN connections in the future without user
                 // intervention.
-                mService.setVpnPackageAuthorization(mPackage, UserHandle.myUserId(), true);
+                mService.setVpnPackageAuthorization(
+                        mPackage, UserHandle.myUserId(), true, mIsPlatformVpn);
                 setResult(RESULT_OK);
             }
         } catch (Exception e) {

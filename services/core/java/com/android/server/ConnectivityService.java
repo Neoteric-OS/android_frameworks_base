@@ -4252,26 +4252,29 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     /**
-     * Set whether the VPN package has the ability to launch VPNs without user intervention.
-     * This method is used by system-privileged apps.
-     * VPN permissions are checked in the {@link Vpn} class. If the caller is not {@code userId},
-     * {@link android.Manifest.permission.INTERACT_ACROSS_USERS_FULL} permission is required.
+     * Set whether the VPN package has the ability to launch VPNs without user intervention. This
+     * method is used by system-privileged apps. VPN permissions are checked in the {@link Vpn}
+     * class. If the caller is not {@code userId}, {@link
+     * android.Manifest.permission.INTERACT_ACROSS_USERS_FULL} permission is required.
      *
      * @param packageName The package for which authorization state should change.
      * @param userId User for whom {@code packageName} is installed.
      * @param authorized {@code true} if this app should be able to start a VPN connection without
-     *                   explicit user approval, {@code false} if not.
-     *
+     *     explicit user approval, {@code false} if not.
+     * @param isPlatformVpn {@code true} if this app is using Platform VPN profiles. This will in
+     *     the app getting the OP_ACTIVATE_PLATFORM_VPN instead of OP_ACTIVATE_VPN as used for
+     *     VpnService.
      * @hide
      */
     @Override
-    public void setVpnPackageAuthorization(String packageName, int userId, boolean authorized) {
+    public void setVpnPackageAuthorization(
+            String packageName, int userId, boolean authorized, boolean isPlatformVpn) {
         enforceCrossUserPermission(userId);
 
         synchronized (mVpns) {
             Vpn vpn = mVpns.get(userId);
             if (vpn != null) {
-                vpn.setPackageAuthorization(packageName, authorized);
+                vpn.setPackageAuthorization(packageName, authorized, isPlatformVpn);
             }
         }
     }
@@ -7065,7 +7068,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 final String alwaysOnPackage = getAlwaysOnVpnPackage(userId);
                 if (alwaysOnPackage != null) {
                     setAlwaysOnVpnPackage(userId, null, false, null);
-                    setVpnPackageAuthorization(alwaysOnPackage, userId, false);
+                    setVpnPackageAuthorization(alwaysOnPackage, userId, false, false);
                 }
 
                 // Turn Always-on VPN off
@@ -7088,7 +7091,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     } else {
                         // Prevent this app (packagename = vpnConfig.user) from initiating
                         // VPN connections in the future without user intervention.
-                        setVpnPackageAuthorization(vpnConfig.user, userId, false);
+                        setVpnPackageAuthorization(vpnConfig.user, userId, false, false);
 
                         prepareVpn(null, VpnConfig.LEGACY_VPN, userId);
                     }

@@ -54,7 +54,7 @@ public class VpnManager {
         final Intent intent = new Intent();
         final ComponentName componentName = ComponentName.unflattenFromString(
                 Resources.getSystem().getString(
-                        com.android.internal.R.string.config_customVpnConfirmDialogComponent));
+                        com.android.internal.R.string.config_platformVpnConfirmDialogComponent));
         intent.setComponent(componentName);
         return intent;
     }
