@@ -20,8 +20,11 @@ import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.os.RemoteException;
 
 import com.android.internal.net.VpnProfile;
 
@@ -63,6 +66,15 @@ public class VpnManager {
         }
     }
 
+    static Intent getIntentForConfirmation() {
+        Intent intent = new Intent();
+        ComponentName componentName = ComponentName.unflattenFromString(
+                Resources.getSystem().getString(
+                        com.android.internal.R.string.config_customVpnConfirmDialogComponent));
+        intent.setClassName(componentName.getPackageName(), componentName.getClassName());
+        return intent;
+    }
+
     /** @hide */
     public VpnManager(@NonNull Context ctx, @NonNull IConnectivityManager service) {
         mContext = checkNotNull(ctx, "missing Context");
@@ -75,11 +87,20 @@ public class VpnManager {
      * @returns an intent to request user consent if needed (null otherwise).
      * @param profile the VpnProfile provided by this package. Will override any previous VpnProfile
      *     stored for this package.
+     * @returns an Intent requesting user consent to start the VPN, or null if consent is not
+     *     required based on privileges or previous user consent.
      * @hide
      */
     @Nullable
     public Intent provisionVpn(@NonNull VpnProfile profile) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            if (mService.provisionVpnProfile(profile, mContext.getOpPackageName())) {
+                return null;
+            }
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+        return getIntentForConfirmation();
     }
 
     /**
@@ -90,7 +111,11 @@ public class VpnManager {
      * @see Ikev2VpnProfileBuilder
      */
     public void deleteVpnProfile() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            mService.deleteVpnProfile(mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -100,11 +125,19 @@ public class VpnManager {
      *     setup, or if user consent has not been granted
      */
     public void startVpn() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            mService.startVpnProfile(mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /** Tears down the VPN provided by this package (if any) */
     public void stopVpn() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            mService.stopVpnProfile(mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 }

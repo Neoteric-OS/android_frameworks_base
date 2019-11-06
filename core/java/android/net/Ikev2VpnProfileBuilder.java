@@ -21,6 +21,7 @@ import static com.android.internal.util.Preconditions.checkNotNull;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
+import android.content.Intent;
 import android.security.Credentials;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -286,12 +287,14 @@ public final class Ikev2VpnProfileBuilder {
     /**
      * Validates, builds and provisions the VpnProfile.
      *
+     * @returns an Intent requesting user consent to start the VPN, or null otherwise
      * @throws GeneralSecurityException if any of the required keys or values were invalid.
      */
-    public void build() throws GeneralSecurityException {
+    @NonNull
+    public Intent build() throws GeneralSecurityException {
         mProfile.validateIkev2Ipsec();
 
         final VpnProfile result = new VpnProfile(mProfile);
-        // TODO: Add call to provision this profile
+        return mContext.getSystemService(VpnManager.class).provisionVpn(result);
     }
 }

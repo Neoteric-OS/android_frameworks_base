@@ -21,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 
+import android.content.Context;
 import android.security.Credentials;
 import android.test.mock.MockContext;
 
@@ -62,6 +63,16 @@ public class Ikev2VpnProfileBuilderTest {
                 @Override
                 public String getOpPackageName() {
                     return "fooPackage";
+                }
+
+                @Override
+                public Object getSystemService(String serviceName) {
+                    return mock(VpnManager.class);
+                }
+
+                @Override
+                public String getSystemServiceName(Class<?> serviceClass) {
+                    return Context.VPN_MANAGEMENT_SERVICE;
                 }
             };
     private X509Certificate mUserCert;

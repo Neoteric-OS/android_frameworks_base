@@ -28597,7 +28597,7 @@ package android.net {
   public final class Ikev2VpnProfileBuilder {
     ctor public Ikev2VpnProfileBuilder(@NonNull android.content.Context, @NonNull String, @NonNull String);
     ctor public Ikev2VpnProfileBuilder(@NonNull android.content.Context, @NonNull java.net.InetAddress, @NonNull String);
-    method public void build() throws java.security.GeneralSecurityException;
+    method @NonNull public android.content.Intent build() throws java.security.GeneralSecurityException;
     method @NonNull public android.net.Ikev2VpnProfileBuilder setAllowedAlgorithms(@NonNull java.util.List<java.lang.String>);
     method @NonNull public android.net.Ikev2VpnProfileBuilder setAuthDigitalSignature(@NonNull java.security.cert.X509Certificate, @NonNull java.security.PrivateKey, @NonNull java.security.cert.X509Certificate) throws java.security.cert.CertificateEncodingException, java.io.IOException;
     method @NonNull public android.net.Ikev2VpnProfileBuilder setAuthPsk(@NonNull String);
