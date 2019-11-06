@@ -138,11 +138,16 @@ public class ConfirmDialog extends AlertActivity
             if (mService.prepareVpn(null, mPackage, UserHandle.myUserId())) {
                 // Authorize this app to initiate VPN connections in the future without user
                 // intervention.
-                mService.setVpnPackageAuthorization(mPackage, UserHandle.myUserId(), true);
+                mService.setVpnPackageAuthorization(
+                        mPackage, UserHandle.myUserId(), true, isPlatformVpn());
                 setResult(RESULT_OK);
             }
         } catch (Exception e) {
             Log.e(TAG, "onClick", e);
         }
+    }
+
+    protected boolean isPlatformVpn() {
+        return false;
     }
 }

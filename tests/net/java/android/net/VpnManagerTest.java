@@ -16,6 +16,7 @@
 
 package android.net;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
@@ -24,6 +25,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.test.mock.MockContext;
 
 import androidx.test.filters.SmallTest;
@@ -76,7 +79,13 @@ public class VpnManagerTest {
         PlatformVpnProfile profile = getPlatformVpnProfile();
         when(mMockCs.provisionVpnProfile(any(VpnProfile.class), eq(PKG_NAME))).thenReturn(false);
 
-        assertNotNull(mVpnManager.provisionVpn(profile));
+        Intent intent = mVpnManager.provisionVpn(profile);
+        assertNotNull(intent);
+
+        ComponentName expectedComponentName =
+                ComponentName.unflattenFromString(
+                        "com.android.vpndialogs/com.android.vpndialogs.PlatformVpnConfirmDialog");
+        assertEquals(expectedComponentName, intent.getComponent());
         verify(mMockCs).provisionVpnProfile(eq(profile.toVpnProfile()), eq(PKG_NAME));
     }
 
