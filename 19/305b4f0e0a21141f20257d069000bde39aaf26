@@ -1,0 +1,11 @@
+Autosubmit+1: satayev <satayev@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Michael Wright <michaelwr@google.com>
+Code-Review+1: Andrei-Valentin Onea <andreionea@google.com>
+Code-Review+2: Nicolas Geoffray <ngeoffray@google.com>
+Code-Review+2: satayev <satayev@google.com>
+Submitted-by: satayev <satayev@google.com>
+Submitted-at: Wed, 06 Nov 2019 13:16:51 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1153639
+Project: platform/frameworks/base
+Branch: refs/heads/master
