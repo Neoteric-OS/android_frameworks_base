@@ -3,6 +3,10 @@ AcronymName: android.system.ErrnoException#rethrowAsIOException():
     
 
 
+ActionValue: android.telephony.ims.ImsReasonInfo#EXTRA_MSG_SERVICE_NOT_AUTHORIZED:
+    Inconsistent extra value; expected `android.telephony.ims.extra.MSG_SERVICE_NOT_AUTHORIZED`, was `Forbidden. Not Authorized for Service`
+
+
 BroadcastBehavior: android.app.AlarmManager#ACTION_NEXT_ALARM_CLOCK_CHANGED:
     
 BroadcastBehavior: android.app.admin.DevicePolicyManager#ACTION_APPLICATION_DELEGATION_SCOPES_CHANGED:
@@ -511,6 +515,12 @@ MissingNullability: android.icu.util.VersionInfo#UNICODE_12_0:
     
 MissingNullability: android.icu.util.VersionInfo#UNICODE_12_1:
     
+MissingNullability: android.telephony.ims.ImsReasonInfo#ImsReasonInfo(int, int, String) parameter #2:
+    Missing nullability on parameter `extraMessage` in method `ImsReasonInfo`
+MissingNullability: android.telephony.ims.ImsReasonInfo#getExtraMessage():
+    Missing nullability on method `getExtraMessage` return
+MissingNullability: android.telephony.ims.ImsReasonInfo#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `out` in method `writeToParcel`
 
 
 RequiresPermission: android.accounts.AccountManager#getAccountsByTypeAndFeatures(String, String[], android.accounts.AccountManagerCallback<android.accounts.Account[]>, android.os.Handler):

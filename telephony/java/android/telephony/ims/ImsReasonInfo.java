@@ -18,7 +18,6 @@ package android.telephony.ims;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
-import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -29,9 +28,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * This class enables an application to get details on why a method call failed.
  *
- * @hide
  */
-@SystemApi
 public final class ImsReasonInfo implements Parcelable {
 
     /**
