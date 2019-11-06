@@ -92,6 +92,24 @@ public class HwBlob {
      * @throws IndexOutOfBoundsException when offset is out of this HwBlob
      */
     public native final String getString(long offset);
+    /**
+     * @param offset offset to unmarshall a NativeHandle from
+     * @return the unmarshalled NativeHandle value
+     * @throws IndexOutOfBoundsException when offset is out of this HwBlob
+     */
+    public native final @Nullable NativeHandle getNativeHandle(long offset);
+
+    /**
+     * @param offset offset to unmarshall a HidlMemory from
+     * @return the unmarshalled HidlMemory value
+     * @throws IndexOutOfBoundsException when offset is out of this HwBlob
+     */
+    public final @NonNull HidlMemory getHidlMemory(long offset) {
+        NativeHandle handle = getNativeHandle(offset);
+        long size = getInt64(offset + 16);
+        String name = getString(offset + 24);
+        return new HidlMemory(name, size, handle, false);
+    }
 
     /**
      * Copy the blobs data starting from the given byte offset into the range, copying
@@ -310,6 +328,20 @@ public class HwBlob {
      *     this blob.
      */
     public native final void putBlob(long offset, HwBlob blob);
+
+    /**
+     * Writes a HidlMemory instance (without duplicating the underlying file descriptors) at an
+     * offset.
+     *
+     * @param offset location to write value
+     * @param mem a {@link HidlMemory} instance to write
+     * @throws IndexOutOfBoundsException when [offset, offset + sizeof(jobject)] is out of range
+     */
+    public final void putHidlMemory(long offset, @NonNull HidlMemory mem) {
+        putNativeHandle(offset, mem.getHandle());
+        putInt64(offset + 16, mem.getSize());
+        putString(offset + 24, mem.getName());
+    }
 
     /**
      * @return current handle of HwBlob for reference in a parcelled binder transaction

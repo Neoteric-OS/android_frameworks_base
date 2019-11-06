@@ -340,6 +340,18 @@ static jstring JHwBlob_native_getString(
     return env->NewStringUTF(s->c_str());
 }
 
+static jobject JHwBlob_native_getNativeHandle(JNIEnv* env,
+                                              jobject thiz,
+                                              jlong offset) {
+    sp<JHwBlob> blob = JHwBlob::GetNativeContext(env, thiz);
+
+    const hidl_handle& cppHandle =
+            *reinterpret_cast<hidl_handle*>(static_cast<uint8_t*>(blob->data())
+                    + offset);
+    return JNativeHandle::MakeJavaNativeHandleObj(env,
+                                                  cppHandle.getNativeHandle());
+}
+
 #define DEFINE_BLOB_ARRAY_COPIER(Suffix,Type,NewType)                          \
 static void JHwBlob_native_copyTo ## Suffix ## Array(                          \
         JNIEnv *env,                                                           \
@@ -593,6 +605,8 @@ static JNINativeMethod gMethods[] = {
     { "getFloat", "(J)F", (void *)JHwBlob_native_getFloat },
     { "getDouble", "(J)D", (void *)JHwBlob_native_getDouble },
     { "getString", "(J)Ljava/lang/String;", (void *)JHwBlob_native_getString },
+    { "getNativeHandle", "(J)L" PACKAGE_PATH "/NativeHandle;",
+        (void*)JHwBlob_native_getNativeHandle },
 
     { "copyToBoolArray", "(J[ZI)V", (void *)JHwBlob_native_copyToBoolArray },
     { "copyToInt8Array", "(J[BI)V", (void *)JHwBlob_native_copyToInt8Array },
