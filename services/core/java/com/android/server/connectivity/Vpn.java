@@ -24,6 +24,8 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
 import static android.net.RouteInfo.RTN_THROW;
 import static android.net.RouteInfo.RTN_UNREACHABLE;
 
+import static com.android.internal.util.Preconditions.checkNotNull;
+
 import android.Manifest;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -678,12 +680,6 @@ public class Vpn {
      * @return true if the operation succeeded.
      */
     public synchronized boolean prepare(String oldPackage, String newPackage) {
-        return prepare(oldPackage, newPackage, false);
-    }
-
-    /** Common prepare method for both VpnService and PlatformVpns. */
-    public synchronized boolean prepare(
-            String oldPackage, String newPackage, boolean isPlatformVpn) {
         if (oldPackage != null) {
             // Stop an existing always-on VPN from being dethroned by other apps.
             if (mAlwaysOn && !isCurrentPreparedPackage(oldPackage)) {
@@ -695,10 +691,7 @@ public class Vpn {
                 // The package doesn't match. We return false (to obtain user consent) unless the
                 // user has already consented to that VPN package.
                 if (!oldPackage.equals(VpnConfig.LEGACY_VPN) && isVpnUserPreConsented(oldPackage)) {
-                    // Platform VPNs will do prepareInternal together with the startup.
-                    if (!isPlatformVpn) {
                         prepareInternal(oldPackage);
-                    }
                     return true;
                 }
                 return false;
@@ -2253,16 +2246,13 @@ public class Vpn {
      */
     public synchronized boolean provisionVpnProfile(
             String packageName, VpnProfile profile, KeyStore keyStore) {
+        checkNotNull(packageName, "No package name provided");
+        checkNotNull(profile, "No profile provided");
+        checkNotNull(keyStore, "KeyStore missing");
+
         PackageManager pm = mContext.getPackageManager();
         if (getAppUid(packageName, mUserHandle) != Binder.getCallingUid()) {
             throw new SecurityException("Mismatched package and UID");
-        }
-
-        // If profile is null, delete the keystore entry
-        if (profile == null) {
-            keyStore.delete(
-                    Credentials.PLATFORM_VPN + packageName + profile.key, Process.SYSTEM_UID);
-            return true;
         }
 
         // Permissions checked during startVpnProfile()
@@ -2270,7 +2260,25 @@ public class Vpn {
                 Credentials.PLATFORM_VPN + packageName, profile.encode(), Process.SYSTEM_UID, 0);
 
         // Hook into VpnService prepare() flow.
-        return prepare(packageName, null, true);
+        return prepare(packageName, null);
+    }
+
+    /**
+     * Deletes an app-provisioned VPN profile
+     *
+     * @param packageName the package name of the app provisioning this profile
+     * @param keyStore the System keystore instance to save VPN profiles
+     */
+    public synchronized void deleteVpnProfile(String packageName, KeyStore keyStore) {
+        checkNotNull(packageName, "No package name provided");
+        checkNotNull(keyStore, "KeyStore missing");
+
+        PackageManager pm = mContext.getPackageManager();
+        if (getAppUid(packageName, mUserHandle) != Binder.getCallingUid()) {
+            throw new SecurityException("Mismatched package and UID");
+        }
+
+        keyStore.delete(Credentials.PLATFORM_VPN + packageName, Process.SYSTEM_UID);
     }
 
     /**
@@ -2280,6 +2288,9 @@ public class Vpn {
      * @param keyStore the System keystore instance to retrieve VPN profiles
      */
     public synchronized void startVpnProfile(String packageName, KeyStore keyStore) {
+        checkNotNull(packageName, "No package name provided");
+        checkNotNull(keyStore, "KeyStore missing");
+
         if (!isVpnProfilePreConsented(packageName)) {
             // Running a profile without user consent requires the CONTROL_VPN permission.
             enforceControlPermissionOrInternalCaller();
@@ -2297,6 +2308,8 @@ public class Vpn {
      * @param packageName the package name of the app provisioning this profile
      */
     public synchronized void stopVpnProfile(String packageName) {
+        checkNotNull(packageName, "No package name provided");
+
         // To stop the VPN profile, the package name must match the active VPN, and the caller must
         // be:
         // 1. The current prepared package, and have the OP_ACTIVATE_PLATFORM_VPN appop,

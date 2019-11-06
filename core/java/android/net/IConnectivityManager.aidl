@@ -132,6 +132,8 @@ interface IConnectivityManager
 
     boolean provisionVpnProfile(in VpnProfile profile, String packageName);
 
+    void deleteVpnProfile(String packageName);
+
     void startVpnProfile(String packageName);
 
     void stopVpnProfile(String packageName);
