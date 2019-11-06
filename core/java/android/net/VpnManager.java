@@ -18,6 +18,7 @@ package android.net;
 
 import static com.android.internal.util.Preconditions.checkNotNull;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.Activity;
@@ -30,6 +31,8 @@ import android.os.RemoteException;
 import com.android.internal.net.VpnProfile;
 
 import java.io.IOException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.security.GeneralSecurityException;
 
 /**
@@ -47,6 +50,16 @@ import java.security.GeneralSecurityException;
  * @see Ikev2VpnProfile
  */
 public class VpnManager {
+    /** VPN service type code @hide */
+    public static final int TYPE_VPN_SERVICE = 0;
+    /** Platform VPN type code @hide */
+    public static final int TYPE_PLATFORM_VPN = 1;
+
+    /** @hide */
+    @IntDef(value = {TYPE_VPN_SERVICE, TYPE_PLATFORM_VPN})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface VpnType {}
+
     @NonNull private final Context mContext;
     @NonNull private final IConnectivityManager mService;
 
@@ -54,7 +67,7 @@ public class VpnManager {
         final Intent intent = new Intent();
         final ComponentName componentName = ComponentName.unflattenFromString(
                 Resources.getSystem().getString(
-                        com.android.internal.R.string.config_customVpnConfirmDialogComponent));
+                        com.android.internal.R.string.config_platformVpnConfirmDialogComponent));
         intent.setComponent(componentName);
         return intent;
     }

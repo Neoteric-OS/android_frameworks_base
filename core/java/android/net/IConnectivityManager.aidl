@@ -115,7 +115,7 @@ interface IConnectivityManager
 
     boolean prepareVpn(String oldPackage, String newPackage, int userId);
 
-    void setVpnPackageAuthorization(String packageName, int userId, boolean authorized);
+    void setVpnPackageAuthorization(String packageName, int userId, boolean authorized, int vpnType);
 
     ParcelFileDescriptor establishVpn(in VpnConfig config);
 

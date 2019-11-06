@@ -62,6 +62,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo.DetailedState;
 import android.net.UidRange;
+import android.net.VpnManager;
 import android.net.VpnService;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -771,6 +772,63 @@ public class VpnTest {
                         eq(AppOpsManager.OP_ACTIVATE_PLATFORM_VPN),
                         eq(Process.myUid()),
                         eq(TEST_VPN_PKG));
+    }
+
+    @Test
+    public void testSetPackageAuthorizationVpnService() throws Exception {
+        final Vpn vpn = createVpn(primaryUser.id);
+        setMockedUsers(primaryUser);
+
+        when(mPackageManager.getPackageUidAsUser(eq(TEST_VPN_PKG), anyInt()))
+                .thenReturn(Process.myUid());
+
+        assertTrue(vpn.setPackageAuthorization(TEST_VPN_PKG, true, VpnManager.TYPE_VPN_SERVICE));
+        verify(mAppOps)
+                .setMode(
+                        eq(AppOpsManager.OP_ACTIVATE_VPN),
+                        eq(Process.myUid()),
+                        eq(TEST_VPN_PKG),
+                        eq(AppOpsManager.MODE_ALLOWED));
+    }
+
+    @Test
+    public void testSetPackageAuthorizationPlatformVpn() throws Exception {
+        final Vpn vpn = createVpn(primaryUser.id);
+        setMockedUsers(primaryUser);
+
+        when(mPackageManager.getPackageUidAsUser(eq(TEST_VPN_PKG), anyInt()))
+                .thenReturn(Process.myUid());
+
+        assertTrue(vpn.setPackageAuthorization(TEST_VPN_PKG, true, VpnManager.TYPE_PLATFORM_VPN));
+        verify(mAppOps)
+                .setMode(
+                        eq(AppOpsManager.OP_ACTIVATE_PLATFORM_VPN),
+                        eq(Process.myUid()),
+                        eq(TEST_VPN_PKG),
+                        eq(AppOpsManager.MODE_ALLOWED));
+    }
+
+    @Test
+    public void testSetPackageAuthorizationRevokeAuthorization() throws Exception {
+        final Vpn vpn = createVpn(primaryUser.id);
+        setMockedUsers(primaryUser);
+
+        when(mPackageManager.getPackageUidAsUser(eq(TEST_VPN_PKG), anyInt()))
+                .thenReturn(Process.myUid());
+
+        assertTrue(vpn.setPackageAuthorization(TEST_VPN_PKG, false, VpnManager.TYPE_VPN_SERVICE));
+        verify(mAppOps)
+                .setMode(
+                        eq(AppOpsManager.OP_ACTIVATE_VPN),
+                        eq(Process.myUid()),
+                        eq(TEST_VPN_PKG),
+                        eq(AppOpsManager.MODE_IGNORED));
+        verify(mAppOps)
+                .setMode(
+                        eq(AppOpsManager.OP_ACTIVATE_PLATFORM_VPN),
+                        eq(Process.myUid()),
+                        eq(TEST_VPN_PKG),
+                        eq(AppOpsManager.MODE_IGNORED));
     }
 
     /**

@@ -62,6 +62,7 @@ import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkMisc;
 import android.net.RouteInfo;
 import android.net.UidRange;
+import android.net.VpnManager;
 import android.net.VpnService;
 import android.os.Binder;
 import android.os.Build.VERSION_CODES;
@@ -509,8 +510,11 @@ public class Vpn {
         }
 
         if (packageName != null) {
-            // Pre-authorize new always-on VPN package.
-            if (!setPackageAuthorization(packageName, true)) {
+            // TODO: Give the minimum permission possible; if there is a Platform VPN profile, only
+            // grant ACTIVATE_PLATFORM_VPN.
+            // Pre-authorize new always-on VPN package. Grant the full ACTIVATE_VPN appop, allowing
+            // both VpnService and Platform VPNs.
+            if (!setPackageAuthorization(packageName, true, VpnManager.TYPE_VPN_SERVICE)) {
                 return false;
             }
             mAlwaysOn = true;
@@ -786,25 +790,45 @@ public class Vpn {
         }
     }
 
-    /**
-     * Set whether a package has the ability to launch VPNs without user intervention.
-     */
-    public boolean setPackageAuthorization(String packageName, boolean authorized) {
+    /** Set whether a package has the ability to launch VPNs without user intervention. */
+    public boolean setPackageAuthorization(String packageName, boolean authorized, int vpnType) {
         // Check if the caller is authorized.
         enforceControlPermissionOrInternalCaller();
 
-        int uid = getAppUid(packageName, mUserHandle);
+        final int uid = getAppUid(packageName, mUserHandle);
         if (uid == -1 || VpnConfig.LEGACY_VPN.equals(packageName)) {
             // Authorization for nonexistent packages (or fake ones) can't be updated.
             return false;
         }
 
-        long token = Binder.clearCallingIdentity();
+        final long token = Binder.clearCallingIdentity();
         try {
-            AppOpsManager appOps =
+            final int[] toChange;
+
+            // Clear all AppOps if the app is being unauthorized.
+            if (!authorized) {
+                toChange = new int[] {
+                    AppOpsManager.OP_ACTIVATE_VPN, AppOpsManager.OP_ACTIVATE_PLATFORM_VPN
+                };
+            } else if (vpnType == VpnManager.TYPE_PLATFORM_VPN) {
+                toChange = new int[] {AppOpsManager.OP_ACTIVATE_PLATFORM_VPN};
+            } else if (vpnType == VpnManager.TYPE_VPN_SERVICE) {
+                toChange = new int[] {AppOpsManager.OP_ACTIVATE_VPN};
+            } else {
+                // If unrecognized, log and do not grant any permissions.
+                Log.e(TAG, "Unrecognized VPN type while granting authorization");
+                toChange = new int[] {};
+            }
+
+            final AppOpsManager appOpMgr =
                     (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
-            appOps.setMode(AppOpsManager.OP_ACTIVATE_VPN, uid, packageName,
-                    authorized ? AppOpsManager.MODE_ALLOWED : AppOpsManager.MODE_IGNORED);
+            for (final int appOp : toChange) {
+                appOpMgr.setMode(
+                        appOp,
+                        uid,
+                        packageName,
+                        authorized ? AppOpsManager.MODE_ALLOWED : AppOpsManager.MODE_IGNORED);
+            }
             return true;
         } catch (Exception e) {
             Log.wtf(TAG, "Failed to set app ops for package " + packageName + ", uid " + uid, e);
