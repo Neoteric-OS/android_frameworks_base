@@ -4472,11 +4472,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * @hide
      */
     @Override
-    public boolean provisionVpnProfile(VpnProfile profile, String packageName) {
+    public boolean provisionVpnProfile(@NonNull VpnProfile profile, @NonNull String packageName) {
         int user = UserHandle.getUserId(Binder.getCallingUid());
         synchronized (mVpns) {
             throwIfLockdownEnabled();
             return mVpns.get(user).provisionVpnProfile(packageName, profile, mKeyStore);
+        }
+    }
+
+    /**
+     * Removes a VPN profile based on the provisioning package name.
+     *
+     * @hide
+     */
+    @Override
+    public void deleteVpnProfile(@NonNull String packageName) {
+        int user = UserHandle.getUserId(Binder.getCallingUid());
+        synchronized (mVpns) {
+            throwIfLockdownEnabled();
+            mVpns.get(user).deleteVpnProfile(packageName, mKeyStore);
         }
     }
 
@@ -4486,7 +4500,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * @hide
      */
     @Override
-    public void startVpnProfile(String packageName) {
+    public void startVpnProfile(@NonNull String packageName) {
         int user = UserHandle.getUserId(Binder.getCallingUid());
         synchronized (mVpns) {
             throwIfLockdownEnabled();
@@ -4500,7 +4514,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * @hide
      */
     @Override
-    public void stopVpnProfile(String packageName) {
+    public void stopVpnProfile(@NonNull String packageName) {
         int user = UserHandle.getUserId(Binder.getCallingUid());
         synchronized (mVpns) {
             throwIfLockdownEnabled();

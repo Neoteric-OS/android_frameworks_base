@@ -20,8 +20,14 @@ import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.os.RemoteException;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 /**
  * This class provides an interface for apps to manage platform VPN profiles
@@ -39,6 +45,15 @@ public class VpnManager {
     @NonNull private final Context mContext;
     @NonNull private final IConnectivityManager mService;
 
+    static Intent getIntentForConfirmation() {
+        Intent intent = new Intent();
+        ComponentName componentName = ComponentName.unflattenFromString(
+                Resources.getSystem().getString(
+                        com.android.internal.R.string.config_customVpnConfirmDialogComponent));
+        intent.setClassName(componentName.getPackageName(), componentName.getClassName());
+        return intent;
+    }
+
     /** @hide */
     public VpnManager(@NonNull Context ctx, @NonNull IConnectivityManager service) {
         mContext = checkNotNull(ctx, "missing Context");
@@ -48,18 +63,33 @@ public class VpnManager {
     /**
      * Install a VpnProfile configuration keyed on the calling app's package name.
      *
-     * @param profile the PlatformVpnProfile provided by this package. Will override any previous
-     *     PlatformVpnProfile stored for this package.
-     * @returns an intent to request user consent if needed (null otherwise).
+     * @param profile the VpnProfile provided by this package. Will override any previous VpnProfile
+     *     stored for this package.
+     * @return an Intent requesting user consent to start the VPN, or null if consent is not
+     *     required based on privileges or previous user consent.
+     * @throws IOException if the profile was unable to be parsed.
      */
     @Nullable
-    public Intent provisionVpn(@NonNull PlatformVpnProfile profile) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public Intent provisionVpn(@NonNull PlatformVpnProfile profile) throws IOException {
+        try {
+            if (mService.provisionVpnProfile(profile.toVpnProfile(), mContext.getOpPackageName())) {
+                return null;
+            }
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        } catch (GeneralSecurityException e) {
+            throw new IOException("Failed to parse certificates or keys", e);
+        }
+        return getIntentForConfirmation();
     }
 
     /** Delete the VPN profile configuration that was provisioned by the calling app */
     public void deleteVpnProfile() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            mService.deleteVpnProfile(mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -69,11 +99,19 @@ public class VpnManager {
      *     setup, or if user consent has not been granted
      */
     public void startVpn() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            mService.startVpnProfile(mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /** Tear down the VPN provided by the calling app (if any) */
     public void stopVpn() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            mService.stopVpnProfile(mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 }
