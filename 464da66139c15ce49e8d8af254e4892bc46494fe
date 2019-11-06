@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55c7291a_75da9878",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2148,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-11-06T19:32:34Z",
+      "side": 1,
+      "message": "Should we check this here? If parcelableCall.isVideoCallProviderChanged() \u003d\u003d false, but !Objects.equals(previousVideoProvider, newVideoProvider), videoCallChanged \u003d\u003d true. In this case, it would still set mVideoCallImpl \u003d null, even if video provider is not the same.",
+      "range": {
+        "startLine": 2148,
+        "startChar": 29,
+        "endLine": 2148,
+        "endChar": 72
+      },
+      "revId": "464da66139c15ce49e8d8af254e4892bc46494fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
