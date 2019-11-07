@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "725ca9f4_04a36ccf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-07T03:53:28Z",
+      "side": 1,
+      "message": "Regarding to item 1, upstream tethering code for local only tethering is right directly because NetworkManagement API for tethering is deprecated and dnsmasq daemon will also be deprecated.\n\nLeaving item 2 for Milim to verified his CL.\nMilim, if you test it pass, please describe how you test in this commit message.\ne.g.\nTest: build, boot\n      atest TetheringTests\n      manual test XXXX\n      .....",
+      "parentUuid": "78679679_771c44cd",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "59c58ec04d3c4c8040ee230c3db3b0de8f19c170",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b28c728_1e7e9ada",
         "filename": "core/java/android/hardware/usb/UsbManager.java",
         "patchSetId": 3
