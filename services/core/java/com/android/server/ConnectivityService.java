@@ -6339,10 +6339,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         final ArrayMap<NetworkRequestInfo, NetworkAgentInfo> reassignedRequests = new ArrayMap<>();
 
-        // Find and migrate to this Network any NetworkRequests for
-        // which this network is now the best.
-        final ArrayList<NetworkAgentInfo> removedRequests = new ArrayList<>();
-        final ArrayList<NetworkRequestInfo> addedRequests = new ArrayList<>();
         NetworkCapabilities nc = newNetwork.networkCapabilities;
         if (VDBG) log(" network has: " + nc);
         for (NetworkRequestInfo nri : mNetworkRequests.values()) {
@@ -6377,6 +6373,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
+        // Find and migrate to this Network any NetworkRequests for
+        // which this network is now the best.
+        final ArrayList<NetworkAgentInfo> removedRequests = new ArrayList<>();
+        final ArrayList<NetworkRequestInfo> addedRequests = new ArrayList<>();
         for (final Map.Entry<NetworkRequestInfo, NetworkAgentInfo> entry :
                 reassignedRequests.entrySet()) {
             final NetworkRequestInfo nri = entry.getKey();
