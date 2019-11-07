@@ -6349,7 +6349,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void rematchNetworkAndRequests(NetworkAgentInfo newNetwork, long now) {
         ensureRunningOnConnectivityServiceThread();
         if (!newNetwork.everConnected) return;
-        boolean keep = newNetwork.isVPN();
         boolean isNewDefault = false;
         NetworkAgentInfo oldDefaultNetwork = null;
 
@@ -6378,7 +6377,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     log("Network " + newSatisfier.name() + " was already satisfying"
                             + " request " + nri.request.requestId + ". No change.");
                 }
-                keep = true;
             } else if (newSatisfier != null) {
                 if (VDBG) log("rematch for " + newSatisfier.name());
                 if (previousSatisfier != null) {
@@ -6397,7 +6395,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     Slog.wtf(TAG, "BUG: " + newSatisfier.name() + " already has " + nri.request);
                 }
                 addedRequests.add(nri);
-                keep = true;
                 // Tell NetworkFactories about the new score, so they can stop
                 // trying to connect if they know they cannot match it.
                 // TODO - this could get expensive if we have a lot of requests for this
@@ -6504,7 +6501,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             notifyLockdownVpn(newNetwork);
         }
 
-        if (keep) {
+        if (reassignedRequests.containsValue(newNetwork) || newNetwork.isVPN()) {
             // Notify battery stats service about this network, both the normal
             // interface and any stacked links.
             // TODO: Avoid redoing this; this must only be done once when a network comes online.
