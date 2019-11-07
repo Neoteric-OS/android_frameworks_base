@@ -171,7 +171,11 @@ import android.widget.ListView;
  *
  * @see #setListAdapter
  * @see android.widget.ListView
+ *
+ * @deprecated Use {@link android.support.v4.app.ListFragment} or
+ *   {@link android.support.v7.widget.RecyclerView} to implement your Activity instead.
  */
+@Deprecated
 public class ListActivity extends Activity {
     /**
      * This field should be made private, so it is hidden from the SDK.
