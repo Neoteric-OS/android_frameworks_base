@@ -2283,6 +2283,10 @@ public class Vpn {
         }
     }
 
+    private String getProfileNameForPackage(String packageName) {
+        return Credentials.PLATFORM_VPN + mUserHandle + "_" + packageName;
+    }
+
     /**
      * Stores an app-provisioned VPN profile and returns whether the app is already prepared
      *
@@ -2305,7 +2309,7 @@ public class Vpn {
 
         // Permissions checked during startVpnProfile()
         keyStore.put(
-                Credentials.PLATFORM_VPN + packageName, profile.encode(), Process.SYSTEM_UID, 0);
+                getProfileNameForPackage(packageName), profile.encode(), Process.SYSTEM_UID, 0);
 
         // Hook into VpnService prepare() flow.
         return prepare(packageName, null);
@@ -2326,7 +2330,7 @@ public class Vpn {
             throw new SecurityException("Mismatched package and UID");
         }
 
-        keyStore.delete(Credentials.PLATFORM_VPN + packageName, Process.SYSTEM_UID);
+        keyStore.delete(getProfileNameForPackage(packageName), Process.SYSTEM_UID);
     }
 
     /**
@@ -2344,10 +2348,21 @@ public class Vpn {
             enforceControlPermissionOrInternalCaller();
         }
 
-        // TODO: Clear binder UID
-        // TODO: Retrieve VPN profile
-        // TODO: Call prepare() as internal caller
-        // TODO: Start PlatformVpnRunner
+        Binder.withCleanCallingIdentity(
+                () -> {
+                    String key = getProfileNameForPackage(packageName);
+                    byte[] value = keyStore.get(key, true);
+                    if (value == null) {
+                        throw new IllegalArgumentException("Default profile for package not found");
+                    }
+
+                    VpnProfile profile = VpnProfile.decode(key, value);
+                    if (!prepare(null, packageName)) {
+                        throw new SecurityException("Starting VPN Profiles requires user consent");
+                    }
+
+                    startPlatformVpnPrivileged(profile);
+                });
     }
 
     /**
@@ -2366,9 +2381,13 @@ public class Vpn {
             enforceSettingsPermission();
         }
 
-        // TODO: Clear binder UID
-        // TODO: Shut down PlatformVpnRunner
+        Binder.withCleanCallingIdentity(
+                () -> {
+                    stopPlatformVpnPrivileged();
+                });
     }
 
-    private void startPlatformVpnPrivileged(VpnProfile profile) {}
+    private synchronized void startPlatformVpnPrivileged(VpnProfile profile) {}
+
+    private synchronized void stopPlatformVpnPrivileged() {}
 }
