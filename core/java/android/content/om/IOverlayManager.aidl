@@ -17,6 +17,7 @@
 package android.content.om;
 
 import android.content.om.OverlayInfo;
+import android.content.om.OverlayManagerTransaction;
 
 /**
  * Api for getting information about overlay packages.
@@ -157,4 +158,9 @@ interface IOverlayManager {
      * Returns the list of default overlay packages, or an empty array if there are none.
      */
     String[] getDefaultOverlayPackages();
+
+    /**
+     * FIXME: docs
+     */
+    boolean commit(in OverlayManagerTransaction transaction);
 }

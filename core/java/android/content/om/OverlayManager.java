@@ -163,4 +163,17 @@ public class OverlayManager {
             throw e.rethrowFromSystemServer();
         }
     }
+
+    /**
+     * FIXME: docs
+     *
+     * @hide
+     */
+    public boolean commit(@NonNull final OverlayManagerTransaction transaction) {
+        try {
+            return mService.commit(transaction);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }
