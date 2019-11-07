@@ -123,3 +123,18 @@ enum SimStateEnum {
      */
     SIM_STATE_PRESENT = 11;
 }
+
+// Standard Enhanced Roaming Indicator defined by 3GPP2 C.R1001-H v1.0
+enum EnhancedRoamingIndicator {
+   ENHANCED_ROAMING_INDICATOR_ON = 0;
+   ENHANCED_ROAMING_INDICATOR_OFF = 1;
+   ENHANCED_ROAMING_INDICATOR_FLASH = 2;
+}
+
+// ERI icon mode used along with ERI icon
+enum EriIconMode {
+   // ERI icon should be displayed normally
+   ERI_ICON_MODE_NORMAL = 0;
+   // ERI icon should be flashing
+   ERI_ICON_MODE_FLASH = 1;
+}

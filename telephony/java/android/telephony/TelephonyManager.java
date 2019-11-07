@@ -5230,21 +5230,57 @@ public class TelephonyManager {
     }
 
     /**
-     * Returns the CDMA ERI icon index to display
+     * ERI (Enhanced Roaming Indicator) is ON i.e value 0 defined by
+     * 3GPP2 C.R1001-H v1.0 Table 8.1-1.
+     *
      * @hide
      */
-    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
-    public int getCdmaEriIconIndex() {
-        return getCdmaEriIconIndex(getSubId());
+    @SystemApi
+    public static final int ENHANCED_ROAMING_INDICATOR_ON =
+            TelephonyProtoEnums.ENHANCED_ROAMING_INDICATOR_ON;
+
+    /**
+     * ERI (Enhanced Roaming Indicator) is OFF i.e value 1 defined by
+     * 3GPP2 C.R1001-H v1.0 Table 8.1-1.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int ENHANCED_ROAMING_INDICATOR_OFF =
+            TelephonyProtoEnums.ENHANCED_ROAMING_INDICATOR_OFF;
+
+    /**
+     * ERI (Enhanced Roaming Indicator) is FLASH i.e value 2 defined by
+     * 3GPP2 C.R1001-H v1.0 Table 8.1-1.
+     *
+     * @hide
+     */
+    public static final int ENHANCED_ROAMING_INDICATOR_FLASH =
+            TelephonyProtoEnums.ENHANCED_ROAMING_INDICATOR_FLASH;
+
+    /**
+     * Get the CDMA ERI(Enhanced Roaming Indicator) for icon display defined in
+     * 3GPP2 C.R1001-H Table 8.1-1. Enhanced Roaming Indicator Number Assignments
+     *
+     * Note: This table defines only standard ERI number assignments however
+     * the carriers can define their own ERI number assignments.
+     *
+     * Returns the CDMA ERI for icon display
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    @SystemApi
+    public int getCdmaEri() {
+        return getCdmaEri(getSubId());
     }
 
     /**
      * Returns the CDMA ERI icon index to display for a subscription
      * @hide
      */
-    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @UnsupportedAppUsage
-    public int getCdmaEriIconIndex(int subId) {
+    public int getCdmaEri(int subId) {
         try {
             ITelephony telephony = getITelephony();
             if (telephony == null)
@@ -5259,15 +5295,49 @@ public class TelephonyManager {
         }
     }
 
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = {"ERI_ICON_MODE_"}, value = {
+                    ERI_ICON_MODE_NORMAL,
+                    ERI_ICON_MODE_FLASH
+            })
+    public @interface EriIconMode {}
+
     /**
-     * Returns the CDMA ERI icon mode,
-     * 0 - ON
-     * 1 - FLASHING
+     * ERI (Enhanced Roaming Indicator) icon mode is normal. This constant represents that
+     * the ERI icon should be displayed normally.
+     *
+     * Note: ERI is defined 3GPP2 C.R1001-H Table 8.1-1
      *
      * @hide
      */
-    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
-    public int getCdmaEriIconMode() {
+    @SystemApi
+    public static final int ERI_ICON_MODE_NORMAL = TelephonyProtoEnums.ERI_ICON_MODE_NORMAL;
+
+    /**
+     * ERI (Enhanced Roaming Indicator) icon mode flash. This constant represents that
+     * the ERI icon should be flashing.
+     *
+     * Note: ERI is defined 3GPP2 C.R1001-H Table 8.1-1
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int ERI_ICON_MODE_FLASH = TelephonyProtoEnums.ERI_ICON_MODE_FLASH;
+    /**
+     * Get the CDMA ERI icon mode
+     *
+     * Returns one of the following CDMA ERI icon mode
+     * {@link android.telephony.TelephonyManager#ERI_ICON_MODE_NORMAL}
+     * {@link android.telephony.TelephonyManager#ERI_ICON_MODE_FLASH}
+     *
+     * Note: ERI is defined 3GPP2 C.R1001-H Table 8.1-1
+     *
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    @SystemApi
+    public @EriIconMode int getCdmaEriIconMode() {
         return getCdmaEriIconMode(getSubId());
     }
 
@@ -5278,7 +5348,7 @@ public class TelephonyManager {
      *
      * @hide
      */
-    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @UnsupportedAppUsage
     public int getCdmaEriIconMode(int subId) {
         try {
