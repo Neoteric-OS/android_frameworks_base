@@ -5232,10 +5232,13 @@ public class TelephonyManager {
     }
 
     /**
+     * Get the CDMA ERI icon index for icon display
+     *
      * Returns the CDMA ERI icon index to display
      * @hide
      */
-    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    @SystemApi
     public int getCdmaEriIconIndex() {
         return getCdmaEriIconIndex(getSubId());
     }
@@ -5244,7 +5247,7 @@ public class TelephonyManager {
      * Returns the CDMA ERI icon index to display for a subscription
      * @hide
      */
-    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @UnsupportedAppUsage
     public int getCdmaEriIconIndex(int subId) {
         try {
@@ -5261,13 +5264,16 @@ public class TelephonyManager {
     }
 
     /**
+     * Get the CDMA ERI icon mode
+     *
      * Returns the CDMA ERI icon mode,
      * 0 - ON
      * 1 - FLASHING
      *
      * @hide
      */
-    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    @SystemApi
     public int getCdmaEriIconMode() {
         return getCdmaEriIconMode(getSubId());
     }
@@ -5279,7 +5285,7 @@ public class TelephonyManager {
      *
      * @hide
      */
-    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @UnsupportedAppUsage
     public int getCdmaEriIconMode(int subId) {
         try {
