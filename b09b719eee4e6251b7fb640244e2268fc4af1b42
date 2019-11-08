@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f53f879_a01d073f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10387,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-11-08T18:32:30Z",
+      "side": 1,
+      "message": "These are internal variable names. Need better description.",
+      "range": {
+        "startLine": 10386,
+        "startChar": 77,
+        "endLine": 10387,
+        "endChar": 74
+      },
+      "revId": "b09b719eee4e6251b7fb640244e2268fc4af1b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0712056b_bf4bc612",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10390,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-11-08T18:32:30Z",
+      "side": 1,
+      "message": "subscription id",
+      "range": {
+        "startLine": 10390,
+        "startChar": 7,
+        "endLine": 10390,
+        "endChar": 12
+      },
+      "revId": "b09b719eee4e6251b7fb640244e2268fc4af1b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207f5783_46a9f1d4",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10400,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-11-08T18:32:30Z",
+      "side": 1,
+      "message": "{@code false}",
+      "range": {
+        "startLine": 10400,
+        "startChar": 47,
+        "endLine": 10400,
+        "endChar": 52
+      },
+      "revId": "b09b719eee4e6251b7fb640244e2268fc4af1b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f496ffd9_3baeb195",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10400,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-11-08T18:32:30Z",
+      "side": 1,
+      "message": "{@code true}",
+      "range": {
+        "startLine": 10400,
+        "startChar": 15,
+        "endLine": 10400,
+        "endChar": 19
+      },
+      "revId": "b09b719eee4e6251b7fb640244e2268fc4af1b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
