@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2e36900_1c1b2fe8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5242,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-11-08T18:27:43Z",
+      "side": 1,
+      "message": "Looks like this is returning EriInfo.ROAMING_INDICATOR_XXX. \n\n1. Then should this have the name \"index\"?\n2. Need intdef and annotation\n3. Link to spec if there is any.",
+      "range": {
+        "startLine": 5242,
+        "startChar": 15,
+        "endLine": 5242,
+        "endChar": 34
+      },
+      "revId": "fba84da6122019c69f1388a8eb4483bb31346bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84947d92_e90dc385",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5271,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-11-08T18:27:43Z",
+      "side": 1,
+      "message": "Hidden API has lower expectation. If you are making this a system API, it\u0027s better to make intdef for them. And better link to 3GPP2 spec if there is any.",
+      "range": {
+        "startLine": 5270,
+        "startChar": 0,
+        "endLine": 5271,
+        "endChar": 19
+      },
+      "revId": "fba84da6122019c69f1388a8eb4483bb31346bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
