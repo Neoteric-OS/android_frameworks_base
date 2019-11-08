@@ -1,0 +1,10 @@
+android_test {
+    name: "framework-sdkinfo-tests",
+    srcs: ["src/**/*.java"],
+    libs: [
+        "android.test.base",
+        "android.test.runner",
+    ],
+    static_libs: [ "framework-sdkinfo" ],
+    platform_apis: true,
+}

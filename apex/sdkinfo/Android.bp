@@ -15,6 +15,7 @@
 apex {
     name: "com.android.sdkinfo",
     manifest: "manifest.json",
+    java_libs: [ "framework-sdkinfo" ],
     key: "com.android.sdkinfo.key",
     certificate: ":com.android.sdkinfo.certificate",
 }
