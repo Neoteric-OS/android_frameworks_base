@@ -35,6 +35,7 @@
 static const char* kPathWhitelist[] = {
   "/apex/com.android.conscrypt/javalib/conscrypt.jar",
   "/apex/com.android.media/javalib/updatable-media.jar",
+  "/apex/com.android.tetheringstack/javalib/tethering-client.jar",
   "/dev/null",
   "/dev/socket/zygote",
   "/dev/socket/zygote_secondary",
