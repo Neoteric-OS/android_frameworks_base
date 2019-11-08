@@ -10510,11 +10510,32 @@ public class TelephonyManager {
     }
 
     /**
+     * Returns whether mobile data is capable or not on the device at this time
+     * based on all the following aspects
+     *  1. User settings
+     *  2. Carrier settings
+     *  3. Network policy
+     *  4. Device provisioning setting
+     *  5. Other internal circumstances eg. data blocked due to emergency calling.
+     *
+     * If this object has been created with {@link #createForSubscriptionId},
+     * applies to the given subscription Id. Otherwise, applies to
+     * {@link SubscriptionManager#getDefaultDataSubscriptionId()}
+     *
+     * <p>Requires one of the following permissions:
+     * {@link android.Manifest.permission#ACCESS_NETWORK_STATE},
+     * {@link android.Manifest.permission#MODIFY_PHONE_STATE}
+     *
+     * <p>Note that this does not take into account any data restrictions that may be present on the
+     * calling app. Such restrictions may be inspected with
+     * {@link ConnectivityManager#getRestrictBackgroundStatus}.
+     *
+     * @return {@code true} if mobile data is capable, {@code false} otherwise
      * @hide
-     * It's similar to isDataEnabled, but unlike isDataEnabled, this API also evaluates
-     * carrierDataEnabled, policyDataEnabled etc to give a final decision of whether mobile data is
-     * capable of using.
      */
+    @RequiresPermission(anyOf = {android.Manifest.permission.ACCESS_NETWORK_STATE,
+        android.Manifest.permission.MODIFY_PHONE_STATE})
+    @SystemApi
     public boolean isDataCapable() {
         boolean retVal = false;
         try {
