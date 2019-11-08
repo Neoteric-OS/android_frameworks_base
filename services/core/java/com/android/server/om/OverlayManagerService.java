@@ -578,28 +578,14 @@ public final class OverlayManagerService extends SystemService {
         @Override
         public boolean setEnabled(@Nullable final String packageName, final boolean enable,
                 int userId) throws RemoteException {
-            try {
-                traceBegin(TRACE_TAG_RRO, "OMS#setEnabled " + packageName + " " + enable);
-                enforceChangeOverlayPackagesPermission("setEnabled");
-                userId = handleIncomingUser(userId, "setEnabled");
-                if (packageName == null) {
-                    return false;
-                }
-
-                final long ident = Binder.clearCallingIdentity();
-                try {
-                    synchronized (mLock) {
-                        final OverlayManagerTransaction t = new OverlayManagerTransaction.Builder()
-                                .setEnabled(packageName, enable, userId)
-                                .build();
-                        return commit(t);
-                    }
-                } finally {
-                    Binder.restoreCallingIdentity(ident);
-                }
-            } finally {
-                traceEnd(TRACE_TAG_RRO);
+            if (packageName == null) {
+                return false;
             }
+            // FIXME: with the new transactional API, mark the one-shot methods as @Deprecated?
+            OverlayManagerTransaction t = new OverlayManagerTransaction.Builder()
+                    .setEnabled(packageName, enable, userId)
+                    .build();
+            return commit(t);
         }
 
         @Override
