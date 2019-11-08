@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6ea3ebe_66494e17",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3205,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2019-11-08T19:01:34Z",
+      "side": 1,
+      "message": ". Active data subscription refers to the subscription currently chosen to provide Cellular Internet connection to the user.",
+      "range": {
+        "startLine": 3205,
+        "startChar": 48,
+        "endLine": 3205,
+        "endChar": 49
+      },
+      "revId": "c2b1989d01820174996dd2376d0815a7243881e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7a0984_c0a034ec",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3210,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2019-11-08T19:01:34Z",
+      "side": 1,
+      "message": "@return Active data subscription id if any is chosen, or SubscriptionManager.INVALID_SUBSCRIPTION_ID if not.",
+      "revId": "c2b1989d01820174996dd2376d0815a7243881e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
