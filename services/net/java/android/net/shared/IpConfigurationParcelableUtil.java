@@ -21,7 +21,6 @@ import android.net.DhcpResults;
 import android.net.DhcpResultsParcelable;
 import android.net.InetAddresses;
 
-import java.net.Inet4Address;
 import java.net.InetAddress;
 
 /**
@@ -43,20 +42,6 @@ public final class IpConfigurationParcelableUtil {
         p.vendorInfo = results.vendorInfo;
         p.serverHostName = results.serverHostName;
         return p;
-    }
-
-    /**
-     * Convert a DhcpResultsParcelable to DhcpResults.
-     */
-    public static DhcpResults fromStableParcelable(@Nullable DhcpResultsParcelable p) {
-        if (p == null) return null;
-        final DhcpResults results = new DhcpResults(p.baseConfiguration);
-        results.leaseDuration = p.leaseDuration;
-        results.mtu = p.mtu;
-        results.serverAddress = (Inet4Address) unparcelAddress(p.serverAddress);
-        results.vendorInfo = p.vendorInfo;
-        results.serverHostName = p.serverHostName;
-        return results;
     }
 
     /**

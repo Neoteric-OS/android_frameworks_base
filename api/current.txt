@@ -28555,15 +28555,21 @@ package android.net {
 
   public class DhcpInfo implements android.os.Parcelable {
     ctor public DhcpInfo();
+    method public void clear();
     method public int describeContents();
+    method public boolean hasMeteredHint();
     method public void writeToParcel(android.os.Parcel, int);
     field public int dns1;
     field public int dns2;
+    field @Nullable public String domains;
     field public int gateway;
     field public int ipAddress;
     field public int leaseDuration;
+    field public int mtu;
     field public int netmask;
     field public int serverAddress;
+    field @Nullable public String serverHostName;
+    field @Nullable public String vendorInfo;
   }
 
   public final class DnsResolver {

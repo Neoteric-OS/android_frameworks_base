@@ -17,13 +17,16 @@
 package android.net.shared;
 
 import static android.net.InetAddresses.parseNumericAddress;
-import static android.net.shared.IpConfigurationParcelableUtil.fromStableParcelable;
+import static android.net.ip.IpClientUtil.fromDhcpResultsToDhcpInfo;
+import static android.net.ip.IpClientUtil.fromStableParcelable;
 import static android.net.shared.IpConfigurationParcelableUtil.toStableParcelable;
+
 
 import static com.android.testutils.MiscAssertsKt.assertFieldCountEquals;
 
 import static org.junit.Assert.assertEquals;
 
+import android.net.DhcpInfo;
 import android.net.DhcpResults;
 import android.net.LinkAddress;
 
@@ -63,53 +66,54 @@ public class IpConfigurationParcelableUtilTest {
 
     @Test
     public void testParcelUnparcelDhcpResults() {
-        doDhcpResultsParcelUnparcelTest();
+        doConvertDhcpResultsToDhcpInfoTest();
     }
 
     @Test
     public void testParcelUnparcelDhcpResults_NullIpAddress() {
         mDhcpResults.ipAddress = null;
-        doDhcpResultsParcelUnparcelTest();
+        doConvertDhcpResultsToDhcpInfoTest();
     }
 
     @Test
     public void testParcelUnparcelDhcpResults_NullGateway() {
         mDhcpResults.gateway = null;
-        doDhcpResultsParcelUnparcelTest();
+        doConvertDhcpResultsToDhcpInfoTest();
     }
 
     @Test
     public void testParcelUnparcelDhcpResults_NullDomains() {
         mDhcpResults.domains = null;
-        doDhcpResultsParcelUnparcelTest();
+        doConvertDhcpResultsToDhcpInfoTest();
     }
 
     @Test
     public void testParcelUnparcelDhcpResults_EmptyDomains() {
         mDhcpResults.domains = "";
-        doDhcpResultsParcelUnparcelTest();
+        doConvertDhcpResultsToDhcpInfoTest();
     }
 
     @Test
     public void testParcelUnparcelDhcpResults_NullServerAddress() {
         mDhcpResults.serverAddress = null;
-        doDhcpResultsParcelUnparcelTest();
+        doConvertDhcpResultsToDhcpInfoTest();
     }
 
     @Test
     public void testParcelUnparcelDhcpResults_NullVendorInfo() {
         mDhcpResults.vendorInfo = null;
-        doDhcpResultsParcelUnparcelTest();
+        doConvertDhcpResultsToDhcpInfoTest();
     }
 
     @Test
     public void testParcelUnparcelDhcpResults_NullServerHostName() {
         mDhcpResults.serverHostName = null;
-        doDhcpResultsParcelUnparcelTest();
+        doConvertDhcpResultsToDhcpInfoTest();
     }
 
-    private void doDhcpResultsParcelUnparcelTest() {
-        final DhcpResults unparceled = fromStableParcelable(toStableParcelable(mDhcpResults));
-        assertEquals(mDhcpResults, unparceled);
+    private void doConvertDhcpResultsToDhcpInfoTest() {
+        final DhcpInfo unparceled = fromStableParcelable(toStableParcelable(mDhcpResults));
+        final DhcpInfo resultsToInfo = fromDhcpResultsToDhcpInfo(mDhcpResults);
+        assertEquals(unparceled, resultsToInfo);
     }
 }
