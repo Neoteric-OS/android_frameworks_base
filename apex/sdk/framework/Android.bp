@@ -1,0 +1,7 @@
+filegroup {
+    name: "framework-sdk-sources",
+    srcs: [
+        "java/**/*.java",
+    ],
+    path: "java",
+}

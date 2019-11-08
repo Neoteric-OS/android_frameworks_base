@@ -267,6 +267,7 @@ filegroup {
     name: "framework-all-sources",
     srcs: [
         ":framework-non-updatable-sources",
+        ":framework-sdk-sources",
         ":updatable-media-srcs",
     ],
 }
@@ -968,6 +969,7 @@ stubs_defaults {
     name: "framework-doc-stubs-default",
     srcs: [
         ":framework-non-updatable-sources",
+        ":framework-sdk-sources",
         "core/java/**/*.logtags",
         "test-base/src/**/*.java",
         ":opt-telephony-srcs",
@@ -1032,6 +1034,7 @@ stubs_defaults {
     name: "metalava-api-stubs-default",
     srcs: [
         ":framework-non-updatable-sources",
+        ":framework-sdk-sources",
         "core/java/**/*.logtags",
         ":opt-telephony-srcs",
         ":opt-net-voip-srcs",
