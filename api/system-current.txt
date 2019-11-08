@@ -8241,6 +8241,7 @@ package android.telephony {
     method @NonNull @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public String iccTransmitApduBasicChannelBySlot(int, int, int, int, int, int, @Nullable String);
     method @Nullable @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public String iccTransmitApduLogicalChannelBySlot(int, int, int, int, int, int, int, @Nullable String);
     method @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public boolean isApplicationOnUicc(int);
+    method @RequiresPermission(anyOf={android.Manifest.permission.ACCESS_NETWORK_STATE, android.Manifest.permission.MODIFY_PHONE_STATE}) public boolean isDataCapable();
     method public boolean isDataConnectivityPossible();
     method @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public boolean isDataEnabledForApn(int);
     method @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public boolean isEmergencyAssistanceEnabled();
