@@ -28560,8 +28560,33 @@ package android.net {
 
   public class DhcpInfo implements android.os.Parcelable {
     ctor public DhcpInfo();
+    method public void clear();
     method public int describeContents();
+    method public int getDns1();
+    method public int getDns2();
+    method @Nullable public String getDomains();
+    method public int getGateway();
+    method public int getIpAddress();
+    method public int getLeaseDuration();
+    method public int getMtu();
+    method public int getNetmask();
+    method public int getServerAddress();
+    method @Nullable public String getServerHostName();
+    method @Nullable public String getVendorInfo();
+    method public boolean hasMeteredHint();
+    method public void setDns1(int);
+    method public void setDns2(int);
+    method public void setDomains(@Nullable String);
+    method public void setGateway(int);
+    method public void setIpAddress(int);
+    method public void setLeaseDuration(int);
+    method public void setMtu(int);
+    method public void setNetmask(int);
+    method public void setServerAddress(int);
+    method public void setServerHostName(@Nullable String);
+    method public void setVendorInfo(@Nullable String);
     method public void writeToParcel(android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.DhcpInfo> CREATOR;
     field public int dns1;
     field public int dns2;
     field public int gateway;

@@ -16,19 +16,30 @@
 
 package android.net.ip;
 
-import static android.net.shared.IpConfigurationParcelableUtil.fromStableParcelable;
+import static android.net.shared.IpConfigurationParcelableUtil.toStableParcelable;
 
+import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.content.Context;
+import android.net.DhcpInfo;
+import android.net.DhcpResults;
 import android.net.DhcpResultsParcelable;
+import android.net.InetAddresses;
 import android.net.Layer2PacketParcelable;
+import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkStackClient;
+import android.net.StaticIpConfiguration;
+import android.net.shared.Inet4AddressUtils;
 import android.os.ConditionVariable;
+
+import com.android.internal.annotations.VisibleForTesting;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.util.List;
-
 
 /**
  * Utilities and wrappers to simplify communication with IpClient, which lives in the NetworkStack
@@ -118,7 +129,7 @@ public class IpClientUtil {
         // null or not.
         @Override
         public void onNewDhcpResults(DhcpResultsParcelable dhcpResults) {
-            mCb.onNewDhcpResults(fromStableParcelable(dhcpResults));
+            mCb.onNewDhcpInfo(fromStableParcelable(dhcpResults));
         }
 
         @Override
@@ -188,6 +199,71 @@ public class IpClientUtil {
         public int getInterfaceVersion() {
             return this.VERSION;
         }
+    }
+
+    // TODO: Find a more proper place to put this method.
+    /**
+     * Convert a DhcpResultsParcelable to DhcpInfo.
+     */
+    @Nullable
+    public static DhcpInfo fromStableParcelable(@NonNull DhcpResultsParcelable p) {
+        if (p == null) return null;
+
+        final DhcpInfo info = new DhcpInfo();
+        final StaticIpConfiguration cfg = new StaticIpConfiguration(p.baseConfiguration);
+        final LinkAddress linkAddr = cfg.getIpAddress();
+        final InetAddress addr = linkAddr.getAddress();
+
+        if (linkAddr != null && addr instanceof Inet4Address) {
+            info.ipAddress = addrInet4ToInt(
+                    (Inet4Address) cfg.getIpAddress().getAddress());
+        }
+        if (cfg.getGateway() != null) {
+            info.gateway = addrInet4ToInt(
+                    (Inet4Address) cfg.getGateway());
+        }
+
+        int dnsFound = 0;
+        for (InetAddress dns : cfg.getDnsServers()) {
+            if (dns instanceof Inet4Address) {
+                if (dnsFound == 0) {
+                    info.dns1 = addrInet4ToInt((Inet4Address) dns);
+                } else {
+                    info.dns2 = addrInet4ToInt((Inet4Address) dns);
+                }
+                if (++dnsFound > 1) break;
+            }
+        }
+
+        if (p.serverAddress == null) {
+            info.serverAddress = 0;
+        } else {
+            final Inet4Address serverAddress =
+                    (Inet4Address) InetAddresses.parseNumericAddress(p.serverAddress);
+            info.serverAddress = addrInet4ToInt(serverAddress);
+        }
+
+        info.domains = cfg.getDomains();
+        info.leaseDuration = p.leaseDuration;
+        info.mtu = p.mtu;
+        info.vendorInfo = p.vendorInfo;
+        info.serverHostName = p.serverHostName;
+
+        return info;
+    }
+
+    private static int addrInet4ToInt(Inet4Address addr) {
+        return Inet4AddressUtils.inet4AddressToIntHTL(addr);
+    }
+
+    /**
+     * Converts a DhcpResults instance into a DhcpInfo instance.
+     */
+    @VisibleForTesting
+    public static DhcpInfo convertDhcpResultsToDhcpInfo(DhcpResults results) {
+        if (results == null) return null;
+
+        return fromStableParcelable(toStableParcelable(results));
     }
 
     /**

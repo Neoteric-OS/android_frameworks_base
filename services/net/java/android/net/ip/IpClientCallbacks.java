@@ -16,7 +16,7 @@
 
 package android.net.ip;
 
-import android.net.DhcpResults;
+import android.net.DhcpInfo;
 import android.net.Layer2PacketParcelable;
 import android.net.LinkProperties;
 
@@ -66,7 +66,7 @@ public class IpClientCallbacks {
      * <p>DHCPv4 or static IPv4 configuration failure or success can be determined by whether or not
      * the passed-in DhcpResults object is null.
      */
-    public void onNewDhcpResults(DhcpResults dhcpResults) {}
+    public void onNewDhcpInfo(DhcpInfo dhcpInfo) {}
 
     /**
      * Indicates that provisioning was successful.
