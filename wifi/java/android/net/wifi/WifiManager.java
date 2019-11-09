@@ -4001,7 +4001,7 @@ public class WifiManager {
                 if (ws == null) {
                     mWorkSource = null;
                 } else {
-                    ws.clearNames();
+                    ws = ws.withoutNames();
                     if (mWorkSource == null) {
                         changed = mWorkSource != null;
                         mWorkSource = new WorkSource(ws);
