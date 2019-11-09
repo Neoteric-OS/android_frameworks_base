@@ -90,7 +90,7 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
         void onResult(int resultCode, Throwable detail);
     }
 
-    private final String mUrl;
+    private final String mUrl, mDsuSlot;
     private final long mSystemSize;
     private final long mUserdataSize;
     private final Context mContext;
@@ -102,12 +102,14 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
 
     InstallationAsyncTask(
             String url,
+            String dsuSlot,
             long systemSize,
             long userdataSize,
             Context context,
             DynamicSystemManager dynSystem,
             ProgressListener listener) {
         mUrl = url;
+        mDsuSlot = dsuSlot;
         mSystemSize = systemSize;
         mUserdataSize = userdataSize;
         mContext = context;
@@ -125,13 +127,16 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
             mDynSystem.remove();
             // init input stream before creating userdata, which takes 90 seconds.
             is = initInputStream();
-            mDynSystem.startInstallation();
+            mDynSystem.startInstallation(mDsuSlot);
             installUserdata();
 
             if (isCancelled()) {
                 return null;
             }
-
+            if (mUrl == null) {
+                mDynSystem.finishInstallation();
+                return null;
+            }
             String extension = mUrl.substring(mUrl.lastIndexOf('.') + 1);
 
             if ("gz".equals(extension)) {
