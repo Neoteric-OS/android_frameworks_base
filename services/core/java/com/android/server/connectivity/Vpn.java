@@ -49,6 +49,7 @@ import android.content.pm.UserInfo;
 import android.net.ConnectivityManager;
 import android.net.INetworkManagementEventObserver;
 import android.net.IpPrefix;
+import android.net.IpSecManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.LocalSocket;
@@ -1945,6 +1946,32 @@ public class Vpn {
         protected abstract void check(String iface);
 
         protected abstract void exit();
+    }
+
+    private class IkeV2VpnRunner extends VpnRunner {
+        private static final String TAG = "IkeV2VpnRunner";
+
+        private final IpSecManager mIpSecManager;
+        private final VpnProfile mProfile;
+
+        IkeV2VpnRunner(VpnProfile profile) {
+            super(TAG);
+            mProfile = profile;
+
+            mConfig = new VpnConfig();
+            mIpSecManager = mContext.getSystemService(IpSecManager.class);
+        }
+
+        @Override
+        public void run() {}
+
+        @Override
+        public void check(String iface) {}
+
+        @Override
+        public void exit() {
+            agentDisconnect();
+        }
     }
 
     /**
