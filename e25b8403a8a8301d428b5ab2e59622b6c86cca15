@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c29ea0fd_6930e7d0",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2019-11-11T13:38:14Z",
+      "side": 1,
+      "message": "Garbage in the signature file.",
+      "revId": "e25b8403a8a8301d428b5ab2e59622b6c86cca15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
