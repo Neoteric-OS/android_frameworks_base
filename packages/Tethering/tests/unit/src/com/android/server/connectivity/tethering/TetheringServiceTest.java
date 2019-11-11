@@ -46,7 +46,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.notNull;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.any;
@@ -963,9 +962,6 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         when(tethering.getTetheredIfaces()).thenReturn(activeTetheringIfacesList);
 
         turl.onUserRestrictionsChanged(userId, newRestrictions, currRestrictions);
-
-        verify(tethering, times(expectedInteractionsWithShowNotification))
-                .showTetheredNotification(anyInt(), eq(false));
 
         verify(tethering, times(expectedInteractionsWithShowNotification)).untetherAll();
     }
