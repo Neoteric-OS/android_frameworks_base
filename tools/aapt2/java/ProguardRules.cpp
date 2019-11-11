@@ -404,9 +404,12 @@ void WriteKeepSet(const KeepSet& keep_set, OutputStream* out, bool minimal_keep)
 
   for (const auto& entry : keep_set.conditional_class_set_) {
     std::set<UsageLocation> locations;
-    bool can_be_conditional = true;
-    for (const UsageLocation& location : entry.second) {
-      can_be_conditional &= CollectLocations(location, keep_set, &locations);
+    bool can_be_conditional = false;
+    if (keep_set.conditional_keep_rules_) {
+      can_be_conditional = true;
+      for (const UsageLocation& location : entry.second) {
+        can_be_conditional &= CollectLocations(location, keep_set, &locations);
+      }
     }
 
     if (keep_set.conditional_keep_rules_ && can_be_conditional) {
