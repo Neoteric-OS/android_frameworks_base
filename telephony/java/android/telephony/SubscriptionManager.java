@@ -911,6 +911,10 @@ public class SubscriptionManager {
     private final Context mContext;
     private volatile INetworkPolicyManager mNetworkPolicy;
 
+    // Resource cache
+    private static final Map<Integer, Resources> sResourcesCache = new HashMap<>();
+    private static final Map<Integer, Resources> sResourcesCacheRootLocale = new HashMap<>();
+
     /**
      * A listener class for monitoring changes to {@link SubscriptionInfo} records.
      * <p>
@@ -2353,6 +2357,18 @@ public class SubscriptionManager {
      */
     public static Resources getResourcesForSubId(Context context, int subId,
             boolean useRootLocale) {
+        // Check if resources exist in cache.
+        Map<Integer, Resources> resouceCache = sResourcesCache;
+        if (isValidSubscriptionId(subId)) {
+            if (useRootLocale) {
+                resouceCache = sResourcesCacheRootLocale;
+            }
+
+            if (resouceCache.containsKey(subId)) {
+                return resouceCache.get(subId);
+            }
+        }
+
         final SubscriptionInfo subInfo =
                 SubscriptionManager.from(context).getActiveSubscriptionInfo(subId);
 
@@ -2372,7 +2388,14 @@ public class SubscriptionManager {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         DisplayMetrics newMetrics = new DisplayMetrics();
         newMetrics.setTo(metrics);
-        return new Resources(context.getResources().getAssets(), newMetrics, newConfig);
+        Resources res = new Resources(context.getResources().getAssets(), newMetrics, newConfig);
+
+        // Save the resources in the cache.
+        if (isValidSubscriptionId(subId)) {
+            resouceCache.put(subId, res);
+        }
+
+        return res;
     }
 
     /**
