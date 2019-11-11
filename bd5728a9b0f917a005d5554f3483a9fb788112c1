@@ -46,6 +46,30 @@
       "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5387799f_d1b2112b",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-11-11T21:59:47Z",
+      "side": 1,
+      "message": "go/android-api-rules\nI think maybe an enum with enums testapi, systemapi, empty means hide.\n\n@DeprecatedForSdk(allowIn\u003d{TEST_API, SYSTEM_API})",
+      "parentUuid": "55044286_bf5e4e57",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 34
+      },
+      "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
