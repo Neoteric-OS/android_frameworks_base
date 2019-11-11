@@ -16,7 +16,7 @@
 
 #define LOG_TAG "VibratorService"
 
-#include <android/hardware/vibrator/1.4/IVibrator.h>
+#include <android/hardware/vibrator/1.3/IVibrator.h>
 #include <android/hardware/vibrator/BnVibratorCallback.h>
 #include <android/hardware/vibrator/IVibrator.h>
 #include <binder/IServiceManager.h>
