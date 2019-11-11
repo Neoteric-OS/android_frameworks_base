@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54d8a374_9f7741ee",
+        "filename": "api/lint-baseline.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2019-11-11T19:32:14Z",
+      "side": 1,
+      "message": "How did these new lint findings get added - can we fix them?",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 11
+      },
+      "revId": "3142298db178192ea7cd4cfde5c8514745e87b03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
