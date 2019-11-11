@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a794346_bf550c89",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-11-11T21:39:18Z",
+      "side": 1,
+      "message": "Do we want to make it possible to specify what SDK it\u0027s deprecated for? For example, we might have public API that we want to mark deprecated for public SDK, but leave it un-deprecated as @TestApi or @SystemApi.",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 34
+      },
+      "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
