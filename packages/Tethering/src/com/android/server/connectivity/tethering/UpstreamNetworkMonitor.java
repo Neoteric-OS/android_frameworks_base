@@ -79,6 +79,7 @@ public class UpstreamNetworkMonitor {
     public static final int EVENT_ON_CAPABILITIES   = 1;
     public static final int EVENT_ON_LINKPROPERTIES = 2;
     public static final int EVENT_ON_LOST           = 3;
+    public static final int EVENT_ON_SUSPEND        = 4;
     public static final int NOTIFY_LOCAL_PREFIXES   = 10;
 
     private static final int CALLBACK_LISTEN_ALL = 1;
@@ -367,11 +368,13 @@ public class UpstreamNetworkMonitor {
     private void handleSuspended(Network network) {
         if (!network.equals(mTetheringUpstreamNetwork)) return;
         mLog.log("SUSPENDED current upstream: " + network);
+        notifyTarget(EVENT_ON_SUSPEND, Boolean.TRUE);
     }
 
     private void handleResumed(Network network) {
         if (!network.equals(mTetheringUpstreamNetwork)) return;
         mLog.log("RESUMED current upstream: " + network);
+        notifyTarget(EVENT_ON_SUSPEND, Boolean.FALSE);
     }
 
     private void handleLost(Network network) {

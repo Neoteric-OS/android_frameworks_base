@@ -47,9 +47,6 @@ import static android.net.wifi.WifiManager.WIFI_AP_STATE_DISABLED;
 import static android.telephony.CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothPan;
@@ -59,7 +56,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
 import android.net.INetd;
@@ -114,8 +110,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
-import com.android.internal.notification.SystemNotificationChannels;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.MessageUtils;
@@ -199,11 +193,10 @@ public class TetheringService extends Service {
     private PhoneStateListener mPhoneStateListener;
     private int mActiveDataSubId = INVALID_SUBSCRIPTION_ID;
     private ITetherInternalCallback mTetherInternalCallback = null;
+    private TetheringNotification mTetheringNotification;
 
     private volatile TetheringConfiguration mConfig;
     private InterfaceSet mCurrentUpstreamIfaceSet;
-    private Notification.Builder mTetheredNotificationBuilder;
-    private int mLastNotificationId;
 
     private boolean mRndisEnabled;       // track the RNDIS function enabled state
     // True iff. WiFi tethering should be started when soft AP is ready.
@@ -232,6 +225,7 @@ public class TetheringService extends Service {
                 mLog);
         mUpstreamNetworkMonitor = mDeps.getUpstreamNetworkMonitor(mContext, mTetherMasterSM, mLog,
                 TetherMasterSM.EVENT_UPSTREAM_CALLBACK);
+        mTetheringNotification = new TetheringNotification(mContext);
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_CARRIER_CONFIG_CHANGED);
@@ -264,6 +258,7 @@ public class TetheringService extends Service {
 
                 mActiveDataSubId = subId;
                 updateConfiguration();
+                mTetheringNotification.onSubscriptionIdChanged(subId);
                 // To avoid launching unexpected provisioning checks, ignore re-provisioning when
                 // no CarrierConfig loaded yet. Assume reevaluateSimCardProvisioning() will be
                 // triggered again when CarrierConfig is loaded.
@@ -282,6 +277,7 @@ public class TetheringService extends Service {
 
         startStateMachineUpdaters(mHandler);
         startTrackDefaultNetwork();
+        getWifiManager().registerSoftApCallback(new SoftApCallBack(), mHandler);
     }
 
     /**
@@ -419,6 +415,20 @@ public class TetheringService extends Service {
         @Override
         public void onInterfaceRemoved(String ifName) {
             mHandler.post(() -> interfaceRemoved(ifName));
+        }
+    }
+
+    private class SoftApCallBack implements WifiManager.SoftApCallback {
+        // Wifi listener for state change of the soft AP
+        @Override
+        public void onStateChanged(final int state, final int failureReason) {
+            // Nothing
+        }
+
+        // Called by wifi when the number of soft AP clients changed.
+        @Override
+        public void onNumClientsChanged(final int numClients) {
+            mTetheringNotification.onNumClientsChanged(numClients);
         }
     }
 
@@ -706,109 +716,6 @@ public class TetheringService extends Service {
                     "tether", TextUtils.join(",", tetherList),
                     "error", TextUtils.join(",", erroredList)));
         }
-
-        if (usbTethered) {
-            if (wifiTethered || bluetoothTethered) {
-                showTetheredNotification(SystemMessage.NOTE_TETHER_GENERAL);
-            } else {
-                showTetheredNotification(SystemMessage.NOTE_TETHER_USB);
-            }
-        } else if (wifiTethered) {
-            if (bluetoothTethered) {
-                showTetheredNotification(SystemMessage.NOTE_TETHER_GENERAL);
-            } else {
-                /* We now have a status bar icon for WifiTethering, so drop the notification */
-                clearTetheredNotification();
-            }
-        } else if (bluetoothTethered) {
-            showTetheredNotification(SystemMessage.NOTE_TETHER_BLUETOOTH);
-        } else {
-            clearTetheredNotification();
-        }
-    }
-
-    private void showTetheredNotification(int id) {
-        showTetheredNotification(id, true);
-    }
-
-    @VisibleForTesting
-    protected void showTetheredNotification(int id, boolean tetheringOn) {
-        NotificationManager notificationManager =
-                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notificationManager == null) {
-            return;
-        }
-        int icon = 0;
-        switch(id) {
-            case SystemMessage.NOTE_TETHER_USB:
-                icon = com.android.internal.R.drawable.stat_sys_tether_usb;
-                break;
-            case SystemMessage.NOTE_TETHER_BLUETOOTH:
-                icon = com.android.internal.R.drawable.stat_sys_tether_bluetooth;
-                break;
-            case SystemMessage.NOTE_TETHER_GENERAL:
-            default:
-                icon = com.android.internal.R.drawable.stat_sys_tether_general;
-                break;
-        }
-
-        if (mLastNotificationId != 0) {
-            if (mLastNotificationId == icon) {
-                return;
-            }
-            notificationManager.cancelAsUser(null, mLastNotificationId,
-                    UserHandle.ALL);
-            mLastNotificationId = 0;
-        }
-
-        Intent intent = new Intent();
-        intent.setClassName("com.android.settings", "com.android.settings.TetherSettings");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-        PendingIntent pi = PendingIntent.getActivityAsUser(mContext, 0, intent, 0,
-                null, UserHandle.CURRENT);
-
-        Resources r = Resources.getSystem();
-        final CharSequence title;
-        final CharSequence message;
-
-        if (tetheringOn) {
-            title = r.getText(com.android.internal.R.string.tethered_notification_title);
-            message = r.getText(com.android.internal.R.string.tethered_notification_message);
-        } else {
-            title = r.getText(com.android.internal.R.string.disable_tether_notification_title);
-            message = r.getText(com.android.internal.R.string.disable_tether_notification_message);
-        }
-
-        if (mTetheredNotificationBuilder == null) {
-            mTetheredNotificationBuilder =
-                    new Notification.Builder(mContext, SystemNotificationChannels.NETWORK_STATUS);
-            mTetheredNotificationBuilder.setWhen(0)
-                    .setOngoing(true)
-                    .setColor(mContext.getColor(
-                            com.android.internal.R.color.system_notification_accent_color))
-                    .setVisibility(Notification.VISIBILITY_PUBLIC)
-                    .setCategory(Notification.CATEGORY_STATUS);
-        }
-        mTetheredNotificationBuilder.setSmallIcon(icon)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setContentIntent(pi);
-        mLastNotificationId = id;
-
-        notificationManager.notifyAsUser(null, mLastNotificationId,
-                mTetheredNotificationBuilder.buildInto(new Notification()), UserHandle.ALL);
-    }
-
-    @VisibleForTesting
-    protected void clearTetheredNotification() {
-        NotificationManager notificationManager =
-                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notificationManager != null && mLastNotificationId != 0) {
-            notificationManager.cancelAsUser(null, mLastNotificationId,
-                    UserHandle.ALL);
-            mLastNotificationId = 0;
-        }
     }
 
     private class StateReceiver extends BroadcastReceiver {
@@ -957,12 +864,9 @@ public class TetheringService extends Service {
                 return;
             }
 
-            mWrapper.clearTetheredNotification();
             final boolean isTetheringActiveOnDevice = (mWrapper.getTetheredIfaces().length != 0);
 
             if (newlyDisallowed && isTetheringActiveOnDevice) {
-                mWrapper.showTetheredNotification(
-                        com.android.internal.R.drawable.stat_sys_tether_general, false);
                 mWrapper.untetherAll();
             }
         }
@@ -1497,13 +1401,26 @@ public class TetheringService extends Service {
         }
 
         private void handleUpstreamNetworkMonitorCallback(int arg1, Object o) {
-            if (arg1 == UpstreamNetworkMonitor.NOTIFY_LOCAL_PREFIXES) {
-                mOffload.sendOffloadExemptPrefixes((Set<IpPrefix>) o);
-                return;
+            switch (arg1) {
+                case UpstreamNetworkMonitor.EVENT_ON_CAPABILITIES:
+                case UpstreamNetworkMonitor.EVENT_ON_LINKPROPERTIES:
+                case UpstreamNetworkMonitor.EVENT_ON_LOST:
+                    handleUpstreamStatesChanged(arg1, (NetworkState) o);
+                    break;
+                case UpstreamNetworkMonitor.EVENT_ON_SUSPEND:
+                    final Boolean status = (Boolean) o;
+                    mTetheringNotification.onNetworkSuspendChanged(status.booleanValue());
+                    break;
+                case UpstreamNetworkMonitor.NOTIFY_LOCAL_PREFIXES:
+                    mOffload.sendOffloadExemptPrefixes((Set<IpPrefix>) o);
+                    break;
+                default:
+                    mLog.e("Unknown arg1 value: " + arg1);
+                    break;
             }
+        }
 
-            final NetworkState ns = (NetworkState) o;
-
+        private void handleUpstreamStatesChanged(final int event, final NetworkState ns) {
             if (ns == null || !pertainsToCurrentUpstream(ns)) {
                 // TODO: In future, this is where upstream evaluation and selection
                 // could be handled for notifications which include sufficient data.
@@ -1520,7 +1437,7 @@ public class TetheringService extends Service {
                 return;
             }
 
-            switch (arg1) {
+            switch (event) {
                 case UpstreamNetworkMonitor.EVENT_ON_CAPABILITIES:
                     handleNewUpstreamNetworkState(ns);
                     break;
@@ -1533,9 +1450,6 @@ public class TetheringService extends Service {
                     // broadcasts that result in being passed a
                     // TetherMasterSM.CMD_UPSTREAM_CHANGED.
                     handleNewUpstreamNetworkState(null);
-                    break;
-                default:
-                    mLog.e("Unknown arg1 value: " + arg1);
                     break;
             }
         }
@@ -2014,10 +1928,14 @@ public class TetheringService extends Service {
             case IpServer.STATE_UNAVAILABLE:
             case IpServer.STATE_AVAILABLE:
                 which = TetherMasterSM.EVENT_IFACE_SERVING_STATE_INACTIVE;
+                mTetheringNotification.onDownstreamStopped(
+                        ifaceNameToType(iface), mActiveDataSubId);
                 break;
             case IpServer.STATE_TETHERED:
             case IpServer.STATE_LOCAL_ONLY:
                 which = TetherMasterSM.EVENT_IFACE_SERVING_STATE_ACTIVE;
+                mTetheringNotification.onDownstreamStarted(
+                        ifaceNameToType(iface), mActiveDataSubId);
                 break;
             default:
                 Log.wtf(TAG, "Unknown interface state: " + state);

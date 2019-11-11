@@ -46,7 +46,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.notNull;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.any;
@@ -61,6 +60,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -68,6 +68,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.hardware.usb.UsbManager;
 import android.net.INetd;
 import android.net.INetworkPolicyManager;
@@ -122,6 +123,7 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.StateMachine;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.internal.util.test.FakeSettingsProvider;
+import com.android.tethering.R;
 
 import org.junit.After;
 import org.junit.Before;
@@ -166,6 +168,8 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
     @Mock private RouterAdvertisementDaemon mRouterAdvertisementDaemon;
     @Mock private IDhcpServer mDhcpServer;
     @Mock private INetd mNetd;
+    @Mock private NotificationManager mNotificationManager;
+    @Mock private TypedArray mIconArray;
 
     private final MockIpServerDependencies mIpServerDependencies =
             spy(new MockIpServerDependencies());
@@ -214,6 +218,7 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
             if (Context.WIFI_SERVICE.equals(name)) return mWifiManager;
             if (Context.USB_SERVICE.equals(name)) return mUsbManager;
             if (Context.TELEPHONY_SERVICE.equals(name)) return mTelephonyManager;
+            if (Context.NOTIFICATION_SERVICE.equals(name)) return mNotificationManager;
             return super.getSystemService(name);
         }
     }
@@ -413,6 +418,9 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
                 .thenReturn(new int[0]);
         when(mResources.getBoolean(com.android.internal.R.bool.config_tether_upstream_automatic))
                 .thenReturn(false);
+        when(mResources.obtainTypedArray(R.array.tethering_notification_icons))
+                .thenReturn(mIconArray);
+        when(mIconArray.length()).thenReturn(0);
         when(mNMService.listInterfaces())
                 .thenReturn(new String[] {
                         TEST_MOBILE_IFNAME, TEST_WLAN_IFNAME, TEST_USB_IFNAME, TEST_P2P_IFNAME});
@@ -447,6 +455,8 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         verify(mTelephonyManager).listen(phoneListenerCaptor.capture(),
                 eq(PhoneStateListener.LISTEN_ACTIVE_DATA_SUBSCRIPTION_ID_CHANGE));
         mPhoneStateListener = phoneListenerCaptor.getValue();
+
+        verify(mWifiManager, times(1)).registerSoftApCallback(any(), any());
     }
 
     @After
@@ -963,9 +973,6 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         when(tethering.getTetheredIfaces()).thenReturn(activeTetheringIfacesList);
 
         turl.onUserRestrictionsChanged(userId, newRestrictions, currRestrictions);
-
-        verify(tethering, times(expectedInteractionsWithShowNotification))
-                .showTetheredNotification(anyInt(), eq(false));
 
         verify(tethering, times(expectedInteractionsWithShowNotification)).untetherAll();
     }
