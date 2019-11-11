@@ -38,6 +38,20 @@ import java.util.Map;
  */
 public final class CompatChange extends CompatibilityChangeInfo {
 
+    /**
+     * Callback listener for when compat changes are updated for a package.
+     * See {@link #registerListener(ChangeListener)} for more details.
+     */
+    public interface ChangeListener {
+        /**
+         * Called upon an override change for packageName and the change this listener is
+         * registered for. Called before the app is killed.
+         */
+        void onCompatChange(String packageName);
+    }
+
+    ChangeListener mListener;
+
     private Map<String, Boolean> mPackageOverrides;
 
     public CompatChange(long changeId) {
@@ -54,6 +68,7 @@ public final class CompatChange extends CompatibilityChangeInfo {
     public CompatChange(long changeId, @Nullable String name, int enableAfterTargetSdk,
             boolean disabled) {
         super(changeId, name, enableAfterTargetSdk, disabled);
+        mListener = null;
     }
 
     /**
@@ -62,6 +77,15 @@ public final class CompatChange extends CompatibilityChangeInfo {
     public CompatChange(Change change) {
         super(change.getId(), change.getName(), change.getEnableAfterTargetSdk(),
                 change.getDisabled());
+        mListener = null;
+    }
+
+    void registerListener(ChangeListener listener) {
+        if (mListener != null) {
+            throw new IllegalArgumentException(
+                    "Listener for change " + toString() + " already registered.");
+        }
+        mListener = listener;
     }
 
     /**
@@ -78,6 +102,7 @@ public final class CompatChange extends CompatibilityChangeInfo {
             mPackageOverrides = new HashMap<>();
         }
         mPackageOverrides.put(pname, enabled);
+        notifyListener(pname);
     }
 
     /**
@@ -90,6 +115,7 @@ public final class CompatChange extends CompatibilityChangeInfo {
     void removePackageOverride(String pname) {
         if (mPackageOverrides != null) {
             mPackageOverrides.remove(pname);
+            notifyListener(pname);
         }
     }
 
@@ -130,5 +156,11 @@ public final class CompatChange extends CompatibilityChangeInfo {
             sb.append("; packageOverrides=").append(mPackageOverrides);
         }
         return sb.append(")").toString();
+    }
+
+    private void notifyListener(String packageName) {
+        if (mListener != null) {
+            mListener.onCompatChange(packageName);
+        }
     }
 }
