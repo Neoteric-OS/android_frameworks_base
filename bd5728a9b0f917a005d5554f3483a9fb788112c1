@@ -22,6 +22,30 @@
       "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55044286_bf5e4e57",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1004689
+      },
+      "writtenOn": "2019-11-11T21:55:39Z",
+      "side": 1,
+      "message": "What do you think the API surface (this annotation) should look like? A new enum with common sets of SDK names, related to the annotations (@TestApi, @SystemApi) ? If so what are the sets of APIs you want to distinguish between?",
+      "parentUuid": "3a794346_bf550c89",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 34
+      },
+      "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
