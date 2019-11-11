@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdc4ac32_1d3718e2",
+        "filename": "tests/RollbackTest/StagedRollbackTest/src/com/android/tests/rollback/host/StagedRollbackTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-11T09:40:15Z",
+      "side": 1,
+      "message": "Per comment in other CL: this could return two files.",
+      "range": {
+        "startLine": 172,
+        "startChar": 80,
+        "endLine": 172,
+        "endChar": 83
+      },
+      "revId": "1ebd5c44d2c4de8d570723a3b57857989e1c7d14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
