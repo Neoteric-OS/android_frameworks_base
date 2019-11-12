@@ -720,7 +720,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
      *
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public int getAudioState(BluetoothDevice device) {
         if (VDBG) log("getAudioState");
         final IBluetoothHeadset service = mService;
@@ -815,6 +815,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
      * or on error
      * @hide
      */
+    @SystemApi
     public boolean isAudioOn() {
         if (VDBG) log("isAudioOn()");
         final IBluetoothHeadset service = mService;
@@ -848,7 +849,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
      * @return false if there was some error such as there is no active headset
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public boolean connectAudio() {
         final IBluetoothHeadset service = mService;
         if (service != null && isEnabled()) {
@@ -875,7 +876,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
      * @return false if audio is not connected, or on error, true otherwise
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public boolean disconnectAudio() {
         final IBluetoothHeadset service = mService;
         if (service != null && isEnabled()) {
@@ -968,7 +969,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
      *
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public void phoneStateChanged(int numActive, int numHeld, int callState, String number,
             int type, String name) {
         final IBluetoothHeadset service = mService;
@@ -989,6 +990,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     public void clccResponse(int index, int direction, int status, int mode, boolean mpty,
             String number, int type) {
         final IBluetoothHeadset service = mService;
@@ -1067,7 +1069,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
      * @hide
      */
     @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN)
-    @UnsupportedAppUsage
+    @SystemApi
     public boolean setActiveDevice(@Nullable BluetoothDevice device) {
         if (DBG) {
             Log.d(TAG, "setActiveDevice: " + device);
@@ -1097,7 +1099,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
      * @hide
      */
     @RequiresPermission(android.Manifest.permission.BLUETOOTH)
-    @UnsupportedAppUsage
+    @SystemApi
     public BluetoothDevice getActiveDevice() {
         if (VDBG) {
             Log.d(TAG, "getActiveDevice");
@@ -1124,6 +1126,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
      * @hide
      */
     @RequiresPermission(android.Manifest.permission.BLUETOOTH)
+    @SystemApi
     public boolean isInbandRingingEnabled() {
         if (DBG) {
             log("isInbandRingingEnabled()");
