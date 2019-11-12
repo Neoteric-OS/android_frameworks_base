@@ -1292,9 +1292,24 @@ package android.bluetooth {
   }
 
   public final class BluetoothHeadset implements android.bluetooth.BluetoothProfile {
+    method public void clccResponse(int, int, int, int, boolean, String, int);
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN) public boolean connect(android.bluetooth.BluetoothDevice);
+    method public boolean connectAudio();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN) public boolean disconnect(android.bluetooth.BluetoothDevice);
+    method public boolean disconnectAudio();
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH) public android.bluetooth.BluetoothDevice getActiveDevice();
+    method public int getAudioState(android.bluetooth.BluetoothDevice);
+    method public boolean isAudioOn();
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH) public boolean isInbandRingingEnabled();
+    method public void phoneStateChanged(int, int, int, String, int, String);
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN) public boolean setActiveDevice(@Nullable android.bluetooth.BluetoothDevice);
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN) public boolean setPriority(android.bluetooth.BluetoothDevice, int);
+  }
+
+  public final class BluetoothHearingAid implements android.bluetooth.BluetoothProfile {
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH) public java.util.List<android.bluetooth.BluetoothDevice> getActiveDevices();
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH) public long getHiSyncId(android.bluetooth.BluetoothDevice);
+    method public boolean setActiveDevice(@Nullable android.bluetooth.BluetoothDevice);
   }
 
   public interface BluetoothProfile {
