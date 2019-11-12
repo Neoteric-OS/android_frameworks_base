@@ -18,9 +18,10 @@ package android.telephony.ims;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.SystemApi;
-import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -29,11 +30,7 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * This class enables an application to get details on why a method call failed.
- *
- * @hide
  */
-@SystemApi
-@TestApi
 public final class ImsReasonInfo implements Parcelable {
 
     /**
@@ -1089,9 +1086,11 @@ public final class ImsReasonInfo implements Parcelable {
     /**
      * Network string error messages.
      * mExtraMessage may have these values.
+     * @hide
      */
-    public static final String EXTRA_MSG_SERVICE_NOT_AUTHORIZED
-            = "Forbidden. Not Authorized for Service";
+    @SystemApi
+    public static final String EXTRA_MSG_SERVICE_NOT_AUTHORIZED =
+            "Forbidden. Not Authorized for Service";
 
 
     /*
@@ -1099,21 +1098,21 @@ public final class ImsReasonInfo implements Parcelable {
      * This value can be referred when the code is CODE_LOCAL_CALL_CS_RETRY_REQUIRED.
      */
     /**
-     * An extra that may be populated when the {@link CODE_LOCAL_CALL_CS_RETRY_REQUIRED} result has
+     * An extra that may be populated when the {@link #CODE_LOCAL_CALL_CS_RETRY_REQUIRED} result has
      * been returned.
      * <p>
      * Try to connect the call using CS
      */
     public static final int EXTRA_CODE_CALL_RETRY_NORMAL = 1;
     /**
-     * An extra that may be populated when the {@link CODE_LOCAL_CALL_CS_RETRY_REQUIRED} result has
+     * An extra that may be populated when the {@link #CODE_LOCAL_CALL_CS_RETRY_REQUIRED} result has
      * been returned.
      * <p>
      * Try to connect the call using CS and do not notify the user.
      */
     public static final int EXTRA_CODE_CALL_RETRY_SILENT_REDIAL = 2;
     /**
-     * An extra that may be populated when the {@link CODE_LOCAL_CALL_CS_RETRY_REQUIRED} result has
+     * An extra that may be populated when the {@link #CODE_LOCAL_CALL_CS_RETRY_REQUIRED} result has
      * been returned.
      * <p>
      * Try to connect the call using CS by using the settings.
@@ -1123,15 +1122,18 @@ public final class ImsReasonInfo implements Parcelable {
 
     // For main reason code
     /** @hide */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.Q, publicAlternatives = "{@code "
+            + "#getCode()}")
     public int mCode;
     // For the extra code value; it depends on the code value.
     /** @hide */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.Q, publicAlternatives = "{@code "
+            + "#getExtraCode()}")
     public int mExtraCode;
     // For the additional message of the reason info.
     /** @hide */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.Q, publicAlternatives = "{@code "
+            + "#getExtraMessage()}")
     public String mExtraMessage;
 
     /** @hide */
@@ -1155,7 +1157,7 @@ public final class ImsReasonInfo implements Parcelable {
         mExtraMessage = null;
     }
 
-    public ImsReasonInfo(int code, int extraCode, String extraMessage) {
+    public ImsReasonInfo(int code, int extraCode, @Nullable String extraMessage) {
         mCode = code;
         mExtraCode = extraCode;
         mExtraMessage = extraMessage;
@@ -1179,7 +1181,7 @@ public final class ImsReasonInfo implements Parcelable {
      * @return an optional OEM specified string that provides extra information about the operation
      * result.
      */
-    public String getExtraMessage() {
+    public @Nullable String getExtraMessage() {
         return mExtraMessage;
     }
 
@@ -1198,13 +1200,13 @@ public final class ImsReasonInfo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel out, int flags) {
+    public void writeToParcel(@NonNull Parcel out, int flags) {
         out.writeInt(mCode);
         out.writeInt(mExtraCode);
         out.writeString(mExtraMessage);
     }
 
-    public static final @android.annotation.NonNull Creator<ImsReasonInfo> CREATOR = new Creator<ImsReasonInfo>() {
+    public static final @NonNull Creator<ImsReasonInfo> CREATOR = new Creator<ImsReasonInfo>() {
         @Override
         public ImsReasonInfo createFromParcel(Parcel in) {
             return new ImsReasonInfo(in);
