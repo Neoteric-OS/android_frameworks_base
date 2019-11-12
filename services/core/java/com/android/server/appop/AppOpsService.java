@@ -32,12 +32,13 @@ import static android.app.AppOpsManager.UID_STATE_TOP;
 import static android.app.AppOpsManager.modeToName;
 import static android.app.AppOpsManager.opToName;
 import static android.app.AppOpsManager.resolveFirstUnrestrictedUidState;
+import static android.content.pm.PackageManager.MATCH_ANY_USER;
+import static android.content.pm.PackageManager.MATCH_KNOWN_PACKAGES;
 
 import android.Manifest;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.ActivityManager;
-import android.app.ActivityThread;
 import android.app.AppGlobals;
 import android.app.AppOpsManager;
 import android.app.AppOpsManager.HistoricalOps;
@@ -176,6 +177,9 @@ public class AppOpsService extends IAppOpsService.Stub {
     Context mContext;
     final AtomicFile mFile;
     final Handler mHandler;
+    // maps uid to package names
+    @GuardedBy("mInstalledPackages")
+    private final ArrayMap<Integer, List<AppInfoLite>> mInstalledPackages = new ArrayMap<>();
 
     private final AppOpsManagerInternalImpl mAppOpsManagerInternal
             = new AppOpsManagerInternalImpl();
@@ -721,8 +725,99 @@ public class AppOpsService extends IAppOpsService.Stub {
         LockGuard.installLock(this, LockGuard.INDEX_APP_OPS);
         mFile = new AtomicFile(storagePath, "appops");
         mHandler = handler;
-        mConstants = new Constants(mHandler);
+        PackageManagerInternal pmi = LocalServices.getService(PackageManagerInternal.class);
+        if (pmi != null) {
+            pmi.getPackageList(new PackageManagerInternal.PackageListObserver() {
+                @Override
+                public void onPackageAdded(@NonNull String packageName, int uid) {
+                    ApplicationInfo appInfo = pmi.getApplicationInfo(packageName, MATCH_ANY_USER
+                                    | PackageManager.MATCH_DIRECT_BOOT_AWARE
+                                    | PackageManager.MATCH_DIRECT_BOOT_UNAWARE,
+                            UserHandle.myUserId(), Process.myUid());
+                    synchronized (mInstalledPackages) {
+                        onPackageAddedLocked(packageName, uid, appInfo.isPrivilegedApp());
+                    }
+                }
+
+                @Override
+                public void onPackageRemoved(@NonNull String packageName, int uid) {
+                    synchronized (mInstalledPackages) {
+                        onPackageRemovedLocked(packageName, uid);
+                    }
+                }
+            });
+            List<ApplicationInfo> installedApps = pmi.getInstalledApplications(MATCH_ANY_USER
+                            | PackageManager.MATCH_DIRECT_BOOT_AWARE
+                            | PackageManager.MATCH_DIRECT_BOOT_UNAWARE,
+                    UserHandle.myUserId(), Process.myUid());
+            synchronized (mInstalledPackages) {
+                for (ApplicationInfo appInfo : installedApps) {
+                    int uid = appInfo.uid;
+                    String packageName = appInfo.packageName;
+                    onPackageAddedLocked(packageName, uid, false);
+                }
+            }
+        } else {
+            Slog.w(TAG, "failed to get the PackageManagerInternal service");
+        }
         readState();
+    }
+
+    private static class AppInfoLite {
+        String packageName;
+        int uid;
+        boolean privilegedApp;
+
+        public AppInfoLite(String packageName, int uid, boolean privilegedApp) {
+            this.packageName = packageName;
+            this.uid = uid;
+            this.privilegedApp = privilegedApp;
+        }
+    }
+
+    @GuardedBy("mInstalledPackages")
+    private void onPackageAddedLocked(@NonNull String packageName, int uid, boolean privileged) {
+        List<AppInfoLite> apps = mInstalledPackages.get(uid);
+        if (apps == null) {
+            apps = new ArrayList<>();
+        }
+        for (AppInfoLite appInfo : apps) {
+            if (packageName.equals(appInfo.packageName)) {
+                return;
+            }
+        }
+        apps.add(new AppInfoLite(packageName, uid, privileged));
+    }
+
+    @GuardedBy("mInstalledPackages")
+    private void onPackageRemovedLocked(@NonNull String packageName, int uid) {
+        List<AppInfoLite> apps = mInstalledPackages.get(uid);
+        if (apps == null) {
+            // Should not happen
+            Slog.wtf(TAG, "Weird, found an uninitialized uid " + uid
+                    + ", pkg=" + packageName);
+            return;
+        }
+        for (int i = apps.size() - 1; i >= 0; i--) {
+            if (packageName.equals(apps.get(i).packageName)) {
+                apps.remove(i);
+                return;
+            }
+        }
+        if (apps.isEmpty()) {
+            mInstalledPackages.remove(uid);
+        }
+    }
+
+    private AppInfoLite getAppInfo(@NonNull String packageName, int uid) {
+        synchronized (mInstalledPackages) {
+            List<AppInfoLite> apps = mInstalledPackages.get(uid);
+            if (apps == null) return null;
+            for (AppInfoLite app : apps) {
+                if (packageName.equals(app.packageName)) return app;
+            }
+        }
+        return null;
     }
 
     public void publish(Context context) {
@@ -2519,41 +2614,24 @@ public class AppOpsService extends IAppOpsService.Stub {
             // This is the first time we have seen this package name under this uid,
             // so let's make sure it is valid.
             if (uid != 0) {
-                final long ident = Binder.clearCallingIdentity();
-                try {
-                    int pkgUid = -1;
-                    try {
-                        ApplicationInfo appInfo = ActivityThread.getPackageManager()
-                                .getApplicationInfo(packageName,
-                                        PackageManager.MATCH_DIRECT_BOOT_AWARE
-                                                | PackageManager.MATCH_DIRECT_BOOT_UNAWARE,
-                                        UserHandle.getUserId(uid));
-                        if (appInfo != null) {
-                            pkgUid = appInfo.uid;
-                            isPrivileged = (appInfo.privateFlags
-                                    & ApplicationInfo.PRIVATE_FLAG_PRIVILEGED) != 0;
-                        } else {
-                            pkgUid = resolveUid(packageName);
-                            if (pkgUid >= 0) {
-                                isPrivileged = false;
-                            }
-                        }
-                    } catch (RemoteException e) {
-                        Slog.w(TAG, "Could not contact PackageManager", e);
-                    }
-                    if (pkgUid != uid) {
+                int pkgUid = -1;
+
+                if (uid < Process.FIRST_APPLICATION_UID) {
+                    pkgUid = resolveUid(packageName);
+                } else {
+                    AppInfoLite appInfo = getAppInfo(packageName, uid);
+                    if (appInfo != null) {
+                        pkgUid = appInfo.uid;
+                        isPrivileged = appInfo.privilegedApp;
+                    } else if (!uidMismatchExpected) {
                         // Oops!  The package name is not valid for the uid they are calling
                         // under.  Abort.
-                        if (!uidMismatchExpected) {
-                            RuntimeException ex = new RuntimeException("here");
-                            ex.fillInStackTrace();
-                            Slog.w(TAG, "Bad call: specified package " + packageName
-                                    + " under uid " + uid + " but it is really " + pkgUid, ex);
-                        }
-                        return null;
+                        Slog.w(TAG, "Bad call: no package named " + packageName
+                                        + " with uid " + uid, new RuntimeException("here"));
                     }
-                } finally {
-                    Binder.restoreCallingIdentity(ident);
+                }
+                if (pkgUid != uid) {
+                    return null;
                 }
             }
             ops = new Ops(packageName, uidState, isPrivileged);
@@ -2870,22 +2948,12 @@ public class AppOpsService extends IAppOpsService.Stub {
         String isPrivilegedString = parser.getAttributeValue(null, "p");
         boolean isPrivileged = false;
         if (isPrivilegedString == null) {
-            try {
-                IPackageManager packageManager = ActivityThread.getPackageManager();
-                if (packageManager != null) {
-                    ApplicationInfo appInfo = ActivityThread.getPackageManager()
-                            .getApplicationInfo(pkgName, 0, UserHandle.getUserId(uid));
-                    if (appInfo != null) {
-                        isPrivileged = (appInfo.privateFlags
-                                & ApplicationInfo.PRIVATE_FLAG_PRIVILEGED) != 0;
-                    }
-                } else {
-                    // Could not load data, don't add to cache so it will be loaded later.
-                    return;
-                }
-            } catch (RemoteException e) {
-                Slog.w(TAG, "Could not contact PackageManager", e);
+            AppInfoLite appInfo = getAppInfo(pkgName, uid);
+            if (appInfo == null) {
+                // Could not load data, don't add to cache so it will be loaded later.
+                return;
             }
+            isPrivileged = appInfo.privilegedApp;
         } else {
             isPrivileged = Boolean.parseBoolean(isPrivilegedString);
         }
@@ -3693,7 +3761,7 @@ public class AppOpsService extends IAppOpsService.Stub {
                     dumpPackage = args[i];
                     try {
                         dumpUid = AppGlobals.getPackageManager().getPackageUid(dumpPackage,
-                                PackageManager.MATCH_KNOWN_PACKAGES | PackageManager.MATCH_INSTANT,
+                                MATCH_KNOWN_PACKAGES | PackageManager.MATCH_INSTANT,
                                 0);
                     } catch (RemoteException e) {
                     }
@@ -4199,6 +4267,11 @@ public class AppOpsService extends IAppOpsService.Stub {
                                 pw.print(" packages: "); pw.println(Arrays.toString(packageNames));
                     }
                 }
+            }
+
+            pw.print(" Installed apps:");
+            synchronized (mInstalledPackages) {
+                // TODO: sort by app id
             }
         }
 
