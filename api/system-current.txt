@@ -4342,6 +4342,11 @@ package android.net.ipsec.ike {
     field public final byte[] keyId;
   }
 
+  public final class IkeManager {
+    ctor public IkeManager(android.content.Context);
+    method public android.net.ipsec.ike.IkeSession openIkeSession(android.net.ipsec.ike.IkeSessionOptions, android.net.ipsec.ike.ChildSessionOptions, java.util.concurrent.Executor, android.net.ipsec.ike.IkeSessionCallback, android.net.ipsec.ike.ChildSessionCallback);
+  }
+
   public final class IkeRfc822AddrIdentification extends android.net.ipsec.ike.IkeIdentification {
     ctor public IkeRfc822AddrIdentification(@NonNull String);
     field public final String rfc822Name;
@@ -4357,6 +4362,13 @@ package android.net.ipsec.ike {
     method public android.net.ipsec.ike.IkeSaProposal.Builder addIntegrityAlgorithm(int);
     method public android.net.ipsec.ike.IkeSaProposal.Builder addPseudorandomFunction(int);
     method public android.net.ipsec.ike.IkeSaProposal build();
+  }
+
+  public final class IkeSession implements java.lang.AutoCloseable {
+    method public void close() throws java.lang.Exception;
+    method public void closeChildSession(android.net.ipsec.ike.ChildSessionCallback);
+    method public void kill() throws java.lang.Exception;
+    method public void openChildSession(android.net.ipsec.ike.ChildSessionOptions, android.net.ipsec.ike.ChildSessionCallback);
   }
 
   public interface IkeSessionCallback {
