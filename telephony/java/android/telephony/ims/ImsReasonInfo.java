@@ -18,7 +18,6 @@ package android.telephony.ims;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
-import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -29,9 +28,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * This class enables an application to get details on why a method call failed.
  *
- * @hide
  */
-@SystemApi
 public final class ImsReasonInfo implements Parcelable {
 
     /**
@@ -1088,8 +1085,8 @@ public final class ImsReasonInfo implements Parcelable {
      * Network string error messages.
      * mExtraMessage may have these values.
      */
-    public static final String EXTRA_MSG_SERVICE_NOT_AUTHORIZED
-            = "Forbidden. Not Authorized for Service";
+    public static final String EXTRA_MSG_SERVICE_NOT_AUTHORIZED =
+            "android.telephony.ims.extra.MSG_SERVICE_NOT_AUTHORIZED";
 
 
     /*
@@ -1153,7 +1150,7 @@ public final class ImsReasonInfo implements Parcelable {
         mExtraMessage = null;
     }
 
-    public ImsReasonInfo(int code, int extraCode, String extraMessage) {
+    public ImsReasonInfo(int code, int extraCode, @NonNull String extraMessage) {
         mCode = code;
         mExtraCode = extraCode;
         mExtraMessage = extraMessage;
@@ -1169,7 +1166,7 @@ public final class ImsReasonInfo implements Parcelable {
     /**
      * @return an optional OEM specified code that provides extra information.
      */
-    public int getExtraCode() {
+    public @NonNull int getExtraCode() {
         return mExtraCode;
     }
 
@@ -1177,7 +1174,7 @@ public final class ImsReasonInfo implements Parcelable {
      * @return an optional OEM specified string that provides extra information about the operation
      * result.
      */
-    public String getExtraMessage() {
+    public @NonNull String getExtraMessage() {
         return mExtraMessage;
     }
 
@@ -1196,7 +1193,7 @@ public final class ImsReasonInfo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel out, int flags) {
+    public void writeToParcel(@NonNull Parcel out, int flags) {
         out.writeInt(mCode);
         out.writeInt(mExtraCode);
         out.writeString(mExtraMessage);
