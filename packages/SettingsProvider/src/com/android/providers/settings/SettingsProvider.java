@@ -440,6 +440,11 @@ public class SettingsProvider extends ContentProvider {
             case Settings.CALL_METHOD_PUT_SYSTEM: {
                 String value = getSettingValue(args);
                 insertSystemSetting(name, value, requestingUserId);
+                // Enable touch sounds on System user as well,
+                // because taskbar-ui always runs under System user.
+                if (Settings.System.SOUND_EFFECTS_ENABLED.equals(name)) {
+                    insertSystemSetting(name, value, UserHandle.USER_SYSTEM);
+                }
                 break;
             }
 
