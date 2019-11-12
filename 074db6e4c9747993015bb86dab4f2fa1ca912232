@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17641eb7_f3fca162",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2019-11-12T18:51:07Z",
+      "side": 1,
+      "message": "Nit: remove empty line",
+      "range": {
+        "startLine": 30,
+        "startChar": 1,
+        "endLine": 30,
+        "endChar": 2
+      },
+      "revId": "074db6e4c9747993015bb86dab4f2fa1ca912232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5c6336_7cd3bb07",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2019-11-12T18:51:07Z",
+      "side": 1,
+      "message": "Does anybody directly depend on the actual old string value \"Forbidden. ...\"? If so they\u0027d need an update as well",
+      "range": {
+        "startLine": 1089,
+        "startChar": 13,
+        "endLine": 1089,
+        "endChar": 67
+      },
+      "revId": "074db6e4c9747993015bb86dab4f2fa1ca912232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770199bb_67cfec5c",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2019-11-12T18:51:07Z",
+      "side": 1,
+      "message": "Does anything directly use these? It\u0027d be a good time to make them private and remove @UnsupportedAppUsage + @hide",
+      "range": {
+        "startLine": 1119,
+        "startChar": 4,
+        "endLine": 1130,
+        "endChar": 32
+      },
+      "revId": "074db6e4c9747993015bb86dab4f2fa1ca912232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f95cca7_c279587b",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2019-11-12T18:51:07Z",
+      "side": 1,
+      "message": "Same here?",
+      "range": {
+        "startLine": 1145,
+        "startChar": 4,
+        "endLine": 1147,
+        "endChar": 11
+      },
+      "revId": "074db6e4c9747993015bb86dab4f2fa1ca912232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388a874f_01696739",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2019-11-12T18:51:07Z",
+      "side": 1,
+      "message": "Ints (and all other primitive types boolean/byte/char/... without capitalized names) can\u0027t be null - no need for this here",
+      "range": {
+        "startLine": 1169,
+        "startChar": 11,
+        "endLine": 1169,
+        "endChar": 19
+      },
+      "revId": "074db6e4c9747993015bb86dab4f2fa1ca912232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f124aef3_be75823a",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2019-11-12T18:51:07Z",
+      "side": 1,
+      "message": "NonNull is already imported, so you can remove this fully-qualified name and it\u0027ll still compile fine",
+      "range": {
+        "startLine": 1202,
+        "startChar": 25,
+        "endLine": 1202,
+        "endChar": 51
+      },
+      "revId": "074db6e4c9747993015bb86dab4f2fa1ca912232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
