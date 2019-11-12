@@ -22,6 +22,30 @@
       "revId": "464da66139c15ce49e8d8af254e4892bc46494fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952667d4_4098f3db",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2148,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-11-12T18:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55c7291a_75da9878",
+      "range": {
+        "startLine": 2148,
+        "startChar": 29,
+        "endLine": 2148,
+        "endChar": 72
+      },
+      "revId": "464da66139c15ce49e8d8af254e4892bc46494fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
