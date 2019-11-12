@@ -22,6 +22,7 @@ import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
+import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Binder;
@@ -305,7 +306,7 @@ public final class BluetoothHearingAid implements BluetoothProfile {
      * @return false on immediate error, true otherwise
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public boolean setActiveDevice(@Nullable BluetoothDevice device) {
         if (DBG) log("setActiveDevice(" + device + ")");
         final IBluetoothHearingAid service = getService();
@@ -334,9 +335,9 @@ public final class BluetoothHearingAid implements BluetoothProfile {
      * is not active, it will be null on that position. Returns empty list on error.
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     @RequiresPermission(Manifest.permission.BLUETOOTH)
-    public List<BluetoothDevice> getActiveDevices() {
+    public @Nullable List<BluetoothDevice> getActiveDevices() {
         if (VDBG) log("getActiveDevices()");
         final IBluetoothHearingAid service = getService();
         try {
@@ -525,7 +526,8 @@ public final class BluetoothHearingAid implements BluetoothProfile {
      * @hide
      */
     @RequiresPermission(Manifest.permission.BLUETOOTH)
-    public long getHiSyncId(BluetoothDevice device) {
+    @SystemApi
+    public long getHiSyncId(@Nullable BluetoothDevice device) {
         if (VDBG) {
             log("getCustomerId(" + device + ")");
         }
