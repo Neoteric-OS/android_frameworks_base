@@ -16,15 +16,19 @@
 
 package com.android.server.power;
 
+import static android.os.Process.THREAD_PRIORITY_FOREGROUND;
+
 import android.annotation.Nullable;
 import android.content.Context;
 import android.hardware.thermal.V1_0.ThermalStatus;
 import android.hardware.thermal.V1_0.ThermalStatusCode;
 import android.hardware.thermal.V1_1.IThermalCallback;
 import android.hardware.thermal.V2_0.IThermalChangedCallback;
+import android.hardware.thermal.V2_0.TemperatureThreshold;
 import android.hardware.thermal.V2_0.ThrottlingSeverity;
 import android.os.Binder;
 import android.os.CoolingDevice;
+import android.os.Handler;
 import android.os.HwBinder;
 import android.os.IThermalEventListener;
 import android.os.IThermalService;
@@ -46,6 +50,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.DumpUtils;
 import com.android.server.EventLogTags;
 import com.android.server.FgThread;
+import com.android.server.ServiceThread;
 import com.android.server.SystemService;
 
 import java.io.FileDescriptor;
@@ -56,6 +61,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * This is a system service that listens to HAL thermal events and dispatch those to listeners.
@@ -102,6 +108,9 @@ public class ThermalManagerService extends SystemService {
 
     /** Invalid throttling status */
     private static final int INVALID_THROTTLING = Integer.MIN_VALUE;
+
+    /** Watches temperatures to forecast when throttling will occur */
+    private final TemperatureWatcher mTemperatureWatcher = new TemperatureWatcher();
 
     public ThermalManagerService(Context context) {
         this(context, null);
@@ -462,6 +471,15 @@ public class ThermalManagerService extends SystemService {
             }
         }
 
+        @Override
+        public float getThermalHeadroom(int forecastSeconds) {
+            if (!mHalReady.get()) {
+                return Float.NaN;
+            }
+
+            return mTemperatureWatcher.getForecast(forecastSeconds);
+        }
+
         private void dumpItemsLocked(PrintWriter pw, String prefix,
                 Collection<?> items) {
             for (Iterator iterator = items.iterator(); iterator.hasNext();) {
@@ -616,6 +634,9 @@ public class ThermalManagerService extends SystemService {
         protected abstract List<CoolingDevice> getCurrentCoolingDevices(boolean shouldFilter,
                 int type);
 
+        protected abstract List<TemperatureThreshold> getTemperatureThresholds(boolean shouldFilter,
+                int type);
+
         protected abstract boolean connectToHal();
 
         protected abstract void dump(PrintWriter pw, String prefix);
@@ -725,6 +746,12 @@ public class ThermalManagerService extends SystemService {
                 }
                 return ret;
             }
+        }
+
+        @Override
+        protected List<TemperatureThreshold> getTemperatureThresholds(boolean shouldFilter,
+                int type) {
+            return null;
         }
 
         @Override
@@ -857,6 +884,12 @@ public class ThermalManagerService extends SystemService {
         }
 
         @Override
+        protected List<TemperatureThreshold> getTemperatureThresholds(boolean shouldFilter,
+                int type) {
+            return null;
+        }
+
+        @Override
         protected boolean connectToHal() {
             synchronized (mHalLock) {
                 try {
@@ -975,6 +1008,32 @@ public class ThermalManagerService extends SystemService {
         }
 
         @Override
+        protected List<TemperatureThreshold> getTemperatureThresholds(boolean shouldFilter,
+                int type) {
+            synchronized (mHalLock) {
+                List<TemperatureThreshold> ret = new ArrayList<>();
+                if (mThermalHal20 == null) {
+                    return ret;
+                }
+                try {
+                    mThermalHal20.getTemperatureThresholds(shouldFilter, type,
+                            (status, thresholds) -> {
+                                if (ThermalStatusCode.SUCCESS == status.code) {
+                                    ret.addAll(thresholds);
+                                } else {
+                                    Slog.e(TAG,
+                                            "Couldn't get temperature thresholds because of HAL "
+                                                    + "error: " + status.debugMessage);
+                                }
+                            });
+                } catch (RemoteException e) {
+                    Slog.e(TAG, "Couldn't getTemperatureThresholds, reconnecting...");
+                }
+                return ret;
+            }
+        }
+
+        @Override
         protected boolean connectToHal() {
             synchronized (mHalLock) {
                 try {
@@ -1001,4 +1060,174 @@ public class ThermalManagerService extends SystemService {
         }
     }
 
+    class TemperatureWatcher {
+        class Sample {
+            Sample(long time, float temperature) {
+                this.time = time;
+                this.temperature = temperature;
+            }
+
+            public long time;
+            public float temperature;
+        }
+
+        private final Handler mHandler;
+        private final ArrayMap<String, ArrayList<Sample>> mSamples = new ArrayMap<>();
+        private ArrayMap<String, Float> mSevereThresholds = new ArrayMap<>();
+        long mLastForecastCallTimeMillis = 0;
+
+        TemperatureWatcher() {
+            ServiceThread serviceThread = new ServiceThread(":tempWatcher",
+                    THREAD_PRIORITY_FOREGROUND, false);
+            serviceThread.start();
+            mHandler = new Handler(serviceThread.getLooper());
+        }
+
+        private void getSevereThresholds() {
+            synchronized (mSamples) {
+                List<TemperatureThreshold> thresholds = mHalWrapper.getTemperatureThresholds(
+                        false,
+                        Temperature.TYPE_UNKNOWN);
+                for (TemperatureThreshold threshold : thresholds) {
+                    if (threshold.hotThrottlingThresholds.length <= ThrottlingSeverity.SEVERE) {
+                        continue;
+                    }
+                    float temperature =
+                            threshold.hotThrottlingThresholds[ThrottlingSeverity.SEVERE];
+                    if (!Float.isNaN(temperature)) {
+                        mSevereThresholds.put(threshold.name,
+                                threshold.hotThrottlingThresholds[ThrottlingSeverity.SEVERE]);
+                    }
+                }
+            }
+        }
+
+        private static final int INACTIVITY_DELAY_MILLIS = 10000;
+        private static final int RING_BUFFER_SIZE = 30;
+
+        private void updateTemperature() {
+            synchronized (mSamples) {
+                if (System.currentTimeMillis() - mLastForecastCallTimeMillis
+                        < INACTIVITY_DELAY_MILLIS) {
+                    // Trigger this again after a second as long as forecast has been called more
+                    // recently than the inactivity timeout
+                    mHandler.postDelayed(this::updateTemperature, 1000);
+                } else {
+                    // Otherwise, we've been idle for at least 10 seconds, so we should
+                    // shut down
+                    mSamples.clear();
+                    return;
+                }
+
+                long now = System.currentTimeMillis();
+                List<Temperature> temperatures = mHalWrapper.getCurrentTemperatures(false,
+                        Temperature.TYPE_UNKNOWN);
+
+                for (Temperature temperature : temperatures) {
+                    ArrayList<Sample> samples = mSamples.computeIfAbsent(temperature.getName(),
+                            k -> new ArrayList<>(RING_BUFFER_SIZE));
+                    if (samples.size() == RING_BUFFER_SIZE) {
+                        samples.remove(0);
+                    }
+                    samples.add(new Sample(now, temperature.getValue()));
+                }
+            }
+        }
+
+        /*
+         * Calculates the trend using a linear regression
+         */
+        private float getSlopeOf(List<Sample> samples) {
+            long sumTimes = 0L;
+            float sumTemperatures = 0.0f;
+            for (Sample sample : samples) {
+                sumTimes += sample.time;
+                sumTemperatures += sample.temperature;
+            }
+            long meanTime = sumTimes / samples.size();
+            float meanTemperature = sumTemperatures / samples.size();
+
+            long sampleVariance = 0L;
+            float sampleCovariance = 0.0f;
+            for (Sample sample : samples) {
+                long timeDelta = sample.time - meanTime;
+                float temperatureDelta = sample.temperature - meanTemperature;
+                sampleVariance += timeDelta * timeDelta;
+                sampleCovariance += timeDelta * temperatureDelta;
+            }
+
+            return sampleCovariance / sampleVariance;
+        }
+
+        static final float DEGREES_BETWEEN_ZERO_AND_ONE = 30.0f;
+
+        private float normalizeTemperature(float temperature, float severeThreshold) {
+            synchronized (mSamples) {
+                float zeroNormalized = severeThreshold - DEGREES_BETWEEN_ZERO_AND_ONE;
+                if (temperature <= zeroNormalized) {
+                    return 0.0f;
+                }
+                float delta = temperature - zeroNormalized;
+                return delta / DEGREES_BETWEEN_ZERO_AND_ONE;
+            }
+        }
+
+        private static final int MINIMUM_SAMPLE_COUNT = 3;
+
+        float getForecast(int forecastSeconds) {
+            synchronized (mSamples) {
+                mLastForecastCallTimeMillis = System.currentTimeMillis();
+                if (mSamples.isEmpty()) {
+                    updateTemperature();
+                }
+
+                // If somehow things take much longer than expected or there are no temperatures
+                // to sample, return early
+                if (mSamples.isEmpty()) {
+                    Slog.e(TAG, "No temperature samples found");
+                    return Float.NaN;
+                }
+
+                if (mSevereThresholds.isEmpty()) {
+                    getSevereThresholds();
+
+                    // If we still don't have any thresholds, we can't normalize the temperatures,
+                    // so return early
+                    if (mSevereThresholds.isEmpty()) {
+                        Slog.e(TAG, "No temperature thresholds found");
+                        return Float.NaN;
+                    }
+                }
+
+                final AtomicReference<Float> maxNormalized = new AtomicReference<>();
+                mSamples.forEach((String name, ArrayList<Sample> samples) -> {
+                    Float threshold = mSevereThresholds.get(name);
+                    if (threshold == null) {
+                        Slog.e(TAG, "No threshold found for " + name);
+                        return;
+                    }
+
+                    float currentTemperature = samples.get(0).temperature;
+
+                    if (samples.size() < MINIMUM_SAMPLE_COUNT) {
+                        // Don't try to forecast, just use the latest one we have
+                        float normalized = normalizeTemperature(currentTemperature, threshold);
+                        if (maxNormalized.get() == null || normalized > maxNormalized.get()) {
+                            maxNormalized.set(normalized);
+                        }
+                        return;
+                    }
+
+                    float slope = getSlopeOf(samples);
+                    float normalized = normalizeTemperature(
+                            currentTemperature + slope * forecastSeconds, threshold);
+                    if (maxNormalized.get() == null || normalized > maxNormalized.get()) {
+                        maxNormalized.set(normalized);
+                    }
+                });
+
+                return maxNormalized.get();
+            }
+        }
+    }
 }

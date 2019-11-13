@@ -18,6 +18,7 @@ package android.os;
 
 import android.Manifest.permission;
 import android.annotation.CallbackExecutor;
+import android.annotation.CurrentTimeMillisLong;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -38,6 +39,7 @@ import com.android.internal.util.Preconditions;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * This class gives you control of the power state of the device.
@@ -1911,6 +1913,54 @@ public final class PowerManager {
                 } else {
                     throw new RuntimeException("Listener failed to remove");
                 }
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+    }
+
+    @CurrentTimeMillisLong
+    private final AtomicLong mLastHeadroomUpdate = new AtomicLong(0L);
+    private static final int MINIMUM_HEADROOM_TIME_MILLIS = 500;
+
+    /**
+     * This function provides an estimate of how much thermal headroom the device currently has
+     * before hitting throttling.
+     *
+     * @param forecastSeconds how many seconds in the future to forecast. Values less than 0 will
+     *                        be clamped to 0. Given that device conditions may change at any time,
+     *                        forecasts from further in the future will likely be less accurate than
+     *                        forecasts in the near future.
+     * @return a value greater than or equal to 0.0 (values less than 0.0 will be clamped to 0.0),
+     *         where 1.0 indicates the throttling threshold. The distance between 0.0 and 1.0 may be
+     *         assumed to be constant, and the value may be greater than 1.0 if throttling is
+     *         occurring or forecast to occur. Returns NaN if no forecast is available.
+     */
+    public float getThermalHeadroom(int forecastSeconds) {
+        // Rate-limit calls into the thermal service before entering the monitor
+        long now = System.currentTimeMillis();
+        long lastUpdateTime = mLastHeadroomUpdate.get();
+        long timeSinceLastUpdate = now - lastUpdateTime;
+        while (timeSinceLastUpdate < MINIMUM_HEADROOM_TIME_MILLIS) {
+            try {
+                Thread.sleep(MINIMUM_HEADROOM_TIME_MILLIS - timeSinceLastUpdate);
+                break;
+            } catch (InterruptedException e) {
+                // Update the current time and try again
+                now = System.currentTimeMillis();
+                timeSinceLastUpdate = now - lastUpdateTime;
+            }
+        }
+
+        synchronized (this) {
+            if (mThermalService == null) {
+                mThermalService = IThermalService.Stub.asInterface(
+                        ServiceManager.getService(Context.THERMAL_SERVICE));
+            }
+            try {
+                float forecast = mThermalService.getThermalHeadroom(forecastSeconds);
+                mLastHeadroomUpdate.set(System.currentTimeMillis());
+                return forecast;
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }

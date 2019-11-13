@@ -28,6 +28,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
+import android.hardware.thermal.V2_0.TemperatureThreshold;
 import android.os.CoolingDevice;
 import android.os.IBinder;
 import android.os.IPowerManager;
@@ -130,6 +131,12 @@ public class ThermalManagerServiceTest {
                 ret.add(cdev);
             }
             return ret;
+        }
+
+        @Override
+        protected List<TemperatureThreshold> getTemperatureThresholds(boolean shouldFilter,
+                int type) {
+            return null;
         }
 
         @Override
