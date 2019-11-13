@@ -157,6 +157,16 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         VpnProfile.validateAllowedAlgorithms(mAllowedAlgorithms);
     }
 
+    /**
+     * Returns a raw VpnProfile type
+     *
+     * @hide
+     */
+    @NonNull
+    public int getTypeInt() {
+        return mType;
+    }
+
     /** Retrieves the server address string. */
     @NonNull
     public String getServerAddr() {
@@ -315,6 +325,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         profile.isMetered = mIsMetered;
         profile.maxMtu = mMaxMtu;
         profile.authParamsInline = true;
+        profile.saveLogin = true;
 
         switch (mType) {
             case TYPE_IKEV2_IPSEC_USER_PASS:

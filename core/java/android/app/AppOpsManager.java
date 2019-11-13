@@ -1590,7 +1590,7 @@ public class AppOpsManager {
             Manifest.permission.REQUEST_DELETE_PACKAGES,
             Manifest.permission.BIND_ACCESSIBILITY_SERVICE,
             Manifest.permission.ACCEPT_HANDOVER,
-            null, // no permission for OP_MANAGE_IPSEC_TUNNELS
+            Manifest.permission.MANAGE_IPSEC_TUNNELS,
             Manifest.permission.FOREGROUND_SERVICE,
             null, // no permission for OP_BLUETOOTH_SCAN
             Manifest.permission.USE_BIOMETRIC,
