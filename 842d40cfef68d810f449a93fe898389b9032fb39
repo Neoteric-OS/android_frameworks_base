@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea904486_de02cce3",
+        "filename": "api/current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 45598,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-11-13T19:27:01Z",
+      "side": 1,
+      "message": "Do we need to expose the constructors? How about @TestApi?",
+      "range": {
+        "startLine": 45598,
+        "startChar": 16,
+        "endLine": 45598,
+        "endChar": 29
+      },
+      "revId": "842d40cfef68d810f449a93fe898389b9032fb39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2fdb96_6a9ee3ba",
+        "filename": "api/current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 45599,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-11-13T19:27:01Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 45599,
+        "startChar": 16,
+        "endLine": 45599,
+        "endChar": 29
+      },
+      "revId": "842d40cfef68d810f449a93fe898389b9032fb39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c938354e_f3fa447b",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-11-13T19:27:01Z",
+      "side": 1,
+      "message": "maxSdkVersion\u003dQ",
+      "range": {
+        "startLine": 1121,
+        "startChar": 21,
+        "endLine": 1121,
+        "endChar": 26
+      },
+      "revId": "842d40cfef68d810f449a93fe898389b9032fb39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8f7ffb_3bee3062",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-11-13T19:27:01Z",
+      "side": 1,
+      "message": "Keep UnsupportedAppUsage?",
+      "range": {
+        "startLine": 1123,
+        "startChar": 16,
+        "endLine": 1123,
+        "endChar": 26
+      },
+      "revId": "842d40cfef68d810f449a93fe898389b9032fb39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56ec08f_4882795f",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-11-13T19:27:01Z",
+      "side": 1,
+      "message": "maxSdkVersion\u003dQ",
+      "range": {
+        "startLine": 1126,
+        "startChar": 5,
+        "endLine": 1126,
+        "endChar": 24
+      },
+      "revId": "842d40cfef68d810f449a93fe898389b9032fb39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8a9de2_ae5dca67",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-11-13T19:27:01Z",
+      "side": 1,
+      "message": "Looks like ExtraMessage can be null. Empty String?",
+      "range": {
+        "startLine": 1133,
+        "startChar": 24,
+        "endLine": 1133,
+        "endChar": 28
+      },
+      "revId": "842d40cfef68d810f449a93fe898389b9032fb39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
