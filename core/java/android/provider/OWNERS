@@ -1,4 +1,2 @@
-per-file DeviceConfig.java = svetoslavganov@google.com
-per-file DeviceConfig.java = hackbod@google.com
-
-
+per-file DeviceConfig.java = hackbod@google.com, svetoslavganov@google.com
+per-file AndroidDeviceConfig.java = hackbod@google.com, svetoslavganov@google.com
