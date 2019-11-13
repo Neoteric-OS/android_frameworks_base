@@ -39,7 +39,7 @@ import java.security.GeneralSecurityException;
  * <p>VPN apps using supported protocols should preferentially use this API over the {@link
  * VpnService}, due to improved platform integration.
  *
- * @see Ikev2VpnProfileBuilder
+ * @see Ikev2VpnProfile
  */
 public class VpnManager {
     @NonNull private final Context mContext;

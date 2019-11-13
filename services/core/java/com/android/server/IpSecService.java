@@ -637,6 +637,7 @@ public class IpSecService extends IIpSecService.Stub {
         @Override
         public void invalidate() throws RemoteException {
             getUserRecord().removeTransformRecord(mResourceId);
+            Log.d(TAG, "Invalidating resource: " + this);
         }
 
         @Override
@@ -724,6 +725,7 @@ public class IpSecService extends IIpSecService.Stub {
         @Override
         public void invalidate() throws RemoteException {
             getUserRecord().removeSpiRecord(mResourceId);
+            Log.d(TAG, "Invalidating resource: " + this);
         }
 
         @Override
@@ -901,6 +903,7 @@ public class IpSecService extends IIpSecService.Stub {
         @Override
         public void invalidate() {
             getUserRecord().removeTunnelInterfaceRecord(mResourceId);
+            Log.d(TAG, "Invalidating resource: " + this);
         }
 
         @Override
@@ -968,6 +971,7 @@ public class IpSecService extends IIpSecService.Stub {
         @Override
         public void invalidate() {
             getUserRecord().removeEncapSocketRecord(mResourceId);
+            Log.d(TAG, "Invalidating resource: " + this);
         }
 
         @Override
@@ -1557,15 +1561,12 @@ public class IpSecService extends IIpSecService.Stub {
         }
 
         checkNotNull(callingPackage, "Null calling package cannot create IpSec tunnels");
-        switch (getAppOpsManager().noteOp(TUNNEL_OP, Binder.getCallingUid(), callingPackage)) {
-            case AppOpsManager.MODE_DEFAULT:
-                mContext.enforceCallingOrSelfPermission(
-                        android.Manifest.permission.MANAGE_IPSEC_TUNNELS, "IpSecService");
-                break;
+        switch (getAppOpsManager().noteOpNoThrow(TUNNEL_OP, Binder.getCallingUid(), callingPackage)) {
             case AppOpsManager.MODE_ALLOWED:
                 return;
             default:
-                throw new SecurityException("Request to ignore AppOps for non-legacy API");
+                mContext.enforceCallingOrSelfPermission(
+                        android.Manifest.permission.MANAGE_IPSEC_TUNNELS, "IpSecService");
         }
     }
 
