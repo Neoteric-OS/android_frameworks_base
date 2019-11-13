@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc1f7f41_af3b3232",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6376,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-13T12:15:23Z",
+      "side": 1,
+      "message": "Not related to this patch, just recall one thing that Junyu may has concern for this name per our offline discussion.\nNot sure if you have same feeling with him.\nThis array is used to store the candidate which is going to linger.\nHow about lingeringNetworks or something match its target?",
+      "range": {
+        "startLine": 6376,
+        "startChar": 42,
+        "endLine": 6376,
+        "endChar": 58
+      },
+      "revId": "3bc04f293e0e557c793ac6871420f299b5aac3e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
