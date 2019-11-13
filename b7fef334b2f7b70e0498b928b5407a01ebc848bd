@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "313fa28b_148c3271",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-11-13T15:32:29Z",
+      "side": 1,
+      "message": "wrong line",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 75
+      },
+      "revId": "b7fef334b2f7b70e0498b928b5407a01ebc848bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fc07cd_a843afff",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-11-13T15:32:29Z",
+      "side": 1,
+      "message": "nit: extract this into a local variable before if",
+      "range": {
+        "startLine": 244,
+        "startChar": 40,
+        "endLine": 244,
+        "endChar": 59
+      },
+      "revId": "b7fef334b2f7b70e0498b928b5407a01ebc848bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0355c610_e89c6552",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-11-13T15:32:29Z",
+      "side": 1,
+      "message": "Callback listener for when compat changes are updated for a package?",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 76
+      },
+      "revId": "b7fef334b2f7b70e0498b928b5407a01ebc848bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aacc7f5e_445f3aa6",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-11-13T15:32:29Z",
+      "side": 1,
+      "message": "do we have/plan to have APIs for toggling all changes or toggling all changes for a package or toggling a change for all packages? This will be spammed a lot?",
+      "revId": "b7fef334b2f7b70e0498b928b5407a01ebc848bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff0ec773_a2ba0fa2",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-11-13T15:32:29Z",
+      "side": 1,
+      "message": "onCompatChange?",
+      "range": {
+        "startLine": 63,
+        "startChar": 13,
+        "endLine": 63,
+        "endChar": 27
+      },
+      "revId": "b7fef334b2f7b70e0498b928b5407a01ebc848bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994c0cf8_83c25797",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-11-13T15:32:29Z",
+      "side": 1,
+      "message": "Only one",
+      "range": {
+        "startLine": 132,
+        "startChar": 54,
+        "endLine": 132,
+        "endChar": 59
+      },
+      "revId": "b7fef334b2f7b70e0498b928b5407a01ebc848bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff7b2d3_0c6ccc8e",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-11-13T15:32:29Z",
+      "side": 1,
+      "message": "is the existing case would ever want to unregister?",
+      "range": {
+        "startLine": 142,
+        "startChar": 16,
+        "endLine": 142,
+        "endChar": 32
+      },
+      "revId": "b7fef334b2f7b70e0498b928b5407a01ebc848bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c0a15d_0f272d50",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-11-13T15:32:29Z",
+      "side": 1,
+      "message": "this is an unchecked exception, you don\u0027t need to mention it in method declaration",
+      "range": {
+        "startLine": 143,
+        "startChar": 12,
+        "endLine": 143,
+        "endChar": 43
+      },
+      "revId": "b7fef334b2f7b70e0498b928b5407a01ebc848bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d05941_b23a4184",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-11-13T15:32:29Z",
+      "side": 1,
+      "message": "what about this one?",
+      "range": {
+        "startLine": 169,
+        "startChar": 16,
+        "endLine": 169,
+        "endChar": 30
+      },
+      "revId": "b7fef334b2f7b70e0498b928b5407a01ebc848bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
