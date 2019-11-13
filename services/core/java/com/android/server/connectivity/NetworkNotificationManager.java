@@ -18,6 +18,7 @@ package com.android.server.connectivity;
 
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 
 import android.app.Notification;
@@ -90,7 +91,10 @@ public class NetworkNotificationManager {
     }
 
     // TODO: deal more gracefully with multi-transport networks.
-    private static int getFirstTransportType(NetworkAgentInfo nai) {
+    protected static int getTransportType(NetworkAgentInfo nai) {
+        if (nai.isVPN()) {
+            return TRANSPORT_VPN;
+        }
         for (int i = 0; i < 64; i++) {
             if (nai.networkCapabilities.hasTransport(i)) return i;
         }
@@ -146,7 +150,7 @@ public class NetworkNotificationManager {
         final int transportType;
         final String name;
         if (nai != null) {
-            transportType = getFirstTransportType(nai);
+            transportType = getTransportType(nai);
             final String extraInfo = nai.networkInfo.getExtraInfo();
             name = TextUtils.isEmpty(extraInfo) ? nai.networkCapabilities.getSSID() : extraInfo;
             // Only notify for Internet-capable networks.
@@ -175,7 +179,7 @@ public class NetworkNotificationManager {
                     tag, nameOf(eventId), getTransportName(transportType), name, highPriority));
         }
 
-        Resources r = Resources.getSystem();
+        Resources r = mContext.getResources();
         final CharSequence title;
         final CharSequence details;
         int icon = getIcon(transportType, notifyType);
@@ -239,7 +243,7 @@ public class NetworkNotificationManager {
             details = r.getString(R.string.captive_portal_logged_in_detailed);
         } else if (notifyType == NotificationType.NETWORK_SWITCH) {
             String fromTransport = getTransportName(transportType);
-            String toTransport = getTransportName(getFirstTransportType(switchToNai));
+            String toTransport = getTransportName(getTransportType(switchToNai));
             title = r.getString(R.string.network_switch_metered, toTransport);
             details = r.getString(R.string.network_switch_metered_detail, toTransport,
                     fromTransport);
@@ -340,8 +344,8 @@ public class NetworkNotificationManager {
     }
 
     public void showToast(NetworkAgentInfo fromNai, NetworkAgentInfo toNai) {
-        String fromTransport = getTransportName(getFirstTransportType(fromNai));
-        String toTransport = getTransportName(getFirstTransportType(toNai));
+        String fromTransport = getTransportName(getTransportType(fromNai));
+        String toTransport = getTransportName(getTransportType(toNai));
         String text = mContext.getResources().getString(
                 R.string.network_switch_metered_toast, fromTransport, toTransport);
         Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();

@@ -18,8 +18,10 @@ package com.android.server.connectivity;
 
 import static com.android.server.connectivity.NetworkNotificationManager.NotificationType.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
@@ -40,6 +42,7 @@ import android.telephony.TelephonyManager;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.android.internal.R;
 import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
 
 import org.junit.Before;
@@ -60,12 +63,19 @@ public class NetworkNotificationManagerTest {
 
     static final NetworkCapabilities CELL_CAPABILITIES = new NetworkCapabilities();
     static final NetworkCapabilities WIFI_CAPABILITIES = new NetworkCapabilities();
+    static final NetworkCapabilities VPN_CAPABILITIES = new NetworkCapabilities();
     static {
         CELL_CAPABILITIES.addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
         CELL_CAPABILITIES.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
 
         WIFI_CAPABILITIES.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
         WIFI_CAPABILITIES.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+
+        // Set the underyling network to wifi.
+        VPN_CAPABILITIES.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
+        VPN_CAPABILITIES.addTransportType(NetworkCapabilities.TRANSPORT_VPN);
+        VPN_CAPABILITIES.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+        VPN_CAPABILITIES.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN);
     }
 
     @Mock Context mCtx;
@@ -75,6 +85,7 @@ public class NetworkNotificationManagerTest {
     @Mock NotificationManager mNotificationManager;
     @Mock NetworkAgentInfo mWifiNai;
     @Mock NetworkAgentInfo mCellNai;
+    @Mock NetworkAgentInfo mVpnNai;
     @Mock NetworkInfo mNetworkInfo;
     ArgumentCaptor<Notification> mCaptor;
 
@@ -88,6 +99,9 @@ public class NetworkNotificationManagerTest {
         mWifiNai.networkInfo = mNetworkInfo;
         mCellNai.networkCapabilities = CELL_CAPABILITIES;
         mCellNai.networkInfo = mNetworkInfo;
+
+        mVpnNai.networkCapabilities = VPN_CAPABILITIES;
+        mVpnNai.networkInfo = mNetworkInfo;
         when(mCtx.getResources()).thenReturn(mResources);
         when(mCtx.getPackageManager()).thenReturn(mPm);
         when(mCtx.getApplicationInfo()).thenReturn(new ApplicationInfo());
@@ -95,6 +109,45 @@ public class NetworkNotificationManagerTest {
         when(mResources.getColor(anyInt(), any())).thenReturn(0xFF607D8B);
 
         mManager = new NetworkNotificationManager(mCtx, mTelephonyManager, mNotificationManager);
+    }
+
+    @Test
+    public void testGetTransportType() {
+        doReturn(true).when(mVpnNai).isVPN();
+        assertEquals(NetworkCapabilities.TRANSPORT_WIFI, mManager.getTransportType(mWifiNai));
+        assertEquals(NetworkCapabilities.TRANSPORT_CELLULAR, mManager.getTransportType(mCellNai));
+        assertEquals(NetworkCapabilities.TRANSPORT_VPN, mManager.getTransportType(mVpnNai));
+    }
+
+    @Test
+    public void testTitleOfPrivateDnsBroken() {
+        final int id1 = 100;
+        final int id2 = 101;
+        final int id3 = 102;
+        final String tag1 = NetworkNotificationManager.tagFor(id1);
+        final String tag2 = NetworkNotificationManager.tagFor(id2);
+        final String tag3 = NetworkNotificationManager.tagFor(id3);
+        // Test the title of mobile data.
+        mManager.showNotification(id1, PRIVATE_DNS_BROKEN, mCellNai, null, null, true);
+        verify(mNotificationManager, times(1))
+                .notifyAsUser(eq(tag1), eq(PRIVATE_DNS_BROKEN.eventId), any(), any());
+        verify(mResources, times(1)).getString(R.string.mobile_no_internet);
+        verify(mResources, times(1)).getString(R.string.private_dns_broken_detailed);
+
+        // Test the title of wifi.
+        mManager.showNotification(id2, PRIVATE_DNS_BROKEN, mWifiNai, null, null, true);
+        verify(mNotificationManager, times(1))
+                .notifyAsUser(eq(tag2), eq(PRIVATE_DNS_BROKEN.eventId), any(), any());
+        verify(mResources, times(1)).getString(R.string.wifi_no_internet, eq(any()));
+        verify(mResources, times(2)).getString(R.string.private_dns_broken_detailed);
+
+        // Test the title of other networks.
+        doReturn(true).when(mVpnNai).isVPN();
+        mManager.showNotification(id3, PRIVATE_DNS_BROKEN, mVpnNai, null, null, true);
+        verify(mNotificationManager, times(1))
+                .notifyAsUser(eq(tag3), eq(PRIVATE_DNS_BROKEN.eventId), any(), any());
+        verify(mResources, times(1)).getString(R.string.other_networks_no_internet);
+        verify(mResources, times(3)).getString(R.string.private_dns_broken_detailed);
     }
 
     @Test
