@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "52003964_bb5f814e",
+        "filename": "PREUPLOAD.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-13T10:37:53Z",
+      "side": 1,
+      "message": "This is super hard to read and very error prone. If the set of paths is always the same, then why can\u0027t we put it in the tool? Then at least we have the benefit of syntax checking and unit testing.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 253
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea0e1f9b_2a42c8c7",
         "filename": "tools/aosp_hook/aosp_hook.py",
         "patchSetId": 1
