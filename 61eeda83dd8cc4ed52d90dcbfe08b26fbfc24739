@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0e48cdeb_7120c10e",
+        "filename": "core/java/android/net/InterfaceConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-11-13T07:14:44Z",
+      "side": 1,
+      "message": "1. Done\n2. Done\n3. API lint will trigger error that CREATOR is required.",
+      "parentUuid": "1099ce4b_b3f204d6",
+      "range": {
+        "startLine": 152,
+        "startChar": 25,
+        "endLine": 152,
+        "endChar": 44
+      },
+      "revId": "61eeda83dd8cc4ed52d90dcbfe08b26fbfc24739",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27611ca6_d038d116",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
         "patchSetId": 4
@@ -130,6 +154,30 @@
       "writtenOn": "2019-11-06T12:04:15Z",
       "side": 1,
       "message": "I have no problem with this change, but is it related ? It looks included by mistake.",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 47
+      },
+      "revId": "61eeda83dd8cc4ed52d90dcbfe08b26fbfc24739",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca1c3f4_d7183860",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-11-13T07:14:44Z",
+      "side": 1,
+      "message": "It is related to mokito static library change. UpstreamNetworkMonitorTest, NsdManagerTest and MultipathPolicyTrackerTest got failure after the mockito-target-minus-junit4 is replaced with mockito-target-inline-minus-junit4 so I fixed all of them in this patch. I can add description in commit message.\n\n\nRemove change in UpstreamNetworkMonitorTest because the isDunRequested() is changed to a local method.",
+      "parentUuid": "27611ca6_d038d116",
       "range": {
         "startLine": 233,
         "startChar": 0,
@@ -159,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "a6d50136_10ec2df2",
+        "filename": "tests/net/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-11-13T07:14:44Z",
+      "side": 1,
+      "message": "This is used for mockito static library. I check the Android.bp of mockito-target-inline-minus-junit4\" and it only depends on the static JNI library libdexmakerjvmtiagent.",
+      "parentUuid": "bf060896_5062e762",
+      "revId": "61eeda83dd8cc4ed52d90dcbfe08b26fbfc24739",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2270e0c6_70c91093",
         "filename": "tests/net/AndroidManifest.xml",
         "patchSetId": 4
@@ -170,6 +236,30 @@
       "writtenOn": "2019-11-06T12:04:15Z",
       "side": 1,
       "message": "Is this related to this patch ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 78
+      },
+      "revId": "61eeda83dd8cc4ed52d90dcbfe08b26fbfc24739",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd3700f_68a3339c",
+        "filename": "tests/net/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-11-13T07:14:44Z",
+      "side": 1,
+      "message": "Yes, it is related to jvmti dependencies runtime error. Add more comments in the xml file.",
+      "parentUuid": "2270e0c6_70c91093",
       "range": {
         "startLine": 49,
         "startChar": 0,
@@ -202,6 +292,30 @@
       "revId": "61eeda83dd8cc4ed52d90dcbfe08b26fbfc24739",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86060eca_5e35d7a3",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-11-13T07:14:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a92e38f7_67d5d98a",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 26
+      },
+      "revId": "61eeda83dd8cc4ed52d90dcbfe08b26fbfc24739",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
