@@ -28,6 +28,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.systemui.Dependency;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -68,6 +69,10 @@ public final class ClockOptionsProvider extends ContentProvider {
 
     @Inject
     public Provider<List<ClockInfo>> mClockInfosProvider;
+
+    public ClockOptionsProvider() {
+        this(() -> Dependency.get(ClockManager.class).getClockInfos());
+    }
 
     @VisibleForTesting
     ClockOptionsProvider(Provider<List<ClockInfo>> clockInfosProvider) {
