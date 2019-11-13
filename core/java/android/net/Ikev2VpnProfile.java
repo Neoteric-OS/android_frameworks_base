@@ -176,6 +176,16 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         }
     }
 
+    /**
+     * Returns a raw VpnProfile type
+     *
+     * @hide
+     */
+    @NonNull
+    public int getTypeInt() {
+        return mType;
+    }
+
     /** Retrieves the server address string. */
     @NonNull
     public String getServerAddr() {
