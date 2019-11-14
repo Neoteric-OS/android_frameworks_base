@@ -5657,6 +5657,7 @@ package android.os.storage {
 package android.os.telephony {
 
   public class TelephonyRegistryManager {
+    method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public void notifyCallStateChangedForAllSubscriptions(int, @Nullable String);
     method public void notifyCarrierNetworkChange(boolean);
   }
 

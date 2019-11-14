@@ -15,13 +15,15 @@
  */
 package android.os.telephony;
 
+import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.telephony.Annotation;
 import android.telephony.Annotation.ApnType;
 import android.telephony.Annotation.CallState;
 import android.telephony.Annotation.DataActivityType;
@@ -41,7 +43,9 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.telephony.data.ApnSetting;
 import android.telephony.ims.ImsReasonInfo;
+
 import com.android.internal.telephony.ITelephonyRegistry;
+
 import java.util.List;
 
 /**
@@ -98,14 +102,33 @@ public class TelephonyRegistryManager {
      * @param slotIndex for which call state changed. Can be derived from subId except when subId is
      * invalid.
      * @param state latest call state. e.g, offhook, ringing
-     * @param incomingNumer incoming phone number.
+     * @param incomingNumber incoming phone number.
      *
      * @hide
      */
     public void notifyCallStateChanged(int subId, int slotIndex, @CallState int state,
-        String incomingNumer) {
+            String incomingNumber) {
         try {
-          sRegistry.notifyCallState(slotIndex, subId, state, incomingNumer);
+            sRegistry.notifyCallState(slotIndex, subId, state, incomingNumber);
+        } catch (RemoteException ex) {
+            // system server crash
+        }
+    }
+
+    /**
+     * Notify call state changed on all subscriptions.
+     *
+     * @param state latest call state. e.g, offhook, ringing
+     * @param incomingNumber incoming phone number.
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    public void notifyCallStateChangedForAllSubscriptions(@CallState int state,
+            @Nullable String incomingNumber) {
+        try {
+            sRegistry.notifyCallStateForAllSubs(state, incomingNumber);
         } catch (RemoteException ex) {
             // system server crash
         }
