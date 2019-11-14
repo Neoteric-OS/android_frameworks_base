@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9512ac50_b8afd5a6",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/wifi/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1403999
+      },
+      "writtenOn": "2019-11-14T09:55:19Z",
+      "side": 1,
+      "message": "remove\n\nasargent@google.com\ndling@google.com\nzhfan@google.com",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "61c03198cb2bb683d6d9fcfdd3141e469b03c301",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
