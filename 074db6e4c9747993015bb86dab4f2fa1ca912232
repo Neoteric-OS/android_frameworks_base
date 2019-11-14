@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f6433e91_b96b8612",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-11-14T21:26:14Z",
+      "side": 1,
+      "message": "There can be other vendors that we are not indexing in codesearch that use these params, we can not change access levels if they have @UnsupportedAppUsage tags",
+      "parentUuid": "83975ab0_22e6adc3",
+      "range": {
+        "startLine": 1119,
+        "startChar": 4,
+        "endLine": 1130,
+        "endChar": 32
+      },
+      "revId": "074db6e4c9747993015bb86dab4f2fa1ca912232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f95cca7_c279587b",
         "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
         "patchSetId": 2
