@@ -734,6 +734,8 @@ public class ServiceState implements Parcelable {
      * @return long name of voice operator
      * @hide
      */
+    @Nullable
+    @SystemApi
     public String getDataOperatorAlphaLong() {
         return mDataOperatorAlphaLong;
     }
@@ -818,7 +820,8 @@ public class ServiceState implements Parcelable {
      * @return numeric format of operator, null if unregistered or unknown
      * @hide
      */
-    @UnsupportedAppUsage
+    @Nullable
+    @SystemApi
     public String getDataOperatorNumeric() {
         return mDataOperatorNumeric;
     }
