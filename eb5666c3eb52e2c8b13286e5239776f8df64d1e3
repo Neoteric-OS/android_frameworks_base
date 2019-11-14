@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbc351f4_ee331e5a",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2019-11-14T17:46:45Z",
+      "side": 1,
+      "message": "conflicting with aosp/1161263",
+      "range": {
+        "startLine": 739,
+        "startChar": 18,
+        "endLine": 739,
+        "endChar": 46
+      },
+      "revId": "eb5666c3eb52e2c8b13286e5239776f8df64d1e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
