@@ -70,6 +70,30 @@
       "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b781854f_1d244a16",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-11-14T22:28:44Z",
+      "side": 1,
+      "message": "Or, if that\u0027s going to slow things down, we could add this as is and add configurability later when it\u0027s needed.",
+      "parentUuid": "5387799f_d1b2112b",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 34
+      },
+      "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
