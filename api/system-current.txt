@@ -211,6 +211,7 @@ package android {
     field public static final String WRITE_EMBEDDED_SUBSCRIPTIONS = "android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS";
     field public static final String WRITE_MEDIA_STORAGE = "android.permission.WRITE_MEDIA_STORAGE";
     field public static final String WRITE_OBB = "android.permission.WRITE_OBB";
+    field public static final String WRITE_RLOG = "android.permission.WRITE_RLOG";
   }
 
   public static final class Manifest.permission_group {
@@ -8097,6 +8098,24 @@ package android.telephony {
     field public static final int TEMPORARY_FAILURE = 41; // 0x29
     field public static final int UNOBTAINABLE_NUMBER = 1; // 0x1
     field public static final int USER_NOT_MEMBER_OF_CUG = 87; // 0x57
+  }
+
+  public final class Rlog {
+    method public static int d(@Nullable String, @NonNull String);
+    method public static int d(@Nullable String, @NonNull String, @Nullable Throwable);
+    method public static int e(@Nullable String, @NonNull String);
+    method public static int e(@Nullable String, @NonNull String, @Nullable Throwable);
+    method public static int i(@Nullable String, @NonNull String);
+    method public static int i(@Nullable String, @NonNull String, @Nullable Throwable);
+    method public static boolean isLoggable(@Nullable String, int);
+    method @NonNull public static String pii(@Nullable String, @Nullable Object);
+    method @NonNull public static String pii(boolean, @Nullable Object);
+    method public static int println(int, @Nullable String, @NonNull String);
+    method public static int v(@Nullable String, @NonNull String);
+    method public static int v(@Nullable String, @NonNull String, @Nullable Throwable);
+    method public static int w(@Nullable String, @NonNull String);
+    method public static int w(@Nullable String, @NonNull String, @Nullable Throwable);
+    method public static int w(@Nullable String, @Nullable Throwable);
   }
 
   public class ServiceState implements android.os.Parcelable {
