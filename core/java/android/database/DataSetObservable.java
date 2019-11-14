@@ -20,13 +20,22 @@ package android.database;
  * A specialization of {@link Observable} for {@link DataSetObserver}
  * that provides methods for sending notifications to a list of
  * {@link DataSetObserver} objects.
+ *
+ * @deprecated This class has behavior that is error-prone but difficult to change without
+ *   risking breaking applications that depend on it. If you need to implement an
+ *   {@link android.widget.Adapter}, track and call into registered {@link DataSetObserver}s
+ *   yourself.
  */
+@Deprecated
 public class DataSetObservable extends Observable<DataSetObserver> {
     /**
      * Invokes {@link DataSetObserver#onChanged} on each observer.
      * Called when the contents of the data set have changed.  The recipient
      * will obtain the new contents the next time it queries the data set.
+     *
+     * @deprecated This method calls into callbacks while holding a lock.
      */
+    @Deprecated
     public void notifyChanged() {
         synchronized(mObservers) {
             // since onChanged() is implemented by the app, it could do anything, including
@@ -43,7 +52,10 @@ public class DataSetObservable extends Observable<DataSetObserver> {
      * Invokes {@link DataSetObserver#onInvalidated} on each observer.
      * Called when the data set is no longer valid and cannot be queried again,
      * such as when the data set has been closed.
+     *
+     * @deprecated This method calls into callbacks while holding a lock.
      */
+    @Deprecated
     public void notifyInvalidated() {
         synchronized (mObservers) {
             for (int i = mObservers.size() - 1; i >= 0; i--) {
