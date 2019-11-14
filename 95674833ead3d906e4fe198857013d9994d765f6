@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4a447a49_9993f790",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-14T04:10:27Z",
+      "side": 1,
+      "message": "Sorry for typo, s/use synchronize to variable you access/synchronize to protect the variable you access",
+      "parentUuid": "0b6323d0_c19209d9",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 61
+      },
+      "revId": "95674833ead3d906e4fe198857013d9994d765f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9823034d_ba50de3a",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
         "patchSetId": 5
