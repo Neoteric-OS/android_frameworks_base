@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "348a4806_0ae77b8a",
+        "filename": "api/current.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 45669,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-11-14T00:18:43Z",
+      "side": 1,
+      "message": "Suggest that we talk to breadley@ to figure out whether we want to expose the OEM cause codes.",
+      "range": {
+        "startLine": 45669,
+        "startChar": 34,
+        "endLine": 45669,
+        "endChar": 50
+      },
+      "revId": "543343ad89a44ae19edb7f08e275e114a983745b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084d8d2f_261640ea",
+        "filename": "api/current.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 45781,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-11-14T00:18:43Z",
+      "side": 1,
+      "message": "I have a feeling we don\u0027t want to expose this.",
+      "range": {
+        "startLine": 45781,
+        "startChar": 37,
+        "endLine": 45781,
+        "endChar": 69
+      },
+      "revId": "543343ad89a44ae19edb7f08e275e114a983745b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
