@@ -1239,7 +1239,9 @@ package android.bluetooth {
 
   public final class BluetoothAdapter {
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public boolean addOnMetadataChangedListener(@NonNull android.bluetooth.BluetoothDevice, @NonNull java.util.concurrent.Executor, @NonNull android.bluetooth.BluetoothAdapter.OnMetadataChangedListener);
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN) public boolean connectAllEnabledProfilesWithRemoteDevice(@NonNull android.bluetooth.BluetoothDevice);
     method public boolean disableBLE();
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN) public boolean disconnectAllEnabledProfilesWithRemoteDevice(@NonNull android.bluetooth.BluetoothDevice);
     method public boolean enableBLE();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN) public boolean enableNoAutoConnect();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public boolean factoryReset();
