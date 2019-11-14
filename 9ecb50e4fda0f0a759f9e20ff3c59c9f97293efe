@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b44ee66_95b80b58",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3214,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-11-14T18:23:15Z",
+      "side": 1,
+      "message": "Interesting; didn\u0027t realize we had so many statics in this class; I guess its locally consistent.",
+      "range": {
+        "startLine": 3214,
+        "startChar": 11,
+        "endLine": 3214,
+        "endChar": 17
+      },
+      "revId": "9ecb50e4fda0f0a759f9e20ff3c59c9f97293efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
