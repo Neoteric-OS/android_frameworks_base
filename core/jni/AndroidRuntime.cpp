@@ -1564,8 +1564,9 @@ static const RegJNIRec gRegJNI[] = {
     REG_JNI(register_android_os_MemoryFile),
     REG_JNI(register_android_os_SharedMemory),
     REG_JNI(register_com_android_internal_os_ClassLoaderFactory),
-    REG_JNI(register_com_android_internal_os_Zygote),
+    // _ZygoteInit must come before _Zygote XXX FIXME
     REG_JNI(register_com_android_internal_os_ZygoteInit),
+    REG_JNI(register_com_android_internal_os_Zygote),
     REG_JNI(register_com_android_internal_util_VirtualRefBasePtr),
     REG_JNI(register_android_hardware_Camera),
     REG_JNI(register_android_hardware_camera2_CameraMetadata),

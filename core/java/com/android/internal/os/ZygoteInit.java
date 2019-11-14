@@ -1000,4 +1000,6 @@ public class ZygoteInit {
     }
 
     private static final native void nativeZygoteInit();
+
+    static native boolean checkBinderForkSupport();
 }

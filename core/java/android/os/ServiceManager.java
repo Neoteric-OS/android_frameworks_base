@@ -235,16 +235,14 @@ public final class ServiceManager {
 
     /**
      * This is only intended to be called when the process is first being brought
-     * up and bound by the activity manager. There is only one thread in the process
-     * at that time, so no locking is done.
+     * up and bound by the activity manager or, alternatively, in Zygote, when we want to
+     * set up service connections we inherit across fork. There is only one thread in the process
+     * at these times, so no locking is done.
      *
      * @param cache the cache of service references
      * @hide
      */
-    public static void initServiceCache(Map<String, IBinder> cache) {
-        if (sCache.size() != 0) {
-            throw new IllegalStateException("setServiceCache may only be called once");
-        }
+    public static void populateServiceCache(Map<String, IBinder> cache) {
         sCache.putAll(cache);
     }
 

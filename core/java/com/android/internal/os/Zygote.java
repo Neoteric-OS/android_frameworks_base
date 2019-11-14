@@ -210,6 +210,13 @@ public final class Zygote {
      */
     public static final String USAP_POOL_SECONDARY_SOCKET_NAME = "usap_pool_secondary";
 
+    /**
+     * Whether we're using inherited binder service handles instead of
+     * sending a bundle of services at application bind time.
+     * @hide
+     */
+    public static final boolean CACHE_SERVICES_IN_ZYGOTE = ZygoteInit.checkBinderForkSupport();
+
     private Zygote() {}
 
     /**

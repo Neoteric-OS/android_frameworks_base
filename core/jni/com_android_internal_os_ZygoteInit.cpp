@@ -19,6 +19,7 @@
 #include <EGL/egl.h>
 #include <Properties.h>
 #include <ui/GraphicBufferMapper.h>
+#include <binder/ProcessState.h>
 
 #include "core_jni_helpers.h"
 
@@ -41,7 +42,7 @@ struct ScopedSCSExit {
 #ifdef __aarch64__
     void* scs;
 
-    ScopedSCSExit() {
+    ScopedSCSExit() {"
         __asm__ __volatile__("str x18, [%0]" ::"r"(&scs));
     }
 
@@ -69,11 +70,18 @@ void android_internal_os_ZygoteInit_nativePreloadGraphicsDriver(JNIEnv* env, jcl
     }
 }
 
+static
+jboolean android_internal_os_ZygoteInit_checkBinderForkSupport(JNIEnv* env, jclass) {
+    return android::ProcessState::checkForkSupport();
+}
+
 const JNINativeMethod gMethods[] = {
     { "nativePreloadAppProcessHALs", "()V",
       (void*)android_internal_os_ZygoteInit_nativePreloadAppProcessHALs },
     { "nativePreloadGraphicsDriver", "()V",
       (void*)android_internal_os_ZygoteInit_nativePreloadGraphicsDriver },
+    { "checkBinderForkSupport", "()Z",
+      (void*)android_internal_os_ZygoteInit_checkBinderForkSupport },
 };
 
 }  // anonymous namespace

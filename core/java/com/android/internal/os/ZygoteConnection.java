@@ -25,14 +25,18 @@ import static com.android.internal.os.ZygoteConnectionConstants.WRAPPED_PID_TIME
 
 import android.annotation.UnsupportedAppUsage;
 import android.content.pm.ApplicationInfo;
+import android.content.Context;
 import android.net.Credentials;
 import android.net.LocalSocket;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Process;
 import android.os.Trace;
+import android.os.ServiceManager;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.StructPollfd;
+import android.util.ArrayMap;
 import android.util.Log;
 
 import dalvik.system.VMRuntime;
@@ -142,6 +146,11 @@ class ZygoteConnection {
 
         if (parsedArgs.mBootCompleted) {
             handleBootCompleted();
+            return null;
+        }
+
+        if (parsedArgs.mRefreshServiceCache) {
+            refreshServiceCache();
             return null;
         }
 
@@ -312,6 +321,30 @@ class ZygoteConnection {
         }
 
         VMRuntime.bootCompleted();
+    }
+
+    private void refreshServiceCache() {
+        if (!Zygote.CACHE_SERVICES_IN_ZYGOTE) {
+            Log.i(TAG, "not using zygote-based service cache");
+            return;
+        }
+        Log.i(TAG, "using zygote-based service cache");
+        ArrayMap<String, IBinder> services = new ArrayMap<>();
+        for (String serviceName : Context.SERVICES_TO_CACHE) {
+            IBinder service = ServiceManager.getService(serviceName);
+            if (service != null) {
+                Log.d(TAG, "caching service " + serviceName);
+                services.put(serviceName, service);
+            } else {
+                Log.w(TAG, "not caching service " + serviceName + ": not started");
+            }
+        }
+        ServiceManager.populateServiceCache(services);
+        try {
+            mSocketOutStream.writeInt(0);
+        } catch (IOException ioe) {
+            throw new IllegalStateException("Error writing to command socket", ioe);
+        }
     }
 
     /**

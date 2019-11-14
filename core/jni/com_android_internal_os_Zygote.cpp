@@ -40,6 +40,7 @@
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <utility>
 
 #include <android/fdsan.h>
 #include <arpa/inet.h>
@@ -74,6 +75,7 @@
 #include <android-base/strings.h>
 #include <android-base/unique_fd.h>
 #include <bionic/malloc.h>
+#include <binder/ProcessState.h>
 #include <cutils/fs.h>
 #include <cutils/multiuser.h>
 #include <private/android_filesystem_config.h>
@@ -506,12 +508,18 @@ static void EnableDebugger() {
   }
 }
 
-static void PreApplicationInit() {
+static void PreApplicationInit(int new_binder_driver_fd) {
   // The child process sets this to indicate it's not the zygote.
   android_mallopt(M_SET_ZYGOTE_CHILD, nullptr, 0);
 
   // Set the jemalloc decay time to 1.
   mallopt(M_DECAY_TIME, 1);
+
+  if (new_binder_driver_fd >= 0) {
+      auto binder_process_state = android::ProcessState::selfOrNull();
+      LOG_ALWAYS_FATAL_IF(!binder_process_state, "binder state not present");
+      binder_process_state->afterForkInChild(new_binder_driver_fd);
+  }
 }
 
 static void SetUpSeccompFilter(uid_t uid, bool is_child_zygote) {
@@ -901,8 +909,8 @@ static void ClearUsapTable() {
 
 // Utility routine to fork a process from the zygote.
 static pid_t ForkCommon(JNIEnv* env, bool is_system_server,
-                        const std::vector<int>& fds_to_close,
-                        const std::vector<int>& fds_to_ignore) {
+                        std::vector<int> fds_to_close,
+                        std::vector<int> fds_to_ignore) {
   SetSignalHandlers();
 
   // Curry a failure function.
@@ -915,6 +923,21 @@ static pid_t ForkCommon(JNIEnv* env, bool is_system_server,
   //
   // Note that the zygote process is single threaded at this point.
   BlockSignal(SIGCHLD, fail_fn);
+
+  // If binder has been initialized, add it to the list of file
+  // descriptors to ignore across the fork; we handle the binder file
+  // descriptor specially in the child.
+  int new_binder_driver_fd = -1;
+  auto binder_process_state = android::ProcessState::selfOrNull();
+  if (binder_process_state) {
+      fds_to_ignore.push_back(binder_process_state->getDriverFD());
+      android::status_t prepare_result =
+              binder_process_state->prepareForFork(&new_binder_driver_fd);
+      if (prepare_result != android::OK) {
+          fail_fn(CREATE_ERROR("Could not fork binder: %d", prepare_result));
+      }
+      fds_to_ignore.push_back(new_binder_driver_fd);
+  }
 
   // Close any logging related FDs before we start evaluating the list of
   // file descriptors.
@@ -935,8 +958,8 @@ static pid_t ForkCommon(JNIEnv* env, bool is_system_server,
   pid_t pid = fork();
 
   if (pid == 0) {
-    // The child process.
-    PreApplicationInit();
+    // The child process. Closes new_binder_driver_fd by side effect if valid.
+    PreApplicationInit(new_binder_driver_fd);
 
     // Clean up any descriptors which must be closed immediately
     DetachDescriptors(env, fds_to_close, fail_fn);
@@ -951,6 +974,9 @@ static pid_t ForkCommon(JNIEnv* env, bool is_system_server,
     // Turn fdsan back on.
     android_fdsan_set_error_level(fdsan_error_level);
   } else {
+    if (new_binder_driver_fd >= 0) {
+      close(new_binder_driver_fd);
+    }
     ALOGD("Forked child process %d", pid);
   }
 
@@ -1338,7 +1364,7 @@ static void UnmountStorageOnInit(JNIEnv* env) {
 namespace android {
 
 static void com_android_internal_os_Zygote_nativePreApplicationInit(JNIEnv*, jclass) {
-  PreApplicationInit();
+  PreApplicationInit(-1);
 }
 
 static jint com_android_internal_os_Zygote_nativeForkAndSpecialize(
@@ -1371,7 +1397,7 @@ static jint com_android_internal_os_Zygote_nativeForkAndSpecialize(
       fds_to_ignore.push_back(gUsapPoolEventFD);
     }
 
-    pid_t pid = ForkCommon(env, false, fds_to_close, fds_to_ignore);
+    pid_t pid = ForkCommon(env, false, std::move(fds_to_close), std::move(fds_to_ignore));
 
     if (pid == 0) {
       SpecializeCommon(env, uid, gid, gids, runtime_flags, rlimits,
@@ -1397,8 +1423,8 @@ static jint com_android_internal_os_Zygote_nativeForkSystemServer(
   }
 
   pid_t pid = ForkCommon(env, true,
-                         fds_to_close,
-                         fds_to_ignore);
+                         std::move(fds_to_close),
+                         std::move(fds_to_ignore));
   if (pid == 0) {
       SpecializeCommon(env, uid, gid, gids, runtime_flags, rlimits,
                        permitted_capabilities, effective_capabilities,
@@ -1468,7 +1494,9 @@ static jint com_android_internal_os_Zygote_nativeForkUsap(JNIEnv* env,
   fds_to_ignore.push_back(write_pipe_fd);
   fds_to_ignore.insert(fds_to_ignore.end(), session_socket_fds.begin(), session_socket_fds.end());
 
-  pid_t usap_pid = ForkCommon(env, /* is_system_server= */ false, fds_to_close, fds_to_ignore);
+  pid_t usap_pid = ForkCommon(env, /* is_system_server= */ false,
+                              std::move(fds_to_close),
+                              std::move(fds_to_ignore));
 
   if (usap_pid != 0) {
     ++gUsapPoolCount;

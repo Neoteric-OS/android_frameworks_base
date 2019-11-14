@@ -2919,29 +2919,13 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         if (mAppBindArgs == null) {
             mAppBindArgs = new ArrayMap<>();
-
-            // Add common services.
-            // IMPORTANT: Before adding services here, make sure ephemeral apps can access them too.
-            // Enable the check in ApplicationThread.bindApplication() to make sure.
-            addServiceToMap(mAppBindArgs, "package");
-            addServiceToMap(mAppBindArgs, Context.WINDOW_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.ALARM_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.DISPLAY_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.NETWORKMANAGEMENT_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.CONNECTIVITY_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.ACCESSIBILITY_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.INPUT_METHOD_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.INPUT_SERVICE);
-            addServiceToMap(mAppBindArgs, "graphicsstats");
-            addServiceToMap(mAppBindArgs, Context.APP_OPS_SERVICE);
-            addServiceToMap(mAppBindArgs, "content");
-            addServiceToMap(mAppBindArgs, Context.JOB_SCHEDULER_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.NOTIFICATION_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.VIBRATOR_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.ACCOUNT_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.POWER_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.USER_SERVICE);
-            addServiceToMap(mAppBindArgs, "mount");
+            if (Zygote.CACHE_SERVICES_IN_ZYGOTE) {
+                ZYGOTE_PROCESS.refreshServiceCache();
+            } else {
+                for (String serviceName : Context.SERVICES_TO_CACHE) {
+                    addServiceToMap(mAppBindArgs, serviceName);
+                }
+            }
         }
         return mAppBindArgs;
     }

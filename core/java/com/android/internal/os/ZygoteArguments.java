@@ -191,6 +191,8 @@ class ZygoteArguments {
      */
     boolean mBootCompleted;
 
+    boolean mRefreshServiceCache;
+
     /**
      * Exemptions from API blacklisting. These are sent to the pre-forked zygote at boot time, or
      * when they change, via --set-api-blacklist-exemptions.
@@ -367,6 +369,8 @@ class ZygoteArguments {
                 mPidQuery = true;
             } else if (arg.equals("--boot-completed")) {
                 mBootCompleted = true;
+            } else if (arg.equals("--refresh-service-cache")) {
+                mRefreshServiceCache = true;
             } else if (arg.startsWith("--instruction-set=")) {
                 mInstructionSet = arg.substring(arg.indexOf('=') + 1);
             } else if (arg.startsWith("--app-data-dir=")) {
@@ -421,7 +425,7 @@ class ZygoteArguments {
             }
         }
 
-        if (mBootCompleted) {
+        if (mBootCompleted || mRefreshServiceCache /*XXX*/) {
             if (args.length - curArg > 0) {
                 throw new IllegalArgumentException("Unexpected arguments after --boot-completed");
             }

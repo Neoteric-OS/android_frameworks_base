@@ -5573,4 +5573,32 @@ public abstract class Context {
                     + "get a UI context from ActivityThread#getSystemUiContext()");
         }
     }
+
+    /**
+     * List of services that every process should have.
+     * @hide
+     */
+    // IMPORTANT: Before adding services here, make sure ephemeral apps can access them too.
+    // Enable the check in ApplicationThread.bindApplication() to make sure.
+    public static final String[] SERVICES_TO_CACHE = new String[]{
+        "package",
+        "permissionmgr",
+        WINDOW_SERVICE,
+        ALARM_SERVICE,
+        DISPLAY_SERVICE,
+        NETWORKMANAGEMENT_SERVICE,
+        CONNECTIVITY_SERVICE,
+        ACCESSIBILITY_SERVICE,
+        INPUT_METHOD_SERVICE,
+        "graphicsstats",
+        Context.APP_OPS_SERVICE,
+        "content",
+        Context.JOB_SCHEDULER_SERVICE,
+        Context.NOTIFICATION_SERVICE,
+        Context.VIBRATOR_SERVICE,
+        Context.ACCOUNT_SERVICE,
+        Context.POWER_SERVICE,
+        Context.USER_SERVICE,
+        "mount",
+    };
 }

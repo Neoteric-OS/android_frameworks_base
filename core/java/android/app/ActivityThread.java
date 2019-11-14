@@ -1035,7 +1035,7 @@ public final class ActivityThread extends ClientTransactionHandler {
                 }
 
                 // Setup the service cache in the ServiceManager
-                ServiceManager.initServiceCache(services);
+                ServiceManager.populateServiceCache(services);
             }
 
             setCoreSettings(coreSettings);

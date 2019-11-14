@@ -767,6 +767,29 @@ public class ZygoteProcess {
         }
     }
 
+    private void refreshServiceCache(String abi) {
+        try {
+            synchronized (mLock) {
+                ZygoteState state = openZygoteSocketIfNeeded(abi);
+                state.mZygoteOutputWriter.write("1\n--refresh-service-cache\n");
+                state.mZygoteOutputWriter.flush();
+                state.mZygoteInputStream.readInt();
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException("Failed to inform zygote of refresh service cache", ex);
+        }
+    }
+
+
+    public void refreshServiceCache() {
+        if (Build.SUPPORTED_32_BIT_ABIS.length > 0) {
+            refreshServiceCache(Build.SUPPORTED_32_BIT_ABIS[0]);
+        }
+        if (Build.SUPPORTED_64_BIT_ABIS.length > 0) {
+            refreshServiceCache(Build.SUPPORTED_64_BIT_ABIS[0]);
+        }
+    }
+
     /**
      * Push hidden API blacklisting exemptions into the zygote process(es).
      *
