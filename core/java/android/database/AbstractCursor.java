@@ -373,11 +373,13 @@ public abstract class AbstractCursor implements CrossProcessCursor {
         }
     }
 
+    @Deprecated
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
         mDataSetObservable.registerObserver(observer);
     }
 
+    @Deprecated
     @Override
     public void unregisterDataSetObserver(DataSetObserver observer) {
         mDataSetObservable.unregisterObserver(observer);
