@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8210df21_d60d4a84",
+        "filename": "tests/Gating/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-11-14T19:03:15Z",
+      "side": 1,
+      "message": "Is PlatformCompatGating better?",
+      "parentUuid": "52fbcb81_a1a91257",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "3ef8d80138e02e20393d58c616ab37818290bbe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df032d99_fbac7b42",
         "filename": "tests/Gating/src/com/android/compat/testing/DummyApi.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "3ef8d80138e02e20393d58c616ab37818290bbe7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b0865e_8daf29f3",
+        "filename": "tests/Gating/src/com/android/compat/testing/DummyApi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-11-14T19:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df032d99_fbac7b42",
+      "range": {
+        "startLine": 83,
+        "startChar": 24,
+        "endLine": 83,
+        "endChar": 28
+      },
+      "revId": "3ef8d80138e02e20393d58c616ab37818290bbe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "177cec27_b564cad1",
+        "filename": "tests/Gating/test-rules/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-11-14T19:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18ecaa0f_7e7f1c1a",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 1
+      },
+      "revId": "3ef8d80138e02e20393d58c616ab37818290bbe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe4fce61_0d823018",
         "filename": "tests/Gating/test-rules/src/android/compat/testing/PlatformCompatChangeRule.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "3ef8d80138e02e20393d58c616ab37818290bbe7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf8c6ab_4b380ee2",
+        "filename": "tests/Gating/test-rules/src/android/compat/testing/PlatformCompatChangeRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-11-14T19:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe4fce61_0d823018",
+      "range": {
+        "startLine": 43,
+        "startChar": 3,
+        "endLine": 43,
+        "endChar": 8
+      },
+      "revId": "3ef8d80138e02e20393d58c616ab37818290bbe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
