@@ -22,6 +22,30 @@
       "revId": "174f96d4cda4b5097034dbbbc752079f736ee58a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c264e279_85892425",
+        "filename": "core/java/android/bluetooth/BluetoothProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-11-14T11:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "617ed899_39210112",
+      "range": {
+        "startLine": 374,
+        "startChar": 24,
+        "endLine": 374,
+        "endChar": 30
+      },
+      "revId": "174f96d4cda4b5097034dbbbc752079f736ee58a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
