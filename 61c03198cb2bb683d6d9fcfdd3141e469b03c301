@@ -22,6 +22,30 @@
       "revId": "61c03198cb2bb683d6d9fcfdd3141e469b03c301",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac8423d_5a4d697a",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/wifi/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1356080
+      },
+      "writtenOn": "2019-11-14T10:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9512ac50_b8afd5a6",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "61c03198cb2bb683d6d9fcfdd3141e469b03c301",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
