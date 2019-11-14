@@ -12468,13 +12468,13 @@ package android.database {
     method protected void onChange(boolean);
     method public boolean onMove(int, int);
     method public void registerContentObserver(android.database.ContentObserver);
-    method public void registerDataSetObserver(android.database.DataSetObserver);
+    method @Deprecated public void registerDataSetObserver(android.database.DataSetObserver);
     method public boolean requery();
     method public android.os.Bundle respond(android.os.Bundle);
     method public void setExtras(android.os.Bundle);
     method public void setNotificationUri(android.content.ContentResolver, android.net.Uri);
     method public void unregisterContentObserver(android.database.ContentObserver);
-    method public void unregisterDataSetObserver(android.database.DataSetObserver);
+    method @Deprecated public void unregisterDataSetObserver(android.database.DataSetObserver);
     field @Deprecated protected boolean mClosed;
     field @Deprecated protected android.content.ContentResolver mContentResolver;
     field @Deprecated protected int mPos;
@@ -12575,14 +12575,14 @@ package android.database {
     method public boolean moveToPosition(int);
     method public boolean moveToPrevious();
     method public void registerContentObserver(android.database.ContentObserver);
-    method public void registerDataSetObserver(android.database.DataSetObserver);
+    method @Deprecated public void registerDataSetObserver(android.database.DataSetObserver);
     method @Deprecated public boolean requery();
     method public android.os.Bundle respond(android.os.Bundle);
     method public void setExtras(android.os.Bundle);
     method public void setNotificationUri(android.content.ContentResolver, android.net.Uri);
     method public default void setNotificationUris(@NonNull android.content.ContentResolver, @NonNull java.util.List<android.net.Uri>);
     method public void unregisterContentObserver(android.database.ContentObserver);
-    method public void unregisterDataSetObserver(android.database.DataSetObserver);
+    method @Deprecated public void unregisterDataSetObserver(android.database.DataSetObserver);
     field public static final int FIELD_TYPE_BLOB = 4; // 0x4
     field public static final int FIELD_TYPE_FLOAT = 2; // 0x2
     field public static final int FIELD_TYPE_INTEGER = 1; // 0x1
@@ -12682,19 +12682,19 @@ package android.database {
     method public boolean moveToPosition(int);
     method public boolean moveToPrevious();
     method public void registerContentObserver(android.database.ContentObserver);
-    method public void registerDataSetObserver(android.database.DataSetObserver);
+    method @Deprecated public void registerDataSetObserver(android.database.DataSetObserver);
     method @Deprecated public boolean requery();
     method public android.os.Bundle respond(android.os.Bundle);
     method public void setExtras(android.os.Bundle);
     method public void setNotificationUri(android.content.ContentResolver, android.net.Uri);
     method public void unregisterContentObserver(android.database.ContentObserver);
-    method public void unregisterDataSetObserver(android.database.DataSetObserver);
+    method @Deprecated public void unregisterDataSetObserver(android.database.DataSetObserver);
   }
 
-  public class DataSetObservable extends android.database.Observable<android.database.DataSetObserver> {
-    ctor public DataSetObservable();
-    method public void notifyChanged();
-    method public void notifyInvalidated();
+  @Deprecated public class DataSetObservable extends android.database.Observable<android.database.DataSetObserver> {
+    ctor @Deprecated public DataSetObservable();
+    method @Deprecated public void notifyChanged();
+    method @Deprecated public void notifyInvalidated();
   }
 
   public abstract class DataSetObserver {
@@ -12816,6 +12816,7 @@ package android.database {
 
   public class MergeCursor extends android.database.AbstractCursor {
     ctor public MergeCursor(android.database.Cursor[]);
+    method @Deprecated public void deactivate();
     method public String[] getColumnNames();
     method public int getCount();
     method public double getDouble(int);
@@ -12825,6 +12826,7 @@ package android.database {
     method public short getShort(int);
     method public String getString(int);
     method public boolean isNull(int);
+    method @Deprecated public boolean requery();
   }
 
   public abstract class Observable<T> {

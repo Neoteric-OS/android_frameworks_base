@@ -410,7 +410,9 @@ public interface Cursor extends Closeable {
      *
      * @param observer the object that gets notified when the cursors data set changes.
      * @see #unregisterDataSetObserver(DataSetObserver)
+     * @deprecated Don't use {@link #requery} or {@link #deactivate} with Cursors.
      */
+    @Deprecated
     void registerDataSetObserver(DataSetObserver observer);
 
     /**
@@ -419,7 +421,9 @@ public interface Cursor extends Closeable {
      *
      * @param observer the object to unregister.
      * @see #registerDataSetObserver(DataSetObserver)
+     * @deprecated Don't use {@link #requery} or {@link #deactivate} with Cursors.
      */
+    @Deprecated
     void unregisterDataSetObserver(DataSetObserver observer);
 
     /**

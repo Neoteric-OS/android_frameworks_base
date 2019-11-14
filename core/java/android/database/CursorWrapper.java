@@ -221,6 +221,7 @@ public class CursorWrapper implements Cursor {
         mCursor.registerContentObserver(observer);
     }
 
+    @Deprecated
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
         mCursor.registerDataSetObserver(observer);
@@ -262,6 +263,7 @@ public class CursorWrapper implements Cursor {
         mCursor.unregisterContentObserver(observer);
     }
 
+    @Deprecated
     @Override
     public void unregisterDataSetObserver(DataSetObserver observer) {
         mCursor.unregisterDataSetObserver(observer);

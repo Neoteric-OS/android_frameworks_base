@@ -17,9 +17,8 @@
 package android.database;
 
 /**
- * Receives call backs when a data set has been changed, or made invalid. The typically data sets
- * that are observed are {@link Cursor}s or {@link android.widget.Adapter}s.
- * DataSetObserver must be implemented by objects which are added to a DataSetObservable.
+ * Receives call backs when a data set has been changed, or made invalid, typically used by
+ * {@link android.widget.Adapter}s.
  */
 public abstract class DataSetObserver {
     /**

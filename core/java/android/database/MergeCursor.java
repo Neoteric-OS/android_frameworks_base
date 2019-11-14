@@ -155,6 +155,7 @@ public class MergeCursor extends AbstractCursor
         }
     }
     
+    @Deprecated
     @Override
     public void deactivate()
     {
@@ -196,6 +197,7 @@ public class MergeCursor extends AbstractCursor
         }
     }
     
+    @Deprecated
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
         int length = mCursors.length;
@@ -206,6 +208,7 @@ public class MergeCursor extends AbstractCursor
         }
     }
     
+    @Deprecated
     @Override
     public void unregisterDataSetObserver(DataSetObserver observer) {
         int length = mCursors.length;
@@ -216,6 +219,7 @@ public class MergeCursor extends AbstractCursor
         }
     }
 
+    @Deprecated
     @Override
     public boolean requery()
     {
