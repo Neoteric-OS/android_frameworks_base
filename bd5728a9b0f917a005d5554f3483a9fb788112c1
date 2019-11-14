@@ -94,6 +94,30 @@
       "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b98bd0_3ab482ff",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1004689
+      },
+      "writtenOn": "2019-11-14T22:51:05Z",
+      "side": 1,
+      "message": "I started working on it, but it\u0027s a bit tricky.\n\nIf all we had to do is change @DeprecatedForSdk to @Deprecated in stubs, this would be trivial. But for real API deprecations we need to have documentation as well, in the form of a @deprecated annotation in the javadoc. At first I had just left it that way, but if you mark something @deprecated it will show up as deprecated even for internal usage. So then I changed the tag to @deprecatedForSdk and in metalava I unconditionally translate those to @deprecated in the stubs.\n\nNow, to make this conditional on the generated API, this requires more work because the place we replace the documentation starts to need to look at the context (the corresponding annotated element) which it wasn\u0027t before. I have a WIP CL for this but I\u0027ve been distracted with other stuff. Maybe on the shuttle today -- but then I have a bunch of other pending reviews etc to get done too :-)",
+      "parentUuid": "b781854f_1d244a16",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 34
+      },
+      "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
