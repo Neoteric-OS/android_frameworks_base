@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52fbcb81_a1a91257",
+        "filename": "tests/Gating/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-14T16:45:25Z",
+      "side": 1,
+      "message": "IIRC test names go in a global namespace - make the name a little more specific?\n\n(same applies to the directory name?)",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "3ef8d80138e02e20393d58c616ab37818290bbe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df032d99_fbac7b42",
+        "filename": "tests/Gating/src/com/android/compat/testing/DummyApi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-14T16:45:25Z",
+      "side": 1,
+      "message": "why not make the return type a boolean?",
+      "range": {
+        "startLine": 83,
+        "startChar": 24,
+        "endLine": 83,
+        "endChar": 28
+      },
+      "revId": "3ef8d80138e02e20393d58c616ab37818290bbe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ecaa0f_7e7f1c1a",
+        "filename": "tests/Gating/test-rules/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-14T16:45:25Z",
+      "side": 1,
+      "message": "be consistent with tabs vs spaces",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 1
+      },
+      "revId": "3ef8d80138e02e20393d58c616ab37818290bbe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4fce61_0d823018",
+        "filename": "tests/Gating/test-rules/src/android/compat/testing/PlatformCompatChangeRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-14T16:45:25Z",
+      "side": 1,
+      "message": "can we just use @? Most people will look at the code rather than generated docs (do we even do that?)",
+      "range": {
+        "startLine": 43,
+        "startChar": 3,
+        "endLine": 43,
+        "endChar": 8
+      },
+      "revId": "3ef8d80138e02e20393d58c616ab37818290bbe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
