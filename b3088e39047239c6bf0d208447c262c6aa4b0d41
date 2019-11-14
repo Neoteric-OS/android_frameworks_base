@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1db4e242_80743b44",
+        "filename": "core/java/android/net/IpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-11-14T14:11:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31e3a579_582e3c74",
+      "range": {
+        "startLine": 66,
+        "startChar": 9,
+        "endLine": 66,
+        "endChar": 13
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1687f2a7_0521738d",
         "filename": "core/java/android/net/IpConfiguration.java",
         "patchSetId": 1
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "17c72055_9b9a1c07",
+        "filename": "core/java/android/net/IpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-11-14T14:11:10Z",
+      "side": 1,
+      "message": "expose both setter and getter.",
+      "parentUuid": "bf48263c_07613e28",
+      "range": {
+        "startLine": 119,
+        "startChar": 9,
+        "endLine": 119,
+        "endChar": 13
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c802953_e030837f",
         "filename": "core/java/android/net/IpConfiguration.java",
         "patchSetId": 1
@@ -141,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "cd3b7950_e1927836",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-11-14T14:11:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66ac22b6_e2d256ab",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 14
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdb685bc_3be18eb1",
         "filename": "core/java/android/net/ProxyInfo.java",
         "patchSetId": 1
@@ -161,6 +233,30 @@
       "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42dcfb7b_78a4b77f",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-11-14T14:11:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdb685bc_3be18eb1",
+      "range": {
+        "startLine": 122,
+        "startChar": 5,
+        "endLine": 122,
+        "endChar": 14
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "321782f5_8dd0a96f",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-11-14T14:11:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ee021b6_6a0e1e87",
+      "range": {
+        "startLine": 166,
+        "startChar": 5,
+        "endLine": 166,
+        "endChar": 14
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ca61db7_39ab2656",
         "filename": "core/java/android/net/ProxyInfo.java",
         "patchSetId": 1
@@ -210,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "8893fe90_58415b57",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-11-14T14:11:10Z",
+      "side": 1,
+      "message": "Done. Already gave suggestion to wifi.",
+      "parentUuid": "8ca61db7_39ab2656",
+      "range": {
+        "startLine": 230,
+        "startChar": 5,
+        "endLine": 230,
+        "endChar": 14
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3aede63_2e23f23b",
         "filename": "core/java/android/net/StaticIpConfiguration.java",
         "patchSetId": 1
@@ -221,6 +365,30 @@
       "writtenOn": "2019-10-09T07:16:07Z",
       "side": 1,
       "message": "As this class is already @SystemApi I think the recommended way to do this is to just remove @hide",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 14
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b9963c_5d18c14c",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-11-14T14:11:10Z",
+      "side": 1,
+      "message": "Expose these fields will get API lint errors. Due to API guideline 3.9, I\u0027ll check wifi team if they could use getters which are @SystemApi and StaticIpConfiguration builder instead.",
+      "parentUuid": "a3aede63_2e23f23b",
       "range": {
         "startLine": 56,
         "startChar": 5,
