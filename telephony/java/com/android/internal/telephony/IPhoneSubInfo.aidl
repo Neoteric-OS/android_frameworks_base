@@ -148,13 +148,14 @@ interface IPhoneSubInfo {
     /**
      * Retrieves the alpha identifier associated with the voice mail number.
      */
-    String getVoiceMailAlphaTag(String callingPackage);
+    String getVoiceMailAlphaTag(String callingPackage, String callingFeatureId);
 
     /**
      * Retrieves the alpha identifier associated with the voice mail number
      * of a subId.
      */
-    String getVoiceMailAlphaTagForSubscriber(int subId, String callingPackage);
+    String getVoiceMailAlphaTagForSubscriber(int subId, String callingPackage,
+            String callingFeatureId);
 
     /**
      * Returns the IMS private user identity (IMPI) that was loaded from the ISIM.

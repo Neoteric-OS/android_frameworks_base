@@ -160,7 +160,7 @@ public class Build {
         try {
             Application application = ActivityThread.currentApplication();
             String callingPackage = application != null ? application.getPackageName() : null;
-            return service.getSerialForPackage(callingPackage);
+            return service.getSerialForPackage(callingPackage, null);
         } catch (RemoteException e) {
             e.rethrowFromSystemServer();
         }

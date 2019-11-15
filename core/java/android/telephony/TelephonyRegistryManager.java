@@ -123,7 +123,8 @@ public class TelephonyRegistryManager {
         };
         mSubscriptionChangedListenerMap.put(listener, callback);
         try {
-            sRegistry.addOnSubscriptionsChangedListener(mContext.getOpPackageName(), callback);
+            sRegistry.addOnSubscriptionsChangedListener(mContext.getOpPackageName(), null,
+                    callback);
         } catch (RemoteException ex) {
             // system server crash
         }
@@ -182,7 +183,7 @@ public class TelephonyRegistryManager {
         mOpportunisticSubscriptionChangedListenerMap.put(listener, callback);
         try {
             sRegistry.addOnOpportunisticSubscriptionsChangedListener(mContext.getOpPackageName(),
-                    callback);
+                    null, callback);
         } catch (RemoteException ex) {
             // system server crash
         }
