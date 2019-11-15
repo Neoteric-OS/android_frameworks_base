@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "03edb1b6_3bb2ca94",
+        "filename": "tests/Gating/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-15T07:48:05Z",
+      "side": 1,
+      "message": "LGTM.",
+      "parentUuid": "8210df21_d60d4a84",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "3ef8d80138e02e20393d58c616ab37818290bbe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df032d99_fbac7b42",
         "filename": "tests/Gating/src/com/android/compat/testing/DummyApi.java",
         "patchSetId": 2
