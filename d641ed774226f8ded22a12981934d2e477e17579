@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "79bfcb94_63d6a14d",
+        "filename": "PREUPLOAD.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-15T04:49:05Z",
+      "side": 1,
+      "message": "We suggested many other ways to do this. I don\u0027t like too much the Blaze-style all-caps files because while okay when you have one or two of them, they quickly become pretty invasive. Moved to a file next to the script with one regexp per line.",
+      "parentUuid": "58819564_2c33fe7b",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 254
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32e696f_1cc94ef5",
+        "filename": "PREUPLOAD.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-15T04:49:05Z",
+      "side": 1,
+      "message": "I moved the regexps to a file as Jeff suggested. I observe that having them in the tool makes it more complex to have identically-named files across different gits behave differently, as the paths are relative to the git by default. Therefore I favored having this in a file in the git.",
+      "parentUuid": "52003964_bb5f814e",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 253
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea0e1f9b_2a42c8c7",
         "filename": "tools/aosp_hook/aosp_hook.py",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "d641ed774226f8ded22a12981934d2e477e17579",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2391a4b9_1db8f09d",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-15T04:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea0e1f9b_2a42c8c7",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "26b8e8bf_ea1c86dd",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-15T04:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b81a0008_442a9e04",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cc63cfe_c0aeff4e",
         "filename": "tools/aosp_hook/aosp_hook.py",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "d641ed774226f8ded22a12981934d2e477e17579",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebe02c1_4b489034",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-15T04:49:05Z",
+      "side": 1,
+      "message": "Removed because I don\u0027t think it\u0027s really appropriate to have a git tutorial in this place. Note though that this paragraph was focused on how to do the cherry-pick *before* uploading to gerrit, because to do that you\u0027d have to bypass this preupload first, then CP to AOSP, then update this commit\u0027s cover change with the AOSP commit.",
+      "parentUuid": "9cc63cfe_c0aeff4e",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 70
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c77db310_9a5a5945",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-15T04:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "191aff1e_60ecb76f",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0fbcf29_b71eab3b",
         "filename": "tools/aosp_hook/aosp_hook.py",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "d641ed774226f8ded22a12981934d2e477e17579",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d30031b_8209f3a8",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-15T04:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0fbcf29_b71eab3b",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 60
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "747a74d4_19f88107",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-15T04:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "836b8264_2ce72bc1",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 13
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be2ce03a_cf4d78bd",
         "filename": "tools/aosp_hook/aosp_hook.py",
         "patchSetId": 1
@@ -206,6 +398,30 @@
       "revId": "d641ed774226f8ded22a12981934d2e477e17579",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c3335e4_a8a1b635",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-15T04:49:05Z",
+      "side": 1,
+      "message": "See there\u0027s a good reason I said I don\u0027t speak python",
+      "parentUuid": "be2ce03a_cf4d78bd",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "c97a7bef_89aff7a6",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-15T04:49:05Z",
+      "side": 1,
+      "message": "Well you lose the nice property that it returns the file or None, instead it returns a boolean. But I\u0027m not using that property and it\u0027s unlikely to be ever used considering the code, and it\u0027s also not hard to reinstate, so adopted your suggestion.",
+      "parentUuid": "401dd39a_1499c812",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b177b075_3a9b2fc3",
         "filename": "tools/aosp_hook/aosp_hook.py",
         "patchSetId": 1
@@ -252,6 +492,30 @@
       "revId": "d641ed774226f8ded22a12981934d2e477e17579",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e7b64d_aa3239a0",
+        "filename": "tools/aosp_hook/aosp_hook.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-15T04:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b177b075_3a9b2fc3",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "d641ed774226f8ded22a12981934d2e477e17579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
