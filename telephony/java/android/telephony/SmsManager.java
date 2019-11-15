@@ -31,6 +31,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.CursorWindow;
 import android.net.Uri;
+import android.os.BaseBundle;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -2408,22 +2409,110 @@ public final class SmsManager {
     public static final String MESSAGE_STATUS_READ = "read";
 
     /**
-     * Get carrier-dependent configuration values.
+     * Get carrier-dependent MMS configuration values.
      *
      * <p class="note"><strong>Note:</strong> This method is intended for internal use by carrier
-     * applications or the Telephony framework and will never trigger an SMS disambiguation
-     * dialog. If this method is called on a device that has multiple active subscriptions, this
-     * {@link SmsManager} instance has been created with {@link #getDefault()}, and no user-defined
-     * default subscription is defined, the subscription ID associated with this message will be
-     * INVALID, which will result in the operation being completed on the subscription associated
-     * with logical slot 0. Use {@link #getSmsManagerForSubscriptionId(int)} to ensure the
-     * operation is performed on the correct subscription.
+     * applications or the Telephony framework and will never trigger an SMS disambiguation dialog.
+     * If this method is called on a device that has multiple active subscriptions, this {@link
+     * SmsManager} instance has been created with {@link #getDefault()}, and no user-defined default
+     * subscription is defined, the subscription ID associated with this message will be INVALID,
+     * which will result in the operation being completed on the subscription associated with
+     * logical slot 0. Use {@link #getSmsManagerForSubscriptionId(int)} to ensure the operation is
+     * performed on the correct subscription.
      * </p>
      *
-     * @return bundle key/values pairs of configuration values
+     * @return the bundle key/values pairs that contains MMS configuration values
      */
+    @Nullable
     public Bundle getCarrierConfigValues() {
-        return MmsManager.getInstance().getCarrierConfigValues(getSubscriptionId());
+        try {
+            ISms iSms = getISmsService();
+            if (iSms != null) {
+                return getMmsConfig(iSms.getCarrierConfigValuesForSubscriber(getSubscriptionId()));
+            }
+        } catch (RemoteException ex) {
+            // ignore it
+        }
+        return null;
+    }
+
+    /**
+     * Filters a bundle to only contain MMS config variables.
+     *
+     * This is for use with bundles returned by {@link CarrierConfigManager} which contain MMS
+     * config and unrelated config. It is assumed that all MMS_CONFIG_* keys are present in the
+     * supplied bundle.
+     *
+     * @param config a Bundle that contains MMS config variables and possibly more.
+     * @return a new Bundle that only contains the MMS_CONFIG_* keys defined above.
+     */
+    private static Bundle getMmsConfig(BaseBundle config) {
+        Bundle filtered = new Bundle();
+        filtered.putBoolean(
+                MMS_CONFIG_APPEND_TRANSACTION_ID,
+                config.getBoolean(MMS_CONFIG_APPEND_TRANSACTION_ID));
+        filtered.putBoolean(MMS_CONFIG_MMS_ENABLED, config.getBoolean(MMS_CONFIG_MMS_ENABLED));
+        filtered.putBoolean(
+                MMS_CONFIG_GROUP_MMS_ENABLED, config.getBoolean(MMS_CONFIG_GROUP_MMS_ENABLED));
+        filtered.putBoolean(
+                MMS_CONFIG_NOTIFY_WAP_MMSC_ENABLED,
+                config.getBoolean(MMS_CONFIG_NOTIFY_WAP_MMSC_ENABLED));
+        filtered.putBoolean(MMS_CONFIG_ALIAS_ENABLED, config.getBoolean(MMS_CONFIG_ALIAS_ENABLED));
+        filtered.putBoolean(
+                MMS_CONFIG_ALLOW_ATTACH_AUDIO, config.getBoolean(MMS_CONFIG_ALLOW_ATTACH_AUDIO));
+        filtered.putBoolean(
+                MMS_CONFIG_MULTIPART_SMS_ENABLED,
+                config.getBoolean(MMS_CONFIG_MULTIPART_SMS_ENABLED));
+        filtered.putBoolean(
+                MMS_CONFIG_SMS_DELIVERY_REPORT_ENABLED,
+                config.getBoolean(MMS_CONFIG_SMS_DELIVERY_REPORT_ENABLED));
+        filtered.putBoolean(
+                MMS_CONFIG_SUPPORT_MMS_CONTENT_DISPOSITION,
+                config.getBoolean(MMS_CONFIG_SUPPORT_MMS_CONTENT_DISPOSITION));
+        filtered.putBoolean(
+                MMS_CONFIG_SEND_MULTIPART_SMS_AS_SEPARATE_MESSAGES,
+                config.getBoolean(MMS_CONFIG_SEND_MULTIPART_SMS_AS_SEPARATE_MESSAGES));
+        filtered.putBoolean(
+                MMS_CONFIG_MMS_READ_REPORT_ENABLED,
+                config.getBoolean(MMS_CONFIG_MMS_READ_REPORT_ENABLED));
+        filtered.putBoolean(
+                MMS_CONFIG_MMS_DELIVERY_REPORT_ENABLED,
+                config.getBoolean(MMS_CONFIG_MMS_DELIVERY_REPORT_ENABLED));
+        filtered.putBoolean(
+                MMS_CONFIG_CLOSE_CONNECTION, config.getBoolean(MMS_CONFIG_CLOSE_CONNECTION));
+        filtered.putInt(MMS_CONFIG_MAX_MESSAGE_SIZE, config.getInt(MMS_CONFIG_MAX_MESSAGE_SIZE));
+        filtered.putInt(MMS_CONFIG_MAX_IMAGE_WIDTH, config.getInt(MMS_CONFIG_MAX_IMAGE_WIDTH));
+        filtered.putInt(MMS_CONFIG_MAX_IMAGE_HEIGHT, config.getInt(MMS_CONFIG_MAX_IMAGE_HEIGHT));
+        filtered.putInt(MMS_CONFIG_RECIPIENT_LIMIT, config.getInt(MMS_CONFIG_RECIPIENT_LIMIT));
+        filtered.putInt(MMS_CONFIG_ALIAS_MIN_CHARS, config.getInt(MMS_CONFIG_ALIAS_MIN_CHARS));
+        filtered.putInt(MMS_CONFIG_ALIAS_MAX_CHARS, config.getInt(MMS_CONFIG_ALIAS_MAX_CHARS));
+        filtered.putInt(
+                MMS_CONFIG_SMS_TO_MMS_TEXT_THRESHOLD,
+                config.getInt(MMS_CONFIG_SMS_TO_MMS_TEXT_THRESHOLD));
+        filtered.putInt(
+                MMS_CONFIG_SMS_TO_MMS_TEXT_LENGTH_THRESHOLD,
+                config.getInt(MMS_CONFIG_SMS_TO_MMS_TEXT_LENGTH_THRESHOLD));
+        filtered.putInt(
+                MMS_CONFIG_MESSAGE_TEXT_MAX_SIZE, config.getInt(MMS_CONFIG_MESSAGE_TEXT_MAX_SIZE));
+        filtered.putInt(
+                MMS_CONFIG_SUBJECT_MAX_LENGTH, config.getInt(MMS_CONFIG_SUBJECT_MAX_LENGTH));
+        filtered.putInt(
+                MMS_CONFIG_HTTP_SOCKET_TIMEOUT, config.getInt(MMS_CONFIG_HTTP_SOCKET_TIMEOUT));
+        filtered.putString(
+                MMS_CONFIG_UA_PROF_TAG_NAME, config.getString(MMS_CONFIG_UA_PROF_TAG_NAME));
+        filtered.putString(MMS_CONFIG_USER_AGENT, config.getString(MMS_CONFIG_USER_AGENT));
+        filtered.putString(MMS_CONFIG_UA_PROF_URL, config.getString(MMS_CONFIG_UA_PROF_URL));
+        filtered.putString(MMS_CONFIG_HTTP_PARAMS, config.getString(MMS_CONFIG_HTTP_PARAMS));
+        filtered.putString(
+                MMS_CONFIG_EMAIL_GATEWAY_NUMBER, config.getString(MMS_CONFIG_EMAIL_GATEWAY_NUMBER));
+        filtered.putString(MMS_CONFIG_NAI_SUFFIX, config.getString(MMS_CONFIG_NAI_SUFFIX));
+        filtered.putBoolean(
+                MMS_CONFIG_SHOW_CELL_BROADCAST_APP_LINKS,
+                config.getBoolean(MMS_CONFIG_SHOW_CELL_BROADCAST_APP_LINKS));
+        filtered.putBoolean(
+                MMS_CONFIG_SUPPORT_HTTP_CHARSET_HEADER,
+                config.getBoolean(MMS_CONFIG_SUPPORT_HTTP_CHARSET_HEADER));
+        return filtered;
     }
 
     /**
