@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7160d37_c556b6d3",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-11-15T18:54:25Z",
+      "side": 1,
+      "message": "please add the maxTargetSdk annotation? getExtraCode()",
+      "range": {
+        "startLine": 1130,
+        "startChar": 5,
+        "endLine": 1130,
+        "endChar": 24
+      },
+      "revId": "5ac612c621b34da0de5b6e64edeb58772498eed5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
