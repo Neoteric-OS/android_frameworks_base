@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fdf2a75a_75aa418a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-15T15:13:00Z",
+      "side": 1,
+      "message": "Yep, I guess so. MODULE didn\u0027t exist before.",
+      "parentUuid": "b1a3c2e0_a826a645",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 59
+      },
+      "revId": "b860786bf56a1c68acdda653373075b4aa73148a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "728eb6fd_a1054991",
         "filename": "tools/processors/unsupportedappusage/test/Android.bp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-11-15T14:33:11Z",
       "side": 1,
       "message": "remove?",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "b860786bf56a1c68acdda653373075b4aa73148a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e6f7bf0_61734788",
+        "filename": "tools/processors/unsupportedappusage/test/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-15T15:13:00Z",
+      "side": 1,
+      "message": "Done. Copy pasta.",
+      "parentUuid": "728eb6fd_a1054991",
       "range": {
         "startLine": 18,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "b860786bf56a1c68acdda653373075b4aa73148a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79c2425_5182ef9c",
+        "filename": "tools/processors/unsupportedappusage/test/src/android/processor/unsupportedappusage/test/UnsupportedAppUsageProcessorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-15T15:13:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62de8c31_aa8067e0",
+      "range": {
+        "startLine": 17,
+        "startChar": 45,
+        "endLine": 17,
+        "endChar": 50
+      },
+      "revId": "b860786bf56a1c68acdda653373075b4aa73148a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
