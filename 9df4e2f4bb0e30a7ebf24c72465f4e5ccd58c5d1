@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bd99b85_175b48b1",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-11-15T23:24:24Z",
+      "side": 1,
+      "message": "can probably drop \"withRemoteDevice\" since the parameter implies this?\n\nso connectAllEnabledProfiles and disconnectAllEnabledProfiles?",
+      "range": {
+        "startLine": 1746,
+        "startChar": 19,
+        "endLine": 1746,
+        "endChar": 60
+      },
+      "revId": "9df4e2f4bb0e30a7ebf24c72465f4e5ccd58c5d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
