@@ -22,7 +22,11 @@ import android.net.Uri;
  * A specialization of {@link Observable} for {@link ContentObserver}
  * that provides methods for sending notifications to a list of
  * {@link ContentObserver} objects.
+ *
+ * @deprecated This class calls into observers while holding a lock. Instead, use {@link
+ * android.content.ContentResolver} to register for and notify of changes.
  */
+@Deprecated
 public class ContentObservable extends Observable<ContentObserver> {
     // Even though the generic method defined in Observable would be perfectly
     // fine on its own, we can't delete this overridden method because it would

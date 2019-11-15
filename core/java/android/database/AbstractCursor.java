@@ -360,11 +360,15 @@ public abstract class AbstractCursor implements CrossProcessCursor {
         return getColumnNames()[columnIndex];
     }
 
+    /** @deprecated {@see Cursor#registerContentObserver(ContentObserver)} */
+    @Deprecated
     @Override
     public void registerContentObserver(ContentObserver observer) {
         mContentObservable.registerObserver(observer);
     }
 
+    /** @deprecated {@see Cursor#unregisterContentObserver(ContentObserver)} */
+    @Deprecated
     @Override
     public void unregisterContentObserver(ContentObserver observer) {
         // cursor will unregister all observers when it close
@@ -388,7 +392,11 @@ public abstract class AbstractCursor implements CrossProcessCursor {
      * observers.
      *
      * @param selfChange
+     * @deprecated Cursors should not use {@link #requery} to change their content. Instead, notify
+     * about changes to the underlying data via {@link android.content.ContentResolver} and
+     * {@link #setNotificationUris}.
      */
+    @Deprecated
     protected void onChange(boolean selfChange) {
         synchronized (mSelfObserverLock) {
             mContentObservable.dispatchChange(selfChange, null);
@@ -528,7 +536,10 @@ public abstract class AbstractCursor implements CrossProcessCursor {
 
     /**
      * Cursors use this class to track changes others make to their URI.
+     *
+     * @deprecated {@see Cursor#registerContentObserver(ContentObserver)}
      */
+    @Deprecated
     protected static class SelfContentObserver extends ContentObserver {
         WeakReference<AbstractCursor> mCursor;
 

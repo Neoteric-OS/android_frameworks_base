@@ -12467,23 +12467,23 @@ package android.database {
     method public final boolean moveToNext();
     method public final boolean moveToPosition(int);
     method public final boolean moveToPrevious();
-    method protected void onChange(boolean);
+    method @Deprecated protected void onChange(boolean);
     method public boolean onMove(int, int);
-    method public void registerContentObserver(android.database.ContentObserver);
+    method @Deprecated public void registerContentObserver(android.database.ContentObserver);
     method public void registerDataSetObserver(android.database.DataSetObserver);
     method public boolean requery();
     method public android.os.Bundle respond(android.os.Bundle);
     method public void setExtras(android.os.Bundle);
     method public void setNotificationUri(android.content.ContentResolver, android.net.Uri);
-    method public void unregisterContentObserver(android.database.ContentObserver);
+    method @Deprecated public void unregisterContentObserver(android.database.ContentObserver);
     method public void unregisterDataSetObserver(android.database.DataSetObserver);
     field @Deprecated protected boolean mClosed;
     field @Deprecated protected android.content.ContentResolver mContentResolver;
     field @Deprecated protected int mPos;
   }
 
-  protected static class AbstractCursor.SelfContentObserver extends android.database.ContentObserver {
-    ctor public AbstractCursor.SelfContentObserver(android.database.AbstractCursor);
+  @Deprecated protected static class AbstractCursor.SelfContentObserver extends android.database.ContentObserver {
+    ctor @Deprecated public AbstractCursor.SelfContentObserver(android.database.AbstractCursor);
   }
 
   public abstract class AbstractWindowedCursor extends android.database.AbstractCursor {
@@ -12511,12 +12511,12 @@ package android.database {
     field public int sizeCopied;
   }
 
-  public class ContentObservable extends android.database.Observable<android.database.ContentObserver> {
-    ctor public ContentObservable();
+  @Deprecated public class ContentObservable extends android.database.Observable<android.database.ContentObserver> {
+    ctor @Deprecated public ContentObservable();
     method @Deprecated public void dispatchChange(boolean);
-    method public void dispatchChange(boolean, android.net.Uri);
+    method @Deprecated public void dispatchChange(boolean, android.net.Uri);
     method @Deprecated public void notifyChange(boolean);
-    method public void registerObserver(android.database.ContentObserver);
+    method @Deprecated public void registerObserver(android.database.ContentObserver);
   }
 
   public abstract class ContentObserver {
@@ -12827,14 +12827,16 @@ package android.database {
     method public short getShort(int);
     method public String getString(int);
     method public boolean isNull(int);
+    method public void registerContentObserver(android.database.ContentObserver);
+    method public void unregisterContentObserver(android.database.ContentObserver);
   }
 
-  public abstract class Observable<T> {
-    ctor public Observable();
-    method public void registerObserver(T);
-    method public void unregisterAll();
-    method public void unregisterObserver(T);
-    field protected final java.util.ArrayList<T> mObservers;
+  @Deprecated public abstract class Observable<T> {
+    ctor @Deprecated public Observable();
+    method @Deprecated public void registerObserver(T);
+    method @Deprecated public void unregisterAll();
+    method @Deprecated public void unregisterObserver(T);
+    field @Deprecated protected final java.util.ArrayList<T> mObservers;
   }
 
   public class SQLException extends java.lang.RuntimeException {

@@ -25,7 +25,11 @@ import java.util.ArrayList;
  * a registry of observers of specific types and dispatch notifications to them.
  *
  * @param T The observer type.
+ * @deprecated This class has locking behavior that is error-prone but difficult to change without
+ *   risking breaking applications that depend on it. {@link androidx.lifecycle.LiveData} may be a
+ *   replacement, depending on your use case.
  */
+@Deprecated
 public abstract class Observable<T> {
     /**
      * The list of observers.  An observer can be in the list at most
@@ -39,7 +43,9 @@ public abstract class Observable<T> {
      * @param observer the observer to register
      * @throws IllegalArgumentException the observer is null
      * @throws IllegalStateException the observer is already registered
+     * @deprecated This method is very slow when large numbers of observers are registered.
      */
+    @Deprecated
     public void registerObserver(T observer) {
         if (observer == null) {
             throw new IllegalArgumentException("The observer is null.");
@@ -58,7 +64,9 @@ public abstract class Observable<T> {
      * @param observer the observer to unregister
      * @throws IllegalArgumentException the observer is null
      * @throws IllegalStateException the observer is not yet registered
+     * @deprecated This method is very slow when large numbers of observers are registered.
      */
+    @Deprecated
     public void unregisterObserver(T observer) {
         if (observer == null) {
             throw new IllegalArgumentException("The observer is null.");
