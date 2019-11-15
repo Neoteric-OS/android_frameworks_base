@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22307876_1595eeaa",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-11-15T19:32:27Z",
+      "side": 1,
+      "message": "Please comment what the key means. In fact, both subId and context should be used for the key. useRootLocale is fine because it\u0027s for corner cases. It\u0027s okay not to cache it.\n\nThe static cache should be shared by all contexts within one process, for example, the phone process. Resources for telephony provider and resources for telephony service should be different, but they are in the same phone process.",
+      "range": {
+        "startLine": 915,
+        "startChar": 29,
+        "endLine": 915,
+        "endChar": 36
+      },
+      "revId": "07fe89aa50b051ffc7d6801ebbfb6e37abff9894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
