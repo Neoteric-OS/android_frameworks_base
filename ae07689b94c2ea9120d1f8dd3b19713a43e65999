@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74a1d657_eb5ac464",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-16T02:04:47Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem this will produce a useful object. I get that the NPE is not useful, but maybe we want to throw IllegalState or IllegalArgument instead ?",
+      "range": {
+        "startLine": 181,
+        "startChar": 12,
+        "endLine": 181,
+        "endChar": 38
+      },
+      "revId": "ae07689b94c2ea9120d1f8dd3b19713a43e65999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
