@@ -16,6 +16,9 @@
 
 package android.bluetooth;
 
+import android.Manifest;
+import android.annotation.RequiresPermission;
+import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Binder;
@@ -320,14 +323,13 @@ public final class BluetoothA2dpSink implements BluetoothProfile {
      * Priority can be one of {@link #PRIORITY_ON} orgetBluetoothManager
      * {@link #PRIORITY_OFF},
      *
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}
-     * permission.
-     *
      * @param device Paired bluetooth device
      * @param priority
      * @return true if priority is set, false on error
      * @hide
      */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
     public boolean setPriority(BluetoothDevice device, int priority) {
         if (DBG) log("setPriority(" + device + ", " + priority + ")");
         final IBluetoothA2dpSink service = getService();
@@ -354,12 +356,12 @@ public final class BluetoothA2dpSink implements BluetoothProfile {
      * {@link #PRIORITY_AUTO_CONNECT}, {@link #PRIORITY_OFF},
      * {@link #PRIORITY_ON}, {@link #PRIORITY_UNDEFINED}
      *
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH} permission.
-     *
      * @param device Bluetooth device
      * @return priority of the device
      * @hide
      */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
     public int getPriority(BluetoothDevice device) {
         if (VDBG) log("getPriority(" + device + ")");
         final IBluetoothA2dpSink service = getService();

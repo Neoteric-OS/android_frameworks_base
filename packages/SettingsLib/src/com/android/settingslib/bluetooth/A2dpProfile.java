@@ -210,14 +210,14 @@ public class A2dpProfile implements LocalBluetoothProfile {
     }
 
     public boolean supportsHighQualityAudio(BluetoothDevice device) {
-        int support = mService.supportsOptionalCodecs(device);
-        return support == BluetoothA2dp.OPTIONAL_CODECS_SUPPORTED;
+        int support = mService.supportsHighQualityAudioCodecs(device);
+        return support == BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_SUPPORTED;
     }
 
     public boolean isHighQualityAudioEnabled(BluetoothDevice device) {
-        int enabled = mService.getOptionalCodecsEnabled(device);
-        if (enabled != BluetoothA2dp.OPTIONAL_CODECS_PREF_UNKNOWN) {
-            return enabled == BluetoothA2dp.OPTIONAL_CODECS_PREF_ENABLED;
+        int enabled = mService.getHighQualityAudioCodecsEnabled(device);
+        if (enabled != BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_PREF_UNKNOWN) {
+            return enabled == BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_PREF_ENABLED;
         } else if (getConnectionStatus(device) != BluetoothProfile.STATE_CONNECTED &&
                 supportsHighQualityAudio(device)) {
             // Since we don't have a stored preference and the device isn't connected, just return
@@ -238,16 +238,16 @@ public class A2dpProfile implements LocalBluetoothProfile {
 
     public void setHighQualityAudioEnabled(BluetoothDevice device, boolean enabled) {
         int prefValue = enabled
-                ? BluetoothA2dp.OPTIONAL_CODECS_PREF_ENABLED
-                : BluetoothA2dp.OPTIONAL_CODECS_PREF_DISABLED;
-        mService.setOptionalCodecsEnabled(device, prefValue);
+                ? BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_PREF_ENABLED
+                : BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_PREF_DISABLED;
+        mService.setHighQualityAudioCodecsEnabled(device, prefValue);
         if (getConnectionStatus(device) != BluetoothProfile.STATE_CONNECTED) {
             return;
         }
         if (enabled) {
-            mService.enableOptionalCodecs(device);
+            mService.enableHighQualityAudioCodecs(device);
         } else {
-            mService.disableOptionalCodecs(device);
+            mService.disableHighQualityAudioCodecs(device);
         }
     }
 

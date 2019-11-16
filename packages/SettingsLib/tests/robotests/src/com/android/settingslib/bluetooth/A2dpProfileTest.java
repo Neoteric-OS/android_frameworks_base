@@ -74,26 +74,26 @@ public class A2dpProfileTest {
     @Test
     public void supportsHighQualityAudio() {
         when(mBluetoothA2dp.supportsOptionalCodecs(any())).thenReturn(
-                BluetoothA2dp.OPTIONAL_CODECS_SUPPORTED);
+                BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_SUPPORTED);
         assertThat(mProfile.supportsHighQualityAudio(mDevice)).isTrue();
 
         when(mBluetoothA2dp.supportsOptionalCodecs(any())).thenReturn(
-                BluetoothA2dp.OPTIONAL_CODECS_NOT_SUPPORTED);
+                BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_NOT_SUPPORTED);
         assertThat(mProfile.supportsHighQualityAudio(mDevice)).isFalse();
 
         when(mBluetoothA2dp.supportsOptionalCodecs(any())).thenReturn(
-                BluetoothA2dp.OPTIONAL_CODECS_SUPPORT_UNKNOWN);
+                BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_SUPPORT_UNKNOWN);
         assertThat(mProfile.supportsHighQualityAudio(mDevice)).isFalse();
     }
 
     @Test
     public void isHighQualityAudioEnabled() {
         when(mBluetoothA2dp.getOptionalCodecsEnabled(any())).thenReturn(
-                BluetoothA2dp.OPTIONAL_CODECS_PREF_ENABLED);
+                BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_PREF_ENABLED);
         assertThat(mProfile.isHighQualityAudioEnabled(mDevice)).isTrue();
 
         when(mBluetoothA2dp.getOptionalCodecsEnabled(any())).thenReturn(
-                BluetoothA2dp.OPTIONAL_CODECS_PREF_DISABLED);
+                BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_PREF_DISABLED);
         assertThat(mProfile.isHighQualityAudioEnabled(mDevice)).isFalse();
 
         // If we don't have a stored pref for whether optional codecs should be enabled or not,
@@ -101,16 +101,16 @@ public class A2dpProfileTest {
         // codecs are supported. If the device is connected then we should ask it directly, but if
         // the device isn't connected then rely on the stored pref about such support.
         when(mBluetoothA2dp.getOptionalCodecsEnabled(any())).thenReturn(
-                BluetoothA2dp.OPTIONAL_CODECS_PREF_UNKNOWN);
+                BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_PREF_UNKNOWN);
         when(mBluetoothA2dp.getConnectionState(any())).thenReturn(
                 BluetoothProfile.STATE_DISCONNECTED);
 
         when(mBluetoothA2dp.supportsOptionalCodecs(any())).thenReturn(
-                BluetoothA2dp.OPTIONAL_CODECS_NOT_SUPPORTED);
+                BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_NOT_SUPPORTED);
         assertThat(mProfile.isHighQualityAudioEnabled(mDevice)).isFalse();
 
         when(mBluetoothA2dp.supportsOptionalCodecs(any())).thenReturn(
-                BluetoothA2dp.OPTIONAL_CODECS_SUPPORTED);
+                BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_SUPPORTED);
         assertThat(mProfile.isHighQualityAudioEnabled(mDevice)).isTrue();
 
         when(mBluetoothA2dp.getConnectionState(any())).thenReturn(
@@ -152,14 +152,14 @@ public class A2dpProfileTest {
         // Most tests want to simulate optional codecs being supported by the device, so do that
         // by default here.
         when(mBluetoothA2dp.supportsOptionalCodecs(any())).thenReturn(
-                BluetoothA2dp.OPTIONAL_CODECS_SUPPORTED);
+                BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_SUPPORTED);
     }
 
     @Test
     public void getLableCodecsNotSupported() {
         setupLabelTest();
         when(mBluetoothA2dp.supportsOptionalCodecs(any())).thenReturn(
-                BluetoothA2dp.OPTIONAL_CODECS_NOT_SUPPORTED);
+                BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_NOT_SUPPORTED);
         assertThat(mProfile.getHighQualityAudioOptionLabel(mDevice)).isEqualTo(UNKNOWN_CODEC_LABEL);
     }
 

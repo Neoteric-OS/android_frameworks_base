@@ -21,6 +21,7 @@ import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
+import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Binder;
@@ -154,53 +155,53 @@ public final class BluetoothA2dp implements BluetoothProfile {
 
     /**
      * We don't have a stored preference for whether or not the given A2DP sink device supports
-     * optional codecs.
+     * high quality audio codecs.
      *
      * @hide
      */
-    @UnsupportedAppUsage
-    public static final int OPTIONAL_CODECS_SUPPORT_UNKNOWN = -1;
+    @SystemApi
+    public static final int HIGH_QUALITY_AUDIO_CODECS_SUPPORT_UNKNOWN = -1;
 
     /**
-     * The given A2DP sink device does not support optional codecs.
+     * The given A2DP sink device does not support high quality audio codecs.
      *
      * @hide
      */
-    @UnsupportedAppUsage
-    public static final int OPTIONAL_CODECS_NOT_SUPPORTED = 0;
+    @SystemApi
+    public static final int HIGH_QUALITY_AUDIO_CODECS_NOT_SUPPORTED = 0;
 
     /**
-     * The given A2DP sink device does support optional codecs.
+     * The given A2DP sink device does support high quality audio codecs.
      *
      * @hide
      */
-    @UnsupportedAppUsage
-    public static final int OPTIONAL_CODECS_SUPPORTED = 1;
+    @SystemApi
+    public static final int HIGH_QUALITY_AUDIO_CODECS_SUPPORTED = 1;
 
     /**
-     * We don't have a stored preference for whether optional codecs should be enabled or disabled
-     * for the given A2DP device.
+     * We don't have a stored preference for whether high quality audio codecs should be enabled or
+     * disabled for the given A2DP device.
      *
      * @hide
      */
-    @UnsupportedAppUsage
-    public static final int OPTIONAL_CODECS_PREF_UNKNOWN = -1;
+    @SystemApi
+    public static final int HIGH_QUALITY_AUDIO_CODECS_PREF_UNKNOWN = -1;
 
     /**
-     * Optional codecs should be disabled for the given A2DP device.
+     * High quality audio codecs should be disabled for the given A2DP device.
      *
      * @hide
      */
-    @UnsupportedAppUsage
-    public static final int OPTIONAL_CODECS_PREF_DISABLED = 0;
+    @SystemApi
+    public static final int HIGH_QUALITY_AUDIO_CODECS_PREF_DISABLED = 0;
 
     /**
-     * Optional codecs should be enabled for the given A2DP device.
+     * High quality audio codecs should be enabled for the given A2DP device.
      *
      * @hide
      */
-    @UnsupportedAppUsage
-    public static final int OPTIONAL_CODECS_PREF_ENABLED = 1;
+    @SystemApi
+    public static final int HIGH_QUALITY_AUDIO_CODECS_PREF_ENABLED = 1;
 
     private BluetoothAdapter mAdapter;
     private final BluetoothProfileConnector<IBluetoothA2dp> mProfileConnector =
@@ -382,15 +383,13 @@ public final class BluetoothA2dp implements BluetoothProfile {
      * {@link #ACTION_ACTIVE_DEVICE_CHANGED} intent will be broadcasted
      * with the active device.
      *
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}
-     * permission.
-     *
      * @param device the remote Bluetooth device. Could be null to clear
      * the active device and stop streaming audio to a Bluetooth device.
      * @return false on immediate error, true otherwise
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
     public boolean setActiveDevice(@Nullable BluetoothDevice device) {
         if (DBG) log("setActiveDevice(" + device + ")");
         try {
@@ -410,16 +409,13 @@ public final class BluetoothA2dp implements BluetoothProfile {
     /**
      * Get the connected device that is active.
      *
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH}
-     * permission.
-     *
      * @return the connected device that is active or null if no device
      * is active
      * @hide
      */
-    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    @SystemApi
     @Nullable
-    @UnsupportedAppUsage
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
     public BluetoothDevice getActiveDevice() {
         if (VDBG) log("getActiveDevice()");
         try {
@@ -442,15 +438,14 @@ public final class BluetoothA2dp implements BluetoothProfile {
      * Priority can be one of {@link #PRIORITY_ON} orgetBluetoothManager
      * {@link #PRIORITY_OFF},
      *
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}
-     * permission.
-     *
      * @param device Paired bluetooth device
      * @param priority
      * @return true if priority is set, false on error
      * @hide
      */
-    public boolean setPriority(BluetoothDevice device, int priority) {
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
+    public boolean setPriority(@Nullable BluetoothDevice device, int priority) {
         if (DBG) log("setPriority(" + device + ", " + priority + ")");
         try {
             final IBluetoothA2dp service = getService();
@@ -481,9 +476,9 @@ public final class BluetoothA2dp implements BluetoothProfile {
      * @return priority of the device
      * @hide
      */
+    @SystemApi
     @RequiresPermission(Manifest.permission.BLUETOOTH)
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
-    public int getPriority(BluetoothDevice device) {
+    public int getPriority(@Nullable BluetoothDevice device) {
         if (VDBG) log("getPriority(" + device + ")");
         try {
             final IBluetoothA2dp service = getService();
@@ -590,8 +585,10 @@ public final class BluetoothA2dp implements BluetoothProfile {
      * @return the current codec status
      * @hide
      */
-    @UnsupportedAppUsage
-    public @Nullable BluetoothCodecStatus getCodecStatus(BluetoothDevice device) {
+    @SystemApi
+    @Nullable
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public BluetoothCodecStatus getCodecStatus(@Nullable BluetoothDevice device) {
         if (DBG) Log.d(TAG, "getCodecStatus(" + device + ")");
         try {
             final IBluetoothA2dp service = getService();
@@ -616,9 +613,10 @@ public final class BluetoothA2dp implements BluetoothProfile {
      * @param codecConfig the codec configuration preference
      * @hide
      */
-    @UnsupportedAppUsage
-    public void setCodecConfigPreference(BluetoothDevice device,
-                                         BluetoothCodecConfig codecConfig) {
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public void setCodecConfigPreference(@Nullable BluetoothDevice device,
+                                         @Nullable BluetoothCodecConfig codecConfig) {
         if (DBG) Log.d(TAG, "setCodecConfigPreference(" + device + ")");
         try {
             final IBluetoothA2dp service = getService();
@@ -634,29 +632,31 @@ public final class BluetoothA2dp implements BluetoothProfile {
     }
 
     /**
-     * Enables the optional codecs.
+     * Enables the high quality audio (optional) codecs.
      *
      * @param device the remote Bluetooth device. If null, use the currect
      * active A2DP Bluetooth device.
      * @hide
      */
-    @UnsupportedAppUsage
-    public void enableOptionalCodecs(BluetoothDevice device) {
-        if (DBG) Log.d(TAG, "enableOptionalCodecs(" + device + ")");
-        enableDisableOptionalCodecs(device, true);
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public void enableHighQualityAudioCodecs(@Nullable BluetoothDevice device) {
+        if (DBG) Log.d(TAG, "enableHighQualityAudioCodecs(" + device + ")");
+        enableDisableHighQualityAudioCodecs(device, true);
     }
 
     /**
-     * Disables the optional codecs.
+     * Disables the high quality audio (optional) codecs.
      *
      * @param device the remote Bluetooth device. If null, use the currect
      * active A2DP Bluetooth device.
      * @hide
      */
-    @UnsupportedAppUsage
-    public void disableOptionalCodecs(BluetoothDevice device) {
-        if (DBG) Log.d(TAG, "disableOptionalCodecs(" + device + ")");
-        enableDisableOptionalCodecs(device, false);
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public void disableHighQualityAudioCodecs(@Nullable BluetoothDevice device) {
+        if (DBG) Log.d(TAG, "disableHighQualityAudioCodecs(" + device + ")");
+        enableDisableHighQualityAudioCodecs(device, false);
     }
 
     /**
@@ -666,7 +666,7 @@ public final class BluetoothA2dp implements BluetoothProfile {
      * active A2DP Bluetooth device.
      * @param enable if true, enable the optional codecs, other disable them
      */
-    private void enableDisableOptionalCodecs(BluetoothDevice device, boolean enable) {
+    private void enableDisableHighQualityAudioCodecs(BluetoothDevice device, boolean enable) {
         try {
             final IBluetoothA2dp service = getService();
             if (service != null && isEnabled()) {
@@ -679,59 +679,62 @@ public final class BluetoothA2dp implements BluetoothProfile {
             if (service == null) Log.w(TAG, "Proxy not attached to service");
             return;
         } catch (RemoteException e) {
-            Log.e(TAG, "Error talking to BT service in enableDisableOptionalCodecs()", e);
+            Log.e(TAG, "Error talking to BT service in enableDisableHighQualityAudioCodecs()", e);
             return;
         }
     }
 
     /**
-     * Returns whether this device supports optional codecs.
+     * Returns whether this device supports high quality audio (optional) codecs.
      *
      * @param device The device to check
      * @return one of OPTIONAL_CODECS_SUPPORT_UNKNOWN, OPTIONAL_CODECS_NOT_SUPPORTED, or
      * OPTIONAL_CODECS_SUPPORTED.
      * @hide
      */
-    @UnsupportedAppUsage
-    public int supportsOptionalCodecs(BluetoothDevice device) {
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
+    public int supportsHighQualityAudioCodecs(@Nullable BluetoothDevice device) {
         try {
             final IBluetoothA2dp service = getService();
             if (service != null && isEnabled() && isValidDevice(device)) {
                 return service.supportsOptionalCodecs(device);
             }
             if (service == null) Log.w(TAG, "Proxy not attached to service");
-            return OPTIONAL_CODECS_SUPPORT_UNKNOWN;
+            return HIGH_QUALITY_AUDIO_CODECS_SUPPORT_UNKNOWN;
         } catch (RemoteException e) {
             Log.e(TAG, "Error talking to BT service in getSupportsOptionalCodecs()", e);
-            return OPTIONAL_CODECS_SUPPORT_UNKNOWN;
+            return HIGH_QUALITY_AUDIO_CODECS_SUPPORT_UNKNOWN;
         }
     }
 
     /**
-     * Returns whether this device should have optional codecs enabled.
+     * Returns whether this device should have high quality audio (optional) codecs enabled.
      *
      * @param device The device in question.
      * @return one of OPTIONAL_CODECS_PREF_UNKNOWN, OPTIONAL_CODECS_PREF_ENABLED, or
      * OPTIONAL_CODECS_PREF_DISABLED.
      * @hide
      */
-    @UnsupportedAppUsage
-    public int getOptionalCodecsEnabled(BluetoothDevice device) {
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
+    public int getHighQualityAudioCodecsEnabled(@Nullable BluetoothDevice device) {
         try {
             final IBluetoothA2dp service = getService();
             if (service != null && isEnabled() && isValidDevice(device)) {
                 return service.getOptionalCodecsEnabled(device);
             }
             if (service == null) Log.w(TAG, "Proxy not attached to service");
-            return OPTIONAL_CODECS_PREF_UNKNOWN;
+            return HIGH_QUALITY_AUDIO_CODECS_PREF_UNKNOWN;
         } catch (RemoteException e) {
-            Log.e(TAG, "Error talking to BT service in getSupportsOptionalCodecs()", e);
-            return OPTIONAL_CODECS_PREF_UNKNOWN;
+            Log.e(TAG, "Error talking to BT service in getHighQualityAudioCodecsEnabled()", e);
+            return HIGH_QUALITY_AUDIO_CODECS_PREF_UNKNOWN;
         }
     }
 
     /**
-     * Sets a persistent preference for whether a given device should have optional codecs enabled.
+     * Sets a persistent preference for whether a given device should have high quality audio
+     * (optional) codecs enabled.
      *
      * @param device The device to set this preference for.
      * @param value Whether the optional codecs should be enabled for this device.  This should be
@@ -739,12 +742,13 @@ public final class BluetoothA2dp implements BluetoothProfile {
      * OPTIONAL_CODECS_PREF_DISABLED.
      * @hide
      */
-    @UnsupportedAppUsage
-    public void setOptionalCodecsEnabled(BluetoothDevice device, int value) {
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
+    public void setHighQualityAudioCodecsEnabled(@Nullable BluetoothDevice device, int value) {
         try {
-            if (value != BluetoothA2dp.OPTIONAL_CODECS_PREF_UNKNOWN
-                    && value != BluetoothA2dp.OPTIONAL_CODECS_PREF_DISABLED
-                    && value != BluetoothA2dp.OPTIONAL_CODECS_PREF_ENABLED) {
+            if (value != BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_PREF_UNKNOWN
+                    && value != BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_PREF_DISABLED
+                    && value != BluetoothA2dp.HIGH_QUALITY_AUDIO_CODECS_PREF_ENABLED) {
                 Log.e(TAG, "Invalid value passed to setOptionalCodecsEnabled: " + value);
                 return;
             }
