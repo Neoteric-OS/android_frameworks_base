@@ -59,7 +59,11 @@ bool NativeInputApplicationHandle::updateInfo() {
         return false;
     }
 
-    mInfo.name = getStringField(env, obj, gInputApplicationHandleClassInfo.name, "<null>");
+    auto name = getStringField(env, obj, gInputApplicationHandleClassInfo.name, "<null>");
+    if(name != mInfo.name){
+      android::AutoMutex _l(mInfoLock);
+      mInfo.name = name;
+     }
 
     mInfo.dispatchingTimeout = env->GetLongField(obj,
             gInputApplicationHandleClassInfo.dispatchingTimeoutNanos);
