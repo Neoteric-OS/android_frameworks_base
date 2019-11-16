@@ -70,6 +70,30 @@
       "revId": "045de3d1795f1f67f271398aa717d91796664696",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67fa5df7_234122c7",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3982,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-16T02:11:12Z",
+      "side": 1,
+      "message": "Are we sure no other technology than cellular provides this ? A quick look into AOSP seems to indicate it\u0027s the case, but OEMs could have implemented it for their WiFi.\n\nAlso if we want to deprecate this I agree with Lorenzo we should update ConnectivityService to make sure this is not wired up anywhere else – just removing it from our implementation of Telephony doesn\u0027t seem enough.",
+      "parentUuid": "629b9406_7f92432e",
+      "range": {
+        "startLine": 3982,
+        "startChar": 29,
+        "endLine": 3982,
+        "endChar": 44
+      },
+      "revId": "045de3d1795f1f67f271398aa717d91796664696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
