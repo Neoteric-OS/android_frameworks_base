@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ffd3128a_b60ffbfb",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-18T02:09:08Z",
+      "side": 1,
+      "message": "I think we don\u0027t need this anymore due to we can define a NOTIFY_ID by ourself.",
+      "parentUuid": "896314c6_8279c419",
+      "range": {
+        "startLine": 36,
+        "startChar": 61,
+        "endLine": 36,
+        "endChar": 74
+      },
+      "revId": "95674833ead3d906e4fe198857013d9994d765f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b6323d0_c19209d9",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
         "patchSetId": 5
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "866993c9_d9487055",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-18T02:09:08Z",
+      "side": 1,
+      "message": "Move this receiver to TetheringService.",
+      "parentUuid": "4a447a49_9993f790",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 61
+      },
+      "revId": "95674833ead3d906e4fe198857013d9994d765f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9823034d_ba50de3a",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
         "patchSetId": 5
@@ -83,6 +131,30 @@
       "writtenOn": "2019-11-14T04:03:16Z",
       "side": 1,
       "message": "Since you don\u0027t clear these variable when tethering is down. Does status is guaranteed to be correct.\ne.g.  mNetworkSuspend(true) -\u003e tethering stopped and UpstreamNetworkMonitor don\u0027t report tethering selected upstream status -\u003e upstream becomes to be non-suspend -\u003e user enable tethering -\u003e ??\ne.g. mConnectedClients(\u003d3) -\u003e user disable hotspot -\u003e enable hotspot again -\u003e does number of connected client callback report always earlier than first setupNotification() ?? It seems we probability get the race here.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 44
+      },
+      "revId": "95674833ead3d906e4fe198857013d9994d765f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5efe136_0883b756",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-18T02:09:08Z",
+      "side": 1,
+      "message": "Yes, these parameters need to be clear after notification canceled.",
+      "parentUuid": "9823034d_ba50de3a",
       "range": {
         "startLine": 60,
         "startChar": 0,
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "f2b7af98_9694a260",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-18T02:09:08Z",
+      "side": 1,
+      "message": "Created b/144544650 to follow up",
+      "parentUuid": "239bc18a_37d2d1ab",
+      "range": {
+        "startLine": 167,
+        "startChar": 33,
+        "endLine": 167,
+        "endChar": 45
+      },
+      "revId": "95674833ead3d906e4fe198857013d9994d765f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "906add96_4bb8dffb",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
         "patchSetId": 5
@@ -129,6 +225,30 @@
       "writtenOn": "2019-11-14T04:03:16Z",
       "side": 1,
       "message": "Note: this is @hide usage.",
+      "range": {
+        "startLine": 218,
+        "startChar": 41,
+        "endLine": 218,
+        "endChar": 58
+      },
+      "revId": "95674833ead3d906e4fe198857013d9994d765f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc124bf0_009caf5b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-18T02:09:08Z",
+      "side": 1,
+      "message": "Created b/144545095 to follow up",
+      "parentUuid": "906add96_4bb8dffb",
       "range": {
         "startLine": 218,
         "startChar": 41,
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "0a165dd8_741f0f37",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-18T02:09:08Z",
+      "side": 1,
+      "message": "I think we should also add onNetworkSuspendChanged(false) when got EVENT_ON_LOST.",
+      "parentUuid": "d3786af8_1ee84033",
+      "range": {
+        "startLine": 1410,
+        "startChar": 44,
+        "endLine": 1410,
+        "endChar": 60
+      },
+      "revId": "95674833ead3d906e4fe198857013d9994d765f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbeec9b4_4227dc1c",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
         "patchSetId": 5
@@ -175,6 +319,30 @@
       "writtenOn": "2019-11-14T04:03:16Z",
       "side": 1,
       "message": "How about change to below logic, then someone add new UpstreamNetworkMonitor.EVENT_ON_XXX in handleUpstreamStatesChanged(), it won\u0027t need to add the event into this switch case again(I think most of case the callback event is triggered for handling upstream states change).\n            switch (arg1) {\n                case UpstreamNetworkMonitor.EVENT_ON_SUSPEND:\n                    final Boolean status \u003d (Boolean) o;\n                    mTetheringNotification.onNetworkSuspendChanged(status.booleanValue());\n                    break;\n                case UpstreamNetworkMonitor.NOTIFY_LOCAL_PREFIXES:\n                    mOffload.sendOffloadExemptPrefixes((Set\u003cIpPrefix\u003e) o);\n                    break;\n                default:\n                    handleUpstreamStatesChanged(arg1, (NetworkState) o);\n                    break;",
+      "range": {
+        "startLine": 1405,
+        "startChar": 0,
+        "endLine": 1419,
+        "endChar": 26
+      },
+      "revId": "95674833ead3d906e4fe198857013d9994d765f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8acda723_5ba964c7",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-18T02:09:08Z",
+      "side": 1,
+      "message": "I\u0027m not a fan for putting handleUpstreamStatesChanged to default. Because this logic doesn\u0027t exactly know what events are handling and can\u0027t catch the unknown event as well.",
+      "parentUuid": "dbeec9b4_4227dc1c",
       "range": {
         "startLine": 1405,
         "startChar": 0,
