@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "459a16f1_a99ed7a7",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3781,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-11-18T19:22:01Z",
+      "side": 1,
+      "message": "Is there any reason this API needs to system and test? If not, lets remove it.",
+      "range": {
+        "startLine": 3780,
+        "startChar": 0,
+        "endLine": 3781,
+        "endChar": 12
+      },
+      "revId": "32c693937d14b5e7f8eea59517a50f6c6056af64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
