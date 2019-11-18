@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c859f87_00528e6e",
+        "filename": "core/java/android/accounts/AccountAuthenticatorActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1022529
+      },
+      "writtenOn": "2019-11-18T20:48:32Z",
+      "side": 1,
+      "message": "Why is this being deprecated?",
+      "revId": "f138c0c0a2701af2225bf716d939790f28ede3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
