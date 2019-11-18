@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a50127e2_1667d6a8",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "Can you add some comments on the threading model in this class: is it non-thread-safe, should methods only be called on one thread, etc ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 34
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a838f7e5_20dff78d",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "Can this be final ?",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798e79dc_f169880a",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "Nit: would mNetworkSuspended be better ?",
+      "range": {
+        "startLine": 58,
+        "startChar": 20,
+        "endLine": 58,
+        "endChar": 35
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43da1f4c_4698a2d7",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "Final ?",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 11
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e743d65e_a28a1d79",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "This is looks a lot like an .equals method, that ends up implemented here because the Downstream is passed as separate arguments in the method. One problem is it\u0027s easy to miss if adding fields to the Downstream class.\nSome options I\u0027m thinking about:\n - How about having onDownstreamStarted / onDownstreamStopped take a Downstream argument instead of 2 ints ?\n - Otherwise, maybe add a boolean Downstream#matches(int, int) method ? Unit tests should use #assertFieldCountEquals to make sure it\u0027s kept up to date",
+      "range": {
+        "startLine": 85,
+        "startChar": 15,
+        "endLine": 85,
+        "endChar": 62
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7005c118_72fd489b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "Since this is not the index of one downstream, how about getDownstreamTypesMask ? Or getActiveDownstreamTypesMask ?",
+      "range": {
+        "startLine": 120,
+        "startChar": 16,
+        "endLine": 120,
+        "endChar": 34
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c8a48b_40277287",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "Should it be hotspotActiveWithoutClients ? Or just noHotspotClients ?",
+      "range": {
+        "startLine": 158,
+        "startChar": 49,
+        "endLine": 158,
+        "endChar": 71
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f06c0e_96e227b6",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "Do you need INTERACT_ACROSS_USERS permission for this ? If yes, this is a problem for the Tethering module. We\u0027ll need some solution (could be a new API in ConnectivityService for module notifications ?)",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 79
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8daeb04_bab10603",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "It\u0027s not obvious from the name of this method that it has side-effects on the members of this class; I think it would be cleaner if the logic is:\n -\u003e Notification comes in (like onNumClientsChanged)\n -\u003e The callback updates the state that is kept in the TetheringNotification class\n -\u003e setupNotification() uses the state to show or hide the notification (but it does not re-modify it)\n\nIn short, could this be moved to the callbacks that update the active downstreams, instead of modifying the state in setupNotification ?",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 34
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e740cdc7_7ac2e8fc",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "Actually I would find it easier to read with:\nmConnectedClients \u003d\u003d 0 ? downstreamIndex : mConnectedClients - 1\n\n...but this is also confusing to me because the icon index would be 1 with 2 clients, but also 1 with 0 clients and USB tethering enabled. Could you clarify the code (extract variables or add comments ?)",
+      "range": {
+        "startLine": 185,
+        "startChar": 39,
+        "endLine": 186,
+        "endChar": 57
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab270d4f_8253d991",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "Is this always the settings package name ? Some OEMs have different settings apps. Do they need to use the same package names / class names ?",
+      "range": {
+        "startLine": 212,
+        "startChar": 29,
+        "endLine": 212,
+        "endChar": 49
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87292e7_e2954e23",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "Can you add a comment on why this is CURRENT here, but notifyAsUser uses ALL ?",
+      "range": {
+        "startLine": 215,
+        "startChar": 22,
+        "endLine": 215,
+        "endChar": 40
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9ba393_96554e22",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "Can this crash with invalid format ? Maybe put it in a try/catch to have a fallback if OEMs have wrong configuration ?",
+      "range": {
+        "startLine": 224,
+        "startChar": 41,
+        "endLine": 224,
+        "endChar": 54
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e30873_46a05f90",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "Is there an alternative we can use, considering that this will not be usable once Tethering builds against system API ?\nSee also b/141518412 that is basically the same problem. Rather than overlays, having the system colors in @SystemApi could also be a better solution if feasible.",
+      "range": {
+        "startLine": 227,
+        "startChar": 32,
+        "endLine": 227,
+        "endChar": 54
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46faaea_14b283b8",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-18T07:27:38Z",
+      "side": 1,
+      "message": "Same as previous comment for INTERACT_ACROSS_USERS permission",
+      "range": {
+        "startLine": 233,
+        "startChar": 29,
+        "endLine": 233,
+        "endChar": 41
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
