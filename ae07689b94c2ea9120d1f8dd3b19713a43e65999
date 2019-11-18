@@ -70,6 +70,30 @@
       "revId": "ae07689b94c2ea9120d1f8dd3b19713a43e65999",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54948154_31b915ec",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2019-11-18T13:48:48Z",
+      "side": 1,
+      "message": "We were not using the builders before. We were directly using StaticIpConfiguration before. As a part of mainline, we just moved to using the builder \u0026 hence saw this via code inspection. We have if (dnsServer !\u003d null) check on our parsing code. So, that\u0027s why david ended up looking at what happens in that case in the builder.\n\nhttps://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/util/XmlUtil.java?rcl\u003d7703348beff18ed6cfe4abec9e4d8ab227833c85\u0026l\u003d900",
+      "parentUuid": "ece1ae21_9ba4fea3",
+      "range": {
+        "startLine": 181,
+        "startChar": 12,
+        "endLine": 181,
+        "endChar": 38
+      },
+      "revId": "ae07689b94c2ea9120d1f8dd3b19713a43e65999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
