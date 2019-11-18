@@ -4244,8 +4244,8 @@ package android.app {
     method public android.app.AlertDialog show();
   }
 
-  public class AliasActivity extends android.app.Activity {
-    ctor public AliasActivity();
+  @Deprecated public class AliasActivity extends android.app.Activity {
+    ctor @Deprecated public AliasActivity();
   }
 
   public class AppComponentFactory {
@@ -8357,6 +8357,7 @@ package android.bluetooth {
     method public int describeContents();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH) public boolean fetchUuidsWithSdp();
     method public String getAddress();
+    method @Nullable @RequiresPermission(android.Manifest.permission.BLUETOOTH) public String getAlias();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH) public android.bluetooth.BluetoothClass getBluetoothClass();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH) public int getBondState();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH) public String getName();
@@ -8368,6 +8369,7 @@ package android.bluetooth {
     field public static final String ACTION_ACL_CONNECTED = "android.bluetooth.device.action.ACL_CONNECTED";
     field public static final String ACTION_ACL_DISCONNECTED = "android.bluetooth.device.action.ACL_DISCONNECTED";
     field public static final String ACTION_ACL_DISCONNECT_REQUESTED = "android.bluetooth.device.action.ACL_DISCONNECT_REQUESTED";
+    field public static final String ACTION_ALIAS_CHANGED = "android.bluetooth.action.ALIAS_CHANGED";
     field public static final String ACTION_BOND_STATE_CHANGED = "android.bluetooth.device.action.BOND_STATE_CHANGED";
     field public static final String ACTION_CLASS_CHANGED = "android.bluetooth.device.action.CLASS_CHANGED";
     field public static final String ACTION_FOUND = "android.bluetooth.device.action.FOUND";
@@ -9769,6 +9771,7 @@ package android.content {
     method @RequiresPermission("android.permission.INTERACT_ACROSS_USERS") public abstract void sendBroadcastAsUser(@RequiresPermission android.content.Intent, android.os.UserHandle, @Nullable String);
     method public abstract void sendOrderedBroadcast(@RequiresPermission android.content.Intent, @Nullable String);
     method public abstract void sendOrderedBroadcast(@NonNull @RequiresPermission android.content.Intent, @Nullable String, @Nullable android.content.BroadcastReceiver, @Nullable android.os.Handler, int, @Nullable String, @Nullable android.os.Bundle);
+    method public void sendOrderedBroadcast(@NonNull @RequiresPermission android.content.Intent, @Nullable String, @Nullable String, @Nullable android.content.BroadcastReceiver, @Nullable android.os.Handler, int, @Nullable String, @Nullable android.os.Bundle);
     method @RequiresPermission("android.permission.INTERACT_ACROSS_USERS") public abstract void sendOrderedBroadcastAsUser(@RequiresPermission android.content.Intent, android.os.UserHandle, @Nullable String, android.content.BroadcastReceiver, @Nullable android.os.Handler, int, @Nullable String, @Nullable android.os.Bundle);
     method @Deprecated @RequiresPermission(android.Manifest.permission.BROADCAST_STICKY) public abstract void sendStickyBroadcast(@RequiresPermission android.content.Intent);
     method @Deprecated @RequiresPermission(allOf={"android.permission.INTERACT_ACROSS_USERS", android.Manifest.permission.BROADCAST_STICKY}) public abstract void sendStickyBroadcastAsUser(@RequiresPermission android.content.Intent, android.os.UserHandle);
@@ -33983,31 +33986,31 @@ package android.opengl {
 
 package android.os {
 
-  public abstract class AsyncTask<Params, Progress, Result> {
-    ctor public AsyncTask();
-    method public final boolean cancel(boolean);
-    method @WorkerThread protected abstract Result doInBackground(Params...);
-    method @MainThread public final android.os.AsyncTask<Params,Progress,Result> execute(Params...);
-    method @MainThread public static void execute(Runnable);
-    method @MainThread public final android.os.AsyncTask<Params,Progress,Result> executeOnExecutor(java.util.concurrent.Executor, Params...);
-    method public final Result get() throws java.util.concurrent.ExecutionException, java.lang.InterruptedException;
-    method public final Result get(long, java.util.concurrent.TimeUnit) throws java.util.concurrent.ExecutionException, java.lang.InterruptedException, java.util.concurrent.TimeoutException;
-    method public final android.os.AsyncTask.Status getStatus();
-    method public final boolean isCancelled();
-    method @MainThread protected void onCancelled(Result);
-    method @MainThread protected void onCancelled();
-    method @MainThread protected void onPostExecute(Result);
-    method @MainThread protected void onPreExecute();
-    method @MainThread protected void onProgressUpdate(Progress...);
-    method @WorkerThread protected final void publishProgress(Progress...);
-    field public static final java.util.concurrent.Executor SERIAL_EXECUTOR;
-    field public static final java.util.concurrent.Executor THREAD_POOL_EXECUTOR;
+  @Deprecated public abstract class AsyncTask<Params, Progress, Result> {
+    ctor @Deprecated public AsyncTask();
+    method @Deprecated public final boolean cancel(boolean);
+    method @Deprecated @WorkerThread protected abstract Result doInBackground(Params...);
+    method @Deprecated @MainThread public final android.os.AsyncTask<Params,Progress,Result> execute(Params...);
+    method @Deprecated @MainThread public static void execute(Runnable);
+    method @Deprecated @MainThread public final android.os.AsyncTask<Params,Progress,Result> executeOnExecutor(java.util.concurrent.Executor, Params...);
+    method @Deprecated public final Result get() throws java.util.concurrent.ExecutionException, java.lang.InterruptedException;
+    method @Deprecated public final Result get(long, java.util.concurrent.TimeUnit) throws java.util.concurrent.ExecutionException, java.lang.InterruptedException, java.util.concurrent.TimeoutException;
+    method @Deprecated public final android.os.AsyncTask.Status getStatus();
+    method @Deprecated public final boolean isCancelled();
+    method @Deprecated @MainThread protected void onCancelled(Result);
+    method @Deprecated @MainThread protected void onCancelled();
+    method @Deprecated @MainThread protected void onPostExecute(Result);
+    method @Deprecated @MainThread protected void onPreExecute();
+    method @Deprecated @MainThread protected void onProgressUpdate(Progress...);
+    method @Deprecated @WorkerThread protected final void publishProgress(Progress...);
+    field @Deprecated public static final java.util.concurrent.Executor SERIAL_EXECUTOR;
+    field @Deprecated public static final java.util.concurrent.Executor THREAD_POOL_EXECUTOR;
   }
 
-  public enum AsyncTask.Status {
-    enum_constant public static final android.os.AsyncTask.Status FINISHED;
-    enum_constant public static final android.os.AsyncTask.Status PENDING;
-    enum_constant public static final android.os.AsyncTask.Status RUNNING;
+  @Deprecated public enum AsyncTask.Status {
+    enum_constant @Deprecated public static final android.os.AsyncTask.Status FINISHED;
+    enum_constant @Deprecated public static final android.os.AsyncTask.Status PENDING;
+    enum_constant @Deprecated public static final android.os.AsyncTask.Status RUNNING;
   }
 
   public class BadParcelableException extends android.util.AndroidRuntimeException {
@@ -36910,6 +36913,7 @@ package android.provider {
     field public static final String DURATION = "duration";
     field public static final String EXTRA_CALL_TYPE_FILTER = "android.provider.extra.CALL_TYPE_FILTER";
     field public static final String FEATURES = "features";
+    field public static final int FEATURES_ASSISTED_DIALING_USED = 16; // 0x10
     field public static final int FEATURES_HD_CALL = 4; // 0x4
     field public static final int FEATURES_PULLED_EXTERNALLY = 2; // 0x2
     field public static final int FEATURES_RTT = 32; // 0x20
@@ -42667,6 +42671,7 @@ package android.system {
     field public static final int IP_MULTICAST_TTL;
     field public static final int IP_TOS;
     field public static final int IP_TTL;
+    field public static final int MAP_ANONYMOUS;
     field public static final int MAP_FIXED;
     field public static final int MAP_PRIVATE;
     field public static final int MAP_SHARED;
@@ -43134,6 +43139,7 @@ package android.telecom {
     field public static final int DIRECTION_INCOMING = 0; // 0x0
     field public static final int DIRECTION_OUTGOING = 1; // 0x1
     field public static final int DIRECTION_UNKNOWN = -1; // 0xffffffff
+    field public static final int PROPERTY_ASSISTED_DIALING_USED = 512; // 0x200
     field public static final int PROPERTY_CONFERENCE = 1; // 0x1
     field public static final int PROPERTY_EMERGENCY_CALLBACK_MODE = 4; // 0x4
     field public static final int PROPERTY_ENTERPRISE_CALL = 32; // 0x20
@@ -43247,6 +43253,7 @@ package android.telecom {
     method public final void removeConnection(android.telecom.Connection);
     method public final void removeExtras(java.util.List<java.lang.String>);
     method public final void removeExtras(java.lang.String...);
+    method public void sendConferenceEvent(@NonNull String, @Nullable android.os.Bundle);
     method public final void setActive();
     method public final void setConferenceableConnections(java.util.List<android.telecom.Connection>);
     method public final void setConnectionCapabilities(int);
@@ -43386,6 +43393,7 @@ package android.telecom {
     field public static final String EXTRA_IS_RTT_AUDIO_PRESENT = "android.telecom.extra.IS_RTT_AUDIO_PRESENT";
     field public static final String EXTRA_LAST_FORWARDED_NUMBER = "android.telecom.extra.LAST_FORWARDED_NUMBER";
     field public static final String EXTRA_SIP_INVITE = "android.telecom.extra.SIP_INVITE";
+    field public static final int PROPERTY_ASSISTED_DIALING_USED = 512; // 0x200
     field public static final int PROPERTY_HAS_CDMA_VOICE_PRIVACY = 32; // 0x20
     field public static final int PROPERTY_HIGH_DEF_AUDIO = 4; // 0x4
     field public static final int PROPERTY_IS_EXTERNAL_CALL = 16; // 0x10
@@ -43800,6 +43808,7 @@ package android.telecom {
     method public android.telecom.PhoneAccount getPhoneAccount(android.telecom.PhoneAccountHandle);
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public java.util.List<android.telecom.PhoneAccountHandle> getSelfManagedPhoneAccounts();
     method public android.telecom.PhoneAccountHandle getSimCallManager();
+    method @Nullable public android.telecom.PhoneAccountHandle getSimCallManagerForSubscription(int);
     method @Nullable public String getSystemDialerPackage();
     method @Nullable @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public android.telecom.PhoneAccountHandle getUserSelectedOutgoingPhoneAccount();
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public String getVoiceMailNumber(android.telecom.PhoneAccountHandle);
@@ -43848,6 +43857,7 @@ package android.telecom {
     field public static final String EXTRA_START_CALL_WITH_RTT = "android.telecom.extra.START_CALL_WITH_RTT";
     field public static final String EXTRA_START_CALL_WITH_SPEAKERPHONE = "android.telecom.extra.START_CALL_WITH_SPEAKERPHONE";
     field public static final String EXTRA_START_CALL_WITH_VIDEO_STATE = "android.telecom.extra.START_CALL_WITH_VIDEO_STATE";
+    field public static final String EXTRA_USE_ASSISTED_DIALING = "android.telecom.extra.USE_ASSISTED_DIALING";
     field public static final String GATEWAY_ORIGINAL_ADDRESS = "android.telecom.extra.GATEWAY_ORIGINAL_ADDRESS";
     field public static final String GATEWAY_PROVIDER_PACKAGE = "android.telecom.extra.GATEWAY_PROVIDER_PACKAGE";
     field public static final String METADATA_INCLUDE_EXTERNAL_CALLS = "android.telecom.INCLUDE_EXTERNAL_CALLS";
@@ -44030,6 +44040,9 @@ package android.telephony {
     field public static final int DATA_CYCLE_THRESHOLD_DISABLED = -2; // 0xfffffffe
     field public static final String EXTRA_SLOT_INDEX = "android.telephony.extra.SLOT_INDEX";
     field public static final String EXTRA_SUBSCRIPTION_INDEX = "android.telephony.extra.SUBSCRIPTION_INDEX";
+    field public static final String KEY_5G_NR_SSRSRP_THRESHOLDS_INT_ARRAY = "5g_nr_ssrsrp_thresholds_int_array";
+    field public static final String KEY_5G_NR_SSRSRQ_THRESHOLDS_INT_ARRAY = "5g_nr_ssrsrq_thresholds_int_array";
+    field public static final String KEY_5G_NR_SSSINR_THRESHOLDS_INT_ARRAY = "5g_nr_sssinr_thresholds_int_array";
     field public static final String KEY_ADDITIONAL_CALL_SETTING_BOOL = "additional_call_setting_bool";
     field public static final String KEY_ALLOW_ADDING_APNS_BOOL = "allow_adding_apns_bool";
     field public static final String KEY_ALLOW_ADD_CALL_DURING_VIDEO_CALL_BOOL = "allow_add_call_during_video_call";
@@ -44161,6 +44174,7 @@ package android.telephony {
     field public static final String KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_RSSNR_INT = "opportunistic_network_entry_threshold_rssnr_int";
     field public static final String KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_RSRP_INT = "opportunistic_network_exit_threshold_rsrp_int";
     field public static final String KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_RSSNR_INT = "opportunistic_network_exit_threshold_rssnr_int";
+    field public static final String KEY_PARAMETERS_USE_FOR_5G_NR_SIGNAL_BAR_INT = "parameters_use_for_5g_nr_signal_bar_int";
     field public static final String KEY_PREFER_2G_BOOL = "prefer_2g_bool";
     field public static final String KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL = "prevent_clir_activation_and_deactivation_code_bool";
     field public static final String KEY_RADIO_RESTART_FAILURE_CAUSES_INT_ARRAY = "radio_restart_failure_causes_int_array";
@@ -44296,6 +44310,8 @@ package android.telephony {
   public abstract class CellInfo implements android.os.Parcelable {
     method public int describeContents();
     method public int getCellConnectionStatus();
+    method @NonNull public abstract android.telephony.CellIdentity getCellIdentity();
+    method @NonNull public abstract android.telephony.CellSignalStrength getCellSignalStrength();
     method public long getTimeStamp();
     method public boolean isRegistered();
     field public static final int CONNECTION_NONE = 0; // 0x0
@@ -44778,13 +44794,60 @@ package android.telephony {
     field public static final int MMS_ERROR_RETRY = 6; // 0x6
     field public static final int MMS_ERROR_UNABLE_CONNECT_MMS = 3; // 0x3
     field public static final int MMS_ERROR_UNSPECIFIED = 1; // 0x1
+    field public static final int RESULT_BLUETOOTH_DISCONNECTED = 27; // 0x1b
+    field public static final int RESULT_CANCELLED = 23; // 0x17
+    field public static final int RESULT_ENCODING_ERROR = 18; // 0x12
+    field public static final int RESULT_ERROR_FDN_CHECK_FAILURE = 6; // 0x6
     field public static final int RESULT_ERROR_GENERIC_FAILURE = 1; // 0x1
     field public static final int RESULT_ERROR_LIMIT_EXCEEDED = 5; // 0x5
+    field public static final int RESULT_ERROR_NONE = 0; // 0x0
     field public static final int RESULT_ERROR_NO_SERVICE = 4; // 0x4
     field public static final int RESULT_ERROR_NULL_PDU = 3; // 0x3
     field public static final int RESULT_ERROR_RADIO_OFF = 2; // 0x2
     field public static final int RESULT_ERROR_SHORT_CODE_NEVER_ALLOWED = 8; // 0x8
     field public static final int RESULT_ERROR_SHORT_CODE_NOT_ALLOWED = 7; // 0x7
+    field public static final int RESULT_INTERNAL_ERROR = 21; // 0x15
+    field public static final int RESULT_INVALID_ARGUMENTS = 11; // 0xb
+    field public static final int RESULT_INVALID_BLUETOOTH_ADDRESS = 26; // 0x1a
+    field public static final int RESULT_INVALID_SMSC_ADDRESS = 19; // 0x13
+    field public static final int RESULT_INVALID_SMS_FORMAT = 14; // 0xe
+    field public static final int RESULT_INVALID_STATE = 12; // 0xc
+    field public static final int RESULT_MODEM_ERROR = 16; // 0x10
+    field public static final int RESULT_NETWORK_ERROR = 17; // 0x11
+    field public static final int RESULT_NETWORK_REJECT = 10; // 0xa
+    field public static final int RESULT_NO_BLUETOOTH_SERVICE = 25; // 0x19
+    field public static final int RESULT_NO_DEFAULT_SMS_APP = 32; // 0x20
+    field public static final int RESULT_NO_MEMORY = 13; // 0xd
+    field public static final int RESULT_NO_RESOURCES = 22; // 0x16
+    field public static final int RESULT_OPERATION_NOT_ALLOWED = 20; // 0x14
+    field public static final int RESULT_RADIO_NOT_AVAILABLE = 9; // 0x9
+    field public static final int RESULT_REMOTE_EXCEPTION = 31; // 0x1f
+    field public static final int RESULT_REQUEST_NOT_SUPPORTED = 24; // 0x18
+    field public static final int RESULT_RIL_CANCELLED = 119; // 0x77
+    field public static final int RESULT_RIL_ENCODING_ERR = 109; // 0x6d
+    field public static final int RESULT_RIL_INTERNAL_ERR = 113; // 0x71
+    field public static final int RESULT_RIL_INVALID_ARGUMENTS = 104; // 0x68
+    field public static final int RESULT_RIL_INVALID_MODEM_STATE = 115; // 0x73
+    field public static final int RESULT_RIL_INVALID_SMSC_ADDRESS = 110; // 0x6e
+    field public static final int RESULT_RIL_INVALID_SMS_FORMAT = 107; // 0x6b
+    field public static final int RESULT_RIL_INVALID_STATE = 103; // 0x67
+    field public static final int RESULT_RIL_MODEM_ERR = 111; // 0x6f
+    field public static final int RESULT_RIL_NETWORK_ERR = 112; // 0x70
+    field public static final int RESULT_RIL_NETWORK_NOT_READY = 116; // 0x74
+    field public static final int RESULT_RIL_NETWORK_REJECT = 102; // 0x66
+    field public static final int RESULT_RIL_NO_MEMORY = 105; // 0x69
+    field public static final int RESULT_RIL_NO_RESOURCES = 118; // 0x76
+    field public static final int RESULT_RIL_OPERATION_NOT_ALLOWED = 117; // 0x75
+    field public static final int RESULT_RIL_RADIO_NOT_AVAILABLE = 100; // 0x64
+    field public static final int RESULT_RIL_REQUEST_NOT_SUPPORTED = 114; // 0x72
+    field public static final int RESULT_RIL_REQUEST_RATE_LIMITED = 106; // 0x6a
+    field public static final int RESULT_RIL_SIM_ABSENT = 120; // 0x78
+    field public static final int RESULT_RIL_SMS_SEND_FAIL_RETRY = 101; // 0x65
+    field public static final int RESULT_RIL_SYSTEM_ERR = 108; // 0x6c
+    field public static final int RESULT_SMS_BLOCKED_DURING_EMERGENCY = 29; // 0x1d
+    field public static final int RESULT_SMS_SEND_RETRY_FAILED = 30; // 0x1e
+    field public static final int RESULT_SYSTEM_ERROR = 15; // 0xf
+    field public static final int RESULT_UNEXPECTED_EVENT_STOP_SENDING = 28; // 0x1c
     field public static final int STATUS_ON_ICC_FREE = 0; // 0x0
     field public static final int STATUS_ON_ICC_READ = 1; // 0x1
     field public static final int STATUS_ON_ICC_SENT = 5; // 0x5
@@ -44890,6 +44953,7 @@ package android.telephony {
     method @NonNull @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public android.os.ParcelUuid createSubscriptionGroup(@NonNull java.util.List<java.lang.Integer>);
     method @Deprecated public static android.telephony.SubscriptionManager from(android.content.Context);
     method public java.util.List<android.telephony.SubscriptionInfo> getAccessibleSubscriptionInfoList();
+    method public static int getActiveDataSubscriptionId();
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public android.telephony.SubscriptionInfo getActiveSubscriptionInfo(int);
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public int getActiveSubscriptionInfoCount();
     method public int getActiveSubscriptionInfoCountMax();
@@ -44923,6 +44987,7 @@ package android.telephony {
     field public static final int DATA_ROAMING_DISABLE = 0; // 0x0
     field public static final int DATA_ROAMING_ENABLE = 1; // 0x1
     field public static final int DEFAULT_SUBSCRIPTION_ID = 2147483647; // 0x7fffffff
+    field public static final String EXTRA_SLOT_INDEX = "android.telephony.extra.SLOT_INDEX";
     field public static final String EXTRA_SUBSCRIPTION_INDEX = "android.telephony.extra.SUBSCRIPTION_INDEX";
     field public static final int INVALID_SIM_SLOT_INDEX = -1; // 0xffffffff
     field public static final int INVALID_SUBSCRIPTION_ID = -1; // 0xffffffff
@@ -44987,7 +45052,7 @@ package android.telephony {
     method public int getDataState();
     method @Deprecated @RequiresPermission("android.permission.READ_PRIVILEGED_PHONE_STATE") public String getDeviceId();
     method @Deprecated @RequiresPermission("android.permission.READ_PRIVILEGED_PHONE_STATE") public String getDeviceId(int);
-    method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public String getDeviceSoftwareVersion();
+    method @Nullable @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public String getDeviceSoftwareVersion();
     method @NonNull @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public java.util.Map<java.lang.Integer,java.util.List<android.telephony.emergency.EmergencyNumber>> getEmergencyNumberList();
     method @NonNull @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public java.util.Map<java.lang.Integer,java.util.List<android.telephony.emergency.EmergencyNumber>> getEmergencyNumberList(int);
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public String[] getForbiddenPlmns();
@@ -45023,8 +45088,8 @@ package android.telephony {
     method @Nullable public CharSequence getSimSpecificCarrierIdName();
     method public int getSimState();
     method public int getSimState(int);
-    method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public int getSubIdForPhoneAccountHandle(@NonNull android.telecom.PhoneAccountHandle);
     method @RequiresPermission("android.permission.READ_PRIVILEGED_PHONE_STATE") public String getSubscriberId();
+    method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public int getSubscriptionId(@NonNull android.telecom.PhoneAccountHandle);
     method public int getSupportedModemCount();
     method @Nullable public String getTypeAllocationCode();
     method @Nullable public String getTypeAllocationCode(int);
@@ -45437,11 +45502,13 @@ package android.telephony.euicc {
     method @RequiresPermission("android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS") public void updateSubscriptionNickname(int, @Nullable String, @NonNull android.app.PendingIntent);
     field public static final String ACTION_MANAGE_EMBEDDED_SUBSCRIPTIONS = "android.telephony.euicc.action.MANAGE_EMBEDDED_SUBSCRIPTIONS";
     field public static final String ACTION_NOTIFY_CARRIER_SETUP_INCOMPLETE = "android.telephony.euicc.action.NOTIFY_CARRIER_SETUP_INCOMPLETE";
+    field public static final String ACTION_START_EUICC_ACTIVATION = "android.telephony.euicc.action.START_EUICC_ACTIVATION";
     field public static final int EMBEDDED_SUBSCRIPTION_RESULT_ERROR = 2; // 0x2
     field public static final int EMBEDDED_SUBSCRIPTION_RESULT_OK = 0; // 0x0
     field public static final int EMBEDDED_SUBSCRIPTION_RESULT_RESOLVABLE_ERROR = 1; // 0x1
     field public static final String EXTRA_EMBEDDED_SUBSCRIPTION_DETAILED_CODE = "android.telephony.euicc.extra.EMBEDDED_SUBSCRIPTION_DETAILED_CODE";
     field public static final String EXTRA_EMBEDDED_SUBSCRIPTION_DOWNLOADABLE_SUBSCRIPTION = "android.telephony.euicc.extra.EMBEDDED_SUBSCRIPTION_DOWNLOADABLE_SUBSCRIPTION";
+    field public static final String EXTRA_USE_QR_SCANNER = "android.telephony.euicc.extra.USE_QR_SCANNER";
     field public static final String META_DATA_CARRIER_ICON = "android.telephony.euicc.carriericon";
   }
 

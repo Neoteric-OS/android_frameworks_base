@@ -42,6 +42,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 
+import java.util.ArrayList;
+import java.util.concurrent.Executor;
+
 @SmallTest
 @RunWith(AndroidTestingRunner.class)
 @TestableLooper.RunWithLooper
@@ -67,10 +70,11 @@ public class HotspotControllerImplTest extends SysuiTestCase {
         mContext.addMockSystemService(WifiManager.class, mWifiManager);
 
         doAnswer((InvocationOnMock invocation) -> {
-            ((WifiManager.SoftApCallback) invocation.getArgument(0)).onNumClientsChanged(1);
+            ((WifiManager.SoftApCallback) invocation.getArgument(0))
+                    .onConnectedClientsChanged(new ArrayList<>());
             return null;
         }).when(mWifiManager).registerSoftApCallback(any(WifiManager.SoftApCallback.class),
-                any(Handler.class));
+                any(Executor.class));
 
         mController = new HotspotControllerImpl(mContext, new Handler(mLooper.getLooper()));
     }

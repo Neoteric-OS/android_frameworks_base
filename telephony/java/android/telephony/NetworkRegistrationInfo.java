@@ -24,8 +24,8 @@ import android.annotation.TestApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.AccessNetworkConstants.TransportType;
-import android.telephony.TelephonyManager.NetworkType;
 
+import android.telephony.Annotation.NetworkType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
@@ -323,9 +323,12 @@ public final class NetworkRegistrationInfo implements Parcelable {
     public @Domain int getDomain() { return mDomain; }
 
     /**
+     * Get the 5G NR connection state.
+     *
      * @return the 5G NR connection state.
      * @hide
      */
+    @SystemApi
     public @NRState int getNrState() {
         return mNrState;
     }

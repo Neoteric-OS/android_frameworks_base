@@ -31,6 +31,7 @@ import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SuppressAutoDoc;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
+import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.app.BroadcastOptions;
 import android.app.PendingIntent;
@@ -54,6 +55,7 @@ import android.os.ParcelUuid;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.telephony.Annotation.NetworkType;
 import android.telephony.euicc.EuiccManager;
 import android.telephony.ims.ImsMmTelManager;
 import android.util.DisplayMetrics;
@@ -157,6 +159,7 @@ public class SubscriptionManager {
      */
     @NonNull
     @SystemApi
+    @TestApi
     public static final Uri WFC_ENABLED_CONTENT_URI = Uri.withAppendedPath(CONTENT_URI, "wfc");
 
     /**
@@ -176,6 +179,7 @@ public class SubscriptionManager {
      */
     @NonNull
     @SystemApi
+    @TestApi
     public static final Uri ADVANCED_CALLING_ENABLED_CONTENT_URI = Uri.withAppendedPath(
             CONTENT_URI, "advanced_calling");
 
@@ -194,6 +198,7 @@ public class SubscriptionManager {
      */
     @NonNull
     @SystemApi
+    @TestApi
     public static final Uri WFC_MODE_CONTENT_URI = Uri.withAppendedPath(CONTENT_URI, "wfc_mode");
 
     /**
@@ -211,6 +216,7 @@ public class SubscriptionManager {
      */
     @NonNull
     @SystemApi
+    @TestApi
     public static final Uri WFC_ROAMING_MODE_CONTENT_URI = Uri.withAppendedPath(
             CONTENT_URI, "wfc_roaming_mode");
 
@@ -230,6 +236,7 @@ public class SubscriptionManager {
      */
     @NonNull
     @SystemApi
+    @TestApi
     public static final Uri VT_ENABLED_CONTENT_URI = Uri.withAppendedPath(
             CONTENT_URI, "vt_enabled");
 
@@ -248,6 +255,7 @@ public class SubscriptionManager {
      */
     @NonNull
     @SystemApi
+    @TestApi
     public static final Uri WFC_ROAMING_ENABLED_CONTENT_URI = Uri.withAppendedPath(
             CONTENT_URI, "wfc_roaming_enabled");
 
@@ -894,6 +902,11 @@ public class SubscriptionManager {
      * which has changed.
      */
     public static final String EXTRA_SUBSCRIPTION_INDEX = "android.telephony.extra.SUBSCRIPTION_INDEX";
+
+    /**
+     * Integer extra to specify SIM slot index.
+     */
+    public static final String EXTRA_SLOT_INDEX = "android.telephony.extra.SLOT_INDEX";
 
     private final Context mContext;
     private volatile INetworkPolicyManager mNetworkPolicy;
@@ -1862,17 +1875,40 @@ public class SubscriptionManager {
         return subId;
     }
 
-    /** @hide */
-    public void setDefaultVoiceSubId(int subId) {
-        if (VDBG) logd("setDefaultVoiceSubId sub id = " + subId);
+    /**
+     * Sets the system's default voice subscription id.
+     *
+     * On a data-only device, this is a no-op.
+     *
+     * May throw a {@link RuntimeException} if the provided subscription id is equal to
+     * {@link SubscriptionManager#DEFAULT_SUBSCRIPTION_ID}
+     *
+     * @param subscriptionId A valid subscription ID to set as the system default, or
+     *                       {@link SubscriptionManager#INVALID_SUBSCRIPTION_ID}
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public void setDefaultVoiceSubscriptionId(int subscriptionId) {
+        if (VDBG) logd("setDefaultVoiceSubId sub id = " + subscriptionId);
         try {
             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
             if (iSub != null) {
-                iSub.setDefaultVoiceSubId(subId);
+                iSub.setDefaultVoiceSubId(subscriptionId);
             }
         } catch (RemoteException ex) {
             // ignore it
         }
+    }
+
+    /**
+     * Same as {@link #setDefaultVoiceSubscriptionId(int)}, but preserved for backwards
+     * compatibility.
+     * @hide
+     */
+    public void setDefaultVoiceSubId(int subId) {
+        setDefaultVoiceSubscriptionId(subId);
     }
 
     /**
@@ -2095,13 +2131,13 @@ public class SubscriptionManager {
     /** @hide */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public static boolean isValidSlotIndex(int slotIndex) {
-        return slotIndex >= 0 && slotIndex < TelephonyManager.getDefault().getSupportedModemCount();
+        return slotIndex >= 0 && slotIndex < TelephonyManager.getDefault().getActiveModemCount();
     }
 
     /** @hide */
     @UnsupportedAppUsage
     public static boolean isValidPhoneId(int phoneId) {
-        return phoneId >= 0 && phoneId < TelephonyManager.getDefault().getSupportedModemCount();
+        return phoneId >= 0 && phoneId < TelephonyManager.getDefault().getActiveModemCount();
     }
 
     /** @hide */
@@ -2122,6 +2158,7 @@ public class SubscriptionManager {
         if (VDBG) logd("putPhoneIdAndSubIdExtra: phoneId=" + phoneId + " subId=" + subId);
         intent.putExtra(PhoneConstants.SUBSCRIPTION_KEY, subId);
         intent.putExtra(EXTRA_SUBSCRIPTION_INDEX, subId);
+        intent.putExtra(EXTRA_SLOT_INDEX, phoneId);
         intent.putExtra(PhoneConstants.PHONE_KEY, phoneId);
     }
 
@@ -2593,7 +2630,6 @@ public class SubscriptionManager {
      *
      * @param info The subscription to check.
      * @return whether the app is authorized to manage this subscription per its metadata.
-     * @throws IllegalArgumentException if this subscription is not embedded.
      */
     public boolean canManageSubscription(SubscriptionInfo info) {
         return canManageSubscription(info, mContext.getPackageName());
@@ -2609,14 +2645,10 @@ public class SubscriptionManager {
      * @param info The subscription to check.
      * @param packageName Package name of the app to check.
      * @return whether the app is authorized to manage this subscription per its access rules.
-     * @throws IllegalArgumentException if this subscription is not embedded.
      * @hide
      */
     public boolean canManageSubscription(SubscriptionInfo info, String packageName) {
-        if (!info.isEmbedded()) {
-            throw new IllegalArgumentException("Not an embedded subscription");
-        }
-        if (info.getAllAccessRules() == null) {
+        if (info == null || info.getAllAccessRules() == null) {
             return false;
         }
         PackageManager packageManager = mContext.getPackageManager();
@@ -2624,7 +2656,8 @@ public class SubscriptionManager {
         try {
             packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
         } catch (PackageManager.NameNotFoundException e) {
-            throw new IllegalArgumentException("Unknown package: " + packageName, e);
+            logd("Unknown package: " + packageName);
+            return false;
         }
         for (UiccAccessRule rule : info.getAllAccessRules()) {
             if (rule.getCarrierPrivilegeStatus(packageInfo)
@@ -3017,7 +3050,7 @@ public class SubscriptionManager {
         // to the caller.
         boolean hasCarrierPrivilegePermission = TelephonyManager.from(mContext)
                 .hasCarrierPrivileges(info.getSubscriptionId())
-                || (info.isEmbedded() && canManageSubscription(info));
+                || canManageSubscription(info);
         return hasCarrierPrivilegePermission;
     }
 
@@ -3195,13 +3228,14 @@ public class SubscriptionManager {
     }
 
     /**
-     * Get active data subscription id.
+     * Get active data subscription id. Active data subscription refers to the subscription
+     * currently chosen to provide cellular internet connection to the user. This may be
+     * different from getDefaultDataSubscriptionId(). Eg. Opportunistics data
+     *
      * See {@link PhoneStateListener#onActiveDataSubscriptionIdChanged(int)} for the details.
      *
-     * @return Active data subscription id
-     *
-     * //TODO: Refactor this API in b/134702460
-     * @hide
+     * @return Active data subscription id if any is chosen, or
+     * SubscriptionManager.INVALID_SUBSCRIPTION_ID if not.
      */
     public static int getActiveDataSubscriptionId() {
         try {

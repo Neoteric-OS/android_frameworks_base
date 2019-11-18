@@ -24,6 +24,7 @@ import static android.Manifest.permission.INTERACT_ACROSS_USERS_FULL;
 import static android.Manifest.permission.REMOVE_TASKS;
 import static android.Manifest.permission.START_ACTIVITIES_FROM_BACKGROUND;
 import static android.app.ActivityManager.INSTR_FLAG_DISABLE_HIDDEN_API_CHECKS;
+import static android.app.ActivityManager.INSTR_FLAG_DISABLE_TEST_API_CHECKS;
 import static android.app.ActivityManager.INSTR_FLAG_MOUNT_EXTERNAL_STORAGE_FULL;
 import static android.app.ActivityManager.PROCESS_STATE_LAST_ACTIVITY;
 import static android.app.ActivityManager.PROCESS_STATE_NONEXISTENT;
@@ -7786,10 +7787,18 @@ public class ActivityManagerService extends IActivityManager.Stub
                 false /* mountExtStorageFull */, abiOverride);
     }
 
-    // TODO: Move to ProcessList?
     @GuardedBy("this")
     final ProcessRecord addAppLocked(ApplicationInfo info, String customProcess, boolean isolated,
             boolean disableHiddenApiChecks, boolean mountExtStorageFull, String abiOverride) {
+        return addAppLocked(info, customProcess, isolated, disableHiddenApiChecks,
+                false /* disableTestApiChecks */, mountExtStorageFull, abiOverride);
+    }
+
+    // TODO: Move to ProcessList?
+    @GuardedBy("this")
+    final ProcessRecord addAppLocked(ApplicationInfo info, String customProcess, boolean isolated,
+            boolean disableHiddenApiChecks, boolean disableTestApiChecks,
+            boolean mountExtStorageFull, String abiOverride) {
         ProcessRecord app;
         if (!isolated) {
             app = getProcessRecordLocked(customProcess != null ? customProcess : info.processName,
@@ -7824,7 +7833,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             mPersistentStartingProcesses.add(app);
             mProcessList.startProcessLocked(app, new HostingRecord("added application",
                     customProcess != null ? customProcess : app.processName),
-                    disableHiddenApiChecks, mountExtStorageFull, abiOverride);
+                    disableHiddenApiChecks, disableTestApiChecks, mountExtStorageFull, abiOverride);
         }
 
         return app;
@@ -15761,10 +15770,13 @@ public class ActivityManagerService extends IActivityManager.Stub
 
             boolean disableHiddenApiChecks = ai.usesNonSdkApi()
                     || (flags & INSTR_FLAG_DISABLE_HIDDEN_API_CHECKS) != 0;
-            if (disableHiddenApiChecks) {
+            boolean disableTestApiChecks = disableHiddenApiChecks
+                    || (flags & INSTR_FLAG_DISABLE_TEST_API_CHECKS) != 0;
+            if (disableHiddenApiChecks || disableTestApiChecks) {
                 enforceCallingPermission(android.Manifest.permission.DISABLE_HIDDEN_API_CHECKS,
                         "disable hidden API checks");
             }
+
             final boolean mountExtStorageFull = isCallerShell()
                     && (flags & INSTR_FLAG_MOUNT_EXTERNAL_STORAGE_FULL) != 0;
 
@@ -15779,7 +15791,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
 
             ProcessRecord app = addAppLocked(ai, defProcess, false, disableHiddenApiChecks,
-                    mountExtStorageFull, abiOverride);
+                    disableTestApiChecks, mountExtStorageFull, abiOverride);
             app.setActiveInstrumentation(activeInstr);
             activeInstr.mFinished = false;
             activeInstr.mRunningProcesses.add(app);
