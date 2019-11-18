@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d601a961_c1c5f087",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2449,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-11-18T06:59:11Z",
+      "side": 1,
+      "message": "Actually this should ideally be done on the other side of the binder call. Can you please move it to SmsController?",
+      "revId": "b8f3e1f12a7b7fb4d03c572da64f1c291d5681c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
