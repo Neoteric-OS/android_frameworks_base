@@ -516,4 +516,14 @@ public class TelephonyIntents {
     // ACTION_REPORT_RADIO_BUG extra keys
     public static final String EXTRA_SLOT_ID = "slotId";
     public static final String EXTRA_RADIO_BUG_TYPE = "radioBugType";
+
+    /**
+     * Broadcast action to notify the SIM Refresh and file has update.
+     *
+     * Requires the READ_PRIVILEGED_PHONE_STATE permission.
+     *
+     * @hide
+     */
+    public static final String ACTION_SIM_REFRESH_FILEUPDATE
+            = "com.android.internal.telephony.ACTION_SIM_REFRESH_FILEUPDATE";
 }
