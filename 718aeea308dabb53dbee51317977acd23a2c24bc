@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7e0955c_ab30b7f0",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-11-19T11:58:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "611372bf_964af8a2",
+      "range": {
+        "startLine": 58,
+        "startChar": 21,
+        "endLine": 58,
+        "endChar": 35
+      },
+      "revId": "718aeea308dabb53dbee51317977acd23a2c24bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55dfd5b9_ce90b0a3",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f2752b15_03f361a6",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-11-19T11:58:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55dfd5b9_ce90b0a3",
+      "range": {
+        "startLine": 134,
+        "startChar": 26,
+        "endLine": 134,
+        "endChar": 40
+      },
+      "revId": "718aeea308dabb53dbee51317977acd23a2c24bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19b0f176_6f9adbb7",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "718aeea308dabb53dbee51317977acd23a2c24bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cbbf350_b2c1c28f",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-11-19T11:58:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19b0f176_6f9adbb7",
+      "range": {
+        "startLine": 136,
+        "startChar": 49,
+        "endLine": 136,
+        "endChar": 63
+      },
+      "revId": "718aeea308dabb53dbee51317977acd23a2c24bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
