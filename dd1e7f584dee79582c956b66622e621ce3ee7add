@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f45f304_adcc921b",
+        "filename": "core/java/android/content/pm/PackageManagerInternal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2019-11-19T18:49:40Z",
+      "side": 1,
+      "message": "documenting an in-person discussion ... in a future change, we should be removing this API and require all callers to determine the mime type prior to querying",
+      "range": {
+        "startLine": 414,
+        "startChar": 4,
+        "endLine": 415,
+        "endChar": 75
+      },
+      "revId": "dd1e7f584dee79582c956b66622e621ce3ee7add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
