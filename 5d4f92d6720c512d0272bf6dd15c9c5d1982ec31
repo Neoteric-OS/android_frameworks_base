@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36998a15_a1095f13",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-19T14:54:38Z",
+      "side": 1,
+      "message": "Feels like this change may be simpler if you added the listener as a member in CompatChange, and notified it from with there when it changes? Then you wouldn\u0027t need to propagate info about what changed upwards to notify later. It would also makes things easier to reason about.",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 239,
+        "endChar": 13
+      },
+      "revId": "5d4f92d6720c512d0272bf6dd15c9c5d1982ec31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed538fea_0914942f",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-19T14:54:38Z",
+      "side": 1,
+      "message": "might be better to use mockito here?\n\n  listener \u003d mock(PlatformCompat.ChangeListener.class)\n\nand....",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 51
+      },
+      "revId": "5d4f92d6720c512d0272bf6dd15c9c5d1982ec31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba25ced8_8100d330",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-19T14:54:38Z",
+      "side": 1,
+      "message": "...then:\n\n  verify(listener, times(2)).onCompatChange(PACKAGE_NAME)\n\nmeans you don\u0027t need your TestListener class.\n\n(not sure how familiar you are with mockito, but...) you can also instantiate your mocks by doing:\n\n  @Mock PlatformCompat.ChangeListener mListener;\n\nin the class and \n  \n  MockitoAnnotations.initMocks(this);\n\nin your @Before method.\n\nLooks like there are a bunch of mockito examples you can follow in the servicetests dir.",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 18
+      },
+      "revId": "5d4f92d6720c512d0272bf6dd15c9c5d1982ec31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad12ace2_dbf37147",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-19T14:54:38Z",
+      "side": 1,
+      "message": "assertThat(listener1.getNumCalls(PACKAGE_NAME)).isEqualTo(1);\n\nand elsewhere in here. You\u0027ll get much more helpful error messages.",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 75
+      },
+      "revId": "5d4f92d6720c512d0272bf6dd15c9c5d1982ec31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d491391_26bac16a",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-19T14:54:38Z",
+      "side": 1,
+      "message": "I tend to find tests easier to read \u0026 debug if you go for the repetitive option, rather than having helper methods like that that vary their behaviour based on params passed in.",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 154,
+        "endChar": 40
+      },
+      "revId": "5d4f92d6720c512d0272bf6dd15c9c5d1982ec31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
