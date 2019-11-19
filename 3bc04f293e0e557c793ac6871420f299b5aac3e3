@@ -22,6 +22,30 @@
       "revId": "3bc04f293e0e557c793ac6871420f299b5aac3e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa8e01f_28a53851",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6376,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T08:03:12Z",
+      "side": 1,
+      "message": "This has been renamed on Junyu\u0027s comment on a previous patch.",
+      "parentUuid": "fc1f7f41_af3b3232",
+      "range": {
+        "startLine": 6376,
+        "startChar": 42,
+        "endLine": 6376,
+        "endChar": 58
+      },
+      "revId": "3bc04f293e0e557c793ac6871420f299b5aac3e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
