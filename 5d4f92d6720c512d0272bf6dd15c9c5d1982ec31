@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "512880ee_3ca539e6",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-11-19T15:48:29Z",
+      "side": 1,
+      "message": "It may cause other complexity - what do we do if a listener is registered before the change is added? Fail? \nAlso, it\u0027s somewhat clean that config is just the config - no other side effects like this or killing the app.\nDon\u0027t have a strong opinion, though - WDYT?",
+      "parentUuid": "36998a15_a1095f13",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 239,
+        "endChar": 13
+      },
+      "revId": "5d4f92d6720c512d0272bf6dd15c9c5d1982ec31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed538fea_0914942f",
         "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "5d4f92d6720c512d0272bf6dd15c9c5d1982ec31",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f331e44_94e265fc",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-11-19T15:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed538fea_0914942f",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 51
+      },
+      "revId": "5d4f92d6720c512d0272bf6dd15c9c5d1982ec31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bf2e4c60_c09da9ea",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-11-19T15:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba25ced8_8100d330",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 18
+      },
+      "revId": "5d4f92d6720c512d0272bf6dd15c9c5d1982ec31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad12ace2_dbf37147",
         "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6ca0a420_e6f52ac3",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-11-19T15:48:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad12ace2_dbf37147",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 75
+      },
+      "revId": "5d4f92d6720c512d0272bf6dd15c9c5d1982ec31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d491391_26bac16a",
         "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2019-11-19T14:54:38Z",
       "side": 1,
       "message": "I tend to find tests easier to read \u0026 debug if you go for the repetitive option, rather than having helper methods like that that vary their behaviour based on params passed in.",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 154,
+        "endChar": 40
+      },
+      "revId": "5d4f92d6720c512d0272bf6dd15c9c5d1982ec31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1785b8a7_57385403",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-11-19T15:48:29Z",
+      "side": 1,
+      "message": "Even if it\u0027s EXACTLY the same test (and there\u0027s nothing more), for two versions of the same method?",
+      "parentUuid": "2d491391_26bac16a",
       "range": {
         "startLine": 154,
         "startChar": 8,
