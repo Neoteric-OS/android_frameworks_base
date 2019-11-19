@@ -22,6 +22,30 @@
       "revId": "32c693937d14b5e7f8eea59517a50f6c6056af64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e7ae1d_8ea62a79",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3781,
+      "author": {
+        "id": 1233564
+      },
+      "writtenOn": "2019-11-19T09:20:13Z",
+      "side": 1,
+      "message": "I added them to keep the same annotations as the original override-function. However, I think you are right. This version of the function does not need these annotations. I have removed them in Patchset 3.",
+      "parentUuid": "459a16f1_a99ed7a7",
+      "range": {
+        "startLine": 3780,
+        "startChar": 0,
+        "endLine": 3781,
+        "endChar": 12
+      },
+      "revId": "32c693937d14b5e7f8eea59517a50f6c6056af64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
