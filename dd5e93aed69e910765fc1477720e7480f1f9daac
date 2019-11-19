@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3121504c_38ae864f",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 28941,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T13:31:31Z",
+      "side": 1,
+      "message": "While personally I prefer the constructors, there are already build* methods here. I think we should keep doing the same thing for homogeneity. For example the version that takes a Uri is already accessible through buildPacProxy, so I don\u0027t think it should be exposed at all (callers should be updated to use buildPacProxy instead).\n\nDetails in the ProxyInfo file.",
+      "range": {
+        "startLine": 28938,
+        "startChar": 4,
+        "endLine": 28941,
+        "endChar": 59
+      },
+      "revId": "dd5e93aed69e910765fc1477720e7480f1f9daac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f34bc6_35e42c90",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T13:31:31Z",
+      "side": 1,
+      "message": "As I was writing on the API file, can we make these build*Proxy instead ?\n\n• ProxyInfo(host, port, String exclList) should be removed, and callers should use buildDirectProxy(host, port, List\u003cString\u003e exclList)\n• ProxyInfo(Uri pacFileUrl) should be removed, and callers should use buildPacProxy(Uri)\n• ProxyInfo(Uri pacFileUri, int localProxyPort) should be renamed to buildPacProxy(Uri, int) and exposed\n\nThe exception is ProxyInfo(ProxyInfo). As the copy constructor, I think we should keep that.",
+      "range": {
+        "startLine": 94,
+        "startChar": 11,
+        "endLine": 94,
+        "endChar": 20
+      },
+      "revId": "dd5e93aed69e910765fc1477720e7480f1f9daac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538cff0a_2c9afe1d",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T13:31:31Z",
+      "side": 1,
+      "message": "Can you remind me who is using this and why ? It doesn\u0027t sound very useful.",
+      "range": {
+        "startLine": 230,
+        "startChar": 19,
+        "endLine": 230,
+        "endChar": 26
+      },
+      "revId": "dd5e93aed69e910765fc1477720e7480f1f9daac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
