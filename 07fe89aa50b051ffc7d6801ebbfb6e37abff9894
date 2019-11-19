@@ -22,6 +22,30 @@
       "revId": "07fe89aa50b051ffc7d6801ebbfb6e37abff9894",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42d6948_8183607c",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1233564
+      },
+      "writtenOn": "2019-11-19T16:09:44Z",
+      "side": 1,
+      "message": "\u003ePlease comment what the key means.\nDone!\n\n\u003eIn fact, both subId and context should be used for the key. \nYes, you are right. Sorry for missing that. In patchset 2 the key is a Pair containing both the context and the subId.",
+      "parentUuid": "22307876_1595eeaa",
+      "range": {
+        "startLine": 915,
+        "startChar": 29,
+        "endLine": 915,
+        "endChar": 36
+      },
+      "revId": "07fe89aa50b051ffc7d6801ebbfb6e37abff9894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
