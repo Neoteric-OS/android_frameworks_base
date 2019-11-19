@@ -61,6 +61,7 @@ import android.telephony.euicc.EuiccManager;
 import android.telephony.ims.ImsMmTelManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.Pair;
 
 import com.android.internal.telephony.ISetOpportunisticDataCallback;
 import com.android.internal.telephony.ISub;
@@ -909,6 +910,10 @@ public class SubscriptionManager {
 
     private final Context mContext;
     private volatile INetworkPolicyManager mNetworkPolicy;
+
+    // Cache of Resource that has been created in getResourcesForSubId. Key is a Pair containing
+    // the Context and subId.
+    private static final Map<Pair<Context, Integer>, Resources> sResourcesCache = new HashMap<>();
 
     /**
      * A listener class for monitoring changes to {@link SubscriptionInfo} records.
@@ -2306,6 +2311,17 @@ public class SubscriptionManager {
      */
     public static Resources getResourcesForSubId(Context context, int subId,
             boolean useRootLocale) {
+        // Check if resources for this context and subId already exist in the resource cache.
+        // Resources that use the root locale are not cached.
+        Pair<Context, Integer> pair = null;
+        if (isValidSubscriptionId(subId) && !useRootLocale) {
+            pair = Pair.create(context, subId);
+            if (sResourcesCache.containsKey(pair)) {
+                // Cache hit. Use cached Resources.
+                return sResourcesCache.get(pair);
+            }
+        }
+
         final SubscriptionInfo subInfo =
                 SubscriptionManager.from(context).getActiveSubscriptionInfo(subId);
 
@@ -2325,7 +2341,13 @@ public class SubscriptionManager {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         DisplayMetrics newMetrics = new DisplayMetrics();
         newMetrics.setTo(metrics);
-        return new Resources(context.getResources().getAssets(), newMetrics, newConfig);
+        Resources res = new Resources(context.getResources().getAssets(), newMetrics, newConfig);
+
+        if (pair != null) {
+            // Save the newly created Resources in the resource cache.
+            sResourcesCache.put(pair, res);
+        }
+        return res;
     }
 
     /**
