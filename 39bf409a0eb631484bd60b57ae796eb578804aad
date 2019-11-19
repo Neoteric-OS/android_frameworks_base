@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "5832d549_ec10779c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-19T02:25:01Z",
+      "side": 1,
+      "message": "Can you have a comment on how this is defined?",
+      "range": {
+        "startLine": 44,
+        "startChar": 29,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a838f7e5_20dff78d",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
         "patchSetId": 6
@@ -94,6 +117,75 @@
     },
     {
       "key": {
+        "uuid": "e397fdcd_3b6709cf",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-19T02:25:01Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 11
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "217bd7f1_0c0c2f01",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-19T02:25:01Z",
+      "side": 1,
+      "message": "Though the description is the number of client, should the method name onClientNumChanged?",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 27
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a76c79_c216ed9a",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-19T02:25:01Z",
+      "side": 1,
+      "message": "This should be a positive number. Do you want to add a @IntRange to define it to prevent caller to bring a incorrect number. Of course, caller should mostly ourselves.",
+      "range": {
+        "startLine": 71,
+        "startChar": 36,
+        "endLine": 71,
+        "endChar": 56
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e743d65e_a28a1d79",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
         "patchSetId": 6
@@ -151,6 +243,29 @@
       "writtenOn": "2019-11-18T07:27:38Z",
       "side": 1,
       "message": "Should it be hotspotActiveWithoutClients ? Or just noHotspotClients ?",
+      "range": {
+        "startLine": 158,
+        "startChar": 49,
+        "endLine": 158,
+        "endChar": 71
+      },
+      "revId": "39bf409a0eb631484bd60b57ae796eb578804aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e6b04f_0dbf81e9",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotification.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-19T02:25:01Z",
+      "side": 1,
+      "message": "You have logic to decrease the number. would that be possible that it will less than 0? Should it be safer to put mConnectedClients \u003c\u003d 0?",
       "range": {
         "startLine": 158,
         "startChar": 49,
