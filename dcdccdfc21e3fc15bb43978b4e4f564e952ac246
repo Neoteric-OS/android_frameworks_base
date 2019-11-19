@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17d2027e_7fb7c11b",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-11-19T18:10:07Z",
+      "side": 1,
+      "message": "This javadoc needs some improvements if this is going to be part of the public API.  \nYou should explain where this class is used.",
+      "range": {
+        "startLine": 32,
+        "startChar": 3,
+        "endLine": 32,
+        "endChar": 80
+      },
+      "revId": "dcdccdfc21e3fc15bb43978b4e4f564e952ac246",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692d65b6_116360e7",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-11-19T18:10:07Z",
+      "side": 1,
+      "message": "@ImsCode int code",
+      "range": {
+        "startLine": 1160,
+        "startChar": 25,
+        "endLine": 1160,
+        "endChar": 51
+      },
+      "revId": "dcdccdfc21e3fc15bb43978b4e4f564e952ac246",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
