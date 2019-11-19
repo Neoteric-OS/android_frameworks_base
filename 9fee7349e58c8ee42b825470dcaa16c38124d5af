@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "638dc1d9_40e909e2",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 6097,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-11-19T21:04:37Z",
+      "side": 1,
+      "message": "Need to run make update-api to update this; you didn\u0027t change this method.",
+      "range": {
+        "startLine": 6097,
+        "startChar": 4,
+        "endLine": 6097,
+        "endChar": 221
+      },
+      "revId": "9fee7349e58c8ee42b825470dcaa16c38124d5af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73652849_a8c7307e",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-11-19T21:04:37Z",
+      "side": 1,
+      "message": "Is this the total number of SMS messages?  Or the total bytes?",
+      "range": {
+        "startLine": 1504,
+        "startChar": 7,
+        "endLine": 1505,
+        "endChar": 12
+      },
+      "revId": "9fee7349e58c8ee42b825470dcaa16c38124d5af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
