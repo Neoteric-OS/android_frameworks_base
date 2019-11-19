@@ -168,9 +168,9 @@ public final class ArraySet<E> implements Collection<E>, Set<E> {
                 if (sTwiceBaseCache != null) {
                     final Object[] array = sTwiceBaseCache;
                     try {
-                        mArray = array;
                         sTwiceBaseCache = (Object[]) array[0];
                         mHashes = (int[]) array[1];
+                        mArray = array;
                         array[0] = array[1] = null;
                         sTwiceBaseCacheSize--;
                         if (DEBUG) {
@@ -193,9 +193,9 @@ public final class ArraySet<E> implements Collection<E>, Set<E> {
                 if (sBaseCache != null) {
                     final Object[] array = sBaseCache;
                     try {
-                        mArray = array;
                         sBaseCache = (Object[]) array[0];
                         mHashes = (int[]) array[1];
+                        mArray = array;
                         array[0] = array[1] = null;
                         sBaseCacheSize--;
                         if (DEBUG) {
