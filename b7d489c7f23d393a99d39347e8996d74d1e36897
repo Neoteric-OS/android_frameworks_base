@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2df8ae72_7b0e0546",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-11-20T02:37:36Z",
+      "side": 1,
+      "message": "Why are we removing the infix of pan.profile? Or are we going to move it to BluetoothProfile, and remove those on each profile?\nPlease be noted that some of the profile connection state change intent is using different format of extra data.",
+      "range": {
+        "startLine": 76,
+        "startChar": 13,
+        "endLine": 76,
+        "endChar": 62
+      },
+      "revId": "b7d489c7f23d393a99d39347e8996d74d1e36897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
