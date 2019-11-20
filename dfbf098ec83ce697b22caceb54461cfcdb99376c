@@ -22,6 +22,30 @@
       "revId": "dfbf098ec83ce697b22caceb54461cfcdb99376c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b44443c_13cb2e65",
+        "filename": "packages/Tethering/CleanSpec.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-20T02:44:51Z",
+      "side": 1,
+      "message": "No, it actually appear in here. Reference other CleanSpec.mk file. They all reserve this warning.",
+      "parentUuid": "aab04f34_891e8a35",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 67
+      },
+      "revId": "dfbf098ec83ce697b22caceb54461cfcdb99376c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
