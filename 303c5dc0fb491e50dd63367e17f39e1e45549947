@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e979c78a_dc364f6f",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-20T06:33:07Z",
+      "side": 0,
+      "message": "Nit: Looks like this just remove the java static_libs from services not related to libtetheroffloadjni. You should still add contents about this in commit message.",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 59
+      },
+      "revId": "303c5dc0fb491e50dd63367e17f39e1e45549947",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
