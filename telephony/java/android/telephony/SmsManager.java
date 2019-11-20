@@ -294,6 +294,13 @@ public final class SmsManager {
     }
 
     /**
+     * Intent extra name for subscription Id associated with messaging operations such as sending
+     * SMS/MMS and downloading MMS. It is passed to applications to know which SIM is used when the
+     * operations are done successfully only since "Ask every time" is supported.
+     */
+    public static final String EXTRA_SUBSCRIPTION_ID = "android.telephony.extra.SUBSCRIPTION_ID";
+
+    /**
      * Send a text based SMS.
      *
      * <p class="note"><strong>Note:</strong> Using this method requires that your app has the

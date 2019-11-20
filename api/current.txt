@@ -44757,6 +44757,7 @@ package android.telephony {
     method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public boolean setSmscAddress(@NonNull String);
     field public static final String EXTRA_MMS_DATA = "android.telephony.extra.MMS_DATA";
     field public static final String EXTRA_MMS_HTTP_STATUS = "android.telephony.extra.MMS_HTTP_STATUS";
+    field public static final String EXTRA_SUBSCRIPTION_ID = "android.telephony.extra.SUBSCRIPTION_ID";
     field public static final String MMS_CONFIG_ALIAS_ENABLED = "aliasEnabled";
     field public static final String MMS_CONFIG_ALIAS_MAX_CHARS = "aliasMaxChars";
     field public static final String MMS_CONFIG_ALIAS_MIN_CHARS = "aliasMinChars";
