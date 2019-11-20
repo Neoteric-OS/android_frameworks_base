@@ -5552,6 +5552,7 @@ package android.app {
     method @Deprecated public android.app.Notification.Builder setDefaults(int);
     method @NonNull public android.app.Notification.Builder setDeleteIntent(android.app.PendingIntent);
     method @NonNull public android.app.Notification.Builder setExtras(android.os.Bundle);
+    method @NonNull public android.app.Notification.Builder setFlag(@android.app.Notification.NotificationFlags int, boolean);
     method @NonNull public android.app.Notification.Builder setFullScreenIntent(android.app.PendingIntent, boolean);
     method @NonNull public android.app.Notification.Builder setGroup(String);
     method @NonNull public android.app.Notification.Builder setGroupAlertBehavior(int);
@@ -5676,6 +5677,9 @@ package android.app {
     method public CharSequence getText();
     method public long getTimestamp();
     method public android.app.Notification.MessagingStyle.Message setData(String, android.net.Uri);
+  }
+
+  @IntDef({android.app.Notification.FLAG_SHOW_LIGHTS, android.app.Notification.FLAG_ONGOING_EVENT, android.app.Notification.FLAG_INSISTENT, android.app.Notification.FLAG_ONLY_ALERT_ONCE, android.app.Notification.FLAG_AUTO_CANCEL, android.app.Notification.FLAG_NO_CLEAR, android.app.Notification.FLAG_FOREGROUND_SERVICE, android.app.Notification.FLAG_HIGH_PRIORITY, android.app.Notification.FLAG_LOCAL_ONLY, android.app.Notification.FLAG_GROUP_SUMMARY, 0x400, android.app.Notification.FLAG_BUBBLE}) @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE) public static @interface Notification.NotificationFlags {
   }
 
   public abstract static class Notification.Style {
