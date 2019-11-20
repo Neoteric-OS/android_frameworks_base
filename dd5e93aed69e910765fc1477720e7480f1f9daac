@@ -140,6 +140,30 @@
       "revId": "dd5e93aed69e910765fc1477720e7480f1f9daac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabebe94_33088a34",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-20T07:58:48Z",
+      "side": 1,
+      "message": "Okay fair enough. I don\u0027t think alternatives are much better.",
+      "parentUuid": "274cd0cf_9a83afb0",
+      "range": {
+        "startLine": 230,
+        "startChar": 19,
+        "endLine": 230,
+        "endChar": 26
+      },
+      "revId": "dd5e93aed69e910765fc1477720e7480f1f9daac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

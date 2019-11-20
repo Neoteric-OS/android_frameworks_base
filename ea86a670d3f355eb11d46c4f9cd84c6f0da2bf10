@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e1a53bc_a419194d",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-20T07:58:48Z",
+      "side": 1,
+      "message": "Let\u0027s keep the @NonNull annotation from patchset 3",
+      "range": {
+        "startLine": 118,
+        "startChar": 21,
+        "endLine": 118,
+        "endChar": 24
+      },
+      "revId": "ea86a670d3f355eb11d46c4f9cd84c6f0da2bf10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27a4edc7_be006707",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-20T07:58:48Z",
+      "side": 1,
+      "message": "Let\u0027s keep the @NonNull annotation from patchset 3",
+      "range": {
+        "startLine": 145,
+        "startChar": 21,
+        "endLine": 145,
+        "endChar": 24
+      },
+      "revId": "ea86a670d3f355eb11d46c4f9cd84c6f0da2bf10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc5a024_0f92294d",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-20T07:58:48Z",
+      "side": 1,
+      "message": "Let\u0027s keep the annotation from patchset 3, I think it was useful.",
+      "range": {
+        "startLine": 238,
+        "startChar": 4,
+        "endLine": 238,
+        "endChar": 10
+      },
+      "revId": "ea86a670d3f355eb11d46c4f9cd84c6f0da2bf10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
