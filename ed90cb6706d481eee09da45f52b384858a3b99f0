@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2edd28b_428cff26",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1233564
+      },
+      "writtenOn": "2019-11-20T10:04:48Z",
+      "side": 1,
+      "message": "Good point! I have changed to use a ConcurrentHashMap in patchset 3.",
+      "parentUuid": "5e62759e_1be7c2fa",
+      "range": {
+        "startLine": 916,
+        "startChar": 86,
+        "endLine": 916,
+        "endChar": 93
+      },
+      "revId": "ed90cb6706d481eee09da45f52b384858a3b99f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13a824a8_61c092a6",
         "filename": "telephony/java/android/telephony/SubscriptionManager.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ed90cb6706d481eee09da45f52b384858a3b99f0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8cebc1b_ed3b850e",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2312,
+      "author": {
+        "id": 1233564
+      },
+      "writtenOn": "2019-11-20T10:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13a824a8_61c092a6",
+      "range": {
+        "startLine": 2312,
+        "startChar": 4,
+        "endLine": 2312,
+        "endChar": 10
+      },
+      "revId": "ed90cb6706d481eee09da45f52b384858a3b99f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
