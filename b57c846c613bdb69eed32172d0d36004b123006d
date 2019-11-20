@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85329234_46c5afe2",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-20T09:41:22Z",
+      "side": 1,
+      "message": "IIRC you can use never() instead if you prefer",
+      "range": {
+        "startLine": 104,
+        "startChar": 27,
+        "endLine": 104,
+        "endChar": 35
+      },
+      "revId": "b57c846c613bdb69eed32172d0d36004b123006d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f285f1_0ca233dc",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-20T09:41:22Z",
+      "side": 1,
+      "message": "times(1) is the default, so you can omit it if you prefer\n\n  verify(mListener).onCompatChange(...)",
+      "range": {
+        "startLine": 121,
+        "startChar": 27,
+        "endLine": 121,
+        "endChar": 36
+      },
+      "revId": "b57c846c613bdb69eed32172d0d36004b123006d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

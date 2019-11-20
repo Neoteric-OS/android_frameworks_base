@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2ab29d9e_b8c4e892",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-20T09:41:22Z",
+      "side": 1,
+      "message": "I agree neither seems optimal. There must be a better solution...\n\nhow about refactoring out the code that maintains listeners per change ID into a new class, then have the CompatChange notify that class of all changes?\n\nConfig being just config if clean I agree, but it we need to know about changes to it, it does feel like the best place for that logic to live.",
+      "parentUuid": "512880ee_3ca539e6",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 239,
+        "endChar": 13
+      },
+      "revId": "5d4f92d6720c512d0272bf6dd15c9c5d1982ec31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed538fea_0914942f",
         "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
         "patchSetId": 4
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "Even if it\u0027s EXACTLY the same test (and there\u0027s nothing more), for two versions of the same method?",
       "parentUuid": "2d491391_26bac16a",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 154,
+        "endChar": 40
+      },
+      "revId": "5d4f92d6720c512d0272bf6dd15c9c5d1982ec31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19033f0_fe28c210",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/PlatformCompatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-20T09:41:22Z",
+      "side": 1,
+      "message": "Yes, even then :)\n\nLooking at your helper method above, a lot of the verbosity could be factored out in cleaner way. e.g. the enabled and disabled lists could be replaced by a `List.of(1)` (maybe in a static final member); instantiating PlatformCompat could be done in a @Before method. Removing the extra code added by the `if (forTest)` conditional, and there\u0027s not much duplication left.\n\nI always used to try and write test code as you have done here, but eventually came to the conclusion it just adds confusion. Test code being repetitive is ok and means each test method is easier to understand in isolation.\n\nIt\u0027s up you of course, just offering my pearls of wisdom (FWIW!)",
+      "parentUuid": "1785b8a7_57385403",
       "range": {
         "startLine": 154,
         "startChar": 8,
