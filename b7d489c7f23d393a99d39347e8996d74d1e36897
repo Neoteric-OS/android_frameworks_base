@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3ad5ab3e_45a9577c",
+        "filename": "api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-11-20T23:50:35Z",
+      "side": 1,
+      "message": "intdefs?",
+      "range": {
+        "startLine": 1311,
+        "startChar": 4,
+        "endLine": 1316,
+        "endChar": 3
+      },
+      "revId": "b7d489c7f23d393a99d39347e8996d74d1e36897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2df8ae72_7b0e0546",
         "filename": "core/java/android/bluetooth/BluetoothPan.java",
         "patchSetId": 1
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "It was just being done to be inline with the format of extra data, but if that is the case, we can go ahead and suppress the lint warnings and change this back to having the infix of pan.profile.",
       "parentUuid": "2df8ae72_7b0e0546",
+      "range": {
+        "startLine": 76,
+        "startChar": 13,
+        "endLine": 76,
+        "endChar": 62
+      },
+      "revId": "b7d489c7f23d393a99d39347e8996d74d1e36897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a82081_b00efa30",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-11-20T23:50:35Z",
+      "side": 1,
+      "message": "yeah let\u0027s move it back to avoid conflicts",
+      "parentUuid": "b12e32fc_1a4f1d0c",
       "range": {
         "startLine": 76,
         "startChar": 13,
