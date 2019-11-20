@@ -1076,9 +1076,7 @@ public final class BluetoothDevice implements Parcelable {
      * is preserved over power cycle.
      *
      * @return true on success, false on error
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(Manifest.permission.BLUETOOTH)
     public boolean setAlias(@NonNull String alias) {
         final IBluetooth service = sService;
