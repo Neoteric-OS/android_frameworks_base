@@ -4537,7 +4537,12 @@ public class Notification implements Parcelable
         }
 
         /**
-         * @hide
+         * Set on or off a Notification property
+         *
+         * @param mask Bit mask of the property
+         * @param value Status (on/off) of the property
+         *
+         * @return The same Builder.
          */
         @NonNull
         public Builder setFlag(int mask, boolean value) {
