@@ -64,7 +64,6 @@ interface ITelephonyRegistry {
             in NetworkCapabilities networkCapabilities, int networkType, boolean roaming);
     @UnsupportedAppUsage
     void notifyDataConnectionFailed(String apnType);
-    void notifyDataConnectionFailedForSubscriber(int phoneId, int subId, String apnType);
     @UnsupportedAppUsage(maxTargetSdk = 28)
     void notifyCellLocation(in Bundle cellLocation);
     void notifyCellLocationForSubscriber(in int subId, in Bundle cellLocation);

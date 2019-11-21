@@ -657,25 +657,6 @@ public class TelephonyRegistryManager {
     }
 
     /**
-     * Notify data connection failed on certain subscription.
-     *
-     * @param subId for which data connection failed.
-     * @param slotIndex for which data conenction faled. Can be derived from subId except when subId
-     * is invalid.
-     * @param apnType the apnType, "ims" for IMS APN, "emergency" for EMERGENCY APN. Note each data
-     * connection can support multiple anyTypes.
-     *
-     * @hide
-     */
-    public void notifyDataConnectionFailed(int subId, int slotIndex, String apnType) {
-        try {
-            sRegistry.notifyDataConnectionFailedForSubscriber(slotIndex, subId, apnType);
-        } catch (RemoteException ex) {
-            // system process is dead
-        }
-    }
-
-    /**
      * TODO change from bundle to CellLocation?
      * @hide
      */
