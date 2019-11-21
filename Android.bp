@@ -268,6 +268,7 @@ filegroup {
         ":framework-sdkextensions-sources",
         ":framework-tethering-srcs",
         ":updatable-media-srcs",
+        ":ike-srcs",
     ]
 }
 
@@ -430,6 +431,7 @@ java_library {
     name: "framework-minus-apex",
     defaults: ["framework-defaults"],
     srcs: [":framework-non-updatable-sources"],
+    libs: ["ike-stubs"],
     installable: true,
     javac_shard_size: 150,
     required: [
@@ -463,6 +465,7 @@ java_library {
     static_libs: [
         "framework-minus-apex",
         "updatable_media_stubs",
+        "ike-stubs",
         "framework-sdkextensions-stubs-systemapi",
         // TODO(jiyong): add more stubs for APEXes here
     ],
