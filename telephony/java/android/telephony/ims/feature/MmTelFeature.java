@@ -20,7 +20,6 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
-import android.annotation.TestApi;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.RemoteException;
@@ -52,10 +51,7 @@ import java.lang.annotation.RetentionPolicy;
  *
  * Any class wishing to use MmTelFeature should extend this class and implement all methods that the
  * service supports.
- * @hide
  */
-@SystemApi
-@TestApi
 public class MmTelFeature extends ImsFeature {
 
     private static final String LOG_TAG = "MmTelFeature";
@@ -233,7 +229,9 @@ public class MmTelFeature extends ImsFeature {
             super();
         }
 
-        /**@deprecated Use {@link MmTelCapabilities} to construct a new instance instead.*/
+        /**@deprecated Use {@link MmTelCapabilities} to construct a new instance instead.
+         * @hide
+         */
         @Deprecated
         public MmTelCapabilities(Capabilities c) {
             mCapabilities = c.mCapabilities;
@@ -408,7 +406,7 @@ public class MmTelFeature extends ImsFeature {
      * @return A copy of the current MmTelFeature capability status.
      */
     @Override
-    public final MmTelCapabilities queryCapabilityStatus() {
+    public @NonNull final MmTelCapabilities queryCapabilityStatus() {
         return new MmTelCapabilities(super.queryCapabilityStatus());
     }
 
@@ -433,7 +431,9 @@ public class MmTelFeature extends ImsFeature {
      * @param c The {@link ImsCallSessionImplBase} of the new incoming call.
      * @param extras A bundle containing extra parameters related to the call. See
      * {@link #EXTRA_IS_UNKNOWN_CALL} and {@link #EXTRA_IS_USSD} above.
+      * @hide
      */
+    @SystemApi
     public final void notifyIncomingCall(@NonNull ImsCallSessionImplBase c,
             @NonNull Bundle extras) {
         if (c == null || extras == null) {
@@ -458,7 +458,9 @@ public class MmTelFeature extends ImsFeature {
      * @param callProfile The {@link ImsCallProfile} IMS call profile with details.
      *        This can be null if no call information is available for the rejected call.
      * @param reason The {@link ImsReasonInfo} call rejection reason.
+     * * @hide
      */
+    @SystemApi
     public final void notifyRejectedCall(@NonNull ImsCallProfile callProfile,
             @NonNull ImsReasonInfo reason) {
         if (callProfile == null || reason == null) {
@@ -537,8 +539,10 @@ public class MmTelFeature extends ImsFeature {
      * Enabling/Disabling a capability here indicates that the capability should be registered or
      * deregistered (depending on the capability change) and become available or unavailable to
      * the framework.
+     * * @hide
      */
     @Override
+    @SystemApi
     public void changeEnabledCapabilities(@NonNull CapabilityChangeRequest request,
             @NonNull CapabilityCallbackProxy c) {
         // Base implementation, no-op
@@ -561,7 +565,9 @@ public class MmTelFeature extends ImsFeature {
      *        {@link ImsCallProfile#CALL_TYPE_VS_TX}
      *        {@link ImsCallProfile#CALL_TYPE_VS_RX}
      * @return a {@link ImsCallProfile} object
+     * @hide
      */
+    @SystemApi
     public @Nullable ImsCallProfile createCallProfile(int callSessionType, int callType) {
         // Base Implementation - Should be overridden
         return null;
@@ -582,7 +588,9 @@ public class MmTelFeature extends ImsFeature {
      * {@link ImsCallSession} directly.
      *
      * @param profile a call profile to make the call
+     * @hide
      */
+    @SystemApi
     public @Nullable ImsCallSessionImplBase createCallSession(@NonNull ImsCallProfile profile) {
         // Base Implementation - Should be overridden
         return null;
@@ -632,7 +640,9 @@ public class MmTelFeature extends ImsFeature {
     /**
      * @return The {@link ImsUtImplBase} Ut interface implementation for the supplementary service
      * configuration.
+     * @hide
      */
+    @SystemApi
     public @NonNull ImsUtImplBase getUt() {
         // Base Implementation - Should be overridden
         return new ImsUtImplBase();
@@ -641,7 +651,9 @@ public class MmTelFeature extends ImsFeature {
     /**
      * @return The {@link ImsEcbmImplBase} Emergency call-back mode interface for emergency VoLTE
      * calls that support it.
+     * @hide
      */
+    @SystemApi
     public @NonNull ImsEcbmImplBase getEcbm() {
         // Base Implementation - Should be overridden
         return new ImsEcbmImplBase();
@@ -650,7 +662,9 @@ public class MmTelFeature extends ImsFeature {
     /**
      * @return The {@link ImsMultiEndpointImplBase} implementation for implementing Dialog event
      * package processing for multi-endpoint.
+     * @hide
      */
+    @SystemApi
     public @NonNull ImsMultiEndpointImplBase getMultiEndpoint() {
         // Base Implementation - Should be overridden
         return new ImsMultiEndpointImplBase();
@@ -710,7 +724,9 @@ public class MmTelFeature extends ImsFeature {
      *
      * @return an instance of {@link ImsSmsImplBase} which should be implemented by the IMS
      * Provider.
+     * @hide
      */
+    @SystemApi
     public @NonNull ImsSmsImplBase getSmsImplementation() {
         return new ImsSmsImplBase();
     }
