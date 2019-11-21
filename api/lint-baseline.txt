@@ -485,6 +485,10 @@ HiddenSuperclass: android.util.StatsLog:
     
 
 
+ManagerLookup: android.telephony.ims.ImsMmTelManager#createForSubscriptionId(int):
+    Managers must always be obtained from Context (`createForSubscriptionId`)
+
+
 MissingNullability: android.icu.lang.UCharacter.UnicodeBlock#EGYPTIAN_HIEROGLYPH_FORMAT_CONTROLS:
     
 MissingNullability: android.icu.lang.UCharacter.UnicodeBlock#ELYMAIC:

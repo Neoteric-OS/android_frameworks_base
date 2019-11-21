@@ -56,10 +56,7 @@ import java.util.function.Consumer;
  * associated subscription.
  *
  * @see #createForSubscriptionId(int)
- * @hide
  */
-@SystemApi
-@TestApi
 public class ImsMmTelManager implements RegistrationManager {
 
     /**
@@ -369,7 +366,11 @@ public class ImsMmTelManager implements RegistrationManager {
         }
     }
 
-    /**{@inheritDoc}*/
+    /**
+     * {@inheritDoc}
+     * @hide
+     */
+    @SystemApi @TestApi
     @Override
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public void getRegistrationTransportType(@NonNull @CallbackExecutor Executor executor,
@@ -524,8 +525,10 @@ public class ImsMmTelManager implements RegistrationManager {
      * @see #isAdvancedCallingSettingEnabled()
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
+     * @hide
      */
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    @SystemApi @TestApi
     public void setAdvancedCallingSettingEnabled(boolean isEnabled) {
         try {
             getITelephony().setAdvancedCallingSettingEnabled(mSubId, isEnabled);
@@ -561,8 +564,10 @@ public class ImsMmTelManager implements RegistrationManager {
      *         {@link MmTelFeature.MmTelCapabilities#CAPABILITY_TYPE_SMS}
      * @return {@code true} if the MmTel IMS capability is capable for this subscription, false
      *         otherwise.
+     * @hide
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    @SystemApi @TestApi
     public boolean isCapable(@MmTelFeature.MmTelCapabilities.MmTelCapability int capability,
             @ImsRegistrationImplBase.ImsRegistrationTech int imsRegTech) {
         try {
@@ -588,8 +593,10 @@ public class ImsMmTelManager implements RegistrationManager {
      *         {@link MmTelFeature.MmTelCapabilities#CAPABILITY_TYPE_SMS}
      * @return {@code true} if the MmTel IMS capability is available for this subscription, false
      *         otherwise.
+     * @hide
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    @SystemApi @TestApi
     public boolean isAvailable(@MmTelFeature.MmTelCapabilities.MmTelCapability int capability,
             @ImsRegistrationImplBase.ImsRegistrationTech int imsRegTech) {
         try {
@@ -613,7 +620,9 @@ public class ImsMmTelManager implements RegistrationManager {
      *                 capability is supported on this carrier network for the transport specified.
      * @throws ImsException if the subscription is no longer valid or the IMS service is not
      * available.
+     * @hide
      */
+    @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public void isSupported(@MmTelFeature.MmTelCapabilities.MmTelCapability int capability,
             @AccessNetworkConstants.TransportType int transportType,
@@ -669,7 +678,9 @@ public class ImsMmTelManager implements RegistrationManager {
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @see #isVtSettingEnabled()
+     * @hide
      */
+    @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVtSettingEnabled(boolean isEnabled) {
         try {
@@ -716,7 +727,9 @@ public class ImsMmTelManager implements RegistrationManager {
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @param isEnabled true if the user's setting for Voice over WiFi is enabled, false otherwise=
      * @see #isVoWiFiSettingEnabled()
+     * @hide
      */
+    @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiSettingEnabled(boolean isEnabled) {
         try {
@@ -766,7 +779,9 @@ public class ImsMmTelManager implements RegistrationManager {
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @see #isVoWiFiRoamingSettingEnabled()
+     * @hide
      */
+    @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiRoamingSettingEnabled(boolean isEnabled) {
         try {
@@ -796,7 +811,9 @@ public class ImsMmTelManager implements RegistrationManager {
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @see #setVoWiFiSettingEnabled(boolean)
+     * @hide
      */
+    @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiNonPersistent(boolean isCapable, int mode) {
         try {
@@ -851,7 +868,9 @@ public class ImsMmTelManager implements RegistrationManager {
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @see #getVoWiFiModeSetting()
+     * @hide
      */
+    @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiModeSetting(@WiFiCallingMode int mode) {
         try {
@@ -880,7 +899,9 @@ public class ImsMmTelManager implements RegistrationManager {
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @see #setVoWiFiRoamingSettingEnabled(boolean)
+     * @hide
      */
+    @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public @WiFiCallingMode int getVoWiFiRoamingModeSetting() {
         try {
@@ -909,7 +930,9 @@ public class ImsMmTelManager implements RegistrationManager {
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @see #getVoWiFiRoamingModeSetting()
+     * @hide
      */
+    @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiRoamingModeSetting(@WiFiCallingMode int mode) {
         try {
@@ -936,7 +959,9 @@ public class ImsMmTelManager implements RegistrationManager {
      * @throws IllegalArgumentException if the subscription associated with this operation is not
      * active (SIM is not inserted, ESIM inactive) or invalid.
      * @param isEnabled if true RTT should be enabled during calls made on this subscription.
+     * @hide
      */
+    @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setRttCapabilitySetting(boolean isEnabled) {
         try {
@@ -988,7 +1013,9 @@ public class ImsMmTelManager implements RegistrationManager {
      *                 specified when the service state has been retrieved from the IMS service.
      * @throws ImsException if the IMS service associated with this subscription is not available or
      * the IMS service is not available.
+     * @hide
      */
+    @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public void getFeatureState(@NonNull @CallbackExecutor Executor executor,
             @NonNull @ImsFeature.ImsState Consumer<Integer> callback) throws ImsException {
