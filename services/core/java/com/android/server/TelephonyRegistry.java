@@ -1614,12 +1614,10 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
     }
 
     public void notifyDataConnectionFailed(String apnType) {
-         notifyDataConnectionFailedForSubscriber(SubscriptionManager.DEFAULT_PHONE_INDEX,
-                 SubscriptionManager.DEFAULT_SUBSCRIPTION_ID,
-                 apnType);
+        loge("This function should not be invoked");
     }
 
-    public void notifyDataConnectionFailedForSubscriber(int phoneId, int subId, String apnType) {
+    private void notifyDataConnectionFailedForSubscriber(int phoneId, int subId, String apnType) {
         if (!checkNotifyPermission("notifyDataConnectionFailed()")) {
             return;
         }
@@ -1832,6 +1830,10 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         if (!checkNotifyPermission("notifyPreciseDataConnectionFailed()")) {
             return;
         }
+
+        // precise notify invokes imprecise notify
+        notifyDataConnectionFailedForSubscriber(phoneId, subId, apnType);
+
         synchronized (mRecords) {
             if (validatePhoneId(phoneId)) {
                 mPreciseDataConnectionState[phoneId] = new PreciseDataConnectionState(
