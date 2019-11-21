@@ -8806,7 +8806,7 @@ public class TelephonyManager {
     @Deprecated
     public boolean isTtyModeSupported() {
         try {
-            TelecomManager telecomManager = TelecomManager.from(mContext);
+            TelecomManager telecomManager = mContext.getSystemService(TelecomManager.class);
             if (telecomManager != null) {
                 return telecomManager.isTtySupported();
             }
