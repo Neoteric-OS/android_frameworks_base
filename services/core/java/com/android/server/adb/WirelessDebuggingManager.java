@@ -16,8 +16,14 @@
 
 package com.android.server.adb;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.debug.AdbManager;
 import android.debug.PairDevice;
 import android.net.LocalSocket;
@@ -29,9 +35,12 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.Slog;
 
 import com.android.framework.protobuf.InvalidProtocolBufferException;
+import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
+import com.android.internal.notification.SystemNotificationChannels;
 import com.android.server.FgThread;
 import com.android.server.adb.AdbKeyStoreProto.Key;
 import com.android.server.adb.AdbKeyStoreProto.KeyStore;
@@ -45,8 +54,10 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides communication to the Android Debug Daemon to allow, deny, query,
@@ -72,6 +83,7 @@ public class WirelessDebuggingManager {
     private String mDeviceName;
     Map<String, PairDevice> mPairedDevices = new HashMap<>();
     Map<String, PairDevice> mPairingDevices = new HashMap<>();
+    Set<String> mConnectedDevices = new HashSet<>();
     private static final int PAIRING_CODE_LENGTH = 6;
     private byte[] mOurKey;
     private byte[] mTheirKey;
@@ -279,6 +291,9 @@ public class WirelessDebuggingManager {
     }
 
     class WirelessDebuggingHandler extends Handler {
+        private NotificationManager mNotificationManager;
+        private boolean mAdbNotificationShown;
+
         // === Messages from the UI ==============
         // UI asks adbd to enable adbdwifi
         private static final int MSG_ADBDWIFI_ENABLE = 1;
@@ -309,16 +324,93 @@ public class WirelessDebuggingManager {
         // Notifys us a paired device disconnected.
         private static final int MSG_DEVICE_DISCONNECTED = 12;
 
+        // === System server messages ==============
+        private static final int MSG_BOOT_COMPLETED = 13;
+
         // === Messages we can send to adbd ===========
         private static final String MSG_DISCONNECT_DEVICE = "DD";
+        private static final String MSG_DISABLE_ADBDWIFI = "DA";
+
+        private static final String ADB_NOTIFICATION_CHANNEL_ID_TV = "usbdevicemanager.adb.tv";
+        private boolean isTv() {
+            return mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LEANBACK);
+        }
 
         WirelessDebuggingHandler(Looper looper) {
             super(looper);
         }
 
+        // Show when at least one device is connected.
+        public void showAdbConnectedNotification(boolean show) {
+            final int id = SystemMessage.NOTE_ADB_WIFI_ACTIVE;
+            final int titleRes = com.android.internal.R.string.adbwifi_active_notification_title;
+            if (show == mAdbNotificationShown) {
+                return;
+            }
+            if (!mAdbNotificationShown) {
+                Resources r = mContext.getResources();
+                CharSequence title = r.getText(titleRes);
+                CharSequence message = r.getText(
+                        com.android.internal.R.string.adbwifi_active_notification_message);
+
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent pi = PendingIntent.getActivityAsUser(mContext, 0,
+                        intent, 0, null, UserHandle.CURRENT);
+
+                Notification notification =
+                        new Notification.Builder(mContext, SystemNotificationChannels.DEVELOPER)
+                                .setSmallIcon(com.android.internal.R.drawable.stat_sys_adb)
+                                .setWhen(0)
+                                .setOngoing(true)
+                                .setTicker(title)
+                                .setDefaults(0)  // please be quiet
+                                .setColor(mContext.getColor(
+                                        com.android.internal.R.color
+                                                .system_notification_accent_color))
+                                .setContentTitle(title)
+                                .setContentText(message)
+                                .setContentIntent(pi)
+                                .setVisibility(Notification.VISIBILITY_PUBLIC)
+                                .extend(new Notification.TvExtender()
+                                        .setChannelId(ADB_NOTIFICATION_CHANNEL_ID_TV))
+                                .build();
+                mAdbNotificationShown = true;
+                mNotificationManager.notifyAsUser(null, id, notification,
+                        UserHandle.ALL);
+            } else {
+                mAdbNotificationShown = false;
+                mNotificationManager.cancelAsUser(null, id, UserHandle.ALL);
+            }
+        }
+
+        private void setupNotifications() {
+            mNotificationManager = (NotificationManager)
+                    mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (mNotificationManager == null) {
+                Slog.e(TAG, "Unable to setup notifications for wireless debugging");
+                return;
+            }
+
+            // Ensure that the notification channels are set up
+            if (isTv()) {
+                // TV-specific notification channel
+                mNotificationManager.createNotificationChannel(
+                        new NotificationChannel(ADB_NOTIFICATION_CHANNEL_ID_TV,
+                                mContext.getString(
+                                        com.android.internal.R.string
+                                                .adb_debugging_notification_channel_tv),
+                                NotificationManager.IMPORTANCE_HIGH));
+            }
+        }
+
         public void handleMessage(Message msg) {
             if (DEBUG) Slog.i(TAG, "adb wireless handle msg " + msg.what);
             switch (msg.what) {
+                case MSG_BOOT_COMPLETED:
+                    setupNotifications();
+                    break;
                 case MSG_ADBDWIFI_ENABLE:
                     if (mAdbWirelessEnabled) {
                         break;
@@ -335,7 +427,7 @@ public class WirelessDebuggingManager {
                     SystemProperties.set(WIRELESS_DEBUG_PERSISTENT_CONFIG_PROPERTY,
                             Boolean.toString(mAdbWirelessEnabled));
 
-                    if (DEBUG) Slog.i(TAG, "adb start wireless adb mThread");
+                    if (DEBUG) Slog.i(TAG, "adb start wireless adb");
                     mThread = new WirelessDebuggingThread();
                     mThread.start();
 
@@ -350,16 +442,21 @@ public class WirelessDebuggingManager {
                             Boolean.toString(mAdbWirelessEnabled));
 
                     if (mThread != null) {
+                        mThread.sendMessage(MSG_DISABLE_ADBDWIFI.getBytes());
                         mThread.stopListening();
                         mThread = null;
                     }
                     mPairedDevices.clear();
                     mPairingDevices.clear();
+                    mConnectedDevices.clear();
+                    showAdbConnectedNotification(false);
                     break;
                 case MSG_QUERY_PAIRED_DEVICES:
                     sendPairedDevicesToUI(mPairedDevices);
                     break;
                 case MSG_QUERY_PAIRING_DEVICES:
+                    // TODO: dead code ATM. We don't support picking a device from a list to pair
+                    // with.
                     sendPairingDevicesToUI(mPairingDevices);
                     break;
                 case MSG_REQ_UNPAIR: {
@@ -412,11 +509,23 @@ public class WirelessDebuggingManager {
                     }
                     break;
                 case MSG_DEVICE_CONNECTED: {
-                    // TODO: Not implemented
+                    String guid = new String((byte[]) msg.obj);
+                    if (mConnectedDevices.add(guid)) {
+                        refreshPairedDevicesList(mPairedDevices);
+                        sendPairedDevicesToUI(mPairedDevices);
+                        showAdbConnectedNotification(true);
+                    }
                     break;
                 }
                 case MSG_DEVICE_DISCONNECTED: {
-                    // TODO: Not implemented
+                    String guid = new String((byte[]) msg.obj);
+                    if (mConnectedDevices.remove(guid)) {
+                        refreshPairedDevicesList(mPairedDevices);
+                        sendPairedDevicesToUI(mPairedDevices);
+                        if (mConnectedDevices.isEmpty()) {
+                            showAdbConnectedNotification(false);
+                        }
+                    }
                     break;
                 }
             }
@@ -495,7 +604,9 @@ public class WirelessDebuggingManager {
                 List<Key> keys = keyStore.getKeysList();
                 keys.forEach(key -> {
                     pairedDevices.put(key.getGuid(),
-                                      new PairDevice(key.getName(), key.getGuid(), false));
+                                      new PairDevice(key.getName(),
+                                                     key.getGuid(),
+                                                     mConnectedDevices.contains(key.getGuid())));
                 });
             } catch (InvalidProtocolBufferException e) {
                 e.printStackTrace();
@@ -512,6 +623,7 @@ public class WirelessDebuggingManager {
     public void bootCompleted() {
         boolean enable = SystemProperties.getBoolean(
                 WIRELESS_DEBUG_PERSISTENT_CONFIG_PROPERTY, false);
+        mHandler.sendEmptyMessage(WirelessDebuggingHandler.MSG_BOOT_COMPLETED);
         enableAdbWireless(enable);
         if (DEBUG) Slog.i(TAG, "enable adb wireless on boot completion");
     }
