@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4898fff8_6088c1c3",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1866,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2019-11-21T20:35:52Z",
+      "side": 1,
+      "message": "(mErrorRecoveryRetryCounter + 1) * SERVICE_RESTART_TIME_MS ?\n\nIf we can\u0027t restart because things are slow, could we back off?",
+      "range": {
+        "startLine": 1866,
+        "startChar": 64,
+        "endLine": 1866,
+        "endChar": 87
+      },
+      "revId": "f44d6732c39eedc8270a1755af15e7dc3d9b69fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
