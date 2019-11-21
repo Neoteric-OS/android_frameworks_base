@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "710b93a2_6bdccc29",
+        "filename": "packages/Tethering/CleanSpec.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T09:41:32Z",
+      "side": 1,
+      "message": "I fail to see the reason for this ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 55,
+        "endLine": 44,
+        "endChar": 68
+      },
+      "revId": "fd78bbab353e5f1bfdf5ef0a24b6821743296963",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
