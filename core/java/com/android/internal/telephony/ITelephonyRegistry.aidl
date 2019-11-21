@@ -56,11 +56,10 @@ interface ITelephonyRegistry {
     @UnsupportedAppUsage(maxTargetSdk = 28)
     void notifyDataActivity(int state);
     void notifyDataActivityForSubscriber(in int subId, int state);
-    void notifyDataConnectionForSubscriber(int phoneId, int subId, int state,
-            String apnType, int networkType, in PreciseDataConnectionState preciseState);
+    void notifyDataConnectionForSubscriber(
+            int phoneId, int subId, String apnType, in PreciseDataConnectionState preciseState);
     @UnsupportedAppUsage
     void notifyDataConnectionFailed(String apnType);
-    void notifyDataConnectionFailedForSubscriber(int phoneId, int subId, String apnType);
     @UnsupportedAppUsage(maxTargetSdk = 28)
     void notifyCellLocation(in Bundle cellLocation);
     void notifyCellLocationForSubscriber(in int subId, in Bundle cellLocation);
