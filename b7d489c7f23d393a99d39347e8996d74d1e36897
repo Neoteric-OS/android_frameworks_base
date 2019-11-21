@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b302702_72403941",
+        "filename": "api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-11-21T21:19:17Z",
+      "side": 1,
+      "message": "Added!",
+      "parentUuid": "3ad5ab3e_45a9577c",
+      "range": {
+        "startLine": 1311,
+        "startChar": 4,
+        "endLine": 1316,
+        "endChar": 3
+      },
+      "revId": "b7d489c7f23d393a99d39347e8996d74d1e36897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2df8ae72_7b0e0546",
         "filename": "core/java/android/bluetooth/BluetoothPan.java",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "b7d489c7f23d393a99d39347e8996d74d1e36897",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7669e7de_c37341dc",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-11-21T21:19:17Z",
+      "side": 1,
+      "message": "It\u0027s back!",
+      "parentUuid": "21a82081_b00efa30",
+      "range": {
+        "startLine": 76,
+        "startChar": 13,
+        "endLine": 76,
+        "endChar": 62
+      },
+      "revId": "b7d489c7f23d393a99d39347e8996d74d1e36897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
