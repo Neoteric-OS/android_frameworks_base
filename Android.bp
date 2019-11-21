@@ -267,6 +267,7 @@ filegroup {
     srcs: [
         ":framework-sdkext-sources",
         ":updatable-media-srcs",
+        ":ike-srcs",
     ]
 }
 
@@ -425,7 +426,10 @@ java_library {
     name: "framework-minus-apex",
     defaults: ["framework-defaults"],
     srcs: [":framework-non-updatable-sources"],
-    libs: ["app-compat-annotations"],
+    libs: [
+        "app-compat-annotations",
+        "ike-stubs",
+    ],
     installable: true,
     javac_shard_size: 150,
     required: [
@@ -457,6 +461,7 @@ java_library {
     installable: false, // this lib is a build-only library
     static_libs: [
         "framework-minus-apex",
+        "ike-stubs",
         // TODO(jiyong): add stubs for APEXes here
     ],
     sdk_version: "core_platform",
