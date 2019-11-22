@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ba990ec_33ea8080",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2019-11-22T14:13:52Z",
+      "side": 1,
+      "message": "don\u0027t think this is true? (also what you\u0027re trying to avoid right?)",
+      "range": {
+        "startLine": 32,
+        "startChar": 49,
+        "endLine": 32,
+        "endChar": 72
+      },
+      "revId": "a40206a49b1b5117258cc8a5e3754cb9e4d37cff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
