@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "905f04e3_8c96d120",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-11-22T01:02:03Z",
+      "side": 1,
+      "message": "hide is implicit, because the class is hide?",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 16
+      },
+      "revId": "a052447ad6f6e412dd0f1a6baeddb422c47d9625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
