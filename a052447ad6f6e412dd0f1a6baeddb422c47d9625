@@ -22,6 +22,30 @@
       "revId": "a052447ad6f6e412dd0f1a6baeddb422c47d9625",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1591d43d_f55e0a11",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-11-22T19:51:53Z",
+      "side": 1,
+      "message": "I actually made the class a SystemApi, so everything that is public and lacking any annotations should implicitly be a SystemApi. Therefore, the annotation is needed if this is to be @hide.",
+      "parentUuid": "905f04e3_8c96d120",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 16
+      },
+      "revId": "a052447ad6f6e412dd0f1a6baeddb422c47d9625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
