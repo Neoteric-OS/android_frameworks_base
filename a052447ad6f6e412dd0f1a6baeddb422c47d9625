@@ -70,6 +70,30 @@
       "revId": "a052447ad6f6e412dd0f1a6baeddb422c47d9625",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0793949_872772ea",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-11-22T22:31:57Z",
+      "side": 1,
+      "message": "We\u0027re only using this within bluetooth, so I think it should be @hide unless we want to encourage others to use this as well. Unfortunately, there is no way to enforce that they do.",
+      "parentUuid": "afccc8fc_d776f566",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 16
+      },
+      "revId": "a052447ad6f6e412dd0f1a6baeddb422c47d9625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
