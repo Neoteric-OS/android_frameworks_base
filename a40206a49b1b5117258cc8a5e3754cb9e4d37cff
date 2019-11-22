@@ -22,6 +22,30 @@
       "revId": "a40206a49b1b5117258cc8a5e3754cb9e4d37cff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3234fb55_efca766b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1040443
+      },
+      "writtenOn": "2019-11-22T19:10:31Z",
+      "side": 1,
+      "message": "Yeah you are right, I think what hector meant here is \"plus internal branches (up to, but excluded, master), e.g. the various \"plus aosp\"\n\npropagation should stop at master by virtue of having used the right merged-in this time",
+      "parentUuid": "2ba990ec_33ea8080",
+      "range": {
+        "startLine": 32,
+        "startChar": 49,
+        "endLine": 32,
+        "endChar": 72
+      },
+      "revId": "a40206a49b1b5117258cc8a5e3754cb9e4d37cff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
