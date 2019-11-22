@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3626cc3f_ae1165e9",
+        "filename": "api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2019-11-22T00:49:44Z",
+      "side": 1,
+      "message": "It looks like they should be ordered alphabetically.",
+      "range": {
+        "startLine": 178,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 90
+      },
+      "revId": "3a613fe1760b9caaf23e3dea3a6e8b0d4d92d5d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
