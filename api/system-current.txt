@@ -6372,6 +6372,18 @@ package android.provider {
   }
 
   public static final class Settings.Global extends android.provider.Settings.NameValueTable {
+    method @NonNull public static String getBluetoothA2dpOptionalCodecsEnabledKey(@NonNull String);
+    method @NonNull public static String getBluetoothA2dpSinkPriorityKey(@NonNull String);
+    method @NonNull public static String getBluetoothA2dpSrcPriorityKey(@NonNull String);
+    method @NonNull public static String getBluetoothA2dpSupportsOptionalCodecsKey(@NonNull String);
+    method @NonNull public static String getBluetoothHeadsetPriorityKey(@NonNull String);
+    method @NonNull public static String getBluetoothHearingAidPriorityKey(@NonNull String);
+    method @NonNull public static String getBluetoothHidHostPriorityKey(@NonNull String);
+    method @NonNull public static String getBluetoothMapClientPriorityKey(@NonNull String);
+    method @NonNull public static String getBluetoothMapPriorityKey(@NonNull String);
+    method @NonNull public static String getBluetoothPanPriorityKey(@NonNull String);
+    method @NonNull public static String getBluetoothPbapClientPriorityKey(@NonNull String);
+    method @NonNull public static String getBluetoothSapPriorityKey(@NonNull String);
     method @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public static boolean putString(@NonNull android.content.ContentResolver, @NonNull String, @Nullable String, @Nullable String, boolean);
     method @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public static void resetToDefaults(@NonNull android.content.ContentResolver, @Nullable String);
     field public static final String APP_STANDBY_ENABLED = "app_standby_enabled";
