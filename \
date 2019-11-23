@@ -1,0 +1,15 @@
+Do not use hidden API XmlUtils.
+
+Make a local copy instead.
+
+Bug: 137202333
+Test: make
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch xmlutils
+# Your branch is up to date with 'aosp/master'.
+#
+# Changes to be committed:
+#	new file:   telephony/java/com/android/internal/telephony/util/XmlUtils.java
+#
