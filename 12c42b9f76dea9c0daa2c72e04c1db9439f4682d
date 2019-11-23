@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "531799f7_47c2f58a",
+        "filename": "telephony/java/com/android/internal/telephony/util/ArrayUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-11-23T23:56:41Z",
+      "side": 1,
+      "message": "Since this is specific to telephony, I\u0027d rather not include functions that we don\u0027t use anywhere.",
+      "revId": "12c42b9f76dea9c0daa2c72e04c1db9439f4682d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
