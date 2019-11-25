@@ -45,6 +45,8 @@ import java.lang.reflect.Modifier;
 import java.util.Objects;
 import java.util.logging.LogManager;
 
+import javax.net.ssl.HttpsURLConnection;
+
 /**
  * Main entry point for runtime initialization.  Not for
  * public consumption.
@@ -214,6 +216,16 @@ public class RuntimeInit {
          * with several customizations (extensions, overrides).
          */
         MimeMap.setDefaultSupplier(DefaultMimeMapFactory::create);
+
+        /*
+         * Example of installing a stricter hostname verifier.
+         * NB this Core Platform API is not available on Android 10 or earlier versions.
+         */
+        try {
+            HttpsURLConnection.installStrictHostnameVerifier(true);
+        } catch (AssertionError e) {
+            // Do something
+        }
     }
 
     @UnsupportedAppUsage
