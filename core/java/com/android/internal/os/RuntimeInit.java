@@ -45,6 +45,9 @@ import java.lang.reflect.Modifier;
 import java.util.Objects;
 import java.util.logging.LogManager;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+
 /**
  * Main entry point for runtime initialization.  Not for
  * public consumption.
@@ -214,6 +217,20 @@ public class RuntimeInit {
          * with several customizations (extensions, overrides).
          */
         MimeMap.setDefaultSupplier(DefaultMimeMapFactory::create);
+
+        /*
+         *  Install a strict hostname verifier (for example)
+         */
+        try {
+            HostnameVerifier hostnameVerifier = (HostnameVerifier)
+                Class.forName("com.android.okhttp.internal.tls.OkHostnameVerifier")
+                    .getField("STRICT_INSTANCE").get(null);
+            if (hostnameVerifier != null) {
+                HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
+            }
+        } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException e) {
+            // Do something
+        }
     }
 
     @UnsupportedAppUsage
