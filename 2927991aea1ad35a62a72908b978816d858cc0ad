@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee00eabf_8851e209",
+        "filename": "tools/aapt2/java/ProguardRules.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1133997
+      },
+      "writtenOn": "2019-11-25T10:35:47Z",
+      "side": 1,
+      "message": "nit: line length (here, below and other files)",
+      "range": {
+        "startLine": 73,
+        "startChar": 99,
+        "endLine": 73,
+        "endChar": 120
+      },
+      "revId": "2927991aea1ad35a62a72908b978816d858cc0ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6455a1a1_e7011b12",
+        "filename": "tools/aapt2/java/ProguardRules_test.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1133997
+      },
+      "writtenOn": "2019-11-25T10:35:47Z",
+      "side": 1,
+      "message": "Please add tests.\nSome tests will run when you build, some tests you can run by using master/out/host/linux.../aapt2_tests (I don\u0027t remember the full path).",
+      "range": {
+        "startLine": 33,
+        "startChar": 52,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "2927991aea1ad35a62a72908b978816d858cc0ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
