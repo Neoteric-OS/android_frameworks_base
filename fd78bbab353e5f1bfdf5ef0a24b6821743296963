@@ -22,6 +22,30 @@
       "revId": "fd78bbab353e5f1bfdf5ef0a24b6821743296963",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a7e23aa_ea634f2c",
+        "filename": "packages/Tethering/CleanSpec.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-25T02:37:23Z",
+      "side": 1,
+      "message": "This is just a example(First word is \"#\").",
+      "parentUuid": "710b93a2_6bdccc29",
+      "range": {
+        "startLine": 44,
+        "startChar": 55,
+        "endLine": 44,
+        "endChar": 68
+      },
+      "revId": "fd78bbab353e5f1bfdf5ef0a24b6821743296963",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
