@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "84ffd5e8_64434791",
+        "filename": "tools/aapt2/cmd/Link.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2019-11-25T16:54:08Z",
+      "side": 1,
+      "message": "line length here as well",
+      "range": {
+        "startLine": 1280,
+        "startChar": 86,
+        "endLine": 1280,
+        "endChar": 118
+      },
+      "revId": "2927991aea1ad35a62a72908b978816d858cc0ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee00eabf_8851e209",
         "filename": "tools/aapt2/java/ProguardRules.h",
         "patchSetId": 2
