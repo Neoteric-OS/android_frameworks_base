@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b07c7981_02c50b94",
+        "filename": "core/java/android/net/IpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2019-11-25T19:31:47Z",
+      "side": 1,
+      "message": "Ping on this comment. I recall there being compile time checks that enforce Parcelable methods are not hidden.\n\nSame with describeContents().",
+      "parentUuid": "4c802953_e030837f",
+      "range": {
+        "startLine": 190,
+        "startChar": 8,
+        "endLine": 190,
+        "endChar": 12
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66ac22b6_e2d256ab",
         "filename": "core/java/android/net/ProxyInfo.java",
         "patchSetId": 1
