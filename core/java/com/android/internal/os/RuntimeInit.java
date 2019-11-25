@@ -30,8 +30,10 @@ import android.os.SystemProperties;
 import android.os.Trace;
 import android.util.Log;
 import android.util.Slog;
+
 import com.android.internal.logging.AndroidConfig;
 import com.android.server.NetworkManagementSocketTagger;
+
 import dalvik.system.RuntimeHooks;
 import dalvik.system.VMRuntime;
 
@@ -42,6 +44,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Objects;
 import java.util.logging.LogManager;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Main entry point for runtime initialization.  Not for
@@ -230,6 +235,20 @@ public class RuntimeInit {
          * Install a time zone supplier that uses the Android persistent time zone system property.
          */
         RuntimeHooks.setTimeZoneIdSupplier(() -> SystemProperties.get("persist.sys.timezone"));
+
+        /*
+         *  Install a strict hostname verifier
+         */
+        try {
+            HostnameVerifier hostnameVerifier = (HostnameVerifier)
+                    Class.forName("com.android.okhttp.internal.tls.OkHostnameVerifier")
+                    .getField("STRICT_INSTANCE").get(null);
+            if (hostnameVerifier != null) {
+                HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
+            }
+        } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException e) {
+            // Do something
+        }
 
         /*
          * Sets handler for java.util.logging to use Android log facilities.
