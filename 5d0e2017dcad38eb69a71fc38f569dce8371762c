@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c905ec1_8772924e",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-25T08:22:46Z",
+      "side": 1,
+      "message": "IllegalStateException?",
+      "range": {
+        "startLine": 83,
+        "startChar": 22,
+        "endLine": 83,
+        "endChar": 46
+      },
+      "revId": "5d0e2017dcad38eb69a71fc38f569dce8371762c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a193b48_815afe97",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-25T08:22:46Z",
+      "side": 1,
+      "message": "ignoring the return type here?",
+      "range": {
+        "startLine": 122,
+        "startChar": 27,
+        "endLine": 122,
+        "endChar": 43
+      },
+      "revId": "5d0e2017dcad38eb69a71fc38f569dce8371762c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
