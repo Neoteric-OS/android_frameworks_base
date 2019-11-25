@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3c3b8b5_607d1f72",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-25T17:18:54Z",
+      "side": 1,
+      "message": "Is this just for testing? If so, add @VisibleForTesting\n\nIf not, why do we want this?",
+      "range": {
+        "startLine": 260,
+        "startChar": 9,
+        "endLine": 260,
+        "endChar": 21
+      },
+      "revId": "d2ef2bd3ab9639f0697422fa049eb539795b2498",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
