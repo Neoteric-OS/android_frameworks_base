@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "81b59e7a_d99c096a",
+        "filename": "core/java/android/net/IpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2019-11-26T18:08:23Z",
+      "side": 1,
+      "message": "Actually I just remembered I\u0027ve gotten lint robot warnings like this before: ag/c/platform/frameworks/base/+/9631340/7/api/system-current.txt#4873\n\nParcelable requires `void writeToParcel(Parcel, int)`; missing in android.net.wifi.WifiEnterpriseConfig",
+      "parentUuid": "2d07d5de_c32bd84e",
+      "range": {
+        "startLine": 190,
+        "startChar": 8,
+        "endLine": 190,
+        "endChar": 12
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66ac22b6_e2d256ab",
         "filename": "core/java/android/net/ProxyInfo.java",
         "patchSetId": 1
