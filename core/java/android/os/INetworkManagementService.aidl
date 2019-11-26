@@ -133,20 +133,17 @@ interface INetworkManagementService
     /**
      * Returns true if IP forwarding is enabled
      */
-    @UnsupportedAppUsage
     boolean getIpForwardingEnabled();
 
     /**
      * Enables/Disables IP Forwarding
      */
-    @UnsupportedAppUsage
     void setIpForwardingEnabled(boolean enabled);
 
     /**
      * Start tethering services with the specified dhcp server range
      * arg is a set of start end pairs defining the ranges.
      */
-    @UnsupportedAppUsage
     void startTethering(in String[] dhcpRanges);
 
     /**
@@ -160,31 +157,26 @@ interface INetworkManagementService
     /**
      * Stop currently running tethering services
      */
-    @UnsupportedAppUsage
     void stopTethering();
 
     /**
      * Returns true if tethering services are started
      */
-    @UnsupportedAppUsage
     boolean isTetheringStarted();
 
     /**
      * Tethers the specified interface
      */
-    @UnsupportedAppUsage
     void tetherInterface(String iface);
 
     /**
      * Untethers the specified interface
      */
-    @UnsupportedAppUsage
     void untetherInterface(String iface);
 
     /**
      * Returns a list of currently tethered interfaces
      */
-    @UnsupportedAppUsage
     String[] listTetheredInterfaces();
 
     /**
@@ -214,13 +206,11 @@ interface INetworkManagementService
      *  The address and netmask of the external interface is used for
      *  the NAT'ed network.
      */
-    @UnsupportedAppUsage
     void enableNat(String internalInterface, String externalInterface);
 
     /**
      *  Disables Network Address Translation between two interfaces.
      */
-    @UnsupportedAppUsage
     void disableNat(String internalInterface, String externalInterface);
 
     /**
