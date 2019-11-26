@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "2d07d5de_c32bd84e",
+        "filename": "core/java/android/net/IpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2019-11-26T18:01:17Z",
+      "side": 1,
+      "message": "Ack. Thanks for clarifying.",
+      "parentUuid": "fdec5776_6c6065ee",
+      "range": {
+        "startLine": 190,
+        "startChar": 8,
+        "endLine": 190,
+        "endChar": 12
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66ac22b6_e2d256ab",
         "filename": "core/java/android/net/ProxyInfo.java",
         "patchSetId": 1
