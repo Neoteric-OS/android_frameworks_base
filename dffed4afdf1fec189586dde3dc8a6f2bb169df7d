@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ef7fc7d_6b7888dd",
+        "filename": "TEST_MAPPING",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1088076
+      },
+      "writtenOn": "2019-11-26T17:26:41Z",
+      "side": 1,
+      "message": "same question as the other CL",
+      "revId": "dffed4afdf1fec189586dde3dc8a6f2bb169df7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
