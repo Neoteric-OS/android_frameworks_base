@@ -455,6 +455,9 @@
         android:name="com.google.android.systemui.permission.WIRELESS_CHARGER_STATUS"
         android:protectionLevel="system|signature" />
 
+    <!-- DataSwitch tile -->
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
+
     <application
         android:name=".application.impl.SystemUIApplicationImpl"
         android:persistent="true"
