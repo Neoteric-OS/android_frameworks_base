@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b4f1d7_9ddd807e",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T12:08:25Z",
+      "side": 1,
+      "message": "This makes this method/object useless ; can we either remove this method, or make it abstract ? As a worse alternative we can also make it throw, but I\u0027d prefer it made abstract or removed",
+      "range": {
+        "startLine": 148,
+        "startChar": 20,
+        "endLine": 148,
+        "endChar": 34
+      },
+      "revId": "211b7a4d77d8000956099101899d209f73d54989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82e43b0_68123bbd",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringDependencies.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T12:08:25Z",
+      "side": 1,
+      "message": "Same comment : if this method must never be called directly but only in subclasses, let\u0027s make it abstract or remove it.",
+      "range": {
+        "startLine": 70,
+        "startChar": 15,
+        "endLine": 70,
+        "endChar": 19
+      },
+      "revId": "211b7a4d77d8000956099101899d209f73d54989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc0cf81_7ff50786",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T12:08:25Z",
+      "side": 1,
+      "message": "Maybe we can remove this method ? (in a followup is fine)",
+      "range": {
+        "startLine": 214,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 5
+      },
+      "revId": "211b7a4d77d8000956099101899d209f73d54989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e45484_84b5f64d",
+        "filename": "services/net/java/android/net/NetworkStackClient.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T12:08:25Z",
+      "side": 1,
+      "message": "s/ig/ing",
+      "range": {
+        "startLine": 206,
+        "startChar": 46,
+        "endLine": 206,
+        "endChar": 48
+      },
+      "revId": "211b7a4d77d8000956099101899d209f73d54989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
