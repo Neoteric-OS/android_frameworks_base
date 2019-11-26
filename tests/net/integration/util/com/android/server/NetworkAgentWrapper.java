@@ -237,6 +237,18 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
         mNetworkAgent.sendLinkProperties(lp);
     }
 
+    public void setState(int state) {
+        mNetworkAgent.setState(state);
+    }
+
+    public void setSubtype(int subtype, String subtypeName) {
+        mNetworkAgent.setSubtype(subtype, subtypeName);
+    }
+
+    public void setApnName(String apn) {
+        mNetworkAgent.setApnName(apn);
+    }
+
     public void setStartKeepaliveEvent(int reason) {
         mStartKeepaliveError = reason;
     }

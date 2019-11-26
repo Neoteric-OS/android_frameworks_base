@@ -624,6 +624,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @VisibleForTesting
     final MultipathPolicyTracker mMultipathPolicyTracker;
 
+    private static final SparseArray<DetailedState> STATE_MAP = new SparseArray<>();
+    static {
+        STATE_MAP.put(NetworkAgent.STATE_CONNECTING, DetailedState.CONNECTING);
+        STATE_MAP.put(NetworkAgent.STATE_CONNECTED, DetailedState.CONNECTED);
+        STATE_MAP.put(NetworkAgent.STATE_SUSPENDED, DetailedState.SUSPENDED);
+        STATE_MAP.put(NetworkAgent.STATE_DISCONNECTED, DetailedState.DISCONNECTED);
+    }
+
     /**
      * Implements support for the legacy "one network per network type" model.
      *
@@ -2632,6 +2640,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
                 case NetworkAgent.EVENT_SOCKET_KEEPALIVE: {
                     mKeepaliveTracker.handleEventSocketKeepalive(nai, msg);
+                    break;
+                }
+                case NetworkAgent.EVENT_NETWORK_STATE_CHANGED: {
+                    int state = msg.arg1;
+                    nai.networkInfo.setDetailedState(STATE_MAP.get(state), null, null);
+                    updateNetworkInfo(nai, nai.networkInfo);
+                    break;
+                }
+                case NetworkAgent.EVENT_NETWORK_SUBTYPE_CHANGED: {
+                    int subtype = msg.arg1;
+                    String subtypeName = (String) msg.obj;
+                    nai.networkInfo.setSubtype(subtype, subtypeName);
+                    updateNetworkInfo(nai, nai.networkInfo);
+                    break;
+                }
+                case NetworkAgent.EVENT_NETWORK_SET_APN_NAME: {
+                    String apn = (String) msg.obj;
+                    nai.networkInfo.setExtraInfo(apn);
+                    updateNetworkInfo(nai, nai.networkInfo);
                     break;
                 }
             }

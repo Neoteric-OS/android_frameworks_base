@@ -43,6 +43,10 @@ import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_HTTPS;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_PRIVDNS;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_PARTIAL;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_VALID;
+import static android.net.NetworkAgent.STATE_CONNECTED;
+import static android.net.NetworkAgent.STATE_CONNECTING;
+import static android.net.NetworkAgent.STATE_DISCONNECTED;
+import static android.net.NetworkAgent.STATE_SUSPENDED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CBS;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
@@ -5945,6 +5949,59 @@ public class ConnectivityServiceTest {
         mCm.unregisterNetworkCallback(networkCallback);
     }
 
+    @Test
+    public void testUpdateNetworkInfoDetail() throws Exception {
+        final String testApnName = "test.apn";
+        final int testSubtype = 207;
+        final String testSubtypeName = "SUPER-MOBILE";
+
+        // Bring up the mobile network.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+
+        // Update subtype and subtype name.
+        mCellNetworkAgent.setSubtype(testSubtype, testSubtypeName);
+        waitForIdle();
+        NetworkInfo ni = mCm.getActiveNetworkInfo();
+        // Check subtype and subtype name are updated successully.
+        assertEquals(testSubtype, ni.getSubtype());
+        assertEquals(testSubtypeName, ni.getSubtypeName());
+
+        // Update apn name.
+        mCellNetworkAgent.setApnName(testApnName);
+        waitForIdle();
+        ni = mCm.getActiveNetworkInfo();
+        // Check apn is updated successfully.
+        assertEquals(testApnName, ni.getExtraInfo());
+
+        mCellNetworkAgent.setState(STATE_CONNECTING);
+        waitForIdle();
+        ni = mCm.getActiveNetworkInfo();
+        // Check state is updated successully.
+        assertEquals(NetworkInfo.DetailedState.CONNECTING, ni.getDetailedState());
+
+        mCellNetworkAgent.setState(STATE_CONNECTED);
+        waitForIdle();
+        ni = mCm.getActiveNetworkInfo();
+        // Check state is updated successully.
+        assertEquals(NetworkInfo.DetailedState.CONNECTED, ni.getDetailedState());
+
+        mCellNetworkAgent.setState(STATE_SUSPENDED);
+        waitForIdle();
+        ni = mCm.getActiveNetworkInfo();
+        // Check state is updated successully.
+        assertEquals(NetworkInfo.DetailedState.SUSPENDED, ni.getDetailedState());
+
+        mCellNetworkAgent.setState(STATE_DISCONNECTED);
+        waitForIdle();
+        // Get network info by network type because it's not an active network.
+        ni = mCm.getNetworkInfo(ni.getType());
+        // Check state is updated successully.
+        assertEquals(NetworkInfo.DetailedState.DISCONNECTED, ni.getDetailedState());
+
+        mCellNetworkAgent.disconnect();
+    }
+
     private void verifyTcpBufferSizeChange(String tcpBufferSizes) throws Exception {
         String[] values = tcpBufferSizes.split(",");
         String rmemValues = String.join(" ", values[0], values[1], values[2]);
@@ -6215,7 +6272,6 @@ public class ConnectivityServiceTest {
         wifiLp.setWakeOnLanSupported(true);
         assertEquals(wifiLp, mService.getActiveLinkProperties());
     }
-
 
     private TestNetworkAgentWrapper establishVpn(LinkProperties lp, int establishingUid,
             Set<UidRange> vpnRange) throws Exception {
