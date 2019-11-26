@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d5caf3_281b6c19",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T08:06:16Z",
+      "side": 1,
+      "message": "PACKAGE_USAGE_STATS is for reading usage stats, I don\u0027t think it is appropriate here.\nMaybe UPDATE_DEVICE_STATS ?",
+      "range": {
+        "startLine": 1206,
+        "startChar": 68,
+        "endLine": 1206,
+        "endChar": 87
+      },
+      "revId": "40d6cf2c97e90c9e1f6b8f4b6822df2c770af252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "068d73ce_f8fc2a7b",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsManagerInternal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T08:06:16Z",
+      "side": 1,
+      "message": "Maybe add a short explanation on how this will warn all providers for the given interface (at first I thought this forced one iface \u003d\u003d one provider until I read the associated code)",
+      "range": {
+        "startLine": 39,
+        "startChar": 76,
+        "endLine": 39,
+        "endChar": 77
+      },
+      "revId": "40d6cf2c97e90c9e1f6b8f4b6822df2c770af252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456953f6_35d63f2c",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1262,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T08:06:16Z",
+      "side": 1,
+      "message": "Just to make sure I understand : this code will eventually be removed right ?",
+      "range": {
+        "startLine": 1258,
+        "startChar": 0,
+        "endLine": 1262,
+        "endChar": 53
+      },
+      "revId": "40d6cf2c97e90c9e1f6b8f4b6822df2c770af252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ab43957_625418bc",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T08:06:16Z",
+      "side": 1,
+      "message": "Do these two cover all stats ? Do we have any such architectural guarantee ?",
+      "range": {
+        "startLine": 1378,
+        "startChar": 48,
+        "endLine": 1378,
+        "endChar": 63
+      },
+      "revId": "40d6cf2c97e90c9e1f6b8f4b6822df2c770af252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23bb9580_f0f19a03",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1779,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T08:06:16Z",
+      "side": 1,
+      "message": "So the death recipient is the only way of unregistering ? I fear this may not be enough because :\n• the developer doesn\u0027t have control over when the object is actually garbage collected\n• there is a binder loop. The system has a ref to a proxy for INetworkStatsProvider and the provider has a ref to the callback.",
+      "range": {
+        "startLine": 1777,
+        "startChar": 63,
+        "endLine": 1779,
+        "endChar": 6
+      },
+      "revId": "40d6cf2c97e90c9e1f6b8f4b6822df2c770af252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8c4e09_b190f81d",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1809,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T08:06:16Z",
+      "side": 1,
+      "message": "space\n(also final)",
+      "range": {
+        "startLine": 1809,
+        "startChar": 48,
+        "endLine": 1809,
+        "endChar": 49
+      },
+      "revId": "40d6cf2c97e90c9e1f6b8f4b6822df2c770af252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232b0aa1_fcbc021c",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T08:06:16Z",
+      "side": 1,
+      "message": "private ? It\u0027s fairly dangerous to let lock objects escape",
+      "range": {
+        "startLine": 1818,
+        "startChar": 23,
+        "endLine": 1818,
+        "endChar": 29
+      },
+      "revId": "40d6cf2c97e90c9e1f6b8f4b6822df2c770af252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e4662d_effb5189",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1845,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T08:06:16Z",
+      "side": 1,
+      "message": "Question on the API : since when are these stats ? If they are since last time, shouldn\u0027t we combine them when we receive and clear them when we read from them ? If they are from the beginning of time, shouldn\u0027t we subtract the last value when we read from them ?",
+      "range": {
+        "startLine": 1845,
+        "startChar": 16,
+        "endLine": 1845,
+        "endChar": 36
+      },
+      "revId": "40d6cf2c97e90c9e1f6b8f4b6822df2c770af252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce71c5fa_2bf0d6e3",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1851,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T08:06:16Z",
+      "side": 1,
+      "message": "Consider\n• Making mAlertObserver final\n• Passing it to this class and make this class static\n\nThe first one is more important than the second",
+      "range": {
+        "startLine": 1851,
+        "startChar": 12,
+        "endLine": 1851,
+        "endChar": 26
+      },
+      "revId": "40d6cf2c97e90c9e1f6b8f4b6822df2c770af252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
