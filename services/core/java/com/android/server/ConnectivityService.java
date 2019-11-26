@@ -87,6 +87,7 @@ import android.net.MatchAllNetworkSpecifier;
 import android.net.NattSocketKeepalive;
 import android.net.Network;
 import android.net.NetworkAgent;
+import android.net.NetworkAgent.State;
 import android.net.NetworkCapabilities;
 import android.net.NetworkConfig;
 import android.net.NetworkFactory;
@@ -214,6 +215,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.ConcurrentModificationException;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -628,6 +630,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @VisibleForTesting
     final MultipathPolicyTracker mMultipathPolicyTracker;
 
+    private static final EnumMap<State, DetailedState> STATE_MAP =
+            new EnumMap<State, DetailedState>(State.class);
+
+    static {
+        STATE_MAP.put(State.IDLE, DetailedState.IDLE);
+        STATE_MAP.put(State.CONNECTING, DetailedState.CONNECTING);
+        STATE_MAP.put(State.OBTAINING_IPADDR, DetailedState.OBTAINING_IPADDR);
+        STATE_MAP.put(State.CONNECTED, DetailedState.CONNECTED);
+        STATE_MAP.put(State.SUSPENDED, DetailedState.SUSPENDED);
+        STATE_MAP.put(State.DISCONNECTING, DetailedState.DISCONNECTING);
+        STATE_MAP.put(State.DISCONNECTED, DetailedState.DISCONNECTED);
+        STATE_MAP.put(State.FAILED, DetailedState.FAILED);
+    }
     /**
      * Implements support for the legacy "one network per network type" model.
      *
@@ -2666,6 +2681,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
                 case NetworkAgent.EVENT_SOCKET_KEEPALIVE: {
                     mKeepaliveTracker.handleEventSocketKeepalive(nai, msg);
+                    break;
+                }
+                case NetworkAgent.EVENT_NETWORK_STATE_CHANGED: {
+                    State state = (State) msg.obj;
+                    nai.networkInfo.setDetailedState(STATE_MAP.get(state), null, null);
+                    updateNetworkInfo(nai, nai.networkInfo);
+                    break;
+                }
+                case NetworkAgent.EVENT_NETWORK_SUBTYPE_CHANGED: {
+                    int subtype = (int) msg.arg1;
+                    String subtypeName = (String) msg.obj;
+                    nai.networkInfo.setSubtype(subtype, subtypeName);
+                    updateNetworkInfo(nai, nai.networkInfo);
                     break;
                 }
             }

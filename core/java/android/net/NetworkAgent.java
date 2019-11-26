@@ -213,6 +213,43 @@ public abstract class NetworkAgent extends Handler {
      */
     public static final int CMD_REMOVE_KEEPALIVE_PACKET_FILTER = BASE + 17;
 
+    /**
+     * Sent by the NetworkAgent to ConnectivityService to pass the current
+     * network state.
+     * obj = network state
+     */
+    public static final int EVENT_NETWORK_STATE_CHANGED = BASE + 18;
+
+    /**
+     * Sent by the NetworkAgent to ConnectivityService to pass the current
+     * network subtype and subtype name.
+     * arg1 = subtype
+     * obj = subtype name
+     */
+    public static final int EVENT_NETWORK_SUBTYPE_CHANGED = BASE + 19;
+
+    /**
+     * The state of a network connection
+     */
+    public enum State {
+        /** Ready to start data connection setup. */
+        IDLE,
+        /** Currently setting up data connection. */
+        CONNECTING,
+        /** Awaiting response from DHCP server in order to assign IP address information. */
+        OBTAINING_IPADDR,
+        /** IP traffic should be available. */
+        CONNECTED,
+        /** IP traffic is suspended */
+        SUSPENDED,
+        /** Currently tearing down data connection. */
+        DISCONNECTING,
+        /** IP traffic not available. */
+        DISCONNECTED,
+        /** Attempt to connect failed. */
+        FAILED,
+    }
+
     // TODO : remove these two constructors. They are a stopgap measure to help sheperding a number
     // of dependent changes that would conflict throughout the automerger graph. Having these
     // temporarily helps with the process of going through with all these dependent changes across
@@ -429,6 +466,20 @@ public abstract class NetworkAgent extends Handler {
      */
     public void updateScore(@NonNull NetworkScore ns) {
         queueOrSendMessage(EVENT_NETWORK_SCORE_CHANGED, new NetworkScore(ns));
+    }
+
+    /**
+     * Called by the bearer code when it has a new state for this network.
+     */
+    public void setState(State state) {
+        queueOrSendMessage(EVENT_NETWORK_STATE_CHANGED, state);
+    }
+
+    /**
+     * Called by the bearer code when it has a new subtype and subtype name for this network.
+     */
+    public void setSubtype(int subtype, String subtypeName) {
+        queueOrSendMessage(EVENT_NETWORK_SUBTYPE_CHANGED, subtype, 0 /* unused */, subtypeName);
     }
 
     /**
