@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "fdec5776_6c6065ee",
+        "filename": "core/java/android/net/IpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T03:14:43Z",
+      "side": 1,
+      "message": "We checked that this works, and that this is what other parcelables in the framework do. Also, the API council rules explicitly ask for CREATOR to be public (like the latest patchset does), which kind of implies the other methods don\u0027t have to. https://g3doc.corp.google.com/company/teams/android-api-council/guidelines.md?cl\u003dhead#3-parcelable-implementations-must-have-public-creator-field",
+      "parentUuid": "b07c7981_02c50b94",
+      "range": {
+        "startLine": 190,
+        "startChar": 8,
+        "endLine": 190,
+        "endChar": 12
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66ac22b6_e2d256ab",
         "filename": "core/java/android/net/ProxyInfo.java",
         "patchSetId": 1
