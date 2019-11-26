@@ -55,6 +55,32 @@ public abstract class ArrayUtils {
         }
     }
 
+    /**
+     * Fill destination array with subset of source array.
+     * Length will be limited to the bounds of source and destination array.
+     * The length actually copied is returend.
+     * @param dst is the destination array.
+     * @param dstOffset is the offset in the destination array.
+     * @param src is the source array
+     * @param srcOffset is the offset in the source array.
+     * @param length is the length to be copied from source to destination array.
+     * @return The length actually copied from source array.
+     */
+    public static int fill(byte[] dst, int dstOffset, byte[] src, int srcOffset, int length) {
+        if (dst == null || src == null || length == 0
+                || dstOffset >= dst.length || srcOffset >= src.length) {
+            return 0;
+        }
+        if (length > dst.length - dstOffset) {
+            length = dst.length - dstOffset;
+        }
+        if (length > src.length - srcOffset) {
+            length = src.length - srcOffset;
+        }
+        System.arraycopy(src, srcOffset, dst, dstOffset, length);
+        return length;
+    }
+
     public static byte[] subarray(byte[] arr, int offset, int len) {
         if (len == 0) {
             return EmptyArray.BYTE;
