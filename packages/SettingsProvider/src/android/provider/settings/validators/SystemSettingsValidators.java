@@ -223,5 +223,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.EDGE_LIGHT_COLOR_MODE, new InclusiveIntegerRangeValidator(0, 3));
         VALIDATORS.put(System.EDGE_LIGHT_CUSTOM_COLOR, NON_EMPTY_HEX_COLOR_VALIDATOR);
         VALIDATORS.put(System.SHOW_FOURG_ICON, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.USE_OLD_MOBILETYPE, BOOLEAN_VALIDATOR);
     }
 }
