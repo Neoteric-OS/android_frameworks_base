@@ -335,6 +335,8 @@ public interface StatusBarIconController {
 
         protected ArrayList<String> mBlockList = new ArrayList<>();
 
+        private boolean mIsOldSignalStyle = false;
+
         public IconManager(
                 ViewGroup group,
                 StatusBarLocation location,
@@ -453,6 +455,7 @@ public interface StatusBarIconController {
             StatusBarMobileView view = onCreateStatusBarMobileView(state.subId, slot);
             view.applyMobileState(state);
             mGroup.addView(view, index, onCreateLayoutParams());
+            view.updateDisplayType(mIsOldSignalStyle);
 
             if (mIsInDemoMode) {
                 Context mobileContext = mMobileContextProvider
@@ -639,6 +642,19 @@ public interface StatusBarIconController {
 
         protected DemoStatusIcons createDemoStatusIcons() {
             return new DemoStatusIcons((LinearLayout) mGroup, mIconSize);
+        }
+
+        protected void setMobileSignalStyle(boolean isOldSignalStyle) {
+            mIsOldSignalStyle = isOldSignalStyle;
+        }
+
+        protected void updateMobileIconStyle() {
+            for (int i = 0; i < mGroup.getChildCount(); i++) {
+                final View child = mGroup.getChildAt(i);
+                if (child instanceof StatusBarMobileView) {
+                    ((StatusBarMobileView) child).updateDisplayType(mIsOldSignalStyle);
+                }
+            }
         }
     }
 }
