@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63439e99_c1800682",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T03:25:01Z",
+      "side": 1,
+      "message": "Nit: can you add a comment to explain why each flag is necessary ? Can be in a later commit.",
+      "range": {
+        "startLine": 74,
+        "startChar": 3,
+        "endLine": 74,
+        "endChar": 55
+      },
+      "revId": "37ca9297d852d660dd3bf0e2160268c9c448da37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
