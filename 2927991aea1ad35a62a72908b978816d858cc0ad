@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2109f859_c331b74e",
+        "filename": "tools/aapt2/cmd/Link.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 1566513
+      },
+      "writtenOn": "2019-11-27T01:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84ffd5e8_64434791",
+      "range": {
+        "startLine": 1280,
+        "startChar": 86,
+        "endLine": 1280,
+        "endChar": 118
+      },
+      "revId": "2927991aea1ad35a62a72908b978816d858cc0ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee00eabf_8851e209",
         "filename": "tools/aapt2/java/ProguardRules.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "2927991aea1ad35a62a72908b978816d858cc0ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be032ff8_0ffefa93",
+        "filename": "tools/aapt2/java/ProguardRules.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1566513
+      },
+      "writtenOn": "2019-11-27T01:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee00eabf_8851e209",
+      "range": {
+        "startLine": 73,
+        "startChar": 99,
+        "endLine": 73,
+        "endChar": 120
+      },
+      "revId": "2927991aea1ad35a62a72908b978816d858cc0ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
