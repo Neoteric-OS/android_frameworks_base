@@ -286,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "c5798c6e_f6f03e19",
+        "filename": "core/java/android/net/IpConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-27T13:19:57Z",
+      "side": 1,
+      "message": "Also thanks a lot David for finding this !",
+      "parentUuid": "820e7bee_93196bad",
+      "range": {
+        "startLine": 190,
+        "startChar": 8,
+        "endLine": 190,
+        "endChar": 12
+      },
+      "revId": "b3088e39047239c6bf0d208447c262c6aa4b0d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66ac22b6_e2d256ab",
         "filename": "core/java/android/net/ProxyInfo.java",
         "patchSetId": 1
