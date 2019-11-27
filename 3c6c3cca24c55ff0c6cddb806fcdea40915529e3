@@ -70,6 +70,29 @@
       "revId": "3c6c3cca24c55ff0c6cddb806fcdea40915529e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf1a126_d80fa9eb",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2433,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-11-27T15:49:45Z",
+      "side": 1,
+      "message": "Agree this is confusing.  I know the standards just call it content ids.  but I think we should be explicit here.\n\nCOLUMN_CONTENT_GLOBAL_UNIQIUE_ID\u003d \"content_guid\"\n\nI think WatchedPrograms.COLUMN_CONTENT_GLOBAL_UNIQIUE_ID should be included because channel data can be updated or deleted after the event.  WatchedPrograms should contain a snapshot of relevant data.\n\nPlease update relevant entries to COLUMN_CONTENT_GLOBAL_UNIQIUE_ID\u003d \"content_guid\".",
+      "range": {
+        "startLine": 2433,
+        "startChar": 35,
+        "endLine": 2433,
+        "endChar": 52
+      },
+      "revId": "3c6c3cca24c55ff0c6cddb806fcdea40915529e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
