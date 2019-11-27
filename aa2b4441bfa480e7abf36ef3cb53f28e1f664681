@@ -34,6 +34,24 @@
       "revId": "aa2b4441bfa480e7abf36ef3cb53f28e1f664681",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aad395d_4de42c4f",
+        "filename": "telephony/java/com/android/internal/telephony/TelephonyIntents.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-11-27T06:21:18Z",
+      "side": 1,
+      "message": "Is it a privileged app? If yes, you can make this a system api. If not, then this needs to be public. Either way it needs to be either system or public for Contacts app to be able to access it (after mainline changes are done).",
+      "parentUuid": "6d7e0994_7b6afea1",
+      "revId": "aa2b4441bfa480e7abf36ef3cb53f28e1f664681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
