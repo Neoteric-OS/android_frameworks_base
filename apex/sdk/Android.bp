@@ -1,0 +1,13 @@
+
+apex {
+    name: "com.android.sdk",
+    manifest: "manifest.json",
+    key: "com.android.sdk.key",
+    // TODO: certificate
+}
+
+apex_key {
+    name: "com.android.sdk.key",
+    public_key: "com.android.sdk.avbpubkey",
+    private_key: "com.android.sdk.pem",
+}
