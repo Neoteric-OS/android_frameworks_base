@@ -18,6 +18,8 @@ package com.android.server.compat;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
@@ -31,6 +33,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 
 import com.android.internal.compat.CompatibilityChangeConfig;
+import com.android.internal.compat.IAndroidBuildClassifier;
+import com.android.internal.compat.IOverrideValidator;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -50,6 +54,12 @@ public class PlatformCompatTest {
     private PackageManager mPackageManager;
     @Mock
     CompatChange.ChangeListener mListener1, mListener2;
+    CompatConfig mCompatConfig;
+    @Mock
+    IAndroidBuildClassifier mBuildClassifier;
+    @Mock
+    IOverrideValidator mOverrideValidator;
+
 
 
     @Before
@@ -57,12 +67,15 @@ public class PlatformCompatTest {
         when(mContext.getPackageManager()).thenReturn(mPackageManager);
         when(mPackageManager.getPackageUid(eq(PACKAGE_NAME), eq(0))).thenThrow(
                 new PackageManager.NameNotFoundException());
-        CompatConfig.get().clearChanges();
+        mCompatConfig = new CompatConfig();
+        // Allow any override.
+        when(mOverrideValidator.allowOverride(anyLong(), anyString())).thenReturn(true);
     }
 
     @Test
     public void testRegisterListenerToSameIdThrows() {
-        PlatformCompat pc = new PlatformCompat(mContext);
+        PlatformCompat pc = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier,
+                                    mOverrideValidator);
 
         // Registering a listener to change 1 is successful.
         pc.registerListener(1, mListener1);
@@ -74,7 +87,8 @@ public class PlatformCompatTest {
 
     @Test
     public void testRegisterListenerReturn() {
-        PlatformCompat pc = new PlatformCompat(mContext);
+        PlatformCompat pc = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier,
+                                    mOverrideValidator);
 
         pc.setOverrides(
                 new CompatibilityChangeConfig(
@@ -89,7 +103,8 @@ public class PlatformCompatTest {
 
     @Test
     public void testListenerCalledOnSetOverrides() {
-        PlatformCompat pc = new PlatformCompat(mContext);
+        PlatformCompat pc = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier,
+                                    mOverrideValidator);
 
         pc.registerListener(1, mListener1);
         pc.registerListener(2, mListener1);
@@ -104,7 +119,8 @@ public class PlatformCompatTest {
 
     @Test
     public void testListenerNotCalledOnWrongPackage() {
-        PlatformCompat pc = new PlatformCompat(mContext);
+        PlatformCompat pc = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier,
+                                    mOverrideValidator);
 
         pc.registerListener(1, mListener1);
         pc.registerListener(2, mListener1);
@@ -119,7 +135,8 @@ public class PlatformCompatTest {
 
     @Test
     public void testListenerCalledOnSetOverridesTwoListeners() {
-        PlatformCompat pc = new PlatformCompat(mContext);
+        PlatformCompat pc = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier,
+                                    mOverrideValidator);
         pc.registerListener(1, mListener1);
 
         final ImmutableSet<Long> enabled = ImmutableSet.of(1L);
@@ -149,7 +166,8 @@ public class PlatformCompatTest {
 
     @Test
     public void testListenerCalledOnSetOverridesForTest() {
-        PlatformCompat pc = new PlatformCompat(mContext);
+        PlatformCompat pc = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier,
+                                    mOverrideValidator);
 
         pc.registerListener(1, mListener1);
         pc.registerListener(2, mListener1);
@@ -164,7 +182,8 @@ public class PlatformCompatTest {
 
     @Test
     public void testListenerCalledOnSetOverridesTwoListenersForTest() {
-        PlatformCompat pc = new PlatformCompat(mContext);
+        PlatformCompat pc = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier,
+                                    mOverrideValidator);
         pc.registerListener(1, mListener1);
 
         final ImmutableSet<Long> enabled = ImmutableSet.of(1L);
@@ -193,7 +212,8 @@ public class PlatformCompatTest {
 
     @Test
     public void testListenerCalledOnClearOverrides() {
-        PlatformCompat pc = new PlatformCompat(mContext);
+        PlatformCompat pc = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier,
+                                    mOverrideValidator);
 
         pc.registerListener(1, mListener1);
         pc.registerListener(2, mListener2);
@@ -215,7 +235,8 @@ public class PlatformCompatTest {
 
     @Test
     public void testListenerCalledOnClearOverridesMultipleOverrides() {
-        PlatformCompat pc = new PlatformCompat(mContext);
+        PlatformCompat pc = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier,
+                                    mOverrideValidator);
 
         pc.registerListener(1, mListener1);
         pc.registerListener(2, mListener2);
@@ -237,7 +258,8 @@ public class PlatformCompatTest {
 
     @Test
     public void testListenerCalledOnClearOverrideExists() {
-        PlatformCompat pc = new PlatformCompat(mContext);
+        PlatformCompat pc = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier,
+                                    mOverrideValidator);
 
         pc.registerListener(1, mListener1);
         pc.registerListener(2, mListener2);
@@ -259,7 +281,8 @@ public class PlatformCompatTest {
 
     @Test
     public void testListenerCalledOnClearOverrideDoesntExist() {
-        PlatformCompat pc = new PlatformCompat(mContext);
+        PlatformCompat pc = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier,
+                                    mOverrideValidator);
 
         pc.registerListener(1, mListener1);
 

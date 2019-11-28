@@ -18,15 +18,23 @@ package com.android.server.compat;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+
 import android.content.pm.ApplicationInfo;
 
 import androidx.test.runner.AndroidJUnit4;
 
 import com.android.compat.annotation.Change;
 import com.android.compat.annotation.XmlWriter;
+import com.android.internal.compat.IOverrideValidator;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,6 +43,9 @@ import java.util.UUID;
 
 @RunWith(AndroidJUnit4.class)
 public class CompatConfigTest {
+
+    @Mock
+    private IOverrideValidator mAlwaysValid;
 
     private ApplicationInfo makeAppInfo(String pName, int targetSdkVersion) {
         ApplicationInfo ai = new ApplicationInfo();
@@ -62,6 +73,12 @@ public class CompatConfigTest {
             throw new RuntimeException(
                     "Encountered an error while writing compat config file", e);
         }
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        when(mAlwaysValid.allowOverride(anyLong(), anyString())).thenReturn(true);
     }
 
     @Test
@@ -121,7 +138,7 @@ public class CompatConfigTest {
     public void testPackageOverrideEnabled() {
         CompatConfig pc = new CompatConfig();
         pc.addChange(new CompatChange(1234L, "MY_CHANGE", -1, true, null)); // disabled
-        pc.addOverride(1234L, "com.some.package", true);
+        pc.addOverride(1234L, "com.some.package", true, mAlwaysValid);
         assertThat(pc.isChangeEnabled(1234L, makeAppInfo("com.some.package", 2))).isTrue();
         assertThat(pc.isChangeEnabled(1234L, makeAppInfo("com.other.package", 2))).isFalse();
     }
@@ -130,7 +147,7 @@ public class CompatConfigTest {
     public void testPackageOverrideDisabled() {
         CompatConfig pc = new CompatConfig();
         pc.addChange(new CompatChange(1234L, "MY_CHANGE", -1, false, null));
-        pc.addOverride(1234L, "com.some.package", false);
+        pc.addOverride(1234L, "com.some.package", false, mAlwaysValid);
         assertThat(pc.isChangeEnabled(1234L, makeAppInfo("com.some.package", 2))).isFalse();
         assertThat(pc.isChangeEnabled(1234L, makeAppInfo("com.other.package", 2))).isTrue();
     }
@@ -138,7 +155,7 @@ public class CompatConfigTest {
     @Test
     public void testPackageOverrideUnknownPackage() {
         CompatConfig pc = new CompatConfig();
-        pc.addOverride(1234L, "com.some.package", false);
+        pc.addOverride(1234L, "com.some.package", false, mAlwaysValid);
         assertThat(pc.isChangeEnabled(1234L, makeAppInfo("com.some.package", 2))).isFalse();
         assertThat(pc.isChangeEnabled(1234L, makeAppInfo("com.other.package", 2))).isTrue();
     }
@@ -153,8 +170,8 @@ public class CompatConfigTest {
     public void testRemovePackageOverride() {
         CompatConfig pc = new CompatConfig();
         pc.addChange(new CompatChange(1234L, "MY_CHANGE", -1, false, null));
-        pc.addOverride(1234L, "com.some.package", false);
-        pc.removeOverride(1234L, "com.some.package");
+        pc.addOverride(1234L, "com.some.package", false, mAlwaysValid);
+        pc.removeOverride(1234L, "com.some.package", mAlwaysValid);
         assertThat(pc.isChangeEnabled(1234L, makeAppInfo("com.some.package", 2))).isTrue();
     }
 
