@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06bf38bc_98f744b6",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-11-28T03:58:50Z",
+      "side": 1,
+      "message": "should we also collapse AUTO_CONNECT into allowed?",
+      "range": {
+        "startLine": 458,
+        "startChar": 12,
+        "endLine": 460,
+        "endChar": 22
+      },
+      "revId": "bf662dc37b0281392ec95ea96cc694e9ea1a6e8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1f3e33_b080a3be",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-11-28T03:58:50Z",
+      "side": 1,
+      "message": "shared conversion logic helper too?",
+      "range": {
+        "startLine": 519,
+        "startChar": 8,
+        "endLine": 530,
+        "endChar": 51
+      },
+      "revId": "bf662dc37b0281392ec95ea96cc694e9ea1a6e8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50045216_25ca214d",
+        "filename": "core/java/android/bluetooth/BluetoothA2dpSink.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-11-28T03:58:50Z",
+      "side": 1,
+      "message": "can we centralize this common logic into a shared hidden helper?",
+      "range": {
+        "startLine": 333,
+        "startChar": 8,
+        "endLine": 346,
+        "endChar": 9
+      },
+      "revId": "bf662dc37b0281392ec95ea96cc694e9ea1a6e8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8990b954_d881d264",
+        "filename": "core/java/android/bluetooth/BluetoothProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-11-28T03:58:50Z",
+      "side": 1,
+      "message": "should be an intdef, right?",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 277,
+        "endChar": 39
+      },
+      "revId": "bf662dc37b0281392ec95ea96cc694e9ea1a6e8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
