@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce298056_9a01ffd4",
+        "filename": "core/java/android/net/NetworkMisc.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-28T09:04:02Z",
+      "side": 1,
+      "message": "IIUC, you only expose and remove @hide for those APIs which will be called by mainline module?",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 16
+      },
+      "revId": "4425916be0c978affbfbc9e908687d47bbc7ae7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d551fd_eb86a3b0",
+        "filename": "core/java/android/net/NetworkMisc.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-28T09:04:02Z",
+      "side": 1,
+      "message": "Parcel#writeBoolean() will do this for you, so maybe you can call writeBoolean() directly.\nAlso, when people see these code, people could know it\u0027s a boolean.",
+      "range": {
+        "startLine": 198,
+        "startChar": 21,
+        "endLine": 198,
+        "endChar": 54
+      },
+      "revId": "4425916be0c978affbfbc9e908687d47bbc7ae7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71943935_ba0fcc4e",
+        "filename": "core/java/android/net/NetworkMisc.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-28T09:04:02Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 202,
+        "startChar": 21,
+        "endLine": 202,
+        "endChar": 43
+      },
+      "revId": "4425916be0c978affbfbc9e908687d47bbc7ae7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640e8922_1e9e198b",
+        "filename": "core/java/android/net/NetworkMisc.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-28T09:04:02Z",
+      "side": 1,
+      "message": "Although Parcel#readBoolean() will call Parcel#readInt() finally, but maybe it\u0027s better to call readBoolean() here, please see the comment on line.198.",
+      "range": {
+        "startLine": 212,
+        "startChar": 55,
+        "endLine": 212,
+        "endChar": 64
+      },
+      "revId": "4425916be0c978affbfbc9e908687d47bbc7ae7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23fda48e_d5029973",
+        "filename": "core/java/android/net/NetworkMisc.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-28T09:04:02Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 216,
+        "startChar": 44,
+        "endLine": 216,
+        "endChar": 53
+      },
+      "revId": "4425916be0c978affbfbc9e908687d47bbc7ae7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49896f9_b892ae4a",
+        "filename": "tests/net/java/android/net/nsd/NsdManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-28T09:04:02Z",
+      "side": 1,
+      "message": "No big concern for this change, but I\u0027m curious about why do you do this change?\nWill you add some code which need mMessenger in the future?",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 61
+      },
+      "revId": "4425916be0c978affbfbc9e908687d47bbc7ae7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a2d24e_46ac5859",
+        "filename": "tests/net/java/com/android/server/connectivity/MultipathPolicyTrackerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-28T09:04:02Z",
+      "side": 1,
+      "message": "Hmm...I\u0027m not sure why do you add this.\nIs there any test case will failed after using mockito extended?",
+      "range": {
+        "startLine": 153,
+        "startChar": 8,
+        "endLine": 156,
+        "endChar": 94
+      },
+      "revId": "4425916be0c978affbfbc9e908687d47bbc7ae7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
