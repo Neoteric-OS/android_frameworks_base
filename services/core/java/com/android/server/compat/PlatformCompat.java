@@ -22,11 +22,13 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Binder;
+import android.os.Build;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.util.Slog;
 import android.util.StatsLog;
 
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.compat.ChangeReporter;
 import com.android.internal.compat.CompatibilityChangeConfig;
 import com.android.internal.compat.CompatibilityChangeInfo;
@@ -39,17 +41,51 @@ import java.io.PrintWriter;
 /**
  * System server internal API for gating and reporting compatibility changes.
  */
-public class PlatformCompat extends IPlatformCompat.Stub {
+public class PlatformCompat extends IPlatformCompat.Stub implements IOverrideValidator {
+    /**
+     * Interface that helps figure out what kind of build is currently installed.
+     */
+    public interface AndroidBuildClassifier {
+        /**
+         *  {@code true} if build is user-debug or eng.
+         **/
+        boolean isDebuggableBuild();
+        /**
+         *  {@code true} if build is REL
+         */
+        boolean isFinalBuild();
+    }
 
     private static final String TAG = "Compatibility";
 
     private final Context mContext;
     private final ChangeReporter mChangeReporter;
+    private final CompatConfig mCompatConfig;
+    private final AndroidBuildClassifier mBuildClassifier;
 
     public PlatformCompat(Context context) {
         mContext = context;
         mChangeReporter = new ChangeReporter(
                 StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__SOURCE__SYSTEM_SERVER);
+        mCompatConfig = CompatConfig.get();
+        mBuildClassifier = new AndroidBuildClassifier() {
+            public boolean isDebuggableBuild() {
+                return Build.IS_DEBUGGABLE;
+            }
+
+            public boolean isFinalBuild() {
+                return "REL".equals(Build.VERSION.CODENAME);
+            }
+        };
+    }
+
+    @VisibleForTesting
+    PlatformCompat(Context context, CompatConfig compatConfig, AndroidBuildClassifier classifier) {
+        mContext = context;
+        mChangeReporter = new ChangeReporter(
+                StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__SOURCE__SYSTEM_SERVER);
+        mCompatConfig = compatConfig;
+        mBuildClassifier = classifier;
     }
 
     @Override
@@ -74,7 +110,7 @@ public class PlatformCompat extends IPlatformCompat.Stub {
 
     @Override
     public boolean isChangeEnabled(long changeId, ApplicationInfo appInfo) {
-        if (CompatConfig.get().isChangeEnabled(changeId, appInfo)) {
+        if (mCompatConfig.isChangeEnabled(changeId, appInfo)) {
             reportChange(changeId, appInfo.uid,
                     StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__STATE__ENABLED);
             return true;
@@ -109,52 +145,50 @@ public class PlatformCompat extends IPlatformCompat.Stub {
 
     @Override
     public void setOverrides(CompatibilityChangeConfig overrides, String packageName) {
-        CompatConfig.get().addOverrides(overrides, packageName);
+        mCompatConfig.addOverrides(overrides, packageName, this);
         killPackage(packageName);
     }
 
     @Override
     public void setOverridesForTest(CompatibilityChangeConfig overrides, String packageName) {
-        CompatConfig.get().addOverrides(overrides, packageName);
+        mCompatConfig.addOverrides(overrides, packageName, this);
     }
 
     @Override
     public void clearOverrides(String packageName) {
-        CompatConfig config = CompatConfig.get();
-        config.removePackageOverrides(packageName);
+        mCompatConfig.removePackageOverrides(packageName, this);
         killPackage(packageName);
     }
 
     @Override
     public void clearOverridesForTest(String packageName) {
-        CompatConfig config = CompatConfig.get();
-        config.removePackageOverrides(packageName);
+        mCompatConfig.removePackageOverrides(packageName, this);
     }
 
     @Override
     public boolean clearOverride(long changeId, String packageName) {
-        boolean existed = CompatConfig.get().removeOverride(changeId, packageName);
+        boolean existed = mCompatConfig.removeOverride(changeId, packageName, this);
         killPackage(packageName);
         return existed;
     }
 
     @Override
     public CompatibilityChangeConfig getAppConfig(ApplicationInfo appInfo) {
-        return CompatConfig.get().getAppConfig(appInfo);
+        return mCompatConfig.getAppConfig(appInfo);
     }
 
     @Override
     public CompatibilityChangeInfo[] listAllChanges() {
-        return CompatConfig.get().dumpChanges();
+        return mCompatConfig.dumpChanges();
     }
 
     /**
      * Check whether the change is known to the compat config.
-     * @param changeId
+     *
      * @return {@code true} if the change is known.
      */
     public boolean isKnownChangeId(long changeId) {
-        return CompatConfig.get().isKnownChangeId(changeId);
+        return mCompatConfig.isKnownChangeId(changeId);
 
     }
 
@@ -164,11 +198,11 @@ public class PlatformCompat extends IPlatformCompat.Stub {
      *
      * @param appInfo The app in question
      * @return A sorted long array of change IDs. We use a primitive array to minimize memory
-     *      footprint: Every app process will store this array statically so we aim to reduce
-     *      overhead as much as possible.
+     * footprint: Every app process will store this array statically so we aim to reduce
+     * overhead as much as possible.
      */
     public long[] getDisabledChanges(ApplicationInfo appInfo) {
-        return CompatConfig.get().getDisabledChanges(appInfo);
+        return mCompatConfig.getDisabledChanges(appInfo);
     }
 
     /**
@@ -178,18 +212,19 @@ public class PlatformCompat extends IPlatformCompat.Stub {
      * @return The change ID, or {@code -1} if no change with that name exists.
      */
     public long lookupChangeId(String name) {
-        return CompatConfig.get().lookupChangeId(name);
+        return mCompatConfig.lookupChangeId(name);
     }
 
     @Override
     protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         if (!DumpUtils.checkDumpAndUsageStatsPermission(mContext, "platform_compat", pw)) return;
-        CompatConfig.get().dumpConfig(pw);
+        mCompatConfig.dumpConfig(pw);
     }
 
     /**
      * Clears information stored about events reported on behalf of an app.
      * To be called once upon app start or end. A second call would be a no-op.
+     *
      * @param appInfo the app to reset
      */
     public void resetReporting(ApplicationInfo appInfo) {
@@ -237,5 +272,32 @@ public class PlatformCompat extends IPlatformCompat.Stub {
         } finally {
             Binder.restoreCallingIdentity(identity);
         }
+    }
+
+    @Override
+    public boolean allowOverride(long changeId, String packageName) {
+        // Allow any override for userdebug or eng builds.
+        if (mBuildClassifier.isDebuggableBuild()) {
+            return true;
+        }
+        ApplicationInfo applicationInfo = getApplicationInfo(packageName, 0);
+        // Only allow overriding debuggable apps.
+        if ((applicationInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0) {
+            return false;
+        }
+        int minTargetSdk = mCompatConfig.minTargetSdkForChangeId(changeId);
+        // Do not allow overriding non-target sdk gated changes on user builds
+        if (minTargetSdk == -1) {
+            return false;
+        }
+        // Allow overriding any change for debuggable apps on final (i.e. non-beta) builds.
+        if (!mBuildClassifier.isFinalBuild()) {
+            return true;
+        }
+        // Only allow to opt-in for a targetSdk gated change.
+        if (applicationInfo.targetSdkVersion < minTargetSdk) {
+            return true;
+        }
+        return false;
     }
 }

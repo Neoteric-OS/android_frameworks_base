@@ -157,10 +157,15 @@ final class CompatConfig {
      *                    platform is gated on the ID given.
      * @param packageName The app package name to override the change for.
      * @param enabled     If the change should be enabled or disabled.
+     * @param validator   Instance that figures whether the change should be overridden.
      * @return {@code true} if the change existed before adding the override.
      */
-    boolean addOverride(long changeId, String packageName, boolean enabled) {
+    boolean addOverride(long changeId, String packageName, boolean enabled,
+            IOverrideValidator validator) {
         boolean alreadyKnown = true;
+        if (!validator.allowOverride(changeId, packageName)) {
+            return alreadyKnown;
+        }
         synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
             if (c == null) {
@@ -186,19 +191,34 @@ final class CompatConfig {
     }
 
     /**
+     * Returns the minimum sdk version for which this change should be enabled (or 0 if it is not
+     * target sdk gated).
+     */
+    int minTargetSdkForChangeId(long changeId) {
+        synchronized (mChanges) {
+            CompatChange c = mChanges.get(changeId);
+            if (c == null) {
+                return 0;
+            }
+            return c.getEnableAfterTargetSdk();
+        }
+    }
+
+    /**
      * Removes an override previously added via {@link #addOverride(long, String, boolean)}. This
      * restores the default behaviour for the given change and app, once any app processes have been
      * restarted.
      *
      * @param changeId    The ID of the change that was overridden.
      * @param packageName The app package name that was overridden.
+     * @param validator   Instance that figures whether the override should be removed.
      * @return {@code true} if an override existed;
      */
-    boolean removeOverride(long changeId, String packageName) {
+    boolean removeOverride(long changeId, String packageName, IOverrideValidator validator) {
         boolean overrideExists = false;
         synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
-            if (c != null) {
+            if (c != null && validator.allowOverride(c.getId(), packageName)) {
                 overrideExists = true;
                 c.removePackageOverride(packageName);
             }
@@ -207,38 +227,43 @@ final class CompatConfig {
     }
 
     /**
-     * Overrides the enabled state for a given change and app. This method is intended to be used
-     * *only* for debugging purposes.
+     * Overrides the enabled state for a given change and app.
      *
      * <p>Note, package overrides are not persistent and will be lost on system or runtime restart.
      *
      * @param overrides   list of overrides to default changes config.
      * @param packageName app for which the overrides will be applied.
+     * @param validator   instance that figures whether the change should be overridden.
      */
-    void addOverrides(CompatibilityChangeConfig overrides, String packageName) {
+    void addOverrides(CompatibilityChangeConfig overrides, String packageName,
+            IOverrideValidator validator) {
         synchronized (mChanges) {
             for (Long changeId : overrides.enabledChanges()) {
-                addOverride(changeId, packageName, true);
+                addOverride(changeId, packageName, true, validator);
             }
             for (Long changeId : overrides.disabledChanges()) {
-                addOverride(changeId, packageName, false);
+                addOverride(changeId, packageName, false, validator);
+
             }
         }
     }
 
     /**
      * Removes all overrides previously added via {@link #addOverride(long, String, boolean)} or
-     * {@link #addAppOverrides(CompatibilityChangeConfig, String)} for a certain package.
+     * {@link #addOverrides(CompatibilityChangeConfig, String)} for a certain package.
      *
      * <p>This restores the default behaviour for the given change and app, once any app
      * processes have been restarted.
      *
      * @param packageName The package for which the overrides should be purged.
      */
-    void removePackageOverrides(String packageName) {
+    void removePackageOverrides(String packageName, IOverrideValidator validator) {
         synchronized (mChanges) {
             for (int i = 0; i < mChanges.size(); ++i) {
-                mChanges.valueAt(i).removePackageOverride(packageName);
+                CompatChange change = mChanges.valueAt(i);
+                if (change != null && validator.allowOverride(change.getId(), packageName)) {
+                    mChanges.valueAt(i).removePackageOverride(packageName);
+                }
             }
         }
     }
@@ -327,5 +352,4 @@ final class CompatConfig {
             Slog.e(TAG, "Encountered an error while reading/parsing compat config file", e);
         }
     }
-
 }
