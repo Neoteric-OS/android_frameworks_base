@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "516bac55_1aecad5c",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1803,
+      "author": {
+        "id": 1319697
+      },
+      "writtenOn": "2019-11-28T08:14:11Z",
+      "side": 1,
+      "message": "We need to pick more patch to ensure this replace to mLock or removed.",
+      "range": {
+        "startLine": 1803,
+        "startChar": 8,
+        "endLine": 1803,
+        "endChar": 38
+      },
+      "revId": "0b666cf2d580778113fd6db6aa570845801a9d36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1885cdfb_d573b092",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1809,
+      "author": {
+        "id": 1319697
+      },
+      "writtenOn": "2019-11-28T08:14:11Z",
+      "side": 1,
+      "message": "ditto;",
+      "range": {
+        "startLine": 1809,
+        "startChar": 12,
+        "endLine": 1809,
+        "endChar": 36
+      },
+      "revId": "0b666cf2d580778113fd6db6aa570845801a9d36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff642e07_c963f7f7",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1850,
+      "author": {
+        "id": 1319697
+      },
+      "writtenOn": "2019-11-28T08:14:11Z",
+      "side": 1,
+      "message": "ditto;",
+      "range": {
+        "startLine": 1813,
+        "startChar": 1,
+        "endLine": 1850,
+        "endChar": 9
+      },
+      "revId": "0b666cf2d580778113fd6db6aa570845801a9d36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
