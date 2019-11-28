@@ -4111,6 +4111,16 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * @hide
+         */
+        public static final String TIGO_CMAS_STATUS = "tigo_cmas_status";
+        /**
+         * @hide
+         */
+        private static final Validator TIGO_CMAS_STATUS_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+        /**
          * Whether the phone vibrates when it is ringing due to an incoming call. This will
          * be used by Phone and Setting apps; it shouldn't affect other apps.
          * The value is boolean (1 or 0).
@@ -4661,6 +4671,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(EGG_MODE);
             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
+            PRIVATE_SETTINGS.add(TIGO_CMAS_STATUS);
         }
 
         /**
@@ -4754,6 +4765,7 @@ public final class Settings {
             VALIDATORS.put(WIFI_STATIC_DNS2, WIFI_STATIC_DNS2_VALIDATOR);
             VALIDATORS.put(SHOW_BATTERY_PERCENT, SHOW_BATTERY_PERCENT_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_LIGHT_PULSE, BOOLEAN_VALIDATOR);
+            VALIDATORS.put(TIGO_CMAS_STATUS, TIGO_CMAS_STATUS_VALIDATOR);
         }
 
         /**

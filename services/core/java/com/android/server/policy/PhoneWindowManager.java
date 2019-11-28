@@ -617,7 +617,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private volatile int mTopFocusedDisplayId = INVALID_DISPLAY;
 
     private int mPowerButtonSuppressionDelayMillis = POWER_BUTTON_SUPPRESSION_DELAY_DEFAULT_MILLIS;
-
+    private boolean mDisableAllKeyAction = false;
     private static final int MSG_DISPATCH_MEDIA_KEY_WITH_WAKE_LOCK = 3;
     private static final int MSG_DISPATCH_MEDIA_KEY_REPEAT_WITH_WAKE_LOCK = 4;
     private static final int MSG_KEYGUARD_DRAWN_COMPLETE = 5;
@@ -787,6 +787,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Global.getUriFor(
                     Settings.Global.POWER_BUTTON_SUPPRESSION_DELAY_AFTER_GESTURE_WAKE), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.TIGO_CMAS_STATUS), false, this,
                     UserHandle.USER_ALL);
             updateSettings();
         }
@@ -2052,6 +2055,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.Global.POWER_BUTTON_VERY_LONG_PRESS,
                     mContext.getResources().getInteger(
                             com.android.internal.R.integer.config_veryLongPressOnPowerBehavior));
+            mDisableAllKeyAction = Settings.System.getInt(resolver,
+                    Settings.System.TIGO_CMAS_STATUS, 0) == 1;
         }
         if (updateRotation) {
             updateRotation(true);
@@ -2632,6 +2637,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         final boolean down = event.getAction() == KeyEvent.ACTION_DOWN;
         final boolean canceled = event.isCanceled();
         final int displayId = event.getDisplayId();
+
+        // add for control disable all the key operation while receive the  emergency cb message
+        if(mDisableAllKeyAction){
+            WindowManager.LayoutParams attrs = win != null ? win.getAttrs() : null;
+            if (attrs != null
+                    && (null != attrs.packageName)
+                    && attrs.packageName.startsWith("com.android.cellbroadcastreceiver")) {
+                return 0;
+            }
+        }
 
         if (DEBUG_INPUT) {
             Log.d(TAG, "interceptKeyTi keyCode=" + keyCode + " down=" + down + " repeatCount="
@@ -3659,6 +3674,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     public int interceptKeyBeforeQueueing(KeyEvent event, int policyFlags) {
         if (!mSystemBooted) {
             // If we have not yet booted, don't let key events do anything.
+            return 0;
+        }
+
+        // add for control disable all the key operation while receive the  emergency cb message
+        if (mDisableAllKeyAction){
             return 0;
         }
 
@@ -4831,6 +4851,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // In normal flow, systemReady is called before other system services are ready.
         // So it is better not to bind keyguard here.
         mKeyguardDelegate.onSystemReady();
+
+        Settings.System.putInt(mContext.getContentResolver(),
+                Settings.System.TIGO_CMAS_STATUS, 0);
 
         mVrManagerInternal = LocalServices.getService(VrManagerInternal.class);
         if (mVrManagerInternal != null) {
