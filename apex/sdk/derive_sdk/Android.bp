@@ -1,0 +1,19 @@
+
+cc_binary {
+    name: "derive_sdk",
+    srcs: [
+        "derive_sdk.cpp",
+        "sdk.proto",
+    ],
+    proto: {
+        type: "lite",
+    },
+    // TODO: build against the SDK.
+    //sdk_version: "current",
+    //stl: "c++_static",
+    shared_libs: ["liblog"],
+    static_libs: [
+        "libbase",
+        "libprotobuf-cpp-lite",
+    ],
+}

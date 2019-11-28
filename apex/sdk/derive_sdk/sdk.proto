@@ -1,0 +1,7 @@
+syntax = "proto3";
+package com.android.sdk.proto;
+option java_outer_classname = "SdkProto";
+
+message SdkVersion {
+  int32 version = 1;
+}
