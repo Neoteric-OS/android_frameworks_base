@@ -12,25 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-apex {
-    name: "com.android.sdkext",
-    manifest: "manifest.json",
-    java_libs: [ "framework-sdkext" ],
-    key: "com.android.sdkext.key",
-    certificate: ":com.android.sdkext.certificate",
-}
-
-apex_key {
-    name: "com.android.sdkext.key",
-    public_key: "com.android.sdkext.avbpubkey",
-    private_key: "com.android.sdkext.pem",
-}
-
-android_app_certificate {
-    name: "com.android.sdkext.certificate",
-    certificate: "com.android.sdkext",
-}
-
 cc_binary {
     name: "derive_sdk",
     srcs: [
