@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c3fc271_ebe3b67f",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-11-28T06:43:40Z",
+      "side": 1,
+      "message": "Completely forgot about that one. That was the biggest reason why we needed the conversion logic in the first place. Will make this change.",
+      "parentUuid": "06bf38bc_98f744b6",
+      "range": {
+        "startLine": 458,
+        "startChar": 12,
+        "endLine": 460,
+        "endChar": 22
+      },
+      "revId": "bf662dc37b0281392ec95ea96cc694e9ea1a6e8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b1f3e33_b080a3be",
         "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-11-28T03:58:50Z",
       "side": 1,
       "message": "shared conversion logic helper too?",
+      "range": {
+        "startLine": 519,
+        "startChar": 8,
+        "endLine": 530,
+        "endChar": 51
+      },
+      "revId": "bf662dc37b0281392ec95ea96cc694e9ea1a6e8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3e2145_2310c078",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-11-28T06:43:40Z",
+      "side": 1,
+      "message": "Yeah i\u0027ll create a helper for this, good point!",
+      "parentUuid": "5b1f3e33_b080a3be",
       "range": {
         "startLine": 519,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "808aa2b3_0ab82c0c",
+        "filename": "core/java/android/bluetooth/BluetoothA2dpSink.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-11-28T06:43:40Z",
+      "side": 1,
+      "message": "Will do!",
+      "parentUuid": "50045216_25ca214d",
+      "range": {
+        "startLine": 333,
+        "startChar": 8,
+        "endLine": 346,
+        "endChar": 9
+      },
+      "revId": "bf662dc37b0281392ec95ea96cc694e9ea1a6e8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8990b954_d881d264",
         "filename": "core/java/android/bluetooth/BluetoothProfile.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2019-11-28T03:58:50Z",
       "side": 1,
       "message": "should be an intdef, right?",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 277,
+        "endChar": 39
+      },
+      "revId": "bf662dc37b0281392ec95ea96cc694e9ea1a6e8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f7e558_51abf919",
+        "filename": "core/java/android/bluetooth/BluetoothProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-11-28T06:43:40Z",
+      "side": 1,
+      "message": "Yeah, forgot to do that, will add this!",
+      "parentUuid": "8990b954_d881d264",
       "range": {
         "startLine": 259,
         "startChar": 4,
