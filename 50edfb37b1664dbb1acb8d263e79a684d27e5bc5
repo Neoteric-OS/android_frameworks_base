@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee9fff94_fba9fac9",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1319697
+      },
+      "writtenOn": "2019-11-28T11:58:55Z",
+      "side": 1,
+      "message": "Note: conflict only happen on comment section.",
+      "range": {
+        "startLine": 757,
+        "startChar": 0,
+        "endLine": 757,
+        "endChar": 88
+      },
+      "revId": "50edfb37b1664dbb1acb8d263e79a684d27e5bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
