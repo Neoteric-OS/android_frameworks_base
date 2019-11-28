@@ -29,6 +29,7 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.hardware.input.InputManager;
 import android.hardware.vibrator.IVibrator;
+import android.hardware.vibrator.IVibratorCallback;
 import android.hardware.vibrator.V1_0.EffectStrength;
 import android.icu.text.DateFormat;
 import android.media.AudioAttributes;
@@ -1078,11 +1079,34 @@ public class VibratorService extends IVibratorService.Stub
         //synchronized (mInputDeviceVibrators) {
         //    return !mInputDeviceVibrators.isEmpty() || vibratorExists();
         //}
+        asdfasdf();
         return vibratorExists();
+    }
+
+    private void asdfasdf() {
+        IVibrator vibrator = IVibrator.Stub.asInterface(
+            ServiceManager.getService("android.hardware.vibrator.IVibrator/default"));
+        if (vibrator == null) {
+            Slog.d(TAG, "asdfasdf Couldn't find VINTF vibrator for test.");
+        } else {
+           try {
+            IVibratorCallback.Stub stub = new IVibratorCallback.Stub() {
+                public void onComplete() {
+                    Slog.d(TAG, "asdfasdf We have vibrations completing over here.");
+                }
+            };
+            vibrator.on(200, stub);
+           } catch (RemoteException e) {
+             // intentionally crash for testing
+             throw new RuntimeException(e);
+           }
+        }
     }
 
     private void doVibratorOn(long millis, int amplitude, int uid, AudioAttributes attrs) {
         Trace.traceBegin(Trace.TRACE_TAG_VIBRATOR, "doVibratorOn");
+        asdfasdf();
+
         try {
             synchronized (mInputDeviceVibrators) {
                 if (amplitude == VibrationEffect.DEFAULT_AMPLITUDE) {
@@ -1112,6 +1136,7 @@ public class VibratorService extends IVibratorService.Stub
     }
 
     private void doVibratorSetAmplitude(int amplitude) {
+        asdfasdf();
         if (mSupportsAmplitudeControl) {
             vibratorSetAmplitude(amplitude);
         }
@@ -1141,6 +1166,7 @@ public class VibratorService extends IVibratorService.Stub
 
     @GuardedBy("mLock")
     private long doVibratorPrebakedEffectLocked(Vibration vib) {
+        asdfasdf();
         Trace.traceBegin(Trace.TRACE_TAG_VIBRATOR, "doVibratorPrebakedEffectLocked");
         try {
             final VibrationEffect.Prebaked prebaked = (VibrationEffect.Prebaked) vib.effect;
