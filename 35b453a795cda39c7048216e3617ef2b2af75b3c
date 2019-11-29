@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a6d0a20_b1027bee",
+        "filename": "packages/Tethering/apex/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-29T02:39:18Z",
+      "side": 1,
+      "message": "But this is an R module right ?",
+      "range": {
+        "startLine": 21,
+        "startChar": 22,
+        "endLine": 21,
+        "endChar": 45
+      },
+      "revId": "35b453a795cda39c7048216e3617ef2b2af75b3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
