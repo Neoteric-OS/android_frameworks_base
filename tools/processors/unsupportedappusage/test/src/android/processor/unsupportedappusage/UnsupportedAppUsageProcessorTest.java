@@ -40,6 +40,7 @@ public class UnsupportedAppUsageProcessorTest {
                 "public @interface UnsupportedAppUsage {",
                 "    String expectedSignature() default \"\";\n",
                 "    String someProperty() default \"\";",
+                "    String overrideSourcePosition() default \"\";",
                 "}"));
     }
 
@@ -92,5 +93,22 @@ public class UnsupportedAppUsageProcessorTest {
                 "properties", "someProperty=%22value%22");
     }
 
+    @Test
+    public void testSourcePositionOverride() throws Exception {
+        mJavac.addSource("a.b.Class", Joiner.on('\n').join(
+                "package a.b;", // 1
+                "import dalvik.annotation.compat.UnsupportedAppUsage;", // 2
+                "public class Class {", // 3
+                "  @UnsupportedAppUsage(overrideSourcePosition=\"otherfile.aidl:30:10:31:20\")",
+                "  public void method() {}", // 5
+                "}"));
+        Map<String, String> row = compileAndReadCsv().getContents().get(0);
+        assertThat(row).containsEntry("file", "otherfile.aidl");
+        assertThat(row).containsEntry("startline", "30");
+        assertThat(row).containsEntry("startcol", "10");
+        assertThat(row).containsEntry("endline", "31");
+        assertThat(row).containsEntry("endcol", "20");
+        assertThat(row).containsEntry("properties", "");
+    }
 
 }
