@@ -216,6 +216,9 @@
     <!-- Permission required for CTS test - TetheringManagerTest -->
     <uses-permission android:name="android.permission.TETHER_PRIVILEGED"/>
 
+    <!-- Permission required for CTS test - ConnectivityManagerTest#testSetAirplaneMode -->
+    <uses-permission android:name="android.permission.NETWORK_AIRPLANE_MODE"/>
+
     <application android:label="@string/app_label"
                 android:theme="@android:style/Theme.DeviceDefault.DayNight"
                 android:defaultToDeviceProtectedStorage="true"
