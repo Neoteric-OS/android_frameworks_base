@@ -7027,6 +7027,7 @@ package android.app.admin {
     field public static final int TAG_CERT_AUTHORITY_REMOVED = 210030; // 0x3346e
     field public static final int TAG_CERT_VALIDATION_FAILURE = 210033; // 0x33471
     field public static final int TAG_CRYPTO_SELF_TEST_COMPLETED = 210031; // 0x3346f
+    field public static final int TAG_IDENTIFIER_VERIFICATION_FAILED = 210037; // 0x33475
     field public static final int TAG_KEYGUARD_DISABLED_FEATURES_SET = 210021; // 0x33465
     field public static final int TAG_KEYGUARD_DISMISSED = 210006; // 0x33456
     field public static final int TAG_KEYGUARD_DISMISS_AUTH_ATTEMPT = 210007; // 0x33457
@@ -7050,6 +7051,9 @@ package android.app.admin {
     field public static final int TAG_REMOTE_LOCK = 210022; // 0x33466
     field public static final int TAG_SYNC_RECV_FILE = 210003; // 0x33453
     field public static final int TAG_SYNC_SEND_FILE = 210004; // 0x33454
+    field public static final int TAG_TLS_SESSION_ESTABLISHED = 210034; // 0x33472
+    field public static final int TAG_TLS_SESSION_FAILED_TO_ESTABLISH = 210036; // 0x33474
+    field public static final int TAG_TLS_SESSION_TERMINATED = 210035; // 0x33473
     field public static final int TAG_USER_RESTRICTION_ADDED = 210027; // 0x3346b
     field public static final int TAG_USER_RESTRICTION_REMOVED = 210028; // 0x3346c
     field public static final int TAG_WIPE_FAILURE = 210023; // 0x33467

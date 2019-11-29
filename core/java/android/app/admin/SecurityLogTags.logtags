@@ -11,7 +11,8 @@ option java_package android.app.admin
 210007 security_keyguard_dismiss_auth_attempt   (success|1),(method_strength|1)
 210008 security_keyguard_secured
 
-# Additional event types for NIAP MDFPP 3.1 compliant audit logging.
+##################################################################################################
+# Begin additional event types for NIAP MDFPP 3.1 compliant audit logging.
 
 210009 security_os_startup                      (boot_state|3),(verity_mode|3)
 210010 security_os_shutdown
@@ -37,4 +38,12 @@ option java_package android.app.admin
 210030 security_cert_authority_removed          (success|1),(subject|3)
 210031 security_crypto_self_test_completed      (success|1)
 210032 security_key_integrity_violation         (key_id|3),(uid|1)
+# https://www.niap-ccevs.org/MMO/PP/-417-/#cc-manaudit table 1: FIA_X509_EXT.1 Failure to validate X.509v3 certificate. (Reason for failure of validation.)
 210033 security_cert_validation_failure         (reason|3)
+# https://www.niap-ccevs.org/MMO/PP/-417-/#cc-objaudit table 2: FCS_TLSC_EXT.1:
+210034 security_tls_session_established (hostname|3),(port|1) # Establishment of a TLS session. (Non-TOE endpoint of connection.)
+210035 security_tls_session_terminated (hostname|3),(port|1)  # Termination of a TLS session. (Non-TOE endpoint of connection.)
+210036 security_tls_session_failed_to_establish (reason|3)    # Failure to establish a TLS session. (Reason for failure)
+210037 security_identifier_verification_failed (presented_identifier|3),(reference_identifier|3)  # Failure to verify presented identifier. (Presented identifier and reference identifier.)
+# End additional event types for NIAP MDFPP 3.1 compliant audit logging.
+###################################################################################################
