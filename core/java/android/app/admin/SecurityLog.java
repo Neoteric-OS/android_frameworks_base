@@ -433,6 +433,43 @@ public class SecurityLog {
             SecurityLogTags.SECURITY_CERT_VALIDATION_FAILURE;
 
     /**
+     * Indicates establishment of a TLS session. The log entry contains the following
+     * information about the event, encapsulated in an {@link Object} array and accessible via
+     * {@link SecurityEvent#getData()}:
+     * <li> [0] hostname of non-TOE endpoint of connection. ({@code String})
+     * <li> [1] port of non-TOE endpoint of connection. ({@code Integer}).
+     */
+    public static final int TAG_TLS_SESSION_ESTABLISHED =
+            SecurityLogTags.SECURITY_TLS_SESSION_ESTABLISHED;
+
+    /**
+     * Indicates termination of a TLS session. The log entry contains the following
+     * information about the event, encapsulated in an {@link Object} array and accessible via
+     * {@link SecurityEvent#getData()}:
+     * <li> [0] hostname of non-TOE endpoint of connection. ({@code String})
+     * <li> [1] port of non-TOE endpoint of connection. ({@code Integer}).
+     */
+    public static final int TAG_TLS_SESSION_TERMINATED =
+            SecurityLogTags.SECURITY_TLS_SESSION_TERMINATED;
+
+    /**
+     * Indicates failure to establish a TLS session. The log entry contains a {@code String}
+     * payload indicating the failure reason, accessible via {@link SecurityEvent#getData()}.
+     */
+    public static final int TAG_TLS_SESSION_FAILED_TO_ESTABLISH =
+            SecurityLogTags.SECURITY_TLS_SESSION_FAILED_TO_ESTABLISH;
+
+    /**
+     * Indicates failure to verify a presented identifier. The log entry contains the following
+     * information about the event, encapsulated in an {@link Object} array and accessible via
+     * {@link SecurityEvent#getData()}:
+     * <li> [0] presented identifier. ({@code String})
+     * <li> [1] reference identifier. ({@code String}).
+     */
+    public static final int TAG_IDENTIFIER_VERIFICATION_FAILED =
+            SecurityLogTags.SECURITY_IDENTIFIER_VERIFICATION_FAILED;
+
+    /**
      * Event severity level indicating that the event corresponds to normal workflow.
      */
     public static final int LEVEL_INFO = 1;
