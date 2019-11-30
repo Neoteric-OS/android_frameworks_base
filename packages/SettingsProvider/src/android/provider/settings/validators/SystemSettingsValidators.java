@@ -278,5 +278,7 @@ public class SystemSettingsValidators {
                 new InclusiveIntegerRangeValidator(0, 1));
         VALIDATORS.put(System.QS_SHOW_BRIGHTNESS, new InclusiveIntegerRangeValidator(0, 2));
         VALIDATORS.put(System.QS_BRIGHTNESS_POSITION_BOTTOM, BOOLEAN_VALIDATOR);
+	VALIDATORS.put(System.STATUS_BAR_BATTERY_STYLE, new InclusiveIntegerRangeValidator(0, 2));
+        VALIDATORS.put(System.STATUS_BAR_SHOW_BATTERY_PERCENT, new InclusiveIntegerRangeValidator(0, 2));
     }
 }
