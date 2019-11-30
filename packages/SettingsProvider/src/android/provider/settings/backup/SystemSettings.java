@@ -127,7 +127,9 @@ public class SystemSettings {
                 Settings.System.PREFERRED_REGION,
                 Settings.System.CV_ENABLED,
                 Settings.System.QS_SHOW_BRIGHTNESS,
-        	Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM
+        	Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
+		Settings.System.STATUS_BAR_BATTERY_STYLE,
+        	Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT
         ));
         if (Flags.backUpSmoothDisplayAndForcePeakRefreshRate()) {
             settings.add(Settings.System.PEAK_REFRESH_RATE);
