@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "92c68378_df81176f",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4196,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-02T09:19:42Z",
+      "side": 1,
+      "message": "Let\u0027s please find a better name for this than NetworkMisc. Maybe make it a public static inner class of NetworkAgent? Maybe call it NetworkParameters or NetworkSettings or something?",
+      "range": {
+        "startLine": 4196,
+        "startChar": 21,
+        "endLine": 4196,
+        "endChar": 32
+      },
+      "revId": "4425916be0c978affbfbc9e908687d47bbc7ae7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce298056_9a01ffd4",
         "filename": "core/java/android/net/NetworkMisc.java",
         "patchSetId": 2
