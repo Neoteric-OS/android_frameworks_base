@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec7e6c41_4d59067c",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00fea690_4baa4558",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d05c3fc_c9c71b8b",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 409,
+        "startChar": 3,
+        "endLine": 409,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1d77d5_3a57ed02",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 446,
+        "startChar": 4,
+        "endLine": 446,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d50afb_e657d5df",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 461,
+        "startChar": 4,
+        "endLine": 461,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a80638_1012c204",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "@SystemApi? or to static lib",
+      "range": {
+        "startLine": 601,
+        "startChar": 4,
+        "endLine": 601,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8932be7_2b820068",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 721,
+        "startChar": 3,
+        "endLine": 721,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15085c7e_b64e9415",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 862,
+        "startChar": 4,
+        "endLine": 862,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afe0f3d_6d022406",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 893,
+        "startChar": 4,
+        "endLine": 893,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d14d76_de3b6635",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 953,
+        "startChar": 4,
+        "endLine": 953,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b28a8da_76aff005",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "system api",
+      "range": {
+        "startLine": 973,
+        "startChar": 4,
+        "endLine": 973,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a412bf1e_b47d53a8",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 986,
+        "startChar": 3,
+        "endLine": 986,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e6b9bc_6c612654",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 1057,
+        "startChar": 4,
+        "endLine": 1057,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd23b0cc_697dcbff",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T14:47:02Z",
+      "side": 1,
+      "message": "system api",
+      "range": {
+        "startLine": 1283,
+        "startChar": 4,
+        "endLine": 1283,
+        "endChar": 14
+      },
+      "revId": "de41de9b23011b9bd59ea419eae6c264e0b06e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
