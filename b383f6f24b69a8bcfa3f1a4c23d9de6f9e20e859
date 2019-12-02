@@ -46,6 +46,30 @@
       "revId": "b383f6f24b69a8bcfa3f1a4c23d9de6f9e20e859",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b167196a_4aa86ced",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2019-12-02T16:52:39Z",
+      "side": 1,
+      "message": "..looking at the discussion in r.android.com/1115772 it sounds like it isn\u0027t updatable, but might be in the future? Removed it for now, LMK if you want it in here or not.",
+      "parentUuid": "f1ec3429_4ca2f217",
+      "range": {
+        "startLine": 1044,
+        "startChar": 16,
+        "endLine": 1045,
+        "endChar": 39
+      },
+      "revId": "b383f6f24b69a8bcfa3f1a4c23d9de6f9e20e859",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
