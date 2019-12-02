@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb5f411e_e93ef23e",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-12-02T19:34:15Z",
+      "side": 1,
+      "message": "skip the variable, and combine into the statement below directly?\n\nif it\u0027s too long, consider importing priorityToConnectionPolicy statically\n\nimport static android.Bluetooth.BluetoothAdapter.priorityToConnectionPolicy;\n\nand then setConnectionPolicy(device, priorityToConnectionPolicy(priority));",
+      "range": {
+        "startLine": 454,
+        "startChar": 31,
+        "endLine": 454,
+        "endChar": 85
+      },
+      "revId": "7dbf305a9b860b5f3a254e9cabf8f977c4fd19e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a2d2fb_a0d3d814",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-12-02T19:34:15Z",
+      "side": 1,
+      "message": "do you know why we\u0027re running this check? (and do we need it in this new world?)",
+      "range": {
+        "startLine": 479,
+        "startChar": 16,
+        "endLine": 482,
+        "endChar": 17
+      },
+      "revId": "7dbf305a9b860b5f3a254e9cabf8f977c4fd19e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
