@@ -142,6 +142,30 @@
       "revId": "b383f6f24b69a8bcfa3f1a4c23d9de6f9e20e859",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f97a16_c2ca6c87",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2019-12-02T17:17:01Z",
+      "side": 1,
+      "message": "whatever is simplest IMO - I doubt compiling that one java class twice will be a bottleneck in the build",
+      "parentUuid": "16df5dc0_858d2fff",
+      "range": {
+        "startLine": 1044,
+        "startChar": 16,
+        "endLine": 1045,
+        "endChar": 39
+      },
+      "revId": "b383f6f24b69a8bcfa3f1a4c23d9de6f9e20e859",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
