@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5523eeb0_2b68864a",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-12-02T22:45:52Z",
+      "side": 1,
+      "message": "Fixed in new patchset!",
+      "parentUuid": "eb5f411e_e93ef23e",
+      "range": {
+        "startLine": 454,
+        "startChar": 31,
+        "endLine": 454,
+        "endChar": 85
+      },
+      "revId": "7dbf305a9b860b5f3a254e9cabf8f977c4fd19e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81a2d2fb_a0d3d814",
         "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
         "patchSetId": 2
