@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21bb8d7e_97aa4f17",
+        "filename": "core/java/android/hardware/display/AmbientDisplayConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2019-12-02T17:34:37Z",
+      "side": 1,
+      "message": "Please use the constants instead:\n\n    Settings.Secure.DOZE_ENABLED\n    Settings.Secure.DOZE_ALWAYS_ON\n    Settings.Secure.DOZE_PICK_UP_GESTURE\n    Settings.Secure.DOZE_PULSE_ON_LONG_PRESS\n    Settings.Secure.DOZE_DOUBLE_TAP_GESTURE",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "a27250f48f2ba9cdab4d41fa778cef6390bcdae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
