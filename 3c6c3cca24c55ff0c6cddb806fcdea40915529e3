@@ -93,6 +93,30 @@
       "revId": "3c6c3cca24c55ff0c6cddb806fcdea40915529e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71a3b97_82a0876f",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2433,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-12-02T00:38:22Z",
+      "side": 1,
+      "message": "Thanks for comment.\n\n\u003eAgree this is confusing.  I know the standards just call it content ids.  but I think we should be explicit here.\n\u003eCOLUMN_CONTENT_GLOBAL_UNIQIUE_ID\u003d \"content_guid\"\n\nHow about COLUMN_CONTENT_GLOBAL_ID? since globalContentId is used in ATSC3.0 specification(ATSC A/332).\n\n\u003eI think WatchedPrograms.COLUMN_CONTENT_GLOBAL_UNIQIUE_ID should be included because channel data can be updated or deleted after the event.  WatchedPrograms should contain a snapshot of relevant data.\n\nAs you know, WatchedPrograms records are inserted automatically by TIF(TvInputManagerService) for logging the watch history and they are used by System apps for \"search or recommendation\" purpose.\nIn case of \"search or recommendation\" purpose, \nSony thinks that the metadata of deleted channels is not needed and the latest (not snapshot) metadata of updated channels should be presented to a user.\nAs a fact, the current implementation of TvInputManagerService just put WatchedPrograms.COLUMN_CHANNEL_ID and doesn\u0027t put any snapshot of metadata.",
+      "parentUuid": "acf1a126_d80fa9eb",
+      "range": {
+        "startLine": 2433,
+        "startChar": 35,
+        "endLine": 2433,
+        "endChar": 52
+      },
+      "revId": "3c6c3cca24c55ff0c6cddb806fcdea40915529e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
