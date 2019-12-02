@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22561d79_709aba03",
+        "filename": "services/net/java/android/net/ip/IpClientCallbacks.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-02T10:20:05Z",
+      "side": 1,
+      "message": "I would say:\n\nCalled to provide a list of packets that should be sent by the link layer, in order, before link is established. For example, when performing FILS, this list will contain a DHCPDISCOVER packet.\n\nAny network responses to these packets are expected to delivered to the IP stack just like any other received packet, and will be processed by IpClient as usual.\n\nWhen the preconnection process is completed, the caller must call either abortPreconnection or notifyPreconnectionComplete() to continue the provisioning process.",
+      "range": {
+        "startLine": 124,
+        "startChar": 48,
+        "endLine": 124,
+        "endChar": 49
+      },
+      "revId": "37ad53403392cdcd3b80435f641a647cda8cf294",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb95d96_528ba73e",
+        "filename": "services/net/java/android/net/ip/IpClientCallbacks.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-02T10:20:05Z",
+      "side": 1,
+      "message": "DHCP is IPv4-only. Maybe just call this onPreconnectionStart?",
+      "range": {
+        "startLine": 126,
+        "startChar": 18,
+        "endLine": 126,
+        "endChar": 25
+      },
+      "revId": "37ad53403392cdcd3b80435f641a647cda8cf294",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

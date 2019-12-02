@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdac597b_2ac4312b",
+        "filename": "services/net/java/android/net/ip/IpClientManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-02T10:20:05Z",
+      "side": 1,
+      "message": "Notify that the packets passed in onPreconnectionStart have not been sent to the network, and that the link is ready for use.",
+      "range": {
+        "startLine": 276,
+        "startChar": 0,
+        "endLine": 278,
+        "endChar": 7
+      },
+      "revId": "61f31020db34393e0f98156752a934a799e207c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4fff48_cd6e0087",
+        "filename": "services/net/java/android/net/ip/IpClientManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-02T10:20:05Z",
+      "side": 1,
+      "message": "Notify that the packets passed in onPreconnectionStart have successfully been sent to the network, and that the link is ready for use.",
+      "range": {
+        "startLine": 293,
+        "startChar": 7,
+        "endLine": 293,
+        "endChar": 54
+      },
+      "revId": "61f31020db34393e0f98156752a934a799e207c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f30cc8_3277c47b",
+        "filename": "services/net/java/android/net/ip/IpClientManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-02T10:20:05Z",
+      "side": 1,
+      "message": "Consider merging these two methods into one. Something like:\n\n\n/**\n * Notify IpClient that preconnection is complete and that the link is ready for use.\n * The success parameter indicates whether the packets passed in by onPreconnectionStart were\n * successfully sent to the network or not.\n */\npublic boolean notifyPreconnectionComplete(boolean success);",
+      "range": {
+        "startLine": 294,
+        "startChar": 7,
+        "endLine": 296,
+        "endChar": 0
+      },
+      "revId": "61f31020db34393e0f98156752a934a799e207c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
