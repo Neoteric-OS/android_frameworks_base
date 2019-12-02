@@ -386,11 +386,11 @@ public final class BluetoothSap implements BluetoothProfile {
                 return service.getConnectionPolicy(device);
             } catch (RemoteException e) {
                 Log.e(TAG, Log.getStackTraceString(new Throwable()));
-                return BluetoothProfile.CONNECTION_POLICY_FORBIDDEN;
+                return BluetoothProfile.CONNECTION_POLICY_UNKNOWN;
             }
         }
         if (service == null) Log.w(TAG, "Proxy not attached to service");
-        return BluetoothProfile.CONNECTION_POLICY_FORBIDDEN;
+        return BluetoothProfile.CONNECTION_POLICY_UNKNOWN;
     }
 
     private static void log(String msg) {

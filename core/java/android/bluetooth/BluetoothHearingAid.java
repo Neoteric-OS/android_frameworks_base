@@ -442,10 +442,10 @@ public final class BluetoothHearingAid implements BluetoothProfile {
                 return service.getConnectionPolicy(device);
             }
             if (service == null) Log.w(TAG, "Proxy not attached to service");
-            return BluetoothProfile.CONNECTION_POLICY_FORBIDDEN;
+            return BluetoothProfile.CONNECTION_POLICY_UNKNOWN;
         } catch (RemoteException e) {
             Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
-            return BluetoothProfile.CONNECTION_POLICY_FORBIDDEN;
+            return BluetoothProfile.CONNECTION_POLICY_UNKNOWN;
         }
     }
 
