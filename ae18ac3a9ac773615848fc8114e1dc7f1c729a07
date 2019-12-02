@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f862003c_cb1c5436",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-02T01:42:12Z",
+      "side": 1,
+      "message": "Nit: tethering",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "ae18ac3a9ac773615848fc8114e1dc7f1c729a07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625b442b_e064720a",
+        "filename": "packages/Tethering/apex/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-02T01:42:12Z",
+      "side": 1,
+      "message": "This is still unused right ?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 1
+      },
+      "revId": "ae18ac3a9ac773615848fc8114e1dc7f1c729a07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70c13b3e_d1c95260",
+        "filename": "packages/Tethering/apex/manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-02T01:42:12Z",
+      "side": 1,
+      "message": "Technically this should probably be 30, but this will be updated later anyway",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 15
+      },
+      "revId": "ae18ac3a9ac773615848fc8114e1dc7f1c729a07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
