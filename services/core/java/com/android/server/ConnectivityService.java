@@ -6300,6 +6300,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         @NonNull private final Set<AffectedNetwork> mAffectedNetworks = new ArraySet<>();
 
+        @NonNull Iterable<AffectedNetwork> getAffectedNetworks() {
+            return mAffectedNetworks;
+        }
+
         void addAffectedNetwork(@NonNull final AffectedNetwork network) {
             mAffectedNetworks.add(network);
         }
@@ -6375,10 +6379,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         boolean isNewDefault = false;
         NetworkAgentInfo oldDefaultNetwork = null;
 
-        final boolean wasBackgroundNetwork = newNetwork.isBackgroundNetwork();
         final NetworkReassignment reassignment = new NetworkReassignment();
         reassignment.addAffectedNetwork(new NetworkReassignment.AffectedNetwork(newNetwork,
-                wasBackgroundNetwork));
+                newNetwork.isBackgroundNetwork()));
 
         final int score = newNetwork.getCurrentScore();
 
@@ -6489,33 +6492,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // before LegacyTypeTracker sends legacy broadcasts
         for (NetworkRequestInfo nri : addedRequests) notifyNetworkAvailable(newNetwork, nri);
 
-        // Finally, process listen requests and update capabilities if the background state has
-        // changed for this network. For consistency with previous behavior, send onLost callbacks
-        // before onAvailable.
-        processNewlyLostListenRequests(newNetwork);
-
-        // Maybe the network changed background states. Update its capabilities.
-        final boolean backgroundChanged = wasBackgroundNetwork != newNetwork.isBackgroundNetwork();
-        if (backgroundChanged) {
-            final NetworkCapabilities newNc = mixInCapabilities(newNetwork,
-                    newNetwork.networkCapabilities);
-
-            final int oldPermission = getNetworkPermission(newNetwork.networkCapabilities);
-            final int newPermission = getNetworkPermission(newNc);
-            if (oldPermission != newPermission) {
-                try {
-                    mNMS.setNetworkPermission(newNetwork.network.netId, newPermission);
-                } catch (RemoteException e) {
-                    loge("Exception in setNetworkPermission: " + e);
-                }
-            }
-
-            newNetwork.setNetworkCapabilities(newNc);
-            notifyNetworkCallbacks(newNetwork, ConnectivityManager.CALLBACK_CAP_CHANGED);
-        }
-
-        processNewlySatisfiedListenRequests(newNetwork);
-
         return reassignment;
     }
 
@@ -6538,11 +6514,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // scoring network and then a higher scoring network, which could produce multiple
         // callbacks.
         Arrays.sort(nais);
+        final NetworkReassignment reassignment = new NetworkReassignment();
         for (final NetworkAgentInfo nai : nais) {
-            rematchNetworkAndRequests(nai, now);
+            reassignment.merge(rematchNetworkAndRequests(nai, now));
         }
 
         final NetworkAgentInfo newDefaultNetwork = getDefaultNetwork();
+
+        for (final NetworkReassignment.AffectedNetwork event : reassignment.getAffectedNetworks()) {
+            // Process listen requests and update capabilities if the background state has
+            // changed for this network. For consistency with previous behavior, send onLost
+            // callbacks before onAvailable.
+            processNewlyLostListenRequests(event.mNetwork);
+            if (event.mOldBackground != event.mNetwork.isBackgroundNetwork()) {
+                applyBackgroundChangeForRematch(event.mNetwork);
+            }
+            processNewlySatisfiedListenRequests(event.mNetwork);
+        }
 
         for (final NetworkAgentInfo nai : nais) {
             // Rematching may have altered the linger state of some networks, so update all linger
@@ -6573,6 +6561,33 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
             }
         }
+    }
+
+    /**
+     * Apply a change in background state resulting from rematching networks with requests.
+     *
+     * During rematch, a network may change background states by starting to satisfy or stopping
+     * to satisfy a foreground request. Listens don't count for this. When a network changes
+     * background states, its capabilities need to be updated and callbacks fired for the
+     * capability change.
+     *
+     * @param nai The network that changed background states
+     */
+    private void applyBackgroundChangeForRematch(final NetworkAgentInfo nai) {
+        final NetworkCapabilities newNc = mixInCapabilities(nai, nai.networkCapabilities);
+
+        final int oldPermission = getNetworkPermission(nai.networkCapabilities);
+        final int newPermission = getNetworkPermission(newNc);
+        if (oldPermission != newPermission) {
+            try {
+                mNMS.setNetworkPermission(nai.network.netId, newPermission);
+            } catch (RemoteException e) {
+                loge("Exception in setNetworkPermission: " + e);
+            }
+        }
+
+        nai.setNetworkCapabilities(newNc);
+        notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_CAP_CHANGED);
     }
 
     private void updateLegacyTypeTrackerAndVpnLockdownForRematch(
