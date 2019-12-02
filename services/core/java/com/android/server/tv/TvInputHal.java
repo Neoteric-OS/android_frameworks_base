@@ -148,9 +148,8 @@ final class TvInputHal implements Handler.Callback {
     }
 
     private void retrieveStreamConfigsLocked(int deviceId) {
-        int generation = mStreamConfigGenerations.get(deviceId, 0) + 1;
+        int generation = mStreamConfigGenerations.get(deviceId, 0);
         mStreamConfigs.put(deviceId, nativeGetStreamConfigs(mPtr, deviceId, generation));
-        mStreamConfigGenerations.put(deviceId, generation);
     }
 
     // Called from native
