@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd647431_5cd40274",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-02T01:51:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f862003c_cb1c5436",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "ae18ac3a9ac773615848fc8114e1dc7f1c729a07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "625b442b_e064720a",
         "filename": "packages/Tethering/apex/Android.bp",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2019-12-02T01:42:12Z",
       "side": 1,
       "message": "This is still unused right ?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 1
+      },
+      "revId": "ae18ac3a9ac773615848fc8114e1dc7f1c729a07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2cbefa2_a5394864",
+        "filename": "packages/Tethering/apex/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-02T01:51:59Z",
+      "side": 1,
+      "message": "Yes, this certificate don\u0027t be use by tethering module yet. Tethering still don\u0027t explicitly set certificate property, so it use tests key which is located in build/target/product/security/testkey",
+      "parentUuid": "625b442b_e064720a",
       "range": {
         "startLine": 32,
         "startChar": 0,
