@@ -5658,11 +5658,6 @@ public class ConnectivityServiceTest {
         trustedCallback.expectAvailableDoubleValidatedCallbacks(mWiFiNetworkAgent);
 
         mWiFiNetworkAgent.removeCapability(NET_CAPABILITY_TRUSTED);
-        // There is currently a bug where losing the TRUSTED capability will send a LOST
-        // callback to requests before the available callback, in spite of the semantics
-        // of the requests dictating this should not happen. This is considered benign, but
-        // ideally should be fixed in the future.
-        trustedCallback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
         trustedCallback.expectAvailableCallbacksValidated(mCellNetworkAgent);
 
         mCm.unregisterNetworkCallback(trustedCallback);
