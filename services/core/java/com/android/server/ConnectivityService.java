@@ -6413,8 +6413,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         reassignment.addAffectedNetwork(new NetworkReassignment.AffectedNetwork(newNetwork,
                 newNetwork.isBackgroundNetwork()));
 
-        final int score = newNetwork.getCurrentScore();
-
         if (VDBG || DDBG) log("rematching " + newNetwork.name());
 
         final ArrayMap<NetworkRequestInfo, NetworkAgentInfo> reassignedRequests =
@@ -6467,15 +6465,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             " request " + nri.request.requestId);
                 }
                 newNetwork.removeRequest(nri.request.requestId);
-                if (previousSatisfier == newNetwork) {
-                    nri.mSatisfier = null;
-                    if (isDefaultRequest(nri)) mDefaultNetworkNai = null;
-                    sendUpdatedScoreToFactories(nri.request, null);
-                } else {
-                    Slog.wtf(TAG, "BUG: Removing request " + nri.request.requestId + " from " +
-                            newNetwork.name() +
-                            " without updating mSatisfier or factories!");
-                }
+                nri.mSatisfier = null;
+                if (isDefaultRequest(nri)) mDefaultNetworkNai = null;
+                sendUpdatedScoreToFactories(nri.request, null);
             }
         }
 
