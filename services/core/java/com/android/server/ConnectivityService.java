@@ -6425,7 +6425,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         // Find and migrate to this Network any NetworkRequests for
         // which this network is now the best.
-        final ArrayList<NetworkAgentInfo> removedRequests = new ArrayList<>();
         for (final Map.Entry<NetworkRequestInfo, NetworkAgentInfo> entry :
                 reassignedRequests.entrySet()) {
             final NetworkRequestInfo nri = entry.getKey();
@@ -6439,7 +6438,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     }
                     previousSatisfier.removeRequest(nri.request.requestId);
                     previousSatisfier.lingerRequest(nri.request, now, mLingerDelayMs);
-                    removedRequests.add(previousSatisfier);
                 } else {
                     if (VDBG || DDBG) log("   accepting network in place of null");
                 }
