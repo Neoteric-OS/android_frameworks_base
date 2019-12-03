@@ -148,4 +148,11 @@ public class TetheringDependencies {
     public Context getContext() {
         return null;
     }
+
+    /**
+     * Get a reference to the TetheringNotificationUpdater to be used by tethering.
+     */
+    public TetheringNotificationUpdater getNotificationUpdater(Context ctx) {
+        return new TetheringNotificationUpdater(ctx);
+    }
 }

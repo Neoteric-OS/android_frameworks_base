@@ -46,7 +46,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.notNull;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.any;
@@ -167,6 +166,7 @@ public class TetheringTest {
     @Mock private IDhcpServer mDhcpServer;
     @Mock private INetd mNetd;
     @Mock private UserManager mUserManager;
+    @Mock private TetheringNotificationUpdater mNotificationUpdater;
 
     private final MockIpServerDependencies mIpServerDependencies =
             spy(new MockIpServerDependencies());
@@ -351,6 +351,11 @@ public class TetheringTest {
         public Context getContext() {
             return mServiceContext;
         }
+
+        @Override
+        public TetheringNotificationUpdater getNotificationUpdater(Context ctx) {
+            return mNotificationUpdater;
+        }
     }
 
     private static NetworkState buildMobileUpstreamState(boolean withIPv4, boolean withIPv6,
@@ -451,6 +456,8 @@ public class TetheringTest {
         verify(mTelephonyManager).listen(phoneListenerCaptor.capture(),
                 eq(PhoneStateListener.LISTEN_ACTIVE_DATA_SUBSCRIPTION_ID_CHANGE));
         mPhoneStateListener = phoneListenerCaptor.getValue();
+
+        verify(mWifiManager, times(1)).registerSoftApCallback(any(), any());
     }
 
     private Tethering makeTethering() {
@@ -546,7 +553,9 @@ public class TetheringTest {
         // it creates a IpServer and sends out a broadcast indicating that the
         // interface is "available".
         if (emulateInterfaceStatusChanged) {
-            assertEquals(1, mTetheringDependencies.mIsTetheringSupportedCalls);
+            // There is 1 IpServer state change event: STATE_AVAILABLE
+            // Each event will check isTetheringSupported() twice.
+            assertEquals(2, mTetheringDependencies.mIsTetheringSupportedCalls);
             verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_AVAILABLE_TETHER);
             verify(mWifiManager).updateInterfaceIpState(
                     TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
@@ -621,9 +630,9 @@ public class TetheringTest {
         verifyNoMoreInteractions(mWifiManager);
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_ACTIVE_LOCAL_ONLY);
         verify(mUpstreamNetworkMonitor, times(1)).startObserveAllNetworks();
-        // This will be called twice, one is on entering IpServer.STATE_AVAILABLE,
-        // and another one is on IpServer.STATE_TETHERED/IpServer.STATE_LOCAL_ONLY.
-        assertEquals(2, mTetheringDependencies.mIsTetheringSupportedCalls);
+        // There are 2 IpServer state change events: STATE_AVAILABLE -> STATE_LOCAL_ONLY
+        // Each event will check isTetheringSupported() twice.
+        assertEquals(4, mTetheringDependencies.mIsTetheringSupportedCalls);
 
         // Emulate externally-visible WifiManager effects, when hotspot mode
         // is being torn down.
@@ -822,7 +831,9 @@ public class TetheringTest {
         sendWifiApStateChanged(WIFI_AP_STATE_ENABLED);
         mLooper.dispatchAll();
 
-        assertEquals(1, mTetheringDependencies.mIsTetheringSupportedCalls);
+        // There is 1 IpServer state change event: STATE_AVAILABLE
+        // Each event will check isTetheringSupported() twice.
+        assertEquals(2, mTetheringDependencies.mIsTetheringSupportedCalls);
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_AVAILABLE_TETHER);
         verify(mWifiManager).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
@@ -864,9 +875,9 @@ public class TetheringTest {
         // In tethering mode, in the default configuration, an explicit request
         // for a mobile network is also made.
         verify(mUpstreamNetworkMonitor, times(1)).registerMobileNetworkRequest();
-        // This will be called twice, one is on entering IpServer.STATE_AVAILABLE,
-        // and another one is on IpServer.STATE_TETHERED/IpServer.STATE_LOCAL_ONLY.
-        assertEquals(2, mTetheringDependencies.mIsTetheringSupportedCalls);
+        // There are 2 IpServer state change events: STATE_AVAILABLE -> STATE_TETHERED
+        // Each event will check isTetheringSupported() twice.
+        assertEquals(4, mTetheringDependencies.mIsTetheringSupportedCalls);
 
         /////
         // We do not currently emulate any upstream being found.
@@ -937,9 +948,10 @@ public class TetheringTest {
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
         verify(mWifiManager).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_TETHERED);
-        // There are 3 state change event:
-        // AVAILABLE -> STATE_TETHERED -> STATE_AVAILABLE.
-        assertEquals(3, mTetheringDependencies.mIsTetheringSupportedCalls);
+        // There are 3 IpServer state change event:
+        //         STATE_AVAILABLE -> STATE_TETHERED -> STATE_AVAILABLE.
+        // Each event will check isTetheringSupported() twice.
+        assertEquals(6, mTetheringDependencies.mIsTetheringSupportedCalls);
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_AVAILABLE_TETHER);
         // This is called, but will throw.
         verify(mNMService, times(1)).setIpForwardingEnabled(true);
@@ -970,9 +982,6 @@ public class TetheringTest {
         ural.mDisallowTethering = currentDisallow;
 
         ural.onUserRestrictionsChanged();
-
-        verify(mockTethering, times(expectedInteractionsWithShowNotification))
-                .showTetheredNotification(anyInt(), eq(false));
 
         verify(mockTethering, times(expectedInteractionsWithShowNotification))
                 .untetherAll();
@@ -1204,9 +1213,9 @@ public class TetheringTest {
         verifyNoMoreInteractions(mNMService);
         verifyTetheringBroadcast(TEST_P2P_IFNAME, EXTRA_ACTIVE_LOCAL_ONLY);
         verify(mUpstreamNetworkMonitor, times(1)).startObserveAllNetworks();
-        // This will be called twice, one is on entering IpServer.STATE_AVAILABLE,
-        // and another one is on IpServer.STATE_TETHERED/IpServer.STATE_LOCAL_ONLY.
-        assertEquals(2, mTetheringDependencies.mIsTetheringSupportedCalls);
+        // There are 2 IpServer state change events: STATE_AVAILABLE -> STATE_LOCAL_ONLY
+        // Each event will check isTetheringSupported() twice.
+        assertEquals(4, mTetheringDependencies.mIsTetheringSupportedCalls);
 
         assertEquals(TETHER_ERROR_NO_ERROR, mTethering.getLastTetherError(TEST_P2P_IFNAME));
 
