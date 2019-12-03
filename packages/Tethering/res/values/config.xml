@@ -4,4 +4,33 @@
     OEMs that wish to change the below settings must do so via a runtime resource overlay package
     and *NOT* by changing this file. This file is part of the tethering mainline module.
     -->
+
+    <!-- Default tethering notification -->
+    <!-- Icons for showing tether enable notification.
+         Empty array means disable this notification. Empty item means not show notification for
+         this downstream type.
+         Can customize for each downstream types or just one icon for all downstream types. -->
+    <!-- Hotspot doesn't show notification due to status bar already has an icon -->
+    <array name="tethering_notification_icons">
+        <item></item>
+        <item></item>
+        <item>@drawable/stat_sys_tether_usb</item>
+        <item>@drawable/stat_sys_tether_general</item>
+        <item>@drawable/stat_sys_tether_bluetooth</item>
+        <item>@drawable/stat_sys_tether_general</item>
+        <item>@drawable/stat_sys_tether_general</item>
+        <item>@drawable/stat_sys_tether_general</item>
+    </array>
+    <!-- Strings for tether enable notification title. -->
+    <string name="tethering_notification_title_noclients">@string/tethered_notification_title</string>
+    <!-- Strings for tether enable notification message. -->
+    <string name="tethering_notification_text_noclients">@string/tethered_notification_message</string>
+    <!-- Strings for tether enable notification message when power saving mode is on. -->
+    <string name="tethering_notification_text_power_saving_noclients">@string/tethered_notification_message</string>
+
+    <!-- Strings for combination downstream info.
+         Empty array means no customization. Empty item means no info for this downstream type.
+         Can customize for each downstream types or just one string for all downstream types. -->
+    <string-array name="tethering_downstream_combinations">
+    </string-array>
 </resources>
