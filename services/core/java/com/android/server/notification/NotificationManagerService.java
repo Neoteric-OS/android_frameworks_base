@@ -1389,6 +1389,8 @@ public class NotificationManagerService extends SystemService {
                 = Settings.System.getUriFor(Settings.System.NOTIFICATION_LIGHT_PULSE);
         private final Uri NOTIFICATION_RATE_LIMIT_URI
                 = Settings.Global.getUriFor(Settings.Global.MAX_NOTIFICATION_ENQUEUE_RATE);
+        private final Uri NOTIFICATION_NEW_INTERRUPTION_MODEL_URI
+                = Settings.Secure.getUriFor(Settings.Secure.NOTIFICATION_NEW_INTERRUPTION_MODEL);
 
         SettingsObserver(Handler handler) {
             super(handler);
@@ -1405,6 +1407,8 @@ public class NotificationManagerService extends SystemService {
             resolver.registerContentObserver(NOTIFICATION_BUBBLES_URI_GLOBAL,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(NOTIFICATION_BUBBLES_URI_SECURE,
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(NOTIFICATION_NEW_INTERRUPTION_MODEL_URI,
                     false, this, UserHandle.USER_ALL);
             update(null);
         }
@@ -1440,6 +1444,9 @@ public class NotificationManagerService extends SystemService {
             }
             if (NOTIFICATION_BUBBLES_URI_SECURE.equals(uri)) {
                 syncBubbleSettings(resolver, NOTIFICATION_BUBBLES_URI_SECURE);
+            }
+            if (uri == null || NOTIFICATION_NEW_INTERRUPTION_MODEL_URI.equals(uri)) {
+                mRankingHelper.updateInterruptionModel();
             }
         }
 
