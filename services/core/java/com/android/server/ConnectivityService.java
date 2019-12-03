@@ -6237,7 +6237,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void makeDefault(@NonNull final NetworkAgentInfo newNetwork) {
+    private void makeDefault(@Nullable final NetworkAgentInfo newNetwork) {
+        if (null == newNetwork) return;
         if (DBG) log("Switching to new default network: " + newNetwork);
 
         try {
@@ -6336,6 +6337,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mAffectedNetworks.addAll(other.mAffectedNetworks);
             return this;
         }
+
+        // Will return null if this reassignment does not reassign the default network.
+        @Nullable private NetworkAgentInfo getNewSatisfier(@NonNull final NetworkRequest nr) {
+            for (final RequestReassignment event : getRequestReassignments()) {
+                if (nr.requestId == event.mRequest.request.requestId) return event.mNewNetwork;
+            }
+            return null;
+        }
     }
 
     private ArrayMap<NetworkRequestInfo, NetworkAgentInfo> computeRequestReassignmentForNetwork(
@@ -6399,8 +6408,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private NetworkReassignment rematchNetworkAndRequests(NetworkAgentInfo newNetwork, long now) {
         ensureRunningOnConnectivityServiceThread();
         if (!newNetwork.everConnected) return null;
-        boolean isNewDefault = false;
-        NetworkAgentInfo oldDefaultNetwork = null;
 
         final NetworkReassignment reassignment = new NetworkReassignment();
         reassignment.addAffectedNetwork(new NetworkReassignment.AffectedNetwork(newNetwork,
@@ -6450,8 +6457,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 // netid->request mapping to each factory?
                 sendUpdatedScoreToFactories(nri.request, newSatisfier);
                 if (isDefaultRequest(nri)) {
-                    isNewDefault = true;
-                    oldDefaultNetwork = previousSatisfier;
                     if (previousSatisfier != null) {
                         mLingerMonitor.noteLingerDefaultNetwork(previousSatisfier, newSatisfier);
                     }
@@ -6489,17 +6494,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        if (isNewDefault) {
-            updateDataActivityTracking(newNetwork, oldDefaultNetwork);
-            // Notify system services that this network is up.
-            makeDefault(newNetwork);
-            // Log 0 -> X and Y -> X default network transitions, where X is the new default.
-            mDeps.getMetricsLogger().defaultNetworkMetrics().logDefaultNetworkEvent(
-                    now, newNetwork, oldDefaultNetwork);
-            // Have a new default network, release the transition wakelock in
-            scheduleReleaseNetworkTransitionWakelock();
-        }
-
         return reassignment;
     }
 
@@ -6527,7 +6521,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
             reassignment.merge(rematchNetworkAndRequests(nai, now));
         }
 
-        final NetworkAgentInfo newDefaultNetwork = getDefaultNetwork();
+        final NetworkAgentInfo newDefaultNetwork =
+                getOrElse(reassignment.getNewSatisfier(mDefaultRequest), oldDefaultNetwork);
+
+        if (oldDefaultNetwork != newDefaultNetwork) {
+            updateDataActivityTracking(newDefaultNetwork, oldDefaultNetwork);
+            // Notify system services that this network is up.
+            makeDefault(newDefaultNetwork);
+            // Log 0 -> X and Y -> X default network transitions, where X is the new default.
+            mDeps.getMetricsLogger().defaultNetworkMetrics().logDefaultNetworkEvent(
+                    now, newDefaultNetwork, oldDefaultNetwork);
+            // Have a new default network, release the transition wakelock in
+            scheduleReleaseNetworkTransitionWakelock();
+        }
 
         // Notify requested networks are available after the default net is switched, but
         // before LegacyTypeTracker sends legacy broadcasts
@@ -7328,5 +7334,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             return mTNS;
         }
+    }
+
+    /**
+     * Returns its first argument if non-null, and the second otherwise.
+     */
+    @Nullable private <T> T getOrElse(@Nullable final T object, @Nullable final T otherwise) {
+        return null != object ? object : otherwise;
     }
 }
