@@ -99,6 +99,8 @@ public class VolumeInfo implements Parcelable {
 
     public static final int MOUNT_FLAG_PRIMARY = IVold.MOUNT_FLAG_PRIMARY;
     public static final int MOUNT_FLAG_VISIBLE = IVold.MOUNT_FLAG_VISIBLE;
+    public static final int MOUNT_FLAG_INDEXABLE = IVold.MOUNT_FLAG_INDEXABLE;
+    public static final int MOUNT_FLAG_INTERNAL = IVold.MOUNT_FLAG_INTERNAL;
 
     private static SparseArray<String> sStateToEnvironment = new SparseArray<>();
     private static ArrayMap<String, String> sEnvironmentToBroadcast = new ArrayMap<>();

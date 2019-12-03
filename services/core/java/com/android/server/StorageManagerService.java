@@ -1157,12 +1157,13 @@ class StorageManagerService extends IStorageManager.Stub
         }
 
         @Override
-        public void onVolumeCreated(String volId, int type, String diskId, String partGuid) {
+        public void onVolumeCreated(String volId, int type, String diskId, String partGuid,
+                int mountFlags) {
             synchronized (mLock) {
                 final DiskInfo disk = mDisks.get(diskId);
                 final VolumeInfo vol = new VolumeInfo(volId, type, disk, partGuid);
                 mVolumes.put(volId, vol);
-                onVolumeCreatedLocked(vol);
+                onVolumeCreatedLocked(vol, mountFlags);
             }
         }
 
@@ -1247,7 +1248,7 @@ class StorageManagerService extends IStorageManager.Stub
     }
 
     @GuardedBy("mLock")
-    private void onVolumeCreatedLocked(VolumeInfo vol) {
+    private void onVolumeCreatedLocked(VolumeInfo vol, int mountFlags) {
         if (mPmInternal.isOnlyCoreApps()) {
             Slog.d(TAG, "System booted in core-only mode; ignoring volume " + vol.getId());
             return;
@@ -1294,6 +1295,16 @@ class StorageManagerService extends IStorageManager.Stub
 
         } else if (vol.type == VolumeInfo.TYPE_STUB) {
             vol.mountUserId = mCurrentUserId;
+            // We only support the following flags to be overridden.
+            if ((mountFlags & VolumeInfo.MOUNT_FLAG_VISIBLE) != 0) {
+                vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
+            }
+            if ((mountFlags & VolumeInfo.MOUNT_FLAG_INDEXABLE) != 0) {
+                vol.mountFlags |= VolumeInfo.MOUNT_FLAG_INDEXABLE;
+            }
+            if ((mountFlags & VolumeInfo.MOUNT_FLAG_INTERNAL) != 0) {
+                vol.mountFlags |= VolumeInfo.MOUNT_FLAG_INTERNAL;
+            }
             mHandler.obtainMessage(H_VOLUME_MOUNT, vol).sendToTarget();
         } else {
             Slog.d(TAG, "Skipping automatic mounting of " + vol);
