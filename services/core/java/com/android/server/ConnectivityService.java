@@ -6093,11 +6093,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void sendUpdatedScoreToFactories(NetworkRequest networkRequest, NetworkAgentInfo nai) {
-        int score = 0;
-        int serial = 0;
+        final int score;
+        final int serial;
         if (nai != null) {
             score = nai.getCurrentScore();
             serial = nai.factorySerialNumber;
+        } else {
+            score = 0;
+            serial = 0;
         }
         if (VDBG || DDBG){
             log("sending new Min Network Score(" + score + "): " + networkRequest.toString());
@@ -6461,12 +6464,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 newNetwork.removeRequest(nri.request.requestId);
             }
             nri.mSatisfier = newSatisfier;
-            // Tell NetworkFactories about the new score, so they can stop
-            // trying to connect if they know they cannot match it.
-            // TODO - this could get expensive if we have a lot of requests for this
-            // network.  Think about if there is a way to reduce this.  Push
-            // netid->request mapping to each factory?
-            sendUpdatedScoreToFactories(nri.request, newSatisfier);
         }
 
         return reassignment;
@@ -6517,6 +6514,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // before LegacyTypeTracker sends legacy broadcasts
         for (final NetworkReassignment.RequestReassignment event :
                 reassignment.getRequestReassignments()) {
+            // Tell NetworkFactories about the new score, so they can stop
+            // trying to connect if they know they cannot match it.
+            // TODO - this could get expensive if we have a lot of requests for this
+            // network.  Think about if there is a way to reduce this.  Push
+            // netid->request mapping to each factory?
+            sendUpdatedScoreToFactories(event.mRequest.request, event.mNewNetwork);
+
             if (null != event.mNewNetwork) {
                 notifyNetworkAvailable(event.mNewNetwork, event.mRequest);
             } else {
