@@ -6500,17 +6500,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             scheduleReleaseNetworkTransitionWakelock();
         }
 
-        if (!newNetwork.networkCapabilities.equalRequestableCapabilities(nc)) {
-            Slog.wtf(TAG, String.format(
-                    "BUG: %s changed requestable capabilities during rematch: %s -> %s",
-                    newNetwork.name(), nc, newNetwork.networkCapabilities));
-        }
-        if (newNetwork.getCurrentScore() != score) {
-            Slog.wtf(TAG, String.format(
-                    "BUG: %s changed score during rematch: %d -> %d",
-                   newNetwork.name(), score, newNetwork.getCurrentScore()));
-        }
-
         return reassignment;
     }
 
