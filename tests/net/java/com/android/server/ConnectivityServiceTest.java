@@ -5642,6 +5642,33 @@ public class ConnectivityServiceTest {
     }
 
     @Test
+    public final void testLoseTrusted() throws Exception {
+        final NetworkRequest trustedRequest = new NetworkRequest.Builder()
+                .addCapability(NET_CAPABILITY_TRUSTED)
+                .build();
+        final TestNetworkCallback trustedCallback = new TestNetworkCallback();
+        mCm.requestNetwork(trustedRequest, trustedCallback);
+
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+        trustedCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(true);
+        trustedCallback.expectAvailableDoubleValidatedCallbacks(mWiFiNetworkAgent);
+
+        mWiFiNetworkAgent.removeCapability(NET_CAPABILITY_TRUSTED);
+        // There is currently a bug where losing the TRUSTED capability will send a LOST
+        // callback to requests before the available callback, in spite of the semantics
+        // of the requests dictating this should not happen. This is considered benign, but
+        // ideally should be fixed in the future.
+        trustedCallback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
+        trustedCallback.expectAvailableCallbacksValidated(mCellNetworkAgent);
+
+        mCm.unregisterNetworkCallback(trustedCallback);
+    }
+
+    @Test
     public final void testBatteryStatsNetworkType() throws Exception {
         final LinkProperties cellLp = new LinkProperties();
         cellLp.setInterfaceName("cell0");
