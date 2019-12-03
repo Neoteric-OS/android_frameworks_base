@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da521af4_b747802d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11364,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-12-03T01:51:53Z",
+      "side": 0,
+      "message": "Don\u0027t delete the todo",
+      "range": {
+        "startLine": 11364,
+        "startChar": 20,
+        "endLine": 11364,
+        "endChar": 91
+      },
+      "revId": "0899f50b757275e7eeb9910fb9d0d78c077f6194",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
