@@ -44,8 +44,8 @@ public class A2dpProfile implements LocalBluetoothProfile {
     private final CachedBluetoothDeviceManager mDeviceManager;
 
     static final ParcelUuid[] SINK_UUIDS = {
-        BluetoothUuid.AudioSink,
-        BluetoothUuid.AdvAudioDist,
+        BluetoothUuid.AUDIO_SINK,
+        BluetoothUuid.ADV_AUDIO_DIST,
     };
 
     static final String NAME = "A2DP";

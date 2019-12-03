@@ -574,7 +574,7 @@ public final class BluetoothA2dp implements BluetoothProfile {
             if (uuids == null) return false;
 
             for (ParcelUuid uuid : uuids) {
-                if (BluetoothUuid.isAvrcpTarget(uuid)) {
+                if (uuid.equals(BluetoothUuid.AVRCP_TARGET)) {
                     return true;
                 }
             }

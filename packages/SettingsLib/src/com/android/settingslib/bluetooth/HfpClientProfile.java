@@ -44,7 +44,7 @@ final class HfpClientProfile implements LocalBluetoothProfile {
 
     static final ParcelUuid[] SRC_UUIDS = {
         BluetoothUuid.HSP_AG,
-        BluetoothUuid.Handsfree_AG,
+        BluetoothUuid.HANDS_FREE_AG,
     };
 
     static final String NAME = "HEADSET_CLIENT";
