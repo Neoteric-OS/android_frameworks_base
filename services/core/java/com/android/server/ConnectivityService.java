@@ -6238,8 +6238,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void makeDefault(@Nullable final NetworkAgentInfo newNetwork) {
-        if (null == newNetwork) return;
         if (DBG) log("Switching to new default network: " + newNetwork);
+
+        mDefaultNetworkNai = newNetwork;
+        if (null == newNetwork) return;
 
         try {
             mNMS.setDefaultNetId(newNetwork.network.netId);
@@ -6247,7 +6249,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             loge("Exception setting default network :" + e);
         }
 
-        mDefaultNetworkNai = newNetwork;
         notifyLockdownVpn(newNetwork);
         handleApplyDefaultProxy(newNetwork.linkProperties.getHttpProxy());
         updateTcpBufferSizes(newNetwork.linkProperties.getTcpBufferSizes());
@@ -6460,7 +6461,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
                 newNetwork.removeRequest(nri.request.requestId);
                 nri.mSatisfier = null;
-                if (isDefaultRequest(nri)) mDefaultNetworkNai = null;
             }
             // Tell NetworkFactories about the new score, so they can stop
             // trying to connect if they know they cannot match it.
