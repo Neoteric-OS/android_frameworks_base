@@ -28458,6 +28458,24 @@ package android.net {
     field @NonNull public static final android.os.Parcelable.Creator<android.net.CaptivePortal> CREATOR;
   }
 
+  public class ConnectivityDiagnosticsManager {
+    method public void registerConnectivityDiagnosticsCallback(@NonNull android.net.NetworkRequest, @NonNull android.net.ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback, @NonNull java.util.concurrent.Executor);
+    method public void unregisterConnectivityDiagnosticsCallback(@NonNull android.net.ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback);
+    field public static final int DETECTION_METHOD_DNS_EVENTS = 1; // 0x1
+    field public static final int DETECTION_METHOD_TCP_METRICS = 2; // 0x2
+  }
+
+  public abstract static class ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback {
+    ctor public ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback();
+  }
+
+  public static class ConnectivityDiagnosticsManager.ConnectivityReport {
+    field @NonNull public final android.os.Bundle additionalInfo;
+    field @NonNull public final android.net.LinkProperties linkProperties;
+    field @NonNull public final android.net.NetworkCapabilities networkCapabilities;
+    field public final long reportEpochTimestampMillis;
+  }
+
   public class ConnectivityManager {
     method public void addDefaultNetworkActiveListener(android.net.ConnectivityManager.OnNetworkActiveListener);
     method public boolean bindProcessToNetwork(@Nullable android.net.Network);
