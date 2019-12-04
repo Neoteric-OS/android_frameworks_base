@@ -458,6 +458,9 @@ public final class PowerManagerService extends SystemService
     // True if the lights should stay off until an explicit user action.
     private static boolean sQuiescent;
 
+    // True if Android Automotive.
+    private static boolean sAutomotive;
+
     // True if the proximity sensor reads a positive result.
     private boolean mProximityPositive;
 
@@ -783,7 +786,8 @@ public final class PowerManagerService extends SystemService
 
             mWakefulness = WAKEFULNESS_AWAKE;
             sQuiescent = SystemProperties.get(SYSTEM_PROPERTY_QUIESCENT, "0").equals("1");
-
+            sAutomotive = mContext.getPackageManager()
+                    .hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE);
             mNativeWrapper.nativeInit(this);
             mNativeWrapper.nativeSetAutoSuspend(false);
             mNativeWrapper.nativeSetInteractive(true);
@@ -2494,7 +2498,8 @@ public final class PowerManagerService extends SystemService
                         + ", useAutoBrightness=" + autoBrightness
                         + ", mScreenBrightnessBoostInProgress=" + mScreenBrightnessBoostInProgress
                         + ", mIsVrModeEnabled= " + mIsVrModeEnabled
-                        + ", sQuiescent=" + sQuiescent);
+                        + ", sQuiescent=" + sQuiescent
+                        + ", sAutomotive=" + sAutomotive);
             }
         }
         return mDisplayReady && !oldDisplayReady;
@@ -2740,6 +2745,14 @@ public final class PowerManagerService extends SystemService
     }
 
     private void setHalAutoSuspendModeLocked(boolean enable) {
+        if (sAutomotive) {
+            // In Android Automotive, the power state is controlled explicitly by the Vehicle
+            // HAL, so we do not use AutoSuspend. Do not enable native AutoSuspend.
+            if (DEBUG && enable) {
+                Slog.d(TAG, "Android Automotive: Not enabling auto-suspend mode");
+            }
+            enable = false;
+        }
         if (enable != mHalAutoSuspendModeEnabled) {
             if (DEBUG) {
                 Slog.d(TAG, "Setting HAL auto-suspend mode to " + enable);
