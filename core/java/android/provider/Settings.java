@@ -231,7 +231,8 @@ public final class Settings {
      * @hide
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_TETHER_PROVISIONING =
+    @SystemApi
+    public static final String ACTION_TETHER_PROVISIONING_UI =
             "android.settings.TETHER_PROVISIONING_UI";
 
     /**
@@ -10441,6 +10442,7 @@ public final class Settings {
          * is interpreted as |false|.
          * @hide
          */
+        @SystemApi
         public static final String TETHER_OFFLOAD_DISABLED = "tether_offload_disabled";
 
         /**
@@ -10450,6 +10452,7 @@ public final class Settings {
          * is interpreted as |false|.
          * @hide
          */
+        @SystemApi
         public static final String TETHER_ENABLE_LEGACY_DHCP_SERVER =
                 "tether_enable_legacy_dhcp_server";
 
