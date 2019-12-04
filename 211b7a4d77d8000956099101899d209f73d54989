@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "590c10c1_60e89478",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-04T03:56:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6b4f1d7_9ddd807e",
+      "range": {
+        "startLine": 148,
+        "startChar": 20,
+        "endLine": 148,
+        "endChar": 34
+      },
+      "revId": "211b7a4d77d8000956099101899d209f73d54989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b82e43b0_68123bbd",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringDependencies.java",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bde911de_41635b00",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringDependencies.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-04T03:56:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b82e43b0_68123bbd",
+      "range": {
+        "startLine": 70,
+        "startChar": 15,
+        "endLine": 70,
+        "endChar": 19
+      },
+      "revId": "211b7a4d77d8000956099101899d209f73d54989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfc0cf81_7ff50786",
         "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "211b7a4d77d8000956099101899d209f73d54989",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0c6bd4_806c5ebb",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-04T03:56:27Z",
+      "side": 1,
+      "message": "Ack, add to cleanup b/144742179",
+      "parentUuid": "cfc0cf81_7ff50786",
+      "range": {
+        "startLine": 214,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 5
+      },
+      "revId": "211b7a4d77d8000956099101899d209f73d54989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
