@@ -367,9 +367,9 @@ public final class Telecom extends BaseCommand {
     }
 
     private void runGetMaxPhones() throws RemoteException {
-        // This assumes the max number of SIMs is 2, which it currently is
         if (TelephonyManager.MULTISIM_ALLOWED == mTelephonyManager.isMultiSimSupported()) {
-            System.out.println("2");
+            int phoneCount = mTelephonyManager.getPhoneCount();
+            System.out.println(phoneCount);
         } else {
             System.out.println("1");
         }
