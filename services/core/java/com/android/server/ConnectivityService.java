@@ -6393,11 +6393,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return change;
     }
 
-    private ArrayMap<NetworkRequestInfo, NetworkAgentInfo> computeRequestReassignmentForNetwork(
-            @NonNull final NetworkReassignment changes,
+    private void computeRequestReassignmentForNetwork(@NonNull final NetworkReassignment changes,
             @NonNull final NetworkAgentInfo newNetwork) {
         final int score = newNetwork.getCurrentScore();
-        final ArrayMap<NetworkRequestInfo, NetworkAgentInfo> reassignedRequests = new ArrayMap<>();
         for (NetworkRequestInfo nri : mNetworkRequests.values()) {
             // Process requests in the first pass and listens in the second pass. This allows us to
             // change a network's capabilities depending on which requests it has. This is only
@@ -6420,18 +6418,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             + ", newScore = " + score);
                 }
                 if (currentNetwork == null || currentNetwork.getCurrentScore() < score) {
-                    reassignedRequests.put(nri, newNetwork);
                     changes.addRequestReassignment(new NetworkReassignment.RequestReassignment(
                             nri, currentNetwork, newNetwork));
                 }
             } else if (newNetwork == currentNetwork) {
-                reassignedRequests.put(nri, null);
                 changes.addRequestReassignment(new NetworkReassignment.RequestReassignment(
                         nri, currentNetwork, null));
             }
         }
-
-        return reassignedRequests;
     }
 
     // Handles a network appearing or improving its score.
@@ -6459,18 +6453,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (VDBG || DDBG) log("rematching " + newNetwork.name());
 
-        final ArrayMap<NetworkRequestInfo, NetworkAgentInfo> reassignedRequests =
-                computeRequestReassignmentForNetwork(changes, newNetwork);
-
-        // Find and migrate to this Network any NetworkRequests for
-        // which this network is now the best.
-        for (final Map.Entry<NetworkRequestInfo, NetworkAgentInfo> entry :
-                reassignedRequests.entrySet()) {
-            final NetworkRequestInfo nri = entry.getKey();
-            final NetworkAgentInfo previousSatisfier = nri.mSatisfier;
-            final NetworkAgentInfo newSatisfier = entry.getValue();
-            updateNetworkAgentInfoForRematchRequest(nri, previousSatisfier, newSatisfier, now);
-        }
+        computeRequestReassignmentForNetwork(changes, newNetwork);
     }
 
     private void updateNetworkAgentInfoForRematchRequest(@NonNull final NetworkRequestInfo nri,
@@ -6524,6 +6507,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkReassignment changes = computeInitialReassignment();
         for (final NetworkAgentInfo nai : nais) {
             rematchNetworkAndRequests(changes, nai, now);
+        }
+
+        for (final NetworkReassignment.RequestReassignment event :
+                changes.getRequestReassignments()) {
+            if (event.mOldNetwork == event.mNewNetwork) continue;
+            updateNetworkAgentInfoForRematchRequest(event.mRequest, event.mOldNetwork,
+                    event.mNewNetwork, now);
         }
 
         final NetworkRequestInfo defaultRequestInfo = mNetworkRequests.get(mDefaultRequest);
