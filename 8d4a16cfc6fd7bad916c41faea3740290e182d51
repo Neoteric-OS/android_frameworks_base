@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e98411e7_42bf88b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1305591
+      },
+      "writtenOn": "2019-12-04T21:19:19Z",
+      "side": 1,
+      "message": "(this is the DO NOT MERGE i refer to in the previous comment)",
+      "range": {
+        "startLine": 7,
+        "startChar": 37,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "8d4a16cfc6fd7bad916c41faea3740290e182d51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
