@@ -28460,6 +28460,8 @@ package android.net {
 
   public class ConnectivityDiagnosticsManager {
     method public void registerConnectivityDiagnosticsCallback(@NonNull android.net.NetworkRequest, @NonNull android.net.ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback, @NonNull java.util.concurrent.Executor);
+    method public void requestRouteDiagnostics(@NonNull android.net.Network, @NonNull java.net.InetAddress, @NonNull java.util.concurrent.Executor, @NonNull android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsCallback);
+    method public void requestRouteDiagnostics(@NonNull android.net.Network, @NonNull java.net.InetAddress, @NonNull android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsOptions, @NonNull java.util.concurrent.Executor, @NonNull android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsCallback);
     method public void unregisterConnectivityDiagnosticsCallback(@NonNull android.net.ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback);
     field public static final int DETECTION_METHOD_DNS_EVENTS = 1; // 0x1
     field public static final int DETECTION_METHOD_TCP_METRICS = 2; // 0x2
@@ -28474,6 +28476,41 @@ package android.net {
     field @NonNull public final android.net.LinkProperties linkProperties;
     field @NonNull public final android.net.NetworkCapabilities networkCapabilities;
     field public final long reportEpochTimestampMillis;
+  }
+
+  public abstract static class ConnectivityDiagnosticsManager.RouteDiagnosticsCallback {
+    ctor public ConnectivityDiagnosticsManager.RouteDiagnosticsCallback();
+    method public void onError(@NonNull android.net.Network, @NonNull java.net.InetAddress, @NonNull Exception);
+    method public void onRouteDiagnosticsComplete(@NonNull android.net.Network, @NonNull java.net.InetAddress, @NonNull java.util.List<android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopInfo>);
+  }
+
+  public static class ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopInfo {
+    field public final int numProbesSent;
+    field @NonNull public final java.util.List<android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopResponse> responses;
+    field public final int ttl;
+  }
+
+  public static class ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopResponse {
+    field @NonNull public final java.net.InetAddress address;
+    field public final double averageRttMillis;
+    field public final int numProbesReceived;
+  }
+
+  public static class ConnectivityDiagnosticsManager.RouteDiagnosticsOptions {
+    field public static final int MTU_BYTES = 48; // 0x30
+    field public final int maxTtl;
+    field public final int packetSizeBytes;
+    field public final int probesPerHop;
+    field public final int timeoutMillis;
+  }
+
+  public static class ConnectivityDiagnosticsManager.RouteDiagnosticsOptions.Builder {
+    ctor public ConnectivityDiagnosticsManager.RouteDiagnosticsOptions.Builder();
+    method @NonNull public android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsOptions build();
+    method @NonNull public android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsOptions.Builder setMaxTtl(int);
+    method @NonNull public android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsOptions.Builder setPacketSizeBytes(int);
+    method @NonNull public android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsOptions.Builder setProbesPerHop(int);
+    method @NonNull public android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsOptions.Builder setTimeoutMillis(int);
   }
 
   public class ConnectivityManager {
