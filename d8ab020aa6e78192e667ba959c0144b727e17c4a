@@ -70,6 +70,30 @@
       "revId": "d8ab020aa6e78192e667ba959c0144b727e17c4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71fbe0ff_ff1cbd64",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-12-04T08:56:14Z",
+      "side": 1,
+      "message": "I\u0027m not on the libcore team any more but here\u0027s my thoughts:\n\nI\u0027m in favor of deprecation - it\u0027s badly named. I\u0027d point to java.time.Duration personally. Anything over a day gets nuanced as the calendar system / civil time kicks in. 365 days, 52 weeks, 1 year - all a bit fuzzy. http://go/it\u0027s-about-time for a good read (I don\u0027t pretend to have read all of it closely).\n\nI _think_ the one in RelativeDateTimeFormatter is probably ok - I _think_ it\u0027s used to work out when to switch from talking about things in days to years, or similar heuristic.\n\nThere are various replacements depending on what the user is trying to represent. Here\u0027s some I found (probably not complete), and ICU (android.icu) has it\u0027s own copy of calendar too.\n\n        Duration.ofDays(365).toMillis();\n        TimeUnit.DAYS.toMillis(365);\n\n        ChronoUnit.YEARS.getDuration(); // \"Estimated\"\n        \n        // Calendar\n        {\n            Calendar cal \u003d new GregorianCalendar(2020, Calendar.JANUARY, 1, 0, 0, 0);\n            long startMillis \u003d cal.getTimeInMillis();\n            cal.add(Calendar.YEAR, 1);\n            long yearDurationMillis \u003d cal.getTimeInMillis() - startMillis;\n        }\n        \n        {\n            LocalDate localDate \u003d LocalDate.of(2020, 1, 1);\n            long startMillis \u003d localDate.atStartOfDay().toEpochSecond(ZoneOffset.UTC);\n            localDate.plusYears(1);\n            long yearDurationMillis \u003d localDate.atStartOfDay().toEpochSecond(ZoneOffset.UTC);\n        }",
+      "parentUuid": "70a46dcb_7cd42b3f",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 18
+      },
+      "revId": "d8ab020aa6e78192e667ba959c0144b727e17c4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
