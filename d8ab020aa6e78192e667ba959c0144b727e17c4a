@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f88e4f2_c2d8f284",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2019-12-04T03:56:08Z",
+      "side": 1,
+      "message": "what do we suggest to all the users of this? As far as I know we cannot deprecate without giving them another way to do the same thing. \n\nThere is a lot of usage in the framework \nhttps://cs.corp.google.com/search/?q\u003dYEAR_IN_MILLIS+file:.java\u0026m\u003d100\u0026det\u003dmatsel\u0026sq\u003dpackage:android\u0026type\u003dcs\n\nWe also need to inform libcore team\nhttps://cs.corp.google.com/android/libcore/luni/src/main/java/libcore/icu/RelativeDateTimeFormatter.java?q\u003dYEAR_IN_MILLIS+file:.java\u0026sq\u003dpackage:android\u0026dr\u003dCSs\u0026l\u003d48",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 18
+      },
+      "revId": "d8ab020aa6e78192e667ba959c0144b727e17c4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
