@@ -6572,17 +6572,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        for (final NetworkReassignment.NetworkBgStatePair event : changes.getRematchedNetworks()) {
-            // Process listen requests and update capabilities if the background state has
-            // changed for this network. For consistency with previous behavior, send onLost
-            // callbacks before onAvailable.
-            processNewlyLostListenRequests(event.mNetwork);
-            if (event.mOldBackground != event.mNetwork.isBackgroundNetwork()) {
-                applyBackgroundChangeForRematch(event.mNetwork);
-            }
-            processNewlySatisfiedListenRequests(event.mNetwork);
-        }
-
+        // Update the linger state before processing listen callbacks, because the background
+        // computation depends on whether the network is lingering. Don't send the LOSING callbacks
+        // just yet though, because they have to be sent later.
         final ArrayList<NetworkAgentInfo> lingeredNetworks = new ArrayList<>();
         for (final NetworkAgentInfo nai : nais) {
             // Rematching may have altered the linger state of some networks, so update all linger
@@ -6593,6 +6585,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (updateLingerState(nai, now)) {
                 lingeredNetworks.add(nai);
             }
+        }
+
+        for (final NetworkReassignment.NetworkBgStatePair event : changes.getRematchedNetworks()) {
+            // Process listen requests and update capabilities if the background state has
+            // changed for this network. For consistency with previous behavior, send onLost
+            // callbacks before onAvailable.
+            processNewlyLostListenRequests(event.mNetwork);
+            if (event.mOldBackground != event.mNetwork.isBackgroundNetwork()) {
+                applyBackgroundChangeForRematch(event.mNetwork);
+            }
+            processNewlySatisfiedListenRequests(event.mNetwork);
         }
 
         for (final NetworkAgentInfo nai : lingeredNetworks) {
