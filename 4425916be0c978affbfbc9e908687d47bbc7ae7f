@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e8d4ef00_8f4b5419",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4196,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-04T08:46:36Z",
+      "side": 1,
+      "message": "Counter-proposal :\n\nChange the constructor of NetworkAgent that takes a NetworkMisc into one that takes these three arguments.\nWiFi can continue to call the constructor that doesn\u0027t take either NetworkMisc or the three args. Telephony would just call it with the three values.\n\nThe impl of the constructor will create the NetworkMisc object and pass it to ConnectivityManager#registerNetworkAgent as before.\n\nWDYT ?",
+      "parentUuid": "92c68378_df81176f",
+      "range": {
+        "startLine": 4196,
+        "startChar": 21,
+        "endLine": 4196,
+        "endChar": 32
+      },
+      "revId": "4425916be0c978affbfbc9e908687d47bbc7ae7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce298056_9a01ffd4",
         "filename": "core/java/android/net/NetworkMisc.java",
         "patchSetId": 2
