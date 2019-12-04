@@ -20,6 +20,8 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.os.Bundle;
 
+import java.net.InetAddress;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 /**
@@ -156,5 +158,102 @@ public class ConnectivityDiagnosticsManager {
             @NonNull ConnectivityDiagnosticsCallback callback) {
         // TODO(b/143187964): implement ConnectivityDiagnostics functionality
         throw new UnsupportedOperationException("registerCallback() not supported yet");
+    }
+
+    /**
+     * Base class for Route Diagnostics callbacks. Used to provide information about a {@code
+     * traceroute} request to a specific IP address. Must be extended by applications wanting route
+     * diagnostics information.
+     */
+    public abstract static class RouteDiagnosticsCallback {
+        /** HopInfo represents the route diagnostics information collected for some TTL. */
+        public static class HopInfo {
+            // The HopResponses received for this HopInfo.
+            @NonNull public final List<HopResponse> responses;
+
+            // The number of probes sent for this HopInfo.
+            public final int numProbesSent;
+
+            // The TTL for this HopInfo.
+            public final int ttl;
+
+            /**
+             * @param responses The List<HopResponse> for this TTL
+             * @param numProbesSent The number of probes sent out for this TTL
+             * @param ttl The TTL (time to live) represented by this HopInfo
+             */
+            public HopInfo(@NonNull List<HopResponse> responses, int numProbesSent, int ttl) {
+                this.responses = responses;
+                this.numProbesSent = numProbesSent;
+                this.ttl = ttl;
+            }
+        }
+
+        /**
+         * HopResponse represents the route diagnostics information collected to a specific IP
+         * address for a specific TTL.
+         */
+        public static class HopResponse {
+            // The address for which the diagnostics apply.
+            @NonNull public final InetAddress address;
+
+            // The average RTT in milliseconds to reach this address.
+            public final double averageRttMillis;
+
+            // The number of probe responses received from this address.
+            public final int numProbesReceived;
+
+            /**
+             * @param address The InetAddress for this HopResponse
+             * @param averageRttMillis The average RTT (round trip time) in milliseconds
+             * @param numProbesReceived The number of probes responded to by this
+             */
+            public HopResponse(
+                    @NonNull InetAddress address, double averageRttMillis, int numProbesReceived) {
+                this.address = address;
+                this.averageRttMillis = averageRttMillis;
+                this.numProbesReceived = numProbesReceived;
+            }
+        }
+
+        /**
+         * Called when route diagnostics have been completed to the specified host.
+         *
+         * @param network The Network on which the route diagnostics were collected
+         * @param host The InetAddress to which route diagnostics were collected
+         * @param route The List<HopInfo> route that was determined to the host
+         */
+        protected void receiveRouteDiagnostics(
+                Network network, InetAddress host, List<HopInfo> route) {}
+
+        /**
+         * Called when a critical error is encountered while computing route diagnostics.
+         *
+         * @param network The Network on which the route diagnostics were attempted
+         * @param host The InetAddress to which route diagnostics were attempted
+         * @param cause The Exception that caused the route diagnostics to fail
+         */
+        protected void onError(Network network, InetAddress host, Exception cause) {}
+    }
+
+    /**
+     * Request diagnostic information be collected for a particular IP address or domain.
+     *
+     * <p>Every call to {@link ConnectivityDiagnosticsManager#requestRouteDiagnostics} will result
+     * in either {@link RouteDiagnosticsCallback#receiveRouteDiagnostics} or {@link
+     * RouteDiagnosticsCallback#onError} being invoked.
+     *
+     * @param network The {@link Network} to be used for route diagnostics
+     * @param host The {@link InetAddress} to be targeted for route diagnostics
+     * @param callback The {@link RouteDiagnosticsCallback} to be invoked
+     * @param e The {@link Executor} on which the route diagnostics will be computed
+     */
+    public void requestRouteDiagnostics(
+            @NonNull Network network,
+            @NonNull InetAddress host,
+            @NonNull RouteDiagnosticsCallback callback,
+            @NonNull Executor e) {
+        // TODO(b/143189134): implement Route Diagnostics functionality
+        throw new UnsupportedOperationException("requestRouteDiagnostics() not supported yet");
     }
 }

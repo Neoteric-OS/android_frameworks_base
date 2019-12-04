@@ -28460,6 +28460,7 @@ package android.net {
 
   public class ConnectivityDiagnosticsManager {
     method public void registerConnectivityDiagnosticsCallback(@NonNull android.net.NetworkRequest, @NonNull android.net.ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback, @NonNull java.util.concurrent.Executor);
+    method public void requestRouteDiagnostics(@NonNull android.net.Network, @NonNull java.net.InetAddress, @NonNull android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsCallback, @NonNull java.util.concurrent.Executor);
     method public void unregisterConnectivityDiagnosticsCallback(@NonNull android.net.ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback);
     field public static final int DNS_EVENTS = 1; // 0x1
     field public static final int TCP_METRICS = 2; // 0x2
@@ -28478,6 +28479,26 @@ package android.net {
   }
 
   @IntDef({android.net.ConnectivityDiagnosticsManager.DNS_EVENTS, android.net.ConnectivityDiagnosticsManager.TCP_METRICS}) @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.CLASS) public static @interface ConnectivityDiagnosticsManager.DetectionMethod {
+  }
+
+  public abstract static class ConnectivityDiagnosticsManager.RouteDiagnosticsCallback {
+    ctor public ConnectivityDiagnosticsManager.RouteDiagnosticsCallback();
+    method protected void onError(android.net.Network, java.net.InetAddress, Exception);
+    method protected void receiveRouteDiagnostics(android.net.Network, java.net.InetAddress, java.util.List<android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopInfo>);
+  }
+
+  public static class ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopInfo {
+    ctor public ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopInfo(@NonNull java.util.List<android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopResponse>, int, int);
+    field public final int numProbesSent;
+    field @NonNull public final java.util.List<android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopResponse> responses;
+    field public final int ttl;
+  }
+
+  public static class ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopResponse {
+    ctor public ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopResponse(@NonNull java.net.InetAddress, double, int);
+    field @NonNull public final java.net.InetAddress address;
+    field public final double averageRttMillis;
+    field public final int numProbesReceived;
   }
 
   public class ConnectivityManager {
