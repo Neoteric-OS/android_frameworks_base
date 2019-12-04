@@ -22,6 +22,30 @@
       "revId": "d8ab020aa6e78192e667ba959c0144b727e17c4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932c4a8a_ddbd89d8",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2019-12-04T03:56:47Z",
+      "side": 1,
+      "message": "if we add the icu/libcore team to this CL they might have a suggestion for us.",
+      "parentUuid": "0f88e4f2_c2d8f284",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 18
+      },
+      "revId": "d8ab020aa6e78192e667ba959c0144b727e17c4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
