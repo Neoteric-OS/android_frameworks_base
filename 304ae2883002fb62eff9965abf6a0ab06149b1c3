@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef8ef19b_15433ec5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-04T11:44:19Z",
+      "side": 1,
+      "message": "Should be 6363?",
+      "range": {
+        "startLine": 11,
+        "startChar": 45,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "304ae2883002fb62eff9965abf6a0ab06149b1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "293f1f0d_885ee170",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-04T11:44:19Z",
+      "side": 1,
+      "message": "Hmm...I\u0027m thinking about is there any possible that \"newNetwork.isSatisfyingRequest(nri.request.requestId)\" but newNetwork is not equal to currentNetwork?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 59
+      },
+      "revId": "304ae2883002fb62eff9965abf6a0ab06149b1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
