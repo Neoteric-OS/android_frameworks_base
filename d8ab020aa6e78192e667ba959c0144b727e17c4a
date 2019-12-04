@@ -118,6 +118,30 @@
       "revId": "d8ab020aa6e78192e667ba959c0144b727e17c4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd34a64_f40a193d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2019-12-04T23:43:15Z",
+      "side": 1,
+      "message": "Thanks Neil.\n\nCharles, I suggest to point developers to Calendar or Duration\n\n\"Please use other date/time constructs such as TimeUnit, Calendar or Duration instead\".",
+      "parentUuid": "07a720a0_f18972c0",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 18
+      },
+      "revId": "d8ab020aa6e78192e667ba959c0144b727e17c4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
