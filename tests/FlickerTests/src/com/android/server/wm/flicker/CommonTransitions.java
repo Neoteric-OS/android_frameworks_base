@@ -47,7 +47,7 @@ import com.android.server.wm.flicker.helpers.PipAppHelper;
  */
 class CommonTransitions {
 
-    public static final int ITERATIONS = 1;
+    public static final int ITERATIONS = 3;
     private static final String TAG = "FLICKER";
     private static final long APP_LAUNCH_TIMEOUT = 10000;
 
