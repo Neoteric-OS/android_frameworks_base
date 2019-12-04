@@ -368,7 +368,8 @@ public final class Telecom extends BaseCommand {
         // This assumes the max number of SIMs is 2, which it currently is
         if (TelephonyManager.MULTISIM_ALLOWED
                 == mTelephonyService.isMultiSimSupported("com.android.commands.telecom")) {
-            System.out.println("2");
+            int phoneCount = TelephonyManager.getDefault().getPhoneCount();
+            System.out.println(phoneCount);
         } else {
             System.out.println("1");
         }
