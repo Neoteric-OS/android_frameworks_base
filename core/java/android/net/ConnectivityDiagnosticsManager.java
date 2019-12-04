@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2019 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,6 +22,8 @@ import android.os.Bundle;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.net.InetAddress;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 /**
@@ -169,5 +171,266 @@ public class ConnectivityDiagnosticsManager {
             @NonNull ConnectivityDiagnosticsCallback callback) {
         // TODO(b/143187964): implement ConnectivityDiagnostics functionality
         throw new UnsupportedOperationException("registerCallback() not supported yet");
+    }
+
+    /**
+     * Base class for Route Diagnostics callbacks.
+     *
+     * <p>Used to provide information about a {@code traceroute} request to a specific IP address.
+     * Must be extended by applications wanting route diagnostics information.
+     */
+    public abstract static class RouteDiagnosticsCallback {
+        /** HopInfo represents the route diagnostics information collected for some TTL. */
+        public static class HopInfo {
+            @NonNull public final List<HopResponse> responses;
+            public final int numProbesSent;
+            public final int ttl;
+
+            /**
+             * @param responses The List<HopResponse> for this TTL
+             * @param numProbesSent The number of probes sent out for this TTL
+             * @param ttl The TTL (time to live) represented by this HopInfo
+             *
+             * @hide
+             */
+            public HopInfo(@NonNull List<HopResponse> responses, int numProbesSent, int ttl) {
+                this.responses = responses;
+                this.numProbesSent = numProbesSent;
+                this.ttl = ttl;
+            }
+        }
+
+        /**
+         * HopResponse represents a single node in the Network.
+         *
+         * <p>The metrics for average RTT and number of probes received are for a specific TTL
+         * value.
+         */
+        public static class HopResponse {
+            @NonNull public final InetAddress address;
+            public final double averageRttMillis;
+            public final int numProbesReceived;
+
+            /**
+             * @param address The InetAddress for this HopResponse
+             * @param averageRttMillis The average RTT (round trip time) in milliseconds
+             * @param numProbesReceived The number of probes responded to by this node
+             *
+             * @hide
+             */
+            public HopResponse(
+                    @NonNull InetAddress address, double averageRttMillis, int numProbesReceived) {
+                this.address = address;
+                this.averageRttMillis = averageRttMillis;
+                this.numProbesReceived = numProbesReceived;
+            }
+        }
+
+        /**
+         * Called when route diagnostics have been completed to the specified host.
+         *
+         * @param network The Network on which the route diagnostics were collected
+         * @param host The InetAddress to which route diagnostics were collected
+         * @param route The List<HopInfo> route that was determined to the host
+         */
+        public void onRouteDiagnosticsComplete(
+                @NonNull Network network,
+                @NonNull InetAddress host,
+                @NonNull List<HopInfo> route) {}
+
+        /**
+         * Called when a critical error is encountered while computing route diagnostics.
+         *
+         * @param network The Network on which the route diagnostics were attempted
+         * @param host The InetAddress to which route diagnostics were attempted
+         * @param cause The Exception that caused the route diagnostics to fail
+         */
+        public void onError(
+                @NonNull Network network, @NonNull InetAddress host, @NonNull Exception cause) {}
+    }
+
+    /**
+     * Class used to configure the route diagnostics performed by the system.
+     *
+     * <p>The default values are those used by {@code traceroute}:
+     *
+     * <ul>
+     *   <li>Max TTL: 30
+     *   <li>Probes per Hop: 3
+     *   <li>Packet Size: 80 Bytes
+     *   <li>Timeout Seconds: 5 s
+     * </ul>
+     */
+    public static class RouteDiagnosticsOptions {
+        private static final int DEFAULT_MAX_TTL = 30;
+        private static final int DEFAULT_PROBES_PER_HOP = 3;
+
+        // IPv4: 60B, IPv6: 80B
+        private static final int DEFAULT_PACKET_SIZE_BYTES = 80;
+        private static final int DEFAULT_TIMEOUT_MILLIS = 5000;
+
+        /** ICMP Header is 8 Bytes */
+        public static final int MINIMUM_PACKET_SIZE_BYTES = 8;
+
+        /**
+         * @hide
+         */
+        static final RouteDiagnosticsOptions DEFAULT = new Builder().build();
+
+        public final int maxTtl;
+        public final int probesPerHop;
+        public final int packetSizeBytes;
+        public final int timeoutMillis;
+
+        private RouteDiagnosticsOptions(
+                int maxTtl, int probesPerHop, int packetSizeBytes, int timeoutMillis) {
+            this.maxTtl = maxTtl;
+            this.probesPerHop = probesPerHop;
+            this.packetSizeBytes = packetSizeBytes;
+            this.timeoutMillis = timeoutMillis;
+        }
+
+        /**
+         * Class to be used for configuring a RouteDiagnosticsOptions instance.
+         *
+         * <p>Each configurable value will use {@code traceroute}'s default value unless overridden.
+         */
+        public static class Builder {
+            private int mMaxTtl = DEFAULT_MAX_TTL;
+            private int mProbesPerHop = DEFAULT_PROBES_PER_HOP;
+            private int mPacketSizeBytes = DEFAULT_PACKET_SIZE_BYTES;
+            private int mTimeoutMillis = DEFAULT_TIMEOUT_MILLIS;
+
+            /** Constructs a new RouteDiagnosticsOptions.Builder. */
+            public Builder() {}
+
+            /**
+             * Sets the maximum TTL (inclusive).
+             *
+             * @param maxTtl The maximum TTL to be used
+             * @return Builder this, to facilitate chaining
+             * @throws IllegalArgumentException iff maxTtl < 1
+             */
+            @NonNull
+            public Builder setMaxTtl(int maxTtl) {
+                if (maxTtl < 1) {
+                    throw new IllegalArgumentException("Max TTL must be at least 1");
+                }
+                this.mMaxTtl = maxTtl;
+                return this;
+            }
+
+            /**
+             * Sets the probes per hop.
+             *
+             * @param probesPerHop The number of probes to be sent for each TTL
+             * @return Builder this, to facilitate chaining
+             * @throws IllegalArgumentException iff probesPerHop < 1
+             */
+            @NonNull
+            public Builder setProbesPerHop(int probesPerHop) {
+                if (probesPerHop < 1) {
+                    throw new IllegalArgumentException("Probes per Hop must be at least 1");
+                }
+                this.mProbesPerHop = probesPerHop;
+                return this;
+            }
+
+            /**
+             * Sets the packet size for each outgoing probe.
+             *
+             * @param packetSizeBytes The packet size (in Bytes) to be used for each outgoing probe
+             * @return Builder this, to facilitate chaining.
+             * @throws IllegalArgumentException iff packetSizeBytes < {@link
+             *     RouteDiagnosticsOptions#MINIMUM_PACKET_SIZE_BYTES}
+             */
+            @NonNull
+            public Builder setPacketSizeBytes(int packetSizeBytes) {
+                if (packetSizeBytes < MINIMUM_PACKET_SIZE_BYTES) {
+                    throw new IllegalArgumentException(
+                            "Packet size (in bytes) must be at least "
+                                    + MINIMUM_PACKET_SIZE_BYTES
+                                    + " Bytes");
+                }
+                this.mPacketSizeBytes = packetSizeBytes;
+                return this;
+            }
+
+            /**
+             * Sets the timeout to be used for each outgoing probe.
+             *
+             * <p>The timeout will be the maximum wait time allowed for a probe response. That is,
+             * the network node's response message must be received by at most timeoutMillis ms
+             * after the probe is sent.
+             *
+             * @param timeoutMillis The timeout (in milliseconds) to be used for each outgoing probe
+             * @return Builder this, to facilitate chaining.
+             * @throws IllegalArgumentException iff timeoutMillis < 500
+             */
+            @NonNull
+            public Builder setTimeoutMillis(int timeoutMillis) {
+                if (timeoutMillis < 500) {
+                    throw new IllegalArgumentException(
+                            "Timeout (in milliseconds) must be at least 500");
+                }
+                this.mTimeoutMillis = timeoutMillis;
+                return this;
+            }
+
+            /**
+             * Constructs and returns a RouteDiagnosticsOptions with the configurations applied to
+             * this Builder.
+             *
+             * @return the RouteDiagnosticsOptions constructed by this Builder
+             */
+            @NonNull
+            public RouteDiagnosticsOptions build() {
+                return new RouteDiagnosticsOptions(
+                        mMaxTtl, mProbesPerHop, mPacketSizeBytes, mTimeoutMillis);
+            }
+        }
+    }
+
+    /**
+     * Request diagnostic information be collected for a particular IP address or domain.
+     *
+     * <p>Every call to {@link ConnectivityDiagnosticsManager#requestRouteDiagnostics} will result
+     * in either {@link RouteDiagnosticsCallback#onRouteDiagnosticsComplete} or {@link
+     * RouteDiagnosticsCallback#onError} being invoked.
+     *
+     * @param network The Network to be used for route diagnostics
+     * @param host The InetAddress to be targeted for route diagnostics
+     * @param e The Executor on which the route diagnostics will be computed
+     * @param callback The RouteDiagnosticsCallback to be invoked
+     */
+    public void requestRouteDiagnostics(
+            @NonNull Network network,
+            @NonNull InetAddress host,
+            @NonNull Executor e,
+            @NonNull RouteDiagnosticsCallback callback) {
+        requestRouteDiagnostics(network, host, RouteDiagnosticsOptions.DEFAULT, e, callback);
+    }
+
+    /**
+     * Request diagnostic information be collected for a particular IP address or domain.
+     *
+     * <p>Every call to {@link ConnectivityDiagnosticsManager#requestRouteDiagnostics} will result
+     * in either {@link RouteDiagnosticsCallback#onRouteDiagnosticsComplete} or {@link
+     * RouteDiagnosticsCallback#onError} being invoked.
+     *
+     * @param network The Network to be used for route diagnostics
+     * @param host The InetAddress to be targeted for route diagnostics
+     * @param routeDiagnosticsOptions The options to be used for collecting the route diagnostics
+     * @param e The Executor on which the route diagnostics will be computed
+     * @param callback The RouteDiagnosticsCallback to be invoked
+     */
+    public void requestRouteDiagnostics(
+            @NonNull Network network,
+            @NonNull InetAddress host,
+            @NonNull RouteDiagnosticsOptions routeDiagnosticsOptions,
+            @NonNull Executor e,
+            @NonNull RouteDiagnosticsCallback callback) {
+        // TODO(b/143189134): implement Route Diagnostics functionality
+        throw new UnsupportedOperationException("requestRouteDiagnostics() not supported yet");
     }
 }
