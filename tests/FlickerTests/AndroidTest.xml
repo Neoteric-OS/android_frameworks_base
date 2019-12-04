@@ -9,6 +9,8 @@
         <option name="screen-always-on" value="on" />
         <!-- prevents the phone from restarting -->
         <option name="force-skip-system-props" value="true" />
+        <!-- remove old test data
+        <option name="run-command" value="rm -rf /sdcard/flicker" /> -->
     </target_preparer>
     <target_preparer class="com.android.tradefed.targetprep.suite.SuiteApkInstaller">
         <option name="cleanup-apks" value="true"/>
@@ -25,6 +27,6 @@
     <metrics_collector class="com.android.tradefed.device.metric.FilePullerLogCollector">
         <option name="directory-keys" value="/sdcard/flicker" />
         <option name="collect-on-run-ended-only" value="true" />
-        <option name="clean-up" value="false" />
+        <option name="clean-up" value="true" />
     </metrics_collector>
 </configuration>
