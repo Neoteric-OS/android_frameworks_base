@@ -63,7 +63,6 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.hardware.usb.UsbManager;
 import android.net.INetd;
-import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
 import android.net.ITetheringEventCallback;
 import android.net.IpPrefix;
@@ -174,7 +173,6 @@ public class Tethering {
     private final ArrayMap<String, TetherState> mTetherStates;
     private final BroadcastReceiver mStateReceiver;
     private final INetworkStatsService mStatsService;
-    private final INetworkPolicyManager mPolicyManager;
     private final Looper mLooper;
     private final StateMachine mTetherMasterSM;
     private final OffloadController mOffloadController;
@@ -210,7 +208,6 @@ public class Tethering {
         mDeps = deps;
         mContext = mDeps.getContext();
         mStatsService = mDeps.getINetworkStatsService();
-        mPolicyManager = mDeps.getINetworkPolicyManager();
         mNetd = mDeps.getINetd(mContext);
         mLooper = mDeps.getTetheringLooper();
 
@@ -1970,15 +1967,6 @@ public class Tethering {
         }
 
         mLog.log(String.format("OBSERVED iface=%s state=%s error=%s", iface, state, error));
-
-        try {
-            // Notify that we're tethering (or not) this interface.
-            // This is how data saver for instance knows if the user explicitly
-            // turned on tethering (thus keeping us from being in data saver mode).
-            mPolicyManager.onTetheringChanged(iface, state == IpServer.STATE_TETHERED);
-        } catch (RemoteException e) {
-            // Not really very much we can do here.
-        }
 
         // If TetherMasterSM is in ErrorState, TetherMasterSM stays there.
         // Thus we give a chance for TetherMasterSM to recover to InitialState
