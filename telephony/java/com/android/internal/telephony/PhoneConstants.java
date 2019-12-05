@@ -49,6 +49,7 @@ public class PhoneConstants {
       * <ul>
       * <li>CONNECTED = IP traffic should be available</li>
       * <li>CONNECTING = Currently setting up data connection</li>
+      * <li>DISCONNECTING = IP temporarily available</li>
       * <li>DISCONNECTED = IP not available</li>
       * <li>SUSPENDED = connection is created but IP traffic is
       *                 temperately not available. i.e. voice call is in place
@@ -65,7 +66,8 @@ public class PhoneConstants {
         @UnsupportedAppUsage
         DISCONNECTED,
         @UnsupportedAppUsage
-        SUSPENDED;
+        SUSPENDED,
+        DISCONNECTING;
     };
 
     public static final String STATE_KEY = "state";

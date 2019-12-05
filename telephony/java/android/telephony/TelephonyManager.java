@@ -891,6 +891,7 @@ public class TelephonyManager {
      * @see TelephonyManager#DATA_CONNECTING
      * @see TelephonyManager#DATA_CONNECTED
      * @see TelephonyManager#DATA_SUSPENDED
+     * @see TelephonyManager#DATA_DISCONNECTING
      *
      * <p class="note">
      * Retrieve with
@@ -5142,6 +5143,7 @@ public class TelephonyManager {
             DATA_CONNECTING,
             DATA_CONNECTED,
             DATA_SUSPENDED,
+            DATA_DISCONNECTING,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface DataState{}
@@ -5158,6 +5160,12 @@ public class TelephonyManager {
      * traffic is temporarily unavailable. For example, in a 2G network,
      * data activity may be suspended when a voice call arrives. */
     public static final int DATA_SUSPENDED      = 3;
+    /**
+     * Data connection state: Disconnecting.
+     *
+     * IP traffic may be available but will cease working imminently.
+     */
+    public static final int DATA_DISCONNECTING = 4;
 
     /**
      * Returns a constant indicating the current data connection state
@@ -5167,14 +5175,21 @@ public class TelephonyManager {
      * @see #DATA_CONNECTING
      * @see #DATA_CONNECTED
      * @see #DATA_SUSPENDED
+     * @see #DATA_DISCONNECTING
      */
     public int getDataState() {
         try {
             ITelephony telephony = getITelephony();
             if (telephony == null)
                 return DATA_DISCONNECTED;
-            return telephony.getDataStateForSubId(
+            int state = telephony.getDataStateForSubId(
                     getSubId(SubscriptionManager.getActiveDataSubscriptionId()));
+            if (state == TelephonyManager.DATA_DISCONNECTING
+                    && VMRuntime.getRuntime().getTargetSdkVersion() < Build.VERSION_CODES.R) {
+                return TelephonyManager.DATA_CONNECTED;
+            }
+
+            return state;
         } catch (RemoteException ex) {
             // the phone process is restarting.
             return DATA_DISCONNECTED;
@@ -5195,6 +5210,7 @@ public class TelephonyManager {
             case DATA_CONNECTING: return "CONNECTING";
             case DATA_CONNECTED: return "CONNECTED";
             case DATA_SUSPENDED: return "SUSPENDED";
+            case DATA_DISCONNECTING: return "DISCONNECTING";
         }
         return "UNKNOWN(" + state + ")";
     }
