@@ -28,6 +28,7 @@ android_test {
         "mockito-target-extended-minus-junit4",
         "TetheringApiCurrentLib",
         "testables",
+        "hamcrest-library",
     ],
     libs: [
         "android.test.runner",

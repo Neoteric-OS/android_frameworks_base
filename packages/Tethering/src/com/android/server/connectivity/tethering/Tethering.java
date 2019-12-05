@@ -20,6 +20,7 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.hardware.usb.UsbManager.USB_CONFIGURED;
 import static android.hardware.usb.UsbManager.USB_CONNECTED;
 import static android.hardware.usb.UsbManager.USB_FUNCTION_RNDIS;
+import static android.net.ConnectivityManager.ACTION_RESTRICT_BACKGROUND_CHANGED;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.EXTRA_NETWORK_INFO;
 import static android.net.TetheringManager.ACTION_TETHER_STATE_CHANGED;
@@ -61,8 +62,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.hardware.usb.UsbManager;
+import android.net.ConnectivityManager;
 import android.net.INetd;
-import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
 import android.net.ITetheringEventCallback;
 import android.net.IpPrefix;
@@ -175,7 +176,6 @@ public class Tethering {
     private final ArrayMap<String, TetherState> mTetherStates;
     private final BroadcastReceiver mStateReceiver;
     private final INetworkStatsService mStatsService;
-    private final INetworkPolicyManager mPolicyManager;
     private final Looper mLooper;
     private final StateMachine mTetherMasterSM;
     private final OffloadController mOffloadController;
@@ -206,13 +206,13 @@ public class Tethering {
     private boolean mWifiTetherRequested;
     private Network mTetherUpstream;
     private TetherStatesParcel mTetherStatesParcel;
+    private boolean mBackGroundRestrictDisabled = true;
 
     public Tethering(TetheringDependencies deps) {
         mLog.mark("Tethering.constructed");
         mDeps = deps;
         mContext = mDeps.getContext();
         mStatsService = mDeps.getINetworkStatsService();
-        mPolicyManager = mDeps.getINetworkPolicyManager();
         mNetd = mDeps.getINetd(mContext);
         mNetdUtils = new NetdUtils(mNetd);
         mLooper = mDeps.getTetheringLooper();
@@ -288,6 +288,7 @@ public class Tethering {
         filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
         filter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         filter.addAction(UserManager.ACTION_USER_RESTRICTIONS_CHANGED);
+        filter.addAction(ACTION_RESTRICT_BACKGROUND_CHANGED);
         mContext.registerReceiver(mStateReceiver, filter, null, handler);
     }
 
@@ -484,7 +485,7 @@ public class Tethering {
     }
 
     private void setBluetoothTethering(final boolean enable, final ResultReceiver receiver) {
-        final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        final BluetoothAdapter adapter = mDeps.getBluetoothAdapter();
         if (adapter == null || !adapter.isEnabled()) {
             Log.w(TAG, "Tried to enable bluetooth tethering with null or disabled adapter. null: "
                     + (adapter == null));
@@ -785,6 +786,9 @@ public class Tethering {
             } else if (action.equals(UserManager.ACTION_USER_RESTRICTIONS_CHANGED)) {
                 mLog.log("OBSERVED user restrictions changed");
                 handleUserRestrictionAction();
+            } else if (action.equals(ACTION_RESTRICT_BACKGROUND_CHANGED)) {
+                mLog.log("OBSERVED resctrict background changed");
+                handleRestrictBackgroundChnaged();
             }
         }
 
@@ -894,6 +898,20 @@ public class Tethering {
 
         private void handleUserRestrictionAction() {
             mTetheringRestriction.onUserRestrictionsChanged();
+        }
+
+        private void handleRestrictBackgroundChnaged() {
+            final ConnectivityManager connMgr = (ConnectivityManager) mContext.getSystemService(
+                    Context.CONNECTIVITY_SERVICE);
+            final boolean isRestrictDisabled = connMgr.getRestrictBackgroundStatus()
+                    == ConnectivityManager.RESTRICT_BACKGROUND_STATUS_DISABLED;
+
+            if (mBackGroundRestrictDisabled == isRestrictDisabled) return;
+
+            mBackGroundRestrictDisabled = isRestrictDisabled;
+            if (!mBackGroundRestrictDisabled) {
+                untetherAll();
+            }
         }
     }
 
@@ -1991,15 +2009,6 @@ public class Tethering {
         }
 
         mLog.log(String.format("OBSERVED iface=%s state=%s error=%s", iface, state, error));
-
-        try {
-            // Notify that we're tethering (or not) this interface.
-            // This is how data saver for instance knows if the user explicitly
-            // turned on tethering (thus keeping us from being in data saver mode).
-            mPolicyManager.onTetheringChanged(iface, state == IpServer.STATE_TETHERED);
-        } catch (RemoteException e) {
-            // Not really very much we can do here.
-        }
 
         // If TetherMasterSM is in ErrorState, TetherMasterSM stays there.
         // Thus we give a chance for TetherMasterSM to recover to InitialState
