@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6cab0cc_4b775754",
+        "filename": "core/java/android/view/Display.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-05T13:24:33Z",
+      "side": 1,
+      "message": "Please expand the docs.",
+      "revId": "30b5973a9cc09f67dbc4bfb34c9e71c12215ff35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5308eef5_4de33927",
+        "filename": "core/java/android/view/Display.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-05T13:24:33Z",
+      "side": 1,
+      "message": "Let\u0027s just go ahead and expose this in API since that\u0027s the plan anyways.",
+      "revId": "30b5973a9cc09f67dbc4bfb34c9e71c12215ff35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199d85e9_37766155",
+        "filename": "core/java/android/view/Display.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1333,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-05T13:24:33Z",
+      "side": 1,
+      "message": "Why have an overload instead of just replacing the first method? When should you use the one that doesn\u0027t take isNative into account vs this one?",
+      "revId": "30b5973a9cc09f67dbc4bfb34c9e71c12215ff35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd9dfda8_c429d9bc",
+        "filename": "core/java/android/view/SurfaceControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-05T13:24:33Z",
+      "side": 1,
+      "message": "Don\u0027t add @UnsupportedAppUsage to new fields.",
+      "revId": "30b5973a9cc09f67dbc4bfb34c9e71c12215ff35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8cba355_ce2b0a9f",
+        "filename": "services/core/java/com/android/server/display/OverlayDisplayAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-05T13:24:33Z",
+      "side": 1,
+      "message": "nit: Avoid unlabeled booleans passed to methods. Either:\n\n  mModes[i] \u003d createMode(mode.mWidth, mode.mHeight, refreshRate, false /*isNative*/)\n\nor\n\n  final boolean isNative \u003d false;\n  mModes[i] \u003d createMode(mode.mWidth, mode.mHeight, refreshRate, isNative);\n\nDitto for all other locations.",
+      "revId": "30b5973a9cc09f67dbc4bfb34c9e71c12215ff35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21fddab5_edd1ff73",
+        "filename": "services/core/java/com/android/server/display/VirtualDisplayAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-05T13:24:33Z",
+      "side": 1,
+      "message": "What\u0027s the rationale behind the decision to not call this mode \"native\"? Same for all other software displays.",
+      "revId": "30b5973a9cc09f67dbc4bfb34c9e71c12215ff35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
