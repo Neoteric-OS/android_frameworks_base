@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "53ca8694_78b59f2d",
+        "filename": "services/core/java/com/android/server/display/OverlayDisplayAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-05T17:00:20Z",
+      "side": 1,
+      "message": "Nope, no strong preference. I think the first is more common, but both are fine by me.",
+      "parentUuid": "d9c79bc2_b12bd558",
+      "revId": "30b5973a9cc09f67dbc4bfb34c9e71c12215ff35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21fddab5_edd1ff73",
         "filename": "services/core/java/com/android/server/display/VirtualDisplayAdapter.java",
         "patchSetId": 1
@@ -209,6 +227,24 @@
       "revId": "30b5973a9cc09f67dbc4bfb34c9e71c12215ff35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1863fbf0_42998688",
+        "filename": "services/core/java/com/android/server/display/VirtualDisplayAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-05T17:00:20Z",
+      "side": 1,
+      "message": "I agree, I don\u0027t think it matters much one way or the other, I just wanted to understand if there was an important case you had thought of that I was missing.\n\nMy initial thought was marking them as native since it would be odd to ask for one resolution and then immediately downscale; I\u0027d assume that whatever resolution they asked for is what they\u0027ll actually end up rendering at. That being said, it\u0027s kind of undefined so I\u0027m also happy leaving it false since we don\u0027t know for sure. It also doesn\u0027t hurt that this tests whether people are actually handling the \"no native mode\" case.",
+      "parentUuid": "21d97821_0886cdd6",
+      "revId": "30b5973a9cc09f67dbc4bfb34c9e71c12215ff35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
