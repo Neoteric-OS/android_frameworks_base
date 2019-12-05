@@ -21,6 +21,7 @@ import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
 import android.net.LinkProperties;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.Annotation.ApnType;
@@ -28,6 +29,8 @@ import android.telephony.Annotation.DataFailureCause;
 import android.telephony.Annotation.DataState;
 import android.telephony.Annotation.NetworkType;
 import android.telephony.data.ApnSetting;
+
+import dalvik.system.VMRuntime;
 
 import java.util.Objects;
 
@@ -104,6 +107,11 @@ public final class PreciseDataConnectionState implements Parcelable {
      * {@link #getDataConnectionApnTypeBitMask()}
      */
     public @DataState int getDataConnectionState() {
+        if (mState == TelephonyManager.DATA_DISCONNECTING
+                && VMRuntime.getRuntime().getTargetSdkVersion() < Build.VERSION_CODES.R) {
+            return TelephonyManager.DATA_CONNECTED;
+        }
+
         return mState;
     }
 

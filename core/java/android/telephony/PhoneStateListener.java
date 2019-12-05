@@ -1068,11 +1068,21 @@ public class PhoneStateListener {
             PhoneStateListener psl = mPhoneStateListenerWeakRef.get();
             if (psl == null) return;
 
-            Binder.withCleanCallingIdentity(() -> mExecutor.execute(
-                    () -> {
-                        psl.onDataConnectionStateChanged(state, networkType);
-                        psl.onDataConnectionStateChanged(state);
-                    }));
+            if (state == TelephonyManager.DATA_DISCONNECTING
+                    && VMRuntime.getRuntime().getTargetSdkVersion() < Build.VERSION_CODES.R) {
+                Binder.withCleanCallingIdentity(() -> mExecutor.execute(
+                        () -> {
+                            psl.onDataConnectionStateChanged(
+                                    TelephonyManager.DATA_CONNECTED, networkType);
+                            psl.onDataConnectionStateChanged(TelephonyManager.DATA_CONNECTED);
+                        }));
+            } else {
+                Binder.withCleanCallingIdentity(() -> mExecutor.execute(
+                        () -> {
+                            psl.onDataConnectionStateChanged(state, networkType);
+                            psl.onDataConnectionStateChanged(state);
+                        }));
+            }
         }
 
         public void onDataActivity(int direction) {
