@@ -364,7 +364,7 @@ public class LinkPropertiesTest {
 
     @Test
     public void testRouteInterfaces() {
-        LinkAddress prefix = new LinkAddress(address("2001:db8::"), 32);
+        LinkAddress prefix = new LinkAddress(address("2001:db8:1::"), 32);
         InetAddress address = ADDRV6;
 
         // Add a route with no interface to a LinkProperties with no interface. No errors.
