@@ -113,6 +113,43 @@ public final class LinkProperties implements Parcelable {
     /**
      * @hide
      */
+    public static class CompareChangedResult<T> {
+        public final List<T> removed = new ArrayList<>();
+        public final List<T> added = new ArrayList<>();
+        public final List<T> changed = new ArrayList<>();
+
+        public CompareChangedResult() {}
+
+        public CompareChangedResult(Collection<T> oldItems, Collection<T> newItems) {
+            if (oldItems != null) {
+                removed.addAll(oldItems);
+            }
+            if (newItems != null) {
+                for (T newItem : newItems) {
+                    for (T oldItem : oldItems) {
+                        if (((RouteInfo)oldItem).routeUpdated(newItem)) {
+                            changed.add(newItem);
+                        }
+                        else if (!removed.remove(newItem)) {
+                            added.add(newItem);
+                        }
+                    }
+                }
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "removed=[" + TextUtils.join(",", removed)
+                    + "] added=[" + TextUtils.join(",", added)
+                    + "] changed =[" + TextUtils.join(",", changed)
+                    + "]";
+        }
+    }
+
+    /**
+     * @hide
+     */
     @UnsupportedAppUsage(implicitMember =
             "values()[Landroid/net/LinkProperties$ProvisioningChange;")
     public enum ProvisioningChange {

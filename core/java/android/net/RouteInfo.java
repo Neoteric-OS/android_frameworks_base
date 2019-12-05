@@ -83,6 +83,11 @@ public final class RouteInfo implements Parcelable {
     @Nullable
     private final String mInterface;
 
+    /**
+     * The MTU for this route.
+     */
+    @NonNull
+    private final int mMtu = 0;
 
     /** Unicast route. @hide */
     @SystemApi
@@ -373,6 +378,16 @@ public final class RouteInfo implements Parcelable {
     }
 
     /**
+     * Retrieves the MTU used for this route if specified, else 0.
+     *
+     * @return The value of the MTU used for this route.
+     */
+    @NonNull
+    public int getMtu() {
+        return mMtu;
+    }
+
+    /**
      * Indicates if this route is a default route (ie, has no destination specified).
      *
      * @return {@code true} if the destination has a prefix length of 0.
@@ -490,10 +505,27 @@ public final class RouteInfo implements Parcelable {
 
         RouteInfo target = (RouteInfo) obj;
 
-        return Objects.equals(mDestination, target.getDestination()) &&
-                Objects.equals(mGateway, target.getGateway()) &&
-                Objects.equals(mInterface, target.getInterface()) &&
-                mType == target.getType();
+        return Objects.equals(mDestination, target.getDestination());
+    }
+
+    /**
+     * Compares this RouteInfo object against the specified object and indicates if an
+     * existing route was updated.
+     * @return {@code true} if the route was updated, {@code false} otherwise.
+     */
+    public boolean routeUpdated(Object obj){
+        if (this == obj) return true;
+
+        if (!(obj instanceof RouteInfo)) return false;
+
+        RouteInfo target = (RouteInfo) obj;
+
+        if(mDestination == target.getDestination()){
+            if(mGateway != target.getGateway() || mInterface != target.getInterface() ||
+               mType != target.getType() || mMtu != target.getMtu())
+            return true;
+        }
+        return false;
     }
 
     /**
