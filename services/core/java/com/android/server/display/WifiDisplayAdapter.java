@@ -599,7 +599,7 @@ final class WifiDisplayAdapter extends DisplayAdapter {
             mFlags = flags;
             mAddress = DisplayAddress.fromMacAddress(address);
             mSurface = surface;
-            mMode = createMode(width, height, refreshRate);
+            mMode = createMode(width, height, refreshRate, false /*isNative*/);
         }
 
         @Override

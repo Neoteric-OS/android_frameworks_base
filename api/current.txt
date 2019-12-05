@@ -49013,6 +49013,7 @@ package android.view {
     method public int getPhysicalHeight();
     method public int getPhysicalWidth();
     method public float getRefreshRate();
+    method public boolean isNative();
     method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.view.Display.Mode> CREATOR;
   }

@@ -276,6 +276,12 @@ public final class DisplayInfo implements Parcelable {
     // TODO (b/114338689): Remove the flag and use IWindowManager#getRemoveContentMode
     public int removeMode = Display.REMOVE_MODE_MOVE_CONTENT_TO_PRIMARY;
 
+    /**
+     * Whether the display's parameters are natively supported by the device
+     */
+    public boolean isNative;
+
+
     public static final @android.annotation.NonNull Creator<DisplayInfo> CREATOR = new Creator<DisplayInfo>() {
         @Override
         public DisplayInfo createFromParcel(Parcel source) {
@@ -340,7 +346,8 @@ public final class DisplayInfo implements Parcelable {
                 && state == other.state
                 && ownerUid == other.ownerUid
                 && Objects.equals(ownerPackageName, other.ownerPackageName)
-                && removeMode == other.removeMode;
+                && removeMode == other.removeMode
+                && isNative == other.isNative;
     }
 
     @Override
@@ -386,6 +393,7 @@ public final class DisplayInfo implements Parcelable {
         ownerUid = other.ownerUid;
         ownerPackageName = other.ownerPackageName;
         removeMode = other.removeMode;
+        isNative = other.isNative;
     }
 
     public void readFromParcel(Parcel source) {
@@ -433,6 +441,7 @@ public final class DisplayInfo implements Parcelable {
         ownerPackageName = source.readString();
         uniqueId = source.readString();
         removeMode = source.readInt();
+        isNative = source.readBoolean();
     }
 
     @Override
@@ -479,6 +488,7 @@ public final class DisplayInfo implements Parcelable {
         dest.writeString(ownerPackageName);
         dest.writeString(uniqueId);
         dest.writeInt(removeMode);
+        dest.writeBoolean(isNative);
     }
 
     @Override
@@ -512,7 +522,10 @@ public final class DisplayInfo implements Parcelable {
         Display.Mode defaultMode = getDefaultMode();
         for (int i = 0; i < modes.length; i++) {
             if (modes[i].matches(
-                    defaultMode.getPhysicalWidth(), defaultMode.getPhysicalHeight(), refreshRate)) {
+                    defaultMode.getPhysicalWidth(),
+                    defaultMode.getPhysicalHeight(),
+                    refreshRate,
+                    defaultMode.isNative())) {
                 return modes[i].getModeId();
             }
         }
@@ -690,6 +703,8 @@ public final class DisplayInfo implements Parcelable {
         sb.append(flagsToString(flags));
         sb.append(", removeMode ");
         sb.append(removeMode);
+        sb.append(", isNative ");
+        sb.append(isNative);
         sb.append("}");
         return sb.toString();
     }

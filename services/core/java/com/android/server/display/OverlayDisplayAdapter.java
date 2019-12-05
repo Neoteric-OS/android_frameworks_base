@@ -250,7 +250,7 @@ final class OverlayDisplayAdapter extends DisplayAdapter {
             mModes = new Display.Mode[modes.size()];
             for (int i = 0; i < modes.size(); i++) {
                 OverlayMode mode = modes.get(i);
-                mModes[i] = createMode(mode.mWidth, mode.mHeight, refreshRate);
+                mModes[i] = createMode(mode.mWidth, mode.mHeight, refreshRate, false /*isNative*/);
             }
             mActiveMode = activeMode;
             mDefaultMode = defaultMode;

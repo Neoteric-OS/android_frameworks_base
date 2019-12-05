@@ -1245,16 +1245,18 @@ public final class Display {
         private final int mWidth;
         private final int mHeight;
         private final float mRefreshRate;
+        private final boolean mIsNative;
 
         /**
          * @hide
          */
         @UnsupportedAppUsage
-        public Mode(int modeId, int width, int height, float refreshRate) {
+        public Mode(int modeId, int width, int height, float refreshRate, boolean isNative) {
             mModeId = modeId;
             mWidth = width;
             mHeight = height;
             mRefreshRate = refreshRate;
+            mIsNative = isNative;
         }
 
         /**
@@ -1304,14 +1306,32 @@ public final class Display {
         }
 
         /**
+         * Returns {@code true} if this mode is supported natively by the display.
+         * <p>
+         * Some displays may advertise support for a broader set of display configurations than they
+         * can actually physically display. For instance, a 1080p display could advertise support
+         * for 2160p signals so that it can stream BluRay Disc movies, but would eventually scale
+         * the image down to 1080p. A display mode would be native if it does match what the display
+         * actually outputs.
+         * <p>
+         * Applications can use this information to select a more appropriate display mode. For
+         * instance, a streaming application might select a lower but native resolution to save
+         * bandwidth.
+         */
+        public boolean isNative() {
+            return mIsNative;
+        }
+
+        /**
          * Returns {@code true} if this mode matches the given parameters.
          *
          * @hide
          */
-        public boolean matches(int width, int height, float refreshRate) {
-            return mWidth == width &&
-                    mHeight == height &&
-                    Float.floatToIntBits(mRefreshRate) == Float.floatToIntBits(refreshRate);
+        public boolean matches(int width, int height, float refreshRate, boolean isNative) {
+            return mWidth == width
+                    && mHeight == height
+                    && Float.floatToIntBits(mRefreshRate) == Float.floatToIntBits(refreshRate)
+                    && mIsNative == isNative;
         }
 
         @Override
@@ -1323,7 +1343,8 @@ public final class Display {
                 return false;
             }
             Mode that = (Mode) other;
-            return mModeId == that.mModeId && matches(that.mWidth, that.mHeight, that.mRefreshRate);
+            return mModeId == that.mModeId
+                && matches(that.mWidth, that.mHeight, that.mRefreshRate, that.mIsNative);
         }
 
         @Override
@@ -1333,6 +1354,7 @@ public final class Display {
             hash = hash * 17 + mWidth;
             hash = hash * 17 + mHeight;
             hash = hash * 17 + Float.floatToIntBits(mRefreshRate);
+            hash = hash * 17 + (mIsNative ? 1 : 0);
             return hash;
         }
 
@@ -1343,6 +1365,7 @@ public final class Display {
                     .append(", width=").append(mWidth)
                     .append(", height=").append(mHeight)
                     .append(", fps=").append(mRefreshRate)
+                    .append(", isNative=").append(mIsNative)
                     .append("}")
                     .toString();
         }
@@ -1353,7 +1376,7 @@ public final class Display {
         }
 
         private Mode(Parcel in) {
-            this(in.readInt(), in.readInt(), in.readInt(), in.readFloat());
+            this(in.readInt(), in.readInt(), in.readInt(), in.readFloat(), in.readBoolean());
         }
 
         @Override
@@ -1362,6 +1385,7 @@ public final class Display {
             out.writeInt(mWidth);
             out.writeInt(mHeight);
             out.writeFloat(mRefreshRate);
+            out.writeBoolean(mIsNative);
         }
 
         @SuppressWarnings("hiding")

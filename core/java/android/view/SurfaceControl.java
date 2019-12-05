@@ -1428,6 +1428,11 @@ public final class SurfaceControl implements Parcelable {
         /**
          * @hide
          */
+        public boolean isNative;
+
+        /**
+         * @hide
+         */
         @UnsupportedAppUsage
         public PhysicalDisplayInfo() {
         }
@@ -1460,7 +1465,8 @@ public final class SurfaceControl implements Parcelable {
                     && yDpi == other.yDpi
                     && secure == other.secure
                     && appVsyncOffsetNanos == other.appVsyncOffsetNanos
-                    && presentationDeadlineNanos == other.presentationDeadlineNanos;
+                    && presentationDeadlineNanos == other.presentationDeadlineNanos
+                    && isNative == other.isNative;
         }
 
         /**
@@ -1484,6 +1490,7 @@ public final class SurfaceControl implements Parcelable {
             secure = other.secure;
             appVsyncOffsetNanos = other.appVsyncOffsetNanos;
             presentationDeadlineNanos = other.presentationDeadlineNanos;
+            isNative = other.isNative;
         }
 
         /**
@@ -1494,7 +1501,8 @@ public final class SurfaceControl implements Parcelable {
             return "PhysicalDisplayInfo{" + width + " x " + height + ", " + refreshRate + " fps, "
                     + "density " + density + ", " + xDpi + " x " + yDpi + " dpi, secure " + secure
                     + ", appVsyncOffset " + appVsyncOffsetNanos
-                    + ", bufferDeadline " + presentationDeadlineNanos + "}";
+                    + ", bufferDeadline " + presentationDeadlineNanos
+                    + ", isNative " + isNative + "}";
         }
     }
 

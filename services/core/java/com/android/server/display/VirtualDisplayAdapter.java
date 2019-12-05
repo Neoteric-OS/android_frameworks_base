@@ -226,7 +226,7 @@ public class VirtualDisplayAdapter extends DisplayAdapter {
             mName = name;
             mWidth = width;
             mHeight = height;
-            mMode = createMode(width, height, REFRESH_RATE);
+            mMode = createMode(width, height, REFRESH_RATE, false /*isNative*/);
             mDensityDpi = densityDpi;
             mSurface = surface;
             mFlags = flags;
@@ -306,7 +306,7 @@ public class VirtualDisplayAdapter extends DisplayAdapter {
                 sendTraversalRequestLocked();
                 mWidth = width;
                 mHeight = height;
-                mMode = createMode(width, height, REFRESH_RATE);
+                mMode = createMode(width, height, REFRESH_RATE, false);
                 mDensityDpi = densityDpi;
                 mInfo = null;
                 mPendingChanges |= PENDING_RESIZE;
