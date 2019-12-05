@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6be4f54b_4414d0b6",
+        "filename": "services/core/java/com/android/server/display/VirtualDisplayAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-05T16:56:34Z",
+      "side": 1,
+      "message": "nit: missed one",
+      "revId": "b9e4bf385bf532d9b1df5130954fda51ea0d7c7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
