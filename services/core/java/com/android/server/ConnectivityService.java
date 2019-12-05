@@ -5753,13 +5753,39 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    private RouteInfoParcel convertRouteInfo(RouteInfo route) {
+        final String nextHop;
+
+        switch (route.getType()) {
+            case RouteInfo.RTN_UNICAST:
+                if (route.hasGateway()) {
+                    nextHop = route.getGateway().getHostAddress();
+                } else {
+                    nextHop = INetd.NEXTHOP_NONE;
+                }
+                break;
+            case RouteInfo.RTN_UNREACHABLE:
+                nextHop = INetd.NEXTHOP_UNREACHABLE;
+                break;
+            case RouteInfo.RTN_THROW:
+                nextHop = INetd.NEXTHOP_THROW;
+                break;
+            default:
+                nextHop = INetd.NEXTHOP_NONE;
+                break;
+        }
+
+        return new RouteInfoParcel(route.getInterface, route.getDestination().toString(),
+                                   nextHop, route.getMtu());
+    }
+
     /**
      * Have netd update routes from oldLp to newLp.
      * @return true if routes changed between oldLp and newLp
      */
     private boolean updateRoutes(LinkProperties newLp, LinkProperties oldLp, int netId) {
-        // Compare the route diff to determine which routes should be added and removed.
-        CompareResult<RouteInfo> routeDiff = new CompareResult<>(
+        // compare the route diff to determine which routes have been updated
+        UpdateResult<RouteInfo> routeDiff = new UpdateResult<>(
                 oldLp != null ? oldLp.getAllRoutes() : null,
                 newLp != null ? newLp.getAllRoutes() : null);
 
@@ -5770,7 +5796,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (route.hasGateway()) continue;
             if (VDBG || DDBG) log("Adding Route [" + route + "] to network " + netId);
             try {
-                mNMS.addRoute(netId, route);
+                mNetd.networkAddRouteParcel(netId, convertRouteInfo(route));
             } catch (Exception e) {
                 if ((route.getDestination().getAddress() instanceof Inet4Address) || VDBG) {
                     loge("Exception in addRoute for non-gateway: " + e);
@@ -5781,7 +5807,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (!route.hasGateway()) continue;
             if (VDBG || DDBG) log("Adding Route [" + route + "] to network " + netId);
             try {
-                mNMS.addRoute(netId, route);
+                mNetd.networkAddRouteParcel(netId, convertRouteInfo(route));
             } catch (Exception e) {
                 if ((route.getGateway() instanceof Inet4Address) || VDBG) {
                     loge("Exception in addRoute for gateway: " + e);
@@ -5792,12 +5818,22 @@ public class ConnectivityService extends IConnectivityManager.Stub
         for (RouteInfo route : routeDiff.removed) {
             if (VDBG || DDBG) log("Removing Route [" + route + "] from network " + netId);
             try {
-                mNMS.removeRoute(netId, route);
+                mNetd.networkRemoveRouteParcel(netId, convertRouteInfo(route));
             } catch (Exception e) {
                 loge("Exception in removeRoute: " + e);
             }
         }
-        return !routeDiff.added.isEmpty() || !routeDiff.removed.isEmpty();
+
+        for (RouteInfo route : routeDiff.changed) {
+            if (VDBG || DDBG) log("Changing Route [" + route + "] from network " + netId);
+            try {
+                mNetd.networkChangeRouteParcel(netId, convertRouteInfo(route));
+            } catch (Exception e) {
+                loge("Exception in changeRoute: " + e);
+            }
+        }
+        return !routeDiff.added.isEmpty() || !routeDiff.removed.isEmpty() ||
+               !routeDiff.changed.isEmpty();
     }
 
     private void updateDnses(LinkProperties newLp, LinkProperties oldLp, int netId) {
