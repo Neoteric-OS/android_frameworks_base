@@ -6343,4 +6343,56 @@ public class ConnectivityServiceTest {
                 UserHandle.getAppId(uid));
         return packageInfo;
     }
+
+    private void assertRouteInfoParcelMatches(RouteInfoParcel parcel, RouteInfo route) {
+        assertEquals(parcel.destination, route.getDestination().toString());
+        ... check the other alements of the parcel ...
+    }
+
+    @Test
+    public void testRouteAddDeleteUpdate() throws Exception {
+        final NetworkRequest request = new NetworkRequest.Builder().build();
+        final TestNetworkCallback callback = new TestNetworkCallback();
+        mCm.registerNetworkCallback(request, callback);
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        reset(mMockNetd);
+        mCellNetworkAgent.connect(false);
+        networkCallback.expectAvailableCallbacksUnvalidated(mCellNetworkAgent);
+        final int netId = mCellNetworkAgent.getNetwork().netId;
+
+        final String iface = "rmnet_data0";
+        final InetAddress gateway = InetAddress.getByName("fe80::5678");
+        RouteInfo direct = RouteInfo.makeHostRoute(gateway, iface);
+        RouteInfo rio1 = new RouteInfo(new IpPrefix("2001:db8:1::/48"), gateway, iface);
+        RouteInfo rio2 = new RouteInfo(new IpPrefix("2001:db8:2::/48"), gateway, iface);
+        RouteInfo defaultRoute = new RouteInfo(null, gateway, iface);
+        RouteInfo defaultWithMtu = new RouteInfo(null, gateway, iface, RouteInfo.RTN_UNICAST, 1280 /* mtu */);
+        // Send LinkProperties and check that we ask netd to add routes.
+        LinkProperties lp = new LinkProperties();
+        lp.addRoute(direct);
+        lp.addRoute(rio1);
+        lp.addRoute(defaultRoute);
+        mCellNetworkAgent.sendLinkProperties(lp);
+        ArgumentCaptor<RouteInfoParcel> captor = ArgumentCaptor.forClass(RouteInfoParcel.class);
+        verify(mMockNetd, times(3)).networkAddRouteParcel(eq(netId), captor.capture());
+        assertRouteInfoParcelMatches(captor.getAllValues().get(0), direct);
+        assertRouteInfoParcelMatches(captor.getAllValues().get(1), rio1);
+        assertRouteInfoParcelMatches(captor.getAllValues().get(2), defaultRoute);
+        // Send updated LinkProperties and check that we ask netd to add, remove, update routes.
+        assertTrue(lp.getRoutes().contains(defaultRoute));
+        lp.removeRoute(rio1);
+        lp.addRoute(rio2);
+        lp.addRoute(defaultWithMtu);
+        // Ensure the previous default route is replaced.
+        assertFalse(lp.getRoutes().contains(defaultRoute));
+        assertTrue(lp.getRouets().contains(defaultWithMtu));
+        mCellNetworkAgent.sendLinkProperties(lp);
+        verify(mMockNetd).networkRemoveRouteParcel(eq(netId), captor.capture());
+        assertRouteInfoParcelMatches(captor.getValue(), rio1);
+        verify(mMockNetd).networkAddRouteParcel(eq(netId), captor.capture());
+        assertRouteInfoParcelMatches(captor.getValue(), rio2);
+        verify(mMockNetd).networkUpdateRouteParcel(eq(netId), captor.capture());
+        assertRouteInfoParcelMatches(captor.getValue(), defaultWithMtu);
+        mCm.unregisterNetworkCallback(callback);
+    }
 }
