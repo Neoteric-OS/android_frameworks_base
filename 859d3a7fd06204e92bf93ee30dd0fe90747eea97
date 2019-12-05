@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e7d2b35_8e123038",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 44404,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2019-12-05T23:13:31Z",
+      "side": 1,
+      "message": "Not sure why this appears as public API while using /** @hide */ and @SystemApi.\n\nTyler, do you see anything missing here?",
+      "range": {
+        "startLine": 44404,
+        "startChar": 4,
+        "endLine": 44404,
+        "endChar": 47
+      },
+      "revId": "859d3a7fd06204e92bf93ee30dd0fe90747eea97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
