@@ -29309,6 +29309,7 @@ package android.net {
     method @Nullable public String getInterface();
     method public boolean hasGateway();
     method public boolean isDefaultRoute();
+    method public boolean isSameDestinationAs(@Nullable Object);
     method public boolean matches(java.net.InetAddress);
     method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.net.RouteInfo> CREATOR;
