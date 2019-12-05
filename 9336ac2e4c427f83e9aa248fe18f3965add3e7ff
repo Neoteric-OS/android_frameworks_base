@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d1f2e21_a39f3aec",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1988,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-12-05T19:26:53Z",
+      "side": 1,
+      "message": "is this something that should be exposed? it feels like a helper function that would be internal",
+      "range": {
+        "startLine": 1986,
+        "startChar": 4,
+        "endLine": 1988,
+        "endChar": 66
+      },
+      "revId": "9336ac2e4c427f83e9aa248fe18f3965add3e7ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
