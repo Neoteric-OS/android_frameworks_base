@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8546177d_b16b03f9",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-05T18:02:25Z",
+      "side": 1,
+      "message": "as written, this has no configurability options for the client. Do we want to define a RouteDiagnosticsConfig class with options for defining max TTL, probes per hop, and packet size?",
+      "range": {
+        "startLine": 246,
+        "startChar": 16,
+        "endLine": 246,
+        "endChar": 39
+      },
+      "revId": "bed47e916740b0b80add0e380f2ef27dbdc723dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
