@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0a4cadd_bf582bd1",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-06T17:20:37Z",
+      "side": 1,
+      "message": "Don\u0027t make this a static, make this a member var like every other config option.\n\nIt should also be moved up above to the other config options and suffixed with Config. See mSupportsDoubleTapWakeConfig.",
+      "revId": "cea5032a797391a6c6915df3fca58c031eb42327",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b427d075_77678bf3",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-06T17:20:37Z",
+      "side": 1,
+      "message": "Move this to where all the other config values are loaded.",
+      "revId": "cea5032a797391a6c6915df3fca58c031eb42327",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59452cc1_2053b6a0",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2518,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-06T17:20:37Z",
+      "side": 1,
+      "message": "There\u0027s no reason to log this here, it\u0027s not at all relevant.",
+      "revId": "cea5032a797391a6c6915df3fca58c031eb42327",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
