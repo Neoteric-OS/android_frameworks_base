@@ -36,18 +36,33 @@ class CompatConfigBuilder {
         return new CompatConfigBuilder();
     }
 
+<<<<<<< HEAD:services/tests/servicestests/src/com/android/server/compat/CompatConfigBuilder.java
     CompatConfigBuilder addTargetSdkChangeWithId(int sdk, long id) {
-        mChanges.add(new CompatChange(id, "", sdk, false, ""));
+        mChanges.add(new CompatChange(id, null, sdk, false, null));
         return this;
     }
 
     CompatConfigBuilder addTargetSdkDisabledChangeWithId(int sdk, long id) {
-        mChanges.add(new CompatChange(id, "", sdk, true, ""));
+        mChanges.add(new CompatChange(id, null, sdk, true, null));
         return this;
     }
 
     CompatConfigBuilder addTargetSdkChangeWithIdAndName(int sdk, long id, String name) {
+        mChanges.add(new CompatChange(id, name, sdk, false, null));
+=======
+    ChangeConfigBuilder addTargetSdkChangeWithId(int sdk, long id) {
+        mChanges.add(new CompatChange(id, "", sdk, false, ""));
+        return this;
+    }
+
+    ChangeConfigBuilder addTargetSdkDisabledChangeWithId(int sdk, long id) {
+        mChanges.add(new CompatChange(id, "", sdk, true, ""));
+        return this;
+    }
+
+    ChangeConfigBuilder addTargetSdkChangeWithIdAndName(int sdk, long id, String name) {
         mChanges.add(new CompatChange(id, name, sdk, false, ""));
+>>>>>>> c869eaf521a... Refactor CompatConfigTest and PlatformCompatTest:services/tests/servicestests/src/com/android/server/compat/ChangeConfigBuilder.java
         return this;
     }
 
@@ -57,32 +72,61 @@ class CompatConfigBuilder {
         return this;
     }
 
+<<<<<<< HEAD:services/tests/servicestests/src/com/android/server/compat/CompatConfigBuilder.java
     CompatConfigBuilder addEnabledChangeWithId(long id) {
-        mChanges.add(new CompatChange(id, "", -1, false, ""));
+        mChanges.add(new CompatChange(id, null, -1, false, null));
         return this;
     }
 
     CompatConfigBuilder addEnabledChangeWithIdAndName(long id, String name) {
-        mChanges.add(new CompatChange(id, name, -1, false, ""));
+        mChanges.add(new CompatChange(id, name, -1, false, null));
         return this;
     }
     CompatConfigBuilder addEnabledChangeWithIdAndDescription(long id, String description) {
-        mChanges.add(new CompatChange(id, "", -1, false, description));
+        mChanges.add(new CompatChange(id, null, -1, false, description));
         return this;
     }
 
     CompatConfigBuilder addDisabledChangeWithId(long id) {
-        mChanges.add(new CompatChange(id, "", -1, true, ""));
+        mChanges.add(new CompatChange(id, null, -1, true, null));
         return this;
     }
 
     CompatConfigBuilder addDisabledChangeWithIdAndName(long id, String name) {
-        mChanges.add(new CompatChange(id, name, -1, true, ""));
+        mChanges.add(new CompatChange(id, name, -1, true, null));
         return this;
     }
 
     CompatConfigBuilder addDisabledChangeWithIdAndDescription(long id, String description) {
+        mChanges.add(new CompatChange(id, null, -1, true, description));
+=======
+    ChangeConfigBuilder addEnabledChangeWithId(long id) {
+        mChanges.add(new CompatChange(id, "", -1, false, ""));
+        return this;
+    }
+
+    ChangeConfigBuilder addEnabledChangeWithIdAndName(long id, String name) {
+        mChanges.add(new CompatChange(id, name, -1, false, ""));
+        return this;
+    }
+    ChangeConfigBuilder addEnabledChangeWithIdAndDescription(long id, String description) {
+        mChanges.add(new CompatChange(id, "", -1, false, description));
+        return this;
+    }
+
+    ChangeConfigBuilder addDisabledChangeWithId(long id) {
+        mChanges.add(new CompatChange(id, "", -1, true, ""));
+        return this;
+    }
+
+    ChangeConfigBuilder addDisabledChangeWithIdAndName(long id, String name) {
+        mChanges.add(new CompatChange(id, name, -1, true, ""));
+        return this;
+    }
+
+    ChangeConfigBuilder addDisabledChangeWithIdAndDescription(long id, String description) {
         mChanges.add(new CompatChange(id, "", -1, true, description));
+>>>>>>> c869eaf521a... Refactor CompatConfigTest and PlatformCompatTest:services/tests/servicestests/src/com/android/server/compat/ChangeConfigBuilder.java
         return this;
     }
 
