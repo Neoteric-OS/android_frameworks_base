@@ -21,15 +21,10 @@ import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.content.Context;
-import android.net.LinkProperties;
-import android.net.NetworkCapabilities;
 import android.os.Binder;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerExecutor;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.telephony.Annotation.ApnType;
 import android.telephony.Annotation.CallState;
 import android.telephony.Annotation.DataActivityType;
 import android.telephony.Annotation.DataFailureCause;
@@ -366,26 +361,17 @@ public class TelephonyRegistryManager {
      * @param slotIndex for which data connections state changed. Can be derived from subId except
      * when subId is invalid.
      * @param state latest data connection state, e.g,
-     * @param isDataConnectivityPossible indicates if data is allowed
      * @param apn the APN {@link ApnSetting#getApnName()} of this data connection.
      * @param apnType the apnType, "ims" for IMS APN, "emergency" for EMERGENCY APN.
-     * @param linkProperties {@link LinkProperties} associated with this data connection.
-     * @param networkCapabilities {@link NetworkCapabilities} associated with this data connection.
      * @param networkType associated with this data connection.
-     * @param roaming {@code true} indicates in roaming, {@false} otherwise.
      * @see TelephonyManager#DATA_DISCONNECTED
-     * @see TelephonyManager#isDataConnectivityPossible()
-     *
      * @hide
      */
     public void notifyDataConnectionForSubscriber(int slotIndex, int subId, @DataState int state,
-        boolean isDataConnectivityPossible,
-        @ApnType String apn, String apnType, LinkProperties linkProperties,
-        NetworkCapabilities networkCapabilities, int networkType, boolean roaming) {
+            String apnType, int networkType, PreciseDataConnectionState preciseState) {
         try {
-            sRegistry.notifyDataConnectionForSubscriber(slotIndex, subId, state,
-                isDataConnectivityPossible,
-                apn, apnType, linkProperties, networkCapabilities, networkType, roaming);
+            sRegistry.notifyDataConnectionForSubscriber(
+                    slotIndex, subId, state, apnType, networkType, preciseState);
         } catch (RemoteException ex) {
             // system process is dead
         }

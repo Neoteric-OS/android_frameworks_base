@@ -98,19 +98,11 @@ public class PhoneConstants {
 
     public static final String PHONE_NAME_KEY = "phoneName";
     public static final String DATA_NETWORK_TYPE_KEY = "networkType";
-    public static final String DATA_FAILURE_CAUSE_KEY = "failCause";
     public static final String DATA_APN_TYPE_KEY = "apnType";
     public static final String DATA_APN_KEY = "apn";
-    public static final String DATA_LINK_PROPERTIES_KEY = "linkProperties";
-    public static final String DATA_NETWORK_CAPABILITIES_KEY = "networkCapabilities";
 
-    public static final String DATA_IFACE_NAME_KEY = "iface";
-    public static final String NETWORK_UNAVAILABLE_KEY = "networkUnvailable";
-    public static final String DATA_NETWORK_ROAMING_KEY = "networkRoaming";
     public static final String PHONE_IN_ECM_STATE = "phoneinECMState";
     public static final String PHONE_IN_EMERGENCY_CALL = "phoneInEmergencyCall";
-
-    public static final String REASON_LINK_PROPERTIES_CHANGED = "linkPropertiesChanged";
 
     /**
      * Return codes for supplyPinReturnResult and

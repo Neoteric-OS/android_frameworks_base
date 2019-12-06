@@ -25,6 +25,7 @@ import android.telephony.CellInfo;
 import android.telephony.ims.ImsReasonInfo;
 import android.telephony.PhoneCapability;
 import android.telephony.PhysicalChannelConfig;
+import android.telephony.PreciseDataConnectionState;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.emergency.EmergencyNumber;
@@ -55,13 +56,8 @@ interface ITelephonyRegistry {
     @UnsupportedAppUsage(maxTargetSdk = 28)
     void notifyDataActivity(int state);
     void notifyDataActivityForSubscriber(in int subId, int state);
-    void notifyDataConnection(int state, boolean isDataConnectivityPossible,
-            String apn, String apnType, in LinkProperties linkProperties,
-            in NetworkCapabilities networkCapabilities, int networkType, boolean roaming);
     void notifyDataConnectionForSubscriber(int phoneId, int subId, int state,
-            boolean isDataConnectivityPossible,
-            String apn, String apnType, in LinkProperties linkProperties,
-            in NetworkCapabilities networkCapabilities, int networkType, boolean roaming);
+            String apnType, int networkType, in PreciseDataConnectionState preciseState);
     @UnsupportedAppUsage
     void notifyDataConnectionFailed(String apnType);
     void notifyDataConnectionFailedForSubscriber(int phoneId, int subId, String apnType);
