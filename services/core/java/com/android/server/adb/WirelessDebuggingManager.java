@@ -16,18 +16,30 @@
 
 package com.android.server.adb;
 
+import android.app.ActivityManager;
+import android.content.ActivityNotFoundException;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.debug.AdbManager;
 import android.debug.PairDevice;
+import android.net.ConnectivityManager;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.net.wifi.WifiSsid;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -35,10 +47,12 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.os.UserManager;
 import android.provider.Settings;
 import android.util.Slog;
 
 import com.android.framework.protobuf.InvalidProtocolBufferException;
+import com.android.internal.R;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
 import com.android.internal.notification.SystemNotificationChannels;
 import com.android.server.FgThread;
@@ -294,6 +308,54 @@ public class WirelessDebuggingManager {
         private NotificationManager mNotificationManager;
         private boolean mAdbNotificationShown;
 
+        private WifiManager mWifiManager;
+        // Disable adbwifi on any network change.
+        private String mBssid;
+        private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                // We only care about when wifi is disabled, and when there is a wifi network change.
+                if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(action)) {
+                    int state = intent.getIntExtra(
+                            WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_DISABLED);
+                    if (state == WifiManager.WIFI_STATE_DISABLED) {
+                        Slog.i(TAG, "Wifi disabled. Disabling adbwifi.");
+                        sendEmptyMessage(WirelessDebuggingHandler.MSG_ADBDWIFI_DISABLE);
+                    }
+                } else if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(action)) {
+                    // We only care about wifi type connections
+                    NetworkInfo networkInfo = (NetworkInfo) intent.getParcelableExtra(
+                            WifiManager.EXTRA_NETWORK_INFO);
+                    if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                        // Check for network disconnect
+                        if (!networkInfo.isConnected()) {
+                            Slog.i(TAG, "Network disconnected. Disabling adbwifi.");
+                            sendEmptyMessage(WirelessDebuggingHandler.MSG_ADBDWIFI_DISABLE);
+                            return;
+                        }
+
+                        WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
+                        if (wifiInfo == null || wifiInfo.getNetworkId() == -1) {
+                            Slog.i(TAG, "Not connected to any wireless network. Not enabling adbwifi.");
+                            sendEmptyMessage(WirelessDebuggingHandler.MSG_ADBDWIFI_DISABLE);
+                        }
+
+                        // Check for network change
+                        String bssid = wifiInfo.getBSSID();
+                        if (bssid == null || bssid.isEmpty()) {
+                            Slog.e(TAG, "Unable to get the wifi ap's BSSID. Disabling adbwifi.");
+                            sendEmptyMessage(WirelessDebuggingHandler.MSG_ADBDWIFI_DISABLE);
+                        }
+                        if (!bssid.equals(mBssid)) {
+                            Slog.i(TAG, "Detected wifi network change. Disabling adbwifi.");
+                            sendEmptyMessage(WirelessDebuggingHandler.MSG_ADBDWIFI_DISABLE);
+                        }
+                    }
+                }
+            }
+        };
+
         // === Messages from the UI ==============
         // UI asks adbd to enable adbdwifi
         private static final int MSG_ADBDWIFI_ENABLE = 1;
@@ -405,6 +467,124 @@ public class WirelessDebuggingManager {
             }
         }
 
+        private boolean verifyWifiNetwork() {
+            if (mWifiManager == null) {
+                mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+                if (mWifiManager == null) {
+                    Slog.e(TAG, "Unable to get WifiManager for adbwifi");
+                    return false;
+                }
+            }
+
+            WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
+            if (wifiInfo == null || wifiInfo.getNetworkId() == -1) {
+                Slog.i(TAG, "Not connected to any wireless network. Not enabling adbwifi.");
+                return false;
+            }
+
+            String ssid = null;
+            if (wifiInfo.isPasspointAp() || wifiInfo.isOsuAp()) {
+                ssid = wifiInfo.getPasspointProviderFriendlyName();
+            } else {
+                ssid = wifiInfo.getSSID();
+                if (ssid == null || WifiSsid.NONE.equals(ssid)) {
+                    // OK, it's not in the connectionInfo; we have to go hunting for it
+                    List<WifiConfiguration> networks = mWifiManager.getConfiguredNetworks();
+                    int length = networks.size();
+                    for (int i = 0; i < length; i++) {
+                        if (networks.get(i).networkId == wifiInfo.getNetworkId()) {
+                            ssid = networks.get(i).SSID;
+                        }
+                    }
+                    if (ssid == null) {
+                        Slog.e(TAG, "Unable to get ssid of the wireless ap. Disabling adbwifi");
+                        return false;
+                    }
+                }
+            }
+            mBssid = wifiInfo.getBSSID();
+            if (mBssid == null || mBssid.isEmpty()) {
+                Slog.e(TAG, "Unable to get the wifi ap's BSSID. Disabling adbwifi.");
+                return false;
+            }
+
+            // TODO: Prompt the user asking them whether they trust this network, then save the
+            // bssid if so (allow once, allow always options). Also, need to subscribe to wifi
+            // notifications to detect wifi state changes.
+            Slog.i(TAG, "Got ssid=" + ssid + " bssid=" + mBssid);
+            startConfirmation(ssid, mBssid);
+
+            IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+            intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+            mContext.registerReceiver(mBroadcastReceiver, intentFilter);
+            return true;
+        }
+
+        private void startConfirmation(String ssid, String bssid) {
+            int currentUserId = ActivityManager.getCurrentUser();
+            UserInfo userInfo= UserManager.get(mContext).getUserInfo(currentUserId);
+            String componentString;
+            if (userInfo.isAdmin()) {
+                componentString = Resources.getSystem().getString(
+                        com.android.internal.R.string.config_customAdbWifiNetworkConfirmationComponent);
+            } else {
+                componentString = Resources.getSystem().getString(
+                        com.android.internal.R.string.config_customAdbWifiNetworkConfirmationComponent);
+            }
+            ComponentName componentName = ComponentName.unflattenFromString(componentString);
+            if (startConfirmationActivity(componentName, userInfo.getUserHandle(), ssid, bssid)
+                    || startConfirmationService(componentName, userInfo.getUserHandle(),
+                            ssid, bssid)) {
+                return;
+            }
+            Slog.e(TAG, "Unable to start customAdbWifiNetworkConfirmation[SecondaryUser]Component "
+                    + componentString + " as an Activity or a Service");
+        }
+
+        /**
+         * @return true if the componentName led to an Activity that was started.
+         */
+        private boolean startConfirmationActivity(ComponentName componentName, UserHandle userHandle,
+                String ssid, String bssid) {
+            PackageManager packageManager = mContext.getPackageManager();
+            Intent intent = createConfirmationIntent(componentName, ssid, bssid);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+                try {
+                    mContext.startActivityAsUser(intent, userHandle);
+                    return true;
+                } catch (ActivityNotFoundException e) {
+                    Slog.e(TAG, "unable to start adb wireless whitelist activity: " + componentName, e);
+                }
+            }
+            return false;
+        }
+
+        /**
+         * @return true if the componentName led to a Service that was started.
+         */
+        private boolean startConfirmationService(ComponentName componentName, UserHandle userHandle,
+                String ssid, String bssid) {
+            Intent intent = createConfirmationIntent(componentName, ssid, bssid);
+            try {
+                if (mContext.startServiceAsUser(intent, userHandle) != null) {
+                    return true;
+                }
+            } catch (SecurityException e) {
+                Slog.e(TAG, "unable to start adb wireless whitelist service: " + componentName, e);
+            }
+            return false;
+        }
+
+        private Intent createConfirmationIntent(ComponentName componentName, String ssid,
+                String bssid) {
+            Intent intent = new Intent();
+            intent.setClassName(componentName.getPackageName(), componentName.getClassName());
+            intent.putExtra("ssid", ssid);
+            intent.putExtra("bssid", bssid);
+            return intent;
+        }
+
         public void handleMessage(Message msg) {
             if (DEBUG) Slog.i(TAG, "adb wireless handle msg " + msg.what);
             switch (msg.what) {
@@ -412,15 +592,24 @@ public class WirelessDebuggingManager {
                     setupNotifications();
                     break;
                 case MSG_ADBDWIFI_ENABLE:
+                    // TODO: Enabling/disabling adbwifi directly corresponds to the adb data socket
+                    // being opened/closed. Let's add some callbacks down in adbd to notify us of
+                    // the connection changes.
                     if (mAdbWirelessEnabled) {
                         break;
                     }
 
-                    mAdbWirelessEnabled = true;
                     if (!native_keystore_init()) {
                         Slog.e(TAG, "Unable to initialize adbwifi keystore");
-                        // TODO: Should we re-disable the UI?
+                        // TODO: signal to notify Settings UI
+                        return;
                     }
+                    if (!verifyWifiNetwork()) {
+                        // TODO: signal to notify Settings UI
+                        return;
+                    }
+
+                    mAdbWirelessEnabled = true;
                     // Send the paired devices list to the UI
                     refreshPairedDevicesList(mPairedDevices);
                     sendPairedDevicesToUI(mPairedDevices);
@@ -437,6 +626,7 @@ public class WirelessDebuggingManager {
                         break;
                     }
 
+                    mContext.unregisterReceiver(mBroadcastReceiver);
                     mAdbWirelessEnabled = false;
                     SystemProperties.set(WIRELESS_DEBUG_PERSISTENT_CONFIG_PROPERTY,
                             Boolean.toString(mAdbWirelessEnabled));
