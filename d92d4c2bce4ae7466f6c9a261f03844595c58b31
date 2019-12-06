@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1090d5_4900806d",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:35:02Z",
+      "side": 1,
+      "message": "This provides more than diagnostics information, no? It allows for triggering certain diagnostics, as well as listen to system verifications?",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "d92d4c2bce4ae7466f6c9a261f03844595c58b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206a226b_0d61f117",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:35:02Z",
+      "side": 1,
+      "message": "Pop the stack; let\u0027s discuss here what why someone might want to use this class - what are the app classes that would care about this, and how does this help them?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 8
+      },
+      "revId": "d92d4c2bce4ae7466f6c9a261f03844595c58b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "098653e0_21d1d86d",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:35:02Z",
+      "side": 1,
+      "message": "Do we need source retention here? and maybe @hide?",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "d92d4c2bce4ae7466f6c9a261f03844595c58b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9376ded_10754937",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:35:02Z",
+      "side": 1,
+      "message": "FYI: Eventually this probably will need to take a context, but that can be done later",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 41
+      },
+      "revId": "d92d4c2bce4ae7466f6c9a261f03844595c58b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7b081cb_23172c1b",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:35:02Z",
+      "side": 1,
+      "message": "Is this a circular reference?",
+      "range": {
+        "startLine": 55,
+        "startChar": 67,
+        "endLine": 55,
+        "endChar": 86
+      },
+      "revId": "d92d4c2bce4ae7466f6c9a261f03844595c58b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d4f27cf_947ceffc",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:35:02Z",
+      "side": 1,
+      "message": "API visibility - do apps need this?",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 33
+      },
+      "revId": "d92d4c2bce4ae7466f6c9a261f03844595c58b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b408f989_6a8ba320",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:35:02Z",
+      "side": 1,
+      "message": "Question out of curiosity - this is so we can use them as unique binders for death registration, yeah?",
+      "range": {
+        "startLine": 130,
+        "startChar": 31,
+        "endLine": 130,
+        "endChar": 90
+      },
+      "revId": "d92d4c2bce4ae7466f6c9a261f03844595c58b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7c2f1e_8e9f3180",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:35:02Z",
+      "side": 1,
+      "message": "registered?",
+      "range": {
+        "startLine": 147,
+        "startChar": 49,
+        "endLine": 147,
+        "endChar": 64
+      },
+      "revId": "d92d4c2bce4ae7466f6c9a261f03844595c58b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
