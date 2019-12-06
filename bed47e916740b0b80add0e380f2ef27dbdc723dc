@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "512d44eb_f9063997",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:26:57Z",
+      "side": 1,
+      "message": "General javadoc rule of thumb - first block of javadoc should be a single line:\n\n/**\n * [Simple oneliner (if at all possible)]\n *\n * \u003cp\u003e[More Details]\n */",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 93
+      },
+      "revId": "bed47e916740b0b80add0e380f2ef27dbdc723dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6432471_36eb08a4",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:26:57Z",
+      "side": 1,
+      "message": "Must be /** */ for it to be considered javadoc (i think)",
+      "range": {
+        "startLine": 167,
+        "startChar": 13,
+        "endLine": 167,
+        "endChar": 14
+      },
+      "revId": "bed47e916740b0b80add0e380f2ef27dbdc723dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8518a0cf_c908a006",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:26:57Z",
+      "side": 1,
+      "message": "Should this be constructable by anything outside the platform?\n\nMaybe @hide?",
+      "range": {
+        "startLine": 181,
+        "startChar": 19,
+        "endLine": 181,
+        "endChar": 26
+      },
+      "revId": "bed47e916740b0b80add0e380f2ef27dbdc723dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f99a0a_a54dd998",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:26:57Z",
+      "side": 1,
+      "message": "Suggest a little more detail; this represents a single node in the network, not all of them for a TTL. (unless the \"collected to a specific IP\" is meant to convey that, in which case we may need to clarify that more)",
+      "range": {
+        "startLine": 189,
+        "startChar": 38,
+        "endLine": 189,
+        "endChar": 67
+      },
+      "revId": "bed47e916740b0b80add0e380f2ef27dbdc723dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be42b5a7_cdbcd5c1",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:26:57Z",
+      "side": 1,
+      "message": "Linking failure: no reference found\n\n:)",
+      "range": {
+        "startLine": 205,
+        "startChar": 77,
+        "endLine": 205,
+        "endChar": 81
+      },
+      "revId": "bed47e916740b0b80add0e380f2ef27dbdc723dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8546177d_b16b03f9",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 2
@@ -13,6 +128,30 @@
       "writtenOn": "2019-12-05T18:02:25Z",
       "side": 1,
       "message": "as written, this has no configurability options for the client. Do we want to define a RouteDiagnosticsConfig class with options for defining max TTL, probes per hop, and packet size?",
+      "range": {
+        "startLine": 246,
+        "startChar": 16,
+        "endLine": 246,
+        "endChar": 39
+      },
+      "revId": "bed47e916740b0b80add0e380f2ef27dbdc723dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f7ec2c_d18d579a",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:26:57Z",
+      "side": 1,
+      "message": "I\u0027d vote yes, but this will need a wider discussion. Suggest adding a method that allows for this, and if it doesn\u0027t gain traction, we can @hide it.",
+      "parentUuid": "8546177d_b16b03f9",
       "range": {
         "startLine": 246,
         "startChar": 16,
