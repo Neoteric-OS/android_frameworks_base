@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d5bf1281_a81772cb",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-06T22:42:11Z",
+      "side": 1,
+      "message": "The capabilities listed in b/129542328 will be added.",
+      "parentUuid": "4fca8d8e_0a321767",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07f056a1_32c16ef7",
         "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2019-10-30T15:35:32Z",
       "side": 1,
       "message": "Keystone CL with GSMA RCS 7.1 spec spec changes and feature tags is as given. Please take them \n\nhttps://keystone-qcom-review.googlesource.com/c/platform/frameworks/base/+/183134",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d3aacc_6bab9654",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-06T22:42:11Z",
+      "side": 1,
+      "message": "Is the same CL as the one linked in b/129542328? I can not access",
+      "parentUuid": "07f056a1_32c16ef7",
       "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "17adf0cd_aa4017c7",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-06T22:42:11Z",
+      "side": 1,
+      "message": "We will go ahead and add these trigger types",
+      "parentUuid": "b2a0d4de_a3424b1a",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24f32085_fbd9d872",
         "filename": "telephony/java/android/telephony/ims/stub/RcsSipOptionsImplBase.java",
         "patchSetId": 16
@@ -64,6 +118,24 @@
       "writtenOn": "2019-10-30T15:35:32Z",
       "side": 1,
       "message": "Error response is also sent if requested contact is blacklisted. In new API, we don\u0027t see any parameter to specify if requested contact is blacklisted. Just wanted to understand how do we handle such a case. It is part of existing AIDL Option API.\n\nresponseIncomingOptions(int optionsServiceHandle,  int tId, int sipResponseCode,\n                                   String reasonPhrase, in OptionsCapInfo capInfo,\n                                       in boolean bContactInBL);",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5881d72_fc2645d7",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsSipOptionsImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-06T22:42:11Z",
+      "side": 1,
+      "message": "Is the blacklist boolean generated from a specific response code or is it generated in a different manner?",
+      "parentUuid": "24f32085_fbd9d872",
       "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
