@@ -117,6 +117,30 @@
       "revId": "3c6c3cca24c55ff0c6cddb806fcdea40915529e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709be512_75714983",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2433,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-12-06T09:28:28Z",
+      "side": 1,
+      "message": "Dear nick.\n\nWe`re still waiting your reply.\n1. COLUMN_CONTENT_GLOBAL_UNIQIUE_ID or COLUMN_CONTENT_GLOBAL_ID?\n2. need WatchedPrograms.COLUMN_CHANNEL_ID?\n\nPlus one more thing we would like to hear your opinion.\n\nIn the NorDig PVR split recordings shall clearly be marked in the list of recordings as constituent parts belonging to the same programme.\nso Sony think COLUMN_SPLIT_ID is required in RecordedPrograms and hope to modify like below.\n\nPrograms. COLUMN_SPLIT_ID\n\u003d\u003e\nProgramColumns.COLUMN_SPLIT_ID\n\nPlease kindly review our suggestion.",
+      "parentUuid": "b71a3b97_82a0876f",
+      "range": {
+        "startLine": 2433,
+        "startChar": 35,
+        "endLine": 2433,
+        "endChar": 52
+      },
+      "revId": "3c6c3cca24c55ff0c6cddb806fcdea40915529e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
