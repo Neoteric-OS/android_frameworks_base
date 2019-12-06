@@ -22,6 +22,30 @@
       "revId": "18fe039ca72984d070a050ac4fbbdaa9f209b27e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033177aa_4c400392",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1604759
+      },
+      "writtenOn": "2019-12-06T02:16:35Z",
+      "side": 1,
+      "message": "screen off，no power and driving with Gouda Map navigation\nAfter one hour driving the phone steps into deep doze and disable gps.The Gouda Map show weak gps signal",
+      "parentUuid": "2ed97599_82fd90cd",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "18fe039ca72984d070a050ac4fbbdaa9f209b27e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
