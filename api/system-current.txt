@@ -6019,6 +6019,17 @@ package android.os {
 
 }
 
+package android.os.ext {
+
+  public class SdkExtensions {
+    method public static int getExtensionVersion(@android.os.ext.SdkExtensions.SdkVersion int);
+  }
+
+  @IntDef({android.os.Build.VERSION_CODES.R}) @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE) public static @interface SdkExtensions.SdkVersion {
+  }
+
+}
+
 package android.os.image {
 
   public class DynamicSystemClient {
