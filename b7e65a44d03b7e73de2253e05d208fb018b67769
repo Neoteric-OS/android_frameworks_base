@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e6ca921_080dc1b0",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-06T17:40:40Z",
+      "side": 1,
+      "message": "Do we have any idea how often we\u0027d hit this in practice?\n\nGiven our fd limit is 32k (IIRC) this seems rather low.",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 50
+      },
+      "revId": "b7e65a44d03b7e73de2253e05d208fb018b67769",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101e3cd6_e9a90439",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-06T17:40:40Z",
+      "side": 1,
+      "message": "Can we use SIGRTMIN + 7 instead of hard coding 39?\n\nSIGRTMIN can theoretically change, so you generally should use offsets from it rather than hard coding values so that things stay consistent.",
+      "range": {
+        "startLine": 104,
+        "startChar": 22,
+        "endLine": 104,
+        "endChar": 24
+      },
+      "revId": "b7e65a44d03b7e73de2253e05d208fb018b67769",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
