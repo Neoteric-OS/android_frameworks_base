@@ -17,8 +17,13 @@ package com.android.server.compat;
 
 import android.content.Context;
 
+import com.android.compat.annotation.Change;
+import com.android.compat.annotation.XmlWriter;
 import com.android.internal.compat.AndroidBuildClassifier;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -40,52 +45,52 @@ class CompatConfigBuilder {
     }
 
     CompatConfigBuilder addTargetSdkChangeWithId(int sdk, long id) {
-        mChanges.add(new CompatChange(id, null, sdk, false, null));
+        mChanges.add(new CompatChange(id, "", sdk, false, ""));
         return this;
     }
 
     CompatConfigBuilder addTargetSdkDisabledChangeWithId(int sdk, long id) {
-        mChanges.add(new CompatChange(id, null, sdk, true, null));
+        mChanges.add(new CompatChange(id, "", sdk, true, ""));
         return this;
     }
 
     CompatConfigBuilder addTargetSdkChangeWithIdAndName(int sdk, long id, String name) {
-        mChanges.add(new CompatChange(id, name, sdk, false, null));
+        mChanges.add(new CompatChange(id, name, sdk, false, ""));
         return this;
     }
 
     CompatConfigBuilder addTargetSdkChangeWithIdAndDescription(int sdk, long id,
             String description) {
-        mChanges.add(new CompatChange(id, null, sdk, false, description));
+        mChanges.add(new CompatChange(id, "", sdk, false, description));
         return this;
     }
 
     CompatConfigBuilder addEnabledChangeWithId(long id) {
-        mChanges.add(new CompatChange(id, null, -1, false, null));
+        mChanges.add(new CompatChange(id, "", -1, false, ""));
         return this;
     }
 
     CompatConfigBuilder addEnabledChangeWithIdAndName(long id, String name) {
-        mChanges.add(new CompatChange(id, name, -1, false, null));
+        mChanges.add(new CompatChange(id, name, -1, false, ""));
         return this;
     }
     CompatConfigBuilder addEnabledChangeWithIdAndDescription(long id, String description) {
-        mChanges.add(new CompatChange(id, null, -1, false, description));
+        mChanges.add(new CompatChange(id, "", -1, false, description));
         return this;
     }
 
     CompatConfigBuilder addDisabledChangeWithId(long id) {
-        mChanges.add(new CompatChange(id, null, -1, true, null));
+        mChanges.add(new CompatChange(id, "", -1, true, ""));
         return this;
     }
 
     CompatConfigBuilder addDisabledChangeWithIdAndName(long id, String name) {
-        mChanges.add(new CompatChange(id, name, -1, true, null));
+        mChanges.add(new CompatChange(id, name, -1, true, ""));
         return this;
     }
 
     CompatConfigBuilder addDisabledChangeWithIdAndDescription(long id, String description) {
-        mChanges.add(new CompatChange(id, null, -1, true, description));
+        mChanges.add(new CompatChange(id, "", -1, true, description));
         return this;
     }
 
@@ -95,5 +100,21 @@ class CompatConfigBuilder {
             config.addChange(change);
         }
         return config;
+    }
+
+    void saveToFile(File dir, String filename) {
+        File file = new File(dir.getPath() + filename);
+        XmlWriter writer = new XmlWriter();
+        for (CompatChange change : mChanges) {
+            writer.addChange(new Change(change.getId(), change.getName(), change.getDisabled(),
+                                    change.getEnableAfterTargetSdk(), change.getDescription()));
+        }
+        try {
+            file.createNewFile();
+            writer.write(new FileOutputStream(file));
+        } catch (IOException e) {
+            throw new RuntimeException(
+                    "Encountered an error while writing compat config file", e);
+        }
     }
 }
