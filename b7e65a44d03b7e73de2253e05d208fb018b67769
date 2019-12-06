@@ -45,6 +45,30 @@
       "revId": "b7e65a44d03b7e73de2253e05d208fb018b67769",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ced1dcb_fe4a0f7a",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2019-12-06T18:57:43Z",
+      "side": 1,
+      "message": "we actually move the SIGRTMIN *above* all these internal-use signals.\n\nbut it is probably time that we gave all these reserved signals names in \"private/sigrtmin.h\" and moved it into \"bionic/libc/platform/bionic/reserved_signals.h\" or whatever, then use the header-only library bionic_libc_platform_headers in places like this.",
+      "parentUuid": "101e3cd6_e9a90439",
+      "range": {
+        "startLine": 104,
+        "startChar": 22,
+        "endLine": 104,
+        "endChar": 24
+      },
+      "revId": "b7e65a44d03b7e73de2253e05d208fb018b67769",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
