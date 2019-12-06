@@ -1080,6 +1080,21 @@ public final class LinkProperties implements Parcelable {
     }
 
     /**
+     * Returns true if this link has an IPv4 prohibit route.
+     *
+     * @return {@code true} if there is an IPv4 prohibit route, {@code false} otherwise.
+     * @hide
+     */
+    public boolean hasIpv4ProhibitRoute() {
+        for (RouteInfo r : mRoutes) {
+            if (r.isIPv4Prohibit()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * For backward compatibility.
      * This was annotated with @UnsupportedAppUsage in P, so we can't remove the method completely
      * just yet.
@@ -1102,6 +1117,21 @@ public final class LinkProperties implements Parcelable {
     public boolean hasIpv6DefaultRoute() {
         for (RouteInfo r : mRoutes) {
             if (r.isIPv6Default()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if this link has an IPv6 prohibit route.
+     *
+     * @return {@code true} if there is an IPv6 prohibit route, {@code false} otherwise.
+     * @hide
+     */
+    public boolean hasIpv6ProhibitRoute() {
+        for (RouteInfo r : mRoutes) {
+            if (r.isIPv6Prohibit()) {
                 return true;
             }
         }

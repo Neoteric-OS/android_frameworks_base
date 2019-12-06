@@ -16,6 +16,8 @@
 
 package android.net;
 
+import static android.net.RouteInfo.RTN_UNREACHABLE;
+
 import static com.android.testutils.ParcelUtilsKt.assertParcelSane;
 import static com.android.testutils.ParcelUtilsKt.assertParcelingIsLossless;
 import static com.android.testutils.ParcelUtilsKt.parcelingRoundTrip;
@@ -46,6 +48,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1196,5 +1199,23 @@ public class LinkPropertiesTest {
 
         lp.clear();
         assertNull(lp.getCaptivePortalData());
+    }
+
+    @Test
+    public void testHasIpv4ProhibitRoute() {
+        final LinkProperties lp = makeTestObject();
+        assertFalse(lp.hasIpv4ProhibitRoute());
+
+        lp.addRoute(new RouteInfo(new IpPrefix(Inet4Address.ANY, 0), RTN_UNREACHABLE));
+        assertTrue(lp.hasIpv4ProhibitRoute());
+    }
+
+    @Test
+    public void testHasIpv6ProhibitRoute() {
+        final LinkProperties lp = makeTestObject();
+        assertFalse(lp.hasIpv6ProhibitRoute());
+
+        lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), RTN_UNREACHABLE));
+        assertTrue(lp.hasIpv6ProhibitRoute());
     }
 }

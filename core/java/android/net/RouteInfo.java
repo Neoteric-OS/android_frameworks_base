@@ -425,6 +425,16 @@ public final class RouteInfo implements Parcelable {
     }
 
     /**
+     * Indicates if this route is a prohibit route.
+     *
+     * @return {@code true} if it's an unreachable route with prefix length of 0.
+     * @hide
+     */
+    private boolean isProhibitRoute() {
+        return mType == RTN_UNREACHABLE && mDestination.getPrefixLength() == 0;
+    }
+
+    /**
      * Indicates if this route is an IPv4 default route.
      * @hide
      */
@@ -433,11 +443,27 @@ public final class RouteInfo implements Parcelable {
     }
 
     /**
+     * Indicates if this route is an IPv4 prohibit route.
+     * @hide
+     */
+    public boolean isIPv4Prohibit() {
+        return isProhibitRoute() && mDestination.getAddress() instanceof Inet4Address;
+    }
+
+    /**
      * Indicates if this route is an IPv6 default route.
      * @hide
      */
     public boolean isIPv6Default() {
         return isDefaultRoute() && mDestination.getAddress() instanceof Inet6Address;
+    }
+
+    /**
+     * Indicates if this route is an IPv6 prohibit route.
+     * @hide
+     */
+    public boolean isIPv6Prohibit() {
+        return isProhibitRoute() && mDestination.getAddress() instanceof Inet6Address;
     }
 
     /**

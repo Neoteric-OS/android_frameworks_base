@@ -195,78 +195,104 @@ public class RouteInfoTest {
         assertTrue(r.isDefaultRoute());
         assertTrue(r.isIPv4Default());
         assertFalse(r.isIPv6Default());
+        assertFalse(r.isIPv4Prohibit());
+        assertFalse(r.isIPv6Prohibit());
 
         r = new RouteInfo(Prefix("::/0"), Address("::"), "wlan0");
         assertFalse(r.isHostRoute());
         assertTrue(r.isDefaultRoute());
         assertFalse(r.isIPv4Default());
         assertTrue(r.isIPv6Default());
+        assertFalse(r.isIPv4Prohibit());
+        assertFalse(r.isIPv6Prohibit());
 
         r = new RouteInfo(Prefix("192.0.2.0/24"), null, "wlan0");
         assertFalse(r.isHostRoute());
         assertFalse(r.isDefaultRoute());
         assertFalse(r.isIPv4Default());
         assertFalse(r.isIPv6Default());
+        assertFalse(r.isIPv4Prohibit());
+        assertFalse(r.isIPv6Prohibit());
 
         r = new RouteInfo(Prefix("2001:db8::/48"), null, "wlan0");
         assertFalse(r.isHostRoute());
         assertFalse(r.isDefaultRoute());
         assertFalse(r.isIPv4Default());
         assertFalse(r.isIPv6Default());
+        assertFalse(r.isIPv4Prohibit());
+        assertFalse(r.isIPv6Prohibit());
 
         r = new RouteInfo(Prefix("192.0.2.0/32"), Address("0.0.0.0"), "wlan0");
         assertTrue(r.isHostRoute());
         assertFalse(r.isDefaultRoute());
         assertFalse(r.isIPv4Default());
         assertFalse(r.isIPv6Default());
+        assertFalse(r.isIPv4Prohibit());
+        assertFalse(r.isIPv6Prohibit());
 
         r = new RouteInfo(Prefix("2001:db8::/128"), Address("::"), "wlan0");
         assertTrue(r.isHostRoute());
         assertFalse(r.isDefaultRoute());
         assertFalse(r.isIPv4Default());
         assertFalse(r.isIPv6Default());
+        assertFalse(r.isIPv4Prohibit());
+        assertFalse(r.isIPv6Prohibit());
 
         r = new RouteInfo(Prefix("192.0.2.0/32"), null, "wlan0");
         assertTrue(r.isHostRoute());
         assertFalse(r.isDefaultRoute());
         assertFalse(r.isIPv4Default());
         assertFalse(r.isIPv6Default());
+        assertFalse(r.isIPv4Prohibit());
+        assertFalse(r.isIPv6Prohibit());
 
         r = new RouteInfo(Prefix("2001:db8::/128"), null, "wlan0");
         assertTrue(r.isHostRoute());
         assertFalse(r.isDefaultRoute());
         assertFalse(r.isIPv4Default());
         assertFalse(r.isIPv6Default());
+        assertFalse(r.isIPv4Prohibit());
+        assertFalse(r.isIPv6Prohibit());
 
         r = new RouteInfo(Prefix("::/128"), Address("fe80::"), "wlan0");
         assertTrue(r.isHostRoute());
         assertFalse(r.isDefaultRoute());
         assertFalse(r.isIPv4Default());
         assertFalse(r.isIPv6Default());
+        assertFalse(r.isIPv4Prohibit());
+        assertFalse(r.isIPv6Prohibit());
 
         r = new RouteInfo(Prefix("0.0.0.0/32"), Address("192.0.2.1"), "wlan0");
         assertTrue(r.isHostRoute());
         assertFalse(r.isDefaultRoute());
         assertFalse(r.isIPv4Default());
         assertFalse(r.isIPv6Default());
+        assertFalse(r.isIPv4Prohibit());
+        assertFalse(r.isIPv6Prohibit());
 
         r = new RouteInfo(Prefix("0.0.0.0/32"), Address("192.0.2.1"), "wlan0");
         assertTrue(r.isHostRoute());
         assertFalse(r.isDefaultRoute());
         assertFalse(r.isIPv4Default());
         assertFalse(r.isIPv6Default());
+        assertFalse(r.isIPv4Prohibit());
+        assertFalse(r.isIPv6Prohibit());
 
         r = new RouteInfo(new IpPrefix(Inet4Address.ANY, 0), RTN_UNREACHABLE);
         assertFalse(r.isHostRoute());
         assertFalse(r.isDefaultRoute());
         assertFalse(r.isIPv4Default());
         assertFalse(r.isIPv6Default());
+        assertTrue(r.isIPv4Prohibit());
+        assertFalse(r.isIPv6Prohibit());
 
         r = new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), RTN_UNREACHABLE);
         assertFalse(r.isHostRoute());
         assertFalse(r.isDefaultRoute());
         assertFalse(r.isIPv4Default());
         assertFalse(r.isIPv6Default());
+        assertFalse(r.isIPv4Prohibit());
+        assertTrue(r.isIPv6Prohibit());
     }
 
     @Test
