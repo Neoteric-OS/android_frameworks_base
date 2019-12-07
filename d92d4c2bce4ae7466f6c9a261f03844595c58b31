@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c20c2ceb_e0d0338a",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-07T02:29:57Z",
+      "side": 1,
+      "message": "Definitely better. I think we can actually remove this primary responsibilities piece; it\u0027s basically enumerating the API in a javadoc (which will primarily be read on the developer APIs page)",
+      "parentUuid": "e76998a0_3b4455b7",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 8
+      },
+      "revId": "d92d4c2bce4ae7466f6c9a261f03844595c58b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "098653e0_21d1d86d",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 2
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Added source retention. I don\u0027t think @hide makes sense, since this will be reported to callbacks in onDataStalled - thoughts?",
       "parentUuid": "098653e0_21d1d86d",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "d92d4c2bce4ae7466f6c9a261f03844595c58b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac277c5_a0d9ca90",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-07T02:29:57Z",
+      "side": 1,
+      "message": "Per API guidelines, intdefs are always hidden:\n\nhttp://go/android-api-guidelines#no-public-typedefs",
+      "parentUuid": "9c11ff0d_5cda43cb",
       "range": {
         "startLine": 47,
         "startChar": 5,
