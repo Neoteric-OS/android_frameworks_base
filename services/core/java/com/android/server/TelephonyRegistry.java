@@ -259,7 +259,9 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
     private final LocalLog mListenLog = new LocalLog(100);
 
-    private PreciseDataConnectionState[] mPreciseDataConnectionState;
+    // Per-phoneMap of APN Type to DataConnectionState
+    private ArrayList<HashMap<String, PreciseDataConnectionState>> mPreciseDataConnectionStates =
+            new ArrayList<HashMap<String, PreciseDataConnectionState>>();
 
     // Nothing here yet, but putting it here in case we want to add more in the future.
     static final int ENFORCE_COARSE_LOCATION_PERMISSION_MASK = 0;
@@ -414,7 +416,6 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         mCallQuality = copyOf(mCallQuality, mNumPhones);
         mCallNetworkType = copyOf(mCallNetworkType, mNumPhones);
         mCallAttributes = copyOf(mCallAttributes, mNumPhones);
-        mPreciseDataConnectionState = copyOf(mPreciseDataConnectionState, mNumPhones);
         mOutgoingCallEmergencyNumber = copyOf(mOutgoingCallEmergencyNumber, mNumPhones);
         mOutgoingSmsEmergencyNumber = copyOf(mOutgoingSmsEmergencyNumber, mNumPhones);
 
@@ -423,6 +424,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             cutListToSize(mCellInfo, mNumPhones);
             cutListToSize(mImsReasonInfo, mNumPhones);
             cutListToSize(mPhysicalChannelConfigs, mNumPhones);
+            cutListToSize(mPreciseDataConnectionStates, mNumPhones);
             return;
         }
 
@@ -455,7 +457,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mRingingCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
             mForegroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
             mBackgroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
-            mPreciseDataConnectionState[i] = new PreciseDataConnectionState();
+            mPreciseDataConnectionStates.add(new HashMap<String, PreciseDataConnectionState>());
         }
 
         // Note that location can be null for non-phone builds like
@@ -517,7 +519,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         mCallQuality = new CallQuality[numPhones];
         mCallNetworkType = new int[numPhones];
         mCallAttributes = new CallAttributes[numPhones];
-        mPreciseDataConnectionState = new PreciseDataConnectionState[numPhones];
+        mPreciseDataConnectionStates = new ArrayList<>();
         mCellInfo = new ArrayList<>();
         mImsReasonInfo = new ArrayList<>();
         mPhysicalChannelConfigs = new ArrayList<>();
@@ -552,7 +554,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mRingingCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
             mForegroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
             mBackgroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
-            mPreciseDataConnectionState[i] = new PreciseDataConnectionState();
+            mPreciseDataConnectionStates.add(new HashMap<String, PreciseDataConnectionState>());
         }
 
         // Note that location can be null for non-phone builds like
@@ -914,8 +916,10 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     }
                     if ((events & PhoneStateListener.LISTEN_PRECISE_DATA_CONNECTION_STATE) != 0) {
                         try {
-                            r.callback.onPreciseDataConnectionStateChanged(
-                                    mPreciseDataConnectionState[phoneId]);
+                            for (PreciseDataConnectionState pdcs
+                                    : mPreciseDataConnectionStates.get(phoneId).values()) {
+                                r.callback.onPreciseDataConnectionStateChanged(pdcs);
+                            }
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
@@ -929,7 +933,8 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     }
                     if ((events & PhoneStateListener.LISTEN_VOICE_ACTIVATION_STATE) !=0) {
                         try {
-                            r.callback.onVoiceActivationStateChanged(mVoiceActivationState[phoneId]);
+                            r.callback.onVoiceActivationStateChanged(
+                                    mVoiceActivationState[phoneId]);
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
@@ -1595,19 +1600,28 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     mDataConnectionNetworkType[phoneId] = networkType;
                 }
 
-                mPreciseDataConnectionState[phoneId] = new PreciseDataConnectionState(
-                        state, networkType,
-                        ApnSetting.getApnTypesBitmaskFromString(apnType), apn,
-                        linkProps, DataFailCause.NONE);
-                for (Record r : mRecords) {
-                    if (r.matchPhoneStateListenerEvent(
-                            PhoneStateListener.LISTEN_PRECISE_DATA_CONNECTION_STATE)
-                            && idMatch(r.subId, subId, phoneId)) {
-                        try {
-                            r.callback.onPreciseDataConnectionStateChanged(
-                                    mPreciseDataConnectionState[phoneId]);
-                        } catch (RemoteException ex) {
-                            mRemoveList.add(r.binder);
+                boolean needsNotify = false;
+                // State has been cleared for this APN Type
+                if (preciseState == null) {
+                    // We try clear the state and check if the state was previously not cleared
+                    needsNotify = mPreciseDataConnectionStates.get(phoneId).remove(apnType) != null;
+                } else {
+                    // We need to check to see if the state actually changed
+                    PreciseDataConnectionState oldPreciseState =
+                        mPreciseDataConnectionStates.get(phoneId).put(apnType, preciseState);
+                    needsNotify = !preciseState.equals(oldPreciseState);
+                }
+
+                if (needsNotify) {
+                    for (Record r : mRecords) {
+                        if (r.matchPhoneStateListenerEvent(
+                                PhoneStateListener.LISTEN_PRECISE_DATA_CONNECTION_STATE)
+                                && idMatch(r.subId, subId, phoneId)) {
+                            try {
+                                r.callback.onPreciseDataConnectionStateChanged(preciseState);
+                            } catch (RemoteException ex) {
+                                mRemoveList.add(r.binder);
+                            }
                         }
                     }
                 }
@@ -1632,17 +1646,19 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         }
         synchronized (mRecords) {
             if (validatePhoneId(phoneId)) {
-                mPreciseDataConnectionState[phoneId] = new PreciseDataConnectionState(
-                        TelephonyManager.DATA_UNKNOWN,TelephonyManager.NETWORK_TYPE_UNKNOWN,
-                        ApnSetting.getApnTypesBitmaskFromString(apnType), null, null,
-                        DataFailCause.NONE);
+                mPreciseDataConnectionStates.get(phoneId).put(
+                        apnType,
+                        new PreciseDataConnectionState(
+                                TelephonyManager.DATA_UNKNOWN,TelephonyManager.NETWORK_TYPE_UNKNOWN,
+                                ApnSetting.getApnTypesBitmaskFromString(apnType), null, null,
+                                DataFailCause.NONE));
                 for (Record r : mRecords) {
                     if (r.matchPhoneStateListenerEvent(
                             PhoneStateListener.LISTEN_PRECISE_DATA_CONNECTION_STATE)
                             && idMatch(r.subId, subId, phoneId)) {
                         try {
                             r.callback.onPreciseDataConnectionStateChanged(
-                                    mPreciseDataConnectionState[phoneId]);
+                                    mPreciseDataConnectionStates.get(phoneId).get(apnType));
                         } catch (RemoteException ex) {
                             mRemoveList.add(r.binder);
                         }
@@ -1840,23 +1856,25 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
         synchronized (mRecords) {
             if (validatePhoneId(phoneId)) {
-                mPreciseDataConnectionState[phoneId] = new PreciseDataConnectionState(
-                        TelephonyManager.DATA_UNKNOWN, TelephonyManager.NETWORK_TYPE_UNKNOWN,
-                        ApnSetting.getApnTypesBitmaskFromString(apnType), apn, null, failCause);
+                mPreciseDataConnectionStates.get(phoneId).put(
+                        apnType,
+                        new PreciseDataConnectionState(
+                                TelephonyManager.DATA_UNKNOWN,TelephonyManager.NETWORK_TYPE_UNKNOWN,
+                                ApnSetting.getApnTypesBitmaskFromString(apnType), null, null,
+                                failCause));
                 for (Record r : mRecords) {
                     if (r.matchPhoneStateListenerEvent(
                             PhoneStateListener.LISTEN_PRECISE_DATA_CONNECTION_STATE)
                             && idMatch(r.subId, subId, phoneId)) {
                         try {
                             r.callback.onPreciseDataConnectionStateChanged(
-                                    mPreciseDataConnectionState[phoneId]);
+                                    mPreciseDataConnectionStates.get(phoneId).get(apnType));
                         } catch (RemoteException ex) {
                             mRemoveList.add(r.binder);
                         }
                     }
                 }
             }
-
             handleRemoveListLocked();
         }
     }
@@ -2114,7 +2132,6 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         }
     }
 
-
     @Override
     public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
         final IndentingPrintWriter pw = new IndentingPrintWriter(writer, "  ");
@@ -2153,7 +2170,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 pw.println("mCallQuality=" + mCallQuality[i]);
                 pw.println("mCallAttributes=" + mCallAttributes[i]);
                 pw.println("mCallNetworkType=" + mCallNetworkType[i]);
-                pw.println("mPreciseDataConnectionState=" + mPreciseDataConnectionState[i]);
+                pw.println("mPreciseDataConnectionState=" + mPreciseDataConnectionStates.get(i));
                 pw.println("mOutgoingCallEmergencyNumber=" + mOutgoingCallEmergencyNumber[i]);
                 pw.println("mOutgoingSmsEmergencyNumber=" + mOutgoingSmsEmergencyNumber[i]);
                 pw.decreaseIndent();
