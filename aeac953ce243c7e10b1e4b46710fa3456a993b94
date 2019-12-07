@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53cf023c_72fc0503",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1535,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-12-07T21:27:15Z",
+      "side": 1,
+      "message": "nit: cancelPairing? Not sure what the user input part means.",
+      "range": {
+        "startLine": 1535,
+        "startChar": 19,
+        "endLine": 1535,
+        "endChar": 41
+      },
+      "revId": "aeac953ce243c7e10b1e4b46710fa3456a993b94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
