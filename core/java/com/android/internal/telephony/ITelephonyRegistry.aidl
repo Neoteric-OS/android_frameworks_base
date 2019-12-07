@@ -19,8 +19,8 @@ package com.android.internal.telephony;
 import android.content.Intent;
 import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
-import android.os.Bundle;
 import android.telephony.CallQuality;
+import android.telephony.CellIdentity;
 import android.telephony.CellInfo;
 import android.telephony.ims.ImsReasonInfo;
 import android.telephony.PhoneCapability;
@@ -65,9 +65,9 @@ interface ITelephonyRegistry {
     @UnsupportedAppUsage
     void notifyDataConnectionFailed(String apnType);
     void notifyDataConnectionFailedForSubscriber(int phoneId, int subId, String apnType);
-    @UnsupportedAppUsage(maxTargetSdk = 28)
-    void notifyCellLocation(in Bundle cellLocation);
-    void notifyCellLocationForSubscriber(in int subId, in Bundle cellLocation);
+    // Uses CellIdentity which is Parcelable here; will convert to CellLocation in client.
+    void notifyCellLocation(in CellIdentity cellLocation);
+    void notifyCellLocationForSubscriber(in int subId, in CellIdentity cellLocation);
     @UnsupportedAppUsage(maxTargetSdk = 28)
     void notifyOtaspChanged(in int subId, in int otaspMode);
     @UnsupportedAppUsage

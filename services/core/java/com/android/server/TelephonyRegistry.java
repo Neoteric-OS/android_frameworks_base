@@ -45,6 +45,7 @@ import android.telephony.Annotation.RadioPowerState;
 import android.telephony.Annotation.SrvccState;
 import android.telephony.CallAttributes;
 import android.telephony.CallQuality;
+import android.telephony.CellIdentity;
 import android.telephony.CellInfo;
 import android.telephony.CellLocation;
 import android.telephony.DataFailCause;
@@ -205,7 +206,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
     // Connection state of default APN type data (i.e. internet) of phones
     private int[] mDataConnectionState;
 
-    private Bundle[] mCellLocation;
+    private CellIdentity[] mCellIdentity;
 
     private int[] mDataConnectionNetworkType;
 
@@ -295,7 +296,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     int numPhones = getTelephonyManager().getPhoneCount();
                     for (int sub = 0; sub < numPhones; sub++) {
                         TelephonyRegistry.this.notifyCellLocationForSubscriber(sub,
-                                mCellLocation[sub]);
+                                mCellIdentity[sub]);
                     }
                     break;
                 }
@@ -404,7 +405,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         mSignalStrength = copyOf(mSignalStrength, mNumPhones);
         mMessageWaiting = copyOf(mMessageWaiting, mNumPhones);
         mCallForwarding = copyOf(mCallForwarding, mNumPhones);
-        mCellLocation = copyOf(mCellLocation, mNumPhones);
+        mCellIdentity = copyOf(mCellIdentity, mNumPhones);
         mSrvccState = copyOf(mSrvccState, mNumPhones);
         mOtaspMode = copyOf(mOtaspMode, mNumPhones);
         mPreciseCallState = copyOf(mPreciseCallState, mNumPhones);
@@ -441,7 +442,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mUserMobileDataState[i] = false;
             mMessageWaiting[i] =  false;
             mCallForwarding[i] =  false;
-            mCellLocation[i] = new Bundle();
+            mCellIdentity[i] = null;
             mCellInfo.add(i, null);
             mImsReasonInfo.add(i, null);
             mSrvccState[i] = TelephonyManager.SRVCC_STATE_HANDOVER_NONE;
@@ -458,15 +459,6 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mForegroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
             mBackgroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
             mPreciseDataConnectionState[i] = new PreciseDataConnectionState();
-        }
-
-        // Note that location can be null for non-phone builds like
-        // like the generic one.
-        CellLocation  location = CellLocation.getEmpty();
-        if (location != null) {
-            for (int i = oldNumPhones; i < mNumPhones; i++) {
-                location.fillInNotifierBundle(mCellLocation[i]);
-            }
         }
     }
 
@@ -507,7 +499,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         mSignalStrength = new SignalStrength[numPhones];
         mMessageWaiting = new boolean[numPhones];
         mCallForwarding = new boolean[numPhones];
-        mCellLocation = new Bundle[numPhones];
+        mCellIdentity = new CellIdentity[numPhones];
         mSrvccState = new int[numPhones];
         mOtaspMode = new int[numPhones];
         mPreciseCallState = new PreciseCallState[numPhones];
@@ -538,7 +530,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mUserMobileDataState[i] = false;
             mMessageWaiting[i] =  false;
             mCallForwarding[i] =  false;
-            mCellLocation[i] = new Bundle();
+            mCellIdentity[i] = null;
             mCellInfo.add(i, null);
             mImsReasonInfo.add(i, null);
             mSrvccState[i] = TelephonyManager.SRVCC_STATE_HANDOVER_NONE;
@@ -555,14 +547,6 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mForegroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
             mBackgroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
             mPreciseDataConnectionState[i] = new PreciseDataConnectionState();
-        }
-
-        // Note that location can be null for non-phone builds like
-        // like the generic one.
-        if (location != null) {
-            for (int i = 0; i < numPhones; i++) {
-                location.fillInNotifierBundle(mCellLocation[i]);
-            }
         }
 
         mAppOps = mContext.getSystemService(AppOpsManager.class);
@@ -834,11 +818,11 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     }
                     if (validateEventsAndUserLocked(r, PhoneStateListener.LISTEN_CELL_LOCATION)) {
                         try {
-                            if (DBG_LOC) log("listen: mCellLocation = "
-                                    + mCellLocation[phoneId]);
+                            if (DBG_LOC) log("listen: mCellIdentity = "
+                                    + mCellIdentity[phoneId]);
                             if (checkFineLocationAccess(r, Build.VERSION_CODES.Q)) {
-                                r.callback.onCellLocationChanged(
-                                        new Bundle(mCellLocation[phoneId]));
+                                // null will be translated to empty CellLocation object in client.
+                                r.callback.onCellLocationChanged(mCellIdentity[phoneId]);
                             }
                         } catch (RemoteException ex) {
                             remove(r.binder);
@@ -1656,11 +1640,13 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 DataFailCause.NONE);
     }
 
-    public void notifyCellLocation(Bundle cellLocation) {
-         notifyCellLocationForSubscriber(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID, cellLocation);
+    @Override
+    public void notifyCellLocation(CellIdentity cellLocation) {
+        notifyCellLocationForSubscriber(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID, cellLocation);
     }
 
-    public void notifyCellLocationForSubscriber(int subId, Bundle cellLocation) {
+    @Override
+    public void notifyCellLocationForSubscriber(int subId, CellIdentity cellLocation) {
         log("notifyCellLocationForSubscriber: subId=" + subId
                 + " cellLocation=" + cellLocation);
         if (!checkNotifyPermission("notifyCellLocation()")) {
@@ -1673,7 +1659,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         int phoneId = SubscriptionManager.getPhoneId(subId);
         synchronized (mRecords) {
             if (validatePhoneId(phoneId)) {
-                mCellLocation[phoneId] = cellLocation;
+                mCellIdentity[phoneId] = cellLocation;
                 for (Record r : mRecords) {
                     if (validateEventsAndUserLocked(r, PhoneStateListener.LISTEN_CELL_LOCATION) &&
                             idMatch(r.subId, subId, phoneId) &&
@@ -1683,7 +1669,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                                 log("notifyCellLocation: cellLocation=" + cellLocation
                                         + " r=" + r);
                             }
-                            r.callback.onCellLocationChanged(new Bundle(cellLocation));
+                            r.callback.onCellLocationChanged(cellLocation);
                         } catch (RemoteException ex) {
                             mRemoveList.add(r.binder);
                         }
@@ -2139,7 +2125,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 pw.println("mCallForwarding=" + mCallForwarding[i]);
                 pw.println("mDataActivity=" + mDataActivity[i]);
                 pw.println("mDataConnectionState=" + mDataConnectionState[i]);
-                pw.println("mCellLocation=" + mCellLocation[i]);
+                pw.println("mCellIdentity=" + mCellIdentity[i]);
                 pw.println("mCellInfo=" + mCellInfo.get(i));
                 pw.println("mImsCallDisconnectCause=" + mImsReasonInfo.get(i));
                 pw.println("mSrvccState=" + mSrvccState[i]);
@@ -2663,10 +2649,11 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
         if (validateEventsAndUserLocked(r, PhoneStateListener.LISTEN_CELL_LOCATION)) {
             try {
-                if (DBG_LOC) log("checkPossibleMissNotify: onCellLocationChanged mCellLocation = "
-                        + mCellLocation[phoneId]);
+                if (DBG_LOC) log("checkPossibleMissNotify: onCellLocationChanged mCellIdentity = "
+                        + mCellIdentity[phoneId]);
                 if (checkFineLocationAccess(r, Build.VERSION_CODES.Q)) {
-                    r.callback.onCellLocationChanged(new Bundle(mCellLocation[phoneId]));
+                    // null will be translated to empty CellLocation object in client.
+                    r.callback.onCellLocationChanged(mCellIdentity[phoneId]);
                 }
             } catch (RemoteException ex) {
                 mRemoveList.add(r.binder);
