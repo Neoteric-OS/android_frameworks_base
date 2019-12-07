@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0dd04a39_c684d8f1",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2019-12-07T00:38:56Z",
+      "side": 1,
+      "message": "Yes, We raised the same change on AOSP as keystone was not accessible. Please find the CL\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1159088",
+      "parentUuid": "48d3aacc_6bab9654",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2a0d4de_a3424b1a",
         "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
         "patchSetId": 16
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Is the blacklist boolean generated from a specific response code or is it generated in a different manner?",
       "parentUuid": "24f32085_fbd9d872",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b234bd4_4c303fc1",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsSipOptionsImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2019-12-07T00:38:56Z",
+      "side": 1,
+      "message": "Blacklist boolean generation is not related to sipResponseCode as such as it signifies that contact capability can\u0027t be provided because contact is blacklisted. Everything may be fine from SIP point of view as sipResponseCode may be 200 Ok which means success however contact may be BL hence contact capabilities can\u0027t be provided",
+      "parentUuid": "b5881d72_fc2645d7",
       "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
