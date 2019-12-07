@@ -22,6 +22,30 @@
       "revId": "9336ac2e4c427f83e9aa248fe18f3965add3e7ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b78f6b_9a0b6f54",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1988,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-12-07T03:04:45Z",
+      "side": 1,
+      "message": "Going to overload setPin with one that takes in a String and performs this conversion internally and is @SystemApi. Will make this method private and refactor usages to instead directly call setPin.",
+      "parentUuid": "6d1f2e21_a39f3aec",
+      "range": {
+        "startLine": 1986,
+        "startChar": 4,
+        "endLine": 1988,
+        "endChar": 66
+      },
+      "revId": "9336ac2e4c427f83e9aa248fe18f3965add3e7ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
