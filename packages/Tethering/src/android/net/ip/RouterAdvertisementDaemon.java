@@ -22,7 +22,6 @@ import static android.system.OsConstants.AF_INET6;
 import static android.system.OsConstants.IPPROTO_ICMPV6;
 import static android.system.OsConstants.SOCK_RAW;
 import static android.system.OsConstants.SOL_SOCKET;
-import static android.system.OsConstants.SO_BINDTODEVICE;
 import static android.system.OsConstants.SO_SNDTIMEO;
 
 import android.net.IpPrefix;
@@ -30,6 +29,7 @@ import android.net.LinkAddress;
 import android.net.NetworkUtils;
 import android.net.TrafficStats;
 import android.net.util.InterfaceParams;
+import android.net.util.TetheringUtils;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.StructTimeval;
@@ -611,9 +611,8 @@ public class RouterAdvertisementDaemon {
             // Setting SNDTIMEO is purely for defensive purposes.
             Os.setsockoptTimeval(
                     mSocket, SOL_SOCKET, SO_SNDTIMEO, StructTimeval.fromMillis(send_timout_ms));
-            Os.setsockoptIfreq(mSocket, SOL_SOCKET, SO_BINDTODEVICE, mInterface.name);
             NetworkUtils.protectFromVpn(mSocket);
-            NetworkUtils.setupRaSocket(mSocket, mInterface.index);
+            TetheringUtils.setupRaSocket(mSocket, mInterface.name, mInterface.index);
         } catch (ErrnoException | IOException e) {
             Log.e(TAG, "Failed to create RA daemon socket: " + e);
             return false;

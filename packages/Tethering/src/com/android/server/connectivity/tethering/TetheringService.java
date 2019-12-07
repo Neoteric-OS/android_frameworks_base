@@ -74,6 +74,7 @@ public class TetheringService extends Service {
         mDeps = getTetheringDependencies();
         mContext = mDeps.getContext();
         mTethering = makeTethering(mDeps);
+        System.loadLibrary("tetheroffloadjni");
         mUserManager = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
     }
 
