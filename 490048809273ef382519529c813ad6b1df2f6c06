@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cca7ceb_9a0e215e",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-09T16:06:58Z",
+      "side": 1,
+      "message": "Suggest either renaming this arg to explicit what service this is or add an @param documentation",
+      "range": {
+        "startLine": 155,
+        "startChar": 30,
+        "endLine": 155,
+        "endChar": 37
+      },
+      "revId": "490048809273ef382519529c813ad6b1df2f6c06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbee7039_94424a46",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-09T16:06:58Z",
+      "side": 1,
+      "message": "If this is called several times we\u0027ll make several objects. Should we create this IpServer.Dependencies in the constructor of mDeps instead, and simply return it here ?",
+      "range": {
+        "startLine": 188,
+        "startChar": 45,
+        "endLine": 188,
+        "endChar": 68
+      },
+      "revId": "490048809273ef382519529c813ad6b1df2f6c06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df56a055_36e5a989",
+        "filename": "services/net/java/android/net/NetworkStackClient.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-09T16:06:58Z",
+      "side": 1,
+      "message": "wtf does not crash the network stack and therefore it won\u0027t cause a boot failure. (also \"failure\")",
+      "range": {
+        "startLine": 206,
+        "startChar": 20,
+        "endLine": 206,
+        "endChar": 33
+      },
+      "revId": "490048809273ef382519529c813ad6b1df2f6c06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
