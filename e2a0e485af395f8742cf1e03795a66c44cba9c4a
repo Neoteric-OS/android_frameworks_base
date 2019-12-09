@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ec9e404_5f910785",
+        "filename": "core/java/android/util/LocalLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-09T16:36:27Z",
+      "side": 1,
+      "message": "nit:\n\n  final String logLine;",
+      "revId": "e2a0e485af395f8742cf1e03795a66c44cba9c4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea01d04_0b27ffcf",
+        "filename": "services/core/java/com/android/server/timedetector/SimpleTimeDetectorStrategy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-09T16:36:27Z",
+      "side": 1,
+      "message": "nit: typo in \"use\"",
+      "range": {
+        "startLine": 70,
+        "startChar": 71,
+        "endLine": 70,
+        "endChar": 89
+      },
+      "revId": "e2a0e485af395f8742cf1e03795a66c44cba9c4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436db0db_627e418d",
+        "filename": "services/core/java/com/android/server/timezonedetector/TimeZoneDetectorStrategy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-09T16:36:27Z",
+      "side": 1,
+      "message": "nit: typo in \"use\"",
+      "range": {
+        "startLine": 175,
+        "startChar": 75,
+        "endLine": 175,
+        "endChar": 93
+      },
+      "revId": "e2a0e485af395f8742cf1e03795a66c44cba9c4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
