@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eb828d4_5edd2da4",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-09T21:32:55Z",
+      "side": 1,
+      "message": "The semantics of PSL are that when an event is registered, the registrant always receives an initial value. That\u0027s why the \"empty\" locations and no null check. Clients expect this behavior. What was the reason to change it to null-initialize and then not send on null?",
+      "range": {
+        "startLine": 825,
+        "startChar": 32,
+        "endLine": 825,
+        "endChar": 69
+      },
+      "revId": "fe9dd904fdbfcaad5d16b372563f2dcc04e2e28c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b273d2a7_2f87c347",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-09T21:32:55Z",
+      "side": 1,
+      "message": "unless I missed it, here it would be reasonable to do an if (!Objects.equals(cellLocation, mCellLocation[phoneId]) and skipp the callback if location didn\u0027t actually change.",
+      "range": {
+        "startLine": 1674,
+        "startChar": 28,
+        "endLine": 1674,
+        "endChar": 75
+      },
+      "revId": "fe9dd904fdbfcaad5d16b372563f2dcc04e2e28c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335f238d_ff2a86bf",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2648,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-09T21:32:55Z",
+      "side": 1,
+      "message": "same ? as above with the null check. I think the old logic was conceptually correct based on PSL behavior.",
+      "range": {
+        "startLine": 2648,
+        "startChar": 50,
+        "endLine": 2648,
+        "endChar": 54
+      },
+      "revId": "fe9dd904fdbfcaad5d16b372563f2dcc04e2e28c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
