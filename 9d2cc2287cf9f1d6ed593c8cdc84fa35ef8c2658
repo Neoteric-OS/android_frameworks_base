@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05b2982c_ad4c2724",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 8187,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-09T18:39:31Z",
+      "side": 1,
+      "message": "Looks like you need to do a make update-api again; the RequiresPermission annotation is in here typically.",
+      "range": {
+        "startLine": 8187,
+        "startChar": 4,
+        "endLine": 8187,
+        "endChar": 44
+      },
+      "revId": "9d2cc2287cf9f1d6ed593c8cdc84fa35ef8c2658",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be53b23e_e3f52f92",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2016,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-09T18:39:31Z",
+      "side": 1,
+      "message": "0?  It seems odd to return -1 ever.",
+      "range": {
+        "startLine": 2016,
+        "startChar": 8,
+        "endLine": 2016,
+        "endChar": 21
+      },
+      "revId": "9d2cc2287cf9f1d6ed593c8cdc84fa35ef8c2658",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
