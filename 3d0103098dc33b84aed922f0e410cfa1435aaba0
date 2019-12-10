@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7dd6d79e_754dd52b",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-12-10T21:40:46Z",
+      "side": 1,
+      "message": "Same as \"verifyPayloadMetadata\". Will explain in doc.",
+      "parentUuid": "5ed667ae_1d1c89aa",
+      "range": {
+        "startLine": 425,
+        "startChar": 23,
+        "endLine": 425,
+        "endChar": 46
+      },
+      "revId": "3d0103098dc33b84aed922f0e410cfa1435aaba0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c64d8512_b43f4e14",
         "filename": "core/java/android/os/UpdateEngine.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-12-10T18:53:35Z",
       "side": 1,
       "message": "Just curious, why is payloadMetadataFile not sufficient for this purpose ?",
+      "range": {
+        "startLine": 435,
+        "startChar": 0,
+        "endLine": 439,
+        "endChar": 33
+      },
+      "revId": "3d0103098dc33b84aed922f0e410cfa1435aaba0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a293522_f6abf439",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-12-10T21:40:46Z",
+      "side": 1,
+      "message": "The headerKeyValuePairs is needed to retrieve a unique payload ID of the payload (see applyPayload). Similar to applyPayload, this function needs to detect duplicate calls with the same payload (which should do nothing, similar to \"resume\" in applyPayload) and multiple calls with different payloads (which should free up space used by previous payload and re-allocate).\n\nPlease see the update_engine CL as well for the implementation of this function.",
+      "parentUuid": "c64d8512_b43f4e14",
       "range": {
         "startLine": 435,
         "startChar": 0,
