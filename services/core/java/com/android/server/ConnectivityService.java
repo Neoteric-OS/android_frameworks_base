@@ -6442,7 +6442,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // @param now the time the rematch starts, as returned by SystemClock.elapsedRealtime();
     private void rematchNetworkAndRequests(@NonNull final NetworkReassignment changes,
             @NonNull final NetworkAgentInfo newNetwork, final long now) {
-        ensureRunningOnConnectivityServiceThread();
         if (!newNetwork.everConnected) return;
 
         changes.addAffectedNetwork(new NetworkReassignment.NetworkBgStatePair(newNetwork,
@@ -6489,6 +6488,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
         nri.mSatisfier = newSatisfier;
     }
 
+    private NetworkReassignment computeNetworkReassignment(final long now) {
+        ensureRunningOnConnectivityServiceThread();
+        final NetworkAgentInfo[] nais = mNetworkAgentInfos.values().toArray(
+                new NetworkAgentInfo[mNetworkAgentInfos.size()]);
+        // Rematch higher scoring networks first to prevent requests first matching a lower
+        // scoring network and then a higher scoring network, which could produce multiple
+        // callbacks.
+        Arrays.sort(nais);
+        final NetworkReassignment changes = computeInitialReassignment();
+        for (final NetworkAgentInfo nai : nais) {
+            rematchNetworkAndRequests(changes, nai, now);
+        }
+        return changes;
+    }
+
     /**
      * Attempt to rematch all Networks with NetworkRequests.  This may result in Networks
      * being disconnected.
@@ -6502,16 +6516,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final long now = SystemClock.elapsedRealtime();
         final NetworkAgentInfo oldDefaultNetwork = getDefaultNetwork();
 
-        final NetworkAgentInfo[] nais = mNetworkAgentInfos.values().toArray(
-                new NetworkAgentInfo[mNetworkAgentInfos.size()]);
-        // Rematch higher scoring networks first to prevent requests first matching a lower
-        // scoring network and then a higher scoring network, which could produce multiple
-        // callbacks.
-        Arrays.sort(nais);
-        final NetworkReassignment changes = computeInitialReassignment();
-        for (final NetworkAgentInfo nai : nais) {
-            rematchNetworkAndRequests(changes, nai, now);
-        }
+        final NetworkReassignment changes = computeNetworkReassignment(now);
 
         for (final NetworkReassignment.RequestReassignment event :
                 changes.getRequestReassignments()) {
@@ -6558,6 +6563,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         ConnectivityManager.CALLBACK_LOST, 0);
             }
         }
+
+        final Collection<NetworkAgentInfo> nais = mNetworkAgentInfos.values();
 
         // Update the linger state before processing listen callbacks, because the background
         // computation depends on whether the network is lingering. Don't send the LOSING callbacks
@@ -6643,7 +6650,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void updateLegacyTypeTrackerAndVpnLockdownForRematch(
             @Nullable final NetworkAgentInfo oldDefaultNetwork,
             @Nullable final NetworkAgentInfo newDefaultNetwork,
-            @NonNull final NetworkAgentInfo[] nais) {
+            @NonNull final Collection<NetworkAgentInfo> nais) {
         if (oldDefaultNetwork != newDefaultNetwork) {
             // Maintain the illusion : since the legacy API only understands one network at a time,
             // if the default network changed, apps should see a disconnected broadcast for the
