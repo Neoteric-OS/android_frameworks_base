@@ -170,12 +170,6 @@ interface INetworkManagementService
     boolean isTetheringStarted();
 
     /**
-     * Tethers the specified interface
-     */
-    @UnsupportedAppUsage
-    void tetherInterface(String iface);
-
-    /**
      * Untethers the specified interface
      */
     @UnsupportedAppUsage
