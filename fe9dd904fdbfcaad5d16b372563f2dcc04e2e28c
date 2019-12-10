@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d9c50704_0a875373",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2019-12-10T00:02:37Z",
+      "side": 1,
+      "message": "Ah, didn\u0027t know that convention.\n\nTelephonyRegistry is out of Telephony mainline module so cannot create a CellIdentity instance with hidden APIs here. Maybe pass a null and in the client code translate null to CellLocation.getEmpty() ? Does AIDL like null ?",
+      "parentUuid": "1eb828d4_5edd2da4",
+      "range": {
+        "startLine": 825,
+        "startChar": 32,
+        "endLine": 825,
+        "endChar": 69
+      },
+      "revId": "fe9dd904fdbfcaad5d16b372563f2dcc04e2e28c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b273d2a7_2f87c347",
         "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-12-09T21:32:55Z",
       "side": 1,
       "message": "unless I missed it, here it would be reasonable to do an if (!Objects.equals(cellLocation, mCellLocation[phoneId]) and skipp the callback if location didn\u0027t actually change.",
+      "range": {
+        "startLine": 1674,
+        "startChar": 28,
+        "endLine": 1674,
+        "endChar": 75
+      },
+      "revId": "fe9dd904fdbfcaad5d16b372563f2dcc04e2e28c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e45ca8_30b58dea",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2019-12-10T00:02:37Z",
+      "side": 1,
+      "message": "I will document this feedback in a clean up bug to avoid behavior change in this CL.",
+      "parentUuid": "b273d2a7_2f87c347",
       "range": {
         "startLine": 1674,
         "startChar": 28,
@@ -68,6 +116,30 @@
       "revId": "fe9dd904fdbfcaad5d16b372563f2dcc04e2e28c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c0612b_fcd35a62",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2648,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2019-12-10T00:02:37Z",
+      "side": 1,
+      "message": "discussing in the thread above.",
+      "parentUuid": "335f238d_ff2a86bf",
+      "range": {
+        "startLine": 2648,
+        "startChar": 50,
+        "endLine": 2648,
+        "endChar": 54
+      },
+      "revId": "fe9dd904fdbfcaad5d16b372563f2dcc04e2e28c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
