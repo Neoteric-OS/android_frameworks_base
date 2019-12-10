@@ -507,10 +507,22 @@ MissingNullability: android.icu.text.DateTimePatternGenerator#getFieldDisplayNam
     
 MissingNullability: android.icu.text.DateTimePatternGenerator#getFieldDisplayName(int, android.icu.text.DateTimePatternGenerator.DisplayWidth) parameter #1:
     
+MissingNullability: android.icu.util.MeasureUnit#ATMOSPHERE:
+    
+MissingNullability: android.icu.util.MeasureUnit#PERCENT:
+    
+MissingNullability: android.icu.util.MeasureUnit#PERMILLE:
+    
+MissingNullability: android.icu.util.MeasureUnit#PETABYTE:
+    
 MissingNullability: android.icu.util.VersionInfo#UNICODE_12_0:
     
 MissingNullability: android.icu.util.VersionInfo#UNICODE_12_1:
     
+
+
+NotCloseable: android.util.CloseGuard:
+    Classes that release resources (close()) should implement AutoClosable and CloseGuard: class android.util.CloseGuard
 
 
 RequiresPermission: android.accounts.AccountManager#getAccountsByTypeAndFeatures(String, String[], android.accounts.AccountManagerCallback<android.accounts.Account[]>, android.os.Handler):
