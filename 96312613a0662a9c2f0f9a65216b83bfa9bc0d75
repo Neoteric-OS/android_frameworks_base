@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12df8335_d3ab07dd",
+        "filename": "core/java/android/util/CloseGuard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2019-12-10T21:11:10Z",
+      "side": 1,
+      "message": "This isn\u0027t technically correct as is. If we make it public, I think we at least need to minimally fix that. To see why, assume initially that the ellipsis below is empty, and the body of this method is compiled as:\n\ntmp \u003d this.guard;\nA:\ntmp.close();\n\nThe this pointer is no longer needed at A. Thus it may appear dead to the garbage collector. Assume the garbage collector and finalizer run at A. close() gets called twice concurrently, which is bad.\n\nAdditional code after the call makes this less likely still, assuming it refers to \"this\". But it doesn\u0027t solve the problem, since the compiler may still decide to move up the \"this\" dereferences.\n\nThe dalvik.system version suggests getting around this with @ReachabilitySensitive. That\u0027s about to get replaced with @Cleaned, and we\u0027re debating whether to make it public. A minimal fix not relying on that annotation would be to add at the end of this method:\n\n  Reference.reachabilityFence(this);\n  // For full correctness in the absence of a close() call, other methods may also need\n  // reachabilityFence() calls.",
+      "range": {
+        "startLine": 76,
+        "startChar": 1,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "96312613a0662a9c2f0f9a65216b83bfa9bc0d75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
