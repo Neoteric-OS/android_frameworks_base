@@ -22,6 +22,30 @@
       "revId": "c7de88c4b8e6649cffed9cc6e8a23975233d4f6f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc4ab8e_41c7f876",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2879,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-12-10T19:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b722ba00_e2ef47ac",
+      "range": {
+        "startLine": 2879,
+        "startChar": 12,
+        "endLine": 2879,
+        "endChar": 30
+      },
+      "revId": "c7de88c4b8e6649cffed9cc6e8a23975233d4f6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
