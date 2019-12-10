@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ed667ae_1d1c89aa",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2019-12-10T18:53:35Z",
+      "side": 1,
+      "message": "I assume this is the is file path to the downloaded payload metadata file ?",
+      "range": {
+        "startLine": 425,
+        "startChar": 23,
+        "endLine": 425,
+        "endChar": 46
+      },
+      "revId": "3d0103098dc33b84aed922f0e410cfa1435aaba0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64d8512_b43f4e14",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2019-12-10T18:53:35Z",
+      "side": 1,
+      "message": "Just curious, why is payloadMetadataFile not sufficient for this purpose ?",
+      "range": {
+        "startLine": 435,
+        "startChar": 0,
+        "endLine": 439,
+        "endChar": 33
+      },
+      "revId": "3d0103098dc33b84aed922f0e410cfa1435aaba0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
