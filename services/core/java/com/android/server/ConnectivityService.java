@@ -213,6 +213,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
@@ -6515,17 +6516,31 @@ public class ConnectivityService extends IConnectivityManager.Stub
         nri.mSatisfier = newSatisfier;
     }
 
-    private NetworkReassignment computeNetworkReassignment(final long now) {
+    private NetworkReassignment computeNetworkReassignment() {
         ensureRunningOnConnectivityServiceThread();
-        final NetworkAgentInfo[] nais = mNetworkAgentInfos.values().toArray(
-                new NetworkAgentInfo[mNetworkAgentInfos.size()]);
-        // Rematch higher scoring networks first to prevent requests first matching a lower
-        // scoring network and then a higher scoring network, which could produce multiple
-        // callbacks.
-        Arrays.sort(nais);
-        final NetworkReassignment changes = computeInitialReassignment();
-        for (final NetworkAgentInfo nai : nais) {
-            rematchNetworkAndRequests(changes, nai, now);
+        final NetworkReassignment changes = new NetworkReassignment();
+
+        // Gather the list of all relevant agents and sort them by score.
+        final ArrayList<NetworkAgentInfo> nais = new ArrayList<>();
+        for (final NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
+            if (!nai.everConnected) continue;
+            nais.add(nai);
+            changes.addAffectedNetwork(new NetworkReassignment.AffectedNetworkPlusState(nai,
+                    nai.isBackgroundNetwork()));
+        }
+        Collections.sort(nais);
+
+        for (final NetworkRequestInfo nri : mNetworkRequests.values()) {
+            if (nri.request.isListen()) continue;
+            // Find the top scoring network satisfying this request.
+            for (final NetworkAgentInfo nai : nais) {
+                if (!nai.satisfies(nri.request)) continue;
+                if (nai != nri.mSatisfier) {
+                    changes.addRequestReassignment(new NetworkReassignment.RequestReassignment(
+                            nri, nri.mSatisfier, nai));
+                }
+                break;  // Next NRI
+            }
         }
         return changes;
     }
@@ -6535,14 +6550,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * being disconnected.
      */
     private void rematchAllNetworksAndRequests() {
-        // TODO: This may be slow, and should be optimized. Unfortunately at this moment the
-        // processing is network-major instead of request-major (the code iterates through all
-        // networks, then for each it iterates for all requests), which is a problem for re-scoring
-        // requests. Once the code has switched to a request-major iteration style, this can
-        // be optimized to only do the processing needed.
+        // TODO: This may be slow, and should be optimized.
         final long now = SystemClock.elapsedRealtime();
         final NetworkAgentInfo oldDefaultNetwork = getDefaultNetwork();
-        final NetworkReassignment changes = computeNetworkReassignment(now);
+        final NetworkReassignment changes = computeNetworkReassignment();
         if (VDBG || DDBG) log(changes.toString());
         applyNetworkReassignment(changes, oldDefaultNetwork, now);
     }
