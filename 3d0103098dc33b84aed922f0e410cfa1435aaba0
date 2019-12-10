@@ -93,6 +93,30 @@
       "revId": "3d0103098dc33b84aed922f0e410cfa1435aaba0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432ee6f4_e0161be8",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-12-10T21:42:46Z",
+      "side": 1,
+      "message": "Especially, in the \"duplicate calls with the same payload\" case, since the update may be resuming, the allocated space must NOT be freed then reallocated; otherwise, the previous progress is lost.",
+      "parentUuid": "6a293522_f6abf439",
+      "range": {
+        "startLine": 435,
+        "startChar": 0,
+        "endLine": 439,
+        "endChar": 33
+      },
+      "revId": "3d0103098dc33b84aed922f0e410cfa1435aaba0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
