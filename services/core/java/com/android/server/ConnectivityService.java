@@ -186,6 +186,7 @@ import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkDiagnostics;
 import com.android.server.connectivity.NetworkNotificationManager;
 import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
+import com.android.server.connectivity.NetworkRanker;
 import com.android.server.connectivity.PermissionMonitor;
 import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Vpn;
@@ -212,7 +213,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
@@ -567,6 +567,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     /** Handler used for incoming {@link NetworkStateTracker} events. */
     final private NetworkStateTrackerHandler mTrackerHandler;
     private final DnsManager mDnsManager;
+    private final NetworkRanker mNetworkRanker;
 
     private boolean mSystemReady;
     private Intent mInitialBroadcast;
@@ -950,6 +951,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mMetricsLog = logger;
         mDefaultRequest = createDefaultInternetRequestForTransport(-1, NetworkRequest.Type.REQUEST);
+        mNetworkRanker = new NetworkRanker(mDefaultRequest);
         NetworkRequestInfo defaultNRI = new NetworkRequestInfo(null, mDefaultRequest, new Binder());
         mNetworkRequests.put(mDefaultRequest, defaultNRI);
         mNetworkRequestInfoLogs.log("REGISTER " + defaultNRI);
@@ -6440,18 +6442,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
             changes.addAffectedNetwork(new NetworkReassignment.NetworkBgStatePair(nai,
                     nai.isBackgroundNetwork()));
         }
-        Collections.sort(nais);
 
         for (final NetworkRequestInfo nri : mNetworkRequests.values()) {
             if (nri.request.isListen()) continue;
-            // Find the top scoring network satisfying this request.
-            for (final NetworkAgentInfo nai : nais) {
-                if (!nai.satisfies(nri.request)) continue;
-                if (nai != nri.mSatisfier) {
-                    changes.addRequestReassignment(new NetworkReassignment.RequestReassignment(
-                            nri, nri.mSatisfier, nai));
-                }
-                break;  // Next NRI
+            final NetworkAgentInfo bestNetwork = mNetworkRanker.getBestNetwork(nri.request, nais);
+            if (bestNetwork != nri.mSatisfier) {
+                changes.addRequestReassignment(new NetworkReassignment.RequestReassignment(
+                        nri, nri.mSatisfier, bestNetwork));
             }
         }
         return changes;
@@ -6466,7 +6463,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final long now = SystemClock.elapsedRealtime();
         final NetworkReassignment changes = computeNetworkReassignment();
         if (VDBG || DDBG) log(changes.toString());
-        applyNetworkReassignment(changes, oldDefaultNetwork, now);
+        applyNetworkReassignment(changes, now);
     }
 
     private void applyNetworkReassignment(@NonNull final NetworkReassignment changes,
