@@ -148,7 +148,6 @@ import android.security.Credentials;
 import android.security.KeyStore;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.LocalLog;
 import android.util.Log;
@@ -6354,30 +6353,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         @NonNull private final Set<NetworkBgStatePair> mRematchedNetworks = new ArraySet<>();
-        @NonNull private final Map<NetworkRequestInfo, RequestReassignment> mReassignments =
-                new ArrayMap<>();
+        @NonNull private final ArrayList<RequestReassignment> mReassignments = new ArrayList<>();
 
         @NonNull Iterable<NetworkBgStatePair> getRematchedNetworks() {
             return mRematchedNetworks;
         }
 
         @NonNull Iterable<RequestReassignment> getRequestReassignments() {
-            return mReassignments.values();
+            return mReassignments;
         }
 
         void addRequestReassignment(@NonNull final RequestReassignment reassignment) {
-            final RequestReassignment oldChange = mReassignments.get(reassignment.mRequest);
-            if (null == oldChange) {
-                mReassignments.put(reassignment.mRequest, reassignment);
-                return;
-            }
-            if (oldChange.mNewNetwork != reassignment.mOldNetwork) {
-                throw new IllegalArgumentException("Trying to reassign " + reassignment.mRequest
-                        + " from " + reassignment.mOldNetwork + " to " + reassignment.mNewNetwork
-                        + " but it's already planned to be reassigned to " + oldChange.mNewNetwork);
-            }
-            mReassignments.put(reassignment.mRequest, new RequestReassignment(reassignment.mRequest,
-                    oldChange.mOldNetwork, reassignment.mNewNetwork));
+            mReassignments.add(reassignment);
         }
 
         void addRematchedNetwork(@NonNull final NetworkBgStatePair network) {
