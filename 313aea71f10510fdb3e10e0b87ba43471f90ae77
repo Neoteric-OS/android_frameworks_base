@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f111a856_6038c2c0",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1403999
+      },
+      "writtenOn": "2019-12-10T08:47:05Z",
+      "side": 1,
+      "message": "can remove \njackqdyulei\nasargent\n\nfrom the list",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "313aea71f10510fdb3e10e0b87ba43471f90ae77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
