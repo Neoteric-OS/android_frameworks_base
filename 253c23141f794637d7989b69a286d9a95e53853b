@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bb29de1_0df064fa",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-10T23:59:52Z",
+      "side": 1,
+      "message": "These will need a common prefix:\n\n[DETECTION_]METHOD_DNS_EVENTS\n\n(detection optional)",
+      "range": {
+        "startLine": 51,
+        "startChar": 28,
+        "endLine": 51,
+        "endChar": 38
+      },
+      "revId": "253c23141f794637d7989b69a286d9a95e53853b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

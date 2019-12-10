@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "1a66c297_ea8bbf94",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-10T23:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ac277c5_a0d9ca90",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "d92d4c2bce4ae7466f6c9a261f03844595c58b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9376ded_10754937",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 2
