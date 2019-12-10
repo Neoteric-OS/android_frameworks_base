@@ -5842,6 +5842,7 @@ package android.os {
 
   public class UpdateEngine {
     ctor public UpdateEngine();
+    method public boolean allocateSpace(@NonNull String, @NonNull String[]);
     method public void applyPayload(String, long, long, String[]);
     method public void applyPayload(@NonNull android.os.ParcelFileDescriptor, long, long, @NonNull String[]);
     method public boolean bind(android.os.UpdateEngineCallback, android.os.Handler);
