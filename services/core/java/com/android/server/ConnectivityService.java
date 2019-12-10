@@ -6467,14 +6467,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void rematchAllNetworksAndRequests() {
         // TODO: This may be slow, and should be optimized.
         final long now = SystemClock.elapsedRealtime();
-        final NetworkAgentInfo oldDefaultNetwork = getDefaultNetwork();
         final NetworkReassignment changes = computeNetworkReassignment();
         if (VDBG || DDBG) log(changes.toString());
         applyNetworkReassignment(changes, oldDefaultNetwork, now);
     }
 
     private void applyNetworkReassignment(@NonNull final NetworkReassignment changes,
-            @Nullable final NetworkAgentInfo oldDefaultNetwork, final long now) {
+            final long now) {
+        final NetworkAgentInfo oldDefaultNetwork = getDefaultNetwork();
+
         for (final NetworkReassignment.RequestReassignment event :
                 changes.getRequestReassignments()) {
             updateNetworkAgentInfoForRematchRequest(event.mRequest, event.mOldNetwork,
