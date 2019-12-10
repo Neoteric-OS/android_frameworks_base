@@ -419,4 +419,34 @@ public class UpdateEngine {
             throw e.rethrowFromSystemServer();
         }
     }
+
+    /**
+     * Initialize partitions for a payload associated with the given payload
+     * metadata {@code payloadMetadataFilename} by preallocating required space.
+     *
+     * <p>This function should be called after payload has been verified after
+     * {@link #verifyPayloadMetadata}. This function does not verify whether
+     * the given payload is applicable or not.
+     *
+     * <p>See {@link #applyPayload(String)} for {@code headerKeyValuePairs}
+     * parameter.
+     *
+     * <p>Implementation of {@code allocateSpace} uses
+     * {@code headerKeyValuePairs} to determine whether space has been allocated
+     * for a different or same payload previously. If space has been allocated
+     * for a different payload before, space will be reallocated for the given
+     * payload. If space has been allocated for the same payload, no actions to
+     * storage devices are taken.
+     *
+     * <p>This function is synchronous and may take a non-trivial amount of
+     * time. Callers should call this function in a background thread.
+     */
+    public boolean allocateSpace(String payloadMetadataFilename, String[] headerKeyValuePairs) {
+        try {
+            return mUpdateEngine.allocateSpaceForPayload(payloadMetadataFilename,
+                    headerKeyValuePairs);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }
