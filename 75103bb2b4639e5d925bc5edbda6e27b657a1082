@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cb86466_f444ed04",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-10T10:50:34Z",
+      "side": 1,
+      "message": "I think what you want to say is \"The makeDefault() should return earlier if newNetwork is null\".\nSo based on \"two negatives make a positive\", I think you should add \"not\" between \"to\" and \"do\", right?\n\n\"There is no reason to not do this earlier if it\u0027s null.\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "75103bb2b4639e5d925bc5edbda6e27b657a1082",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
