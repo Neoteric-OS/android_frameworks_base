@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e592d7d_468ab105",
+        "filename": "tests/net/java/android/net/nsd/NsdManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-10T08:00:31Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this to be a member any more, which makes the old code preferable.",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 18
+      },
+      "revId": "3d0d9a9583cc7a547d3b5facd90af3d7a2b0ca8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a32caeb_e070aa1e",
+        "filename": "tests/net/java/com/android/server/connectivity/MultipathPolicyTrackerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-10T08:00:31Z",
+      "side": 1,
+      "message": "Is this related to this change ? It seems separate.",
+      "range": {
+        "startLine": 154,
+        "startChar": 22,
+        "endLine": 154,
+        "endChar": 38
+      },
+      "revId": "3d0d9a9583cc7a547d3b5facd90af3d7a2b0ca8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
