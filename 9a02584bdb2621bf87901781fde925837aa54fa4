@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "220ea367_9f2de81c",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1138679
+      },
+      "writtenOn": "2019-12-10T18:06:07Z",
+      "side": 1,
+      "message": "You can also remove eisenbach and asapperstein, since all of us won\u0027t work on BT settings anymore.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 12
+      },
+      "revId": "9a02584bdb2621bf87901781fde925837aa54fa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
