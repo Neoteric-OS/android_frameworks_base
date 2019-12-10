@@ -40,6 +40,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
+import static android.net.NetworkCapabilities.transportNamesOf;
 import static android.net.NetworkPolicyManager.RULE_NONE;
 import static android.net.NetworkPolicyManager.uidRulesToString;
 import static android.net.shared.NetworkMonitorUtils.isPrivateDnsValidationRequired;
@@ -6324,6 +6325,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mNetwork = network;
                 mOldBackground = oldBackground;
             }
+
+            public String toString() {
+                return "[" + netToSimpleString(mNetwork) + " oldBackground=" + mOldBackground + "]";
+            }
         }
 
         static class RequestReassignment {
@@ -6336,6 +6341,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mRequest = request;
                 mOldNetwork = oldNetwork;
                 mNewNetwork = newNetwork;
+            }
+
+            public String toString() {
+                return mRequest.request.requestId + " : " + netToSimpleString(mOldNetwork) + " → "
+                        + netToSimpleString(mNewNetwork);
             }
         }
 
@@ -6376,6 +6386,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 if (nri == event.mRequest) return event.mNewNetwork;
             }
             return null;
+        }
+
+        public String toString() {
+            final StringBuilder sb = new StringBuilder();
+            sb.append("NetworkReassignment :");
+            if (mAffectedNetworks.isEmpty() && mReassignments.isEmpty()) {
+                return sb.append(" no changes").toString();
+            }
+            sb.append("\n  Affected networks : ");
+            sb.append(TextUtils.join(", ", mAffectedNetworks));
+            for (final RequestReassignment rr : getRequestReassignments()) {
+                sb.append("\n  ").append(rr);
+            }
+            return sb.append("\n").toString();
         }
     }
 
@@ -6515,6 +6539,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final long now = SystemClock.elapsedRealtime();
         final NetworkAgentInfo oldDefaultNetwork = getDefaultNetwork();
         final NetworkReassignment changes = computeNetworkReassignment(now);
+        if (VDBG || DDBG) log(changes.toString());
         applyNetworkReassignment(changes, oldDefaultNetwork, now);
     }
 
@@ -7384,5 +7409,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Nullable
     private static <T> T getOrElse(@Nullable final T object, @Nullable final T otherwise) {
         return null != object ? object : otherwise;
+    }
+
+    @NonNull
+    private static String netToSimpleString(@NonNull final NetworkAgentInfo nai) {
+        return "[" + nai.network.netId + " "
+                + transportNamesOf(nai.networkCapabilities.getTransportTypes()) + "]";
     }
 }
