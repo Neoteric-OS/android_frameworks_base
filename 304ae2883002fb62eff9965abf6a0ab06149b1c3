@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aaba18e2_dae127fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-10T14:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef8ef19b_15433ec5",
+      "range": {
+        "startLine": 11,
+        "startChar": 45,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "304ae2883002fb62eff9965abf6a0ab06149b1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "293f1f0d_885ee170",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "Note:\nAccording to computeRequestReassignmentForNetwork(), we could say if newSatisfier is null, then \"newNetwork.isSatisfyingRequest(nri.request.requestId)\" is true, and if that condition is true it also means that network is equal to nri.mSatisfier(See line.6448 \u0026 6449).",
       "parentUuid": "293f1f0d_885ee170",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 59
+      },
+      "revId": "304ae2883002fb62eff9965abf6a0ab06149b1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a8b92cd_777bb4b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-10T14:34:11Z",
+      "side": 1,
+      "message": "Reworded (and fixed a mistake) ; see if that works for you.",
+      "parentUuid": "d396313b_427a6171",
       "range": {
         "startLine": 12,
         "startChar": 0,
