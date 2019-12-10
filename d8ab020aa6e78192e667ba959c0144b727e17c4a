@@ -142,6 +142,30 @@
       "revId": "d8ab020aa6e78192e667ba959c0144b727e17c4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e4f093_7cec7b12",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-12-10T16:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbd34a64_f40a193d",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 18
+      },
+      "revId": "d8ab020aa6e78192e667ba959c0144b727e17c4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
