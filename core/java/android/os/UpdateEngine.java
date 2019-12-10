@@ -449,4 +449,19 @@ public class UpdateEngine {
             throw e.rethrowFromSystemServer();
         }
     }
+
+    /**
+     * Cleanup files used by the previous update and free up space after the
+     * device has been booted successfully into the new build.
+     *
+     * <p>This function is synchronous and may take a non-trivial amount of
+     * time. Callers should call this function in a background thread.
+     */
+    public boolean cleanupSuccessfulUpdate() {
+        try {
+            return mUpdateEngine.cleanupSuccessfulUpdate();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }
