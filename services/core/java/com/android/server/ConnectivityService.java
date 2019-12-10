@@ -6511,9 +6511,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // be optimized to only do the processing needed.
         final long now = SystemClock.elapsedRealtime();
         final NetworkAgentInfo oldDefaultNetwork = getDefaultNetwork();
-
         final NetworkReassignment changes = computeNetworkReassignment(now);
+        applyNetworkReassignment(changes, oldDefaultNetwork, now);
+    }
 
+    private void applyNetworkReassignment(@NonNull final NetworkReassignment changes,
+            @Nullable final NetworkAgentInfo oldDefaultNetwork, final long now) {
         for (final NetworkReassignment.RequestReassignment event :
                 changes.getRequestReassignments()) {
             if (event.mOldNetwork == event.mNewNetwork) continue;
