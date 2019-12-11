@@ -1673,9 +1673,16 @@ static void com_android_internal_os_Zygote_nativeEmptyUsapPool(JNIEnv* env, jcla
 static int disable_execute_only(struct dl_phdr_info *info, size_t size, void *data) {
   // Search for any execute-only segments and mark them read+execute.
   for (int i = 0; i < info->dlpi_phnum; i++) {
-    if ((info->dlpi_phdr[i].p_type == PT_LOAD) && (info->dlpi_phdr[i].p_flags == PF_X)) {
-      mprotect(reinterpret_cast<void*>(info->dlpi_addr + info->dlpi_phdr[i].p_vaddr),
-              info->dlpi_phdr[i].p_memsz, PROT_READ | PROT_EXEC);
+    const auto& phdr = info->dlpi_phdr[i];
+    if ((phdr.p_type == PT_LOAD) && (phdr.p_flags == PF_X) && (phdr.p_memsz > 0)) {
+      const uintptr_t page_start = phdr.p_vaddr & ~PAGE_MASK;
+      const uintptr_t page_offset = phdr.p_vaddr & PAGE_MASK;
+      if (mprotect(reinterpret_cast<void*>(info->dlpi_addr + page_offset),
+                   page_start + phdr.p_memsz,
+                   PROT_READ | PROT_EXEC) == -1) {
+        ALOGE("Failed to disable execute only pages");
+        return -1;
+      }
     }
   }
   // Return non-zero to exit dl_iterate_phdr.
