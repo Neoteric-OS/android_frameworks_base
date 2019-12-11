@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1b7500a_d2042059",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-11T01:01:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc288c32_aede4c35",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "396fccab500ebeace3380da18c8fbf81f95b8c45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f40c700_f779d1b2",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3e75a2ab_8bf3ff67",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-11T01:01:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f40c700_f779d1b2",
+      "range": {
+        "startLine": 263,
+        "startChar": 11,
+        "endLine": 263,
+        "endChar": 20
+      },
+      "revId": "396fccab500ebeace3380da18c8fbf81f95b8c45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc11a75d_cab88e3b",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "396fccab500ebeace3380da18c8fbf81f95b8c45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e16b45_4b4de38f",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-11T01:01:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc11a75d_cab88e3b",
+      "range": {
+        "startLine": 268,
+        "startChar": 32,
+        "endLine": 268,
+        "endChar": 57
+      },
+      "revId": "396fccab500ebeace3380da18c8fbf81f95b8c45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
