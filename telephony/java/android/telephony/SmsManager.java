@@ -1578,7 +1578,7 @@ public final class SmsManager {
     }
 
     /**
-     * Copy a raw SMS PDU to the ICC.
+     * Copies a raw SMS PDU to the ICC.
      * ICC (Integrated Circuit Card) is the card of the device.
      * For example, this can be the SIM or USIM for GSM.
      *
@@ -1592,21 +1592,24 @@ public final class SmsManager {
      * operation is performed on the correct subscription.
      * </p>
      *
-     * @param smsc the SMSC for this message, or NULL for the default SMSC
-     * @param pdu the raw PDU to store
-     * @param status message status (STATUS_ON_ICC_READ, STATUS_ON_ICC_UNREAD,
-     *               STATUS_ON_ICC_SENT, STATUS_ON_ICC_UNSENT)
-     * @return true for success
+     * @param smsc the SMSC for this message.
+     * @param pdu the raw PDU to store.
+     * @param status message status. One of these status:
+     *               <code>STATUS_ON_ICC_READ</code>
+     *               <code>STATUS_ON_ICC_UNREAD</code>
+     *               <code>STATUS_ON_ICC_SENT</code>
+     *               <code>STATUS_ON_ICC_UNSENT</code>
+     * @return true for success. Otherwise false.
      *
-     * @throws IllegalArgumentException if pdu is NULL
-     * {@hide}
+     * @throws IllegalArgumentException if pdu is empty.
+     * @hide
      */
-    @UnsupportedAppUsage
-    public boolean copyMessageToIcc(byte[] smsc, byte[] pdu,int status) {
+    @SystemApi
+    public boolean copyMessageToIcc(@Nullable byte[] smsc, @NonNull byte[] pdu, int status) {
         boolean success = false;
 
-        if (null == pdu) {
-            throw new IllegalArgumentException("pdu is NULL");
+        if (pdu.length == 0) {
+            throw new IllegalArgumentException("Empty PDU");
         }
         try {
             ISms iSms = getISmsService();

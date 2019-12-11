@@ -43,8 +43,11 @@ import dalvik.annotation.compat.UnsupportedAppUsage;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 
 /**
  * A Short Message Service message.
@@ -635,6 +638,161 @@ public class SmsMessage extends SmsMessageBase {
         // TP-Protocol-Identifier
         bo.write(0);
         return bo;
+    }
+
+    /**
+     * Get an SMS-DELIVER PDU for an originating address and a message.
+     *
+     * @param scAddress Service Centre address.
+     * @param originatingAddress The address of the originating for the message.
+     * @param message String representation of the message payload.
+     * @param date Time stamp the message was received. @see android.provider.Telephony.Sms.DATE.
+     * @return a <code>SubmitPdu</code> containing the encoded SC address if applicable and the
+     *         encoded message. Returns null on encode error.
+     * @hide
+     */
+    public static SubmitPdu getDeliverPdu(
+            String scAddress, String originatingAddress, String message, long date) {
+        if (originatingAddress == null || message == null) {
+            return null;
+        }
+
+        // Find the best encoding to use
+        TextEncodingDetails ted = calculateLength(message, false);
+        int encoding = ted.codeUnitSize;
+        int languageTable = ted.languageTable;
+        int languageShiftTable = ted.languageShiftTable;
+        byte[] header = null;
+
+        if (encoding == ENCODING_7BIT && (languageTable != 0 || languageShiftTable != 0)) {
+            SmsHeader smsHeader = new SmsHeader();
+            smsHeader.languageTable = languageTable;
+            smsHeader.languageShiftTable = languageShiftTable;
+            header = SmsHeader.toByteArray(smsHeader);
+        }
+
+        SubmitPdu ret = new SubmitPdu();
+
+        ByteArrayOutputStream bo = new ByteArrayOutputStream(MAX_USER_DATA_BYTES + 40);
+
+        // SMSC address with length octet, or 0
+        if (scAddress == null) {
+            ret.encodedScAddress = null;
+        } else {
+            ret.encodedScAddress =
+                    PhoneNumberUtils.networkPortionToCalledPartyBCDWithLength(scAddress);
+        }
+
+        // TP-Message-Type-Indicator
+        bo.write(0); // SMS-DELIVER
+
+        byte[] oaBytes;
+
+        oaBytes = PhoneNumberUtils.networkPortionToCalledPartyBCD(originatingAddress);
+
+        // Return null for invalid originating address
+        if (oaBytes == null) return null;
+
+        // Originating address length in BCD digits, ignoring TON byte and pad
+        // TODO Should be better.
+        bo.write((oaBytes.length - 1) * 2 - ((oaBytes[oaBytes.length - 1] & 0xf0) == 0xf0 ? 1 : 0));
+
+        // Originating Address
+        bo.write(oaBytes, 0, oaBytes.length);
+
+        // TP-Protocol-Identifier
+        bo.write(0);
+
+        // User Data (and length)
+        byte[] userData;
+        try {
+            if (encoding == ENCODING_7BIT) {
+                userData = GsmAlphabet.stringToGsm7BitPackedWithHeader(message, header,
+                        languageTable, languageShiftTable);
+            } else { // Assume UCS-2
+                try {
+                    userData = encodeUCS2(message, header);
+                } catch (UnsupportedEncodingException uex) {
+                    Rlog.e(LOG_TAG, "Implausible UnsupportedEncodingException ", uex);
+                    return null;
+                }
+            }
+        } catch (EncodeException ex) {
+            if (ex.getError() == EncodeException.ERROR_EXCEED_SIZE) {
+                Rlog.e(LOG_TAG, "Exceed size limitation EncodeException", ex);
+                return null;
+            } else {
+                // Encoding to the 7-bit alphabet failed. Let's see if we can send it as a UCS-2
+                // encoded message
+                try {
+                    userData = encodeUCS2(message, header);
+                    encoding = ENCODING_16BIT;
+                } catch (EncodeException ex1) {
+                    Rlog.e(LOG_TAG, "Exceed size limitation EncodeException", ex1);
+                    return null;
+                } catch (UnsupportedEncodingException uex) {
+                    Rlog.e(LOG_TAG, "Implausible UnsupportedEncodingException ", uex);
+                    return null;
+                }
+            }
+        }
+
+        if (encoding == ENCODING_7BIT) {
+            if ((0xff & userData[0]) > MAX_USER_DATA_SEPTETS) {
+                // Message too long
+                Rlog.e(LOG_TAG, "Message too long (" + (0xff & userData[0]) + " septets)");
+                return null;
+            }
+            // TP-Data-Coding-Scheme
+            // Default encoding, uncompressed
+            bo.write(0x00);
+        } else { // Assume UCS-2
+            if ((0xff & userData[0]) > MAX_USER_DATA_BYTES) {
+                // Message too long
+                Rlog.e(LOG_TAG, "Message too long (" + (0xff & userData[0]) + " bytes)");
+                return null;
+            }
+            // TP-Data-Coding-Scheme
+            // UCS-2 encoding, uncompressed
+            bo.write(0x08);
+        }
+
+        // TP-Service-Centre-Time-Stamp
+        byte[] scts = new byte[7];
+
+        ZonedDateTime zoneDateTime = Instant.ofEpochMilli(date).atZone(ZoneId.systemDefault());
+        LocalDateTime localDateTime = zoneDateTime.toLocalDateTime();
+
+        // It indicates the difference, expressed in quarters of an hour, between the local time and
+        // GMT.
+        int timezoneOffset = zoneDateTime.getOffset().getTotalSeconds() / 60 / 15;
+        boolean negativeOffset = timezoneOffset < 0;
+        if (negativeOffset) {
+            timezoneOffset = -timezoneOffset;
+        }
+        int year = localDateTime.getYear();
+        int month = localDateTime.getMonthValue();
+        int day = localDateTime.getDayOfMonth();
+        int hour = localDateTime.getHour();
+        int minute = localDateTime.getMinute();
+        int second = localDateTime.getSecond();
+
+        year = year > 2000 ? year - 2000 : year - 1900;
+        scts[0] = (byte) ((((year % 10) & 0x0F) << 4) | ((year / 10) & 0x0F));
+        scts[1] = (byte) ((((month % 10) & 0x0F) << 4) | ((month / 10) & 0x0F));
+        scts[2] = (byte) ((((day % 10) & 0x0F) << 4) | ((day / 10) & 0x0F));
+        scts[3] = (byte) ((((hour % 10) & 0x0F) << 4) | ((hour / 10) & 0x0F));
+        scts[4] = (byte) ((((minute % 10) & 0x0F) << 4) | ((minute / 10) & 0x0F));
+        scts[5] = (byte) ((((second % 10) & 0x0F) << 4) | ((second / 10) & 0x0F));
+        scts[6] = (byte) ((((timezoneOffset % 10) & 0x0F) << 4) | ((timezoneOffset / 10) & 0x0F));
+        if (negativeOffset) {
+            scts[0] |= 0x08; // Negative offset
+        }
+        bo.write(scts, 0, scts.length);
+
+        bo.write(userData, 0, userData.length);
+        ret.encodedMessage = bo.toByteArray();
+        return ret;
     }
 
     private static class PduParser {

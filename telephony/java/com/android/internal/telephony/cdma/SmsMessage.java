@@ -1063,6 +1063,72 @@ public class SmsMessage extends SmsMessageBase {
     }
 
     /**
+     * Get an SMS-DELIVER PDU for a originating address and a message.
+     *
+     * @param origAddr The address of the originating for the message.
+     * @param message String representation of the message payload.
+     * @param date Time stamp the message was received. @see android.provider.Telephony.Sms.DATE.
+     * @return a <code>SubmitPdu</code> containing the encoded message only. Returns null on encode
+     *         error.
+     * @hide
+     */
+    public static SubmitPdu getDeliverPdu(String origAddr, String message, long date) {
+        if (origAddr == null || message == null) {
+            return null;
+        }
+
+        CdmaSmsAddress addr = CdmaSmsAddress.parse(origAddr);
+        if (addr == null) return null;
+
+        BearerData bearerData = new BearerData();
+        bearerData.messageType = BearerData.MESSAGE_TYPE_DELIVER;
+
+        bearerData.messageId = 0;
+
+        bearerData.deliveryAckReq = false;
+        bearerData.userAckReq = false;
+        bearerData.readAckReq = false;
+        bearerData.reportReq = false;
+
+        bearerData.userData = new UserData();
+        bearerData.userData.payloadStr = message;
+
+        bearerData.msgCenterTimeStamp = BearerData.TimeStamp.fromMillis(date);
+
+        byte[] encodedBearerData = BearerData.encode(bearerData);
+        if (encodedBearerData == null) return null;
+
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream(100);
+            DataOutputStream dos = new DataOutputStream(baos);
+            dos.writeInt(SmsEnvelope.TELESERVICE_WMT);
+            dos.writeInt(0); // servicePresent
+            dos.writeInt(0); // serviceCategory
+            dos.write(addr.digitMode);
+            dos.write(addr.numberMode);
+            dos.write(addr.ton); // number_type
+            dos.write(addr.numberPlan);
+            dos.write(addr.numberOfDigits);
+            dos.write(addr.origBytes, 0, addr.origBytes.length); // digits
+            // Subaddress is not supported.
+            dos.write(0); // subaddressType
+            dos.write(0); // subaddr_odd
+            dos.write(0); // subaddr_nbr_of_digits
+            dos.write(encodedBearerData.length);
+            dos.write(encodedBearerData, 0, encodedBearerData.length);
+            dos.close();
+
+            SubmitPdu pdu = new SubmitPdu();
+            pdu.encodedMessage = baos.toByteArray();
+            pdu.encodedScAddress = null;
+            return pdu;
+        } catch (IOException ex) {
+            Rlog.e(LOG_TAG, "creating Deliver PDU failed: " + ex);
+        }
+        return null;
+    }
+
+    /**
      * Creates byte array (pseudo pdu) from SMS object.
      * Note: Do not call this method more than once per object!
      * @hide

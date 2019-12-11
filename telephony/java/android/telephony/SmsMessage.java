@@ -18,8 +18,10 @@ package android.telephony;
 
 import static android.telephony.TelephonyManager.PHONE_TYPE_CDMA;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.StringDef;
+import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
 import android.content.res.Resources;
 import android.os.Binder;
@@ -605,6 +607,54 @@ public class SmsMessage {
         }
 
         return new SubmitPdu(spb);
+    }
+
+    // TODO: SubmitPdu class is used for SMS-DELIVER also now. Refactor for SubmitPdu and new
+    // DeliverPdu accordingly.
+
+    /**
+     * Gets an SMS PDU to store in the ICC.
+     *
+     * @param subId Subscription of the message.
+     * @param status Message status. One of these status:
+     *               <code>SmsManager.STATUS_ON_ICC_READ</code>
+     *               <code>SmsManager.STATUS_ON_ICC_UNREAD</code>
+     *               <code>SmsManager.STATUS_ON_ICC_SENT</code>
+     *               <code>SmsManager.STATUS_ON_ICC_UNSENT</code>
+     * @param scAddress Service Centre address.
+     * @param address Destination or originating address.
+     * @param message String representation of the message payload.
+     * @param date Time stamp the message was received. @see android.provider.Telephony.Sms.DATE.
+     * @return a <code>SubmitPdu</code> containing the encoded SC address if applicable and the
+     *         encoded message. Returns null on encode error.
+     * @hide
+     */
+    @SystemApi
+    @Nullable
+    public static SubmitPdu getSmsPdu(int subId, int status, @Nullable String scAddress,
+            @NonNull String address, @NonNull String message, long date) {
+        SubmitPduBase spb;
+        if (isCdmaVoice(subId)) { // 3GPP2 format
+            if (status == SmsManager.STATUS_ON_ICC_READ
+                    || status == SmsManager.STATUS_ON_ICC_UNREAD) { // Deliver PDU
+                spb = com.android.internal.telephony.cdma.SmsMessage.getDeliverPdu(address,
+                        message, date);
+            } else { // Submit PDU
+                spb = com.android.internal.telephony.cdma.SmsMessage.getSubmitPdu(scAddress,
+                        address, message, false /* statusReportRequested */, null /* smsHeader */);
+            }
+        } else { // 3GPP format
+            if (status == SmsManager.STATUS_ON_ICC_READ
+                    || status == SmsManager.STATUS_ON_ICC_UNREAD) { // Deliver PDU
+                spb = com.android.internal.telephony.gsm.SmsMessage.getDeliverPdu(scAddress,
+                        address, message, date);
+            } else { // Submit PDU
+                spb = com.android.internal.telephony.gsm.SmsMessage.getSubmitPdu(scAddress,
+                        address, message, false /* statusReportRequested */, null /* header */);
+            }
+        }
+
+        return spb != null ? new SubmitPdu(spb) : null;
     }
 
     /**
