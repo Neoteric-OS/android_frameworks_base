@@ -22,6 +22,30 @@
       "revId": "beb36056d23b1eb72aa0779447a2ca8cbfd16658",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a5e2e5_81f45c43",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2019-12-11T17:42:36Z",
+      "side": 1,
+      "message": "A follow up question. Would those I/O error be a merge failure, which would indicate that the device storage is in permanent bad state ?",
+      "parentUuid": "77b12416_8a82b624",
+      "range": {
+        "startLine": 444,
+        "startChar": 34,
+        "endLine": 444,
+        "endChar": 71
+      },
+      "revId": "beb36056d23b1eb72aa0779447a2ca8cbfd16658",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
