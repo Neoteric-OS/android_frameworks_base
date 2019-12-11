@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77b12416_8a82b624",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2019-12-11T17:30:56Z",
+      "side": 1,
+      "message": "I think this handling might be a bit too generic. For insufficient space, it\u0027s actionable and the caller could try prompt user to free up more space. However, I don\u0027t think it\u0027s applicable for other errors ?",
+      "range": {
+        "startLine": 444,
+        "startChar": 34,
+        "endLine": 444,
+        "endChar": 71
+      },
+      "revId": "beb36056d23b1eb72aa0779447a2ca8cbfd16658",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
