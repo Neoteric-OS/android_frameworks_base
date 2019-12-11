@@ -24,6 +24,7 @@ import android.util.Log;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.os.RoSystemProperties;
 import com.android.org.conscrypt.ClientSessionContext;
+import com.android.org.conscrypt.Conscrypt;
 import com.android.org.conscrypt.OpenSSLSocketImpl;
 import com.android.org.conscrypt.SSLClientSessionCache;
 
@@ -257,7 +258,9 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
             sslContext.init(keyManagers, trustManagers, null);
             ((ClientSessionContext) sslContext.getClientSessionContext())
                 .setPersistentCache(mSessionCache);
-            return sslContext.getSocketFactory();
+            SSLSocketFactory factory = sslContext.getSocketFactory();
+            Conscrypt.setUseEngineSocket(factory, false);
+            return factory;
         } catch (KeyManagementException | NoSuchAlgorithmException | NoSuchProviderException e) {
             Log.wtf(TAG, e);
             return (SSLSocketFactory) SSLSocketFactory.getDefault();  // Fallback
