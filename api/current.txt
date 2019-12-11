@@ -45095,6 +45095,7 @@ package android.telephony {
 
   public static class SubscriptionManager.OnSubscriptionsChangedListener {
     ctor public SubscriptionManager.OnSubscriptionsChangedListener();
+    ctor public SubscriptionManager.OnSubscriptionsChangedListener(@NonNull java.util.concurrent.Executor);
     method public void onSubscriptionsChanged();
   }
 

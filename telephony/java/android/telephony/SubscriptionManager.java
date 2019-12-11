@@ -942,17 +942,25 @@ public class SubscriptionManager {
          * The looper can be the calling thread's looper or the looper passed from the
          * constructor {@link #OnSubscriptionsChangedListener(Looper)}.
          */
-        private final HandlerExecutor mExecutor;
+        private final Executor mExecutor;
 
         /**
          * @hide
          */
-        public HandlerExecutor getHandlerExecutor() {
+        public Executor getExecutor() {
             return mExecutor;
         }
 
         public OnSubscriptionsChangedListener() {
             mExecutor = new HandlerExecutor(new OnSubscriptionsChangedListenerHandler());
+        }
+
+        /**
+         * Allow a listener to be created with an executor
+         * @param executor the executor callback
+         */
+        public OnSubscriptionsChangedListener(@NonNull Executor executor) {
+            mExecutor = executor;
         }
 
         /**
