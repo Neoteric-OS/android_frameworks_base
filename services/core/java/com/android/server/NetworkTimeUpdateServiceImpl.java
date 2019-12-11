@@ -100,7 +100,7 @@ public class NetworkTimeUpdateServiceImpl extends Binder implements NetworkTimeU
 
     public NetworkTimeUpdateServiceImpl(Context context) {
         mContext = context;
-        mTime = NtpTrustedTime.getInstance(context);
+        mTime = new NtpTrustedTime(context);
         mAlarmManager = mContext.getSystemService(AlarmManager.class);
         mCM = mContext.getSystemService(ConnectivityManager.class);
 

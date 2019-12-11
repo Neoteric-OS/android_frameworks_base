@@ -2166,7 +2166,7 @@ class AlarmManagerService extends SystemService {
 
         @Override
         public long currentNetworkTimeMillis() {
-            final NtpTrustedTime time = NtpTrustedTime.getInstance(getContext());
+            final NtpTrustedTime time = new NtpTrustedTime(getContext());
             if (time.hasCache()) {
                 return time.currentTimeMillis();
             } else {

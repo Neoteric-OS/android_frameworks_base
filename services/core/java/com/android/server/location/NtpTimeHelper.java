@@ -85,7 +85,7 @@ class NtpTimeHelper {
     }
 
     NtpTimeHelper(Context context, Looper looper, InjectNtpTimeCallback callback) {
-        this(context, looper, callback, NtpTrustedTime.getInstance(context));
+        this(context, looper, callback, new NtpTrustedTime(context));
     }
 
     synchronized void enablePeriodicTimeInjection() {

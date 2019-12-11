@@ -15645,7 +15645,6 @@ HSPLandroid/util/NtpTrustedTime;->getCacheAge()J
 HSPLandroid/util/NtpTrustedTime;->getCacheCertainty()J
 HSPLandroid/util/NtpTrustedTime;->getCachedNtpTime()J
 HSPLandroid/util/NtpTrustedTime;->getCachedNtpTimeReference()J
-HSPLandroid/util/NtpTrustedTime;->getInstance(Landroid/content/Context;)Landroid/util/NtpTrustedTime;
 HSPLandroid/util/NtpTrustedTime;->hasCache()Z
 HSPLandroid/util/PackageUtils;->computeSha256Digest([B)Ljava/lang/String;
 HSPLandroid/util/PackageUtils;->computeSha256DigestBytes([B)[B

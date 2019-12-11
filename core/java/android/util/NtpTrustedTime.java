@@ -38,11 +38,9 @@ public class NtpTrustedTime implements TrustedTime {
     private static final String TAG = "NtpTrustedTime";
     private static final boolean LOGD = false;
 
-    private static NtpTrustedTime sSingleton;
-    private static Context sContext;
-
-    private final String mServer;
-    private final long mTimeout;
+    private final Context mContext;
+    private final String mSecureServer;
+    private final long mGlobalTimeout;
 
     private ConnectivityManager mCM;
 
@@ -51,44 +49,23 @@ public class NtpTrustedTime implements TrustedTime {
     private long mCachedNtpElapsedRealtime;
     private long mCachedNtpCertainty;
 
-    private NtpTrustedTime(String server, long timeout) {
-        if (LOGD) Log.d(TAG, "creating NtpTrustedTime using " + server);
-        mServer = server;
-        mTimeout = timeout;
-    }
+    public NtpTrustedTime(Context context) {
+        final ContentResolver resolver = context.getContentResolver();
 
-    @UnsupportedAppUsage
-    public static synchronized NtpTrustedTime getInstance(Context context) {
-        if (sSingleton == null) {
-            final Resources res = context.getResources();
-            final ContentResolver resolver = context.getContentResolver();
+        mSecureServer = Settings.Global.getString(
+                resolver, Settings.Global.NTP_SERVER);
+        mGlobalTimeout = Settings.Global.getLong(
+                resolver, Settings.Global.NTP_TIMEOUT, -1);
 
-            final String defaultServer = res.getString(
-                    com.android.internal.R.string.config_ntpServer);
-            final long defaultTimeout = res.getInteger(
-                    com.android.internal.R.integer.config_ntpTimeout);
-
-            final String secureServer = Settings.Global.getString(
-                    resolver, Settings.Global.NTP_SERVER);
-            final long timeout = Settings.Global.getLong(
-                    resolver, Settings.Global.NTP_TIMEOUT, defaultTimeout);
-
-            final String server = secureServer != null ? secureServer : defaultServer;
-            sSingleton = new NtpTrustedTime(server, timeout);
-            sContext = context;
-        }
-
-        return sSingleton;
+        mContext = context;
     }
 
     @Override
     @UnsupportedAppUsage
     public boolean forceRefresh() {
         // We can't do this at initialization time: ConnectivityService might not be running yet.
-        synchronized (this) {
-            if (mCM == null) {
-                mCM = sContext.getSystemService(ConnectivityManager.class);
-            }
+        if (mCM == null) {
+            mCM = mContext.getSystemService(ConnectivityManager.class);
         }
 
         final Network network = mCM == null ? null : mCM.getActiveNetwork();
@@ -96,16 +73,15 @@ public class NtpTrustedTime implements TrustedTime {
     }
 
     public boolean forceRefresh(Network network) {
-        if (TextUtils.isEmpty(mServer)) {
-            // missing server, so no trusted time available
-            return false;
-        }
+        final String server = mSecureServer != null ? mSecureServer :
+                mContext.getResources().getString(com.android.internal.R.string.config_ntpServer);
+        if (LOGD) Log.d(TAG, "refreshing NtpTrustedTime using " + server);
+        final long timeout = mGlobalTimeout != -1 ? mGlobalTimeout :
+                mContext.getResources().getInteger(com.android.internal.R.integer.config_ntpTimeout);
 
         // We can't do this at initialization time: ConnectivityService might not be running yet.
-        synchronized (this) {
-            if (mCM == null) {
-                mCM = sContext.getSystemService(ConnectivityManager.class);
-            }
+        if (mCM == null) {
+            mCM = mContext.getSystemService(ConnectivityManager.class);
         }
 
         final NetworkInfo ni = mCM == null ? null : mCM.getNetworkInfo(network);
@@ -117,7 +93,7 @@ public class NtpTrustedTime implements TrustedTime {
 
         if (LOGD) Log.d(TAG, "forceRefresh() from cache miss");
         final SntpClient client = new SntpClient();
-        if (client.requestTime(mServer, (int) mTimeout, network)) {
+        if (client.requestTime(server, (int) timeout, network)) {
             mHasCache = true;
             mCachedNtpTime = client.getNtpTime();
             mCachedNtpElapsedRealtime = client.getNtpTimeReference();
