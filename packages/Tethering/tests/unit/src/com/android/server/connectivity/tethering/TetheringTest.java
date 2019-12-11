@@ -61,6 +61,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import android.app.usage.NetworkStatsManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -71,7 +72,6 @@ import android.content.res.Resources;
 import android.hardware.usb.UsbManager;
 import android.net.INetd;
 import android.net.INetworkPolicyManager;
-import android.net.INetworkStatsService;
 import android.net.ITetherInternalCallback;
 import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
@@ -153,7 +153,7 @@ public class TetheringTest {
     @Mock private ApplicationInfo mApplicationInfo;
     @Mock private Context mContext;
     @Mock private INetworkManagementService mNMService;
-    @Mock private INetworkStatsService mStatsService;
+    @Mock private NetworkStatsManager mStatsManager;
     @Mock private INetworkPolicyManager mPolicyManager;
     @Mock private OffloadHardwareInterface mOffloadHardwareInterface;
     @Mock private Resources mResources;
@@ -216,6 +216,7 @@ public class TetheringTest {
             if (Context.USB_SERVICE.equals(name)) return mUsbManager;
             if (Context.TELEPHONY_SERVICE.equals(name)) return mTelephonyManager;
             if (Context.USER_SERVICE.equals(name)) return mUserManager;
+            if (Context.NETWORK_STATS_SERVICE.equals(name)) return mStatsManager;
             return super.getSystemService(name);
         }
 
@@ -325,11 +326,6 @@ public class TetheringTest {
         @Override
         public INetworkManagementService getINetworkManagementService() {
             return mNMService;
-        }
-
-        @Override
-        public INetworkStatsService getINetworkStatsService() {
-            return mStatsService;
         }
 
         @Override
@@ -444,7 +440,7 @@ public class TetheringTest {
         mServiceContext.registerReceiver(mBroadcastReceiver,
                 new IntentFilter(ACTION_TETHER_STATE_CHANGED));
         mTethering = makeTethering();
-        verify(mStatsService, times(1)).registerNetworkStatsProvider(anyString(), any());
+        verify(mStatsManager, times(1)).registerNetworkStatsProvider(anyString(), any());
         verify(mNetd).registerUnsolicitedEventListener(any());
         final ArgumentCaptor<PhoneStateListener> phoneListenerCaptor =
                 ArgumentCaptor.forClass(PhoneStateListener.class);

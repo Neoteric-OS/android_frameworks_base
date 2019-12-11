@@ -63,7 +63,6 @@ import android.content.res.Resources;
 import android.hardware.usb.UsbManager;
 import android.net.INetd;
 import android.net.INetworkPolicyManager;
-import android.net.INetworkStatsService;
 import android.net.ITetherInternalCallback;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
@@ -171,7 +170,6 @@ public class Tethering {
     private final BroadcastReceiver mStateReceiver;
     // Stopship: replace mNMService before production.
     private final INetworkManagementService mNMService;
-    private final INetworkStatsService mStatsService;
     private final INetworkPolicyManager mPolicyManager;
     private final Looper mLooper;
     private final StateMachine mTetherMasterSM;
@@ -208,7 +206,6 @@ public class Tethering {
         mDeps = deps;
         mContext = mDeps.getContext();
         mNMService = mDeps.getINetworkManagementService();
-        mStatsService = mDeps.getINetworkStatsService();
         mPolicyManager = mDeps.getINetworkPolicyManager();
         mNetd = mDeps.getINetd(mContext);
         mLooper = mDeps.getTetheringLooper();
@@ -220,7 +217,8 @@ public class Tethering {
         mTetherMasterSM = new TetherMasterSM("TetherMaster", mLooper, deps);
         mTetherMasterSM.start();
 
-        final NetworkStatsManager statsManager = new NetworkStatsManager(mContext, mStatsService);
+        final NetworkStatsManager statsManager =
+                (NetworkStatsManager) mContext.getSystemService(Context.NETWORK_STATS_SERVICE);
         mHandler = mTetherMasterSM.getHandler();
         mOffloadController = new OffloadController(mHandler,
                 mDeps.getOffloadHardwareInterface(mHandler, mLog),
