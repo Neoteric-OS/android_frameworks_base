@@ -19,8 +19,12 @@ package android.net;
 import static android.system.OsConstants.AF_INET;
 import static android.system.OsConstants.AF_INET6;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.os.Bundle;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -55,6 +59,14 @@ public class ConnectivityDiagnosticsManager {
     private static final int IPV6_PACKET_SIZE = 40;
     private static final int ICMP_ECHO_REQUEST_SIZE = 8;
     private static final int ICMP6_ECHO_REQUEST_SIZE = 8;
+
+    public static final int DETECTION_METHOD_DNS_EVENTS = 1;
+    public static final int DETECTION_METHOD_TCP_METRICS = 2;
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({DETECTION_METHOD_DNS_EVENTS, DETECTION_METHOD_TCP_METRICS})
+    public @interface DetectionMethod {}
 
     /** @hide */
     public ConnectivityDiagnosticsManager() {}
@@ -354,5 +366,114 @@ public class ConnectivityDiagnosticsManager {
         }
 
         throw new UnsupportedOperationException("requestRouteDiagnostics() not supported yet");
+    }
+
+    /** Class that includes connectivity information for a specific Network at a specific time. */
+    public static class ConnectivityReport {
+        /** Epoch timestamp for the report in milliseconds */
+        public final long reportEpochTimestampMillis;
+
+        /** LinkProperties avilable on the Network at the reported timestamp */
+        @NonNull public final LinkProperties linkProperties;
+
+        /** NetworkCapabilities avilable on the Network at the reported timestamp */
+        @NonNull public final NetworkCapabilities networkCapabilities;
+
+        /** Bundle containing addtional info about the report */
+        @NonNull public final Bundle additionalInfo;
+
+        /** @hide */
+        public ConnectivityReport(
+                long reportEpochTimestampMillis,
+                @NonNull LinkProperties linkProperties,
+                @NonNull NetworkCapabilities networkCapabilities,
+                @NonNull Bundle additionalInfo) {
+            this.reportEpochTimestampMillis = reportEpochTimestampMillis;
+            this.linkProperties = linkProperties;
+            this.networkCapabilities = networkCapabilities;
+            this.additionalInfo = additionalInfo;
+        }
+    }
+
+    /**
+     * Abstract base class for Connectivity Diagnostics callbacks. Used for notifications about
+     * network connectivity events. Must be extended by applications wanting notifications.
+     */
+    public abstract static class ConnectivityDiagnosticsCallback {
+        /**
+         * Called when the platform completes a data connectivity check. This will also be invoked
+         * upon registration with the latest report.
+         *
+         * @param network The Network for which the ConnectivityReport was generated
+         * @param report The ConnectivityReport containing information for the specified network
+         */
+        void onConnectivityReport(Network network, ConnectivityReport report) {}
+
+        /**
+         * Called when the platform detects a data stall.
+         *
+         * @param network The Network for which the data stall is being reported
+         * @param epochTimestampMillis The epoch timestamp in milliseconds when the data stall was
+         *     detected
+         * @param detectionMethod The {@link DetectionMethod} used to identify the data stall
+         * @param stallDetail A Bundle containing additional information on the data stall
+         */
+        void onDataStalled(
+                Network network,
+                long epochTimestampMillis,
+                @DetectionMethod int detectionMethod,
+                Bundle stallDetail) {}
+
+        /**
+         * Called when any app reports connectivity to the System.
+         *
+         * @param network The Network for which connectivity has been reported
+         * @param hasConnectivity The connectivity reported to the System
+         */
+        void onNetworkConnectivityReported(Network network, boolean hasConnectivity) {}
+    }
+
+    /**
+     * Registers a ConnectivityDiagnosticsCallback with the System.
+     *
+     * <p>In order to register or receive callbacks, the caller must either:
+     *
+     * <ul>
+     *   <li>have carrier privileges (on any active subscription), or
+     *   <li>be the currently-running (active) VPN, or
+     *   <li>have the NETWORK_STACK permission
+     * </ul>
+     *
+     * <p>Each register() call <b>MUST</b> use a unique ConnectivityDiagnosticsCallback instance.
+     *
+     * @param request The NetworkRequest that will be used to match with Networks for which
+     *     callbacks will be fired
+     * @param callback The ConnectivityDiagnosticsCallback that the caller wants registered with the
+     *     System
+     * @param e The Executor to be used for running the callback method invocations
+     * @throws IllegalArgumentException if the same callback instance is registered with multiple
+     *     NetworkRequests
+     * @throws SecurityException if the caller does not have appropriate permissions.
+     */
+    public void registerConnectivityDiagnosticsCallback(
+            @NonNull NetworkRequest request,
+            @NonNull ConnectivityDiagnosticsCallback callback,
+            @NonNull Executor e) {
+        // TODO(b/143187964): implement ConnectivityDiagnostics functionality
+        throw new UnsupportedOperationException("registerCallback() not supported yet");
+    }
+
+    /**
+     * Unregisters a ConnectivityDiagnosticsCallback with the System.
+     *
+     * <p>If the given callback is not currently registered with the System, this operation will be
+     * a no-op.
+     *
+     * @param callback The ConnectivityDiagnosticsCallback to be unregistered from the System.
+     */
+    public void unregisterConnectivityDiagnosticsCallback(
+            @NonNull ConnectivityDiagnosticsCallback callback) {
+        // TODO(b/143187964): implement ConnectivityDiagnostics functionality
+        throw new UnsupportedOperationException("registerCallback() not supported yet");
     }
 }
