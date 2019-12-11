@@ -18586,8 +18586,10 @@ public class ActivityManagerService extends IActivityManager.Stub
                     return true;
                 }
             }
-            proc.appNotResponding(activityShortComponentName, aInfo,
-                    parentShortComponentName, parentProcess, aboveSystem, annotation);
+            mHandler.post(() -> {
+                    proc.appNotResponding(activityShortComponentName, aInfo,
+                        parentShortComponentName, parentProcess, aboveSystem, annotation);
+            });
         }
 
         return true;
