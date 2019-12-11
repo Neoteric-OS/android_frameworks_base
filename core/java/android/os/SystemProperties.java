@@ -239,6 +239,53 @@ public class SystemProperties {
     }
 
     /**
+     * Prefixes regarded as vendor-owned system properties.
+     * @hide
+     */
+    @SystemApi
+    public static final @NonNull String[] VENDOR_PREFIXES = new String[]{
+        "odm.",
+        "ro.odm.",
+        "persist.odm.",
+        "init.svc.odm.",
+        "ctl.odm.",
+        "ctl.start$odm.",
+        "ctl.stop$odm.",
+        "vendor.",
+        "ro.vendor.",
+        "persist.vendor.",
+        "init.svc.vendor.",
+        "ctl.vendor.",
+        "ctl.start$vendor.",
+        "ctl.stop$vendor.",
+        "ro.boot.",
+        "ro.hardware.",
+    };
+
+    /**
+     * Set the value for the given {@code key} to {@code val}.
+     * Only properties starting with one of {@link #VENDOR_PREFIXES} can be set.
+     *
+     * @throws IllegalArgumentException if the {@code val} exceeds 91 characters, or the
+     * {@code key} does not start with one of {@link #VENDOR_PREFIXES}.
+     * @throws RuntimeException if the property cannot be set, for example, if it was blocked by
+     * SELinux. libc will log the underlying reason.
+     * @hide
+     */
+    @SystemApi
+    public static void setVendorProp(@NonNull String key, @Nullable String val) {
+        for (String prefix : VENDOR_PREFIXES) {
+            if (key.startsWith(prefix)) {
+                set(key, val);
+                return;
+            }
+        }
+
+        throw new IllegalArgumentException("system property '" + key
+                + "' does not have vendor's or odm's prefix");
+    }
+
+    /**
      * Add a callback that will be run whenever any system property changes.
      *
      * @param callback The {@link Runnable} that should be executed when a system property
