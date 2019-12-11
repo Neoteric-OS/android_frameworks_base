@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57bd588f_216c4af2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-11T07:49:14Z",
+      "side": 1,
+      "message": "Should be line.6467 in the old file.",
+      "range": {
+        "startLine": 13,
+        "startChar": 31,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "d68bc0f0b380c48f110fe84bc320faaec0126271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
