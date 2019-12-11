@@ -28458,6 +28458,46 @@ package android.net {
     field @NonNull public static final android.os.Parcelable.Creator<android.net.CaptivePortal> CREATOR;
   }
 
+  public class ConnectivityDiagnosticsManager {
+    method public void requestRouteDiagnostics(@NonNull android.net.Network, @NonNull java.net.InetAddress, @NonNull java.util.concurrent.Executor, @NonNull android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsCallback);
+    method public void requestRouteDiagnostics(@NonNull android.net.Network, @NonNull java.net.InetAddress, @NonNull android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsParams, @NonNull java.util.concurrent.Executor, @NonNull android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsCallback);
+  }
+
+  public abstract static class ConnectivityDiagnosticsManager.RouteDiagnosticsCallback {
+    ctor public ConnectivityDiagnosticsManager.RouteDiagnosticsCallback();
+    method public void onError(@NonNull android.net.Network, @NonNull java.net.InetAddress, @NonNull Exception);
+    method public void onRouteDiagnosticsComplete(@NonNull android.net.Network, @NonNull java.net.InetAddress, @NonNull java.util.List<android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopInfo>);
+  }
+
+  public static class ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopInfo {
+    field public final int numProbesSent;
+    field @NonNull public final java.util.List<android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopResponse> responses;
+    field public final int ttl;
+  }
+
+  public static class ConnectivityDiagnosticsManager.RouteDiagnosticsCallback.HopResponse {
+    field @NonNull public final java.net.InetAddress address;
+    field public final double averageRttMillis;
+    field public final int numProbesReceived;
+  }
+
+  public static class ConnectivityDiagnosticsManager.RouteDiagnosticsParams {
+    field public static final int MINIMUM_PACKET_SIZE_BYTES = 48; // 0x30
+    field public final int maxTtl;
+    field public final int packetSizeBytes;
+    field public final int probesPerHop;
+    field public final int timeoutMillis;
+  }
+
+  public static class ConnectivityDiagnosticsManager.RouteDiagnosticsParams.Builder {
+    ctor public ConnectivityDiagnosticsManager.RouteDiagnosticsParams.Builder();
+    method @NonNull public android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsParams build();
+    method @NonNull public android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsParams.Builder setMaxTtl(int);
+    method @NonNull public android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsParams.Builder setPacketSizeBytes(int);
+    method @NonNull public android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsParams.Builder setProbesPerHop(int);
+    method @NonNull public android.net.ConnectivityDiagnosticsManager.RouteDiagnosticsParams.Builder setTimeoutMillis(int);
+  }
+
   public class ConnectivityManager {
     method public void addDefaultNetworkActiveListener(android.net.ConnectivityManager.OnNetworkActiveListener);
     method public boolean bindProcessToNetwork(@Nullable android.net.Network);
