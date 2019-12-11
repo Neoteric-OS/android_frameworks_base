@@ -1056,6 +1056,34 @@ public class SubscriptionManager {
     }
 
     /**
+     * Register for changes to the list of active {@link SubscriptionInfo} records or to the
+     * individual records themselves. When a change occurs the onSubscriptionsChanged method of
+     * the listener will be invoked immediately if there has been a notification. The
+     * onSubscriptionChanged method will also be triggered once initially when calling this
+     * function.
+     *
+     * @param listener an instance of {@link OnSubscriptionsChangedListener} with
+     *                 onSubscriptionsChanged overridden.
+     * @param executor the executor that will execute callbacks.
+     */
+    public void addOnSubscriptionsChangedListener(@NonNull OnSubscriptionsChangedListener listener,
+                                                  @NonNull Executor executor) {
+        String pkgName = mContext != null ? mContext.getOpPackageName() : "<unknown>";
+        if (DBG) {
+            logd("register OnSubscriptionsChangedListener pkgName=" + pkgName
+                    + " listener=" + listener);
+        }
+        // We use the TelephonyRegistry as it runs in the system and thus is always
+        // available. Where as SubscriptionController could crash and not be available
+        TelephonyRegistryManager telephonyRegistryManager = (TelephonyRegistryManager)
+                mContext.getSystemService(Context.TELEPHONY_REGISTRY_SERVICE);
+        if (telephonyRegistryManager != null) {
+            telephonyRegistryManager.addOnSubscriptionsChangedListener(listener,
+                    executor);
+        }
+    }
+
+    /**
      * Unregister the {@link OnSubscriptionsChangedListener}. This is not strictly necessary
      * as the listener will automatically be unregistered if an attempt to invoke the listener
      * fails.
