@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79f4aafb_986cb485",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1672,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-12-11T19:38:10Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "a0fcbf6d_c0323552",
+      "range": {
+        "startLine": 1671,
+        "startChar": 69,
+        "endLine": 1672,
+        "endChar": 59
+      },
+      "revId": "82b72eb5903b263750bb7c77183a4edb86da1578",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51b00588_c0be26df",
         "filename": "core/java/android/bluetooth/BluetoothDevice.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c2cefa07_5090d754",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1694,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-12-11T19:38:10Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "51b00588_c0be26df",
+      "range": {
+        "startLine": 1693,
+        "startChar": 20,
+        "endLine": 1694,
+        "endChar": 25
+      },
+      "revId": "82b72eb5903b263750bb7c77183a4edb86da1578",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a2f9bc2_46c1dc0b",
         "filename": "core/java/android/bluetooth/BluetoothDevice.java",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "82b72eb5903b263750bb7c77183a4edb86da1578",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f81e14_f6874d72",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-12-11T19:38:10Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "7a2f9bc2_46c1dc0b",
+      "range": {
+        "startLine": 1716,
+        "startChar": 65,
+        "endLine": 1717,
+        "endChar": 59
+      },
+      "revId": "82b72eb5903b263750bb7c77183a4edb86da1578",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
