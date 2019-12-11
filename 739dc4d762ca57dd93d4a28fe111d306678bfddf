@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eae18a5c_f713f413",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-12-11T14:52:15Z",
+      "side": 1,
+      "message": "can you add it to framework-defaults instead?",
+      "range": {
+        "startLine": 427,
+        "startChar": 16,
+        "endLine": 427,
+        "endChar": 34
+      },
+      "revId": "739dc4d762ca57dd93d4a28fe111d306678bfddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
