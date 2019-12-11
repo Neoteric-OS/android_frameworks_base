@@ -140,6 +140,30 @@
       "revId": "396fccab500ebeace3380da18c8fbf81f95b8c45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abeb50a5_b0975ac0",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-11T01:29:53Z",
+      "side": 1,
+      "message": "Sorry, meant full packet size",
+      "parentUuid": "e8e16b45_4b4de38f",
+      "range": {
+        "startLine": 268,
+        "startChar": 32,
+        "endLine": 268,
+        "endChar": 57
+      },
+      "revId": "396fccab500ebeace3380da18c8fbf81f95b8c45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
