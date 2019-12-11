@@ -117,6 +117,30 @@
       "revId": "304ae2883002fb62eff9965abf6a0ab06149b1c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31cd4e52_342fad53",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-11T07:48:16Z",
+      "side": 1,
+      "message": "Yes, it\u0027s more clear to me.\nBut I think other reviewers still need some time to trace the flow to figure it out. 😂",
+      "parentUuid": "8a8b92cd_777bb4b2",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 59
+      },
+      "revId": "304ae2883002fb62eff9965abf6a0ab06149b1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
