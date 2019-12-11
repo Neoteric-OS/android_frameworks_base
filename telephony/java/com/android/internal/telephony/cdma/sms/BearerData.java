@@ -248,10 +248,10 @@ public final class BearerData {
         public int hour;
         public int monthDay;
 
-        /** Month [0-11] */
-        public int month;
+        /** Month in the range 1(Jan) - 12(Dec). */
+        public int monthOrdinal;
 
-        /** Full year. For example, 1970. */
+        /** Full year in the range 1996 - 2095. */
         public int year;
 
         private ZoneId mZoneId;
@@ -269,7 +269,7 @@ public final class BearerData {
             ts.year = year >= 96 ? year + 1900 : year + 2000;
             int month = IccUtils.cdmaBcdByteToInt(data[1]);
             if (month < 1 || month > 12) return null;
-            ts.month = month - 1;
+            ts.monthOrdinal = month;
             int day = IccUtils.cdmaBcdByteToInt(data[2]);
             if (day < 1 || day > 31) return null;
             ts.monthDay = day;
@@ -287,7 +287,7 @@ public final class BearerData {
 
         public long toMillis() {
             LocalDateTime localDateTime =
-                    LocalDateTime.of(year, month + 1, monthDay, hour, minute, second);
+                    LocalDateTime.of(year, monthOrdinal, monthDay, hour, minute, second);
             Instant instant = localDateTime.toInstant(mZoneId.getRules().getOffset(localDateTime));
             return instant.toEpochMilli();
         }
@@ -298,7 +298,7 @@ public final class BearerData {
             StringBuilder builder = new StringBuilder();
             builder.append("TimeStamp ");
             builder.append("{ year=" + year);
-            builder.append(", month=" + month);
+            builder.append(", month=" + monthOrdinal);
             builder.append(", day=" + monthDay);
             builder.append(", hour=" + hour);
             builder.append(", minute=" + minute);
