@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ea91ce5_61bcdc03",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-11T07:21:43Z",
+      "side": 1,
+      "message": "Do we like to add TETHERING_ETHERNET since we may support it as request in b/141103467?",
+      "range": {
+        "startLine": 142,
+        "startChar": 20,
+        "endLine": 142,
+        "endChar": 38
+      },
+      "revId": "a3be72416c4cf47cf42d19b4045f98ee8a1b9e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49c01a2_168a82f7",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-11T07:21:43Z",
+      "side": 1,
+      "message": "You may still need onInfoChanged since the code is different between internal master. Either request sync to aosp or need a patch to internal first?",
+      "range": {
+        "startLine": 369,
+        "startChar": 4,
+        "endLine": 369,
+        "endChar": 6
+      },
+      "revId": "a3be72416c4cf47cf42d19b4045f98ee8a1b9e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cf77b2_d210b3e1",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-11T07:21:43Z",
+      "side": 1,
+      "message": "It looks that tethering does not need to know this? Can\u0027t it just listen in TetheringNotificationUpdater instead of passing again via tethering?\n\nAfter offline chat, you may need to send a message to handler to guarantee the events/messages come from one signal thread if it\u0027s preferred. Ditto in other place from Tethering to call to TetheringNotificationUpdater.",
+      "range": {
+        "startLine": 695,
+        "startChar": 14,
+        "endLine": 697,
+        "endChar": 13
+      },
+      "revId": "a3be72416c4cf47cf42d19b4045f98ee8a1b9e62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
