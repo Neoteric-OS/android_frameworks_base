@@ -65,7 +65,7 @@ public class FlashlightControllerImpl implements FlashlightController {
     /** Lock on {@code this} when accessing */
     private boolean mFlashlightEnabled;
 
-    private String mCameraId;
+    private String[] mCameraId;
     private boolean mTorchAvailable;
 
     @Inject
@@ -93,11 +93,11 @@ public class FlashlightControllerImpl implements FlashlightController {
     public void setFlashlight(boolean enabled) {
         boolean pendingError = false;
         synchronized (this) {
-            if (mCameraId == null) return;
+            if (mCameraId == null || mCameraId.length == 0) return;
             if (mFlashlightEnabled != enabled) {
                 mFlashlightEnabled = enabled;
                 try {
-                    mCameraManager.setTorchMode(mCameraId, enabled);
+                    mCameraManager.setTorchMode(mCameraId[mCameraId.length -1], enabled);
                 } catch (CameraAccessException e) {
                     Log.e(TAG, "Couldn't set torch mode", e);
                     mFlashlightEnabled = false;
@@ -149,18 +149,21 @@ public class FlashlightControllerImpl implements FlashlightController {
         }
     }
 
-    private String getCameraId() throws CameraAccessException {
-        String[] ids = mCameraManager.getCameraIdList();
-        for (String id : ids) {
+    private String[] getCameraId() throws CameraAccessException {
+        ArrayList<String> ids = new ArrayList<String>();
+        for (String id : mCameraManager.getCameraIdList()) {
             CameraCharacteristics c = mCameraManager.getCameraCharacteristics(id);
             Boolean flashAvailable = c.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
             Integer lensFacing = c.get(CameraCharacteristics.LENS_FACING);
             if (flashAvailable != null && flashAvailable
                     && lensFacing != null && lensFacing == CameraCharacteristics.LENS_FACING_BACK) {
-                return id;
+                ids.add(id);
             }
         }
-        return null;
+        if (ids.size() == 0) {
+            return null;
+        }
+        return ids.toArray(new String[] {});
     }
 
     private void dispatchModeChanged(boolean enabled) {
@@ -213,24 +216,29 @@ public class FlashlightControllerImpl implements FlashlightController {
 
         @Override
         public void onTorchModeUnavailable(String cameraId) {
-            if (TextUtils.equals(cameraId, mCameraId)) {
-                setCameraAvailable(false);
-                Settings.Secure.putInt(
-                    mContext.getContentResolver(), Settings.Secure.FLASHLIGHT_AVAILABLE, 0);
-
+            if (mCameraId == null) return;
+            for (String id : mCameraId) {
+                if (TextUtils.equals(cameraId, id)) {
+                    setCameraAvailable(false);
+                    Settings.Secure.putInt(
+                        mContext.getContentResolver(), Settings.Secure.FLASHLIGHT_AVAILABLE, 0);
+                }
             }
         }
 
         @Override
         public void onTorchModeChanged(String cameraId, boolean enabled) {
-            if (TextUtils.equals(cameraId, mCameraId)) {
-                setCameraAvailable(true);
-                setTorchMode(enabled);
-                Settings.Secure.putInt(
-                    mContext.getContentResolver(), Settings.Secure.FLASHLIGHT_AVAILABLE, 1);
-                Settings.Secure.putInt(
-                    mContext.getContentResolver(), Secure.FLASHLIGHT_ENABLED, enabled ? 1 : 0);
-                mContext.sendBroadcast(new Intent(ACTION_FLASHLIGHT_CHANGED));
+            if (mCameraId == null) return;
+            for (String id : mCameraId) {
+                if (TextUtils.equals(cameraId, id)) {
+                    setCameraAvailable(true);
+                    setTorchMode(enabled);
+                    Settings.Secure.putInt(
+                        mContext.getContentResolver(), Settings.Secure.FLASHLIGHT_AVAILABLE, 1);
+                    Settings.Secure.putInt(
+                        mContext.getContentResolver(), Secure.FLASHLIGHT_ENABLED, enabled ? 1 : 0);
+                    mContext.sendBroadcast(new Intent(ACTION_FLASHLIGHT_CHANGED));
+                }
             }
         }
 
