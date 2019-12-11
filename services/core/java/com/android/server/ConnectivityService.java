@@ -1887,14 +1887,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             mHandler.sendMessage(mHandler.obtainMessage(
                     EVENT_DATA_SAVER_CHANGED, restrictBackground ? 1 : 0, 0));
-
-            // TODO: relocate this specific callback in Tethering.
-            if (restrictBackground) {
-                log("onRestrictBackgroundChanged(true): disabling tethering");
-                mTetheringManager.stopTethering(ConnectivityManager.TETHERING_WIFI);
-                mTetheringManager.stopTethering(ConnectivityManager.TETHERING_USB);
-                mTetheringManager.stopTethering(ConnectivityManager.TETHERING_BLUETOOTH);
-            }
         }
     };
 
