@@ -2,6 +2,161 @@
   "comments": [
     {
       "key": {
+        "uuid": "dd011a86_63e0b297",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-12T06:02:16Z",
+      "side": 1,
+      "message": "implement parallel traceroute",
+      "revId": "57b8d9e3f99aa8d5fa4246d597bb2c4bcb3b1dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac9a710_4c14798d",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-12T06:02:16Z",
+      "side": 1,
+      "message": "List of RTTs instead of average. More informative to the user.",
+      "range": {
+        "startLine": 88,
+        "startChar": 12,
+        "endLine": 92,
+        "endChar": 47
+      },
+      "revId": "57b8d9e3f99aa8d5fa4246d597bb2c4bcb3b1dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198c29c3_f860d783",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-12T06:02:16Z",
+      "side": 1,
+      "message": "What about instead returning List\u003cHopResponse\u003e, where HopResponse is:\n- InetAddress\n- ttl\n- rtt\n\nTimed out ICMP Echo Requests will then be a HopResponse(null, ttl, invalid)",
+      "range": {
+        "startLine": 113,
+        "startChar": 25,
+        "endLine": 113,
+        "endChar": 44
+      },
+      "revId": "57b8d9e3f99aa8d5fa4246d597bb2c4bcb3b1dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b79905_205eabf0",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-12T06:02:16Z",
+      "side": 1,
+      "message": "Network being returned may not be valid at time of callbacks.",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 97
+      },
+      "revId": "57b8d9e3f99aa8d5fa4246d597bb2c4bcb3b1dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994b086a_7c97f82d",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-12T06:02:16Z",
+      "side": 1,
+      "message": "also allow configurable overall timeout",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 12
+      },
+      "revId": "57b8d9e3f99aa8d5fa4246d597bb2c4bcb3b1dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "208962cd_1d0917d3",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-12T06:02:16Z",
+      "side": 1,
+      "message": "clarify that this is a timeout for a response to a single probe",
+      "range": {
+        "startLine": 145,
+        "startChar": 8,
+        "endLine": 145,
+        "endChar": 63
+      },
+      "revId": "57b8d9e3f99aa8d5fa4246d597bb2c4bcb3b1dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e051598_e6e31dfa",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-12T06:02:16Z",
+      "side": 1,
+      "message": "Remove in favor of checking packet size when client calls request()",
+      "range": {
+        "startLine": 147,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 63
+      },
+      "revId": "57b8d9e3f99aa8d5fa4246d597bb2c4bcb3b1dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7daab8e_33b050c2",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 12
@@ -41,6 +196,52 @@
         "startChar": 20,
         "endLine": 253,
         "endChar": 37
+      },
+      "revId": "57b8d9e3f99aa8d5fa4246d597bb2c4bcb3b1dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f429545_79ea61eb",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-12T06:02:16Z",
+      "side": 1,
+      "message": "Use two Executors: 1 for computing diagnostics. 1 for calling callback.",
+      "range": {
+        "startLine": 284,
+        "startChar": 7,
+        "endLine": 284,
+        "endChar": 76
+      },
+      "revId": "57b8d9e3f99aa8d5fa4246d597bb2c4bcb3b1dad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d9eefc_cb25dc78",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-12T06:02:16Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 287,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 5
       },
       "revId": "57b8d9e3f99aa8d5fa4246d597bb2c4bcb3b1dad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
