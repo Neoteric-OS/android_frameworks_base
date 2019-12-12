@@ -70,6 +70,30 @@
       "revId": "f09a081553c287095b9a42a7fd4a8e86b10ec774",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68ee08de_2a34b164",
+        "filename": "libs/androidfw/LocaleDataTables.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1024310
+      },
+      "writtenOn": "2019-12-12T14:37:06Z",
+      "side": 1,
+      "message": "But this won\u0027t compile, ~~~B_PARENTS is not a valid C++ variable name.",
+      "parentUuid": "f6583838_967595e6",
+      "range": {
+        "startLine": 2359,
+        "startChar": 35,
+        "endLine": 2359,
+        "endChar": 40
+      },
+      "revId": "f09a081553c287095b9a42a7fd4a8e86b10ec774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
