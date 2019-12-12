@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b542472b_05048bd6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-12T11:43:53Z",
+      "side": 1,
+      "message": "//\u003d\u003d\u003d\u003d\u003dNot related to this change\u003d\u003d\u003d\u003d\u003d//\nIt reminds that I have a commit aosp/1183400 which is trying to test NetworkCapabilities#TRANSPORT_NAMES but I got below message when I was running the test and still don\u0027t know why so far...\nNot sure if you have any idea about that? 🙏\n\nSTACKTRACE:\njava.lang.IllegalAccessError: Field \u0027android.net.NetworkCapabilities.TRANSPORT_NAMES\u0027 is inaccessible to class \u0027android.net.NetworkCapabilitiesTest\u0027 (declaration of \u0027android.net.NetworkCapabilitiesTest\u0027 appears in /data/app/com.android.frameworks.tests.net-XSAsLBZjzK7ID-4L0PdTZw\u003d\u003d/base.apk)\n\tat android.net.NetworkCapabilitiesTest.testGetTransportName(NetworkCapabilitiesTest.java:603)\n\tat java.lang.reflect.Method.invoke(Native Method)\n\tat org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)\n\tat org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)\n\tat org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:52)\n\tat org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)\n\tat org.junit.internal.runners.statements.FailOnTimeout$CallableStatement.call(FailOnTimeout.java:148)\n\tat org.junit.internal.runners.statements.FailOnTimeout$CallableStatement.call(FailOnTimeout.java:142)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.lang.Thread.run(Thread.java:921)",
+      "range": {
+        "startLine": 43,
+        "startChar": 46,
+        "endLine": 43,
+        "endChar": 62
+      },
+      "revId": "a7b8bcf2568a7e36de80060ea366c8bdbc602a4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c7284d4_c122eab6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7405,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-12T11:43:53Z",
+      "side": 1,
+      "message": "For example:\n[100 WIFI|VPN]\n\nAm I right?\nDo you want to add a delimiter between netid and transport type?",
+      "range": {
+        "startLine": 7404,
+        "startChar": 8,
+        "endLine": 7405,
+        "endChar": 86
+      },
+      "revId": "a7b8bcf2568a7e36de80060ea366c8bdbc602a4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
