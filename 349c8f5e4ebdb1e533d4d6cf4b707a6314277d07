@@ -70,6 +70,30 @@
       "revId": "349c8f5e4ebdb1e533d4d6cf4b707a6314277d07",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "997faf44_484ff288",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6354,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-12T09:58:54Z",
+      "side": 1,
+      "message": "Your reply is very clear and basically what you said is also matching what I understood.\nAnd yes, I think I was misreading the \"oldChange.mOldNetwork\" to \"oldChange.mNewNetwork\" in the first comment.\nBut if the code is changed to what I wrote in my first comment, I think it still resolves the bug, right?\n\nLet me simplify my question of second comment:\n\n\u003e With this patch, when addRequestReassignment is called, I check if there was already a reassignment for this request. If there is, I make sure that the old destination is the new origin.\nRequest : A → B first, then B → C.\nIf that\u0027s the case, then I replace A → B with A → C, because going to B was just an intempestive intermediate state that shouldn\u0027t be visible to the outside world.\n\nAs you said, the flow \"A → B first, then B → C\" could be simplified to \"A → C\".\nSo, no matter how does network change, the mOldNetwork will always be A, right?\nAnd in practice, the A is null in the beginning, so the mOldNetwork will be null forever.\nIf what I said above is true, then once the code is running to line.6542, it will pass null into callCallbackForRequest() and make null pointer exception.\nSince the logic of these code is a bit complicated, so maybe I was wrong.\nBut I\u0027m afraid if I\u0027m right, then we are makeing the bug...",
+      "parentUuid": "e70a94ec_5cf21e1d",
+      "range": {
+        "startLine": 6353,
+        "startChar": 12,
+        "endLine": 6354,
+        "endChar": 70
+      },
+      "revId": "349c8f5e4ebdb1e533d4d6cf4b707a6314277d07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
