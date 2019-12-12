@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e79155c_63d274e0",
+        "filename": "core/java/android/os/IThermalService.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2019-12-12T18:34:44Z",
+      "side": 1,
+      "message": "negative for forecast unavailable. actually why not return NaN in such case?",
+      "range": {
+        "startLine": 110,
+        "startChar": 16,
+        "endLine": 110,
+        "endChar": 17
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82f7e4e_28c931ff",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2019-12-12T18:34:44Z",
+      "side": 1,
+      "message": "move out of HAL wrapper and don\u0027t have to deal with HAL.",
+      "range": {
+        "startLine": 1002,
+        "startChar": 21,
+        "endLine": 1002,
+        "endChar": 39
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9f649f_287a9ab9",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2019-12-12T18:34:44Z",
+      "side": 1,
+      "message": "Let\u0027s make the ring buffer 30 in capacity",
+      "range": {
+        "startLine": 1006,
+        "startChar": 54,
+        "endLine": 1006,
+        "endChar": 71
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5fc3b2_db5f28dc",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2019-12-12T18:34:44Z",
+      "side": 1,
+      "message": "can we resue com.android.server.FgThread? as this won\u0027t post too frequently?",
+      "range": {
+        "startLine": 1012,
+        "startChar": 16,
+        "endLine": 1013,
+        "endChar": 59
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "115847f7_0543f1c0",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2019-12-12T18:34:44Z",
+      "side": 1,
+      "message": "NaN would be better?",
+      "range": {
+        "startLine": 1044,
+        "startChar": 89,
+        "endLine": 1044,
+        "endChar": 94
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4dfce0_87bdb236",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2019-12-12T18:34:44Z",
+      "side": 1,
+      "message": "what about multiple skin sensors?\nshould we get average or max of the headroom/likelihood?",
+      "range": {
+        "startLine": 1062,
+        "startChar": 52,
+        "endLine": 1062,
+        "endChar": 71
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09eb6ef_2c752aa2",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2019-12-12T18:34:44Z",
+      "side": 1,
+      "message": "make this a private static final",
+      "range": {
+        "startLine": 1071,
+        "startChar": 46,
+        "endLine": 1071,
+        "endChar": 48
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7e8f3f_beaa739e",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2019-12-12T18:34:44Z",
+      "side": 1,
+      "message": "maintain at the fixed size? or maybe just use a fixed size array\n                        if (mSamples.size() \u003d\u003d 30) {\n                            mSamples.remove(0);\n                        } \n                        mSamples.add(skinTemperature.get());",
+      "range": {
+        "startLine": 1070,
+        "startChar": 24,
+        "endLine": 1073,
+        "endChar": 25
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb183e22_2480463c",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2019-12-12T18:34:44Z",
+      "side": 1,
+      "message": "same here, considering multiple skin sensors.",
+      "range": {
+        "startLine": 1161,
+        "startChar": 43,
+        "endLine": 1161,
+        "endChar": 60
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5920a338_b0dae335",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2019-12-12T18:34:44Z",
+      "side": 1,
+      "message": "what if NaN?",
+      "range": {
+        "startLine": 1183,
+        "startChar": 26,
+        "endLine": 1183,
+        "endChar": 41
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f082cce_b7e965aa",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2019-12-12T18:34:44Z",
+      "side": 1,
+      "message": "what if exception thrown in reconnection?\n\nput this in after the try/catch, so it get chance to set HAL to null.",
+      "range": {
+        "startLine": 1186,
+        "startChar": 20,
+        "endLine": 1186,
+        "endChar": 62
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
