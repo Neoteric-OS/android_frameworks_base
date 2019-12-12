@@ -22,6 +22,30 @@
       "revId": "349c8f5e4ebdb1e533d4d6cf4b707a6314277d07",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124f0155_1ee97c4a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6354,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-12T03:21:03Z",
+      "side": 1,
+      "message": "Well, after reviewing the code again.\nI think what you want to do is different from my previous comment.\nAnd what you wrote might be wrong.\nPlease let me give an example and try to explain what you want to do:\nIf there are three networks which are trying to satisfy the default request, and presume the sequence is (1) mobile, (2) wifi, (3) BT.\nSo the first time to run the rematch function, the component of RequestReassignment will be mRequest\u003ddefaultRequest, mOldNetwork\u003dnull, mNewNetwork\u003dmobile network.\nThe second round that mobile will be replaced by wifi, so the component of RequestReassignment will be mRequest\u003ddefaultRequest, mOldNetwork\u003dmobile, mNewNetwork\u003dmobile network.\nBut in this time, when the code is running to addRequestReassignment(), the component of RequestReassignment will be reassigned to mRequest\u003ddefaultRequest, mOldNetwork\u003dnull(oldChange.mOldNetwork is null), mNewNetwork\u003dwifi.\nSame as the third round, the compoent of RequestReassignment should be mRequest\u003ddefaultRequest, mOldNetwork\u003dwifi, mNewNetwork\u003dBT, but it will be reassigned to mRequest\u003ddefaultRequest, mOldNetwork\u003dnull, mNewNetwork\u003dBT.\nIt will make the mOldNetwork keep null and make a null pointer exception inside callCallbackForRequest()? See line.6542.",
+      "parentUuid": "e69bfe00_144ec903",
+      "range": {
+        "startLine": 6353,
+        "startChar": 12,
+        "endLine": 6354,
+        "endChar": 70
+      },
+      "revId": "349c8f5e4ebdb1e533d4d6cf4b707a6314277d07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
