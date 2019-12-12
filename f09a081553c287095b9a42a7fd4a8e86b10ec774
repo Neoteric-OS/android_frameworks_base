@@ -94,6 +94,30 @@
       "revId": "f09a081553c287095b9a42a7fd4a8e86b10ec774",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ac71c2_9a0cd864",
+        "filename": "libs/androidfw/LocaleDataTables.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-12-12T14:44:38Z",
+      "side": 1,
+      "message": "Right. I will try to rename the variable",
+      "parentUuid": "68ee08de_2a34b164",
+      "range": {
+        "startLine": 2359,
+        "startChar": 35,
+        "endLine": 2359,
+        "endChar": 40
+      },
+      "revId": "f09a081553c287095b9a42a7fd4a8e86b10ec774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
