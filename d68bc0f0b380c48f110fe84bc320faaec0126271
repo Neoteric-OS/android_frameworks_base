@@ -22,6 +22,30 @@
       "revId": "d68bc0f0b380c48f110fe84bc320faaec0126271",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e46778c_499f532f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T07:30:12Z",
+      "side": 1,
+      "message": "Kind of the same 😊\nUpdated.",
+      "parentUuid": "57bd588f_216c4af2",
+      "range": {
+        "startLine": 13,
+        "startChar": 31,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "d68bc0f0b380c48f110fe84bc320faaec0126271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
