@@ -46,6 +46,30 @@
       "revId": "f09a081553c287095b9a42a7fd4a8e86b10ec774",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6583838_967595e6",
+        "filename": "libs/androidfw/LocaleDataTables.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-12-12T14:35:08Z",
+      "side": 1,
+      "message": "In fact, ~~~B is specified by the generation script, not by ICU.\nhttps://android.git.corp.google.com/platform/frameworks/base/+/e7a644ba7ebe4bdb47560d0a7e8d8909f166ecd9/tools/localedata/extract_icu_data.py#50\n\nI guess this ~~~B_PARENTS is newly added because the parent-child relationship (ar-XB -\u003e ar-015) is new. ~~~B is an existing script in line 100 here.",
+      "parentUuid": "34255fcc_f1e72e53",
+      "range": {
+        "startLine": 2359,
+        "startChar": 35,
+        "endLine": 2359,
+        "endChar": 40
+      },
+      "revId": "f09a081553c287095b9a42a7fd4a8e86b10ec774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
