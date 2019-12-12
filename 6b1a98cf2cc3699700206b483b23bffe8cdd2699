@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff1a6fe8_24943516",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-12T07:20:42Z",
+      "side": 1,
+      "message": "Line.6443 is a comment, not sure where is the exact line do you want to say.",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "6b1a98cf2cc3699700206b483b23bffe8cdd2699",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281e63f1_6a349288",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-12T07:20:42Z",
+      "side": 1,
+      "message": "Not sure if line.6580 is actually what you want to say in this patch.",
+      "range": {
+        "startLine": 15,
+        "startChar": 61,
+        "endLine": 15,
+        "endChar": 65
+      },
+      "revId": "6b1a98cf2cc3699700206b483b23bffe8cdd2699",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db1b794_96f4fb9f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6574,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-12T07:20:42Z",
+      "side": 1,
+      "message": "Why do they have to be sent later?\nI don\u0027t see the reason to explain this part.",
+      "range": {
+        "startLine": 6574,
+        "startChar": 28,
+        "endLine": 6574,
+        "endChar": 63
+      },
+      "revId": "6b1a98cf2cc3699700206b483b23bffe8cdd2699",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
