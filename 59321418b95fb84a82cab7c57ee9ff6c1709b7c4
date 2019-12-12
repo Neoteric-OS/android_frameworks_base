@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ad325a2_ab15b6ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-12T08:33:57Z",
+      "side": 1,
+      "message": "style: exceed 76 chars per line.",
+      "range": {
+        "startLine": 11,
+        "startChar": 82,
+        "endLine": 11,
+        "endChar": 125
+      },
+      "revId": "59321418b95fb84a82cab7c57ee9ff6c1709b7c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7cdfce8_9b136d25",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-12T08:33:57Z",
+      "side": 1,
+      "message": "Would you specify what tests was done in the test section?\nAlso please specify bug number if any.\n\nTest:\nBug:",
+      "revId": "59321418b95fb84a82cab7c57ee9ff6c1709b7c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc203d44_84f771b1",
+        "filename": "core/java/android/content/ContentProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-12T08:33:57Z",
+      "side": 1,
+      "message": "style: missing space.",
+      "range": {
+        "startLine": 638,
+        "startChar": 31,
+        "endLine": 638,
+        "endChar": 35
+      },
+      "revId": "59321418b95fb84a82cab7c57ee9ff6c1709b7c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5a868b_06fea24b",
+        "filename": "core/java/android/content/ContentProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-12T08:33:57Z",
+      "side": 1,
+      "message": "redundant cast?",
+      "range": {
+        "startLine": 639,
+        "startChar": 34,
+        "endLine": 639,
+        "endChar": 40
+      },
+      "revId": "59321418b95fb84a82cab7c57ee9ff6c1709b7c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
