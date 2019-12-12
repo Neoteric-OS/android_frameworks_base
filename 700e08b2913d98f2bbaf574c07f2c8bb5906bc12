@@ -22,6 +22,30 @@
       "revId": "700e08b2913d98f2bbaf574c07f2c8bb5906bc12",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713c2954_a888ee2f",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-12-12T12:09:42Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the goal here as well. Processor needs some tweaks though, before we can do that..",
+      "parentUuid": "276f38a2_5f82014a",
+      "range": {
+        "startLine": 475,
+        "startChar": 11,
+        "endLine": 475,
+        "endChar": 36
+      },
+      "revId": "700e08b2913d98f2bbaf574c07f2c8bb5906bc12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
