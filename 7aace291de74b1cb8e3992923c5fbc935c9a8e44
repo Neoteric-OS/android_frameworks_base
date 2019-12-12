@@ -22,6 +22,30 @@
       "revId": "7aace291de74b1cb8e3992923c5fbc935c9a8e44",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0daae50c_42d654ec",
+        "filename": "core/java/android/content/pm/ParceledListSlice.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2019-12-12T01:20:01Z",
+      "side": 1,
+      "message": "hmm, it would be nice, but it might be tricky. for this, aidl compiler needs to require corresponding java file, and check the names and its count is same as aidl file after parsing java code.",
+      "parentUuid": "1610bc0c_f0b7965b",
+      "range": {
+        "startLine": 19,
+        "startChar": 29,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "7aace291de74b1cb8e3992923c5fbc935c9a8e44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
