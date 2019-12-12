@@ -22,6 +22,30 @@
       "revId": "3e59d61109bf8917c2d10954af403ee8a3d63b16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1594fb53_fffce8f5",
+        "filename": "core/java/android/os/SystemProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1291338
+      },
+      "writtenOn": "2019-12-12T00:51:32Z",
+      "side": 1,
+      "message": "I think listing all prefixes is clearer. And we also have \"ro.boot\" and \"ro.hardware\".",
+      "parentUuid": "85e08526_80279ee8",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 6
+      },
+      "revId": "3e59d61109bf8917c2d10954af403ee8a3d63b16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
