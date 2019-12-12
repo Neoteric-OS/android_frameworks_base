@@ -513,6 +513,10 @@ MissingNullability: android.icu.util.VersionInfo#UNICODE_12_1:
     
 
 
+NotCloseable: android.util.CloseGuard:
+    Classes that release resources (close()) should implement AutoClosable and CloseGuard: class android.util.CloseGuard
+
+
 RequiresPermission: android.accounts.AccountManager#getAccountsByTypeAndFeatures(String, String[], android.accounts.AccountManagerCallback<android.accounts.Account[]>, android.os.Handler):
     
 RequiresPermission: android.accounts.AccountManager#hasFeatures(android.accounts.Account, String[], android.accounts.AccountManagerCallback<java.lang.Boolean>, android.os.Handler):

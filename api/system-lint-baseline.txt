@@ -1,4 +1,18 @@
 // Baseline format: 1.0
+ArrayReturn: android.bluetooth.BluetoothCodecStatus#BluetoothCodecStatus(android.bluetooth.BluetoothCodecConfig, android.bluetooth.BluetoothCodecConfig[], android.bluetooth.BluetoothCodecConfig[]) parameter #1:
+    Method parameter should be Collection<BluetoothCodecConfig> (or subclass) instead of raw array; was `android.bluetooth.BluetoothCodecConfig[]`
+ArrayReturn: android.bluetooth.BluetoothCodecStatus#BluetoothCodecStatus(android.bluetooth.BluetoothCodecConfig, android.bluetooth.BluetoothCodecConfig[], android.bluetooth.BluetoothCodecConfig[]) parameter #2:
+    Method parameter should be Collection<BluetoothCodecConfig> (or subclass) instead of raw array; was `android.bluetooth.BluetoothCodecConfig[]`
+ArrayReturn: android.bluetooth.BluetoothCodecStatus#getCodecsLocalCapabilities():
+    Method should return Collection<BluetoothCodecConfig> (or subclass) instead of raw array; was `android.bluetooth.BluetoothCodecConfig[]`
+ArrayReturn: android.bluetooth.BluetoothCodecStatus#getCodecsSelectableCapabilities():
+    Method should return Collection<BluetoothCodecConfig> (or subclass) instead of raw array; was `android.bluetooth.BluetoothCodecConfig[]`
+ArrayReturn: android.bluetooth.BluetoothUuid#containsAnyUuid(android.os.ParcelUuid[], android.os.ParcelUuid[]) parameter #0:
+    Method parameter should be Collection<ParcelUuid> (or subclass) instead of raw array; was `android.os.ParcelUuid[]`
+ArrayReturn: android.bluetooth.BluetoothUuid#containsAnyUuid(android.os.ParcelUuid[], android.os.ParcelUuid[]) parameter #1:
+    Method parameter should be Collection<ParcelUuid> (or subclass) instead of raw array; was `android.os.ParcelUuid[]`
+ArrayReturn: android.net.NetworkScoreManager#requestScores(android.net.NetworkKey[]) parameter #0:
+    Method parameter should be Collection<NetworkKey> (or subclass) instead of raw array; was `android.net.NetworkKey[]`
 ArrayReturn: android.view.contentcapture.ViewNode#getAutofillOptions():
     
 
@@ -13,8 +27,16 @@ GenericException: android.service.autofill.augmented.FillWindow#finalize():
     
 
 
+IntentBuilderName: android.content.Context#registerReceiverForAllUsers(android.content.BroadcastReceiver, android.content.IntentFilter, String, android.os.Handler):
+    Methods creating an Intent should be named `create<Foo>Intent()`, was `registerReceiverForAllUsers`
+
+
 KotlinKeyword: android.app.Notification#when:
     
+
+
+KotlinOperator: android.telephony.CbGeoUtils.Geometry#contains(android.telephony.CbGeoUtils.LatLng):
+    Method can be invoked as a "in" operator from Kotlin: `contains` (this is usually desirable; just make sure it makes sense for this type of object)
 
 
 MissingNullability: android.media.soundtrigger.SoundTriggerDetectionService#onUnbind(android.content.Intent) parameter #0:
@@ -52,13 +74,13 @@ MissingNullability: android.service.notification.NotificationAssistantService#at
 MissingNullability: android.telecom.CallScreeningService.CallResponse.Builder#setShouldScreenCallFurther(boolean):
     
 MissingNullability: android.telephony.CellBroadcastService#onBind(android.content.Intent):
-    Missing nullability on method `onBind` return
+    
 MissingNullability: android.telephony.CellBroadcastService#onBind(android.content.Intent) parameter #0:
-    Missing nullability on parameter `intent` in method `onBind`
+    
 MissingNullability: android.telephony.CellBroadcastService#onCdmaCellBroadcastSms(int, byte[]) parameter #1:
-    Missing nullability on parameter `message` in method `onCdmaCellBroadcastSms`
+    
 MissingNullability: android.telephony.CellBroadcastService#onGsmCellBroadcastSms(int, byte[]) parameter #1:
-    Missing nullability on parameter `message` in method `onGsmCellBroadcastSms`
+    
 MissingNullability: android.telephony.NetworkService#onUnbind(android.content.Intent) parameter #0:
     
 MissingNullability: android.telephony.SmsCbCmasInfo#toString():
@@ -137,6 +159,10 @@ NoClone: android.service.contentcapture.ContentCaptureService#dump(java.io.FileD
     
 
 
+NotCloseable: android.bluetooth.BluetoothPan:
+    Classes that release resources (finalize()) should implement AutoClosable and CloseGuard: class android.bluetooth.BluetoothPan
+
+
 ProtectedMember: android.printservice.recommendation.RecommendationService#attachBaseContext(android.content.Context):
     
 ProtectedMember: android.service.contentcapture.ContentCaptureService#dump(java.io.FileDescriptor, java.io.PrintWriter, String[]):
@@ -144,15 +170,17 @@ ProtectedMember: android.service.contentcapture.ContentCaptureService#dump(java.
 ProtectedMember: android.service.notification.NotificationAssistantService#attachBaseContext(android.content.Context):
     
 
-PublicTypedef: android.content.integrity.AtomicFormula.Key: Don't expose @IntDef: @Key must be hidden.
 
-PublicTypedef: android.content.integrity.AtomicFormula.Operator: Don't expose @IntDef: @Operator must be hidden.
-
-PublicTypedef: android.content.integrity.CompoundFormula.Connector: Don't expose @IntDef: @Connector must be hidden.
-
-PublicTypedef: android.content.integrity.Formula.Tag: Don't expose @IntDef: @Tag must be hidden.
-
-PublicTypedef: android.content.integrity.Rule.Effect: Don't expose @IntDef: @Effect must be hidden.
+PublicTypedef: android.content.integrity.AtomicFormula.Key:
+    
+PublicTypedef: android.content.integrity.AtomicFormula.Operator:
+    
+PublicTypedef: android.content.integrity.CompoundFormula.Connector:
+    
+PublicTypedef: android.content.integrity.Formula.Tag:
+    
+PublicTypedef: android.content.integrity.Rule.Effect:
+    
 
 
 SamShouldBeLast: android.accounts.AccountManager#addAccount(String, String, String[], android.os.Bundle, android.app.Activity, android.accounts.AccountManagerCallback<android.os.Bundle>, android.os.Handler):
@@ -201,6 +229,8 @@ SamShouldBeLast: android.app.AlarmManager#setWindow(int, long, long, String, and
     
 SamShouldBeLast: android.app.WallpaperInfo#dump(android.util.Printer, String):
     
+SamShouldBeLast: android.app.WallpaperManager#addOnColorsChangedListener(android.app.WallpaperManager.OnColorsChangedListener, android.os.Handler):
+    SAM-compatible parameters (such as parameter 1, "listener", in android.app.WallpaperManager.addOnColorsChangedListener) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
 SamShouldBeLast: android.app.admin.DevicePolicyManager#installSystemUpdate(android.content.ComponentName, android.net.Uri, java.util.concurrent.Executor, android.app.admin.DevicePolicyManager.InstallSystemUpdateCallback):
     
 SamShouldBeLast: android.content.Context#bindIsolatedService(android.content.Intent, int, String, java.util.concurrent.Executor, android.content.ServiceConnection):
@@ -342,7 +372,7 @@ ServiceName: android.Manifest.permission#BIND_ATTENTION_SERVICE:
 ServiceName: android.Manifest.permission#BIND_AUGMENTED_AUTOFILL_SERVICE:
     
 ServiceName: android.Manifest.permission#BIND_CELL_BROADCAST_SERVICE:
-    Inconsistent service value; expected `BIND_CELL_BROADCAST`, was `android.permission.BIND_CELL_BROADCAST_SERVICE`
+    
 ServiceName: android.Manifest.permission#BIND_CONTENT_CAPTURE_SERVICE:
     
 ServiceName: android.Manifest.permission#BIND_CONTENT_SUGGESTIONS_SERVICE:
@@ -379,3 +409,7 @@ ServiceName: android.Manifest.permission#PROVIDE_RESOLVER_RANKER_SERVICE:
     
 ServiceName: android.Manifest.permission#REQUEST_NOTIFICATION_ASSISTANT_SERVICE:
     
+
+
+UserHandleName: android.telephony.CellBroadcastIntents#sendOrderedBroadcastForBackgroundReceivers(android.content.Context, android.os.UserHandle, android.content.Intent, String, String, android.content.BroadcastReceiver, android.os.Handler, int, String, android.os.Bundle):
+    Method taking UserHandle should be named `doFooAsUser` or `queryFooForUser`, was `sendOrderedBroadcastForBackgroundReceivers`
