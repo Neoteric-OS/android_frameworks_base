@@ -46,6 +46,30 @@
       "revId": "349c8f5e4ebdb1e533d4d6cf4b707a6314277d07",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70a94ec_5cf21e1d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6354,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T07:30:04Z",
+      "side": 1,
+      "message": "I believe you are under the impression that we keep this object across rematches. It\u0027s not the case. It may help you to consider why this patch is fixing the issue described in the comment that I\u0027m removing below.\n\nThe relevant case is the following : a network is satisfying a request, and there is another network with a lower score that COULD satisfy this request.\nExample : default request, WiFi satisfies it, Mobile is connected.\n\nNow the satisfier stops satisfying the request (for example, WiFi loses the TRUSTED capability). Consider what happens in the rematch loop. We process networks in highest-to-lowest score order, so we\u0027ll process WiFi before processing Mobile.\nWhen WiFi is processed, it loses this request. Later, when Mobile is processed, it gains this request.\n\nBefore this change, reassignment will contain two items :\n1 defaultRequest : wifi → null\n2 defaultRequest : null → mobile\nIn other words, the code is changing its mind ; it says \"oh, wifi can\u0027t do this, I don\u0027t have a network any more\" but later says \"oh wait, mobile can do this\". But really what we SHOULD do is just have \"defaultRequest : wifi → mobile\". It\u0027s just not possible to know that yet when we process the WiFi network.\n\nThis is why callCallbackForRequest in l.6537 will send CALLBACK_LOST for WiFi, when we process \"defaultRequest : wifi → null\". But that\u0027s incorrect ! Really we should send CALLBACK_AVAILABLE for Mobile instead. We do that later, when we process the other change that goes from null to mobile. That\u0027s what the comment below describes.\n\n\nWith this patch, when addRequestReassignment is called, I check if there was already a reassignment for this request. If there is, I make sure that the old destination is the new origin.\nRequest : A → B first, then B → C.\nIf that\u0027s the case, then I replace A → B with A → C, because going to B was just an intempestive intermediate state that shouldn\u0027t be visible to the outside world.\n\nSo with this patch, in the example above, I actually make the change :\ndefautRequest : wifi → mobile\n\nThis is why it fixes this bug, and you can see that in the test.\n\nNow the check and the exception is only assurance for me that the code is indeed running in the order I expect it to. I think it is an invariant of the current code that addRequestReassignment is never called with an unrelated network (e.g. A → B then C → D should never happen for the same request). The exception is just a way for me to make sure this invariant is actually respected.\n\n\nDoes this clarify things ? You can see that later simplifications of the code will actually let me get completely rid of that. When we switch from a network-major loop to a request-major loop, this can\u0027t happen any more because we process each request once.\n\nAs with your initial comment, I think you got wrong that oldChange.mNewNetwork \u003d\u003d newChange.mOldNetwork, but I add it with oldChange.mOldNetwork (if I called the other method, I\u0027d get newChange.mOldNetwork, that\u0027s not the one I need ; in the A → B then B → C case, I\u0027d find myselv with B → C instead of A → C).",
+      "parentUuid": "124f0155_1ee97c4a",
+      "range": {
+        "startLine": 6353,
+        "startChar": 12,
+        "endLine": 6354,
+        "endChar": 70
+      },
+      "revId": "349c8f5e4ebdb1e533d4d6cf4b707a6314277d07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
