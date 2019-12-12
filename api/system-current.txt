@@ -6802,6 +6802,10 @@ package android.security.keystore {
     ctor public DeviceIdAttestationException(@Nullable String, @Nullable Throwable);
   }
 
+  public class KeyStore {
+
+  }
+
 }
 
 package android.security.keystore.recovery {

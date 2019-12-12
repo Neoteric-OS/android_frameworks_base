@@ -288,7 +288,7 @@ public class AndroidKeyStoreProvider extends Provider {
     }
 
     @NonNull
-    private static KeyPair loadAndroidKeyStoreKeyPairFromKeystore(
+    public static KeyPair loadAndroidKeyStoreKeyPairFromKeystore(
             @NonNull KeyStore keyStore, @NonNull String privateKeyAlias, int uid,
             @NonNull KeyCharacteristics keyCharacteristics)
             throws UnrecoverableKeyException {

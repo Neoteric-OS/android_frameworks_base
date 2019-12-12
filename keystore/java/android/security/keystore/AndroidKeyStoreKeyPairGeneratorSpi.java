@@ -18,10 +18,8 @@ package android.security.keystore;
 
 import android.annotation.Nullable;
 import android.security.Credentials;
-import android.security.GateKeeper;
 import android.security.KeyPairGeneratorSpec;
 import android.security.KeyStore;
-import android.security.KeyStoreException;
 import android.security.keymaster.KeyCharacteristics;
 import android.security.keymaster.KeymasterArguments;
 import android.security.keymaster.KeymasterCertificateChain;
@@ -467,9 +465,9 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
         final String privateKeyAlias = Credentials.USER_PRIVATE_KEY + mEntryAlias;
         boolean success = false;
         try {
-            generateKeystoreKeyPair(
+            KeyCharacteristics keyCharacteristics = generateKeystoreKeyPair(
                     privateKeyAlias, constructKeyGenerationArguments(), additionalEntropy, flags);
-            KeyPair keyPair = loadKeystoreKeyPair(privateKeyAlias);
+            KeyPair keyPair = loadKeystoreKeyPair(privateKeyAlias, keyCharacteristics);
 
             storeCertificateChain(flags, createCertificateChain(privateKeyAlias, keyPair));
 
@@ -501,11 +499,12 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
         return Collections.singleton(generateSelfSignedCertificateBytes(keyPair));
     }
 
-    private void generateKeystoreKeyPair(final String privateKeyAlias, KeymasterArguments args,
-            byte[] additionalEntropy, final int flags) throws ProviderException {
-        KeyCharacteristics resultingKeyCharacteristics = new KeyCharacteristics();
+    private KeyCharacteristics generateKeystoreKeyPair(final String privateKeyAlias,
+            KeymasterArguments args, byte[] additionalEntropy, final int flags)
+            throws ProviderException {
+        KeyCharacteristics keyCharacteristicsOut = new KeyCharacteristics();
         int errorCode = mKeyStore.generateKey(privateKeyAlias, args, additionalEntropy,
-                mEntryUid, flags, resultingKeyCharacteristics);
+                mEntryUid, flags, keyCharacteristicsOut);
         if (errorCode != KeyStore.NO_ERROR) {
             if (errorCode == KeyStore.HARDWARE_TYPE_UNAVAILABLE) {
                 throw new StrongBoxUnavailableException("Failed to generate key pair");
@@ -514,19 +513,22 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
                         "Failed to generate key pair", KeyStore.getKeyStoreException(errorCode));
             }
         }
+        return keyCharacteristicsOut;
     }
 
-    private KeyPair loadKeystoreKeyPair(final String privateKeyAlias) throws ProviderException {
+    private KeyPair loadKeystoreKeyPair(final String privateKeyAlias,
+            KeyCharacteristics keyCharacteristics) throws ProviderException {
         try {
-            KeyPair result  = AndroidKeyStoreProvider.loadAndroidKeyStoreKeyPairFromKeystore(
-                    mKeyStore, privateKeyAlias, mEntryUid);
+            KeyPair result  = AndroidKeyStoreProvider
+                    .loadAndroidKeyStoreKeyPairFromKeystore(
+                    mKeyStore, privateKeyAlias, mEntryUid, keyCharacteristics);
             if (!mJcaKeyAlgorithm.equalsIgnoreCase(result.getPrivate().getAlgorithm())) {
                 throw new ProviderException(
                         "Generated key pair algorithm does not match requested algorithm: "
                                 + result.getPrivate().getAlgorithm() + " vs " + mJcaKeyAlgorithm);
             }
             return result;
-        } catch (UnrecoverableKeyException | KeyPermanentlyInvalidatedException e) {
+        } catch (UnrecoverableKeyException e) {
             throw new ProviderException("Failed to load generated key pair from keystore", e);
         }
     }

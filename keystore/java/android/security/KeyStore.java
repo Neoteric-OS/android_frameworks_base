@@ -70,6 +70,7 @@ import sun.security.x509.AlgorithmId;
  * assumes that private and secret key bytes are available and would
  * preclude the use of hardware crypto.
  */
+@SystemApi
 public class KeyStore {
     private static final String TAG = "KeyStore";
 
