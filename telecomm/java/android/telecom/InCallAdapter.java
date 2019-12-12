@@ -89,6 +89,34 @@ public final class InCallAdapter {
     }
 
     /**
+     * Instructs Telecom to transfer the specified call.
+     *
+     * @param callId The identifier of the call to transfer.
+     * @param targetNumber The address to transfer to.
+     * @param isConfirmationRequired if {@code true} it will initiate ASSURED transfer,
+     * if {@code false}, it will initiate BLIND transfer.
+     */
+    public void transferCall(String callId, Uri targetNumber, boolean isConfirmationRequired) {
+        try {
+            mAdapter.transferCall(callId, targetNumber, isConfirmationRequired);
+        } catch (RemoteException e) {
+        }
+    }
+
+    /**
+     * Instructs Telecom to transfer the specified call to another ongoing call.
+     *
+     * @param callId The identifier of the call to transfer.
+     * @param otherCallId The identifier of the other call to which this will be transferred.
+     */
+    public void transferCall(String callId, String otherCallId) {
+        try {
+            mAdapter.consultativeTransfer(callId, otherCallId);
+        } catch (RemoteException e) {
+        }
+    }
+
+    /**
      * Instructs Telecom to disconnect the specified call.
      *
      * @param callId The identifier of the call to disconnect.

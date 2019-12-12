@@ -196,6 +196,28 @@ public class ImsCallSessionImplBase extends IImsCallSession.Stub {
     }
 
     /**
+     * Transfer an established call to given number
+     *
+     * @param number number to transfer the call
+     * @param isConfirmationRequired if {@code True}, indicates Assured transfer,
+     * if {@code False} it indicates Blind transfer.
+     */
+    @Override
+    public void transfer(String number, boolean isConfirmationRequired) {
+    }
+
+    /**
+     * Transfer an established call to given number
+     *
+     * @param number number to transfer the call
+     * @param isConfirmationRequired if {@code True}, indicates Assured transfer,
+     * if {@code False} it indicates Blind transfer.
+     */
+    @Override
+    public void consultativeTransfer(IImsCallSession transferToSession) {
+    }
+
+    /**
      * Rejects an incoming call or session update.
      *
      * @param reason reason code to reject an incoming call, defined in {@link ImsReasonInfo}.
@@ -600,6 +622,16 @@ public class ImsCallSessionImplBase extends IImsCallSession.Stub {
         public void callSessionRttAudioIndicatorChanged(ImsStreamMediaProfile profile)
                 throws RemoteException {
             mNewListener.callSessionRttAudioIndicatorChanged(profile);
+        }
+
+        @Override
+        public void callSessionTransferred() throws RemoteException {
+            mNewListener.callSessionTransferred();
+        }
+
+        @Override
+        public void callSessionTransferFailed(ImsReasonInfo reasonInfo) throws RemoteException {
+            mNewListener.callSessionTransferFailed(reasonInfo);
         }
 
         @Override

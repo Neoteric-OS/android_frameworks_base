@@ -183,6 +183,18 @@ public class ImsCallSessionImplBase implements AutoCloseable {
         }
 
         @Override
+        public void transfer(String number, boolean isConfirmationRequired) {
+            ImsCallSessionImplBase.this.transfer(number, isConfirmationRequired);
+        }
+
+        @Override
+        public void consultativeTransfer(IImsCallSession transferToSession) {
+            ImsCallSessionImplBase otherSession = new ImsCallSessionImplBase();
+            otherSession.setServiceImpl(transferToSession);
+            ImsCallSessionImplBase.this.consultativeTransfer(otherSession);
+        }
+
+        @Override
         public void terminate(int reason) {
             ImsCallSessionImplBase.this.terminate(reason);
         }
@@ -413,6 +425,25 @@ public class ImsCallSessionImplBase implements AutoCloseable {
      * {@link ImsCallSession.Listener#callSessionStartFailed}
      */
     public void reject(int reason) {
+    }
+
+    /**
+     * Transfer an established call to given number
+     *
+     * @param number number to transfer the call
+     * @param isConfirmationRequired if {@code True}, indicates Assured transfer,
+     * if {@code False} it indicates Blind transfer.
+     */
+    public void transfer(String number, boolean isConfirmationRequired) {
+    }
+
+    /**
+     * Transfer an established call to another call session
+     *
+     * @param otherSession The other ImsCallSession to transfer the ongoing session to.
+     */
+    public void consultativeTransfer(ImsCallSessionImplBase otherSession) {
+        //TODO... add logs if you are getting the correct otherSession...
     }
 
     /**

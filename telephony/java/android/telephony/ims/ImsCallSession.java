@@ -453,6 +453,17 @@ public class ImsCallSession {
         }
 
         /**
+         * Received response for call transfer request.
+         */
+        public void callSessionTransferred(ImsCallSession session) {
+            // no-op
+        }
+
+        public void callSessionTransferFailed(ImsCallSession session, ImsReasonInfo reasonInfo) {
+            // no-op
+        }
+
+        /**
          * Called when the IMS service reports a change to the call quality.
          */
         public void callQualityChanged(CallQuality callQuality) {
@@ -792,6 +803,41 @@ public class ImsCallSession {
 
         try {
             miSession.reject(reason);
+        } catch (RemoteException e) {
+        }
+    }
+
+    /**
+     * Transfers an ongoing call.
+     *
+     * @param number number to be transferred to.
+     * @param isConfirmationRequired indicates blind or assured transfer.
+     */
+    public void transfer(String number, boolean isConfirmationRequired) {
+        if (mClosed) {
+            return;
+        }
+
+        try {
+            miSession.transfer(number, isConfirmationRequired);
+        } catch (RemoteException e) {
+        }
+    }
+
+    /**
+     * Transfers a call to another ongoing call.
+     *
+     * @param transferToSession the other ImsCallSession to which this session will be transferred.
+     */
+    public void consultativeTransfer(ImsCallSession transferToSession) {
+        if (mClosed) {
+            return;
+        }
+
+        try {
+            if (transferToSession != null) {
+                miSession.consultativeTransfer(transferToSession.getSession());
+            }
         } catch (RemoteException e) {
         }
     }
@@ -1420,6 +1466,20 @@ public class ImsCallSession {
         public void callSessionRttAudioIndicatorChanged(ImsStreamMediaProfile profile) {
             if (mListener != null) {
                 mListener.callSessionRttAudioIndicatorChanged(profile);
+            }
+        }
+
+        @Override
+        public void callSessionTransferred() {
+            if (mListener != null) {
+                mListener.callSessionTransferred(ImsCallSession.this);
+            }
+        }
+
+        @Override
+        public void callSessionTransferFailed(ImsReasonInfo reasonInfo) {
+            if (mListener != null) {
+                mListener.callSessionTransferFailed(ImsCallSession.this, reasonInfo);
             }
         }
 

@@ -1,5 +1,13 @@
 // Baseline format: 1.0
+ArrayReturn: android.net.NetworkScoreManager#requestScores(android.net.NetworkKey[]) parameter #0:
+    
 ArrayReturn: android.view.contentcapture.ViewNode#getAutofillOptions():
+    
+
+
+ExecutorRegistration: android.net.ipsec.ike.IkeSession#closeChildSession(android.net.ipsec.ike.ChildSessionCallback):
+    
+ExecutorRegistration: android.net.ipsec.ike.IkeSession#openChildSession(android.net.ipsec.ike.ChildSessionOptions, android.net.ipsec.ike.ChildSessionCallback):
     
 
 
@@ -13,7 +21,15 @@ GenericException: android.service.autofill.augmented.FillWindow#finalize():
     
 
 
+IntentBuilderName: android.content.Context#registerReceiverForAllUsers(android.content.BroadcastReceiver, android.content.IntentFilter, String, android.os.Handler):
+    
+
+
 KotlinKeyword: android.app.Notification#when:
+    
+
+
+KotlinOperator: android.telephony.CbGeoUtils.Geometry#contains(android.telephony.CbGeoUtils.LatLng):
     
 
 
@@ -52,13 +68,13 @@ MissingNullability: android.service.notification.NotificationAssistantService#at
 MissingNullability: android.telecom.CallScreeningService.CallResponse.Builder#setShouldScreenCallFurther(boolean):
     
 MissingNullability: android.telephony.CellBroadcastService#onBind(android.content.Intent):
-    Missing nullability on method `onBind` return
+    
 MissingNullability: android.telephony.CellBroadcastService#onBind(android.content.Intent) parameter #0:
-    Missing nullability on parameter `intent` in method `onBind`
+    
 MissingNullability: android.telephony.CellBroadcastService#onCdmaCellBroadcastSms(int, byte[]) parameter #1:
-    Missing nullability on parameter `message` in method `onCdmaCellBroadcastSms`
+    
 MissingNullability: android.telephony.CellBroadcastService#onGsmCellBroadcastSms(int, byte[]) parameter #1:
-    Missing nullability on parameter `message` in method `onGsmCellBroadcastSms`
+    
 MissingNullability: android.telephony.NetworkService#onUnbind(android.content.Intent) parameter #0:
     
 MissingNullability: android.telephony.SmsCbCmasInfo#toString():
@@ -90,6 +106,12 @@ MissingNullability: android.telephony.cdma.CdmaSmsCbProgramData#toString():
 MissingNullability: android.telephony.cdma.CdmaSmsCbProgramData#writeToParcel(android.os.Parcel, int) parameter #0:
     
 MissingNullability: android.telephony.data.DataService#onUnbind(android.content.Intent) parameter #0:
+    
+MissingNullability: android.telephony.ims.stub.ImsCallSessionImplBase#consultativeTransfer(android.telephony.ims.stub.ImsCallSessionImplBase) parameter #0:
+    Missing nullability on parameter `otherSession` in method `consultativeTransfer`
+MissingNullability: android.telephony.ims.stub.ImsCallSessionImplBase#consultativeTransfer(com.android.ims.internal.IImsCallSession) parameter #0:
+    
+MissingNullability: android.telephony.ims.stub.ImsCallSessionImplBase#transfer(String, boolean) parameter #0:
     
 MissingNullability: android.telephony.ims.stub.ImsSmsImplBase#onSmsStatusReportReceived(int, String, byte[]) parameter #1:
     
@@ -137,11 +159,19 @@ NoClone: android.service.contentcapture.ContentCaptureService#dump(java.io.FileD
     
 
 
+NotCloseable: android.bluetooth.BluetoothPan:
+    
+
+
 ProtectedMember: android.printservice.recommendation.RecommendationService#attachBaseContext(android.content.Context):
     
 ProtectedMember: android.service.contentcapture.ContentCaptureService#dump(java.io.FileDescriptor, java.io.PrintWriter, String[]):
     
 ProtectedMember: android.service.notification.NotificationAssistantService#attachBaseContext(android.content.Context):
+    
+
+
+ReferencesHidden: android.telephony.ims.stub.ImsCallSessionImplBase#consultativeTransfer(com.android.ims.internal.IImsCallSession) parameter #0:
     
 
 
@@ -190,6 +220,8 @@ SamShouldBeLast: android.app.AlarmManager#setExact(int, long, String, android.ap
 SamShouldBeLast: android.app.AlarmManager#setWindow(int, long, long, String, android.app.AlarmManager.OnAlarmListener, android.os.Handler):
     
 SamShouldBeLast: android.app.WallpaperInfo#dump(android.util.Printer, String):
+    
+SamShouldBeLast: android.app.WallpaperManager#addOnColorsChangedListener(android.app.WallpaperManager.OnColorsChangedListener, android.os.Handler):
     
 SamShouldBeLast: android.app.admin.DevicePolicyManager#installSystemUpdate(android.content.ComponentName, android.net.Uri, java.util.concurrent.Executor, android.app.admin.DevicePolicyManager.InstallSystemUpdateCallback):
     
@@ -332,7 +364,7 @@ ServiceName: android.Manifest.permission#BIND_ATTENTION_SERVICE:
 ServiceName: android.Manifest.permission#BIND_AUGMENTED_AUTOFILL_SERVICE:
     
 ServiceName: android.Manifest.permission#BIND_CELL_BROADCAST_SERVICE:
-    Inconsistent service value; expected `BIND_CELL_BROADCAST`, was `android.permission.BIND_CELL_BROADCAST_SERVICE`
+    
 ServiceName: android.Manifest.permission#BIND_CONTENT_CAPTURE_SERVICE:
     
 ServiceName: android.Manifest.permission#BIND_CONTENT_SUGGESTIONS_SERVICE:
@@ -368,4 +400,14 @@ ServiceName: android.Manifest.permission#BIND_TV_REMOTE_SERVICE:
 ServiceName: android.Manifest.permission#PROVIDE_RESOLVER_RANKER_SERVICE:
     
 ServiceName: android.Manifest.permission#REQUEST_NOTIFICATION_ASSISTANT_SERVICE:
+    
+
+
+UserHandleName: android.net.ipsec.ike.ChildSessionOptions:
+    
+UserHandleName: android.net.ipsec.ike.IkeSessionOptions:
+    
+UserHandleName: android.net.ipsec.ike.TransportModeChildSessionOptions:
+    
+UserHandleName: android.net.ipsec.ike.TunnelModeChildSessionOptions:
     

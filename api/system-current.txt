@@ -9899,6 +9899,7 @@ package android.telephony.ims.stub {
     ctor public ImsCallSessionImplBase();
     method public void accept(int, android.telephony.ims.ImsStreamMediaProfile);
     method public void close();
+    method public void consultativeTransfer(android.telephony.ims.stub.ImsCallSessionImplBase);
     method public void deflect(String);
     method public void extendToConference(String[]);
     method public String getCallId();
@@ -9928,6 +9929,7 @@ package android.telephony.ims.stub {
     method public void startDtmf(char);
     method public void stopDtmf();
     method public void terminate(int);
+    method public void transfer(String, boolean);
     method public void update(int, android.telephony.ims.ImsStreamMediaProfile);
     field public static final int USSD_MODE_NOTIFY = 0; // 0x0
     field public static final int USSD_MODE_REQUEST = 1; // 0x1

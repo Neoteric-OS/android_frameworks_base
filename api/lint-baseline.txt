@@ -485,6 +485,10 @@ HiddenSuperclass: android.util.StatsLog:
     
 
 
+InvalidSyntax: PsiErrorElement:Identifier expected:
+    Syntax error: `Identifier expected`
+
+
 MissingNullability: android.icu.lang.UCharacter.UnicodeBlock#EGYPTIAN_HIEROGLYPH_FORMAT_CONTROLS:
     
 MissingNullability: android.icu.lang.UCharacter.UnicodeBlock#ELYMAIC:
@@ -510,6 +514,14 @@ MissingNullability: android.icu.text.DateTimePatternGenerator#getFieldDisplayNam
 MissingNullability: android.icu.util.VersionInfo#UNICODE_12_0:
     
 MissingNullability: android.icu.util.VersionInfo#UNICODE_12_1:
+    
+MissingNullability: android.telecom.Call#transfer(android.net.Uri, boolean) parameter #0:
+    
+MissingNullability: android.telecom.Call#transfer(android.telecom.Call) parameter #0:
+    
+MissingNullability: android.telecom.Connection#onConsultativeTransfer(android.telecom.Connection) parameter #0:
+    
+MissingNullability: android.telecom.Connection#onTransfer(android.net.Uri, boolean) parameter #0:
     
 
 

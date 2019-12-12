@@ -43058,6 +43058,8 @@ package android.telecom {
     method public void stopDtmfTone();
     method public void stopRtt();
     method public void swapConference();
+    method public void transfer(android.net.Uri, boolean);
+    method public void transfer(android.telecom.Call);
     method public void unhold();
     method public void unregisterCallback(android.telecom.Call.Callback);
     field @Deprecated public static final String AVAILABLE_PHONE_ACCOUNTS = "selectPhoneAccountAccounts";
@@ -43145,6 +43147,8 @@ package android.telecom {
     field public static final int CAPABILITY_SUPPORT_DEFLECT = 16777216; // 0x1000000
     field public static final int CAPABILITY_SUPPORT_HOLD = 2; // 0x2
     field public static final int CAPABILITY_SWAP_CONFERENCE = 8; // 0x8
+    field public static final int CAPABILITY_TRANSFER = 33554432; // 0x2000000
+    field public static final int CAPABILITY_TRANSFER_CONSULTATIVE = 67108864; // 0x4000000
     field public static final int DIRECTION_INCOMING = 0; // 0x0
     field public static final int DIRECTION_OUTGOING = 1; // 0x1
     field public static final int DIRECTION_UNKNOWN = -1; // 0xffffffff
@@ -43312,6 +43316,7 @@ package android.telecom {
     method public void onAnswer();
     method public void onCallAudioStateChanged(android.telecom.CallAudioState);
     method public void onCallEvent(String, android.os.Bundle);
+    method public void onConsultativeTransfer(android.telecom.Connection);
     method public void onDeflect(android.net.Uri);
     method public void onDisconnect();
     method public void onExtrasChanged(android.os.Bundle);
@@ -43329,6 +43334,7 @@ package android.telecom {
     method public void onStateChanged(int);
     method public void onStopDtmfTone();
     method public void onStopRtt();
+    method public void onTransfer(android.net.Uri, boolean);
     method public void onUnhold();
     method public static String propertiesToString(int);
     method public final void putExtras(@NonNull android.os.Bundle);
@@ -43385,6 +43391,8 @@ package android.telecom {
     field public static final int CAPABILITY_SUPPORT_DEFLECT = 33554432; // 0x2000000
     field public static final int CAPABILITY_SUPPORT_HOLD = 2; // 0x2
     field public static final int CAPABILITY_SWAP_CONFERENCE = 8; // 0x8
+    field public static final int CAPABILITY_TRANSFER = 67108864; // 0x4000000
+    field public static final int CAPABILITY_TRANSFER_CONSULTATIVE = 134217728; // 0x8000000
     field public static final String EVENT_CALL_HOLD_FAILED = "android.telecom.event.CALL_HOLD_FAILED";
     field public static final String EVENT_CALL_MERGE_FAILED = "android.telecom.event.CALL_MERGE_FAILED";
     field public static final String EVENT_CALL_PULL_FAILED = "android.telecom.event.CALL_PULL_FAILED";
