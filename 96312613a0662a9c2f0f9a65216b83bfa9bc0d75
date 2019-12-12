@@ -46,6 +46,30 @@
       "revId": "96312613a0662a9c2f0f9a65216b83bfa9bc0d75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82553755_45d4e522",
+        "filename": "core/java/android/util/CloseGuard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2019-12-12T06:46:48Z",
+      "side": 1,
+      "message": "Thanks! I think that\u0027s a sufficient solution for this problem.",
+      "parentUuid": "9a1629ea_4c163282",
+      "range": {
+        "startLine": 76,
+        "startChar": 1,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "96312613a0662a9c2f0f9a65216b83bfa9bc0d75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
