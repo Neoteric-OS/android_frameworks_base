@@ -65,7 +65,7 @@ public final class BugreportManager {
     public abstract static class BugreportCallback {
         /** @hide */
         @Retention(RetentionPolicy.SOURCE)
-        @IntDef(prefix = { "BUGREPORT_ERROR_" }, value = {
+        @IntDef(prefix = {"BUGREPORT_ERROR_"}, value = {
                 BUGREPORT_ERROR_INVALID_INPUT,
                 BUGREPORT_ERROR_RUNTIME,
                 BUGREPORT_ERROR_USER_DENIED_CONSENT,
@@ -185,7 +185,7 @@ public final class BugreportManager {
     @RequiresPermission(android.Manifest.permission.DUMP)
     public void cancelBugreport() {
         try {
-            mBinder.cancelBugreport();
+            mBinder.cancelBugreport(mContext.getOpPackageName());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

@@ -16,10 +16,13 @@
 
 package com.android.server.os;
 
+import android.Manifest;
 import android.annotation.RequiresPermission;
 import android.app.ActivityManager;
 import android.app.AppOpsManager;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.os.Binder;
 import android.os.BugreportParams;
@@ -30,7 +33,9 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+import android.os.UserHandle;
 import android.os.UserManager;
+import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 import android.util.Slog;
 
@@ -53,11 +58,13 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
     private final Object mLock = new Object();
     private final Context mContext;
     private final AppOpsManager mAppOps;
+    private final TelephonyManager mTelephonyManager;
     private final ArraySet<String> mBugreportWhitelistedPackages;
 
     BugreportManagerServiceImpl(Context context) {
         mContext = context;
         mAppOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+        mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         mBugreportWhitelistedPackages =
                 SystemConfig.getInstance().getBugreportWhitelistedPackages();
     }
@@ -74,11 +81,14 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
     public void startBugreport(int callingUidUnused, String callingPackage,
             FileDescriptor bugreportFd, FileDescriptor screenshotFd,
             int bugreportMode, IDumpstateListener listener) {
-        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.DUMP, "startBugreport");
         Preconditions.checkNotNull(callingPackage);
         Preconditions.checkNotNull(bugreportFd);
         Preconditions.checkNotNull(listener);
         validateBugreportMode(bugreportMode);
+
+        int callingUid = Binder.getCallingUid();
+        enforcePermission(callingPackage, callingUid, bugreportMode
+                == BugreportParams.BUGREPORT_MODE_TELEPHONY /* checkCarrierPrivileges */);
         final long identity = Binder.clearCallingIdentity();
         try {
             ensureIsPrimaryUser();
@@ -86,13 +96,6 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
             Binder.restoreCallingIdentity(identity);
         }
 
-        int callingUid = Binder.getCallingUid();
-        mAppOps.checkPackage(callingUid, callingPackage);
-
-        if (!mBugreportWhitelistedPackages.contains(callingPackage)) {
-            throw new SecurityException(
-                    callingPackage + " is not whitelisted to use Bugreport API");
-        }
         synchronized (mLock) {
             startBugreportLocked(callingUid, callingPackage, bugreportFd, screenshotFd,
                     bugreportMode, listener);
@@ -101,8 +104,11 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
 
     @Override
     @RequiresPermission(android.Manifest.permission.DUMP)
-    public void cancelBugreport() {
-        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.DUMP, "startBugreport");
+    public void cancelBugreport(String callingPackage) {
+        // Since we don't necessarily keep track of who started a bugreport or what type it may be,
+        // we have to always allow carrier privileged apps to cancel bug reports.
+        enforcePermission(callingPackage, Binder.getCallingUid(),
+                true /* checkCarrierPrivileges */);
         // This tells init to cancel bugreportd service. Note that this is achieved through setting
         // a system property which is not thread-safe. So the lock here offers thread-safety only
         // among callers of the API.
@@ -178,7 +184,7 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
             // lifecycle correctly. If we don't subsequent callers will get
             // BUGREPORT_ERROR_ANOTHER_REPORT_IN_PROGRESS error.
             // Note that listener will be notified by the death recipient below.
-            cancelBugreport();
+            cancelBugreport(callingPackage);
         }
     }
 
@@ -225,9 +231,46 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
         if (timedOut) {
             Slog.w(TAG,
                     "Timed out waiting to get dumpstate service handle ("
-                    + totalTimeWaitedMillis + "ms)");
+                            + totalTimeWaitedMillis + "ms)");
         }
         return ds;
+    }
+
+    private void enforcePermission(String callingPackage, int callingUid,
+            boolean checkCarrierPrivileges) {
+        mAppOps.checkPackage(callingUid, callingPackage);
+
+        // To gain access through the DUMP permission, the calling package must: 1) be a system app,
+        // 2) be whitelisted by the OEM, and 3) actually hold the DUMP permission.
+        if (mBugreportWhitelistedPackages.contains(callingPackage)) {
+            try {
+                ApplicationInfo callingPackageInfo =
+                        mContext.getPackageManager().getApplicationInfoAsUser(
+                                callingPackage,
+                                0 /* flags */,
+                                UserHandle.getUserHandleForUid(callingUid));
+                if (callingPackageInfo != null && callingPackageInfo.isSystemApp()
+                        && mContext.checkCallingOrSelfPermission(Manifest.permission.DUMP)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                Slog.e(TAG, "Can't get package info for " + callingPackage, e);
+            }
+        }
+        // For carrier privileges, this can include user-installed apps. This is essentially a
+        // function of the current active SIM(s) in the device to let carrier apps through.
+        if (checkCarrierPrivileges
+                && mTelephonyManager.checkCarrierPrivilegesForPackageAnyPhone(callingPackage)
+                == TelephonyManager.CARRIER_PRIVILEGE_STATUS_HAS_ACCESS) {
+            return;
+        }
+
+        String message =
+                callingPackage + " does not hold the DUMP permission " + (checkCarrierPrivileges
+                        ? "or carrier privileges " : "") + "to request a bug report";
+        Slog.w(TAG, message);
+        throw new SecurityException(message);
     }
 
     private void reportError(IDumpstateListener listener, int errorCode) {
