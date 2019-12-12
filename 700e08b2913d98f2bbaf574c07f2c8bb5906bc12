@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "276f38a2_5f82014a",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-12-12T11:36:40Z",
+      "side": 1,
+      "message": "can we get rid of this now? (not in this CL obviously)",
+      "range": {
+        "startLine": 475,
+        "startChar": 11,
+        "endLine": 475,
+        "endChar": 36
+      },
+      "revId": "700e08b2913d98f2bbaf574c07f2c8bb5906bc12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
