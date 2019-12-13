@@ -162,6 +162,7 @@ import android.net.NetworkState;
 import android.net.NetworkStats;
 import android.net.NetworkTemplate;
 import android.net.StringNetworkSpecifier;
+import android.net.TelephonyNetworkSpecifier;
 import android.net.TrafficStats;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
@@ -5236,7 +5237,9 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         if (state != null && state.networkCapabilities != null
                 && state.networkCapabilities.hasTransport(TRANSPORT_CELLULAR)) {
             NetworkSpecifier spec = state.networkCapabilities.getNetworkSpecifier();
-            if (spec instanceof StringNetworkSpecifier) {
+            if (spec instanceof TelephonyNetworkSpecifier) {
+                subId = ((TelephonyNetworkSpecifier) spec).subscriptionId();
+            } else if (spec instanceof StringNetworkSpecifier) {
                 try {
                     subId = Integer.parseInt(((StringNetworkSpecifier) spec).specifier);
                 } catch (NumberFormatException e) {
