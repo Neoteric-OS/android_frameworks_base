@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "20a30b13_2db76d3d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T10:11:36Z",
+      "side": 1,
+      "message": "Make it public. The problem is that the classes are not in the same package at runtime, because they are loaded by different class loaders (the framework classes are not loaded by the same class loader as the test classes), even if the compiler does not know that.\n\nThis is a basic Java protection feature, otherwise you could just declare your client class in the same package as one of the classes in a library you use, and use its package private members.\n\nIt\u0027s sad that our build system is hiding this from the compiler.",
+      "parentUuid": "b542472b_05048bd6",
+      "range": {
+        "startLine": 43,
+        "startChar": 46,
+        "endLine": 43,
+        "endChar": 62
+      },
+      "revId": "a7b8bcf2568a7e36de80060ea366c8bdbc602a4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c7284d4_c122eab6",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "a7b8bcf2568a7e36de80060ea366c8bdbc602a4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbaea0de_b51d5e89",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7405,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T10:11:36Z",
+      "side": 1,
+      "message": "Yes you are correct. The delimiter is added by transportNamesOf. Added your example as a comment.",
+      "parentUuid": "2c7284d4_c122eab6",
+      "range": {
+        "startLine": 7404,
+        "startChar": 8,
+        "endLine": 7405,
+        "endChar": 86
+      },
+      "revId": "a7b8bcf2568a7e36de80060ea366c8bdbc602a4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
