@@ -46,6 +46,30 @@
       "revId": "3e59d61109bf8917c2d10954af403ee8a3d63b16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ce429e_59e91daa",
+        "filename": "core/java/android/os/SystemProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-12-13T01:48:27Z",
+      "side": 1,
+      "message": "Yes, but we also have the one in init, right? Should it be duplicated here? We\u0027ll have to maintain both",
+      "parentUuid": "1594fb53_fffce8f5",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 6
+      },
+      "revId": "3e59d61109bf8917c2d10954af403ee8a3d63b16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
