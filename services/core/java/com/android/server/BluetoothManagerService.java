@@ -199,6 +199,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     // synchronize with broadcast receiver.
     private boolean mQuietEnableExternal;
     private boolean mEnableExternal;
+    private boolean mEnableBLE;
 
     // Map of apps registered to keep BLE scanning on.
     private Map<IBinder, ClientDeathRecipient> mBleApps =
@@ -312,9 +313,11 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                                 mContext.getPackageName());
                     }
                 } else if (mEnableExternal) {
+                    if (st!= BluetoothAdapter.STATE_ON && isBluetoothPersistedStateOn()) {
                     sendEnableMsg(mQuietEnableExternal,
                             BluetoothProtoEnums.ENABLE_DISABLE_REASON_AIRPLANE_MODE,
                             mContext.getPackageName());
+                    }
                 }
             }
         }
@@ -384,6 +387,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         mBinding = false;
         mUnbinding = false;
         mEnable = false;
+        mEnableBLE = false;
         mState = BluetoothAdapter.STATE_OFF;
         mQuietEnableExternal = false;
         mEnableExternal = false;
@@ -720,7 +724,9 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                 if (DBG) {
                     Slog.d(TAG, "Reseting the mEnable flag for clean disable");
                 }
-                mEnable = false;
+                if (!mEnableExternal) {
+                    mEnable = false;
+                }
             }
         } catch (RemoteException e) {
             Slog.e(TAG, "getState()", e);
@@ -756,6 +762,21 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                 Slog.d(TAG, "Unregistered for death of " + packageName);
             }
         }
+        if (enable) {
+            try {
+                mBluetoothLock.readLock().lock();
+                if (mBluetooth == null ||
+                        (mBluetooth.getState() != BluetoothAdapter.STATE_BLE_ON &&
+                         mBluetooth.getState() != BluetoothAdapter.STATE_TURNING_ON &&
+                         mBluetooth.getState() != BluetoothAdapter.STATE_ON)) {
+                    mEnableBLE = true;
+                }
+            } catch (RemoteException e) {
+                    Slog.e(TAG,"Unable to call getState", e);
+            } finally {
+                    mBluetoothLock.readLock().unlock();
+            }
+        }
         int appCount = mBleApps.size();
         if (DBG) {
             Slog.d(TAG, appCount + " registered Ble Apps");
@@ -765,6 +786,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         }
         if (appCount == 0 && !mEnableExternal) {
             sendBrEdrDownCallback();
+            mEnableExternal = false;
         }
         return appCount;
     }
@@ -795,7 +817,21 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                 Slog.e(TAG, "onBluetoothServiceUp: mBluetooth is null!");
                 return;
             }
-            if (isBluetoothPersistedStateOnBluetooth() || !isBleAppPresent()) {
+            int st = mBluetooth.getState();
+            if (st != BluetoothAdapter.STATE_BLE_ON) {
+                if (DBG) Slog.v(TAG, "onBluetoothServiceUp: state isn't BLE_ON: " +
+                         BluetoothAdapter.nameForState(st));
+                return;
+            }
+           if (isAirplaneModeOn() && !mEnableExternal) {
+                addActiveLog(BluetoothProtoEnums.ENABLE_DISABLE_REASON_AIRPLANE_MODE,
+                    mContext.getPackageName(), false);
+
+                mBluetooth.onBrEdrDown();
+                mEnable = false;
+                mEnableExternal = false;
+            } else if (isBluetoothPersistedStateOnBluetooth() ||
+                 mEnableExternal) {
                 // This triggers transition to STATE_ON
                 mBluetooth.onLeServiceUp();
                 persistBluetoothSetting(BLUETOOTH_ON_BLUETOOTH);
@@ -916,7 +952,11 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
 
         synchronized (mReceiver) {
             mQuietEnableExternal = false;
-            mEnableExternal = true;
+            if (!mEnableBLE) {
+                mEnableExternal = true;
+            } else {
+                mEnableBLE = false;
+            }
             // waive WRITE_SECURE_SETTINGS permission check
             sendEnableMsg(false,
                     BluetoothProtoEnums.ENABLE_DISABLE_REASON_APPLICATION_REQUEST, packageName);
