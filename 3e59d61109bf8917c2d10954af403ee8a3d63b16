@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1b8e9477_9b1fec7d",
+        "filename": "core/java/android/os/SystemProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2019-12-13T03:47:01Z",
+      "side": 1,
+      "message": "This array doesn\u0027t need to be an API.",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 14
+      },
+      "revId": "3e59d61109bf8917c2d10954af403ee8a3d63b16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85e08526_80279ee8",
         "filename": "core/java/android/os/SystemProperties.java",
         "patchSetId": 1
