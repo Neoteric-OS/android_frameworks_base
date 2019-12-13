@@ -16,6 +16,7 @@
 
 package android.telephony;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
@@ -511,10 +512,7 @@ public class SubscriptionInfo implements Parcelable {
         return mGroupUUID;
     }
 
-    /**
-     * @hide
-     */
-    public List<String> getEhplmns() {
+    public @NonNull List<String> getEhplmns() {
         return mEhplmns == null ? Collections.emptyList() : Arrays.asList(mEhplmns);
     }
 

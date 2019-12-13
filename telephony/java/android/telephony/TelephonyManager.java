@@ -210,6 +210,8 @@ public class TelephonyManager {
     /** @hide */
     static public final int OTASP_SIM_UNPROVISIONED = 5;
 
+    private String mUserPlmn;
+
     /**
      * Used in carrier Wi-Fi for IMSI + IMPI encryption, this indicates a public key that's
      * available for use in ePDG links.
@@ -7399,6 +7401,7 @@ public class TelephonyManager {
     @SuppressAutoDoc // Blocked by b/72967236 - no support for carrier privileges
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     public boolean setNetworkSelectionModeManual(String operatorNumeric, boolean persistSelection) {
+        mUserPlmn = operatorNumeric;
         return setNetworkSelectionModeManual(
                 new OperatorInfo(
                         "" /* operatorAlphaLong */, "" /* operatorAlphaShort */, operatorNumeric),
@@ -7446,7 +7449,6 @@ public class TelephonyManager {
 
      * @return the network selection mode.
      *
-     * @hide
      */
     @NetworkSelectionMode
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
@@ -11773,5 +11775,14 @@ public class TelephonyManager {
             }
         }
         return false;
+    }
+
+    /** Return the user-selected manual PLMN setting if applicable */
+    public @Nullable String getManualNetworkSelection() {
+        if (isManualNetworkSelectionAllowed()
+                || getNetworkSelectionMode() == NETWORK_SELECTION_MODE_MANUAL) {
+            return mUserPlmn;
+        }
+        return null;
     }
 }
