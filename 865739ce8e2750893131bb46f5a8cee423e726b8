@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f83687f_0795412a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10446,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-12-13T06:03:41Z",
+      "side": 1,
+      "message": "@SystemApi should have a system permission associated with it. Can you change this to READ_PRIVILEGED_PHONE_STATE? Change the check on the implementation side too.",
+      "range": {
+        "startLine": 10446,
+        "startChar": 52,
+        "endLine": 10446,
+        "endChar": 68
+      },
+      "revId": "865739ce8e2750893131bb46f5a8cee423e726b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
