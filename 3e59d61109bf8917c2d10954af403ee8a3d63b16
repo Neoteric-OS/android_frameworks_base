@@ -70,6 +70,30 @@
       "revId": "3e59d61109bf8917c2d10954af403ee8a3d63b16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d333803_5266929c",
+        "filename": "core/java/android/os/SystemProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1291338
+      },
+      "writtenOn": "2019-12-13T02:16:31Z",
+      "side": 1,
+      "message": "Oops, I see. I misunderstood :p\n\nThe only code I\u0027ve found is here: https://android.googlesource.com/platform/system/core/+/7b1dbeda0c6df7a60825fe0636d9450e2495f5b7/init/action_parser.cpp#46 but I\u0027m really not sure how to merge these two. Can we just freeze this list?",
+      "parentUuid": "73ce429e_59e91daa",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 6
+      },
+      "revId": "3e59d61109bf8917c2d10954af403ee8a3d63b16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
