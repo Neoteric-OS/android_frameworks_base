@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "565840b5_359a6e31",
+        "filename": "core/java/android/bluetooth/BluetoothA2dpSink.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-12-13T21:38:57Z",
+      "side": 1,
+      "message": "nit: since this is an a2dp class, how about isAudioPlaying?",
+      "range": {
+        "startLine": 373,
+        "startChar": 19,
+        "endLine": 373,
+        "endChar": 32
+      },
+      "revId": "f1a914ee21f046da745e806f01a003f3606faee2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
