@@ -142,6 +142,30 @@
       "revId": "349c8f5e4ebdb1e533d4d6cf4b707a6314277d07",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53e51509_9d657df1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6354,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T10:11:33Z",
+      "side": 1,
+      "message": "If we change to the code we wrote in your first comment, then a change from A → B then B → C will be represented by B → C, so we\u0027ll wrongly send LOST to B, and we\u0027ll miss sending LOST to A.\n\nThe reason there can\u0027t be an NPE in line 6542 is that there can\u0027t be a reassignment from null to null. We only enter line 6542 if mNewNetwork is null, and when mNewNetwork is null mOldNetwork is never null.\n\nI agree this is very obscure in the code, but I contend that :\n• This was already existing complexity ; in fact, we notice it now because the code is clearer than it used to be\n• As you note, future patches will actually make this clear.\n\nSo I don\u0027t think we need to change it in this patch, because AFAICT there is no bug, it\u0027s not introducing this complexity, and fixing it now is harder than fixing it later.",
+      "parentUuid": "3ca67868_00414bd9",
+      "range": {
+        "startLine": 6353,
+        "startChar": 12,
+        "endLine": 6354,
+        "endChar": 70
+      },
+      "revId": "349c8f5e4ebdb1e533d4d6cf4b707a6314277d07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
