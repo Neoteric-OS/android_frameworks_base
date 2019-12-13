@@ -60,6 +60,7 @@ public class TetheringNotificationUpdater {
     // This value has to be made 1 2 and 4, and OR'd with the others.
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
     private boolean mPowerSaving = false;
+    private boolean mTetheringRestricted = false;
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
         mUpdateLock = new Object();
@@ -93,6 +94,14 @@ public class TetheringNotificationUpdater {
         updateNotification();
     }
 
+    /** Called when tethering restrictions changed status */
+    public void onTetheringRestrictionsChanged(final boolean restricted) {
+        if (mTetheringRestricted != restricted) {
+            mTetheringRestricted = restricted;
+            updateNotification();
+        }
+    }
+
     private Resources getResources(@NonNull final Context c, final int subId) {
         if (subId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
             return getResourcesForSubId(c, subId);
@@ -110,7 +119,9 @@ public class TetheringNotificationUpdater {
         final boolean tetheringInactive = mDownstreamTypesMask <= DOWNSTREAM_NONE;
 
         synchronized (mUpdateLock) {
-            if (tetheringInactive) {
+            if (mTetheringRestricted) {
+                setupRestrictedNotification();
+            } else if (tetheringInactive) {
                 clearNotification();
             } else {
                 if (setupNotification()) {
@@ -124,6 +135,14 @@ public class TetheringNotificationUpdater {
 
     private void clearNotification() {
         mNotificationManager.cancel(null /* tag */, NOTIFY_ID);
+    }
+
+    private void setupRestrictedNotification() {
+        final Resources res = getResources(mContext, mActiveDataSubId);
+        final String title = res.getString(R.string.disable_tether_notification_title);
+        final String message = res.getString(R.string.disable_tether_notification_message);
+
+        showNotification(R.drawable.stat_sys_tether_general, title, message, "");
     }
 
     private boolean setupNotification() {

@@ -197,4 +197,28 @@ class TetheringNotificationUpdaterTest {
         assertTrue(title.equals(notificationUpdater.formatText(
                 "", "", R.string.tethered_notification_title)))
     }
+
+    @Test
+    fun testDisallowTetherNotification() {
+        val disallowTitle = context.getResources()
+                .getString(R.string.disable_tether_notification_title)
+        val disallowMessage = context.getResources()
+                .getString(R.string.disable_tether_notification_message)
+
+        // Hotspot enabled, no notification showed.
+        notificationUpdater.onDownstreamChanged(WIFI_DOWNSTREAM_TYPE_MASK)
+        expectClearNotification()
+
+        // User restrictions on, showed disallow notification.
+        notificationUpdater.onTetheringRestrictionsChanged(true)
+        expectShowNotification(disallowTitle, disallowMessage)
+
+        // Hotspot disabled, showed disallow notification.
+        notificationUpdater.onDownstreamChanged(DOWNSTREAM_NONE)
+        expectShowNotification(disallowTitle, disallowMessage)
+
+        // User restrictions off, no notification showed.
+        notificationUpdater.onTetheringRestrictionsChanged(false)
+        expectClearNotification()
+    }
 }

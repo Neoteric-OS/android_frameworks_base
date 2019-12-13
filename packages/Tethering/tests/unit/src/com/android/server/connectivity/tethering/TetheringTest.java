@@ -978,7 +978,7 @@ public class TetheringTest {
 
     private void runUserRestrictionsChange(
             boolean currentDisallow, boolean nextDisallow, String[] activeTetheringIfacesList,
-            int expectedInteractionsWithShowNotification) throws  Exception {
+            int expectedInteractionsWithUntether) throws  Exception {
         final Bundle newRestrictions = new Bundle();
         newRestrictions.putBoolean(UserManager.DISALLOW_CONFIG_TETHERING, nextDisallow);
         final Tethering mockTethering = mock(Tethering.class);
@@ -986,13 +986,15 @@ public class TetheringTest {
         when(mUserManager.getUserRestrictions()).thenReturn(newRestrictions);
 
         final Tethering.UserRestrictionActionListener ural =
-                new Tethering.UserRestrictionActionListener(mUserManager, mockTethering);
+                new Tethering.UserRestrictionActionListener(
+                        mUserManager, mockTethering, mNotificationUpdater);
         ural.mDisallowTethering = currentDisallow;
 
         ural.onUserRestrictionsChanged();
 
-        verify(mockTethering, times(expectedInteractionsWithShowNotification))
-                .untetherAll();
+        verify(mockTethering, times(expectedInteractionsWithUntether)).untetherAll();
+        verify(mNotificationUpdater, times(currentDisallow != nextDisallow ? 1 : 0))
+                .onTetheringRestrictionsChanged(expectedInteractionsWithUntether == 1);
     }
 
     @Test
@@ -1000,10 +1002,10 @@ public class TetheringTest {
         final String[] emptyActiveIfacesList = new String[]{};
         final boolean currDisallow = false;
         final boolean nextDisallow = true;
-        final int expectedInteractionsWithShowNotification = 0;
+        final int expectedInteractionsWithUntether = 0;
 
         runUserRestrictionsChange(currDisallow, nextDisallow, emptyActiveIfacesList,
-                expectedInteractionsWithShowNotification);
+                expectedInteractionsWithUntether);
     }
 
     @Test
@@ -1011,10 +1013,10 @@ public class TetheringTest {
         final String[] nonEmptyActiveIfacesList = new String[]{TEST_WLAN_IFNAME};
         final boolean currDisallow = false;
         final boolean nextDisallow = true;
-        final int expectedInteractionsWithShowNotification = 1;
+        final int expectedInteractionsWithUntether = 1;
 
         runUserRestrictionsChange(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
-                expectedInteractionsWithShowNotification);
+                expectedInteractionsWithUntether);
     }
 
     @Test
@@ -1022,10 +1024,10 @@ public class TetheringTest {
         final String[] nonEmptyActiveIfacesList = new String[]{};
         final boolean currDisallow = true;
         final boolean nextDisallow = false;
-        final int expectedInteractionsWithShowNotification = 0;
+        final int expectedInteractionsWithUntether = 0;
 
         runUserRestrictionsChange(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
-                expectedInteractionsWithShowNotification);
+                expectedInteractionsWithUntether);
     }
 
     @Test
@@ -1033,27 +1035,27 @@ public class TetheringTest {
         final String[] nonEmptyActiveIfacesList = new String[]{TEST_WLAN_IFNAME};
         final boolean currDisallow = true;
         final boolean nextDisallow = false;
-        final int expectedInteractionsWithShowNotification = 0;
+        final int expectedInteractionsWithUntether = 0;
 
         runUserRestrictionsChange(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
-                expectedInteractionsWithShowNotification);
+                expectedInteractionsWithUntether);
     }
 
     @Test
     public void testDisallowTetheringUnchanged() throws Exception {
         final String[] nonEmptyActiveIfacesList = new String[]{TEST_WLAN_IFNAME};
-        final int expectedInteractionsWithShowNotification = 0;
+        final int expectedInteractionsWithUntether = 0;
         boolean currDisallow = true;
         boolean nextDisallow = true;
 
         runUserRestrictionsChange(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
-                expectedInteractionsWithShowNotification);
+                expectedInteractionsWithUntether);
 
         currDisallow = false;
         nextDisallow = false;
 
         runUserRestrictionsChange(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
-                expectedInteractionsWithShowNotification);
+                expectedInteractionsWithUntether);
     }
 
     private class TestTetheringEventCallback extends ITetheringEventCallback.Stub {
