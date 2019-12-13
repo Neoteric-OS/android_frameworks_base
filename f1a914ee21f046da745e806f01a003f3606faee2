@@ -22,6 +22,30 @@
       "revId": "f1a914ee21f046da745e806f01a003f3606faee2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bda47f_3ce4d796",
+        "filename": "core/java/android/bluetooth/BluetoothA2dpSink.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2019-12-13T23:16:03Z",
+      "side": 1,
+      "message": "Yeah I think that\u0027s a good call! Done!",
+      "parentUuid": "565840b5_359a6e31",
+      "range": {
+        "startLine": 373,
+        "startChar": 19,
+        "endLine": 373,
+        "endChar": 32
+      },
+      "revId": "f1a914ee21f046da745e806f01a003f3606faee2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
