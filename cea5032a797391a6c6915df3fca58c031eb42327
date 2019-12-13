@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e3f0fc3_b8e4f46d",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1074960
+      },
+      "writtenOn": "2019-12-13T22:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0a4cadd_bf582bd1",
+      "revId": "cea5032a797391a6c6915df3fca58c031eb42327",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b427d075_77678bf3",
         "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "af1f5fa1_454c9d21",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1074960
+      },
+      "writtenOn": "2019-12-13T22:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b427d075_77678bf3",
+      "revId": "cea5032a797391a6c6915df3fca58c031eb42327",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59452cc1_2053b6a0",
         "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "cea5032a797391a6c6915df3fca58c031eb42327",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272ce757_dda8d88b",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2518,
+      "author": {
+        "id": 1074960
+      },
+      "writtenOn": "2019-12-13T22:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59452cc1_2053b6a0",
+      "revId": "cea5032a797391a6c6915df3fca58c031eb42327",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
