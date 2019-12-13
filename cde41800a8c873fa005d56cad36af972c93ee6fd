@@ -22,6 +22,30 @@
       "revId": "cde41800a8c873fa005d56cad36af972c93ee6fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2069901_d0f22680",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-13T06:13:00Z",
+      "side": 1,
+      "message": "Current flow mConnector only be null before Tethering register to Tethering service. After mConnector is assigned, it should never be changed(just currently, Tether13 change the design that mConnector would be final). So if mConnector pass above null check, I think it should not have race in here. Correct me if my understanding  is wrong.",
+      "parentUuid": "46e7aa14_f23e4c46",
+      "range": {
+        "startLine": 184,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 22
+      },
+      "revId": "cde41800a8c873fa005d56cad36af972c93ee6fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
