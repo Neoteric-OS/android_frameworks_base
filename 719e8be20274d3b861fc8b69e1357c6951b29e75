@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cdd53ef_4da182a5",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:47:16Z",
+      "side": 1,
+      "message": "prefix \u003d",
+      "range": {
+        "startLine": 68,
+        "startChar": 5,
+        "endLine": 68,
+        "endChar": 11
+      },
+      "revId": "719e8be20274d3b861fc8b69e1357c6951b29e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ee4fbd_89612a3d",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:47:16Z",
+      "side": 1,
+      "message": "I find this expression redundant ; a timestamp is always with respect to the epoch, and in Java it\u0027s normally always in milliseconds. I think reportTimestamp is enough as a name.\n\nYou should however indicate what clock it is taken from, so that apps can compute meaningful time differences.",
+      "range": {
+        "startLine": 381,
+        "startChar": 32,
+        "endLine": 381,
+        "endChar": 52
+      },
+      "revId": "719e8be20274d3b861fc8b69e1357c6951b29e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c912ea_e18c3a18",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:47:16Z",
+      "side": 1,
+      "message": "\"that may contain\" ?",
+      "range": {
+        "startLine": 389,
+        "startChar": 19,
+        "endLine": 389,
+        "endChar": 29
+      },
+      "revId": "719e8be20274d3b861fc8b69e1357c6951b29e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8fa546a3_c6f9ae22",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:47:16Z",
+      "side": 1,
+      "message": "I think we said PersistableBundle",
+      "range": {
+        "startLine": 390,
+        "startChar": 30,
+        "endLine": 390,
+        "endChar": 36
+      },
+      "revId": "719e8be20274d3b861fc8b69e1357c6951b29e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbbb6482_e8f49c01",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:47:16Z",
+      "side": 1,
+      "message": "You may want to expose this, it\u0027s useful for apps to write tests of their usage of this API. You can say in doc that apps normally don\u0027t instantiate this themselves and instead get instances of this through xxx API",
+      "range": {
+        "startLine": 393,
+        "startChar": 15,
+        "endLine": 393,
+        "endChar": 33
+      },
+      "revId": "719e8be20274d3b861fc8b69e1357c6951b29e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a05bbd_2db03571",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:47:16Z",
+      "side": 1,
+      "message": "Do you want to include the Network object inside the ConnectivityReport object ? I think it makes most sense, because the ConnectivityReport makes no sense without the network.",
+      "range": {
+        "startLine": 417,
+        "startChar": 51,
+        "endLine": 417,
+        "endChar": 69
+      },
+      "revId": "719e8be20274d3b861fc8b69e1357c6951b29e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf8d63c_c1519332",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:47:16Z",
+      "side": 1,
+      "message": "As long as you have a ConnectivityReport data class, maybe you want a data class for this too",
+      "range": {
+        "startLine": 429,
+        "startChar": 16,
+        "endLine": 432,
+        "endChar": 33
+      },
+      "revId": "719e8be20274d3b861fc8b69e1357c6951b29e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ab6da6_1dbc22d7",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:47:16Z",
+      "side": 1,
+      "message": "This is inaccurate (it fails to include WiFi suggestors) and fails to reflect the real reasons for access to this API. Please frame the comment around the conclusions we had about the permissions. It also fails to explain the app will only get callbacks about the networks it established.",
+      "range": {
+        "startLine": 449,
+        "startChar": 11,
+        "endLine": 452,
+        "endChar": 12
+      },
+      "revId": "719e8be20274d3b861fc8b69e1357c6951b29e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df581548_c35f3b63",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:47:16Z",
+      "side": 1,
+      "message": "...else what happens ?",
+      "range": {
+        "startLine": 454,
+        "startChar": 96,
+        "endLine": 454,
+        "endChar": 97
+      },
+      "revId": "719e8be20274d3b861fc8b69e1357c6951b29e75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
