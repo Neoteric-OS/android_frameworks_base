@@ -635,24 +635,8 @@ public class ContentProviderOperation implements Parcelable {
             }
             if (value == null) {
                 mValues.putNull(key);
-            } else if (value instanceof String) {
-                mValues.put(key, (String) value);
-            } else if (value instanceof Byte) {
-                mValues.put(key, (Byte) value);
-            } else if (value instanceof Short) {
-                mValues.put(key, (Short) value);
-            } else if (value instanceof Integer) {
-                mValues.put(key, (Integer) value);
-            } else if (value instanceof Long) {
-                mValues.put(key, (Long) value);
-            } else if (value instanceof Float) {
-                mValues.put(key, (Float) value);
-            } else if (value instanceof Double) {
-                mValues.put(key, (Double) value);
-            } else if (value instanceof Boolean) {
-                mValues.put(key, (Boolean) value);
-            } else if (value instanceof byte[]) {
-                mValues.put(key, (byte[]) value);
+            } else if (value != null) {
+                mValues.put(key, value);
             } else {
                 throw new IllegalArgumentException("bad value type: " + value.getClass().getName());
             }

@@ -9651,15 +9651,7 @@ package android.content {
     method public Short getAsShort(String);
     method public String getAsString(String);
     method public java.util.Set<java.lang.String> keySet();
-    method public void put(String, String);
-    method public void put(String, Byte);
-    method public void put(String, Short);
-    method public void put(String, Integer);
-    method public void put(String, Long);
-    method public void put(String, Float);
-    method public void put(String, Double);
-    method public void put(String, Boolean);
-    method public void put(String, byte[]);
+    method public void put(String, Object);
     method public void putAll(android.content.ContentValues);
     method public void putNull(String);
     method public void remove(String);

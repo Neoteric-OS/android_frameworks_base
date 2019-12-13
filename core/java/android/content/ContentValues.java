@@ -110,16 +110,6 @@ public final class ContentValues implements Parcelable {
     }
 
     /**
-     * Adds a value to the set.
-     *
-     * @param key the name of the value to put
-     * @param value the data for the value to put
-     */
-    public void put(String key, String value) {
-        mMap.put(key, value);
-    }
-
-    /**
      * Adds all values from the passed in ContentValues.
      *
      * @param other the ContentValues from which to copy
@@ -134,77 +124,7 @@ public final class ContentValues implements Parcelable {
      * @param key the name of the value to put
      * @param value the data for the value to put
      */
-    public void put(String key, Byte value) {
-        mMap.put(key, value);
-    }
-
-    /**
-     * Adds a value to the set.
-     *
-     * @param key the name of the value to put
-     * @param value the data for the value to put
-     */
-    public void put(String key, Short value) {
-        mMap.put(key, value);
-    }
-
-    /**
-     * Adds a value to the set.
-     *
-     * @param key the name of the value to put
-     * @param value the data for the value to put
-     */
-    public void put(String key, Integer value) {
-        mMap.put(key, value);
-    }
-
-    /**
-     * Adds a value to the set.
-     *
-     * @param key the name of the value to put
-     * @param value the data for the value to put
-     */
-    public void put(String key, Long value) {
-        mMap.put(key, value);
-    }
-
-    /**
-     * Adds a value to the set.
-     *
-     * @param key the name of the value to put
-     * @param value the data for the value to put
-     */
-    public void put(String key, Float value) {
-        mMap.put(key, value);
-    }
-
-    /**
-     * Adds a value to the set.
-     *
-     * @param key the name of the value to put
-     * @param value the data for the value to put
-     */
-    public void put(String key, Double value) {
-        mMap.put(key, value);
-    }
-
-    /**
-     * Adds a value to the set.
-     *
-     * @param key the name of the value to put
-     * @param value the data for the value to put
-     */
-    public void put(String key, Boolean value) {
-        mMap.put(key, value);
-    }
-
-    /**
-     * Adds a value to the set.
-     *
-     * @param key the name of the value to put
-     * @param value the data for the value to put
-     */
-    public void put(String key, byte[] value) {
+    public void put(String key, Object value) {
         mMap.put(key, value);
     }
 
