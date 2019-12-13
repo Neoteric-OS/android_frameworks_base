@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.NetworkSpecifier;
 import android.net.StringNetworkSpecifier;
+import android.net.TelephonyNetworkSpecifier;
 import android.net.wifi.WifiInfo;
 import android.os.UserHandle;
 import android.telephony.SubscriptionManager;
@@ -223,7 +224,9 @@ public class NetworkNotificationManager {
                     // name has been added to it
                     NetworkSpecifier specifier = nai.networkCapabilities.getNetworkSpecifier();
                     int subId = SubscriptionManager.DEFAULT_SUBSCRIPTION_ID;
-                    if (specifier instanceof StringNetworkSpecifier) {
+                    if (specifier instanceof TelephonyNetworkSpecifier) {
+                        subId = ((TelephonyNetworkSpecifier) specifier).getSubscriptionId();
+                    } else if (specifier instanceof StringNetworkSpecifier) {
                         try {
                             subId = Integer.parseInt(
                                     ((StringNetworkSpecifier) specifier).specifier);
