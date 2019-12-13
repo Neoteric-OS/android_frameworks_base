@@ -94,6 +94,30 @@
       "revId": "349c8f5e4ebdb1e533d4d6cf4b707a6314277d07",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "752b63ea_d875391b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6354,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-13T03:00:26Z",
+      "side": 1,
+      "message": "Well, if my comment on [NS B04] is right that line.6541 could be removed, then maybe we could ignore the problem what I said above.",
+      "parentUuid": "997faf44_484ff288",
+      "range": {
+        "startLine": 6353,
+        "startChar": 12,
+        "endLine": 6354,
+        "endChar": 70
+      },
+      "revId": "349c8f5e4ebdb1e533d4d6cf4b707a6314277d07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
