@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21d2b6d3_525e5b3b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T11:30:03Z",
+      "side": 1,
+      "message": "Can this be androidx.annotation.IntDef ? I think android.annotation.IntDef is not public",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "a026cb4da2dfc28f66546cf6ba6626b557697895",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

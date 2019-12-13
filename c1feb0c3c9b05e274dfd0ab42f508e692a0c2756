@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c8692a5_0186ca26",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T11:30:03Z",
+      "side": 1,
+      "message": "Does this mean that there is no notification on WiFi, as today ?\nUX confirmed that we should not show more notifications unless this is required by the user\u0027s carrier, because it needlessly uses notification space, so if that\u0027s the case it\u0027s great.",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a89fdb_846c35e2",
+        "filename": "packages/Tethering/res/values/overlayable.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T11:30:03Z",
+      "side": 1,
+      "message": "Can you add documentation on each of these resources, and the format, for OEMs ?\nThen a comment in res/values/config.xml on each resource to see the doc in overlayable.xml would also help.",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 73
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b07c6a_c29fd731",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T11:30:03Z",
+      "side": 1,
+      "message": "Is it hard to do in this patch, or do you have another followup patch ready ?",
+      "range": {
+        "startLine": 852,
+        "startChar": 15,
+        "endLine": 852,
+        "endChar": 56
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0416ec10_07378261",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T11:30:03Z",
+      "side": 1,
+      "message": "How about mUpdateLock ? I think this is used more often to name locks",
+      "range": {
+        "startLine": 51,
+        "startChar": 25,
+        "endLine": 51,
+        "endChar": 36
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86a7759_af1bd7c9",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T11:30:03Z",
+      "side": 1,
+      "message": "Should this be context.createContextAsUser(UserHandle.ALL, 0).getSystemService(...) ?\nOtherwise notifications may not show properly when under other users ?\n\nAlternatively add a comment saying that tethering is always controlled from user 0, so the notifications are also shown from that context only ?\n\nI\u0027m not sure what the current behavior is when switching to secondary users. Maybe you could have a try ?",
+      "range": {
+        "startLine": 68,
+        "startChar": 38,
+        "endLine": 68,
+        "endChar": 45
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e7dcdf_2c908953",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T11:30:03Z",
+      "side": 1,
+      "message": "It feels strange to get the icon once just to see if notifications should be enabled, then possibly get the icon to show from a different array.\n\nHow about having the methods return a boolean indicating whether this type of notification was enabled (and shown) ?\nThen something like:\n\nif ((mNetworkSuspended \u0026\u0026 setupPauseNotification())\n    || (mConnectedClients \u003e 0 \u0026\u0026 setupHotspotClientsNotification())\n    || setupNotification()) {\n  return;\n}\nclearNotification();\n\nEach method would return false when iconArray.length() \u003c 1, so no need to check for the size of tethering_notification_icons.",
+      "range": {
+        "startLine": 150,
+        "startChar": 16,
+        "endLine": 158,
+        "endChar": 17
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61f1880_3098d33b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T11:30:03Z",
+      "side": 1,
+      "message": "Most of these are switching behavior based on noHotspotClients, which makes the code hard to follow.\nHow about having a different method for:\nsetupHotspotClientsNotification()\nand\nsetupNotification()\n?",
+      "range": {
+        "startLine": 188,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 9
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42dcab05_6844bc2b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T11:30:03Z",
+      "side": 1,
+      "message": "Nit: @androidx.annotation.StringRes (also on other arguments of the type)",
+      "range": {
+        "startLine": 224,
+        "startChar": 49,
+        "endLine": 224,
+        "endChar": 50
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0a1019_9989e8bd",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T11:30:03Z",
+      "side": 1,
+      "message": "Nit: @androidx.annotation.DrawableRes (also on other arguments of the type)",
+      "range": {
+        "startLine": 236,
+        "startChar": 34,
+        "endLine": 236,
+        "endChar": 35
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e60253_8f45952f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T11:30:03Z",
+      "side": 1,
+      "message": "I find this name a little confusing, why not just \"formatText\" ?",
+      "range": {
+        "startLine": 238,
+        "startChar": 35,
+        "endLine": 238,
+        "endChar": 49
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be10bd4_d94d404c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T11:30:03Z",
+      "side": 1,
+      "message": "This is also done as user 0. Maybe that\u0027s fine if the notifications are only shown with the main user, considering that tether settings are not there on secondary users ?",
+      "range": {
+        "startLine": 244,
+        "startChar": 33,
+        "endLine": 244,
+        "endChar": 58
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53fa48b9_1c49c51d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T11:30:03Z",
+      "side": 1,
+      "message": "Can you add tests that verify that this is called at the proper time with the proper arguments ?",
+      "range": {
+        "startLine": 169,
+        "startChar": 47,
+        "endLine": 169,
+        "endChar": 67
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
