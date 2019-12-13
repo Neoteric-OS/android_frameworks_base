@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46e7aa14_f23e4c46",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T06:01:11Z",
+      "side": 1,
+      "message": "mConnector is mutable. Any time you need to make a null check on a mutable member you need to move it into a local and use only the local.",
+      "range": {
+        "startLine": 184,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 22
+      },
+      "revId": "cde41800a8c873fa005d56cad36af972c93ee6fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
