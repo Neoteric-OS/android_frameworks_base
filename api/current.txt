@@ -44204,6 +44204,7 @@ package android.telephony {
     field public static final String KEY_CONFIG_IMS_RCS_PACKAGE_OVERRIDE_STRING = "config_ims_rcs_package_override_string";
     field public static final String KEY_CONFIG_PLANS_PACKAGE_OVERRIDE_STRING = "config_plans_package_override_string";
     field public static final String KEY_CONFIG_TELEPHONY_USE_OWN_NUMBER_FOR_VOICEMAIL_BOOL = "config_telephony_use_own_number_for_voicemail_bool";
+    field public static final String KEY_CONVERT_INCOMING_NUMBER_TO_NATIONAL_FORMAT_STRING_ARRAY = "convert_incoming_number_to_national_format_string_array";
     field public static final String KEY_CSP_ENABLED_BOOL = "csp_enabled_bool";
     field public static final String KEY_DATA_LIMIT_NOTIFICATION_BOOL = "data_limit_notification_bool";
     field public static final String KEY_DATA_LIMIT_THRESHOLD_BYTES_LONG = "data_limit_threshold_bytes_long";

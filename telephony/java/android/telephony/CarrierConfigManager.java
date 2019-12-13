@@ -3370,6 +3370,15 @@ public class CarrierConfigManager {
     public static final String KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL =
             "prevent_clir_activation_and_deactivation_code_bool";
 
+    /**
+     * Specify strings to convert international number to national number for incoming call.
+     * Individual entries have the format:
+     * [target country code to replace]:[replacement]
+     * (e.g. Convert country codes for Japan. [+81]:[0])
+     */
+    public static final String KEY_CONVERT_INCOMING_NUMBER_TO_NATIONAL_FORMAT_STRING_ARRAY =
+            "convert_incoming_number_to_national_format_string_array";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -3834,6 +3843,7 @@ public class CarrierConfigManager {
                 new int[] {4 /* BUSY */});
         sDefaults.putBoolean(KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL, false);
         sDefaults.putLong(KEY_DATA_SWITCH_VALIDATION_TIMEOUT_LONG, 2000);
+        sDefaults.putStringArray(KEY_CONVERT_INCOMING_NUMBER_TO_NATIONAL_FORMAT_STRING_ARRAY, null);
     }
 
     /**
