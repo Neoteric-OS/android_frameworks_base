@@ -500,6 +500,12 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
             checkNotNull(pass, MISSING_PARAM_MSG_TMPL, "pass");
             checkNotNull(serverRootCa, MISSING_PARAM_MSG_TMPL, "serverRootCa");
 
+            try {
+                certificateToPemString(serverRootCa);
+            } catch (GeneralSecurityException | IOException e) {
+                throw new IllegalArgumentException("Certificate could not be encoded");
+            }
+
             resetAuthParams();
             mUsername = user;
             mPassword = pass;
@@ -531,6 +537,14 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
             checkNotNull(userCert, MISSING_PARAM_MSG_TMPL, "userCert");
             checkNotNull(key, MISSING_PARAM_MSG_TMPL, "key");
             checkNotNull(serverRootCa, MISSING_PARAM_MSG_TMPL, "serverRootCa");
+
+            // Test to make sure all auth params can be encoded safely.
+            try {
+                certificateToPemString(userCert);
+                certificateToPemString(serverRootCa);
+            } catch (GeneralSecurityException | IOException e) {
+                throw new IllegalArgumentException("Certificate could not be encoded");
+            }
 
             resetAuthParams();
             mUserCert = userCert;
