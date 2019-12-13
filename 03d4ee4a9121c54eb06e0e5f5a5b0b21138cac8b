@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fff7a24a_04fb8649",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:34:15Z",
+      "side": 1,
+      "message": "Maybe just say routeDiagnostics as we don\u0027t use the word traceroute anywhere in the API",
+      "range": {
+        "startLine": 65,
+        "startChar": 53,
+        "endLine": 65,
+        "endChar": 63
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1808a2a5_d02e7c59",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:34:15Z",
+      "side": 1,
+      "message": "This sounds like it would be useful for app testing purpose. Any issue with exposing it ?",
+      "range": {
+        "startLine": 85,
+        "startChar": 17,
+        "endLine": 85,
+        "endChar": 21
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f8d37c_6a225b04",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:34:15Z",
+      "side": 1,
+      "message": "...any more\n\n(if this is called then the diagnostics completed successfully, which I take to mean that necessarily the network used to be active. Is that accurate ? Or are there, say, combinations of parameters what will result in this being called even if the network was already disconnected before the diagnostics will requested ?)",
+      "range": {
+        "startLine": 101,
+        "startChar": 47,
+        "endLine": 101,
+        "endChar": 53
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e572c23e_6752cc42",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:34:15Z",
+      "side": 1,
+      "message": "result of the route diagnostics ?",
+      "range": {
+        "startLine": 105,
+        "startChar": 37,
+        "endLine": 105,
+        "endChar": 50
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8bddda_66a12f14",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:34:15Z",
+      "side": 1,
+      "message": "Do you have anything more specific, at least for documentation ? You don\u0027t *need* to, but it\u0027s nice to developers.",
+      "range": {
+        "startLine": 119,
+        "startChar": 28,
+        "endLine": 119,
+        "endChar": 37
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca590e7_a69448f9",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:34:15Z",
+      "side": 1,
+      "message": "I think you need to be a lot more specific ; traceroute has many implementations and I don\u0027t think any standard (like POSIX) is defining these constants. Suggest just removing this comment, or calling what specific version of the tool.",
+      "range": {
+        "startLine": 128,
+        "startChar": 54,
+        "endLine": 128,
+        "endChar": 64
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2cd415_ffcde75e",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:34:15Z",
+      "side": 1,
+      "message": "Doesn\u0027t this depend on v4 / v6 ? If you\u0027re using the same value for both then you\u0027re not following the default values of the traceroute we looked at together.",
+      "range": {
+        "startLine": 133,
+        "startChar": 26,
+        "endLine": 133,
+        "endChar": 27
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a54786d_303fe51b",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:34:15Z",
+      "side": 1,
+      "message": "You don\u0027t need to say \"this.\", the local is not shadowing the member",
+      "range": {
+        "startLine": 243,
+        "startChar": 16,
+        "endLine": 243,
+        "endChar": 20
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d450da60_33683475",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:34:15Z",
+      "side": 1,
+      "message": "The number of threads ? How can you even know this ? Executor does not expose a facility to tell you how many threads it uses. Not all Executors are instances of ThreadPoolExecutor. Even if you are passed an instance of ThreadPoolExecutor how does that work exactly ? I don\u0027t see a reasonable way of making this work.\n\nI also do not think it\u0027s reasonable at all to ask for the client to create 80 threads if they want 80 concurrent probes (which is not particularly far-fetched). Parallelism in networking is normally achieved with use of poll() when writing in C or C++, not with massive amounts of threads, for usage of resource reasons.\n\nI think you need to have the parallelism configuration in the Params object, and implement it with poll() like normal.",
+      "range": {
+        "startLine": 327,
+        "startChar": 96,
+        "endLine": 330,
+        "endChar": 19
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9613da_bc3e96af",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T16:34:15Z",
+      "side": 1,
+      "message": "I thought it was an option ?",
+      "range": {
+        "startLine": 336,
+        "startChar": 51,
+        "endLine": 336,
+        "endChar": 55
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
