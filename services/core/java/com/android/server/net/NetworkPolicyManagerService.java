@@ -160,7 +160,7 @@ import android.net.NetworkStack;
 import android.net.NetworkState;
 import android.net.NetworkStats;
 import android.net.NetworkTemplate;
-import android.net.StringNetworkSpecifier;
+import android.net.TelephonyNetworkSpecifier;
 import android.net.TrafficStats;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
@@ -227,7 +227,6 @@ import com.android.internal.util.ConcurrentUtils;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.FastXmlSerializer;
 import com.android.internal.util.IndentingPrintWriter;
-import com.android.internal.util.Preconditions;
 import com.android.internal.util.StatLogger;
 import com.android.server.EventLogTags;
 import com.android.server.LocalServices;
@@ -5231,16 +5230,12 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     }
 
     private int parseSubId(NetworkState state) {
-        // TODO: moved to using a legitimate NetworkSpecifier instead of string parsing
         int subId = INVALID_SUBSCRIPTION_ID;
         if (state != null && state.networkCapabilities != null
                 && state.networkCapabilities.hasTransport(TRANSPORT_CELLULAR)) {
             NetworkSpecifier spec = state.networkCapabilities.getNetworkSpecifier();
-            if (spec instanceof StringNetworkSpecifier) {
-                try {
-                    subId = Integer.parseInt(((StringNetworkSpecifier) spec).specifier);
-                } catch (NumberFormatException e) {
-                }
+            if (spec instanceof TelephonyNetworkSpecifier) {
+                subId = ((TelephonyNetworkSpecifier) spec).getSubscriptionId();
             }
         }
         return subId;
