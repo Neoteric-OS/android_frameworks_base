@@ -70,6 +70,30 @@
       "revId": "cde41800a8c873fa005d56cad36af972c93ee6fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63899861_da6faa82",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-13T06:46:56Z",
+      "side": 1,
+      "message": "Offline discuss with Jean, this don\u0027t cause real bug currently but this is poor practice. Will just go Tether13 because it change whole design. If Tether13 can\u0027t merged next week, should have a pinpoint to fix.",
+      "parentUuid": "9b9ab529_b227562d",
+      "range": {
+        "startLine": 184,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 22
+      },
+      "revId": "cde41800a8c873fa005d56cad36af972c93ee6fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
