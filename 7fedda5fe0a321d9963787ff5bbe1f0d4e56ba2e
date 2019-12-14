@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aa0dec0_d66eecc3",
+        "filename": "telephony/java/android/telephony/SubscriptionInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-14T00:01:10Z",
+      "side": 1,
+      "message": "1) These maybe should be exposed via TelephonyManager. I don\u0027t expect this field to change (ever), but if not we should talk to tgunn@ about where to expose them.\n\n2) For name, suggest getExtendedHomePlmns().",
+      "range": {
+        "startLine": 506,
+        "startChar": 33,
+        "endLine": 506,
+        "endChar": 43
+      },
+      "revId": "7fedda5fe0a321d9963787ff5bbe1f0d4e56ba2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "addef36f_c48dc761",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-14T00:01:10Z",
+      "side": 1,
+      "message": "We can\u0027t add this in TelephonyManager. Instances of TM can be created and destroyed.",
+      "range": {
+        "startLine": 202,
+        "startChar": 19,
+        "endLine": 202,
+        "endChar": 28
+      },
+      "revId": "7fedda5fe0a321d9963787ff5bbe1f0d4e56ba2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab32517_4e36ad60",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7337,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-14T00:01:10Z",
+      "side": 1,
+      "message": "this information needs to be stored in the GsmCdmaPhone object and retrieved over binder when we need it. Those objects persist (and keep the information secure), whereas TelephonyManager objects can be reflected(to circumvent permissions) AND are empheral objects. Moreover, think about DSDS - there can be 2 manually selected networks. :-)",
+      "range": {
+        "startLine": 7337,
+        "startChar": 20,
+        "endLine": 7337,
+        "endChar": 35
+      },
+      "revId": "7fedda5fe0a321d9963787ff5bbe1f0d4e56ba2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
