@@ -24,11 +24,11 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.provider.Telephony.Sms.Intents;
+import android.telephony.IWapPushManager;
+import android.telephony.WapPushManagerParams;
 import android.test.ServiceTestCase;
 import android.util.Log;
 
-import com.android.internal.telephony.IWapPushManager;
-import com.android.internal.telephony.WapPushManagerParams;
 import com.android.internal.telephony.WspTypeDecoder;
 import com.android.internal.telephony.uicc.IccUtils;
 import com.android.internal.util.HexDump;

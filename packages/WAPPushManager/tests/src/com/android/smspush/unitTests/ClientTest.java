@@ -24,6 +24,8 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.telephony.IWapPushManager;
+import android.telephony.WapPushManagerParams;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,8 +33,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
-import com.android.internal.telephony.IWapPushManager;
-import com.android.internal.telephony.WapPushManagerParams;
 import com.android.internal.telephony.WapPushOverSms;
 import com.android.internal.util.HexDump;
 import com.android.smspush.WapPushManager;

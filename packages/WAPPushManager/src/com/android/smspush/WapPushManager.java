@@ -26,16 +26,15 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
+import android.telephony.IWapPushManager;
+import android.telephony.WapPushManagerParams;
 import android.util.Log;
-
-import com.android.internal.telephony.IWapPushManager;
-import com.android.internal.telephony.WapPushManagerParams;
 
 /**
  * The WapPushManager service is implemented to process incoming

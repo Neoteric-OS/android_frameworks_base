@@ -30,7 +30,7 @@
             android:permission="com.android.smspush.WAPPUSH_MANAGER_BIND"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.android.internal.telephony.IWapPushManager"></action>
+                <action android:name="android.telephony.action.WapPushManager"></action>
             </intent-filter>
         </service>
     </application>
