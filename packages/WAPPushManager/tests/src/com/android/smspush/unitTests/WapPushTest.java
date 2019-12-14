@@ -27,8 +27,8 @@ import android.provider.Telephony.Sms.Intents;
 import android.test.ServiceTestCase;
 import android.util.Log;
 
-import com.android.internal.telephony.IWapPushManager;
-import com.android.internal.telephony.WapPushManagerParams;
+import android.service.carrier.IWapPushManager;
+import android.service.carrier.WapPushManagerParams;
 import com.android.internal.telephony.WspTypeDecoder;
 import com.android.internal.telephony.uicc.IccUtils;
 import com.android.internal.util.HexDump;

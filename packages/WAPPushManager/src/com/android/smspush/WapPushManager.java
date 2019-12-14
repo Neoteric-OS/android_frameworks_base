@@ -34,8 +34,8 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.android.internal.telephony.IWapPushManager;
-import com.android.internal.telephony.WapPushManagerParams;
+import android.service.carrier.IWapPushManager;
+import android.service.carrier.WapPushManagerParams;
 
 /**
  * The WapPushManager service is implemented to process incoming
