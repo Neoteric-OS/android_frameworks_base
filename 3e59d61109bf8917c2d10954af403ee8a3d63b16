@@ -117,6 +117,30 @@
       "revId": "3e59d61109bf8917c2d10954af403ee8a3d63b16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f4b10e7_ed24fef3",
+        "filename": "core/java/android/os/SystemProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-12-14T00:36:39Z",
+      "side": 1,
+      "message": "We may need to change it in the future, more likely adding than deleting.\n\npublic native bool isVendorProp?\n\nUsually, we are distinguishing vendor/system props by SELinux, but this is impossible for apps. It\u0027s really messy I feel even to let an app process get ahold of these properties, because then we aren\u0027t sure from an SELinux perspective if the platform code or the app is accessing them. Another example, do we imagine non-vendor system apps calling this API? I wonder if the restriction should be done inside of \u0027set\u0027 using PM isVendor. Although, yeah, this is a really complicated route to go down. Impossible to get everything right.\n\nYeah, actually, aren\u0027t there Treble violations here? Similar to b/120188076. Any vendor app can use system properties?",
+      "parentUuid": "1d333803_5266929c",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 6
+      },
+      "revId": "3e59d61109bf8917c2d10954af403ee8a3d63b16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
