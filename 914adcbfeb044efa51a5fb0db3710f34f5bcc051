@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61858236_7e8886ee",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-12-15T04:11:54Z",
+      "side": 1,
+      "message": "nit: List\u003cMap\u003c\u003e\u003e \u003d new ArrayList\u003cHashMap\u003c\u003e\u003e?",
+      "range": {
+        "startLine": 264,
+        "startChar": 4,
+        "endLine": 265,
+        "endChar": 73
+      },
+      "revId": "914adcbfeb044efa51a5fb0db3710f34f5bcc051",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
