@@ -28597,6 +28597,30 @@ package android.net {
     field public final int code;
   }
 
+  public class IcmpException extends java.io.IOException {
+    ctor public IcmpException(int, int);
+    ctor public IcmpException(int, int, @Nullable String);
+    ctor public IcmpException(int, int, @Nullable String, @Nullable Throwable);
+    field public final int code;
+    field public final int type;
+  }
+
+  public class Icmpv6Exception extends java.io.IOException {
+    ctor public Icmpv6Exception(int, int);
+    ctor public Icmpv6Exception(int, int, @Nullable String);
+    ctor public Icmpv6Exception(int, int, @Nullable String, @Nullable Throwable);
+    field public final int code;
+    field public final int type;
+  }
+
+  public class Icmpv6PacketTooBigException extends android.net.Icmpv6Exception {
+    ctor public Icmpv6PacketTooBigException(@NonNull java.net.InetAddress, int);
+    ctor public Icmpv6PacketTooBigException(@NonNull java.net.InetAddress, int, @Nullable String);
+    ctor public Icmpv6PacketTooBigException(@NonNull java.net.InetAddress, int, @Nullable String, @Nullable Throwable);
+    field @NonNull public final java.net.InetAddress address;
+    field public final int mtu;
+  }
+
   public class InetAddresses {
     method public static boolean isNumericAddress(@NonNull String);
     method @NonNull public static java.net.InetAddress parseNumericAddress(@NonNull String);
