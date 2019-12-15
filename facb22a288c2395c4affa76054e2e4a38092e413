@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd1608a5_37c4e937",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-15T23:03:11Z",
+      "side": 1,
+      "message": "Should we also be discussing data accounting in this javadoc?\n\nThe requesting app will be shown as using up to (max TTL * probes per hop * packet size) Bytes for each request, which could add up if called frequently and/or with a large packet size",
+      "range": {
+        "startLine": 361,
+        "startChar": 7,
+        "endLine": 361,
+        "endChar": 89
+      },
+      "revId": "facb22a288c2395c4affa76054e2e4a38092e413",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
