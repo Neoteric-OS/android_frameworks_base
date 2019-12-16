@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "230b1eed_e1994e58",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-12-16T17:44:46Z",
+      "side": 1,
+      "message": "I\u0027m worried about frameworks depending on this kind of internals (doesn\u0027t the API blacklisting stop them?). Perhaps it\u0027d be better to add a @CorePlatformApi inside libcore that internally does this, and which frameworks can call? WDYT?",
+      "range": {
+        "startLine": 225,
+        "startChar": 12,
+        "endLine": 227,
+        "endChar": 59
+      },
+      "revId": "57094d6dc7fe3a1a5968b4814e67440dc099fbf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
