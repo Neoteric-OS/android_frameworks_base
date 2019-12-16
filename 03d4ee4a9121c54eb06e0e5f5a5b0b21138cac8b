@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "052d8bce_6fe646f4",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-16T23:15:19Z",
+      "side": 1,
+      "message": "Clarified in followup CL (aosp/1190546)",
+      "parentUuid": "7049d622_80bed518",
+      "range": {
+        "startLine": 105,
+        "startChar": 37,
+        "endLine": 105,
+        "endChar": 50
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb8bddda_66a12f14",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 14
@@ -306,6 +330,30 @@
       "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18edb471_ff5fd9b4",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-16T23:15:19Z",
+      "side": 1,
+      "message": "Leaving as Exception.\n\nIllegalArgumentException will be thrown if a non AF_INET / AF_INET6 protocol family specified. Since this error isn\u0027t I/O related, it doesn\u0027t make sense to wrap in an IOException.",
+      "parentUuid": "0bdfb5c8_6a9be90a",
+      "range": {
+        "startLine": 119,
+        "startChar": 28,
+        "endLine": 119,
+        "endChar": 37
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
