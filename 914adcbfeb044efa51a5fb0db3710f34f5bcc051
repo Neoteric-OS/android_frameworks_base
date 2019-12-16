@@ -22,6 +22,30 @@
       "revId": "914adcbfeb044efa51a5fb0db3710f34f5bcc051",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fe3bf4_5c4e8fd1",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-16T21:36:01Z",
+      "side": 1,
+      "message": "The syntax is weird, but it works if I instantiate an ArrayList\u003cMap\u003c\u003e\u003e. Done.",
+      "parentUuid": "61858236_7e8886ee",
+      "range": {
+        "startLine": 264,
+        "startChar": 4,
+        "endLine": 265,
+        "endChar": 73
+      },
+      "revId": "914adcbfeb044efa51a5fb0db3710f34f5bcc051",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
