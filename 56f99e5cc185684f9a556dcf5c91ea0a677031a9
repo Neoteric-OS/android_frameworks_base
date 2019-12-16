@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5aaa796_f241eb07",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1893,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T15:39:29Z",
+      "side": 1,
+      "message": "If this can/should also stop platform VPNs then call this stopVpnRunnerPrivileged or something. If it can\u0027t, then make sure the runner is actually running legacy VPN",
+      "range": {
+        "startLine": 1893,
+        "startChar": 33,
+        "endLine": 1893,
+        "endChar": 39
+      },
+      "revId": "56f99e5cc185684f9a556dcf5c91ea0a677031a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60953921_a2516181",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1918,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T15:39:29Z",
+      "side": 1,
+      "message": "Update the name ?",
+      "range": {
+        "startLine": 1918,
+        "startChar": 42,
+        "endLine": 1918,
+        "endChar": 48
+      },
+      "revId": "56f99e5cc185684f9a556dcf5c91ea0a677031a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d13c7a_b37e277d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T15:39:29Z",
+      "side": 1,
+      "message": "Can we take this opportunity to rename this to something that will tell the reader something about what this does ?",
+      "range": {
+        "startLine": 2028,
+        "startChar": 20,
+        "endLine": 2028,
+        "endChar": 25
+      },
+      "revId": "56f99e5cc185684f9a556dcf5c91ea0a677031a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
