@@ -141,6 +141,30 @@
       "revId": "3e59d61109bf8917c2d10954af403ee8a3d63b16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4021daba_be368081",
+        "filename": "core/java/android/os/SystemProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1291338
+      },
+      "writtenOn": "2019-12-16T09:13:05Z",
+      "side": 1,
+      "message": "What I wanted to do here was to allow vendor codes to access vendor\u0027s properties with no hacking or workaround. Can\u0027t vendor assign their own SELinux contexts to their own apps with seapp_contexts? If so, vendors will be able to control accessibilities of vendor properties so platform code or apps other than vendor can\u0027t access vendor\u0027s properties. Non-vendor system apps will get nothing with this method, because vendor\u0027s sepolicy rules won\u0027t allow non-vendor apps to access the properties.\n\nFor using PM isVendor, I don\u0027t want \u0027set\u0027 to be @SystemApi or public API. For Treble violation, vendor or odm properties are owned by vendor, so I can\u0027t see any violation.\n\nBTW if distinguishing vendor/system apps is indeed impossible, this CL has no meaning. Is it?",
+      "parentUuid": "9f4b10e7_ed24fef3",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 6
+      },
+      "revId": "3e59d61109bf8917c2d10954af403ee8a3d63b16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
