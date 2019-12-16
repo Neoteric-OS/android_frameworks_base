@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6fd88f5_859ceec6",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2019-12-16T22:55:07Z",
+      "side": 1,
+      "message": "merge conflict due to b/146350559.",
+      "revId": "eb4a1e9a01981ab6c90f83a3eadda668f1c2b07a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
