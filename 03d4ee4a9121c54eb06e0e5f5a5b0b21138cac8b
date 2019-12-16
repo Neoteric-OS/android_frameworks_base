@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "7049d622_80bed518",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T07:08:47Z",
+      "side": 1,
+      "message": "Leaving it to you. I don\u0027t think it\u0027s essential, but I also don\u0027t think it\u0027s bad to say it.",
+      "parentUuid": "374b654e_d3b65ddc",
+      "range": {
+        "startLine": 105,
+        "startChar": 37,
+        "endLine": 105,
+        "endChar": 50
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb8bddda_66a12f14",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 14
@@ -249,6 +273,30 @@
       "side": 1,
       "message": "Moved IcmpException, Icmpv6Exception, and Icmpv6PacketTooBigException definitions to aosp/1189888",
       "parentUuid": "5f003246_7e4bddf6",
+      "range": {
+        "startLine": 119,
+        "startChar": 28,
+        "endLine": 119,
+        "endChar": 37
+      },
+      "revId": "03d4ee4a9121c54eb06e0e5f5a5b0b21138cac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bdfb5c8_6a9be90a",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T07:08:47Z",
+      "side": 1,
+      "message": "Are these the only three possibilities ? If so this should probably be the common supertype (IOException I think). I think it is actually okay to make this Exception in a future version, because no existing implementation should be broken by such a change – that being said if you *already* know this will throw other exceptions than IOException down the road then keep this an instance of Exception.",
+      "parentUuid": "a9d32a4b_ea3ef1fe",
       "range": {
         "startLine": 119,
         "startChar": 28,

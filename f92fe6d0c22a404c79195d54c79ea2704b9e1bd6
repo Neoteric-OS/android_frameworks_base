@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88d9ea93_e9070ded",
+        "filename": "api/current.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 28485,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T07:08:47Z",
+      "side": 1,
+      "message": "PerTtl ? Leaving up to you.",
+      "range": {
+        "startLine": 28485,
+        "startChar": 33,
+        "endLine": 28485,
+        "endChar": 39
+      },
+      "revId": "f92fe6d0c22a404c79195d54c79ea2704b9e1bd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
