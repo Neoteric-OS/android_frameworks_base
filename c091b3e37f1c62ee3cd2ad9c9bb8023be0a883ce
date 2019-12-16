@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "917d97b6_b1c91e3d",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-16T23:23:50Z",
+      "side": 1,
+      "message": "That makes sense. Updated to use \u0027applied\u0027. Also clarified for onConnectivityReport and onDataStallSuspected",
+      "parentUuid": "37b4e6c9_a85bbb87",
+      "range": {
+        "startLine": 431,
+        "startChar": 58,
+        "endLine": 431,
+        "endChar": 65
+      },
+      "revId": "c091b3e37f1c62ee3cd2ad9c9bb8023be0a883ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ffb829_da9c568b",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 20
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "37862b9e_78a2dfc5",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-16T23:23:50Z",
+      "side": 1,
+      "message": "Updated to OnDataStallSuspected",
+      "parentUuid": "77ffb829_da9c568b",
+      "range": {
+        "startLine": 537,
+        "startChar": 20,
+        "endLine": 537,
+        "endChar": 33
+      },
+      "revId": "c091b3e37f1c62ee3cd2ad9c9bb8023be0a883ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b10fd4e9_d83eb55b",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 20
@@ -68,6 +116,30 @@
       "revId": "c091b3e37f1c62ee3cd2ad9c9bb8023be0a883ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ce4549_197540ee",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-16T23:23:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b10fd4e9_d83eb55b",
+      "range": {
+        "startLine": 583,
+        "startChar": 21,
+        "endLine": 583,
+        "endChar": 52
+      },
+      "revId": "c091b3e37f1c62ee3cd2ad9c9bb8023be0a883ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
