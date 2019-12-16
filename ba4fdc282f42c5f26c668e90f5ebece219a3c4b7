@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24749f85_f340a64d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2353,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T15:34:40Z",
+      "side": 1,
+      "message": "finals on all those locals please, don\u0027t make the readers of this code think about this",
+      "range": {
+        "startLine": 2353,
+        "startChar": 20,
+        "endLine": 2353,
+        "endChar": 26
+      },
+      "revId": "ba4fdc282f42c5f26c668e90f5ebece219a3c4b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
