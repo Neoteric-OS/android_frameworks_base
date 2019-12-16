@@ -22,6 +22,30 @@
       "revId": "8e775ceeda6050d5f9474746c391cee827654a21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950ecc36_5712108e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 6465,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T12:33:16Z",
+      "side": 1,
+      "message": "Oh no it doesn\u0027t, not yet. But this tower of changes ends up fixing it.\n\nThe problem is that the side effects must be done in the right order to avoid causing too many of them. We can\u0027t afford to change the network satisfying a request multiple times, so we must always find first the network that will satisfy the request. For example :\n\nsendUpdatedScoreToFactories will just take the new network and send its score to all factories asynchronously. If there are 4 networks connected, and the one satisfying the request disconnects, we loop through networks in descending score order. If it was in ascending order, we\u0027d assign the lowest scoring request first, then the middle one, then the top one, and we would send all three scores to all factories.\n\nWhen we send the lowest score to factories, they may try to bring up a network. So for example, if we have Ethernet and Mobile connected, we\u0027ll first send the Mobile score to the WiFi factory, and WiFi will try to connect, then we\u0027ll send the Ethernet score, and WiFi will stop connecting, but in the mean time it will have set the WiFi chip to high power mode. Ouch.\n\nThe same thing applies to callbacks : if you reassign in the wrong order, you\u0027ll send onAvailable for the worse network then immediately onAvailable to the better one to REQUEST type requests.\nIn fact, there IS a known bug in one particular case : if a network stops satisfying a request, but there is another lower-scoring network that can, because we iterate in this order, we\u0027ll figure out first that the higher-scoring network can\u0027t satisfy the request and we\u0027ll send LOST. Only afterwards we find the lower-scoring network and we send AVAILABLE. You can see there is a comment about that in ll.6531~6537. This has been the case for a long time.\n\n\nYou can notice that the callbacks used to be sent in the loop, and now the loop is only writing into the NetworkReassignment, but this is still true : it would add multiple entries to the NetworkReassignment and they would be processed in order. But for callbacks, the new NetworkReassignment scheme makes it possible to catch the issue before it is applied : if you go A → B then B → C we could just replace this with an A → C entry in the NetworkReassignment. This is actually my strategy here to get rid of the order requirement.\n\nAnd in fact, this is what [NS A37] does, fixing the issue of the LOST + AVAILABLE callbacks described in the comment in l.6531. But even after A37 there are still some side effects to fix before this becomes order-independent. For example, we reassign nri.mSatisfier in l.6452, but we read from it in the loop in l.6369. Anything depending on this global state would change if we change the order. (the specific issue with mSpecifier is fixed by A40).",
+      "parentUuid": "0c6f311c_2d39133a",
+      "range": {
+        "startLine": 6465,
+        "startChar": 51,
+        "endLine": 6465,
+        "endChar": 77
+      },
+      "revId": "8e775ceeda6050d5f9474746c391cee827654a21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
