@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60f673ac_32571ac3",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T11:04:35Z",
+      "side": 1,
+      "message": "That\u0027s also true if the profile is not selected as always-on right ?",
+      "range": {
+        "startLine": 30,
+        "startChar": 31,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "bae1f3131121af617becc59d4fd65fba4c2097c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f36b5c_e7d896d7",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T11:04:35Z",
+      "side": 1,
+      "message": "That doesn\u0027t sound like an incentive to me. Easier to write ? Improved performance through kernel direct codepaths ? Guarantees to users of no on-device packet inspection ? Something else ?",
+      "range": {
+        "startLine": 34,
+        "startChar": 23,
+        "endLine": 34,
+        "endChar": 52
+      },
+      "revId": "bae1f3131121af617becc59d4fd65fba4c2097c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec25748_7f372ef2",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T11:04:35Z",
+      "side": 1,
+      "message": "I find this naming here puzzling because it looks like it should take an argument. Delete what VPN profile ? This can probably be dispelled just by calling it deleteProvisionedVpnProfile. WDYT ?\n\nMaybe likewise below : startProvisionedVpn",
+      "range": {
+        "startLine": 61,
+        "startChar": 16,
+        "endLine": 61,
+        "endChar": 32
+      },
+      "revId": "bae1f3131121af617becc59d4fd65fba4c2097c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1efcadaa_28c05e2d",
+        "filename": "tests/net/java/android/net/VpnManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T11:04:35Z",
+      "side": 1,
+      "message": "What you wrote is perfectly fine but keep in mind that in this codebase you can use Kotlin for more expressive and easier code :)",
+      "revId": "bae1f3131121af617becc59d4fd65fba4c2097c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
