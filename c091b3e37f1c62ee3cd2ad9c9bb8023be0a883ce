@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37b4e6c9_a85bbb87",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T07:18:03Z",
+      "side": 1,
+      "message": "\"applied\" maybe ?\n\nI think it must be crystal clear, like on the previous patch, that this network may have disconnected by the time the report is sent.\n\nWorse : if you keep a ref to it forever, it\u0027s possible a different Network is actually #equals() to it. This is generally true of the entire surface and it takes a sufficient amount of time for network IDs to be reused for this never to be a problem in practice so I don\u0027t think we need to call this out.\n\nBut I think it must be clear that this network is under no obligation to still be connected.",
+      "range": {
+        "startLine": 431,
+        "startChar": 58,
+        "endLine": 431,
+        "endChar": 65
+      },
+      "revId": "c091b3e37f1c62ee3cd2ad9c9bb8023be0a883ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ffb829_da9c568b",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T07:18:03Z",
+      "side": 1,
+      "message": "onDataStallSuspected, or onSuspectedDataStall.",
+      "range": {
+        "startLine": 537,
+        "startChar": 20,
+        "endLine": 537,
+        "endChar": 33
+      },
+      "revId": "c091b3e37f1c62ee3cd2ad9c9bb8023be0a883ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10fd4e9_d83eb55b",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T07:18:03Z",
+      "side": 1,
+      "message": "Make the callback the last argument.\n\nhttps://g3doc.corp.google.com/company/teams/android-api-council/guidelines.md?cl\u003dhead#1-use-listener-for-single-method-interfaces-callback-otherwise\n\nConsider the syntax of the caller :\n\n  register...(request, executor, new Callback() {\n     /* 20 lines of code */\n    });\n\nis nicer than\n\n  register...(request, new Callback() {\n     /* 20 lines of code */\n    }, executor);",
+      "range": {
+        "startLine": 583,
+        "startChar": 21,
+        "endLine": 583,
+        "endChar": 52
+      },
+      "revId": "c091b3e37f1c62ee3cd2ad9c9bb8023be0a883ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
