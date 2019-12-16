@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86f70ad9_929f3cfb",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 8682,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-16T21:15:42Z",
+      "side": 1,
+      "message": "Can you sort this alphabetically into the list of other method names here?  Although this is passing in AOSP, the downstream API lint checker is complaining that the method should be declared under \"enableCellBroadcastRange\".",
+      "range": {
+        "startLine": 8682,
+        "startChar": 4,
+        "endLine": 8682,
+        "endChar": 121
+      },
+      "revId": "a50f44c0abe44155edf63da3d7a3c78144140972",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
