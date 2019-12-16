@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4162838_ce7f54ab",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1958,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T15:16:38Z",
+      "side": 1,
+      "message": "Optional : is it useful to include something from profile ?",
+      "range": {
+        "startLine": 1958,
+        "startChar": 18,
+        "endLine": 1958,
+        "endChar": 21
+      },
+      "revId": "97eff45b504ca768ab63912cc684c83dc0898657",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f75505_e98b1e76",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1961,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T15:16:38Z",
+      "side": 1,
+      "message": "Isn\u0027t it a little early to assign this ? Other places do this in establish() or so.",
+      "range": {
+        "startLine": 1961,
+        "startChar": 12,
+        "endLine": 1961,
+        "endChar": 19
+      },
+      "revId": "97eff45b504ca768ab63912cc684c83dc0898657",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
