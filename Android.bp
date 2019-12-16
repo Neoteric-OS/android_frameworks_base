@@ -230,6 +230,7 @@ filegroup {
         ":framework-telephony-common-sources",
         ":framework-telephony-sources",
         ":framework-wifi-sources",
+        ":net-utils-framework-common-srcs",
         ":PacProcessor-aidl-sources",
         ":ProxyHandler-aidl-sources",
 
