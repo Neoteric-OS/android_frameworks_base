@@ -1,0 +1,7 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Dario Freni <dariofreni@google.com>
+Submitted-by: Oli Lan <olilan@google.com>
+Submitted-at: Tue, 17 Dec 2019 10:31:23 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1189121
+Project: platform/frameworks/base
+Branch: refs/heads/master
