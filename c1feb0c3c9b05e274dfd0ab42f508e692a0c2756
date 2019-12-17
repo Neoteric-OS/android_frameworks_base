@@ -48,6 +48,121 @@
     },
     {
       "key": {
+        "uuid": "37c4e9cb_e75c50b1",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 203,
+        "startChar": 4,
+        "endLine": 203,
+        "endChar": 11
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da01b09e_337a80ba",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "If tethering is not supported, should we not create it? suppose isTetheringSupported() should not change in runtime.",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 223,
+        "endChar": 70
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0659dc89_c9b7ce37",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "Probably we do not listen for so many intents if tethering is not supported in the device.\n\nAlso, in other code like registerSoftApCallback. Ideally, if tethering is not supported, the code should not even run.",
+      "range": {
+        "startLine": 313,
+        "startChar": 8,
+        "endLine": 319,
+        "endChar": 70
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9cbce7_dff5f809",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "Nit: extra space",
+      "range": {
+        "startLine": 372,
+        "startChar": 11,
+        "endLine": 372,
+        "endChar": 12
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2ac326_1b906330",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "Nit: I think \"if (!mDeps.isTetheringSupported()) return;\" can be checked here since you do not need to get power save mode status if you do not need to know that.",
+      "range": {
+        "startLine": 704,
+        "startChar": 8,
+        "endLine": 704,
+        "endChar": 50
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48b07c6a_c29fd731",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 10
@@ -64,6 +179,29 @@
         "startChar": 15,
         "endLine": 852,
         "endChar": 56
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670aea4a_2e0f1a95",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringDependencies.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "Nit: @NonNull final    if possible",
+      "range": {
+        "startLine": 155,
+        "startChar": 63,
+        "endLine": 155,
+        "endChar": 64
       },
       "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -117,6 +255,75 @@
     },
     {
       "key": {
+        "uuid": "9ac8e150_81bf2749",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "Nit: maybe onActiveDataSubscriptionIdChanged is clear. then the parameter could just be \"subId\"",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 45
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc52aa4_d450521c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "Nit: why only 0, 1 and 2? By definition, there is also 3(TETHERING_WIFI_P2P).",
+      "range": {
+        "startLine": 117,
+        "startChar": 84,
+        "endLine": 117,
+        "endChar": 92
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9722a9ed_193cb818",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "From the possible value defineed in @IntDef, it can be TETHERING_INVLAID which is -1. That should be invalid. We may need to filter first or we will get a unexpected index(-2147483648) and use it in l.149",
+      "range": {
+        "startLine": 119,
+        "startChar": 12,
+        "endLine": 119,
+        "endChar": 39
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2e7dcdf_2c908953",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 10
@@ -133,6 +340,121 @@
         "startChar": 16,
         "endLine": 158,
         "endChar": 17
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363b6154_8e887bc4",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "Nit: It\u0027s one-line. why do we need this to be a function?",
+      "range": {
+        "startLine": 164,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 53
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d020bef_40c45412",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "Nit: null /* tag */",
+      "range": {
+        "startLine": 164,
+        "startChar": 36,
+        "endLine": 164,
+        "endChar": 40
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f38b624_78bf6100",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "what if the upstream is not cellular? Also refer to the resource of active data subId?",
+      "range": {
+        "startLine": 183,
+        "startChar": 30,
+        "endLine": 183,
+        "endChar": 71
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a471c862_8c7e7e14",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "Nit: do you like to put it in a const?",
+      "range": {
+        "startLine": 187,
+        "startChar": 94,
+        "endLine": 187,
+        "endChar": 95
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dddcf8f_a85bcffb",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "It\u0027s not intuitive why no hotspot client is decided by this. Maybe a comment helps.",
+      "range": {
+        "startLine": 187,
+        "startChar": 67,
+        "endLine": 187,
+        "endChar": 95
       },
       "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -248,6 +570,52 @@
         "startChar": 33,
         "endLine": 244,
         "endChar": 58
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def48d33_2108c8a7",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "Nit: mContext, 0 /* requestCode */, intent, 0 /* flags */, null /* options */",
+      "range": {
+        "startLine": 244,
+        "startChar": 59,
+        "endLine": 244,
+        "endChar": 87
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4671aa22_19dba877",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T13:41:05Z",
+      "side": 1,
+      "message": "don\u0027t you need to know/filter the network? If wifi and mobile are connected, upstream is wifi. you may update notification when mobile is down?",
+      "range": {
+        "startLine": 346,
+        "startChar": 8,
+        "endLine": 347,
+        "endChar": 85
       },
       "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
