@@ -1,0 +1,8 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Rubin Xu <rubinxu@google.com>
+Code-Review+2: Chalard Jean <jchalard@google.com>
+Submitted-by: Benedict Wong <benedictwong@google.com>
+Submitted-at: Tue, 17 Dec 2019 18:35:48 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1164545
+Project: platform/frameworks/base
+Branch: refs/heads/master
