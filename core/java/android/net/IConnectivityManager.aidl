@@ -19,6 +19,7 @@ package android.net;
 import android.app.PendingIntent;
 import android.net.ConnectionInfo;
 import android.net.LinkProperties;
+import android.net.IConnectivityDiagnosticsCallback;
 import android.net.ITetheringEventCallback;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -222,6 +223,10 @@ interface IConnectivityManager
 
     void registerTetheringEventCallback(ITetheringEventCallback callback, String callerPkg);
     void unregisterTetheringEventCallback(ITetheringEventCallback callback, String callerPkg);
+
+    void registerConnectivityDiagnosticsCallback(in IConnectivityDiagnosticsCallback callback,
+            in NetworkRequest request);
+    void unregisterConnectivityDiagnosticsCallback(in IConnectivityDiagnosticsCallback callback);
 
     IBinder startOrGetTestNetworkService();
 }
