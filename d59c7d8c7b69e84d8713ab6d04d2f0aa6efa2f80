@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "887b9392_f7aa0231",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-12-17T15:15:04Z",
+      "side": 1,
+      "message": "A bit more brittle now, but I think it\u0027s okay...",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 37
+      },
+      "revId": "d59c7d8c7b69e84d8713ab6d04d2f0aa6efa2f80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
