@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ed31684_33464624",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-12-17T12:49:25Z",
+      "side": 1,
+      "message": "The naming is misleading (and i definitely misunderstood it) -- this refers to the additional space that needs to be made available on the partition to apply an update, right ? It\u0027s not the total amount of space that we\u0027d need to apply a payload is it ? I\u0027d suggest renaming.\n\nAlso, the contract of this method is pretty error prone as callers have to check the errorCode as well (in order to interpret it correctly). For example, if a caller doesn\u0027t check the error code, they may wrongly assume that no additional space is required (when the reality is that the method threw a ServiceSpecificException).\n\nCan we eliminate this somehow ?",
+      "range": {
+        "startLine": 459,
+        "startChar": 8,
+        "endLine": 459,
+        "endChar": 38
+      },
+      "revId": "9ea81249880c5e13a6e7a44b781db5c96f7672bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
