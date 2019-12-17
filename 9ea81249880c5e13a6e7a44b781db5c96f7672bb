@@ -46,6 +46,30 @@
       "revId": "9ea81249880c5e13a6e7a44b781db5c96f7672bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1951df8_8b1df68c",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-12-17T22:53:24Z",
+      "side": 1,
+      "message": "I could also make these fields private and have:\n\npublic int errorCode() { return mErrorCode; }\npublic long totalSpaceRequired() {\n    if (mErrorCode \u003d\u003d SUCCESS) return 0;\n    if (mErrorCode !\u003d NOT_ENOUGH_SPACE) return mSpaceRequired;\n    throw new IllegalStateException();\n}",
+      "parentUuid": "c46f820e_7c202f4d",
+      "range": {
+        "startLine": 459,
+        "startChar": 8,
+        "endLine": 459,
+        "endChar": 38
+      },
+      "revId": "9ea81249880c5e13a6e7a44b781db5c96f7672bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
