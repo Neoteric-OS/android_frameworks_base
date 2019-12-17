@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e29e119_4fc7d20e",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4180,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-17T05:35:53Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem great. I think Jean said that this will move into a static library instead?",
+      "range": {
+        "startLine": 4180,
+        "startChar": 23,
+        "endLine": 4180,
+        "endChar": 54
+      },
+      "revId": "b3254964aef66d391f45746f4d02e8ef7bd8a777",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
