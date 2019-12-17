@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "20618364_e7adf358",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 6110,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-17T09:58:30Z",
+      "side": 1,
+      "message": "nit: maybe add @Nullable?",
+      "range": {
+        "startLine": 6110,
+        "startChar": 76,
+        "endLine": 6110,
+        "endChar": 92
+      },
+      "revId": "7ea6ef8c557cc69a40771572afc9fd899aaa5dd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a5667cf_25e13e04",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 10
