@@ -125,8 +125,8 @@ public class CbGeoUtils {
     }
 
     /**
-     * The class represents a simple polygon with at least 3 points.
-     * @hide
+     * A class representing a simple polygon with at least 3 points. This is used for geo-fencing
+     * logic with cell broadcasts.
      */
     public static class Polygon implements Geometry {
         /**
@@ -145,7 +145,7 @@ public class CbGeoUtils {
          * connected to form an edge of the polygon. The polygon has at least 3 vertices, and the
          * last vertices and the first vertices must be adjacent.
          *
-         * The longitude difference in the vertices should be less than 180 degree.
+         * The longitude difference in the vertices should be less than 180 degrees.
          */
         public Polygon(@NonNull List<LatLng> vertices) {
             mVertices = vertices;
@@ -164,19 +164,24 @@ public class CbGeoUtils {
                     .collect(Collectors.toList());
         }
 
-        public List<LatLng> getVertices() {
+        /**
+         * Return the list of vertices which compose the polygon.
+         */
+        public @NonNull List<LatLng> getVertices() {
             return mVertices;
         }
 
         /**
-         * Check if the given point {@code p} is inside the polygon. This method counts the number
-         * of times the polygon winds around the point P, A.K.A "winding number". The point is
-         * outside only when this "winding number" is 0.
+         * Check if the given LatLng is inside the polygon.
          *
-         * If a point is on the edge of the polygon, it is also considered to be inside the polygon.
+         * If a LatLng is on the edge of the polygon, it is also considered to be inside the
+         * polygon.
          */
         @Override
-        public boolean contains(LatLng latLng) {
+        public boolean contains(@NonNull LatLng latLng) {
+            // This method counts the number of times the polygon winds around the point P, A.K.A
+            // "winding number". The point is outside only when this "winding number" is 0.
+
             Point p = convertAndScaleLatLng(latLng);
 
             int n = mScaledVertices.size();
@@ -245,6 +250,7 @@ public class CbGeoUtils {
             return a.x * b.y - a.y * b.x;
         }
 
+        /** @hide */
         static final class Point {
             public final double x;
             public final double y;
@@ -270,29 +276,47 @@ public class CbGeoUtils {
     }
 
     /**
-     * The class represents a circle.
-     * @hide
+     * A class represents a {@link Geometry} in the shape of a Circle. This is used for handling
+     * geo-fenced cell broadcasts.
      */
     public static class Circle implements Geometry {
         private final LatLng mCenter;
         private final double mRadiusMeter;
 
-        public Circle(LatLng center, double radiusMeter) {
+        /**
+         * Construct a Circle given a center point and a radius in meters.
+         *
+         * @param center the latitude and longitude of the center of the circle
+         * @param radiusInMeters the radius of the circle in meters
+         */
+        public Circle(@NonNull LatLng center, double radiusInMeters) {
             this.mCenter = center;
-            this.mRadiusMeter = radiusMeter;
+            this.mRadiusMeter = radiusInMeters;
         }
 
-        public LatLng getCenter() {
+        /**
+         * Return the latitude and longitude of the center of the circle;
+         */
+        public @NonNull LatLng getCenter() {
             return mCenter;
         }
 
+
+        /**
+         * Return the radius of the circle in meters.
+         */
         public double getRadius() {
             return mRadiusMeter;
         }
 
+        /**
+         * Check if the given LatLng is inside the circle.
+         *
+         * If a LatLng is on the edge of the circle, it is also considered to be inside the circle.
+         */
         @Override
-        public boolean contains(LatLng p) {
-            return mCenter.distance(p) <= mRadiusMeter;
+        public boolean contains(@NonNull LatLng latLng) {
+            return mCenter.distance(latLng) <= mRadiusMeter;
         }
 
         @Override
