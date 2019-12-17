@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09383c06_51c5cfef",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-17T07:08:44Z",
+      "side": 1,
+      "message": "Done, revised",
+      "parentUuid": "f1a40e67_974c1eef",
+      "range": {
+        "startLine": 534,
+        "startChar": 85,
+        "endLine": 534,
+        "endChar": 92
+      },
+      "revId": "a0610216a33db6a192c2ac2cad550fb960f9c0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29fc889a_491fe826",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "a0610216a33db6a192c2ac2cad550fb960f9c0e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43466aa_16309968",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4509,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-17T07:08:44Z",
+      "side": 1,
+      "message": "1. Oops, my oversight, for sure this has to be called inside NL.\n2. IIUC forceUpdate might not need to be inside the lock. Let\u0027s wait for Sudheer take a look.",
+      "parentUuid": "29fc889a_491fe826",
+      "range": {
+        "startLine": 4509,
+        "startChar": 40,
+        "endLine": 4509,
+        "endChar": 42
+      },
+      "revId": "a0610216a33db6a192c2ac2cad550fb960f9c0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3042df28_0bfc1341",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-17T07:08:44Z",
+      "side": 1,
+      "message": "In the plan global alert is ~2MB or 1/1000 lowest rule.\nIt is triggered when one provider reaches it.\nAnd re-armed under 1sec constrain.\nSo IIUC we don\u0027t need to divide this.",
+      "parentUuid": "9ece6efb_64623cf5",
+      "range": {
+        "startLine": 519,
+        "startChar": 38,
+        "endLine": 519,
+        "endChar": 55
+      },
+      "revId": "a0610216a33db6a192c2ac2cad550fb960f9c0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b83e14a7_696a6ec4",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2019-12-12T13:49:22Z",
       "side": 1,
       "message": "I think I\u0027m missing something fundamental here.\n\nWe need to make sure the limit is never exceeded. I thought we\u0027d be dividing the limit by the number of providers and have each provider limit by that. In this picture there is no iface. In this world I don\u0027t understand why this function takes an interface.\n\nSo assuming I\u0027m missing a fundamental reason that this must take an interface, that means we can\u0027t do what I describe above. Instead we need to divide by the number of interfaces then right ? But if that\u0027s the case, if 2 providers track the same interface, we can have overages. E.g. limit is 1MB and there is only 1 interface on the system tracked by 2 providers, we set the limit to 1MB because 1MB / 1 \u003d 1MB, and both providers do 999kB and we have exceeded the limit.\n\nWhat am I missing ?",
+      "range": {
+        "startLine": 1505,
+        "startChar": 58,
+        "endLine": 1505,
+        "endChar": 63
+      },
+      "revId": "a0610216a33db6a192c2ac2cad550fb960f9c0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8113613_da1fabbf",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-17T07:08:44Z",
+      "side": 1,
+      "message": "1. The reason we need interface is answered here:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1168608/6/core/java/android/net/INetworkStatsProvider.aidl#29\n\n2. The point you missed is that we\u0027ll have global alert fired frequently.\nThe limit will be re-calculated every time provider fires that, See aosp/1183413\n\n3. As for limit, yes you are right.\nWe need to devide it to prevent overshooting.\nBut we also want to prevent network from blocking if the limit is not actually reached.\nNeed more time to think about that and will reply later.",
+      "parentUuid": "b83e14a7_696a6ec4",
       "range": {
         "startLine": 1505,
         "startChar": 58,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "10cfa715_75f30e8c",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1786,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-17T07:08:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b6068f_696324e8",
+      "range": {
+        "startLine": 1786,
+        "startChar": 8,
+        "endLine": 1786,
+        "endChar": 20
+      },
+      "revId": "a0610216a33db6a192c2ac2cad550fb960f9c0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e736d080_094d4463",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "a0610216a33db6a192c2ac2cad550fb960f9c0e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7883c9e5_143bf555",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1796,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-17T07:08:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e736d080_094d4463",
+      "range": {
+        "startLine": 1796,
+        "startChar": 14,
+        "endLine": 1796,
+        "endChar": 39
+      },
+      "revId": "a0610216a33db6a192c2ac2cad550fb960f9c0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4eb959a0_b50083e8",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1817,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-17T07:08:44Z",
+      "side": 1,
+      "message": "Done, adopted RemoteCallbackList, see if it works for you.",
+      "parentUuid": "467c36f2_a0a6d738",
+      "range": {
+        "startLine": 1817,
+        "startChar": 78,
+        "endLine": 1817,
+        "endChar": 98
+      },
+      "revId": "a0610216a33db6a192c2ac2cad550fb960f9c0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aff528b7_fe791818",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 5
@@ -174,6 +342,30 @@
       "writtenOn": "2019-12-12T13:49:22Z",
       "side": 1,
       "message": "This is already what will happen if you don\u0027t check for it explicitly so I\u0027m not sure it\u0027s very valuable to do that test. Not feeling strongly.",
+      "range": {
+        "startLine": 1860,
+        "startChar": 12,
+        "endLine": 1862,
+        "endChar": 13
+      },
+      "revId": "a0610216a33db6a192c2ac2cad550fb960f9c0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5431b65_e4b7b4cd",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1862,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-17T07:08:44Z",
+      "side": 1,
+      "message": "Done,\nHowever I do need to protect the service from crashing when provider send me null.\nSee if this works for you.",
+      "parentUuid": "aff528b7_fe791818",
       "range": {
         "startLine": 1860,
         "startChar": 12,
