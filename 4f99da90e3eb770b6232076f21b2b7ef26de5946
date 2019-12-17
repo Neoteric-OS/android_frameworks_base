@@ -16,6 +16,24 @@
       "revId": "4f99da90e3eb770b6232076f21b2b7ef26de5946",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bcdf74_81a12421",
+        "filename": "packages/SystemUI/src/com/android/systemui/biometrics/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2019-12-17T02:22:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1ba4844_d9785078",
+      "revId": "4f99da90e3eb770b6232076f21b2b7ef26de5946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
