@@ -60,55 +60,6 @@ public class ConnectivityDiagnosticsManager {
     /** @hide */
     public ConnectivityDiagnosticsManager() {}
 
-    /** Class that includes connectivity information for a specific Network at a specific time. */
-    public static class ConnectivityReport {
-        /** The Network for which this ConnectivityReport applied */
-        @NonNull public final Network network;
-
-        /**
-         * The timestamp for the report. The timestamp is taken from {@link
-         * System#currentTimeMillis}.
-         */
-        public final long reportTimestamp;
-
-        /** LinkProperties available on the Network at the reported timestamp */
-        @NonNull public final LinkProperties linkProperties;
-
-        /** NetworkCapabilities available on the Network at the reported timestamp */
-        @NonNull public final NetworkCapabilities networkCapabilities;
-
-        /** PersistableBundle that may contain additional info about the report */
-        @NonNull public final PersistableBundle additionalInfo;
-
-        /**
-         * Constructor for ConnectivityReport.
-         *
-         * <p>Apps should obtain instances through {@link
-         * ConnectivityDiagnosticsCallback#onConnectivityReport} instead of instantiating their own
-         * instances (unless for testing purposes).
-         *
-         * @param network The Network for which this ConnectivityReport applies
-         * @param reportTimestamp The timestamp for the report
-         * @param linkProperties The LinkProperties available on network at reportTimestamp
-         * @param networkCapabilities The NetworkCapabilities available on network at
-         *     reportTimestamp
-         * @param additionalInfo A PersistableBundle that may contain additional info about the
-         *     report
-         */
-        public ConnectivityReport(
-                @NonNull Network network,
-                long reportTimestamp,
-                @NonNull LinkProperties linkProperties,
-                @NonNull NetworkCapabilities networkCapabilities,
-                @NonNull PersistableBundle additionalInfo) {
-            this.network = network;
-            this.reportTimestamp = reportTimestamp;
-            this.linkProperties = linkProperties;
-            this.networkCapabilities = networkCapabilities;
-            this.additionalInfo = additionalInfo;
-        }
-    }
-
     /** Class that includes information for a suspected data stall on a specific Network */
     public static class DataStallReport {
         /** The Network for which this DataStallReport applied */

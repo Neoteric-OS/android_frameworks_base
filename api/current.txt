@@ -28467,18 +28467,9 @@ package android.net {
 
   public abstract static class ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback {
     ctor public ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback();
-    method public void onConnectivityReport(@NonNull android.net.ConnectivityDiagnosticsManager.ConnectivityReport);
+    method public void onConnectivityReport(@NonNull android.net.ConnectivityReport);
     method public void onDataStallSuspected(@NonNull android.net.ConnectivityDiagnosticsManager.DataStallReport);
     method public void onNetworkConnectivityReported(@NonNull android.net.Network, boolean);
-  }
-
-  public static class ConnectivityDiagnosticsManager.ConnectivityReport {
-    ctor public ConnectivityDiagnosticsManager.ConnectivityReport(@NonNull android.net.Network, long, @NonNull android.net.LinkProperties, @NonNull android.net.NetworkCapabilities, @NonNull android.os.PersistableBundle);
-    field @NonNull public final android.os.PersistableBundle additionalInfo;
-    field @NonNull public final android.net.LinkProperties linkProperties;
-    field @NonNull public final android.net.Network network;
-    field @NonNull public final android.net.NetworkCapabilities networkCapabilities;
-    field public final long reportTimestamp;
   }
 
   public static class ConnectivityDiagnosticsManager.DataStallReport {
@@ -28580,6 +28571,18 @@ package android.net {
 
   public static interface ConnectivityManager.OnNetworkActiveListener {
     method public void onNetworkActive();
+  }
+
+  public final class ConnectivityReport implements android.os.Parcelable {
+    ctor public ConnectivityReport(@NonNull android.net.Network, long, @NonNull android.net.LinkProperties, @NonNull android.net.NetworkCapabilities, @NonNull android.os.PersistableBundle);
+    method public int describeContents();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.ConnectivityReport> CREATOR;
+    field @NonNull public final android.os.PersistableBundle additionalInfo;
+    field @NonNull public final android.net.LinkProperties linkProperties;
+    field @NonNull public final android.net.Network network;
+    field @NonNull public final android.net.NetworkCapabilities networkCapabilities;
+    field public final long reportTimestamp;
   }
 
   public class Credentials {
