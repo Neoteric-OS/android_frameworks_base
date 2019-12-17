@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b4abd6f_eebd70c0",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-17T17:24:20Z",
+      "side": 0,
+      "message": "These seems not related this CL.",
+      "range": {
+        "startLine": 345,
+        "startChar": 11,
+        "endLine": 345,
+        "endChar": 116
+      },
+      "revId": "2cf7b94daffc1c7e8f0e78674edcfedad696b952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

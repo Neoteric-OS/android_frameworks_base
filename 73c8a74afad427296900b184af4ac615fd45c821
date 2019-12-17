@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a06742e2_8ecbc8d1",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-17T17:24:20Z",
+      "side": 1,
+      "message": "could you address it ??",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 61
+      },
+      "revId": "73c8a74afad427296900b184af4ac615fd45c821",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca06c82_c365f1c1",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-17T17:24:20Z",
+      "side": 1,
+      "message": "These seems not related this CL.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 4
+      },
+      "revId": "73c8a74afad427296900b184af4ac615fd45c821",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "044387e4_6dfe63c9",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-17T17:24:20Z",
+      "side": 1,
+      "message": "These seems not related this CL.",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 147
+      },
+      "revId": "73c8a74afad427296900b184af4ac615fd45c821",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
