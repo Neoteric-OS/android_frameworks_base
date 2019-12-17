@@ -22,6 +22,30 @@
       "revId": "d59c7d8c7b69e84d8713ab6d04d2f0aa6efa2f80",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0da435c_efd60006",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-12-17T16:01:13Z",
+      "side": 1,
+      "message": "Or less brittle, since unrelated changes in the annotation processor don\u0027t break it, Depends on your perspective :)",
+      "parentUuid": "887b9392_f7aa0231",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 37
+      },
+      "revId": "d59c7d8c7b69e84d8713ab6d04d2f0aa6efa2f80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
