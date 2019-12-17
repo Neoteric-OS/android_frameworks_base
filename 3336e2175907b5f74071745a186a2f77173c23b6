@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "16c94f1f_69c50e2d",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 2529,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-12-17T19:07:01Z",
+      "side": 1,
+      "message": "SGTM! I was blindly C\u0026P.",
+      "parentUuid": "e519a8c3_de0fe74a",
+      "range": {
+        "startLine": 2529,
+        "startChar": 33,
+        "endLine": 2529,
+        "endChar": 53
+      },
+      "revId": "3336e2175907b5f74071745a186a2f77173c23b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "061b9c00_967efadc",
         "filename": "core/res/AndroidManifest.xml",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d3c9eb3c_d536134a",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 2536,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-12-17T19:07:01Z",
+      "side": 1,
+      "message": "Not sure about this. Do you think OEMS want their own settings / quick settings apps under priv-app?\n\nThere are a few other users I was going to switch over separately in one go for other form factors, but I\u0027m guessing they\u0027d all be signature:\n\nhttps://r.android.com/1172172 - TvSettings\nhttps://r.android.com/1172266 - Car Settings\nhttps://r.android.com/1172112 - Car \"developeroptions\" (?)\n\nI\u0027m happy to take a steer on this as I don\u0027t really know the impact if this ends up too constrained.",
+      "parentUuid": "061b9c00_967efadc",
+      "range": {
+        "startLine": 2536,
+        "startChar": 43,
+        "endLine": 2536,
+        "endChar": 53
+      },
+      "revId": "3336e2175907b5f74071745a186a2f77173c23b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "536d41d0_4c519a54",
         "filename": "data/etc/privapp-permissions-platform.xml",
         "patchSetId": 14
@@ -59,6 +107,30 @@
       "writtenOn": "2019-12-17T18:35:32Z",
       "side": 1,
       "message": "Hmm I\u0027m trying to remember where this component comes from; is it closer to the enterprise world?  (Should it be suggesting time via a DevicePolicyManager API, instead of claiming to be setting time from a \"manual\" human?)",
+      "range": {
+        "startLine": 67,
+        "startChar": 46,
+        "endLine": 67,
+        "endChar": 65
+      },
+      "revId": "3336e2175907b5f74071745a186a2f77173c23b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4e1b27_85c253c7",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-12-17T19:07:01Z",
+      "side": 1,
+      "message": "Yes, I think ManagedProvisioning is enterprise.\n\nThat\u0027s a good point. I switched it over from calling AlarmManager.setTime() / setTimeZone() directly. If managed provisioning needs \"just do what I say, set the clock / time zone\" behavior then perhaps I should put it back to calling AlarmManager directly _or_ break out a separate path.\n\nI\u0027ll create a bug with the owners to discuss.",
+      "parentUuid": "536d41d0_4c519a54",
       "range": {
         "startLine": 67,
         "startChar": 46,
