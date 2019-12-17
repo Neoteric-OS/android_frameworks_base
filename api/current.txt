@@ -28461,23 +28461,13 @@ package android.net {
   public class ConnectivityDiagnosticsManager {
     method public void registerConnectivityDiagnosticsCallback(@NonNull android.net.NetworkRequest, @NonNull java.util.concurrent.Executor, @NonNull android.net.ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback);
     method public void unregisterConnectivityDiagnosticsCallback(@NonNull android.net.ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback);
-    field public static final int DETECTION_METHOD_DNS_EVENTS = 1; // 0x1
-    field public static final int DETECTION_METHOD_TCP_METRICS = 2; // 0x2
   }
 
   public abstract static class ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback {
     ctor public ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback();
     method public void onConnectivityReport(@NonNull android.net.ConnectivityReport);
-    method public void onDataStallSuspected(@NonNull android.net.ConnectivityDiagnosticsManager.DataStallReport);
+    method public void onDataStallSuspected(@NonNull android.net.DataStallReport);
     method public void onNetworkConnectivityReported(@NonNull android.net.Network, boolean);
-  }
-
-  public static class ConnectivityDiagnosticsManager.DataStallReport {
-    ctor public ConnectivityDiagnosticsManager.DataStallReport(@NonNull android.net.Network, long, int, @NonNull android.os.PersistableBundle);
-    field public final int detectionMethod;
-    field @NonNull public final android.net.Network network;
-    field public final long reportTimestamp;
-    field @NonNull public final android.os.PersistableBundle stallDetails;
   }
 
   public class ConnectivityManager {
@@ -28590,6 +28580,19 @@ package android.net {
     method public int getGid();
     method public int getPid();
     method public int getUid();
+  }
+
+  public final class DataStallReport implements android.os.Parcelable {
+    ctor public DataStallReport(@NonNull android.net.Network, long, int, @NonNull android.os.PersistableBundle);
+    method public int describeContents();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.DataStallReport> CREATOR;
+    field public static final int DETECTION_METHOD_DNS_EVENTS = 1; // 0x1
+    field public static final int DETECTION_METHOD_TCP_METRICS = 2; // 0x2
+    field public final int detectionMethod;
+    field @NonNull public final android.net.Network network;
+    field public final long reportTimestamp;
+    field @NonNull public final android.os.PersistableBundle stallDetails;
   }
 
   public class DhcpInfo implements android.os.Parcelable {
