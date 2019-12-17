@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fdb429b3_0b971ae5",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-17T09:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60f673ac_32571ac3",
+      "range": {
+        "startLine": 30,
+        "startChar": 31,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "bae1f3131121af617becc59d4fd65fba4c2097c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49f36b5c_e7d896d7",
         "filename": "core/java/android/net/VpnManager.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "bae1f3131121af617becc59d4fd65fba4c2097c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf2899c_6fbf8e6e",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-17T09:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49f36b5c_e7d896d7",
+      "range": {
+        "startLine": 34,
+        "startChar": 23,
+        "endLine": 34,
+        "endChar": 52
+      },
+      "revId": "bae1f3131121af617becc59d4fd65fba4c2097c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f0092450_4ccf4dc5",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-17T09:04:25Z",
+      "side": 1,
+      "message": "Done. Also changed it to startProvisionedVpnProfile()\n\nI\u0027ve left stopVpn as-is, since it stops any VPN regardless of what profile is loaded.",
+      "parentUuid": "6ec25748_7f372ef2",
+      "range": {
+        "startLine": 61,
+        "startChar": 16,
+        "endLine": 61,
+        "endChar": 32
+      },
+      "revId": "bae1f3131121af617becc59d4fd65fba4c2097c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1efcadaa_28c05e2d",
         "filename": "tests/net/java/android/net/VpnManagerTest.java",
         "patchSetId": 10
@@ -85,6 +157,24 @@
       "revId": "bae1f3131121af617becc59d4fd65fba4c2097c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e89d21_67efceed",
+        "filename": "tests/net/java/android/net/VpnManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-17T09:04:25Z",
+      "side": 1,
+      "message": "I keep meaning to pick it up, but crunch time is probably not the best moment :) One day!\n\nPerhaps next year i\u0027ll prototype in Kotlin instead of Java",
+      "parentUuid": "1efcadaa_28c05e2d",
+      "revId": "bae1f3131121af617becc59d4fd65fba4c2097c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
