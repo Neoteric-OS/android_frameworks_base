@@ -1663,6 +1663,9 @@ public final class TvInputManager {
      * @return the list of {@link DvbDeviceInfo} objects representing available DVB devices.
      * @hide
      */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.DVB_DEVICE)
+    @NonNull
     public List<DvbDeviceInfo> getDvbDeviceList() {
         try {
             return mService.getDvbDeviceList();
@@ -1683,7 +1686,10 @@ public final class TvInputManager {
      *         or the specified DVB device was busy with a previous request.
      * @hide
      */
-    public ParcelFileDescriptor openDvbDevice(DvbDeviceInfo info, int device) {
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.DVB_DEVICE)
+    @Nullable
+    public ParcelFileDescriptor openDvbDevice(@NonNull DvbDeviceInfo info, int device) {
         try {
             if (DVB_DEVICE_START > device || DVB_DEVICE_END < device) {
                 throw new IllegalArgumentException("Invalid DVB device: " + device);
