@@ -22,6 +22,29 @@
       "revId": "a50f44c0abe44155edf63da3d7a3c78144140972",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407bc8e4_00848719",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2008,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-12-17T00:05:49Z",
+      "side": 1,
+      "message": "nit:Gets",
+      "range": {
+        "startLine": 2008,
+        "startChar": 7,
+        "endLine": 2008,
+        "endChar": 10
+      },
+      "revId": "a50f44c0abe44155edf63da3d7a3c78144140972",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
