@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b212dbf_f315294a",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-18T10:56:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ac0e0fd8_94ee24fa",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 50
+      },
+      "revId": "4534f27daf4ed16766cdd5806c406f785241f03d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30c6d13b_e3a17ec4",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4534f27daf4ed16766cdd5806c406f785241f03d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92da2e48_e95312ff",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1671,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-18T10:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30c6d13b_e3a17ec4",
+      "range": {
+        "startLine": 1669,
+        "startChar": 0,
+        "endLine": 1671,
+        "endChar": 47
+      },
+      "revId": "4534f27daf4ed16766cdd5806c406f785241f03d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d071e037_a4ca6774",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-18T10:56:30Z",
+      "side": 1,
+      "message": "Done (left %43 on TESTIPV6ADDR to test both cases)",
+      "parentUuid": "084da366_87810fb6",
+      "range": {
+        "startLine": 64,
+        "startChar": 69,
+        "endLine": 64,
+        "endChar": 71
+      },
+      "revId": "4534f27daf4ed16766cdd5806c406f785241f03d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69dc74da_2562cda8",
         "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
         "patchSetId": 1
@@ -85,6 +157,24 @@
       "revId": "4534f27daf4ed16766cdd5806c406f785241f03d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70509731_0d5e0d05",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-18T10:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69dc74da_2562cda8",
+      "revId": "4534f27daf4ed16766cdd5806c406f785241f03d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
