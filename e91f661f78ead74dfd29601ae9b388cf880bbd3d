@@ -140,6 +140,30 @@
       "revId": "e91f661f78ead74dfd29601ae9b388cf880bbd3d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0863c4f1_b9ce3bd4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 6263,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-18T10:32:38Z",
+      "side": 1,
+      "message": "I have two ideas:\n1. Rename makeDefault() to updateDefaultNetwork() or somethinkg like that, and seperate two parts in this function, one is to deal with the case of newNetwork is null, the other is to deal with the case of newNetwork is no null.\n2. Seperate two functions to deal with the case of newNetwork is null or not null. So, the makeDefault() keep it as-is, and create a new function naming clearDefault() to clear the routing, netid...and so on.",
+      "parentUuid": "8ae618af_73a0dc5c",
+      "range": {
+        "startLine": 6261,
+        "startChar": 8,
+        "endLine": 6263,
+        "endChar": 31
+      },
+      "revId": "e91f661f78ead74dfd29601ae9b388cf880bbd3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
