@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c507e7a4_7b65c644",
+        "filename": "core/java/android/net/ConnectivityReport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-18T23:00:50Z",
+      "side": 1,
+      "message": "General API guidance generally specifies using non-public fields, and having getters (and setters if necessary)",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 25
+      },
+      "revId": "86cf487ab7fab93b49694d58690c5b125fc38388",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
