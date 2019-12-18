@@ -98,6 +98,7 @@ import android.media.session.MediaSessionManager;
 import android.media.soundtrigger.SoundTriggerManager;
 import android.media.tv.ITvInputManager;
 import android.media.tv.TvInputManager;
+import android.net.ConnectivityDiagnosticsManager;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityThread;
 import android.net.EthernetManager;
@@ -347,6 +348,18 @@ final class SystemServiceRegistry {
                 IBinder b = ServiceManager.getService(Context.IPSEC_SERVICE);
                 IIpSecService service = IIpSecService.Stub.asInterface(b);
                 return new IpSecManager(ctx, service);
+            }});
+
+        registerService(Context.CONNECTIVITY_DIAGNOSTICS_SERVICE,
+                ConnectivityDiagnosticsManager.class,
+                new StaticApplicationContextServiceFetcher<ConnectivityDiagnosticsManager>() {
+            @Override
+            public ConnectivityDiagnosticsManager createService(Context context)
+                    throws ServiceNotFoundException {
+                IBinder b = ServiceManager.getServiceOrThrow(Context
+                .CONNECTIVITY_DIAGNOSTICS_SERVICE);
+                IConnectivityManager service = IConnectivityManager.Stub.asInterface(b);
+                return new ConnectivityDiagnosticsManager(context, service);
             }});
 
         registerService(
