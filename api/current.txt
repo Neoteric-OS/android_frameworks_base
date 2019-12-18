@@ -35018,6 +35018,7 @@ package android.os {
     method public boolean isPowerSaveMode();
     method @Deprecated public boolean isScreenOn();
     method public boolean isSustainedPerformanceModeSupported();
+    method public boolean isUserspaceRebootSupported();
     method public boolean isWakeLockLevelSupported(int);
     method public android.os.PowerManager.WakeLock newWakeLock(int, String);
     method public void reboot(String);

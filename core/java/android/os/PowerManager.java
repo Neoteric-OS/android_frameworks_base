@@ -605,6 +605,12 @@ public final class PowerManager {
     public static final String REBOOT_SAFE_MODE = "safemode";
 
     /**
+     * The 'reason' value used for userspace reboot.
+     * @hide
+     */
+    public static final String REBOOT_USERSPACE = "userspace";
+
+    /**
      * The 'reason' value used when rebooting the device without turning on the screen.
      * @hide
      */
@@ -1383,6 +1389,14 @@ public final class PowerManager {
     }
 
     /**
+     * Returns {@code true} if tis devices supports userspace reboot.
+     */
+    // TODO(b/138605180): add link to documentation once it's ready.
+    public boolean isUserspaceRebootSupported() {
+        return SystemProperties.getBoolean("ro.init.userspace_reboot.is_supported", false);
+    }
+
+    /**
      * Reboot the device.  Will not return if the reboot is successful.
      * <p>
      * Requires the {@link android.Manifest.permission#REBOOT} permission.
@@ -1390,8 +1404,15 @@ public final class PowerManager {
      *
      * @param reason code to pass to the kernel (e.g., "recovery") to
      *               request special boot modes, or null.
+     * @throws UnsupportedOperationException if userspace reboot was requested on a device that
+     *                                       doesn't support it.
      */
+    // TODO(b/138605273): consider a new api with well defined reasons.
     public void reboot(String reason) {
+        if (reason.equals(REBOOT_USERSPACE) && !isUserspaceRebootSupported()) {
+            throw new UnsupportedOperationException(
+                    "Attempted userspace reboot on a device that doesn't support it");
+        }
         try {
             mService.reboot(false, reason, true);
         } catch (RemoteException e) {
