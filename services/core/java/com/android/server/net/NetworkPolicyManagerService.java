@@ -389,6 +389,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private static final int MSG_SUBSCRIPTION_OVERRIDE = 16;
     private static final int MSG_METERED_RESTRICTED_PACKAGES_CHANGED = 17;
     private static final int MSG_SET_NETWORK_TEMPLATE_ENABLED = 18;
+    private static final int MSG_ENQUEUE_NOTIFICATION = 19;
+    private static final int MSG_CANCEL_NOTIFICATION = 20;
 
     private static final int UID_MSG_STATE_CHANGED = 100;
     private static final int UID_MSG_GONE = 101;
@@ -1464,14 +1466,13 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         builder.setContentText(body);
         builder.setStyle(new Notification.BigTextStyle().bigText(body));
 
-        mContext.getSystemService(NotificationManager.class).notifyAsUser(notificationId.getTag(),
-                notificationId.getId(), builder.build(), UserHandle.ALL);
-        mActiveNotifs.add(notificationId);
+        NotificationMessageObj obj = new NotificationMessageObj(notificationId, builder.build());
+        mHandler.obtainMessage(MSG_ENQUEUE_NOTIFICATION, obj).sendToTarget();
     }
 
     private void cancelNotification(NotificationId notificationId) {
-        mContext.getSystemService(NotificationManager.class).cancel(notificationId.getTag(),
-                notificationId.getId());
+        NotificationMessageObj obj = new NotificationMessageObj(notificationId, null);
+        mHandler.obtainMessage(MSG_CANCEL_NOTIFICATION, obj).sendToTarget();
     }
 
     /**
@@ -4594,6 +4595,22 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     setNetworkTemplateEnabledInner(template, enabled);
                     return true;
                 }
+                case MSG_ENQUEUE_NOTIFICATION: {
+                    final NotificationMessageObj notifactionObj = (NotificationMessageObj) msg.obj;
+                    final NotificationId notificationId = notifactionObj.mNotificationId;
+                    mContext.getSystemService(NotificationManager.class).notifyAsUser(
+                            notificationId.getTag(), notificationId.getId(),
+                            notifactionObj.mNotification, UserHandle.ALL);
+                    mActiveNotifs.add(notificationId);
+                    return true;
+                }
+                case MSG_CANCEL_NOTIFICATION: {
+                    final NotificationMessageObj notifactionObj = (NotificationMessageObj) msg.obj;
+                    final NotificationId notificationId = notifactionObj.mNotificationId;
+                    mContext.getSystemService(NotificationManager.class).cancel(
+                            notificationId.getTag(), notificationId.getId());
+                    return true;
+                }
                 default: {
                     return false;
                 }
@@ -5364,6 +5381,16 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
         public int getId() {
             return mId;
+        }
+    }
+
+    private class NotificationMessageObj {
+        private final NotificationId mNotificationId;
+        private final Notification mNotification ;
+
+        NotificationMessageObj(NotificationId notificationId, Notification notification) {
+            mNotificationId = notificationId;
+            mNotification = notification;
         }
     }
 }
