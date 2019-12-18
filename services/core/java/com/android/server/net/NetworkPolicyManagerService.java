@@ -391,6 +391,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private static final int MSG_SET_NETWORK_TEMPLATE_ENABLED = 18;
     private static final int MSG_SUBSCRIPTION_PLANS_CHANGED = 19;
     private static final int MSG_STATS_PROVIDER_LIMIT_REACHED = 20;
+    private static final int MSG_ENQUEUE_NOTIFICATION = 21;
+    private static final int MSG_CANCEL_NOTIFICATION = 22;
 
     private static final int UID_MSG_STATE_CHANGED = 100;
     private static final int UID_MSG_GONE = 101;
@@ -1193,7 +1195,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 if (policy.isOverWarning(totalBytes) && !policy.isOverLimit(totalBytes)) {
                     final boolean snoozedThisCycle = policy.lastWarningSnooze >= cycleStart;
                     if (!snoozedThisCycle) {
-                        enqueueNotification(policy, TYPE_WARNING, totalBytes, null);
+                        enqueueNotificationAsync(policy, TYPE_WARNING, totalBytes, null);
                     }
                 }
             }
@@ -1203,9 +1205,9 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 if (policy.isOverLimit(totalBytes)) {
                     final boolean snoozedThisCycle = policy.lastLimitSnooze >= cycleStart;
                     if (snoozedThisCycle) {
-                        enqueueNotification(policy, TYPE_LIMIT_SNOOZED, totalBytes, null);
+                        enqueueNotificationAsync(policy, TYPE_LIMIT_SNOOZED, totalBytes, null);
                     } else {
-                        enqueueNotification(policy, TYPE_LIMIT, totalBytes, null);
+                        enqueueNotificationAsync(policy, TYPE_LIMIT, totalBytes, null);
                         notifyOverLimitNL(policy.template);
                     }
                 } else {
@@ -1233,7 +1235,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 final boolean snoozedRecently = policy.lastRapidSnooze >= now
                         - DateUtils.DAY_IN_MILLIS;
                 if (projectedBytes > alertBytes && !snoozedRecently) {
-                    enqueueNotification(policy, TYPE_RAPID, 0,
+                    enqueueNotificationAsync(policy, TYPE_RAPID, 0,
                             findRapidBlame(policy.template, recentStart, recentEnd));
                 }
             }
@@ -1243,7 +1245,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         for (int i = beforeNotifs.size()-1; i >= 0; i--) {
             final NotificationId notificationId = beforeNotifs.valueAt(i);
             if (!mActiveNotifs.contains(notificationId)) {
-                cancelNotification(notificationId);
+                cancelNotificationAsync(notificationId);
             }
         }
 
@@ -1335,7 +1337,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
      * Show notification for combined {@link NetworkPolicy} and specific type,
      * like {@link #TYPE_LIMIT}. Okay to call multiple times.
      */
-    private void enqueueNotification(NetworkPolicy policy, int type, long totalBytes,
+    private void enqueueNotificationAsync(NetworkPolicy policy, int type, long totalBytes,
             ApplicationInfo rapidBlame) {
         final NotificationId notificationId = new NotificationId(policy, type);
         final Notification.Builder builder =
@@ -1468,14 +1470,15 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         builder.setContentText(body);
         builder.setStyle(new Notification.BigTextStyle().bigText(body));
 
-        mContext.getSystemService(NotificationManager.class).notifyAsUser(notificationId.getTag(),
-                notificationId.getId(), builder.build(), UserHandle.ALL);
-        mActiveNotifs.add(notificationId);
+        final Pair<NotificationId, Notification> obj = new Pair<>(
+                notificationId, builder.build());
+        mHandler.obtainMessage(MSG_ENQUEUE_NOTIFICATION, obj).sendToTarget();
     }
 
-    private void cancelNotification(NotificationId notificationId) {
-        mContext.getSystemService(NotificationManager.class).cancel(notificationId.getTag(),
-                notificationId.getId());
+    private void cancelNotificationAsync(NotificationId notificationId) {
+        final Pair<NotificationId, Notification> obj = new Pair<>(
+                notificationId, null);
+        mHandler.obtainMessage(MSG_CANCEL_NOTIFICATION, obj).sendToTarget();
     }
 
     /**
@@ -4659,6 +4662,26 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                         dispatchSubscriptionPlansChanged(listener, subId, plans);
                     }
                     mListeners.finishBroadcast();
+                    return true;
+                }
+                case MSG_ENQUEUE_NOTIFICATION: {
+                    final Pair<NotificationId, Notification> notificationObj =
+                            (Pair<NotificationId, Notification>) msg.obj;
+                    final NotificationId notificationId = notificationObj.first;
+                    mContext.getSystemService(NotificationManager.class).notifyAsUser(
+                            notificationId.getTag(), notificationId.getId(),
+                            notificationObj.second, UserHandle.ALL);
+                    synchronized (mNetworkPoliciesSecondLock) {
+                        mActiveNotifs.add(notificationId);
+                    }
+                    return true;
+                }
+                case MSG_CANCEL_NOTIFICATION: {
+                    final Pair<NotificationId, Notification> notificationObj =
+                            (Pair<NotificationId, Notification>) msg.obj;
+                    final NotificationId notificationId = notificationObj.first;
+                    mContext.getSystemService(NotificationManager.class).cancel(
+                            notificationId.getTag(), notificationId.getId());
                     return true;
                 }
                 default: {
