@@ -35016,6 +35016,7 @@ package android.os {
     method public boolean isIgnoringBatteryOptimizations(String);
     method public boolean isInteractive();
     method public boolean isPowerSaveMode();
+    method public boolean isRebootingUserspaceSupported();
     method @Deprecated public boolean isScreenOn();
     method public boolean isSustainedPerformanceModeSupported();
     method public boolean isWakeLockLevelSupported(int);
@@ -35034,6 +35035,7 @@ package android.os {
     field public static final int ON_AFTER_RELEASE = 536870912; // 0x20000000
     field public static final int PARTIAL_WAKE_LOCK = 1; // 0x1
     field public static final int PROXIMITY_SCREEN_OFF_WAKE_LOCK = 32; // 0x20
+    field public static final String REBOOT_USERSPACE = "userspace";
     field public static final int RELEASE_FLAG_WAIT_FOR_NO_PROXIMITY = 1; // 0x1
     field @Deprecated public static final int SCREEN_BRIGHT_WAKE_LOCK = 10; // 0xa
     field @Deprecated public static final int SCREEN_DIM_WAKE_LOCK = 6; // 0x6
