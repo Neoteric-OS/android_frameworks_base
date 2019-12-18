@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c60a512d_1192fe23",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1424063
+      },
+      "writtenOn": "2019-12-18T01:54:21Z",
+      "side": 1,
+      "message": "There are some errors during local build. So I run several commands as build system suggests like:\n\n\"You have tried to change the API from what has been previously approved.\n\nTo make these errors go away, you have two choices:\n   1. You can add \u0027@hide\u0027 javadoc comments to the methods, etc. listed in the\n      errors above.\n\n   2. You can update current.txt by executing the following command:\n         make system-api-stubs-docs-update-current-api\n\n      To submit the revised current.txt to the main Android repository,\n      you will need approval.\n\"\n\nCan I ignore all commands like above? Those unrelated modifications are due to local build errors.\nWithout the commands, I couldn\u0027t get build success.",
+      "parentUuid": "a06742e2_8ecbc8d1",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 61
+      },
+      "revId": "73c8a74afad427296900b184af4ac615fd45c821",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ca06c82_c365f1c1",
         "filename": "api/system-lint-baseline.txt",
         "patchSetId": 6
