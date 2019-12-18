@@ -45209,12 +45209,12 @@ package android.telephony {
     method public android.net.Uri getVoicemailRingtoneUri(android.telecom.PhoneAccountHandle);
     method public boolean hasCarrierPrivileges();
     method public boolean hasIccCard();
-    method public boolean iccCloseLogicalChannel(int);
+    method @Deprecated public boolean iccCloseLogicalChannel(int);
     method public byte[] iccExchangeSimIO(int, int, int, int, int, String);
     method @Deprecated public android.telephony.IccOpenLogicalChannelResponse iccOpenLogicalChannel(String);
-    method public android.telephony.IccOpenLogicalChannelResponse iccOpenLogicalChannel(String, int);
-    method public String iccTransmitApduBasicChannel(int, int, int, int, int, String);
-    method public String iccTransmitApduLogicalChannel(int, int, int, int, int, int, String);
+    method @Deprecated public android.telephony.IccOpenLogicalChannelResponse iccOpenLogicalChannel(String, int);
+    method @Deprecated public String iccTransmitApduBasicChannel(int, int, int, int, int, String);
+    method @Deprecated public String iccTransmitApduLogicalChannel(int, int, int, int, int, int, String);
     method public boolean isConcurrentVoiceAndDataSupported();
     method @RequiresPermission(anyOf={android.Manifest.permission.ACCESS_NETWORK_STATE, android.Manifest.permission.MODIFY_PHONE_STATE}) public boolean isDataEnabled();
     method @RequiresPermission(anyOf={android.Manifest.permission.ACCESS_NETWORK_STATE, android.Manifest.permission.READ_PHONE_STATE}) public boolean isDataRoamingEnabled();
