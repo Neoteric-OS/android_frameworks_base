@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "517bce35_5fa34f11",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-18T22:31:50Z",
+      "side": 1,
+      "message": "Hmm, i\u0027m not sure what the rules are for this; Most services seem to use CachedServiceFetcher, but the ConnectivityService backed ones are currently StaticApplicationContext...",
+      "range": {
+        "startLine": 355,
+        "startChar": 20,
+        "endLine": 355,
+        "endChar": 58
+      },
+      "revId": "ded1351d766b219753f287afab38daadff571774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641e4044_af7e1615",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-18T22:31:50Z",
+      "side": 1,
+      "message": "Indentation?",
+      "range": {
+        "startLine": 360,
+        "startChar": 16,
+        "endLine": 360,
+        "endChar": 17
+      },
+      "revId": "ded1351d766b219753f287afab38daadff571774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea116399_c6ef5f05",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-18T22:31:50Z",
+      "side": 1,
+      "message": "Probably want a note that the diagnostics service is backed by the ConnectivityService. otherwise this looks odd",
+      "range": {
+        "startLine": 361,
+        "startChar": 16,
+        "endLine": 361,
+        "endChar": 36
+      },
+      "revId": "ded1351d766b219753f287afab38daadff571774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036d82c8_e8077630",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3871,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-18T22:31:50Z",
+      "side": 1,
+      "message": "Is this supposed to be the same as the connectivity service?",
+      "range": {
+        "startLine": 3871,
+        "startChar": 51,
+        "endLine": 3871,
+        "endChar": 97
+      },
+      "revId": "ded1351d766b219753f287afab38daadff571774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127813a9_e922905c",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-18T22:31:50Z",
+      "side": 1,
+      "message": "Hmm, is there a technical reason why we\u0027re requiring unique callbacks? If so, we will need to check that in the system server.\n\nTechnically a caller could call directly into the binder, bypassing ConnectivityDiagnosticsManager, and something might go majorly wrong.",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 50
+      },
+      "revId": "ded1351d766b219753f287afab38daadff571774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
