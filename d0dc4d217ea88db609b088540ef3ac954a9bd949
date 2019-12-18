@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "be95c42a_de1b125c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-18T03:41:18Z",
+      "side": 1,
+      "message": "Sorry, re-uploaded locally.",
+      "parentUuid": "a043e71f_830d93ec",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 22
+      },
+      "revId": "d0dc4d217ea88db609b088540ef3ac954a9bd949",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c6c431f_c08cc4eb",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
