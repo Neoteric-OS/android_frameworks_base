@@ -1,0 +1,8 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Marco Nelissen <marcone@google.com>
+Submitted-by: Marco Nelissen <marcone@google.com>
+Submitted-at: Thu, 19 Dec 2019 19:46:31 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1195575
+Project: platform/frameworks/base
+Branch: refs/heads/master
