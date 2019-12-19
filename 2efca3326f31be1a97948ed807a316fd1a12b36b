@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4baa0f65_75457b2d",
+        "filename": "api/lint-baseline.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1373934
+      },
+      "writtenOn": "2019-12-19T17:08:12Z",
+      "side": 1,
+      "message": "Synced the whole aosp and filtered only ICU-related lint warnings",
+      "parentUuid": "269cc749_8c20dcf4",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 526,
+        "endChar": 0
+      },
+      "revId": "2efca3326f31be1a97948ed807a316fd1a12b36b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aefbe76_74cd98d0",
         "filename": "api/system-lint-baseline.txt",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "2efca3326f31be1a97948ed807a316fd1a12b36b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c38df9_bf832b30",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1373934
+      },
+      "writtenOn": "2019-12-19T17:08:12Z",
+      "side": 1,
+      "message": "Removed everything not related to ICU.",
+      "parentUuid": "8aefbe76_74cd98d0",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 30
+      },
+      "revId": "2efca3326f31be1a97948ed807a316fd1a12b36b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
