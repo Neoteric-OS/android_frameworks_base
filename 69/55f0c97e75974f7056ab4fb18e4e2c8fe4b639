@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Joe Onorato <joeo@google.com>
+Code-Review+2: Joe Onorato <joeo@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Joe Onorato <joeo@google.com>
+Submitted-at: Thu, 19 Dec 2019 16:49:05 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1194513
+Project: platform/frameworks/base
+Branch: refs/heads/master
