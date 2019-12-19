@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b3a0ab1_c8dafc02",
+        "filename": "core/java/android/os/PowerManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1411,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-19T14:22:00Z",
+      "side": 1,
+      "message": "Can you add a @Nullable annotation?",
+      "revId": "1901d8ed679fb780974a720e4375ae43ebea8601",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b359679_2ba8b8f1",
+        "filename": "core/java/android/os/PowerManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1412,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-19T14:22:00Z",
+      "side": 1,
+      "message": "This actually needs to be REBOOT_USERSPACE.equals(reason)\n\nOtherwise you\u0027ll get an NPE when a null reason is passed in.",
+      "range": {
+        "startLine": 1412,
+        "startChar": 12,
+        "endLine": 1412,
+        "endChar": 43
+      },
+      "revId": "1901d8ed679fb780974a720e4375ae43ebea8601",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
