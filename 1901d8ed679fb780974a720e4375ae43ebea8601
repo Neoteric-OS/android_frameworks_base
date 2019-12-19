@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1df17362_fb585408",
+        "filename": "core/java/android/os/PowerManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1411,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2019-12-19T17:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b3a0ab1_c8dafc02",
+      "revId": "1901d8ed679fb780974a720e4375ae43ebea8601",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b359679_2ba8b8f1",
         "filename": "core/java/android/os/PowerManager.java",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "1901d8ed679fb780974a720e4375ae43ebea8601",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5927fc78_2e62b5d5",
+        "filename": "core/java/android/os/PowerManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1412,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2019-12-19T17:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b359679_2ba8b8f1",
+      "range": {
+        "startLine": 1412,
+        "startChar": 12,
+        "endLine": 1412,
+        "endChar": 43
+      },
+      "revId": "1901d8ed679fb780974a720e4375ae43ebea8601",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
