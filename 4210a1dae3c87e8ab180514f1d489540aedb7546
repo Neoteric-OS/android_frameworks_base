@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "588b8b0a_b098c233",
+        "filename": "core/java/android/os/PowerManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-19T13:10:19Z",
+      "side": 1,
+      "message": "Is this going to be used by a mainline module, or just a part of the platform?",
+      "revId": "4210a1dae3c87e8ab180514f1d489540aedb7546",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a4fe544_9c6de411",
+        "filename": "core/java/android/os/PowerManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-19T13:10:19Z",
+      "side": 1,
+      "message": "\"supports rebooting userspace\"\n\nI think this makes it a bit more clear what it means by \"userspace reboot\". All the other reboot constants are about rebooting into a given mode, this is about only rebooting a certain mode and not others, so the clearer we can be the better.",
+      "range": {
+        "startLine": 1392,
+        "startChar": 43,
+        "endLine": 1392,
+        "endChar": 68
+      },
+      "revId": "4210a1dae3c87e8ab180514f1d489540aedb7546",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1021f47_23008d0e",
+        "filename": "core/java/android/os/PowerManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-19T13:10:19Z",
+      "side": 1,
+      "message": "nit: spelling",
+      "range": {
+        "startLine": 1392,
+        "startChar": 31,
+        "endLine": 1392,
+        "endChar": 34
+      },
+      "revId": "4210a1dae3c87e8ab180514f1d489540aedb7546",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abd7032_9b21a759",
+        "filename": "core/java/android/os/PowerManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2019-12-19T13:10:19Z",
+      "side": 1,
+      "message": "Can we remove this TODO? There\u0027s no reason to have it in the code. If we want to think about a new API for this, lets leave the considerations in a bug.",
+      "revId": "4210a1dae3c87e8ab180514f1d489540aedb7546",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
