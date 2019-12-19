@@ -46,6 +46,30 @@
       "revId": "b19d1a064aff4e60dcaec760622fc2e0ad4b6a8c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e294d0_1c7e33df",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-12-19T16:17:43Z",
+      "side": 1,
+      "message": "I can also *change* this to the API you suggest and return the *additional* space required on the device if you think it is a better API.\n\n(In fact, due to fragmentation, the total free space required could be bigger than what the implementation thinks, so it would be weird for the end user to see \"total free space required is 1G, and I already have 1G free space. Why can\u0027t I apply the update?\" If this API returns *additional* space instead, the implementation may discover that due to fragmentation, there are 100M additional free space required on this device, and return 100M. David / Alessio, what do you think?)",
+      "parentUuid": "0c218439_2bc2ab08",
+      "range": {
+        "startLine": 469,
+        "startChar": 20,
+        "endLine": 469,
+        "endChar": 38
+      },
+      "revId": "b19d1a064aff4e60dcaec760622fc2e0ad4b6a8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
