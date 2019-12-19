@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "518df00a_828c7d88",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-19T19:05:38Z",
+      "side": 1,
+      "message": "It looks like some also use StaticServiceFetcher. Per their class comments:\n\nCachedServiceFetcher is used when the system service constructor needs a ContextImpl and should be cached by that context.\n\nStaticServiceFetcher is used when the system does not need a ContextImpl and should be cached process-wide.\n\nStaticApplicationContextServiceFetcher has a TODO on it stating that it should be removed when ConnectivityManager works well when several application components have their own instances. Based on this, I think we should avoid adding more dependencies on it.\n\n\nFor now, replacing with CachedServiceFetcher.",
+      "parentUuid": "517bce35_5fa34f11",
+      "range": {
+        "startLine": 355,
+        "startChar": 20,
+        "endLine": 355,
+        "endChar": 58
+      },
+      "revId": "ded1351d766b219753f287afab38daadff571774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "641e4044_af7e1615",
         "filename": "core/java/android/app/SystemServiceRegistry.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "ded1351d766b219753f287afab38daadff571774",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa43f90a_813abe5c",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-19T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "641e4044_af7e1615",
+      "range": {
+        "startLine": 360,
+        "startChar": 16,
+        "endLine": 360,
+        "endChar": 17
+      },
+      "revId": "ded1351d766b219753f287afab38daadff571774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "80c4e701_390a3260",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-19T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea116399_c6ef5f05",
+      "range": {
+        "startLine": 361,
+        "startChar": 16,
+        "endLine": 361,
+        "endChar": 36
+      },
+      "revId": "ded1351d766b219753f287afab38daadff571774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "036d82c8_e8077630",
         "filename": "core/java/android/content/Context.java",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3f0a5ba6_0dfca3f0",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3871,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-19T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "036d82c8_e8077630",
+      "range": {
+        "startLine": 3871,
+        "startChar": 51,
+        "endLine": 3871,
+        "endChar": 97
+      },
+      "revId": "ded1351d766b219753f287afab38daadff571774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "127813a9_e922905c",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2019-12-18T22:31:50Z",
       "side": 1,
       "message": "Hmm, is there a technical reason why we\u0027re requiring unique callbacks? If so, we will need to check that in the system server.\n\nTechnically a caller could call directly into the binder, bypassing ConnectivityDiagnosticsManager, and something might go majorly wrong.",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 50
+      },
+      "revId": "ded1351d766b219753f287afab38daadff571774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3bb8ced_c7c069ac",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-19T19:05:38Z",
+      "side": 1,
+      "message": "Requiring a unique callback is done to avoid reference counting. We could allow callbacks to be registered with multiple network requests, but this would leave the behavior for unregister() ambiguous.\n\nWe will also check for duplicates in ConnectivityService. This is meant only as a preemptive check to speed up the rejection if possible.",
+      "parentUuid": "127813a9_e922905c",
       "range": {
         "startLine": 174,
         "startChar": 16,
