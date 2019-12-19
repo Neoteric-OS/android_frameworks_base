@@ -1,0 +1,10 @@
+Code-Review+2: Yao Chen <yaochen@google.com>
+Code-Review+1: Muhammad Qureshi <muhammadq@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Ruchir Rastogi <ruchirr@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 19 Dec 2019 23:31:46 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1194454
+Project: platform/frameworks/base
+Branch: refs/heads/master
