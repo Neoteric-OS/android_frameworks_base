@@ -3469,6 +3469,14 @@ public final class ActiveServices {
         if (mTmpCollectionResults != null) {
             for (int i = mTmpCollectionResults.size() - 1; i >= 0; i--) {
                 bringDownServiceLocked(mTmpCollectionResults.get(i));
+                /**
+                *bringDownServiceLocked may lead to runtime exception which
+                *can again invoke bringDownDisabledPackageServicesLocked on the
+                *package and since  mTmpCollectionResults is global it might be
+                *cleaned in subsequent call
+                */
+                if (mTmpCollectionResults.size() == 0)
+                    break;
             }
             mTmpCollectionResults.clear();
         }
