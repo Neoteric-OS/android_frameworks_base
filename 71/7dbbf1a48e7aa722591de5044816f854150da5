@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Dario Freni <dariofreni@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+API-Review+1: Michael Wright <michaelwr@google.com>
+Submitted-by: Nikita Ioffe <ioffe@google.com>
+Submitted-at: Thu, 19 Dec 2019 23:44:01 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1192128
+Project: platform/frameworks/base
+Branch: refs/heads/master
