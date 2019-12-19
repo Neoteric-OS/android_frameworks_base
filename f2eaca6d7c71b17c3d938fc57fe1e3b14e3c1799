@@ -46,6 +46,30 @@
       "revId": "f2eaca6d7c71b17c3d938fc57fe1e3b14e3c1799",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4861e1eb_74813727",
+        "filename": "api/lint-baseline.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-12-19T18:31:20Z",
+      "side": 1,
+      "message": "I think the lint complains the new APIs (I guess new APIs in Android R.), as the above android.icu APIs are all introduced in ICU 64. I think PART_PER_MILLION was introduced in API level 28",
+      "parentUuid": "9ca6ae61_88192fa0",
+      "range": {
+        "startLine": 517,
+        "startChar": 0,
+        "endLine": 517,
+        "endChar": 89
+      },
+      "revId": "f2eaca6d7c71b17c3d938fc57fe1e3b14e3c1799",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
