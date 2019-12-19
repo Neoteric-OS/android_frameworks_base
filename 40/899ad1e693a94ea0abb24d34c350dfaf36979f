@@ -1,0 +1,9 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Suren Baghdasaryan <surenb@google.com>
+Code-Review+2: Makoto Onuki <omakoto@google.com>
+Submitted-by: Suren Baghdasaryan <surenb@google.com>
+Submitted-at: Thu, 19 Dec 2019 21:30:44 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1176223
+Project: platform/frameworks/base
+Branch: refs/heads/master
