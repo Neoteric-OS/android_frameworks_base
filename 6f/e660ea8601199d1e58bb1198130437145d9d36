@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Shuo Qian <shuoq@google.com>
+Code-Review+2: Tyler Gunn <tgunn@google.com>
+API-Review+1: Tyler Gunn <tgunn@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 19 Dec 2019 23:55:32 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1193268
+Project: platform/frameworks/base
+Branch: refs/heads/master
