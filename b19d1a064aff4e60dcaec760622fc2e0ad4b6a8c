@@ -22,6 +22,30 @@
       "revId": "b19d1a064aff4e60dcaec760622fc2e0ad4b6a8c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c218439_2bc2ab08",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-12-19T16:12:35Z",
+      "side": 1,
+      "message": "\u003e I still think the name of this method is misleading. What this signifies is the amount of space that needs to be allocated *above and beyond* what allocateSpace managed to allocate, right ? In other words, this is a signal for the amount of space that needs to be freed.\n\nIt is the total amount of space needed. To be more specific, this always return the same number X no matter how much free space is on the device, as long as total free space on the device \u003c X. This is NOT space that needs to be allocated *above and beyond* what allocateSpace allocates.\n\nDoes that align with the name \u0026 Javadoc you suggest?",
+      "parentUuid": "4303e2ed_24dd0047",
+      "range": {
+        "startLine": 469,
+        "startChar": 20,
+        "endLine": 469,
+        "endChar": 38
+      },
+      "revId": "b19d1a064aff4e60dcaec760622fc2e0ad4b6a8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
