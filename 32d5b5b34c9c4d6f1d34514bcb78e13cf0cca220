@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a588c4e4_edc51353",
+        "filename": "media/java/android/media/tv/TvInputManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2019-12-19T04:25:00Z",
+      "side": 1,
+      "message": "If it is busy, don\u0027t we need to have a way to know when it is available?",
+      "range": {
+        "startLine": 1686,
+        "startChar": 18,
+        "endLine": 1686,
+        "endChar": 76
+      },
+      "revId": "32d5b5b34c9c4d6f1d34514bcb78e13cf0cca220",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
