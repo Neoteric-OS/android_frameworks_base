@@ -32,7 +32,10 @@ java_library {
     libs: [ "framework-annotations-lib" ],
     permitted_packages: [ "android.os.ext" ],
     installable: true,
-    visibility: [ "//frameworks/base/apex/sdkext:__pkg__" ],
+    visibility: [
+        "//frameworks/base/apex/sdkext",
+        "//frameworks/base/apex/sdkext/testing",
+    ],
 }
 
 droidstubs {
