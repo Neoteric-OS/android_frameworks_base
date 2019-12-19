@@ -16,7 +16,6 @@
 
 package android.telephony;
 
-import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
@@ -27,8 +26,6 @@ import android.telephony.Annotation.PreciseCallStates;
 import android.telephony.DisconnectCause;
 import android.telephony.PreciseDisconnectCause;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.Objects;
 
 /**
@@ -77,11 +74,17 @@ public final class PreciseCallState implements Parcelable {
     private int mPreciseDisconnectCause = PreciseDisconnectCause.NOT_VALID;
 
     /**
-     * Constructor
+     * Construct PreciseCallState with parameters
+     *
+     * @param ringingCall ring call state
+     * @param foregroundCall foreground call state
+     * @param backgroundCall background call state
+     * @param disconnectCause disconnect cause
+     * @param preciseDisconnectCause precise disconnect cause
      *
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public PreciseCallState(@PreciseCallStates int ringingCall,
                             @PreciseCallStates int foregroundCall,
                             @PreciseCallStates int backgroundCall, int disconnectCause,
