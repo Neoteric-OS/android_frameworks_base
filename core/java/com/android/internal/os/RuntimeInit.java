@@ -35,6 +35,7 @@ import com.android.internal.logging.AndroidConfig;
 import com.android.server.NetworkManagementSocketTagger;
 
 import dalvik.system.RuntimeHooks;
+import dalvik.system.ThreadPrioritySetter;
 import dalvik.system.VMRuntime;
 
 import libcore.content.type.MimeMap;
@@ -204,6 +205,7 @@ public class RuntimeInit {
      */
     public static void preForkInit() {
         if (DEBUG) Slog.d(TAG, "Entered preForkInit.");
+        RuntimeHooks.setThreadPrioritySetter(new RuntimeThreadPrioritySetter());
         RuntimeInit.enableDdms();
         // TODO(b/142019040#comment13): Decide whether to load the default instance eagerly, i.e.
         // MimeMap.setDefault(DefaultMimeMapFactory.create());
@@ -214,6 +216,37 @@ public class RuntimeInit {
          * with several customizations (extensions, overrides).
          */
         MimeMap.setDefaultSupplier(DefaultMimeMapFactory::create);
+    }
+
+    /**
+     * Handler for a thread setting its priority.
+     */
+    private static class RuntimeThreadPrioritySetter implements ThreadPrioritySetter {
+        private static final int[] NICE_VALUES = {
+            Process.THREAD_PRIORITY_LOWEST,  // 1 (MIN_PRIORITY)
+            Process.THREAD_PRIORITY_BACKGROUND + 6,
+            Process.THREAD_PRIORITY_BACKGROUND + 3,
+            Process.THREAD_PRIORITY_BACKGROUND,
+            Process.THREAD_PRIORITY_DEFAULT,  // 5 (NORM_PRIORITY)
+            Process.THREAD_PRIORITY_DEFAULT - 2,
+            Process.THREAD_PRIORITY_DEFAULT - 4,
+            Process.THREAD_PRIORITY_URGENT_DISPLAY + 3,
+            Process.THREAD_PRIORITY_URGENT_DISPLAY + 2,
+            Process.THREAD_PRIORITY_URGENT_DISPLAY  // 10 (MAX_PRIORITY)
+        };
+
+        @Override
+        public void setPriority(int priority) {
+            //priority should range from 1 to 10
+            if (priority < 1) {
+                priority = 1;
+            }
+            else if (priority > 10) {
+                priority = 10;
+            }
+
+            Process.setThreadPriority(NICE_VALUES[priority - 1]);
+        }
     }
 
     @UnsupportedAppUsage
