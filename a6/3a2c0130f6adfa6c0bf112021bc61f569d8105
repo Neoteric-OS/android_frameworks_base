@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Mathew Inwood <mathewi@google.com>
+Code-Review+1: Austin Wang <wangaustin@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Build-Cop-Override+1: Austin Wang <wangaustin@google.com>
+Submitted-by: Austin Wang <wangaustin@google.com>
+Submitted-at: Thu, 19 Dec 2019 10:09:09 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1193747
+Project: platform/frameworks/base
+Branch: refs/heads/master
