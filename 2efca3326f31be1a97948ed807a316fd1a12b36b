@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "269cc749_8c20dcf4",
+        "filename": "api/lint-baseline.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-12-19T16:04:42Z",
+      "side": 1,
+      "message": "It does not seem to relate to android.icu either. Could you try to regenerate this file after `repo sync` or remove this change?",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 526,
+        "endChar": 0
+      },
+      "revId": "2efca3326f31be1a97948ed807a316fd1a12b36b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aefbe76_74cd98d0",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-12-19T16:04:42Z",
+      "side": 1,
+      "message": "I don\u0027t see any android.icu changes in this file. Can you build successfully without changing this file?",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 30
+      },
+      "revId": "2efca3326f31be1a97948ed807a316fd1a12b36b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
