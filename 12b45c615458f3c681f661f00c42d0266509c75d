@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "31f60b3a_0c8293df",
+        "filename": "core/java/android/os/IThermalService.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2019-12-20T23:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e79155c_63d274e0",
+      "range": {
+        "startLine": 110,
+        "startChar": 16,
+        "endLine": 110,
+        "endChar": 17
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f82f7e4e_28c931ff",
         "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7bbc3ee_8cffd52c",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2019-12-20T23:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f82f7e4e_28c931ff",
+      "range": {
+        "startLine": 1002,
+        "startChar": 21,
+        "endLine": 1002,
+        "endChar": 39
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e7eb6ea0_3f9a9433",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2019-12-20T23:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c9f649f_287a9ab9",
+      "range": {
+        "startLine": 1006,
+        "startChar": 54,
+        "endLine": 1006,
+        "endChar": 71
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa5fc3b2_db5f28dc",
         "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2019-12-12T18:34:44Z",
       "side": 1,
       "message": "can we resue com.android.server.FgThread? as this won\u0027t post too frequently?",
+      "range": {
+        "startLine": 1012,
+        "startChar": 16,
+        "endLine": 1013,
+        "endChar": 59
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "602b0667_0f7626d4",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2019-12-20T23:08:58Z",
+      "side": 1,
+      "message": "I was worried that it might starve the FgThread if the HAL misbehaves, so I tried to contain the badness to a worker thread",
+      "parentUuid": "fa5fc3b2_db5f28dc",
       "range": {
         "startLine": 1012,
         "startChar": 16,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1fc5592b_6f7b59a8",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2019-12-20T23:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "115847f7_0543f1c0",
+      "range": {
+        "startLine": 1044,
+        "startChar": 89,
+        "endLine": 1044,
+        "endChar": 94
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c4dfce0_87bdb236",
         "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e911cd90_34048922",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2019-12-20T23:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c4dfce0_87bdb236",
+      "range": {
+        "startLine": 1062,
+        "startChar": 52,
+        "endLine": 1062,
+        "endChar": 71
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "0c78d9f7_36b91bb9",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2019-12-20T23:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f09eb6ef_2c752aa2",
+      "range": {
+        "startLine": 1071,
+        "startChar": 46,
+        "endLine": 1071,
+        "endChar": 48
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b7e8f3f_beaa739e",
         "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d3ec36_fa9efae4",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2019-12-20T23:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b7e8f3f_beaa739e",
+      "range": {
+        "startLine": 1070,
+        "startChar": 24,
+        "endLine": 1073,
+        "endChar": 25
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "871ccd3f_dfeae64b",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2019-12-20T23:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb183e22_2480463c",
+      "range": {
+        "startLine": 1161,
+        "startChar": 43,
+        "endLine": 1161,
+        "endChar": 60
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5920a338_b0dae335",
         "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
         "patchSetId": 3
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "1e1959cb_6c6e29bb",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2019-12-20T23:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5920a338_b0dae335",
+      "range": {
+        "startLine": 1183,
+        "startChar": 26,
+        "endLine": 1183,
+        "endChar": 41
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f082cce_b7e965aa",
         "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
         "patchSetId": 3
@@ -252,6 +492,30 @@
       "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6048df09_dd25a318",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2019-12-20T23:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f082cce_b7e965aa",
+      "range": {
+        "startLine": 1186,
+        "startChar": 20,
+        "endLine": 1186,
+        "endChar": 62
+      },
+      "revId": "12b45c615458f3c681f661f00c42d0266509c75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
