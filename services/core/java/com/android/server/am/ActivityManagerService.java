@@ -4407,16 +4407,18 @@ public class ActivityManagerService extends IActivityManager.Stub
                                 proc.pkgList.mPkgList);
                         for (int ipkg = proc.pkgList.size() - 1; ipkg >= 0; ipkg--) {
                             ProcessStats.ProcessStateHolder holder = proc.pkgList.valueAt(ipkg);
-                            StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
-                                    proc.info.uid,
-                                    holder.state.getName(),
-                                    holder.state.getPackage(),
-                                    infos[i].getTotalPss(),
-                                    infos[i].getTotalUss(),
-                                    infos[i].getTotalRss(),
-                                    ProcessStats.ADD_PSS_EXTERNAL_SLOW,
-                                    endTime-startTime,
-                                    holder.appVersion);
+                            if (holder.state != null) {
+                                StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
+                                        proc.info.uid,
+                                        holder.state.getName(),
+                                        holder.state.getPackage(),
+                                        infos[i].getTotalPss(),
+                                        infos[i].getTotalUss(),
+                                        infos[i].getTotalRss(),
+                                        ProcessStats.ADD_PSS_EXTERNAL_SLOW,
+                                        endTime-startTime,
+                                        holder.appVersion);
+                            }
                         }
                     }
                 }
@@ -4465,13 +4467,15 @@ public class ActivityManagerService extends IActivityManager.Stub
                                 ProcessStats.ADD_PSS_EXTERNAL, endTime-startTime, proc.pkgList.mPkgList);
                         for (int ipkg = proc.pkgList.size() - 1; ipkg >= 0; ipkg--) {
                             ProcessStats.ProcessStateHolder holder = proc.pkgList.valueAt(ipkg);
-                            StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
-                                    proc.info.uid,
-                                    holder.state.getName(),
-                                    holder.state.getPackage(),
-                                    pss[i], tmpUss[0], tmpUss[2],
-                                    ProcessStats.ADD_PSS_EXTERNAL, endTime-startTime,
-                                    holder.appVersion);
+                            if (holder.state != null) {
+                                StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
+                                        proc.info.uid,
+                                        holder.state.getName(),
+                                        holder.state.getPackage(),
+                                        pss[i], tmpUss[0], tmpUss[2],
+                                        ProcessStats.ADD_PSS_EXTERNAL, endTime-startTime,
+                                        holder.appVersion);
+                            }
                         }
                     }
                 }
@@ -12550,13 +12554,15 @@ public class ActivityManagerService extends IActivityManager.Stub
                                 reportType, endTime-startTime, r.pkgList.mPkgList);
                         for (int ipkg = r.pkgList.size() - 1; ipkg >= 0; ipkg--) {
                             ProcessStats.ProcessStateHolder holder = r.pkgList.valueAt(ipkg);
-                            StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
-                                    r.info.uid,
-                                    holder.state.getName(),
-                                    holder.state.getPackage(),
-                                    myTotalPss, myTotalUss, myTotalRss, reportType,
-                                    endTime-startTime,
-                                    holder.appVersion);
+                            if (holder.state != null) {
+                                StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
+                                        r.info.uid,
+                                        holder.state.getName(),
+                                        holder.state.getPackage(),
+                                        myTotalPss, myTotalUss, myTotalRss, reportType,
+                                        endTime-startTime,
+                                        holder.appVersion);
+                            }
                         }
                     }
                 }
@@ -13075,12 +13081,14 @@ public class ActivityManagerService extends IActivityManager.Stub
                             reportType, endTime-startTime, r.pkgList.mPkgList);
                     for (int ipkg = r.pkgList.size() - 1; ipkg >= 0; ipkg--) {
                         ProcessStats.ProcessStateHolder holder = r.pkgList.valueAt(ipkg);
-                        StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
-                                r.info.uid,
-                                holder.state.getName(),
-                                holder.state.getPackage(),
-                                myTotalPss, myTotalUss, myTotalRss, reportType, endTime-startTime,
-                                holder.appVersion);
+                        if (holder.state != null) {
+                            StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
+                                    r.info.uid,
+                                    holder.state.getName(),
+                                    holder.state.getPackage(),
+                                    myTotalPss, myTotalUss, myTotalRss, reportType, endTime-startTime,
+                                    holder.appVersion);
+                        }
                     }
                 }
             }
@@ -16229,12 +16237,14 @@ public class ActivityManagerService extends IActivityManager.Stub
                 pss, uss, rss, true, statType, pssDuration, proc.pkgList.mPkgList);
         for (int ipkg = proc.pkgList.mPkgList.size() - 1; ipkg >= 0; ipkg--) {
             ProcessStats.ProcessStateHolder holder = proc.pkgList.valueAt(ipkg);
-            StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
-                    proc.info.uid,
-                    holder.state.getName(),
-                    holder.state.getPackage(),
-                    pss, uss, rss, statType, pssDuration,
-                    holder.appVersion);
+            if (holder.state != null) {
+                StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
+                        proc.info.uid,
+                        holder.state.getName(),
+                        holder.state.getPackage(),
+                        pss, uss, rss, statType, pssDuration,
+                        holder.appVersion);
+            }
         }
         if (DEBUG_PSS) Slog.d(TAG_PSS,
                 "pss of " + proc.toShortString() + ": " + pss + " lastPss=" + proc.lastPss
@@ -16579,11 +16589,13 @@ public class ActivityManagerService extends IActivityManager.Stub
                         app.baseProcessTracker.reportExcessiveCpu(app.pkgList.mPkgList);
                         for (int ipkg = app.pkgList.size() - 1; ipkg >= 0; ipkg--) {
                             ProcessStats.ProcessStateHolder holder = app.pkgList.valueAt(ipkg);
-                            StatsLog.write(StatsLog.EXCESSIVE_CPU_USAGE_REPORTED,
-                                    app.info.uid,
-                                    holder.state.getName(),
-                                    holder.state.getPackage(),
-                                    holder.appVersion);
+                            if (holder.state != null) {
+                                StatsLog.write(StatsLog.EXCESSIVE_CPU_USAGE_REPORTED,
+                                        app.info.uid,
+                                        holder.state.getName(),
+                                        holder.state.getPackage(),
+                                        holder.appVersion);
+                            }
                         }
                     }
                 }
