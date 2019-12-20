@@ -22,6 +22,30 @@
       "revId": "ef083e51ef302717755a9bf0b2220ddfd3e76a32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e66b96_e573b17b",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1516608
+      },
+      "writtenOn": "2019-12-20T18:41:16Z",
+      "side": 1,
+      "message": "Both language table and language shift table are for GSM 7 bit. See 3GPP TS 9.2.3.24.15 \u0026 9.2.3.24.16",
+      "parentUuid": "db0bc605_1cee664e",
+      "range": {
+        "startLine": 350,
+        "startChar": 26,
+        "endLine": 351,
+        "endChar": 48
+      },
+      "revId": "ef083e51ef302717755a9bf0b2220ddfd3e76a32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
