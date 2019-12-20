@@ -1,0 +1,10 @@
+Autosubmit+1: Mark Chien <markchien@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Nicolas Geoffray <ngeoffray@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 20 Dec 2019 06:24:20 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1190918
+Project: platform/frameworks/base
+Branch: refs/heads/master
