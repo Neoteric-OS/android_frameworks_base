@@ -46,6 +46,30 @@
       "revId": "ef083e51ef302717755a9bf0b2220ddfd3e76a32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b0ffe4b_4c610f10",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-12-20T19:37:13Z",
+      "side": 1,
+      "message": "But this API is for both GSM and CDMA. And looking at the BT code you use these 2 fields for both as well, no?",
+      "parentUuid": "25e66b96_e573b17b",
+      "range": {
+        "startLine": 350,
+        "startChar": 26,
+        "endLine": 351,
+        "endChar": 48
+      },
+      "revId": "ef083e51ef302717755a9bf0b2220ddfd3e76a32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
