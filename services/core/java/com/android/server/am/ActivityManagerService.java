@@ -4409,8 +4409,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                             ProcessStats.ProcessStateHolder holder = proc.pkgList.valueAt(ipkg);
                             StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
                                     proc.info.uid,
-                                    holder.state.getName(),
-                                    holder.state.getPackage(),
+                                    holder.state != null ? holder.state.getName() : "",
+                                    holder.state != null ? holder.state.getPackage() : "",
                                     infos[i].getTotalPss(),
                                     infos[i].getTotalUss(),
                                     infos[i].getTotalRss(),
@@ -4467,8 +4467,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                             ProcessStats.ProcessStateHolder holder = proc.pkgList.valueAt(ipkg);
                             StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
                                     proc.info.uid,
-                                    holder.state.getName(),
-                                    holder.state.getPackage(),
+                                    holder.state != null ? holder.state.getName() : "",
+                                    holder.state != null ? holder.state.getPackage() : "",
                                     pss[i], tmpUss[0], tmpUss[2],
                                     ProcessStats.ADD_PSS_EXTERNAL, endTime-startTime,
                                     holder.appVersion);
@@ -12552,8 +12552,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                             ProcessStats.ProcessStateHolder holder = r.pkgList.valueAt(ipkg);
                             StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
                                     r.info.uid,
-                                    holder.state.getName(),
-                                    holder.state.getPackage(),
+                                    holder.state != null ? holder.state.getName() : "",
+                                    holder.state != null ? holder.state.getPackage() : "",
                                     myTotalPss, myTotalUss, myTotalRss, reportType,
                                     endTime-startTime,
                                     holder.appVersion);
@@ -13060,8 +13060,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                         ProcessStats.ProcessStateHolder holder = r.pkgList.valueAt(ipkg);
                         StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
                                 r.info.uid,
-                                holder.state.getName(),
-                                holder.state.getPackage(),
+                                holder.state != null ? holder.state.getName() : "",
+                                holder.state != null ? holder.state.getPackage() : "",
                                 myTotalPss, myTotalUss, myTotalRss, reportType, endTime-startTime,
                                 holder.appVersion);
                     }
@@ -16203,8 +16203,8 @@ public class ActivityManagerService extends IActivityManager.Stub
             ProcessStats.ProcessStateHolder holder = proc.pkgList.valueAt(ipkg);
             StatsLog.write(StatsLog.PROCESS_MEMORY_STAT_REPORTED,
                     proc.info.uid,
-                    holder.state.getName(),
-                    holder.state.getPackage(),
+                    holder.state != null ? holder.state.getName() : "",
+                    holder.state != null ? holder.state.getPackage() : "",
                     pss, uss, rss, statType, pssDuration,
                     holder.appVersion);
         }
@@ -16553,8 +16553,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                             ProcessStats.ProcessStateHolder holder = app.pkgList.valueAt(ipkg);
                             StatsLog.write(StatsLog.EXCESSIVE_CPU_USAGE_REPORTED,
                                     app.info.uid,
-                                    holder.state.getName(),
-                                    holder.state.getPackage(),
+                                    holder.state != null ? holder.state.getName() : "",
+                                    holder.state != null ? holder.state.getPackage() : "",
                                     holder.appVersion);
                         }
                     }
