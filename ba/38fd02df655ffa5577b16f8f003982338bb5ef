@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Jean-Michel Trivi <jmtrivi@google.com>
+Autosubmit+1: Jean-Michel Trivi <jmtrivi@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 20 Dec 2019 01:44:31 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1194949
+Project: platform/frameworks/base
+Branch: refs/heads/android10-dev
