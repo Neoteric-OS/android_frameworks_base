@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b6fdd34_086b520d",
+        "filename": "core/java/android/util/NtpTrustedTime.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2019-12-20T16:31:53Z",
+      "side": 1,
+      "message": "Is it really needed to guard accessing the values?",
+      "revId": "bbc7b6500cafcf6c69609b9be4e38e035e3f41f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa072635_a086cae0",
+        "filename": "core/java/android/util/NtpTrustedTime.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2019-12-20T16:31:53Z",
+      "side": 1,
+      "message": "Is the application context really required?\nI\u0027m quite sure we shouldn\u0027t be tied to the application lifecycle",
+      "parentUuid": "",
+      "revId": "bbc7b6500cafcf6c69609b9be4e38e035e3f41f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
