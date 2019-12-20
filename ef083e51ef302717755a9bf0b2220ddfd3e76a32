@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db0bc605_1cee664e",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1607511
+      },
+      "writtenOn": "2019-12-20T06:29:11Z",
+      "side": 1,
+      "message": "I don\u0027t know the details here, but are these always \"GSM\"? What about CDMA case?",
+      "range": {
+        "startLine": 350,
+        "startChar": 26,
+        "endLine": 351,
+        "endChar": 48
+      },
+      "revId": "ef083e51ef302717755a9bf0b2220ddfd3e76a32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
