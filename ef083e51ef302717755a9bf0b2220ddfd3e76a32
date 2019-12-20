@@ -70,6 +70,30 @@
       "revId": "ef083e51ef302717755a9bf0b2220ddfd3e76a32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1e373cd_61180087",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1516608
+      },
+      "writtenOn": "2019-12-20T20:44:14Z",
+      "side": 1,
+      "message": "In CDMA code we used UserData which contains SmsHeader. But I think in this condition, languageTable and languageShiftTable will not be used as a part of UserData.",
+      "parentUuid": "7b0ffe4b_4c610f10",
+      "range": {
+        "startLine": 350,
+        "startChar": 26,
+        "endLine": 351,
+        "endChar": 48
+      },
+      "revId": "ef083e51ef302717755a9bf0b2220ddfd3e76a32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
