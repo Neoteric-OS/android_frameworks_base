@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c6aca72_8cd196b6",
+        "filename": "core/java/android/util/NtpTrustedTime.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-12-20T17:44:02Z",
+      "side": 1,
+      "message": "Well, if we accept my initial assumption that multiple threads could be using the singleton, something probably needs to be done. I\u0027m not too happy with creating multiple instances instead, particularly with @UnsupportedAppUsage on the getInstance() method (which means removing it might break apps).\n\nJust based on simple threading principles, the fields shouldn\u0027t be manipulated from one thread while another could be reading it. There\u0027s no obvious ordering guarantees or even atomic updates of long values on 32-bit devices without use of volatile or synchronized.\n\nI found several examples of things using the NtpTrustedTime singleton today. I don\u0027t know if those users are all guaranteed to use the same thread. They may all be in the system server, and they may provide guarantees about which thread will be using it, but I think the class should be made thread safe before doing anything more radical. The ability to get the TimestampedValue also provides an atomic way to read the two fields I want to get to in the near term without something changing between the two calls.\n\nLonger term, I think the model where the client checks the cache age, then does a forceRefresh() is not good in the possible presence of multiple threads.\n\nIMO, there should probably be separate a way of getting the \"best available network time\" (perhaps with a callback when its available). The NetworkTimeUpdateService, which I\u0027d like to make the service to go to when needing \"network time\", could provide a nicer, higher-level API.",
+      "parentUuid": "4b6fdd34_086b520d",
+      "revId": "bbc7b6500cafcf6c69609b9be4e38e035e3f41f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa072635_a086cae0",
         "filename": "core/java/android/util/NtpTrustedTime.java",
         "patchSetId": 2
@@ -31,6 +49,47 @@
       "side": 1,
       "message": "Is the application context really required?\nI\u0027m quite sure we shouldn\u0027t be tied to the application lifecycle",
       "parentUuid": "",
+      "revId": "bbc7b6500cafcf6c69609b9be4e38e035e3f41f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18dcc3cf_c47e7052",
+        "filename": "core/java/android/util/NtpTrustedTime.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-12-20T17:44:02Z",
+      "side": 1,
+      "message": "I was assuming this was a good way to get the widest-possible context for the current process, not narrower. i.e. if somebody passed an Activity context we\u0027d probably want to hang on to the application context instead, not the activity...? If it\u0027s already an Application, I\u0027m assuming this is effectively a no-op, but I\u0027m happy to be corrected: this is not my usual area.",
+      "parentUuid": "aa072635_a086cae0",
+      "revId": "bbc7b6500cafcf6c69609b9be4e38e035e3f41f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc28b72_cd01ba0c",
+        "filename": "core/java/android/util/NtpTrustedTime.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-12-20T17:44:02Z",
+      "side": 1,
+      "message": "Whoops. Ignore @UnsupportedAppUsage. Should be removed.",
+      "range": {
+        "startLine": 184,
+        "startChar": 5,
+        "endLine": 184,
+        "endChar": 24
+      },
       "revId": "bbc7b6500cafcf6c69609b9be4e38e035e3f41f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
