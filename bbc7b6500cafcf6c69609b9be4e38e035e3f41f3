@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "051acf37_c3a39f68",
+        "filename": "core/java/android/util/NtpTrustedTime.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2019-12-20T17:58:41Z",
+      "side": 1,
+      "message": "This was one of the reasons I killed the instance, but I see the issue with the app possibly using this API.\nIndeed with the current implementation we have thread issues, but I think all the current users live in the same thread so we\u0027re safe for now.\n\nI don\u0027t have a way to verify this method isn\u0027t used by apps, if you say it\u0027s used then we can\u0027t do radical changes, yet.\n\nI like the idea of implementing an API as a callback to get data, but I\u0027m not an user here, I just wanted the issue fixed :)",
+      "parentUuid": "",
+      "revId": "bbc7b6500cafcf6c69609b9be4e38e035e3f41f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa072635_a086cae0",
         "filename": "core/java/android/util/NtpTrustedTime.java",
         "patchSetId": 2
