@@ -796,6 +796,9 @@ public class PackageManagerService extends IPackageManager.Stub
         }
     }
 
+    private ArraySet<String> mBlacklistedSystemUserApps;
+    private ArraySet<String> mWhitelistedlistedSystemUserApps;
+
     class PackageParserCallback implements PackageParser.Callback {
         @Override public final boolean hasFeature(String feature) {
             return PackageManagerService.this.hasSystemFeature(feature, 0);
@@ -2373,6 +2376,7 @@ public class PackageManagerService extends IPackageManager.Stub
 
         boolean isHeadlessSystemUserMode = UserManager.isHeadlessSystemUserMode();
         if (!isHeadlessSystemUserMode && !UserManager.isSplitSystemUser()) {
+
             Log.i(TAG, "Skipping system user blacklist on 'regular' device type");
             return;
         }
@@ -2398,11 +2402,13 @@ public class PackageManagerService extends IPackageManager.Stub
                     /* systemAppsOnly */ false, UserHandle.SYSTEM));
         }
         // Apply whitelist and blacklist for split system user/headless system user
-        ArraySet<String> wlApps = SystemConfig.getInstance().getSystemUserWhitelistedApps();
-        enableApps.addAll(wlApps);
-        ArraySet<String> blApps = SystemConfig.getInstance().getSystemUserBlacklistedApps();
-        enableApps.removeAll(blApps);
-        Log.i(TAG, "Blacklisted packages: " + blApps);
+        SystemConfig sysconfig = SystemConfig.getInstance();
+        mWhitelistedlistedSystemUserApps = sysconfig.getSystemUserWhitelistedApps();
+        enableApps.addAll(mWhitelistedlistedSystemUserApps);
+        Log.i(TAG, "Whitelisted packages: " + mWhitelistedlistedSystemUserApps);
+        mBlacklistedSystemUserApps = sysconfig.getSystemUserBlacklistedApps();
+        enableApps.removeAll(mBlacklistedSystemUserApps);
+        Log.i(TAG, "Blacklisted packages: " + mBlacklistedSystemUserApps);
 
         synchronized (mPackages) {
             for  (String pName : allAps) {
@@ -21670,6 +21676,10 @@ public class PackageManagerService extends IPackageManager.Stub
                         isSystemUserPackagesBlacklistSupported();
                 pw.println("isSystemUserPackagesBlacklistSupported: "
                         + systemUserPackagesBlacklistSupported);
+                if (systemUserPackagesBlacklistSupported) {
+                    dumpPackagesList(pw, "  ", "whitelist", mWhitelistedlistedSystemUserApps);
+                    dumpPackagesList(pw, "  ", "blacklist", mBlacklistedSystemUserApps);
+                }
             }
 
             if (dumpState.isDumping(DumpState.DUMP_SHARED_USERS)) {
@@ -21776,6 +21786,21 @@ public class PackageManagerService extends IPackageManager.Stub
 
         if (!checkin && dumpState.isDumping(DumpState.DUMP_APEX)) {
             mApexManager.dump(pw, packageName);
+        }
+    }
+
+    private void dumpPackagesList(PrintWriter pw, String prefix, String name,
+            ArraySet<String> list) {
+        pw.print(prefix); pw.print(name); pw.print(": ");
+        int size = list.size();
+        if (size == 0) {
+            pw.println("empty");
+            return;
+        }
+        pw.print(size); pw.println(" packages");
+        String prefix2 = prefix + "  ";
+        for (int i = 0; i < size; i++) {
+            pw.print(prefix2); pw.println(list.valueAt(i));
         }
     }
 
