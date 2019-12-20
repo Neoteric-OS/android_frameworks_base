@@ -1,0 +1,10 @@
+Code-Review+2: Amit Mahajan <amitmahajan@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+API-Review+1: Tyler Gunn <tgunn@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Shuo Qian <shuoq@google.com>
+Submitted-at: Fri, 20 Dec 2019 18:23:11 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1196443
+Project: platform/frameworks/base
+Branch: refs/heads/master
