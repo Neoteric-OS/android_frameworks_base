@@ -84,8 +84,7 @@ public class InstallSuccess extends AlertActivity {
             setupAlert();
             requireViewById(R.id.install_success).setVisibility(View.VISIBLE);
             // Enable or disable "launch" button
-            Intent launchIntent = getPackageManager().getLaunchIntentForPackage(
-                    appInfo.packageName);
+            final Intent launchIntent = getLaunchIntentForPackage(appInfo.packageName);
             boolean enabled = false;
             if (launchIntent != null) {
                 List<ResolveInfo> list = getPackageManager().queryIntentActivities(launchIntent,
@@ -109,5 +108,19 @@ public class InstallSuccess extends AlertActivity {
                 launchButton.setEnabled(false);
             }
         }
+    }
+
+    @Nullable
+    private Intent getLaunchIntentForPackage(String packageName) {
+        PackageManager pm = getPackageManager();
+        Intent intent = null;
+        if (DeviceUtils.isTelevision(this)) {
+            intent = pm.getLeanbackLaunchIntentForPackage(packageName);
+        }
+        // In the non-TV case or there is no leanback launch intent
+        if (intent == null) {
+            intent = pm.getLaunchIntentForPackage(packageName);
+        }
+        return intent;
     }
 }
