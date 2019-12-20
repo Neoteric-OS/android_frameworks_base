@@ -16,6 +16,8 @@
 
 package android.util;
 
+import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.UnsupportedAppUsage;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -28,168 +30,229 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.text.TextUtils;
 
+import com.android.internal.annotations.GuardedBy;
+
+import java.util.Objects;
+import java.util.function.Supplier;
+
 /**
- * {@link TrustedTime} that connects with a remote NTP server as its trusted
- * time source.
+ * A singleton that connects with a remote NTP server as its trusted time source. This class
+ * is thread-safe. The {@link #forceRefresh()} method is synchronous, i.e. it may occupy the
+ * current thread while performing an NTP request. All other threads calling {@link #forceRefresh()}
+ * will block during that request.
  *
  * @hide
  */
-public class NtpTrustedTime implements TrustedTime {
+public class NtpTrustedTime {
+
+    /**
+     * The result of a successful NTP query.
+     *
+     * @hide
+     */
+    public static class NtpResult {
+        private final long mTimeMillis;
+        private final long mElapsedRealtimeMillis;
+        private final long mCertaintyMillis;
+
+        public NtpResult(
+                long timeMillis, long elapsedRealtimeMillis, long certaintyMillis) {
+            mTimeMillis = timeMillis;
+            mElapsedRealtimeMillis = elapsedRealtimeMillis;
+            mCertaintyMillis = certaintyMillis;
+        }
+
+        public long getTimeMillis() {
+            return mTimeMillis;
+        }
+
+        public long getElapsedRealtimeMillis() {
+            return mElapsedRealtimeMillis;
+        }
+
+        public long getCertaintyMillis() {
+            return mCertaintyMillis;
+        }
+
+        /** Calculates and returns the current time accounting for the age of this result. */
+        public long currentTimeMillis() {
+            return mTimeMillis + getAgeMillis();
+        }
+
+        /** Calculates and returns the age of this result. */
+        public long getAgeMillis() {
+            return SystemClock.elapsedRealtime() - mElapsedRealtimeMillis;
+        }
+
+        @Override
+        public String toString() {
+            return "NtpResult{"
+                    + "mTimeMillis=" + mTimeMillis
+                    + ", mElapsedRealtimeMillis=" + mElapsedRealtimeMillis
+                    + ", mCertaintyMillis=" + mCertaintyMillis
+                    + '}';
+        }
+    }
+
     private static final String TAG = "NtpTrustedTime";
     private static final boolean LOGD = false;
 
     private static NtpTrustedTime sSingleton;
-    private static Context sContext;
 
-    private final String mServer;
-    private final long mTimeout;
+    @NonNull
+    private final Context mContext;
 
-    private ConnectivityManager mCM;
+    /**
+     * A supplier that returns the ConnectivityManager. The Supplier can return null if
+     * ConnectivityService isn't running yet.
+     */
+    private final Supplier<ConnectivityManager> mConnectivityManagerSupplier =
+            new Supplier<ConnectivityManager>() {
+        private ConnectivityManager mConnectivityManager;
 
-    private boolean mHasCache;
-    private long mCachedNtpTime;
-    private long mCachedNtpElapsedRealtime;
-    private long mCachedNtpCertainty;
+        @Nullable
+        @Override
+        public synchronized ConnectivityManager get() {
+            // We can't do this at initialization time: ConnectivityService might not be running
+            // yet.
+            if (mConnectivityManager == null) {
+                mConnectivityManager = mContext.getSystemService(ConnectivityManager.class);
+            }
+            return mConnectivityManager;
+        }
+    };
 
-    private NtpTrustedTime(String server, long timeout) {
-        if (LOGD) Log.d(TAG, "creating NtpTrustedTime using " + server);
-        mServer = server;
-        mTimeout = timeout;
+    @GuardedBy("this") private NtpResult mNtpResult;
+
+    private NtpTrustedTime(Context context) {
+        mContext = Objects.requireNonNull(context);
     }
 
     @UnsupportedAppUsage
     public static synchronized NtpTrustedTime getInstance(Context context) {
         if (sSingleton == null) {
-            final Resources res = context.getResources();
-            final ContentResolver resolver = context.getContentResolver();
-
-            final String defaultServer = res.getString(
-                    com.android.internal.R.string.config_ntpServer);
-            final long defaultTimeout = res.getInteger(
-                    com.android.internal.R.integer.config_ntpTimeout);
-
-            final String secureServer = Settings.Global.getString(
-                    resolver, Settings.Global.NTP_SERVER);
-            final long timeout = Settings.Global.getLong(
-                    resolver, Settings.Global.NTP_TIMEOUT, defaultTimeout);
-
-            final String server = secureServer != null ? secureServer : defaultServer;
-            sSingleton = new NtpTrustedTime(server, timeout);
-            sContext = context;
+            Context appContext = context.getApplicationContext();
+            sSingleton = new NtpTrustedTime(appContext);
         }
-
         return sSingleton;
     }
 
-    @Override
     @UnsupportedAppUsage
     public boolean forceRefresh() {
-        // We can't do this at initialization time: ConnectivityService might not be running yet.
         synchronized (this) {
-            if (mCM == null) {
-                mCM = sContext.getSystemService(ConnectivityManager.class);
+            NtpConnectionInfo connectionInfo = getNtpConnectionInfo();
+            if (connectionInfo == null) {
+                // missing server config, so no trusted time available
+                if (LOGD) Log.d(TAG, "forceRefresh: invalid server config");
+                return false;
+            }
+
+            ConnectivityManager connectivityManager = mConnectivityManagerSupplier.get();
+            if (connectivityManager == null) {
+                if (LOGD) Log.d(TAG, "forceRefresh: no ConnectivityManager");
+                return false;
+            }
+            final Network network = connectivityManager.getActiveNetwork();
+            final NetworkInfo ni = connectivityManager.getNetworkInfo(network);
+            if (ni == null || !ni.isConnected()) {
+                if (LOGD) Log.d(TAG, "forceRefresh: no connectivity");
+                return false;
+            }
+
+            if (LOGD) Log.d(TAG, "forceRefresh() from cache miss");
+            final SntpClient client = new SntpClient();
+            final String serverName = connectionInfo.getServer();
+            final int timeoutMillis = connectionInfo.getTimeoutMillis();
+            if (client.requestTime(serverName, timeoutMillis, network)) {
+                long ntpCertainty = client.getRoundTripTime() / 2;
+                mNtpResult = new NtpResult(
+                        client.getNtpTime(), client.getNtpTimeReference(), ntpCertainty);
+                return true;
+            } else {
+                return false;
             }
         }
-
-        final Network network = mCM == null ? null : mCM.getActiveNetwork();
-        return forceRefresh(network);
-    }
-
-    public boolean forceRefresh(Network network) {
-        if (TextUtils.isEmpty(mServer)) {
-            // missing server, so no trusted time available
-            return false;
-        }
-
-        // We can't do this at initialization time: ConnectivityService might not be running yet.
-        synchronized (this) {
-            if (mCM == null) {
-                mCM = sContext.getSystemService(ConnectivityManager.class);
-            }
-        }
-
-        final NetworkInfo ni = mCM == null ? null : mCM.getNetworkInfo(network);
-        if (ni == null || !ni.isConnected()) {
-            if (LOGD) Log.d(TAG, "forceRefresh: no connectivity");
-            return false;
-        }
-
-
-        if (LOGD) Log.d(TAG, "forceRefresh() from cache miss");
-        final SntpClient client = new SntpClient();
-        if (client.requestTime(mServer, (int) mTimeout, network)) {
-            mHasCache = true;
-            mCachedNtpTime = client.getNtpTime();
-            mCachedNtpElapsedRealtime = client.getNtpTimeReference();
-            mCachedNtpCertainty = client.getRoundTripTime() / 2;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    @UnsupportedAppUsage
-    public boolean hasCache() {
-        return mHasCache;
-    }
-
-    @Override
-    public long getCacheAge() {
-        if (mHasCache) {
-            return SystemClock.elapsedRealtime() - mCachedNtpElapsedRealtime;
-        } else {
-            return Long.MAX_VALUE;
-        }
-    }
-
-    @Override
-    public long getCacheCertainty() {
-        if (mHasCache) {
-            return mCachedNtpCertainty;
-        } else {
-            return Long.MAX_VALUE;
-        }
-    }
-
-    @Override
-    @UnsupportedAppUsage
-    public long currentTimeMillis() {
-        if (!mHasCache) {
-            throw new IllegalStateException("Missing authoritative time source");
-        }
-        if (LOGD) Log.d(TAG, "currentTimeMillis() cache hit");
-
-        // current time is age after the last ntp cache; callers who
-        // want fresh values will hit makeAuthoritative() first.
-        return mCachedNtpTime + getCacheAge();
-    }
-
-    @UnsupportedAppUsage
-    public long getCachedNtpTime() {
-        if (LOGD) Log.d(TAG, "getCachedNtpTime() cache hit");
-        return mCachedNtpTime;
-    }
-
-    @UnsupportedAppUsage
-    public long getCachedNtpTimeReference() {
-        return mCachedNtpElapsedRealtime;
     }
 
     /**
-     * Returns the combination of {@link #getCachedNtpTime()} and {@link
-     * #getCachedNtpTimeReference()} as a {@link TimestampedValue}. This method is useful when
-     * passing the time to another component that will adjust for elapsed time.
+     * Only kept for UnsupportedAppUsage.
      *
-     * @throws IllegalStateException if there is no cached value
+     * @deprecated Use {@link #getCachedNtpResult()}
      */
-    public TimestampedValue<Long> getCachedNtpTimeSignal() {
-        if (!mHasCache) {
-            throw new IllegalStateException("Missing authoritative time source");
-        }
-        if (LOGD) Log.d(TAG, "getCachedNtpTimeSignal() cache hit");
-
-        return new TimestampedValue<>(mCachedNtpElapsedRealtime, mCachedNtpTime);
+    @Deprecated
+    @UnsupportedAppUsage
+    public synchronized boolean hasCache() {
+        return mNtpResult != null;
     }
 
+    /**
+     * Only kept for UnsupportedAppUsage.
+     *
+     * @deprecated Use {@link #getCachedNtpResult()}
+     */
+    @Deprecated
+    @UnsupportedAppUsage
+    public synchronized long getCachedNtpTime() {
+        if (LOGD) Log.d(TAG, "getCachedNtpTime() cache hit");
+        return mNtpResult == null ? 0 : mNtpResult.getTimeMillis();
+    }
+
+    /**
+     * Only kept for UnsupportedAppUsage.
+     *
+     * @deprecated Use {@link #getCachedNtpResult()}
+     */
+    @Deprecated
+    @UnsupportedAppUsage
+    public synchronized long getCachedNtpTimeReference() {
+        return mNtpResult == null ? 0 : mNtpResult.getElapsedRealtimeMillis();
+    }
+
+    /**
+     * Returns an object containing the latest NTP information available. Can return {@code null} if
+     * none is available.
+     */
+    @Nullable
+    public synchronized NtpResult getCachedNtpResult() {
+        return mNtpResult;
+    }
+
+    private static class NtpConnectionInfo {
+
+        @NonNull private final String mServer;
+        private final int mTimeoutMillis;
+
+        NtpConnectionInfo(@NonNull String server, int timeoutMillis) {
+            mServer = Objects.requireNonNull(server);
+            mTimeoutMillis = timeoutMillis;
+        }
+
+        @NonNull
+        public String getServer() {
+            return mServer;
+        }
+
+        int getTimeoutMillis() {
+            return mTimeoutMillis;
+        }
+    }
+
+    @GuardedBy("this")
+    private NtpConnectionInfo getNtpConnectionInfo() {
+        final ContentResolver resolver = mContext.getContentResolver();
+
+        final Resources res = mContext.getResources();
+        final String defaultServer = res.getString(
+                com.android.internal.R.string.config_ntpServer);
+        final int defaultTimeoutMillis = res.getInteger(
+                com.android.internal.R.integer.config_ntpTimeout);
+
+        final String secureServer = Settings.Global.getString(
+                resolver, Settings.Global.NTP_SERVER);
+        final int timeoutMillis = Settings.Global.getInt(
+                resolver, Settings.Global.NTP_TIMEOUT, defaultTimeoutMillis);
+
+        final String server = secureServer != null ? secureServer : defaultServer;
+        return TextUtils.isEmpty(server) ? null : new NtpConnectionInfo(server, timeoutMillis);
+    }
 }
