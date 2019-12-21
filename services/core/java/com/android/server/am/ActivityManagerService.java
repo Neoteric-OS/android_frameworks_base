@@ -1538,6 +1538,10 @@ public class ActivityManagerService extends IActivityManager.Stub
     static final int DISPATCH_OOM_ADJ_OBSERVER_MSG = 70;
     static final int KILL_APP_ZYGOTE_MSG = 71;
 
+    public static final int KILL_AND_REMOVE_PID = 1000;
+    public static final int REMOVE_PID_DELAY_TIME = 2000;
+    ProcessRecord killedProcessRecord;
+
     static final int FIRST_BROADCAST_QUEUE_MSG = 200;
 
     static final String SERVICE_RECORD_KEY = "servicerecord";
@@ -1897,6 +1901,14 @@ public class ActivityManagerService extends IActivityManager.Stub
             case HANDLE_TRUST_STORAGE_UPDATE_MSG: {
                 synchronized (ActivityManagerService.this) {
                     mProcessList.handleAllTrustStorageUpdateLocked();
+                }
+            } break;
+            case KILL_AND_REMOVE_PID: {
+                synchronized (ActivityManagerService.this) {
+                    ProcessRecord app = (ProcessRecord)msg.obj;
+                    if (app != null) {
+                        appDiedLocked(app, app.pid, app.thread, true);
+                    }
                 }
             } break;
             }
@@ -3706,9 +3718,18 @@ public class ActivityManagerService extends IActivityManager.Stub
        appDiedLocked(app, app.pid, app.thread, false);
     }
 
+    void setProcessRecord(ProcessRecord processRecord) {
+         killedProcessRecord = processRecord;
+    }
+
     @GuardedBy("this")
     final void appDiedLocked(ProcessRecord app, int pid, IApplicationThread thread,
             boolean fromBinderDied) {
+        // First remove the killed message
+         if (killedProcessRecord != null && killedProcessRecord.pid == pid
+                 && killedProcessRecord.uid == app.uid) {
+             mHandler.removeMessages(KILL_AND_REMOVE_PID);
+         }
         // First check if this ProcessRecord is actually active for the pid.
         synchronized (mPidsSelfLocked) {
             ProcessRecord curProc = mPidsSelfLocked.get(pid);

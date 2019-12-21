@@ -771,6 +771,13 @@ class ProcessRecord implements WindowProcessListener {
                 EventLog.writeEvent(EventLogTags.AM_KILL, userId, pid, processName, setAdj, reason);
                 Process.killProcessQuiet(pid);
                 ProcessList.killProcessGroup(uid, pid);
+                // Add for send a delay 2s message to AMS.
+                mService.setProcessRecord(this);
+                Message msg = Message.obtain();
+                msg.what = ActivityManagerService.KILL_AND_REMOVE_PID;
+                msg.obj = this;
+
+                mService.mHandler.sendMessageDelayed(msg, ActivityManagerService.REMOVE_PID_DELAY_TIME);
             } else {
                 pendingStart = false;
             }
