@@ -51,6 +51,8 @@ import android.app.ActivityThread;
 import android.app.AppGlobals;
 import android.app.AppProtoEnums;
 import android.app.IApplicationThread;
+import android.compat.annotation.ChangeId;
+import android.compat.annotation.EnabledAfter;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -92,6 +94,7 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.app.ProcessMap;
 import com.android.internal.app.procstats.ProcessStats;
+import com.android.internal.os.RuntimeInit;
 import com.android.internal.os.Zygote;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.MemInfoReader;
@@ -103,6 +106,7 @@ import com.android.server.pm.dex.DexManager;
 import com.android.server.wm.ActivityServiceConnectionsHolder;
 import com.android.server.wm.WindowManagerService;
 
+import dalvik.annotation.compat.VersionCodes;
 import dalvik.system.VMRuntime;
 
 import java.io.File;
@@ -279,6 +283,14 @@ public final class ProcessList {
 
     // lmkd reconnect delay in msecs
     private static final long LMKD_RECONNECT_DELAY_MS = 1000;
+
+    /*
+     * Native heap allocations will now have a non-zero tag in the most significant byte.
+     * See {@linktourl https://source.android.com/devices/tech/debug/tagged-pointers}.
+     */
+    @ChangeId
+    @EnabledAfter(targetSdkVersion = VersionCodes.Q)
+    private static final long NATIVE_HEAP_POINTER_TAGGING = 135754954; // This is a bug id.
 
     ActivityManagerService mService = null;
 
@@ -1651,6 +1663,19 @@ public final class ProcessList {
             // Property defaults to true currently.
             if (!TextUtils.isEmpty(useAppImageCache) && !useAppImageCache.equals("false")) {
                 runtimeFlags |= Zygote.USE_APP_IMAGE_STARTUP_CACHE;
+            }
+
+            if (Zygote.nativeSupportsMemoryTagging()) {
+                if ((app.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                    // System apps are generally more privileged than regular apps, and don't have the
+                    // same app compat concerns as regular apps, so we enable async tag checks for all
+                    // of their processes.
+                    runtimeFlags |= Zygote.MEMORY_TAG_LEVEL_ASYNC;
+                }
+            } else {
+                if (mPlatformCompat.isChangeEnabled(NATIVE_HEAP_POINTER_TAGGING, app.info)) {
+                    runtimeFlags |= Zygote.MEMORY_TAG_LEVEL_TBI;
+                }
             }
 
             String invokeWith = null;

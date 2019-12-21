@@ -122,6 +122,22 @@ public final class Zygote {
      */
     public static final int DISABLE_TEST_API_ENFORCEMENT_POLICY = 1 << 18;
 
+    public static final int MEMORY_TAG_LEVEL_MASK = (1 << 19) | (1 << 20);
+    /**
+     * Enable pointer tagging in this process.
+     */
+    public static final int MEMORY_TAG_LEVEL_TBI = 1 << 19;
+
+    /**
+     * Enable asynchronous memory tag checks in this process.
+     */
+    public static final int MEMORY_TAG_LEVEL_ASYNC = 2 << 19;
+
+    /**
+     * Enable synchronous memory tag checks in this process.
+     */
+    public static final int MEMORY_TAG_LEVEL_SYNC = 3 << 19;
+
     /** No external storage should be mounted. */
     public static final int MOUNT_EXTERNAL_NONE = IVold.REMOUNT_MODE_NONE;
     /** Default external storage should be mounted. */
@@ -985,4 +1001,9 @@ public final class Zygote {
      */
     @FastNative
     public static native int nativeParseSigChld(byte[] in, int length, int[] out);
+
+    /**
+     * Returns whether the hardware supports memory tagging (ARM MTE).
+     */
+    public static native boolean nativeSupportsMemoryTagging();
 }
