@@ -108,7 +108,23 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
     private static final boolean DBG = false; // STOPSHIP if true
     private static final boolean DBG_LOC = false; // STOPSHIP if true
     private static final boolean VDBG = false; // STOPSHIP if true
-
+    /**
+     * Broadcast Action: An attempt to establish a data connection has failed.
+     * The intent will have the following extra values:</p>
+     * <dl>
+     *   <dt>phoneName</dt><dd>A string version of the phone name.</dd>
+     *   <dt>state</dt><dd>One of {@code CONNECTED}, {@code CONNECTING}, or {code DISCONNECTED}.</dd>
+     *   <dt>reason</dt><dd>A string indicating the reason for the failure, if available.</dd>
+     * </dl>
+     *
+     * <p class="note">
+     * Requires the READ_PHONE_STATE permission.
+     *
+     * <p class="note">This is a protected intent that can only be sent
+     * by the system.
+     */
+    private static final String ACTION_DATA_CONNECTION_FAILED
+            = "android.intent.action.DATA_CONNECTION_FAILED";
     private static class Record {
         Context context;
 
@@ -2280,7 +2296,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
     }
 
     private void broadcastDataConnectionFailed(String apnType, int subId) {
-        Intent intent = new Intent(TelephonyIntents.ACTION_DATA_CONNECTION_FAILED);
+        Intent intent = new Intent(ACTION_DATA_CONNECTION_FAILED);
         intent.putExtra(PhoneConstants.DATA_APN_TYPE_KEY, apnType);
         intent.putExtra(PHONE_CONSTANTS_SUBSCRIPTION_KEY, subId);
         mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
