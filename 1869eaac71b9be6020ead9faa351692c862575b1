@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a62fd6e_3fc1eb91",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-21T05:14:03Z",
+      "side": 1,
+      "message": "That is not what this CL does. This CL just makes TokenBucket available to the network stack. So maybe change to:\n\nMake TokenBucket available to the network stack.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 51
+      },
+      "revId": "1869eaac71b9be6020ead9faa351692c862575b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939d272b_024e4e66",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-21T05:14:03Z",
+      "side": 1,
+      "message": "For consistency, it is required to discuss testing in Test: lines. For example, here you could use:\n\nTest: Build Pass: OK\nTest: Power ON/OFF: OK\nTest: Verify CPU loading improvement: OK",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 36
+      },
+      "revId": "1869eaac71b9be6020ead9faa351692c862575b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9c3f2b_d59b989f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-21T05:14:03Z",
+      "side": 1,
+      "message": "The commit message needs a Change-Id line. For this CL you can get it from the gerrit UI, and it is:\n\nChange-Id: I75d55c3e53fce57e50533dc74af3381a6cee4b96\n\nFor future CLs, please use the repo hooks, which will create a change ID automatically, and perform other useful tasks such as run linters, autoformatters, etc. These will save on code review time.\n\nhttps://android.googlesource.com/platform/tools/repohooks/+/refs/heads/master/README.md",
+      "revId": "1869eaac71b9be6020ead9faa351692c862575b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
