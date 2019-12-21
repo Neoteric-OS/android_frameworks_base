@@ -1615,6 +1615,13 @@ public final class ProcessList {
                 runtimeFlags |= Zygote.USE_APP_IMAGE_STARTUP_CACHE;
             }
 
+            if ((app.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                // System apps are generally more privileged than regular apps, and don't have the
+                // same app compat concerns as regular apps, so we enable async tag checks for all
+                // of their processes.
+                runtimeFlags |= Zygote.MEMORY_TAG_LEVEL_ASYNC;
+            }
+
             String invokeWith = null;
             if ((app.info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
                 // Debuggable apps may include a wrapper script with their library directory.
