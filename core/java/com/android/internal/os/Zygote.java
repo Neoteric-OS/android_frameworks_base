@@ -121,6 +121,16 @@ public final class Zygote {
      */
     public static final int DISABLE_TEST_API_ENFORCEMENT_POLICY = 1 << 18;
 
+    /**
+     * Enable asynchronous memory tag checks in this process.
+     */
+    public static final int MEMORY_TAG_LEVEL_ASYNC = 1 << 19;
+
+    /**
+     * Enable synchronous memory tag checks in this process.
+     */
+    public static final int MEMORY_TAG_LEVEL_SYNC = 1 << 20;
+
     /** No external storage should be mounted. */
     public static final int MOUNT_EXTERNAL_NONE = IVold.REMOUNT_MODE_NONE;
     /** Default external storage should be mounted. */
