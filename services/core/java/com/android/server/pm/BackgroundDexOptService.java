@@ -488,7 +488,7 @@ public class BackgroundDexOptService extends JobService {
 
     private boolean performDexOptPrimary(PackageManagerService pm, String pkg, int reason,
             int dexoptFlags) {
-        int result = trackPerformDexOpt(pkg, /*isForPrimaryDex=*/ false,
+        int result = trackPerformDexOpt(pkg, /*isForPrimaryDex=*/ true,
                 () -> pm.performDexOptWithStatus(new DexoptOptions(pkg, reason, dexoptFlags)));
         return result == PackageDexOptimizer.DEX_OPT_PERFORMED;
     }
@@ -497,7 +497,7 @@ public class BackgroundDexOptService extends JobService {
             int dexoptFlags) {
         DexoptOptions dexoptOptions = new DexoptOptions(pkg, reason,
                 dexoptFlags | DexoptOptions.DEXOPT_ONLY_SECONDARY_DEX);
-        int result = trackPerformDexOpt(pkg, /*isForPrimaryDex=*/ true,
+        int result = trackPerformDexOpt(pkg, /*isForPrimaryDex=*/ false,
                 () -> pm.performDexOpt(dexoptOptions)
                     ? PackageDexOptimizer.DEX_OPT_PERFORMED : PackageDexOptimizer.DEX_OPT_FAILED
         );
