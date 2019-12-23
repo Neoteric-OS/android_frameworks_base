@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3672d8bf_911a3227",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 6355,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-23T05:27:10Z",
+      "side": 1,
+      "message": "nit: 1. this does not print mOldNetwork which might help debugging.\n2. maybe use symbols to simplify message?\ne.g. Reassignment \u003cmRequest\u003e c-\u003ed conflicts with a-\u003eb",
+      "range": {
+        "startLine": 6353,
+        "startChar": 22,
+        "endLine": 6355,
+        "endChar": 100
+      },
+      "revId": "9897249be27f3c2e477803326dfd1c49cf975bbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6bef4ce_bd699add",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 6357,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-23T05:27:10Z",
+      "side": 1,
+      "message": "maybe add comment describe about what case we are dealing with here or above function?",
+      "range": {
+        "startLine": 6357,
+        "startChar": 12,
+        "endLine": 6357,
+        "endChar": 26
+      },
+      "revId": "9897249be27f3c2e477803326dfd1c49cf975bbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
