@@ -706,7 +706,9 @@ public class AlertController {
 
     protected void setupContent(ViewGroup contentPanel) {
         mScrollView = (ScrollView) contentPanel.findViewById(R.id.scrollView);
-        mScrollView.setFocusable(false);
+        if (mScrollView != null) {
+             mScrollView.setFocusable(false);
+        }
 
         // Special case for users that only want to display a String
         mMessageView = (TextView) contentPanel.findViewById(R.id.message);
