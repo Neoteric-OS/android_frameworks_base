@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dd48d3c1_c9641a61",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-23T03:35:45Z",
+      "side": 1,
+      "message": "The commands to update the API as you pasted above are fine, however the warning here shows that there is a missing nullability annotation on your new API, which should be addressed.\nYou just need to add a @NonNull or @Nullable annotation on the getLocalOnlyIfaces method and revert the change in this file.",
+      "parentUuid": "c60a512d_1192fe23",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 61
+      },
+      "revId": "73c8a74afad427296900b184af4ac615fd45c821",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ca06c82_c365f1c1",
         "filename": "api/system-lint-baseline.txt",
         "patchSetId": 6
