@@ -1188,21 +1188,27 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 }
 
                 // Traffic occurring on stacked interfaces is usually clatd.
+                //
+                // eBPF offloaded 464xlat'ed packets never hit base interface ip6?tables,
+                // and thus *all* statistics are collected on the stacked v4-* interface.
+                //
                 // UID stats are always counted on the stacked interface and never
                 // on the base interface, because the packets on the base interface
-                // do not actually match application sockets until they are translated.
+                // do not actually match application sockets unless they are IPv4.
                 //
-                // Interface stats are more complicated. Packets subject to BPF offload
+                // Interface stats are more complicated. Packets subject to eBPF offload
                 // never appear on the base interface and only appear on the stacked
                 // interface, so to ensure those packets increment interface stats, interface
-                // stats from stacked interfaces must be collected.
+                // stats from stacked interfaces must be collected. For xt_qtaguid (ie.
+                // non eBPF offloaded) they would appear on both, but we explicitly do not
+                // trigger xt_qtaguid interface counting on the v4-+ interfaces (see iptables
+                // rules and the "! -i v4-+" and "! -o v4-+" magic).
+                //
                 final List<LinkProperties> stackedLinks = state.linkProperties.getStackedLinks();
                 for (LinkProperties stackedLink : stackedLinks) {
                     final String stackedIface = stackedLink.getInterfaceName();
                     if (stackedIface != null) {
-                        if (mUseBpfTrafficStats) {
-                            findOrCreateNetworkIdentitySet(mActiveIfaces, stackedIface).add(ident);
-                        }
+                        findOrCreateNetworkIdentitySet(mActiveIfaces, stackedIface).add(ident);
                         findOrCreateNetworkIdentitySet(mActiveUidIfaces, stackedIface).add(ident);
                         if (isMobile) {
                             mobileIfaces.add(stackedIface);
