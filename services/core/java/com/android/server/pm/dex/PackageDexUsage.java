@@ -83,7 +83,8 @@ public class PackageDexUsage extends AbstractStatsBase<Void> {
             "=UnknownClassLoaderContext=";
 
     // The marker used for unsupported class loader contexts (no longer written, may occur in old
-    // files so discarded on read).
+    // files so discarded on read). Keep in sync with
+    // ClassLoaderContext::EncodedUnsupportedClassLoaderContext within the runtime.
     private static final String UNSUPPORTED_CLASS_LOADER_CONTEXT =
             "=UnsupportedClassLoaderContext=";
 
