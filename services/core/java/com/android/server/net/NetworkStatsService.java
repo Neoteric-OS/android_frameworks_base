@@ -1188,21 +1188,28 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 }
 
                 // Traffic occurring on stacked interfaces is usually clatd.
-                // UID stats are always counted on the stacked interface and never
-                // on the base interface, because the packets on the base interface
-                // do not actually match application sockets until they are translated.
                 //
-                // Interface stats are more complicated. Packets subject to BPF offload
-                // never appear on the base interface and only appear on the stacked
-                // interface, so to ensure those packets increment interface stats, interface
-                // stats from stacked interfaces must be collected.
+                // eBPF offloaded 464xlat'ed packets never hit base interface ip6tables, and thus
+                // *all* statistics are collected by iptables on the stacked v4-* interface.
+                //
+                // UID stats are always counted on the stacked interface and never on the base
+                // interface, because the packets on the base interface do not actually match
+                // application sockets (they're not IPv4) and thus we don't know the app uid.
+                //
+                // Interface stats are more complicated. For ingress we drop in ip6tables raw
+                // prerouting and thus can only account on the stacked interface.  For egress
+                // packets subject to eBPF offload never appear on the base interface and only
+                // appear on the stacked interface. Thus to ensure packets increment interface
+                // stats, we must collate data from stacked interfaces. For xt_qtaguid (ie.
+                // non eBPF offloaded) TX they would appear on both, but we explicitly do not
+                // trigger xt_qtaguid interface counting on the v4-+ interfaces (see iptables
+                // rules and the "! -o v4-+" magic).
+                //
                 final List<LinkProperties> stackedLinks = state.linkProperties.getStackedLinks();
                 for (LinkProperties stackedLink : stackedLinks) {
                     final String stackedIface = stackedLink.getInterfaceName();
                     if (stackedIface != null) {
-                        if (mUseBpfTrafficStats) {
-                            findOrCreateNetworkIdentitySet(mActiveIfaces, stackedIface).add(ident);
-                        }
+                        findOrCreateNetworkIdentitySet(mActiveIfaces, stackedIface).add(ident);
                         findOrCreateNetworkIdentitySet(mActiveUidIfaces, stackedIface).add(ident);
                         if (isMobile) {
                             mobileIfaces.add(stackedIface);
