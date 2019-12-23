@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc229ebe_502fba2b",
+        "filename": "services/core/java/com/android/server/am/ActiveServices.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3478,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2019-12-23T20:41:38Z",
+      "side": 1,
+      "message": "Hmm. This makes me feel that the rescheduleDelayedStartsLocked() should be called from the handler thread only.",
+      "revId": "92bdca827e7630e651d19069463251448f536ff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
