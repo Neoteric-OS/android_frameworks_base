@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f2adff8_4e47b19b",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T07:31:40Z",
+      "side": 0,
+      "message": "I think this is useful information, even though the unwanted capabilities are not part of the public API ATM.\nI\u0027d recommend doing the same as in the other comment, and we can discuss what to do about unwanted capabilities in January.",
+      "range": {
+        "startLine": 443,
+        "startChar": 7,
+        "endLine": 444,
+        "endChar": 86
+      },
+      "revId": "be64b53449fbe521650669f38e7d7342a5c7ecad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab39fc30_446a6ee7",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T07:31:40Z",
+      "side": 1,
+      "message": "Unwanted capabilities are not part of the public API, so it would be confusing to mention them here too.\nCould you move this comment out of the javadoc and into the method, and maybe add a \"TODO: consider adding unwanted capabilities to the public API and mention this in the documentation\" ?",
+      "range": {
+        "startLine": 401,
+        "startChar": 7,
+        "endLine": 402,
+        "endChar": 87
+      },
+      "revId": "f327e025c739d4e10f8919033fe3d83a4b4efccf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
