@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8706b95_3d8122ca",
+        "filename": "packages/Tethering/jni/android_net_util_TetheringUtils.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T06:07:16Z",
+      "side": 1,
+      "message": "This looks unused ?",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 33
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde2d5a2_4e007e84",
+        "filename": "packages/Tethering/jni/android_net_util_TetheringUtils.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T06:07:16Z",
+      "side": 1,
+      "message": "I see you removed the TODO to consider moving the above to Java, do you think it\u0027s not reasonable to implement it in Java in the future ?\nOs.setsockoptInt could be used for most of the calls",
+      "range": {
+        "startLine": 156,
+        "startChar": 37,
+        "endLine": 156,
+        "endChar": 38
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdd0de0_5b7c1cd7",
+        "filename": "packages/Tethering/src/android/net/util/TetheringUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T06:07:16Z",
+      "side": 1,
+      "message": "Could you also document what the sockets are useful for, e.g. why the offload interface needs to receive netfilter sockets ?",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 89
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199c1d07_3f76e976",
+        "filename": "packages/Tethering/src/android/net/util/TetheringUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T06:07:16Z",
+      "side": 1,
+      "message": "Nit: netfilter",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04e03f3_254c222c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T06:07:16Z",
+      "side": 1,
+      "message": "Remove instead of comment out ?",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601bff3e_e2f30abc",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T06:07:16Z",
+      "side": 1,
+      "message": "Also here ?",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 112,
+        "endChar": 49
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59d1326_63868281",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T06:07:16Z",
+      "side": 1,
+      "message": "Kind of nit ? If this needed to be called every time before a Tethering object is created, I\u0027d move it into the Tethering constructor. But I think this only needs to be called once per process; it just happens to work here because Tethering is only created once.\n\nMaybe just move it into onCreate() considering this ?",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 45
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
