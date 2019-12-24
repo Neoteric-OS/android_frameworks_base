@@ -855,14 +855,13 @@ public class NetworkStats implements Parcelable {
         final NetworkStats adjustments = new NetworkStats(0, stackedIfaces.size());
 
         // For recycling
-        Entry entry = null;
         Entry adjust = new NetworkStats.Entry(IFACE_ALL, 0, 0, 0, 0, 0, 0, 0L, 0L, 0L, 0L, 0L);
 
         for (int i = 0; i < stackedTraffic.size; i++) {
-            entry = stackedTraffic.getValues(i, entry);
-            if (entry.iface == null || !entry.iface.startsWith(CLATD_INTERFACE_PREFIX)) {
-                continue;
-            }
+            Entry entry = stackedTraffic.getValues(i, null);
+            if (entry == null) continue;
+            if (entry.iface == null) continue;
+            if (!entry.iface.startsWith(CLATD_INTERFACE_PREFIX)) continue;
 
             // For 464xlat traffic, per uid stats only counts the bytes of the native IPv4 packet
             // sent on the stacked interface with prefix "v4-" and drops the IPv6 header size after
@@ -875,28 +874,26 @@ public class NetworkStats implements Parcelable {
             entry.txBytes += entry.txPackets * IPV4V6_HEADER_DELTA;
             stackedTraffic.setValues(i, entry);
 
+            if (useBpfStats) continue;
+
             final String baseIface = stackedIfaces.get(entry.iface);
-            if (baseIface == null) {
-                continue;
-            }
+            if (baseIface == null) continue;
 
             // Subtract xt_qtaguid 464lat rx traffic seen for the root UID on the current base
             // interface. As for eBPF, the per uid stats is collected by different hook, the rx
             // packets on base interface will not be counted.
             adjust.iface = baseIface;
-            if (!useBpfStats) {
-                adjust.rxBytes = -entry.rxBytes;
-                adjust.rxPackets = -entry.rxPackets;
-            }
+            adjust.rxBytes = -entry.rxBytes;
+            adjust.rxPackets = -entry.rxPackets;
             adjustments.combineValues(adjust);
         }
+        if (!useBpfStats) baseTraffic.combineAllValues(adjustments);
 
         // Traffic on clat uid is IPv6 TX traffic that is already counted with app uid on the
         // stacked IPv4 'v4-' interface, so it needs to be removed to avoid double-counting.
         // Note: IPv6 RX clat traffic never reaches ip6tables due to raw prerouting drop rule,
         // and thus is simply never counted (all ingress/egress accounting happens from iptables).
         baseTraffic.removeUids(new int[] {CLAT_UID});
-        baseTraffic.combineAllValues(adjustments);
     }
 
     /**
