@@ -46,6 +46,30 @@
       "revId": "980a41e0d4df7c10403b3a69fbacef344326667d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a0d3ce6_60f217de",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6597,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-24T08:32:02Z",
+      "side": 1,
+      "message": "Ack, that also confused me.",
+      "parentUuid": "f906ed39_81a33550",
+      "range": {
+        "startLine": 6590,
+        "startChar": 12,
+        "endLine": 6597,
+        "endChar": 9
+      },
+      "revId": "980a41e0d4df7c10403b3a69fbacef344326667d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
