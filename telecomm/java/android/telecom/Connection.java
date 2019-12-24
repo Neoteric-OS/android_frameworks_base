@@ -647,6 +647,13 @@ public abstract class Connection extends Conferenceable {
             "android.telecom.extra.AUDIO_CODEC";
 
     /**
+     * Integer connection extra key to indicates that Single party call is incoming or
+     * outgoing.
+     * @hide
+     */
+    public static final String EXTRA_CALL_DIRECTION = "android.telecom.extra.CALL_DIRECTION";
+
+    /**
      * Connection event used to inform Telecom that it should play the on hold tone.  This is used
      * to play a tone when the peer puts the current call on hold.  Sent to Telecom via
      * {@link #sendConnectionEvent(String, Bundle)}.
