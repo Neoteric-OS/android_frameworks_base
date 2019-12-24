@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6daf5ad_c04f88a8",
+        "filename": "services/core/java/com/android/server/am/ActiveServices.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2019-12-24T15:51:33Z",
+      "side": 1,
+      "message": "1. Make it a msg instead of \"new Runnable\" to avoid memory fragmentation\n2. line 302 should be locked with mAm.",
+      "revId": "c372a6439cf39173aef32b68c65164f48d92e93e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
