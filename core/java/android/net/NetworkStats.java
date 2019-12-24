@@ -850,37 +850,19 @@ public class NetworkStats implements Parcelable {
      */
     public static void apply464xlatAdjustments(NetworkStats baseTraffic,
             NetworkStats stackedTraffic, Map<String, String> stackedIfaces, boolean useBpfStats) {
-        // Total 464xlat traffic to subtract from uid 0 on all base interfaces.
-        // stackedIfaces may grow afterwards, but NetworkStats will just be resized automatically.
-        final NetworkStats adjustments = new NetworkStats(0, stackedIfaces.size());
-
-        // For recycling
-        Entry entry = null;
-        Entry adjust = new NetworkStats.Entry(IFACE_ALL, 0, 0, 0, 0, 0, 0, 0L, 0L, 0L, 0L, 0L);
-
         for (int i = 0; i < stackedTraffic.size; i++) {
-            entry = stackedTraffic.getValues(i, entry);
-            if (entry.iface == null || !entry.iface.startsWith(CLATD_INTERFACE_PREFIX)) {
-                continue;
-            }
-            final String baseIface = stackedIfaces.get(entry.iface);
-            if (baseIface == null) {
-                continue;
-            }
-            // Subtract xt_qtaguid 464lat rx traffic seen for the root UID on the current base
-            // interface. As for eBPF, the per uid stats is collected by different hook, the rx
-            // packets on base interface will not be counted.
-            adjust.iface = baseIface;
-            if (!useBpfStats) {
-                adjust.rxBytes = -(entry.rxBytes + entry.rxPackets * IPV4V6_HEADER_DELTA);
-                adjust.rxPackets = -entry.rxPackets;
-            }
-            adjustments.combineValues(adjust);
+            Entry entry = stackedTraffic.getValues(i, null);
+            if (entry == null) continue;
+            if (entry.iface == null) continue;
+            if (!entry.iface.startsWith(CLATD_INTERFACE_PREFIX)) continue;
 
             // For 464xlat traffic, per uid stats only counts the bytes of the native IPv4 packet
             // sent on the stacked interface with prefix "v4-" and drops the IPv6 header size after
             // unwrapping. To account correctly for on-the-wire traffic, add the 20 additional bytes
             // difference for all packets (http://b/12249687, http:/b/33681750).
+            //
+            // Note: this doesn't account for LRO/GRO/GSO/TSO (ie. >mtu) traffic correctly, nor
+            // does it correctly account for the 8 extra bytes in the IPv6 fragmentation header.
             entry.rxBytes += entry.rxPackets * IPV4V6_HEADER_DELTA;
             entry.txBytes += entry.txPackets * IPV4V6_HEADER_DELTA;
             stackedTraffic.setValues(i, entry);
@@ -891,7 +873,6 @@ public class NetworkStats implements Parcelable {
         // Note: IPv6 RX clat traffic never reaches ip6tables due to raw prerouting drop rule,
         // and thus is simply never counted (all ingress/egress accounting happens from iptables).
         baseTraffic.removeUids(new int[] {CLAT_UID});
-        baseTraffic.combineAllValues(adjustments);
     }
 
     /**
