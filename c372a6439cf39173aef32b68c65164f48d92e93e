@@ -16,6 +16,24 @@
       "revId": "c372a6439cf39173aef32b68c65164f48d92e93e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4859c25_77fbae99",
+        "filename": "services/core/java/com/android/server/am/ActiveServices.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1463796
+      },
+      "writtenOn": "2019-12-24T20:12:26Z",
+      "side": 1,
+      "message": "\u003e\u003e\u003eMake it a msg instead of \"new Runnable\" to avoid memory fragmentation\nso you mean to introduce one new message same as and use it in place of runnable :\n284         static final int MSG_BG_START_TIMEOUT \u003d 1;\n285         static final int MSG_UPDATE_FOREGROUND_APPS \u003d 2;\n\n\u003e\u003e\u003e line 302 should be locked with mAm.\nsure i will provide the proper synchronization",
+      "parentUuid": "e6daf5ad_c04f88a8",
+      "revId": "c372a6439cf39173aef32b68c65164f48d92e93e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
