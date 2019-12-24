@@ -20,6 +20,7 @@ import static android.content.pm.PackageManager.GET_SIGNATURES;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.app.ActivityManager;
@@ -48,10 +49,10 @@ import java.util.Iterator;
 /**
  * Manager for creating and modifying network policy rules.
  *
- * {@hide}
+ * @hide
  */
-@SystemService(Context.NETWORK_POLICY_SERVICE)
 @SystemApi
+@SystemService(Context.NETWORK_POLICY_SERVICE)
 public class NetworkPolicyManager {
 
     /* POLICY_* are masks and can be ORed, although currently they are not.*/
@@ -131,7 +132,6 @@ public class NetworkPolicyManager {
 
     /** @hide */
     public static final int FIREWALL_RULE_DEFAULT = 0;
-
     /** @hide */
     public static final String FIREWALL_CHAIN_NAME_NONE = "none";
     /** @hide */
@@ -264,6 +264,30 @@ public class NetworkPolicyManager {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    /** @hide */
+    @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY)
+    @SystemApi
+    public void addNetworkPolicyListener(@NonNull NetworkPolicyListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("listener cannot be null.");
+        }
+
+        final NetworkPolicyListenerProxy proxyListener = new NetworkPolicyListenerProxy(listener);
+        listener.setListener(proxyListener);
+        registerListener(proxyListener);
+    }
+
+    /** @hide */
+    @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY)
+    @SystemApi
+    public void removeNetworkPolicyListener(@NonNull NetworkPolicyListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("listener cannot be null.");
+        }
+
+        unregisterListener(listener.getListener());
     }
 
     /** @hide */
@@ -463,6 +487,39 @@ public class NetworkPolicyManager {
         return WifiInfo.removeDoubleQuotes(ssid);
     }
 
+    /**
+     * NetworkPolicyListener proxy for NetworkPolicyListener object.
+     * @hide
+     */
+    public class NetworkPolicyListenerProxy extends Listener {
+        private final NetworkPolicyListener mListener;
+
+        NetworkPolicyListenerProxy(NetworkPolicyListener listener) {
+            mListener = listener;
+        }
+        @Override
+        public void onUidRulesChanged(int uid, int uidRules) {
+            mListener.onUidRulesChanged(uid, uidRules);
+        }
+        @Override
+        public void onMeteredIfacesChanged(@NonNull String[] meteredIfaces) {
+            mListener.onMeteredIfacesChanged(meteredIfaces);
+        }
+        @Override
+        public void onRestrictBackgroundChanged(boolean restrictBackground) {
+            mListener.onRestrictBackgroundChanged(restrictBackground);
+        }
+        @Override
+        public void onUidPoliciesChanged(int uid, int uidPolicies) {
+            mListener.onUidPoliciesChanged(uid, uidPolicies);
+        }
+        @Override
+        public void onSubscriptionOverride(int subId, int overrideMask, int overrideValue) {
+            mListener.onSubscriptionOverride(subId, overrideMask, overrideValue);
+        }
+    }
+
+    // TODO: Remove this class and should use android.net.NetworkPolicyListener instead.
     /** {@hide} */
     public static class Listener extends INetworkPolicyListener.Stub {
         @Override public void onUidRulesChanged(int uid, int uidRules) { }

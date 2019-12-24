@@ -4447,8 +4447,19 @@ package android.net {
     field public final android.net.WifiKey wifiKey;
   }
 
+  public class NetworkPolicyListener {
+    ctor public NetworkPolicyListener();
+    method public void onMeteredIfacesChanged(@NonNull String[]);
+    method public void onRestrictBackgroundChanged(boolean);
+    method public void onSubscriptionOverride(int, int, int);
+    method public void onUidPoliciesChanged(int, int);
+    method public void onUidRulesChanged(int, int);
+  }
+
   public class NetworkPolicyManager {
+    method @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY) public void addNetworkPolicyListener(@NonNull android.net.NetworkPolicyListener);
     method @Nullable public String getSubscriptionPlansOwner(int);
+    method @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY) public void removeNetworkPolicyListener(@NonNull android.net.NetworkPolicyListener);
     method public void setSubscriptionOverride(int, int, int, long, @NonNull String);
     field public static final int OVERRIDE_CONGESTED = 2; // 0x2
     field public static final int OVERRIDE_UNMETERED = 1; // 0x1
