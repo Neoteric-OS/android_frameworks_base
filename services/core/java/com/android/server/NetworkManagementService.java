@@ -2205,4 +2205,9 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
             }
         }
     }
+
+    public void removeUidsLocked(int[] uids) {
+        mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
+        mStatsFactory.removeUidsLocked(uids);
+    }
 }

@@ -389,4 +389,5 @@ interface INetworkManagementService
     void setAllowOnlyVpnForUids(boolean enable, in UidRange[] uidRanges);
 
     boolean isNetworkRestricted(int uid);
+    void removeUidsLocked(in int[] uids);
 }

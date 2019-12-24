@@ -1578,6 +1578,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
         mUidRecorder.removeUidsLocked(uids);
         mUidTagRecorder.removeUidsLocked(uids);
+        try {
+            mNetworkManager.removeUidsLocked(uids);
+        } catch (RemoteException e) {
+            // ignored; service lives in system_server
+        }
 
         // Clear kernel stats associated with UID
         for (int uid : uids) {

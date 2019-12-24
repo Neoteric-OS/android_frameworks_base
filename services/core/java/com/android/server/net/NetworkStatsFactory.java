@@ -488,4 +488,10 @@ public class NetworkStatsFactory {
         pe.initCause(cause);
         return pe;
     }
+
+    public void removeUidsLocked(int[] uids) {
+        synchronized (mPersistentDataLock) {
+            mPersistSnapshot.removeUids(uids);
+        }
+    }
 }
