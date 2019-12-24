@@ -886,8 +886,10 @@ public class NetworkStats implements Parcelable {
             stackedTraffic.setValues(i, entry);
         }
 
-        // Traffic on clat uid is v6 tx traffic that is already counted with app uid on the stacked
-        // v4 interface, so it needs to be removed to avoid double-counting.
+        // Traffic on clat uid is IPv6 TX traffic that is already counted with app uid on the
+        // stacked IPv4 'v4-' interface, so it needs to be removed to avoid double-counting.
+        // Note: IPv6 RX clat traffic never reaches ip6tables due to raw prerouting drop rule,
+        // and thus is simply never counted (all ingress/egress accounting happens from iptables).
         baseTraffic.removeUids(new int[] {CLAT_UID});
         baseTraffic.combineAllValues(adjustments);
     }
