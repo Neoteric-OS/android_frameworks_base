@@ -23,7 +23,6 @@ import static android.net.util.NetworkConstants.FF;
 import static android.net.util.NetworkConstants.RFC7421_PREFIX_LENGTH;
 import static android.net.util.NetworkConstants.asByte;
 
-import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.INetworkStackStatusCallback;
 import android.net.INetworkStatsService;
@@ -32,6 +31,7 @@ import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.RouteInfo;
+import android.net.TetheringManager;
 import android.net.dhcp.DhcpServerCallbacks;
 import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.DhcpServingParamsParcelExt;
@@ -119,7 +119,7 @@ public class IpServer extends StateMachine {
          *
          * @param who the calling instance of IpServer
          * @param state one of STATE_*
-         * @param lastError one of ConnectivityManager.TETHER_ERROR_*
+         * @param lastError one of TetheringManager.TETHER_ERROR_*
          */
         public void updateInterfaceState(IpServer who, int state, int lastError) { }
 
@@ -229,7 +229,7 @@ public class IpServer extends StateMachine {
         mUsingLegacyDhcp = usingLegacyDhcp;
         mDeps = deps;
         resetLinkProperties();
-        mLastError = ConnectivityManager.TETHER_ERROR_NO_ERROR;
+        mLastError = TetheringManager.TETHER_ERROR_NO_ERROR;
         mServingMode = STATE_AVAILABLE;
 
         mInitialState = new InitialState();
@@ -250,7 +250,7 @@ public class IpServer extends StateMachine {
     }
 
     /**
-     * Tethering downstream type. It would be one of ConnectivityManager#TETHERING_*.
+     * Tethering downstream type. It would be one of TetheringManager#TETHERING_*.
      */
     public int interfaceType() {
         return mInterfaceType;
@@ -354,7 +354,7 @@ public class IpServer extends StateMachine {
         }
 
         private void handleError() {
-            mLastError = ConnectivityManager.TETHER_ERROR_DHCPSERVER_ERROR;
+            mLastError = TetheringManager.TETHER_ERROR_DHCPSERVER_ERROR;
             transitionTo(mInitialState);
         }
     }
@@ -389,7 +389,7 @@ public class IpServer extends StateMachine {
                     public void callback(int statusCode) {
                         if (statusCode != STATUS_SUCCESS) {
                             mLog.e("Error stopping DHCP server: " + statusCode);
-                            mLastError = ConnectivityManager.TETHER_ERROR_DHCPSERVER_ERROR;
+                            mLastError = TetheringManager.TETHER_ERROR_DHCPSERVER_ERROR;
                             // Not much more we can do here
                         }
                     }
@@ -425,13 +425,13 @@ public class IpServer extends StateMachine {
         // config passed down to us by a higher layer IP-coordinating element.
         String ipAsString = null;
         int prefixLen = 0;
-        if (mInterfaceType == ConnectivityManager.TETHERING_USB) {
+        if (mInterfaceType == TetheringManager.TETHERING_USB) {
             ipAsString = USB_NEAR_IFACE_ADDR;
             prefixLen = USB_PREFIX_LENGTH;
-        } else if (mInterfaceType == ConnectivityManager.TETHERING_WIFI) {
+        } else if (mInterfaceType == TetheringManager.TETHERING_WIFI) {
             ipAsString = getRandomWifiIPv4Address();
             prefixLen = WIFI_HOST_IFACE_PREFIX_LENGTH;
-        } else if (mInterfaceType == ConnectivityManager.TETHERING_WIFI_P2P) {
+        } else if (mInterfaceType == TetheringManager.TETHERING_WIFI_P2P) {
             ipAsString = WIFI_P2P_IFACE_ADDR;
             prefixLen = WIFI_P2P_IFACE_PREFIX_LENGTH;
         } else {
@@ -451,7 +451,7 @@ public class IpServer extends StateMachine {
             InetAddress addr = parseNumericAddress(ipAsString);
             linkAddr = new LinkAddress(addr, prefixLen);
             ifcg.setLinkAddress(linkAddr);
-            if (mInterfaceType == ConnectivityManager.TETHERING_WIFI) {
+            if (mInterfaceType == TetheringManager.TETHERING_WIFI) {
                 // The WiFi stack has ownership of the interface up/down state.
                 // It is unclear whether the Bluetooth or USB stacks will manage their own
                 // state.
@@ -729,7 +729,7 @@ public class IpServer extends StateMachine {
             logMessage(this, message.what);
             switch (message.what) {
                 case CMD_TETHER_REQUESTED:
-                    mLastError = ConnectivityManager.TETHER_ERROR_NO_ERROR;
+                    mLastError = TetheringManager.TETHER_ERROR_NO_ERROR;
                     switch (message.arg1) {
                         case STATE_LOCAL_ONLY:
                             transitionTo(mLocalHotspotState);
@@ -758,7 +758,7 @@ public class IpServer extends StateMachine {
         @Override
         public void enter() {
             if (!startIPv4()) {
-                mLastError = ConnectivityManager.TETHER_ERROR_IFACE_CFG_ERROR;
+                mLastError = TetheringManager.TETHER_ERROR_IFACE_CFG_ERROR;
                 return;
             }
 
@@ -766,7 +766,7 @@ public class IpServer extends StateMachine {
                 mNMService.tetherInterface(mIfaceName);
             } catch (Exception e) {
                 mLog.e("Error Tethering: " + e);
-                mLastError = ConnectivityManager.TETHER_ERROR_TETHER_IFACE_ERROR;
+                mLastError = TetheringManager.TETHER_ERROR_TETHER_IFACE_ERROR;
                 return;
             }
 
@@ -787,7 +787,7 @@ public class IpServer extends StateMachine {
             try {
                 mNMService.untetherInterface(mIfaceName);
             } catch (Exception e) {
-                mLastError = ConnectivityManager.TETHER_ERROR_UNTETHER_IFACE_ERROR;
+                mLastError = TetheringManager.TETHER_ERROR_UNTETHER_IFACE_ERROR;
                 mLog.e("Failed to untether interface: " + e);
             }
 
@@ -817,7 +817,7 @@ public class IpServer extends StateMachine {
                 case CMD_START_TETHERING_ERROR:
                 case CMD_STOP_TETHERING_ERROR:
                 case CMD_SET_DNS_FORWARDERS_ERROR:
-                    mLastError = ConnectivityManager.TETHER_ERROR_MASTER_ERROR;
+                    mLastError = TetheringManager.TETHER_ERROR_MASTER_ERROR;
                     transitionTo(mInitialState);
                     break;
                 default:
@@ -836,7 +836,7 @@ public class IpServer extends StateMachine {
         @Override
         public void enter() {
             super.enter();
-            if (mLastError != ConnectivityManager.TETHER_ERROR_NO_ERROR) {
+            if (mLastError != TetheringManager.TETHER_ERROR_NO_ERROR) {
                 transitionTo(mInitialState);
             }
 
@@ -872,7 +872,7 @@ public class IpServer extends StateMachine {
         @Override
         public void enter() {
             super.enter();
-            if (mLastError != ConnectivityManager.TETHER_ERROR_NO_ERROR) {
+            if (mLastError != TetheringManager.TETHER_ERROR_NO_ERROR) {
                 transitionTo(mInitialState);
             }
 
@@ -953,7 +953,7 @@ public class IpServer extends StateMachine {
                         } catch (Exception e) {
                             mLog.e("Exception enabling NAT: " + e);
                             cleanupUpstream();
-                            mLastError = ConnectivityManager.TETHER_ERROR_ENABLE_NAT_ERROR;
+                            mLastError = TetheringManager.TETHER_ERROR_ENABLE_NAT_ERROR;
                             transitionTo(mInitialState);
                             return true;
                         }
@@ -998,7 +998,7 @@ public class IpServer extends StateMachine {
     class UnavailableState extends State {
         @Override
         public void enter() {
-            mLastError = ConnectivityManager.TETHER_ERROR_NO_ERROR;
+            mLastError = TetheringManager.TETHER_ERROR_NO_ERROR;
             sendInterfaceState(STATE_UNAVAILABLE);
         }
     }
