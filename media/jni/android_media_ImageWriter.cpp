@@ -73,6 +73,7 @@ public:
     // Implementation of IProducerListener, used to notify the ImageWriter that the consumer
     // has returned a buffer and it is ready for ImageWriter to dequeue.
     virtual void onBufferReleased();
+    virtual void onBufferDetached(int slot);
 
     void setProducer(const sp<Surface>& producer) { mProducer = producer; }
     Surface* getProducer() { return mProducer.get(); }
@@ -281,6 +282,11 @@ void JNIImageWriterContext::onBufferReleased() {
     if (needsDetach) {
         detachJNI();
     }
+}
+
+void JNIImageWriterContext::onBufferDetached(int slot) {
+    ALOGV("%s: buffer onBufferDetached", __FUNCTION__);
+    mProducer->releaseSlot(slot);
 }
 
 // ----------------------------------------------------------------------------
