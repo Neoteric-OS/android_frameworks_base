@@ -837,6 +837,11 @@ abstract class HdmiCecLocalDevice {
             // To prevent from calling the callback again during handling the callback itself.
             mPendingActionClearedCallback = null;
             callback.onCleared(this);
+        } else if (!mActions.isEmpty() && mService.isPowerStandbyOrTransient()) {
+            // Use copied action list in that start() may remove itself.
+            for (HdmiCecFeatureAction action : new ArrayList<>(mActions)) {
+                Slog.i(TAG, "PowerStandbyOrTransient, not-cleared action:" + action);
+            }
         }
     }
 
