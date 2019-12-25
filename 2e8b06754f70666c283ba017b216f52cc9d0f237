@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eccf51a0_37cdf0c0",
+        "filename": "packages/Tethering/jni/android_net_util_TetheringUtils.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-25T04:31:28Z",
+      "side": 1,
+      "message": "Ooops, yes. Originally I want to combine to JNI, but finally I found it is not a good idea and loss this unused parameter.",
+      "parentUuid": "d8706b95_3d8122ca",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 33
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bde2d5a2_4e007e84",
         "filename": "packages/Tethering/jni/android_net_util_TetheringUtils.cpp",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871da557_859850f7",
+        "filename": "packages/Tethering/jni/android_net_util_TetheringUtils.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-25T04:31:28Z",
+      "side": 1,
+      "message": "Yes, just like to comment above. We already here and they all necessary for setup ra socket. The JAVA Os.setsockoptInt is also JNI. I don\u0027t think separate these into different JNI is a reasonable TODO. We already call this function as setupRaSocket instead of setupIcmp6Filter.",
+      "parentUuid": "bde2d5a2_4e007e84",
+      "range": {
+        "startLine": 156,
+        "startChar": 37,
+        "endLine": 156,
+        "endChar": 38
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "2e59cd3a_f1ec989d",
+        "filename": "packages/Tethering/src/android/net/util/TetheringUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-25T04:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afdd0de0_5b7c1cd7",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 89
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13ff955c_a37d4d88",
+        "filename": "packages/Tethering/src/android/net/util/TetheringUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-25T04:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "199c1d07_3f76e976",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b04e03f3_254c222c",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4b819a_aea4811f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-25T04:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b04e03f3_254c222c",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "47617261_9337392e",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-25T04:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "601bff3e_e2f30abc",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 112,
+        "endChar": 49
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f59d1326_63868281",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
         "patchSetId": 5
@@ -160,6 +304,30 @@
       "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25bb3cce_d7ccc3ad",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-25T04:31:28Z",
+      "side": 1,
+      "message": "Yes, this just need to be call once per process. Why I put it here instead of onCreate() is this would be more friendly for testing. I can override or spy makeTethering to avoid load this library. For current design tetherutilsjni is inside tethering apk which is also in apex. Testing app is hard to find this and is impractical to load this library in testing app\u0027s process. Testing app can\u0027t use it, it need cap_net_admin permission for ra socket and selinux permission for offload configuration.",
+      "parentUuid": "f59d1326_63868281",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 45
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
