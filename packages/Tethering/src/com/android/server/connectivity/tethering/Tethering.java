@@ -101,8 +101,8 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
-import com.android.internal.notification.SystemNotificationChannels;
+//import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
+//import com.android.internal.notification.SystemNotificationChannels;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.MessageUtils;
 import com.android.internal.util.Protocol;
@@ -669,19 +669,19 @@ public class Tethering {
 
         if (usbTethered) {
             if (wifiTethered || bluetoothTethered) {
-                showTetheredNotification(SystemMessage.NOTE_TETHER_GENERAL);
+                //showTetheredNotification(SystemMessage.NOTE_TETHER_GENERAL);
             } else {
-                showTetheredNotification(SystemMessage.NOTE_TETHER_USB);
+                //showTetheredNotification(SystemMessage.NOTE_TETHER_USB);
             }
         } else if (wifiTethered) {
             if (bluetoothTethered) {
-                showTetheredNotification(SystemMessage.NOTE_TETHER_GENERAL);
+                //showTetheredNotification(SystemMessage.NOTE_TETHER_GENERAL);
             } else {
                 /* We now have a status bar icon for WifiTethering, so drop the notification */
                 clearTetheredNotification();
             }
         } else if (bluetoothTethered) {
-            showTetheredNotification(SystemMessage.NOTE_TETHER_BLUETOOTH);
+            //showTetheredNotification(SystemMessage.NOTE_TETHER_BLUETOOTH);
         } else {
             clearTetheredNotification();
         }
@@ -693,7 +693,8 @@ public class Tethering {
 
     @VisibleForTesting
     protected void showTetheredNotification(int id, boolean tetheringOn) {
-        NotificationManager notificationManager =
+        // Temp mark to development build as system_current.
+        /*NotificationManager notificationManager =
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager == null) {
             return;
@@ -758,6 +759,7 @@ public class Tethering {
 
         notificationManager.notifyAsUser(null, mLastNotificationId,
                 mTetheredNotificationBuilder.buildInto(new Notification()), UserHandle.ALL);
+        */
     }
 
     @VisibleForTesting
