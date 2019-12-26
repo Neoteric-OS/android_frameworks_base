@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c4599d2_70d12f4f",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Yes, you are right.",
+      "parentUuid": "3c8692a5_0186ca26",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18a89fdb_846c35e2",
         "filename": "packages/Tethering/res/values/overlayable.xml",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2019-12-13T11:30:03Z",
       "side": 1,
       "message": "Can you add documentation on each of these resources, and the format, for OEMs ?\nThen a comment in res/values/config.xml on each resource to see the doc in overlayable.xml would also help.",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 73
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e93536_af1c48ee",
+        "filename": "packages/Tethering/res/values/overlayable.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Will write a doc about the usage of each configs.",
+      "parentUuid": "18a89fdb_846c35e2",
       "range": {
         "startLine": 20,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0a92cd29_412155fc",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37c4e9cb_e75c50b1",
+      "range": {
+        "startLine": 203,
+        "startChar": 4,
+        "endLine": 203,
+        "endChar": 11
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da01b09e_337a80ba",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f2a66b_ab820b02",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "As we discussed offline, isTetheringSupported() can be changed in runtime but NotificationUpdater is still required for notifying status such as disallow tethering.",
+      "parentUuid": "da01b09e_337a80ba",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 223,
+        "endChar": 70
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a2c73a99_6e4d514f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Yes, some codes may be the cost if tethering is not supported. But isTetheringSupported() can be changed in runtime that means tethering should run normally after tethering is supported and these are necessary for tethering to get required info.",
+      "parentUuid": "0659dc89_c9b7ce37",
+      "range": {
+        "startLine": 313,
+        "startChar": 8,
+        "endLine": 319,
+        "endChar": 70
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd9cbce7_dff5f809",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2117d078_7f80b0ac",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd9cbce7_dff5f809",
+      "range": {
+        "startLine": 372,
+        "startChar": 11,
+        "endLine": 372,
+        "endChar": 12
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "facb5316_7ad3f9db",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Move getting PowerManager to functor to reduce unnecessary cost if tethering is not supported.",
+      "parentUuid": "cb2ac326_1b906330",
+      "range": {
+        "startLine": 704,
+        "startChar": 8,
+        "endLine": 704,
+        "endChar": 50
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48b07c6a_c29fd731",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 10
@@ -183,6 +351,30 @@
       "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858c0f7a_4afda657",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Yes, aosp/1188867 is adding this.",
+      "parentUuid": "48b07c6a_c29fd731",
+      "range": {
+        "startLine": 852,
+        "startChar": 15,
+        "endLine": 852,
+        "endChar": 56
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "052fe261_d2c1c9c1",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringDependencies.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "670aea4a_2e0f1a95",
+      "range": {
+        "startLine": 155,
+        "startChar": 63,
+        "endLine": 155,
+        "endChar": 64
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0416ec10_07378261",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 10
@@ -229,6 +445,30 @@
       "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6e27de_8adb1521",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0416ec10_07378261",
+      "range": {
+        "startLine": 51,
+        "startChar": 25,
+        "endLine": 51,
+        "endChar": 36
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "64b90577_4a240821",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Yes, update accordingly. But notification still can\u0027t show to secondary user due to this bug b/144024489. After patched the change, notification can show normally. I will request bug owner sync solution to aosp.",
+      "parentUuid": "a86a7759_af1bd7c9",
+      "range": {
+        "startLine": 68,
+        "startChar": 38,
+        "endLine": 68,
+        "endChar": 45
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ac8e150_81bf2749",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 10
@@ -275,6 +539,30 @@
       "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b948e4a2_50ea9d10",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ac8e150_81bf2749",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 45
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "67cb10ea_7a35bfba",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "No, TETHERING_WIFI_P2P is not a downstream type.",
+      "parentUuid": "1dc52aa4_d450521c",
+      "range": {
+        "startLine": 117,
+        "startChar": 84,
+        "endLine": 117,
+        "endChar": 92
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9722a9ed_193cb818",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 10
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "835ae77f_3c0e709c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "This code is gone.",
+      "parentUuid": "9722a9ed_193cb818",
+      "range": {
+        "startLine": 119,
+        "startChar": 12,
+        "endLine": 119,
+        "endChar": 39
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2e7dcdf_2c908953",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 10
@@ -344,6 +680,30 @@
       "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d0145d4_274ccc30",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2e7dcdf_2c908953",
+      "range": {
+        "startLine": 150,
+        "startChar": 16,
+        "endLine": 158,
+        "endChar": 17
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +753,54 @@
     },
     {
       "key": {
+        "uuid": "913d253f_553d0f78",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Because you can put all clear actions here if we add more actions in the future.",
+      "parentUuid": "363b6154_8e887bc4",
+      "range": {
+        "startLine": 164,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 53
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e8b504d_8aa450aa",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d020bef_40c45412",
+      "range": {
+        "startLine": 164,
+        "startChar": 36,
+        "endLine": 164,
+        "endChar": 40
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f38b624_78bf6100",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 10
@@ -413,6 +821,30 @@
       "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10d0cb7_da61f9da",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "As we discussed offline, the notification style should base on subid(sim card).",
+      "parentUuid": "9f38b624_78bf6100",
+      "range": {
+        "startLine": 183,
+        "startChar": 30,
+        "endLine": 183,
+        "endChar": 71
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -462,6 +894,54 @@
     },
     {
       "key": {
+        "uuid": "d52e2ab9_33acf75f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "I have changed the design. It\u0027s more clear for this logic.",
+      "parentUuid": "1dddcf8f_a85bcffb",
+      "range": {
+        "startLine": 187,
+        "startChar": 67,
+        "endLine": 187,
+        "endChar": 95
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94730285_53e62edc",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "This code is gone.",
+      "parentUuid": "a471c862_8c7e7e14",
+      "range": {
+        "startLine": 187,
+        "startChar": 94,
+        "endLine": 187,
+        "endChar": 95
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f61f1880_3098d33b",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 10
@@ -482,6 +962,30 @@
       "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83980995_df10d178",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f61f1880_3098d33b",
+      "range": {
+        "startLine": 188,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 9
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -508,6 +1012,30 @@
     },
     {
       "key": {
+        "uuid": "ae1c89c1_dfbc58bd",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42dcab05_6844bc2b",
+      "range": {
+        "startLine": 224,
+        "startChar": 49,
+        "endLine": 224,
+        "endChar": 50
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e0a1019_9989e8bd",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 10
@@ -531,6 +1059,30 @@
     },
     {
       "key": {
+        "uuid": "e1d6b47c_118a710e",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e0a1019_9989e8bd",
+      "range": {
+        "startLine": 236,
+        "startChar": 34,
+        "endLine": 236,
+        "endChar": 35
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9e60253_8f45952f",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 10
@@ -551,6 +1103,30 @@
       "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b90b027_601869cc",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9e60253_8f45952f",
+      "range": {
+        "startLine": 238,
+        "startChar": 35,
+        "endLine": 238,
+        "endChar": 49
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -600,6 +1176,54 @@
     },
     {
       "key": {
+        "uuid": "bd3a420c_bc54fed3",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "def48d33_2108c8a7",
+      "range": {
+        "startLine": 244,
+        "startChar": 59,
+        "endLine": 244,
+        "endChar": 87
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "220dc5a4_b29a017d",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Change the context to context.createContextAsUser(UserHandle.CURRENT, 0) as previous design that can redirect to TetherSettings page of current user.",
+      "parentUuid": "3be10bd4_d94d404c",
+      "range": {
+        "startLine": 244,
+        "startChar": 33,
+        "endLine": 244,
+        "endChar": 58
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4671aa22_19dba877",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 10
@@ -623,6 +1247,30 @@
     },
     {
       "key": {
+        "uuid": "b6b6564e_26fc45a0",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4671aa22_19dba877",
+      "range": {
+        "startLine": 346,
+        "startChar": 8,
+        "endLine": 347,
+        "endChar": 85
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53fa48b9_1c49c51d",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
         "patchSetId": 10
@@ -643,6 +1291,30 @@
       "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a8a0bdb_e61115e7",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-12-26T07:59:52Z",
+      "side": 1,
+      "message": "I have added more tests to verify the interaction with TetheringNotificationUpdater.",
+      "parentUuid": "53fa48b9_1c49c51d",
+      "range": {
+        "startLine": 169,
+        "startChar": 47,
+        "endLine": 169,
+        "endChar": 67
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
