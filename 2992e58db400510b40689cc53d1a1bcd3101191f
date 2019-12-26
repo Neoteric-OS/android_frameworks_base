@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "542bbb85_312b7cdf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6396,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-26T03:31:20Z",
+      "side": 1,
+      "message": "Is it better if:\n 1. single line log if you are going to print in logcat.\n    That would be easier to search and filter by keyword.\n 2. add multiple line history log in a new section of dumpsys connectivity.",
+      "range": {
+        "startLine": 6396,
+        "startChar": 22,
+        "endLine": 6396,
+        "endChar": 30
+      },
+      "revId": "2992e58db400510b40689cc53d1a1bcd3101191f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eef7078_beb84a9e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7402,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-26T03:31:20Z",
+      "side": 1,
+      "message": "1. It doesn\u0027t look not very idiomatic to me.\nmaybe a toShortString() inside NAI class?\n2. Also be noticed that we have a naiToString() in this class.\nMaybe we want to reuse them?",
+      "range": {
+        "startLine": 7402,
+        "startChar": 26,
+        "endLine": 7402,
+        "endChar": 43
+      },
+      "revId": "2992e58db400510b40689cc53d1a1bcd3101191f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
