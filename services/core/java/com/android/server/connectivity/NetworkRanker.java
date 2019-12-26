@@ -16,11 +16,16 @@
 
 package com.android.server.connectivity;
 
+import static android.net.NetworkScore.LEGACY_SCORE;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.NetworkRequest;
+import android.net.NetworkScore;
+import android.net.NetworkSelectionSettings;
 
 import java.util.Collection;
+import java.util.Comparator;
 
 /**
  * A class that knows how to find the best network matching a request out of a list of networks.
@@ -50,5 +55,22 @@ public class NetworkRanker {
             }
         }
         return bestNetwork;
+    }
+
+    /**
+     * Compares NetworkScore.
+     */
+    public int compareNetworks(NetworkScore ns1, NetworkScore ns2, NetworkRequest request,
+            NetworkSelectionSettings selectionSettings) {
+        return Integer.compare(ns1.getIntExtension(LEGACY_SCORE),
+                ns2.getIntExtension(LEGACY_SCORE));
+    }
+
+    /**
+     * Return comparator for comparing NetworkScore.
+     */
+    public Comparator<NetworkScore> makeComparator(NetworkRequest request,
+            NetworkSelectionSettings selectionSettings) {
+        return (ns1, ns2) -> compareNetworks(ns1, ns2, request, selectionSettings);
     }
 }
