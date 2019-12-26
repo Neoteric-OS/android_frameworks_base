@@ -22,6 +22,30 @@
       "revId": "be64b53449fbe521650669f38e7d7342a5c7ecad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0925769b_b9a4f98b",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-26T12:32:03Z",
+      "side": 0,
+      "message": "The @link will cause to TH failure so I move this comment into the method.",
+      "parentUuid": "4f2adff8_4e47b19b",
+      "range": {
+        "startLine": 443,
+        "startChar": 7,
+        "endLine": 444,
+        "endChar": 86
+      },
+      "revId": "be64b53449fbe521650669f38e7d7342a5c7ecad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
