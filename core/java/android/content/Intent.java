@@ -6381,7 +6381,7 @@ public class Intent implements Parcelable, Cloneable {
      *
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public static final int FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT = 0x04000000;
     /**
      * Set when this broadcast is for a boot upgrade, a special mode that
