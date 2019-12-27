@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bbecbce_a78a2f4e",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-12-27T22:49:23Z",
+      "side": 1,
+      "message": "sounds like something out of a sci fi movie",
+      "range": {
+        "startLine": 517,
+        "startChar": 16,
+        "endLine": 517,
+        "endChar": 57
+      },
+      "revId": "1c687628e0c713ad3ea92a8c639ade2128af3411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
