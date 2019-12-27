@@ -18,8 +18,8 @@ package com.android.server.connectivity.tethering;
 
 import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
 import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
-import static android.net.ConnectivityManager.TYPE_NONE;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 
@@ -34,7 +34,6 @@ import android.net.NetworkRequest;
 import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
 import android.os.Handler;
-import android.os.Process;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -83,6 +82,11 @@ public class UpstreamNetworkMonitor {
     private static final int CALLBACK_DEFAULT_INTERNET = 2;
     private static final int CALLBACK_MOBILE_REQUEST = 3;
 
+    // TYPE_NONE should be the same as ConnectivityManager#TYPE_NONE which was made inaccessible.
+    // This value is used by deprecated preferredUpstreamIfaceTypes selection which is default
+    // disabled.
+    private static final int TYPE_NONE = -1;
+
     private final Context mContext;
     private final SharedLog mLog;
     private final StateMachine mTarget;
@@ -102,6 +106,7 @@ public class UpstreamNetworkMonitor {
     private Network mDefaultInternetNetwork;
     // The current upstream network used for tethering.
     private Network mTetheringUpstreamNetwork;
+    private boolean mIsUpstreamSuspend;
 
     public UpstreamNetworkMonitor(Context ctx, StateMachine tgt, SharedLog log, int what) {
         mContext = ctx;
@@ -111,6 +116,7 @@ public class UpstreamNetworkMonitor {
         mWhat = what;
         mLocalPrefixes = new HashSet<>();
         mIsDefaultCellularUpstream = false;
+        mIsUpstreamSuspend = false;
     }
 
     @VisibleForTesting
@@ -172,6 +178,7 @@ public class UpstreamNetworkMonitor {
         mListenAllCallback = null;
 
         mTetheringUpstreamNetwork = null;
+        mIsUpstreamSuspend = false;
         mNetworkMap.clear();
     }
 
@@ -293,6 +300,7 @@ public class UpstreamNetworkMonitor {
 
     /** Tell UpstreamNetworkMonitor which network is the current upstream of tethering. */
     public void setCurrentUpstream(Network upstream) {
+        if (upstream != mTetheringUpstreamNetwork) mIsUpstreamSuspend = false;
         mTetheringUpstreamNetwork = upstream;
     }
 
@@ -331,6 +339,8 @@ public class UpstreamNetworkMonitor {
                     network, newNc));
         }
 
+        handleSuspendedChange(network, newNc);
+
         mNetworkMap.put(network, new UpstreamNetworkState(
                 prev.linkProperties, newNc, network));
         // TODO: If sufficient information is available to select a more
@@ -359,14 +369,18 @@ public class UpstreamNetworkMonitor {
         notifyTarget(EVENT_ON_LINKPROPERTIES, network);
     }
 
-    private void handleSuspended(Network network) {
+    private void handleSuspendedChange(Network network, NetworkCapabilities newNc) {
         if (!network.equals(mTetheringUpstreamNetwork)) return;
-        mLog.log("SUSPENDED current upstream: " + network);
-    }
 
-    private void handleResumed(Network network) {
-        if (!network.equals(mTetheringUpstreamNetwork)) return;
-        mLog.log("RESUMED current upstream: " + network);
+        final boolean isSuspend = !newNc.hasCapability(NET_CAPABILITY_NOT_SUSPENDED);
+        if (mIsUpstreamSuspend == isSuspend) return;
+
+        mIsUpstreamSuspend = isSuspend;
+        if (mIsUpstreamSuspend) {
+            mLog.log("SUSPENDED current upstream: " + network);
+        } else {
+            mLog.log("RESUMED current upstream: " + network);
+        }
     }
 
     private void handleLost(Network network) {
@@ -454,20 +468,6 @@ public class UpstreamNetworkMonitor {
             // So it's not useful to do this work for non-LISTEN_ALL callbacks.
             if (mCallbackType == CALLBACK_LISTEN_ALL) {
                 recomputeLocalPrefixes();
-            }
-        }
-
-        @Override
-        public void onNetworkSuspended(Network network) {
-            if (mCallbackType == CALLBACK_LISTEN_ALL) {
-                handleSuspended(network);
-            }
-        }
-
-        @Override
-        public void onNetworkResumed(Network network) {
-            if (mCallbackType == CALLBACK_LISTEN_ALL) {
-                handleResumed(network);
             }
         }
 

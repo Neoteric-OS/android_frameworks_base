@@ -18,7 +18,6 @@ package com.android.server.connectivity.tethering;
 
 import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
 import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
-import static android.net.ConnectivityManager.TYPE_NONE;
 import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
@@ -80,6 +79,7 @@ import java.util.Set;
 @SmallTest
 public class UpstreamNetworkMonitorTest {
     private static final int EVENT_UNM_UPDATE = 1;
+    private static final int TYPE_NONE = -1;
 
     private static final boolean INCLUDES = true;
     private static final boolean EXCLUDES = false;
