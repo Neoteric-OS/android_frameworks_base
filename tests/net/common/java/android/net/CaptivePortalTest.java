@@ -80,6 +80,12 @@ public class CaptivePortalTest {
     }
 
     @Test
+    public void testReevaluateNetwork() {
+        final MyCaptivePortalImpl result = runCaptivePortalTest(c -> c.reevaluateNetwork());
+        assertEquals(result.mCode, CaptivePortal.APP_RETURN_REEVALUATION_REQUIRED);
+    }
+
+    @Test
     public void testLogEvent() {
         final MyCaptivePortalImpl result = runCaptivePortalTest(c -> c.logEvent(
                 MetricsEvent.ACTION_CAPTIVE_PORTAL_LOGIN_ACTIVITY,

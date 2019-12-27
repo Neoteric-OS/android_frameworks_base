@@ -3626,6 +3626,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // nai.networkMonitor() is thread-safe
             final NetworkMonitorManager nm = nai.networkMonitor();
             if (nm == null) return;
+
+            if (response == CaptivePortal.APP_RETURN_REEVALUATION_REQUIRED) {
+                final int uid = Binder.getCallingUid();
+                nm.forceReevaluation(uid);
+                return;
+            }
+
             nm.notifyCaptivePortalAppFinished(response);
         }
 

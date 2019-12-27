@@ -60,6 +60,16 @@ public class CaptivePortal implements Parcelable {
     @SystemApi
     @TestApi
     public static final int APP_RETURN_WANTED_AS_IS = 2;
+    /**
+     * Response code from the captive portal application, indicating that the network condition may
+     * be changed and the network should be re-validated.
+     * @see ICaptivePortal#appResponse(int)
+     * @see android.net.INetworkMonitor#notifyCaptivePortalAppFinished(int)
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    public static final int APP_RETURN_REEVALUATION_REQUIRED = 3;
 
     private final IBinder mBinder;
 
@@ -131,6 +141,19 @@ public class CaptivePortal implements Parcelable {
     public void useNetwork() {
         try {
             ICaptivePortal.Stub.asInterface(mBinder).appResponse(APP_RETURN_WANTED_AS_IS);
+        } catch (RemoteException e) {
+        }
+    }
+
+    /**
+     * Indicate to the system to reevaluate captive portal status.
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    public void reevaluateNetwork() {
+        try {
+            ICaptivePortal.Stub.asInterface(mBinder).appResponse(APP_RETURN_REEVALUATION_REQUIRED);
         } catch (RemoteException e) {
         }
     }
