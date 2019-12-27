@@ -17,6 +17,8 @@
 package android.telephony;
 
 import static android.content.Context.TELECOM_SERVICE;
+import static android.provider.Telephony.Carriers.DPC_URI;
+import static android.provider.Telephony.Carriers.INVALID_APN_ID;
 
 import static com.android.internal.util.Preconditions.checkNotNull;
 
@@ -44,6 +46,7 @@ import android.compat.annotation.EnabledAfter;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkStats;
 import android.net.Uri;
@@ -75,6 +78,7 @@ import android.telephony.Annotation.NetworkType;
 import android.telephony.Annotation.RadioPowerState;
 import android.telephony.Annotation.SimActivationState;
 import android.telephony.VisualVoicemailService.VisualVoicemailTask;
+import android.telephony.data.ApnSetting;
 import android.telephony.emergency.EmergencyNumber;
 import android.telephony.emergency.EmergencyNumber.EmergencyServiceCategories;
 import android.telephony.ims.ImsMmTelManager;
@@ -11665,6 +11669,87 @@ public class TelephonyManager {
             Log.e(TAG, "getRadioHalVersion() RemoteException", e);
         }
         return new Pair<Integer, Integer>(-1, -1);
+    }
+
+    /**
+     * Returns a list of APNs set as overrides by the device policy manager via
+     * {@link #addDevicePolicyOverrideApn}.
+     *
+     * Note: although the required permission is READ_PRIVILEGED_PHONE_STATE, the permission check
+     * is actually more restrictive -- only the system or phone uids are allowed to call
+     * this method.
+     * @param context Context to use.
+     * @return {@link List} of APNs that have been set as overrides.
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public @NonNull List<ApnSetting> getDevicePolicyOverrideApns(@NonNull Context context) {
+        try (Cursor cursor = context.getContentResolver().query(DPC_URI, null, null, null, null)) {
+            if (cursor == null) {
+                return Collections.emptyList();
+            }
+            List<ApnSetting> apnList = new ArrayList<ApnSetting>();
+            cursor.moveToPosition(-1);
+            while (cursor.moveToNext()) {
+                ApnSetting apn = ApnSetting.makeApnSetting(cursor);
+                apnList.add(apn);
+            }
+            return apnList;
+        }
+    }
+
+    /**
+     * Used by the device policy manager to add a new override APN.
+     *
+     * Note: although the required permission is MODIFY_PHONE_STATE, the permission check
+     * is actually more restrictive -- only the system or phone uids are allowed to call
+     * this method.
+     * @param context Context to use.
+     * @param apnSetting The {@link ApnSetting} describing the new APN.
+     * @return ID of the newly created override APN.
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public int addDevicePolicyOverrideApn(@NonNull Context context,
+            @NonNull ApnSetting apnSetting) {
+        Uri resultUri = context.getContentResolver().insert(DPC_URI, apnSetting.toContentValues());
+
+        int resultId = INVALID_APN_ID;
+        if (resultUri != null) {
+            try {
+                resultId = Integer.parseInt(resultUri.getLastPathSegment());
+            } catch (NumberFormatException e) {
+                Rlog.e(TAG, "Failed to parse inserted override APN id: "
+                        + resultUri.getLastPathSegment());
+            }
+        }
+        return resultId;
+    }
+
+    /**
+     * Used by the device policy manager to modify an override APN.
+     *
+     * Note: although the required permission is MODIFY_PHONE_STATE, the permission check
+     * is actually more restrictive -- only the system or phone uids are allowed to call
+     * this method.
+     * @param context Context to use.
+     * @param apnId The ID of the APN to modify, as returned by {@link #addDevicePolicyOverrideApn}
+     * @param apnSetting The {@link ApnSetting} describing the updated APN.
+     * @return {@code true} if successful, {@code false} otherwise.
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public boolean modifyDevicePolicyOverrideApn(@NonNull Context context, int apnId,
+            @NonNull ApnSetting apnSetting) {
+        return context.getContentResolver().update(
+                Uri.withAppendedPath(DPC_URI, Integer.toString(apnId)),
+                apnSetting.toContentValues(), null, null) > 0;
     }
 
     /**

@@ -206,6 +206,7 @@ import android.provider.ContactsContract.QuickContact;
 import android.provider.ContactsInternal;
 import android.provider.Settings;
 import android.provider.Settings.Global;
+import android.provider.Telephony;
 import android.security.IKeyChainAliasCallback;
 import android.security.IKeyChainService;
 import android.security.KeyChain;
@@ -13936,23 +13937,14 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         Preconditions.checkNotNull(apnSetting, "ApnSetting is null in addOverrideApn");
         enforceDeviceOwner(who);
 
-        int operatedId = -1;
-        Uri resultUri;
-        final long id = mInjector.binderClearCallingIdentity();
-        try {
-            resultUri = mContext.getContentResolver().insert(DPC_URI, apnSetting.toContentValues());
-        } finally {
-            mInjector.binderRestoreCallingIdentity(id);
+        TelephonyManager tm = mContext.getSystemService(TelephonyManager.class);
+        if (tm != null) {
+            return Binder.withCleanCallingIdentity(
+                    () -> tm.addDevicePolicyOverrideApn(mContext, apnSetting));
+        } else {
+            Log.w(LOG_TAG, "TelephonyManager is null when trying to add override apn");
+            return Telephony.Carriers.INVALID_APN_ID;
         }
-        if (resultUri != null) {
-            try {
-                operatedId = Integer.parseInt(resultUri.getLastPathSegment());
-            } catch (NumberFormatException e) {
-                Slog.e(LOG_TAG, "Failed to parse inserted override APN id.", e);
-            }
-        }
-
-        return operatedId;
     }
 
     @Override
@@ -13968,13 +13960,13 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         if (apnId < 0) {
             return false;
         }
-        final long id = mInjector.binderClearCallingIdentity();
-        try {
-            return mContext.getContentResolver().update(
-                    Uri.withAppendedPath(DPC_URI, Integer.toString(apnId)),
-                    apnSetting.toContentValues(), null, null) > 0;
-        } finally {
-            mInjector.binderRestoreCallingIdentity(id);
+        TelephonyManager tm = mContext.getSystemService(TelephonyManager.class);
+        if (tm != null) {
+            return Binder.withCleanCallingIdentity(
+                    () -> tm.modifyDevicePolicyOverrideApn(mContext, apnId, apnSetting));
+        } else {
+            Log.w(LOG_TAG, "TelephonyManager is null when trying to modify override apn");
+            return false;
         }
     }
 
@@ -14016,28 +14008,12 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
     }
 
     private List<ApnSetting> getOverrideApnsUnchecked() {
-        final Cursor cursor;
-        final long id = mInjector.binderClearCallingIdentity();
-        try {
-            cursor = mContext.getContentResolver().query(DPC_URI, null, null, null, null);
-        } finally {
-            mInjector.binderRestoreCallingIdentity(id);
+        TelephonyManager tm = mContext.getSystemService(TelephonyManager.class);
+        if (tm != null) {
+            return Binder.withCleanCallingIdentity(() -> tm.getDevicePolicyOverrideApns(mContext));
         }
-
-        if (cursor == null) {
-            return Collections.emptyList();
-        }
-        try {
-            List<ApnSetting> apnList = new ArrayList<ApnSetting>();
-            cursor.moveToPosition(-1);
-            while (cursor.moveToNext()) {
-                ApnSetting apn = ApnSetting.makeApnSetting(cursor);
-                apnList.add(apn);
-            }
-            return apnList;
-        } finally {
-            cursor.close();
-        }
+        Log.w(LOG_TAG, "TelephonyManager is null when trying to get override apns");
+        return Collections.emptyList();
     }
 
     @Override
