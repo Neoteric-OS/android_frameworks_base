@@ -89,6 +89,7 @@ public class TrafficStats {
      *
      * @hide
      */
+    @SystemApi
     public static final int UID_TETHERING = -5;
 
     /**
