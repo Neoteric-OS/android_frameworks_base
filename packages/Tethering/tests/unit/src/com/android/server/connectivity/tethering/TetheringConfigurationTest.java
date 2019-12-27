@@ -24,7 +24,7 @@ import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DHCP_SERVER;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
-import static com.android.internal.R.array.config_mobile_hotspot_provision_app;
+import static com.android.networkstack.tethering.R.array.config_mobile_hotspot_provision_app;
 import static com.android.internal.R.array.config_tether_bluetooth_regexs;
 import static com.android.internal.R.array.config_tether_dhcp_range;
 import static com.android.internal.R.array.config_tether_upstream_types;

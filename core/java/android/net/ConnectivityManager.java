@@ -2301,22 +2301,7 @@ public class ConnectivityManager {
 
     /** {@hide} */
     public static final void enforceTetherChangePermission(Context context, String callingPkg) {
-        Preconditions.checkNotNull(context, "Context cannot be null");
-        Preconditions.checkNotNull(callingPkg, "callingPkg cannot be null");
-
-        if (context.getResources().getStringArray(
-                com.android.internal.R.array.config_mobile_hotspot_provision_app).length == 2) {
-            // Have a provisioning app - must only let system apps (which check this app)
-            // turn on tethering
-            context.enforceCallingOrSelfPermission(
-                    android.Manifest.permission.TETHER_PRIVILEGED, "ConnectivityService");
-        } else {
-            int uid = Binder.getCallingUid();
-            // If callingPkg's uid is not same as Binder.getCallingUid(),
-            // AppOpsService throws SecurityException.
-            Settings.checkAndNoteWriteSettingsOperation(context, uid, callingPkg,
-                    true /* throwException */);
-        }
+        throw new UnsupportedOperationException("enforceTetherChangePermission is no longer supported");
     }
 
     /**

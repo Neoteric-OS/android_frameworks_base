@@ -212,6 +212,14 @@ public class TetheringService extends Service {
         }
 
         @Override
+        public void isTetherProvisioningRequired(IIntResultListener listener) {
+            try {
+                final int required = mTethering.isTetherProvisioningRequired() ? 1 : 0;
+                listener.onResult(required);
+            } catch (RemoteException e) { }
+        }
+
+        @Override
         protected void dump(@NonNull FileDescriptor fd, @NonNull PrintWriter writer,
                     @Nullable String[] args) {
             mTethering.dump(fd, writer, args);

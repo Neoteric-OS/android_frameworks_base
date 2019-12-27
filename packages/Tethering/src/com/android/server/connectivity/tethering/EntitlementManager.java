@@ -27,7 +27,7 @@ import static android.net.TetheringManager.TETHER_ERROR_ENTITLEMENT_UNKONWN;
 import static android.net.TetheringManager.TETHER_ERROR_NO_ERROR;
 import static android.net.TetheringManager.TETHER_ERROR_PROVISION_FAILED;
 
-import static com.android.internal.R.string.config_wifi_tether_enable;
+import static com.android.networkstack.tethering.R.string.config_wifi_tether_enable;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

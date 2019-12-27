@@ -628,4 +628,20 @@ public class TetheringManager {
             }
         });
     }
+
+    public boolean isTetherProvisioningRequired() {
+        final RequestDispatcher dispatcher = new RequestDispatcher();
+        final int ret = dispatcher.waitForResult(listener -> {
+            try {
+                mConnector.isTetherProvisioningRequired(listener);
+            } catch (RemoteException e) {
+                throw new IllegalStateException(e);
+            }
+        });
+        return intToBoolean(ret);
+    }
+
+    private static boolean intToBoolean(final int src) {
+        return src == 0 ? false : true;
+    }
 }

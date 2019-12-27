@@ -23,9 +23,10 @@ import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
 import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
 import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DHCP_SERVER;
 
-import static com.android.internal.R.array.config_mobile_hotspot_provision_app;
-import static com.android.internal.R.integer.config_mobile_hotspot_provision_check_period;
-import static com.android.internal.R.string.config_mobile_hotspot_provision_app_no_ui;
+import static com.android.networkstack.tethering.R.array.config_mobile_hotspot_provision_app;
+import static com.android.networkstack.tethering.R
+        .integer.config_mobile_hotspot_provision_check_period;
+import static com.android.networkstack.tethering.R.string.config_mobile_hotspot_provision_app_no_ui;
 import static com.android.networkstack.tethering.R.array.config_tether_bluetooth_regexs;
 import static com.android.networkstack.tethering.R.array.config_tether_dhcp_range;
 import static com.android.networkstack.tethering.R.array.config_tether_upstream_types;

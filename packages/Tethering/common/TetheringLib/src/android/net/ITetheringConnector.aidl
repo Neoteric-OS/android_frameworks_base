@@ -42,4 +42,6 @@ oneway interface ITetheringConnector {
     void isTetheringSupported(String callerPkg, IIntResultListener receiver);
 
     void stopAllTethering(String callerPkg, IIntResultListener receiver);
+
+    void isTetherProvisioningRequired(IIntResultListener listener);
 }
