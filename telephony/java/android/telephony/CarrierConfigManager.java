@@ -1962,6 +1962,12 @@ public class CarrierConfigManager {
             "allow_holding_video_call";
 
     /**
+     * When true, indicates that the conference host is included in the conference event package
+     */
+    public static final String KEY_INCLUDE_CONFERENCE_HOST_IN_CEP_BOOL =
+            "include_conference_host_in_cep";
+
+    /**
      * When true, indicates that the HD audio icon in the in-call screen should not be shown for
      * VoWifi calls.
      * @hide
@@ -3647,6 +3653,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_ALLOW_MERGE_WIFI_CALLS_WHEN_VOWIFI_OFF_BOOL, true);
         sDefaults.putBoolean(KEY_ALLOW_ADD_CALL_DURING_VIDEO_CALL_BOOL, true);
         sDefaults.putBoolean(KEY_ALLOW_HOLDING_VIDEO_CALL_BOOL, true);
+        sDefaults.putBoolean(KEY_INCLUDE_CONFERENCE_HOST_IN_CEP_BOOL, false);
         sDefaults.putBoolean(KEY_WIFI_CALLS_CAN_BE_HD_AUDIO, true);
         sDefaults.putBoolean(KEY_VIDEO_CALLS_CAN_BE_HD_AUDIO, true);
         sDefaults.putBoolean(KEY_GSM_CDMA_CALLS_CAN_BE_HD_AUDIO, false);
