@@ -70,6 +70,30 @@
       "revId": "b19d1a064aff4e60dcaec760622fc2e0ad4b6a8c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84e0ed5_597a74ac",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-12-28T00:31:58Z",
+      "side": 1,
+      "message": "Talked with David offline and we agree that having an API that returns the *total* space required is preferred. Narayan, I am going to rename the API and doc as you suggested, but it will return the *total* space required.",
+      "parentUuid": "b0e294d0_1c7e33df",
+      "range": {
+        "startLine": 469,
+        "startChar": 20,
+        "endLine": 469,
+        "endChar": 38
+      },
+      "revId": "b19d1a064aff4e60dcaec760622fc2e0ad4b6a8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
