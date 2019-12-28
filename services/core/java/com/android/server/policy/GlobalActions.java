@@ -70,7 +70,9 @@ class GlobalActions implements GlobalActionsProvider.GlobalActionsListener {
         } else {
             // SysUI isn't alive, show legacy menu.
             ensureLegacyCreated();
-            mLegacyGlobalActions.showDialog(mKeyguardShowing, mDeviceProvisioned);
+            synchronized (mLegacyGlobalActions) {
+                mLegacyGlobalActions.showDialog(mKeyguardShowing, mDeviceProvisioned);
+            }
         }
     }
 
@@ -95,7 +97,9 @@ class GlobalActions implements GlobalActionsProvider.GlobalActionsListener {
             // Global actions provider died but we need to be showing global actions still, show the
             // legacy global acrions provider.
             ensureLegacyCreated();
-            mLegacyGlobalActions.showDialog(mKeyguardShowing, mDeviceProvisioned);
+            synchronized (mLegacyGlobalActions) {
+                mLegacyGlobalActions.showDialog(mKeyguardShowing, mDeviceProvisioned);
+            }
         }
     }
 
@@ -105,7 +109,9 @@ class GlobalActions implements GlobalActionsProvider.GlobalActionsListener {
             if (DEBUG) Slog.d(TAG, "Global actions timeout");
             // We haven't heard from sysui, show the legacy dialog.
             ensureLegacyCreated();
-            mLegacyGlobalActions.showDialog(mKeyguardShowing, mDeviceProvisioned);
+            synchronized (mLegacyGlobalActions) {
+                mLegacyGlobalActions.showDialog(mKeyguardShowing, mDeviceProvisioned);
+            }
         }
     };
 }
