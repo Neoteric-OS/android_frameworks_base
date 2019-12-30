@@ -16,6 +16,8 @@
 
 package android.net;
 
+import static android.net.NetworkScore.LEGACY_SCORE;
+
 import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Build;
@@ -34,6 +36,7 @@ import com.android.internal.util.Protocol;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -104,7 +107,7 @@ public class NetworkFactory extends Handler {
 
     /**
      * Internally used to set our best-guess score.
-     * msg.arg1 = new score
+     * msg.obj = new score
      */
     private static final int CMD_SET_SCORE = BASE + 2;
 
@@ -122,6 +125,10 @@ public class NetworkFactory extends Handler {
      */
     public static final int EVENT_UNFULFILLABLE_REQUEST = BASE + 4;
 
+    private static final Comparator<NetworkScore> NETWORK_SCORE_COMPARATOR =
+            (ns1, ns2) -> Integer.compare(ns1.getIntExtension(LEGACY_SCORE),
+            ns2.getIntExtension(LEGACY_SCORE));
+
     private final Context mContext;
     private final ArrayList<Message> mPreConnectedQueue = new ArrayList<Message>();
     private AsyncChannel mAsyncChannel;
@@ -130,7 +137,7 @@ public class NetworkFactory extends Handler {
     private final SparseArray<NetworkRequestInfo> mNetworkRequests =
             new SparseArray<NetworkRequestInfo>();
 
-    private int mScore;
+    private NetworkScore mScore;
     private NetworkCapabilities mCapabilityFilter;
 
     private int mRefCount = 0;
@@ -205,7 +212,7 @@ public class NetworkFactory extends Handler {
                 break;
             }
             case CMD_SET_SCORE: {
-                handleSetScore(msg.arg1);
+                handleSetScore((NetworkScore) msg.obj);
                 break;
             }
             case CMD_SET_FILTER: {
@@ -217,13 +224,14 @@ public class NetworkFactory extends Handler {
 
     private class NetworkRequestInfo {
         public final NetworkRequest request;
-        public int score;
+        public final NetworkScore score;
         public boolean requested; // do we have a request outstanding, limited by score
         public int factorySerialNumber;
 
         NetworkRequestInfo(NetworkRequest request, int score, int factorySerialNumber) {
             this.request = request;
-            this.score = score;
+            this.score = new NetworkScore();
+            this.score.putIntExtension(NetworkScore.LEGACY_SCORE, score);
             this.requested = false;
             this.factorySerialNumber = factorySerialNumber;
         }
@@ -277,7 +285,7 @@ public class NetworkFactory extends Handler {
                 log("new score " + score + " for exisiting request " + request
                         + " with serial " + servingFactorySerialNumber);
             }
-            n.score = score;
+            n.score.putIntExtension(NetworkScore.LEGACY_SCORE, score);
             n.factorySerialNumber = servingFactorySerialNumber;
         }
         if (VDBG) log("  my score=" + mScore + ", my filter=" + mCapabilityFilter);
@@ -294,7 +302,7 @@ public class NetworkFactory extends Handler {
         }
     }
 
-    private void handleSetScore(int score) {
+    private void handleSetScore(NetworkScore score) {
         mScore = score;
         evalRequests();
     }
@@ -338,7 +346,7 @@ public class NetworkFactory extends Handler {
         }
         if (shouldNeedNetworkFor(n)) {
             if (VDBG) log("  needNetworkFor");
-            needNetworkFor(n.request, n.score);
+            needNetworkFor(n.request, n.score.getIntExtension(LEGACY_SCORE));
             n.requested = true;
         } else if (shouldReleaseNetworkFor(n)) {
             if (VDBG) log("  releaseNetworkFor");
@@ -355,13 +363,14 @@ public class NetworkFactory extends Handler {
             // If the score of this request is higher or equal to that of this factory and some
             // other factory is responsible for it, then this factory should not track the request
             // because it has no hope of satisfying it.
-            && (n.score < mScore || n.factorySerialNumber == mSerialNumber)
+            && (NETWORK_SCORE_COMPARATOR.compare(n.score, mScore) < 0
+                    || n.factorySerialNumber == mSerialNumber)
             // If this factory can't satisfy the capability needs of this request, then it
             // should not be tracked.
             && n.request.networkCapabilities.satisfiedByNetworkCapabilities(mCapabilityFilter)
             // Finally if the concrete implementation of the factory rejects the request, then
             // don't track it.
-            && acceptRequest(n.request, n.score);
+            && acceptRequest(n.request, n.score.getIntExtension(LEGACY_SCORE));
     }
 
     private boolean shouldReleaseNetworkFor(NetworkRequestInfo n) {
@@ -373,10 +382,11 @@ public class NetworkFactory extends Handler {
             //   assigned to the factory
             // - This factory can't satisfy the capability needs of the request
             // - The concrete implementation of the factory rejects the request
-            && ((n.score > mScore && n.factorySerialNumber != mSerialNumber)
+            && ((NETWORK_SCORE_COMPARATOR.compare(n.score, mScore) > 0
+                            && n.factorySerialNumber != mSerialNumber)
                     || !n.request.networkCapabilities.satisfiedByNetworkCapabilities(
                             mCapabilityFilter)
-                    || !acceptRequest(n.request, n.score));
+                    || !acceptRequest(n.request, n.score.getIntExtension(LEGACY_SCORE)));
     }
 
     private void evalRequests() {
@@ -432,7 +442,9 @@ public class NetworkFactory extends Handler {
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void setScoreFilter(int score) {
-        sendMessage(obtainMessage(CMD_SET_SCORE, score, 0));
+        final NetworkScore ns = new NetworkScore();
+        ns.putIntExtension(LEGACY_SCORE, score);
+        sendMessage(obtainMessage(CMD_SET_SCORE, new NetworkScore(ns)));
     }
 
     public void setCapabilityFilter(NetworkCapabilities netCap) {
