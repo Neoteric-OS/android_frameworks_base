@@ -84,6 +84,8 @@ abstract class BasicTagTechnology implements TagTechnology {
             } else {
                 throw new IOException();
             }
+        } catch (IllegalStateException e) {
+            throw new IOException("The tag is already connected!");
         } catch (RemoteException e) {
             Log.e(TAG, "NFC service dead", e);
             throw new IOException("NFC service died");
