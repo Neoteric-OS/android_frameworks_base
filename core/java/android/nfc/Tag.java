@@ -455,7 +455,7 @@ public final class Tag implements Parcelable {
      *
      * @hide
      */
-    public synchronized void setConnectedTechnology(int technology) {
+    public synchronized void setConnectedTechnology(int technology) throws IllegalStateException {
         if (mConnectedTechnology == -1) {
             mConnectedTechnology = technology;
         } else {
