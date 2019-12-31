@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "408a3be5_0658a0e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-31T08:35:52Z",
+      "side": 1,
+      "message": "maybe NS02 C01?",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181d6896_fda290ac",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-31T08:35:52Z",
+      "side": 1,
+      "message": "It is strange that we are modifying NetworkRanker but don\u0027t use it in this change.\nThat makes the NetworkRanker modification irrelevant to this change.\nmaybe we want to spilit them?",
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf37db8_cc988daf",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-31T08:35:52Z",
+      "side": 1,
+      "message": "maybe refactor to \nnew NetworkScore().putIntExtension(...);\nif this is widely used?",
+      "range": {
+        "startLine": 233,
+        "startChar": 12,
+        "endLine": 234,
+        "endChar": 73
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aafc00af_aee4be44",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-31T08:35:52Z",
+      "side": 1,
+      "message": "maybe @NonNull or @Nullable?",
+      "range": {
+        "startLine": 305,
+        "startChar": 32,
+        "endLine": 305,
+        "endChar": 44
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9598fef_046d4a76",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-31T08:35:52Z",
+      "side": 1,
+      "message": "question: why do we need new NetworkScore(ns) instead of just ns?\nmaybe add comment for this?",
+      "range": {
+        "startLine": 447,
+        "startChar": 49,
+        "endLine": 447,
+        "endChar": 69
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e5fd71_8764c5fb",
+        "filename": "core/java/android/net/NetworkSelectionSettings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-31T08:35:52Z",
+      "side": 1,
+      "message": "2020, happy new year~",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93aeffdb_605a97bb",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-31T08:35:52Z",
+      "side": 1,
+      "message": "Do we want to put the paramter until we use it in this function?\nAlternatively add TODO for this?",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 64,
+        "endChar": 54
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
