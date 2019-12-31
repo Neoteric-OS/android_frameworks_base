@@ -27,7 +27,6 @@ import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.INetworkStackStatusCallback;
 import android.net.INetworkStatsService;
-import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
@@ -37,11 +36,11 @@ import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.DhcpServingParamsParcelExt;
 import android.net.dhcp.IDhcpServer;
 import android.net.ip.RouterAdvertisementDaemon.RaParams;
+import android.net.shared.NetdUtils;
+import android.net.shared.RouteUtils;
 import android.net.util.InterfaceParams;
 import android.net.util.InterfaceSet;
-import android.net.util.NetdService;
 import android.net.util.SharedLog;
-import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
@@ -143,10 +142,6 @@ public class IpServer extends StateMachine {
             return InterfaceParams.getByName(ifName);
         }
 
-        public INetd getNetdService() {
-            return NetdService.getInstance();
-        }
-
         /** Create a DhcpServer instance to be used by IpServer. */
         public abstract void makeDhcpServer(String ifName, DhcpServingParamsParcel params,
                 DhcpServerCallbacks cb);
@@ -180,8 +175,8 @@ public class IpServer extends StateMachine {
     private final State mUnavailableState;
 
     private final SharedLog mLog;
-    private final INetworkManagementService mNMService;
     private final INetd mNetd;
+    private final NetdUtils mNetdUtils;
     private final INetworkStatsService mStatsService;
     private final Callback mCallback;
     private final InterfaceController mInterfaceCtrl;
@@ -210,15 +205,16 @@ public class IpServer extends StateMachine {
     private int mDhcpServerStartIndex = 0;
     private IDhcpServer mDhcpServer;
     private RaParams mLastRaParams;
+    private LinkAddress mIpv4Address;
 
     public IpServer(
             String ifaceName, Looper looper, int interfaceType, SharedLog log,
-            INetworkManagementService nMService, INetworkStatsService statsService,
-            Callback callback, boolean usingLegacyDhcp, Dependencies deps) {
+            INetd netd, INetworkStatsService statsService, Callback callback,
+            boolean usingLegacyDhcp, Dependencies deps) {
         super(ifaceName, looper);
         mLog = log.forSubComponent(ifaceName);
-        mNMService = nMService;
-        mNetd = deps.getNetdService();
+        mNetd = netd;
+        mNetdUtils = new NetdUtils(mNetd);
         mStatsService = statsService;
         mCallback = callback;
         mInterfaceCtrl = new InterfaceController(ifaceName, mNetd, mLog);
@@ -347,7 +343,7 @@ public class IpServer extends StateMachine {
                         }
                     });
                 } catch (RemoteException e) {
-                    e.rethrowFromSystemServer();
+                    throw new IllegalStateException(e);
                 }
             });
         }
@@ -395,7 +391,8 @@ public class IpServer extends StateMachine {
                 });
                 mDhcpServer = null;
             } catch (RemoteException e) {
-                e.rethrowFromSystemServer();
+                mLog.e("Error stopping DHCP", e);
+                // Not much more we can do here
             }
         }
     }
@@ -414,85 +411,73 @@ public class IpServer extends StateMachine {
         // NOTE: All of configureIPv4() will be refactored out of existence
         // into calls to InterfaceController, shared with startIPv4().
         mInterfaceCtrl.clearIPv4Address();
+        mIpv4Address = null;
     }
 
-    // TODO: Refactor this in terms of calls to InterfaceController.
     private boolean configureIPv4(boolean enabled) {
         if (VDBG) Log.d(TAG, "configureIPv4(" + enabled + ")");
 
         // TODO: Replace this hard-coded information with dynamically selected
         // config passed down to us by a higher layer IP-coordinating element.
         String ipAsString = null;
+        final Inet4Address srvAddr;
         int prefixLen = 0;
-        if (mInterfaceType == ConnectivityManager.TETHERING_USB) {
-            ipAsString = USB_NEAR_IFACE_ADDR;
-            prefixLen = USB_PREFIX_LENGTH;
-        } else if (mInterfaceType == ConnectivityManager.TETHERING_WIFI) {
-            ipAsString = getRandomWifiIPv4Address();
-            prefixLen = WIFI_HOST_IFACE_PREFIX_LENGTH;
-        } else if (mInterfaceType == ConnectivityManager.TETHERING_WIFI_P2P) {
-            ipAsString = WIFI_P2P_IFACE_ADDR;
-            prefixLen = WIFI_P2P_IFACE_PREFIX_LENGTH;
-        } else {
-            // BT configures the interface elsewhere: only start DHCP.
-            final Inet4Address srvAddr = (Inet4Address) parseNumericAddress(BLUETOOTH_IFACE_ADDR);
-            return configureDhcp(enabled, srvAddr, BLUETOOTH_DHCP_PREFIX_LENGTH);
+        try {
+            if (mInterfaceType == ConnectivityManager.TETHERING_USB) {
+                srvAddr = (Inet4Address) parseNumericAddress(USB_NEAR_IFACE_ADDR);
+                prefixLen = USB_PREFIX_LENGTH;
+            } else if (mInterfaceType == ConnectivityManager.TETHERING_WIFI) {
+                srvAddr = (Inet4Address) parseNumericAddress(getRandomWifiIPv4Address());
+                prefixLen = WIFI_HOST_IFACE_PREFIX_LENGTH;
+            } else if (mInterfaceType == ConnectivityManager.TETHERING_WIFI_P2P) {
+                srvAddr = (Inet4Address) parseNumericAddress(WIFI_P2P_IFACE_ADDR);
+                prefixLen = WIFI_P2P_IFACE_PREFIX_LENGTH;
+            } else {
+                // BT configures the interface elsewhere: only start DHCP.
+                // TODO: make all tethering types behave the same way, and delete the bluetooth
+                // code that calls into NetworkManagementService directly.
+                srvAddr = (Inet4Address) parseNumericAddress(BLUETOOTH_IFACE_ADDR);
+                mIpv4Address = new LinkAddress(srvAddr, BLUETOOTH_DHCP_PREFIX_LENGTH);
+                return configureDhcp(enabled, srvAddr, BLUETOOTH_DHCP_PREFIX_LENGTH);
+            }
+            mIpv4Address = new LinkAddress(srvAddr, prefixLen);
+        } catch (IllegalStateException e) {
+            mLog.e("Error selecting ipv4 address " + e);
+            if (!enabled) stopDhcp();
+            return false;
         }
 
-        final LinkAddress linkAddr;
         try {
-            final InterfaceConfiguration ifcg = mNMService.getInterfaceConfig(mIfaceName);
-            if (ifcg == null) {
-                mLog.e("Received null interface config");
-                return false;
-            }
-
-            InetAddress addr = parseNumericAddress(ipAsString);
-            linkAddr = new LinkAddress(addr, prefixLen);
-            ifcg.setLinkAddress(linkAddr);
+            final Boolean setIfaceUp;
             if (mInterfaceType == ConnectivityManager.TETHERING_WIFI) {
                 // The WiFi stack has ownership of the interface up/down state.
                 // It is unclear whether the Bluetooth or USB stacks will manage their own
                 // state.
-                ifcg.ignoreInterfaceUpDownStatus();
+                setIfaceUp = null;
             } else {
-                if (enabled) {
-                    ifcg.setInterfaceUp();
-                } else {
-                    ifcg.setInterfaceDown();
-                }
+                setIfaceUp = enabled;
             }
-            ifcg.clearFlag("running");
+            mInterfaceCtrl.setInterfaceConfiguration(mIpv4Address, setIfaceUp);
 
-            // TODO: this may throw if the interface is already gone. Do proper handling and
-            // simplify the DHCP server start/stop.
-            mNMService.setInterfaceConfig(mIfaceName, ifcg);
-
-            if (!configureDhcp(enabled, (Inet4Address) addr, prefixLen)) {
+            if (!configureDhcp(enabled, srvAddr, prefixLen)) {
                 return false;
             }
         } catch (Exception e) {
             mLog.e("Error configuring interface " + e);
-            if (!enabled) {
-                try {
-                    // Calling stopDhcp several times is fine
-                    stopDhcp();
-                } catch (Exception dhcpError) {
-                    mLog.e("Error stopping DHCP", dhcpError);
-                }
-            }
+            // Calling stopDhcp several times is fine
+            if (!enabled) stopDhcp();
             return false;
         }
 
         // Directly-connected route.
-        final IpPrefix ipv4Prefix = new IpPrefix(linkAddr.getAddress(),
-                linkAddr.getPrefixLength());
+        final IpPrefix ipv4Prefix = new IpPrefix(mIpv4Address.getAddress(),
+                mIpv4Address.getPrefixLength());
         final RouteInfo route = new RouteInfo(ipv4Prefix, null, null, RTN_UNICAST);
         if (enabled) {
-            mLinkProperties.addLinkAddress(linkAddr);
+            mLinkProperties.addLinkAddress(mIpv4Address);
             mLinkProperties.addRoute(route);
         } else {
-            mLinkProperties.removeLinkAddress(linkAddr);
+            mLinkProperties.removeLinkAddress(mIpv4Address);
             mLinkProperties.removeRoute(route);
         }
         return true;
@@ -584,14 +569,12 @@ public class IpServer extends StateMachine {
         if (!deprecatedPrefixes.isEmpty()) {
             final ArrayList<RouteInfo> toBeRemoved =
                     getLocalRoutesFor(mIfaceName, deprecatedPrefixes);
-            try {
-                final int removalFailures = mNMService.removeRoutesFromLocalNetwork(toBeRemoved);
-                if (removalFailures > 0) {
-                    mLog.e(String.format("Failed to remove %d IPv6 routes from local table.",
-                            removalFailures));
-                }
-            } catch (RemoteException e) {
-                mLog.e("Failed to remove IPv6 routes from local table: " + e);
+            // Remove routes from local network.
+            final int removalFailures = RouteUtils.removeRoutesFromLocalNetwork(
+                    mNetd, toBeRemoved);
+            if (removalFailures > 0) {
+                mLog.e(String.format("Failed to remove %d IPv6 routes from local table.",
+                        removalFailures));
             }
 
             for (RouteInfo route : toBeRemoved) mLinkProperties.removeRoute(route);
@@ -608,12 +591,17 @@ public class IpServer extends StateMachine {
                 final ArrayList<RouteInfo> toBeAdded =
                         getLocalRoutesFor(mIfaceName, addedPrefixes);
                 try {
-                    // It's safe to call addInterfaceToLocalNetwork() even if
-                    // the interface is already in the local_network. Note also
-                    // that adding routes that already exist does not cause an
-                    // error (EEXIST is silently ignored).
-                    mNMService.addInterfaceToLocalNetwork(mIfaceName, toBeAdded);
-                } catch (Exception e) {
+                    // It's safe to call networkAddInterface() even if
+                    // the interface is already in the local_network.
+                    mNetdUtils.addInterfaceToNetwork(mIfaceName, INetd.LOCAL_NET_ID);
+                } catch (ServiceSpecificException | RemoteException e) {
+                    mLog.e("Failed to add " + mIfaceName + " to local table: " + e);
+                }
+                try {
+                    // Add routes to local network. Note that adding routes that
+                    // already exist does not cause an error (EEXIST is silently ignored).
+                    RouteUtils.addRoutesToLocalNetwork(mNetd, mIfaceName, toBeAdded);
+                } catch (IllegalStateException e) {
                     mLog.e("Failed to add IPv6 routes to local table: " + e);
                 }
 
@@ -660,7 +648,7 @@ public class IpServer extends StateMachine {
         }
 
         try {
-            mNetd.tetherApplyDnsInterfaces();
+            mNetdUtils.tetherApplyDnsInterfaces();
         } catch (ServiceSpecificException | RemoteException e) {
             mLog.e("Failed to update local DNS caching server");
             if (newDnses != null) newDnses.clear();
@@ -670,7 +658,7 @@ public class IpServer extends StateMachine {
     private byte getHopLimit(String upstreamIface) {
         try {
             int upstreamHopLimit = Integer.parseUnsignedInt(
-                    mNetd.getProcSysNet(INetd.IPV6, INetd.CONF, upstreamIface, "hop_limit"));
+                    mNetdUtils.getProcSysNet(INetd.IPV6, INetd.CONF, upstreamIface, "hop_limit"));
             // Add one hop to account for this forwarding device
             upstreamHopLimit++;
             // Cap the hop limit to 255.
@@ -762,8 +750,16 @@ public class IpServer extends StateMachine {
             }
 
             try {
-                mNMService.tetherInterface(mIfaceName);
-            } catch (Exception e) {
+                mNetdUtils.tetherInterfaceAdd(mIfaceName);
+                mNetdUtils.addInterfaceToNetwork(mIfaceName, INetd.LOCAL_NET_ID);
+                final ArrayList<RouteInfo> routes = new ArrayList<>();
+                // The RouteInfo constructor truncates the LinkAddress to a network prefix,
+                // thus making it suitable to use as a route destination.
+                final IpPrefix ipv4Prefix = new IpPrefix(mIpv4Address.getAddress(),
+                        mIpv4Address.getPrefixLength());
+                routes.add(new RouteInfo(ipv4Prefix, null, mIfaceName, RTN_UNICAST));
+                RouteUtils.addRoutesToLocalNetwork(mNetd, mIfaceName, routes);
+            } catch (RemoteException | ServiceSpecificException e) {
                 mLog.e("Error Tethering: " + e);
                 mLastError = ConnectivityManager.TETHER_ERROR_TETHER_IFACE_ERROR;
                 return;
@@ -784,10 +780,17 @@ public class IpServer extends StateMachine {
             stopIPv6();
 
             try {
-                mNMService.untetherInterface(mIfaceName);
-            } catch (Exception e) {
+                mNetdUtils.tetherInterfaceRemove(mIfaceName);
+            } catch (RemoteException | ServiceSpecificException e) {
                 mLastError = ConnectivityManager.TETHER_ERROR_UNTETHER_IFACE_ERROR;
                 mLog.e("Failed to untether interface: " + e);
+            } finally {
+                try {
+                    mNetdUtils.removeInterfaceFromNetwork(mIfaceName, INetd.LOCAL_NET_ID);
+                } catch (RemoteException | ServiceSpecificException e) {
+                    mLastError = ConnectivityManager.TETHER_ERROR_UNTETHER_IFACE_ERROR;
+                    mLog.e("Failed to remove interface from local network: " + e);
+                }
             }
 
             stopIPv4();
@@ -901,17 +904,17 @@ public class IpServer extends StateMachine {
                 // About to tear down NAT; gather remaining statistics.
                 mStatsService.forceUpdate();
             } catch (Exception e) {
-                if (VDBG) Log.e(TAG, "Exception in forceUpdate: " + e.toString());
+                mLog.e("Exception in forceUpdate: " + e.toString());
             }
             try {
-                mNMService.stopInterfaceForwarding(mIfaceName, upstreamIface);
-            } catch (Exception e) {
-                if (VDBG) Log.e(TAG, "Exception in removeInterfaceForward: " + e.toString());
+                mNetdUtils.stopInterfaceForwarding(mIfaceName, upstreamIface);
+            } catch (RemoteException | ServiceSpecificException e) {
+                mLog.e("Exception in ipfwdRemoveInterfaceForward: " + e.toString());
             }
             try {
-                mNMService.disableNat(mIfaceName, upstreamIface);
-            } catch (Exception e) {
-                if (VDBG) Log.e(TAG, "Exception in disableNat: " + e.toString());
+                mNetdUtils.disableNat(mIfaceName, upstreamIface);
+            } catch (RemoteException | ServiceSpecificException e) {
+                mLog.e("Exception in disableNat: " + e.toString());
             }
         }
 
@@ -947,10 +950,10 @@ public class IpServer extends StateMachine {
 
                     for (String ifname : added) {
                         try {
-                            mNMService.enableNat(mIfaceName, ifname);
-                            mNMService.startInterfaceForwarding(mIfaceName, ifname);
-                        } catch (Exception e) {
-                            mLog.e("Exception enabling NAT: " + e);
+                            mNetdUtils.enableNat(mIfaceName, ifname);
+                            mNetdUtils.startInterfaceForwarding(mIfaceName, ifname);
+                        } catch (RemoteException | ServiceSpecificException e) {
+                            mLog.e("Exception enabling NAT: " + e.toString());
                             cleanupUpstream();
                             mLastError = ConnectivityManager.TETHER_ERROR_ENABLE_NAT_ERROR;
                             transitionTo(mInitialState);

@@ -58,10 +58,12 @@ import android.net.NetworkStack;
 import android.net.NetworkStats;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
-import android.net.TetherConfigParcel;
 import android.net.TetherStatsParcel;
 import android.net.UidRange;
 import android.net.UidRangeParcel;
+import android.net.shared.NetdUtils;
+import android.net.shared.RouteUtils;
+import android.net.shared.RouteUtils.ModifyOperation;
 import android.net.util.NetdService;
 import android.os.BatteryStats;
 import android.os.Binder;
@@ -103,7 +105,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
-import java.net.InterfaceAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -157,6 +158,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     private final SystemServices mServices;
 
     private INetd mNetdService;
+
+    private NetdUtils mNetdUtils;
 
     private final NetdUnsolicitedEventListener mNetdUnsolicitedEventListener;
 
@@ -515,6 +518,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
         } catch (RemoteException | ServiceSpecificException e) {
             Slog.e(TAG, "Failed to set Netd unsolicited event listener " + e);
         }
+        mNetdUtils = new NetdUtils(mNetdService);
     }
 
     /**
@@ -743,7 +747,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
         //  APIs.
         NetworkStack.checkNetworkStackPermissionOr(mContext, CONNECTIVITY_INTERNAL);
         try {
-            return mNetdService.interfaceGetList();
+            return mNetdUtils.listInterfaces();
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -897,48 +901,14 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
 
     @Override
     public void addRoute(int netId, RouteInfo route) {
-        modifyRoute(MODIFY_OPERATION_ADD, netId, route);
+        NetworkStack.checkNetworkStackPermission(mContext);
+        RouteUtils.modifyRoute(mNetdService, ModifyOperation.ADD, netId, route);
     }
 
     @Override
     public void removeRoute(int netId, RouteInfo route) {
-        modifyRoute(MODIFY_OPERATION_REMOVE, netId, route);
-    }
-
-    private void modifyRoute(boolean add, int netId, RouteInfo route) {
         NetworkStack.checkNetworkStackPermission(mContext);
-
-        final String ifName = route.getInterface();
-        final String dst = route.getDestination().toString();
-        final String nextHop;
-
-        switch (route.getType()) {
-            case RouteInfo.RTN_UNICAST:
-                if (route.hasGateway()) {
-                    nextHop = route.getGateway().getHostAddress();
-                } else {
-                    nextHop = INetd.NEXTHOP_NONE;
-                }
-                break;
-            case RouteInfo.RTN_UNREACHABLE:
-                nextHop = INetd.NEXTHOP_UNREACHABLE;
-                break;
-            case RouteInfo.RTN_THROW:
-                nextHop = INetd.NEXTHOP_THROW;
-                break;
-            default:
-                nextHop = INetd.NEXTHOP_NONE;
-                break;
-        }
-        try {
-            if (add) {
-                mNetdService.networkAddRoute(netId, ifName, dst, nextHop);
-            } else {
-                mNetdService.networkRemoveRoute(netId, ifName, dst, nextHop);
-            }
-        } catch (RemoteException | ServiceSpecificException e) {
-            throw new IllegalStateException(e);
-        }
+        RouteUtils.modifyRoute(mNetdService, ModifyOperation.REMOVE, netId, route);
     }
 
     private ArrayList<String> readRouteList(String filename) {
@@ -993,8 +963,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
         NetworkStack.checkNetworkStackPermission(mContext);
 
         try {
-            final boolean isEnabled = mNetdService.ipfwdEnabled();
-            return isEnabled;
+            return mNetdUtils.getIpForwardingEnabled();
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1004,11 +973,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     public void setIpForwardingEnabled(boolean enable) {
         NetworkStack.checkNetworkStackPermission(mContext);
         try {
-            if (enable) {
-                mNetdService.ipfwdEnableForwarding("tethering");
-            } else {
-                mNetdService.ipfwdDisableForwarding("tethering");
-            }
+            mNetdUtils.setIpForwardingEnabled(enable, "tethering");
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1022,12 +987,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     @Override
     public void startTetheringWithConfiguration(boolean usingLegacyDnsProxy, String[] dhcpRange) {
         NetworkStack.checkNetworkStackPermission(mContext);
-        // an odd number of addrs will fail
         try {
-            final TetherConfigParcel config = new TetherConfigParcel();
-            config.usingLegacyDnsProxy = usingLegacyDnsProxy;
-            config.dhcpRanges = dhcpRange;
-            mNetdService.tetherStartWithConfiguration(config);
+            mNetdUtils.startTethering(usingLegacyDnsProxy, dhcpRange);
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1037,7 +998,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     public void stopTethering() {
         NetworkStack.checkNetworkStackPermission(mContext);
         try {
-            mNetdService.tetherStop();
+            mNetdUtils.stopTethering();
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1048,8 +1009,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
         NetworkStack.checkNetworkStackPermission(mContext);
 
         try {
-            final boolean isEnabled = mNetdService.tetherIsEnabled();
-            return isEnabled;
+            return mNetdUtils.isTetheringStarted();
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1059,7 +1019,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     public void tetherInterface(String iface) {
         NetworkStack.checkNetworkStackPermission(mContext);
         try {
-            mNetdService.tetherInterfaceAdd(iface);
+            mNetdUtils.tetherInterfaceAdd(iface);
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1074,7 +1034,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     public void untetherInterface(String iface) {
         NetworkStack.checkNetworkStackPermission(mContext);
         try {
-            mNetdService.tetherInterfaceRemove(iface);
+            mNetdUtils.tetherInterfaceRemove(iface);
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         } finally {
@@ -1086,7 +1046,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     public String[] listTetheredInterfaces() {
         NetworkStack.checkNetworkStackPermission(mContext);
         try {
-            return mNetdService.tetherInterfaceList();
+            return mNetdUtils.listTetheredInterfaces();
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1095,11 +1055,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     @Override
     public void setDnsForwarders(Network network, String[] dns) {
         NetworkStack.checkNetworkStackPermission(mContext);
-
-        int netId = (network != null) ? network.netId : ConnectivityManager.NETID_UNSET;
-
         try {
-            mNetdService.tetherDnsSet(netId, dns);
+            mNetdUtils.setDnsForwarders(network, dns);
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1109,28 +1066,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     public String[] getDnsForwarders() {
         NetworkStack.checkNetworkStackPermission(mContext);
         try {
-            return mNetdService.tetherDnsList();
-        } catch (RemoteException | ServiceSpecificException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
-    private List<InterfaceAddress> excludeLinkLocal(List<InterfaceAddress> addresses) {
-        ArrayList<InterfaceAddress> filtered = new ArrayList<>(addresses.size());
-        for (InterfaceAddress ia : addresses) {
-            if (!ia.getAddress().isLinkLocalAddress())
-                filtered.add(ia);
-        }
-        return filtered;
-    }
-
-    private void modifyInterfaceForward(boolean add, String fromIface, String toIface) {
-        try {
-            if (add) {
-                mNetdService.ipfwdAddInterfaceForward(fromIface, toIface);
-            } else {
-                mNetdService.ipfwdRemoveInterfaceForward(fromIface, toIface);
-            }
+            return mNetdUtils.getDnsForwarders();
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1139,20 +1075,28 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     @Override
     public void startInterfaceForwarding(String fromIface, String toIface) {
         NetworkStack.checkNetworkStackPermission(mContext);
-        modifyInterfaceForward(true, fromIface, toIface);
+        try {
+            mNetdUtils.startInterfaceForwarding(fromIface, toIface);
+        } catch (RemoteException | ServiceSpecificException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
     public void stopInterfaceForwarding(String fromIface, String toIface) {
         NetworkStack.checkNetworkStackPermission(mContext);
-        modifyInterfaceForward(false, fromIface, toIface);
+        try {
+            mNetdUtils.stopInterfaceForwarding(fromIface, toIface);
+        } catch (RemoteException | ServiceSpecificException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
     public void enableNat(String internalInterface, String externalInterface) {
         NetworkStack.checkNetworkStackPermission(mContext);
         try {
-            mNetdService.tetherAddForward(internalInterface, externalInterface);
+            mNetdUtils.enableNat(internalInterface, externalInterface);
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1162,7 +1106,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     public void disableNat(String internalInterface, String externalInterface) {
         NetworkStack.checkNetworkStackPermission(mContext);
         try {
-            mNetdService.tetherRemoveForward(internalInterface, externalInterface);
+            mNetdUtils.disableNat(internalInterface, externalInterface);
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -2033,9 +1977,9 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
         NetworkStack.checkNetworkStackPermission(mContext);
         try {
             if (add) {
-                mNetdService.networkAddInterface(netId, iface);
+                mNetdUtils.addInterfaceToNetwork(iface, netId);
             } else {
-                mNetdService.networkRemoveInterface(netId, iface);
+                mNetdUtils.removeInterfaceFromNetwork(iface, netId);
             }
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
@@ -2121,16 +2065,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     @Override
     public void addInterfaceToLocalNetwork(String iface, List<RouteInfo> routes) {
         modifyInterfaceInNetwork(MODIFY_OPERATION_ADD, INetd.LOCAL_NET_ID, iface);
-
-        for (RouteInfo route : routes) {
-            if (!route.isDefaultRoute()) {
-                modifyRoute(MODIFY_OPERATION_ADD, INetd.LOCAL_NET_ID, route);
-            }
-        }
-
-        // IPv6 link local should be activated always.
-        modifyRoute(MODIFY_OPERATION_ADD, INetd.LOCAL_NET_ID,
-                new RouteInfo(new IpPrefix("fe80::/64"), null, iface));
+        // modifyInterfaceInNetwork already check calling permission.
+        RouteUtils.addRoutesToLocalNetwork(mNetdService, iface, routes);
     }
 
     @Override
@@ -2140,17 +2076,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
 
     @Override
     public int removeRoutesFromLocalNetwork(List<RouteInfo> routes) {
-        int failures = 0;
-
-        for (RouteInfo route : routes) {
-            try {
-                modifyRoute(MODIFY_OPERATION_REMOVE, INetd.LOCAL_NET_ID, route);
-            } catch (IllegalStateException e) {
-                failures++;
-            }
-        }
-
-        return failures;
+        NetworkStack.checkNetworkStackPermission(mContext);
+        return RouteUtils.removeRoutesFromLocalNetwork(mNetdService, routes);
     }
 
     @Override
