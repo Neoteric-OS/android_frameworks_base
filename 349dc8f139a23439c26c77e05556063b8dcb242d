@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34391a1e_df0732ee",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-12-31T09:47:32Z",
+      "side": 1,
+      "message": "Unclear to me why this is an interface. Seems like overkill ? A final concrete class should be sufficient, right ?",
+      "range": {
+        "startLine": 434,
+        "startChar": 4,
+        "endLine": 434,
+        "endChar": 42
+      },
+      "revId": "349dc8f139a23439c26c77e05556063b8dcb242d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2f5f7e_db97d15d",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-12-31T09:47:32Z",
+      "side": 1,
+      "message": "This is confusing - isn\u0027t this supposed to be the amount of space that has to be *available* (and not the amount that needs to be freed). Please reword.",
+      "range": {
+        "startLine": 450,
+        "startChar": 21,
+        "endLine": 450,
+        "endChar": 52
+      },
+      "revId": "349dc8f139a23439c26c77e05556063b8dcb242d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b1c75ab_e875dfa5",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-12-31T09:47:32Z",
+      "side": 1,
+      "message": "This also seems incorrect (and is not necessary in this context, as how the space is reclaimed has nothing to do with this method).",
+      "range": {
+        "startLine": 453,
+        "startChar": 11,
+        "endLine": 454,
+        "endChar": 30
+      },
+      "revId": "349dc8f139a23439c26c77e05556063b8dcb242d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
