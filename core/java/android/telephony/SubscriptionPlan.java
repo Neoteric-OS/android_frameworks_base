@@ -173,7 +173,7 @@ public final class SubscriptionPlan implements Parcelable {
         }
     };
 
-    /** {@hide} */
+    /** Return the Recurrence Rule of this plan. */
     public @NonNull RecurrenceRule getCycleRule() {
         return cycleRule;
     }

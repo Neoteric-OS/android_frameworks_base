@@ -16,6 +16,8 @@
 
 package android.util;
 
+import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -37,10 +39,8 @@ import java.util.Objects;
 /**
  * Description of an event that should recur over time at a specific interval
  * between two anchor points in time.
- *
- * @hide
  */
-public class RecurrenceRule implements Parcelable {
+public final class RecurrenceRule implements Parcelable {
     private static final String TAG = "RecurrenceRule";
     private static final boolean LOGD = Log.isLoggable(TAG, Log.DEBUG);
 
@@ -50,25 +50,30 @@ public class RecurrenceRule implements Parcelable {
     @VisibleForTesting
     public static Clock sClock = Clock.systemDefaultZone();
 
-    @UnsupportedAppUsage
+    /** {@hide} */
     public final ZonedDateTime start;
+    /** {@hide} */
     public final ZonedDateTime end;
+    /** {@hide} */
     public final Period period;
 
-    public RecurrenceRule(ZonedDateTime start, ZonedDateTime end, Period period) {
+    public RecurrenceRule(
+            @Nullable ZonedDateTime start, @Nullable ZonedDateTime end, @Nullable Period period) {
         this.start = start;
         this.end = end;
         this.period = period;
     }
 
+    /** {@hide} */
     @Deprecated
     public static RecurrenceRule buildNever() {
         return new RecurrenceRule(null, null, null);
     }
 
+    /** {@hide} */
     @Deprecated
     @UnsupportedAppUsage
-    public static RecurrenceRule buildRecurringMonthly(int dayOfMonth, ZoneId zone) {
+    public static RecurrenceRule buildRecurringMonthly(int dayOfMonth, @NonNull ZoneId zone) {
         // Assume we started last January, since it has all possible days
         final ZonedDateTime now = ZonedDateTime.now(sClock).withZoneSameInstant(zone);
         final ZonedDateTime start = ZonedDateTime.of(
@@ -89,13 +94,14 @@ public class RecurrenceRule implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(convertZonedDateTime(start));
         dest.writeString(convertZonedDateTime(end));
         dest.writeString(convertPeriod(period));
     }
 
-    public RecurrenceRule(DataInputStream in) throws IOException {
+    /** {@hide} */
+    public RecurrenceRule(@NonNull DataInputStream in) throws IOException {
         final int version = in.readInt();
         switch (version) {
             case VERSION_INIT:
@@ -108,7 +114,12 @@ public class RecurrenceRule implements Parcelable {
         }
     }
 
-    public void writeToStream(DataOutputStream out) throws IOException {
+    /**
+     * Writes the content of the RecurrenceRule.
+     *
+     * {@hide}
+     */
+    public void writeToStream(@NonNull DataOutputStream out) throws IOException {
         out.writeInt(VERSION_INIT);
         BackupUtils.writeString(out, convertZonedDateTime(start));
         BackupUtils.writeString(out, convertZonedDateTime(end));
@@ -140,7 +151,8 @@ public class RecurrenceRule implements Parcelable {
         return false;
     }
 
-    public static final @android.annotation.NonNull Parcelable.Creator<RecurrenceRule> CREATOR = new Parcelable.Creator<RecurrenceRule>() {
+    public static final @NonNull Parcelable.Creator<RecurrenceRule> CREATOR =
+            new Parcelable.Creator<RecurrenceRule>() {
         @Override
         public RecurrenceRule createFromParcel(Parcel source) {
             return new RecurrenceRule(source);
@@ -156,6 +168,7 @@ public class RecurrenceRule implements Parcelable {
         return period != null;
     }
 
+    /** {@hide} */
     @Deprecated
     public boolean isMonthly() {
         return start != null
@@ -165,7 +178,10 @@ public class RecurrenceRule implements Parcelable {
                 && period.getDays() == 0;
     }
 
-    public Iterator<Range<ZonedDateTime>> cycleIterator() {
+    /**
+     * Return an iterator that will return valid cycles based on period.
+     */
+    public @NonNull Iterator<Range<ZonedDateTime>> cycleIterator() {
         if (period != null) {
             return new RecurringIterator();
         } else {
@@ -247,19 +263,63 @@ public class RecurrenceRule implements Parcelable {
         }
     }
 
-    public static String convertZonedDateTime(ZonedDateTime time) {
+    /**
+     * Get the start time of the Recurrence Rule
+     */
+    @Nullable
+    public ZonedDateTime getRecurrenceRuleStartTime() {
+        return start;
+    }
+
+    /**
+     * Get the end time of the Recurrence Rule
+     */
+    @Nullable
+    public ZonedDateTime getRecurrenceRuleEndTime() {
+        return end;
+    }
+
+    /**
+     * Get the Period of the Recurrence Rule
+     */
+    @Nullable
+    public Period getRecurrenceRulePeriod() {
+        return period;
+    }
+
+    /**
+     * Converts the ZonedDateTime to String
+     *
+     * {@hide}
+     */
+    public static @Nullable String convertZonedDateTime(@Nullable ZonedDateTime time) {
         return time != null ? time.toString() : null;
     }
 
-    public static ZonedDateTime convertZonedDateTime(String time) {
+    /**
+     * Converts the String to ZonedDateTime
+     *
+     * {@hide}
+     */
+    public static @Nullable ZonedDateTime convertZonedDateTime(@Nullable String time) {
         return time != null ? ZonedDateTime.parse(time) : null;
     }
 
-    public static String convertPeriod(Period period) {
+    /**
+     * Converts the Period to String
+     *
+     * {@hide}
+     */
+    public static @Nullable String convertPeriod(@Nullable Period period) {
         return period != null ? period.toString() : null;
     }
 
-    public static Period convertPeriod(String period) {
+    /**
+     * Converts the String to Period
+     *
+     * {@hide}
+     */
+    public static @Nullable Period convertPeriod(@Nullable String period) {
         return period != null ? Period.parse(period) : null;
     }
 }
