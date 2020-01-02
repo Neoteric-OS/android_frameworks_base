@@ -45416,6 +45416,7 @@ package android.telephony {
   public final class SubscriptionPlan implements android.os.Parcelable {
     method public java.util.Iterator<android.util.Range<java.time.ZonedDateTime>> cycleIterator();
     method public int describeContents();
+    method @NonNull public android.util.RecurrenceRule getCycleRule();
     method public int getDataLimitBehavior();
     method public long getDataLimitBytes();
     method public long getDataUsageBytes();
@@ -49014,6 +49015,19 @@ package android.util {
     field public static final android.util.Rational NaN;
     field public static final android.util.Rational POSITIVE_INFINITY;
     field public static final android.util.Rational ZERO;
+  }
+
+  public final class RecurrenceRule implements android.os.Parcelable {
+    ctor public RecurrenceRule(@Nullable java.time.ZonedDateTime, @Nullable java.time.ZonedDateTime, @Nullable java.time.Period);
+    ctor public RecurrenceRule(@NonNull java.io.DataInputStream) throws java.io.IOException;
+    method @NonNull public java.util.Iterator<android.util.Range<java.time.ZonedDateTime>> cycleIterator();
+    method public int describeContents();
+    method @Nullable public java.time.ZonedDateTime getRecurrenceRuleEndTime();
+    method @Nullable public java.time.Period getRecurrenceRulePeriod();
+    method @Nullable public java.time.ZonedDateTime getRecurrenceRuleStartTime();
+    method public boolean isRecurring();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.util.RecurrenceRule> CREATOR;
   }
 
   public final class Size {
