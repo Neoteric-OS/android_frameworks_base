@@ -3540,6 +3540,8 @@ public final class Telephony {
          * or Telephony to manage whether DPC-owned APNs are enforced.
          * @hide
          */
+        @NonNull
+        @SystemApi
         public static final Uri ENFORCE_MANAGED_URI = Uri.parse(
                 "content://telephony/carriers/enforce_managed");
 
