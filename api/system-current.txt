@@ -6913,6 +6913,7 @@ package android.provider {
     field public static final int CARRIER_EDITED = 4; // 0x4
     field @NonNull public static final android.net.Uri DPC_URI;
     field public static final String EDITED_STATUS = "edited";
+    field @NonNull public static final android.net.Uri ENFORCE_MANAGED_URI;
     field public static final int INVALID_APN_ID = -1; // 0xffffffff
     field public static final String MAX_CONNECTIONS = "max_conns";
     field public static final String MODEM_PERSIST = "modem_cognitive";
