@@ -31,6 +31,7 @@ import android.net.LinkProperties
 import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
 import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.net.NetworkRequest
+import android.net.TestConnectivityModuleStarter
 import android.net.TestNetworkStackClient
 import android.net.metrics.IpConnectivityLog
 import android.os.ConditionVariable
@@ -100,6 +101,7 @@ class ConnectivityServiceIntegrationTest {
     // lateinit for these three classes under test, as they should be reset to a different instance
     // for every test but should always be initialized before use (or the test should crash).
     private lateinit var networkStackClient: TestNetworkStackClient
+    private lateinit var connectivityModuleStarter: TestConnectivityModuleStarter
     private lateinit var service: ConnectivityService
     private lateinit var cm: ConnectivityManager
 
@@ -148,7 +150,8 @@ class ConnectivityServiceIntegrationTest {
 
         networkStackClient = TestNetworkStackClient(realContext)
         networkStackClient.init()
-        networkStackClient.start()
+        connectivityModuleStarter = TestConnectivityModuleStarter(realContext, networkStackClient);
+        connectivityModuleStarter.startNetworkStack()
 
         LocalServices.removeServiceForTest(NetworkPolicyManagerInternal::class.java)
         LocalServices.addService(NetworkPolicyManagerInternal::class.java,

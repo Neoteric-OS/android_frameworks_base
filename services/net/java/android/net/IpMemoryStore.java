@@ -42,6 +42,7 @@ public class IpMemoryStore extends IpMemoryStoreClient {
         mService = new CompletableFuture<>();
         mTailNode = new AtomicReference<CompletableFuture<IIpMemoryStore>>(mService);
         getNetworkStackClient().fetchIpMemoryStore(
+                context,
                 new IIpMemoryStoreCallbacks.Stub() {
                     @Override
                     public void onIpMemoryStoreFetched(@NonNull final IIpMemoryStore memoryStore) {

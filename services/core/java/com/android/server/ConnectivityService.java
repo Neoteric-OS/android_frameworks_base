@@ -64,6 +64,7 @@ import android.database.ContentObserver;
 import android.net.CaptivePortal;
 import android.net.ConnectionInfo;
 import android.net.ConnectivityManager;
+import android.net.ConnectivityModuleStarter;
 import android.net.ICaptivePortal;
 import android.net.IConnectivityManager;
 import android.net.IDnsResolver;
@@ -2481,6 +2482,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             pw.decreaseIndent();
         }
+
+        pw.println();
+        pw.println("ConnectivityModuleStarter: ");
+        pw.increaseIndent();
+        ConnectivityModuleStarter.getInstance().dump(pw);
+        pw.decreaseIndent();
 
         pw.println();
         pw.println("NetworkStackClient logs:");
@@ -5444,7 +5451,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final long token = Binder.clearCallingIdentity();
         try {
             mDeps.getNetworkStack().makeNetworkMonitor(
-                    nai.network, name, new NetworkMonitorCallbacks(nai));
+                    mContext, nai.network, name, new NetworkMonitorCallbacks(nai));
         } finally {
             Binder.restoreCallingIdentity(token);
         }

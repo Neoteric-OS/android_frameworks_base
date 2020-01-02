@@ -87,12 +87,12 @@ public class IpMemoryStoreTest {
     private void startIpMemoryStore(boolean supplyService) {
         if (supplyService) {
             doAnswer(invocation -> {
-                ((IIpMemoryStoreCallbacks) invocation.getArgument(0))
+                ((IIpMemoryStoreCallbacks) invocation.getArgument(1))
                         .onIpMemoryStoreFetched(mMockService);
                 return null;
-            }).when(mNetworkStackClient).fetchIpMemoryStore(any());
+            }).when(mNetworkStackClient).fetchIpMemoryStore(any(), any());
         } else {
-            doNothing().when(mNetworkStackClient).fetchIpMemoryStore(mCbCaptor.capture());
+            doNothing().when(mNetworkStackClient).fetchIpMemoryStore(any(), mCbCaptor.capture());
         }
         mStore = new IpMemoryStore(mMockContext) {
             @Override

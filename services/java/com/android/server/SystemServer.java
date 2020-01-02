@@ -16,7 +16,6 @@
 
 package com.android.server;
 
-import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
 import static android.os.IServiceManager.DUMP_FLAG_PRIORITY_CRITICAL;
 import static android.os.IServiceManager.DUMP_FLAG_PRIORITY_HIGH;
 import static android.os.IServiceManager.DUMP_FLAG_PRIORITY_NORMAL;
@@ -41,7 +40,7 @@ import android.database.sqlite.SQLiteCompatibilityWalFlags;
 import android.database.sqlite.SQLiteGlobal;
 import android.hardware.display.DisplayManagerInternal;
 import android.net.ConnectivityModuleConnector;
-import android.net.ITetheringConnector;
+import android.net.ConnectivityModuleStarter;
 import android.net.NetworkStackClient;
 import android.os.BaseBundle;
 import android.os.Binder;
@@ -2205,7 +2204,7 @@ public final class SystemServer {
                 // ActivityManagerService.mSystemReady and ActivityManagerService.mProcessesReady
                 // are set to true. Be careful if moving this to a different place in the
                 // startup sequence.
-                NetworkStackClient.getInstance().start();
+                ConnectivityModuleStarter.getInstance().startNetworkStack();
             } catch (Throwable e) {
                 reportWtf("starting Network Stack", e);
             }
@@ -2213,14 +2212,7 @@ public final class SystemServer {
 
             traceBeginAndSlog("StartTethering");
             try {
-                // TODO: hide implementation details, b/146312721.
-                ConnectivityModuleConnector.getInstance().startModuleService(
-                        ITetheringConnector.class.getName(),
-                        PERMISSION_MAINLINE_NETWORK_STACK, service -> {
-                            ServiceManager.addService(Context.TETHERING_SERVICE, service,
-                                    false /* allowIsolated */,
-                                    DUMP_FLAG_PRIORITY_HIGH | DUMP_FLAG_PRIORITY_NORMAL);
-                        });
+                ConnectivityModuleStarter.getInstance().startTethering();
             } catch (Throwable e) {
                 reportWtf("starting Tethering", e);
             }
