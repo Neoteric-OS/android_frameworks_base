@@ -49,15 +49,17 @@ public final class NetworkScore implements Parcelable {
     /**
      * Put the value of parcelable inside the bundle by key.
      */
-    public void putExtension(@Nullable String key, @Nullable Parcelable value) {
+    public NetworkScore putExtension(@Nullable String key, @Nullable Parcelable value) {
         mExtensions.putParcelable(key, value);
+        return this;
     }
 
     /**
      * Put the value of int inside the bundle by key.
      */
-    public void putIntExtension(@Nullable String key, int value) {
+    public NetworkScore putIntExtension(@Nullable String key, int value) {
         mExtensions.putInt(key, value);
+        return this;
     }
 
     /**
