@@ -76,6 +76,21 @@ public final class BluetoothAvrcpController implements BluetoothProfile {
     public static final String EXTRA_PLAYER_SETTING =
             "android.bluetooth.avrcp-controller.profile.extra.PLAYER_SETTING";
 
+    /**
+     * Intent used to broadcast the change in UIDs of the AVRCP Controller
+     * profile.
+     *
+     * <p>This intent will have 1 extra:
+     * <ul>
+     *	<li> {@link BluetoothDevice#EXTRA_DEVICE} - The remote device. </li>
+     * </ul>
+     *
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH} permission to
+     * receive.
+     */
+    public static final String ACTION_UIDS_EVENT =
+        "android.bluetooth.avrcp-controller.profile.action.UIDS_EVENT";
+
     private BluetoothAdapter mAdapter;
     private final BluetoothProfileConnector<IBluetoothAvrcpController> mProfileConnector =
             new BluetoothProfileConnector(this, BluetoothProfile.AVRCP_CONTROLLER,
