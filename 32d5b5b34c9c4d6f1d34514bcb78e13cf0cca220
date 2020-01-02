@@ -22,6 +22,30 @@
       "revId": "32d5b5b34c9c4d6f1d34514bcb78e13cf0cca220",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd6ba2b_e1edc5a7",
+        "filename": "media/java/android/media/tv/TvInputManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-01-02T21:21:35Z",
+      "side": 1,
+      "message": "I updated the documentation to match the underlying code.",
+      "parentUuid": "a588c4e4_edc51353",
+      "range": {
+        "startLine": 1686,
+        "startChar": 18,
+        "endLine": 1686,
+        "endChar": 76
+      },
+      "revId": "32d5b5b34c9c4d6f1d34514bcb78e13cf0cca220",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
