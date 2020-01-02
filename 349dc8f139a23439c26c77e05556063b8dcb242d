@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3bb75da9_9499ba39",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2020-01-02T18:24:08Z",
+      "side": 1,
+      "message": "Done, PTAL!",
+      "parentUuid": "34391a1e_df0732ee",
+      "range": {
+        "startLine": 434,
+        "startChar": 4,
+        "endLine": 434,
+        "endChar": 42
+      },
+      "revId": "349dc8f139a23439c26c77e05556063b8dcb242d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a2f5f7e_db97d15d",
         "filename": "core/java/android/os/UpdateEngine.java",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2c473458_fbbb92ba",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2020-01-02T18:24:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a2f5f7e_db97d15d",
+      "range": {
+        "startLine": 450,
+        "startChar": 21,
+        "endLine": 450,
+        "endChar": 52
+      },
+      "revId": "349dc8f139a23439c26c77e05556063b8dcb242d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b1c75ab_e875dfa5",
         "filename": "core/java/android/os/UpdateEngine.java",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "349dc8f139a23439c26c77e05556063b8dcb242d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd6bf32_d47bcbcf",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2020-01-02T18:24:08Z",
+      "side": 1,
+      "message": "Reworded, PTAL!",
+      "parentUuid": "2b1c75ab_e875dfa5",
+      "range": {
+        "startLine": 453,
+        "startChar": 11,
+        "endLine": 454,
+        "endChar": 30
+      },
+      "revId": "349dc8f139a23439c26c77e05556063b8dcb242d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
