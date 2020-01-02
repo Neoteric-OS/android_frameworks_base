@@ -6760,6 +6760,7 @@ package android.provider {
     field @NonNull public static final android.net.Uri DPC_URI;
     field public static final String EDITED_STATUS = "edited";
     field public static final int INVALID_APN_ID = -1; // 0xffffffff
+    field @NonNull public static final android.net.Uri ENFORCE_MANAGED_URI;
     field public static final String MAX_CONNECTIONS = "max_conns";
     field public static final String MODEM_PERSIST = "modem_cognitive";
     field public static final String MTU = "mtu";
@@ -8928,6 +8929,11 @@ package android.telephony {
     field @NonNull public static final android.net.Uri WFC_MODE_CONTENT_URI;
     field @NonNull public static final android.net.Uri WFC_ROAMING_ENABLED_CONTENT_URI;
     field @NonNull public static final android.net.Uri WFC_ROAMING_MODE_CONTENT_URI;
+  }
+
+  public final class SubscriptionPlan implements android.os.Parcelable {
+    method @NonNull public java.time.ZonedDateTime getCycleRuleEndTime();
+    method @NonNull public java.time.ZonedDateTime getCycleRuleStartTime();
   }
 
   public static class SubscriptionPlan.Builder {

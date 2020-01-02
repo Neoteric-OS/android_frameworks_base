@@ -162,6 +162,22 @@ public final class SubscriptionPlan implements Parcelable {
         return cycleRule;
     }
 
+    /** Get the start time of this recurrence rule
+     * {@hide}
+     */
+    @SystemApi
+    public @NonNull ZonedDateTime getCycleRuleStartTime() {
+        return cycleRule.start;
+    }
+
+    /** Get the end time of this recurrence rule
+     * {@hide}
+     */
+    @SystemApi
+    public @NonNull ZonedDateTime getCycleRuleEndTime() {
+        return cycleRule.end;
+    }
+
     /** Return the short title of this plan. */
     public @Nullable CharSequence getTitle() {
         return title;
