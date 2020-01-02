@@ -3850,18 +3850,19 @@ public abstract class Context {
     public static final String NETD_SERVICE = "netd";
 
     /**
-     * Use with {@link android.os.ServiceManager.getService()} to retrieve a
-     * {@link NetworkStackClient} IBinder for communicating with the network stack
+     * Use with {@link #getSystemService(String)} to retrieve a {@link INetworkStackConnector}
+     * IBinder for communicating with the network stack.
      * @hide
-     * @see NetworkStackClient
+     * @see #getSystemService(String)
      */
+    @SystemApi
     public static final String NETWORK_STACK_SERVICE = "network_stack";
 
     /**
-     * Use with {@link android.os.ServiceManager.getService()} to retrieve a
-     * {@link ITetheringConnector} IBinder for communicating with the tethering service
+     * Use with {@link #getSystemService(String)} to retrieve a
+     * {@link android.net.TetheringManager} for communicating with the tethering service.
      * @hide
-     * @see TetheringClient
+     * @see #getSystemService(String)
      */
     @SystemApi
     public static final String TETHERING_SERVICE = "tethering";

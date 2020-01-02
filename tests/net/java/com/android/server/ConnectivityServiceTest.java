@@ -563,6 +563,7 @@ public class ConnectivityServiceTest {
             final ArgumentCaptor<INetworkMonitorCallbacks> nmCbCaptor =
                     ArgumentCaptor.forClass(INetworkMonitorCallbacks.class);
             doNothing().when(mNetworkStack).makeNetworkMonitor(
+                    eq(mServiceContext),
                     nmNetworkCaptor.capture(),
                     any() /* name */,
                     nmCbCaptor.capture());

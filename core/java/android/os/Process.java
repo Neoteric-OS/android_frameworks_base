@@ -18,6 +18,7 @@ package android.os;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.system.Os;
@@ -180,6 +181,7 @@ public class Process {
      * Defines the UID/GID for the NetworkStack app.
      * @hide
      */
+    @SystemApi
     public static final int NETWORK_STACK_UID = 1073;
 
     /**

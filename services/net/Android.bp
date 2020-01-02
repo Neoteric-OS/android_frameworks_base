@@ -17,6 +17,9 @@ java_library_static {
         "netlink-client",
         "networkstack-client",
     ],
+    libs: [
+        "framework-tethering",
+    ]
 }
 
 filegroup {

@@ -1544,6 +1544,7 @@ package android.content {
     field public static final String HDMI_CONTROL_SERVICE = "hdmi_control";
     field public static final String NETD_SERVICE = "netd";
     field public static final String NETWORK_SCORE_SERVICE = "network_score";
+    field public static final String NETWORK_STACK_SERVICE = "network_stack";
     field public static final String OEM_LOCK_SERVICE = "oem_lock";
     field public static final String PERMISSION_SERVICE = "permission";
     field public static final String PERSISTENT_DATA_BLOCK_SERVICE = "persistent_data_block";
@@ -6015,6 +6016,10 @@ package android.os {
     field public static final int USER_ACTIVITY_EVENT_TOUCH = 2; // 0x2
     field public static final int USER_ACTIVITY_FLAG_INDIRECT = 2; // 0x2
     field public static final int USER_ACTIVITY_FLAG_NO_CHANGE_LIGHTS = 1; // 0x1
+  }
+
+  public class Process {
+    field public static final int NETWORK_STACK_UID = 1073; // 0x431
   }
 
   public class RecoverySystem {

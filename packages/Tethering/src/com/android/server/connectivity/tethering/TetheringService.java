@@ -27,11 +27,11 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.net.IIntResultListener;
-import android.net.INetworkStackConnector;
 import android.net.ITetheringConnector;
 import android.net.ITetheringEventCallback;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
+import android.net.NetworkStackClient;
 import android.net.dhcp.DhcpServerCallbacks;
 import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.ip.IpServer;
@@ -42,7 +42,6 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
-import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.UserManager;
 import android.provider.Settings;
@@ -341,11 +340,9 @@ public class TetheringService extends Service {
                         public void makeDhcpServer(String ifName, DhcpServingParamsParcel params,
                                 DhcpServerCallbacks cb) {
                             try {
-                                final INetworkStackConnector service = getNetworkStackConnector();
-                                if (service == null) return;
-
-                                service.makeDhcpServer(ifName, params, cb);
-                            } catch (RemoteException e) {
+                                NetworkStackClient.getInstance().makeDhcpServer(
+                                        mContext, ifName, params, cb);
+                            } catch (Exception e) {
                                 Log.e(TAG, "Fail to make dhcp server");
                                 try {
                                     cb.onDhcpServerCreated(STATUS_UNKNOWN_ERROR, null);
@@ -353,28 +350,6 @@ public class TetheringService extends Service {
                             }
                         }
                     };
-                }
-
-                // TODO: replace this by NetworkStackClient#getRemoteConnector after refactoring
-                // networkStackClient.
-                static final int NETWORKSTACK_TIMEOUT_MS = 60_000;
-                private INetworkStackConnector getNetworkStackConnector() {
-                    IBinder connector;
-                    try {
-                        final long before = System.currentTimeMillis();
-                        while ((connector = ServiceManager.getService(
-                                Context.NETWORK_STACK_SERVICE)) == null) {
-                            if (System.currentTimeMillis() - before > NETWORKSTACK_TIMEOUT_MS) {
-                                Log.wtf(TAG, "Timeout, fail to get INetworkStackConnector");
-                                return null;
-                            }
-                            Thread.sleep(200);
-                        }
-                    } catch (InterruptedException e) {
-                        Log.wtf(TAG, "Interrupted, fail to get INetworkStackConnector");
-                        return null;
-                    }
-                    return INetworkStackConnector.Stub.asInterface(connector);
                 }
             };
         }

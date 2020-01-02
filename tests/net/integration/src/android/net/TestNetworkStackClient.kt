@@ -16,42 +16,20 @@
 
 package android.net
 
-import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.os.IBinder
-import com.android.server.net.integrationtests.TestNetworkStackService
 import org.mockito.Mockito.any
 import org.mockito.Mockito.spy
 import org.mockito.Mockito.timeout
 import org.mockito.Mockito.verify
 import kotlin.test.fail
 
-const val TEST_ACTION_SUFFIX = ".Test"
-
 class TestNetworkStackClient(context: Context) : NetworkStackClient(TestDependencies(context)) {
     // TODO: consider switching to TrackRecord for more expressive checks
     private val lastCallbacks = HashMap<Network, INetworkMonitorCallbacks>()
 
     private class TestDependencies(private val context: Context) : Dependencies {
-        override fun addToServiceManager(service: IBinder) = Unit
         override fun checkCallerUid() = Unit
-
-        override fun getConnectivityModuleConnector(): ConnectivityModuleConnector {
-            return ConnectivityModuleConnector { _, _, _, inSystemProcess ->
-                getNetworkStackIntent(inSystemProcess)
-            }.also { it.init(context) }
-        }
-
-        private fun getNetworkStackIntent(inSystemProcess: Boolean): Intent? {
-            // Simulate out-of-system-process config: in-process service not found (null intent)
-            if (inSystemProcess) return null
-            val intent = Intent(INetworkStackConnector::class.qualifiedName + TEST_ACTION_SUFFIX)
-            val serviceName = TestNetworkStackService::class.qualifiedName
-                    ?: fail("TestNetworkStackService name not found")
-            intent.component = ComponentName(context.packageName, serviceName)
-            return intent
-        }
     }
 
     // base may be an instance of an inaccessible subclass, so non-spyable.
@@ -66,10 +44,10 @@ class TestNetworkStackClient(context: Context) : NetworkStackClient(TestDependen
         }
     }
 
-    override fun makeNetworkMonitor(network: Network, name: String?, cb: INetworkMonitorCallbacks) {
+    override fun makeNetworkMonitor(context: Context, network: Network, name: String?, cb: INetworkMonitorCallbacks) {
         val cbSpy = spy(NetworkMonitorCallbacksWrapper(cb))
         lastCallbacks[network] = cbSpy
-        super.makeNetworkMonitor(network, name, cbSpy)
+        super.makeNetworkMonitor(context, network, name, cbSpy)
     }
 
     fun verifyNetworkMonitorCreated(network: Network, timeoutMs: Long) {

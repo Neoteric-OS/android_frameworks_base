@@ -78,8 +78,8 @@ public class IpClientUtil {
      * @see {@link NetworkStackClient#makeIpClient(String, IIpClientCallbacks)}
      */
     public static void makeIpClient(Context context, String ifName, IpClientCallbacks callback) {
-        // TODO: migrate clients and remove context argument
-        NetworkStackClient.getInstance().makeIpClient(ifName, new IpClientCallbacksProxy(callback));
+        NetworkStackClient.getInstance().makeIpClient(
+                context, ifName, new IpClientCallbacksProxy(callback));
     }
 
     /**
