@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e838d8f_efa37e36",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-02T09:30:51Z",
+      "side": 1,
+      "message": "Hmm...this patch is corresponding to part3 of network selection, so I think [NS03] is better?",
+      "parentUuid": "408a3be5_0658a0e6",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "181d6896_fda290ac",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7b4dff_87111825",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-02T09:30:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "181d6896_fda290ac",
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c68c6511_1d452ddb",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-02T09:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cf37db8_cc988daf",
+      "range": {
+        "startLine": 233,
+        "startChar": 12,
+        "endLine": 234,
+        "endChar": 73
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aafc00af_aee4be44",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f629efd_ed84476f",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-02T09:30:51Z",
+      "side": 1,
+      "message": "@NonNull.",
+      "parentUuid": "aafc00af_aee4be44",
+      "range": {
+        "startLine": 305,
+        "startChar": 32,
+        "endLine": 305,
+        "endChar": 44
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "8e1e159f_f0b75a2f",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-02T09:30:51Z",
+      "side": 1,
+      "message": "Well, I think we can just assign ns instead of new an object.\nUpdated.",
+      "parentUuid": "a9598fef_046d4a76",
+      "range": {
+        "startLine": 447,
+        "startChar": 49,
+        "endLine": 447,
+        "endChar": 69
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26e5fd71_8764c5fb",
         "filename": "core/java/android/net/NetworkSelectionSettings.java",
         "patchSetId": 3
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "5dd9bf69_d6a9ccab",
+        "filename": "core/java/android/net/NetworkSelectionSettings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-02T09:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26e5fd71_8764c5fb",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93aeffdb_605a97bb",
         "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
         "patchSetId": 3
@@ -154,6 +292,30 @@
       "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31272f4_d6ffc137",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-02T09:30:51Z",
+      "side": 1,
+      "message": "Added TODO.",
+      "parentUuid": "93aeffdb_605a97bb",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 64,
+        "endChar": 54
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
