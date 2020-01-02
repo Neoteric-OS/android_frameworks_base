@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "605f4405_e76a92a8",
+        "filename": "packages/Tethering/res/values/overlayable.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-01-02T03:42:46Z",
+      "side": 1,
+      "message": "Update the doc in latest patchset.",
+      "parentUuid": "80e93536_af1c48ee",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 73
+      },
+      "revId": "c1feb0c3c9b05e274dfd0ab42f508e692a0c2756",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37c4e9cb_e75c50b1",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 10
