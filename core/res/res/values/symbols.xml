@@ -3843,4 +3843,7 @@
   <java-symbol type="layout" name="platlogo_layout" />
 
   <java-symbol type="bool" name="config_automotiveHideNavBarForKeyboard" />
+
+  <java-symbol type="bool" name="config_support_fdn_no_data" />
+  <java-symbol type="string" name="config_fdn_num_for_data" />
 </resources>

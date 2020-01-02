@@ -4325,4 +4325,7 @@
          create additional screen real estate outside beyond the keyboard. Note that the user needs
          to have a confirmed way to dismiss the keyboard when desired. -->
     <bool name="config_automotiveHideNavBarForKeyboard">false</bool>
+
+    <bool name="config_support_fdn_no_data">false</bool>
+    <string name="config_fdn_num_for_data" translatable="false"></string>
 </resources>
