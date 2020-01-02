@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a1845db_ee1b4cb9",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2427,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-02T15:24:22Z",
+      "side": 1,
+      "message": "Could you remove @SystemApi that just keep @hide here?? ConnectivityManager just be a wrapper of TetheringManager that use to backward compatible existing API. I want new added tethering API expose in TetheringManager.\nNote: All methods in TetheringManager are still @hide so far(TetheringManager class is @hide), I will expose them before R freeze.",
+      "range": {
+        "startLine": 2427,
+        "startChar": 4,
+        "endLine": 2427,
+        "endChar": 14
+      },
+      "revId": "09a7e27d5c4ff72de2d834cbea9df5a5d692fef1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
