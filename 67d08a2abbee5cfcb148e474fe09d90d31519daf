@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "66433ed8_981be848",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-02T11:24:44Z",
+      "side": 1,
+      "message": "Given that implement detail might be drifted from planning.\nThus I think the indexing should respect to the final\nversion of implementation.\nFor now NS02 is missing, maybe NS C01 to make it more\nconsisnt with previous set?\nWe can pending this if still no consensus.",
+      "parentUuid": "4e838d8f_efa37e36",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "181d6896_fda290ac",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 3
@@ -81,6 +105,24 @@
       "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef85338d_d4c61e37",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-02T11:24:44Z",
+      "side": 1,
+      "message": "Not done?",
+      "parentUuid": "5f7b4dff_87111825",
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
@@ -269,6 +311,29 @@
       "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ab18a32_46b1f8cf",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-02T11:24:44Z",
+      "side": 1,
+      "message": "1. do we want to add unit test for this?\n2. nit: maybe add @NonNull/@Nullable annotations?",
+      "range": {
+        "startLine": 63,
+        "startChar": 15,
+        "endLine": 63,
+        "endChar": 30
+      },
+      "revId": "67d08a2abbee5cfcb148e474fe09d90d31519daf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {

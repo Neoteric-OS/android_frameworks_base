@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f244ede7_af7c6fb9",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-02T11:24:44Z",
+      "side": 1,
+      "message": "nit: @NonNull?\nalso for below.",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "a4d8564d23139d55067fd4f5ffe2b628a8b1d600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180e5a6b_ac41b165",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-02T11:24:44Z",
+      "side": 1,
+      "message": "1. what is the meaning of returning int? when will we return what value?\nmaybe we need to complete @param and @return session of javadoc?\n\n2. will selectionSettings changes whenever we calls makeComparator?\nIf not, do we want to pass it in constructor instead of parameter of this?",
+      "revId": "a4d8564d23139d55067fd4f5ffe2b628a8b1d600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9dbe36_4d374461",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-02T11:24:44Z",
+      "side": 1,
+      "message": "1. maybe add annotations for parameters and return value?\n2. static?",
+      "range": {
+        "startLine": 74,
+        "startChar": 11,
+        "endLine": 74,
+        "endChar": 21
+      },
+      "revId": "a4d8564d23139d55067fd4f5ffe2b628a8b1d600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

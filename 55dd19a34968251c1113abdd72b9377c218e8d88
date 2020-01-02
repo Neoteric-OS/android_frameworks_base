@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25075724_ea785848",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-02T11:24:44Z",
+      "side": 1,
+      "message": "maybe refactor this? or combine into l.447?",
+      "range": {
+        "startLine": 445,
+        "startChar": 32,
+        "endLine": 446,
+        "endChar": 48
+      },
+      "revId": "55dd19a34968251c1113abdd72b9377c218e8d88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
