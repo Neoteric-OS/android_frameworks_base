@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4224c4d_62ff0caa",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T12:26:55Z",
+      "side": 1,
+      "message": "It looks like pseudo code instead of comments.\nAlso the detail of how we implement (Interger#compare) might not be needed.\n\nMaybe something similar the comments in NetworkRanker?\nInternally used to compare two {@link NetworkScore} based on {@link LEGACY_SCORE}.\nReturns a negative integer, zero, or a positive integer is corresponding to ns1 is less than, equal to, or greater than ns2.",
+      "range": {
+        "startLine": 131,
+        "startChar": 6,
+        "endLine": 133,
+        "endChar": 54
+      },
+      "revId": "f47dac891d76e49d32094d527ecbdb80e31e500a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1d27bb_bd290a7e",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T12:26:55Z",
+      "side": 1,
+      "message": "Is it better to name it SCORE_COMPARATOR given that the score is well known in this class?",
+      "range": {
+        "startLine": 135,
+        "startChar": 50,
+        "endLine": 135,
+        "endChar": 74
+      },
+      "revId": "f47dac891d76e49d32094d527ecbdb80e31e500a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc48bd7_78390035",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T12:26:55Z",
+      "side": 1,
+      "message": "@NonNull?",
+      "revId": "f47dac891d76e49d32094d527ecbdb80e31e500a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9153188f_b444dc7d",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T12:26:55Z",
+      "side": 1,
+      "message": "style: IIUC the indention of these two functions are problematic.",
+      "range": {
+        "startLine": 366,
+        "startChar": 3,
+        "endLine": 396,
+        "endChar": 5
+      },
+      "revId": "f47dac891d76e49d32094d527ecbdb80e31e500a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
