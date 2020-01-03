@@ -6088,7 +6088,7 @@ package android.os {
     method public boolean bind(android.os.UpdateEngineCallback, android.os.Handler);
     method public boolean bind(android.os.UpdateEngineCallback);
     method public void cancel();
-    method public int cleanupAppliedPayload();
+    method @android.os.UpdateEngine.ErrorCode public int cleanupAppliedPayload();
     method public void resetStatus();
     method public void resume();
     method public void suspend();
@@ -6097,8 +6097,11 @@ package android.os {
   }
 
   public static final class UpdateEngine.AllocateSpaceResult {
-    method public int errorCode();
+    method @android.os.UpdateEngine.ErrorCode public int errorCode();
     method public long freeSpaceRequired();
+  }
+
+  @IntDef({android.os.UpdateEngine.ErrorCodeConstants.SUCCESS, android.os.UpdateEngine.ErrorCodeConstants.ERROR, android.os.UpdateEngine.ErrorCodeConstants.FILESYSTEM_COPIER_ERROR, android.os.UpdateEngine.ErrorCodeConstants.POST_INSTALL_RUNNER_ERROR, android.os.UpdateEngine.ErrorCodeConstants.PAYLOAD_MISMATCHED_TYPE_ERROR, android.os.UpdateEngine.ErrorCodeConstants.INSTALL_DEVICE_OPEN_ERROR, android.os.UpdateEngine.ErrorCodeConstants.KERNEL_DEVICE_OPEN_ERROR, android.os.UpdateEngine.ErrorCodeConstants.DOWNLOAD_TRANSFER_ERROR, android.os.UpdateEngine.ErrorCodeConstants.PAYLOAD_HASH_MISMATCH_ERROR, android.os.UpdateEngine.ErrorCodeConstants.PAYLOAD_SIZE_MISMATCH_ERROR, android.os.UpdateEngine.ErrorCodeConstants.DOWNLOAD_PAYLOAD_VERIFICATION_ERROR, android.os.UpdateEngine.ErrorCodeConstants.PAYLOAD_TIMESTAMP_ERROR, android.os.UpdateEngine.ErrorCodeConstants.UPDATED_BUT_NOT_ACTIVE, android.os.UpdateEngine.ErrorCodeConstants.NOT_ENOUGH_SPACE, android.os.UpdateEngine.ErrorCodeConstants.DEVICE_CORRUPTED}) @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.CLASS) public static @interface UpdateEngine.ErrorCode {
   }
 
   public static final class UpdateEngine.ErrorCodeConstants {
