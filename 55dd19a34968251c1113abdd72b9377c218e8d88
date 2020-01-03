@@ -22,6 +22,30 @@
       "revId": "55dd19a34968251c1113abdd72b9377c218e8d88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a90bb3_3bf9254d",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-03T08:10:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25075724_ea785848",
+      "range": {
+        "startLine": 445,
+        "startChar": 32,
+        "endLine": 446,
+        "endChar": 48
+      },
+      "revId": "55dd19a34968251c1113abdd72b9377c218e8d88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

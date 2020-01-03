@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9501e68f_7591f249",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-03T08:10:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f244ede7_af7c6fb9",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "a4d8564d23139d55067fd4f5ffe2b628a8b1d600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "180e5a6b_ac41b165",
         "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "a4d8564d23139d55067fd4f5ffe2b628a8b1d600",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e61439_36e18e30",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-03T08:10:08Z",
+      "side": 1,
+      "message": "\u003e 1. what is the meaning of returning int? when will we return what value?\nmaybe we need to complete @param and @return session of javadoc?\n\nDone.\n\n\u003e 2. will selectionSettings changes whenever we calls makeComparator?\nIf not, do we want to pass it in constructor instead of parameter of this?\n\nI think NetworkSelectionSettings is a device-wide settings, consider the settings may be changed by user, so maybe we should have a setter for it instead of parameter of this method.",
+      "parentUuid": "180e5a6b_ac41b165",
+      "revId": "a4d8564d23139d55067fd4f5ffe2b628a8b1d600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "a4d8564d23139d55067fd4f5ffe2b628a8b1d600",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d1c7ab_2fece3e9",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-03T08:10:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b9dbe36_4d374461",
+      "range": {
+        "startLine": 74,
+        "startChar": 11,
+        "endLine": 74,
+        "endChar": 21
+      },
+      "revId": "a4d8564d23139d55067fd4f5ffe2b628a8b1d600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
