@@ -33,6 +33,7 @@ import android.annotation.UnsupportedAppUsage;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ParceledListSlice;
+import android.hardware.Camera;
 import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
 import android.net.Network;
@@ -51,6 +52,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.os.WorkSource;
 import android.util.Log;
 import android.util.Pair;
@@ -4637,6 +4639,24 @@ public class WifiManager {
      */
     public boolean isEasyConnectSupported() {
         return isFeatureSupported(WIFI_FEATURE_DPP);
+    }
+
+    /**
+     * @return true if the device supports secure ADB over Wi-Fi
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.MANAGE_DEBUGGING)
+    public boolean isADBDebugSupported() {
+        return "1".equals(SystemProperties.get("ro.adb.wifi", "0"));
+    }
+
+    /**
+     * @return true if the device supports secure ADB over Wi-Fi
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.MANAGE_DEBUGGING)
+    public boolean isADBDebugQRSupported() {
+        return isADBDebugSupported() && (Camera.getNumberOfCameras() > 0);
     }
 
     /**
