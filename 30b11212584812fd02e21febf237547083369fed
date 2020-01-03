@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81797aee_e9ca4a6d",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1319697
+      },
+      "writtenOn": "2020-01-03T08:01:40Z",
+      "side": 1,
+      "message": "nit: It\u0027s 2020 today :p",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81944320_84150408",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1319697
+      },
+      "writtenOn": "2020-01-03T08:01:40Z",
+      "side": 1,
+      "message": "Would you mind refer the public symbol ROLLBACK_SERVICE?\n\nandroid/frameworks/base/core/java/android/content/Context.java\n    @SystemApi @TestApi\n    public static final String ROLLBACK_SERVICE \u003d \"rollback\";",
+      "range": {
+        "startLine": 70,
+        "startChar": 30,
+        "endLine": 70,
+        "endChar": 38
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb4f61b_41b5ab45",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1319697
+      },
+      "writtenOn": "2020-01-03T08:01:40Z",
+      "side": 1,
+      "message": "nit: It could be easier to maintain if you pre-defined it as final static string",
+      "range": {
+        "startLine": 90,
+        "startChar": 52,
+        "endLine": 90,
+        "endChar": 65
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737ae6c6_85c4eeca",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1319697
+      },
+      "writtenOn": "2020-01-03T08:01:40Z",
+      "side": 1,
+      "message": "nit: Would you mind add inline comment?\nsetWritable(true/* writable */, true/* ownerOnly */);",
+      "range": {
+        "startLine": 92,
+        "startChar": 37,
+        "endLine": 92,
+        "endChar": 47
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6d5076_08269763",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1319697
+      },
+      "writtenOn": "2020-01-03T08:01:40Z",
+      "side": 1,
+      "message": "Suggest to file a bug and attach bugId here.",
+      "range": {
+        "startLine": 118,
+        "startChar": 20,
+        "endLine": 118,
+        "endChar": 34
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb380efe_1addf15c",
+        "filename": "services/core/java/com/android/server/power/ShutdownThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1319697
+      },
+      "writtenOn": "2020-01-03T08:01:40Z",
+      "side": 1,
+      "message": "nit: would you mind add comment like others?\nshutdownTimingLog.traceEnd(); // DumpPreRebootInfo",
+      "range": {
+        "startLine": 450,
+        "startChar": 8,
+        "endLine": 450,
+        "endChar": 37
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
