@@ -128,6 +128,30 @@
       "revId": "a4d8564d23139d55067fd4f5ffe2b628a8b1d600",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a62fa31_85d9c955",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-03T08:34:30Z",
+      "side": 1,
+      "message": "\u003e 2. static?\n\nCannot be static.\nThe compiler will say \"non-static method compareNetworks(NetworkScore,NetworkScore,NetworkRequest) cannot be referenced from a static context\".",
+      "parentUuid": "76d1c7ab_2fece3e9",
+      "range": {
+        "startLine": 74,
+        "startChar": 11,
+        "endLine": 74,
+        "endChar": 21
+      },
+      "revId": "a4d8564d23139d55067fd4f5ffe2b628a8b1d600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
