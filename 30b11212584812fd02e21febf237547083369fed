@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8be1211c_8f2bba68",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2020-01-03T09:54:50Z",
+      "side": 1,
+      "message": "Oops, tks!",
+      "parentUuid": "81797aee_e9ca4a6d",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06e03731_2611a07b",
         "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "30b11212584812fd02e21febf237547083369fed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36d593f_d23e3291",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2020-01-03T09:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06e03731_2611a07b",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6b512729_eeb626cb",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2020-01-03T09:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81944320_84150408",
+      "range": {
+        "startLine": 70,
+        "startChar": 30,
+        "endLine": 70,
+        "endChar": 38
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfae6934_c456ec22",
         "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "30b11212584812fd02e21febf237547083369fed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9769bf9e_d64a0c98",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2020-01-03T09:54:50Z",
+      "side": 1,
+      "message": "Modify it as unchecked exception, tks!",
+      "parentUuid": "cfae6934_c456ec22",
+      "range": {
+        "startLine": 80,
+        "startChar": 37,
+        "endLine": 80,
+        "endChar": 73
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f5506585_0d86d7b8",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2020-01-03T09:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bb4f61b_41b5ab45",
+      "range": {
+        "startLine": 90,
+        "startChar": 52,
+        "endLine": 90,
+        "endChar": 65
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "737ae6c6_85c4eeca",
         "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "30b11212584812fd02e21febf237547083369fed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "121d109b_43b94fcd",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2020-01-03T09:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "737ae6c6_85c4eeca",
+      "range": {
+        "startLine": 92,
+        "startChar": 37,
+        "endLine": 92,
+        "endChar": 47
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "8b9b37ac_5c4ebc07",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2020-01-03T09:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d6d5076_08269763",
+      "range": {
+        "startLine": 118,
+        "startChar": 20,
+        "endLine": 118,
+        "endChar": 34
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb380efe_1addf15c",
         "filename": "services/core/java/com/android/server/power/ShutdownThread.java",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "30b11212584812fd02e21febf237547083369fed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4732bf4_fbeac3db",
+        "filename": "services/core/java/com/android/server/power/ShutdownThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2020-01-03T09:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb380efe_1addf15c",
+      "range": {
+        "startLine": 450,
+        "startChar": 8,
+        "endLine": 450,
+        "endChar": 37
+      },
+      "revId": "30b11212584812fd02e21febf237547083369fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
