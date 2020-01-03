@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb24e030_3721049b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T14:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "328d3514_e8ea948e",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 4
+      },
+      "revId": "a63daf21be230dd8d6af51de085d69d7579a942d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4762fb5_967cac82",
         "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
         "patchSetId": 3
