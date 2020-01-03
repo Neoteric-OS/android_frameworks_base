@@ -324,7 +324,15 @@ public class PackageDexOptimizer {
             throw new IllegalArgumentException("Dexopt for path " + path + " has invalid uid.");
         }
         synchronized (mInstallLock) {
-            final long acquireTime = acquireWakeLockLI(info.uid);
+            long acquireTime;
+            try {
+                acquireTime = acquireWakeLockLI(info.uid);
+            } catch (SecurityException exc) {
+                // When a secondary dex file is "installed" this codepath may get hit. Since the
+                // installation originated in the package's process it probably won't have
+                // access to hold the wake lock.
+                acquireTime = -1;
+            }
             try {
                 return dexOptSecondaryDexPathLI(info, path, dexUseInfo, options);
             } finally {
