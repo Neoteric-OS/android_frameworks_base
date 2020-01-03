@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6511f84c_20c01301",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T07:26:19Z",
+      "side": 0,
+      "message": "Remove this, l.494 and l.502 looks irrelevant to this commit",
+      "range": {
+        "startLine": 83,
+        "startChar": 19,
+        "endLine": 83,
+        "endChar": 31
+      },
+      "revId": "4e1dd123992fa1f36ea90c15f9dfd97961823164",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

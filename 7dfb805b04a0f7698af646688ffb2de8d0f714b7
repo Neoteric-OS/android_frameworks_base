@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c316e519_33d19bd0",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T07:26:19Z",
+      "side": 1,
+      "message": "Do you like to also mark them as @Deprecated? and suggest to use TetheringManager instead?",
+      "range": {
+        "startLine": 365,
+        "startChar": 4,
+        "endLine": 365,
+        "endChar": 23
+      },
+      "revId": "7dfb805b04a0f7698af646688ffb2de8d0f714b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c701acbf_6c2ec8e9",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T07:26:19Z",
+      "side": 1,
+      "message": "Is that intended to not @hide others exception this one?",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 12
+      },
+      "revId": "7dfb805b04a0f7698af646688ffb2de8d0f714b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
