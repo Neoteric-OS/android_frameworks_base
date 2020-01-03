@@ -46,6 +46,7 @@ import com.android.server.pm.PackageManagerServiceUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -207,12 +208,14 @@ public class DexManager {
         }
 
         int dexPathIndex = 0;
+        final String loadingPackageName = loadingAppInfo.packageName;
+        List<String> newSecondaryDexPaths = new ArrayList<>();
         for (String dexPath : dexPathsToRegister) {
             // Find the owning package name.
             DexSearchResult searchResult = getDexPackage(loadingAppInfo, dexPath, loaderUserId);
 
             if (DEBUG) {
-                Slog.i(TAG, loadingAppInfo.packageName
+                Slog.i(TAG, loadingPackageName
                     + " loads from " + searchResult + " : " + loaderUserId + " : " + dexPath);
             }
 
@@ -220,7 +223,7 @@ public class DexManager {
                 // TODO(calin): extend isUsedByOtherApps check to detect the cases where
                 // different apps share the same runtime. In that case we should not mark the dex
                 // file as isUsedByOtherApps. Currently this is a safe approximation.
-                boolean isUsedByOtherApps = !loadingAppInfo.packageName.equals(
+                boolean isUsedByOtherApps = !loadingPackageName.equals(
                         searchResult.mOwningPackageName);
                 boolean primaryOrSplit = searchResult.mOutcome == DEX_SEARCH_FOUND_PRIMARY ||
                         searchResult.mOutcome == DEX_SEARCH_FOUND_SPLIT;
@@ -229,13 +232,14 @@ public class DexManager {
                     // If the dex file is the primary apk (or a split) and not isUsedByOtherApps
                     // do not record it. This case does not bring any new usable information
                     // and can be safely skipped.
+                    dexPathIndex++;
                     continue;
                 }
 
                 if (!primaryOrSplit) {
                     // Record loading of a DEX file from an app data directory.
                     mDynamicCodeLogger.recordDex(loaderUserId, dexPath,
-                            searchResult.mOwningPackageName, loadingAppInfo.packageName);
+                            searchResult.mOwningPackageName, loadingPackageName);
                 }
 
                 if (classLoaderContexts != null) {
@@ -247,8 +251,18 @@ public class DexManager {
                     String classLoaderContext = classLoaderContexts[dexPathIndex];
                     if (mPackageDexUsage.record(searchResult.mOwningPackageName,
                             dexPath, loaderUserId, loaderIsa, isUsedByOtherApps, primaryOrSplit,
-                            loadingAppInfo.packageName, classLoaderContext)) {
+                            loadingPackageName, classLoaderContext)) {
                         mPackageDexUsage.maybeWriteAsync();
+
+                        // If this is a new dex path let's optimize it below. We only optimize
+                        // for the owning package so that we don't optimize multiple times
+                        // (i.e. we're trying to optimize for secondary dex installation).
+                        // Note: this path will also be taken if e.g. the class loader context
+                        // is updated (which is good because we want to reoptimize the dex files
+                        // for the new CLC).
+                        if (!isUsedByOtherApps) {
+                            newSecondaryDexPaths.add(dexPath);
+                        }
                     }
                 }
             } else {
@@ -259,6 +273,21 @@ public class DexManager {
                 }
             }
             dexPathIndex++;
+        }
+
+        for (String dexPath : newSecondaryDexPaths) {
+            DexUseInfo dexUseInfo = mPackageDexUsage.getPackageUseInfo(loadingPackageName)
+                    .getDexUseInfoMap().get(dexPath);
+
+            // Try to optimize the package according to the install reason.
+            DexoptOptions options = new DexoptOptions(loadingPackageName,
+                    PackageManagerService.REASON_INSTALL, /*flags*/0);
+
+            int result = mPackageDexOptimizer.dexOptSecondaryDexPath(loadingAppInfo, dexPath,
+                    dexUseInfo, options);
+            if (result != PackageDexOptimizer.DEX_OPT_FAILED) {
+                Slog.e(TAG, "Failed to optimize secondary dex " + dexPath);
+            }
         }
     }
 

@@ -38,6 +38,7 @@ import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.android.server.pm.Installer;
+import com.android.server.pm.PackageDexOptimizer;
 
 import dalvik.system.DelegateLastClassLoader;
 import dalvik.system.PathClassLoader;
@@ -47,10 +48,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
+import org.mockito.verification.VerificationMode;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -72,6 +77,7 @@ public class DexManagerTests {
     @Rule public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
     @Mock Installer mInstaller;
     @Mock IPackageManager mPM;
+    @Mock PackageDexOptimizer mPackageDexOptimizer;
     private final Object mInstallLock = new Object();
 
     private DexManager mDexManager;
@@ -108,7 +114,7 @@ public class DexManagerTests {
         mBarUser0DelegateLastClassLoader = new TestData(bar, isa, mUser0,
                 DELEGATE_LAST_CLASS_LOADER_NAME);
 
-        mDexManager = new DexManager(/*Context*/ null, mPM, /*PackageDexOptimizer*/ null,
+        mDexManager = new DexManager(/*Context*/ null, mPM, mPackageDexOptimizer,
                 mInstaller, mInstallLock);
 
         // Foo and Bar are available to user0.
@@ -156,6 +162,9 @@ public class DexManagerTests {
         assertEquals(fooSecondaries.size(), pui.getDexUseInfoMap().size());
         assertSecondaryUse(mFooUser0, pui, fooSecondaries, /*isUsedByOtherApps*/false, mUser0);
 
+        // First and only notification about this dex, so we should get a dexopt request.
+        assertSecondaryDexOptRequested(mFooUser0, fooSecondaries);
+
         assertHasDclInfo(mFooUser0, mFooUser0, fooSecondaries);
     }
 
@@ -170,6 +179,11 @@ public class DexManagerTests {
         assertEquals(barSecondaries.size(), pui.getDexUseInfoMap().size());
         assertSecondaryUse(mFooUser0, pui, barSecondaries, /*isUsedByOtherApps*/true, mUser0);
 
+        // Since we notified across packages we shouldn't get any dexopt requests. Only a package
+        // will dexopt itself for the first time.
+        assertNoSecondaryDexOptRequests(mBarUser0);
+        assertNoSecondaryDexOptRequests(mFooUser0);
+
         assertHasDclInfo(mBarUser0, mFooUser0, barSecondaries);
     }
 
@@ -183,11 +197,22 @@ public class DexManagerTests {
         notifyDexLoad(mFooUser0, barSecondaries, mUser0);
         // Foo loads Bar primary files.
         notifyDexLoad(mFooUser0, mBarUser0.getBaseAndSplitDexPaths(), mUser0);
+
+        assertSecondaryDexOptRequested(mFooUser0, fooSecondaries);
+        assertNoSecondaryDexOptRequests(mBarUser0);
+        resetSecondaryDexOptRequests();
+
         // Bar loads its own secondary files.
         notifyDexLoad(mBarUser0, barSecondaries, mUser0);
         // Bar loads some own secondary files which foo didn't load.
         List<String> barSecondariesForOwnUse = mBarUser0.getSecondaryDexPathsForOwnUse();
         notifyDexLoad(mBarUser0, barSecondariesForOwnUse, mUser0);
+
+        // Note: we don't get a dexopt request for barSecondaries because we didn't detect
+        // an "install" of barSecondaries ever. In practice this should rarely happen (i.e. when
+        // would Foo use Bar's secondary dex files before Bar uses them?)
+        assertSecondaryDexOptRequested(mBarUser0, barSecondariesForOwnUse);
+        assertNoSecondaryDexOptRequests(mFooUser0);
 
         // Check bar usage. Should be used by other app (for primary and barSecondaries).
         PackageUseInfo pui = getPackageUseInfo(mBarUser0);
@@ -211,6 +236,7 @@ public class DexManagerTests {
         // Assert we don't get back data we did not previously record.
         assertNoUseInfo(mFooUser0);
         assertNoDclInfo(mFooUser0);
+        assertNoSecondaryDexOptRequests(mFooUser0);
     }
 
     @Test
@@ -219,6 +245,7 @@ public class DexManagerTests {
         notifyDexLoad(mInvalidIsa, mInvalidIsa.getSecondaryDexPaths(), mUser0);
         assertNoUseInfo(mInvalidIsa);
         assertNoDclInfo(mInvalidIsa);
+        assertNoSecondaryDexOptRequests(mFooUser0);
     }
 
     @Test
@@ -228,6 +255,7 @@ public class DexManagerTests {
         notifyDexLoad(mDoesNotExist, mDoesNotExist.getBaseAndSplitDexPaths(), mUser0);
         assertNoUseInfo(mDoesNotExist);
         assertNoDclInfo(mDoesNotExist);
+        assertNoSecondaryDexOptRequests(mDoesNotExist);
     }
 
     @Test
@@ -238,6 +266,7 @@ public class DexManagerTests {
         assertNoUseInfo(mBarUser1);
 
         assertNoDclInfo(mBarUser1);
+        assertNoSecondaryDexOptRequests(mBarUser1);
     }
 
     @Test
@@ -251,6 +280,9 @@ public class DexManagerTests {
 
         assertNoDclInfo(mBarUser1);
         assertNoDclInfo(mFooUser0);
+
+        assertNoSecondaryDexOptRequests(mBarUser1);
+        assertNoSecondaryDexOptRequests(mFooUser0);
     }
 
     @Test
@@ -264,6 +296,7 @@ public class DexManagerTests {
         notifyDexLoad(mFooUser0, newSecondaries, mUser0);
         assertNoUseInfo(newPackage);
         assertNoDclInfo(newPackage);
+        assertNoSecondaryDexOptRequests(newPackage);
 
         // Notify about newPackage install and let mFoo load its dexes.
         mDexManager.notifyPackageInstalled(newPackage.mPackageInfo, mUser0);
@@ -275,6 +308,9 @@ public class DexManagerTests {
         assertEquals(newSecondaries.size(), pui.getDexUseInfoMap().size());
         assertSecondaryUse(newPackage, pui, newSecondaries, /*isUsedByOtherApps*/true, mUser0);
         assertHasDclInfo(newPackage, mFooUser0, newSecondaries);
+
+        // mFooUser0 doesn't own newSecondaries so we don't trigger a dexopt job
+        assertNoSecondaryDexOptRequests(mFooUser0);
     }
 
     @Test
@@ -292,6 +328,9 @@ public class DexManagerTests {
         assertEquals(newSecondaries.size(), pui.getDexUseInfoMap().size());
         assertSecondaryUse(newPackage, pui, newSecondaries, /*isUsedByOtherApps*/false, mUser0);
         assertHasDclInfo(newPackage, newPackage, newSecondaries);
+
+        // Shiney new dexes should be optimized
+        assertSecondaryDexOptRequested(newPackage, newSecondaries);
     }
 
     @Test
@@ -415,6 +454,7 @@ public class DexManagerTests {
         assertFalse(mDexManager.hasInfoOnPackage(mFooUser0.getPackageName()));
 
         assertNull(getPackageDynamicCodeInfo(mFooUser0));
+        assertNoSecondaryDexOptRequests(mFooUser0);
     }
 
     @Test
@@ -427,6 +467,7 @@ public class DexManagerTests {
         assertIsUsedByOtherApps(mFooUser0, pui, false);
         assertEquals(fooSecondaries.size(), pui.getDexUseInfoMap().size());
         assertSecondaryUse(mFooUser0, pui, fooSecondaries, /*isUsedByOtherApps*/false, mUser0);
+        assertSecondaryDexOptRequested(mFooUser0, fooSecondaries);
 
         assertHasDclInfo(mFooUser0, mFooUser0, fooSecondaries);
     }
@@ -438,6 +479,8 @@ public class DexManagerTests {
 
         // We don't record the dex usage
         assertNoUseInfo(mBarUser0UnsupportedClassLoader);
+        // We don't optimize the dex files because there's no valid CLC
+        assertNoSecondaryDexOptRequests(mBarUser0UnsupportedClassLoader);
 
         // But we do record this as an intance of dynamic code loading
         assertHasDclInfo(
@@ -453,6 +496,8 @@ public class DexManagerTests {
         notifyDexLoad(mBarUser0, classLoaders, classPaths, mUser0);
 
         assertNoUseInfo(mBarUser0);
+        // We don't optimize the dex files because there's no valid CLC
+        assertNoSecondaryDexOptRequests(mBarUser0);
 
         assertHasDclInfo(mBarUser0, mBarUser0, mBarUser0.getSecondaryDexPaths());
     }
@@ -463,6 +508,7 @@ public class DexManagerTests {
 
         assertNoUseInfo(mBarUser0);
         assertNoDclInfo(mBarUser0);
+        assertNoSecondaryDexOptRequests(mBarUser0);
     }
 
     @Test
@@ -475,6 +521,8 @@ public class DexManagerTests {
         assertIsUsedByOtherApps(mBarUser0, pui, false);
         assertEquals(secondaries.size(), pui.getDexUseInfoMap().size());
         assertSecondaryUse(mFooUser0, pui, secondaries, /*isUsedByOtherApps*/false, mUser0);
+        assertSecondaryDexOptRequested(mBarUser0, secondaries);
+        resetSecondaryDexOptRequests();
 
         // Record bar secondaries again with a different class loader. This will change the context.
         notifyDexLoad(mBarUser0DelegateLastClassLoader, secondaries, mUser0);
@@ -488,6 +536,8 @@ public class DexManagerTests {
                         PackageDexUsage.VARIABLE_CLASS_LOADER_CONTEXT).toArray(new String[0]);
         assertSecondaryUse(mFooUser0, pui, secondaries, /*isUsedByOtherApps*/false, mUser0,
                 expectedContexts);
+        // We changed the class loader context, so we kick off a new dexopt job.
+        assertSecondaryDexOptRequested(mBarUser0, secondaries);
     }
 
     @Test
@@ -498,6 +548,8 @@ public class DexManagerTests {
         PackageUseInfo pui = getPackageUseInfo(mBarUser0);
         assertSecondaryUse(mBarUser0, pui, secondaries, /*isUsedByOtherApps*/false, mUser0);
         assertHasDclInfo(mBarUser0, mBarUser0, secondaries);
+        assertSecondaryDexOptRequested(mBarUser0, secondaries);
+        resetSecondaryDexOptRequests();
 
         // Record bar secondaries again with an unsupported class loader. This should not change the
         // context.
@@ -505,6 +557,7 @@ public class DexManagerTests {
         pui = getPackageUseInfo(mBarUser0);
         assertSecondaryUse(mBarUser0, pui, secondaries, /*isUsedByOtherApps*/false, mUser0);
         assertHasDclInfo(mBarUser0, mBarUser0, secondaries);
+        assertNoSecondaryDexOptRequests(mBarUser0);
     }
 
     private void assertSecondaryUse(TestData testData, PackageUseInfo pui,
@@ -523,6 +576,7 @@ public class DexManagerTests {
             assertEquals(expectedContexts[index++], dui.getClassLoaderContext());
         }
     }
+
     private void assertSecondaryUse(TestData testData, PackageUseInfo pui,
             List<String> secondaries, boolean isUsedByOtherApps, int ownerUserId) {
         String[] expectedContexts = DexoptUtils.processContextForDexLoad(
@@ -543,6 +597,37 @@ public class DexManagerTests {
             assertEquals(codePath, isUsedByOtherApps, pui.isUsedByOtherApps(codePath));
         }
     }
+
+    private void resetSecondaryDexOptRequests() {
+        Mockito.reset(mPackageDexOptimizer);
+    }
+
+    private void assertNoSecondaryDexOptRequests(TestData testData) {
+        assertSecondaryDexOptRequested(testData, Arrays.asList());
+    }
+
+    private void assertSecondaryDexOptRequested(TestData testData, List<String> secondaries) {
+        VerificationMode times = Mockito.atLeast(secondaries.size());
+        ArgumentCaptor<String> dexPathCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<ApplicationInfo> appInfoCaptor =
+                ArgumentCaptor.forClass(ApplicationInfo.class);
+
+        Mockito.verify(mPackageDexOptimizer, times).dexOptSecondaryDexPath(appInfoCaptor.capture(),
+                dexPathCaptor.capture(), ArgumentMatchers.any(), ArgumentMatchers.any());
+
+        final String packageName = testData.getPackageName();
+        List<String> dexPathsForPackage = new ArrayList<>();
+        List<String> dexPaths = dexPathCaptor.getAllValues();
+        List<ApplicationInfo> appInfos = appInfoCaptor.getAllValues();
+
+        for (int i = 0; i < dexPaths.size(); i++) {
+            if (appInfos.get(i).packageName.equals(packageName)) {
+                dexPathsForPackage.add(dexPaths.get(i));
+            }
+        }
+        assertEquals(dexPathsForPackage, secondaries);
+    }
+
     private void notifyDexLoad(TestData testData, List<String> dexPaths, int loaderUserId) {
         // By default, assume a single class loader in the chain.
         // This makes writing tests much easier.
