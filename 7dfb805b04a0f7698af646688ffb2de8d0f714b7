@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c18f6308_7cb287d4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-03T09:09:33Z",
+      "side": 1,
+      "message": "Ack, all of ConnectivityManager tethering API would become deprecated in follow up API change CL.",
+      "parentUuid": "c316e519_33d19bd0",
+      "range": {
+        "startLine": 365,
+        "startChar": 4,
+        "endLine": 365,
+        "endChar": 23
+      },
+      "revId": "7dfb805b04a0f7698af646688ffb2de8d0f714b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c701acbf_6c2ec8e9",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "7dfb805b04a0f7698af646688ffb2de8d0f714b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6d7ee1_9ec7e2ba",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-03T09:09:33Z",
+      "side": 1,
+      "message": "All of them is @hide because TetheringManager is @hide. They would change to @SystemApi by followup API change CL.",
+      "parentUuid": "c701acbf_6c2ec8e9",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 12
+      },
+      "revId": "7dfb805b04a0f7698af646688ffb2de8d0f714b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

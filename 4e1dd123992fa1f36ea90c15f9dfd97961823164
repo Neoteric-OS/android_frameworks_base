@@ -22,6 +22,30 @@
       "revId": "4e1dd123992fa1f36ea90c15f9dfd97961823164",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f24146_098c36ae",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-03T09:09:33Z",
+      "side": 0,
+      "message": "It is related to l.30 that this change remove @hide ConnectivityManager legacy type TYPE_WIFI_P2P.",
+      "parentUuid": "6511f84c_20c01301",
+      "range": {
+        "startLine": 83,
+        "startChar": 19,
+        "endLine": 83,
+        "endChar": 31
+      },
+      "revId": "4e1dd123992fa1f36ea90c15f9dfd97961823164",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
