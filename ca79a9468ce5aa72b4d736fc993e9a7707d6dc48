@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cce157c8_9a65df4b",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T09:25:52Z",
+      "side": 1,
+      "message": "nit: not clear about what\u0027s the meaning of \u003c 0 \u0026 \u003e 0.\nMaybe add a simple description above definition?",
+      "range": {
+        "startLine": 366,
+        "startChar": 66,
+        "endLine": 366,
+        "endChar": 69
+      },
+      "revId": "ca79a9468ce5aa72b4d736fc993e9a7707d6dc48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
