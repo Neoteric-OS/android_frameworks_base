@@ -4640,6 +4640,35 @@ public class WifiManager {
     }
 
     /**
+     * @return true if the device supports secure ADB over Wi-Fi.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.MANAGE_DEBUGGING)
+    public boolean isAdbDebugSupported() {
+        try {
+            return mService.isAdbDebugSupported();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * @return true if the device supports secure ADB over Wi-Fi and device pairing by
+     * QR code.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.MANAGE_DEBUGGING)
+    public boolean isAdbDebugQrSupported() {
+        try {
+            return mService.isAdbDebugQrSupported();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Gets the factory Wi-Fi MAC addresses.
      * @return Array of String representing Wi-Fi MAC addresses sorted lexically or an empty Array
      * if failed.

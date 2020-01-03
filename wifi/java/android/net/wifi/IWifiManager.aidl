@@ -219,4 +219,8 @@ interface IWifiManager
     void stopDppSession();
 
     void updateWifiUsabilityScore(int seqNum, int score, int predictionHorizonSec);
+
+    boolean isAdbDebugSupported();
+
+    boolean isAdbDebugQrSupported();
 }
