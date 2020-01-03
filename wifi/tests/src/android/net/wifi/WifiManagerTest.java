@@ -1380,6 +1380,24 @@ public class WifiManagerTest {
     }
 
     /**
+     * Verify the call to isAdbDebugSupported goes to WifiServiceImpl.
+     */
+    @Test
+    public void isAdbDebugSupportedGoesToWifiServiceImpl() throws Exception {
+        mWifiManager.isAdbDebugSupported();
+        verify(mWifiService).isAdbDebugSupported();
+    }
+
+    /**
+     * Verify the call to isAdbDebugQrSupported goes to WifiServiceImpl.
+     */
+    @Test
+    public void isAdbDebugQrSupportedGoesToWifiServiceImpl() throws Exception {
+        mWifiManager.isAdbDebugQrSupported();
+        verify(mWifiService).isAdbDebugQrSupported();
+    }
+
+    /**
      * Defined for testing purpose.
      */
     class SynchronousExecutor implements Executor {

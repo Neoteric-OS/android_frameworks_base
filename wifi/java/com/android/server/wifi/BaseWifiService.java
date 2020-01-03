@@ -481,4 +481,14 @@ public class BaseWifiService extends IWifiManager.Stub {
     public void updateWifiUsabilityScore(int seqNum, int score, int predictionHorizonSec) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public boolean isAdbDebugSupported() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isAdbDebugQrSupported() {
+        throw new UnsupportedOperationException();
+    }
 }
