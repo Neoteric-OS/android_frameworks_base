@@ -1,0 +1,12 @@
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+1: Daniel Bright <dbright@google.com>
+Code-Review+2: Shuo Qian <shuoq@google.com>
+Code-Review+2: Hall Liu <hallliu@google.com>
+Autosubmit+1: Daniel Bright <dbright@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 03 Jan 2020 02:10:35 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1199160
+Project: platform/frameworks/base
+Branch: refs/heads/master
