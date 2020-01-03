@@ -6139,7 +6139,7 @@ package android.os {
 
   public abstract class UpdateEngineCallback {
     ctor public UpdateEngineCallback();
-    method public abstract void onPayloadApplicationComplete(int);
+    method public abstract void onPayloadApplicationComplete(@android.os.UpdateEngine.ErrorCode int);
     method public abstract void onStatusUpdate(int, float);
   }
 
