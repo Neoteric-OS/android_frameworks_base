@@ -174,6 +174,7 @@ public class ProvisioningManager {
             // Base Implementation
         }
 
+
         /**@hide*/
         public final IImsConfigCallback getBinder() {
             return mBinder;
@@ -395,16 +396,19 @@ public class ProvisioningManager {
      * @param config The XML file to be read. ASCII/UTF8 encoded text if not compressed.
      * @param isCompressed The XML file is compressed in gzip format and must be decompressed
      *         before being read.
-     * @hide
+     *
      */
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void notifyRcsAutoConfigurationReceived(@NonNull byte[] config, boolean isCompressed) {
         if (config == null) {
             throw new IllegalArgumentException("Must include a non-null config XML file.");
         }
-        // TODO: Connect to ImsConfigImplBase.
-        throw new UnsupportedOperationException("notifyRcsAutoConfigurationReceived is not"
-                + "supported");
+        try {
+            getITelephony().notifyRcsAutoConfigurationReceived(mSubId, config, isCompressed);
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+
     }
 
     private static boolean isImsAvailableOnDevice() {
