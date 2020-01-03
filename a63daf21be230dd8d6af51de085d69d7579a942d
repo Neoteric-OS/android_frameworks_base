@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "328d3514_e8ea948e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T06:45:13Z",
+      "side": 1,
+      "message": "Sugguest to test with statsd_testdrive to check if it does not impact the original metrics collection.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 4
+      },
+      "revId": "a63daf21be230dd8d6af51de085d69d7579a942d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4762fb5_967cac82",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T06:45:13Z",
+      "side": 1,
+      "message": "@Nullable private?",
+      "range": {
+        "startLine": 797,
+        "startChar": 4,
+        "endLine": 797,
+        "endChar": 21
+      },
+      "revId": "a63daf21be230dd8d6af51de085d69d7579a942d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd4cd6e_aa01ecca",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T06:45:13Z",
+      "side": 1,
+      "message": "Do we need to do this? Both of original and new one are system?",
+      "range": {
+        "startLine": 805,
+        "startChar": 8,
+        "endLine": 805,
+        "endChar": 57
+      },
+      "revId": "a63daf21be230dd8d6af51de085d69d7579a942d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8d13e3_a898ae19",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T06:45:13Z",
+      "side": 1,
+      "message": "Nit: 0x0 /* flag */ will help readability.\n\nNit: Define a constant for it. FLAG_NONE?",
+      "range": {
+        "startLine": 807,
+        "startChar": 57,
+        "endLine": 807,
+        "endChar": 60
+      },
+      "revId": "a63daf21be230dd8d6af51de085d69d7579a942d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7cf7304_a8eff411",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T06:45:13Z",
+      "side": 1,
+      "message": "Nit: Fgbg?",
+      "range": {
+        "startLine": 817,
+        "startChar": 64,
+        "endLine": 817,
+        "endChar": 68
+      },
+      "revId": "a63daf21be230dd8d6af51de085d69d7579a942d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19431aec_5e059428",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T06:45:13Z",
+      "side": 1,
+      "message": "It will rethrow NullPointerException. Do you like to handle this? suppose we do not like to crash device because of it?",
+      "range": {
+        "startLine": 823,
+        "startChar": 60,
+        "endLine": 823,
+        "endChar": 79
+      },
+      "revId": "a63daf21be230dd8d6af51de085d69d7579a942d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "129c75c9_95353e7f",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T06:45:13Z",
+      "side": 1,
+      "message": "Maybe not for this commit. Do we not care about different factors in WiFi stats? Is this kind of data useful to see how many bytes are transferred via WiFi?",
+      "range": {
+        "startLine": 918,
+        "startChar": 57,
+        "endLine": 918,
+        "endChar": 82
+      },
+      "revId": "a63daf21be230dd8d6af51de085d69d7579a942d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b800f0_de4d943a",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T06:45:13Z",
+      "side": 1,
+      "message": "Nit: can\u0027t we combine this with pullMobileBytesTransferByFgBg? Maybe also pullWifiBytesTransferByFgBg and pullWifiBytesTransfer.\n\nE.g. have a function take template and isFgBg as parameter.",
+      "range": {
+        "startLine": 932,
+        "startChar": 17,
+        "endLine": 932,
+        "endChar": 40
+      },
+      "revId": "a63daf21be230dd8d6af51de085d69d7579a942d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
