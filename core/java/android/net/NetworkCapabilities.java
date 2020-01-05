@@ -55,7 +55,9 @@ import java.util.StringJoiner;
  */
 public final class NetworkCapabilities implements Parcelable {
     private static final String TAG = "NetworkCapabilities";
-    private static final int INVALID_UID = -1;
+
+    /** @hide */
+    public static final int INVALID_UID = -1;
 
     // Set to true when private DNS is broken.
     private boolean mPrivateDnsBroken;
