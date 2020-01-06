@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a75720a6_6acaf7e6",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2020-01-06T17:56:16Z",
+      "side": 1,
+      "message": "should this be brought down to 1024 given the numbers you\u0027re reporting? (that\u0027d still be 2x the high water mark you\u0027ve seen.)\n\nor is the plan to start super conservative and bring this down if we don\u0027t find anything?",
+      "revId": "f20c7d685a8dfbef0bd55e2352ee688bab95f638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315fede9_762101e3",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2020-01-06T17:56:16Z",
+      "side": 1,
+      "message": "nit: FdLeakCheckThread, since that\u0027s what it\u0027s called throughout the code?",
+      "range": {
+        "startLine": 99,
+        "startChar": 44,
+        "endLine": 99,
+        "endChar": 55
+      },
+      "revId": "f20c7d685a8dfbef0bd55e2352ee688bab95f638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8799508_1ecece31",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2020-01-06T17:56:16Z",
+      "side": 1,
+      "message": "we\u0027re assuming only slow leaks?",
+      "revId": "f20c7d685a8dfbef0bd55e2352ee688bab95f638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
