@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5da46fc2_67745edf",
+        "filename": "core/java/android/app/AppOpsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-06T13:26:33Z",
+      "side": 1,
+      "message": "Not sure what you mean by intervention, but the user still needs to agree and start the VPN",
+      "range": {
+        "startLine": 843,
+        "startChar": 46,
+        "endLine": 843,
+        "endChar": 71
+      },
+      "revId": "4671b611c78ea1935ff1bb12290681eec38d7789",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
