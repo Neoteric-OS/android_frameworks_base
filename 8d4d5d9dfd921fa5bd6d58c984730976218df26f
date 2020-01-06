@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a0acd027_9477f166",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3440,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-06T21:30:47Z",
+      "side": 1,
+      "message": "It may be better to make this \"true\" or it will break EAB provisioning for VZW + other carriers.",
+      "range": {
+        "startLine": 3440,
+        "startChar": 73,
+        "endLine": 3440,
+        "endChar": 78
+      },
+      "revId": "8d4d5d9dfd921fa5bd6d58c984730976218df26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5419362b_f5d1598e",
         "filename": "telephony/java/android/telephony/ims/ProvisioningManager.java",
         "patchSetId": 1
