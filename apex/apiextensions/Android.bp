@@ -17,37 +17,37 @@ package {
 }
 
 apex {
-    name: "com.android.sdkext",
+    name: "com.android.apiextensions",
     manifest: "manifest.json",
     binaries: [ "derive_sdk" ],
-    java_libs: [ "framework-sdkext" ],
+    java_libs: [ "framework-apiextensions" ],
     prebuilts: [
-      "com.android.sdkext.ldconfig",
+      "com.android.apiextensions.ldconfig",
       "cur_sdkinfo",
       "derive_sdk.rc",
     ],
-    key: "com.android.sdkext.key",
-    certificate: ":com.android.sdkext.certificate",
+    key: "com.android.apiextensions.key",
+    certificate: ":com.android.apiextensions.certificate",
 }
 
 sdk {
-    name: "sdkext-sdk",
-    java_header_libs: [ "framework-sdkext-stubs-systemapi" ],
+    name: "apiextensions-sdk",
+    java_header_libs: [ "framework-apiextensions-stubs-systemapi" ],
 }
 
 apex_key {
-    name: "com.android.sdkext.key",
-    public_key: "com.android.sdkext.avbpubkey",
-    private_key: "com.android.sdkext.pem",
+    name: "com.android.apiextensions.key",
+    public_key: "com.android.apiextensions.avbpubkey",
+    private_key: "com.android.apiextensions.pem",
 }
 
 android_app_certificate {
-    name: "com.android.sdkext.certificate",
-    certificate: "com.android.sdkext",
+    name: "com.android.apiextensions.certificate",
+    certificate: "com.android.apiextensions",
 }
 
 prebuilt_etc {
-    name: "com.android.sdkext.ldconfig",
+    name: "com.android.apiextensions.ldconfig",
     src: "ld.config.txt",
     filename: "ld.config.txt",
     installable: false,

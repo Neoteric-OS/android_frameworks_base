@@ -26,9 +26,9 @@
 #include <android-base/logging.h>
 #include <android-base/properties.h>
 
-#include "frameworks/base/apex/sdkext/derive_sdk/sdk.pb.h"
+#include "frameworks/base/apex/apiextensions/derive_sdk/sdk.pb.h"
 
-using com::android::sdkext::proto::SdkVersion;
+using com::android::apiextensions::proto::SdkVersion;
 
 int main(int, char**) {
     std::unique_ptr<DIR, decltype(&closedir)> apex(opendir("/apex"), closedir);

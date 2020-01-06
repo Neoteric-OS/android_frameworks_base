@@ -15,7 +15,7 @@
  */
 
 syntax = "proto3";
-package com.android.sdkext.proto;
+package com.android.apiextensions.proto;
 
 option java_outer_classname = "SdkProto";
 option optimize_for = LITE_RUNTIME;

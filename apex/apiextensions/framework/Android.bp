@@ -17,55 +17,55 @@ package {
 }
 
 filegroup {
-    name: "framework-sdkext-sources",
+    name: "framework-apiextensions-sources",
     srcs: [
         "java/**/*.java",
     ],
     path: "java",
-    visibility: [ "//frameworks/base:__pkg__" ] // For the "global" stubs.
+    visibility: [ "//frameworks/base" ] // For the "global" stubs.
 }
 
 java_library {
-    name: "framework-sdkext",
-    srcs: [ ":framework-sdkext-sources" ],
+    name: "framework-apiextensions",
+    srcs: [ ":framework-apiextensions-sources" ],
     sdk_version: "system_current",
     libs: [ "framework-annotations-lib" ],
     permitted_packages: [ "android.os.ext" ],
     installable: true,
-    visibility: [ "//frameworks/base/apex/sdkext:__pkg__" ],
+    visibility: [ "//frameworks/base/apex/apiextensions" ],
 }
 
 droidstubs {
-    name: "framework-sdkext-droidstubs-publicapi",
+    name: "framework-apiextensions-droidstubs-publicapi",
     defaults: [
-        "framework-sdkext-stubs-defaults",
+        "framework-apiextensions-stubs-defaults",
         "framework-module-stubs-defaults-publicapi",
     ]
 }
 
 droidstubs {
-    name: "framework-sdkext-droidstubs-systemapi",
+    name: "framework-apiextensions-droidstubs-systemapi",
     defaults: [
-        "framework-sdkext-stubs-defaults",
+        "framework-apiextensions-stubs-defaults",
         "framework-module-stubs-defaults-systemapi",
     ]
 }
 
 stubs_defaults {
-    name: "framework-sdkext-stubs-defaults",
+    name: "framework-apiextensions-stubs-defaults",
     srcs: [
-        ":framework-sdkext-sources",
+        ":framework-apiextensions-sources",
         ":framework-annotations",
     ],
     sdk_version: "system_current",
 }
 
 java_library {
-    name: "framework-sdkext-stubs-systemapi",
-    srcs: [":framework-sdkext-droidstubs-systemapi"],
+    name: "framework-apiextensions-stubs-systemapi",
+    srcs: [":framework-apiextensions-droidstubs-systemapi"],
     sdk_version: "system_current",
     visibility: [
-      "//frameworks/base:__pkg__", // Framework
-      "//frameworks/base/apex/sdkext:__pkg__", // sdkext SDK
+      "//frameworks/base", // Framework
+      "//frameworks/base/apex/apiextensions", // SDK definition
     ]
 }
