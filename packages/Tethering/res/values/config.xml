@@ -60,4 +60,27 @@
     <string name="tethering_notification_pause_title"></string>
     <!-- Strings for tether pause notification message -->
     <string name="tethering_notification_pause_text"></string>
+
+    <!-- Tethering notification with connected client number. -->
+    <!-- Icons for showing tether enable notification with client number.
+         Empty array means disable this notification. Empty item means not show notification for
+         this downstream type.
+         Can customize for each downstream types or just one icon for all downstream types. -->
+    <array name="tethering_notification_number_icons">
+    </array>
+    <!-- Strings for tether enable notification title with client number info.
+         Basically, the customization should be two items one for single client one for multiple
+         clients as below.
+         <item quantity="one">%1$d device connected</item>
+         <item quantity="other">%1$d devices connected</item>
+         -->
+    <plurals name="tethering_notification_title">
+    </plurals>
+    <!-- Strings for tether enable notification message with client number info. -->
+    <plurals name="tethering_notification_text">
+    </plurals>
+    <!-- Strings for tether enable notification message with client number info when power saving
+         mode is on. -->
+    <plurals name="tethering_notification_text_power_saving">
+    </plurals>
 </resources>

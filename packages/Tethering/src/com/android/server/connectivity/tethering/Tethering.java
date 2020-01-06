@@ -78,6 +78,7 @@ import android.net.util.InterfaceSet;
 import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
 import android.net.util.VersionedBroadcastListener;
+import android.net.wifi.WifiClient;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pGroup;
 import android.net.wifi.p2p.WifiP2pInfo;
@@ -85,6 +86,7 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerExecutor;
 import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Message;
@@ -115,6 +117,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
@@ -271,6 +274,8 @@ public class Tethering {
 
         startStateMachineUpdaters(mHandler);
         startTrackDefaultNetwork();
+        getWifiManager().registerSoftApCallback(
+                new HandlerExecutor(mHandler), new SoftApCallBack());
     }
 
     private void startStateMachineUpdaters(Handler handler) {
@@ -372,6 +377,24 @@ public class Tethering {
         @Override
         public void onInterfaceRemoved(String ifName) {
             mHandler.post(() -> interfaceRemoved(ifName));
+        }
+    }
+
+    private class SoftApCallBack implements WifiManager.SoftApCallback {
+        // TODO: Remove onStateChanged override when this method has default on
+        // WifiManager#SoftApCallback interface.
+        // Wifi listener for state change of the soft AP
+        @Override
+        public void onStateChanged(final int state, final int failureReason) {
+            // Nothing
+        }
+
+        // Called by wifi when the number of soft AP clients changed.
+        @Override
+        public void onConnectedClientsChanged(final List<WifiClient> clients) {
+            if (mDeps.isTetheringSupported()) {
+                mNotificationUpdater.onConnectedClientsChanged(clients.size());
+            }
         }
     }
 
