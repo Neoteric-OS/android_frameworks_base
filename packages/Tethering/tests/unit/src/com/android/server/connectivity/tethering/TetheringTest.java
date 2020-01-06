@@ -40,6 +40,7 @@ import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DHCP_SERVER;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import static com.android.server.connectivity.tethering.TetheringNotificationUpdater.DOWNSTREAM_NONE;
+import static com.android.server.connectivity.tethering.UpstreamNetworkMonitor.EVENT_ON_CAPABILITIES;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -1376,6 +1377,22 @@ public class TetheringTest {
         mIsTetheringSupported = false;
         mServiceContext.sendBroadcast(intent);
         verify(mNotificationUpdater, times(1)).onPowerSavingChanged(anyBoolean());
+    }
+
+    @Test
+    public void testUpstreamNetworkSuspended() {
+        final Tethering.TetherMasterSM stateMachine = (Tethering.TetherMasterSM)
+                mTetheringDependencies.mUpstreamNetworkMonitorMasterSM;
+        final UpstreamNetworkState upstreamState = buildMobileIPv4UpstreamState();
+        when(mUpstreamNetworkMonitor.selectPreferredUpstreamType(any())).thenReturn(upstreamState);
+        stateMachine.chooseUpstreamType(true);
+
+        stateMachine.handleUpstreamNetworkMonitorCallback(EVENT_ON_CAPABILITIES, upstreamState);
+        verify(mNotificationUpdater, times(1)).onUpstreamNetworkSuspended(true);
+
+        mIsTetheringSupported = false;
+        stateMachine.handleUpstreamNetworkMonitorCallback(EVENT_ON_CAPABILITIES, upstreamState);
+        verify(mNotificationUpdater, times(1)).onUpstreamNetworkSuspended(anyBoolean());
     }
 
     // TODO: Test that a request for hotspot mode doesn't interfere with an
