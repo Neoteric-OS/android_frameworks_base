@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e183c95f_6e014023",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 10446,
+      "author": {
+        "id": 1308560
+      },
+      "writtenOn": "2020-01-06T08:10:25Z",
+      "side": 1,
+      "message": "Please replace the permission checker(enforeceCallingOrSelfReadPhoneStatePermissionOrCarrierPrivilege) with \"enforeceCallingOrSelfReadPrivilegedPhoneStatePermissionOrCarrierPrivilege\" at packages/services/Telephony/src/com/android/phone/PhoneInterfaceManager.java",
+      "range": {
+        "startLine": 10446,
+        "startChar": 0,
+        "endLine": 10446,
+        "endChar": 80
+      },
+      "revId": "f72a4d4a398acebf7d7d8756543520e561cb529e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
