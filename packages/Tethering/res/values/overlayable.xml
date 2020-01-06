@@ -31,6 +31,19 @@
             <item type="array" name="tethering_notification_pause_icons"/>
             <item type="string" name="tethering_notification_pause_title"/>
             <item type="string" name="tethering_notification_pause_text"/>
+            <item type="array" name="tethering_notification_number_icons"/>
+            <!-- These client number customizations can be either two items one for single client
+                 one for multiple clients or just one item for all clients.
+
+                 Such as:
+                 <item quantity="one">%1$d device connected</item>
+                 <item quantity="other">%1$d devices connected</item>
+
+                 Add "%1$d" info into string if you'd like to show client info.
+            -->
+            <item type="plurals" name="tethering_notification_title"/>
+            <item type="plurals" name="tethering_notification_text"/>
+            <item type="plurals" name="tethering_notification_text_power_saving"/>
         </policy>
     </overlayable>
 </resources>

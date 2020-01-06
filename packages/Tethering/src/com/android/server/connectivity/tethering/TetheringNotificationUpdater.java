@@ -60,6 +60,7 @@ public class TetheringNotificationUpdater {
     // Downstream type is one of ConnectivityManager.TETHERING_* constants, 0 1 or 2.
     // This value has to be made 1 2 and 4, and OR'd with the others.
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
+    private int mConnectedClients = 0;
     private boolean mPowerSaving = false;
     private boolean mUserRestrictions = false;
     private boolean mUpstreamSuspended = false;
@@ -110,6 +111,12 @@ public class TetheringNotificationUpdater {
         }
     }
 
+    /** Called when the number of connected clients changed */
+    public void onConnectedClientsChanged(@IntRange(from = 0) final int number) {
+        mConnectedClients = number;
+        updateNotification();
+    }
+
     private Resources getResources(@NonNull final Context c, final int subId) {
         if (subId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
             return getResourcesForSubId(c, subId);
@@ -134,6 +141,7 @@ public class TetheringNotificationUpdater {
             } else {
                 // Show notification if one of conditions is satisfied.
                 if ((mUpstreamSuspended && setupPauseNotification())
+                        || (mConnectedClients > 0 && setupHotspotClientsNotification())
                         || setupNotification()) {
                     return;
                 }
@@ -170,6 +178,35 @@ public class TetheringNotificationUpdater {
         return showNotification(iconId, title, message, "");
     }
 
+    private boolean setupHotspotClientsNotification() {
+        final Resources res = getResources(mContext, mActiveDataSubId);
+        final TypedArray iconArray =
+                res.obtainTypedArray(R.array.tethering_notification_number_icons);
+
+        if (iconArray.length() < 1) return NOTIFY_DROP;
+
+        final String[] downstreamTexts =
+                res.getStringArray(R.array.tethering_downstream_combinations);
+        // Index can't be negative.
+        final String downstreamText = downstreamTexts.length > mDownstreamTypesMask
+                ? downstreamTexts[mDownstreamTypesMask] : "";
+        // TODO:
+        final int iconIndex = Math.min(mConnectedClients, iconArray.length() - 1);
+        final int iconId = iconArray.getResourceId(iconIndex, NO_ICON_ID);
+        final String title = res.getQuantityString(
+                R.plurals.tethering_notification_title, mConnectedClients);
+
+        final String message;
+        if (mPowerSaving) {
+            message = res.getQuantityString(
+                    R.plurals.tethering_notification_text_power_saving, mConnectedClients);
+        } else {
+            message = res.getQuantityString(
+                    R.plurals.tethering_notification_text, mConnectedClients);
+        }
+        return showNotification(iconId, title, message, downstreamText);
+    }
+
     private boolean setupNotification() {
         final Resources res = getResources(mContext, mActiveDataSubId);
         final TypedArray iconArray = res.obtainTypedArray(R.array.tethering_notification_icons);
@@ -199,7 +236,7 @@ public class TetheringNotificationUpdater {
         String formatText;
         try {
             if (TextUtils.isEmpty(text)) throw new IllegalArgumentException("Wrong string format");
-            formatText = String.format(text, downstreamText);
+            formatText = String.format(text, mConnectedClients, downstreamText);
         } catch (IllegalArgumentException e) {
             formatText = getResources(mContext, mActiveDataSubId).getString(defaultTextId);
         }
