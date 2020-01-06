@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5419362b_f5d1598e",
+        "filename": "telephony/java/android/telephony/ims/ProvisioningManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-06T21:27:02Z",
+      "side": 1,
+      "message": "nit: \"RCS\",  same with below",
+      "range": {
+        "startLine": 394,
+        "startChar": 47,
+        "endLine": 394,
+        "endChar": 50
+      },
+      "revId": "8d4d5d9dfd921fa5bd6d58c984730976218df26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394d3453_3a7ea730",
+        "filename": "telephony/java/android/telephony/ims/ProvisioningManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-06T21:27:02Z",
+      "side": 1,
+      "message": "not UT, should be \"the RCS capability specified\"",
+      "range": {
+        "startLine": 425,
+        "startChar": 66,
+        "endLine": 425,
+        "endChar": 77
+      },
+      "revId": "8d4d5d9dfd921fa5bd6d58c984730976218df26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
