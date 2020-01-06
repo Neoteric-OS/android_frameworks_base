@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37b54abc_aa48f4d5",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-06T06:30:41Z",
+      "side": 1,
+      "message": "Per meeting with Lorenzo, he point out that we can have our own NotificationChannels but notification channel need to be localization-able.\nSee what SystemNotificationChannel does: \nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/com/android/internal/notification/SystemNotificationChannels.java;l\u003d109?q\u003dsystemnoti\u0026ss\u003dandroid\n\nWhat we can do:\n1. have a new system api in NotificationManager to new tethering NotificationChannel.\n2. Or define the resource in tethering package res and have localization for this res.",
+      "revId": "ea7d6441d79315a94884c96a08249c01caafc3e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d38daa_e8993d84",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-06T06:30:41Z",
+      "side": 1,
+      "message": "We can\u0027t do this because the resource Id need to be stable and this is not system API. We can try to make this as system API or move this into tethering package.",
+      "range": {
+        "startLine": 185,
+        "startChar": 32,
+        "endLine": 185,
+        "endChar": 93
+      },
+      "revId": "ea7d6441d79315a94884c96a08249c01caafc3e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
