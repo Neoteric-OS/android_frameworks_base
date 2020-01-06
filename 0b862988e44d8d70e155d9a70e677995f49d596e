@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ae51a02_739c7373",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-06T13:58:34Z",
+      "side": 1,
+      "message": "gives the user the guarantee ?",
+      "range": {
+        "startLine": 35,
+        "startChar": 86,
+        "endLine": 35,
+        "endChar": 93
+      },
+      "revId": "0b862988e44d8d70e155d9a70e677995f49d596e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451c8e5b_32150dc5",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-06T13:58:34Z",
+      "side": 1,
+      "message": "Describe here how apps are supposed to obtain an instance of this",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "0b862988e44d8d70e155d9a70e677995f49d596e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de6212a3_bb5f425e",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-06T13:58:34Z",
+      "side": 1,
+      "message": "Do you need the context ? If you do, can\u0027t you obtain CM from there ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 31,
+        "endLine": 45,
+        "endChar": 38
+      },
+      "revId": "0b862988e44d8d70e155d9a70e677995f49d596e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6be6ca_48423615",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-06T13:58:34Z",
+      "side": 1,
+      "message": "I understand this will also stop a VPN started with VpnService, but do we intend to later expand the surface of VpnManager to also manage other aspects of non-platform VPNs ? If not, this will stick out as an inconsistency.",
+      "range": {
+        "startLine": 78,
+        "startChar": 16,
+        "endLine": 78,
+        "endChar": 23
+      },
+      "revId": "0b862988e44d8d70e155d9a70e677995f49d596e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
