@@ -1,0 +1,14 @@
+Code-Review+2: Yifan Hong <elsk@google.com>
+Code-Review+1: Po-Chien Hsueh <pchsueh@google.com>
+Code-Review+1: Bowgo Tsai <bowgotsai@google.com>
+Code-Review+1: Howard Chen <howardsoc@google.com>
+Autosubmit+1: Yo Chiang <yochiang@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Yo Chiang <yochiang@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Mon, 06 Jan 2020 06:01:35 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1192001
+Project: platform/frameworks/base
+Branch: refs/heads/master
