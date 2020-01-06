@@ -28,6 +28,9 @@
                  <string name="tethering_notification_title_noclients">%2$s tethering on</string>
             -->
             <item type="array" name="tethering_downstream_combinations"/>
+            <item type="array" name="tethering_notification_pause_icons"/>
+            <item type="string" name="tethering_notification_pause_title"/>
+            <item type="string" name="tethering_notification_pause_text"/>
         </policy>
     </overlayable>
 </resources>
