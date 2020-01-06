@@ -53,8 +53,10 @@ const val TEST_SUBID_1 = 0
 const val WIFI_DOWNSTREAM_TYPE_MASK = 1 shl TETHERING_WIFI
 const val USB_DOWNSTREAM_TYPE_MASK = 1 shl TETHERING_USB
 const val OVERLAY_TITTLE = "Tethering active"
+const val OVERLAY_TITTLE_PAUSE = "Tethering pause"
 const val OVERLAY_TEXT_NO_CLIENT = "Tap here to set up."
 const val OVERLAY_TEXT_POWER_SAVING = "Tap here to set up. Power saving on."
+const val OVERLAY_TEXT_PAUSE = "Tap here to set up. Tethering is paused during SRLTE call."
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
@@ -65,25 +67,35 @@ class TetheringNotificationUpdaterTest {
     @Mock private lateinit var notificationManager: NotificationManager
     @Mock private lateinit var overlayRes: Resources
     @Mock private lateinit var overlayIcon: TypedArray
+    @Mock private lateinit var overlayPauseIcon: TypedArray
     private lateinit var context: Context
     private lateinit var notificationUpdater: TetheringNotificationUpdater
 
     fun setupOverlayResources() {
         doReturn(overlayIcon).`when`(overlayRes)
                 .obtainTypedArray(R.array.tethering_notification_icons)
+        doReturn(overlayPauseIcon).`when`(overlayRes)
+                .obtainTypedArray(R.array.tethering_notification_pause_icons)
         doReturn(8).`when`(overlayIcon).length()
+        doReturn(1).`when`(overlayPauseIcon).length()
         val downstreamArray = arrayOf("", "Wi-Fi", "USB", "Wi-Fi/USB", "Bluetooth",
                 "Wi-Fi/Bluetooth", "Bluetooth/USB", "Wi-Fi/BT/USB")
         doReturn(downstreamArray).`when`(overlayRes)
                 .getStringArray(R.array.tethering_downstream_combinations)
         doReturn(OVERLAY_TITTLE).`when`(overlayRes)
                 .getString(R.string.tethering_notification_title_noclients)
+        doReturn(OVERLAY_TITTLE_PAUSE).`when`(overlayRes)
+                .getString(R.string.tethering_notification_pause_title)
         doReturn(OVERLAY_TEXT_NO_CLIENT).`when`(overlayRes)
                 .getString(R.string.tethering_notification_text_noclients)
         doReturn(OVERLAY_TEXT_POWER_SAVING).`when`(overlayRes)
                 .getString(R.string.tethering_notification_text_power_saving_noclients)
+        doReturn(OVERLAY_TEXT_PAUSE).`when`(overlayRes)
+                .getString(R.string.tethering_notification_pause_text)
         doReturn(R.drawable.stat_sys_tether_general).`when`(overlayIcon)
                 .getResourceId(eq(WIFI_DOWNSTREAM_TYPE_MASK), eq(NO_ICON_ID))
+        doReturn(R.drawable.stat_sys_tether_general).`when`(overlayPauseIcon)
+                .getResourceId(anyInt(), eq(NO_ICON_ID))
     }
 
     @Before
@@ -133,6 +145,10 @@ class TetheringNotificationUpdaterTest {
         // Power saving on, no notification showed.
         notificationUpdater.onPowerSavingChanged(true)
         expectClearNotification()
+
+        // Upstream network suspended, no notification showed.
+        notificationUpdater.onUpstreamNetworkSuspended(true)
+        expectClearNotification()
     }
 
     @Test
@@ -155,6 +171,14 @@ class TetheringNotificationUpdaterTest {
 
         // Power saving off, showed enable notification
         notificationUpdater.onPowerSavingChanged(false)
+        expectShowNotification(title, message)
+
+        // Upstream network suspended, showed enable notification
+        notificationUpdater.onUpstreamNetworkSuspended(true)
+        expectShowNotification(title, message)
+
+        // Upstream network resumed, showed enable notification
+        notificationUpdater.onUpstreamNetworkSuspended(false)
         expectShowNotification(title, message)
 
         // Remove wifi downstream, showed enable notification.
@@ -184,6 +208,14 @@ class TetheringNotificationUpdaterTest {
 
         // Power saving off, showed enable notification with overlay text.
         notificationUpdater.onPowerSavingChanged(false)
+        expectShowNotification(OVERLAY_TITTLE, OVERLAY_TEXT_NO_CLIENT)
+
+        // Upstream network suspended, showed pause notification.
+        notificationUpdater.onUpstreamNetworkSuspended(true)
+        expectShowNotification(OVERLAY_TITTLE_PAUSE, OVERLAY_TEXT_PAUSE)
+
+        // Upstream network resumed, showed enable notification with overlay text.
+        notificationUpdater.onUpstreamNetworkSuspended(false)
         expectShowNotification(OVERLAY_TITTLE, OVERLAY_TEXT_NO_CLIENT)
 
         // No downstream, no notification showed.

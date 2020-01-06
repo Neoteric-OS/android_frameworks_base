@@ -62,6 +62,7 @@ public class TetheringNotificationUpdater {
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
     private boolean mPowerSaving = false;
     private boolean mUserRestrictions = false;
+    private boolean mUpstreamSuspended = false;
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
         mUpdateLock = new Object();
@@ -101,6 +102,14 @@ public class TetheringNotificationUpdater {
         }
     }
 
+    /** Called when network suspend changed status */
+    public void onUpstreamNetworkSuspended(final boolean status) {
+        if (mUpstreamSuspended != status) {
+            mUpstreamSuspended = status;
+            updateNotification();
+        }
+    }
+
     private Resources getResources(@NonNull final Context c, final int subId) {
         if (subId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
             return getResourcesForSubId(c, subId);
@@ -121,9 +130,12 @@ public class TetheringNotificationUpdater {
             if (mUserRestrictions) {
                 setupRestrictedNotification();
             } else if (tetheringInactive) {
+                mUpstreamSuspended = false;
                 clearNotification();
             } else {
-                if (setupNotification()) {
+                // Show notification if one of conditions is satisfied.
+                if ((mUpstreamSuspended && setupPauseNotification())
+                        || setupNotification()) {
                     return;
                 }
                 // Tethering is active but no need shows notification.
@@ -142,6 +154,21 @@ public class TetheringNotificationUpdater {
         final String message = res.getString(R.string.disable_tether_notification_message);
 
         showNotification(R.drawable.stat_sys_tether_general, title, message, "");
+    }
+
+    private boolean setupPauseNotification() {
+        final Resources res = getResources(mContext, mActiveDataSubId);
+        final TypedArray iconArray = res.obtainTypedArray(
+                R.array.tethering_notification_pause_icons);
+
+        if (iconArray.length() < 1) return NOTIFY_DROP;
+
+        final int iconIndex = mDownstreamTypesMask < iconArray.length() ? mDownstreamTypesMask : 0;
+        final int iconId = iconArray.getResourceId(iconIndex, NO_ICON_ID);
+        final String title = res.getString(R.string.tethering_notification_pause_title);
+        final String message = res.getString(R.string.tethering_notification_pause_text);
+
+        return showNotification(iconId, title, message, "");
     }
 
     private boolean setupNotification() {

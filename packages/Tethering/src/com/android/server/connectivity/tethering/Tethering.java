@@ -37,6 +37,8 @@ import static android.net.ConnectivityManager.TETHER_ERROR_NO_ERROR;
 import static android.net.ConnectivityManager.TETHER_ERROR_SERVICE_UNAVAIL;
 import static android.net.ConnectivityManager.TETHER_ERROR_UNAVAIL_IFACE;
 import static android.net.ConnectivityManager.TETHER_ERROR_UNKNOWN_IFACE;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_INTERFACE_NAME;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_MODE;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_STATE;
@@ -1358,7 +1360,7 @@ public class Tethering {
             }
         }
 
-        private void handleUpstreamNetworkMonitorCallback(int arg1, Object o) {
+        protected void handleUpstreamNetworkMonitorCallback(int arg1, Object o) {
             if (arg1 == UpstreamNetworkMonitor.NOTIFY_LOCAL_PREFIXES) {
                 mOffload.sendOffloadExemptPrefixes((Set<IpPrefix>) o);
                 return;
@@ -1384,6 +1386,12 @@ public class Tethering {
 
             switch (arg1) {
                 case UpstreamNetworkMonitor.EVENT_ON_CAPABILITIES:
+                    if (mDeps.isTetheringSupported()
+                            && ns.network.equals(mTetherUpstream)
+                            && ns.networkCapabilities.hasTransport(TRANSPORT_CELLULAR)) {
+                        mNotificationUpdater.onUpstreamNetworkSuspended(!ns.networkCapabilities
+                                .hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+                    }
                     handleNewUpstreamNetworkState(ns);
                     break;
                 case UpstreamNetworkMonitor.EVENT_ON_LINKPROPERTIES:

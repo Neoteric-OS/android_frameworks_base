@@ -33,4 +33,17 @@
          Can customize for each downstream types or just one string for all downstream types. -->
     <string-array name="tethering_downstream_combinations">
     </string-array>
+
+    <!-- Tethering pause notification is shown when upstream network is suspended such as SRLTE call
+         is in progress. -->
+    <!-- Icons for showing tether pause notification.
+         Empty array means disable this notification. Empty item means not show notification for
+         this downstream type.
+         Can customize for each downstream types or just one icon for all downstream types. -->
+    <array name="tethering_notification_pause_icons">
+    </array>
+    <!-- Strings for tether pause notification title -->
+    <string name="tethering_notification_pause_title"></string>
+    <!-- Strings for tether pause notification message -->
+    <string name="tethering_notification_pause_text"></string>
 </resources>
