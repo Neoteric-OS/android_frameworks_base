@@ -6645,7 +6645,7 @@ public class TelephonyManager {
     }
 
     /**
-     * Returns an array of Forbidden PLMNs from the USIM App
+     * Returns an array of Forbidden PLMNs from the USIM App.
      * Returns null if the query fails.
      *
      * <p>Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
