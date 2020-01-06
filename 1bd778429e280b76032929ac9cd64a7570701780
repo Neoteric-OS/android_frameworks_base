@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f5539e8_be6e1656",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-06T20:08:48Z",
+      "side": 1,
+      "message": "need a rate limit on this, what if client calling this too frequent?",
+      "range": {
+        "startLine": 474,
+        "startChar": 7,
+        "endLine": 480,
+        "endChar": 9
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ff87ca_062258ed",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-06T20:08:48Z",
+      "side": 1,
+      "message": "can we reuse com.android.server.FgThread? as this won\u0027t post too frequently?",
+      "range": {
+        "startLine": 1069,
+        "startChar": 46,
+        "endLine": 1069,
+        "endChar": 59
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1423166f_321a9a8b",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-06T20:08:48Z",
+      "side": 1,
+      "message": "private and below?",
+      "range": {
+        "startLine": 1075,
+        "startChar": 8,
+        "endLine": 1075,
+        "endChar": 12
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee146e3_c9d81c61",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-06T20:08:48Z",
+      "side": 1,
+      "message": "Slog.d and printes the value map read?",
+      "range": {
+        "startLine": 1076,
+        "startChar": 17,
+        "endLine": 1076,
+        "endChar": 18
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf4adc5_45ceb4b6",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-06T20:08:48Z",
+      "side": 1,
+      "message": "what if the client calling getheadroom freqently, will that queue too many this::updateTemperature?  we need make sure samples are collected to be exact 1s in between or the slope could go wrong.",
+      "range": {
+        "startLine": 1101,
+        "startChar": 16,
+        "endLine": 1105,
+        "endChar": 72
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b3248b_4af94c08",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-06T20:08:48Z",
+      "side": 1,
+      "message": "move to constructor",
+      "range": {
+        "startLine": 1195,
+        "startChar": 16,
+        "endLine": 1205,
+        "endChar": 0
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c695b2ce_04ac32c0",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-06T20:08:48Z",
+      "side": 1,
+      "message": "consider continue here",
+      "range": {
+        "startLine": 1211,
+        "startChar": 24,
+        "endLine": 1211,
+        "endChar": 30
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70000484_d10228ea",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-06T20:08:48Z",
+      "side": 1,
+      "message": "can we make it greater than a defined MIN_SAMPLE_SIZE, e.g. 3 or 5...",
+      "range": {
+        "startLine": 1214,
+        "startChar": 42,
+        "endLine": 1214,
+        "endChar": 43
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
