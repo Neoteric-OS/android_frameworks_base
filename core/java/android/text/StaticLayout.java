@@ -1049,7 +1049,8 @@ public class StaticLayout extends Layout {
         // TODO: could move TAB to share same column as HYPHEN, simplifying this code and gaining
         // one bit for start field
         lines[off + TAB] |= hasTab ? TAB_MASK : 0;
-        lines[off + HYPHEN] = hyphenEdit;
+        // Disable hyphenation if ellipsis happens in this line.
+        lines[off + HYPHEN] = (mEllipsized && currentLineIsTheLastVisibleOne) ? 0 : hyphenEdit;
         lines[off + DIR] |= dir << DIR_SHIFT;
         mLineDirections[j] = measured.getDirections(start - widthStart, end - widthStart);
 
