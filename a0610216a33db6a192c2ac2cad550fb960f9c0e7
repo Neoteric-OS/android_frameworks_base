@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c2beae75_2bbfe91c",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4509,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:54:51Z",
+      "side": 1,
+      "message": "Should you ping Sudheer about this ?\n\nThe only call to forceUpdate() today is in l.4522 and it\u0027s inside the lock, that\u0027s why I said that originally. But if you think it\u0027s not needed I\u0027m happy to trust you.",
+      "parentUuid": "b43466aa_16309968",
+      "range": {
+        "startLine": 4509,
+        "startChar": 40,
+        "endLine": 4509,
+        "endChar": 42
+      },
+      "revId": "a0610216a33db6a192c2ac2cad550fb960f9c0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ece6efb_64623cf5",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 5
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "1. The reason we need interface is answered here:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1168608/6/core/java/android/net/INetworkStatsProvider.aidl#29\n\n2. The point you missed is that we\u0027ll have global alert fired frequently.\nThe limit will be re-calculated every time provider fires that, See aosp/1183413\n\n3. As for limit, yes you are right.\nWe need to devide it to prevent overshooting.\nBut we also want to prevent network from blocking if the limit is not actually reached.\nNeed more time to think about that and will reply later.",
       "parentUuid": "b83e14a7_696a6ec4",
+      "range": {
+        "startLine": 1505,
+        "startChar": 58,
+        "endLine": 1505,
+        "endChar": 63
+      },
+      "revId": "a0610216a33db6a192c2ac2cad550fb960f9c0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece6a7fb_cd2d11f7",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:54:51Z",
+      "side": 1,
+      "message": "Ah right, so I was indeed on to something.\n\nDid you reach a conclusion on this ?",
+      "parentUuid": "f8113613_da1fabbf",
       "range": {
         "startLine": 1505,
         "startChar": 58,

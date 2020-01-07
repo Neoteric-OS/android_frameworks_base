@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56b55f16_b93a167d",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerInternal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:54:51Z",
+      "side": 1,
+      "message": "AbstractNetworkStatsProvider",
+      "range": {
+        "startLine": 132,
+        "startChar": 52,
+        "endLine": 132,
+        "endChar": 76
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb66fdb_ca427ee4",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4582,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:54:51Z",
+      "side": 1,
+      "message": "This should fit on the same line",
+      "range": {
+        "startLine": 4582,
+        "startChar": 28,
+        "endLine": 4582,
+        "endChar": 29
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ffab47b_09b84302",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:54:51Z",
+      "side": 1,
+      "message": "Does this matter ? I don\u0027t think the networkstats code should care about UI constraints – UI can implement their own constraints. If you have performance concerns that\u0027s another matter though.",
+      "range": {
+        "startLine": 1380,
+        "startChar": 19,
+        "endLine": 1380,
+        "endChar": 97
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c7b713f_2fa71da7",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:54:51Z",
+      "side": 1,
+      "message": "Nit : won\u0027t this fit on one line ?",
+      "range": {
+        "startLine": 1383,
+        "startChar": 20,
+        "endLine": 1383,
+        "endChar": 41
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "276bff0d_e31dec14",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1778,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:54:51Z",
+      "side": 1,
+      "message": "I still don\u0027t understand what it means to destroy an object in Java. Besides just losing the ref to it won\u0027t work because the RemoteCallbackList still has a ref to it and the Binder propagates the ref to the other process, so it won\u0027t be garbage collected.",
+      "range": {
+        "startLine": 1777,
+        "startChar": 78,
+        "endLine": 1778,
+        "endChar": 21
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f488a2f9_45286b98",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1809,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:54:51Z",
+      "side": 1,
+      "message": "10 ?\n\nI mean, sure, RemoteCallbackList doesn\u0027t have a size() member so why not.",
+      "range": {
+        "startLine": 1809,
+        "startChar": 54,
+        "endLine": 1809,
+        "endChar": 56
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2c71dd0_310caddb",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1821,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:54:51Z",
+      "side": 1,
+      "message": "I suggest you catch RemoteException here first and log, because that\u0027s what all the callers do.",
+      "range": {
+        "startLine": 1821,
+        "startChar": 18,
+        "endLine": 1821,
+        "endChar": 23
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446a8003_8478008b",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1880,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:54:51Z",
+      "side": 1,
+      "message": "Both are marked @Nullable but if either are null we don\u0027t do anything ? This sounds a bit counter-intuitive, maybe do one of :\n\n• Mark them @NonNull\n• Have comments explaining how the nullability of these objects interact\n• Only combine the stats that are not null",
+      "range": {
+        "startLine": 1880,
+        "startChar": 36,
+        "endLine": 1880,
+        "endChar": 40
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
