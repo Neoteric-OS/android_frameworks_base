@@ -1454,6 +1454,37 @@ public class CarrierConfigManager {
             "apn_settings_default_apn_types_string_array";
 
     /**
+     * Default value of APN protocol field if not specified by user when adding/modifying an APN.
+     *
+     * Available options are:
+     * <ul>
+     *   <li>IP
+     *   <li>IPV6
+     *   <li>IPV4V6
+     * </ul>
+     *
+     * @hide
+     */
+    public static final String KEY_APN_SETTINGS_DEFAULT_APN_PROTOCOL_STRING =
+            "apn_settings_default_apn_protocol_string";
+
+    /**
+     * Default value of APN roaming protocol field if not specified by user when adding/modifying
+     * an APN.
+     *
+     * Available options are:
+     * <ul>
+     *   <li>IP
+     *   <li>IPV6
+     *   <li>IPV4V6
+     * </ul>
+     *
+     * @hide
+     */
+    public static final String KEY_APN_SETTINGS_DEFAULT_APN_ROAMING_PROTOCOL_STRING =
+            "apn_settings_default_apn_roaming_protocol_string";
+
+    /**
      * Boolean indicating if intent for emergency call state changes should be broadcast
      * @hide
      */
@@ -3513,6 +3544,8 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_READ_ONLY_APN_TYPES_STRING_ARRAY, new String[] {"dun"});
         sDefaults.putStringArray(KEY_READ_ONLY_APN_FIELDS_STRING_ARRAY, null);
         sDefaults.putStringArray(KEY_APN_SETTINGS_DEFAULT_APN_TYPES_STRING_ARRAY, null);
+        sDefaults.putString(KEY_APN_SETTINGS_DEFAULT_APN_PROTOCOL_STRING, null);
+        sDefaults.putString(KEY_APN_SETTINGS_DEFAULT_APN_ROAMING_PROTOCOL_STRING, null);
         sDefaults.putBoolean(KEY_BROADCAST_EMERGENCY_CALL_STATE_CHANGES_BOOL, false);
         sDefaults.putBoolean(KEY_ALWAYS_SHOW_EMERGENCY_ALERT_ONOFF_BOOL, false);
         sDefaults.putStringArray(KEY_CARRIER_DATA_CALL_RETRY_CONFIG_STRINGS, new String[]{
