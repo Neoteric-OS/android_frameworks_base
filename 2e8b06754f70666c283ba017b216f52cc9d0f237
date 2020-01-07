@@ -328,6 +328,30 @@
       "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56d33a55_33da855b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-07T07:32:53Z",
+      "side": 1,
+      "message": "ACK, this does not look very pretty but I don\u0027t have a much better solution if you don\u0027t want to add the native library to the test",
+      "parentUuid": "25bb3cce_d7ccc3ad",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 45
+      },
+      "revId": "2e8b06754f70666c283ba017b216f52cc9d0f237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
