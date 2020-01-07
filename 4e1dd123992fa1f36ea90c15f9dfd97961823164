@@ -46,6 +46,29 @@
       "revId": "4e1dd123992fa1f36ea90c15f9dfd97961823164",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0960523_73d80809",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-07T03:39:51Z",
+      "side": 0,
+      "message": "Is there a reason to remove this? It\u0027s an app-visible change so we should not make it if we can avoid it.",
+      "range": {
+        "startLine": 502,
+        "startChar": 8,
+        "endLine": 502,
+        "endChar": 72
+      },
+      "revId": "4e1dd123992fa1f36ea90c15f9dfd97961823164",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
