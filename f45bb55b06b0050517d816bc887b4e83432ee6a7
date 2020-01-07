@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1b78c9c_59908b58",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2020-01-07T19:13:56Z",
+      "side": 1,
+      "message": "Will NetworkStateTrackerHandler take actions in the future ? Then we might want to follow the workflow of other callback methods.",
+      "range": {
+        "startLine": 3003,
+        "startChar": 12,
+        "endLine": 3005,
+        "endChar": 54
+      },
+      "revId": "f45bb55b06b0050517d816bc887b4e83432ee6a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
