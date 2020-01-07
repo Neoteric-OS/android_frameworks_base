@@ -46,6 +46,30 @@
       "revId": "4be48b1ed8e6c6548726e6509e7854b6acdb22fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b4d166_03cdcb94",
+        "filename": "tests/net/integration/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-07T10:24:08Z",
+      "side": 1,
+      "message": "If possible, it would be good to run the test on Q for coverage and compatibility purposes. But that shouldn\u0027t block this CL.",
+      "parentUuid": "3555482d_fc830c37",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 6
+      },
+      "revId": "4be48b1ed8e6c6548726e6509e7854b6acdb22fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
