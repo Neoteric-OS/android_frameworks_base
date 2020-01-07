@@ -22,6 +22,30 @@
       "revId": "4be48b1ed8e6c6548726e6509e7854b6acdb22fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3555482d_fc830c37",
+        "filename": "tests/net/integration/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-07T02:41:50Z",
+      "side": 1,
+      "message": "This builds against hidden APIs:\nplatform_apis: true\n\nSo should not be compatible with SDK \u003c Q in any case. Setting min_sdk_version would allow running the test on release Q builds, but I don\u0027t think it would help too much since it pretty much mocks everything.",
+      "parentUuid": "ede3db4b_73417211",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 6
+      },
+      "revId": "4be48b1ed8e6c6548726e6509e7854b6acdb22fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
