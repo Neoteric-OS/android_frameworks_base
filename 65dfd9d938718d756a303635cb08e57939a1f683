@@ -22,6 +22,30 @@
       "revId": "65dfd9d938718d756a303635cb08e57939a1f683",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82d9ee2_2cadc56e",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2020-01-07T00:24:31Z",
+      "side": 1,
+      "message": "we check !isEmergencyApn before setting an APN for initial attach. So if we check carrier enabled and it\u0027s false, then we might accidentally set an emergency APN to the initial attach APN.",
+      "parentUuid": "44a35b13_3cee3553",
+      "range": {
+        "startLine": 1058,
+        "startChar": 0,
+        "endLine": 1061,
+        "endChar": 5
+      },
+      "revId": "65dfd9d938718d756a303635cb08e57939a1f683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
