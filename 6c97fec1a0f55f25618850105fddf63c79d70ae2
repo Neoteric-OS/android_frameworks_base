@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e693bb3_19e2011f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T08:56:52Z",
+      "side": 1,
+      "message": "quesition: is this related to this CL?\nIf not, suggest split it to different CL.",
+      "range": {
+        "startLine": 488,
+        "startChar": 47,
+        "endLine": 488,
+        "endChar": 66
+      },
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9777febb_f9641f92",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T08:56:52Z",
+      "side": 1,
+      "message": "question: why do we allow opening tethering, but disable it when data saver is on?",
+      "range": {
+        "startLine": 903,
+        "startChar": 21,
+        "endLine": 903,
+        "endChar": 52
+      },
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890ebfaf_a6bc9448",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T08:56:52Z",
+      "side": 1,
+      "message": "Can we name this in positive way?\nE.g. isDataSaverEnabled?\nalso for mBackGroundRestrictDisabled",
+      "range": {
+        "startLine": 906,
+        "startChar": 26,
+        "endLine": 906,
+        "endChar": 44
+      },
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3cc747_1d209da8",
+        "filename": "packages/Tethering/tests/unit/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T08:56:52Z",
+      "side": 1,
+      "message": "question: why this is needed?",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
