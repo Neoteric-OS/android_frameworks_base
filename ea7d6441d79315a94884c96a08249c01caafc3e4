@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5de292fe_5c625405",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-01-07T11:36:45Z",
+      "side": 1,
+      "message": "As we discussed in meeting, define new tethering channel name in tethering package resource.",
+      "parentUuid": "37b54abc_aa48f4d5",
+      "revId": "ea7d6441d79315a94884c96a08249c01caafc3e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09d38daa_e8993d84",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 17
@@ -39,6 +57,30 @@
       "revId": "ea7d6441d79315a94884c96a08249c01caafc3e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb4ca90_7f1d9ef8",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-01-07T11:36:45Z",
+      "side": 1,
+      "message": "This should change to android.R.color.system_notification_accent_color and it\u0027s @SystemApi.",
+      "parentUuid": "09d38daa_e8993d84",
+      "range": {
+        "startLine": 185,
+        "startChar": 32,
+        "endLine": 185,
+        "endChar": 93
+      },
+      "revId": "ea7d6441d79315a94884c96a08249c01caafc3e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
