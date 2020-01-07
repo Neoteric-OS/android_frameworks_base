@@ -4121,7 +4121,7 @@ public class Activity extends ContextThemeWrapper
      * @return The default implementation returns true.
      */
     @Override
-    public boolean onMenuOpened(int featureId, @NonNull Menu menu) {
+    public boolean onMenuOpened(int featureId, @Nullable Menu menu) {
         if (featureId == Window.FEATURE_ACTION_BAR) {
             initWindowDecorActionBar();
             if (mActionBar != null) {
