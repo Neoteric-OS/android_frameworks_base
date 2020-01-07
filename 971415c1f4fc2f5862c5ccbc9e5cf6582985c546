@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b06d417_710e28e3",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-01-07T03:55:10Z",
+      "side": 1,
+      "message": "@Nullable",
+      "range": {
+        "startLine": 1717,
+        "startChar": 4,
+        "endLine": 1717,
+        "endChar": 12
+      },
+      "revId": "971415c1f4fc2f5862c5ccbc9e5cf6582985c546",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
