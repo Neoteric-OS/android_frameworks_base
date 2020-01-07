@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ede3db4b_73417211",
+        "filename": "tests/net/integration/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-01-07T02:24:32Z",
+      "side": 1,
+      "message": "Question: Don\u0027t we need to set min_sdk_version to 29 for this test? This test should only run after Android Q.",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 6
+      },
+      "revId": "4be48b1ed8e6c6548726e6509e7854b6acdb22fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
