@@ -22,6 +22,30 @@
       "revId": "ab1836e5582778d08cc97642d939a7151f137e8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3d87e0_ab3315bd",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 10444,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-01-07T23:48:48Z",
+      "side": 1,
+      "message": "(@michaelwr and @adamp were discussing on it.) Could we move it to android.os instead?",
+      "parentUuid": "aa185f6b_e0425799",
+      "range": {
+        "startLine": 10444,
+        "startChar": 21,
+        "endLine": 10444,
+        "endChar": 37
+      },
+      "revId": "ab1836e5582778d08cc97642d939a7151f137e8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
