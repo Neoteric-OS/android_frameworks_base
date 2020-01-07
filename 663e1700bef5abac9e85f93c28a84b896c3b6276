@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74c1883f_847f0fe0",
+        "filename": "api/current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 19383,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-01-07T22:47:46Z",
+      "side": 0,
+      "message": "Looks like this file is out of date.  Please rebase and update the file again.",
+      "range": {
+        "startLine": 19383,
+        "startChar": 16,
+        "endLine": 19383,
+        "endChar": 19
+      },
+      "revId": "663e1700bef5abac9e85f93c28a84b896c3b6276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
