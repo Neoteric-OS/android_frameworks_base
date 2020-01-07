@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52b246d7_9fb5bedd",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerInternal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56b55f16_b93a167d",
+      "range": {
+        "startLine": 132,
+        "startChar": 52,
+        "endLine": 132,
+        "endChar": 76
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adb66fdb_ca427ee4",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1fb70792_9ac5aa51",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4582,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adb66fdb_ca427ee4",
+      "range": {
+        "startLine": 4582,
+        "startChar": 28,
+        "endLine": 4582,
+        "endChar": 29
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ffab47b_09b84302",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2020-01-07T12:54:51Z",
       "side": 1,
       "message": "Does this matter ? I don\u0027t think the networkstats code should care about UI constraints – UI can implement their own constraints. If you have performance concerns that\u0027s another matter though.",
+      "range": {
+        "startLine": 1380,
+        "startChar": 19,
+        "endLine": 1380,
+        "endChar": 97
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e6d4873_7b067a65",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:58Z",
+      "side": 1,
+      "message": "Yes, agree this is super ugly.\nHowever this happens nearly 100% from local testing.\nMerge without this hack will immediately cause a regression issue that\nper-uid traffic is more than per-iface traffic.\nAnd I\u0027m not quite sure how to suggest UI to fix this.\n\nNeed to do more research.\nAnd will update this later.",
+      "parentUuid": "8ffab47b_09b84302",
       "range": {
         "startLine": 1380,
         "startChar": 19,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c48e535d_b0aa022b",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c7b713f_2fa71da7",
+      "range": {
+        "startLine": 1383,
+        "startChar": 20,
+        "endLine": 1383,
+        "endChar": 41
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "276bff0d_e31dec14",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 8
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a295618b_0fa8cbc8",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1778,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:58Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "276bff0d_e31dec14",
+      "range": {
+        "startLine": 1777,
+        "startChar": 78,
+        "endLine": 1778,
+        "endChar": 21
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f488a2f9_45286b98",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2020-01-07T12:54:51Z",
       "side": 1,
       "message": "10 ?\n\nI mean, sure, RemoteCallbackList doesn\u0027t have a size() member so why not.",
+      "range": {
+        "startLine": 1809,
+        "startChar": 54,
+        "endLine": 1809,
+        "endChar": 56
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f489d46b_a351fd24",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1809,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f488a2f9_45286b98",
       "range": {
         "startLine": 1809,
         "startChar": 54,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "a4c4ae65_9c103f1b",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1821,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2c71dd0_310caddb",
+      "range": {
+        "startLine": 1821,
+        "startChar": 18,
+        "endLine": 1821,
+        "endChar": 23
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "446a8003_8478008b",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 8
@@ -183,6 +351,30 @@
       "revId": "f30d0160620e0666062366d44975e230fd1a9188",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc3ce79_625c8cb4",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1880,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:58Z",
+      "side": 1,
+      "message": "Ideally it should be @NonNull.\nHowever the idea is to protect system from crashing if one provider accidentally reports with null. IIUC @NonNull does not protect us from that?\nThus I\u0027ll take option 3.\nAny thought?",
+      "parentUuid": "446a8003_8478008b",
+      "range": {
+        "startLine": 1880,
+        "startChar": 36,
+        "endLine": 1880,
+        "endChar": 40
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
