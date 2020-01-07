@@ -101,7 +101,7 @@ public class MountServiceTests extends AndroidTestCase {
     }
 
     private File getFilePath(String name) {
-        final File filesDir = mContext.getFilesDir();
+        final File filesDir = mContext.getObbDir();
         final File outFile = new File(filesDir, name);
         return outFile;
     }
