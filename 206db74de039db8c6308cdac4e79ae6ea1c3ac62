@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64018251_8c65dcbd",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2020-01-07T12:09:04Z",
+      "side": 1,
+      "message": "use android.util.Slog in server files instead of Log.",
+      "range": {
+        "startLine": 27,
+        "startChar": 20,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "206db74de039db8c6308cdac4e79ae6ea1c3ac62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d0a90d_52020318",
+        "filename": "services/core/java/com/android/server/power/ShutdownThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2020-01-07T12:09:04Z",
+      "side": 1,
+      "message": "Use Slog.i(...)\n\nFYI, Technically, this whole file should be using Slog instead of Log. The use of Log in server code is a mistake.  Ignore the existing uses for now.",
+      "range": {
+        "startLine": 448,
+        "startChar": 8,
+        "endLine": 448,
+        "endChar": 11
+      },
+      "revId": "206db74de039db8c6308cdac4e79ae6ea1c3ac62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84fb20b_e2e2fb60",
+        "filename": "services/core/java/com/android/server/power/ShutdownThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2020-01-07T12:09:04Z",
+      "side": 1,
+      "message": "Is it possible to wrap this in a try catch block and print out an Slog.e() error if an exception gets thrown? I dont want an unexpected exception in PreRebootLogger (logging code) to get in the way of the safe-shutdown sequence.",
+      "range": {
+        "startLine": 447,
+        "startChar": 7,
+        "endLine": 450,
+        "endChar": 58
+      },
+      "revId": "206db74de039db8c6308cdac4e79ae6ea1c3ac62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
