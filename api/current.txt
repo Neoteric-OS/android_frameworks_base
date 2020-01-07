@@ -3946,6 +3946,7 @@ package android.app {
     method @Deprecated public java.util.List<android.app.ActivityManager.RunningTaskInfo> getRunningTasks(int) throws java.lang.SecurityException;
     method public boolean isActivityStartAllowedOnDisplay(@NonNull android.content.Context, int, @NonNull android.content.Intent);
     method public boolean isBackgroundRestricted();
+    method public boolean isCurrentProfile(int);
     method @Deprecated public boolean isInLockTaskMode();
     method public boolean isLowRamDevice();
     method @Deprecated public static boolean isRunningInTestHarness();
