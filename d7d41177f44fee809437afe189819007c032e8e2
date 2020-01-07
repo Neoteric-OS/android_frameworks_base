@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f687a3f7_80589ab7",
+        "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-07T14:26:48Z",
+      "side": 1,
+      "message": "I\u0027d rather not. The line-count impact would be large and across several git project. I deliberately chose Phone because it\u0027s fewer characters than Telephony. It comes from a data associated with a Phone object from a process called com.android.phone.",
+      "parentUuid": "56f4b168_0e7543f2",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be0605b7_735bf19e",
         "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "0bbc09c4_ae78c032",
+        "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-07T14:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be0605b7_735bf19e",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c52e19ed_642e9741",
         "filename": "core/java/android/app/timedetector/TimeDetector.java",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2020-01-07T12:41:56Z",
       "side": 1,
       "message": "nit: Given that each suggestion has its own unique type, is there an advantage to making the method specific as well? Seems slightly nicer to just have them all be overloads of suggestTime.\n\nMarking as resolved since this is down to taste and I don\u0027t think it matters a lot one way or the other, but I think it\u0027s worth considering.",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d78a9a5_766f85c0",
+        "filename": "core/java/android/app/timedetector/TimeDetector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-07T14:26:48Z",
+      "side": 1,
+      "message": "Yeah, I made a conscious decision not to do that. I don\u0027t see the advantage in the overload - there\u0027s no polymorphism here intentionally.",
+      "parentUuid": "c52e19ed_642e9741",
       "revId": "d7d41177f44fee809437afe189819007c032e8e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "30718b8c_b721c745",
+        "filename": "core/java/android/app/timezonedetector/PhoneTimeZoneSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-07T14:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f629ae05_a94b22aa",
+      "range": {
+        "startLine": 34,
+        "startChar": 32,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bf10096_6446267d",
         "filename": "core/java/android/app/timezonedetector/PhoneTimeZoneSuggestion.java",
         "patchSetId": 1
@@ -96,6 +180,24 @@
       "revId": "d7d41177f44fee809437afe189819007c032e8e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac71ded0_7ded7e3d",
+        "filename": "core/java/android/app/timezonedetector/PhoneTimeZoneSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-07T14:26:48Z",
+      "side": 1,
+      "message": "See response in PhoneTimeSuggestion.",
+      "parentUuid": "3bf10096_6446267d",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "d56262f8_9a77217c",
+        "filename": "core/java/android/app/timezonedetector/PhoneTimeZoneSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-07T14:26:48Z",
+      "side": 1,
+      "message": "Yes - sorry - I assumed that the linter had run and it hadn\u0027t. Fixed.",
+      "parentUuid": "ecabbd75_c93734f0",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ff6342f_22a3fb05",
         "filename": "core/java/android/app/timezonedetector/PhoneTimeZoneSuggestion.java",
         "patchSetId": 1
@@ -130,6 +250,24 @@
       "revId": "d7d41177f44fee809437afe189819007c032e8e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb34fd7_691d0faf",
+        "filename": "core/java/android/app/timezonedetector/PhoneTimeZoneSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-07T14:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ff6342f_22a3fb05",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "873443d1_f99154ea",
+        "filename": "core/java/android/app/timezonedetector/PhoneTimeZoneSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-07T14:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcde0248_3b198e98",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0b65763_6b84a70e",
         "filename": "core/java/android/util/TimestampedValue.java",
         "patchSetId": 1
@@ -164,6 +320,24 @@
       "revId": "d7d41177f44fee809437afe189819007c032e8e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f579e507_00a213f2",
+        "filename": "core/java/android/util/TimestampedValue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-07T14:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0b65763_6b84a70e",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
