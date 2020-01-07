@@ -175,6 +175,30 @@
       "revId": "f47dac891d76e49d32094d527ecbdb80e31e500a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c080a40c_3c6fd194",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T02:47:01Z",
+      "side": 1,
+      "message": "not done?\nIIUC it should be something like:\n                 \u0026\u0026 (SCORE_COMPARATOR.compare(n.score, mScore) \u003c 0\n-                        || n.factorySerialNumber \u003d\u003d mSerialNumber)\n+                || n.factorySerialNumber \u003d\u003d mSerialNumber)\n                 // If this factory can\u0027t satisfy the capability needs of this request, then it\n                 // should not be tracked.\n                 \u0026\u0026 n.request.networkCapabilities.satisfiedByNetworkCapabilities(mCapabilityFilter)\n@@ -389,10 +389,10 @@ public class NetworkFactory extends Handler {\n                 // - This factory can\u0027t satisfy the capability needs of the request\n                 // - The concrete implementation of the factory rejects the request\n                 \u0026\u0026 ((SCORE_COMPARATOR.compare(n.score, mScore) \u003e 0\n-                                \u0026\u0026 n.factorySerialNumber !\u003d mSerialNumber)\n-                        || !n.request.networkCapabilities.satisfiedByNetworkCapabilities(\n-                                mCapabilityFilter)\n-                        || !acceptRequest(n.request, n.score.getIntExtension(LEGACY_SCORE)));\n+                \u0026\u0026 n.factorySerialNumber !\u003d mSerialNumber)\n+                || !n.request.networkCapabilities.satisfiedByNetworkCapabilities(\n+                mCapabilityFilter)\n+                || !acceptRequest(n.request, n.score.getIntExtension(LEGACY_SCORE)));\n     }",
+      "parentUuid": "b12bf36a_3c768894",
+      "range": {
+        "startLine": 366,
+        "startChar": 3,
+        "endLine": 396,
+        "endChar": 5
+      },
+      "revId": "f47dac891d76e49d32094d527ecbdb80e31e500a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
