@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "030e19a4_41ab0308",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2020-01-07T19:13:37Z",
+      "side": 1,
+      "message": "Can we add some tests (probably in ConnectivityServiceTest) or at least assert that the current tests are passing ?",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "684e5451afc65a308cf6c6f9c1389ac47a183326",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f4881a_f2e4c8e6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7206,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2020-01-07T19:13:37Z",
+      "side": 1,
+      "message": "Do we need to check if nai is null ?",
+      "range": {
+        "startLine": 7206,
+        "startChar": 43,
+        "endLine": 7206,
+        "endChar": 46
+      },
+      "revId": "684e5451afc65a308cf6c6f9c1389ac47a183326",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
