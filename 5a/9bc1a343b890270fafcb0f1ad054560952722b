@@ -1,0 +1,10 @@
+Code-Review+2: Robert Greenwalt <rgreenwalt@google.com>
+Code-Review+2: Nicolas Geoffray <ngeoffray@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Chen Xu <fionaxu@google.com>
+Submitted-at: Tue, 07 Jan 2020 19:29:04 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1198459
+Project: platform/frameworks/base
+Branch: refs/heads/master
