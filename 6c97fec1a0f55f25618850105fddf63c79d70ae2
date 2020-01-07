@@ -91,6 +91,69 @@
       "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b31c20_79fdb4b3",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T11:09:52Z",
+      "side": 1,
+      "message": "IIUC this is not very useful if there is sending intent in this function.\nIs it better to rename it to setDataSaverEnabled(boolean enabled)\nand also refactor the mock in it?\n\nsendBroadcastAsUser(...)\nwhen(mConnectivityManager.getRestrictBackgroundStatus()).thenReturn(enabled?...:...);\nmLooper.dispatchAll()?\n\n\nNote: Data Saver is the new name of Restrict Background.\nWhenever you name it should consider the new name first.",
+      "range": {
+        "startLine": 1352,
+        "startChar": 17,
+        "endLine": 1352,
+        "endChar": 46
+      },
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c78dff_d38143a9",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T11:09:52Z",
+      "side": 1,
+      "message": "nit:\n// Verify that ...\nalso for below comments for asssertions.",
+      "range": {
+        "startLine": 1368,
+        "startChar": 8,
+        "endLine": 1368,
+        "endChar": 10
+      },
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3973c62b_f8c4972e",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T11:09:52Z",
+      "side": 1,
+      "message": "nit: a blank line above this?",
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
