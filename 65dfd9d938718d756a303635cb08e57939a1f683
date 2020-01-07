@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44a35b13_3cee3553",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-01-07T00:22:19Z",
+      "side": 1,
+      "message": "why do we want to bypass carrier enabled?",
+      "range": {
+        "startLine": 1058,
+        "startChar": 0,
+        "endLine": 1061,
+        "endChar": 5
+      },
+      "revId": "65dfd9d938718d756a303635cb08e57939a1f683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
