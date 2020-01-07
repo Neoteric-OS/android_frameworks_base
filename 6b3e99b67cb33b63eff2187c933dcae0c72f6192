@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c354261_91ecbc6b",
+        "filename": "core/java/android/text/StaticLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2020-01-07T04:23:13Z",
+      "side": 1,
+      "message": "Please set 0 (i.e. no hyphen edit) if ellipsis happens.\nAlso, please check if the current line is the last line.\n\ni.e. please update the code like as follows.\n  \n  // Disable hyphenation if ellipsis happens in this line.\n  lines[off + HYPHEN] \u003d (mEllipsized \u0026\u0026 currentLineIsTheLastVisibleOne) ? 0 : hyphenEdit",
+      "range": {
+        "startLine": 1053,
+        "startChar": 12,
+        "endLine": 1053,
+        "endChar": 45
+      },
+      "revId": "6b3e99b67cb33b63eff2187c933dcae0c72f6192",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
