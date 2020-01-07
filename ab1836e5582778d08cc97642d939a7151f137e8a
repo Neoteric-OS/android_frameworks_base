@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa185f6b_e0425799",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 10444,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-07T14:29:34Z",
+      "side": 1,
+      "message": "Question for API council: Lint tells me I have to move this class as \"android.util\" classes are not allowed to depend on \"android.os\".\n\nIt looks like there are various API parcelables in android.os, so that would be the \"obvious\" choice. Is there somewhere better?\n\nI\u0027ll pull out a separate change to do the move once it\u0027s clear where this should move to. It will affect two or three git projects.",
+      "range": {
+        "startLine": 10444,
+        "startChar": 21,
+        "endLine": 10444,
+        "endChar": 37
+      },
+      "revId": "ab1836e5582778d08cc97642d939a7151f137e8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
