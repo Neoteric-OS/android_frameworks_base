@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Tobias Thierer <tobiast@google.com>
+Submitted-by: Rick Yiu <rickyiu@google.com>
+Submitted-at: Tue, 07 Jan 2020 02:31:16 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1194951
+Project: platform/frameworks/base
+Branch: refs/heads/master
