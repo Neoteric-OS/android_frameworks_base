@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56f4b168_0e7543f2",
+        "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-01-07T12:41:56Z",
+      "side": 1,
+      "message": "nit: could this be called TelephonyTimeSuggestion?\n\nIt\u0027s a bit more clear that it\u0027s coming from the telephony stack, where as this name sounds like it\u0027s a time suggestion for the phone without a specific source in mind.",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0605b7_735bf19e",
+        "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-01-07T12:41:56Z",
+      "side": 1,
+      "message": "nit: Please add docs for anything you\u0027re adding to the API surface.",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52e19ed_642e9741",
+        "filename": "core/java/android/app/timedetector/TimeDetector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-01-07T12:41:56Z",
+      "side": 1,
+      "message": "nit: Given that each suggestion has its own unique type, is there an advantage to making the method specific as well? Seems slightly nicer to just have them all be overloads of suggestTime.\n\nMarking as resolved since this is down to taste and I don\u0027t think it matters a lot one way or the other, but I think it\u0027s worth considering.",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f629ae05_a94b22aa",
+        "filename": "core/java/android/app/timezonedetector/PhoneTimeZoneSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-01-07T12:41:56Z",
+      "side": 1,
+      "message": "nit: telephony-based\n\nWould prefer the docs be extra clear (and then they match the PhoneTimeSuggestion docs)",
+      "range": {
+        "startLine": 34,
+        "startChar": 32,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf10096_6446267d",
+        "filename": "core/java/android/app/timezonedetector/PhoneTimeZoneSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-01-07T12:41:56Z",
+      "side": 1,
+      "message": "Same question as PhoneTimeSuggestion with regards to Phone vs Telephony.",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecabbd75_c93734f0",
+        "filename": "core/java/android/app/timezonedetector/PhoneTimeZoneSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-01-07T12:41:56Z",
+      "side": 1,
+      "message": "@IntDefs should be hidden, not part of the API surface.\n\nhttps://g3doc.corp.google.com/company/teams/android-api-council/guidelines.md?cl\u003dhead#no-public-typedefs",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff6342f_22a3fb05",
+        "filename": "core/java/android/app/timezonedetector/PhoneTimeZoneSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-01-07T12:41:56Z",
+      "side": 1,
+      "message": "@IntDefs should be hidden, not part of the API surface.\n\nhttps://g3doc.corp.google.com/company/teams/android-api-council/guidelines.md?cl\u003dhead#no-public-typedefs",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcde0248_3b198e98",
+        "filename": "core/java/android/app/timezonedetector/PhoneTimeZoneSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-01-07T12:41:56Z",
+      "side": 1,
+      "message": "Please write docs for anything being added to the API surface.",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b65763_6b84a70e",
+        "filename": "core/java/android/util/TimestampedValue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-01-07T12:41:56Z",
+      "side": 1,
+      "message": "nit: docs for all new APIs",
+      "revId": "d7d41177f44fee809437afe189819007c032e8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
