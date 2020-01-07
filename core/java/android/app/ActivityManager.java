@@ -28,6 +28,7 @@ import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
+import android.annotation.UserIdInt;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -63,6 +64,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.os.UserManager;
 import android.os.WorkSource;
 import android.util.ArrayMap;
 import android.util.DisplayMetrics;
@@ -4233,6 +4235,23 @@ public class ActivityManager {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    /**
+     * Return whether the current user includes a profile corresponding to the given user ID.
+     * @param userId user Id to check
+     * @return Returns the boolean result.
+     */
+    public boolean isCurrentProfile(@UserIdInt int userId) {
+        UserManager userManager = mContext.getSystemService(UserManager.class);
+        if (userManager != null) {
+            for (UserInfo userInfo : userManager.getProfiles(getCurrentUser())) {
+                if (userInfo.id == userId) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
