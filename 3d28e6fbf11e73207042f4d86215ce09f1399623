@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c874f248_0a845e5a",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-01-07T16:10:30Z",
+      "side": 1,
+      "message": "private",
+      "range": {
+        "startLine": 262,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 9
+      },
+      "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa977e4_4d44354c",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-01-07T16:10:30Z",
+      "side": 1,
+      "message": "Question: Why do you get these two values again instead of pass the values from pullMobileBytesTransfer() or pullWifiBytesTransfer()?",
+      "range": {
+        "startLine": 782,
+        "startChar": 8,
+        "endLine": 783,
+        "endChar": 69
+      },
+      "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b45dba2_8da3a1fc",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-01-07T16:10:30Z",
+      "side": 1,
+      "message": "Question: why do you use getOpPackageName() here?",
+      "range": {
+        "startLine": 810,
+        "startChar": 20,
+        "endLine": 810,
+        "endChar": 47
+      },
+      "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
