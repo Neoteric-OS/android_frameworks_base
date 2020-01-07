@@ -4355,6 +4355,7 @@ package android.net {
   public final class MatchAllNetworkSpecifier extends android.net.NetworkSpecifier implements android.os.Parcelable {
     ctor public MatchAllNetworkSpecifier();
     method public int describeContents();
+    method public boolean satisfiedBy(android.net.NetworkSpecifier);
     method public void writeToParcel(@NonNull android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.net.MatchAllNetworkSpecifier> CREATOR;
   }
@@ -4416,6 +4417,12 @@ package android.net {
   public static interface NetworkScoreManager.NetworkScoreCallback {
     method public void clearScores();
     method public void updateScores(@NonNull java.util.List<android.net.ScoredNetwork>);
+  }
+
+  public abstract class NetworkSpecifier {
+    method public void assertValidFromUid(int);
+    method @Nullable public android.net.NetworkSpecifier redact();
+    method public abstract boolean satisfiedBy(@Nullable android.net.NetworkSpecifier);
   }
 
   public class NetworkStack {
@@ -5353,6 +5360,10 @@ package android.net.wifi {
     field public int numUsage;
   }
 
+  public final class WifiNetworkSpecifier extends android.net.NetworkSpecifier implements android.os.Parcelable {
+    method public boolean satisfiedBy(android.net.NetworkSpecifier);
+  }
+
   public class WifiScanner {
     method @Deprecated public void configureWifiChange(int, int, int, int, int, android.net.wifi.WifiScanner.BssidInfo[]);
     method @Deprecated public void configureWifiChange(android.net.wifi.WifiScanner.WifiChangeSettings);
@@ -5515,6 +5526,10 @@ package android.net.wifi.aware {
 
   public class DiscoverySession implements java.lang.AutoCloseable {
     method @Deprecated public android.net.NetworkSpecifier createNetworkSpecifierPmk(@NonNull android.net.wifi.aware.PeerHandle, @NonNull byte[]);
+  }
+
+  public final class WifiAwareNetworkSpecifier extends android.net.NetworkSpecifier implements android.os.Parcelable {
+    method public boolean satisfiedBy(android.net.NetworkSpecifier);
   }
 
   public static final class WifiAwareNetworkSpecifier.Builder {
