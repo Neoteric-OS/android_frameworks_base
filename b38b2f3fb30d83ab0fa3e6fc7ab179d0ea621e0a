@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f53ab4c9_8ddbf2de",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-08T07:50:52Z",
+      "side": 1,
+      "message": "How is it that this is not the same code as the patchset it\u0027s built upon but it\u0027s not marked as changed, nor built on top of obsolete, nor merge conflict ?",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 63
+      },
+      "revId": "b38b2f3fb30d83ab0fa3e6fc7ab179d0ea621e0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
