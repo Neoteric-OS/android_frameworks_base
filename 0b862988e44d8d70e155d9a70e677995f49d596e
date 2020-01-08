@@ -235,6 +235,30 @@
       "revId": "0b862988e44d8d70e155d9a70e677995f49d596e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c1f1fc_f75d0ec4",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T05:00:06Z",
+      "side": 1,
+      "message": "Ack. Done. Thanks for the explanation.",
+      "parentUuid": "aaaff96e_40bb554d",
+      "range": {
+        "startLine": 78,
+        "startChar": 16,
+        "endLine": 78,
+        "endChar": 23
+      },
+      "revId": "0b862988e44d8d70e155d9a70e677995f49d596e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
