@@ -22,6 +22,30 @@
       "revId": "516acc7f8680ab1ac1ae172a9bd1e8a0842eed9b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1083eddc_6389eaa6",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-08T05:47:32Z",
+      "side": 1,
+      "message": "I think it still does – if I see a network coming up and I want the latest report for it, how am I supposed to get it otherwise ?",
+      "parentUuid": "a050d2a0_938ba967",
+      "range": {
+        "startLine": 159,
+        "startChar": 73,
+        "endLine": 160,
+        "endChar": 52
+      },
+      "revId": "516acc7f8680ab1ac1ae172a9bd1e8a0842eed9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
