@@ -399,6 +399,30 @@
       "revId": "f30d0160620e0666062366d44975e230fd1a9188",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cfe8e94_16df3087",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1880,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-08T14:37:03Z",
+      "side": 1,
+      "message": "It\u0027s fine. Yes your understanding is correct, @NonNull does not protect you from that.",
+      "parentUuid": "5fc3ce79_625c8cb4",
+      "range": {
+        "startLine": 1880,
+        "startChar": 36,
+        "endLine": 1880,
+        "endChar": 40
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
