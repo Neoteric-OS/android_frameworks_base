@@ -27,6 +27,7 @@ import static android.provider.Settings.Global.PRIVATE_DNS_DEFAULT_MODE;
 import static android.provider.Settings.Global.PRIVATE_DNS_MODE;
 import static android.provider.Settings.Global.PRIVATE_DNS_SPECIFIER;
 
+import android.annotation.NonNull;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import android.net.IDnsResolver;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkUtils;
+import android.net.ResolverExperimentalOptionsParcel;
 import android.net.ResolverParamsParcel;
 import android.net.Uri;
 import android.net.shared.PrivateDnsConfig;
@@ -337,6 +339,7 @@ public class DnsManager {
                               .collect(Collectors.toList()))
                 : useTls ? paramsParcel.servers  // Opportunistic
                 : new String[0];            // Off
+        paramsParcel.experimentalOptions = new ResolverExperimentalOptionsParcel();
         // Prepare to track the validation status of the DNS servers in the
         // resolver config when private DNS is in opportunistic or strict mode.
         if (useTls) {
@@ -382,6 +385,18 @@ public class DnsManager {
             setNetDnsProperty(i, "");
         }
         mNumDnsEntries = last;
+    }
+
+    /**
+     * Set transport types to resolver.
+     */
+    public void setTransportTypesForNet(int netId, @NonNull int[] transportTypes) {
+        try {
+            mDnsResolver.setTransportTypes(netId, transportTypes);
+        } catch (RemoteException | ServiceSpecificException e) {
+            Slog.e(TAG, "Error setting transport types: " + e);
+            return;
+        }
     }
 
     private void flushVmDnsCache() {

@@ -5992,6 +5992,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // bubble those changes through.
             updateAllVpnsCapabilities();
         }
+        mDnsManager.setTransportTypesForNet(nai.network.netId, newNc.getTransportTypes());
     }
 
     /**

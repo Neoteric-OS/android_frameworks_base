@@ -5832,6 +5832,7 @@ public class ConnectivityServiceTest {
 
         networkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
         verify(mMockDnsResolver, times(1)).startPrefix64Discovery(cellNetId);
+        verify(mMockDnsResolver, times(2)).setTransportTypes(eq(cellNetId), any());
 
         // Switching default network updates TCP buffer sizes.
         verifyTcpBufferSizeChange(ConnectivityService.DEFAULT_TCP_BUFFER_SIZES);
