@@ -1618,9 +1618,8 @@ public class CarrierConfigManager {
     /**
      * Defines carrier-specific actions which act upon CARRIER_SIGNAL_REQUEST_NETWORK_FAILED
      * and configured signal args:
-     * android.telephony.TelephonyManager#EXTRA_APN_TYPE,
-     * android.telephony.TelephonyManager#EXTRA_ERROR_CODE
-     * used for customization of the default carrier app
+     * {@link TelephonyManager#EXTRA_APN_TYPE apnType},
+     * {@link TelephonyManager#EXTRA_ERROR_CODE errorCode}     * used for customization of the default carrier app
      * Format:
      * {
      *     "APN_1, ERROR_CODE_1 : CARRIER_ACTION_IDX_1, CARRIER_ACTION_IDX_2...",
