@@ -6105,6 +6105,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         notifyIfacesChangedForNetworkStats();
         // Fix up the NetworkCapabilities of any VPNs that don't specify underlying networks.
         updateAllVpnsCapabilities();
+        mDnsManager.setDefaultNetworkCapabilities(mDefaultNetworkNai.network.netId,
+                mDefaultNetworkNai.networkCapabilities.getTransportTypes());
     }
 
     private void processListenRequests(@NonNull final NetworkAgentInfo nai) {

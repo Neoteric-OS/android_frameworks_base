@@ -5753,7 +5753,7 @@ public class ConnectivityServiceTest {
         verify(mBatteryStatsService, never()).noteNetworkInterfaceType(startsWith("v4-"), anyInt());
 
         verifyNoMoreInteractions(mMockNetd);
-        verifyNoMoreInteractions(mMockDnsResolver);
+        verify(mMockDnsResolver, times(1)).setDefaultNetworkCapabilities(any());
         reset(mMockNetd);
         reset(mMockDnsResolver);
 

@@ -30,6 +30,7 @@ import static android.provider.Settings.Global.PRIVATE_DNS_SPECIFIER;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.DefaultNetworkCapabsParcel;
 import android.net.IDnsResolver;
 import android.net.LinkProperties;
 import android.net.Network;
@@ -383,6 +384,21 @@ public class DnsManager {
             setNetDnsProperty(i, "");
         }
         mNumDnsEntries = last;
+    }
+
+    /**
+     * Pass network capabilities to resolver.
+     */
+    public void setDefaultNetworkCapabilities(int netId, int[] transportTypes) {
+        final DefaultNetworkCapabsParcel defaultNWCapas = new DefaultNetworkCapabsParcel();
+        defaultNWCapas.networkType = transportTypes;
+        defaultNWCapas.netId = netId;
+        try {
+            mDnsResolver.setDefaultNetworkCapabilities(defaultNWCapas);
+        } catch (RemoteException | ServiceSpecificException e) {
+            Slog.e(TAG, "Error setting network capabilities: " + e);
+            return;
+        }
     }
 
     private void flushVmDnsCache() {
