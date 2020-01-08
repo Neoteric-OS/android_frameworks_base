@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56334734_534c5a59",
+        "filename": "api/lint-baseline.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-01-08T21:00:44Z",
+      "side": 1,
+      "message": "Did you re-generate the lint baseline? I think you need to re-generate this file so that for example this line here doesn\u0027t get added, because that was the cause of the merge conflict, no?",
+      "range": {
+        "startLine": 538,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 62
+      },
+      "revId": "49c35e262c88edde07a401ca71aa716a3b6bbc4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
