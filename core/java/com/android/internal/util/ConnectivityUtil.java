@@ -45,16 +45,47 @@ public class ConnectivityUtil {
     private final AppOpsManager mAppOps;
     private final UserManager mUserManager;
 
-    public ConnectivityUtil(Context context) {
+    /** Creates an instance of {@link ConnectivityUtil}. */
+    public static ConnectivityUtil from(Context context) {
+        return new ConnectivityUtil(context);
+    }
+
+    private ConnectivityUtil(Context context) {
         mContext = context;
         mAppOps = (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
         mUserManager = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
     }
 
     /**
-     * API to determine if the caller has fine/coarse location permission (depending on
-     * config/targetSDK level) and the location mode is enabled for the user. SecurityException is
-     * thrown if the caller has no permission or the location mode is disabled.
+     * Check the location permission and location mode.
+     *
+     * Check whether the application has fine/coarse location permission (depending on
+     * config/targetSDK level) and the location mode is enabled for the user.
+     *
+     * @param pkgName package name of the application requesting access
+     * @param featureId The feature in the package
+     * @param uid The uid of the package
+     * @param message A message describing why the permission was checked. Only needed if this is
+     *                not inside of a two-way binder call from the data receiver
+     */
+    public boolean checkLocationPermissionEnforced(String pkgName, @Nullable String featureId,
+            int uid, @Nullable String message) {
+        try {
+            enforceLocationPermission(pkgName, featureId, uid, message);
+            return true;
+        } catch (SecurityException e) {
+            Log.e(TAG, "Location permission is not enforced.", e);
+            return false;
+        }
+    }
+
+    /**
+     * API to enforce the location permission and location mode.
+     *
+     * Enforce the application has fine/coarse location permission (depending on config/targetSDK
+     * level) and the location mode is enabled for the user. SecurityException is thrown if the
+     * application has no permission or the location mode is disabled.
+     *
      * @param pkgName package name of the application requesting access
      * @param featureId The feature in the package
      * @param uid The uid of the package

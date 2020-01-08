@@ -21,6 +21,7 @@ import static android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS;
 import static android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ANY_USER;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.net.ConnectivityManager.ACTION_CAPTIVE_PORTAL_SIGN_IN;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION_SUPL;
@@ -114,8 +115,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import android.Manifest;
 import android.annotation.NonNull;
 import android.app.AlarmManager;
+import android.app.AppOpsManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -129,6 +132,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.ConnectivityManager.PacketKeepalive;
@@ -171,6 +175,7 @@ import android.net.shared.PrivateDnsConfig;
 import android.net.util.MultinetworkPolicyTracker;
 import android.os.BadParcelableException;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.ConditionVariable;
 import android.os.Handler;
@@ -315,6 +320,8 @@ public class ConnectivityServiceTest {
     @Mock UserManager mUserManager;
     @Mock NotificationManager mNotificationManager;
     @Mock AlarmManager mAlarmManager;
+    @Mock LocationManager mLocationManager;
+    @Mock AppOpsManager mAppOpsManager;
 
     private ArgumentCaptor<ResolverParamsParcel> mResolverParamsParcelCaptor =
             ArgumentCaptor.forClass(ResolverParamsParcel.class);
@@ -347,6 +354,7 @@ public class ConnectivityServiceTest {
 
         @Spy private Resources mResources;
         private final LinkedBlockingQueue<Intent> mStartedActivities = new LinkedBlockingQueue<>();
+        private List<String> mPermissions = new ArrayList<>();
 
         MockContext(Context base, ContentProvider settingsProvider) {
             super(base);
@@ -398,6 +406,8 @@ public class ConnectivityServiceTest {
             if (Context.NETWORK_STACK_SERVICE.equals(name)) return mNetworkStack;
             if (Context.USER_SERVICE.equals(name)) return mUserManager;
             if (Context.ALARM_SERVICE.equals(name)) return mAlarmManager;
+            if (Context.LOCATION_SERVICE.equals(name)) return mLocationManager;
+            if (Context.APP_OPS_SERVICE.equals(name)) return mAppOpsManager;
             return super.getSystemService(name);
         }
 
@@ -424,6 +434,12 @@ public class ConnectivityServiceTest {
             // All other permissions should be held by the test or unnecessary: check as normal to
             // make sure the code does not rely on unexpected permissions.
             super.enforceCallingOrSelfPermission(permission, message);
+        }
+
+        @Override
+        public int checkPermission(String permission, int pid, int uid) {
+            return mPermissions.contains(permission)
+                    ? PERMISSION_GRANTED : super.checkPermission(permission, pid, uid);
         }
 
         @Override
@@ -1072,6 +1088,10 @@ public class ConnectivityServiceTest {
                 Arrays.asList(new UserInfo[] {
                         new UserInfo(VPN_USER, "", 0),
                 }));
+        ApplicationInfo applicationInfo = new ApplicationInfo();
+        applicationInfo.targetSdkVersion =  Build.VERSION_CODES.Q;
+        when(mPackageManager.getApplicationInfoAsUser(anyString(), anyInt(), any()))
+                .thenReturn(applicationInfo);
 
         // InstrumentationTestRunner prepares a looper, but AndroidJUnitRunner does not.
         // http://b/25897652 .
@@ -2834,7 +2854,7 @@ public class ConnectivityServiceTest {
             networkCapabilities.addTransportType(TRANSPORT_WIFI)
                     .setNetworkSpecifier(new MatchAllNetworkSpecifier());
             mService.requestNetwork(networkCapabilities, null, 0, null,
-                    ConnectivityManager.TYPE_WIFI);
+                    ConnectivityManager.TYPE_WIFI, mContext.getPackageName());
         });
 
         class NonParcelableSpecifier extends NetworkSpecifier {
@@ -6216,12 +6236,44 @@ public class ConnectivityServiceTest {
         assertEquals(wifiLp, mService.getActiveLinkProperties());
     }
 
+    @Test
+    public void testNetworkCapabilitiesRestrictedForCallerPermissionsWithoutLocationPermission() {
+        when(mLocationManager.isLocationEnabledForUser(any())).thenReturn(false);
 
-    private TestNetworkAgentWrapper establishVpn(LinkProperties lp, int establishingUid,
+        final NetworkCapabilities originalNc = new NetworkCapabilities();
+        originalNc.setOwnerUid(Binder.getCallingUid());
+        final String callingPkgName = mContext.getPackageName();
+        NetworkCapabilities newNc =
+                mService.networkCapabilitiesRestrictedForCallerPermissions(
+                        originalNc, Binder.getCallingPid(), Binder.getCallingUid(), callingPkgName);
+        assertEquals(Process.INVALID_UID, newNc.getOwnerUid());
+    }
+
+    @Test
+    public void testNetworkCapabilitiesRestrictedForCallerPermissionsWithLocationPermission() {
+        final int callingUid = Binder.getCallingUid();
+        final String callingPkgName = mContext.getPackageName();
+
+        when(mLocationManager.isLocationEnabledForUser(any())).thenReturn(true);
+        when(mAppOpsManager.noteOp(
+                        eq(AppOpsManager.OPSTR_FINE_LOCATION), eq(callingUid), eq(callingPkgName)))
+                .thenReturn(AppOpsManager.MODE_ALLOWED);
+        mServiceContext.mPermissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+
+
+        NetworkCapabilities originalNc = new NetworkCapabilities();
+        originalNc.setOwnerUid(callingUid);
+        NetworkCapabilities newNc =
+                mService.networkCapabilitiesRestrictedForCallerPermissions(
+                        originalNc, Binder.getCallingPid(), callingUid, callingPkgName);
+        assertEquals(callingUid, newNc.getOwnerUid());
+    }
+
+    private TestNetworkAgentWrapper establishVpn(LinkProperties lp, int ownerUid,
             Set<UidRange> vpnRange) throws Exception {
         final TestNetworkAgentWrapper
                 vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN, lp);
-        vpnNetworkAgent.getNetworkCapabilities().setEstablishingVpnAppUid(establishingUid);
+        vpnNetworkAgent.getNetworkCapabilities().setOwnerUid(ownerUid);
         mMockVpn.setNetworkAgent(vpnNetworkAgent);
         mMockVpn.connect();
         mMockVpn.setUids(vpnRange);

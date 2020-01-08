@@ -58,7 +58,8 @@ interface IConnectivityManager
     NetworkInfo[] getAllNetworkInfo();
     Network getNetworkForType(int networkType);
     Network[] getAllNetworks();
-    NetworkCapabilities[] getDefaultNetworkCapabilitiesForUser(int userId);
+    NetworkCapabilities[] getDefaultNetworkCapabilitiesForUser(
+            int userId, String callingPackageName);
 
     boolean isNetworkSupported(int networkType);
 
@@ -67,7 +68,7 @@ interface IConnectivityManager
     LinkProperties getLinkPropertiesForType(int networkType);
     LinkProperties getLinkProperties(in Network network);
 
-    NetworkCapabilities getNetworkCapabilities(in Network network);
+    NetworkCapabilities getNetworkCapabilities(in Network network, String callingPackageName);
 
     @UnsupportedAppUsage
     NetworkState[] getAllNetworkState();
@@ -156,18 +157,19 @@ interface IConnectivityManager
             in NetworkCapabilities nc, int score, in NetworkMisc misc, in int factorySerialNumber);
 
     NetworkRequest requestNetwork(in NetworkCapabilities networkCapabilities,
-            in Messenger messenger, int timeoutSec, in IBinder binder, int legacy);
+            in Messenger messenger, int timeoutSec, in IBinder binder, int legacy,
+            String callingPackageName);
 
     NetworkRequest pendingRequestForNetwork(in NetworkCapabilities networkCapabilities,
-            in PendingIntent operation);
+            in PendingIntent operation, String callingPackageName);
 
     void releasePendingNetworkRequest(in PendingIntent operation);
 
     NetworkRequest listenForNetwork(in NetworkCapabilities networkCapabilities,
-            in Messenger messenger, in IBinder binder);
+            in Messenger messenger, in IBinder binder, String callingPackageName);
 
     void pendingListenForNetwork(in NetworkCapabilities networkCapabilities,
-            in PendingIntent operation);
+            in PendingIntent operation, String callingPackageName);
 
     void releaseNetworkRequest(in NetworkRequest networkRequest);
 

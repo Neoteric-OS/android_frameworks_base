@@ -29083,6 +29083,7 @@ package android.net {
     method @Nullable public android.net.TransportInfo getTransportInfo();
     method public boolean hasCapability(int);
     method public boolean hasTransport(int);
+    method public boolean isNetworkOwner();
     method @NonNull public android.net.NetworkCapabilities removeCapability(int);
     method @NonNull public android.net.NetworkCapabilities setCapability(int, boolean);
     method @NonNull public android.net.NetworkCapabilities setLinkDownstreamBandwidthKbps(int);

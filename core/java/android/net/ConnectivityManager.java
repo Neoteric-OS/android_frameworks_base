@@ -1273,7 +1273,8 @@ public class ConnectivityManager {
     @UnsupportedAppUsage
     public NetworkCapabilities[] getDefaultNetworkCapabilitiesForUser(int userId) {
         try {
-            return mService.getDefaultNetworkCapabilitiesForUser(userId);
+            return mService
+                    .getDefaultNetworkCapabilitiesForUser(userId, mContext.getOpPackageName());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -1355,7 +1356,7 @@ public class ConnectivityManager {
     @Nullable
     public NetworkCapabilities getNetworkCapabilities(@Nullable Network network) {
         try {
-            return mService.getNetworkCapabilities(network);
+            return mService.getNetworkCapabilities(network,  mContext.getOpPackageName());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -3590,6 +3591,7 @@ public class ConnectivityManager {
         checkCallbackNotNull(callback);
         Preconditions.checkArgument(action == REQUEST || need != null, "null NetworkCapabilities");
         final NetworkRequest request;
+        final String callingPackageName = mContext.getOpPackageName();
         try {
             synchronized(sCallbacks) {
                 if (callback.networkRequest != null
@@ -3601,10 +3603,11 @@ public class ConnectivityManager {
                 Messenger messenger = new Messenger(handler);
                 Binder binder = new Binder();
                 if (action == LISTEN) {
-                    request = mService.listenForNetwork(need, messenger, binder);
+                    request = mService.listenForNetwork(
+                            need, messenger, binder, callingPackageName);
                 } else {
                     request = mService.requestNetwork(
-                            need, messenger, timeoutMs, binder, legacyType);
+                            need, messenger, timeoutMs, binder, legacyType, callingPackageName);
                 }
                 if (request != null) {
                     sCallbacks.put(request, callback);
@@ -3878,7 +3881,8 @@ public class ConnectivityManager {
         printStackTrace();
         checkPendingIntentNotNull(operation);
         try {
-            mService.pendingRequestForNetwork(request.networkCapabilities, operation);
+            mService.pendingRequestForNetwork(
+                    request.networkCapabilities, operation, mContext.getOpPackageName());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         } catch (ServiceSpecificException e) {
@@ -3991,7 +3995,8 @@ public class ConnectivityManager {
         printStackTrace();
         checkPendingIntentNotNull(operation);
         try {
-            mService.pendingListenForNetwork(request.networkCapabilities, operation);
+            mService.pendingListenForNetwork(
+                    request.networkCapabilities, operation, mContext.getOpPackageName());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         } catch (ServiceSpecificException e) {
