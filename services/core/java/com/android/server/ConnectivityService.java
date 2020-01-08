@@ -105,6 +105,7 @@ import android.net.NetworkUtils;
 import android.net.NetworkWatchlistManager;
 import android.net.PrivateDnsConfigParcel;
 import android.net.ProxyInfo;
+import android.net.ResolverNetworkCapabsParcel;
 import android.net.RouteInfo;
 import android.net.SocketKeepalive;
 import android.net.TetheringManager;
@@ -5779,6 +5780,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
         NetworkCapabilities newNc = mixInCapabilities(nai, nc);
 
         if (Objects.equals(nai.networkCapabilities, newNc)) return;
+        else {
+            int[] notifyTransportTypes = newNc.getTransportTypes();
+            if (notifyTransportTypes.length > 0) {
+                ResolverNetworkCapabsParcel resolverNWCapas = new ResolverNetworkCapabsParcel();
+                resolverNWCapas.networkType = notifyTransportTypes;
+                try {
+                    mDnsResolver.setResolverNetworkCapabilities(resolverNWCapas);
+                } catch (RemoteException | ServiceSpecificException e) {
+                    Slog.e(TAG, "Error setting network capabilities: " + e);
+                    return;
+                }
+            }
+        }
 
         final int oldPermission = getNetworkPermission(nai.networkCapabilities);
         final int newPermission = getNetworkPermission(newNc);
