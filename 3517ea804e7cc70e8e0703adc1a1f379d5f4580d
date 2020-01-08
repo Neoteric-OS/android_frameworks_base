@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eaed214_ca86ac1b",
+        "filename": "core/java/android/app/AppOpsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-08T03:11:33Z",
+      "side": 1,
+      "message": "Suggest being more precise about this, e.g., \"Platform VPN connection, as used by android.net.VpnManager\".",
+      "range": {
+        "startLine": 843,
+        "startChar": 22,
+        "endLine": 843,
+        "endChar": 34
+      },
+      "revId": "3517ea804e7cc70e8e0703adc1a1f379d5f4580d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
