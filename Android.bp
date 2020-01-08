@@ -594,6 +594,7 @@ filegroup {
         "core/java/com/android/internal/util/State.java",
         "core/java/com/android/internal/util/StateMachine.java",
         "core/java/android/net/annotations/PolicyDirection.java",
+        "core/java/android/annotation/StringDef.java",
         "telephony/java/android/telephony/Annotation.java",
     ],
 }
