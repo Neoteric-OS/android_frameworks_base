@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e67c8f21_f0f0fa6c",
+        "filename": "core/java/android/telephony/SubscriptionPlan.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T17:19:08Z",
+      "side": 1,
+      "message": "The cycleRule supports a Period as well; would it not make more sense to just un-@hide getCycleRule() so that the API consumer can get all of the relevant fields?",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 29
+      },
+      "revId": "d5060733513873a8d7b9823eb6375aaecd172424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
