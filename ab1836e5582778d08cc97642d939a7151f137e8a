@@ -46,6 +46,30 @@
       "revId": "ab1836e5582778d08cc97642d939a7151f137e8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4285f9_2818c71b",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 10444,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-08T09:10:12Z",
+      "side": 1,
+      "message": "android.os is my preference too. Android has plenty of Parcelables in there already.",
+      "parentUuid": "cb3d87e0_ab3315bd",
+      "range": {
+        "startLine": 10444,
+        "startChar": 21,
+        "endLine": 10444,
+        "endChar": 37
+      },
+      "revId": "ab1836e5582778d08cc97642d939a7151f137e8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
