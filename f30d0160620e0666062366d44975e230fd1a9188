@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "56d3ee48_a22b7baf",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-08T09:12:51Z",
+      "side": 1,
+      "message": "Done.\nPer offline discuss.\nLet\u0027s keep the workaround out of service side.",
+      "parentUuid": "6e6d4873_7b067a65",
+      "range": {
+        "startLine": 1380,
+        "startChar": 19,
+        "endLine": 1380,
+        "endChar": 97
+      },
+      "revId": "f30d0160620e0666062366d44975e230fd1a9188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c7b713f_2fa71da7",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 8
