@@ -69,6 +69,30 @@
       "revId": "4e1dd123992fa1f36ea90c15f9dfd97961823164",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7eb4163_d2289352",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T04:55:55Z",
+      "side": 0,
+      "message": "The reason is TYPE_WIFI_P2P is @hide and actually tethering do use EXTRA_NETWORK_INFO. Giving that this just the unit test. I think it is fine to remove it.",
+      "parentUuid": "e0960523_73d80809",
+      "range": {
+        "startLine": 502,
+        "startChar": 8,
+        "endLine": 502,
+        "endChar": 72
+      },
+      "revId": "4e1dd123992fa1f36ea90c15f9dfd97961823164",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
