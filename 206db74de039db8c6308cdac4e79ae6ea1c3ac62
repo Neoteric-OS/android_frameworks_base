@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c10bae89_7bf78b6f",
+        "filename": "services/core/java/com/android/server/power/PreRebootLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2020-01-08T02:28:40Z",
+      "side": 1,
+      "message": "Got it, tks!",
+      "parentUuid": "64018251_8c65dcbd",
+      "range": {
+        "startLine": 27,
+        "startChar": 20,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "206db74de039db8c6308cdac4e79ae6ea1c3ac62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7d0a90d_52020318",
         "filename": "services/core/java/com/android/server/power/ShutdownThread.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8cc54d4b_71499d5c",
+        "filename": "services/core/java/com/android/server/power/ShutdownThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2020-01-08T02:28:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7d0a90d_52020318",
+      "range": {
+        "startLine": 448,
+        "startChar": 8,
+        "endLine": 448,
+        "endChar": 11
+      },
+      "revId": "206db74de039db8c6308cdac4e79ae6ea1c3ac62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d84fb20b_e2e2fb60",
         "filename": "services/core/java/com/android/server/power/ShutdownThread.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "206db74de039db8c6308cdac4e79ae6ea1c3ac62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f5896c_6a7fa3a8",
+        "filename": "services/core/java/com/android/server/power/ShutdownThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2020-01-08T02:28:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d84fb20b_e2e2fb60",
+      "range": {
+        "startLine": 447,
+        "startChar": 7,
+        "endLine": 450,
+        "endChar": 58
+      },
+      "revId": "206db74de039db8c6308cdac4e79ae6ea1c3ac62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
