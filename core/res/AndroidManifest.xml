@@ -2057,8 +2057,7 @@
     <permission android:name="android.permission.MODIFY_PHONE_STATE"
         android:protectionLevel="signature|privileged" />
 
-    <!-- Allows read only access to precise phone state.
-         @hide Pending API council approval -->
+      <!-- Allows read only access to precise phone state. -->
     <permission android:name="android.permission.READ_PRECISE_PHONE_STATE"
         android:protectionLevel="signature|privileged" />
 
