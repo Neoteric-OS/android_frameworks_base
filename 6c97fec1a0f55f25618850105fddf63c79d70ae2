@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ad9a580_6aae731f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T15:47:37Z",
+      "side": 1,
+      "message": "Yes, we need to inject BluetoothAdaper to prevent security exception. Add bluetooth permission to this test apk can also fix permission problem but it also means this unit test would change bluetooth tethering settings that I don\u0027t want.",
+      "parentUuid": "2e693bb3_19e2011f",
+      "range": {
+        "startLine": 488,
+        "startChar": 47,
+        "endLine": 488,
+        "endChar": 66
+      },
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9777febb_f9641f92",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f5e756_95aaf5b2",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T15:47:37Z",
+      "side": 1,
+      "message": "Here is what we want:\nDo turn off tethering when entering data saver, but let the user turn it back on without turning data saver off (like airplane mode turns wifi off, but you can turn wifi back on)",
+      "parentUuid": "9777febb_f9641f92",
+      "range": {
+        "startLine": 903,
+        "startChar": 21,
+        "endLine": 903,
+        "endChar": 52
+      },
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dd41cb7b_f4176c36",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T15:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "890ebfaf_a6bc9448",
+      "range": {
+        "startLine": 906,
+        "startChar": 26,
+        "endLine": 906,
+        "endChar": 44
+      },
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de3cc747_1d209da8",
         "filename": "packages/Tethering/tests/unit/Android.bp",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbb04be_7808930f",
+        "filename": "packages/Tethering/tests/unit/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T15:47:37Z",
+      "side": 1,
+      "message": "Use in TetheringTest.java\nimport static org.hamcrest.Matchers.hasItem;",
+      "parentUuid": "de3cc747_1d209da8",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "03097dae_60ebf0c4",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T15:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b31c20_79fdb4b3",
+      "range": {
+        "startLine": 1352,
+        "startChar": 17,
+        "endLine": 1352,
+        "endChar": 46
+      },
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c78dff_d38143a9",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
         "patchSetId": 8
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c289ea64_d51a975d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T15:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c78dff_d38143a9",
+      "range": {
+        "startLine": 1368,
+        "startChar": 8,
+        "endLine": 1368,
+        "endChar": 10
+      },
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3973c62b_f8c4972e",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
         "patchSetId": 8
@@ -154,6 +298,24 @@
       "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eedd922_aaf6289e",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T15:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3973c62b_f8c4972e",
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
