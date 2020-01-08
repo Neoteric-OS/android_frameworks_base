@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Po-Chien Hsueh <pchsueh@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+1: Howard Chen <howardsoc@google.com>
+Code-Review+2: Yifan Hong <elsk@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Po-Chien Hsueh <pchsueh@google.com>
+Submitted-at: Wed, 08 Jan 2020 03:05:40 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1199336
+Project: platform/frameworks/base
+Branch: refs/heads/master
