@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fd31f9e_e76bea50",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-08T06:02:58Z",
+      "side": 1,
+      "message": "Sorry, why is that ? We have inner parcelable classes, e.g. android.app.Notification.Action.",
+      "range": {
+        "startLine": 11,
+        "startChar": 47,
+        "endLine": 12,
+        "endChar": 44
+      },
+      "revId": "83be26670f16b898200ea6b7a4b87603586a176a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
