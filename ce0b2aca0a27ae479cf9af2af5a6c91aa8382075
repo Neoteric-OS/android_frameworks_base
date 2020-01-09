@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "452a41ef_8e15f466",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T09:11:52Z",
+      "side": 1,
+      "message": "prefix \u003d",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 109,
+        "endChar": 17
+      },
+      "revId": "ce0b2aca0a27ae479cf9af2af5a6c91aa8382075",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904ea365_3b660f0c",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T09:11:52Z",
+      "side": 1,
+      "message": "\"Set\" sounds like a set data structure, maybe you want StatsSet or DataSet or something ?",
+      "range": {
+        "startLine": 117,
+        "startChar": 22,
+        "endLine": 117,
+        "endChar": 25
+      },
+      "revId": "ce0b2aca0a27ae479cf9af2af5a6c91aa8382075",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389d94f3_7962ab52",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T09:11:52Z",
+      "side": 1,
+      "message": "How about Meteredness",
+      "range": {
+        "startLine": 147,
+        "startChar": 22,
+        "endLine": 147,
+        "endChar": 29
+      },
+      "revId": "ce0b2aca0a27ae479cf9af2af5a6c91aa8382075",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
