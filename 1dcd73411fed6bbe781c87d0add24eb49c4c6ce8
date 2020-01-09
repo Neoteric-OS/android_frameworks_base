@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ee3bdf1_08c02ed4",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-09T01:48:39Z",
+      "side": 1,
+      "message": "This is done to get a true equals() comparison on PersistableBundles. PersistableBundle does not implement equals(). Its super class has kindofEquals(), but this method returns false if one (but not both) of the bundles has been parcelled and has not yet been fully unparcelled.\n\nhttps://cs.corp.google.com/android/frameworks/base/core/java/android/os/BaseBundle.java?dr\u003dCSs\u0026g\u003d0\u0026l\u003d405",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 94
+      },
+      "revId": "1dcd73411fed6bbe781c87d0add24eb49c4c6ce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
