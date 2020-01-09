@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfcb197a_5852931c",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2020-01-09T07:51:40Z",
+      "side": 1,
+      "message": "This is good to go as is but ideally this can be split into two tests:\n1. Trigger NPMS.updateNetworkRules as we are doing with setNetworkPolicies and verify setStatsProviderLimit is being called.\n2. Trigger onStatsProviderLimitReached and verify setPolicyDataEnabled is called.",
+      "range": {
+        "startLine": 1691,
+        "startChar": 16,
+        "endLine": 1691,
+        "endChar": 45
+      },
+      "revId": "b9d14a9de93a6bcf7c7c2e66e8170fad4780c177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
