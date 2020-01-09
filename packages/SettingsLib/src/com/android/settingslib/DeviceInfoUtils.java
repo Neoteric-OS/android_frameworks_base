@@ -177,8 +177,8 @@ public class DeviceInfoUtils {
         if (subscriptionInfo != null) {
             final TelephonyManager telephonyManager =
                     (TelephonyManager) context.getSystemService(TELEPHONY_SERVICE);
-            final String rawNumber =
-                    telephonyManager.getLine1Number(subscriptionInfo.getSubscriptionId());
+            final String rawNumber = telephonyManager.createForSubscriptionId(
+                    subscriptionInfo.getSubscriptionId()).getLine1Number();
             if (!TextUtils.isEmpty(rawNumber)) {
                 formattedNumber = PhoneNumberUtils.formatNumber(rawNumber);
             }
@@ -195,8 +195,8 @@ public class DeviceInfoUtils {
                     (TelephonyManager) context.getSystemService(TELEPHONY_SERVICE);
             final int count = subscriptionInfo.size();
             for (int i = 0; i < count; i++) {
-                final String rawNumber = telephonyManager.getLine1Number(
-                        subscriptionInfo.get(i).getSubscriptionId());
+                final String rawNumber = telephonyManager.createForSubscriptionId(
+                        subscriptionInfo.getSubscriptionId()).getLine1Number();
                 if (!TextUtils.isEmpty(rawNumber)) {
                     sb.append(PhoneNumberUtils.formatNumber(rawNumber));
                     if (i < count - 1) {
