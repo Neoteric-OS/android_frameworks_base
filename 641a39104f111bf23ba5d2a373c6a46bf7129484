@@ -22,6 +22,30 @@
       "revId": "641a39104f111bf23ba5d2a373c6a46bf7129484",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75149c8d_d8fff3ea",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4530,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-09T09:41:49Z",
+      "side": 1,
+      "message": "IIUC mMeteredIfaces will be cleared and recomputed in the updateNetworkRulesNL anyway.\nSo it should be fine I think.\nBut if you feel this is risky we can change this back.",
+      "parentUuid": "60e1492b_cc93199f",
+      "range": {
+        "startLine": 4530,
+        "startChar": 20,
+        "endLine": 4530,
+        "endChar": 32
+      },
+      "revId": "641a39104f111bf23ba5d2a373c6a46bf7129484",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
