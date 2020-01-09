@@ -1198,12 +1198,10 @@ public class CarrierConfigManager {
      */
     public static final String KEY_EDITABLE_WFC_MODE_BOOL = "editable_wfc_mode_bool";
 
-     /**
-      * Flag to indicate if Wi-Fi needs to be disabled in ECBM
-      * @hide
-      **/
-     public static final String
-              KEY_CONFIG_WIFI_DISABLE_IN_ECBM = "config_wifi_disable_in_ecbm";
+    /**
+     * Flag to indicate if Wi-Fi needs to be disabled in ECBM.
+     */
+    public static final String KEY_CONFIG_WIFI_DISABLE_IN_ECBM = "config_wifi_disable_in_ecbm";
 
     /**
      * List operator-specific error codes and indices of corresponding error strings in
@@ -1479,29 +1477,25 @@ public class CarrierConfigManager {
             "hide_digits_helper_text_on_stk_input_screen_bool";
 
     /**
-     * Boolean indicating if show data RAT icon on status bar even when data is disabled
-     * @hide
+     * Boolean indicating if show data RAT icon on status bar even when data is disabled.
      */
     public static final String KEY_ALWAYS_SHOW_DATA_RAT_ICON_BOOL =
             "always_show_data_rat_icon_bool";
 
-    /**
+    /**.
      * Boolean indicating if default data account should show LTE or 4G icon
-     * @hide
      */
     public static final String KEY_SHOW_4G_FOR_LTE_DATA_ICON_BOOL =
             "show_4g_for_lte_data_icon_bool";
 
     /**
      * Boolean indicating if default data account should show 4G icon when in 3G.
-     * @hide
      */
     public static final String KEY_SHOW_4G_FOR_3G_DATA_ICON_BOOL =
             "show_4g_for_3g_data_icon_bool";
 
     /**
-     * Boolean indicating if lte+ icon should be shown if available
-     * @hide
+     * Boolean indicating if lte+ icon should be shown if available.
      */
     public static final String KEY_HIDE_LTE_PLUS_DATA_ICON_BOOL =
             "hide_lte_plus_data_icon_bool";
@@ -1518,8 +1512,6 @@ public class CarrierConfigManager {
     /**
      * The string is used to compare with operator name. If it matches the pattern then show
      * specific data icon.
-     *
-     * @hide
      */
     public static final String KEY_SHOW_CARRIER_DATA_ICON_PATTERN_STRING =
             "show_carrier_data_icon_pattern_string";
@@ -2137,7 +2129,6 @@ public class CarrierConfigManager {
      * while the device is registered over WFC. Default value is -1, which indicates
      * that this notification is not pertinent for a particular carrier. We've added a delay
      * to prevent false positives.
-     * @hide
      */
     public static final String KEY_EMERGENCY_NOTIFICATION_DELAY_INT =
             "emergency_notification_delay_int";
@@ -2188,7 +2179,6 @@ public class CarrierConfigManager {
     /**
      * Flag specifying whether to show an alert dialog for video call charges.
      * By default this value is {@code false}.
-     * @hide
      */
     public static final String KEY_SHOW_VIDEO_CALL_CHARGES_ALERT_DIALOG_BOOL =
             "show_video_call_charges_alert_dialog_bool";
@@ -2478,7 +2468,6 @@ public class CarrierConfigManager {
      * 1 indicates that key type {@link TelephonyManager#KEY_TYPE_EPDG} is enabled.
      * 2 indicates that key type {@link TelephonyManager#KEY_TYPE_WLAN} is enabled.
      * 3 indicates that both are enabled.
-     * @hide
      */
     public static final String IMSI_KEY_AVAILABILITY_INT = "imsi_key_availability_int";
 
@@ -2895,7 +2884,7 @@ public class CarrierConfigManager {
 
     /**
      * This configuration allow the system UI to display different 5G icon for different 5G
-     * scenario.
+     * scenarios.
      *
      * There are five 5G scenarios:
      * 1. connected_mmwave: device currently connected to 5G cell as the secondary cell and using
@@ -2912,7 +2901,7 @@ public class CarrierConfigManager {
      *    5G cell as a secondary cell) but the use of 5G is restricted.
      *
      * The configured string contains multiple key-value pairs separated by comma. For each pair,
-     * the key and value is separated by a colon. The key is corresponded to a 5G status above and
+     * the key and value are separated by a colon. The key corresponds to a 5G status above and
      * the value is the icon name. Use "None" as the icon name if no icon should be shown in a
      * specific 5G scenario. If the scenario is "None", config can skip this key and value.
      *
@@ -2922,8 +2911,6 @@ public class CarrierConfigManager {
      * UE want to display 5G_Plus icon for scenario#1, and 5G icon for scenario#2; otherwise no
      * define.
      * The configuration is: "connected_mmwave:5G_Plus,connected:5G"
-     *
-     * @hide
      */
     public static final String KEY_5G_ICON_CONFIGURATION_STRING =
             "5g_icon_configuration_string";
@@ -2938,8 +2925,6 @@ public class CarrierConfigManager {
      *
      * If 5G is reacquired during this timer, the timer is canceled and restarted when 5G is next
      * lost. Allows us to momentarily lose 5G without blinking the icon.
-     *
-     * @hide
      */
     public static final String KEY_5G_ICON_DISPLAY_GRACE_PERIOD_SEC_INT =
             "5g_icon_display_grace_period_sec_int";
@@ -3050,8 +3035,6 @@ public class CarrierConfigManager {
      * signal bar of primary network. By default it will be false, meaning whenever data
      * is going over opportunistic network, signal bar will reflect signal strength and rat
      * icon of that network.
-     *
-     * @hide
      */
     public static final String KEY_ALWAYS_SHOW_PRIMARY_SIGNAL_BAR_IN_OPPORTUNISTIC_NETWORK_BOOLEAN =
             "always_show_primary_signal_bar_in_opportunistic_network_boolean";
