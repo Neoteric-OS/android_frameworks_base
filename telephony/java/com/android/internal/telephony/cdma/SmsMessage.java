@@ -19,7 +19,7 @@ package com.android.internal.telephony.cdma;
 import android.content.res.Resources;
 import android.sysprop.TelephonyProperties;
 import android.telephony.PhoneNumberUtils;
-import android.telephony.Rlog;
+import com.android.telephony.Rlog;
 import android.telephony.SmsCbLocation;
 import android.telephony.SmsCbMessage;
 import android.telephony.cdma.CdmaSmsCbProgramData;

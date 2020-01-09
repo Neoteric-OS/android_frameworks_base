@@ -27,7 +27,7 @@ import static com.android.internal.telephony.SmsConstants.MessageClass;
 
 import android.content.res.Resources;
 import android.telephony.PhoneNumberUtils;
-import android.telephony.Rlog;
+import com.android.telephony.Rlog;
 import android.text.TextUtils;
 
 import com.android.internal.telephony.EncodeException;
