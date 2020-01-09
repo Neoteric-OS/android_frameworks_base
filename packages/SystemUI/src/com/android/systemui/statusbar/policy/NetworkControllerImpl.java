@@ -43,6 +43,7 @@ import android.os.Looper;
 import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
+import android.telephony.NetworkRegistrationInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
@@ -407,7 +408,10 @@ public class NetworkControllerImpl extends BroadcastReceiver
             // When there are no active subscriptions, determine emengency state from last
             // broadcast.
             mEmergencySource = EMERGENCY_NO_CONTROLLERS;
-            return mLastServiceState != null && mLastServiceState.isEmergencyOnly();
+            return mLastServiceState != null && mLastServiceState.getNetworkRegistrationInfoList()
+                    .stream()
+                    .filter(NetworkRegistrationInfo::isRegistered)
+                    .allMatch(NetworkRegistrationInfo::isEmergencyEnabled);
         }
         int voiceSubId = mSubDefaults.getDefaultVoiceSubId();
         if (!SubscriptionManager.isValidSubscriptionId(voiceSubId)) {

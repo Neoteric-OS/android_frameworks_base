@@ -76,6 +76,7 @@ import org.mockito.Mockito;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NetworkControllerBaseTest extends SysuiTestCase {
@@ -312,7 +313,11 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
     }
 
     public void setIsEmergencyOnly(boolean isEmergency) {
-        when(mServiceState.isEmergencyOnly()).thenReturn(isEmergency);
+        NetworkRegistrationInfo fakeRegInfo = mock(NetworkRegistrationInfo.class);
+        when(fakeRegInfo.isEmergencyEnabled()).thenReturn(isEmergency);
+        when(fakeRegInfo.isRegistered()).thenReturn(true);
+        when(mServiceState.getNetworkRegistrationInfoList())
+                .thenReturn(Collections.singletonList(fakeRegInfo));
         updateServiceState();
     }
 

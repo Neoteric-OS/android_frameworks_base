@@ -351,7 +351,9 @@ public class CarrierTextController {
                 if (ss != null && ss.getDataRegistrationState() == ServiceState.STATE_IN_SERVICE) {
                     // hack for WFC (IWLAN) not turning off immediately once
                     // Wi-Fi is disassociated or disabled
-                    if (ss.getRilDataRadioTechnology() != ServiceState.RIL_RADIO_TECHNOLOGY_IWLAN
+                    boolean isOnIwlan =
+                            ss.getDataNetworkType() == TelephonyManager.NETWORK_TYPE_IWLAN;
+                    if (!isOnIwlan
                             || (mWifiManager.isWifiEnabled()
                             && mWifiManager.getConnectionInfo() != null
                             && mWifiManager.getConnectionInfo().getBSSID() != null)) {
