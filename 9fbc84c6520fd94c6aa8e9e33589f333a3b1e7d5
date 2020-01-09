@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "49010f02_bebb7971",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1803,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-09T09:04:08Z",
+      "side": 1,
+      "message": "Yes, plan to update that after SP02 merge.\nOtherwise SP02 might be rebased.",
+      "parentUuid": "020e85a8_41375c57",
+      "range": {
+        "startLine": 1803,
+        "startChar": 23,
+        "endLine": 1803,
+        "endChar": 30
+      },
+      "revId": "9fbc84c6520fd94c6aa8e9e33589f333a3b1e7d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88c8dff2_4183bac8",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 12
