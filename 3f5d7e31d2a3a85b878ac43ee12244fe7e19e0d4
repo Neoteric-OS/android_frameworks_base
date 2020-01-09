@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf0a8040_f4c4fd82",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-09T09:05:11Z",
+      "side": 1,
+      "message": "That\u0027s not actually correct, it\u0027s called on any cellular network when capabilities change (but suspend may not have changed).\nHow about just calling it \"onCapabilitiesChanged\", and send all the capabilities ? Then TetheringNotificationUpdater can figure out if the bits it needs (upstreamSuspended) changed.",
+      "range": {
+        "startLine": 106,
+        "startChar": 8,
+        "endLine": 106,
+        "endChar": 50
+      },
+      "revId": "3f5d7e31d2a3a85b878ac43ee12244fe7e19e0d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e300a7_a6829b1c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-09T09:05:11Z",
+      "side": 1,
+      "message": "This looks like a side-effect that should not be in updateNotification (because it\u0027s not really related to updating the notification, rather keeping track of upstream status ?)\nMaybe it should be in onDownstreamChanged ? Even there, upstream networks could be suspended even if there\u0027s no downstream, so that does not look correct.\n\nWhat does mUpstreamSuspended actually represent ? It\u0027s strange to set it to false even if the NetworkCapabilities may still be SUSPENDED.",
+      "range": {
+        "startLine": 134,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 43
+      },
+      "revId": "3f5d7e31d2a3a85b878ac43ee12244fe7e19e0d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed9d71f_bef67071",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-09T09:05:11Z",
+      "side": 1,
+      "message": "It\u0027s a little confusing that the default upstream state in this test is suspended: that\u0027s not the common case.\nMaybe make it NOT_SUSPENDED by default, and just clear the capability in this test with upstreamState.networkCapabilities.removeCapability(...) ?",
+      "range": {
+        "startLine": 1386,
+        "startChar": 51,
+        "endLine": 1386,
+        "endChar": 82
+      },
+      "revId": "3f5d7e31d2a3a85b878ac43ee12244fe7e19e0d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e122de_d844e65c",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1390,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-09T09:05:11Z",
+      "side": 1,
+      "message": "Is it possible to use some variant of:\nstateMachine.sendMessage(EVENT_UPSTREAM_CALLBACK)\ninstead ? This would be closer to what the TetherMasterSM boundary is: it receives the message via that endpoint from UpstreamNetworkMonitor, while handleUpstreamNetworkMonitorCallback is a private mechanism",
+      "range": {
+        "startLine": 1390,
+        "startChar": 8,
+        "endLine": 1390,
+        "endChar": 96
+      },
+      "revId": "3f5d7e31d2a3a85b878ac43ee12244fe7e19e0d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e28f8c_dcfcb9b8",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-09T09:05:11Z",
+      "side": 1,
+      "message": "Maybe add a comment that this the call from before and we don\u0027t expect any other ?",
+      "range": {
+        "startLine": 1395,
+        "startChar": 8,
+        "endLine": 1395,
+        "endChar": 88
+      },
+      "revId": "3f5d7e31d2a3a85b878ac43ee12244fe7e19e0d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
