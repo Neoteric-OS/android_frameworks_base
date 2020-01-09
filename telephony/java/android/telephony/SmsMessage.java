@@ -18,8 +18,12 @@ package android.telephony;
 
 import static android.telephony.TelephonyManager.PHONE_TYPE_CDMA;
 
+import android.Manifest;
+import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.annotation.StringDef;
+import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
 import android.content.res.Resources;
 import android.os.Binder;
@@ -307,6 +311,35 @@ public class SmsMessage {
         } else {
             wrappedMessage = com.android.internal.telephony.gsm.SmsMessage.createFromEfRecord(
                     index, data);
+        }
+
+        return wrappedMessage != null ? new SmsMessage(wrappedMessage) : null;
+    }
+
+    /**
+     * Create an SmsMessage from a native SMS-Submit PDU, specified by Bluetooth Message Access
+     * Profile Specification v1.4.2 5.8.
+     * This is used by Bluetooth MAP profile to decode message when sending non UTF-8 SMS messages.
+     *
+     * @param data Message data.
+     * @param isCdma Indicates weather the type of the SMS is CDMA.
+     * @return An SmsMessage representing the message.
+     *
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    @SystemApi
+    @Nullable
+    public static SmsMessage createFromNativeSmsSubmitPdu(@NonNull byte[] data, boolean isCdma) {
+        SmsMessageBase wrappedMessage;
+
+        if (isCdma) {
+            wrappedMessage = com.android.internal.telephony.cdma.SmsMessage.createFromEfRecord(
+                    0, data);
+        } else {
+            // Bluetooth uses its own method to decode GSM PDU so this part is not called.
+            wrappedMessage = com.android.internal.telephony.gsm.SmsMessage.createFromEfRecord(
+                    0, data);
         }
 
         return wrappedMessage != null ? new SmsMessage(wrappedMessage) : null;
