@@ -22,6 +22,30 @@
       "revId": "b9d14a9de93a6bcf7c7c2e66e8170fad4780c177",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b91b5f_bdffa6fc",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-09T09:20:55Z",
+      "side": 1,
+      "message": "Ok thanks.\nI\u0027ll address this in follow-up CLs given that the schedule is tight.",
+      "parentUuid": "dfcb197a_5852931c",
+      "range": {
+        "startLine": 1691,
+        "startChar": 16,
+        "endLine": 1691,
+        "endChar": 45
+      },
+      "revId": "b9d14a9de93a6bcf7c7c2e66e8170fad4780c177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
