@@ -22,6 +22,30 @@
       "revId": "8af4d4ad7851d70fa1ffc2915ead611f7840d883",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27076ee5_af680c02",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-09T23:57:01Z",
+      "side": 1,
+      "message": "Is this a cherry pick? If so... we shouldn\u0027t make changes in a cherry-pick. That messes up a lot of things. Can review comments be addressed in a follow-up CL?",
+      "parentUuid": "554c23ef_f9b4866f",
+      "range": {
+        "startLine": 1616,
+        "startChar": 48,
+        "endLine": 1616,
+        "endChar": 60
+      },
+      "revId": "8af4d4ad7851d70fa1ffc2915ead611f7840d883",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
