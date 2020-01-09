@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19db2cff_15b3911a",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1581772
+      },
+      "writtenOn": "2020-01-09T17:40:56Z",
+      "side": 1,
+      "message": "Don\u0027t know if it makes much difference, but you could save yourself one prctl() by checking if the new value is different from the old.",
+      "revId": "ade410a443b90cb8744787f9ffe03355c8bb1e9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188790cb_3e9d8f5a",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1581772
+      },
+      "writtenOn": "2020-01-09T17:40:56Z",
+      "side": 1,
+      "message": "Out of curiosity, what is missing from your Scudo patch to support synchronous checking? I didn\u0027t expect the checking mode to impact the allocator.",
+      "range": {
+        "startLine": 1110,
+        "startChar": 32,
+        "endLine": 1110,
+        "endChar": 62
+      },
+      "revId": "ade410a443b90cb8744787f9ffe03355c8bb1e9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
