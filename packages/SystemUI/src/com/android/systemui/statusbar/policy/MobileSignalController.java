@@ -374,7 +374,8 @@ public class MobileSignalController extends SignalController<
     }
 
     public boolean isEmergencyOnly() {
-        return (mServiceState != null && mServiceState.isEmergencyOnly());
+        return (mServiceState != null && mServiceState.getNetworkRegistrationInfoList().stream()
+                .anyMatch(NetworkRegistrationInfo::isEmergencyEnabled));
     }
 
     private boolean isRoaming() {

@@ -27,6 +27,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.os.Looper;
 import android.telephony.CellSignalStrength;
+import android.telephony.NetworkRegistrationInfo;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.SubscriptionInfo;
@@ -47,6 +48,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @SmallTest
@@ -92,8 +94,11 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
     public void testEmergencyOnlyNoSubscriptions() {
         setupDefaultSignal();
         setSubscriptions();
-        mNetworkController.mLastServiceState = new ServiceState();
-        mNetworkController.mLastServiceState.setEmergencyOnly(true);
+        mNetworkController.mLastServiceState = mock(ServiceState.class);
+        NetworkRegistrationInfo fakeRegInfo = mock(NetworkRegistrationInfo.class);
+        when(fakeRegInfo.isEmergencyEnabled()).thenReturn(true);
+        when(mNetworkController.mLastServiceState.getNetworkRegistrationInfoList())
+                .thenReturn(Collections.singletonList(fakeRegInfo));
         mNetworkController.recalculateEmergency();
         verifyEmergencyOnly(true);
     }
@@ -110,8 +115,11 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
     public void testNoEmengencyNoSubscriptions() {
         setupDefaultSignal();
         setSubscriptions();
-        mNetworkController.mLastServiceState = new ServiceState();
-        mNetworkController.mLastServiceState.setEmergencyOnly(false);
+        mNetworkController.mLastServiceState = mock(ServiceState.class);
+        NetworkRegistrationInfo fakeRegInfo = mock(NetworkRegistrationInfo.class);
+        when(fakeRegInfo.isEmergencyEnabled()).thenReturn(false);
+        when(mNetworkController.mLastServiceState.getNetworkRegistrationInfoList())
+                .thenReturn(Collections.singletonList(fakeRegInfo));
         mNetworkController.recalculateEmergency();
         verifyEmergencyOnly(false);
     }
