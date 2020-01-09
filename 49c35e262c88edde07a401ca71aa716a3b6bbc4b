@@ -22,6 +22,30 @@
       "revId": "49c35e262c88edde07a401ca71aa716a3b6bbc4b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872b34cb_ac55a13e",
+        "filename": "api/lint-baseline.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1373934
+      },
+      "writtenOn": "2020-01-09T13:23:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56334734_534c5a59",
+      "range": {
+        "startLine": 538,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 62
+      },
+      "revId": "49c35e262c88edde07a401ca71aa716a3b6bbc4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
