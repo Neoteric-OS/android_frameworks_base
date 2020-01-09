@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b30d8326_d47d49de",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T09:29:08Z",
+      "side": 1,
+      "message": "You can simplify this to :\n\n  return forceRestrictedCapability || (hasRestrictedCapabilities \u0026\u0026 !hasUnrestrictedCapabilities);\n\n(only if you like it better)",
+      "range": {
+        "startLine": 613,
+        "startChar": 19,
+        "endLine": 613,
+        "endChar": 23
+      },
+      "revId": "4012a5f6618c1031f24cf46b21ad553c1e202166",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
