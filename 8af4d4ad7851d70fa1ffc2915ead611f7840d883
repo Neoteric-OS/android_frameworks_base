@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "554c23ef_f9b4866f",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2020-01-09T22:34:40Z",
+      "side": 1,
+      "message": "rename these params as well",
+      "range": {
+        "startLine": 1616,
+        "startChar": 48,
+        "endLine": 1616,
+        "endChar": 60
+      },
+      "revId": "8af4d4ad7851d70fa1ffc2915ead611f7840d883",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
