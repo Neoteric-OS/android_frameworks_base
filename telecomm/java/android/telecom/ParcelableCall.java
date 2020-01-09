@@ -16,6 +16,7 @@
 
 package android.telecom;
 
+import android.annotation.Nullable;
 import android.annotation.UnsupportedAppUsage;
 import android.net.Uri;
 import android.os.Build;
@@ -66,6 +67,8 @@ public final class ParcelableCall implements Parcelable {
     private final long mCreationTimeMillis;
     private final int mCallDirection;
     private final int mCallerNumberVerificationStatus;
+    private final String mContactDisplayName;
+    private final String mActiveChildCallId; // Only valid for CDMA conferences
 
     public ParcelableCall(
             String id,
@@ -95,7 +98,10 @@ public final class ParcelableCall implements Parcelable {
             Bundle extras,
             long creationTimeMillis,
             int callDirection,
-            int callerNumberVerificationStatus) {
+            int callerNumberVerificationStatus,
+            String contactDisplayName,
+            String activeChildCallId
+    ) {
         mId = id;
         mState = state;
         mDisconnectCause = disconnectCause;
@@ -124,6 +130,8 @@ public final class ParcelableCall implements Parcelable {
         mCreationTimeMillis = creationTimeMillis;
         mCallDirection = callDirection;
         mCallerNumberVerificationStatus = callerNumberVerificationStatus;
+        mContactDisplayName = contactDisplayName;
+        mActiveChildCallId = activeChildCallId;
     }
 
     /** The unique ID of the call. */
@@ -333,6 +341,21 @@ public final class ParcelableCall implements Parcelable {
         return mCallerNumberVerificationStatus;
     }
 
+    /**
+     * @return the name of the remote party as derived from a contacts DB lookup.
+     */
+    public @Nullable String getContactDisplayName() {
+        return mContactDisplayName;
+    }
+
+    /**
+     * @return On a CDMA conference with two participants, returns the ID of the child call that's
+     *         currently active.
+     */
+    public @Nullable String getActiveChildCallId() {
+        return mActiveChildCallId;
+    }
+
     /** Responsible for creating ParcelableCall objects for deserialized Parcels. */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public static final @android.annotation.NonNull Parcelable.Creator<ParcelableCall> CREATOR =
@@ -372,6 +395,8 @@ public final class ParcelableCall implements Parcelable {
             long creationTimeMillis = source.readLong();
             int callDirection = source.readInt();
             int callerNumberVerificationStatus = source.readInt();
+            String contactDisplayName = source.readString();
+            String activeChildCallId = source.readString();
             return new ParcelableCall(
                     id,
                     state,
@@ -400,7 +425,10 @@ public final class ParcelableCall implements Parcelable {
                     extras,
                     creationTimeMillis,
                     callDirection,
-                    callerNumberVerificationStatus);
+                    callerNumberVerificationStatus,
+                    contactDisplayName,
+                    activeChildCallId
+            );
         }
 
         @Override
@@ -447,6 +475,8 @@ public final class ParcelableCall implements Parcelable {
         destination.writeLong(mCreationTimeMillis);
         destination.writeInt(mCallDirection);
         destination.writeInt(mCallerNumberVerificationStatus);
+        destination.writeString(mContactDisplayName);
+        destination.writeString(mActiveChildCallId);
     }
 
     @Override
