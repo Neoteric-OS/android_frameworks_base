@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60131679_092dc5cf",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T10:55:55Z",
+      "side": 1,
+      "message": "As these should already not be used, I don\u0027t think we should create them. Any code that wants to use BIP or VSIM can use the capability instead.",
+      "range": {
+        "startLine": 707,
+        "startChar": 3,
+        "endLine": 720,
+        "endChar": 50
+      },
+      "revId": "fc9ab7ded6b69effba576ae689d10d99f3443a91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f6552b_eddbbb7d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T10:55:55Z",
+      "side": 1,
+      "message": "I don\u0027t see a good reason to add this, can you revert ?",
+      "range": {
+        "startLine": 723,
+        "startChar": 28,
+        "endLine": 723,
+        "endChar": 42
+      },
+      "revId": "fc9ab7ded6b69effba576ae689d10d99f3443a91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
