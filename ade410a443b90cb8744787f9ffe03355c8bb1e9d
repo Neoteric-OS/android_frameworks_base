@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31929dd6_997e10c4",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1067098
+      },
+      "writtenOn": "2020-01-09T17:53:35Z",
+      "side": 1,
+      "message": "I don\u0027t think it matters that much here, this only happens once per process when the zygote is specialized.",
+      "parentUuid": "19db2cff_15b3911a",
+      "revId": "ade410a443b90cb8744787f9ffe03355c8bb1e9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "188790cb_3e9d8f5a",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2020-01-09T17:40:56Z",
       "side": 1,
       "message": "Out of curiosity, what is missing from your Scudo patch to support synchronous checking? I didn\u0027t expect the checking mode to impact the allocator.",
+      "range": {
+        "startLine": 1110,
+        "startChar": 32,
+        "endLine": 1110,
+        "endChar": 62
+      },
+      "revId": "ade410a443b90cb8744787f9ffe03355c8bb1e9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21910934_d098889d",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1067098
+      },
+      "writtenOn": "2020-01-09T17:53:35Z",
+      "side": 1,
+      "message": "We still need to add support for collecting allocation/deallocation stack traces for use in bug reports. These will only be collected in synchronous mode since there isn\u0027t much point in collecting them in asynchronous mode.",
+      "parentUuid": "188790cb_3e9d8f5a",
       "range": {
         "startLine": 1110,
         "startChar": 32,
