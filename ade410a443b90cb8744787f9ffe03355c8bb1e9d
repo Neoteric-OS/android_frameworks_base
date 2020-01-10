@@ -123,6 +123,30 @@
       "revId": "ade410a443b90cb8744787f9ffe03355c8bb1e9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec7d112a_4f412b0f",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1067098
+      },
+      "writtenOn": "2020-01-10T16:27:23Z",
+      "side": 1,
+      "message": "Correct, we plan to store references to the stack traces in the allocation header so it would need to be in Scudo.",
+      "parentUuid": "548dd940_e5d7cac9",
+      "range": {
+        "startLine": 1110,
+        "startChar": 32,
+        "endLine": 1110,
+        "endChar": 62
+      },
+      "revId": "ade410a443b90cb8744787f9ffe03355c8bb1e9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
