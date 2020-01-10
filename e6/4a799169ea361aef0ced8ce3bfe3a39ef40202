@@ -1,0 +1,11 @@
+Code-Review+2: Svetoslav Ganov <svetoslavganov@google.com>
+Code-Review+1: Chiachang Wang <chiachangwang@google.com>
+API-Review+1: Svetoslav Ganov <svetoslavganov@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Mark Chien <markchien@google.com>
+Submitted-at: Fri, 10 Jan 2020 11:06:36 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1198863
+Project: platform/frameworks/base
+Branch: refs/heads/master
