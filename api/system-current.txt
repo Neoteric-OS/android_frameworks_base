@@ -9052,6 +9052,7 @@ package android.telephony {
     method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public boolean supplyPuk(String, String);
     method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public int[] supplyPukReportResult(String, String);
     method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public boolean switchSlots(int[]);
+    method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public void toggleImsOnOff(int);
     method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public void toggleRadioOnOff();
     method public void updateServiceLocation();
     method @RequiresPermission(android.Manifest.permission.READ_ACTIVE_EMERGENCY_SESSION) public void updateTestOtaEmergencyNumberDbFilePath(@NonNull String);
