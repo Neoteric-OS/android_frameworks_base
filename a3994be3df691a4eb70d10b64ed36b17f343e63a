@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ab444b62_29a0e975",
+        "filename": "packages/SystemUI/src/com/android/keyguard/CarrierTextController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-01-10T23:32:24Z",
+      "side": 1,
+      "message": "I am okay with unhiding, or using ImsMmTelManager.getRegistrationTransportType to check if WLAN is the transport.",
+      "parentUuid": "f3429c35_64223e84",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 364,
+        "endChar": 34
+      },
+      "revId": "a3994be3df691a4eb70d10b64ed36b17f343e63a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8efef8c_6d8170e5",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
         "patchSetId": 2
