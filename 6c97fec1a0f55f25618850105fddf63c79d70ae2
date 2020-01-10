@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "3e7c6022_19d413aa",
+        "filename": "packages/Tethering/tests/unit/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-10T10:00:34Z",
+      "side": 1,
+      "message": "Is hasItem necessary?\nCan we use something like Arraylist.contains() ?\nIf so, maybe refactor to assertContains if needed. See\nhttps://source.corp.google.com/aosp-master/cts/tests/tests/net/src/android/net/cts/ConnectivityManagerTest.java;l\u003d108?q\u003dConnectivityManagerTest\u0026sq\u003dpackage:aosp-master\nAlternatively, you can refactor that into MiscAsserts and call that in both side.",
+      "parentUuid": "7cbb04be_7808930f",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "6c97fec1a0f55f25618850105fddf63c79d70ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27b31c20_79fdb4b3",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
         "patchSetId": 8

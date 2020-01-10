@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25dce9b8_90aaa473",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-10T10:00:34Z",
+      "side": 1,
+      "message": "1. typo\n\n2 nit: given that data saver is the new name.\ndo we want to name it something like:\nhandleDataSaverChanged\nisDataSaverEnabled\nmDataSaverEnabled\n?",
+      "range": {
+        "startLine": 903,
+        "startChar": 21,
+        "endLine": 903,
+        "endChar": 52
+      },
+      "revId": "abd9da783169b9e1e8d9b5fe7c6a640b40347e94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56bff8fd_17842619",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-10T10:00:34Z",
+      "side": 1,
+      "message": "style: IIUC we should break at here if that can fit?",
+      "range": {
+        "startLine": 904,
+        "startChar": 46,
+        "endLine": 904,
+        "endChar": 47
+      },
+      "revId": "abd9da783169b9e1e8d9b5fe7c6a640b40347e94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24082d8_6439ae4a",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-10T10:00:34Z",
+      "side": 1,
+      "message": "nit: mCm if you prefer",
+      "range": {
+        "startLine": 174,
+        "startChar": 38,
+        "endLine": 174,
+        "endChar": 58
+      },
+      "revId": "abd9da783169b9e1e8d9b5fe7c6a640b40347e94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71229564_6bf88b68",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-10T10:00:34Z",
+      "side": 1,
+      "message": "Maybe import all these constants to make it shorter?",
+      "range": {
+        "startLine": 1353,
+        "startChar": 61,
+        "endLine": 1353,
+        "endChar": 95
+      },
+      "revId": "abd9da783169b9e1e8d9b5fe7c6a640b40347e94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237ad729_a68b60fa",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-10T10:00:34Z",
+      "side": 1,
+      "message": "maybe just testDataSaverChanged?",
+      "range": {
+        "startLine": 1363,
+        "startChar": 16,
+        "endLine": 1363,
+        "endChar": 45
+      },
+      "revId": "abd9da783169b9e1e8d9b5fe7c6a640b40347e94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd8e869_c9cd3fb7",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-10T10:00:34Z",
+      "side": 1,
+      "message": "nit: final?",
+      "range": {
+        "startLine": 1365,
+        "startChar": 8,
+        "endLine": 1365,
+        "endChar": 28
+      },
+      "revId": "abd9da783169b9e1e8d9b5fe7c6a640b40347e94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be67b777_fad8b1d3",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-10T10:00:34Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 1370,
+        "startChar": 18,
+        "endLine": 1370,
+        "endChar": 22
+      },
+      "revId": "abd9da783169b9e1e8d9b5fe7c6a640b40347e94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
