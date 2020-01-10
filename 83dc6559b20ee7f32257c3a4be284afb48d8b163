@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2038e6c5_af7796bd",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-10T18:21:24Z",
+      "side": 1,
+      "message": "We should @hide these and expose getters for them.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 31
+      },
+      "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9522eab0_e151b72a",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-10T18:21:24Z",
+      "side": 1,
+      "message": "This should be @hide since its already deprecated.",
+      "range": {
+        "startLine": 66,
+        "startChar": 3,
+        "endLine": 67,
+        "endChar": 47
+      },
+      "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02256564_6ec8db60",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-10T18:21:24Z",
+      "side": 1,
+      "message": "This should remain @UnsupportedAppUsage; don\u0027t think we can take this away; this one was showing up in the current.txt as well, so I suspect the api needs to be updated.",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 94
+      },
+      "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15422d91_a76ae2d0",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-10T18:21:24Z",
+      "side": 1,
+      "message": "Can this be @hide?",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 81
+      },
+      "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02227fc_223f1a8a",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-10T18:21:24Z",
+      "side": 1,
+      "message": "This should be @hide since its already deprecated.",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 32
+      },
+      "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883faca2_9412c224",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-10T18:21:24Z",
+      "side": 1,
+      "message": "Can these be @hide?",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 285,
+        "endChar": 5
+      },
+      "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
