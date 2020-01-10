@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31963f12_471a2012",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-10T08:22:06Z",
+      "side": 1,
+      "message": "This used to fetch IWLAN status at least some of the time and I believe batterystats actually cares about this. The cover comment does not mention any check of battery stats, did you make sure IWLAN is not relevant ? I believe it is.\n\n+lorenzo +nharold who may have more context.",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 55
+      },
+      "revId": "5a95a709643d51a290f5f8c9afe457763159fa63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
