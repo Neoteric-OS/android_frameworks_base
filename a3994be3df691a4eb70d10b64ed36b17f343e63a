@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8311281f_e3084267",
+        "filename": "packages/SystemUI/src/com/android/keyguard/CarrierTextController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-01-10T00:41:30Z",
+      "side": 1,
+      "message": "I think your best choice right now is using ss.getDataNetworkType \u003d\u003d IWLAN. Several reasons,\n\n1. On legacy devices (IRadio 1.4 or below) , getNetworkRegistrationInfo(PS, IWLAN) \u003d null\n2. On new devices, as long as the device is on Wifi, getNetworkRegistrationInfo(PS, IWLAN) is HOME.\n\nThat\u0027s why we use getDataNetworkType to simulate the legacy device behavior for data RAT \u003d IWLAN.\n\nIdeally it will be nice if there is an API from IMS manager to check if IMS PDN is brought up through IWLAN, instead of using getDataNetworkType to infer that.",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 364,
+        "endChar": 34
+      },
+      "revId": "a3994be3df691a4eb70d10b64ed36b17f343e63a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8efef8c_6d8170e5",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-01-10T00:41:30Z",
+      "side": 1,
+      "message": "already done in internal master",
+      "range": {
+        "startLine": 707,
+        "startChar": 0,
+        "endLine": 708,
+        "endChar": 76
+      },
+      "revId": "a3994be3df691a4eb70d10b64ed36b17f343e63a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cff4f81_a3c79275",
+        "filename": "packages/SystemUI/tests/src/com/android/keyguard/CarrierTextControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-01-10T00:41:30Z",
+      "side": 1,
+      "message": "done internally",
+      "range": {
+        "startLine": 342,
+        "startChar": 8,
+        "endLine": 342,
+        "endChar": 86
+      },
+      "revId": "a3994be3df691a4eb70d10b64ed36b17f343e63a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
