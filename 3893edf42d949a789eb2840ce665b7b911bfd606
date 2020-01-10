@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a194b247_7a104b4b",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-01-10T00:04:22Z",
+      "side": 1,
+      "message": "I thought this was already done. Did Songferng forget to CP?",
+      "range": {
+        "startLine": 424,
+        "startChar": 43,
+        "endLine": 424,
+        "endChar": 67
+      },
+      "revId": "3893edf42d949a789eb2840ce665b7b911bfd606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
