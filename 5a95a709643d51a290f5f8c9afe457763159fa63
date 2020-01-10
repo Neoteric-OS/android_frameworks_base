@@ -46,6 +46,30 @@
       "revId": "5a95a709643d51a290f5f8c9afe457763159fa63",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33477ea1_acf72195",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-10T23:04:35Z",
+      "side": 1,
+      "message": "If anything, the existence of IWLAN, which in all existing implementations AFAIK only handled the IMS and MMS APNs (maybe FOTA once in a while), was a hindrance to getting an accurate picture of the cellular internet data connection (since IWLAN would mask all other information). With the new APIs, you can specifically understand the status of cellular on both WWAN and WLAN separately, and it\u0027s certainly more correct here to look at the WWAN status in the context of a \"data\" connection, which I presume is used to mean \"internet\".\n\ntl;dr, IWLAN was actually a problem and no longer seeing it here is most likely a benefit, since now you can understand what the actual cellular connection is (and when there might not be one).",
+      "parentUuid": "ea28b2fd_16c2ac68",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 55
+      },
+      "revId": "5a95a709643d51a290f5f8c9afe457763159fa63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
