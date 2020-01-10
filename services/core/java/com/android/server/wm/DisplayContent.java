@@ -1879,6 +1879,9 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
 
     private int reduceConfigLayout(int curLayout, int rotation, float density, int dw, int dh,
             int uiMode, DisplayCutout displayCutout) {
+        // Get the display cutout at this rotation.
+        displayCutout = calculateDisplayCutoutForRotation(rotation).getDisplayCutout();
+
         // Get the app screen size at this rotation.
         int w = mDisplayPolicy.getNonDecorDisplayWidth(dw, dh, rotation, uiMode, displayCutout);
         int h = mDisplayPolicy.getNonDecorDisplayHeight(dw, dh, rotation, uiMode, displayCutout);
