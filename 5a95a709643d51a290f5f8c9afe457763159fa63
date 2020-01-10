@@ -22,6 +22,30 @@
       "revId": "5a95a709643d51a290f5f8c9afe457763159fa63",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea28b2fd_16c2ac68",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-01-10T22:28:32Z",
+      "side": 1,
+      "message": "IWLAN is actually not a RAT. And even when IMS registration in on IWLAN, the PDN for internet is still established on cellular (assuming data always on is enabled). So I am not sure what the \"data connection state\" actually wants to do here and why battery stats even needs it.\n\nIf you want to know if IMS registration is on IWLAN or not, then you should use ImsMmTelManager.getRegistrationTransportType to check if the transport type is TRANSPORT_TYPE_WLAN.",
+      "parentUuid": "31963f12_471a2012",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 55
+      },
+      "revId": "5a95a709643d51a290f5f8c9afe457763159fa63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
