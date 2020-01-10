@@ -17,9 +17,11 @@
 package android.bluetooth;
 
 import android.Manifest;
+import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
-import android.annotation.UnsupportedAppUsage;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.net.Uri;
@@ -36,42 +38,72 @@ import java.util.List;
  *
  * @hide
  */
+@SystemApi
 public final class BluetoothMapClient implements BluetoothProfile {
 
     private static final String TAG = "BluetoothMapClient";
     private static final boolean DBG = Log.isLoggable(TAG, Log.DEBUG);
     private static final boolean VDBG = Log.isLoggable(TAG, Log.VERBOSE);
 
+    /** @hide */
+    @SystemApi
+    @SuppressLint("ActionValue")
     public static final String ACTION_CONNECTION_STATE_CHANGED =
             "android.bluetooth.mapmce.profile.action.CONNECTION_STATE_CHANGED";
+    /** @hide */
+    @SystemApi
+    @SuppressLint("ActionValue")
     public static final String ACTION_MESSAGE_RECEIVED =
             "android.bluetooth.mapmce.profile.action.MESSAGE_RECEIVED";
+
     /* Actions to be used for pending intents */
+
+    /** @hide */
+    @SystemApi
+    @SuppressLint("ActionValue")
     public static final String ACTION_MESSAGE_SENT_SUCCESSFULLY =
             "android.bluetooth.mapmce.profile.action.MESSAGE_SENT_SUCCESSFULLY";
+    /** @hide */
+    @SystemApi
+    @SuppressLint("ActionValue")
     public static final String ACTION_MESSAGE_DELIVERED_SUCCESSFULLY =
             "android.bluetooth.mapmce.profile.action.MESSAGE_DELIVERED_SUCCESSFULLY";
 
     /* Extras used in ACTION_MESSAGE_RECEIVED intent.
      * NOTE: HANDLE is only valid for a single session with the device. */
+
+    /** @hide */
+    @SystemApi
+    @SuppressLint("ActionValue")
     public static final String EXTRA_MESSAGE_HANDLE =
             "android.bluetooth.mapmce.profile.extra.MESSAGE_HANDLE";
+    /** @hide */
+    @SystemApi
+    @SuppressLint("ActionValue")
     public static final String EXTRA_MESSAGE_TIMESTAMP =
             "android.bluetooth.mapmce.profile.extra.MESSAGE_TIMESTAMP";
+    /** @hide */
+    @SystemApi
+    @SuppressLint("ActionValue")
     public static final String EXTRA_MESSAGE_READ_STATUS =
             "android.bluetooth.mapmce.profile.extra.MESSAGE_READ_STATUS";
+    /** @hide */
+    @SystemApi
+    @SuppressLint("ActionValue")
     public static final String EXTRA_SENDER_CONTACT_URI =
             "android.bluetooth.mapmce.profile.extra.SENDER_CONTACT_URI";
+    /** @hide */
+    @SystemApi
+    @SuppressLint("ActionValue")
     public static final String EXTRA_SENDER_CONTACT_NAME =
             "android.bluetooth.mapmce.profile.extra.SENDER_CONTACT_NAME";
 
-    /** There was an error trying to obtain the state */
+    /**
+     * There was an error trying to obtain the state
+     *
+     * @hide
+     */
     public static final int STATE_ERROR = -1;
-
-    public static final int RESULT_FAILURE = 0;
-    public static final int RESULT_SUCCESS = 1;
-    /** Connection canceled before completion. */
-    public static final int RESULT_CANCELED = 2;
 
     private static final int UPLOADING_FEATURE_BITMASK = 0x08;
 
@@ -94,6 +126,7 @@ public final class BluetoothMapClient implements BluetoothProfile {
         mProfileConnector.connect(context, listener);
     }
 
+    @SuppressLint("GenericException")
     protected void finalize() throws Throwable {
         try {
             close();
@@ -107,7 +140,10 @@ public final class BluetoothMapClient implements BluetoothProfile {
      * Other public functions of BluetoothMap will return default error
      * results once close() has been called. Multiple invocations of close()
      * are ok.
+     *
+     * @hide
      */
+    @SystemApi
     public void close() {
         mProfileConnector.disconnect();
     }
@@ -117,29 +153,10 @@ public final class BluetoothMapClient implements BluetoothProfile {
     }
 
     /**
-     * Returns true if the specified Bluetooth device is connected.
-     * Returns false if not connected, or if this proxy object is not
-     * currently connected to the Map service.
-     */
-    public boolean isConnected(BluetoothDevice device) {
-        if (VDBG) Log.d(TAG, "isConnected(" + device + ")");
-        final IBluetoothMapClient service = getService();
-        if (service != null) {
-            try {
-                return service.isConnected(device);
-            } catch (RemoteException e) {
-                Log.e(TAG, e.toString());
-            }
-        } else {
-            Log.w(TAG, "Proxy not attached to service");
-            if (DBG) Log.d(TAG, Log.getStackTraceString(new Throwable()));
-        }
-        return false;
-    }
-
-    /**
      * Initiate connection. Initiation of outgoing connections is not
      * supported for MAP server.
+     *
+     * @hide
      */
     public boolean connect(BluetoothDevice device) {
         if (DBG) Log.d(TAG, "connect(" + device + ")" + "for MAPS MCE");
@@ -162,6 +179,8 @@ public final class BluetoothMapClient implements BluetoothProfile {
      *
      * @param device Remote Bluetooth Device
      * @return false on error, true otherwise
+     *
+     * @hide
      */
     public boolean disconnect(BluetoothDevice device) {
         if (DBG) Log.d(TAG, "disconnect(" + device + ")");
@@ -181,9 +200,12 @@ public final class BluetoothMapClient implements BluetoothProfile {
      * Get the list of connected devices. Currently at most one.
      *
      * @return list of connected devices
+     *
+     * @hide
      */
+    @SystemApi
     @Override
-    public List<BluetoothDevice> getConnectedDevices() {
+    public @NonNull List<BluetoothDevice> getConnectedDevices() {
         if (DBG) Log.d(TAG, "getConnectedDevices()");
         final IBluetoothMapClient service = getService();
         if (service != null && isEnabled()) {
@@ -202,9 +224,13 @@ public final class BluetoothMapClient implements BluetoothProfile {
      * Get the list of devices matching specified states. Currently at most one.
      *
      * @return list of matching devices
+     *
+     * @hide
      */
+    @SystemApi
     @Override
-    public List<BluetoothDevice> getDevicesMatchingConnectionStates(int[] states) {
+    public @NonNull List<BluetoothDevice> getDevicesMatchingConnectionStates(
+            @NonNull int[] states) {
         if (DBG) Log.d(TAG, "getDevicesMatchingStates()");
         final IBluetoothMapClient service = getService();
         if (service != null && isEnabled()) {
@@ -223,9 +249,12 @@ public final class BluetoothMapClient implements BluetoothProfile {
      * Get connection state of device
      *
      * @return device connection state
+     *
+     * @hide
      */
+    @SystemApi
     @Override
-    public int getConnectionState(BluetoothDevice device) {
+    public int getConnectionState(@Nullable BluetoothDevice device) {
         if (DBG) Log.d(TAG, "getConnectionState(" + device + ")");
         final IBluetoothMapClient service = getService();
         if (service != null && isEnabled() && isValidDevice(device)) {
@@ -271,7 +300,7 @@ public final class BluetoothMapClient implements BluetoothProfile {
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
-    public boolean setConnectionPolicy(BluetoothDevice device, int connectionPolicy) {
+    public boolean setConnectionPolicy(@Nullable BluetoothDevice device, int connectionPolicy) {
         if (DBG) Log.d(TAG, "setConnectionPolicy(" + device + ", " + connectionPolicy + ")");
         final IBluetoothMapClient service = getService();
         if (service != null && isEnabled() && isValidDevice(device)) {
@@ -319,7 +348,7 @@ public final class BluetoothMapClient implements BluetoothProfile {
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.BLUETOOTH)
-    public int getConnectionPolicy(BluetoothDevice device) {
+    public int getConnectionPolicy(@Nullable BluetoothDevice device) {
         if (VDBG) Log.d(TAG, "getConnectionPolicy(" + device + ")");
         final IBluetoothMapClient service = getService();
         if (service != null && isEnabled() && isValidDevice(device)) {
@@ -345,10 +374,13 @@ public final class BluetoothMapClient implements BluetoothProfile {
      * @param sentIntent intent issued when message is sent
      * @param deliveredIntent intent issued when message is delivered
      * @return true if the message is enqueued, false on error
+     *
+     * @hide
      */
-    @UnsupportedAppUsage
-    public boolean sendMessage(BluetoothDevice device, Uri[] contacts, String message,
-            PendingIntent sentIntent, PendingIntent deliveredIntent) {
+    @SystemApi
+    public boolean sendMessage(@Nullable BluetoothDevice device, @Nullable Uri[] contacts,
+            @Nullable String message, @Nullable PendingIntent sentIntent,
+            @Nullable PendingIntent deliveredIntent) {
         if (DBG) Log.d(TAG, "sendMessage(" + device + ", " + contacts + ", " + message);
         final IBluetoothMapClient service = getService();
         if (service != null && isEnabled() && isValidDevice(device)) {
@@ -367,8 +399,11 @@ public final class BluetoothMapClient implements BluetoothProfile {
      *
      * @param device Bluetooth device
      * @return true if the message is enqueued, false on error
+     *
+     * @hide
      */
-    public boolean getUnreadMessages(BluetoothDevice device) {
+    @SystemApi
+    public boolean getUnreadMessages(@Nullable BluetoothDevice device) {
         if (DBG) Log.d(TAG, "getUnreadMessages(" + device + ")");
         final IBluetoothMapClient service = getService();
         if (service != null && isEnabled() && isValidDevice(device)) {
@@ -388,8 +423,11 @@ public final class BluetoothMapClient implements BluetoothProfile {
      * @param device The Bluetooth device to get this value for.
      * @return Returns true if the Uploading bit value in SDP record's
      *         MapSupportedFeatures field is set. False is returned otherwise.
+     *
+     * @hide
      */
-    public boolean isUploadingSupported(BluetoothDevice device) {
+    @SystemApi
+    public boolean isUploadingSupported(@Nullable BluetoothDevice device) {
         final IBluetoothMapClient service = getService();
         try {
             return (service != null && isEnabled() && isValidDevice(device))
