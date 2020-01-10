@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f86a000_8f5cd9d9",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-10T07:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "452a41ef_8e15f466",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 109,
+        "endChar": 17
+      },
+      "revId": "ce0b2aca0a27ae479cf9af2af5a6c91aa8382075",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "904ea365_3b660f0c",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "618b5a61_bdcb3166",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-10T07:13:53Z",
+      "side": 1,
+      "message": "Done\nuse @State comes from \nhttps://source.corp.google.com/aosp-master/frameworks/base/core/java/android/app/usage/NetworkStats.java;cl\u003dmaster;l\u003d135?q\u003dNetworkStats\u0026sq\u003dpackage:aosp-master\nSee if this works for you.",
+      "parentUuid": "904ea365_3b660f0c",
+      "range": {
+        "startLine": 117,
+        "startChar": 22,
+        "endLine": 117,
+        "endChar": 25
+      },
+      "revId": "ce0b2aca0a27ae479cf9af2af5a6c91aa8382075",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "389d94f3_7962ab52",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "ce0b2aca0a27ae479cf9af2af5a6c91aa8382075",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fb9fd5_6be5ca64",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-10T07:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "389d94f3_7962ab52",
+      "range": {
+        "startLine": 147,
+        "startChar": 22,
+        "endLine": 147,
+        "endChar": 29
+      },
+      "revId": "ce0b2aca0a27ae479cf9af2af5a6c91aa8382075",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
