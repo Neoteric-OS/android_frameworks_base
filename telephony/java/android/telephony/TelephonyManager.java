@@ -1436,6 +1436,29 @@ public class TelephonyManager {
     public static final String EXTRA_SIM_COMBINATION_NAMES =
             "android.telephony.extra.SIM_COMBINATION_NAMES";
 
+    /**
+     * Extra included in
+     * {@link
+     * com.android.internal.telephony.TelephonyIntents#ACTION_EMERGENCY_CALLBACK_MODE_CHANGED}
+     * Indicates whether the phone is in an emergency phone state.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_PHONE_IN_ECM_STATE =
+            "android.telephony.extra.PHONE_IN_ECM_STATE";
+
+    /**
+     * Extra included in:
+     * {@link com.android.internal.telephony.TelephonyIntents#ACTION_EMERGENCY_CALL_STATE_CHANGED}
+     * It indicates whether the phone is making an emergency call.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_PHONE_IN_EMERGENCY_CALL =
+            "android.telephony.extra.PHONE_IN_EMERGENCY_CALL";
+
     //
     //
     // Device Info
