@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a8ed98e_7ca49f4e",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-10T07:01:59Z",
+      "side": 0,
+      "message": "The new code doesn\u0027t do this, are we comfortable with that ?\nI think the real question here is, will removing this prevent the system from booting to roll back a bad push or something.",
+      "range": {
+        "startLine": 357,
+        "startChar": 32,
+        "endLine": 357,
+        "endChar": 94
+      },
+      "revId": "451ab79b44a7ac9d079507566e8c90720f16386d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

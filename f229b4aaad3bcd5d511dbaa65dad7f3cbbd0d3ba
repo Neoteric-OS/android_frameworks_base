@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "894d7113_4d81c896",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-10T07:01:59Z",
+      "side": 1,
+      "message": "I find this comment difficult to understand considering this is code under services/. Who else than services is using this ?",
+      "range": {
+        "startLine": 15,
+        "startChar": 31,
+        "endLine": 15,
+        "endChar": 55
+      },
+      "revId": "f229b4aaad3bcd5d511dbaa65dad7f3cbbd0d3ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
