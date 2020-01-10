@@ -46,6 +46,30 @@
       "revId": "8af4d4ad7851d70fa1ffc2915ead611f7840d883",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdce51ec_361e0326",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2020-01-10T00:07:28Z",
+      "side": 1,
+      "message": "Oops, didn\u0027t notice it was a cp",
+      "parentUuid": "27076ee5_af680c02",
+      "range": {
+        "startLine": 1616,
+        "startChar": 48,
+        "endLine": 1616,
+        "endChar": 60
+      },
+      "revId": "8af4d4ad7851d70fa1ffc2915ead611f7840d883",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
