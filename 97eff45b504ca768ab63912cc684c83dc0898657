@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a313333c_c51b8176",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1958,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-10T06:51:31Z",
+      "side": 1,
+      "message": "I\u0027d like to keep this consistent so we can easily filter on this as need be.",
+      "parentUuid": "c4162838_ce7f54ab",
+      "range": {
+        "startLine": 1958,
+        "startChar": 18,
+        "endLine": 1958,
+        "endChar": 21
+      },
+      "revId": "97eff45b504ca768ab63912cc684c83dc0898657",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4f75505_e98b1e76",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2019-12-16T15:16:38Z",
       "side": 1,
       "message": "Isn\u0027t it a little early to assign this ? Other places do this in establish() or so.",
+      "range": {
+        "startLine": 1961,
+        "startChar": 12,
+        "endLine": 1961,
+        "endChar": 19
+      },
+      "revId": "97eff45b504ca768ab63912cc684c83dc0898657",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec8501d_2c019e34",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1961,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-10T06:51:31Z",
+      "side": 1,
+      "message": "LegacyVpnRunner also initializes this in the constructor. My understanding is that the early-assignment is due to the difference in operating models between VpnService VPNs and Platform VPNs.\n\nSpecifically, all the config that an app gives to the platform can be known by the time they call establish(), since they can do a negotiation before the establish() call. However, Platform VPNs do not have all the routing, IP addresses or other required information until after the negotiation, and therefore have to be able to update a pre-initialized mConfig.",
+      "parentUuid": "b4f75505_e98b1e76",
       "range": {
         "startLine": 1961,
         "startChar": 12,
