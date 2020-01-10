@@ -46,6 +46,30 @@
       "revId": "d5060733513873a8d7b9823eb6375aaecd172424",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7011dcb0_5faf9de4",
+        "filename": "core/java/android/telephony/SubscriptionPlan.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1595229
+      },
+      "writtenOn": "2020-01-10T10:37:29Z",
+      "side": 1,
+      "message": "Thanks. I un@hide the method in SubscriptionPlan and un@hide RecurreceRule.",
+      "parentUuid": "75a3e8a5_799cfec8",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 29
+      },
+      "revId": "d5060733513873a8d7b9823eb6375aaecd172424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
