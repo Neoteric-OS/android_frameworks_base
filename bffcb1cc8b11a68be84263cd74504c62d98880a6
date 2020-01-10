@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5750b2f_aea63070",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1807,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-10T14:13:38Z",
+      "side": 1,
+      "message": "go/synchronized-this-considered-harmful : suggest synchronizing on mStatsProviderCbList instead.\n\nIs this called from different threads concurrently ?",
+      "range": {
+        "startLine": 1807,
+        "startChar": 12,
+        "endLine": 1807,
+        "endChar": 24
+      },
+      "revId": "bffcb1cc8b11a68be84263cd74504c62d98880a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

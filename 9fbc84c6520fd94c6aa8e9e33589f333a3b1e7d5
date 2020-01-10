@@ -260,6 +260,30 @@
       "revId": "9fbc84c6520fd94c6aa8e9e33589f333a3b1e7d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5db85cc4_f9c171cb",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-10T14:13:38Z",
+      "side": 1,
+      "message": "Don\u0027t you need this ? My original intent was about the code comment here saying this catch() is for dead providers. I think you may still need to catch other exceptions than RemoteException, but to update the comment.\n\nNow if this was really for dead providers and we want to crash on unplanned exception, then the new patchset is fine.",
+      "parentUuid": "79b1bf2d_9af9aa8d",
+      "range": {
+        "startLine": 1819,
+        "startChar": 39,
+        "endLine": 1819,
+        "endChar": 43
+      },
+      "revId": "9fbc84c6520fd94c6aa8e9e33589f333a3b1e7d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
