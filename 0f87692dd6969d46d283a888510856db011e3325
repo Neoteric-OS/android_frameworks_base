@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "533c1199_7f6e248b",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1626,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-01-11T04:03:51Z",
+      "side": 1,
+      "message": "System API is fine, but can we also deprecate it and ask people to check getNetworkRegistrationInfo(NetworkRegistrationInfo.DOMAIN_PS, AccessNetworkConstants.TRANSPORT_TYPE_WWAN) for cellular data network type and ImsMmTelManager. getRegistrationTransportType() to check if device is on IWLAN?",
+      "range": {
+        "startLine": 1625,
+        "startChar": 0,
+        "endLine": 1626,
+        "endChar": 12
+      },
+      "revId": "0f87692dd6969d46d283a888510856db011e3325",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
