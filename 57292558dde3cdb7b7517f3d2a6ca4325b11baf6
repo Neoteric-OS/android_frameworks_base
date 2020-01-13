@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ea5151e_954a0b7a",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "Would just change this to \"provide network statistics to the system\".\n\nRationale: the provider can\u0027t just send \"stats that can\u0027t be seen by the kernel\", it must send \"stats that can\u0027t be seen by any other provider\". Might want to say, something like:\n\nNo de-duplication of statistics between providers is performed, so each provider must only report network traffic that is not being reported by any other provider.",
+      "range": {
+        "startLine": 529,
+        "startChar": 74,
+        "endLine": 530,
+        "endChar": 54
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98455394_28ecf036",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "If this is used only for debugging, suggest saying so.",
+      "range": {
+        "startLine": 533,
+        "startChar": 82,
+        "endLine": 533,
+        "endChar": 83
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cda01a9_854fcee6",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 534,
+        "startChar": 23,
+        "endLine": 534,
+        "endChar": 24
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab9339d_6f3b7cea",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "subclass",
+      "range": {
+        "startLine": 534,
+        "startChar": 25,
+        "endLine": 534,
+        "endChar": 46
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ca4e4e_b6cfd4e2",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "or unregister the provider.",
+      "range": {
+        "startLine": 537,
+        "startChar": 21,
+        "endLine": 537,
+        "endChar": 22
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c9d8e7_ddccd9d4",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "Hmm. I guess it\u0027s not unreachable if the NetworkStatsProviderCallback can throw an unchecked exception. But perhaps it shouldn\u0027t be complaining about that. Anyway, no action necessary.",
+      "range": {
+        "startLine": 552,
+        "startChar": 11,
+        "endLine": 552,
+        "endChar": 22
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1b7275b_2fa69e6e",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerInternal.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "the specified",
+      "range": {
+        "startLine": 133,
+        "startChar": 22,
+        "endLine": 133,
+        "endChar": 32
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d65fc6_03c0ed98",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "Might want to add a comment to mention why we synchronize on a separate lock in addition to synchronizing on mStatsLock, which guards pretty much everything else, and on mStatsProviderCbList. Generally speaking having fewer locks improves readability.\n\n(Or, even, consider using that lock for the providers too, if doing so makes sense.)",
+      "range": {
+        "startLine": 257,
+        "startChar": 4,
+        "endLine": 257,
+        "endChar": 59
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683ef69d_b0641458",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "This is a synchronous call, but actually setting the limit is asynchronous. Should it say somewhere in the provider documentation that if the provider gets one of these calls, and the limit is already reached, it must fire the event?",
+      "range": {
+        "startLine": 1503,
+        "startChar": 20,
+        "endLine": 1503,
+        "endChar": 41
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2563613e_729e0bd8",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1772,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "AbstractNetworkStatsProvider doesn\u0027t have a binder interface. Maybe say, \"the INetworkStatsProvider binder corresponding to the AbstractNetworkStatsProvider to be registered\"",
+      "range": {
+        "startLine": 1769,
+        "startChar": 23,
+        "endLine": 1772,
+        "endChar": 6
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7f788f_e5d8bcb4",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1785,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "Should this check for duplicates?",
+      "range": {
+        "startLine": 1785,
+        "startChar": 33,
+        "endLine": 1785,
+        "endChar": 41
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "799a65ef_31ac6c93",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1791,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "The only thing that can throw in the try block is the constructor, right? If so, suggest using a smaller try block.",
+      "range": {
+        "startLine": 1789,
+        "startChar": 0,
+        "endLine": 1791,
+        "endChar": 9
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58ba525_f7d0ea10",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "Nit: I think \", e\" will give you a full stack trace. If that\u0027s not what you want, suggest + \": \" + e.",
+      "range": {
+        "startLine": 1818,
+        "startChar": 78,
+        "endLine": 1818,
+        "endChar": 81
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb9e2eb_241d897f",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1830,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "What does/should this lock protect? Suggest using @GuardedBy annotations to indicate intent.",
+      "range": {
+        "startLine": 1830,
+        "startChar": 38,
+        "endLine": 1830,
+        "endChar": 56
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe9239d_48937457",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "// Track STATS_PER_IFACE and STATS_PER_UID separately.",
+      "range": {
+        "startLine": 1836,
+        "startChar": 8,
+        "endLine": 1836,
+        "endChar": 44
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbc48a1_216f9d37",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1848,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "If this throws RemoteException, have we already added any state that needs to be cleaned up? (I don\u0027t think so.)",
+      "range": {
+        "startLine": 1848,
+        "startChar": 33,
+        "endLine": 1848,
+        "endChar": 44
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229d9869_a12026ec",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1867,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T07:15:17Z",
+      "side": 1,
+      "message": "Suggest saying why we do this. Is it because NetworkStats is fundamentally intended to be mutable?",
+      "range": {
+        "startLine": 1867,
+        "startChar": 69,
+        "endLine": 1867,
+        "endChar": 70
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
