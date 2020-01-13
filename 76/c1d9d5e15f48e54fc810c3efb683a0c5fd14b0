@@ -1,0 +1,10 @@
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Mathew Inwood <mathewi@google.com>
+Global-Approval+1: Mathew Inwood <mathewi@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: satayev <satayev@google.com>
+Submitted-at: Mon, 13 Jan 2020 13:09:35 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1191899
+Project: platform/frameworks/base
+Branch: refs/heads/master
