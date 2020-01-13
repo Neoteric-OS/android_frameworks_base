@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afb279c6_6ecd515e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10397,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-13T16:09:59Z",
+      "side": 1,
+      "message": "NetworkStats.STATS_PER_IFACE and NetworkStats.STATS_PER_UID are both @hide members of the android.net.NetworkStats class.  You can remove the @hide tags on those as the class is already marked as SystemApi.\n\nShould also add an @IntDef for those values which can be referenced here.\n\nAlso, please document what it means for the return value to be Null.  I presume this is the case if VT was not enabled?",
+      "range": {
+        "startLine": 10397,
+        "startChar": 43,
+        "endLine": 10397,
+        "endChar": 46
+      },
+      "revId": "6bd3341f7a23c79b19127e126707898c1e969f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
