@@ -21,7 +21,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.MemoryFile;
 import android.os.ParcelFileDescriptor;
+import android.os.SystemProperties;
 import android.os.image.DynamicSystemManager;
+import android.service.oemlock.OemLockManager;
 import android.util.Log;
 import android.webkit.URLUtil;
 
@@ -51,6 +53,8 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
     private static final List<String> UNSUPPORTED_PARTITIONS =
             Arrays.asList("vbmeta", "boot", "userdata", "dtbo", "super_empty", "system_other");
 
+    private static final String PROPERTY_OEM_UNLOCK_SUPPORTED = "ro.oem_unlock_supported";
+
     private class UnsupportedUrlException extends RuntimeException {
         private UnsupportedUrlException(String message) {
             super(message);
@@ -60,6 +64,12 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
     private class UnsupportedFormatException extends RuntimeException {
         private UnsupportedFormatException(String message) {
             super(message);
+        }
+    }
+
+    private class RevocationListException extends RuntimeException {
+        private RevocationListException(String message, Throwable cause) {
+            super(message, cause);
         }
     }
 
@@ -103,6 +113,7 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
     private final DynamicSystemManager mDynSystem;
     private final ProgressListener mListener;
     private final boolean mIsNetworkUrl;
+    private final boolean mIsDeviceOemUnlocked;
     private DynamicSystemManager.Session mInstallationSession;
     private KeyRevocationList mKeyRevocationList;
 
@@ -128,6 +139,13 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
         mDynSystem = dynSystem;
         mListener = listener;
         mIsNetworkUrl = URLUtil.isNetworkUrl(mUrl);
+        if (SystemProperties.getBoolean(PROPERTY_OEM_UNLOCK_SUPPORTED, false)) {
+            OemLockManager oemLockManager =
+                    (OemLockManager) mContext.getSystemService(Context.OEM_LOCK_SERVICE);
+            mIsDeviceOemUnlocked = oemLockManager.isDeviceOemUnlocked();
+        } else {
+            mIsDeviceOemUnlocked = false;
+        }
     }
 
     @Override
@@ -242,23 +260,23 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
                     String.format(Locale.US, "Unsupported URL: %s", mUrl));
         }
 
-        // TODO(yochiang): Bypass this check if device is unlocked
         try {
             String listUrl = mContext.getString(R.string.key_revocation_list_url);
             mKeyRevocationList = KeyRevocationList.fromUrl(new URL(listUrl));
         } catch (IOException | JSONException e) {
-            Log.d(TAG, "Failed to fetch Dynamic System Key Revocation List");
             mKeyRevocationList = new KeyRevocationList();
-            keyRevocationThrowOrWarning(e);
+            keyRevocationThrowOrWarning(
+                    new RevocationListException("Failed to fetch key revocation list", e));
         }
     }
 
-    private void keyRevocationThrowOrWarning(Exception e) throws Exception {
-        if (mIsNetworkUrl) {
-            throw e;
-        } else {
-            // If DSU is being installed from a local file URI, then be permissive
+    private void keyRevocationThrowOrWarning(RuntimeException e) throws RuntimeException {
+        if (mIsDeviceOemUnlocked || !mIsNetworkUrl) {
+            // If device is OEM unlocked or DSU is being installed from a local file URI,
+            // then be permissive.
             Log.w(TAG, e.toString());
+        } else {
+            throw e;
         }
     }
 
