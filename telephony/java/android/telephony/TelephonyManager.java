@@ -194,11 +194,24 @@ public class TelephonyManager {
                     NETWORK_SELECTION_MODE_MANUAL})
     public @interface NetworkSelectionMode {}
 
-    /** @hide */
+    /**
+     * The default unknown network selection mode. Indicates that the system can't get the network
+     * selection setting.
+     * @hide */
+    @SystemApi
     public static final int NETWORK_SELECTION_MODE_UNKNOWN = 0;
-    /** @hide */
+
+    /**
+     * Network selection mode. Indicates that the system will automatically connect to available
+     * network.
+     * @hide */
+    @SystemApi
     public static final int NETWORK_SELECTION_MODE_AUTO = 1;
-    /** @hide */
+
+    /**
+     * Network selection mode. Indicates that the network will be selected manually.
+     * @hide */
+    @SystemApi
     public static final int NETWORK_SELECTION_MODE_MANUAL = 2;
 
     /** The otaspMode passed to PhoneStateListener#onOtaspChanged */
@@ -7453,6 +7466,7 @@ public class TelephonyManager {
      * @hide
      */
     @NetworkSelectionMode
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
     public int getNetworkSelectionMode() {
         int mode = NETWORK_SELECTION_MODE_UNKNOWN;
