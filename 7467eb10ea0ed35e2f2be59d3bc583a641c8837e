@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4fa0b3_0c52a786",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T10:15:54Z",
+      "side": 1,
+      "message": "Should this be INTERNET|NOT_RESTRICTED? That\u0027s what networkCapabilitiesForType would have returned.",
+      "range": {
+        "startLine": 220,
+        "startChar": 72,
+        "endLine": 220,
+        "endChar": 95
+      },
+      "revId": "7467eb10ea0ed35e2f2be59d3bc583a641c8837e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71fa5b4d_ad46eabe",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T10:15:54Z",
+      "side": 1,
+      "message": "Nit: suggest the singular \"capability\" since this is only one capability bit.",
+      "range": {
+        "startLine": 220,
+        "startChar": 18,
+        "endLine": 220,
+        "endChar": 33
+      },
+      "revId": "7467eb10ea0ed35e2f2be59d3bc583a641c8837e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
