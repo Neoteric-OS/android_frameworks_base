@@ -1,0 +1,11 @@
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Junyu Lai <junyulai@google.com>
+Code-Review+2: Chalard Jean <jchalard@google.com>
+Code-Review+2: Sudheer Shanka <sudheersai@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Junyu Lai <junyulai@google.com>
+Submitted-at: Mon, 13 Jan 2020 14:09:49 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1180832
+Project: platform/frameworks/base
+Branch: refs/heads/master
