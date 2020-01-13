@@ -27,7 +27,15 @@ import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.doReturn;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.mockitoSession;
+import static com.android.networkstack.tethering.R.array.config_mobile_hotspot_provision_app;
+import static com.android.networkstack.tethering.R.array.config_tether_bluetooth_regexs;
+import static com.android.networkstack.tethering.R.array.config_tether_dhcp_range;
+import static com.android.networkstack.tethering.R.array.config_tether_upstream_types;
+import static com.android.networkstack.tethering.R.array.config_tether_usb_regexs;
+import static com.android.networkstack.tethering.R.array.config_tether_wifi_regexs;
 import static com.android.networkstack.tethering.R.bool.config_tether_enable_legacy_dhcp_server;
+import static com.android.networkstack.tethering.R.string.config_mobile_hotspot_provision_app_no_ui;
+import static com.android.networkstack.tethering.R.string.config_wifi_tether_enable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -56,7 +64,6 @@ import android.telephony.CarrierConfigManager;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
-import com.android.internal.R;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.internal.util.test.BroadcastInterceptingContext;
@@ -156,17 +163,13 @@ public final class EntitlementManagerTest {
                 () -> DeviceConfig.getBoolean(eq(NAMESPACE_CONNECTIVITY),
                 eq(TetheringConfiguration.TETHER_ENABLE_LEGACY_DHCP_SERVER), anyBoolean()));
 
-        when(mResources.getStringArray(R.array.config_tether_dhcp_range))
-            .thenReturn(new String[0]);
-        when(mResources.getStringArray(R.array.config_tether_usb_regexs))
-            .thenReturn(new String[0]);
-        when(mResources.getStringArray(R.array.config_tether_wifi_regexs))
-            .thenReturn(new String[0]);
-        when(mResources.getStringArray(R.array.config_tether_bluetooth_regexs))
-            .thenReturn(new String[0]);
-        when(mResources.getIntArray(R.array.config_tether_upstream_types))
-            .thenReturn(new int[0]);
+        when(mResources.getStringArray(config_tether_dhcp_range)).thenReturn(new String[0]);
+        when(mResources.getStringArray(config_tether_usb_regexs)).thenReturn(new String[0]);
+        when(mResources.getStringArray(config_tether_wifi_regexs)).thenReturn(new String[0]);
+        when(mResources.getStringArray(config_tether_bluetooth_regexs)).thenReturn(new String[0]);
+        when(mResources.getIntArray(config_tether_upstream_types)).thenReturn(new int[0]);
         when(mResources.getBoolean(config_tether_enable_legacy_dhcp_server)).thenReturn(false);
+        when(mResources.getString(config_wifi_tether_enable)).thenReturn("");
         when(mLog.forSubComponent(anyString())).thenReturn(mLog);
 
         mMockContext = new MockContext(mContext);
@@ -190,9 +193,9 @@ public final class EntitlementManagerTest {
 
     private void setupForRequiredProvisioning() {
         // Produce some acceptable looking provision app setting if requested.
-        when(mResources.getStringArray(R.array.config_mobile_hotspot_provision_app))
+        when(mResources.getStringArray(config_mobile_hotspot_provision_app))
                 .thenReturn(PROVISIONING_APP_NAME);
-        when(mResources.getString(R.string.config_mobile_hotspot_provision_app_no_ui))
+        when(mResources.getString(config_mobile_hotspot_provision_app_no_ui))
                 .thenReturn(PROVISIONING_NO_UI_APP_NAME);
         // Act like the CarrierConfigManager is present and ready unless told otherwise.
         when(mContext.getSystemService(Context.CARRIER_CONFIG_SERVICE))
@@ -240,11 +243,10 @@ public final class EntitlementManagerTest {
     @Test
     public void provisioningNotRequiredWhenAppNotFound() {
         setupForRequiredProvisioning();
-        when(mResources.getStringArray(R.array.config_mobile_hotspot_provision_app))
-            .thenReturn(null);
+        when(mResources.getStringArray(config_mobile_hotspot_provision_app)).thenReturn(null);
         mConfig = new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
         assertFalse(mEnMgr.isTetherProvisioningRequired(mConfig));
-        when(mResources.getStringArray(R.array.config_mobile_hotspot_provision_app))
+        when(mResources.getStringArray(config_mobile_hotspot_provision_app))
             .thenReturn(new String[] {"malformedApp"});
         mConfig = new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
         assertFalse(mEnMgr.isTetherProvisioningRequired(mConfig));

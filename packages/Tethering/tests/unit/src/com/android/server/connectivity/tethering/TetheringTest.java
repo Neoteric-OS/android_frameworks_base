@@ -37,7 +37,15 @@ import static android.net.wifi.WifiManager.IFACE_IP_MODE_TETHERED;
 import static android.net.wifi.WifiManager.WIFI_AP_STATE_ENABLED;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
+import static com.android.networkstack.tethering.R.array.config_tether_bluetooth_regexs;
+import static com.android.networkstack.tethering.R.array.config_tether_dhcp_range;
+import static com.android.networkstack.tethering.R.array.config_tether_upstream_types;
+import static com.android.networkstack.tethering.R.array.config_tether_usb_regexs;
+import static com.android.networkstack.tethering.R.array.config_tether_wifi_p2p_regexs;
+import static com.android.networkstack.tethering.R.array.config_tether_wifi_regexs;
 import static com.android.networkstack.tethering.R.bool.config_tether_enable_legacy_dhcp_server;
+import static com.android.networkstack.tethering.R.bool.config_tether_upstream_automatic;
+import static com.android.networkstack.tethering.R.string.config_wifi_tether_enable;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -415,24 +423,21 @@ public class TetheringTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        when(mResources.getStringArray(com.android.internal.R.array.config_tether_dhcp_range))
-                .thenReturn(new String[0]);
-        when(mResources.getStringArray(com.android.internal.R.array.config_tether_usb_regexs))
+        when(mResources.getStringArray(config_tether_dhcp_range)).thenReturn(new String[0]);
+        when(mResources.getStringArray(config_tether_usb_regexs))
                 .thenReturn(new String[] { "test_rndis\\d" });
-        when(mResources.getStringArray(com.android.internal.R.array.config_tether_wifi_regexs))
+        when(mResources.getStringArray(config_tether_wifi_regexs))
                 .thenReturn(new String[]{ "test_wlan\\d" });
-        when(mResources.getStringArray(com.android.internal.R.array.config_tether_wifi_p2p_regexs))
+        when(mResources.getStringArray(config_tether_wifi_p2p_regexs))
                 .thenReturn(new String[]{ "test_p2p-p2p\\d-.*" });
-        when(mResources.getStringArray(com.android.internal.R.array.config_tether_bluetooth_regexs))
-                .thenReturn(new String[0]);
-        when(mResources.getIntArray(com.android.internal.R.array.config_tether_upstream_types))
-                .thenReturn(new int[0]);
-        when(mResources.getBoolean(com.android.internal.R.bool.config_tether_upstream_automatic))
-                .thenReturn(false);
+        when(mResources.getStringArray(config_tether_bluetooth_regexs)).thenReturn(new String[0]);
+        when(mResources.getIntArray(config_tether_upstream_types)).thenReturn(new int[0]);
+        when(mResources.getBoolean(config_tether_upstream_automatic)).thenReturn(false);
         when(mResources.getBoolean(config_tether_enable_legacy_dhcp_server)).thenReturn(false);
         when(mNetd.interfaceGetList())
                 .thenReturn(new String[] {
                         TEST_MOBILE_IFNAME, TEST_WLAN_IFNAME, TEST_USB_IFNAME, TEST_P2P_IFNAME});
+        when(mResources.getString(config_wifi_tether_enable)).thenReturn("");
         mInterfaceConfiguration = new InterfaceConfigurationParcel();
         mInterfaceConfiguration.flags = new String[0];
         when(mRouterAdvertisementDaemon.start())
@@ -780,8 +785,7 @@ public class TetheringTest {
 
     @Test
     public void configTetherUpstreamAutomaticIgnoresConfigTetherUpstreamTypes() throws Exception {
-        when(mResources.getBoolean(com.android.internal.R.bool.config_tether_upstream_automatic))
-                .thenReturn(true);
+        when(mResources.getBoolean(config_tether_upstream_automatic)).thenReturn(true);
         sendConfigurationChanged();
 
         // Setup IPv6
@@ -1309,8 +1313,7 @@ public class TetheringTest {
     private void workingWifiP2pGroupOwnerLegacyMode(
             boolean emulateInterfaceStatusChanged) throws Exception {
         // change to legacy mode and update tethering information by chaning SIM
-        when(mResources.getStringArray(com.android.internal.R.array.config_tether_wifi_p2p_regexs))
-                .thenReturn(new String[]{});
+        when(mResources.getStringArray(config_tether_wifi_p2p_regexs)).thenReturn(new String[]{});
         final int fakeSubId = 1234;
         mPhoneStateListener.onActiveDataSubscriptionIdChanged(fakeSubId);
 

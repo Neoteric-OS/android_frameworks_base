@@ -23,17 +23,17 @@ import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
 import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
 import static android.provider.DeviceConfig.NAMESPACE_CONNECTIVITY;
 
-import static com.android.internal.R.array.config_mobile_hotspot_provision_app;
-import static com.android.internal.R.array.config_tether_bluetooth_regexs;
-import static com.android.internal.R.array.config_tether_dhcp_range;
-import static com.android.internal.R.array.config_tether_upstream_types;
-import static com.android.internal.R.array.config_tether_usb_regexs;
-import static com.android.internal.R.array.config_tether_wifi_p2p_regexs;
-import static com.android.internal.R.array.config_tether_wifi_regexs;
-import static com.android.internal.R.bool.config_tether_upstream_automatic;
-import static com.android.internal.R.integer.config_mobile_hotspot_provision_check_period;
-import static com.android.internal.R.string.config_mobile_hotspot_provision_app_no_ui;
+import static com.android.networkstack.tethering.R.array.config_mobile_hotspot_provision_app;
+import static com.android.networkstack.tethering.R.array.config_tether_bluetooth_regexs;
+import static com.android.networkstack.tethering.R.array.config_tether_dhcp_range;
+import static com.android.networkstack.tethering.R.array.config_tether_upstream_types;
+import static com.android.networkstack.tethering.R.array.config_tether_usb_regexs;
+import static com.android.networkstack.tethering.R.array.config_tether_wifi_p2p_regexs;
+import static com.android.networkstack.tethering.R.array.config_tether_wifi_regexs;
 import static com.android.networkstack.tethering.R.bool.config_tether_enable_legacy_dhcp_server;
+import static com.android.networkstack.tethering.R.bool.config_tether_upstream_automatic;
+import static com.android.networkstack.tethering.R.integer.config_mobile_hotspot_provision_check_period;
+import static com.android.networkstack.tethering.R.string.config_mobile_hotspot_provision_app_no_ui;
 
 import android.content.Context;
 import android.content.res.Resources;

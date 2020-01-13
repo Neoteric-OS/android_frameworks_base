@@ -26,12 +26,12 @@ import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.doReturn;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.mockitoSession;
-import static com.android.internal.R.array.config_mobile_hotspot_provision_app;
-import static com.android.internal.R.array.config_tether_bluetooth_regexs;
-import static com.android.internal.R.array.config_tether_dhcp_range;
-import static com.android.internal.R.array.config_tether_upstream_types;
-import static com.android.internal.R.array.config_tether_usb_regexs;
-import static com.android.internal.R.array.config_tether_wifi_regexs;
+import static com.android.networkstack.tethering.R.array.config_mobile_hotspot_provision_app;
+import static com.android.networkstack.tethering.R.array.config_tether_bluetooth_regexs;
+import static com.android.networkstack.tethering.R.array.config_tether_dhcp_range;
+import static com.android.networkstack.tethering.R.array.config_tether_upstream_types;
+import static com.android.networkstack.tethering.R.array.config_tether_usb_regexs;
+import static com.android.networkstack.tethering.R.array.config_tether_wifi_regexs;
 import static com.android.networkstack.tethering.R.bool.config_tether_enable_legacy_dhcp_server;
 
 import static org.junit.Assert.assertEquals;
