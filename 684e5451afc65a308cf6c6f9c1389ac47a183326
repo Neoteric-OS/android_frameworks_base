@@ -45,6 +45,30 @@
       "revId": "684e5451afc65a308cf6c6f9c1389ac47a183326",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df365da_2ac16590",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7206,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-13T23:50:04Z",
+      "side": 1,
+      "message": "We don\u0027t need to check for null in ConnectivityDiagnosticsHandler, as we only enqueue this event if the NetworkAgentInfo is not-null in the NetworkStateTrackerHandler.\n\nhttps://r.android.com/c/platform/frameworks/base/+/1200998/3/services/core/java/com/android/server/ConnectivityService.java#2726",
+      "parentUuid": "96f4881a_f2e4c8e6",
+      "range": {
+        "startLine": 7206,
+        "startChar": 43,
+        "endLine": 7206,
+        "endChar": 46
+      },
+      "revId": "684e5451afc65a308cf6c6f9c1389ac47a183326",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
