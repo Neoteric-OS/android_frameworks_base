@@ -7453,6 +7453,7 @@ public class TelephonyManager {
      * @hide
      */
     @NetworkSelectionMode
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
     public int getNetworkSelectionMode() {
         int mode = NETWORK_SELECTION_MODE_UNKNOWN;
