@@ -347,7 +347,6 @@ Lcom/android/internal/telephony/ITelephony$Stub$Proxy;->isRadioOn(Ljava/lang/Str
 Lcom/android/internal/telephony/ITelephony$Stub$Proxy;->mRemote:Landroid/os/IBinder;
 Lcom/android/internal/telephony/ITelephony$Stub;->asInterface(Landroid/os/IBinder;)Lcom/android/internal/telephony/ITelephony;
 Lcom/android/internal/telephony/ITelephony$Stub;->DESCRIPTOR:Ljava/lang/String;
-Lcom/android/internal/telephony/ITelephony$Stub;->TRANSACTION_call:I
 Lcom/android/internal/telephony/ITelephony$Stub;->TRANSACTION_dial:I
 Lcom/android/internal/telephony/ITelephony$Stub;->TRANSACTION_getDeviceId:I
 Lcom/android/internal/telephony/ITelephonyRegistry$Stub$Proxy;-><init>(Landroid/os/IBinder;)V

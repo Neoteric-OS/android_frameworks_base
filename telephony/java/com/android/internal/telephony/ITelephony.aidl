@@ -82,14 +82,6 @@ interface ITelephony {
     @UnsupportedAppUsage
     void dial(String number);
 
-    /**
-     * Place a call to the specified number.
-     * @param callingPackage The package making the call.
-     * @param number the number to be called.
-     */
-    @UnsupportedAppUsage
-    void call(String callingPackage, String number);
-
     /** @deprecated Use {@link #isRadioOnWithFeature(String, String) instead */
     @UnsupportedAppUsage
     boolean isRadioOn(String callingPackage);

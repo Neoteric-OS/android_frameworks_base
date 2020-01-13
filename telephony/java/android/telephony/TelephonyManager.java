@@ -16,7 +16,6 @@
 
 package android.telephony;
 
-import static android.content.Context.TELECOM_SERVICE;
 import static android.provider.Telephony.Carriers.DPC_URI;
 import static android.provider.Telephony.Carriers.INVALID_APN_ID;
 
@@ -7996,7 +7995,11 @@ public class TelephonyManager {
     }
 
 
-    /** @hide */
+    /**
+     * @deprecated Use {@link android.telecom.TelecomManager#placeCall(Uri address,
+     * Bundle extras)} instead.
+     * @hide
+     */
     @SystemApi
     @SuppressLint("Doclava125")
     public void dial(String number) {
@@ -8010,7 +8013,7 @@ public class TelephonyManager {
     }
 
     /**
-     * @deprecated Use  {@link android.telecom.TelecomManager#placeCall(Uri address,
+     * @removed Use {@link android.telecom.TelecomManager#placeCall(Uri address,
      * Bundle extras)} instead.
      * @hide
      */
@@ -8018,13 +8021,7 @@ public class TelephonyManager {
     @SystemApi
     @RequiresPermission(android.Manifest.permission.CALL_PHONE)
     public void call(String callingPackage, String number) {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null)
-                telephony.call(callingPackage, number);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error calling ITelephony#call", e);
-        }
+        //  No-op; no longer required.
     }
 
     /**
@@ -8063,7 +8060,7 @@ public class TelephonyManager {
     }
 
     /**
-     * @deprecated Use {@link android.telecom.TelecomManager#isInCall} instead
+     * @removed Use {@link android.telecom.TelecomManager#isInCall} instead
      * @hide
      */
     @Deprecated
@@ -8073,12 +8070,11 @@ public class TelephonyManager {
             android.Manifest.permission.READ_PHONE_STATE
     })
     public boolean isOffhook() {
-        TelecomManager tm = (TelecomManager) mContext.getSystemService(TELECOM_SERVICE);
-        return tm.isInCall();
+        return false;
     }
 
     /**
-     * @deprecated Use {@link android.telecom.TelecomManager#isRinging} instead
+     * @removed Use {@link android.telecom.TelecomManager#isRinging} instead
      * @hide
      */
     @Deprecated
@@ -8088,12 +8084,11 @@ public class TelephonyManager {
             android.Manifest.permission.READ_PHONE_STATE
     })
     public boolean isRinging() {
-        TelecomManager tm = (TelecomManager) mContext.getSystemService(TELECOM_SERVICE);
-        return tm.isRinging();
+        return false;
     }
 
     /**
-     * @deprecated Use {@link android.telecom.TelecomManager#isInCall} instead
+     * @removed Use {@link android.telecom.TelecomManager#isInCall} instead
      * @hide
      */
     @Deprecated
@@ -8103,8 +8098,7 @@ public class TelephonyManager {
             android.Manifest.permission.READ_PHONE_STATE
     })
     public boolean isIdle() {
-        TelecomManager tm = (TelecomManager) mContext.getSystemService(TELECOM_SERVICE);
-        return !tm.isInCall();
+        return true;
     }
 
     /**
