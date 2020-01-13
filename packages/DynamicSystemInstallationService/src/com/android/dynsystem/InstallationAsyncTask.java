@@ -22,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.MemoryFile;
 import android.os.ParcelFileDescriptor;
 import android.os.image.DynamicSystemManager;
+import android.service.persistentdata.PersistentDataBlockManager;
 import android.util.Log;
 import android.webkit.URLUtil;
 
@@ -60,6 +61,12 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
     private class UnsupportedFormatException extends RuntimeException {
         private UnsupportedFormatException(String message) {
             super(message);
+        }
+    }
+
+    static class RevocationListFetchException extends RuntimeException {
+        private RevocationListFetchException(Throwable cause) {
+            super(cause);
         }
     }
 
@@ -103,6 +110,7 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
     private final DynamicSystemManager mDynSystem;
     private final ProgressListener mListener;
     private final boolean mIsNetworkUrl;
+    private final boolean mIsDeviceBootloaderUnlocked;
     private DynamicSystemManager.Session mInstallationSession;
     private KeyRevocationList mKeyRevocationList;
 
@@ -128,6 +136,13 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
         mDynSystem = dynSystem;
         mListener = listener;
         mIsNetworkUrl = URLUtil.isNetworkUrl(mUrl);
+        PersistentDataBlockManager pdbManager =
+                (PersistentDataBlockManager)
+                        mContext.getSystemService(Context.PERSISTENT_DATA_BLOCK_SERVICE);
+        mIsDeviceBootloaderUnlocked =
+                (pdbManager != null)
+                        && (pdbManager.getFlashLockState()
+                                == PersistentDataBlockManager.FLASH_LOCK_UNLOCKED);
     }
 
     @Override
@@ -242,23 +257,22 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
                     String.format(Locale.US, "Unsupported URL: %s", mUrl));
         }
 
-        // TODO(yochiang): Bypass this check if device is unlocked
         try {
             String listUrl = mContext.getString(R.string.key_revocation_list_url);
             mKeyRevocationList = KeyRevocationList.fromUrl(new URL(listUrl));
         } catch (IOException | JSONException e) {
-            Log.d(TAG, "Failed to fetch Dynamic System Key Revocation List");
             mKeyRevocationList = new KeyRevocationList();
-            keyRevocationThrowOrWarning(e);
+            keyRevocationThrowOrWarning(new RevocationListFetchException(e));
         }
     }
 
-    private void keyRevocationThrowOrWarning(Exception e) throws Exception {
-        if (mIsNetworkUrl) {
-            throw e;
-        } else {
-            // If DSU is being installed from a local file URI, then be permissive
+    private void keyRevocationThrowOrWarning(RuntimeException e) throws RuntimeException {
+        if (mIsDeviceBootloaderUnlocked || !mIsNetworkUrl) {
+            // If device is OEM unlocked or DSU is being installed from a local file URI,
+            // then be permissive.
             Log.w(TAG, e.toString());
+        } else {
+            throw e;
         }
     }
 
