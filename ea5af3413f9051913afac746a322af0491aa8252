@@ -22,6 +22,30 @@
       "revId": "ea5af3413f9051913afac746a322af0491aa8252",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97ef45d_4982d5b4",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T07:22:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5312756e_97775373",
+      "range": {
+        "startLine": 231,
+        "startChar": 11,
+        "endLine": 231,
+        "endChar": 16
+      },
+      "revId": "ea5af3413f9051913afac746a322af0491aa8252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
