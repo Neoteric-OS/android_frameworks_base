@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb638c40_72a75e72",
+        "filename": "core/java/com/android/internal/app/AlertController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2020-01-13T21:34:11Z",
+      "side": 1,
+      "message": "Should be updated to account for nullable mScrollView, e.g. remove the view from its parent instead of mScrollView.",
+      "range": {
+        "startLine": 729,
+        "startChar": 12,
+        "endLine": 729,
+        "endChar": 23
+      },
+      "revId": "67f94ffa73df8c94b1c6f121a252c52d79728c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579f28fc_e4055e32",
+        "filename": "core/java/com/android/internal/app/AlertController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2020-01-13T21:34:11Z",
+      "side": 1,
+      "message": "Also needs to account for null mScrollView, but not sure what the best approach would be.",
+      "range": {
+        "startLine": 732,
+        "startChar": 0,
+        "endLine": 736,
+        "endChar": 70
+      },
+      "revId": "67f94ffa73df8c94b1c6f121a252c52d79728c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
