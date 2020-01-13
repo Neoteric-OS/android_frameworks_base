@@ -284,6 +284,30 @@
       "revId": "9fbc84c6520fd94c6aa8e9e33589f333a3b1e7d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74a6000b_2981a332",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-13T04:55:32Z",
+      "side": 1,
+      "message": "Ack\nIIUC we want to crash on IllegalStateException throw by RemoteCallbackList\n if the operation is problematic, e,g. finsishBroadcast when there is not even begin.\nSo let\u0027s keep newest patch.",
+      "parentUuid": "5db85cc4_f9c171cb",
+      "range": {
+        "startLine": 1819,
+        "startChar": 39,
+        "endLine": 1819,
+        "endChar": 43
+      },
+      "revId": "9fbc84c6520fd94c6aa8e9e33589f333a3b1e7d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
