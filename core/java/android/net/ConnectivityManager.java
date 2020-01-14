@@ -710,6 +710,14 @@ public class ConnectivityManager {
     @Deprecated
     public static final int TYPE_TEST = 18; // TODO: Remove this once NetworkTypes are unused.
 
+     /**
+     * PDN connection to download the remote VSIM data.
+     * @deprecated Use {@link NetworkCapabilities#NET_CAPABILITY_VSIM} instead.
+     * {@hide}
+     */
+    @Deprecated
+    public static final int TYPE_MOBILE_VSIM = 19;
+
     // Deprecated constants for return values of startUsingNetworkFeature. They used to live
     // in com.android.internal.telephony.PhoneConstants until they were made inaccessible.
     private static final int DEPRECATED_PHONE_CONSTANT_APN_ALREADY_ACTIVE = 0;
@@ -720,7 +728,7 @@ public class ConnectivityManager {
     public static final int MAX_RADIO_TYPE = TYPE_TEST;
 
     /** {@hide} */
-    public static final int MAX_NETWORK_TYPE = TYPE_TEST;
+    public static final int MAX_NETWORK_TYPE = TYPE_MOBILE_VSIM;
 
     private static final int MIN_NETWORK_TYPE = TYPE_MOBILE;
 
