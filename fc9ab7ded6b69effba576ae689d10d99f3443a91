@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "909c11a1_8a41003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1226402
+      },
+      "writtenOn": "2020-01-14T10:02:31Z",
+      "side": 1,
+      "message": "In /frameworks/opt/telephony/src/java/com/android/internal/telephony/dataconnection/DcRequest.java and frameworks/opt/telephony/src/java/com/android/internal/telephony/dataconnection/DcTracker.java, resource networkAttributes is used to create APN information that platform supported. The CTS test case ConnectivityManagerTest checks if all the network types in networkAttributes are supported by ConnectivityManager. So, the CTS case will fail if we add the new network type in networkAttributes without adding its definitions in ConnectivityManager. These definition can be removed when networkAttributes is not needed.\nBIP will be phased out in future on our platform, so, we remove its related definitions in the patch.",
+      "parentUuid": "60131679_092dc5cf",
+      "range": {
+        "startLine": 707,
+        "startChar": 3,
+        "endLine": 720,
+        "endChar": 50
+      },
+      "revId": "fc9ab7ded6b69effba576ae689d10d99f3443a91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82f6552b_eddbbb7d",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "fc9ab7ded6b69effba576ae689d10d99f3443a91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33d56ce_3f116190",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1226402
+      },
+      "writtenOn": "2020-01-14T10:02:31Z",
+      "side": 1,
+      "message": "Thanks for your review. Reverted it.",
+      "parentUuid": "82f6552b_eddbbb7d",
+      "range": {
+        "startLine": 723,
+        "startChar": 28,
+        "endLine": 723,
+        "endChar": 42
+      },
+      "revId": "fc9ab7ded6b69effba576ae689d10d99f3443a91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
