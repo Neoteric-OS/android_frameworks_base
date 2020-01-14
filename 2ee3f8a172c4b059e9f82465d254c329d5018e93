@@ -183,6 +183,75 @@
       "revId": "2ee3f8a172c4b059e9f82465d254c329d5018e93",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23f47f6_5d823849",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-14T10:23:02Z",
+      "side": 1,
+      "message": "This parameter needs to be explained. I think it\u0027s a bitmap of NetworkPolicyManager RULE_* constants. If so, then the documentation needs to say that it is. And the constants need to be @SystemApi and you need an IntDef for them. Looking at existing examples, I think you need something like:\n\n    /**\n     * No specific rule set.\n     * @hide\n     */\n    @SystemApi\n    public static final int RULE_NONE \u003d 0;\n\n    /**\n     * Allow traffic on metered networks.\n     * @hide\n     */\n    @SystemApi\n    public static final int RULE_ALLOW_METERED \u003d 1 \u003c\u003c 0;\n\n... other RULE_* constants follow, all @SystemApi ...\n\n    /**\n     * Per-UID network traffic rules.\n     *\n     * @hide\n     */\n    @SystemApi\n    @IntDef(flag \u003d true, prefix \u003d {\"RULE_\"}, value \u003d {\n            RULE_NONE,\n            RULE_ALLOW_METERED,\n            ...\n    })\n    @Retention(RetentionPolicy.SOURCE)\n    public @interface Rule {}\n\n... then, later on, annotate the parameters:\n\n    public void onUidRulesChanged(int uid, @Rule int uidRules) {",
+      "range": {
+        "startLine": 501,
+        "startChar": 51,
+        "endLine": 501,
+        "endChar": 59
+      },
+      "revId": "2ee3f8a172c4b059e9f82465d254c329d5018e93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e75536d_b9ea5e3f",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-14T10:23:02Z",
+      "side": 1,
+      "message": "Is this is a bitmask of POLICY_* constants? If so, same comment as above: make the constants @SystemApi, define an IntDef, and annotate the parameters of the methods that take them.",
+      "range": {
+        "startLine": 513,
+        "startChar": 54,
+        "endLine": 513,
+        "endChar": 65
+      },
+      "revId": "2ee3f8a172c4b059e9f82465d254c329d5018e93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d56bc3_5a4f9549",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-14T10:23:02Z",
+      "side": 1,
+      "message": "Is this a bitmask of OVERRIDE_* constants? If so, same comment as above.",
+      "range": {
+        "startLine": 517,
+        "startChar": 58,
+        "endLine": 517,
+        "endChar": 70
+      },
+      "revId": "2ee3f8a172c4b059e9f82465d254c329d5018e93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
