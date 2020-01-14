@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "278a20bc_56d2ec3d",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1595229
+      },
+      "writtenOn": "2020-01-14T11:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2038e6c5_af7796bd",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 31
+      },
+      "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9522eab0_e151b72a",
         "filename": "core/java/android/util/RecurrenceRule.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9758858_87287f24",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1595229
+      },
+      "writtenOn": "2020-01-14T11:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9522eab0_e151b72a",
+      "range": {
+        "startLine": 66,
+        "startChar": 3,
+        "endLine": 67,
+        "endChar": 47
+      },
+      "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d8565d09_16fe1074",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1595229
+      },
+      "writtenOn": "2020-01-14T11:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02256564_6ec8db60",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 94
+      },
+      "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15422d91_a76ae2d0",
         "filename": "core/java/android/util/RecurrenceRule.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3011ef99_aef3d894",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1595229
+      },
+      "writtenOn": "2020-01-14T11:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15422d91_a76ae2d0",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 81
+      },
+      "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6390c239_081cb2d6",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1595229
+      },
+      "writtenOn": "2020-01-14T11:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b02227fc_223f1a8a",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 32
+      },
+      "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "883faca2_9412c224",
         "filename": "core/java/android/util/RecurrenceRule.java",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8edb1920_752852a5",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1595229
+      },
+      "writtenOn": "2020-01-14T11:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "883faca2_9412c224",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 285,
+        "endChar": 5
+      },
+      "revId": "83dc6559b20ee7f32257c3a4be284afb48d8b163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
