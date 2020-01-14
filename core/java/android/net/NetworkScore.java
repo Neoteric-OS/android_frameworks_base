@@ -17,6 +17,8 @@ package android.net;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -28,12 +30,17 @@ import java.util.Objects;
  *
  * A NetworkScore object represents the characteristics of a network that affects how good the
  * network is considered for a particular use.
+ *
+ * This class is not thread-safe.
  * @hide
  */
+@TestApi
+@SystemApi
 public final class NetworkScore implements Parcelable {
 
     // The key of bundle which is used to get the legacy network score of NetworkAgentInfo.
     // TODO: Remove this when the transition to NetworkScore is over.
+    /** @hide */
     public static final String LEGACY_SCORE = "LEGACY_SCORE";
     @NonNull
     private final Bundle mExtensions;
@@ -88,9 +95,7 @@ public final class NetworkScore implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        synchronized (this) {
-            dest.writeBundle(mExtensions);
-        }
+        dest.writeBundle(mExtensions);
     }
 
     public static final @NonNull Creator<NetworkScore> CREATOR = new Creator<NetworkScore>() {

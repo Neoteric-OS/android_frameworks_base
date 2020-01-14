@@ -1418,6 +1418,19 @@ package android.net {
     field public static final int TRANSPORT_TEST = 7; // 0x7
   }
 
+  public final class NetworkScore implements android.os.Parcelable {
+    ctor public NetworkScore();
+    ctor public NetworkScore(@NonNull android.net.NetworkScore);
+    method public int describeContents();
+    method public <T extends android.os.Parcelable> T getExtension(@Nullable String);
+    method public int getIntExtension(@Nullable String);
+    method public void putExtension(@Nullable String, @Nullable android.os.Parcelable);
+    method public void putIntExtension(@Nullable String, int);
+    method public void removeExtension(@Nullable String);
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkScore> CREATOR;
+  }
+
   public class NetworkStack {
     field public static final String PERMISSION_MAINLINE_NETWORK_STACK = "android.permission.MAINLINE_NETWORK_STACK";
   }

@@ -4494,6 +4494,19 @@ package android.net {
     method @NonNull @RequiresPermission(android.Manifest.permission.NETWORK_SIGNAL_STRENGTH_WAKEUP) public android.net.NetworkRequest.Builder setSignalStrength(int);
   }
 
+  public final class NetworkScore implements android.os.Parcelable {
+    ctor public NetworkScore();
+    ctor public NetworkScore(@NonNull android.net.NetworkScore);
+    method public int describeContents();
+    method public <T extends android.os.Parcelable> T getExtension(@Nullable String);
+    method public int getIntExtension(@Nullable String);
+    method public void putExtension(@Nullable String, @Nullable android.os.Parcelable);
+    method public void putIntExtension(@Nullable String, int);
+    method public void removeExtension(@Nullable String);
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkScore> CREATOR;
+  }
+
   public class NetworkScoreManager {
     method @RequiresPermission(anyOf={android.Manifest.permission.SCORE_NETWORKS, "android.permission.REQUEST_NETWORK_SCORES"}) public boolean clearScores() throws java.lang.SecurityException;
     method @RequiresPermission(anyOf={android.Manifest.permission.SCORE_NETWORKS, "android.permission.REQUEST_NETWORK_SCORES"}) public void disableScoring() throws java.lang.SecurityException;
