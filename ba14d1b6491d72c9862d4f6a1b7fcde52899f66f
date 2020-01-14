@@ -22,6 +22,30 @@
       "revId": "ba14d1b6491d72c9862d4f6a1b7fcde52899f66f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67221e52_9c11a162",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-14T10:30:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "96f5c61d_c6fe8242",
+      "range": {
+        "startLine": 1405,
+        "startChar": 0,
+        "endLine": 1407,
+        "endChar": 5
+      },
+      "revId": "ba14d1b6491d72c9862d4f6a1b7fcde52899f66f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
