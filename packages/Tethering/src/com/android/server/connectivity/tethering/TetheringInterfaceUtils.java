@@ -22,8 +22,11 @@ import android.net.NetworkCapabilities;
 import android.net.RouteInfo;
 import android.net.util.InterfaceSet;
 
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Collection;
 
 /**
  * @hide
@@ -85,7 +88,7 @@ public final class TetheringInterfaceUtils {
 
     private static String getInterfaceForDestination(LinkProperties lp, InetAddress dst) {
         final RouteInfo ri = (lp != null)
-                ? RouteInfo.selectBestRoute(lp.getAllRoutes(), dst)
+                ? selectBestRoute(lp.getAllRoutes(), dst)
                 : null;
         return (ri != null) ? ri.getInterface() : null;
     }
@@ -96,5 +99,28 @@ public final class TetheringInterfaceUtils {
         } catch (UnknownHostException e) {
             throw new AssertionError("illegal address length" + addr.length);
         }
+    }
+
+    // TODO: use shared net util lib instead below methods.
+    private static RouteInfo selectBestRoute(Collection<RouteInfo> routes, InetAddress dest) {
+        if ((routes == null) || (dest == null)) return null;
+
+        RouteInfo bestRoute = null;
+        // pick a longest prefix match under same address type
+        for (RouteInfo route : routes) {
+            if (addressTypeMatches(route.getDestination().getAddress(), dest)) {
+                if ((bestRoute != null)
+                        && (bestRoute.getDestination().getPrefixLength()
+                        >= route.getDestination().getPrefixLength())) {
+                    continue;
+                }
+                if (route.matches(dest)) bestRoute = route;
+            }
+        }
+        return bestRoute;
+    }
+    private static boolean addressTypeMatches(InetAddress left, InetAddress right) {
+        return (((left instanceof Inet4Address) && (right instanceof Inet4Address))
+                || ((left instanceof Inet6Address) && (right instanceof Inet6Address)));
     }
 }
