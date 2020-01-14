@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e36510b_5cc38ec0",
+        "filename": "core/java/android/net/NetworkPolicyListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-14T09:44:54Z",
+      "side": 1,
+      "message": "IIUC none of this has ever been public or system API, so maybe consistency doesn\u0027t matter too much ?",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "2ee3f8a172c4b059e9f82465d254c329d5018e93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba843efb_06413eae",
+        "filename": "core/java/android/net/NetworkPolicyListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-14T09:44:54Z",
+      "side": 1,
+      "message": "metered interfaces have changed",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 53
+      },
+      "revId": "2ee3f8a172c4b059e9f82465d254c329d5018e93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42329c92_9fc2b22e",
+        "filename": "core/java/android/net/NetworkPolicyListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-14T09:44:54Z",
+      "side": 1,
+      "message": "has",
+      "range": {
+        "startLine": 53,
+        "startChar": 50,
+        "endLine": 53,
+        "endChar": 52
+      },
+      "revId": "2ee3f8a172c4b059e9f82465d254c329d5018e93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5bb2c7_e2af61ea",
+        "filename": "core/java/android/net/NetworkPolicyListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-14T09:44:54Z",
+      "side": 1,
+      "message": "background",
+      "range": {
+        "startLine": 55,
+        "startChar": 50,
+        "endLine": 55,
+        "endChar": 59
+      },
+      "revId": "2ee3f8a172c4b059e9f82465d254c329d5018e93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060b6faf_d6408c30",
+        "filename": "core/java/android/net/NetworkPolicyListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-14T09:44:54Z",
+      "side": 1,
+      "message": "missing space",
+      "range": {
+        "startLine": 57,
+        "startChar": 71,
+        "endLine": 57,
+        "endChar": 72
+      },
+      "revId": "2ee3f8a172c4b059e9f82465d254c329d5018e93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a1eacf0_c0cf8951",
+        "filename": "core/java/android/net/NetworkPolicyListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-14T09:44:54Z",
+      "side": 1,
+      "message": "policies have been updated for a given uid",
+      "range": {
+        "startLine": 60,
+        "startChar": 19,
+        "endLine": 60,
+        "endChar": 57
+      },
+      "revId": "2ee3f8a172c4b059e9f82465d254c329d5018e93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298a169d_77e94916",
+        "filename": "core/java/android/net/NetworkPolicyListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-14T09:44:54Z",
+      "side": 1,
+      "message": "The uid that has new policies",
+      "range": {
+        "startLine": 62,
+        "startChar": 24,
+        "endLine": 62,
+        "endChar": 64
+      },
+      "revId": "2ee3f8a172c4b059e9f82465d254c329d5018e93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a37886b_8da2af83",
+        "filename": "core/java/android/net/NetworkPolicyListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-14T09:44:54Z",
+      "side": 1,
+      "message": "Notify of a new override about a given subscription",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 49
+      },
+      "revId": "2ee3f8a172c4b059e9f82465d254c329d5018e93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
