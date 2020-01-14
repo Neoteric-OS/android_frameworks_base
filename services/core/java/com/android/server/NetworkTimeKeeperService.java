@@ -18,6 +18,7 @@ package com.android.server;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.time.INetworkTimeKeeper;
 import android.app.timedetector.NetworkTimeSuggestion;
 import android.app.timedetector.TimeDetector;
 import android.content.BroadcastReceiver;
@@ -29,11 +30,11 @@ import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.Network;
-import android.os.Binder;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.os.ParcelableException;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.TimestampedValue;
@@ -46,8 +47,10 @@ import com.android.internal.util.DumpUtils;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.time.DateTimeException;
 
 /**
+ * This service is responsible for keeping track of the time according to network time services.
  * Monitors the network time. If looking up the network time fails for some reason, it tries a few
  * times with a short interval and then resets to checking on longer intervals.
  *
@@ -55,9 +58,9 @@ import java.io.PrintWriter;
  * com.android.server.timedetector.TimeDetectorService} where it may be used to set the device
  * system clock, depending on user settings and what other signals are available.
  */
-public class NetworkTimeUpdateService extends Binder {
+public class NetworkTimeKeeperService extends INetworkTimeKeeper.Stub {
 
-    private static final String TAG = "NetworkTimeUpdateService";
+    private static final String TAG = "NetworkTimeKeeperService";
     private static final boolean DBG = false;
 
     private static final int EVENT_AUTO_TIME_ENABLED = 1;
@@ -82,7 +85,7 @@ public class NetworkTimeUpdateService extends Binder {
     // NTP lookup is done on this thread and handler
     private Handler mHandler;
     private AutoTimeSettingObserver mAutoTimeSettingObserver;
-    private NetworkTimeUpdateCallback mNetworkTimeUpdateCallback;
+    private NetworkCallback mNetworkCallback;
 
     // Normal polling frequency
     private final long mPollingIntervalMs;
@@ -95,7 +98,7 @@ public class NetworkTimeUpdateService extends Binder {
     // connection to happen.
     private int mTryAgainCounter;
 
-    public NetworkTimeUpdateService(Context context) {
+    public NetworkTimeKeeperService(Context context) {
         mContext = context;
         mTime = NtpTrustedTime.getInstance(context);
         mAlarmManager = mContext.getSystemService(AlarmManager.class);
@@ -123,12 +126,22 @@ public class NetworkTimeUpdateService extends Binder {
         HandlerThread thread = new HandlerThread(TAG);
         thread.start();
         mHandler = new MyHandler(thread.getLooper());
-        mNetworkTimeUpdateCallback = new NetworkTimeUpdateCallback();
-        mCM.registerDefaultNetworkCallback(mNetworkTimeUpdateCallback, mHandler);
+        mNetworkCallback = new NetworkCallbackImpl();
+        mCM.registerDefaultNetworkCallback(mNetworkCallback, mHandler);
 
         mAutoTimeSettingObserver = new AutoTimeSettingObserver(mContext, mHandler,
                 EVENT_AUTO_TIME_ENABLED);
         mAutoTimeSettingObserver.observe();
+    }
+
+    @Override
+    public long currentNetworkTimeMillis() {
+        NtpTrustedTime.TimeResult timeResult = mTime.getCachedTimeResult();
+        if (timeResult != null) {
+            return timeResult.currentTimeMillis();
+        } else {
+            throw new ParcelableException(new DateTimeException("Missing NTP fix"));
+        }
     }
 
     private void registerForAlarms() {
@@ -215,7 +228,7 @@ public class NetworkTimeUpdateService extends Binder {
         }
     }
 
-    private class NetworkTimeUpdateCallback extends NetworkCallback {
+    private class NetworkCallbackImpl extends NetworkCallback {
         @Override
         public void onAvailable(Network network) {
             Log.d(TAG, String.format("New default network %s; checking time.", network));

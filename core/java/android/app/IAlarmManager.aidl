@@ -40,5 +40,4 @@ interface IAlarmManager {
     long getNextWakeFromIdleTime();
     @UnsupportedAppUsage
     AlarmManager.AlarmClockInfo getNextAlarmClock(int userId);
-    long currentNetworkTimeMillis();
 }

@@ -913,7 +913,7 @@ public final class SystemServer {
         NsdService serviceDiscovery = null;
         WindowManagerService wm = null;
         SerialService serial = null;
-        NetworkTimeUpdateService networkTimeUpdater = null;
+        NetworkTimeKeeperService networkTimeKeeper = null;
         InputManagerService inputManager = null;
         TelephonyRegistry telephonyRegistry = null;
         ConsumerIrService consumerIr = null;
@@ -1693,12 +1693,13 @@ public final class SystemServer {
             }
 
             if (!isWatch && !disableNetworkTime) {
-                traceBeginAndSlog("StartNetworkTimeUpdateService");
+                traceBeginAndSlog("StartNetworkTimeKeeperService");
                 try {
-                    networkTimeUpdater = new NetworkTimeUpdateService(context);
-                    ServiceManager.addService("network_time_update_service", networkTimeUpdater);
+                    networkTimeKeeper = new NetworkTimeKeeperService(context);
+                    ServiceManager.addService(
+                            Context.NETWORK_TIME_KEEPER_SERVICE, networkTimeKeeper);
                 } catch (Throwable e) {
-                    reportWtf("starting NetworkTimeUpdate service", e);
+                    reportWtf("starting NetworkTimeKeeper service", e);
                 }
                 traceEnd();
             }
@@ -2062,7 +2063,7 @@ public final class SystemServer {
         final ConnectivityService connectivityF = connectivity;
         final LocationManagerService locationF = location;
         final CountryDetectorService countryDetectorF = countryDetector;
-        final NetworkTimeUpdateService networkTimeUpdaterF = networkTimeUpdater;
+        final NetworkTimeKeeperService networkTimeKeeperF = networkTimeKeeper;
         final InputManagerService inputManagerF = inputManager;
         final TelephonyRegistry telephonyRegistryF = telephonyRegistry;
         final MediaRouterService mediaRouterF = mediaRouter;
@@ -2244,13 +2245,13 @@ public final class SystemServer {
                 reportWtf("Notifying CountryDetectorService running", e);
             }
             traceEnd();
-            traceBeginAndSlog("MakeNetworkTimeUpdateReady");
+            traceBeginAndSlog("MakeNetworkTimeUKeeperReady");
             try {
-                if (networkTimeUpdaterF != null) {
-                    networkTimeUpdaterF.systemRunning();
+                if (networkTimeKeeperF != null) {
+                    networkTimeKeeperF.systemRunning();
                 }
             } catch (Throwable e) {
-                reportWtf("Notifying NetworkTimeService running", e);
+                reportWtf("Notifying NetworkTimeKeeper running", e);
             }
             traceEnd();
             traceBeginAndSlog("MakeInputManagerServiceReady");

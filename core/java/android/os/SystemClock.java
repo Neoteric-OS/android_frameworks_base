@@ -18,6 +18,7 @@ package android.os;
 
 import android.annotation.NonNull;
 import android.app.IAlarmManager;
+import android.app.time.INetworkTimeKeeper;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.location.ILocationManager;
@@ -279,11 +280,11 @@ public final class SystemClock {
      * @hide
      */
     public static long currentNetworkTimeMillis() {
-        final IAlarmManager mgr = IAlarmManager.Stub
-                .asInterface(ServiceManager.getService(Context.ALARM_SERVICE));
-        if (mgr != null) {
+        final INetworkTimeKeeper networkTimeKeeper = INetworkTimeKeeper.Stub
+                .asInterface(ServiceManager.getService(Context.NETWORK_TIME_KEEPER_SERVICE));
+        if (networkTimeKeeper != null) {
             try {
-                return mgr.currentNetworkTimeMillis();
+                return networkTimeKeeper.currentNetworkTimeMillis();
             } catch (ParcelableException e) {
                 e.maybeRethrow(DateTimeException.class);
                 throw new RuntimeException(e);
