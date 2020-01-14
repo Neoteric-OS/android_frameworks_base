@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de8770ed_e2a65377",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 7330,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-14T06:42:46Z",
+      "side": 1,
+      "message": "what does \"this\" refer to?",
+      "range": {
+        "startLine": 7330,
+        "startChar": 60,
+        "endLine": 7330,
+        "endChar": 64
+      },
+      "revId": "9e14e9c17a89a2cb6f770f3b135c074246b9cd0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93fec1a3_e0262e9a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 7420,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-14T06:42:46Z",
+      "side": 1,
+      "message": "Is there a reason why we don\u0027t use the Map.entrySet()? That should give us both the key and the value.",
+      "range": {
+        "startLine": 7420,
+        "startChar": 0,
+        "endLine": 7420,
+        "endChar": 98
+      },
+      "revId": "9e14e9c17a89a2cb6f770f3b135c074246b9cd0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a16d57a_dbd966b5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 6331,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-14T06:42:46Z",
+      "side": 1,
+      "message": "Is there a way for us to test the permission checks?",
+      "range": {
+        "startLine": 6331,
+        "startChar": 16,
+        "endLine": 6331,
+        "endChar": 71
+      },
+      "revId": "9e14e9c17a89a2cb6f770f3b135c074246b9cd0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca69430_ae0edc56",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 6343,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-14T06:42:46Z",
+      "side": 1,
+      "message": "suggest using mocks",
+      "range": {
+        "startLine": 6343,
+        "startChar": 0,
+        "endLine": 6343,
+        "endChar": 64
+      },
+      "revId": "9e14e9c17a89a2cb6f770f3b135c074246b9cd0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
