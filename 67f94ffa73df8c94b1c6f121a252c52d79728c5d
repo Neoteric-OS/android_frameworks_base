@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d98200fa_942197ba",
+        "filename": "core/java/com/android/internal/app/AlertController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1463764
+      },
+      "writtenOn": "2020-01-14T11:16:50Z",
+      "side": 1,
+      "message": "should we return from the API if scrollview is NULL same as mMessageView as below? Line 716\n\n mMessageView \u003d (TextView) contentPanel.findViewById(R.id.message);\n if (mMessageView \u003d\u003d null) {\n return;",
+      "parentUuid": "fb638c40_72a75e72",
+      "range": {
+        "startLine": 729,
+        "startChar": 12,
+        "endLine": 729,
+        "endChar": 23
+      },
+      "revId": "67f94ffa73df8c94b1c6f121a252c52d79728c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "579f28fc_e4055e32",
         "filename": "core/java/com/android/internal/app/AlertController.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "67f94ffa73df8c94b1c6f121a252c52d79728c5d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c634dec_8548d14c",
+        "filename": "core/java/com/android/internal/app/AlertController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1463764
+      },
+      "writtenOn": "2020-01-14T11:16:50Z",
+      "side": 1,
+      "message": "same as above then no need to handle this situation",
+      "parentUuid": "579f28fc_e4055e32",
+      "range": {
+        "startLine": 732,
+        "startChar": 0,
+        "endLine": 736,
+        "endChar": 70
+      },
+      "revId": "67f94ffa73df8c94b1c6f121a252c52d79728c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
