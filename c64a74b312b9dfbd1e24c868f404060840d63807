@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c76cfe12_672d54b3",
+        "filename": "api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4499,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-14T10:41:15Z",
+      "side": 1,
+      "message": "Does this need to be @SystemApi?",
+      "range": {
+        "startLine": 4499,
+        "startChar": 16,
+        "endLine": 4499,
+        "endChar": 63
+      },
+      "revId": "c64a74b312b9dfbd1e24c868f404060840d63807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c52022f_9677672e",
+        "filename": "api/test-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-14T10:41:15Z",
+      "side": 1,
+      "message": "Why \"Extension\" here? Generally the word extension indicates that it\u0027s an add-on to something else. From this API surface it looks like there is nothing in this class except extensions. Maybe call it \"dimension\" or \"value\"?",
+      "range": {
+        "startLine": 1426,
+        "startChar": 28,
+        "endLine": 1426,
+        "endChar": 37
+      },
+      "revId": "c64a74b312b9dfbd1e24c868f404060840d63807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
