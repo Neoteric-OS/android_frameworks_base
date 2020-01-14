@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b210100_e70f0463",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3629,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-14T03:04:03Z",
+      "side": 1,
+      "message": "backwards compatibility",
+      "range": {
+        "startLine": 3629,
+        "startChar": 63,
+        "endLine": 3629,
+        "endChar": 79
+      },
+      "revId": "d01641bd1bdc8e44da688be33f6ebbe82cb93f91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459d287c_21492715",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3631,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-14T03:04:03Z",
+      "side": 1,
+      "message": "instead of NetworkCallbacks",
+      "range": {
+        "startLine": 3631,
+        "startChar": 18,
+        "endLine": 3631,
+        "endChar": 51
+      },
+      "revId": "d01641bd1bdc8e44da688be33f6ebbe82cb93f91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
