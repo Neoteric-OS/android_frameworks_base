@@ -70,6 +70,30 @@
       "revId": "5a95a709643d51a290f5f8c9afe457763159fa63",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da834e9_323cdf02",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-14T23:58:12Z",
+      "side": 1,
+      "message": "I see. IIUC BatteryStats is only a local tool to help developers, so we don\u0027t really have to worry about stats not being comparable to some existing data trove somewhere.",
+      "parentUuid": "33477ea1_acf72195",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 55
+      },
+      "revId": "5a95a709643d51a290f5f8c9afe457763159fa63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
