@@ -1,0 +1,10 @@
+Autosubmit+1: Jeffrey Huang <jeffreyhuang@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+1: Tej Singh <singhtejinder@google.com>
+Code-Review+2: Joe Onorato <joeo@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Tue, 14 Jan 2020 01:43:39 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1207206
+Project: platform/frameworks/base
+Branch: refs/heads/master
