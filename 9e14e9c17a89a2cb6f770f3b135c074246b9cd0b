@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5b54048_336c2177",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 7330,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T23:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de8770ed_e2a65377",
+      "range": {
+        "startLine": 7330,
+        "startChar": 60,
+        "endLine": 7330,
+        "endChar": 64
+      },
+      "revId": "9e14e9c17a89a2cb6f770f3b135c074246b9cd0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93fec1a3_e0262e9a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "9e14e9c17a89a2cb6f770f3b135c074246b9cd0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015ffa6e_633f765e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 7420,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T23:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93fec1a3_e0262e9a",
+      "range": {
+        "startLine": 7420,
+        "startChar": 0,
+        "endLine": 7420,
+        "endChar": 98
+      },
+      "revId": "9e14e9c17a89a2cb6f770f3b135c074246b9cd0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4db2a38b_6e57239c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 6331,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T23:35:28Z",
+      "side": 1,
+      "message": "Added a separate test for permissions checks",
+      "parentUuid": "6a16d57a_dbd966b5",
+      "range": {
+        "startLine": 6331,
+        "startChar": 16,
+        "endLine": 6331,
+        "endChar": 71
+      },
+      "revId": "9e14e9c17a89a2cb6f770f3b135c074246b9cd0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ca69430_ae0edc56",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "9e14e9c17a89a2cb6f770f3b135c074246b9cd0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb93827_7d5acb93",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 6343,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T23:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ca69430_ae0edc56",
+      "range": {
+        "startLine": 6343,
+        "startChar": 0,
+        "endLine": 6343,
+        "endChar": 64
+      },
+      "revId": "9e14e9c17a89a2cb6f770f3b135c074246b9cd0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
