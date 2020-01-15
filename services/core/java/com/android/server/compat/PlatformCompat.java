@@ -16,6 +16,11 @@
 
 package com.android.server.compat;
 
+import static android.Manifest.permission.LOG_COMPAT_CHANGE;
+import static android.Manifest.permission.OVERRIDE_COMPAT_CHANGE_CONFIG;
+import static android.Manifest.permission.READ_COMPAT_CHANGE_CONFIG;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
 import android.app.ActivityManager;
 import android.app.IActivityManager;
 import android.content.Context;
@@ -86,6 +91,7 @@ public class PlatformCompat extends IPlatformCompat.Stub {
 
     @Override
     public boolean isChangeEnabled(long changeId, ApplicationInfo appInfo) {
+        checkCompatChangeReadPermission();
         if (mCompatConfig.isChangeEnabled(changeId, appInfo)) {
             reportChange(changeId, appInfo.uid,
                     ChangeReporter.STATE_ENABLED);
@@ -98,6 +104,7 @@ public class PlatformCompat extends IPlatformCompat.Stub {
 
     @Override
     public boolean isChangeEnabledByPackageName(long changeId, String packageName, int userId) {
+        checkCompatChangeReadPermission();
         ApplicationInfo appInfo = getApplicationInfo(packageName, userId);
         if (appInfo == null) {
             return true;
@@ -107,6 +114,7 @@ public class PlatformCompat extends IPlatformCompat.Stub {
 
     @Override
     public boolean isChangeEnabledByUid(long changeId, int uid) {
+        checkCompatChangeReadPermission();
         String[] packages = mContext.getPackageManager().getPackagesForUid(uid);
         if (packages == null || packages.length == 0) {
             return true;
@@ -139,6 +147,7 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     @Override
     public void setOverrides(CompatibilityChangeConfig overrides, String packageName)
             throws RemoteException, SecurityException {
+        checkCompatChangeOverridePermission();
         mCompatConfig.addOverrides(overrides, packageName);
         killPackage(packageName);
     }
@@ -146,11 +155,13 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     @Override
     public void setOverridesForTest(CompatibilityChangeConfig overrides, String packageName)
             throws RemoteException, SecurityException {
+        checkCompatChangeOverridePermission();
         mCompatConfig.addOverrides(overrides, packageName);
     }
 
     @Override
     public void clearOverrides(String packageName) throws RemoteException, SecurityException {
+        checkCompatChangeOverridePermission();
         mCompatConfig.removePackageOverrides(packageName);
         killPackage(packageName);
     }
@@ -158,12 +169,14 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     @Override
     public void clearOverridesForTest(String packageName)
             throws RemoteException, SecurityException {
+        checkCompatChangeOverridePermission();
         mCompatConfig.removePackageOverrides(packageName);
     }
 
     @Override
     public boolean clearOverride(long changeId, String packageName)
             throws RemoteException, SecurityException {
+        checkCompatChangeOverridePermission();
         boolean existed = mCompatConfig.removeOverride(changeId, packageName);
         killPackage(packageName);
         return existed;
@@ -171,11 +184,13 @@ public class PlatformCompat extends IPlatformCompat.Stub {
 
     @Override
     public CompatibilityChangeConfig getAppConfig(ApplicationInfo appInfo) {
+        checkCompatChangeReadPermission();
         return mCompatConfig.getAppConfig(appInfo);
     }
 
     @Override
     public CompatibilityChangeInfo[] listAllChanges() {
+        checkCompatChangeReadPermission();
         return mCompatConfig.dumpChanges();
     }
 
@@ -214,6 +229,7 @@ public class PlatformCompat extends IPlatformCompat.Stub {
 
     @Override
     protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+        checkCompatChangeReadPermission();
         if (!DumpUtils.checkDumpAndUsageStatsPermission(mContext, "platform_compat", pw)) return;
         mCompatConfig.dumpConfig(pw);
     }
@@ -243,6 +259,7 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     }
 
     private void reportChange(long changeId, int uid, int state) {
+        checkCompatChangeLogPermission();
         mChangeReporter.reportChange(uid, changeId, state);
     }
 
@@ -273,6 +290,27 @@ public class PlatformCompat extends IPlatformCompat.Stub {
             }
         } finally {
             Binder.restoreCallingIdentity(identity);
+        }
+    }
+
+    private void checkCompatChangeLogPermission() throws SecurityException {
+        if (mContext.checkCallingOrSelfPermission(LOG_COMPAT_CHANGE)
+                != PERMISSION_GRANTED) {
+            throw new SecurityException("Cannot log compat change usage");
+        }
+    }
+
+    private void checkCompatChangeReadPermission() throws SecurityException {
+        if (mContext.checkCallingOrSelfPermission(READ_COMPAT_CHANGE_CONFIG)
+                != PERMISSION_GRANTED) {
+            throw new SecurityException("Cannot read compat change");
+        }
+    }
+
+    private void checkCompatChangeOverridePermission() throws SecurityException {
+        if (mContext.checkCallingOrSelfPermission(OVERRIDE_COMPAT_CHANGE_CONFIG)
+                != PERMISSION_GRANTED) {
+            throw new SecurityException("Cannot override compat change");
         }
     }
 }
