@@ -22,6 +22,30 @@
       "revId": "ab31db79305d5c91d426ddfeaf60d4989496bc4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0ca375_96d38802",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1595229
+      },
+      "writtenOn": "2020-01-15T10:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd7b74cf_cf54cbf0",
+      "range": {
+        "startLine": 103,
+        "startChar": 3,
+        "endLine": 103,
+        "endChar": 75
+      },
+      "revId": "ab31db79305d5c91d426ddfeaf60d4989496bc4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
