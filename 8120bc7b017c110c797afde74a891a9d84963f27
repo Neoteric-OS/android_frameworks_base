@@ -118,6 +118,30 @@
       "revId": "8120bc7b017c110c797afde74a891a9d84963f27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb4db25_2d263720",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2020-01-15T22:03:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6e0afc1d_14c6432b",
+      "range": {
+        "startLine": 879,
+        "startChar": 24,
+        "endLine": 879,
+        "endChar": 39
+      },
+      "revId": "8120bc7b017c110c797afde74a891a9d84963f27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
