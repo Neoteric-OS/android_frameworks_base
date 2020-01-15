@@ -46,6 +46,30 @@
       "revId": "8120bc7b017c110c797afde74a891a9d84963f27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bcc4f17_c5140daf",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-01-15T20:16:37Z",
+      "side": 1,
+      "message": "This is a non-updatable part of the platform (afaict) and so they can use it. It was anyway using a hidden API.",
+      "parentUuid": "d5a2634c_29014299",
+      "range": {
+        "startLine": 879,
+        "startChar": 24,
+        "endLine": 879,
+        "endChar": 39
+      },
+      "revId": "8120bc7b017c110c797afde74a891a9d84963f27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
