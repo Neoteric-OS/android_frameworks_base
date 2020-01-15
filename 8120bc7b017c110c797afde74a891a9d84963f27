@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1d5a6e2_554a83fd",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2020-01-15T20:05:47Z",
+      "side": 1,
+      "message": "this is @hide in base/core. can this file access that?",
+      "range": {
+        "startLine": 879,
+        "startChar": 24,
+        "endLine": 879,
+        "endChar": 39
+      },
+      "revId": "8120bc7b017c110c797afde74a891a9d84963f27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
