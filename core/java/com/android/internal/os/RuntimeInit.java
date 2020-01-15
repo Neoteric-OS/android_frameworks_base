@@ -66,6 +66,9 @@ public class RuntimeInit {
     private static final native void nativeFinishInit();
     private static final native void nativeSetExitWithoutCleanup(boolean exitWithoutCleanup);
 
+    // Passes disabled compat changes into bionic.
+    private static native void nativeSetDisabledCompatChanges(long[] disabledCompatChanges);
+
     private static int Clog_e(String tag, String msg, Throwable tr) {
         return Log.printlns(Log.LOG_ID_CRASH, Log.ERROR, tag, msg, tr);
     }
@@ -378,6 +381,8 @@ public class RuntimeInit {
 
         VMRuntime.getRuntime().setTargetSdkVersion(targetSdkVersion);
         VMRuntime.getRuntime().setDisabledCompatChanges(disabledCompatChanges);
+
+        nativeSetDisabledCompatChanges(disabledCompatChanges);
 
         final Arguments args = new Arguments(argv);
 

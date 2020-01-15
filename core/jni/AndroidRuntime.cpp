@@ -20,6 +20,7 @@
 
 #include <android_runtime/AndroidRuntime.h>
 
+#include <android/api-level.h>
 #include <android-base/macros.h>
 #include <android-base/properties.h>
 #include <binder/IBinder.h>
@@ -53,6 +54,8 @@
 
 using namespace android;
 using android::base::GetProperty;
+
+extern "C" void android_set_application_disabled_changes(uint64_t* disabled_changes, uint32_t len);
 
 extern int register_android_os_Binder(JNIEnv* env);
 extern int register_android_os_Process(JNIEnv* env);
@@ -279,6 +282,23 @@ static void com_android_internal_os_RuntimeInit_nativeSetExitWithoutCleanup(JNIE
     gCurRuntime->setExitWithoutCleanup(exitWithoutCleanup);
 }
 
+static void com_android_internal_os_RuntimeInit_nativeSetDisabledCompatChanges(JNIEnv* env,
+        jobject, jlongArray disabled_compat_changes)
+{
+    if (disabled_compat_changes == nullptr) {
+        return;
+    }
+    int length = env->GetArrayLength(disabled_compat_changes);
+    uint64_t* disabled_compat_changes_vec = (uint64_t*) malloc(length * sizeof(uint64_t));
+    jlong* elements = env->GetLongArrayElements(disabled_compat_changes, /*isCopy*/nullptr);
+    for (int i = 0; i < length; i++) {
+        disabled_compat_changes_vec[i] = static_cast<uint64_t>(elements[i]);
+    }
+    android_set_application_disabled_changes(disabled_compat_changes_vec, length);
+    free(disabled_compat_changes_vec);
+}
+
+
 /*
  * JNI registration.
  */
@@ -290,6 +310,8 @@ int register_com_android_internal_os_RuntimeInit(JNIEnv* env)
             (void*) com_android_internal_os_RuntimeInit_nativeFinishInit },
         { "nativeSetExitWithoutCleanup", "(Z)V",
             (void*) com_android_internal_os_RuntimeInit_nativeSetExitWithoutCleanup },
+        { "nativeSetDisabledCompatChanges", "([J)V",
+            (void*) com_android_internal_os_RuntimeInit_nativeSetDisabledCompatChanges },
     };
     return jniRegisterNativeMethods(env, "com/android/internal/os/RuntimeInit",
         methods, NELEM(methods));
