@@ -94,6 +94,30 @@
       "revId": "8120bc7b017c110c797afde74a891a9d84963f27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0afc1d_14c6432b",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2020-01-15T21:44:34Z",
+      "side": 1,
+      "message": "Per Amit sounds like they can use it so we are good.\nAdding a new executor or simply creating an anonymous one is also fine",
+      "parentUuid": "74da6b4e_5c07f987",
+      "range": {
+        "startLine": 879,
+        "startChar": 24,
+        "endLine": 879,
+        "endChar": 39
+      },
+      "revId": "8120bc7b017c110c797afde74a891a9d84963f27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
