@@ -22,6 +22,30 @@
       "revId": "451ab79b44a7ac9d079507566e8c90720f16386d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad9eefd_1cf8ed2e",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-15T09:37:09Z",
+      "side": 0,
+      "message": "Yes, timeouts have been troublesome (in rare cases it can take a lot of time for the NetworkStack to start, notably after a system update). Here it\u0027s in the code path to start tethering, so should not affect boot.",
+      "parentUuid": "2a8ed98e_7ca49f4e",
+      "range": {
+        "startLine": 357,
+        "startChar": 32,
+        "endLine": 357,
+        "endChar": 94
+      },
+      "revId": "451ab79b44a7ac9d079507566e8c90720f16386d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
