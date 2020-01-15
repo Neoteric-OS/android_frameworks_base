@@ -82,6 +82,10 @@ public final class RecordingActivityMonitor implements AudioSystem.AudioRecordin
             return mDeathHandler != null;
         }
 
+        RecorderDeathHandler getDeadthHandler() {
+            return mDeathHandler;
+        }
+
         boolean isActiveConfiguration() {
             return mIsActive && mConfig != null;
         }
@@ -413,6 +417,9 @@ public final class RecordingActivityMonitor implements AudioSystem.AudioRecordin
                         // A recorder tracked by AudioServer has to be removed now so it
                         // does not leak. It will be re-registered if recording starts again.
                         mRecordStates.remove(stateIndex);
+                    } else {
+                        RecorderDeathHandler handler = state.getDeadthHandler();
+                        handler.release();
                     }
                     break;
                 case AudioManager.RECORD_CONFIG_EVENT_RELEASE:
@@ -518,6 +525,11 @@ public final class RecordingActivityMonitor implements AudioSystem.AudioRecordin
                 Log.w(TAG, "Could not link to recorder death", e);
                 return false;
             }
+        }
+
+        boolean release() {
+          mRecorderToken.unlinkToDeath(this, 0);
+          return true;
         }
     }
 
