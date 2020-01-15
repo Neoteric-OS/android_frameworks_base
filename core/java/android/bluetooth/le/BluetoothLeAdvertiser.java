@@ -362,6 +362,16 @@ public final class BluetoothLeAdvertiser {
             boolean support2MPhy = mBluetoothAdapter.isLe2MPhySupported();
             int pphy = parameters.getPrimaryPhy();
             int sphy = parameters.getSecondaryPhy();
+            boolean isScannable = parameters.isScannable();
+            if (isScannable && totalBytes(advertiseData, false) != 0){
+              throw new IllegalArgumentException(
+                        "Shall not set advertising data in Scannable ADV");
+            }
+            else if (!isScannable && totalBytes(scanResponse, false) != 0) {
+              throw new IllegalArgumentException(
+                        "Shall not set scanResponse data in Non-Scannable ADV");
+            }
+
             if (pphy == BluetoothDevice.PHY_LE_CODED && !supportCodedPhy) {
                 throw new IllegalArgumentException("Unsupported primary PHY selected");
             }
