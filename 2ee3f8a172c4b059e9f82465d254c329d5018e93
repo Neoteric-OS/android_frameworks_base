@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "90790383_c17f7293",
+        "filename": "core/java/android/net/NetworkPolicyListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-15T07:14:04Z",
+      "side": 1,
+      "message": "Considering with this registerListener() and unregisterListener() are purely internal we could also rename them later really.\n\nSo if I had to make the call I would call them Callback, tolerate the inconsistency for now, and later we can rename them. Leave a TODO in this patch to rename the old ones.\n\nBut in this case, in the interest of expediency, considering we don\u0027t feel strongly at all, let\u0027s merge as is. We\u0027ll see if the API council does feel strongly.",
+      "parentUuid": "d0e3ed00_83977344",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "2ee3f8a172c4b059e9f82465d254c329d5018e93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba843efb_06413eae",
         "filename": "core/java/android/net/NetworkPolicyListener.java",
         "patchSetId": 2
