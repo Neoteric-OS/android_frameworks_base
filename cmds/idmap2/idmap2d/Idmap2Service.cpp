@@ -93,7 +93,8 @@ Status Idmap2Service::removeIdmap(const std::string& overlay_apk_path,
   return ok();
 }
 
-Status Idmap2Service::verifyIdmap(const std::string& overlay_apk_path,
+Status Idmap2Service::verifyIdmap(const std::string& target_apk_path,
+                                  const std::string& overlay_apk_path,
                                   int32_t fulfilled_policies ATTRIBUTE_UNUSED,
                                   bool enforce_overlayable ATTRIBUTE_UNUSED,
                                   int32_t user_id ATTRIBUTE_UNUSED, bool* _aidl_return) {
@@ -103,7 +104,14 @@ Status Idmap2Service::verifyIdmap(const std::string& overlay_apk_path,
   std::ifstream fin(idmap_path);
   const std::unique_ptr<const IdmapHeader> header = IdmapHeader::FromBinaryStream(fin);
   fin.close();
-  *_aidl_return = header && header->IsUpToDate();
+  if (!header) {
+    *_aidl_return  = false;
+    return error("failed to parse idmap header");
+  }
+
+  std::string idmap_target_path = header->GetTargetPath().to_string();
+  *_aidl_return = header->IsUpToDate()
+            && idmap_target_path.compare(0, target_apk_path.size(), target_apk_path) == 0;
 
   // TODO(b/119328308): Check that the set of fulfilled policies of the overlay has not changed
 

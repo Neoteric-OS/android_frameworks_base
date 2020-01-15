@@ -81,7 +81,7 @@ class IdmapManager {
             if (FEATURE_FLAG_IDMAP2) {
                 int policies = calculateFulfilledPolicies(targetPackage, overlayPackage, userId);
                 boolean enforce = enforceOverlayable(overlayPackage);
-                if (mIdmapDaemon.verifyIdmap(overlayPath, policies, enforce, userId)) {
+                if (mIdmapDaemon.verifyIdmap(targetPath, overlayPath, policies, enforce, userId)) {
                     return true;
                 }
                 return mIdmapDaemon.createIdmap(targetPath, overlayPath, policies,

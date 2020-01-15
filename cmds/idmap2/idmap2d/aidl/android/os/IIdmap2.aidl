@@ -30,7 +30,8 @@ interface IIdmap2 {
 
   @utf8InCpp String getIdmapPath(@utf8InCpp String overlayApkPath, int userId);
   boolean removeIdmap(@utf8InCpp String overlayApkPath, int userId);
-  boolean verifyIdmap(@utf8InCpp String overlayApkPath, int fulfilledPolicies,
+  boolean verifyIdmap(@utf8InCpp String targetApkPath,
+					  @utf8InCpp String overlayApkPath, int fulfilledPolicies,
                       boolean enforceOverlayable, int userId);
   @nullable @utf8InCpp String createIdmap(@utf8InCpp String targetApkPath,
                                           @utf8InCpp String overlayApkPath,
