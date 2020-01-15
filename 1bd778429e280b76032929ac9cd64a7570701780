@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27af792b_20247730",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2020-01-15T00:37:54Z",
+      "side": 1,
+      "message": "Added a rate limit to the PowerManager call before we even call into ThermalManagerService",
+      "parentUuid": "3f5539e8_be6e1656",
+      "range": {
+        "startLine": 474,
+        "startChar": 7,
+        "endLine": 480,
+        "endChar": 9
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39ff87ca_062258ed",
         "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-06T20:08:48Z",
       "side": 1,
       "message": "can we reuse com.android.server.FgThread? as this won\u0027t post too frequently?",
+      "range": {
+        "startLine": 1069,
+        "startChar": 46,
+        "endLine": 1069,
+        "endChar": 59
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e9faea7_d0ee5971",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2020-01-15T00:37:54Z",
+      "side": 1,
+      "message": "Are we worried that if the HAL wedges we could take down FgThread for everyone?",
+      "parentUuid": "39ff87ca_062258ed",
       "range": {
         "startLine": 1069,
         "startChar": 46,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e58cfd79_d1ad1bb1",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2020-01-15T00:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1423166f_321a9a8b",
+      "range": {
+        "startLine": 1075,
+        "startChar": 8,
+        "endLine": 1075,
+        "endChar": 12
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ee146e3_c9d81c61",
         "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "1bd778429e280b76032929ac9cd64a7570701780",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07938c68_5d548a95",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2020-01-15T00:37:54Z",
+      "side": 1,
+      "message": "Removed debug Slogs",
+      "parentUuid": "4ee146e3_c9d81c61",
+      "range": {
+        "startLine": 1076,
+        "startChar": 17,
+        "endLine": 1076,
+        "endChar": 18
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0ecad38c_bc329156",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2020-01-15T00:37:54Z",
+      "side": 1,
+      "message": "I store the times now, so this shouldn\u0027t be an issue",
+      "parentUuid": "cbf4adc5_45ceb4b6",
+      "range": {
+        "startLine": 1101,
+        "startChar": 16,
+        "endLine": 1105,
+        "endChar": 72
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68b3248b_4af94c08",
         "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
         "patchSetId": 7
@@ -128,6 +248,30 @@
       "writtenOn": "2020-01-06T20:08:48Z",
       "side": 1,
       "message": "move to constructor",
+      "range": {
+        "startLine": 1195,
+        "startChar": 16,
+        "endLine": 1205,
+        "endChar": 0
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c061d77d_3e48af2d",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2020-01-15T00:37:54Z",
+      "side": 1,
+      "message": "I think this doesn\u0027t work because the in order to get the thresholds, we need the HAL, but the HAL isn\u0027t initialized until onActivityManagerReady, so doing it in the c\u0027tor throws a null exception",
+      "parentUuid": "68b3248b_4af94c08",
       "range": {
         "startLine": 1195,
         "startChar": 16,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "15e5191b_fff0ae5e",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2020-01-15T00:37:54Z",
+      "side": 1,
+      "message": "Since we\u0027re in a lambda in a foreach, this return is effectively a continue, as far as I know",
+      "parentUuid": "c695b2ce_04ac32c0",
+      "range": {
+        "startLine": 1211,
+        "startChar": 24,
+        "endLine": 1211,
+        "endChar": 30
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70000484_d10228ea",
         "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
         "patchSetId": 7
@@ -183,6 +351,30 @@
       "revId": "1bd778429e280b76032929ac9cd64a7570701780",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2807369_00dd46ba",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2020-01-15T00:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70000484_d10228ea",
+      "range": {
+        "startLine": 1214,
+        "startChar": 42,
+        "endLine": 1214,
+        "endChar": 43
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
