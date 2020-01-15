@@ -78,7 +78,7 @@ import java.io.PrintWriter;
     private static long sLastDeviceConnectMsgTime = 0;
 
     // General lock to be taken whenever the state of the audio devices is to be checked or changed
-    private final Object mDeviceStateLock = new Object();
+    final Object mDeviceStateLock = new Object();
 
     // Request to override default use of A2DP for media.
     @GuardedBy("mDeviceStateLock")
