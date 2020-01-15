@@ -149,10 +149,15 @@ void ProfileData::reset() {
 void ProfileData::reportFrame(int64_t duration) {
     mTotalFrameCount++;
     uint32_t framebucket = frameCountIndexForFrameTime(duration);
-    if (framebucket <= mFrameCounts.size()) {
+    if (framebucket < mFrameCounts.size()) {
         mFrameCounts[framebucket]++;
     } else {
-        framebucket = (ns2ms(duration) - kSlowFrameBucketStartMs) / kSlowFrameBucketIntervalMs;
+        duration = ns2ms(duration);
+        if (duration < kSlowFrameBucketStartMs) {
+            mFrameCounts[mFrameCounts.size() - 1]++;
+            return;
+        }
+        framebucket = (duration - kSlowFrameBucketStartMs) / kSlowFrameBucketIntervalMs;
         framebucket = std::min(framebucket, static_cast<uint32_t>(mSlowFrameCounts.size() - 1));
         mSlowFrameCounts[framebucket]++;
     }
