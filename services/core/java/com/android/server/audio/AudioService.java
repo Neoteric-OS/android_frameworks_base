@@ -1102,14 +1102,16 @@ public class AudioService extends IAudioService.Stub
 
     private void checkAllAliasStreamVolumes() {
         synchronized (mSettingsLock) {
-            synchronized (VolumeStreamState.class) {
-                int numStreamTypes = AudioSystem.getNumStreamTypes();
-                for (int streamType = 0; streamType < numStreamTypes; streamType++) {
-                    mStreamStates[streamType]
+            synchronized (mDeviceBroker.mDeviceStateLock) {
+                synchronized (VolumeStreamState.class) {
+                   int numStreamTypes = AudioSystem.getNumStreamTypes();
+                   for (int streamType = 0; streamType < numStreamTypes; streamType++) {
+                       mStreamStates[streamType]
                             .setAllIndexes(mStreamStates[mStreamVolumeAlias[streamType]], TAG);
-                    // apply stream volume
-                    if (!mStreamStates[streamType].mIsMuted) {
-                        mStreamStates[streamType].applyAllVolumes();
+                       // apply stream volume
+                       if (!mStreamStates[streamType].mIsMuted) {
+                           mStreamStates[streamType].applyAllVolumes();
+                       }
                     }
                 }
             }
