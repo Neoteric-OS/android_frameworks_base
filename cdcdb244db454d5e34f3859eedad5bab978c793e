@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b2b0339_64725d5c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 7443,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-15T07:13:13Z",
+      "side": 1,
+      "message": "I think this is safe from a privacy perspective; without the isNetworkOwner, this should just never grant permission (which is still safe)",
+      "range": {
+        "startLine": 7443,
+        "startChar": 12,
+        "endLine": 7443,
+        "endChar": 51
+      },
+      "revId": "cdcdb244db454d5e34f3859eedad5bab978c793e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90d859c3_b9863905",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6388,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-15T07:13:13Z",
+      "side": 1,
+      "message": "the VPN array is keyed on userhandle; so we\u0027ll need to translate from UIDs to UserHandle IDs.\n\ntake a look at UserHandle.getUserId(uid);",
+      "range": {
+        "startLine": 6388,
+        "startChar": 34,
+        "endLine": 6388,
+        "endChar": 49
+      },
+      "revId": "cdcdb244db454d5e34f3859eedad5bab978c793e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b628cdf4_b1616f9a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6388,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-15T07:13:13Z",
+      "side": 1,
+      "message": "Removing is probably not quite the right thing to do here; we probably want to \"turn off\" the VPN. Probably call disconnect on the actual VPN entry",
+      "range": {
+        "startLine": 6388,
+        "startChar": 27,
+        "endLine": 6388,
+        "endChar": 33
+      },
+      "revId": "cdcdb244db454d5e34f3859eedad5bab978c793e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670f97e2_6d23e0d3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6409,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-15T07:13:13Z",
+      "side": 1,
+      "message": "In general, NetworkRequests are built using the builder:\n\n        final NetworkRequest cellRequest \u003d new NetworkRequest.Builder()\n                .addTransportType(TRANSPORT_CELLULAR)\n                .build();\n        mCm.registerNetworkCallback(cellRequest, cellNetworkCallback);",
+      "range": {
+        "startLine": 6405,
+        "startChar": 15,
+        "endLine": 6409,
+        "endChar": 52
+      },
+      "revId": "cdcdb244db454d5e34f3859eedad5bab978c793e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf59aece_9a0f6c11",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6415,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-15T07:13:13Z",
+      "side": 1,
+      "message": "I might be missing something, but can we register these using our binder API? (or even the mCm WrappedConnectivityManager)",
+      "range": {
+        "startLine": 6415,
+        "startChar": 17,
+        "endLine": 6415,
+        "endChar": 50
+      },
+      "revId": "cdcdb244db454d5e34f3859eedad5bab978c793e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
