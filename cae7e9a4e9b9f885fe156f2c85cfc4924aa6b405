@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d377d436_a28bd984",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-15T08:47:48Z",
+      "side": 1,
+      "message": "Meh, I now notice the signature of equals() is not boolean Object#equals(Object, Object) but boolean Object#(Object). That\u0027s what I get for staying up late\n\nAnyway, I think it\u0027s better with the new name, as it removes the potential for confusion.",
+      "parentUuid": "5173f7e3_bed0df77",
+      "range": {
+        "startLine": 71,
+        "startChar": 26,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "cae7e9a4e9b9f885fe156f2c85cfc4924aa6b405",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddb38c66_f10e4b2f",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 7
