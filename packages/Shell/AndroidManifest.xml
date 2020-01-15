@@ -219,6 +219,10 @@
     <!-- Permission required for CTS test - TetheringManagerTest -->
     <uses-permission android:name="android.permission.TETHER_PRIVILEGED"/>
 
+    <!-- Permission needed to run compat change unit and CTS tests -->
+    <uses-permission android:name="android.permission.READ_COMPAT_CHANGE_CONFIG"/>
+    <uses-permission android:name="android.permission.OVERRIDE_COMPAT_CHANGE_CONFIG" />
+
     <application android:label="@string/app_label"
                 android:theme="@android:style/Theme.DeviceDefault.DayNight"
                 android:defaultToDeviceProtectedStorage="true"
