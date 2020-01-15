@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e079f9ca_ebc36404",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2020-01-15T12:14:10Z",
+      "side": 0,
+      "message": "any reason you need to remove this?",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 53,
+        "endChar": 24
+      },
+      "revId": "b90330ea860936e30bab73bca75d62a052016633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
