@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "68f8360e_5377d5d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-15T21:39:42Z",
+      "side": 1,
+      "message": "Please elaborate the test steps used.  Saying you built the code isn\u0027t enough.\nPlease make sure to enumerate the new CTS tests added, unit tests added, and unit tests run.s",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 10
+      },
+      "revId": "ab31db79305d5c91d426ddfeaf60d4989496bc4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd7b74cf_cf54cbf0",
         "filename": "core/java/android/util/RecurrenceRule.java",
         "patchSetId": 5
