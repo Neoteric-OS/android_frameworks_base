@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Amit Mahajan <amitmahajan@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Ready+1: Zongheng Wang <wangzongheng@google.com>
+API-Review+1: Tyler Gunn <tgunn@google.com>
+Submitted-by: Zongheng Wang <wangzongheng@google.com>
+Submitted-at: Wed, 15 Jan 2020 03:05:11 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1197114
+Project: platform/frameworks/base
+Branch: refs/heads/master
