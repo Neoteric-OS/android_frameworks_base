@@ -1,0 +1,12 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+1: Todd Kennedy <toddke@google.com>
+Code-Review+2: Robin Jacob <robinjacob@google.com>
+DrNo-Review+1: Robin Jacob <robinjacob@google.com>
+Autosubmit+1: Jay Patel <pateljay@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 15 Jan 2020 01:07:19 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1202365
+Project: platform/frameworks/base
+Branch: refs/heads/android10-tests-dev
