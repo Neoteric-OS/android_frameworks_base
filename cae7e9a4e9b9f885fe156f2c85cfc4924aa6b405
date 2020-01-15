@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0e2d8be_497cb796",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-15T03:52:57Z",
+      "side": 1,
+      "message": "I don\u0027t think you can call this equals() ; equals() is defined as Object#equals(Object, Object) and not \u003cT\u003e T#equals(? extends T, ? extends T), which means this builds and if I call ConnectivityDiagnosticsManager.class.equals(x, y) I get very unexpected results. Also if I have an instance of ConnectivityDiagnosticsManager and I call .equals() of it, it resolves to this method.",
+      "range": {
+        "startLine": 71,
+        "startChar": 26,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "cae7e9a4e9b9f885fe156f2c85cfc4924aa6b405",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb38c66_f10e4b2f",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-15T03:52:57Z",
+      "side": 1,
+      "message": "Do you need this if you have the next line ? Is this for performance ?",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "cae7e9a4e9b9f885fe156f2c85cfc4924aa6b405",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a20087_4944fb69",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-15T03:52:57Z",
+      "side": 1,
+      "message": "You don\u0027t need the defensive copy for Network objects (they behave as if immutable).",
+      "range": {
+        "startLine": 137,
+        "startChar": 23,
+        "endLine": 137,
+        "endChar": 30
+      },
+      "revId": "cae7e9a4e9b9f885fe156f2c85cfc4924aa6b405",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9e87e1_b22507bf",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-15T03:52:57Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 183,
+        "startChar": 12,
+        "endLine": 183,
+        "endChar": 30
+      },
+      "revId": "cae7e9a4e9b9f885fe156f2c85cfc4924aa6b405",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90293e84_09e7518d",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-15T03:52:57Z",
+      "side": 1,
+      "message": "You can just say in.readParcelable(null)",
+      "range": {
+        "startLine": 226,
+        "startChar": 48,
+        "endLine": 226,
+        "endChar": 64
+      },
+      "revId": "cae7e9a4e9b9f885fe156f2c85cfc4924aa6b405",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd55a51_cfe45ddf",
+        "filename": "tests/net/java/android/net/ConnectivityDiagnosticsManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-15T03:52:57Z",
+      "side": 1,
+      "message": "Suggest calling this \"make\" or \"create\" instead of get to clarify that it will create a new one",
+      "range": {
+        "startLine": 43,
+        "startChar": 31,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "cae7e9a4e9b9f885fe156f2c85cfc4924aa6b405",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b38bd0_5255eb44",
+        "filename": "tests/net/java/android/net/ConnectivityDiagnosticsManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-15T03:52:57Z",
+      "side": 1,
+      "message": "Also test the reverse cases ((a, EMPTY), (b, a), (c, a))",
+      "range": {
+        "startLine": 74,
+        "startChar": 56,
+        "endLine": 74,
+        "endChar": 63
+      },
+      "revId": "cae7e9a4e9b9f885fe156f2c85cfc4924aa6b405",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68ade4d_a2e1d305",
+        "filename": "tests/net/java/android/net/ConnectivityDiagnosticsManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-15T03:52:57Z",
+      "side": 1,
+      "message": "(I won\u0027t insist but) if you find it in you test for each different field",
+      "range": {
+        "startLine": 83,
+        "startChar": 20,
+        "endLine": 83,
+        "endChar": 38
+      },
+      "revId": "cae7e9a4e9b9f885fe156f2c85cfc4924aa6b405",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe16274_a5a35619",
+        "filename": "tests/net/java/android/net/ConnectivityDiagnosticsManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-15T03:52:57Z",
+      "side": 1,
+      "message": "assertParcelSane does this for you",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 33
+      },
+      "revId": "cae7e9a4e9b9f885fe156f2c85cfc4924aa6b405",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
