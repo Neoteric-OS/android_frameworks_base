@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a0648b1_11cd30a0",
+        "filename": "core/java/android/net/NetworkPolicyListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2020-01-15T09:37:06Z",
+      "side": 1,
+      "message": "Uid rules are implementation detail and I\u0027m not really comfortable with exposing them as API. INetworkPolicyListener itself was never designed with this intention, it feels weird exposing it as API as is. I\u0027m assuming you are interested in onSubscriptionOverride and onSubscriptionPlansChanged (I don\u0027t actually see this here, is it intentionally left out?) callbacks, I would suggest creating a new listener specific to your use case but it is unlikely I will be able to look at it in the next few days.",
+      "range": {
+        "startLine": 41,
+        "startChar": 3,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "18f854f864cde02fe324293e4cdcae40fe393adc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
