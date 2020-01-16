@@ -46,6 +46,30 @@
       "revId": "dc21a63e259eae018b0654d54ca9dccb053a3774",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efea67dd_5277290d",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1294681
+      },
+      "writtenOn": "2020-01-16T19:21:04Z",
+      "side": 1,
+      "message": "Sounds good; previous java readability reviews have requested that I not add parameters until they are used, but for iterative development it seems to make more sense that it is introduced here.",
+      "parentUuid": "5c07448a_eab18e4a",
+      "range": {
+        "startLine": 724,
+        "startChar": 47,
+        "endLine": 724,
+        "endChar": 65
+      },
+      "revId": "dc21a63e259eae018b0654d54ca9dccb053a3774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
