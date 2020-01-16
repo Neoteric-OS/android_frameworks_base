@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "565f14d4_923820f0",
+        "filename": "api/current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 29753,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-16T22:34:33Z",
+      "side": 1,
+      "message": "You are gonna have to spruce up these APIs to get it to pass API checks (Using list instead of array, etc..) see build failures.",
+      "range": {
+        "startLine": 29753,
+        "startChar": 19,
+        "endLine": 29753,
+        "endChar": 46
+      },
+      "revId": "00f024734e29cdfedd8c03703e592423110ba83d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
