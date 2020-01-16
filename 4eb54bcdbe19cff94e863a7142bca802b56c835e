@@ -25,6 +25,352 @@
     },
     {
       "key": {
+        "uuid": "f1ceb1e7_9404ad38",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "Sounds to me like we should probably remove this and use Process.INVALID_UID across the board. I\u0027d file a bug if I had access to buganizer right now :/",
+      "parentUuid": "6734979e_bd4c94d2",
+      "range": {
+        "startLine": 60,
+        "startChar": 28,
+        "endLine": 60,
+        "endChar": 39
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85067d80_7e942695",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "null otherwise I expect ?",
+      "range": {
+        "startLine": 567,
+        "startChar": 94,
+        "endLine": 567,
+        "endChar": 95
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fe958f_d1f8f850",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "redirected",
+      "range": {
+        "startLine": 567,
+        "startChar": 61,
+        "endLine": 567,
+        "endChar": 69
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d056696a_16a74c3c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "Should we just take over that one ? Do we have a use case for keeping both ?",
+      "range": {
+        "startLine": 572,
+        "startChar": 22,
+        "endLine": 572,
+        "endChar": 42
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4724276e_de8dc526",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2747,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "Does it make sense that you\u0027re not setting anything else on this that was in the original message, and that you (populate but) don\u0027t read msg.arg1 and msg.obj at all ?",
+      "range": {
+        "startLine": 2747,
+        "startChar": 20,
+        "endLine": 2747,
+        "endChar": 29
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18732a1d_e1ea2677",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 7212,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "Just inline this",
+      "range": {
+        "startLine": 7212,
+        "startChar": 18,
+        "endLine": 7212,
+        "endChar": 21
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800a4c0f_099f8789",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 7416,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "This is a lot later than when the network was actually tested. There was an IPC, then multiple trips around the runloop of the handler...",
+      "range": {
+        "startLine": 7416,
+        "startChar": 24,
+        "endLine": 7416,
+        "endChar": 51
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7e6eed_4fe93d9d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 7418,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "...during which this and the LP may have changed.",
+      "range": {
+        "startLine": 7418,
+        "startChar": 28,
+        "endLine": 7418,
+        "endChar": 47
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b791797e_2848f8a0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 7420,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "final (yeah I know, so just rename the variable to \u0027cb\u0027 or \u0027c\u0027 😊)",
+      "range": {
+        "startLine": 7420,
+        "startChar": 13,
+        "endLine": 7420,
+        "endChar": 18
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c20304_bc515244",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "I\u0027m surprised we didn\u0027t already have something for this",
+      "range": {
+        "startLine": 361,
+        "startChar": 35,
+        "endLine": 361,
+        "endChar": 47
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de716041_1d444432",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "What\u0027s the point of calling this in a unit test ?",
+      "range": {
+        "startLine": 457,
+        "startChar": 23,
+        "endLine": 457,
+        "endChar": 45
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710cffa3_73475cf4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6357,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "Can we have a test strategy that\u0027s more centered on externally-observable behavior ? For example this test does not react at all to a removal of the call to checkConnectivityDiagnosticsPermissions before sending the callback.\n\nSomething like :\n① Have a uid register a callback and check that we throw\n② Grant permissions to that UID\n③ Have it register a callback, check that it succeeds\n④ Generate a fake event, check that the callback is indeed called\n⑤ Revoke permissions\n⑥ Generate a fake event, check that the callback is not called after 500ms or so",
+      "range": {
+        "startLine": 6357,
+        "startChar": 16,
+        "endLine": 6357,
+        "endChar": 59
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a66822_2c7b9296",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6358,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "That\u0027s just the pid and uid of the test process as you\u0027re not in a binder call here",
+      "range": {
+        "startLine": 6358,
+        "startChar": 18,
+        "endLine": 6358,
+        "endChar": 21
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa87d83c_9053183b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6372,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "Can you please have a function to add the permissions rather than accessing the member directly like this ? I suggest it takes a permission and a UID rather than just a permission.\n\n(by the way doing this negates the point of having mPermissions being private – Java generates a synthetic accessor to it for use in this parent class)",
+      "range": {
+        "startLine": 6372,
+        "startChar": 24,
+        "endLine": 6372,
+        "endChar": 36
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b208f8c_0801f228",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6385,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "Isn\u0027t that just mMockVpn ?",
+      "range": {
+        "startLine": 6385,
+        "startChar": 26,
+        "endLine": 6385,
+        "endChar": 29
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3825b90_0934aba2",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
@@ -41,6 +387,52 @@
         "startChar": 25,
         "endLine": 6390,
         "endChar": 64
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a16adc_78848b63",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6416,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "Why add SUPL ?",
+      "range": {
+        "startLine": 6416,
+        "startChar": 40,
+        "endLine": 6416,
+        "endChar": 59
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74250559_1cd23d95",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6418,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T18:22:09Z",
+      "side": 1,
+      "message": "Please do this with TestNetworkCallback instead. It\u0027s a lot clearer, a lot cleaner, and a lot less flaky. There are plenty of tests doing this in this file.",
+      "range": {
+        "startLine": 6417,
+        "startChar": 8,
+        "endLine": 6418,
+        "endChar": 85
       },
       "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
