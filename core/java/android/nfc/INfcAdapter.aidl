@@ -71,5 +71,7 @@ interface INfcAdapter
     boolean isNfcSecureEnabled();
     boolean deviceSupportsNfcSecure();
     boolean setNfcSecure(boolean enable);
+    int selectUicc(int uiccSlot);
+    int getSelectedUicc();
 
 }

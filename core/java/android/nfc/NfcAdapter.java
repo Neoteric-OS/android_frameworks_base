@@ -1793,6 +1793,65 @@ public final class NfcAdapter {
     }
 
     /**
+     * If device supports multiple UICCs with NFC support, select the UICC
+     * corresponding to Slot number provided for NFC transactions. Selected UICC
+     * shall be used for all UICC entries in routing table.
+     *
+     * <p>Requires {@link android.Manifest.permission#NFC} permission and
+     * shall be called only while Nfcservice is enabled.
+     *
+     * @param  uiccSlot uicc slot number to select
+     * @return whether the UICC selection is success or not.
+     * 0x00  SUCCESS
+     * 0x01  ERROR_INVALID_SLOT
+     * 0xFF  Remote Exception
+     *
+     * @throws UnsupportedOperationException if FEATURE_NFC is unavailable
+     */
+    public int selectUicc(int uiccSlot) {
+        if (!sHasNfcFeature) {
+            throw new UnsupportedOperationException();
+        }
+        try {
+            return sService.selectUicc(uiccSlot);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            attemptDeadServiceRecovery(e);
+            return 0xFF;
+        }
+    }
+    /**
+     * Returns current selected UICC slot along with its status.
+     *
+     * <p>Requires {@link android.Manifest.permission#NFC} permission and
+     * shall be called only while Nfcservice is enabled.
+     *
+     * @return status of current selected UICC
+     * 0x01  UICC_01_SELECTED_ENABLED
+     * 0x02  UICC_01_SELECTED_DISABLED,
+     * 0x03  UICC_01_REMOVED,
+     * 0x04  UICC_02_SELECTED_ENABLED,
+     * 0x05  UICC_02_SELECTED_DISABLED,
+     * 0x06  UICC_02_REMOVED,
+     * 0x07  UICC_STATUS_UNKNOWN
+     * 0xFF  Remote Exception
+     *
+     * @throws UnsupportedOperationException if FEATURE_NFC is unavailable
+     */
+    public int getSelectedUicc() {
+        if (!sHasNfcFeature) {
+            throw new UnsupportedOperationException();
+        }
+        try {
+            return sService.getSelectedUicc();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            attemptDeadServiceRecovery(e);
+            return 0xFF;
+        }
+    }
+
+    /**
      * Enable NDEF Push feature.
      * <p>This API is for the Settings application.
      * @hide
