@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "073b351b_d6a51b57",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T22:19:44Z",
+      "side": 1,
+      "message": "Given that platform VPNs don\u0027t have to define a VpnService in the manifest - you could provision always-on support setting via PlatformVpnProfile.",
+      "parentUuid": "4846d3c6_9b13dfb0",
+      "range": {
+        "startLine": 30,
+        "startChar": 91,
+        "endLine": 31,
+        "endChar": 6
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc216e90_2cf88ba3",
         "filename": "core/java/android/net/VpnManager.java",
         "patchSetId": 27
@@ -41,6 +65,75 @@
         "startChar": 21,
         "endLine": 34,
         "endChar": 30
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7313a76e_8b468ee0",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T22:19:44Z",
+      "side": 1,
+      "message": "Since this overrides any previously installed profile - a better name would be something that is indicative of that. So something like - provisionOrUpdateVpnProfile, or installOrUpdateVpnProfile (WifiNetworkSuggestions follow similar pattern btw).",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 37
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b487322_ac8d8b71",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T22:19:44Z",
+      "side": 1,
+      "message": "Do we expect any exception to be thrown in case an app calls delete before provisioning profile? If so, document it.",
+      "range": {
+        "startLine": 70,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 43
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a37d798_11a08db9",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T22:19:44Z",
+      "side": 1,
+      "message": "Is there a use case for a VPN to provision more than one profile?",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 5
       },
       "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
