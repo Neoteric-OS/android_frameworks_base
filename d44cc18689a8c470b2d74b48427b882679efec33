@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a776eb52_9ed772ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T15:04:30Z",
+      "side": 1,
+      "message": "Can you manually test that it\u0027s possible to get an instance of the manager through getSystemService ? Possibly even write a CTS for that ?",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "d44cc18689a8c470b2d74b48427b882679efec33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
