@@ -6414,14 +6414,16 @@ public class ConnectivityServiceTest {
     public void testRegisterUnregisterConnectivityDiagnosticsCallback() throws Exception {
         final NetworkRequest wifiRequest =
                 new NetworkRequest.Builder().addTransportType(TRANSPORT_WIFI).build();
-
         when(mConnectivityDiagnosticsCallback.asBinder()).thenReturn(mIBinder);
 
         mService.registerConnectivityDiagnosticsCallback(
                 mConnectivityDiagnosticsCallback, wifiRequest, mContext.getPackageName());
 
-        verify(mIBinder, timeout(TIMEOUT_MS))
-                .linkToDeath(any(ConnectivityDiagnosticsCallbackInfo.class), anyInt());
+        // Block until all other events are done processing.
+        HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+
+        verify(mIBinder).linkToDeath(any(ConnectivityDiagnosticsCallbackInfo.class), anyInt());
+        verify(mConnectivityDiagnosticsCallback).asBinder();
         assertTrue(
                 mService.mConnectivityDiagnosticsCallbacks.containsKey(
                         mConnectivityDiagnosticsCallback));
@@ -6444,8 +6446,10 @@ public class ConnectivityServiceTest {
         mService.registerConnectivityDiagnosticsCallback(
                 mConnectivityDiagnosticsCallback, wifiRequest, mContext.getPackageName());
 
-        verify(mIBinder, timeout(TIMEOUT_MS))
-                .linkToDeath(any(ConnectivityDiagnosticsCallbackInfo.class), anyInt());
+        // Block until all other events are done processing.
+        HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+
+        verify(mIBinder).linkToDeath(any(ConnectivityDiagnosticsCallbackInfo.class), anyInt());
         verify(mConnectivityDiagnosticsCallback).asBinder();
         assertTrue(
                 mService.mConnectivityDiagnosticsCallbacks.containsKey(
@@ -6603,8 +6607,11 @@ public class ConnectivityServiceTest {
     public void testConnectivityDiagnosticsCallbackOnConnectivityReport() throws Exception {
         setUpConnectivityDiagnosticsCallback();
 
-        // Wait for onConnectivityReport to fire
-        verify(mConnectivityDiagnosticsCallback, timeout(TIMEOUT_MS))
+        // Block until all other events are done processing.
+        HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+
+        // Verify onConnectivityReport fired
+        verify(mConnectivityDiagnosticsCallback)
                 .onConnectivityReport(any(ConnectivityReport.class));
     }
 
@@ -6616,9 +6623,11 @@ public class ConnectivityServiceTest {
         // cellular network agent
         mCellNetworkAgent.notifyDataStallSuspected();
 
-        // Wait for onDataStallSuspected to fire
-        verify(mConnectivityDiagnosticsCallback, timeout(TIMEOUT_MS))
-                .onDataStallSuspected(any(DataStallReport.class));
+        // Block until all other events are done processing.
+        HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+
+        // Verify onDataStallSuspected fired
+        verify(mConnectivityDiagnosticsCallback).onDataStallSuspected(any(DataStallReport.class));
     }
 
     @Test
@@ -6629,15 +6638,21 @@ public class ConnectivityServiceTest {
         final boolean hasConnectivity = true;
         mService.reportNetworkConnectivity(n, hasConnectivity);
 
-        // Wait for onNetworkConnectivityReported to fire
-        verify(mConnectivityDiagnosticsCallback, timeout(TIMEOUT_MS))
+        // Block until all other events are done processing.
+        HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+
+        // Verify onNetworkConnectivityReported fired
+        verify(mConnectivityDiagnosticsCallback)
                 .onNetworkConnectivityReported(eq(n), eq(hasConnectivity));
 
         final boolean noConnectivity = false;
         mService.reportNetworkConnectivity(n, noConnectivity);
 
+        // Block until all other events are done processing.
+        HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+
         // Wait for onNetworkConnectivityReported to fire
-        verify(mConnectivityDiagnosticsCallback, timeout(TIMEOUT_MS))
+        verify(mConnectivityDiagnosticsCallback)
                 .onNetworkConnectivityReported(eq(n), eq(noConnectivity));
     }
 }
