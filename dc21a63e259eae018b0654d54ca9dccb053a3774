@@ -22,6 +22,30 @@
       "revId": "dc21a63e259eae018b0654d54ca9dccb053a3774",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c07448a_eab18e4a",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-01-16T19:09:53Z",
+      "side": 1,
+      "message": "Yes. The feature I am adding can enable adb over WiFi, without adb over USB being enabled. Therefore, \"adb enabled\" will be enough information. AdbDebuggingManager will need to propagate this additional information to all transport subscribers (e.g. UsbDeviceManager).",
+      "parentUuid": "1b33804b_34a4681e",
+      "range": {
+        "startLine": 724,
+        "startChar": 47,
+        "endLine": 724,
+        "endChar": 65
+      },
+      "revId": "dc21a63e259eae018b0654d54ca9dccb053a3774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
