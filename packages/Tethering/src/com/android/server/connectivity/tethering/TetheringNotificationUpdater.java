@@ -25,11 +25,13 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.UserHandle;
+import android.telephony.SubscriptionManager;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.networkstack.tethering.R;
 
 /**
@@ -49,7 +51,10 @@ public class TetheringNotificationUpdater {
     private final Context mContext;
     private final NotificationManager mNotificationManager;
     private final NotificationChannel mChannel;
+    // Downstream type is one of ConnectivityManager.TETHERING_* constants, 0 1 or 2.
+    // This value has to be made 1 2 and 4, and OR'd with the others.
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
+    private int mActiveDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
         mUpdateLock = new Object();
@@ -69,6 +74,27 @@ public class TetheringNotificationUpdater {
             mDownstreamTypesMask = downstreamTypesMask;
             updateNotification();
         }
+    }
+
+    /** Called when active data subscription id changed */
+    public void onActiveDataSubscriptionIdChanged(final int subId) {
+        synchronized (mUpdateLock) {
+            mActiveDataSubId = subId;
+            updateNotification();
+        }
+    }
+
+    private Resources getResources(@NonNull final Context c, final int subId) {
+        if (subId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+            return getResourcesForSubId(c, subId);
+        } else {
+            return c.getResources();
+        }
+    }
+
+    @VisibleForTesting
+    Resources getResourcesForSubId(@NonNull final Context c, final int subId) {
+        return SubscriptionManager.getResourcesForSubId(c, subId);
     }
 
     private void updateNotification() {
@@ -92,7 +118,7 @@ public class TetheringNotificationUpdater {
     }
 
     private boolean setupNotification() {
-        final Resources res = mContext.getResources();
+        final Resources res = getResources(mContext, mActiveDataSubId);
         final TypedArray iconArray = res.obtainTypedArray(R.array.tethering_notification_icons);
 
         if (iconArray.length() < 1) return NOTIFY_DROP;
