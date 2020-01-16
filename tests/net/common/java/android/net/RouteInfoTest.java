@@ -258,6 +258,6 @@ public class RouteInfoTest extends TestCase {
         assertParcelingIsLossless(r);
 
         r = new RouteInfo(Prefix("192.0.2.0/24"), null, "wlan0");
-        assertParcelSane(r, 6);
+        assertParcelSane(r, 7);
     }
 }

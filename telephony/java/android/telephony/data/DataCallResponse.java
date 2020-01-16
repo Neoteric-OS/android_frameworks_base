@@ -77,7 +77,8 @@ public final class DataCallResponse implements Parcelable {
     private final List<InetAddress> mDnsAddresses;
     private final List<InetAddress> mGatewayAddresses;
     private final List<InetAddress> mPcscfAddresses;
-    private final int mMtu;
+    private final int mMtuV4;
+    private final int mMtuV6;
 
     /**
      * @param cause Data call fail cause. {@link DataFailCause#NONE} indicates no error.
@@ -97,9 +98,8 @@ public final class DataCallResponse implements Parcelable {
      * "192.0.1.11 2001:db8::1". When null, the addresses represent point to point connections.
      * @param pcscfAddresses A list of Proxy Call State Control Function address via PCO (Protocol
      * Configuration Option) for IMS client.
-     * @param mtu MTU (maximum transmission unit) in bytes received from network. Zero or negative
-     * values means network has either not sent a value or sent an invalid value.
-     * either not sent a value or sent an invalid value.
+     * @param mtu MTU (maximum transmission unit) in bytes received from network.
+     * Zero or negative values means network has either not sent a value or sent an invalid value.
      *
      * @removed Use the {@link Builder()} instead.
      */
@@ -110,6 +110,16 @@ public final class DataCallResponse implements Parcelable {
                             @Nullable List<InetAddress> dnsAddresses,
                             @Nullable List<InetAddress> gatewayAddresses,
                             @Nullable List<InetAddress> pcscfAddresses, int mtu) {
+        this(cause, suggestedRetryTime, id, linkStatus, protocolType, interfaceName,
+                addresses, dnsAddresses, gatewayAddresses, pcscfAddresses, mtu, mtu);
+    }
+
+    /** @hide */
+    private DataCallResponse(@DataFailureCause int cause, int suggestedRetryTime, int id,
+            @LinkStatus int linkStatus, @ProtocolType int protocolType,
+            @Nullable String interfaceName, @Nullable List<LinkAddress> addresses,
+            @Nullable List<InetAddress> dnsAddresses, @Nullable List<InetAddress> gatewayAddresses,
+            @Nullable List<InetAddress> pcscfAddresses, int mtuV4, int mtuV6) {
         mCause = cause;
         mSuggestedRetryTime = suggestedRetryTime;
         mId = id;
@@ -124,7 +134,8 @@ public final class DataCallResponse implements Parcelable {
                 ? new ArrayList<>() : new ArrayList<>(gatewayAddresses);
         mPcscfAddresses = (pcscfAddresses == null)
                 ? new ArrayList<>() : new ArrayList<>(pcscfAddresses);
-        mMtu = mtu;
+        mMtuV4 = mtuV4;
+        mMtuV6 = mtuV6;
     }
 
     /** @hide */
@@ -144,7 +155,8 @@ public final class DataCallResponse implements Parcelable {
         source.readList(mGatewayAddresses, InetAddress.class.getClassLoader());
         mPcscfAddresses = new ArrayList<>();
         source.readList(mPcscfAddresses, InetAddress.class.getClassLoader());
-        mMtu = source.readInt();
+        mMtuV4 = source.readInt();
+        mMtuV6 = source.readInt();
     }
 
     /**
@@ -210,8 +222,23 @@ public final class DataCallResponse implements Parcelable {
     /**
      * @return MTU (maximum transmission unit) in bytes received from network. Zero or negative
      * values means network has either not sent a value or sent an invalid value.
+     * @deprecated use {@link #getMtuV4} or {@link #getMtuV6} instead.
      */
-    public int getMtu() { return mMtu; }
+    @Deprecated
+    public int getMtu() { return mMtuV4; }
+
+    /**
+     * This replaces the deprecated method getMtu.
+     * @return MTU (maximum transmission unit) in bytes received from network, for IPv4.
+     * Zero or negative values means network has either not sent a value or sent an invalid value.
+     */
+    public int getMtuV4() { return mMtuV4; }
+
+    /**
+     * @return MTU (maximum transmission unit) in bytes received from network, for IPv6.
+     * Zero or negative values means network has either not sent a value or sent an invalid value.
+     */
+    public int getMtuV6() { return mMtuV6; }
 
     @NonNull
     @Override
@@ -228,7 +255,8 @@ public final class DataCallResponse implements Parcelable {
            .append(" dnses=").append(mDnsAddresses)
            .append(" gateways=").append(mGatewayAddresses)
            .append(" pcscf=").append(mPcscfAddresses)
-           .append(" mtu=").append(mMtu)
+           .append(" mtuV4=").append(mMtuV4)
+           .append(" mtuV6=").append(mMtuV6)
            .append("}");
         return sb.toString();
     }
@@ -256,14 +284,15 @@ public final class DataCallResponse implements Parcelable {
                 && mGatewayAddresses.containsAll(other.mGatewayAddresses)
                 && mPcscfAddresses.size() == other.mPcscfAddresses.size()
                 && mPcscfAddresses.containsAll(other.mPcscfAddresses)
-                && mMtu == other.mMtu;
+                && mMtuV4 == other.mMtuV4
+                && mMtuV6 == other.mMtuV6;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(mCause, mSuggestedRetryTime, mId, mLinkStatus, mProtocolType,
                 mInterfaceName, mAddresses, mDnsAddresses, mGatewayAddresses, mPcscfAddresses,
-                mMtu);
+                mMtuV4, mMtuV6);
     }
 
     @Override
@@ -283,7 +312,8 @@ public final class DataCallResponse implements Parcelable {
         dest.writeList(mDnsAddresses);
         dest.writeList(mGatewayAddresses);
         dest.writeList(mPcscfAddresses);
-        dest.writeInt(mMtu);
+        dest.writeInt(mMtuV4);
+        dest.writeInt(mMtuV6);
     }
 
     public static final @android.annotation.NonNull Parcelable.Creator<DataCallResponse> CREATOR =
@@ -334,7 +364,9 @@ public final class DataCallResponse implements Parcelable {
 
         private List<InetAddress> mPcscfAddresses;
 
-        private int mMtu;
+        private int mMtuV4;
+
+        private int mMtuV6;
 
         /**
          * Default constructor for Builder.
@@ -460,9 +492,36 @@ public final class DataCallResponse implements Parcelable {
          * negative values means network has either not sent a value or sent an invalid value.
          *
          * @return The same instance of the builder.
+         * @deprecated use {@link #setMtuV4} or {@link #setMtuV6} instead.
          */
         public @NonNull Builder setMtu(int mtu) {
-            mMtu = mtu;
+            mMtuV4 = mMtuV6 = mtu;
+            return this;
+        }
+
+        /**
+         * Set maximum transmission unit of the data connection, for IPv4.
+         *
+         * @param mtu MTU (maximum transmission unit) in bytes received from network. Zero or
+         * negative values means network has either not sent a value or sent an invalid value.
+         *
+         * @return The same instance of the builder.
+         */
+        public @NonNull Builder setMtuV4(int mtu) {
+            mMtuV4 = mtu;
+            return this;
+        }
+
+        /**
+         * Set maximum transmission unit of the data connection, for IPv6.
+         *
+         * @param mtu MTU (maximum transmission unit) in bytes received from network. Zero or
+         * negative values means network has either not sent a value or sent an invalid value.
+         *
+         * @return The same instance of the builder.
+         */
+        public @NonNull Builder setMtuV6(int mtu) {
+            mMtuV6 = mtu;
             return this;
         }
 
@@ -474,7 +533,7 @@ public final class DataCallResponse implements Parcelable {
         public @NonNull DataCallResponse build() {
             return new DataCallResponse(mCause, mSuggestedRetryTime, mId, mLinkStatus,
                     mProtocolType, mInterfaceName, mAddresses, mDnsAddresses, mGatewayAddresses,
-                    mPcscfAddresses, mMtu);
+                    mPcscfAddresses, mMtuV4, mMtuV6);
         }
     }
 }
