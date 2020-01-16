@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bf4cec7a_2d315c4c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5242,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2020-01-16T21:14:24Z",
+      "side": 1,
+      "message": "1. Changing it to getCdmaEri()\n2. Cannot use intdef as non standard values can be defined by carriers\n3. done",
+      "parentUuid": "b2e36900_1c1b2fe8",
+      "range": {
+        "startLine": 5242,
+        "startChar": 15,
+        "endLine": 5242,
+        "endChar": 34
+      },
+      "revId": "fba84da6122019c69f1388a8eb4483bb31346bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84947d92_e90dc385",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "fba84da6122019c69f1388a8eb4483bb31346bad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ceb340_c94476b4",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5271,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2020-01-16T21:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84947d92_e90dc385",
+      "range": {
+        "startLine": 5270,
+        "startChar": 0,
+        "endLine": 5271,
+        "endChar": 19
+      },
+      "revId": "fba84da6122019c69f1388a8eb4483bb31346bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
