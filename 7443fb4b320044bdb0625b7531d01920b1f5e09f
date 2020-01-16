@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4846d3c6_9b13dfb0",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T22:10:01Z",
+      "side": 1,
+      "message": "We should also allow platform based VPNs to opt-out of always-on setting. This behavior is generally supported by VpnService based VPNs.\n\nSee also developer guide that explains how one could do this: https://developer.android.com/guide/topics/connectivity/vpn#opt_out_of_always-on\n\nSide note: We should also update this guide.",
+      "range": {
+        "startLine": 30,
+        "startChar": 91,
+        "endLine": 31,
+        "endChar": 6
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc216e90_2cf88ba3",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T22:10:01Z",
+      "side": 1,
+      "message": "What\u0027s supported?\nPerhaps reword to something like \u0027..using standard protocols such as IpSec\u0027",
+      "range": {
+        "startLine": 34,
+        "startChar": 21,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
