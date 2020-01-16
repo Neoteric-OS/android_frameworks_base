@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12e61294_2870ef5a",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-16T13:23:40Z",
+      "side": 1,
+      "message": "This need to be system api",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 56
+      },
+      "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e1e91f_e780c65b",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-16T13:23:40Z",
+      "side": 1,
+      "message": "This need to be system api because tethering in internal master branch can\u0027t call @hide function anymore already build with system_current.\n\nIt seems to add @SystemApi as line.351",
+      "range": {
+        "startLine": 380,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 52
+      },
+      "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
