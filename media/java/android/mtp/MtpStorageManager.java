@@ -232,6 +232,14 @@ public class MtpStorageManager {
             mParent = parent;
         }
 
+        private MtpStorage getStorage() {
+            return mStorage;
+        }
+
+        private void setStorage(MtpStorage storage) {
+            mStorage = Preconditions.checkNotNull(storage);
+        }
+
         private void setDir(boolean dir) {
             if (dir != mIsDir) {
                 mIsDir = dir;
@@ -1023,6 +1031,7 @@ public class MtpStorageManager {
              */
             MtpObject newObj = obj.copy(true);
             newObj.setParent(newParent);
+            newObj.setStorage(newParent.getStorage());
             newParent.addChild(newObj);
             return generalBeginRemoveObject(obj, MtpOperation.RENAME)
                     && generalBeginCopyObject(newObj, false);
