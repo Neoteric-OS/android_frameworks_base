@@ -47,6 +47,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Matchers.anyString;
@@ -1225,6 +1226,11 @@ public class TetheringTest {
         mPhoneStateListener.onActiveDataSubscriptionIdChanged(fakeSubId);
         final TetheringConfiguration newConfig = mTethering.getTetheringConfiguration();
         assertEquals(fakeSubId, newConfig.activeDataSubId);
+        verify(mNotificationUpdater, times(1)).onActiveDataSubscriptionIdChanged(eq(fakeSubId));
+
+        mIsTetheringSupported = false;
+        mPhoneStateListener.onActiveDataSubscriptionIdChanged(5678);
+        verify(mNotificationUpdater, times(1)).onActiveDataSubscriptionIdChanged(anyInt());
     }
 
     private void workingWifiP2pGroupOwner(
