@@ -28,6 +28,8 @@
     <!-- Strings for tether disabling notification message [CHAR LIMIT=200] -->
     <string name="disable_tether_notification_message">Contact your admin for details</string>
 
+    <!-- This string should be consistent with the "Hotspot & tethering" text in the "Network and
+    Internet" settings page. That is currently the tether_settings_title_all string. -->
     <!-- Strings for tether notification channel name [CHAR LIMIT=200] -->
     <string name="notification_channel_tethering_status">Hotspot &amp; tethering status</string>
 </resources>
