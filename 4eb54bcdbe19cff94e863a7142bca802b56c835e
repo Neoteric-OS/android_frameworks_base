@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6734979e_bd4c94d2",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T06:31:06Z",
+      "side": 1,
+      "message": "FYI, I\u0027ve asked Qingxi to use Process.INVALID_UID. This has the same value, so interoperability shouldn\u0027t be a concern.\n\nIf we can just use Process.INVALID_UID, that\u0027d be ideal",
+      "range": {
+        "startLine": 60,
+        "startChar": 28,
+        "endLine": 60,
+        "endChar": 39
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3825b90_0934aba2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6390,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T06:31:06Z",
+      "side": 1,
+      "message": "Sorry, not following; is this supposed to succeed when we don\u0027t have an active VPN?",
+      "range": {
+        "startLine": 6390,
+        "startChar": 25,
+        "endLine": 6390,
+        "endChar": 64
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
