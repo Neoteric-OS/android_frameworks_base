@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+1: Nathan Harold <nharold@google.com>
+Code-Review+1: Shi Lu <shilu@google.com>
+Code-Review+2: Shuo Qian <shuoq@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Ready+1: Rambo Wang <rambowang@google.com>
+Submitted-by: Rambo Wang <rambowang@google.com>
+Submitted-at: Thu, 16 Jan 2020 03:05:02 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1205275
+Project: platform/frameworks/base
+Branch: refs/heads/master
