@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "552d1a3a_a204d549",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T06:43:05Z",
+      "side": 1,
+      "message": "In general, try to avoid the default value when testing; we want to know if it gets set.",
+      "range": {
+        "startLine": 547,
+        "startChar": 33,
+        "endLine": 547,
+        "endChar": 60
+      },
+      "revId": "543e1795d214545ac2d5cd424b48bcc6bf689e09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b333a541_33d1e9ba",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 6454,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T06:43:05Z",
+      "side": 1,
+      "message": "Question (and probably applies to the previous tests as well): Why do we add this?",
+      "range": {
+        "startLine": 6454,
+        "startChar": 40,
+        "endLine": 6454,
+        "endChar": 59
+      },
+      "revId": "543e1795d214545ac2d5cd424b48bcc6bf689e09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
