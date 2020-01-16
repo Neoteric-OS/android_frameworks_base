@@ -16,6 +16,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <overlayable name="TetheringConfig">
         <policy type="product|system|vendor">
+            <!-- Params from config.xml that can be overlaid -->
             <item type="array" name="config_tether_usb_regexs"/>
             <item type="array" name="config_tether_ncm_regexs" />
             <item type="array" name="config_tether_wifi_regexs"/>
@@ -31,6 +32,30 @@
             <item type="string" name="config_mobile_hotspot_provision_response"/>
             <item type="integer" name="config_mobile_hotspot_provision_check_period"/>
             <item type="string" name="config_wifi_tether_enable"/>
+            <!-- Configuration values for TetheringNotificationUpdater -->
+            <!-- Icons for showing tether enable notification.
+            Each item should have two elements and separate with ";".
+
+            The front element is downstream types which is one of tethering. This element has to be
+            made by WIFI, USB, BT, and OR'd with the others. Use "|" to combine multiple downstream
+            types and use "," to separate each combinations. Such as
+
+            USB|BT,WIFI|USB|BT
+
+            The end element is icon for the downstream types. This element has to be composed by
+            <package name>:<resource type>/<resource name>. Such as
+
+            1. com.android.networkstack.tethering:drawable/stat_sys_tether_general
+            2. android:drawable/xxx
+
+            So the entire string of each item would be
+
+            USB|BT,WIFI|USB|BT;com.android.networkstack.tethering:drawable/stat_sys_tether_general
+
+            Notification will not show if the downstream type doesn't list in array. Empty array
+            means disable all notifications. -->
+            <item type="array" name="tethering_notification_icons"/>
+            <!-- Params from config.xml that can be overlaid -->
         </policy>
     </overlayable>
 </resources>

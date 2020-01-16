@@ -155,4 +155,34 @@
 
     <!-- ComponentName of the service used to run no ui tether provisioning. -->
     <string translatable="false" name="config_wifi_tether_enable">com.android.settings/.wifi.tether.TetherService</string>
+
+    <!-- Default tethering notification -->
+    <!-- Icons for showing tether enable notification.
+         Each item should have two elements and separate with ";".
+
+         The front element is downstream types which is one of tethering. This element has to be
+         made by WIFI, USB, BT, and OR'd with the others. Use "|" to combine multiple downstream
+         types and use "," to separate each combinations. Such as
+
+             USB|BT,WIFI|USB|BT
+
+         The end element is icon for the downstream types. This element has to be composed by
+         <package name>:<resource type>/<resource name>. Such as
+
+             1. com.android.networkstack.tethering:drawable/stat_sys_tether_general
+             2. android:drawable/xxx
+
+         So the entire string of each item would be
+
+             USB|BT,WIFI|USB|BT;com.android.networkstack.tethering:drawable/stat_sys_tether_general
+
+         Notification will not show if the downstream type doesn't list in array. Empty array means
+         disable all notifications. -->
+    <!-- Hotspot doesn't show notification due to status bar already has an icon -->
+    <array translatable="false" name="tethering_notification_icons">
+        <item>USB;com.android.networkstack.tethering:drawable/stat_sys_tether_usb</item>
+        <item>BT;com.android.networkstack.tethering:drawable/stat_sys_tether_bluetooth</item>
+        <item>WIFI|USB,WIFI|BT;com.android.networkstack.tethering:drawable/stat_sys_tether_general</item>
+        <item>USB|BT,WIFI|USB|BT;com.android.networkstack.tethering:drawable/stat_sys_tether_general</item>
+    </array>
 </resources>
