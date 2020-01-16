@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55ea1153_eb77ec8e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2020-01-16T21:21:59Z",
+      "side": 1,
+      "message": "is this the intended replacement for ServiceState#isEmergencyOnly() ? It just seems a little bit non-obvious what this is doing whereas the old method was clear.\n\nCan we @SystemApi isEmergencyOnly() ?",
+      "range": {
+        "startLine": 374,
+        "startChar": 55,
+        "endLine": 375,
+        "endChar": 69
+      },
+      "revId": "84dd7160b4f4c5fc9d8f6be23e925d806b912d3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
