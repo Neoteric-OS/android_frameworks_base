@@ -28,6 +28,7 @@ import android.annotation.WorkerThread;
 import android.content.Context;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.ServiceSpecificException;
 import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionManager;
 import android.telephony.ims.aidl.IImsConfigCallback;
@@ -376,6 +377,8 @@ public class ProvisioningManager {
         callback.setExecutor(executor);
         try {
             getITelephony().registerImsProvisioningChangedCallback(mSubId, callback.getBinder());
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
         } catch (RemoteException | IllegalStateException e) {
             throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
         }
