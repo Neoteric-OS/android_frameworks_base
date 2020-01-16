@@ -1,0 +1,9 @@
+Code-Review+2: Mathieu Chartier <mathieuc@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Christian Wailes <chriswailes@google.com>
+Submitted-at: Thu, 16 Jan 2020 18:59:57 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1209707
+Project: platform/frameworks/base
+Branch: refs/heads/master
