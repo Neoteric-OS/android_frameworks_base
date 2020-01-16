@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b33804b_34a4681e",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1294681
+      },
+      "writtenOn": "2020-01-16T19:05:14Z",
+      "side": 1,
+      "message": "Why is the transportType being passed in here? Will it be used in a future CL?",
+      "range": {
+        "startLine": 724,
+        "startChar": 47,
+        "endLine": 724,
+        "endChar": 65
+      },
+      "revId": "dc21a63e259eae018b0654d54ca9dccb053a3774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
