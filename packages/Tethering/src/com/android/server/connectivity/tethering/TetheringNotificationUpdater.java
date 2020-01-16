@@ -30,6 +30,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.UserHandle;
 import android.telephony.SubscriptionManager;
+import android.text.TextUtils;
 
 import androidx.annotation.ArrayRes;
 import androidx.annotation.DrawableRes;
@@ -114,15 +115,16 @@ public class TetheringNotificationUpdater {
         mNotificationManager.cancel(null /* tag */, NOTIFY_ID);
     }
 
-    private int getDownstreamTypesMask(@NonNull final String types) {
+    @VisibleForTesting
+    int getDownstreamTypesMask(@NonNull final String types) {
         int downstreamTypesMask = DOWNSTREAM_NONE;
         final String[] downstreams = types.split("\\|");
         for (String downstream : downstreams) {
-            if ("USB".equals(downstream)) {
+            if ("USB".equals(downstream.trim())) {
                 downstreamTypesMask |= (1 << TETHERING_USB);
-            } else if ("WIFI".equals(downstream)) {
+            } else if ("WIFI".equals(downstream.trim())) {
                 downstreamTypesMask |= (1 << TETHERING_WIFI);
-            } else if ("BT".equals(downstream)) {
+            } else if ("BT".equals(downstream.trim())) {
                 downstreamTypesMask |= (1 << TETHERING_BLUETOOTH);
             }
         }
@@ -137,20 +139,24 @@ public class TetheringNotificationUpdater {
      * @return {@link java.util.HashMap} with downstream types and icon id info.
      */
     @NonNull
-    private HashMap<Integer, Integer> getIcons(@ArrayRes int id) {
+    @VisibleForTesting
+    HashMap<Integer, Integer> getIcons(@ArrayRes int id) {
         final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
         final TypedArray array = res.obtainTypedArray(id);
         final HashMap<Integer, Integer> icons = new HashMap<>();
         for (int i = 0; i < array.length(); i++) {
-            final String[] temp = array.getString(i).split(";");
-            if (temp.length != 2) continue;
+            final String config = array.getString(i);
+            if (TextUtils.isEmpty(config)) continue;
 
-            final String[] types = temp[0].split(",");
+            final String[] elements = config.split(";");
+            if (elements.length != 2) continue;
+
+            final String[] types = elements[0].split(",");
             for (String type : types) {
                 int mask = getDownstreamTypesMask(type);
                 if (mask == DOWNSTREAM_NONE) continue;
-                icons.put(mask,
-                        res.getIdentifier(temp[1], null /* defType */, null /* defPackage */));
+                icons.put(mask, res.getIdentifier(
+                        elements[1].trim(), null /* defType */, null /* defPackage */));
             }
         }
         return icons;
