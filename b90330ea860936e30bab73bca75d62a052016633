@@ -46,6 +46,30 @@
       "revId": "b90330ea860936e30bab73bca75d62a052016633",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57483c05_80b39dcc",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2020-01-16T13:09:47Z",
+      "side": 0,
+      "message": "In general, I\u0027d prefer to keep the annotation but add maxTargetSdk \u003d Q and publicAlternative properties to it. This way we prevent existing on device apps from breaking after OTA to R.\n\nHowever, looking at the http://nonsdk/usage/Landroid%2Futil%2FRecurrenceRule;-%3Estart:Ljava%2Ftime%2FZonedDateTime; there is only one known app to use this field. In the worse case, they will have to add an if-else condition and push an update to users if the field is actually used at runtime.",
+      "parentUuid": "94655346_789bef12",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 53,
+        "endChar": 24
+      },
+      "revId": "b90330ea860936e30bab73bca75d62a052016633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
