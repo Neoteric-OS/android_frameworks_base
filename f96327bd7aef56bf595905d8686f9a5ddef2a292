@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "413ab09e_925ad15f",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-01-17T08:30:57Z",
+      "side": 1,
+      "message": "will we keep this path too, or will it be deleted later on?",
+      "range": {
+        "startLine": 383,
+        "startChar": 8,
+        "endLine": 383,
+        "endChar": 79
+      },
+      "revId": "f96327bd7aef56bf595905d8686f9a5ddef2a292",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
