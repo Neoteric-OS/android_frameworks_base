@@ -37,6 +37,8 @@ import com.android.internal.util.Preconditions;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -84,6 +86,7 @@ public final class NetworkCapabilities implements Parcelable {
         mSignalStrength = SIGNAL_STRENGTH_UNSPECIFIED;
         mUids = null;
         mOwnerUid = Process.INVALID_UID;
+        mManagerUids.clear();
         mSSID = null;
         mPrivateDnsBroken = false;
     }
@@ -102,6 +105,7 @@ public final class NetworkCapabilities implements Parcelable {
         mSignalStrength = nc.mSignalStrength;
         setUids(nc.mUids); // Will make the defensive copy
         mOwnerUid = nc.mOwnerUid;
+        mManagerUids = nc.mManagerUids;
         mUnwantedNetworkCapabilities = nc.mUnwantedNetworkCapabilities;
         mSSID = nc.mSSID;
         mPrivateDnsBroken = nc.mPrivateDnsBroken;
@@ -846,6 +850,35 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     /**
+     * UIDs of packages that are able to manage this network, or empty if none.
+     *
+     * <p>This field tracks the UIDs of packages that are able to manage this network, but are not
+     * the network owner.
+     *
+     * <p>For NetworkCapability instances being sent from the System Server, this value MUST be
+     * empty unless the destination is 1) the owner, AND has the fine/coarse location permission
+     * (depending on config/targetSDK level), together with enabled location mode for the user; 2)
+     * system/internal apps.
+     */
+    private List<Integer> mManagerUids = new ArrayList<>();
+
+    /**
+     * Sets the list of UIDs that manage this network.
+     *
+     * @hide
+     */
+    public void setManagerUids(@NonNull final List<Integer> managerUids) {
+        mManagerUids.clear();
+        mManagerUids.addAll(managerUids);
+    }
+
+    /** @hide */
+    @NonNull
+    public List<Integer> getManagerUids() {
+        return new ArrayList<>(mManagerUids);
+    }
+
+    /**
      * Value indicating that link bandwidth is unspecified.
      * @hide
      */
@@ -1497,6 +1530,7 @@ public final class NetworkCapabilities implements Parcelable {
         dest.writeString(mSSID);
         dest.writeBoolean(mPrivateDnsBroken);
         dest.writeInt(mOwnerUid);
+        dest.writeList(mManagerUids);
     }
 
     public static final @android.annotation.NonNull Creator<NetworkCapabilities> CREATOR =
@@ -1521,6 +1555,10 @@ public final class NetworkCapabilities implements Parcelable {
                 netCap.mOwnerUid =
                         Process.isApplicationUid(Binder.getCallingUid())
                                 ? Process.INVALID_UID : ownerId;
+                final List<Integer> managerUids = in.readArrayList(null);
+                if (!Process.isApplicationUid(Binder.getCallingUid())) {
+                    netCap.mManagerUids.addAll(managerUids);
+                }
                 return netCap;
             }
             @Override
@@ -1572,6 +1610,10 @@ public final class NetworkCapabilities implements Parcelable {
         }
         if (mOwnerUid != Process.INVALID_UID) {
             sb.append(" OwnerId: ").append(mOwnerUid);
+        }
+
+        if (!mManagerUids.isEmpty()) {
+            sb.append(" ManagerUIDs: ").append(mManagerUids);
         }
 
         if (null != mSSID) {
