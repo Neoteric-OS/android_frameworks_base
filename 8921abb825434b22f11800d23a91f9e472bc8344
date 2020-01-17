@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fdf6503_57169d22",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4195,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-01-17T22:58:09Z",
+      "side": 1,
+      "message": "Use {@link #ACTION_SIM_CARD_STATE_CHANGED} or {@link #ACTION_SIM_APPLICATION_STATE_CHANGED}",
+      "range": {
+        "startLine": 4195,
+        "startChar": 19,
+        "endLine": 4195,
+        "endChar": 68
+      },
+      "revId": "8921abb825434b22f11800d23a91f9e472bc8344",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
