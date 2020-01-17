@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d809c8b7_ba84ad7b",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-17T04:27:28Z",
+      "side": 1,
+      "message": "I think you want to keep the @hide you added here; the property was originally @hide and would have been accessed by reflection.  It can remain @hide and accessed by reflection subject to the UnSupportedAppUsage annotation above.",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "02cbd28b7f4daaa79bedc4015d9bd8d8c10c6c80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
