@@ -22,6 +22,30 @@
       "revId": "d44cc18689a8c470b2d74b48427b882679efec33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ea1445_4620787b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T07:22:46Z",
+      "side": 1,
+      "message": "Added CTS testing in aosp/1211164.",
+      "parentUuid": "a776eb52_9ed772ff",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "d44cc18689a8c470b2d74b48427b882679efec33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
