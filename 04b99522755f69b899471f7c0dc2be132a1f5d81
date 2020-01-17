@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aa7e944_b7b25112",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-17T03:16:18Z",
+      "side": 1,
+      "message": "nit: the title does not sound right for me,\ngiven that the executor is only used when addOnSubscriptionsChangedListener.\nmaybe name it more specific or add some description for it?",
+      "range": {
+        "startLine": 7,
+        "startChar": 20,
+        "endLine": 7,
+        "endChar": 51
+      },
+      "revId": "04b99522755f69b899471f7c0dc2be132a1f5d81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
