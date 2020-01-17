@@ -26,10 +26,12 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.UserHandle;
 import android.telephony.SubscriptionManager;
+import android.text.TextUtils;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.networkstack.tethering.R;
@@ -143,13 +145,35 @@ public class TetheringNotificationUpdater {
         } else {
             message = res.getString(R.string.tethering_notification_text_noclients);
         }
-        return showNotification(iconId, title, message);
+        final String[] downstreamTexts =
+                res.getStringArray(R.array.tethering_downstream_combinations);
+        // Index can't be negative.
+        final String downstreamText = downstreamTexts.length > mDownstreamTypesMask
+                ? downstreamTexts[mDownstreamTypesMask] : "";
+        return showNotification(iconId, title, message, downstreamText);
+    }
+
+    @VisibleForTesting
+    String formatText(@NonNull final String text, @NonNull final String downstreamText,
+            @StringRes final int defaultTextId) {
+        String formatText;
+        try {
+            if (TextUtils.isEmpty(text)) throw new IllegalArgumentException("Wrong string format");
+            formatText = String.format(text, downstreamText);
+        } catch (IllegalArgumentException e) {
+            formatText = getResources(mContext, mActiveDataSubId).getString(defaultTextId);
+        }
+        return formatText;
     }
 
     private boolean showNotification(@DrawableRes final int iconId, @NonNull final String title,
-            @NonNull final String message) {
+            @NonNull final String message, @NonNull final String downstreamText) {
         if (iconId == NO_ICON_ID) return NOTIFY_DROP;
 
+        final String formatTitle = formatText(
+                title, downstreamText, R.string.tethered_notification_title);
+        final String formatMessage = formatText(
+                message, downstreamText, R.string.tethered_notification_message);
         final Intent intent = new Intent();
         intent.setClassName("com.android.settings", "com.android.settings.TetherSettings");
         final PendingIntent pi = PendingIntent.getActivity(
@@ -158,8 +182,8 @@ public class TetheringNotificationUpdater {
         final Notification notification =
                 new Notification.Builder(mContext, mChannel.getId())
                         .setSmallIcon(iconId)
-                        .setContentTitle(title)
-                        .setContentText(message)
+                        .setContentTitle(formatTitle)
+                        .setContentText(formatMessage)
                         .setWhen(0)
                         .setOngoing(true)
                         .setColor(mContext.getColor(

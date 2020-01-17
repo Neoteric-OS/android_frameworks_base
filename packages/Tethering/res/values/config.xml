@@ -172,4 +172,9 @@
     <string name="tethering_notification_text_noclients">@string/tethered_notification_message</string>
     <!-- Strings for tether enable notification message when power saving mode is on. -->
     <string name="tethering_notification_text_power_saving_noclients">@string/tethered_notification_message</string>
+    <!-- Strings for combination downstream info.
+         Empty array means no customization. Empty item means no info for this downstream type.
+         Can customize for each downstream types or just one string for all downstream types. -->
+    <string-array name="tethering_downstream_combinations">
+    </string-array>
 </resources>

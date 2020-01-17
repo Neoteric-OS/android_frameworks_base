@@ -33,6 +33,7 @@ import com.android.networkstack.tethering.R
 import com.android.server.connectivity.tethering.TetheringNotificationUpdater.DOWNSTREAM_NONE
 import com.android.server.connectivity.tethering.TetheringNotificationUpdater.NO_ICON_ID
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -72,6 +73,10 @@ class TetheringNotificationUpdaterTest {
         doReturn(overlayIcon).`when`(overlayRes)
                 .obtainTypedArray(R.array.tethering_notification_icons)
         doReturn(8).`when`(overlayIcon).length()
+        val downstreamArray = arrayOf("", "Wi-Fi", "USB", "Wi-Fi/USB", "Bluetooth",
+                "Wi-Fi/Bluetooth", "Bluetooth/USB", "Wi-Fi/BT/USB")
+        doReturn(downstreamArray).`when`(overlayRes)
+                .getStringArray(R.array.tethering_downstream_combinations)
         doReturn(OVERLAY_TITTLE).`when`(overlayRes)
                 .getString(R.string.tethering_notification_title_noclients)
         doReturn(OVERLAY_TEXT_NO_CLIENT).`when`(overlayRes)
@@ -195,5 +200,12 @@ class TetheringNotificationUpdaterTest {
         // No downstream, no notification showed.
         notificationUpdater.onDownstreamChanged(DOWNSTREAM_NONE)
         expectClearNotification()
+    }
+
+    @Test
+    fun testWrongFormatText() {
+        val title = context.getResources().getString(R.string.tethered_notification_title)
+        assertTrue(title.equals(notificationUpdater.formatText(
+                "", "", R.string.tethered_notification_title)))
     }
 }
