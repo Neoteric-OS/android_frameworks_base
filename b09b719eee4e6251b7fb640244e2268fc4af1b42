@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "455f1ae0_5a2750d8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10390,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2020-01-17T22:21:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0712056b_bf4bc612",
+      "range": {
+        "startLine": 10390,
+        "startChar": 7,
+        "endLine": 10390,
+        "endChar": 12
+      },
+      "revId": "b09b719eee4e6251b7fb640244e2268fc4af1b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "207f5783_46a9f1d4",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -91,6 +115,54 @@
       "revId": "b09b719eee4e6251b7fb640244e2268fc4af1b42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d12401_141618a3",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10400,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2020-01-17T22:21:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f496ffd9_3baeb195",
+      "range": {
+        "startLine": 10400,
+        "startChar": 15,
+        "endLine": 10400,
+        "endChar": 19
+      },
+      "revId": "b09b719eee4e6251b7fb640244e2268fc4af1b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c4bd7fc_d8f4a99d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10400,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2020-01-17T22:21:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "207f5783_46a9f1d4",
+      "range": {
+        "startLine": 10400,
+        "startChar": 47,
+        "endLine": 10400,
+        "endChar": 52
+      },
+      "revId": "b09b719eee4e6251b7fb640244e2268fc4af1b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
