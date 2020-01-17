@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "cd235621_b6312fea",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 7473,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-17T00:48:04Z",
+      "side": 1,
+      "message": "Nit : try to stick to the local code style",
+      "range": {
+        "startLine": 7472,
+        "startChar": 12,
+        "endLine": 7473,
+        "endChar": 33
+      },
+      "revId": "543e1795d214545ac2d5cd424b48bcc6bf689e09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68890829_62e214ed",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 7484,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-17T00:48:04Z",
+      "side": 1,
+      "message": "This is essentially the only thing that\u0027s different from handleNetworkTestedWithExtras, can you avoid copy-pasting and factorize the code instead ?",
+      "range": {
+        "startLine": 7484,
+        "startChar": 39,
+        "endLine": 7484,
+        "endChar": 59
+      },
+      "revId": "543e1795d214545ac2d5cd424b48bcc6bf689e09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "552d1a3a_a204d549",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 17
