@@ -70,6 +70,30 @@
       "revId": "b90330ea860936e30bab73bca75d62a052016633",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2807696e_307abfcb",
+        "filename": "core/java/android/util/RecurrenceRule.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1595229
+      },
+      "writtenOn": "2020-01-17T10:31:31Z",
+      "side": 0,
+      "message": "Thanks for your review. We keep the UnSupportedAppUsage annotation and remain @hide for this change, thanks.",
+      "parentUuid": "57483c05_80b39dcc",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 53,
+        "endChar": 24
+      },
+      "revId": "b90330ea860936e30bab73bca75d62a052016633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
