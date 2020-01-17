@@ -22,6 +22,30 @@
       "revId": "366346da8f6f2b0d1b0c4148ad0ba0aa2f1988b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c9e462_c6b3b710",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2020-01-17T01:25:11Z",
+      "side": 1,
+      "message": "why do we have both of them....",
+      "parentUuid": "668794c4_8bca3aae",
+      "range": {
+        "startLine": 378,
+        "startChar": 49,
+        "endLine": 378,
+        "endChar": 60
+      },
+      "revId": "366346da8f6f2b0d1b0c4148ad0ba0aa2f1988b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
