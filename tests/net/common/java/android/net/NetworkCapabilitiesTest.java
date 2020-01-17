@@ -60,6 +60,8 @@ import androidx.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 @RunWith(AndroidJUnit4.class)
@@ -275,7 +277,7 @@ public class NetworkCapabilitiesTest {
             .addCapability(NET_CAPABILITY_NOT_METERED);
         assertParcelingIsLossless(netCap);
         netCap.setSSID(TEST_SSID);
-        assertParcelSane(netCap, 12);
+        assertParcelSane(netCap, 13);
     }
 
     @Test
@@ -610,5 +612,18 @@ public class NetworkCapabilitiesTest {
 
         NetworkCapabilities destNc = NetworkCapabilities.CREATOR.createFromParcel(dest);
         assertEquals(Process.INVALID_UID, destNc.getOwnerUid());
+    }
+
+    @Test
+    public void testUnparcelManagerUidsForAppToSystem() {
+        final List<Integer> managerUids = Arrays.asList(Process.myUid());
+        final NetworkCapabilities nc = new NetworkCapabilities();
+        nc.setManagerUids(managerUids);
+
+        final Parcel parcel = Parcel.obtain();
+        nc.writeToParcel(parcel, 0);
+
+        final NetworkCapabilities result = NetworkCapabilities.CREATOR.createFromParcel(parcel);
+        assertEquals(Process.INVALID_UID, result.getOwnerUid());
     }
 }
