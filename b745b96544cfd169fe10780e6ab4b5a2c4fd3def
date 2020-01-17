@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c961628_0daf9b87",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1424063
+      },
+      "writtenOn": "2020-01-17T02:34:08Z",
+      "side": 1,
+      "message": "I didn\u0027t know that. I will do that.",
+      "parentUuid": "12e61294_2870ef5a",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 56
+      },
+      "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1e1e91f_e780c65b",
         "filename": "core/java/android/hardware/usb/UsbManager.java",
         "patchSetId": 10
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "fea02646_0dc24f77",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1424063
+      },
+      "writtenOn": "2020-01-17T02:34:08Z",
+      "side": 1,
+      "message": "Please refer to bug#130840842, Google accepted this on comment#50 ~ #53",
+      "parentUuid": "fd9d9085_74e796b5",
+      "range": {
+        "startLine": 382,
+        "startChar": 29,
+        "endLine": 382,
+        "endChar": 41
+      },
+      "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4638cf1a_f0c0cfc7",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1424063
+      },
+      "writtenOn": "2020-01-17T02:34:08Z",
+      "side": 1,
+      "message": "Sure I will upload it again.",
+      "parentUuid": "c1e1e91f_e780c65b",
+      "range": {
+        "startLine": 380,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 52
+      },
+      "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d827495c_e66e1c2c",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2020-01-16T13:26:26Z",
       "side": 1,
       "message": "IIUC, USB and NCM share an interface. So when the NCM tethering is active, this will match in isUsb and return TETHERING_USB instead.",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 38
+      },
+      "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd6903b_78e0efa2",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1424063
+      },
+      "writtenOn": "2020-01-17T02:34:08Z",
+      "side": 1,
+      "message": "Nope, usually tethering\u0027s regexs are : rndis, usb (tetherableUsbRegexs)\n              usb\u0027s : ncm (tetherableNcmRegexs)\n\nSo it won\u0027t work as you think.",
+      "parentUuid": "d827495c_e66e1c2c",
       "range": {
         "startLine": 409,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6edfe031_71b4a0d7",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1424063
+      },
+      "writtenOn": "2020-01-17T02:34:08Z",
+      "side": 1,
+      "message": "setNcmTethering has same structure with setUsbTethering(). Are there any problems in setUsbTethering()? I don\u0027t see any differences between setUsbTethering() and setNcmTethering()",
+      "parentUuid": "150f4084_81b671ac",
+      "range": {
+        "startLine": 1129,
+        "startChar": 23,
+        "endLine": 1129,
+        "endChar": 42
+      },
+      "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c10352b_1e271280",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 10
@@ -128,6 +248,30 @@
       "writtenOn": "2020-01-16T13:26:26Z",
       "side": 1,
       "message": "If setCurrentFunctions fails asynchronously is there any way to let the caller know later ? (I don\u0027t know of one, just asking)",
+      "range": {
+        "startLine": 1132,
+        "startChar": 15,
+        "endLine": 1132,
+        "endChar": 36
+      },
+      "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0354f6e2_60135aee",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1424063
+      },
+      "writtenOn": "2020-01-17T02:34:08Z",
+      "side": 1,
+      "message": "It is called by startTethering(), so caller can know the result.",
+      "parentUuid": "2c10352b_1e271280",
       "range": {
         "startLine": 1132,
         "startChar": 15,
