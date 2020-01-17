@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecb50320_64e90706",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4192,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-17T23:52:53Z",
+      "side": 1,
+      "message": "D",
+      "range": {
+        "startLine": 4192,
+        "startChar": 35,
+        "endLine": 4192,
+        "endChar": 36
+      },
+      "revId": "0c364f2313ff3832c6a5cb8728baf259251f383c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
