@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9351c2be_fad02e33",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-17T05:24:19Z",
+      "side": 1,
+      "message": "Sorry I was lacking the context. Thanks.",
+      "parentUuid": "fea02646_0dc24f77",
+      "range": {
+        "startLine": 382,
+        "startChar": 29,
+        "endLine": 382,
+        "endChar": 41
+      },
+      "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d827495c_e66e1c2c",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 10
@@ -187,6 +211,30 @@
       "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2736a37d_887a1e89",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-17T05:24:19Z",
+      "side": 1,
+      "message": "I see. Thanks.",
+      "parentUuid": "5fd6903b_78e0efa2",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 38
+      },
+      "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -261,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "5d8e664a_6c929402",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-17T05:24:19Z",
+      "side": 1,
+      "message": "I think you make a fair point that usb tethering already works like this, so I now think that what you have is fine.",
+      "parentUuid": "178c0372_3f860822",
+      "range": {
+        "startLine": 1129,
+        "startChar": 23,
+        "endLine": 1129,
+        "endChar": 42
+      },
+      "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c10352b_1e271280",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 10
@@ -305,6 +377,30 @@
       "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9682e7b6_0317d655",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-17T05:24:19Z",
+      "side": 1,
+      "message": "That\u0027s not what I meant : this code here is calling setCurrentFunctions which doesn\u0027t return anything but can fail (doc for it says : This function is asynchronous and may fail silently without applying the requested changes). Then setNcmTethering will always return TETHER_ERROR_NO_ERROR, so the caller always thinks it worked, even if setting the current functions eventually fails.\n\nGranted, this is already what\u0027s happening in setUsbTethering, so this code is not making anything worse (accordingly, OWNERS approval). But I was wondering if there is any way to improve.",
+      "parentUuid": "0354f6e2_60135aee",
+      "range": {
+        "startLine": 1132,
+        "startChar": 15,
+        "endLine": 1132,
+        "endChar": 36
+      },
+      "revId": "b745b96544cfd169fe10780e6ab4b5a2c4fd3def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
