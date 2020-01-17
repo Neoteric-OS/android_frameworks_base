@@ -34,6 +34,7 @@
             <item type="array" name="tethering_notification_icons"/>
             <item type="string" name="tethering_notification_title_noclients"/>
             <item type="string" name="tethering_notification_text_noclients"/>
+            <item type="string" name="tethering_notification_text_power_saving_noclients"/>
         </policy>
     </overlayable>
 </resources>

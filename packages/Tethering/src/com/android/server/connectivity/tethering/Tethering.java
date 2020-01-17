@@ -86,6 +86,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.PowerManager;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
@@ -284,6 +285,7 @@ public class Tethering {
         filter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         filter.addAction(UserManager.ACTION_USER_RESTRICTIONS_CHANGED);
         filter.addAction(ACTION_RESTRICT_BACKGROUND_CHANGED);
+        filter.addAction(PowerManager.ACTION_POWER_SAVE_MODE_CHANGED);
         mContext.registerReceiver(mStateReceiver, filter, null, handler);
     }
 
@@ -682,6 +684,17 @@ public class Tethering {
             } else if (action.equals(ACTION_RESTRICT_BACKGROUND_CHANGED)) {
                 mLog.log("OBSERVED data saver changed");
                 handleDataSaverChanged();
+            } else if (action.equals(PowerManager.ACTION_POWER_SAVE_MODE_CHANGED)) {
+                mLog.log("OBSERVED power saving changed");
+                handlePowerSaveModeAction();
+            }
+        }
+
+        private void handlePowerSaveModeAction() {
+            if (mDeps.isTetheringSupported()) {
+                final PowerManager manager =
+                        (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+                mNotificationUpdater.onPowerSavingChanged(manager.isPowerSaveMode());
             }
         }
 

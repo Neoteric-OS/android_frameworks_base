@@ -54,6 +54,7 @@ const val WIFI_DOWNSTREAM_TYPE_MASK = 1 shl TETHERING_WIFI
 const val USB_DOWNSTREAM_TYPE_MASK = 1 shl TETHERING_USB
 const val OVERLAY_TITTLE = "Tethering active"
 const val OVERLAY_TEXT_NO_CLIENT = "Tap here to set up."
+const val OVERLAY_TEXT_POWER_SAVING = "Tap here to set up. Power saving on."
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
@@ -75,6 +76,8 @@ class TetheringNotificationUpdaterTest {
                 .getString(R.string.tethering_notification_title_noclients)
         doReturn(OVERLAY_TEXT_NO_CLIENT).`when`(overlayRes)
                 .getString(R.string.tethering_notification_text_noclients)
+        doReturn(OVERLAY_TEXT_POWER_SAVING).`when`(overlayRes)
+                .getString(R.string.tethering_notification_text_power_saving_noclients)
         doReturn(R.drawable.stat_sys_tether_general).`when`(overlayIcon)
                 .getResourceId(eq(WIFI_DOWNSTREAM_TYPE_MASK), eq(NO_ICON_ID))
     }
@@ -131,6 +134,14 @@ class TetheringNotificationUpdaterTest {
                 WIFI_DOWNSTREAM_TYPE_MASK or USB_DOWNSTREAM_TYPE_MASK)
         expectShowNotification(title, message)
 
+        // Power saving on, showed enable notification
+        notificationUpdater.onPowerSavingChanged(true)
+        expectShowNotification(title, message)
+
+        // Power saving off, showed enable notification
+        notificationUpdater.onPowerSavingChanged(false)
+        expectShowNotification(title, message)
+
         // Remove wifi downstream, showed enable notification.
         notificationUpdater.onDownstreamChanged(USB_DOWNSTREAM_TYPE_MASK)
         expectShowNotification(title, message)
@@ -155,6 +166,31 @@ class TetheringNotificationUpdaterTest {
         // Set invalid sub id, no notification for hotspot.
         notificationUpdater.onActiveDataSubscriptionIdChanged(INVALID_SUBSCRIPTION_ID)
         expectClearNotification()
+
+        // No downstream, no notification showed.
+        notificationUpdater.onDownstreamChanged(DOWNSTREAM_NONE)
+        expectClearNotification()
+    }
+
+    @Test
+    fun testNotificationWithPowerSavingChanged() {
+        setupOverlayResources()
+
+        // Hotspot enabled, no notification showed.
+        notificationUpdater.onDownstreamChanged(WIFI_DOWNSTREAM_TYPE_MASK)
+        expectClearNotification()
+
+        // Set overlay resource sub id, showed enable notification with overlay text.
+        notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID_1)
+        expectShowNotification(OVERLAY_TITTLE, OVERLAY_TEXT_NO_CLIENT)
+
+        // Power saving on, showed enable notification with overlay power saving text.
+        notificationUpdater.onPowerSavingChanged(true)
+        expectShowNotification(OVERLAY_TITTLE, OVERLAY_TEXT_POWER_SAVING)
+
+        // Power saving off, showed enable notification with overlay text.
+        notificationUpdater.onPowerSavingChanged(false)
+        expectShowNotification(OVERLAY_TITTLE, OVERLAY_TEXT_NO_CLIENT)
 
         // No downstream, no notification showed.
         notificationUpdater.onDownstreamChanged(DOWNSTREAM_NONE)
