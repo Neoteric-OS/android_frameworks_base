@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ea24343f_db6f2bdd",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T00:24:51Z",
+      "side": 1,
+      "message": "After discussion with Nathan, I think we don\u0027t quite see any use case for an opportunistic VPN profile, which seems like it might be the only use case where we would need it.\n\nIf an app is very much determined to do so, they could have a foreground service that removes the profile once the conditions are no longer met.\n\nI\u0027ll leave this open for Jean to comment if he feels one way or another, but my position right now is it\u0027s slightly out of scope.",
+      "parentUuid": "073b351b_d6a51b57",
+      "range": {
+        "startLine": 30,
+        "startChar": 91,
+        "endLine": 31,
+        "endChar": 6
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc216e90_2cf88ba3",
         "filename": "core/java/android/net/VpnManager.java",
         "patchSetId": 27
@@ -60,6 +84,30 @@
       "writtenOn": "2020-01-16T22:10:01Z",
       "side": 1,
       "message": "What\u0027s supported?\nPerhaps reword to something like \u0027..using standard protocols such as IpSec\u0027",
+      "range": {
+        "startLine": 34,
+        "startChar": 21,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e9c3f7_e0bbf656",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T00:24:51Z",
+      "side": 1,
+      "message": "Is the Ikev2VpnProfile link at the bottom sufficient? Alternatively, it\u0027s quite easy to figure out if a user looks at the subclasses of PlatformVpnProfile.",
+      "parentUuid": "cc216e90_2cf88ba3",
       "range": {
         "startLine": 34,
         "startChar": 21,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "bcb5a1d4_c61c0f45",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T00:24:51Z",
+      "side": 1,
+      "message": "Given that Jean\u0027s +1\u0027d this API, I\u0027ll avoiding changing the API without his guidance.\n\nJean, what ware your thoughts? provisionOrUpdateVpnProfile?",
+      "parentUuid": "7313a76e_8b468ee0",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 37
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b487322_ac8d8b71",
         "filename": "core/java/android/net/VpnManager.java",
         "patchSetId": 27
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "be2699bb_b6d45ea0",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T00:24:51Z",
+      "side": 1,
+      "message": "No, not at the moment. It\u0027d be a no-op.",
+      "parentUuid": "4b487322_ac8d8b71",
+      "range": {
+        "startLine": 70,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 43
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a37d798_11a08db9",
         "filename": "core/java/android/net/VpnManager.java",
         "patchSetId": 27
@@ -129,6 +225,30 @@
       "writtenOn": "2020-01-16T22:19:44Z",
       "side": 1,
       "message": "Is there a use case for a VPN to provision more than one profile?",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 5
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f126180a_881e4e73",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T00:24:51Z",
+      "side": 1,
+      "message": "Not at the moment. That\u0027s been considered, but is out of scope for R. Always-on VPNs complicate that implementation a little too much.",
+      "parentUuid": "3a37d798_11a08db9",
       "range": {
         "startLine": 57,
         "startChar": 4,
