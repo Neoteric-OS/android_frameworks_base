@@ -960,6 +960,26 @@ public class VpnTest {
         // a subsequent CL.
     }
 
+    @Test
+    public void testStartLegacyVpn() throws Exception {
+        final Vpn vpn = createVpn(primaryUser.id);
+        setMockedUsers(primaryUser);
+
+        // Dummy egress interface
+        final String egressIface = "DUMMY0";
+        final LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName(egressIface);
+
+        final RouteInfo defaultRoute = new RouteInfo(new IpPrefix(Inet4Address.ANY, 0),
+                        InetAddresses.parseNumericAddress("192.0.2.0"), egressIface);
+        lp.addRoute(defaultRoute);
+
+        vpn.startLegacyVpn(mVpnProfile, mKeyStore, lp);
+
+        // TODO: Test the Ikev2VpnRunner started up properly. Relies on utility methods added in
+        // a subsequent CL.
+    }
+
     /**
      * Mock some methods of vpn object.
      */

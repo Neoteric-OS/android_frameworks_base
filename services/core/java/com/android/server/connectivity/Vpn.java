@@ -690,7 +690,8 @@ public class Vpn {
             // Prefer VPN profiles, if any exist.
             VpnProfile profile = getVpnProfilePrivileged(alwaysOnPackage, keyStore);
             if (profile != null) {
-                startVpnProfilePrivileged(profile, alwaysOnPackage);
+                startVpnProfilePrivileged(profile, alwaysOnPackage,
+                        null /* keyStore for private key retrieval - unneeded */);
 
                 // If the above startVpnProfilePrivileged() call returns, the Ikev2VpnProfile was
                 // correctly parsed, and the VPN has started running in a different thread. The only
@@ -1939,6 +1940,21 @@ public class Vpn {
         // Prepare arguments for racoon.
         String[] racoon = null;
         switch (profile.type) {
+            case VpnProfile.TYPE_IKEV2_IPSEC_RSA:
+                // Secret key is still just the alias (not the actual private key). The private key
+                // is retrieved from the KeyStore during conversion of the VpnProfile to an
+                // Ikev2VpnProfile.
+                profile.ipsecSecret = privateKey;
+                profile.ipsecUserCert = userCert;
+                // Fallthrough
+            case VpnProfile.TYPE_IKEV2_IPSEC_USER_PASS:
+                profile.ipsecCaCert = caCert;
+                // Fallthrough
+            case VpnProfile.TYPE_IKEV2_IPSEC_PSK:
+
+                // Start VPN profile
+                startVpnProfilePrivileged(profile, VpnConfig.LEGACY_VPN, keyStore);
+                return;
             case VpnProfile.TYPE_L2TP_IPSEC_PSK:
                 racoon = new String[] {
                     iface, profile.server, "udppsk", profile.ipsecIdentifier,
@@ -2945,24 +2961,37 @@ public class Vpn {
                         throw new IllegalArgumentException("No profile found for " + packageName);
                     }
 
-                    startVpnProfilePrivileged(profile, packageName);
+                    startVpnProfilePrivileged(profile, packageName,
+                            null /* keyStore for private key retrieval - unneeded */);
                 });
     }
 
-    private void startVpnProfilePrivileged(
-            @NonNull VpnProfile profile, @NonNull String packageName) {
-        // Ensure that no other previous instance is running.
-        if (mVpnRunner != null) {
-            mVpnRunner.exit();
-            mVpnRunner = null;
-        }
+    private synchronized void startVpnProfilePrivileged(
+            @NonNull VpnProfile profile, @NonNull String packageName, @Nullable KeyStore keyStore) {
+        // Make sure VPN is prepared. This method can be called by user apps via startVpnProfile(),
+        // by the Setting app via startLegacyVpn(), or by ConnectivityService via
+        // startAlwaysOnVpn(), so this is the common place to prepare the VPN. This also has the
+        // nice property of ensuring there are no other VpnRunner instances running.
+        prepareInternal(packageName);
         updateState(DetailedState.CONNECTING, "startPlatformVpn");
 
         try {
+            boolean isSettingsVpn = VpnConfig.LEGACY_VPN.equals(packageName);
+
             // Build basic config
             mConfig = new VpnConfig();
-            mConfig.user = packageName;
-            mConfig.isMetered = profile.isMetered;
+            if (isSettingsVpn) {
+                mConfig.legacy = true;
+                mConfig.session = profile.name;
+                mConfig.user = profile.key;
+
+                // TODO: Add support for configuring meteredness via Settings. Until then, use a
+                // safe default.
+                mConfig.isMetered = true;
+            } else {
+                mConfig.user = packageName;
+                mConfig.isMetered = profile.isMetered;
+            }
             mConfig.startTime = SystemClock.elapsedRealtime();
             mConfig.proxyInfo = profile.proxy;
 
@@ -2970,8 +2999,9 @@ public class Vpn {
                 case VpnProfile.TYPE_IKEV2_IPSEC_USER_PASS:
                 case VpnProfile.TYPE_IKEV2_IPSEC_PSK:
                 case VpnProfile.TYPE_IKEV2_IPSEC_RSA:
-                    mVpnRunner = new IkeV2VpnRunner(Ikev2VpnProfile.fromVpnProfile(profile));
-                    mVpnRunner.start();
+                    mVpnRunner = new IkeV2VpnRunner(Ikev2VpnProfile.fromVpnProfile(
+                            profile, isSettingsVpn, keyStore));
+                    mVpnRunner.run();
                     break;
                 default:
                     updateState(DetailedState.FAILED, "Invalid platform VPN type");
