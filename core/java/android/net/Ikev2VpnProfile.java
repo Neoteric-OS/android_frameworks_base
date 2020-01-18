@@ -25,7 +25,10 @@ import static com.android.internal.util.Preconditions.checkStringNotEmpty;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.os.Process;
 import android.security.Credentials;
+import android.security.KeyStore;
+import android.security.keystore.AndroidKeyStoreProvider;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.net.VpnProfile;
@@ -59,6 +62,9 @@ import java.util.Objects;
  *     Exchange, Version 2 (IKEv2)</a>
  */
 public final class Ikev2VpnProfile extends PlatformVpnProfile {
+    /** Prefix for when Private Key is an alias to look for in KeyStore @hide */
+    public static final String KEYSTORE_ALIAS_PREFIX = "KEYSTORE_ALIAS:";
+
     private static final String MISSING_PARAM_MSG_TMPL = "Required parameter was not provided: %s";
     private static final String EMPTY_CERT = "";
 
@@ -360,6 +366,22 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
     @NonNull
     public static Ikev2VpnProfile fromVpnProfile(@NonNull VpnProfile profile)
             throws IOException, GeneralSecurityException {
+        return fromVpnProfile(profile, null);
+    }
+
+    /**
+     * Builds the Ikev2VpnProfile from the given profile.
+     *
+     * @param profile the source VpnProfile to build from
+     * @param keyStore the Android Keystore instance to use to retrieve the private key, or null if
+     *     the private key is PEM-encoded into the profile.
+     * @return The IKEv2/IPsec VPN profile
+     * @hide
+     */
+    @NonNull
+    public static Ikev2VpnProfile fromVpnProfile(
+            @NonNull VpnProfile profile, @Nullable KeyStore keyStore)
+            throws IOException, GeneralSecurityException {
         final Builder builder = new Builder(profile.server, profile.ipsecIdentifier);
         builder.setProxy(profile.proxy);
         builder.setAllowedAlgorithms(profile.getAllowedAlgorithms());
@@ -378,8 +400,19 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
                 builder.setAuthPsk(decodeFromIpsecSecret(profile.ipsecSecret));
                 break;
             case TYPE_IKEV2_IPSEC_RSA:
+                final PrivateKey key;
+                if (profile.ipsecSecret.startsWith(KEYSTORE_ALIAS_PREFIX)) {
+                    Objects.requireNonNull(keyStore, "Missing Keystore for aliased PrivateKey");
+
+                    final String alias =
+                            profile.ipsecSecret.substring(KEYSTORE_ALIAS_PREFIX.length());
+                    key = AndroidKeyStoreProvider.loadAndroidKeyStorePrivateKeyFromKeystore(
+                            keyStore, alias, Process.myUid());
+                } else {
+                    key = getPrivateKey(profile.ipsecSecret);
+                }
+
                 final X509Certificate userCert = certificateFromPemString(profile.ipsecUserCert);
-                final PrivateKey key = getPrivateKey(profile.ipsecSecret);
                 final X509Certificate serverRootCa = certificateFromPemString(profile.ipsecCaCert);
                 builder.setAuthDigitalSignature(userCert, key, serverRootCa);
                 break;
@@ -388,6 +421,39 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         }
 
         return builder.build();
+    }
+
+    /**
+     * Validates that the VpnProfile is acceptable for the purposes of an Ikev2VpnProfile.
+     *
+     * @hide
+     */
+    public static boolean isValidVpnProfile(@NonNull VpnProfile profile) {
+        if (profile.server.isEmpty() || profile.ipsecIdentifier.isEmpty()) {
+            return false;
+        }
+
+        switch (profile.type) {
+            case TYPE_IKEV2_IPSEC_USER_PASS:
+                if (profile.username.isEmpty() || profile.password.isEmpty()) {
+                    return false;
+                }
+                break;
+            case TYPE_IKEV2_IPSEC_PSK:
+                if (profile.ipsecSecret.isEmpty()) {
+                    return false;
+                }
+                break;
+            case TYPE_IKEV2_IPSEC_RSA:
+                if (profile.ipsecSecret.isEmpty() || profile.ipsecUserCert.isEmpty()) {
+                    return false;
+                }
+                break;
+            default:
+                return false;
+        }
+
+        return true;
     }
 
     /**
@@ -432,7 +498,6 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
 
     /** @hide */
     @NonNull
-    @VisibleForTesting(visibility = Visibility.PRIVATE)
     public static String encodeForIpsecSecret(@NonNull byte[] secret) {
         checkNotNull(secret, MISSING_PARAM_MSG_TMPL, "secret");
 
