@@ -1896,6 +1896,18 @@ public class Vpn {
         // Prepare arguments for racoon.
         String[] racoon = null;
         switch (profile.type) {
+            case VpnProfile.TYPE_IKEV2_IPSEC_USER_PASS: // Fallthrough
+            case VpnProfile.TYPE_IKEV2_IPSEC_PSK: // Fallthrough
+            case VpnProfile.TYPE_IKEV2_IPSEC_RSA:
+                // Update certs from keystore
+                profile.ipsecSecret = privateKey;
+                profile.ipsecUserCert = userCert;
+                profile.ipsecCaCert = caCert;
+                profile.ipsecServerCert = serverCert;
+
+                // Start VPN profile
+                startVpnProfilePrivileged(profile, VpnConfig.SETTINGS_VPN);
+                break;
             case VpnProfile.TYPE_L2TP_IPSEC_PSK:
                 racoon = new String[] {
                     iface, profile.server, "udppsk", profile.ipsecIdentifier,
