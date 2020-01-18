@@ -464,11 +464,20 @@ public class Vpn {
      * @param packageName the canonical package name of the VPN app
      * @return {@code true} if and only if the VPN app exists and supports always-on mode
      */
-    public boolean isAlwaysOnPackageSupported(String packageName) {
+    public boolean isAlwaysOnPackageSupported(String packageName, @NonNull KeyStore keyStore) {
         enforceSettingsPermission();
 
         if (packageName == null) {
             return false;
+        }
+
+        final long oldId = Binder.clearCallingIdentity();
+        try {
+            if (getVpnProfilePrivileged(packageName, keyStore) != null) {
+                return true;
+            }
+        } finally {
+            Binder.restoreCallingIdentity(oldId);
         }
 
         PackageManager pm = mContext.getPackageManager();
@@ -519,10 +528,11 @@ public class Vpn {
      * @return {@code true} if the package has been set as always-on, {@code false} otherwise.
      */
     public synchronized boolean setAlwaysOnPackage(
-            String packageName, boolean lockdown, List<String> lockdownWhitelist) {
+            @Nullable String packageName, boolean lockdown,
+            @Nullable List<String> lockdownWhitelist, @NonNull KeyStore keyStore) {
         enforceControlPermissionOrInternalCaller();
 
-        if (setAlwaysOnPackageInternal(packageName, lockdown, lockdownWhitelist)) {
+        if (setAlwaysOnPackageInternal(packageName, lockdown, lockdownWhitelist, keyStore)) {
             saveAlwaysOnPackage();
             return true;
         }
@@ -539,11 +549,13 @@ public class Vpn {
      * @param lockdown whether to prevent traffic outside of a VPN, for example while connecting.
      * @param lockdownWhitelist packages to be whitelisted from lockdown. This is only used if
      *        {@code lockdown} is {@code true}. Packages must not contain commas.
+     * @param keyStore the system keystore instance to check for profiles
      * @return {@code true} if the package has been set as always-on, {@code false} otherwise.
      */
     @GuardedBy("this")
     private boolean setAlwaysOnPackageInternal(
-            String packageName, boolean lockdown, List<String> lockdownWhitelist) {
+            @Nullable String packageName, boolean lockdown,
+            @Nullable List<String> lockdownWhitelist, @NonNull KeyStore keyStore) {
         if (VpnConfig.SETTINGS_VPN.equals(packageName)) {
             Log.w(TAG, "Not setting legacy VPN \"" + packageName + "\" as always-on.");
             return false;
@@ -559,11 +571,18 @@ public class Vpn {
         }
 
         if (packageName != null) {
-            // TODO: Give the minimum permission possible; if there is a Platform VPN profile, only
-            // grant ACTIVATE_PLATFORM_VPN.
-            // Pre-authorize new always-on VPN package. Grant the full ACTIVATE_VPN appop, allowing
-            // both VpnService and Platform VPNs.
-            if (!setPackageAuthorization(packageName, true, VpnManager.TYPE_VPN_SERVICE)) {
+            VpnProfile profile = null;
+            final long oldId = Binder.clearCallingIdentity();
+            try {
+                profile = getVpnProfilePrivileged(alwaysOnPackage, keyStore);
+            } finally {
+                Binder.restoreCallingIdentity(oldId);
+            }
+
+            // Pre-authorize new always-on VPN package.
+            int grantType =
+                    (profile == null) ? VpnManager.TYPE_VPN_SERVICE : VpnManager.TYPE_PLATFORM_VPN;
+            if (!setPackageAuthorization(packageName, true, grantType)) {
                 return false;
             }
             mAlwaysOn = true;
@@ -653,7 +672,7 @@ public class Vpn {
      * @return {@code true} if the service was started, the service was already connected, or there
      *         was no always-on VPN to start. {@code false} otherwise.
      */
-    public boolean startAlwaysOnVpn() {
+    public boolean startAlwaysOnVpn(@NonNull KeyStore keyStore) {
         final String alwaysOnPackage;
         synchronized (this) {
             alwaysOnPackage = getAlwaysOnPackage();
@@ -674,10 +693,17 @@ public class Vpn {
             }
         }
 
-        // Tell the OS that background services in this app need to be allowed for
-        // a short time, so we can bootstrap the VPN service.
         final long oldId = Binder.clearCallingIdentity();
         try {
+            // Prefer VPN profiles, if any exist.
+            VpnProfile profile = getVpnProfilePrivileged(alwaysOnPackage, keyStore);
+            if (profile != null) {
+                startVpnProfilePrivileged(profile);
+                return true;
+            }
+
+            // Tell the OS that background services in this app need to be allowed for
+            // a short time, so we can bootstrap the VPN service.
             DeviceIdleController.LocalService idleController =
                     LocalServices.getService(DeviceIdleController.LocalService.class);
             idleController.addPowerSaveTempWhitelistApp(Process.myUid(), alwaysOnPackage,
@@ -3023,7 +3049,9 @@ public class Vpn {
     }
 
     private void startVpnProfilePrivileged(@NonNull VpnProfile profile, String packageName) {
-        // TODO: Start PlatformVpnRunner
+        // Call prepareInternal to ensure any previous running VpnProfile is shut down. At worst,
+        // this is a no-op.
+        prepareInternal(packageName);
         updateState(DetailedState.CONNECTING, "startPlatformVpn");
 
         try {
