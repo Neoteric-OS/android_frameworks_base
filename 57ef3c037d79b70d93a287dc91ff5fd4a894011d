@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ed6e3859_ae131263",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T09:23:39Z",
+      "side": 1,
+      "message": "Start with what this patch does?\n\nThis patch adds ... in order to ...",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "57ef3c037d79b70d93a287dc91ff5fd4a894011d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1fe09c_aeeefff9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T09:23:39Z",
+      "side": 1,
+      "message": "manager?",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "57ef3c037d79b70d93a287dc91ff5fd4a894011d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a8718f6_85800ae5",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 2
