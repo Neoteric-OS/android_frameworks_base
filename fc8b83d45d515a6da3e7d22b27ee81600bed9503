@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27d66a6e_14be193a",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:20:26Z",
+      "side": 1,
+      "message": "Is there a plan to add something for the feedback loop? Once an app gives the profile to platform, there could be reasons (such as auth, or rekey failure, or something else) due to which platform may be unable to run the VPN. In such cases, there should be a way for the VPN app to know something is not working. \nAlso, without the feedback loop, it could lead to a jarring experience for a user. Say a user who has enabled always-on for the VPN, but platform is unable to establish VPN due to some reason. Without the feedback loop, VPN app can possibly take no action whatsoever. This means that the user is going to see a persistent notification \"Your always-on VPN is not running\".\n\nFWIW, it could very well be the case that despite the feedback loop, VPN app may not do anything, and that is fine, but my point is that there should be a way for well intended apps. \n\nIt might also be worth exploring options how we can improve the messaging around always-on setting, especially during times platform is unable to start VPN. This will prevent a lot of bugs in the future blaming platform for something not working.\n\nIf none of these options can make in. Then at least consider logging errors so that a developer can look at logs (probably some setting in developer settings). It might also be worth adding some of this to dump of ConnectivityService (or IpSecService if there is one) so that it gets captured when a bug report is captured.",
+      "revId": "fc8b83d45d515a6da3e7d22b27ee81600bed9503",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

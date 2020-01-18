@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e185d2a8_4bc2b16c",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:20:26Z",
+      "side": 1,
+      "message": "It should be fine to leave this out, iff we also make changes to VpnSettings such that it grays out always-on and lockdown mode options from VPN Settings if there is no profile installed by the VPN app.",
+      "parentUuid": "ea24343f_db6f2bdd",
+      "range": {
+        "startLine": 30,
+        "startChar": 91,
+        "endLine": 31,
+        "endChar": 6
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc216e90_2cf88ba3",
         "filename": "core/java/android/net/VpnManager.java",
         "patchSetId": 27
@@ -117,6 +141,30 @@
       "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a3b2ba_ec406297",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:20:26Z",
+      "side": 1,
+      "message": "should be fine.",
+      "parentUuid": "f9e9c3f7_e0bbf656",
+      "range": {
+        "startLine": 34,
+        "startChar": 21,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +306,30 @@
       "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c15efa_d208fb8a",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:20:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f126180a_881e4e73",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 5
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
