@@ -204,6 +204,7 @@ import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
+import android.security.KeyStore;
 import android.system.Os;
 import android.test.mock.MockContentResolver;
 import android.text.TextUtils;
@@ -1011,7 +1012,7 @@ public class ConnectivityServiceTest {
 
         public MockVpn(int userId) {
             super(startHandlerThreadAndReturnLooper(), mServiceContext, mNetworkManagementService,
-                    userId);
+                    userId, mock(KeyStore.class));
         }
 
         public void setNetworkAgent(TestNetworkAgentWrapper agent) {
