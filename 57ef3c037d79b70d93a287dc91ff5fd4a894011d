@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a8718f6_85800ae5",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T09:11:09Z",
+      "side": 1,
+      "message": "I presume PWG has a requirement on this?",
+      "range": {
+        "startLine": 859,
+        "startChar": 65,
+        "endLine": 859,
+        "endChar": 76
+      },
+      "revId": "57ef3c037d79b70d93a287dc91ff5fd4a894011d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53086eb5_a72d368e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T09:11:09Z",
+      "side": 1,
+      "message": "Javadoc? \n/**\n * Retrieves the list of apps allowed to manage the given network.\n *\n * @hide\n */",
+      "range": {
+        "startLine": 876,
+        "startChar": 4,
+        "endLine": 876,
+        "endChar": 8
+      },
+      "revId": "57ef3c037d79b70d93a287dc91ff5fd4a894011d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b299758_7c905800",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1535,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T09:11:09Z",
+      "side": 1,
+      "message": "Suggest moving this to a subsequent patch; it\u0027s implementation detail, and if we accidentally fill this in anywhere, it could cross process boundaries to a user",
+      "range": {
+        "startLine": 1535,
+        "startChar": 0,
+        "endLine": 1535,
+        "endChar": 37
+      },
+      "revId": "57ef3c037d79b70d93a287dc91ff5fd4a894011d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5de168_2975b0a2",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1566,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T09:11:09Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1563,
+        "startChar": 16,
+        "endLine": 1566,
+        "endChar": 17
+      },
+      "revId": "57ef3c037d79b70d93a287dc91ff5fd4a894011d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
