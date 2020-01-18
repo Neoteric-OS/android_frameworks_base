@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df929c59_73f0fc65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T09:00:25Z",
+      "side": 1,
+      "message": "Why the DNM?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "172c393454a5cd14072ef09229deefa4aafd2555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133698d6_6cdfbe3e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T09:00:25Z",
+      "side": 1,
+      "message": "Suggest moving this to the implementation patch with the security stuff, and leave this for just the API impacting pieces and the renames.",
+      "range": {
+        "startLine": 1521,
+        "startChar": 0,
+        "endLine": 1527,
+        "endChar": 17
+      },
+      "revId": "172c393454a5cd14072ef09229deefa4aafd2555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
