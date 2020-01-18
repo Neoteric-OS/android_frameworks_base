@@ -29087,6 +29087,7 @@ package android.net {
     method public int getLinkDownstreamBandwidthKbps();
     method public int getLinkUpstreamBandwidthKbps();
     method @Nullable public android.net.NetworkSpecifier getNetworkSpecifier();
+    method public int getOwnerUid();
     method public int getSignalStrength();
     method @Nullable public android.net.TransportInfo getTransportInfo();
     method public boolean hasCapability(int);
