@@ -260,17 +260,17 @@ public class VpnTest {
         assertFalse(vpn.getLockdown());
 
         // Set always-on without lockdown.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], false, Collections.emptyList()));
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], false, Collections.emptyList(), mKeyStore));
         assertTrue(vpn.getAlwaysOn());
         assertFalse(vpn.getLockdown());
 
         // Set always-on with lockdown.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], true, Collections.emptyList()));
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], true, Collections.emptyList(), mKeyStore));
         assertTrue(vpn.getAlwaysOn());
         assertTrue(vpn.getLockdown());
 
         // Remove always-on configuration.
-        assertTrue(vpn.setAlwaysOnPackage(null, false, Collections.emptyList()));
+        assertTrue(vpn.setAlwaysOnPackage(null, false, Collections.emptyList(), mKeyStore));
         assertFalse(vpn.getAlwaysOn());
         assertFalse(vpn.getLockdown());
     }
@@ -284,11 +284,11 @@ public class VpnTest {
         assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1], user.start + PKG_UIDS[2], user.start + PKG_UIDS[3]);
 
         // Set always-on without lockdown.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], false, null));
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], false, null, mKeyStore));
         assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1], user.start + PKG_UIDS[2], user.start + PKG_UIDS[3]);
 
         // Set always-on with lockdown.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], true, null));
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], true, null, mKeyStore));
         verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
             new UidRange(user.start, user.start + PKG_UIDS[1] - 1),
             new UidRange(user.start + PKG_UIDS[1] + 1, user.stop)
@@ -297,7 +297,7 @@ public class VpnTest {
         assertUnblocked(vpn, user.start + PKG_UIDS[1]);
 
         // Switch to another app.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[3], true, null));
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[3], true, null, mKeyStore));
         verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
             new UidRange(user.start, user.start + PKG_UIDS[1] - 1),
             new UidRange(user.start + PKG_UIDS[1] + 1, user.stop)
@@ -316,7 +316,8 @@ public class VpnTest {
         final UidRange user = UidRange.createForUser(primaryUser.id);
 
         // Set always-on with lockdown and whitelist app PKGS[2] from lockdown.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], true, Collections.singletonList(PKGS[2])));
+        assertTrue(vpn.setAlwaysOnPackage(
+                PKGS[1], true, Collections.singletonList(PKGS[2]), mKeyStore));
         verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
                 new UidRange(user.start, user.start + PKG_UIDS[1] - 1),
                 new UidRange(user.start + PKG_UIDS[2] + 1, user.stop)
@@ -325,7 +326,8 @@ public class VpnTest {
         assertUnblocked(vpn, user.start + PKG_UIDS[1], user.start + PKG_UIDS[2]);
 
         // Change whitelisted app to PKGS[3].
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[1], true, Collections.singletonList(PKGS[3])));
+        assertTrue(vpn.setAlwaysOnPackage(
+                PKGS[1], true, Collections.singletonList(PKGS[3]), mKeyStore));
         verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
                 new UidRange(user.start + PKG_UIDS[2] + 1, user.stop)
         }));
@@ -337,7 +339,8 @@ public class VpnTest {
         assertUnblocked(vpn, user.start + PKG_UIDS[1], user.start + PKG_UIDS[3]);
 
         // Change the VPN app.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[0], true, Collections.singletonList(PKGS[3])));
+        assertTrue(vpn.setAlwaysOnPackage(
+                PKGS[0], true, Collections.singletonList(PKGS[3]), mKeyStore));
         verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
                 new UidRange(user.start, user.start + PKG_UIDS[1] - 1),
                 new UidRange(user.start + PKG_UIDS[1] + 1, user.start + PKG_UIDS[3] - 1)
@@ -350,7 +353,7 @@ public class VpnTest {
         assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[3]);
 
         // Remove the whitelist.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[0], true, null));
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[0], true, null, mKeyStore));
         verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
                 new UidRange(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[3] - 1),
                 new UidRange(user.start + PKG_UIDS[3] + 1, user.stop)
@@ -363,7 +366,8 @@ public class VpnTest {
         assertUnblocked(vpn, user.start + PKG_UIDS[0]);
 
         // Add the whitelist.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[0], true, Collections.singletonList(PKGS[1])));
+        assertTrue(vpn.setAlwaysOnPackage(
+                PKGS[0], true, Collections.singletonList(PKGS[1]), mKeyStore));
         verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
                 new UidRange(user.start + PKG_UIDS[0] + 1, user.stop)
         }));
@@ -375,12 +379,13 @@ public class VpnTest {
         assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1]);
 
         // Try whitelisting a package with a comma, should be rejected.
-        assertFalse(vpn.setAlwaysOnPackage(PKGS[0], true, Collections.singletonList("a.b,c.d")));
+        assertFalse(vpn.setAlwaysOnPackage(
+                PKGS[0], true, Collections.singletonList("a.b,c.d"), mKeyStore));
 
         // Pass a non-existent packages in the whitelist, they (and only they) should be ignored.
         // Whitelisted package should change from PGKS[1] to PKGS[2].
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[0], true,
-                Arrays.asList("com.foo.app", PKGS[2], "com.bar.app")));
+        assertTrue(vpn.setAlwaysOnPackage(
+                PKGS[0], true, Arrays.asList("com.foo.app", PKGS[2], "com.bar.app"), mKeyStore));
         verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[]{
                 new UidRange(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[1] - 1),
                 new UidRange(user.start + PKG_UIDS[1] + 1, user.stop)
@@ -405,7 +410,7 @@ public class VpnTest {
         final UidRange profile = UidRange.createForUser(tempProfile.id);
 
         // Set lockdown.
-        assertTrue(vpn.setAlwaysOnPackage(PKGS[3], true, null));
+        assertTrue(vpn.setAlwaysOnPackage(PKGS[3], true, null, mKeyStore));
         verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
             new UidRange(user.start, user.start + PKG_UIDS[3] - 1),
             new UidRange(user.start + PKG_UIDS[3] + 1, user.stop)
@@ -499,22 +504,22 @@ public class VpnTest {
                 .thenReturn(Collections.singletonList(resInfo));
 
         // null package name should return false
-        assertFalse(vpn.isAlwaysOnPackageSupported(null));
+        assertFalse(vpn.isAlwaysOnPackageSupported(null, mKeyStore));
 
         // Pre-N apps are not supported
         appInfo.targetSdkVersion = VERSION_CODES.M;
-        assertFalse(vpn.isAlwaysOnPackageSupported(PKGS[0]));
+        assertFalse(vpn.isAlwaysOnPackageSupported(PKGS[0], mKeyStore));
 
         // N+ apps are supported by default
         appInfo.targetSdkVersion = VERSION_CODES.N;
-        assertTrue(vpn.isAlwaysOnPackageSupported(PKGS[0]));
+        assertTrue(vpn.isAlwaysOnPackageSupported(PKGS[0], mKeyStore));
 
         // Apps that opt out explicitly are not supported
         appInfo.targetSdkVersion = VERSION_CODES.CUR_DEVELOPMENT;
         Bundle metaData = new Bundle();
         metaData.putBoolean(VpnService.SERVICE_META_DATA_SUPPORTS_ALWAYS_ON, false);
         svcInfo.metaData = metaData;
-        assertFalse(vpn.isAlwaysOnPackageSupported(PKGS[0]));
+        assertFalse(vpn.isAlwaysOnPackageSupported(PKGS[0], mKeyStore));
     }
 
     @Test
@@ -531,7 +536,7 @@ public class VpnTest {
                 .cancelAsUser(anyString(), anyInt(), eq(userHandle));
 
         // Start showing a notification for disconnected once always-on.
-        vpn.setAlwaysOnPackage(PKGS[0], false, null);
+        vpn.setAlwaysOnPackage(PKGS[0], false, null, mKeyStore);
         order.verify(mNotificationManager)
                 .notifyAsUser(anyString(), anyInt(), any(), eq(userHandle));
 
@@ -545,7 +550,7 @@ public class VpnTest {
                 .notifyAsUser(anyString(), anyInt(), any(), eq(userHandle));
 
         // Notification should be cleared after unsetting always-on package.
-        vpn.setAlwaysOnPackage(null, false, null);
+        vpn.setAlwaysOnPackage(null, false, null, mKeyStore);
         order.verify(mNotificationManager).cancelAsUser(anyString(), anyInt(), eq(userHandle));
     }
 
@@ -918,6 +923,41 @@ public class VpnTest {
                         eq(Process.myUid()),
                         eq(TEST_VPN_PKG),
                         eq(AppOpsManager.MODE_IGNORED));
+    }
+
+    private void setAndVerifyAlwaysOnPackage(Vpn vpn, boolean lockdownEnabled) {
+        assertTrue(vpn.setAlwaysOnPackage(TEST_VPN_PKG, lockdownEnabled, null, mKeyStore));
+
+        verify(mKeyStore).get(eq(vpn.getProfileNameForPackage(TEST_VPN_PKG)));
+        verify(mAppOps).setMode(
+                eq(AppOpsManager.OP_ACTIVATE_PLATFORM_VPN), eq(Process.myUid()), eq(TEST_VPN_PKG),
+                eq(AppOpsManager.MODE_ALLOWED));
+
+        verify(mSystemServices).settingsSecurePutStringForUser(
+                eq(Settings.Secure.ALWAYS_ON_VPN_APP), eq(TEST_VPN_PKG), eq(primaryUser.id));
+        verify(mSystemServices).settingsSecurePutIntForUser(
+                eq(Settings.Secure.ALWAYS_ON_VPN_LOCKDOWN), eq(lockdownEnabled ? 1 : 0),
+                eq(primaryUser.id));
+        verify(mSystemServices).settingsSecurePutStringForUser(
+                eq(Settings.Secure.ALWAYS_ON_VPN_LOCKDOWN_WHITELIST), eq(""), eq(primaryUser.id));
+    }
+
+    @Test
+    public void testSetAndStartAlwaysOnVpn() throws Exception {
+        final Vpn vpn = createVpn(primaryUser.id);
+        setMockedUsers(primaryUser);
+
+        // UID checks must return a different UID; otherwise it'll be treated as already prepared.
+        when(mPackageManager.getPackageUidAsUser(eq(TEST_VPN_PKG), anyInt()))
+                .thenReturn(Process.myUid() + 1);
+        when(mKeyStore.get(vpn.getProfileNameForPackage(TEST_VPN_PKG)))
+                .thenReturn(mVpnProfile.encode());
+
+        setAndVerifyAlwaysOnPackage(vpn, false);
+        assertTrue(vpn.startAlwaysOnVpn(mKeyStore));
+
+        // TODO: Test the Ikev2VpnRunner started up properly. Relies on utility methods added in
+        // a subsequent CL.
     }
 
     /**
