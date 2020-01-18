@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Zach Johnson <zachoverflow@google.com>
+Code-Review+1: Alisher Alikhodjaev <alisher@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+API-Review+1: Zach Johnson <zachoverflow@google.com>
+Submitted-by: Alisher Alikhodjaev <alisher@google.com>
+Submitted-at: Sat, 18 Jan 2020 02:00:02 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1171811
+Project: platform/frameworks/base
+Branch: refs/heads/master
