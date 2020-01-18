@@ -4536,6 +4536,7 @@ package android.net {
     method @Nullable public String getSSID();
     method @NonNull public int[] getTransportTypes();
     method public boolean satisfiedByNetworkCapabilities(@Nullable android.net.NetworkCapabilities);
+    method public void setOwnerUid(int);
     method @NonNull public android.net.NetworkCapabilities setSSID(@Nullable String);
     method @NonNull public android.net.NetworkCapabilities setTransportInfo(@NonNull android.net.TransportInfo);
     field public static final int NET_CAPABILITY_OEM_PAID = 22; // 0x16

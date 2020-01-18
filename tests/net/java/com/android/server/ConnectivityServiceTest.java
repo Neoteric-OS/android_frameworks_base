@@ -6313,12 +6313,11 @@ public class ConnectivityServiceTest {
         assertEquals(wifiLp, mService.getActiveLinkProperties());
     }
 
-
-    private TestNetworkAgentWrapper establishVpn(LinkProperties lp, int establishingUid,
-            Set<UidRange> vpnRange) throws Exception {
+    private TestNetworkAgentWrapper establishVpn(
+            LinkProperties lp, int ownerUid, Set<UidRange> vpnRange) throws Exception {
         final TestNetworkAgentWrapper
                 vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN, lp);
-        vpnNetworkAgent.getNetworkCapabilities().setEstablishingVpnAppUid(establishingUid);
+        vpnNetworkAgent.getNetworkCapabilities().setOwnerUid(ownerUid);
         mMockVpn.setNetworkAgent(vpnNetworkAgent);
         mMockVpn.connect();
         mMockVpn.setUids(vpnRange);
