@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6892344a_1e55dda8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7535,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-20T20:53:24Z",
+      "side": 1,
+      "message": "Requires anyOf{READ_PRIVILEGED_PHONE_STATE, READ_PRECISE_PHONE_STATE}",
+      "range": {
+        "startLine": 7535,
+        "startChar": 52,
+        "endLine": 7535,
+        "endChar": 76
+      },
+      "revId": "7f1d5885770f83818045b25a94f3ddf0b93a6079",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
