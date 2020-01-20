@@ -45610,6 +45610,7 @@ package android.telephony {
     method public String getNetworkCountryIso();
     method public String getNetworkOperator();
     method public String getNetworkOperatorName();
+    method @RequiresPermission(android.Manifest.permission.READ_PRECISE_PHONE_STATE) public int getNetworkSelectionMode();
     method public String getNetworkSpecifier();
     method @Deprecated @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public int getNetworkType();
     method @Deprecated public int getPhoneCount();
