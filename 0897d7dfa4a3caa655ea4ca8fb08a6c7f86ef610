@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5117e557_9df6d52f",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 24
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-20T05:17:50Z",
+      "side": 1,
+      "message": "Nit: This may be previous design. I wonder if it will be better to move the icon together to all controlled by tethering. Instead of most controlled by tethering, one controlled by status bar.",
+      "range": {
+        "startLine": 159,
+        "startChar": 9,
+        "endLine": 159,
+        "endChar": 80
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346d2c44_7170cb9d",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 24
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-20T05:17:50Z",
+      "side": 1,
+      "message": "Nit: I found the configuration is not easy to understand at the first sight. We need to configure multiple general icons. Those general icons do not have clear mapping definitions, e.g. The first empty item is useless and the first general icon is usb+wifi...\n\nEither to have a clearer comments, e.g. It\u0027s configured based on the mask calculation...\n\nor we can configure the mask value with it, like\n    \u003carray name\u003d\"tethering_notification_icons\"\u003e\n        \u003citem\u003e1;\u003c/item\u003e\n        \u003citem\u003e2;@drawable/stat_sys_tether_usb\u003c/item\u003e\n        \u003citem\u003e3,5,6,7;@drawable/stat_sys_tether_general\u003c/item\u003e\n        \u003citem\u003e4;@drawable/stat_sys_tether_bluetooth\u003c/item\u003e\n   \u003carray\u003e\n\nor have one default beahavior. Said, no configuration means to show general icon and configured as:\n    \u003carray name\u003d\"tethering_notification_icons\"\u003e\n        \u003citem\u003e1;\u003c/item\u003e\n        \u003citem\u003e2;@drawable/stat_sys_tether_usb\u003c/item\u003e\n        \u003citem\u003e4;@drawable/stat_sys_tether_bluetooth\u003c/item\u003e\n    \u003carray\u003e\n\nAnother concern for this is that the configuration table will grow up to 16 if ethernet tethering is supported. Probably we will have lots of general icon configurations.\n\nNot strong opinion if current design is fine for other reviewers.",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 12
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f8efa0_bf1123dd",
+        "filename": "packages/Tethering/res/values/strings.xml",
+        "patchSetId": 24
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-20T05:17:50Z",
+      "side": 1,
+      "message": "It does not match your comment? The wording is actually different from the text of tether_settings_title_all. Could you put more content why it should be consitent with the string in the Settings?\n\nAlso, the notes here may be hard to achieve since if someone touches the string in the Setting, both updaters and you may not aware the value should be updated. Furthermore, Settings will be configurated and customized by OEMs but tethering plan to be one(mainline) in the future. Maybe need to put in a common place if it needs to be consistent.",
+      "range": {
+        "startLine": 34,
+        "startChar": 57,
+        "endLine": 34,
+        "endChar": 87
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4021a66_26f1e610",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-20T05:17:50Z",
+      "side": 1,
+      "message": "Nit: does it need to be a function? it\u0027s one line code ang I think it\u0027s easily to understand directly from the function itself.",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 5
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a5f514_56d3b19b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-20T05:17:50Z",
+      "side": 1,
+      "message": "I find the logic here is a little hard to understand. \n\nCould you add a comment on it? or make it a function getIconIndex()",
+      "range": {
+        "startLine": 100,
+        "startChar": 30,
+        "endLine": 100,
+        "endChar": 85
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bccc586_a95095b3",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-20T05:17:50Z",
+      "side": 1,
+      "message": "The logic seems incorrect? If I configured only usb icon, I enable bluetooth tethering. Math.min() here will get 2. Bluetooth tethering will show usb icon?",
+      "range": {
+        "startLine": 100,
+        "startChar": 39,
+        "endLine": 100,
+        "endChar": 83
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f072cfeb_b9de3c41",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-20T05:17:50Z",
+      "side": 1,
+      "message": "Why noclient? If it\u0027s used to compare with client connected, maybe just tethering_notification_title?\n\nAnd assume the icon may update multiple times after tethering enabled(E.g. wifi hotspot enable first then turn on USB), is this correct to always show no client one? Maybe it will be updated in other commits?",
+      "range": {
+        "startLine": 102,
+        "startChar": 81,
+        "endLine": 102,
+        "endChar": 90
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677f8cbf_209f4617",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-20T05:17:50Z",
+      "side": 1,
+      "message": "Nit: maybe NO_NOTIFY.",
+      "range": {
+        "startLine": 110,
+        "startChar": 41,
+        "endLine": 110,
+        "endChar": 52
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12164776_a4afb5d8",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-20T05:17:50Z",
+      "side": 1,
+      "message": "I think OEM is allowed to rename their own setting package name? so it probably cannot hardcode  with \"com.android.settings\"?",
+      "range": {
+        "startLine": 113,
+        "startChar": 29,
+        "endLine": 113,
+        "endChar": 49
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec21f9cc_ef2af783",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-20T05:17:50Z",
+      "side": 1,
+      "message": "Looks no place to set it to false even reset? Always true?",
+      "range": {
+        "startLine": 193,
+        "startChar": 20,
+        "endLine": 193,
+        "endChar": 41
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
