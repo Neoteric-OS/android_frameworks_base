@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18b7a276_679d9eb6",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-20T04:10:35Z",
+      "side": 1,
+      "message": "Process.INVALID_UID ? Or better, inline it ; since you could make it private, that means it\u0027s only used in this file.",
+      "range": {
+        "startLine": 58,
+        "startChar": 43,
+        "endLine": 58,
+        "endChar": 45
+      },
+      "revId": "f93f6e08c1d7fde1ab5ebfa026c70c2f72370909",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
