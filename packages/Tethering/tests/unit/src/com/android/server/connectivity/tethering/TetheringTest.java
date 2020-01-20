@@ -986,11 +986,14 @@ public class TetheringTest {
         when(mUserManager.getUserRestrictions()).thenReturn(newRestrictions);
 
         final Tethering.UserRestrictionActionListener ural =
-                new Tethering.UserRestrictionActionListener(mUserManager, mockTethering);
+                new Tethering.UserRestrictionActionListener(
+                        mUserManager, mockTethering, mNotificationUpdater);
         ural.mDisallowTethering = currentDisallow;
 
         ural.onUserRestrictionsChanged();
 
+        verify(mNotificationUpdater, times(expectedInteractionsWithShowNotification))
+                .setupRestrictedNotification();
         verify(mockTethering, times(expectedInteractionsWithShowNotification))
                 .untetherAll();
     }

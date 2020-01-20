@@ -261,7 +261,8 @@ public class Tethering {
 
         final UserManager userManager = (UserManager) mContext.getSystemService(
                 Context.USER_SERVICE);
-        mTetheringRestriction = new UserRestrictionActionListener(userManager, this);
+        mTetheringRestriction = new UserRestrictionActionListener(
+                userManager, this, mNotificationUpdater);
         final TetheringThreadExecutor executor = new TetheringThreadExecutor(mHandler);
         mActiveDataSubIdListener = new ActiveDataSubIdListener(executor);
 
@@ -837,11 +838,14 @@ public class Tethering {
     protected static class UserRestrictionActionListener {
         private final UserManager mUserManager;
         private final Tethering mWrapper;
+        private final TetheringNotificationUpdater mNotificationUpdater;
         public boolean mDisallowTethering;
 
-        public UserRestrictionActionListener(UserManager um, Tethering wrapper) {
+        public UserRestrictionActionListener(@NonNull UserManager um, @NonNull Tethering wrapper,
+                @NonNull TetheringNotificationUpdater updater) {
             mUserManager = um;
             mWrapper = wrapper;
+            mNotificationUpdater = updater;
             mDisallowTethering = false;
         }
 
@@ -860,11 +864,12 @@ public class Tethering {
                 return;
             }
 
-            // TODO: Add user restrictions notification.
+            mNotificationUpdater.clearNotification();
             final boolean isTetheringActiveOnDevice = (mWrapper.getTetheredIfaces().length != 0);
 
             if (newlyDisallowed && isTetheringActiveOnDevice) {
                 mWrapper.untetherAll();
+                mNotificationUpdater.setupRestrictedNotification();
             }
         }
     }

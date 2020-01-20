@@ -126,8 +126,16 @@ public class TetheringNotificationUpdater {
         }
     }
 
-    private void clearNotification() {
+    void clearNotification() {
         mNotificationManager.cancel(null /* tag */, NOTIFY_ID);
+    }
+
+    void setupRestrictedNotification() {
+        final Resources res = getResources(mContext, mActiveDataSubId);
+        final String title = res.getString(R.string.disable_tether_notification_title);
+        final String message = res.getString(R.string.disable_tether_notification_message);
+
+        showNotification(R.drawable.stat_sys_tether_general, title, message, "");
     }
 
     private boolean setupNotification() {
