@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc67377c_9518f7f0",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-20T23:13:50Z",
+      "side": 1,
+      "message": "If this is the only reason why we can\u0027t have the field be final, suggest using the setter below that does clear() and addAll()",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 39
+      },
+      "revId": "eaade926413df8e5998275e4eb1dd2a821a6f5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19aa452_7018fc42",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-20T23:13:50Z",
+      "side": 1,
+      "message": "entity",
+      "range": {
+        "startLine": 860,
+        "startChar": 17,
+        "endLine": 860,
+        "endChar": 20
+      },
+      "revId": "eaade926413df8e5998275e4eb1dd2a821a6f5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f44af4_72f9fa65",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-20T23:13:50Z",
+      "side": 1,
+      "message": "This looks like it could be final?",
+      "range": {
+        "startLine": 862,
+        "startChar": 11,
+        "endLine": 862,
+        "endChar": 12
+      },
+      "revId": "eaade926413df8e5998275e4eb1dd2a821a6f5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6839b6_45d4e1ff",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-20T23:13:50Z",
+      "side": 1,
+      "message": "are allowed to?",
+      "range": {
+        "startLine": 865,
+        "startChar": 33,
+        "endLine": 865,
+        "endChar": 34
+      },
+      "revId": "eaade926413df8e5998275e4eb1dd2a821a6f5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0903b0fd_7f599860",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-20T23:13:50Z",
+      "side": 1,
+      "message": "does this handle nulls properly?",
+      "range": {
+        "startLine": 873,
+        "startChar": 28,
+        "endLine": 873,
+        "endChar": 39
+      },
+      "revId": "eaade926413df8e5998275e4eb1dd2a821a6f5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04231afe_9f9cbe45",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-20T23:13:50Z",
+      "side": 1,
+      "message": "UIDs (for consistency)",
+      "range": {
+        "startLine": 877,
+        "startChar": 29,
+        "endLine": 877,
+        "endChar": 33
+      },
+      "revId": "eaade926413df8e5998275e4eb1dd2a821a6f5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e48218_6540f2da",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-20T23:13:50Z",
+      "side": 1,
+      "message": "(Optional) Suggest Collections.UnmodifiableList",
+      "range": {
+        "startLine": 885,
+        "startChar": 19,
+        "endLine": 885,
+        "endChar": 28
+      },
+      "revId": "eaade926413df8e5998275e4eb1dd2a821a6f5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
