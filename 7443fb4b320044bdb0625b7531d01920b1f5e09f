@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "a71f097a_0427392d",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-20T15:26:13Z",
+      "side": 1,
+      "message": "Either is fine. If it\u0027s documented it should be okay.",
+      "parentUuid": "bcb5a1d4_c61c0f45",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 37
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b487322_ac8d8b71",
         "filename": "core/java/android/net/VpnManager.java",
         "patchSetId": 27
