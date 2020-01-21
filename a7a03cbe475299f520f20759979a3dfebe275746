@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76c6a870_217aa501",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T21:46:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ccbd19f_fd52a535",
+      "range": {
+        "startLine": 854,
+        "startChar": 29,
+        "endLine": 854,
+        "endChar": 41
+      },
+      "revId": "a7a03cbe475299f520f20759979a3dfebe275746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4687b45_702812ac",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "61a79beb_9b79194d",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T21:46:01Z",
+      "side": 1,
+      "message": "Ack. Currently, this field isn\u0027t set anywhere in the System. Will keep this in mind for Telephony changes.",
+      "parentUuid": "b4687b45_702812ac",
+      "range": {
+        "startLine": 860,
+        "startChar": 67,
+        "endLine": 860,
+        "endChar": 76
+      },
+      "revId": "a7a03cbe475299f520f20759979a3dfebe275746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb719d7a_eef1d545",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2020-01-21T16:19:01Z",
       "side": 1,
       "message": "Can we find a better word than \"manage\" ? This not only it\u0027s not clear what managing a network involves and allows, it\u0027s also a pretty directed action verb that seems to say these UIDs should be able to tell the network to do things, but right now it\u0027s only about getting diagnostics. Do we intend to let those UIDs do more managing-related tasks, especially in the case of VPN and Wifi suggestions ?\n\nWe could call that \"FriendUids\" in reference to the C++ modifier friend, but I don\u0027t like it too much ; we could say \"PrivilegedUids\" though that\u0027s also not very specific and a bit overloaded ; we could say \"DiagnosticableUids\" though that adjectives a noun and sounds funny and maybe too specific ; we could say \"SubownerUids\".",
+      "range": {
+        "startLine": 863,
+        "startChar": 33,
+        "endLine": 863,
+        "endChar": 40
+      },
+      "revId": "a7a03cbe475299f520f20759979a3dfebe275746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003ca391_5bdfa11e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T21:46:01Z",
+      "side": 1,
+      "message": "I think SubownerUids makes sense, given that this value somewhat mirrors the owner uid identity. Changed references to use \u0027SubownerUids\u0027.",
+      "parentUuid": "eb719d7a_eef1d545",
       "range": {
         "startLine": 863,
         "startChar": 33,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "31866e8a_1f589310",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T21:46:01Z",
+      "side": 1,
+      "message": "Changed behavior to clear the list when null is passed. Changing annotation to be @Nullable since we\u0027re defining happy-path behavior for the null case.",
+      "parentUuid": "b5d24432_544b20a8",
+      "range": {
+        "startLine": 868,
+        "startChar": 75,
+        "endLine": 869,
+        "endChar": 33
+      },
+      "revId": "a7a03cbe475299f520f20759979a3dfebe275746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "238d25e1_6a08c808",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "a7a03cbe475299f520f20759979a3dfebe275746",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c43875f_4dd25399",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T21:46:01Z",
+      "side": 1,
+      "message": "Apologies - I missed this. Updated test accordingly.",
+      "parentUuid": "238d25e1_6a08c808",
+      "range": {
+        "startLine": 627,
+        "startChar": 49,
+        "endLine": 627,
+        "endChar": 60
+      },
+      "revId": "a7a03cbe475299f520f20759979a3dfebe275746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
