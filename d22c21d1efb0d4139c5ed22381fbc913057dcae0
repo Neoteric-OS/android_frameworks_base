@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d6bdd85a_72359458",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T21:17:06Z",
+      "side": 1,
+      "message": "(Already) removed in a subsequent patchset.",
+      "parentUuid": "21b64a25_5927c4f3",
+      "range": {
+        "startLine": 173,
+        "startChar": 15,
+        "endLine": 173,
+        "endChar": 25
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fe7c9dd_4b64f1dc",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 27
@@ -45,6 +69,30 @@
       "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df59f08_cbbc66c9",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T21:17:06Z",
+      "side": 1,
+      "message": "(Already) removed in a subsequent patchset.",
+      "parentUuid": "7fe7c9dd_4b64f1dc",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 46
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5c75a646_8b973a43",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T21:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf282595_ce87afa9",
+      "range": {
+        "startLine": 266,
+        "startChar": 7,
+        "endLine": 269,
+        "endChar": 44
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7ac9318_a8bee9a4",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 27
@@ -82,6 +154,30 @@
       "writtenOn": "2020-01-21T06:39:27Z",
       "side": 1,
       "message": "... else lp.setMtu(?)",
+      "range": {
+        "startLine": 1009,
+        "startChar": 7,
+        "endLine": 1009,
+        "endChar": 9
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9629056f_08692f44",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T21:17:06Z",
+      "side": 1,
+      "message": "Is there anything we can reasonably set here? Right now the MTU in the link properties of VPNs always comes back as 0, and I\u0027m wary of trying to pick a fixed default here if it may cause VPNs to fragment packets. IIRC this eventually calls down to netd to set the interface MTU as well.",
+      "parentUuid": "f7ac9318_a8bee9a4",
       "range": {
         "startLine": 1009,
         "startChar": 7,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4d6b6bb4_85de0d75",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2041,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T21:17:06Z",
+      "side": 1,
+      "message": "Yeah, this was to mirror LegacyVpnRunner so there\u0027s less unique codepaths, but if we\u0027re going to delete that in a year or two, perhaps there\u0027s no need to.\n\nMoved to startVpnProfilePrivileged (the caller of this constructor).",
+      "parentUuid": "1ec64aee_e9fd9b8b",
+      "range": {
+        "startLine": 2041,
+        "startChar": 12,
+        "endLine": 2041,
+        "endChar": 19
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fb9ebb7_26fa060c",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 27
@@ -137,6 +257,30 @@
       "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71f7e25_e35a1a38",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T21:17:06Z",
+      "side": 1,
+      "message": "(Already) removed in a subsequent patchset.",
+      "parentUuid": "8fb9ebb7_26fa060c",
+      "range": {
+        "startLine": 2046,
+        "startChar": 0,
+        "endLine": 2046,
+        "endChar": 38
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f72716dc_811ecfbe",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2050,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T21:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faabc463_30c30347",
+      "range": {
+        "startLine": 2050,
+        "startChar": 12,
+        "endLine": 2050,
+        "endChar": 23
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8e40d23_7f858c17",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 27
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "1078da29_4c001ba2",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2062,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T21:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8e40d23_7f858c17",
+      "range": {
+        "startLine": 2062,
+        "startChar": 17,
+        "endLine": 2062,
+        "endChar": 30
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c25ef8a2_871450d6",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 27
@@ -197,6 +389,30 @@
       "writtenOn": "2020-01-21T06:39:27Z",
       "side": 1,
       "message": "One of two things should be true\n• The code is the same for all these loops and it should be abstracted away rather than copy-pasted\n• The code is not the same and you shouldn\u0027t have loops operating on collections of one Integer\n\nKeep in mind stuff like Consumer\u003cInteger\u003e or BiConsumer\u003cInteger, Integer\u003e if you use the first approach",
+      "range": {
+        "startLine": 2115,
+        "startChar": 29,
+        "endLine": 2115,
+        "endChar": 84
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b4be7e_795be89b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2115,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T21:17:06Z",
+      "side": 1,
+      "message": "Looped over the two builders to add parameters where I could (prf, dh groups).\n\nBetween IKE and Child SAs, the authentication parameters are slightly different (our kernels don\u0027t support some of the algorithms that IKE can, courtesy of conscrypt actually updating). Also, while the \"addEncryptionAlgorithm\" is identically named, there\u0027s no superclass or abstraction that has that method. 😞\n\nOther minor differences between IKE SA proposals and Child SA proposals:\n\n- IKE SA proposals MUST have a DH group, where child SAs do not\n- IKE SA proposals MUST have a PRF, while child SAs do not accept this parameter",
+      "parentUuid": "c25ef8a2_871450d6",
       "range": {
         "startLine": 2115,
         "startChar": 29,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "9c07501d_4db149fe",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2353,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T21:17:06Z",
+      "side": 1,
+      "message": "Converted to a todo; this was commented out since IKE currently throws an UnsupportedOperationException for the getInternalDnsServers() call.",
+      "parentUuid": "ba6ad43c_075f7458",
+      "range": {
+        "startLine": 2347,
+        "startChar": 28,
+        "endLine": 2353,
+        "endChar": 0
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "008ef88f_a2bc5186",
         "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
         "patchSetId": 27
@@ -252,6 +492,30 @@
       "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc023e1_3356d336",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T21:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "008ef88f_a2bc5186",
+      "range": {
+        "startLine": 840,
+        "startChar": 16,
+        "endLine": 844,
+        "endChar": 32
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
