@@ -58,6 +58,7 @@ public class TetheringNotificationUpdater {
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
     private int mActiveDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
     private boolean mPowerSaving = false;
+    private int mConnectedClients = 0;
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
         mUpdateLock = new Object();
@@ -97,6 +98,14 @@ public class TetheringNotificationUpdater {
         }
     }
 
+    /** Called when the number of connected clients changed */
+    public void onConnectedClientsChanged(@IntRange(from = 0) final int number) {
+        synchronized (mUpdateLock) {
+            mConnectedClients = number;
+            updateNotification();
+        }
+    }
+
     private Resources getResources(@NonNull final Context c, final int subId) {
         if (subId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
             return getResourcesForSubId(c, subId);
@@ -117,7 +126,8 @@ public class TetheringNotificationUpdater {
             if (tetheringInactive) {
                 clearNotification();
             } else {
-                if (setupNotification()) {
+                if ((mConnectedClients > 0 && setupHotspotClientsNotification())
+                        || setupNotification()) {
                     return;
                 }
                 // Tethering is active but no need shows notification.
@@ -136,6 +146,34 @@ public class TetheringNotificationUpdater {
         final String message = res.getString(R.string.disable_tether_notification_message);
 
         showNotification(R.drawable.stat_sys_tether_general, title, message, "");
+    }
+
+    private boolean setupHotspotClientsNotification() {
+        final Resources res = getResources(mContext, mActiveDataSubId);
+        final TypedArray iconArray =
+                res.obtainTypedArray(R.array.tethering_notification_icons_with_client);
+
+        if (iconArray.length() < 1) return NOTIFY_DROP;
+
+        final int iconIndex = Math.min(mConnectedClients, iconArray.length() - 1);
+        final int iconId = iconArray.getResourceId(iconIndex, NO_ICON_ID);
+        final String title = res.getQuantityString(
+                R.plurals.tethering_notification_title_with_client, mConnectedClients);
+        final String message;
+        if (mPowerSaving) {
+            message = res.getQuantityString(
+                    R.plurals.tethering_notification_text_with_client_power_saving,
+                    mConnectedClients);
+        } else {
+            message = res.getQuantityString(
+                    R.plurals.tethering_notification_text_with_client, mConnectedClients);
+        }
+        final String[] downstreamTexts =
+                res.getStringArray(R.array.tethering_downstream_combinations);
+        // Index can't be negative.
+        final String downstreamText = downstreamTexts.length > mDownstreamTypesMask
+                ? downstreamTexts[mDownstreamTypesMask] : "";
+        return showNotification(iconId, title, message, downstreamText);
     }
 
     private boolean setupNotification() {
@@ -167,7 +205,7 @@ public class TetheringNotificationUpdater {
         String formatText;
         try {
             if (TextUtils.isEmpty(text)) throw new IllegalArgumentException("Wrong string format");
-            formatText = String.format(text, downstreamText);
+            formatText = String.format(text, downstreamText, mConnectedClients);
         } catch (IllegalArgumentException e) {
             formatText = getResources(mContext, mActiveDataSubId).getString(defaultTextId);
         }

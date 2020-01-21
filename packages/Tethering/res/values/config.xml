@@ -177,4 +177,27 @@
          Can customize for each downstream types or just one string for all downstream types. -->
     <string-array name="tethering_downstream_combinations">
     </string-array>
+
+    <!-- Tethering notification with connected client number. -->
+    <!-- Icons for showing tether enable notification with client number.
+         Empty array means disable this notification. Empty item means not show notification for
+         this downstream type.
+         Can customize for each downstream types or just one icon for all downstream types. -->
+    <array name="tethering_notification_icons_with_client">
+    </array>
+    <!-- Strings for tether enable notification title with client number info.
+         Basically, the customization should be two items one for single client one for multiple
+         clients as below.
+         <item quantity="one">%2$d device connected</item>
+         <item quantity="other">%2$d devices connected</item>
+         -->
+    <plurals name="tethering_notification_title_with_client">
+    </plurals>
+    <!-- Strings for tether enable notification message with client number info. -->
+    <plurals name="tethering_notification_text_with_client">
+    </plurals>
+    <!-- Strings for tether enable notification message with client number info when power saving
+         mode is on. -->
+    <plurals name="tethering_notification_text_with_client_power_saving">
+    </plurals>
 </resources>

@@ -56,6 +56,8 @@ const val USB_DOWNSTREAM_TYPE_MASK = 1 shl TETHERING_USB
 const val OVERLAY_TITTLE = "Tethering active"
 const val OVERLAY_TEXT_NO_CLIENT = "Tap here to set up."
 const val OVERLAY_TEXT_POWER_SAVING = "Tap here to set up. Power saving on."
+const val OVERLAY_TEXT_WITH_CLIENT = "%2\$d devices connected."
+const val OVERLAY_TEXT_C_AND_PS = "%2\$d devices connected. Power saving on."
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
@@ -66,15 +68,19 @@ class TetheringNotificationUpdaterTest {
     @Mock private lateinit var notificationManager: NotificationManager
     @Mock private lateinit var overlayRes: Resources
     @Mock private lateinit var overlayIcon: TypedArray
+    @Mock private lateinit var overlayIconClient: TypedArray
     private lateinit var context: Context
     private lateinit var notificationUpdater: TetheringNotificationUpdater
+    private val downstreamArray = arrayOf("", "Wi-Fi", "USB", "Wi-Fi/USB", "Bluetooth",
+            "Wi-Fi/Bluetooth", "Bluetooth/USB", "Wi-Fi/BT/USB")
 
     fun setupOverlayResources() {
         doReturn(overlayIcon).`when`(overlayRes)
                 .obtainTypedArray(R.array.tethering_notification_icons)
+        doReturn(overlayIconClient).`when`(overlayRes)
+                .obtainTypedArray(R.array.tethering_notification_icons_with_client)
         doReturn(8).`when`(overlayIcon).length()
-        val downstreamArray = arrayOf("", "Wi-Fi", "USB", "Wi-Fi/USB", "Bluetooth",
-                "Wi-Fi/Bluetooth", "Bluetooth/USB", "Wi-Fi/BT/USB")
+        doReturn(5).`when`(overlayIconClient).length()
         doReturn(downstreamArray).`when`(overlayRes)
                 .getStringArray(R.array.tethering_downstream_combinations)
         doReturn(OVERLAY_TITTLE).`when`(overlayRes)
@@ -83,8 +89,17 @@ class TetheringNotificationUpdaterTest {
                 .getString(R.string.tethering_notification_text_noclients)
         doReturn(OVERLAY_TEXT_POWER_SAVING).`when`(overlayRes)
                 .getString(R.string.tethering_notification_text_power_saving_noclients)
+        doReturn(OVERLAY_TITTLE).`when`(overlayRes)
+                .getQuantityString(eq(R.plurals.tethering_notification_title_with_client), anyInt())
+        doReturn(OVERLAY_TEXT_WITH_CLIENT).`when`(overlayRes)
+                .getQuantityString(eq(R.plurals.tethering_notification_text_with_client), anyInt())
+        doReturn(OVERLAY_TEXT_C_AND_PS).`when`(overlayRes)
+                .getQuantityString(eq(
+                        R.plurals.tethering_notification_text_with_client_power_saving), anyInt())
         doReturn(R.drawable.stat_sys_tether_general).`when`(overlayIcon)
                 .getResourceId(eq(WIFI_DOWNSTREAM_TYPE_MASK), eq(NO_ICON_ID))
+        doReturn(R.drawable.stat_sys_tether_general).`when`(overlayIconClient)
+                .getResourceId(anyInt(), eq(NO_ICON_ID))
     }
 
     @Before
@@ -145,6 +160,14 @@ class TetheringNotificationUpdaterTest {
 
         // Power saving off, showed enable notification
         notificationUpdater.onPowerSavingChanged(false)
+        expectShowNotification(title, message)
+
+        // One client connected, showed enable notification
+        notificationUpdater.onConnectedClientsChanged(1)
+        expectShowNotification(title, message)
+
+        // Client disconnected, showed enable notification
+        notificationUpdater.onConnectedClientsChanged(0)
         expectShowNotification(title, message)
 
         // Remove wifi downstream, showed enable notification.
@@ -225,6 +248,34 @@ class TetheringNotificationUpdaterTest {
         expectShowNotification(disallowTitle, disallowMessage)
 
         // Hotspot disabled, no notification showed.
+        notificationUpdater.onDownstreamChanged(DOWNSTREAM_NONE)
+        expectClearNotification()
+    }
+
+    @Test
+    fun testNotificationWithConnectedClientsChanged() {
+        setupOverlayResources()
+
+        // Hotspot enabled, no notification showed.
+        notificationUpdater.onDownstreamChanged(WIFI_DOWNSTREAM_TYPE_MASK)
+        expectClearNotification()
+
+        // Set overlay resource sub id, showed enable notification with overlay text.
+        notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID_1)
+        expectShowNotification(OVERLAY_TITTLE, OVERLAY_TEXT_NO_CLIENT)
+
+        val numClient = 2
+        // Two clients connected, showed notification with connected client number
+        notificationUpdater.onConnectedClientsChanged(numClient)
+        expectShowNotification(OVERLAY_TITTLE, String.format(
+                OVERLAY_TEXT_WITH_CLIENT, downstreamArray[WIFI_DOWNSTREAM_TYPE_MASK], numClient))
+
+        // Power saving on, showed notification with connected client number and power saving status
+        notificationUpdater.onPowerSavingChanged(true)
+        expectShowNotification(OVERLAY_TITTLE, String.format(
+                OVERLAY_TEXT_C_AND_PS, downstreamArray[WIFI_DOWNSTREAM_TYPE_MASK], numClient))
+
+        // No downstream, no notification showed.
         notificationUpdater.onDownstreamChanged(DOWNSTREAM_NONE)
         expectClearNotification()
     }
