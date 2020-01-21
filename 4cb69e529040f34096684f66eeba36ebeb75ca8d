@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "332a341d_801661f4",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T04:13:57Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with how Bundle APIs usually work, so this might be a question for Jean.\n\nDo these need @StringDef?",
+      "range": {
+        "startLine": 91,
+        "startChar": 35,
+        "endLine": 91,
+        "endChar": 74
+      },
+      "revId": "4cb69e529040f34096684f66eeba36ebeb75ca8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
