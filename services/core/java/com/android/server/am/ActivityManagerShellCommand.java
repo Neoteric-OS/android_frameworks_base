@@ -91,7 +91,6 @@ import android.view.Display;
 import com.android.internal.compat.CompatibilityChangeConfig;
 import com.android.internal.util.HexDump;
 import com.android.internal.util.MemInfoReader;
-import com.android.internal.util.Preconditions;
 import com.android.server.compat.PlatformCompat;
 
 import java.io.BufferedReader;
@@ -1709,7 +1708,7 @@ final class ActivityManagerShellCommand extends ShellCommand {
         return 0;
     }
 
-    private void switchUserAndWaitForComplete(int userId) throws RemoteException {
+    private boolean switchUserAndWaitForComplete(int userId) throws RemoteException {
         // Register switch observer.
         final CountDownLatch switchLatch = new CountDownLatch(1);
         mInterface.registerUserSwitchObserver(
@@ -1723,7 +1722,7 @@ final class ActivityManagerShellCommand extends ShellCommand {
                 }, ActivityManagerShellCommand.class.getName());
 
         // Switch.
-        mInterface.switchUser(userId);
+        boolean switched = mInterface.switchUser(userId);
 
         // Wait.
         try {
@@ -1731,6 +1730,7 @@ final class ActivityManagerShellCommand extends ShellCommand {
         } catch (InterruptedException e) {
             getErrPrintWriter().println("Thread interrupted unexpectedly.");
         }
+        return switched;
     }
 
     int runSwitchUser(PrintWriter pw) throws RemoteException {
@@ -1752,12 +1752,18 @@ final class ActivityManagerShellCommand extends ShellCommand {
         }
 
         int userId = Integer.parseInt(getNextArgRequired());
+        boolean switched;
         if (wait) {
-            switchUserAndWaitForComplete(userId);
+            switched = switchUserAndWaitForComplete(userId);
         } else {
-            mInterface.switchUser(userId);
+            switched = mInterface.switchUser(userId);
         }
-        return 0;
+        if (switched) {
+            return 0;
+        } else {
+            pw.printf("Failed to switch to user %d\n", userId);
+            return 1;
+        }
     }
 
     int runGetCurrentUser(PrintWriter pw) throws RemoteException {
