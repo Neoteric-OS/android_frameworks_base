@@ -16,6 +16,8 @@
 
 package com.android.server.connectivity.tethering;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -24,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.net.NetworkCapabilities;
 import android.os.UserHandle;
 import android.telephony.SubscriptionManager;
 import android.text.TextUtils;
@@ -58,6 +61,7 @@ public class TetheringNotificationUpdater {
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
     private int mActiveDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
     private boolean mPowerSaving = false;
+    private boolean mUpstreamSuspended = false;
     private int mConnectedClients = 0;
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
@@ -106,6 +110,17 @@ public class TetheringNotificationUpdater {
         }
     }
 
+    /** Called when upstream network capabilities changed */
+    public void onUpstreamCapabilitiesChanged(@NonNull final NetworkCapabilities capabilities) {
+        final boolean isNetworkSuspended =
+                !capabilities.hasCapability(NET_CAPABILITY_NOT_SUSPENDED);
+        if (mUpstreamSuspended != isNetworkSuspended) {
+            mUpstreamSuspended = isNetworkSuspended;
+            updateNotification();
+        }
+    }
+
+
     private Resources getResources(@NonNull final Context c, final int subId) {
         if (subId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
             return getResourcesForSubId(c, subId);
@@ -126,7 +141,9 @@ public class TetheringNotificationUpdater {
             if (tetheringInactive) {
                 clearNotification();
             } else {
-                if ((mConnectedClients > 0 && setupHotspotClientsNotification())
+                // Show notification if one of conditions is satisfied.
+                if ((mUpstreamSuspended && setupPauseNotification())
+                        || (mConnectedClients > 0 && setupHotspotClientsNotification())
                         || setupNotification()) {
                     return;
                 }
@@ -146,6 +163,26 @@ public class TetheringNotificationUpdater {
         final String message = res.getString(R.string.disable_tether_notification_message);
 
         showNotification(R.drawable.stat_sys_tether_general, title, message, "");
+    }
+
+    private boolean setupPauseNotification() {
+        final Resources res = getResources(mContext, mActiveDataSubId);
+        final TypedArray iconArray = res.obtainTypedArray(
+                R.array.tethering_notification_pause_icons);
+
+        if (iconArray.length() < 1) return NOTIFY_DROP;
+
+        final int iconIndex = mDownstreamTypesMask < iconArray.length() ? mDownstreamTypesMask : 0;
+        final int iconId = iconArray.getResourceId(iconIndex, NO_ICON_ID);
+        final String title = res.getString(R.string.tethering_notification_pause_title);
+        final String message = res.getString(R.string.tethering_notification_pause_text);
+        final String[] downstreamTexts =
+                res.getStringArray(R.array.tethering_downstream_combinations);
+        // Index can't be negative.
+        final String downstreamText = downstreamTexts.length > mDownstreamTypesMask
+                ? downstreamTexts[mDownstreamTypesMask] : "";
+
+        return showNotification(iconId, title, message, downstreamText);
     }
 
     private boolean setupHotspotClientsNotification() {

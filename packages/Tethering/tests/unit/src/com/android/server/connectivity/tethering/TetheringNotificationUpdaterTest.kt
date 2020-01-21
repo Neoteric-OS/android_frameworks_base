@@ -23,6 +23,8 @@ import android.content.res.Resources
 import android.content.res.TypedArray
 import android.net.ConnectivityManager.TETHERING_USB
 import android.net.ConnectivityManager.TETHERING_WIFI
+import android.net.NetworkCapabilities
+import android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED
 import android.os.UserHandle
 import android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID
 import androidx.test.InstrumentationRegistry
@@ -54,10 +56,12 @@ const val TEST_SUBID_1 = 0
 const val WIFI_DOWNSTREAM_TYPE_MASK = 1 shl TETHERING_WIFI
 const val USB_DOWNSTREAM_TYPE_MASK = 1 shl TETHERING_USB
 const val OVERLAY_TITTLE = "Tethering active"
+const val OVERLAY_TITTLE_PAUSE = "Tethering pause"
 const val OVERLAY_TEXT_NO_CLIENT = "Tap here to set up."
 const val OVERLAY_TEXT_POWER_SAVING = "Tap here to set up. Power saving on."
 const val OVERLAY_TEXT_WITH_CLIENT = "%2\$d devices connected."
 const val OVERLAY_TEXT_C_AND_PS = "%2\$d devices connected. Power saving on."
+const val OVERLAY_TEXT_PAUSE = "Tap here to set up. Tethering is paused during SRLTE call."
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
@@ -69,6 +73,7 @@ class TetheringNotificationUpdaterTest {
     @Mock private lateinit var overlayRes: Resources
     @Mock private lateinit var overlayIcon: TypedArray
     @Mock private lateinit var overlayIconClient: TypedArray
+    @Mock private lateinit var overlayIconPause: TypedArray
     private lateinit var context: Context
     private lateinit var notificationUpdater: TetheringNotificationUpdater
     private val downstreamArray = arrayOf("", "Wi-Fi", "USB", "Wi-Fi/USB", "Bluetooth",
@@ -79,8 +84,11 @@ class TetheringNotificationUpdaterTest {
                 .obtainTypedArray(R.array.tethering_notification_icons)
         doReturn(overlayIconClient).`when`(overlayRes)
                 .obtainTypedArray(R.array.tethering_notification_icons_with_client)
+        doReturn(overlayIconPause).`when`(overlayRes)
+                .obtainTypedArray(R.array.tethering_notification_pause_icons)
         doReturn(8).`when`(overlayIcon).length()
         doReturn(5).`when`(overlayIconClient).length()
+        doReturn(1).`when`(overlayIconPause).length()
         doReturn(downstreamArray).`when`(overlayRes)
                 .getStringArray(R.array.tethering_downstream_combinations)
         doReturn(OVERLAY_TITTLE).`when`(overlayRes)
@@ -96,9 +104,15 @@ class TetheringNotificationUpdaterTest {
         doReturn(OVERLAY_TEXT_C_AND_PS).`when`(overlayRes)
                 .getQuantityString(eq(
                         R.plurals.tethering_notification_text_with_client_power_saving), anyInt())
+        doReturn(OVERLAY_TITTLE_PAUSE).`when`(overlayRes)
+                .getString(R.string.tethering_notification_pause_title)
+        doReturn(OVERLAY_TEXT_PAUSE).`when`(overlayRes)
+                .getString(R.string.tethering_notification_pause_text)
         doReturn(R.drawable.stat_sys_tether_general).`when`(overlayIcon)
                 .getResourceId(eq(WIFI_DOWNSTREAM_TYPE_MASK), eq(NO_ICON_ID))
         doReturn(R.drawable.stat_sys_tether_general).`when`(overlayIconClient)
+                .getResourceId(anyInt(), eq(NO_ICON_ID))
+        doReturn(R.drawable.stat_sys_tether_general).`when`(overlayIconPause)
                 .getResourceId(anyInt(), eq(NO_ICON_ID))
     }
 
@@ -168,6 +182,15 @@ class TetheringNotificationUpdaterTest {
 
         // Client disconnected, showed enable notification
         notificationUpdater.onConnectedClientsChanged(0)
+        expectShowNotification(title, message)
+
+        // Upstream network suspended, showed enable notification
+        notificationUpdater.onUpstreamCapabilitiesChanged(NetworkCapabilities())
+        expectShowNotification(title, message)
+
+        // Upstream network resumed, showed enable notification
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addCapability(NET_CAPABILITY_NOT_SUSPENDED))
         expectShowNotification(title, message)
 
         // Remove wifi downstream, showed enable notification.
@@ -274,6 +297,32 @@ class TetheringNotificationUpdaterTest {
         notificationUpdater.onPowerSavingChanged(true)
         expectShowNotification(OVERLAY_TITTLE, String.format(
                 OVERLAY_TEXT_C_AND_PS, downstreamArray[WIFI_DOWNSTREAM_TYPE_MASK], numClient))
+
+        // No downstream, no notification showed.
+        notificationUpdater.onDownstreamChanged(DOWNSTREAM_NONE)
+        expectClearNotification()
+    }
+
+    @Test
+    fun testNotificationWithUpstreamCapabilitiesChanged() {
+        setupOverlayResources()
+
+        // Hotspot enabled, no notification showed.
+        notificationUpdater.onDownstreamChanged(WIFI_DOWNSTREAM_TYPE_MASK)
+        expectClearNotification()
+
+        // Set overlay resource sub id, showed enable notification with overlay text.
+        notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID_1)
+        expectShowNotification(OVERLAY_TITTLE, OVERLAY_TEXT_NO_CLIENT)
+
+        // Upstream network suspended, showed pause notification.
+        notificationUpdater.onUpstreamCapabilitiesChanged(NetworkCapabilities())
+        expectShowNotification(OVERLAY_TITTLE_PAUSE, OVERLAY_TEXT_PAUSE)
+
+        // Upstream network resumed, showed enable notification with overlay text.
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addCapability(NET_CAPABILITY_NOT_SUSPENDED))
+        expectShowNotification(OVERLAY_TITTLE, OVERLAY_TEXT_NO_CLIENT)
 
         // No downstream, no notification showed.
         notificationUpdater.onDownstreamChanged(DOWNSTREAM_NONE)
