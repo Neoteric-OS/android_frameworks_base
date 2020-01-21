@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ae774c7_3a2db131",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ea5151e_954a0b7a",
+      "range": {
+        "startLine": 529,
+        "startChar": 74,
+        "endLine": 530,
+        "endChar": 54
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98455394_28ecf036",
         "filename": "core/java/android/app/usage/NetworkStatsManager.java",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c7f28a_0f23932c",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98455394_28ecf036",
+      "range": {
+        "startLine": 533,
+        "startChar": 82,
+        "endLine": 533,
+        "endChar": 83
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "84232094_2a585a17",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cda01a9_854fcee6",
+      "range": {
+        "startLine": 534,
+        "startChar": 23,
+        "endLine": 534,
+        "endChar": 24
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98c6ad09_9c5d80c8",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aab9339d_6f3b7cea",
+      "range": {
+        "startLine": 534,
+        "startChar": 25,
+        "endLine": 534,
+        "endChar": 46
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22ca4e4e_b6cfd4e2",
         "filename": "core/java/android/app/usage/NetworkStatsManager.java",
         "patchSetId": 15
@@ -114,6 +210,30 @@
       "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876270b7_76fef186",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22ca4e4e_b6cfd4e2",
+      "range": {
+        "startLine": 537,
+        "startChar": 21,
+        "endLine": 537,
+        "endChar": 22
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "05fe67f8_13458b50",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerInternal.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1b7275b_2fa69e6e",
+      "range": {
+        "startLine": 133,
+        "startChar": 22,
+        "endLine": 133,
+        "endChar": 32
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71d65fc6_03c0ed98",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 15
@@ -183,6 +327,30 @@
       "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02b09fb_ee1448a5",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "Done.\nRemoved, this is not even used in SP03, given that RemoteCallbackList is thread safe.\nIIUC The only thing we need to protect is synchronization of invokeForAllStatsProviderCallbacks\nSee if this works for you.",
+      "parentUuid": "71d65fc6_03c0ed98",
+      "range": {
+        "startLine": 257,
+        "startChar": 4,
+        "endLine": 257,
+        "endChar": 59
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "dfbaa473_0f697f32",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "1. I think it is already said. See if it is clear enough for you. https://source.corp.google.com/aosp-master/frameworks/base/core/java/android/net/netstats/provider/AbstractNetworkStatsProvider.java;cl\u003dmaster;l\u003d58?q\u003dAbstractNetworkStatsProvider\n\n2. How about name this setStatsProviderLimitAsync to make it more clear?\nSee if the latest patch works for you.",
+      "parentUuid": "683ef69d_b0641458",
+      "range": {
+        "startLine": 1503,
+        "startChar": 20,
+        "endLine": 1503,
+        "endChar": 41
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2563613e_729e0bd8",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 15
@@ -229,6 +421,30 @@
       "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6215c81b_8e7279af",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1772,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2563613e_729e0bd8",
+      "range": {
+        "startLine": 1769,
+        "startChar": 23,
+        "endLine": 1772,
+        "endChar": 6
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "5dadf9db_c89a36bf",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1785,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "1. IIUC it is checked inside RemoteCallbackList#register.\nhttps://source.corp.google.com/aosp-master/frameworks/base/core/java/android/os/RemoteCallbackList.java;cl\u003dmaster;l\u003d93?q\u003dRemoteCallbackList\n\n2. looks like RemoteCallbacklist doesn\u0027t provide method to check that.",
+      "parentUuid": "6a7f788f_e5d8bcb4",
+      "range": {
+        "startLine": 1785,
+        "startChar": 33,
+        "endLine": 1785,
+        "endChar": 41
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "799a65ef_31ac6c93",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 15
@@ -275,6 +515,30 @@
       "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f53af9_8f35ec52",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1791,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "RemoteCallbackList#register would also throw RemoteException, too.\nThus, keep it as is.",
+      "parentUuid": "799a65ef_31ac6c93",
+      "range": {
+        "startLine": 1789,
+        "startChar": 0,
+        "endLine": 1791,
+        "endChar": 9
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "5ad067ba_2df09771",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "To me that would be an unusual case that I want to debug.\nThus I\u0027d like keep it as is for now.\nMight fine tune log if it is too much.",
+      "parentUuid": "c58ba525_f7d0ea10",
+      "range": {
+        "startLine": 1818,
+        "startChar": 78,
+        "endLine": 1818,
+        "endChar": 81
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eb9e2eb_241d897f",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 15
@@ -321,6 +609,30 @@
       "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52adf08d_4b740099",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1830,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "This is used to protect mIfaceStats \u0026 mUidStats\nMoved to l.1835 to make it more clear.",
+      "parentUuid": "8eb9e2eb_241d897f",
+      "range": {
+        "startLine": 1830,
+        "startChar": 38,
+        "endLine": 1830,
+        "endChar": 56
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "c74909ef_b09bb76e",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fe9239d_48937457",
+      "range": {
+        "startLine": 1836,
+        "startChar": 8,
+        "endLine": 1836,
+        "endChar": 44
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bbc48a1_216f9d37",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 15
@@ -358,6 +694,30 @@
       "writtenOn": "2020-01-13T07:15:17Z",
       "side": 1,
       "message": "If this throws RemoteException, have we already added any state that needs to be cleaned up? (I don\u0027t think so.)",
+      "range": {
+        "startLine": 1848,
+        "startChar": 33,
+        "endLine": 1848,
+        "endChar": 44
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345963dc_41734b97",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1848,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "No, given that this provider failed to register.\nThus we don\u0027t add it into the list, just print a debug log instead.\nanything I missed?",
+      "parentUuid": "1bbc48a1_216f9d37",
       "range": {
         "startLine": 1848,
         "startChar": 33,
@@ -390,6 +750,30 @@
       "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a96b813_04edcf47",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1867,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-21T06:01:02Z",
+      "side": 1,
+      "message": "Yes, done",
+      "parentUuid": "229d9869_a12026ec",
+      "range": {
+        "startLine": 1867,
+        "startChar": 69,
+        "endLine": 1867,
+        "endChar": 70
+      },
+      "revId": "57292558dde3cdb7b7517f3d2a6ca4325b11baf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
