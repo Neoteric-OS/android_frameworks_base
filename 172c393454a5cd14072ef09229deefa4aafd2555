@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f3f2985_38e5f167",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-21T06:34:22Z",
+      "side": 1,
+      "message": "there is conflict on master. I will manually CP to master when this is merged in.",
+      "parentUuid": "df929c59_73f0fc65",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "172c393454a5cd14072ef09229deefa4aafd2555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "133698d6_6cdfbe3e",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 2

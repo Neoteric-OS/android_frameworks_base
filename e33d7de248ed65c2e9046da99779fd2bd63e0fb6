@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6068ff4_9d207ad7",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-21T06:34:22Z",
+      "side": 1,
+      "message": "it\u0027s not always FINE location permission, it may be coarse location permission, depends on the target SDK.",
+      "range": {
+        "startLine": 864,
+        "startChar": 37,
+        "endLine": 864,
+        "endChar": 57
+      },
+      "revId": "e33d7de248ed65c2e9046da99779fd2bd63e0fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
