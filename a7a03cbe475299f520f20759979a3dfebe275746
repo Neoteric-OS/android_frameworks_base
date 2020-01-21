@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ccbd19f_fd52a535",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T16:19:01Z",
+      "side": 1,
+      "message": "have permission to ?",
+      "range": {
+        "startLine": 854,
+        "startChar": 29,
+        "endLine": 854,
+        "endChar": 41
+      },
+      "revId": "a7a03cbe475299f520f20759979a3dfebe275746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4687b45_702812ac",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T16:19:01Z",
+      "side": 1,
+      "message": "If you\u0027re sending this to telephony you\u0027ll need to parcel this (it doesn\u0027t live in the same process). And you\u0027ll need to sanitize it in all other code paths.",
+      "range": {
+        "startLine": 860,
+        "startChar": 67,
+        "endLine": 860,
+        "endChar": 76
+      },
+      "revId": "a7a03cbe475299f520f20759979a3dfebe275746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb719d7a_eef1d545",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T16:19:01Z",
+      "side": 1,
+      "message": "Can we find a better word than \"manage\" ? This not only it\u0027s not clear what managing a network involves and allows, it\u0027s also a pretty directed action verb that seems to say these UIDs should be able to tell the network to do things, but right now it\u0027s only about getting diagnostics. Do we intend to let those UIDs do more managing-related tasks, especially in the case of VPN and Wifi suggestions ?\n\nWe could call that \"FriendUids\" in reference to the C++ modifier friend, but I don\u0027t like it too much ; we could say \"PrivilegedUids\" though that\u0027s also not very specific and a bit overloaded ; we could say \"DiagnosticableUids\" though that adjectives a noun and sounds funny and maybe too specific ; we could say \"SubownerUids\".",
+      "range": {
+        "startLine": 863,
+        "startChar": 33,
+        "endLine": 863,
+        "endChar": 40
+      },
+      "revId": "a7a03cbe475299f520f20759979a3dfebe275746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d24432_544b20a8",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T16:19:01Z",
+      "side": 1,
+      "message": "Is this a good idea ? ISTM either this should crash as indicated by the @NonNull annotation, or clear the list.",
+      "range": {
+        "startLine": 868,
+        "startChar": 75,
+        "endLine": 869,
+        "endChar": 33
+      },
+      "revId": "a7a03cbe475299f520f20759979a3dfebe275746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238d25e1_6a08c808",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T16:19:01Z",
+      "side": 1,
+      "message": "Did you mean getManagerUids ?",
+      "range": {
+        "startLine": 627,
+        "startChar": 49,
+        "endLine": 627,
+        "endChar": 60
+      },
+      "revId": "a7a03cbe475299f520f20759979a3dfebe275746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
