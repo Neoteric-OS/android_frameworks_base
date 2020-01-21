@@ -1,0 +1,31 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000001415380",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1205274?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2b05068a_d405b1a0",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-01-21T18:59:10Z",
+      "side": 1,
+      "message": "This file contains a set of conflict markers.If this is a false alarm, add IGNORE_MERGE_CONFLICT_CHECK\u003d\u003d\u003creason\u003e to your commit message.",
+      "range": {
+        "startLine": 1872,
+        "startChar": 1,
+        "endLine": 1872,
+        "endChar": 7
+      },
+      "revId": "16f2ebd3649e0c4a10726cc19b6b52076aa1a8d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
