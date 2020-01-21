@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e8ef787_acb0013c",
+        "filename": "core/java/android/app/AppOpsManager.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T06:43:22Z",
+      "side": 1,
+      "message": "Ack. I\u0027ll file a bug to fix this (b/148040488)",
+      "parentUuid": "a777a7c2_48bc1b87",
+      "range": {
+        "startLine": 726,
+        "startChar": 31,
+        "endLine": 726,
+        "endChar": 41
+      },
+      "revId": "6e5f24ed578fde729395fc26590a9772843eff3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b465e5a2_056cbe6a",
         "filename": "core/java/android/app/AppOpsManager.java",
         "patchSetId": 34
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-21T02:39:14Z",
       "side": 1,
       "message": "The opposite would be that this appop is sufficient to start VpnService based VPNs I think. I would clarify by saying something like \"but VpnService-permitted apps can start Platform VPNs\" or simply say @see OP_ACTIVATE_VPN.",
+      "range": {
+        "startLine": 860,
+        "startChar": 10,
+        "endLine": 860,
+        "endChar": 14
+      },
+      "revId": "6e5f24ed578fde729395fc26590a9772843eff3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d21e4f29_126a5a83",
+        "filename": "core/java/android/app/AppOpsManager.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T06:43:22Z",
+      "side": 1,
+      "message": "Hmm, I guess this didn\u0027t fully get copied over. I\u0027ve filed a bug to resolve this in internal, then cherry-pick out (otherwise we have all kinds of merge conflicts)\n\nInternal has this as the documentation - is that sufficient?\n    /**\n     * Start (without additional user intervention) a Platform VPN connection, as used by {@link\n     * android.net.VpnManager}\n     *\n     * \u003cp\u003eThis appop is granted to apps that have already been given user consent to start Platform\n     * VPN connections. This appop is insufficient to start VpnService based VPNs; OP_ACTIVATE_VPN\n     * is needed for that.\n     *\n     * @hide\n     */",
+      "parentUuid": "b465e5a2_056cbe6a",
       "range": {
         "startLine": 860,
         "startChar": 10,
