@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fc4f5f9_3acf8669",
+        "filename": "telephony/java/android/telephony/ClosedSubscriberGroupInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-21T18:47:24Z",
+      "side": 1,
+      "message": "Is this a common terminology for this?  If not, maybe just use the name:\nisRestrictedGroup",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "372d6efaeba596eeb108b7ebcde8b038a109b507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17643873_cfe1951d",
+        "filename": "telephony/java/android/telephony/ClosedSubscriberGroupInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-21T18:47:24Z",
+      "side": 1,
+      "message": "Was Nodeb a typo or is that what it is supposed to be?",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 44
+      },
+      "revId": "372d6efaeba596eeb108b7ebcde8b038a109b507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b93c7f1_76fb93dd",
+        "filename": "telephony/java/android/telephony/ClosedSubscriberGroupInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-21T18:47:24Z",
+      "side": 1,
+      "message": "getIdentity is probably sufficient since all of this is in the CSG class.",
+      "range": {
+        "startLine": 73,
+        "startChar": 15,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "372d6efaeba596eeb108b7ebcde8b038a109b507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
