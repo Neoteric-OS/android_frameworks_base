@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "54941b25_6dd0a816",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-21T01:30:52Z",
+      "side": 1,
+      "message": "Ack. Thinking about this more, I think that just provision should be clear, and has enough Java precedent that it should be clear if it\u0027s in the documentation (eg Map.put()).",
+      "parentUuid": "a71f097a_0427392d",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 37
+      },
+      "revId": "7443fb4b320044bdb0625b7531d01920b1f5e09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b487322_ac8d8b71",
         "filename": "core/java/android/net/VpnManager.java",
         "patchSetId": 27
