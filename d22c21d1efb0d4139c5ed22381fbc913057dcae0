@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21b64a25_5927c4f3",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T06:39:27Z",
+      "side": 1,
+      "message": "Why do you need this if mType is final ? If you need the greater visibility you can just make it public, and as long as it\u0027s @hide you can change it if you ever need to (which by my reckoning you\u0027re unlikely to)",
+      "range": {
+        "startLine": 173,
+        "startChar": 15,
+        "endLine": 173,
+        "endChar": 25
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe7c9dd_4b64f1dc",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T06:39:27Z",
+      "side": 1,
+      "message": "Unused",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 46
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf282595_ce87afa9",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T06:39:27Z",
+      "side": 1,
+      "message": "Please don\u0027t change the style to something that\u0027s not the local style",
+      "range": {
+        "startLine": 266,
+        "startChar": 7,
+        "endLine": 269,
+        "endChar": 44
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ac9318_a8bee9a4",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T06:39:27Z",
+      "side": 1,
+      "message": "... else lp.setMtu(?)",
+      "range": {
+        "startLine": 1009,
+        "startChar": 7,
+        "endLine": 1009,
+        "endChar": 9
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec64aee_e9fd9b8b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2041,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T06:39:27Z",
+      "side": 1,
+      "message": "So it\u0027s a side effect of the constructor of IkeV2VpnRunner to set a field in the parent class ? This sounds super dangerous. I understand this is what the legacy runner is doing, but at the very least can you write Vpn.this.mConfig so it\u0027s clear locally what this does ?",
+      "range": {
+        "startLine": 2041,
+        "startChar": 12,
+        "endLine": 2041,
+        "endChar": 19
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb9ebb7_26fa060c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T06:39:27Z",
+      "side": 1,
+      "message": "Looks like a forgotten debug log",
+      "range": {
+        "startLine": 2046,
+        "startChar": 0,
+        "endLine": 2046,
+        "endChar": 38
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faabc463_30c30347",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2050,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T06:39:27Z",
+      "side": 1,
+      "message": "final on all these locals please",
+      "range": {
+        "startLine": 2050,
+        "startChar": 12,
+        "endLine": 2050,
+        "endChar": 23
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e40d23_7f858c17",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2062,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T06:39:27Z",
+      "side": 1,
+      "message": "...including this",
+      "range": {
+        "startLine": 2062,
+        "startChar": 17,
+        "endLine": 2062,
+        "endChar": 30
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25ef8a2_871450d6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2115,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T06:39:27Z",
+      "side": 1,
+      "message": "One of two things should be true\n• The code is the same for all these loops and it should be abstracted away rather than copy-pasted\n• The code is not the same and you shouldn\u0027t have loops operating on collections of one Integer\n\nKeep in mind stuff like Consumer\u003cInteger\u003e or BiConsumer\u003cInteger, Integer\u003e if you use the first approach",
+      "range": {
+        "startLine": 2115,
+        "startChar": 29,
+        "endLine": 2115,
+        "endChar": 84
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6ad43c_075f7458",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2353,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T06:39:27Z",
+      "side": 1,
+      "message": "Forgot to remove ?",
+      "range": {
+        "startLine": 2347,
+        "startChar": 28,
+        "endLine": 2353,
+        "endChar": 0
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008ef88f_a2bc5186",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T06:39:27Z",
+      "side": 1,
+      "message": "Can you please not change the style to something that\u0027s not the local style ?",
+      "range": {
+        "startLine": 840,
+        "startChar": 16,
+        "endLine": 844,
+        "endChar": 32
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
