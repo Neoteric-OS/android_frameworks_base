@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78cd37b5_acb13f57",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 39
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T05:16:54Z",
+      "side": 1,
+      "message": "How about something like\n\n  exitIfOuterInterfaceIs(String interfaze)\n\n...? I think it\u0027s vastly clearer.",
+      "range": {
+        "startLine": 2046,
+        "startChar": 20,
+        "endLine": 2046,
+        "endChar": 45
+      },
+      "revId": "4e344e3681b7aa741b9968358983ece292834eaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
