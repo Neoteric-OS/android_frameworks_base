@@ -16,8 +16,6 @@
 
 package android.telephony;
 
-import com.android.telephony.Rlog;
-
 import static android.net.NetworkPolicyManager.OVERRIDE_CONGESTED;
 import static android.net.NetworkPolicyManager.OVERRIDE_UNMETERED;
 
@@ -58,7 +56,6 @@ import android.os.ServiceManager;
 import android.provider.Telephony.SimInfo;
 import android.telephony.euicc.EuiccManager;
 import android.telephony.ims.ImsMmTelManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
 
@@ -67,6 +64,7 @@ import com.android.internal.telephony.ISub;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.util.HandlerExecutor;
 import com.android.internal.util.Preconditions;
+import com.android.telephony.Rlog;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -2414,10 +2412,13 @@ public class SubscriptionManager {
             newConfig.setLocale(Locale.ROOT);
         }
 
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        DisplayMetrics newMetrics = new DisplayMetrics();
-        newMetrics.setTo(metrics);
-        Resources res = new Resources(context.getResources().getAssets(), newMetrics, newConfig);
+        // Create new context with new configuration so that we can avoid modifying the passed in
+        // context.
+        // Note that if the original context configuration changes, the resources here will also
+        // change for all values except those overridden by newConfig (e.g. if the device has an
+        // orientation change).
+        Context newContext = context.createConfigurationContext(newConfig);
+        Resources res = newContext.getResources();
 
         if (cacheKey != null) {
             // Save the newly created Resources in the resource cache.
