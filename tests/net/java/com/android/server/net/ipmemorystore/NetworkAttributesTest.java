@@ -61,7 +61,8 @@ public class NetworkAttributesTest {
                         "some hint",
                         Arrays.asList(Inet4Address.getByAddress(new byte[] {5, 6, 7, 8}),
                                 Inet4Address.getByAddress(new byte[] {9, 0, 1, 2})),
-                        98);
+                        98,
+                        "some cluster");
         assertEquals(1.0f, na.getNetworkGroupSamenessConfidence(na), EPSILON);
     }
 }

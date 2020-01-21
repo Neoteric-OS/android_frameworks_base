@@ -59,6 +59,7 @@ public class ParcelableTests {
                 InetAddress.getByName("ACA1:652B:0911:DE8F:1200:115E:913B:AA2A"),
                 InetAddress.getByName("6.7.8.9")));
         builder.setMtu(1_000_000);
+        builder.setCluster("cluster");
         in = builder.build();
         assertEquals(in, new NetworkAttributes(parcelingRoundTrip(in.toParcelable())));
 
@@ -69,7 +70,7 @@ public class ParcelableTests {
         // Verify that this test does not miss any new field added later.
         // If any field is added to NetworkAttributes it must be tested here for parceling
         // roundtrip.
-        assertEquals(5, Arrays.stream(NetworkAttributes.class.getDeclaredFields())
+        assertEquals(6, Arrays.stream(NetworkAttributes.class.getDeclaredFields())
                 .filter(f -> !Modifier.isStatic(f.getModifiers())).count());
     }
 
