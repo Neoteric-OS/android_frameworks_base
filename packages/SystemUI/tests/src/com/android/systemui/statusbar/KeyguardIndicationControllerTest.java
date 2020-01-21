@@ -269,6 +269,7 @@ public class KeyguardIndicationControllerTest extends SysuiTestCase {
         createController();
         String restingIndication = "Resting indication";
         when(mKeyguardUpdateMonitor.getUserHasTrust(anyInt())).thenReturn(true);
+        mController.setPowerPuggedIn(false);
         mController.setRestingIndication(restingIndication);
         mController.setVisible(true);
         assertThat(mTextView.getText()).isEqualTo(mController.getTrustGrantedIndication());
@@ -277,6 +278,17 @@ public class KeyguardIndicationControllerTest extends SysuiTestCase {
         when(mKeyguardUpdateMonitor.getUserHasTrust(anyInt())).thenReturn(false);
         mController.onUnlockMethodStateChanged();
         assertThat(mTextView.getText()).isEqualTo(restingIndication);
+
+        mController.setPowerPuggedIn(true);
+        String powerIndication = mController.computePowerIndication();
+        String pluggedIndication = restingIndication;
+        if (powerIndication != null) {
+            pluggedIndication = mContext.getString(
+                    R.string.keyguard_indication_trust_unlocked_pluggen_in, restingIndication,
+                    powerIndication);
+        }
+        mController.setRestingIndication(restingIndication);
+        assertThat(mTextView.getText()).isEqualTo(pluggedIndication);
     }
 
     @Test
