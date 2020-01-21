@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "726fcf44_088b05ad",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T22:51:56Z",
+      "side": 1,
+      "message": "Do we want to add Javadoc comments explaining what types can be expected for each key? (can be done in a followup CL)",
+      "range": {
+        "startLine": 251,
+        "startChar": 9,
+        "endLine": 256,
+        "endChar": 91
+      },
+      "revId": "9c8501857c789d878159c85bf052a485835960f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bbfd73b_a37dcaca",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T22:51:56Z",
+      "side": 1,
+      "message": "Resurfacing Ben\u0027s question from Patchset 1: Do we need a StringDef for these?",
+      "range": {
+        "startLine": 251,
+        "startChar": 8,
+        "endLine": 256,
+        "endChar": 91
+      },
+      "revId": "9c8501857c789d878159c85bf052a485835960f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
