@@ -93,6 +93,30 @@
       "revId": "6e5f24ed578fde729395fc26590a9772843eff3b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9b92b1_4014ec50",
+        "filename": "core/java/android/app/AppOpsManager.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T06:53:10Z",
+      "side": 1,
+      "message": "Yes, it\u0027s better than what I wrote. Please use that.",
+      "parentUuid": "d21e4f29_126a5a83",
+      "range": {
+        "startLine": 860,
+        "startChar": 10,
+        "endLine": 860,
+        "endChar": 14
+      },
+      "revId": "6e5f24ed578fde729395fc26590a9772843eff3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
