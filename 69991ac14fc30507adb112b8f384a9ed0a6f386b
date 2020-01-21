@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "807b52f5_42339140",
+        "filename": "core/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-21T18:19:25Z",
+      "side": 1,
+      "message": "Typically normal sentences should come before @param/@return/@see/@hide",
+      "range": {
+        "startLine": 215,
+        "startChar": 7,
+        "endLine": 215,
+        "endChar": 93
+      },
+      "revId": "69991ac14fc30507adb112b8f384a9ed0a6f386b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9507b86_a835c92c",
+        "filename": "core/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-21T18:19:25Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 248,
+        "startChar": 10,
+        "endLine": 248,
+        "endChar": 18
+      },
+      "revId": "69991ac14fc30507adb112b8f384a9ed0a6f386b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a98d9ca2_2dd5d55f",
+        "filename": "core/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-21T18:19:25Z",
+      "side": 1,
+      "message": "Nit: blank line between \u003cp\u003e and @see",
+      "range": {
+        "startLine": 305,
+        "startChar": 8,
+        "endLine": 305,
+        "endChar": 9
+      },
+      "revId": "69991ac14fc30507adb112b8f384a9ed0a6f386b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

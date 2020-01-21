@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "788f0184_4a3a9462",
+        "filename": "core/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-21T18:19:25Z",
+      "side": 0,
+      "message": "Is this being made totally public? What\u0027s the new permission on it?",
+      "range": {
+        "startLine": 872,
+        "startChar": 20,
+        "endLine": 872,
+        "endChar": 47
+      },
+      "revId": "09a87d3f9f007d89232b8d29e772d960dcb040e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
