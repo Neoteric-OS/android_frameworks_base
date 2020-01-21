@@ -28711,6 +28711,16 @@ package android.net {
     method public long getReportTimestamp();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.net.ConnectivityDiagnosticsManager.ConnectivityReport> CREATOR;
+    field public static final String KEY_NETWORK_PROBE_RESULT_BITMASK = "networkProbeResultBitmask";
+    field public static final String KEY_NETWORK_VALIDATION_RESULT = "networkValidationResult";
+    field public static final int NETWORK_PROBE_RESULT_DNS_SUCCESS = 4; // 0x4
+    field public static final int NETWORK_PROBE_RESULT_FALLBACK_SUCCESS = 32; // 0x20
+    field public static final int NETWORK_PROBE_RESULT_HTTPS_SUCCESS = 16; // 0x10
+    field public static final int NETWORK_PROBE_RESULT_HTTP_SUCCESS = 8; // 0x8
+    field public static final int NETWORK_PROBE_RESULT_PRIVATE_DNS_SUCCESS = 64; // 0x40
+    field public static final int NETWORK_VALIDATION_RESULT_INVALID = 0; // 0x0
+    field public static final int NETWORK_VALIDATION_RESULT_PARTIALLY_VALID = 2; // 0x2
+    field public static final int NETWORK_VALIDATION_RESULT_VALID = 1; // 0x1
   }
 
   public static final class ConnectivityDiagnosticsManager.DataStallReport implements android.os.Parcelable {
@@ -28724,6 +28734,8 @@ package android.net {
     field @NonNull public static final android.os.Parcelable.Creator<android.net.ConnectivityDiagnosticsManager.DataStallReport> CREATOR;
     field public static final int DETECTION_METHOD_DNS_EVENTS = 1; // 0x1
     field public static final int DETECTION_METHOD_TCP_METRICS = 2; // 0x2
+    field public static final String KEY_DNS_CONSECUTIVE_TIMEOUTS = "dnsConsecutiveTimeouts";
+    field public static final String KEY_TCP_PACKET_FAIL_RATE = "tcpPacketFailRate";
   }
 
   public class ConnectivityManager {
