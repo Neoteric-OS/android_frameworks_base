@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70c314b3_9f9af2f2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 7473,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:16:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd235621_b6312fea",
+      "range": {
+        "startLine": 7472,
+        "startChar": 12,
+        "endLine": 7473,
+        "endChar": 33
+      },
+      "revId": "543e1795d214545ac2d5cd424b48bcc6bf689e09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68890829_62e214ed",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "543e1795d214545ac2d5cd424b48bcc6bf689e09",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d2c512_a1386b05",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 7484,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:16:00Z",
+      "side": 1,
+      "message": "Refactored the logic for matching and permissions checks to a separate method.",
+      "parentUuid": "68890829_62e214ed",
+      "range": {
+        "startLine": 7484,
+        "startChar": 39,
+        "endLine": 7484,
+        "endChar": 59
+      },
+      "revId": "543e1795d214545ac2d5cd424b48bcc6bf689e09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a14f5924_3b4e7ff8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:16:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "552d1a3a_a204d549",
+      "range": {
+        "startLine": 547,
+        "startChar": 33,
+        "endLine": 547,
+        "endChar": 60
+      },
+      "revId": "543e1795d214545ac2d5cd424b48bcc6bf689e09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b333a541_33d1e9ba",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 17
@@ -91,6 +163,30 @@
       "revId": "543e1795d214545ac2d5cd424b48bcc6bf689e09",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e1f4b5_0c6ce371",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 6454,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:16:00Z",
+      "side": 1,
+      "message": "Initially thought it was necessary for request matching. Removed and changed to the callback monitoring approach suggested by Jean in aosp/1200998.",
+      "parentUuid": "b333a541_33d1e9ba",
+      "range": {
+        "startLine": 6454,
+        "startChar": 40,
+        "endLine": 6454,
+        "endChar": 59
+      },
+      "revId": "543e1795d214545ac2d5cd424b48bcc6bf689e09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
