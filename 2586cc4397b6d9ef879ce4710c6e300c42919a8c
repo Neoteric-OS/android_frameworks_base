@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0424c5c9_a5f7364b",
+        "filename": "core/java/android/os/PowerManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-21T21:47:04Z",
+      "side": 1,
+      "message": "what about spurious wakeups? should not check time again?",
+      "range": {
+        "startLine": 1947,
+        "startChar": 16,
+        "endLine": 1947,
+        "endChar": 22
+      },
+      "revId": "2586cc4397b6d9ef879ce4710c6e300c42919a8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3cca0bd_24add241",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-21T21:47:04Z",
+      "side": 1,
+      "message": "instead of client querying this repetitively, can we use a callback for this API? \ne.g. multiple window case might have multiple clients...",
+      "range": {
+        "startLine": 1177,
+        "startChar": 14,
+        "endLine": 1177,
+        "endChar": 25
+      },
+      "revId": "2586cc4397b6d9ef879ce4710c6e300c42919a8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

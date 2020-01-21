@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "70805689_f3ca2b84",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-21T21:47:04Z",
+      "side": 1,
+      "message": "sorry, I did mean to onActivityManagerReady for the one-time initialization part.",
+      "parentUuid": "c061d77d_3e48af2d",
+      "range": {
+        "startLine": 1195,
+        "startChar": 16,
+        "endLine": 1205,
+        "endChar": 0
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c695b2ce_04ac32c0",
         "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
         "patchSetId": 7
@@ -328,6 +352,30 @@
       "revId": "1bd778429e280b76032929ac9cd64a7570701780",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c673a0_2239bb8a",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-21T21:47:04Z",
+      "side": 1,
+      "message": "yeah, you are right.",
+      "parentUuid": "15e5191b_fff0ae5e",
+      "range": {
+        "startLine": 1211,
+        "startChar": 24,
+        "endLine": 1211,
+        "endChar": 30
+      },
+      "revId": "1bd778429e280b76032929ac9cd64a7570701780",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
