@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c044fbe4_07a1f01d",
+        "filename": "telephony/java/android/telephony/ClosedSubscriberGroupInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-21T18:59:58Z",
+      "side": 1,
+      "message": "This is actually taken directly from the 3gpp standard.",
+      "parentUuid": "5fc4f5f9_3acf8669",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "372d6efaeba596eeb108b7ebcde8b038a109b507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17643873_cfe1951d",
         "filename": "telephony/java/android/telephony/ClosedSubscriberGroupInfo.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "95179800_d6a0fe52",
+        "filename": "telephony/java/android/telephony/ClosedSubscriberGroupInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-21T18:59:58Z",
+      "side": 1,
+      "message": "The entity is actually called a NodeB or a Node-B. So the options are:\n\ngetHomeNodebName() or getHomeNodeBName()",
+      "parentUuid": "17643873_cfe1951d",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 44
+      },
+      "revId": "372d6efaeba596eeb108b7ebcde8b038a109b507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b93c7f1_76fb93dd",
         "filename": "telephony/java/android/telephony/ClosedSubscriberGroupInfo.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2020-01-21T18:47:24Z",
       "side": 1,
       "message": "getIdentity is probably sufficient since all of this is in the CSG class.",
+      "range": {
+        "startLine": 73,
+        "startChar": 15,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "372d6efaeba596eeb108b7ebcde8b038a109b507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d91af9_0e41c412",
+        "filename": "telephony/java/android/telephony/ClosedSubscriberGroupInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-21T18:59:58Z",
+      "side": 1,
+      "message": "Also taken directly from the 3gpp standard (CSG-Identity).",
+      "parentUuid": "3b93c7f1_76fb93dd",
       "range": {
         "startLine": 73,
         "startChar": 15,
