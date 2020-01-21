@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1443024_7f6e9c25",
+        "filename": "core/java/android/os/PowerManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2020-01-21T23:24:25Z",
+      "side": 1,
+      "message": "I admit I\u0027m not a Java expert, but is it possible to get a spurious wakeup that doesn\u0027t throw an InterruptedException? I had assumed that we only needed to update and sleep again if we throw (which we do below), but otherwise we could assume that the sleep had completed successfully.",
+      "parentUuid": "0424c5c9_a5f7364b",
+      "range": {
+        "startLine": 1947,
+        "startChar": 16,
+        "endLine": 1947,
+        "endChar": 22
+      },
+      "revId": "2586cc4397b6d9ef879ce4710c6e300c42919a8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3cca0bd_24add241",
         "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-21T21:47:04Z",
       "side": 1,
       "message": "instead of client querying this repetitively, can we use a callback for this API? \ne.g. multiple window case might have multiple clients...",
+      "range": {
+        "startLine": 1177,
+        "startChar": 14,
+        "endLine": 1177,
+        "endChar": 25
+      },
+      "revId": "2586cc4397b6d9ef879ce4710c6e300c42919a8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24d83d5_69ae2aba",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2020-01-21T23:24:25Z",
+      "side": 1,
+      "message": "I intentionally didn\u0027t specify it as a callback because as I understand it, it\u0027s difficult for game engines to deal with callback threads and integrating with the system smoothly. By making it a polling model like this, they don\u0027t have to worry about figuring out where to plug this into their game loop, deal with locking, etc.",
+      "parentUuid": "c3cca0bd_24add241",
       "range": {
         "startLine": 1177,
         "startChar": 14,
