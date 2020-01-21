@@ -22,6 +22,30 @@
       "revId": "09a87d3f9f007d89232b8d29e772d960dcb040e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979253c3_3a9cbe86",
+        "filename": "core/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2020-01-21T19:08:43Z",
+      "side": 0,
+      "message": "The require of permission READ_PRIVILEGED_PHONE_STATE seems a Javadoc mistake. I check all the other places, including:\n- Definition of LISTEN_PHONE_CAPABILITY_CHANG\n- Permission check before triggering the callback\n- Test cases\n- All caller\n\nNone of them require the permission. \nTo keep it consistent, I remove the permission requirement here. If LISTEN_PHONE_CAPABILITY_CHANG do need READ_PRIVILEGED_PHONE_STATE, then we will add in all above places together.\nThanks",
+      "parentUuid": "788f0184_4a3a9462",
+      "range": {
+        "startLine": 872,
+        "startChar": 20,
+        "endLine": 872,
+        "endChar": 47
+      },
+      "revId": "09a87d3f9f007d89232b8d29e772d960dcb040e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
