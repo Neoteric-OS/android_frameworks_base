@@ -22,6 +22,30 @@
       "revId": "f93f6e08c1d7fde1ab5ebfa026c70c2f72370909",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f9a4fb_6a55b86e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "Changed to statically import Process.INVALID_UID",
+      "parentUuid": "18b7a276_679d9eb6",
+      "range": {
+        "startLine": 58,
+        "startChar": 43,
+        "endLine": 58,
+        "endChar": 45
+      },
+      "revId": "f93f6e08c1d7fde1ab5ebfa026c70c2f72370909",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

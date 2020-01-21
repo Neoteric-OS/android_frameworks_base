@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "00ced574_29e6ddc3",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "Removed this field and now statically import Process.INVALID_UID.",
+      "parentUuid": "f1ceb1e7_9404ad38",
+      "range": {
+        "startLine": 60,
+        "startChar": 28,
+        "endLine": 60,
+        "endChar": 39
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85067d80_7e942695",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 18
@@ -95,6 +119,54 @@
     },
     {
       "key": {
+        "uuid": "79a3348b_ff07f8a4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85067d80_7e942695",
+      "range": {
+        "startLine": 567,
+        "startChar": 94,
+        "endLine": 567,
+        "endChar": 95
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a11e6c11_7c702130",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2fe958f_d1f8f850",
+      "range": {
+        "startLine": 567,
+        "startChar": 61,
+        "endLine": 567,
+        "endChar": 69
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d056696a_16a74c3c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 18
@@ -106,6 +178,30 @@
       "writtenOn": "2020-01-16T18:22:09Z",
       "side": 1,
       "message": "Should we just take over that one ? Do we have a use case for keeping both ?",
+      "range": {
+        "startLine": 572,
+        "startChar": 22,
+        "endLine": 572,
+        "endChar": 42
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662033ef_3c3efa07",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "AFAIU, with stable aidl and mainline we can never remove APIs. If we can\u0027t remove INetworkMonitorCallbacks#notifyNetworkTested, it seems to make sense to keep both. Given that this new event is really just EVENT_NETWORK_TESTED with a PersistableBundle, it can rely on the existing functionality in NetworkStateTrackerHandler.\n\nAnother option is to have INetworkMonitorCallbacks#notifyNetworkTested use an empty Bundle and still generate a ConnectivityReport.\n\nThoughts?",
+      "parentUuid": "d056696a_16a74c3c",
       "range": {
         "startLine": 572,
         "startChar": 22,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "6293bf02_dfd4f1cb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2747,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "I believe it makes sense. We still want the original behavior of EVENT_NETWORK_TESTED, but also need to trigger event handling in ConnectivityDiagnosticsHandler. msg.arg1 and msg.obj are still needed for EVENT_NETWORK_TESTED.",
+      "parentUuid": "4724276e_de8dc526",
+      "range": {
+        "startLine": 2747,
+        "startChar": 20,
+        "endLine": 2747,
+        "endChar": 29
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18732a1d_e1ea2677",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 18
@@ -161,6 +281,30 @@
       "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d044e47_4a933215",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 7212,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18732a1d_e1ea2677",
+      "range": {
+        "startLine": 7212,
+        "startChar": 18,
+        "endLine": 7212,
+        "endChar": 21
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "e800a6ac_13d7daa5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 7416,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "Updated to pass timestamp from when NetworkStack notifies network tested.",
+      "parentUuid": "800a4c0f_099f8789",
+      "range": {
+        "startLine": 7416,
+        "startChar": 24,
+        "endLine": 7416,
+        "endChar": 51
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba7e6eed_4fe93d9d",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 18
@@ -198,6 +366,30 @@
       "writtenOn": "2020-01-16T18:22:09Z",
       "side": 1,
       "message": "...during which this and the LP may have changed.",
+      "range": {
+        "startLine": 7418,
+        "startChar": 28,
+        "endLine": 7418,
+        "endChar": 47
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367aafa7_dc9717f5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 7418,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "We want to get NetworkAgentInfo after we finish updating the Network following the updates in EVENT_NETWORK_TESTED, correct?",
+      "parentUuid": "ba7e6eed_4fe93d9d",
       "range": {
         "startLine": 7418,
         "startChar": 28,
@@ -230,6 +422,30 @@
       "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b5e24b_5018e8ba",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 7420,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b791797e_2848f8a0",
+      "range": {
+        "startLine": 7420,
+        "startChar": 13,
+        "endLine": 7420,
+        "endChar": 18
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -279,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "24d37bc9_7fdea8c6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de716041_1d444432",
+      "range": {
+        "startLine": 457,
+        "startChar": 23,
+        "endLine": 457,
+        "endChar": 45
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "710cffa3_73475cf4",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
@@ -290,6 +530,30 @@
       "writtenOn": "2020-01-16T18:22:09Z",
       "side": 1,
       "message": "Can we have a test strategy that\u0027s more centered on externally-observable behavior ? For example this test does not react at all to a removal of the call to checkConnectivityDiagnosticsPermissions before sending the callback.\n\nSomething like :\n① Have a uid register a callback and check that we throw\n② Grant permissions to that UID\n③ Have it register a callback, check that it succeeds\n④ Generate a fake event, check that the callback is indeed called\n⑤ Revoke permissions\n⑥ Generate a fake event, check that the callback is not called after 500ms or so",
+      "range": {
+        "startLine": 6357,
+        "startChar": 16,
+        "endLine": 6357,
+        "endChar": 59
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f321092e_50fe7320",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6357,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "This is intended as a unit test for the permissions check only. IMO it\u0027s worth testing this explicitly, given that it\u0027s fairly cheap to test through this approach and gives us a better guarantee of correctness with our permissions restrictions.\n\nFiled b/148014250 to track adding more testing.",
+      "parentUuid": "710cffa3_73475cf4",
       "range": {
         "startLine": 6357,
         "startChar": 16,
@@ -325,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "4fa52414_76db96ae",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6358,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "That was the intention. Switched to Process.myUid() and Process.myPid() to make it clearer.",
+      "parentUuid": "b4a66822_2c7b9296",
+      "range": {
+        "startLine": 6358,
+        "startChar": 18,
+        "endLine": 6358,
+        "endChar": 21
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa87d83c_9053183b",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
@@ -345,6 +633,30 @@
       "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d59d754b_03c89fa5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6372,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa87d83c_9053183b",
+      "range": {
+        "startLine": 6372,
+        "startChar": 24,
+        "endLine": 6372,
+        "endChar": 36
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -371,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "c7aa0cb2_f9998e92",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6385,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b208f8c_0801f228",
+      "range": {
+        "startLine": 6385,
+        "startChar": 26,
+        "endLine": 6385,
+        "endChar": 29
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3825b90_0934aba2",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
@@ -391,6 +727,30 @@
       "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c027d7_dd73d545",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6390,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "Yes. We register a callback with our uid and pass a NetworkAgentInfo with our uid. This tests the case for being the network owner (and not the active VPN). In this case, the callback should still have permissions to receive callbacks.",
+      "parentUuid": "d3825b90_0934aba2",
+      "range": {
+        "startLine": 6390,
+        "startChar": 25,
+        "endLine": 6390,
+        "endChar": 64
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -417,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "100216aa_efce0617",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6416,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "16a16adc_78848b63",
+      "range": {
+        "startLine": 6416,
+        "startChar": 40,
+        "endLine": 6416,
+        "endChar": 59
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74250559_1cd23d95",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
@@ -437,6 +821,30 @@
       "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16231d3b_cb419533",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6418,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:11:16Z",
+      "side": 1,
+      "message": "Done. Will also update other CLs with this approach.",
+      "parentUuid": "74250559_1cd23d95",
+      "range": {
+        "startLine": 6417,
+        "startChar": 8,
+        "endLine": 6418,
+        "endChar": 85
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
