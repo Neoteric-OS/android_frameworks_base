@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a777a7c2_48bc1b87",
+        "filename": "core/java/android/app/AppOpsManager.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T02:39:14Z",
+      "side": 1,
+      "message": "I find this turn of phrase fairly difficult to understand, so I suggest something like\n\n  Permission to start without additional user intervention a VpnService-backed VPN (as used by VpnService) or a Platform VPN (as used by VpnManager).",
+      "range": {
+        "startLine": 726,
+        "startChar": 31,
+        "endLine": 726,
+        "endChar": 41
+      },
+      "revId": "6e5f24ed578fde729395fc26590a9772843eff3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b465e5a2_056cbe6a",
+        "filename": "core/java/android/app/AppOpsManager.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T02:39:14Z",
+      "side": 1,
+      "message": "The opposite would be that this appop is sufficient to start VpnService based VPNs I think. I would clarify by saying something like \"but VpnService-permitted apps can start Platform VPNs\" or simply say @see OP_ACTIVATE_VPN.",
+      "range": {
+        "startLine": 860,
+        "startChar": 10,
+        "endLine": 860,
+        "endChar": 14
+      },
+      "revId": "6e5f24ed578fde729395fc26590a9772843eff3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
