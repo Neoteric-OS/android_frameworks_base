@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f07bb32a_dc8c3e6b",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 28718,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T16:41:37Z",
+      "side": 1,
+      "message": "Bundle key names normally start with KEY_ (for an example look at AccountManager). There is also no need to spell out stuff that\u0027s already in the class name (I don\u0027t think this needs to be called DataStallReport.DATA_STALL_REPORT_*).\n\nFinally it\u0027s customary to scope the keys themselves by the package they are used. Looking through the API there seem to be a mix of underscores and camel case ; media is using dashes but I think this is for consistency with historical formats and I don\u0027t think it\u0027s encouraged in the general case.\nSo in this case I suggest the value is \"android.net.ConnectivityDiagnosticsManager.DataStallReport.dnsConsecutiveTimeouts\" or the underscore-separated equivalent if you prefer that.\nThe value doesn\u0027t matter that much though, it could also be made shorter by omitting the namespace.",
+      "range": {
+        "startLine": 28718,
+        "startChar": 37,
+        "endLine": 28718,
+        "endChar": 79
+      },
+      "revId": "ba62b133c45acdf8ace1968ab2547ad1f9cc9236",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
