@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "332222d7_708f9557",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-21T22:48:26Z",
+      "side": 1,
+      "message": "My mistake, I meant public; basically the values for the public API need to also be public.",
+      "range": {
+        "startLine": 199,
+        "startChar": 3,
+        "endLine": 214,
+        "endChar": 7
+      },
+      "revId": "1cdd937bd4878259fdacb5b15e7baa5eb8c23507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
