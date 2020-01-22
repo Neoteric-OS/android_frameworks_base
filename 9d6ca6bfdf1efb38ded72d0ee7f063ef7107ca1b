@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d19f5f39_be3c4fcc",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-22T04:05:15Z",
+      "side": 1,
+      "message": "I\u0027m OK for either way, currently, I requests ACCESS_COARSE_LOCATION when SDK \u003c 29 since wifi team\u0027s previous implementation requests this and I want to keep consistent with them.",
+      "parentUuid": "387aae10_0ac95d84",
+      "range": {
+        "startLine": 821,
+        "startChar": 14,
+        "endLine": 822,
+        "endChar": 25
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eec6cbcf_07bb4805",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d614c8c3_a3a6a5a6",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-22T04:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eec6cbcf_07bb4805",
+      "range": {
+        "startLine": 842,
+        "startChar": 32,
+        "endLine": 842,
+        "endChar": 40
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "10cb62ff_246726db",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-22T04:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fa5d3c8_00f95061",
+      "range": {
+        "startLine": 863,
+        "startChar": 7,
+        "endLine": 869,
+        "endChar": 12
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74c94213_2cf5da22",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985121eb_6b455bfb",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-22T04:05:15Z",
+      "side": 1,
+      "message": "This API is used by the application app which cannot call system API. In this case, mOwnerUid will not be INVALID_UID if the caller is the owner of the network. This means that this function will always return false if the app is not the owner of the network which makes it cannot be used to check whether the other app owns this network or not.",
+      "parentUuid": "74c94213_2cf5da22",
+      "range": {
+        "startLine": 873,
+        "startChar": 19,
+        "endLine": 873,
+        "endChar": 33
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ee84150c_e4b6fb40",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-22T04:05:15Z",
+      "side": 1,
+      "message": "add the written part.",
+      "parentUuid": "d3016814_e01b0813",
+      "range": {
+        "startLine": 1548,
+        "startChar": 16,
+        "endLine": 1548,
+        "endChar": 48
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "677982f8_983edbf2",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 11
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "bc994861_c77800bf",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-22T04:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "677982f8_983edbf2",
+      "range": {
+        "startLine": 1551,
+        "startChar": 14,
+        "endLine": 1552,
+        "endChar": 71
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6709cec2_d753a5c6",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 11
@@ -160,6 +304,30 @@
       "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dfd30bd_5279ddc2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-22T04:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6709cec2_d753a5c6",
+      "range": {
+        "startLine": 1636,
+        "startChar": 8,
+        "endLine": 1637,
+        "endChar": 41
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
