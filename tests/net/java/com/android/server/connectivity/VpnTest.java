@@ -20,23 +20,32 @@ import static android.content.pm.UserInfo.FLAG_ADMIN;
 import static android.content.pm.UserInfo.FLAG_MANAGED_PROFILE;
 import static android.content.pm.UserInfo.FLAG_PRIMARY;
 import static android.content.pm.UserInfo.FLAG_RESTRICTED;
+import static android.net.ConnectivityManager.NetworkCallback;
 import static android.net.NetworkCapabilities.LINK_BANDWIDTH_UNSPECIFIED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_CONGESTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+import static android.system.OsConstants.AF_INET;
+import static android.system.OsConstants.IPPROTO_UDP;
+import static android.system.OsConstants.SOCK_DGRAM;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.AdditionalMatchers.aryEq;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
@@ -44,6 +53,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -59,12 +69,26 @@ import android.content.pm.ServiceInfo;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.net.Ikev2VpnProfile;
+import android.net.IpPrefix;
+import android.net.IpSecConfig;
+import android.net.IpSecManager;
+import android.net.IpSecTransform;
+import android.net.IpSecTunnelInterfaceResponse;
+import android.net.IpSecUdpEncapResponse;
+import android.net.LinkAddress;
+import android.net.LinkProperties;
 import android.net.Network;
+import android.net.NetworkAgentConfig;
 import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
+import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.VpnManager;
 import android.net.VpnService;
+import android.net.ipsec.ike.ChildSessionCallback;
+import android.net.ipsec.ike.IkeSessionCallback;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.INetworkManagementService;
@@ -74,8 +98,10 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.security.Credentials;
 import android.security.KeyStore;
+import android.system.Os;
 import android.util.ArrayMap;
 import android.util.ArraySet;
+import android.util.Pair;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -83,11 +109,15 @@ import androidx.test.runner.AndroidJUnit4;
 import com.android.internal.R;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnProfile;
+import com.android.server.IpSecService;
+import com.android.server.connectivity.Vpn.IkeV2VpnRunner;
+import com.android.server.connectivity.VpnIkev2Utils.ChildSessionCallbackImpl;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Answers;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -96,8 +126,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 /**
@@ -124,6 +157,25 @@ public class VpnTest {
     }
 
     static final String TEST_VPN_PKG = "com.dummy.vpn";
+    private static final String TEST_VPN_SERVER = "1.2.3.4";
+    private static final String TEST_VPN_IDENTITY = "identity";
+    private static final byte[] TEST_VPN_PSK = "psk".getBytes();
+    private static final String TEST_IFACE_NAME = "TEST_IFACE";
+    private static final int TEST_ENCAP_RESOURCE_ID = 0x1234;
+    private static final int TEST_TUNNEL_RESOURCE_ID = 0x2345;
+    private static final Network TEST_NETWORK = new Network(1);
+    private static final List<RouteInfo> TEST_ROUTES;
+    private static final List<LinkAddress> TEST_LINK_ADDRESSES;
+    static {
+        TEST_ROUTES = Collections.unmodifiableList(Arrays.asList(
+                new RouteInfo(new IpPrefix("0.0.0.0/0"), null, TEST_IFACE_NAME),
+                new RouteInfo(new IpPrefix("::/0"), null, TEST_IFACE_NAME)));
+
+        TEST_LINK_ADDRESSES = Collections.unmodifiableList(Arrays.asList(
+                new LinkAddress("192.0.2.1/32"), new LinkAddress("2001:db8::/32")));
+    }
+
+    private static final long TEST_TIMEOUT_MS = 200;
 
     /**
      * Names and UIDs for some fake packages. Important points:
@@ -150,23 +202,39 @@ public class VpnTest {
     @Mock private Vpn.SystemServices mSystemServices;
     @Mock private Vpn.Ikev2SessionCreator mIkev2SessionCreator;
     @Mock private ConnectivityManager mConnectivityManager;
+    @Mock private IpSecService mIpSecService;
     @Mock private KeyStore mKeyStore;
-    private final VpnProfile mVpnProfile = new VpnProfile("key");
+    private final VpnProfile mVpnProfile;
+
+    private IpSecManager mIpSecManager;
+
+    public VpnTest() throws Exception {
+        // Build an actual VPN profile that is capable of being converted to and from an
+        // Ikev2VpnProfile
+        final Ikev2VpnProfile.Builder builder =
+                new Ikev2VpnProfile.Builder(TEST_VPN_SERVER, TEST_VPN_IDENTITY);
+        builder.setAuthPsk(TEST_VPN_PSK);
+        mVpnProfile = builder.build().toVpnProfile();
+    }
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
+        mIpSecManager = new IpSecManager(mContext, mIpSecService);
+
         when(mContext.getPackageManager()).thenReturn(mPackageManager);
         setMockedPackages(mPackages);
 
-        when(mContext.getPackageName()).thenReturn(Vpn.class.getPackage().getName());
+        when(mContext.getPackageName()).thenReturn(TEST_VPN_PKG);
+        when(mContext.getOpPackageName()).thenReturn(TEST_VPN_PKG);
         when(mContext.getSystemService(eq(Context.USER_SERVICE))).thenReturn(mUserManager);
         when(mContext.getSystemService(eq(Context.APP_OPS_SERVICE))).thenReturn(mAppOps);
         when(mContext.getSystemService(eq(Context.NOTIFICATION_SERVICE)))
                 .thenReturn(mNotificationManager);
         when(mContext.getSystemService(eq(Context.CONNECTIVITY_SERVICE)))
                 .thenReturn(mConnectivityManager);
+        when(mContext.getSystemService(eq(Context.IPSEC_SERVICE))).thenReturn(mIpSecManager);
         when(mContext.getString(R.string.config_customVpnAlwaysOnDisconnectedDialogComponent))
                 .thenReturn(Resources.getSystem().getString(
                         R.string.config_customVpnAlwaysOnDisconnectedDialogComponent));
@@ -184,6 +252,17 @@ public class VpnTest {
         // Deny all appops by default.
         when(mAppOps.noteOpNoThrow(anyInt(), anyInt(), anyString()))
                 .thenReturn(AppOpsManager.MODE_IGNORED);
+
+        // Setup IpSecService
+        final IpSecUdpEncapResponse udpEncapResp = new IpSecUdpEncapResponse(
+                IpSecManager.Status.OK, TEST_ENCAP_RESOURCE_ID, 0x5678 /* SPI */,
+                Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP));
+        when(mIpSecService.openUdpEncapsulationSocket(eq(0), anyObject())).thenReturn(udpEncapResp);
+
+        final IpSecTunnelInterfaceResponse tunnelResp = new IpSecTunnelInterfaceResponse(
+                IpSecManager.Status.OK, TEST_TUNNEL_RESOURCE_ID, TEST_IFACE_NAME);
+        when(mIpSecService.createTunnelInterface(any(), any(), any(), any(), any()))
+                .thenReturn(tunnelResp);
     }
 
     @Test
@@ -779,12 +858,7 @@ public class VpnTest {
 
     @Test
     public void testStartVpnProfile() throws Exception {
-        final Vpn vpn = createVpnAndSetupUidChecks(AppOpsManager.OP_ACTIVATE_PLATFORM_VPN);
-
-        when(mKeyStore.get(vpn.getProfileNameForPackage(TEST_VPN_PKG)))
-                .thenReturn(mVpnProfile.encode());
-
-        vpn.startVpnProfile(TEST_VPN_PKG, mKeyStore);
+        final Vpn vpn = startIkev2Vpn();
 
         verify(mKeyStore).get(eq(vpn.getProfileNameForPackage(TEST_VPN_PKG)));
         verify(mAppOps)
@@ -805,6 +879,209 @@ public class VpnTest {
 
         // Verify that the the ACTIVATE_VPN appop was checked, but no error was thrown.
         verify(mAppOps).noteOpNoThrow(AppOpsManager.OP_ACTIVATE_VPN, Process.myUid(), TEST_VPN_PKG);
+    }
+
+    private Vpn startIkev2Vpn() throws Exception {
+        final Vpn vpn = createVpnAndSetupUidChecks(AppOpsManager.OP_ACTIVATE_PLATFORM_VPN);
+
+        when(mKeyStore.get(vpn.getProfileNameForPackage(TEST_VPN_PKG)))
+                .thenReturn(mVpnProfile.encode());
+
+        vpn.startVpnProfile(TEST_VPN_PKG, mKeyStore);
+
+        return vpn;
+    }
+
+    private NetworkCallback verifyAndCaptureNetworkCallback() {
+        // Verify and capture the NetworkRequest registration
+        final ArgumentCaptor<ConnectivityManager.NetworkCallback> cbCaptor =
+                ArgumentCaptor.forClass(ConnectivityManager.NetworkCallback.class);
+        verify(mConnectivityManager, timeout(TEST_TIMEOUT_MS))
+                .requestNetwork(any(), cbCaptor.capture());
+
+        final NetworkCallback networkCb = cbCaptor.getValue();
+        assertNotNull(networkCb);
+
+        return networkCb;
+    }
+
+    private Pair<IkeSessionCallback, ChildSessionCallback> verifyAndCaptureIkeCallbacks() {
+        final ArgumentCaptor<IkeSessionCallback> ikeCbCaptor =
+                ArgumentCaptor.forClass(IkeSessionCallback.class);
+        final ArgumentCaptor<ChildSessionCallback> childCbCaptor =
+                ArgumentCaptor.forClass(ChildSessionCallback.class);
+        verify(mIkev2SessionCreator, timeout(TEST_TIMEOUT_MS)).createIkeSession(
+                any(), any(), any(), any(), ikeCbCaptor.capture(), childCbCaptor.capture());
+
+        final IkeSessionCallback ikeCb = ikeCbCaptor.getValue();
+        final ChildSessionCallback childCb = childCbCaptor.getValue();
+        assertNotNull(ikeCb);
+        assertNotNull(childCb);
+
+        return new Pair<>(ikeCb, childCb);
+    }
+
+    private Vpn connectIkev2Vpn() throws Exception {
+        final Vpn vpn = startIkev2Vpn();
+
+        final NetworkCallback networkCb = verifyAndCaptureNetworkCallback();
+
+        // Trigger the onAvailable callback
+        networkCb.onAvailable(TEST_NETWORK);
+
+        final Pair<IkeSessionCallback, ChildSessionCallback> sessionCallbacks =
+                verifyAndCaptureIkeCallbacks();
+        final IkeSessionCallback ikeCb = sessionCallbacks.first;
+        final ChildSessionCallback childCb = sessionCallbacks.second;
+
+        // Trigger child transform created callbacks
+        final IpSecTransform dummyTransform = new IpSecTransform(mContext, new IpSecConfig());
+        for (final int dir : new int[] {IpSecManager.DIRECTION_IN, IpSecManager.DIRECTION_OUT}) {
+            childCb.onIpSecTransformCreated(dummyTransform, dir);
+            verify(mIpSecService).applyTunnelModeTransform(
+                    eq(TEST_TUNNEL_RESOURCE_ID), eq(dir),
+                    eq(dummyTransform.getResourceId()), any());
+        }
+
+        // Trigger child session opened
+        ((ChildSessionCallbackImpl) childCb)
+                .onOpened(TEST_NETWORK, TEST_LINK_ADDRESSES, TEST_ROUTES);
+
+        return vpn;
+    }
+
+    @Test
+    public void testIkev2Vpn() throws Exception {
+        final Vpn vpn = connectIkev2Vpn();
+
+        // Verify setup of Network
+        synchronized (vpn) {
+            assertEquals(TEST_VPN_PKG, vpn.mPackage);
+            assertEquals(TEST_IFACE_NAME, vpn.mInterface);
+            assertEquals(TEST_ROUTES, vpn.mConfig.routes);
+            assertEquals(TEST_LINK_ADDRESSES, vpn.mConfig.addresses);
+            assertNotNull(vpn.mNetworkAgent);
+            assertEquals(DetailedState.CONNECTED, vpn.getNetworkInfo().getDetailedState());
+        }
+
+        for (final LinkAddress addr : TEST_LINK_ADDRESSES) {
+            verify(mIpSecService)
+                    .addAddressToTunnelInterface(eq(TEST_TUNNEL_RESOURCE_ID), eq(addr), any());
+        }
+
+        ArgumentCaptor<NetworkInfo> niCaptor = ArgumentCaptor.forClass(NetworkInfo.class);
+        ArgumentCaptor<LinkProperties> lpCaptor = ArgumentCaptor.forClass(LinkProperties.class);
+        ArgumentCaptor<NetworkCapabilities> ncCaptor =
+                ArgumentCaptor.forClass(NetworkCapabilities.class);
+        ArgumentCaptor<NetworkAgentConfig> configCaptor =
+                ArgumentCaptor.forClass(NetworkAgentConfig.class);
+        verify(mConnectivityManager).registerNetworkAgent(any(), niCaptor.capture(),
+                lpCaptor.capture(), ncCaptor.capture(), anyInt(), configCaptor.capture(), anyInt());
+
+        NetworkInfo netInfo = niCaptor.getValue();
+        LinkProperties linkProp = lpCaptor.getValue();
+        NetworkCapabilities netCap = ncCaptor.getValue();
+        NetworkAgentConfig netAgentConfig = configCaptor.getValue();
+
+        assertNotNull(netInfo);
+        assertNotNull(linkProp);
+        assertNotNull(netCap);
+        assertNotNull(netAgentConfig);
+
+        // Validate that the parameters sent to ConnectivityService were correct.
+        assertEquals(DetailedState.CONNECTING, netInfo.getDetailedState());
+        assertEquals(ConnectivityManager.TYPE_VPN, netInfo.getType());
+        assertArrayEquals(
+                new int[] {NetworkCapabilities.TRANSPORT_VPN}, netCap.getTransportTypes());
+        assertTrue(netCap.hasCapability(NET_CAPABILITY_INTERNET));
+        assertFalse(netCap.hasCapability(NET_CAPABILITY_NOT_VPN));
+        assertEquals(mVpnProfile.isBypassable, netAgentConfig.allowBypass);
+        assertEquals(TEST_LINK_ADDRESSES, linkProp.getLinkAddresses());
+        assertEquals(TEST_ROUTES, linkProp.getRoutes());
+    }
+
+    @Test
+    public void testIkev2VpnNetworkLost() throws Exception {
+        final Vpn vpn = connectIkev2Vpn();
+
+        final NetworkCallback networkCb = verifyAndCaptureNetworkCallback();
+        networkCb.onLost(TEST_NETWORK);
+
+        synchronized (vpn) {
+            assertNull(vpn.mInterface);
+
+            final IkeV2VpnRunner runner = (IkeV2VpnRunner) vpn.mVpnRunner;
+            assertNull(runner.mEncapSocket);
+            assertNull(runner.mTunnelIface);
+            assertNull(runner.mSession);
+            assertNull(runner.mActiveNetwork);
+            assertTrue(runner.mIsRunning);
+
+            for (final RouteInfo routeInfo : vpn.mConfig.routes) {
+                assertEquals(RouteInfo.RTN_UNREACHABLE, routeInfo.getType());
+            }
+
+            verify(mIpSecService).closeUdpEncapsulationSocket(eq(TEST_ENCAP_RESOURCE_ID));
+            verify(mIpSecService)
+                    .deleteTunnelInterface(eq(TEST_TUNNEL_RESOURCE_ID), eq(TEST_VPN_PKG));
+
+            // Verify runner is still active and prepared
+            assertEquals(TEST_VPN_PKG, vpn.mPackage);
+            assertNotNull(vpn.mNetworkAgent);
+
+            // Verify that the interface being removed does not trigger shutdown (required for
+            // failover)
+            vpn.mObserver.interfaceRemoved(TEST_IFACE_NAME);
+
+            assertEquals(TEST_VPN_PKG, vpn.mPackage);
+            assertNotNull(vpn.mNetworkAgent);
+        }
+    }
+
+    @Test
+    public void testIkev2VpnExit() throws Exception {
+        final Vpn vpn = connectIkev2Vpn();
+        final IkeV2VpnRunner runner;
+
+        synchronized (vpn) {
+            runner = (IkeV2VpnRunner) vpn.mVpnRunner;
+            vpn.mVpnRunner.exit();
+
+            // Verify state is reset
+            assertNull(vpn.mConfig);
+            assertNull(vpn.mInterface);
+            assertNull(vpn.mNetworkAgent);
+            assertNull(vpn.mVpnRunner);
+        }
+
+        // Wait for async cleanup (any any pending calls) to complete
+        CountDownLatch latch = new CountDownLatch(1);
+        runner.mExecutor.execute(() -> {
+            latch.countDown();
+        });
+        assertTrue(latch.await(TEST_TIMEOUT_MS, TimeUnit.MILLISECONDS));
+
+        assertNull(runner.mEncapSocket);
+        assertNull(runner.mTunnelIface);
+        assertNull(runner.mSession);
+        assertNull(runner.mActiveNetwork);
+        assertFalse(runner.mIsRunning);
+    }
+
+    @Test
+    public void testStopVpnProfile() throws Exception {
+        final Vpn vpn = connectIkev2Vpn();
+
+        vpn.stopVpnProfile(TEST_VPN_PKG);
+
+        synchronized (vpn) {
+            // Verify state is reset
+            assertNull(vpn.mConfig);
+            assertNull(vpn.mInterface);
+            assertNull(vpn.mNetworkAgent);
+            assertNull(vpn.mVpnRunner);
+            assertEquals(VpnConfig.LEGACY_VPN, vpn.mPackage);
+        }
     }
 
     @Test
@@ -924,6 +1201,7 @@ public class VpnTest {
      * Mock some methods of vpn object.
      */
     private Vpn createVpn(@UserIdInt int userId) {
+        Looper.prepare();
         return new Vpn(Looper.myLooper(), mContext, mNetService,
                 userId, mSystemServices, mIkev2SessionCreator);
     }
