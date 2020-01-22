@@ -46,6 +46,30 @@
       "revId": "ba62b133c45acdf8ace1968ab2547ad1f9cc9236",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "676fedec_ec4241e7",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 28718,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T08:47:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4b2dd5a6_d48f767f",
+      "range": {
+        "startLine": 28718,
+        "startChar": 37,
+        "endLine": 28718,
+        "endChar": 79
+      },
+      "revId": "ba62b133c45acdf8ace1968ab2547ad1f9cc9236",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

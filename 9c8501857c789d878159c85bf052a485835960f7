@@ -45,6 +45,54 @@
       "revId": "9c8501857c789d878159c85bf052a485835960f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2564012a_d307a096",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T08:47:27Z",
+      "side": 1,
+      "message": "You have to add Javadoc for anything that\u0027s public API anyway, so yes. Yes I think doc explaining what type is expected is an important thing to add, thanks for bringing this up.",
+      "parentUuid": "726fcf44_088b05ad",
+      "range": {
+        "startLine": 251,
+        "startChar": 9,
+        "endLine": 256,
+        "endChar": 91
+      },
+      "revId": "9c8501857c789d878159c85bf052a485835960f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995b55e2_af924bbc",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T08:47:27Z",
+      "side": 1,
+      "message": "Would be nice I guess.",
+      "parentUuid": "5bbfd73b_a37dcaca",
+      "range": {
+        "startLine": 251,
+        "startChar": 8,
+        "endLine": 256,
+        "endChar": 91
+      },
+      "revId": "9c8501857c789d878159c85bf052a485835960f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
