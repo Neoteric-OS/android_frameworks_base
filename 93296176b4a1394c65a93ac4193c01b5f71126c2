@@ -22,6 +22,29 @@
       "revId": "93296176b4a1394c65a93ac4193c01b5f71126c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d421e7c_7d3c3572",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-22T05:39:55Z",
+      "side": 1,
+      "message": "Probably need a todo here too (unless we have a CL already open that fixes this)",
+      "range": {
+        "startLine": 1646,
+        "startChar": 8,
+        "endLine": 1646,
+        "endChar": 36
+      },
+      "revId": "93296176b4a1394c65a93ac4193c01b5f71126c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
