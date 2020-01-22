@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e344e4bd_c9fc3ac6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T18:22:04Z",
+      "side": 1,
+      "message": "Meh now that I see it I think it would even be easier to read if written as\n\n  if (!up \u0026\u0026 mVpnRunner !\u003d null) {\n    if (instanceof Legacy) {\n      Legacy runner \u003d (Legacy) mRunner;\n      if (interfaze.equals(runner.mOuterInterface)) runner.exit();\n  }\n\n(that requires to make mOuterInterface public, but it\u0027s final anyway)\n\nOnly do this if you feel like it\u0027s really a big improvement and you care to spare the time. It\u0027s not like you\u0027ve introduced this, it\u0027s just clarifications making this apparent when it used to be super obfuscated.",
+      "range": {
+        "startLine": 1493,
+        "startChar": 0,
+        "endLine": 1493,
+        "endChar": 85
+      },
+      "revId": "31dea09444f0ffcd42b551055f8da8a126a21000",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23ac2800_3cb7ab42",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 1905,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T18:22:04Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 1905,
+        "startChar": 12,
+        "endLine": 1905,
+        "endChar": 19
+      },
+      "revId": "31dea09444f0ffcd42b551055f8da8a126a21000",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a544cb_cd0a7c91",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 1905,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T18:22:04Z",
+      "side": 1,
+      "message": "I think if mPackage is LEGACY_VPN then the runner must be the legacy runner right ? If that\u0027s true, then just say so in a comment. If that\u0027s not true and we actually run platform VPN with the LEGACY_VPN package name, then (I have missed something really big and) we should rename that constant.",
+      "range": {
+        "startLine": 1904,
+        "startChar": 8,
+        "endLine": 1905,
+        "endChar": 72
+      },
+      "revId": "31dea09444f0ffcd42b551055f8da8a126a21000",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
