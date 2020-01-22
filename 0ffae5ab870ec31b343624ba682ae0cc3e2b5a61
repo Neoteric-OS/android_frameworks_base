@@ -22,6 +22,30 @@
       "revId": "0ffae5ab870ec31b343624ba682ae0cc3e2b5a61",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a45d70_bfbdcfff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2020-01-22T22:48:20Z",
+      "side": 1,
+      "message": "This is a partial port of a CL to meet some internal criteria and porting the entire CL this came may not be feasible due to dependencies.",
+      "parentUuid": "a3d042b3_092b83c9",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "0ffae5ab870ec31b343624ba682ae0cc3e2b5a61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
