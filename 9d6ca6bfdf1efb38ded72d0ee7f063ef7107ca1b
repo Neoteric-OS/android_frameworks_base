@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "9e880e02_76a3e74d",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-22T05:38:03Z",
+      "side": 1,
+      "message": "Now that we know exactly how Cody\u0027s admin UIDs works, we can maybe remove this, and expose getOwnerUid() as public API. Apps can then figure out whether it is them by either comparing against Process.INVALID_UID, or Process.myUid()",
+      "parentUuid": "985121eb_6b455bfb",
+      "range": {
+        "startLine": 873,
+        "startChar": 19,
+        "endLine": 873,
+        "endChar": 33
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3016814_e01b0813",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 11

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12807ee8_28c905ea",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-22T05:38:03Z",
+      "side": 1,
+      "message": "Suggest also changing this to\n\n\"Conditionally reset the owner UID if the following conditions are not met:\n1...\n2...\n3...\n\"",
+      "range": {
+        "startLine": 1636,
+        "startChar": 30,
+        "endLine": 1637,
+        "endChar": 41
+      },
+      "revId": "93296176b4a1394c65a93ac4193c01b5f71126c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
