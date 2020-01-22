@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "094c5cb7_fb83401d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T13:13:37Z",
+      "side": 1,
+      "message": "Yes we can\u0027t remove notifyNetworkTested, but I think we can route it to just send a null Bundle no ? These ints here are not public API.\n\nHopefully you can\u0027t have notifyNetworkTested called on R, because the module is not supposed to be older than the OS (I think there might be corner cases), but if it happens I think it\u0027s reasonable to generate a ConnectivityReport.",
+      "parentUuid": "662033ef_3c3efa07",
+      "range": {
+        "startLine": 572,
+        "startChar": 22,
+        "endLine": 572,
+        "endChar": 42
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4724276e_de8dc526",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 18
@@ -402,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "d67ebbe4_54e0034b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 7418,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T13:13:37Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "367aafa7_dc9717f5",
+      "range": {
+        "startLine": 7418,
+        "startChar": 28,
+        "endLine": 7418,
+        "endChar": 47
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b791797e_2848f8a0",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 18
@@ -563,6 +611,30 @@
       "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204e46c4_97eca002",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 6357,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T13:13:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f321092e_50fe7320",
+      "range": {
+        "startLine": 6357,
+        "startChar": 16,
+        "endLine": 6357,
+        "endChar": 59
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {

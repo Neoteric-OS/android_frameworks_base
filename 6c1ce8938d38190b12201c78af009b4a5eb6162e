@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84f0c536_7177e1fa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 2793,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T13:13:37Z",
+      "side": 1,
+      "message": "As long as you\u0027re doing this, let\u0027s make this a String and pull up l.2810 in the caller",
+      "range": {
+        "startLine": 2793,
+        "startChar": 73,
+        "endLine": 2793,
+        "endChar": 79
+      },
+      "revId": "6c1ce8938d38190b12201c78af009b4a5eb6162e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651b99f7_ed69da17",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 7394,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T13:13:37Z",
+      "side": 1,
+      "message": "This looks like inheritance for reuse (and very trivial reuse at that) rather than is-a relationship, as is also indicated by the fact that you never actually use the inheritance. I think just having these two dataclasses completely independent from each other is a little better.\n(fine to address in a followup)",
+      "range": {
+        "startLine": 7394,
+        "startChar": 25,
+        "endLine": 7394,
+        "endChar": 46
+      },
+      "revId": "6c1ce8938d38190b12201c78af009b4a5eb6162e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7d69b9_893516ed",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 7522,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T13:13:37Z",
+      "side": 1,
+      "message": "Wait shouldn\u0027t this be gated on location permission ?",
+      "range": {
+        "startLine": 7522,
+        "startChar": 0,
+        "endLine": 7522,
+        "endChar": 64
+      },
+      "revId": "6c1ce8938d38190b12201c78af009b4a5eb6162e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edea2a51_29bb234d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 6373,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T13:13:37Z",
+      "side": 1,
+      "message": "go/avoidwe",
+      "range": {
+        "startLine": 6373,
+        "startChar": 57,
+        "endLine": 6373,
+        "endChar": 60
+      },
+      "revId": "6c1ce8938d38190b12201c78af009b4a5eb6162e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9db2d9a_72348565",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 6374,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T13:13:37Z",
+      "side": 1,
+      "message": "clearPermissions() ?",
+      "range": {
+        "startLine": 6374,
+        "startChar": 0,
+        "endLine": 6374,
+        "endChar": 45
+      },
+      "revId": "6c1ce8938d38190b12201c78af009b4a5eb6162e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
