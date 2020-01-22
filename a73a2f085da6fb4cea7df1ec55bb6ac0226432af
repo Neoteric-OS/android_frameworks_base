@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08c38485_31bf7ee0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 7399,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T13:26:52Z",
+      "side": 1,
+      "message": "Missing a #",
+      "range": {
+        "startLine": 7399,
+        "startChar": 66,
+        "endLine": 7399,
+        "endChar": 67
+      },
+      "revId": "a73a2f085da6fb4cea7df1ec55bb6ac0226432af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
