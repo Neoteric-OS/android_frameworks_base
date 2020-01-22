@@ -57,7 +57,8 @@ import java.util.function.Consumer;
  * registration and MmTel capability status callbacks, as well as query/modify user settings for the
  * associated subscription.
  *
- * @see #createForSubscriptionId(int)
+ * Use {@link android.telephony.ims.ImsManager#getImsMmTelManager(int)} to get an instance of this
+ * manager.
  */
 public class ImsMmTelManager implements RegistrationManager {
 
@@ -225,8 +226,13 @@ public class ImsMmTelManager implements RegistrationManager {
      * (see {@link android.telephony.TelephonyManager#hasCarrierPrivileges}).
      *
      * @throws IllegalArgumentException if the subscription is invalid.
-     *
+     * @deprecated Use {@link android.telephony.ims.ImsManager#getImsMmTelManager(int)} to get an
+     * instance of this class.
+     * @hide
      */
+    @SystemApi
+    @TestApi
+    @Deprecated
     @SuppressAutoDoc // No support for device / profile owner or carrier privileges (b/72967236).
     @RequiresPermission(anyOf = {
             android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE,
