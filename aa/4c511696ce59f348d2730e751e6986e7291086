@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Chalard Jean <jchalard@google.com>
+API-Review+1: Chalard Jean <jchalard@google.com>
+Autosubmit+1: Remi NGUYEN VAN <reminv@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 22 Jan 2020 15:23:05 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1215096
+Project: platform/frameworks/base
+Branch: refs/heads/master
