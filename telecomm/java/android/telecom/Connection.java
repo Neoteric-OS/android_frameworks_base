@@ -497,8 +497,16 @@ public abstract class Connection extends Conferenceable {
     @TestApi
     public static final int PROPERTY_REMOTELY_HOSTED = 1 << 11;
 
+    /**
+     * Set by the framework to indicate that a connection is using connect time of parent
+     * conference.
+     * <p>
+     * This is used for conference calls.
+     */
+    public static final int PROPERTY_USE_PARENT_CONFERENCE_CONNECT_TIME = 1 << 12;
+
     //**********************************************************************************************
-    // Next PROPERTY value: 1<<12
+    // Next PROPERTY value: 1<<13
     //**********************************************************************************************
 
     /**

@@ -547,8 +547,13 @@ public final class Call {
          */
         public static final int PROPERTY_VOIP_AUDIO_MODE = 0x00001000;
 
+        /**
+         * Indicates the call used connect time of parent conference.
+         */
+        public static final int PROPERTY_USE_PARENT_CONFERENCE_CONNECT_TIME = 0x00002000;
+
         //******************************************************************************************
-        // Next PROPERTY value: 0x00002000
+        // Next PROPERTY value: 0x00004000
         //******************************************************************************************
 
         private final String mTelecomCallId;
