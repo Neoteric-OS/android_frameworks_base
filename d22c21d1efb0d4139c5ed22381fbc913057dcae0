@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "6d2516c7_3bbf56c9",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T18:38:37Z",
+      "side": 1,
+      "message": "I was thinking maybe we should just reset it to the default value that you get when you new LinkProperties(), which is zero. But maybe it doesn\u0027t matter.",
+      "parentUuid": "9629056f_08692f44",
+      "range": {
+        "startLine": 1009,
+        "startChar": 7,
+        "endLine": 1009,
+        "endChar": 9
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ec64aee_e9fd9b8b",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 27
@@ -413,6 +437,30 @@
       "side": 1,
       "message": "Looped over the two builders to add parameters where I could (prf, dh groups).\n\nBetween IKE and Child SAs, the authentication parameters are slightly different (our kernels don\u0027t support some of the algorithms that IKE can, courtesy of conscrypt actually updating). Also, while the \"addEncryptionAlgorithm\" is identically named, there\u0027s no superclass or abstraction that has that method. 😞\n\nOther minor differences between IKE SA proposals and Child SA proposals:\n\n- IKE SA proposals MUST have a DH group, where child SAs do not\n- IKE SA proposals MUST have a PRF, while child SAs do not accept this parameter",
       "parentUuid": "c25ef8a2_871450d6",
+      "range": {
+        "startLine": 2115,
+        "startChar": 29,
+        "endLine": 2115,
+        "endChar": 84
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44f44e5_c13270fd",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2115,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T18:38:37Z",
+      "side": 1,
+      "message": "You know I wonder if you wouldn\u0027t be faster done actually calling each call by hand. After all :\n\n  normalModeBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_CBC, KEY_LEN_AES_128);\n  normalModeBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_CBC, KEY_LEN_AES_192);\n  normalModeBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_CBC, KEY_LEN_AES_256);\n\n...is shorter than\n\n   for (final int keyLen :\n                    Arrays.asList(\n                            SaProposal.KEY_LEN_AES_128,\n                            SaProposal.KEY_LEN_AES_192,\n                            SaProposal.KEY_LEN_AES_256)) {\n                // Currently only AES_CBC is supported.\n                normalModeBuilder.addEncryptionAlgorithm(\n                        SaProposal.ENCRYPTION_ALGORITHM_AES_CBC, keyLen);\n\n...and honestly also easier to parse. The only place with any multiplicity is for AEAD options resulting in 9 lines, and your current look is 14. You could maybe (or not) keep the outer loop for dh/prf. And if you feel bad about this, you can even write a comment apologizing for the unrolling but saying that this code needs to list all these constants anyway and is way shorter than the corresponding loops. Thoughts ?",
+      "parentUuid": "f2b4be7e_795be89b",
       "range": {
         "startLine": 2115,
         "startChar": 29,

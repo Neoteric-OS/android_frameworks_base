@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af309e71_36ec8e8a",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 37
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T18:38:37Z",
+      "side": 1,
+      "message": "No real objection but... why this change ?",
+      "range": {
+        "startLine": 737,
+        "startChar": 0,
+        "endLine": 740,
+        "endChar": 55
+      },
+      "revId": "8fa3f400dcb0e51bec69a66d43dfc905057539dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
