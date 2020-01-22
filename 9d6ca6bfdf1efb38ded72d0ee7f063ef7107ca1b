@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "387aae10_0ac95d84",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T02:58:56Z",
+      "side": 1,
+      "message": "While I don\u0027t have big objections to this, I wonder if it\u0027s really worth actually implementing the check for SDK\u003c29 instead of always requiring ACCESS_FINE_LOCATION. The reason for this is that any app that wants to use this field must either be built against SDK 29 anyway, or use reflection which means they knew about it and knowingly didn\u0027t bump the target SDK. Either way, I think requiring FINE_LOCATION is reasonable, and if that\u0027s the case it may simplify the code.",
+      "range": {
+        "startLine": 821,
+        "startChar": 14,
+        "endLine": 822,
+        "endChar": 25
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eec6cbcf_07bb4805",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T02:58:56Z",
+      "side": 1,
+      "message": "Let\u0027s call this the \"owner\" app across the board, as this is what the field is called and we\u0027re looking to add a list of \"manager\" apps.",
+      "range": {
+        "startLine": 842,
+        "startChar": 32,
+        "endLine": 842,
+        "endChar": 40
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa5d3c8_00f95061",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T02:58:56Z",
+      "side": 1,
+      "message": "It doesn\u0027t do this in this implementation. I think the comments should reflect the current status of the implementation. You are welcome to add TODOs if you want to document how it needs to work eventually.\n\nBut the other issue here is an issue of privacy. This has the check for location in this method essential for privacy but it\u0027s not implemented, so I can\u0027t really in good conscience give you API+1. You could say instead that privacy is guaranteed in this implementation by the fact that this field is never parceled, and add the rest as TODOs. The point is that at no point we should have code that lacks essential privacy checks, even temporarily ; if someone reads this comment and assumes the method does what the comment says, then you have a privacy violation.",
+      "range": {
+        "startLine": 863,
+        "startChar": 7,
+        "endLine": 869,
+        "endChar": 12
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c94213_2cf5da22",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T02:58:56Z",
+      "side": 1,
+      "message": "Assuming the current implementation, with getOwnerUid() being @SystemApi I don\u0027t think we need this in the system API. Apps that want to know if they are the network owner can just do the equality check themselves.\n\nIf the value proposition is that it will do the permissions check for you, then it is not named correctly for that. I think it may be reasonable to have a method checking for something like this, but its name should reflect this, and we should probably just pass it the UID instead of just calling Process.myUid() which is probably not going to be useful to all callers (a lot of the system code probably will need to ask for this on behalf of apps, which makes the fixed Process.myUid() call unhelpful).",
+      "range": {
+        "startLine": 873,
+        "startChar": 19,
+        "endLine": 873,
+        "endChar": 33
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3016814_e01b0813",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T02:58:56Z",
+      "side": 1,
+      "message": "This is not written to the parcel, you should not read it.",
+      "range": {
+        "startLine": 1548,
+        "startChar": 16,
+        "endLine": 1548,
+        "endChar": 48
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677982f8_983edbf2",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T02:58:56Z",
+      "side": 1,
+      "message": "If I\u0027m reading this check correctly that means if an app sends a NC with a UID that\u0027s neither its UID or the UID of the system process, it will not be reset.\n\nAlso do keep in mind this will never be useful in the other direction because this is running on the receiving side, which is entirely under the app\u0027s control.\n\nMore generally speaking I don\u0027t think the parceling code should be the place this is enforced, because it\u0027s unexpected to developers familiar with parceling ; parceling code doing stuff different from just sending things as is should be very rare because it\u0027s ① very difficult to get right ② always unexpected.\n\nConnectivityService already has code that enforces sanity for NCs coming from apps (networkCapabilitiesRestrictedForCallerPermissions, you already found that). I think this should be migrated there instead.",
+      "range": {
+        "startLine": 1551,
+        "startChar": 14,
+        "endLine": 1552,
+        "endChar": 71
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6709cec2_d753a5c6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T02:58:56Z",
+      "side": 1,
+      "message": "As we said today, for privacy we should consider the check to always fail, which means that until the check is implemented this should always reset it.",
+      "range": {
+        "startLine": 1636,
+        "startChar": 8,
+        "endLine": 1637,
+        "endChar": 41
+      },
+      "revId": "9d6ca6bfdf1efb38ded72d0ee7f063ef7107ca1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
