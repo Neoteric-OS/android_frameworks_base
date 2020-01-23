@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "1756bff6_18720dff",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T07:47:14Z",
+      "side": 1,
+      "message": "Right so technically both being true mean that we don\u0027t know whether this is valid or partial, because we didn\u0027t do the HTTPS probe. So it could be either.\nConnectivityService treats this as validated, because\n\nWhat you know is that the network was previously found to provide partial access, and the user said that was okay and not to ask again. So of the two, partial is most likely, but there is also a silm probability it got into this state after a temporary partial network outage.\n\nEither way, ConnectivityService treats this as a validated network – because that\u0027s what the user said to do. So I would say VALIDATED makes most sense here, but I don\u0027t feel strongly.",
+      "parentUuid": "8762fcb2_ec4f5eca",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 78
+      },
+      "revId": "4dd184fed222df1a9ea562b572e10dba1b9cee42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02fb712d_3f10ca7d",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 1
