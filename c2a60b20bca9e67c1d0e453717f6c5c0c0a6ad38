@@ -160,6 +160,40 @@
     },
     {
       "key": {
+        "uuid": "5ae606d2_5a40d6cc",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2020-01-23T01:39:19Z",
+      "side": 1,
+      "message": "Please add an API to remove UCE service block if it was blocked earlier by modem based on error codes like SIP 403, multiple 408. Based on certain error codes, some carriers have requirement to block UCE till device is power cycled so modem blocks all UCE activities as required. Some OEMs expressed concern so we added an API to override this block using an API without power cycle. It makes sense to take this API. Please refer existing AIDL API below\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/android10-c2f2-s2-release/telephony/java/com/android/ims/internal/uce/presence/IPresenceService.aidl#76",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ebc96c_ff955e9e",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2020-01-23T01:39:19Z",
+      "side": 1,
+      "message": "Please either provide complete list of SIP response codes as defined in RFC 3261 or we can send numeric SIP response codes like in existing AIDL implementation and clients can decode it according to RFC 3261.",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f302c52_74b5bab5",
         "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
         "patchSetId": 16
@@ -171,6 +205,23 @@
       "writtenOn": "2020-01-23T00:02:51Z",
       "side": 1,
       "message": "We see that \"retryAfter\" parameter is missing here. \"retryAfter\" parameter is required for some error codes where Network wants us to retry same operation after given time so that it can succeed. Please refer \"PresSipResponse\" parameter as part of older AIDL code.\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/android10-c2f2-s2-release/telephony/java/com/android/ims/internal/uce/presence/IPresenceListener.aidl#79",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627dc831_f38d9edc",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2020-01-23T01:39:19Z",
+      "side": 1,
+      "message": "This API needs to be divided into two parts, \n\n1. First API is for providing single contact capability (availability fetch) where we receive PIDF XML from the network. Please add the support to provide metadata received in this xml. Please refer existing AIDL API \n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/android10-c2f2-s2-release/telephony/java/com/android/ims/internal/uce/presence/IPresenceListener.aidl#88\n\n\u003cstatus\u003e\n\u003coma-pres:service-description\u003e\n\u003ccaps:servcaps\u003e\n\u003ccontact\u003e\n\u003cTimestamp\u003e\n\n\u003ctuple id\u003d\\\"a1\\\"\u003e\\\n    \u003cstatus\u003e\\\n      \u003cbasic\u003eopen\u003c/basic\u003e\\\n    \u003c/status\u003e\\\n    \u003coma-pres:service-description\u003e\\\n      \u003coma-pres:service-id\u003eorg.3gpp.urn:urn-7:3gpp-service.ims.icsi.mmtel\u003c/oma-pres:service-id\u003e\\\n      \u003coma-pres:version\u003e1.0\u003c/oma-pres:version\u003e\\\n      \u003coma-pres:description\u003eVoLTE Voice and Video Service\u003c/oma-pres:description\u003e\\\n    \u003c/oma-pres:service-description\u003e\\\n    \u003ccaps:servcaps\u003e\\\n      \u003ccaps:audio\u003etrue\u003c/caps:audio\u003e\\\n      \u003ccaps:duplex\u003e\\\n        \u003ccaps:supported\u003e\\\n          \u003ccaps:full/\u003e\\\n        \u003c/caps:supported\u003e\\\n      \u003c/caps:duplex\u003e\\\n      \u003ccaps:video\u003etrue\u003c/caps:video\u003e\\\n    \u003c/caps:servcaps\u003e\\\n    \u003ccontact\u003esip:8989532267@w1v4v6.com\u003c/contact\u003e\\\n    \u003ctimestamp\u003e2017-11-10T19:19:50Z\u003c/timestamp\u003e\\\n  \u003c/tuple\u003e\\\n\nPIDF format is part of RFC 3863 https://tools.ietf.org/html/rfc3863\n\n\n2. Second API is for providing contact list capabilities (capability polling)  where we receive a combination of RLMI and multipart PIDF XML from the network. Please provide the support to provide metadata for contact list to the clients. Please refer existing AIDL API\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/android10-c2f2-s2-release/telephony/java/com/android/ims/internal/uce/presence/IPresenceListener.aidl#98\n\nRLMI format is part of RFC 4662 https://tools.ietf.org/html/rfc4662\n\n\nWe can have options to provide meta data to clients\n\na. Our existing AIDL APIs do not provide all but basic meta data which is required. New API should allow to provide at least that much metadata to clients as required.\n\nOR\n\nb. We can pass the whole XML received from network as part of APIs and client can parse the XML",
       "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -206,6 +257,40 @@
       "side": 1,
       "message": "We will go ahead and add these trigger types",
       "parentUuid": "b2a0d4de_a3424b1a",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220d7439_5938c3a9",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsSipOptionsImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2020-01-23T01:39:19Z",
+      "side": 1,
+      "message": "Please either provide complete list of SIP response codes as defined in RFC 3261 or we can send numeric SIP response codes like in existing AIDL implementation and clients can decode it according to RFC 3261.",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db9d867_a5a6f7b6",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsSipOptionsImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2020-01-23T01:39:19Z",
+      "side": 1,
+      "message": "1. Please add retryAfter parameter as it is provided by the network for error case scenarios when it wants client to retry after some time. Please refer parameter 2 in the link below\n\n2. Please add way to provide SDP body to the clients which is received from the network. \nPlease refer parameter 3 in the link below.\n\n\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/android10-c2f2-s2-release/telephony/java/com/android/ims/internal/uce/options/IOptionsListener.aidl#62",
       "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
