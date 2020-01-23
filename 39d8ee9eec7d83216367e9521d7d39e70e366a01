@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b84b8c69_4613b55f",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T01:57:21Z",
+      "side": 1,
+      "message": "I feel like we should add some more detail here to explain what UIDs should be network administrators and what the implications are. Let\u0027s get Jean\u0027s thoughts. I\u0027d like to convey:\n1) In general, user-supplied networks, such as WiFi networks do not have an administrator\n2) Networks supplied by a specific app grant that app owner privileges, which implicitly includes administrator privileges.\n3) Application groups with a particular role such as a carrier app or a running VPN app gain administrator privileges over networks they must use.",
+      "range": {
+        "startLine": 853,
+        "startChar": 61,
+        "endLine": 853,
+        "endChar": 68
+      },
+      "revId": "39d8ee9eec7d83216367e9521d7d39e70e366a01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6320d620_292002e7",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T01:57:21Z",
+      "side": 1,
+      "message": "Is it preferable to have this be non-null?",
+      "range": {
+        "startLine": 860,
+        "startChar": 38,
+        "endLine": 860,
+        "endChar": 46
+      },
+      "revId": "39d8ee9eec7d83216367e9521d7d39e70e366a01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
