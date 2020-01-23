@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9db8acf9_e34a87fd",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-23T06:09:56Z",
+      "side": 1,
+      "message": "These can both be set in the case that the user accepts partial connectivity and HTTPS is disabled. Should we reflect that here?\n\nhttps://cs.corp.google.com/android/packages/modules/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java?rcl\u003d3fcc702d253db4fba5625649ab863a11186e3daa\u0026l\u003d746",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 78
+      },
+      "revId": "4dd184fed222df1a9ea562b572e10dba1b9cee42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02fb712d_3f10ca7d",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 1
@@ -18,6 +41,53 @@
         "startChar": 11,
         "endLine": 128,
         "endChar": 15
+      },
+      "revId": "4dd184fed222df1a9ea562b572e10dba1b9cee42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8e785d_6ae2dcfd",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-23T06:09:56Z",
+      "side": 1,
+      "message": "ack. If we can\u0027t resolve these for now, can we file a bug to track this?",
+      "parentUuid": "02fb712d_3f10ca7d",
+      "range": {
+        "startLine": 128,
+        "startChar": 11,
+        "endLine": 128,
+        "endChar": 15
+      },
+      "revId": "4dd184fed222df1a9ea562b572e10dba1b9cee42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "309293c8_c894c72a",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-23T06:09:56Z",
+      "side": 1,
+      "message": "Should be DETECTION_METHOD_DNS_EVENTS",
+      "range": {
+        "startLine": 355,
+        "startChar": 19,
+        "endLine": 355,
+        "endChar": 43
       },
       "revId": "4dd184fed222df1a9ea562b572e10dba1b9cee42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
