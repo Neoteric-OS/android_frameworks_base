@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8762fcb2_ec4f5eca",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T06:18:19Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s really weird. I\u0027m almost tempted to try and scrub VALID | PARTIALLY_VALID down to just PARTIALLY_VALID. The alternative is to make this a bitmask as well. Jean?",
+      "parentUuid": "9db8acf9_e34a87fd",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 78
+      },
+      "revId": "4dd184fed222df1a9ea562b572e10dba1b9cee42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02fb712d_3f10ca7d",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 1
@@ -92,6 +116,30 @@
       "revId": "4dd184fed222df1a9ea562b572e10dba1b9cee42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87bba8e_969a95a0",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T06:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "309293c8_c894c72a",
+      "range": {
+        "startLine": 355,
+        "startChar": 19,
+        "endLine": 355,
+        "endChar": 43
+      },
+      "revId": "4dd184fed222df1a9ea562b572e10dba1b9cee42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
