@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17162a55_b1e08c15",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 7509,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T09:20:02Z",
+      "side": 1,
+      "message": "You need to also have the check for the location toggle. ConnectivityUtils does this for you.",
+      "range": {
+        "startLine": 7509,
+        "startChar": 13,
+        "endLine": 7509,
+        "endChar": 46
+      },
+      "revId": "f56fae8db022a48da2c12af66395614a8c5e0997",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
