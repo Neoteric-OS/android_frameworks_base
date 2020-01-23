@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "d9dfd5d9_af17e948",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T04:16:52Z",
+      "side": 1,
+      "message": "...not offer Internet connectivity, offer Internet connectivity, offer partial Internet connectivity.\nBecause \"valid\" is not super clear. You can link to NC#NET_CAPABILITY_VALID if you want (and possibly N_C_PARTIAL_CONNECTIVITY)",
+      "range": {
+        "startLine": 88,
+        "startChar": 50,
+        "endLine": 88,
+        "endChar": 57
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01582f71_6d34fcdc",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 4
@@ -59,6 +82,30 @@
       "writtenOn": "2020-01-23T02:28:56Z",
       "side": 1,
       "message": "Are these in an IntDef somewhere? If so, ideally link to the IntDef. If not and IntDef is feasible, can we file a bug to expose constants and an intdef?",
+      "range": {
+        "startLine": 89,
+        "startChar": 19,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3faa9a_cac99f54",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T04:16:52Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "01582f71_6d34fcdc",
       "range": {
         "startLine": 89,
         "startChar": 19,
@@ -94,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "c4bb5250_83545716",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T04:16:52Z",
+      "side": 1,
+      "message": "Also the period over which this rate is valid, otherwise it doesn\u0027t mean much",
+      "parentUuid": "be713228_adf9e173",
+      "range": {
+        "startLine": 273,
+        "startChar": 35,
+        "endLine": 273,
+        "endChar": 59
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64ef193b_0f33c857",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 4
@@ -105,6 +176,30 @@
       "writtenOn": "2020-01-23T02:28:56Z",
       "side": 1,
       "message": "My suggestion would be to hide this key. It sounds like the definition is a little shaky and implementation-detail-y.",
+      "range": {
+        "startLine": 282,
+        "startChar": 35,
+        "endLine": 282,
+        "endChar": 72
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad91c466_d2465ab6",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T04:16:52Z",
+      "side": 1,
+      "message": "+1, I don\u0027t think this is useful.",
+      "parentUuid": "64ef193b_0f33c857",
       "range": {
         "startLine": 282,
         "startChar": 35,
@@ -140,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "46dd9d6c_fd6d5cc6",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T04:16:52Z",
+      "side": 1,
+      "message": "I think we should be able to report the polling period. NetworkMonitor knows that.",
+      "parentUuid": "da39b44b_6e52e18d",
+      "range": {
+        "startLine": 286,
+        "startChar": 83,
+        "endLine": 286,
+        "endChar": 90
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a67c825c_1667ff6e",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 4
@@ -163,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "f81fc271_05c95319",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T04:16:52Z",
+      "side": 1,
+      "message": "(...and if you don\u0027t then still s/LASTEST/LATEST/)",
+      "parentUuid": "a67c825c_1667ff6e",
+      "range": {
+        "startLine": 290,
+        "startChar": 56,
+        "endLine": 290,
+        "endChar": 72
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0bd4c78_af612c95",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 4
@@ -174,6 +317,30 @@
       "writtenOn": "2020-01-23T02:28:56Z",
       "side": 1,
       "message": "It sounds like this isn\u0027t going to be relative to a polling period/ sampling period. Can we find a way to make that very clear to the user?",
+      "range": {
+        "startLine": 297,
+        "startChar": 67,
+        "endLine": 297,
+        "endChar": 89
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c3f58f_ae25f636",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T04:16:52Z",
+      "side": 1,
+      "message": "In a sense that\u0027s why the _DNS_ prefix is. This extra pertains to one detection method.\n\nMaybe more doc is all that\u0027s needed here.",
+      "parentUuid": "c0bd4c78_af612c95",
       "range": {
         "startLine": 297,
         "startChar": 67,
