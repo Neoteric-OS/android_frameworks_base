@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "06e77f40_ccf45e14",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-23T08:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bbc16aa_7a0ceaf9",
+      "range": {
+        "startLine": 843,
+        "startChar": 93,
+        "endLine": 844,
+        "endChar": 33
+      },
+      "revId": "39d8ee9eec7d83216367e9521d7d39e70e366a01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b84b8c69_4613b55f",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 11
