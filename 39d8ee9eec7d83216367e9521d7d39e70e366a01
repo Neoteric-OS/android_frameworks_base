@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2bbc16aa_7a0ceaf9",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T07:54:22Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a good idea. I think the owner UID should be included here, so that you can avoid track them separately when you are looking for administrators. Code that wants to look for administrator privilege should not have to say stuff like getAdministrators().contains(x) || getOwnerUid() \u003d\u003d x",
+      "parentUuid": "b98e6fcc_cd84df3d",
+      "range": {
+        "startLine": 843,
+        "startChar": 93,
+        "endLine": 844,
+        "endChar": 33
+      },
+      "revId": "39d8ee9eec7d83216367e9521d7d39e70e366a01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b84b8c69_4613b55f",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 11
