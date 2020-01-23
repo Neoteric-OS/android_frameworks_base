@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e70507c_5f87062f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T02:28:56Z",
+      "side": 1,
+      "message": "Can this be turned into a format of:\n1) simple rationale\n2) bulletized list of keys for each with a short (4-5 word) description of the keys?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 39
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4552c1fc_85523035",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T02:28:56Z",
+      "side": 1,
+      "message": "Suggest something like:\nThis key represents the overall result of the Network validation procedure that generated this report.",
+      "range": {
+        "startLine": 84,
+        "startChar": 35,
+        "endLine": 84,
+        "endChar": 92
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01582f71_6d34fcdc",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T02:28:56Z",
+      "side": 1,
+      "message": "Are these in an IntDef somewhere? If so, ideally link to the IntDef. If not and IntDef is feasible, can we file a bug to expose constants and an intdef?",
+      "range": {
+        "startLine": 89,
+        "startChar": 19,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be713228_adf9e173",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T02:28:56Z",
+      "side": 1,
+      "message": "For each key, can you add a line stating when it\u0027s expected based on the detection method used?",
+      "range": {
+        "startLine": 273,
+        "startChar": 35,
+        "endLine": 273,
+        "endChar": 59
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ef193b_0f33c857",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T02:28:56Z",
+      "side": 1,
+      "message": "My suggestion would be to hide this key. It sounds like the definition is a little shaky and implementation-detail-y.",
+      "range": {
+        "startLine": 282,
+        "startChar": 35,
+        "endLine": 282,
+        "endChar": 72
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da39b44b_6e52e18d",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T02:28:56Z",
+      "side": 1,
+      "message": "We need some what to explain to a caller what a polling period is. Even if the amount of time is unknown (boy it would be great if we could report the polling period...), if all stats are relative to the same polling period then they will be self-consistent, so each report will make sense, even if the time duration of the reports is inconsistent.",
+      "range": {
+        "startLine": 286,
+        "startChar": 83,
+        "endLine": 286,
+        "endChar": 90
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67c825c_1667ff6e",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T02:28:56Z",
+      "side": 1,
+      "message": "suggest to remove \"LatestPolling\" and try to phrase all keys relative to the same polling period.",
+      "range": {
+        "startLine": 290,
+        "startChar": 56,
+        "endLine": 290,
+        "endChar": 72
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bd4c78_af612c95",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T02:28:56Z",
+      "side": 1,
+      "message": "It sounds like this isn\u0027t going to be relative to a polling period/ sampling period. Can we find a way to make that very clear to the user?",
+      "range": {
+        "startLine": 297,
+        "startChar": 67,
+        "endLine": 297,
+        "endChar": 89
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b560de51_4cb94ef8",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T02:28:56Z",
+      "side": 1,
+      "message": "This bundle will contain keys specific (and appropriate) to the data stall detection method. However, as part of the report, information relevant to other detection methods may also be reported.",
+      "range": {
+        "startLine": 382,
+        "startChar": 33,
+        "endLine": 382,
+        "endChar": 48
+      },
+      "revId": "c728e1869e4f2625e964c5a854a4f0015db6600e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
