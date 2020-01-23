@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca35aa39_dcda3745",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T01:19:26Z",
+      "side": 1,
+      "message": "nit, when possible please use cherry-pick -x so that we can lookup the HASH without using Gerrit. :-)",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "f02d610696fb64e5d4d8c74644a48bf06057f781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
