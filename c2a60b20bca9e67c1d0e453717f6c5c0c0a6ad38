@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e1635e4_8a053eab",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-23T19:30:59Z",
+      "side": 1,
+      "message": "Regarding custom feature tags:\nWe had the add(String extensionTag) method in the builder of this method. Would it be reasonable to add a second parameter to the add(String extensionTag, TupleInfo metadata) to satisfy this requirement? Also, this would need to be added during a publish every time a custom feature tag is used.\n\nRegarding known feature tags:\nIt doesn\u0027t look like there is an option to add metadata in the current AIDL implementation. Is the metadata standard for these tags?",
+      "parentUuid": "83d97080_135da8e5",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fca8d8e_0a321767",
         "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
         "patchSetId": 16
@@ -160,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "adc5f1b2_5487035b",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-23T19:30:59Z",
+      "side": 1,
+      "message": "Sure, this can be renamed if it makes it more clear.",
+      "parentUuid": "5ed1ae6d_ad7f3e9b",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ae606d2_5a40d6cc",
         "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
         "patchSetId": 16
@@ -171,6 +207,24 @@
       "writtenOn": "2020-01-23T01:39:19Z",
       "side": 1,
       "message": "Please add an API to remove UCE service block if it was blocked earlier by modem based on error codes like SIP 403, multiple 408. Based on certain error codes, some carriers have requirement to block UCE till device is power cycled so modem blocks all UCE activities as required. Some OEMs expressed concern so we added an API to override this block using an API without power cycle. It makes sense to take this API. Please refer existing AIDL API below\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/android10-c2f2-s2-release/telephony/java/com/android/ims/internal/uce/presence/IPresenceService.aidl#76",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594bb948_86aefbbb",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-23T19:30:59Z",
+      "side": 1,
+      "message": "How does the framework know that the UCE service has moved into this blocked state? Do we receive 403/408 as a response to a publish or capability request? Do  you remove our IMS registration for RCS?",
+      "parentUuid": "5ae606d2_5a40d6cc",
       "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -194,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "8860180f_947263dc",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-23T19:30:59Z",
+      "side": 1,
+      "message": "I agree, the current implementation is less flexible. We will enumerate the response codes as defined in RFC 3261.",
+      "parentUuid": "a5ebc96c_ff955e9e",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f302c52_74b5bab5",
         "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
         "patchSetId": 16
@@ -211,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "d0e8923c_0b7648b3",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-23T19:30:59Z",
+      "side": 1,
+      "message": "This is reasonable",
+      "parentUuid": "3f302c52_74b5bab5",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "627dc831_f38d9edc",
         "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
         "patchSetId": 16
@@ -222,6 +312,24 @@
       "writtenOn": "2020-01-23T01:39:19Z",
       "side": 1,
       "message": "This API needs to be divided into two parts, \n\n1. First API is for providing single contact capability (availability fetch) where we receive PIDF XML from the network. Please add the support to provide metadata received in this xml. Please refer existing AIDL API \n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/android10-c2f2-s2-release/telephony/java/com/android/ims/internal/uce/presence/IPresenceListener.aidl#88\n\n\u003cstatus\u003e\n\u003coma-pres:service-description\u003e\n\u003ccaps:servcaps\u003e\n\u003ccontact\u003e\n\u003cTimestamp\u003e\n\n\u003ctuple id\u003d\\\"a1\\\"\u003e\\\n    \u003cstatus\u003e\\\n      \u003cbasic\u003eopen\u003c/basic\u003e\\\n    \u003c/status\u003e\\\n    \u003coma-pres:service-description\u003e\\\n      \u003coma-pres:service-id\u003eorg.3gpp.urn:urn-7:3gpp-service.ims.icsi.mmtel\u003c/oma-pres:service-id\u003e\\\n      \u003coma-pres:version\u003e1.0\u003c/oma-pres:version\u003e\\\n      \u003coma-pres:description\u003eVoLTE Voice and Video Service\u003c/oma-pres:description\u003e\\\n    \u003c/oma-pres:service-description\u003e\\\n    \u003ccaps:servcaps\u003e\\\n      \u003ccaps:audio\u003etrue\u003c/caps:audio\u003e\\\n      \u003ccaps:duplex\u003e\\\n        \u003ccaps:supported\u003e\\\n          \u003ccaps:full/\u003e\\\n        \u003c/caps:supported\u003e\\\n      \u003c/caps:duplex\u003e\\\n      \u003ccaps:video\u003etrue\u003c/caps:video\u003e\\\n    \u003c/caps:servcaps\u003e\\\n    \u003ccontact\u003esip:8989532267@w1v4v6.com\u003c/contact\u003e\\\n    \u003ctimestamp\u003e2017-11-10T19:19:50Z\u003c/timestamp\u003e\\\n  \u003c/tuple\u003e\\\n\nPIDF format is part of RFC 3863 https://tools.ietf.org/html/rfc3863\n\n\n2. Second API is for providing contact list capabilities (capability polling)  where we receive a combination of RLMI and multipart PIDF XML from the network. Please provide the support to provide metadata for contact list to the clients. Please refer existing AIDL API\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/android10-c2f2-s2-release/telephony/java/com/android/ims/internal/uce/presence/IPresenceListener.aidl#98\n\nRLMI format is part of RFC 4662 https://tools.ietf.org/html/rfc4662\n\n\nWe can have options to provide meta data to clients\n\na. Our existing AIDL APIs do not provide all but basic meta data which is required. New API should allow to provide at least that much metadata to clients as required.\n\nOR\n\nb. We can pass the whole XML received from network as part of APIs and client can parse the XML",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f313cb47_efdb40f4",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-23T19:30:59Z",
+      "side": 1,
+      "message": "1. Is this for parsing custom feature tags? Why is the metadata needed for well defined feature tags, such as vt capability? Is it to determine version information or something similar?\n2) Can RLMI and PIDF format be condensed to a singular metadata format for the client to use in RcsContactUceCapability? What is the difference between the formats for RLMI and PIDF information from a client\u0027s perspective? Availability fetch and capability polling should not yield two different results for the same contact (even if the underlying implementation on the RCS side is different).",
+      "parentUuid": "627dc831_f38d9edc",
       "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -263,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "a02a4da4_e1884716",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-23T19:30:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17adf0cd_aa4017c7",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "220d7439_5938c3a9",
         "filename": "telephony/java/android/telephony/ims/stub/RcsSipOptionsImplBase.java",
         "patchSetId": 16
@@ -280,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "8ea7a5a9_05a64d30",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsSipOptionsImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-23T19:30:59Z",
+      "side": 1,
+      "message": "I agree, the current implementation is less flexible. We will enumerate the response codes as defined in RFC 3261.",
+      "parentUuid": "220d7439_5938c3a9",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3db9d867_a5a6f7b6",
         "filename": "telephony/java/android/telephony/ims/stub/RcsSipOptionsImplBase.java",
         "patchSetId": 16
@@ -291,6 +435,24 @@
       "writtenOn": "2020-01-23T01:39:19Z",
       "side": 1,
       "message": "1. Please add retryAfter parameter as it is provided by the network for error case scenarios when it wants client to retry after some time. Please refer parameter 2 in the link below\n\n2. Please add way to provide SDP body to the clients which is received from the network. \nPlease refer parameter 3 in the link below.\n\n\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/android10-c2f2-s2-release/telephony/java/com/android/ims/internal/uce/options/IOptionsListener.aidl#62",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eca5eed_5f75b515",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsSipOptionsImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-23T19:30:59Z",
+      "side": 1,
+      "message": "1) retryAfter seems reasonable.\n2) This is the response to sendCapabilityRequest(...). do we also need an SDP parameter for requesting capabilities? I do not see an OptionsCapInfo field in getContactCap/getContactListCap...",
+      "parentUuid": "3db9d867_a5a6f7b6",
       "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -344,6 +506,24 @@
       "side": 1,
       "message": "Blacklist boolean generation is not related to sipResponseCode as such as it signifies that contact capability can\u0027t be provided because contact is blacklisted. Everything may be fine from SIP point of view as sipResponseCode may be 200 Ok which means success however contact may be BL hence contact capabilities can\u0027t be provided",
       "parentUuid": "b5881d72_fc2645d7",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8130ed3_7c74f96f",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsSipOptionsImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-23T19:30:59Z",
+      "side": 1,
+      "message": "How does the ImsService know the contact is blacklisted?",
+      "parentUuid": "9b234bd4_4c303fc1",
       "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
