@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2151a745_bf85bbf3",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-23T06:14:18Z",
+      "side": 1,
+      "message": "nit: can we make both keys consistent (\u0027the value\u0027 vs \u0027this value\u0027)? I missed this on my initial upload - sorry",
+      "range": {
+        "startLine": 367,
+        "startChar": 14,
+        "endLine": 367,
+        "endChar": 18
+      },
+      "revId": "64afbc0a612c919d1a8281aa06fb9e208203e20a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
