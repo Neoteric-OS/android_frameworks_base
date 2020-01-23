@@ -1,0 +1,11 @@
+Code-Review+2: Chalard Jean <jchalard@google.com>
+Code-Review+1: Rambo Wang <rambowang@google.com>
+API-Review+1: Chalard Jean <jchalard@google.com>
+Verified+1: Nathan Harold <nharold@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Nathan Harold <nharold@google.com>
+Submitted-at: Thu, 23 Jan 2020 01:08:31 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1214602
+Project: platform/frameworks/base
+Branch: refs/heads/master
