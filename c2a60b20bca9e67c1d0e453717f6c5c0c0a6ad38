@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "83d97080_135da8e5",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2020-01-23T00:02:51Z",
+      "side": 1,
+      "message": "I don\u0027t see how metadata corresponding to new Feature tags can be added.  It is required to provide builder APIs to add Meta data for custom Feature tags as they are custom and provided by OEMs so we can\u0027t make any assumptions about them while sending Publish. Custome FTs would not be sent as part of Publish if there is no meta-data data associated with it. Please refer third parameter in the API given below.\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/android10-c2f2-s2-release/telephony/java/com/android/ims/internal/uce/presence/IPresenceService.aidl#133 \n\n\nIn general, for Known\\standard Feature tag as well, we should send Metadata as part of Publish. Please find example of metadata for a Feature tag\n\n\u003cstatus\u003e\n\u003coma_service_description\u003e\n\u003ccaps\u003e\n\u003ccontact\u003e\n\u003ctimestamp\u003e\n\n\n\n\u003ctuple id\u003d\\\"a1\\\"\u003e\\\n    \u003cstatus\u003e\\\n      \u003cbasic\u003eopen\u003c/basic\u003e\\\n    \u003c/status\u003e\\\n    \u003coma-pres:service-description\u003e\\\n      \u003coma-pres:service-id\u003eorg.3gpp.urn:urn-7:3gpp-service.ims.icsi.mmtel\u003c/oma-pres:service-id\u003e\\\n      \u003coma-pres:version\u003e1.0\u003c/oma-pres:version\u003e\\\n      \u003coma-pres:description\u003eVoLTE Voice and Video Service\u003c/oma-pres:description\u003e\\\n    \u003c/oma-pres:service-description\u003e\\\n    \u003ccaps:servcaps\u003e\\\n      \u003ccaps:audio\u003etrue\u003c/caps:audio\u003e\\\n      \u003ccaps:duplex\u003e\\\n        \u003ccaps:supported\u003e\\\n          \u003ccaps:full/\u003e\\\n        \u003c/caps:supported\u003e\\\n      \u003c/caps:duplex\u003e\\\n      \u003ccaps:video\u003etrue\u003c/caps:video\u003e\\\n    \u003c/caps:servcaps\u003e\\\n    \u003ccontact\u003esip:8989532267@w1v4v6.com\u003c/contact\u003e\\\n    \u003ctimestamp\u003e2017-11-10T19:19:50Z\u003c/timestamp\u003e\\\n  \u003c/tuple\u003e\\",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fca8d8e_0a321767",
         "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
         "patchSetId": 16
@@ -34,6 +51,24 @@
       "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef57d1a7_e40a66d2",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2020-01-23T00:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5bf1281_a81772cb",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -84,6 +119,58 @@
       "side": 1,
       "message": "Yes, We raised the same change on AOSP as keystone was not accessible. Please find the CL\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1159088",
       "parentUuid": "48d3aacc_6bab9654",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5917a3d_9e828db7",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2020-01-23T00:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dd04a39_c684d8f1",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ed1ae6d_ad7f3e9b",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2020-01-23T00:02:51Z",
+      "side": 1,
+      "message": "I think second parameter should be named capability contact URI (capContactUri) instead of serviceURI. Each Feature tag or Capability can have different associated contactURI than main contact URI for a phone book contact.",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f302c52_74b5bab5",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2020-01-23T00:02:51Z",
+      "side": 1,
+      "message": "We see that \"retryAfter\" parameter is missing here. \"retryAfter\" parameter is required for some error codes where Network wants us to retry same operation after given time so that it can succeed. Please refer \"PresSipResponse\" parameter as part of older AIDL code.\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/android10-c2f2-s2-release/telephony/java/com/android/ims/internal/uce/presence/IPresenceListener.aidl#79",
       "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
