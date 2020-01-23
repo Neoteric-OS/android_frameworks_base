@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02fb712d_3f10ca7d",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-23T05:48:34Z",
+      "side": 1,
+      "message": "Note I originally defined the constants relative to these, but they are in an aidl, so the compilation fails at the IntDef, which finds that they are not bound to a value. We will have to go looking for a way to tie these values together, but the actual value needn\u0027t change in that process; hence, the TODOs.",
+      "range": {
+        "startLine": 128,
+        "startChar": 11,
+        "endLine": 128,
+        "endChar": 15
+      },
+      "revId": "4dd184fed222df1a9ea562b572e10dba1b9cee42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
