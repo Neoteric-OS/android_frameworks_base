@@ -1,0 +1,13 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Amit Mahajan <amitmahajan@google.com>
+Code-Review+2: Todd Kennedy <toddke@google.com>
+Code-Review+1: Patrick Baumann <patb@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Meng Wang <mewan@google.com>
+API-Review+1: Todd Kennedy <toddke@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 23 Jan 2020 19:28:26 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1215478
+Project: platform/frameworks/base
+Branch: refs/heads/master
