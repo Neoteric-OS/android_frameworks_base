@@ -604,6 +604,15 @@ final class UsageStatsProto {
             writeEvent(proto, IntervalStatsProto.EVENT_LOG, stats, stats.events.get(i));
         }
 
-        proto.flush();
+        try {
+            // Flush operation swallows IOException and transforms them into
+            // RuntimeExceptions. Changing the flush() method is not feasible
+            // since it is used everywhere, so instead translate it back into
+            // A IOExceptions which is already part of the signature of this
+            // method.
+            proto.flush();
+        } catch (RuntimeException ex) {
+            throw new IOException(ex);
+        }
     }
 }
