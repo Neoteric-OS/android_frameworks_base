@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "54addd0c_8dccdfe9",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2020-01-24T22:02:07Z",
+      "side": 1,
+      "message": "Yes, if 403/408/489 response is received for Publish/capability Request along with reason as permanent then it means UCE is blocked. We can give exact scenarios. IMS Registration restoration may be triggered in some scenarios without RCS Feature tags based on error code.",
+      "parentUuid": "594bb948_86aefbbb",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5ebc96c_ff955e9e",
         "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
         "patchSetId": 16
@@ -336,6 +354,24 @@
     },
     {
       "key": {
+        "uuid": "6fe9774b_41e86cc1",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2020-01-24T22:02:07Z",
+      "side": 1,
+      "message": "1. Metadata is required for both well defined Feature Tags and more so for Custom Feature Tags for clients to know the version, status of the FT. If TupleInfo is added in the API then it would takes care of all below information.\n\n\u003cstatus\u003e\n\u003coma-pres:service-description\u003e\n\u003ccaps:servcaps\u003e\n\u003ccontact\u003e\n\u003cTimestamp\u003e\n\n2. ListContactCapability involves getting multiple contacts from the server which can be received by client in many chunks. Also subscription may expire while getting these chunks. RLMI information is required to tell if contacts received are partial of full and if subscription has expired or not, expiry time etc. This information is not required for availability fetch.",
+      "parentUuid": "f313cb47_efdb40f4",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2a0d4de_a3424b1a",
         "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
         "patchSetId": 16
@@ -386,6 +422,24 @@
       "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23bdcab7_b8936c8b",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1404836
+      },
+      "writtenOn": "2020-01-24T22:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a02a4da4_e1884716",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
