@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Paul Crowley <paulcrowley@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Qualcomm-Review+1: Dheeresh Mathur <dmathur@quicinc.com>
+Submitted-by: Paul Crowley <paulcrowley@google.com>
+Submitted-at: Fri, 24 Jan 2020 17:02:45 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1187176
+Project: platform/frameworks/base
+Branch: refs/heads/master
