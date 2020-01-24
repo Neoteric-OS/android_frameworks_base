@@ -9084,6 +9084,11 @@ package android.telephony {
     method @Nullable public String getOperatorAlphaLongRaw();
     method @Nullable public String getOperatorAlphaShortRaw();
     method @NonNull public static android.telephony.ServiceState newFromBundle(@NonNull android.os.Bundle);
+    field public static final int FREQUENCY_RANGE_HIGH = 3; // 0x3
+    field public static final int FREQUENCY_RANGE_LOW = 1; // 0x1
+    field public static final int FREQUENCY_RANGE_MID = 2; // 0x2
+    field public static final int FREQUENCY_RANGE_MMWAVE = 4; // 0x4
+    field public static final int FREQUENCY_RANGE_UNKNOWN = 0; // 0x0
     field public static final int ROAMING_TYPE_DOMESTIC = 2; // 0x2
     field public static final int ROAMING_TYPE_INTERNATIONAL = 3; // 0x3
     field public static final int ROAMING_TYPE_NOT_ROAMING = 0; // 0x0

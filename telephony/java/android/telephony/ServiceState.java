@@ -108,33 +108,44 @@ public class ServiceState implements Parcelable {
     public @interface FrequencyRange {}
 
     /**
-     * Indicates frequency range is unknown.
+     * This constant indicates the cellular frequency range is unknown.
+     *
      * @hide
      */
+    @SystemApi
     public static final int FREQUENCY_RANGE_UNKNOWN = 0;
 
     /**
-     * Indicates the frequency range is below 1GHz.
+     * This constant indicates the cellular frequency range is below 1GHz.
+     *
      * @hide
      */
+    @SystemApi
     public static final int FREQUENCY_RANGE_LOW = 1;
 
     /**
-     * Indicates the frequency range is between 1GHz to 3GHz.
+     * This constant indicates the cellular frequency range is between 1GHz to 3GHz.
+     *
      * @hide
      */
+    @SystemApi
     public static final int FREQUENCY_RANGE_MID = 2;
 
     /**
-     * Indicates the frequency range is between 3GHz and 6GHz.
+     * This constant indicates the cellular frequency range is between 3GHz and 6GHz.
+     *
      * @hide
      */
+    @SystemApi
     public static final int FREQUENCY_RANGE_HIGH = 3;
 
     /**
-     * Indicates the frequency range is above 6GHz (millimeter wave frequency).
+     * This constant indicates the cellular frequency range is above 6GHz
+     * i.e millimeter wave frequency.
+     *
      * @hide
      */
+    @SystemApi
     public static final int FREQUENCY_RANGE_MMWAVE = 4;
 
     private static final List<Integer> FREQUENCY_RANGE_ORDER = Arrays.asList(
