@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Ready+1: Cody Kesting <ckesting@google.com>
+Code-Review+2: Raman Tenneti <rtenneti@google.com>
+Build-Cop-Override+1: Raman Tenneti <rtenneti@google.com>
+Submitted-by: Cody Kesting <ckesting@google.com>
+Submitted-at: Fri, 24 Jan 2020 18:37:50 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1217517
+Project: platform/frameworks/base
+Branch: refs/heads/master
