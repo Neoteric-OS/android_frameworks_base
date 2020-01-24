@@ -34,16 +34,25 @@ import java.util.ArrayList;
 public class EthernetManager {
     private static final String TAG = "EthernetManager";
     private static final int MSG_AVAILABILITY_CHANGED = 1000;
+    private static final int MSG_INTERFACE_STATE_CHANGED = 1001;
 
     private final Context mContext;
     private final IEthernetManager mService;
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == MSG_AVAILABILITY_CHANGED) {
-                boolean isAvailable = (msg.arg1 == 1);
-                for (Listener listener : mListeners) {
-                    listener.onAvailabilityChanged((String) msg.obj, isAvailable);
+            switch (msg.what) {
+                case MSG_INTERFACE_STATE_CHANGED: {
+                    boolean isAvailable = (msg.arg1 == 1);
+                    int mode = msg.arg2;
+                    for (Listener listener : mListeners) {
+                        listener.onInterfaceStateChanged((String) msg.obj, isAvailable, mode);
+                        // Hide the mode from legacy clients that don't understand it.
+                        if (mode == INTERFACE_MODE_CLIENT) {
+                            listener.onAvailabilityChanged((String) msg.obj, isAvailable);
+                        }
+                    }
+                    break;
                 }
             }
         }
@@ -52,11 +61,15 @@ public class EthernetManager {
     private final IEthernetServiceListener.Stub mServiceListener =
             new IEthernetServiceListener.Stub() {
                 @Override
-                public void onAvailabilityChanged(String iface, boolean isAvailable) {
+                public void onInterfaceStateChanged(String iface, boolean isAvailable, int mode) {
                     mHandler.obtainMessage(
-                            MSG_AVAILABILITY_CHANGED, isAvailable ? 1 : 0, 0, iface).sendToTarget();
+                            MSG_INTERFACE_STATE_CHANGED, isAvailable ? 1 : 0, mode, iface).sendToTarget();
                 }
             };
+
+    // TODO: IntDef.
+    public static final int INTERFACE_MODE_CLIENT = 1;
+    public static final int INTERFACE_MODE_SERVER = 2;
 
     /**
      * A listener interface to receive notification on changes in Ethernet.
@@ -69,6 +82,9 @@ public class EthernetManager {
          */
         @UnsupportedAppUsage
         void onAvailabilityChanged(String iface, boolean isAvailable);
+
+        default void onInterfaceStateChanged(String iface, boolean isAvailable, int mode) {
+        }
     }
 
     /**
@@ -178,6 +194,14 @@ public class EthernetManager {
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
+        }
+    }
+
+    public void setDefaultInterfaceMode(int mode) {
+        try {
+            mService.setDefaultInterfaceMode(mode);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 }

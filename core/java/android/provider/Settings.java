@@ -10583,6 +10583,13 @@ public final class Settings {
         public static final String NETWORK_WATCHLIST_LAST_REPORT_TIME =
                 "network_watchlist_last_report_time";
 
+        /**
+         * Default mode in which to put newly-detected Ethernet interfaces in the absence of any
+         * specific per-interface configuration.
+         * @hide
+         */
+        public static final String NETWORK_ETHERNET_DEFAULT_MODE = "network_ethernet_default_mode";
+
        /**
         * The thresholds of the wifi throughput badging (SD, HD etc.) as a comma-delimited list of
         * colon-delimited key-value pairs. The key is the badging enum value defined in
