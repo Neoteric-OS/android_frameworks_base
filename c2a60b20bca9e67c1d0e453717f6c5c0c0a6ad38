@@ -459,6 +459,24 @@
     },
     {
       "key": {
+        "uuid": "36ceb27f_0d704b7e",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsSipOptionsImplBase.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-24T00:13:49Z",
+      "side": 1,
+      "message": "Also, what is usually in the SDP information associated with the SIP OPTIONS request/response?",
+      "parentUuid": "2eca5eed_5f75b515",
+      "revId": "c2a60b20bca9e67c1d0e453717f6c5c0c0a6ad38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24f32085_fbd9d872",
         "filename": "telephony/java/android/telephony/ims/stub/RcsSipOptionsImplBase.java",
         "patchSetId": 16
