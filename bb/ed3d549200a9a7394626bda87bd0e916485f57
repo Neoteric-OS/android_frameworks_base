@@ -1,0 +1,11 @@
+Autosubmit+1: Shubang Lu <shubang@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: nchalko <nchalko@google.com>
+Code-Review+1: Shubang Lu <shubang@google.com>
+Code-Review+2: Sungsoo Lim <sungsoo@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 24 Jan 2020 04:14:22 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/741081
+Project: platform/frameworks/base
+Branch: refs/heads/master
