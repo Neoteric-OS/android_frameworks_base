@@ -35,21 +35,6 @@ public class PmPermissionsTests extends AndroidTestCase {
     }
 
     /*
-     * This test verifies that PackageManger.getPackageSizeInfo enforces permission
-     * android.permission.GET_PACKAGE_SIZE
-     */
-    @SmallTest
-    public void testGetPackageSize() {
-        try {
-            mPm.getPackageSizeInfo(mPkgName, null);
-            fail("PackageManager.getPackageSizeInfo" +
-                    "did not throw SecurityException as expected");
-        } catch (SecurityException e) {
-            // expected
-        }
-    }
-
-    /*
      * This test verifies that PackageManger.DeleteApplicationCacheFiles enforces permission
      * android.permission.DELETE_CACHE_FILES
      */
