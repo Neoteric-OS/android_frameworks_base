@@ -29,12 +29,16 @@ import android.os.ResultReceiver;
 import android.util.ArrayMap;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
+import java.util.function.Supplier;
+
+import javax.annotation.concurrent.GuardedBy;
 
 /**
  * This class provides the APIs to control the tethering service.
@@ -49,9 +53,14 @@ public class TetheringManager {
     private static final String TAG = TetheringManager.class.getSimpleName();
     private static final int DEFAULT_TIMEOUT_MS = 60_000;
 
-    private static TetheringManager sInstance;
+    @GuardedBy("mConnectorWaitQueue")
+    @Nullable
+    private ITetheringConnector mConnector;
+    @GuardedBy("mConnectorWaitQueue")
+    @NonNull
+    private final List<ConnectorConsumer> mConnectorWaitQueue = new ArrayList<>();
+    private final Supplier<IBinder> mConnectorSupplier;
 
-    private final ITetheringConnector mConnector;
     private final TetheringCallbackInternal mCallback;
     private final Context mContext;
     private final ArrayMap<TetheringEventCallback, ITetheringEventCallback>
@@ -187,29 +196,103 @@ public class TetheringManager {
     /**
      * Create a TetheringManager object for interacting with the tethering service.
      *
+     * @param context Context for the manager.
+     * @param connectorSupplier Supplier for the manager connector; may return null while the
+     *                          service is not connected.
      * {@hide}
      */
-    public TetheringManager(@NonNull final Context context, @NonNull final IBinder service) {
+    public TetheringManager(@NonNull final Context context,
+            @NonNull Supplier<IBinder> connectorSupplier) {
         mContext = context;
-        mConnector = ITetheringConnector.Stub.asInterface(service);
         mCallback = new TetheringCallbackInternal();
+        mConnectorSupplier = connectorSupplier;
 
         final String pkgName = mContext.getOpPackageName();
+
+        final IBinder connector = mConnectorSupplier.get();
+        if (connector != null) {
+            mConnector = ITetheringConnector.Stub.asInterface(connector);
+        } else {
+            startPollingForConnector();
+        }
+
         Log.i(TAG, "registerTetheringEventCallback:" + pkgName);
+        getConnector(c -> c.registerTetheringEventCallback(mCallback, pkgName));
+    }
+
+    private void startPollingForConnector() {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    // Not much to do here, the system needs to wait for the connector
+                }
+
+                final IBinder connector = mConnectorSupplier.get();
+                if (connector != null) {
+                    onTetheringConnected(ITetheringConnector.Stub.asInterface(connector));
+                    return;
+                }
+            }
+        }).start();
+    }
+
+    private interface ConnectorConsumer {
+        void onConnectorAvailable(ITetheringConnector connector) throws RemoteException;
+    }
+
+    private void onTetheringConnected(ITetheringConnector connector) {
+        boolean done;
+        do {
+            final List<ConnectorConsumer> tasks;
+            synchronized (mConnectorWaitQueue) {
+                tasks = new ArrayList<>(mConnectorWaitQueue);
+                mConnectorWaitQueue.clear();
+            }
+
+            // Allow more tasks to be added at the end without blocking while draining the tasks.
+            for (ConnectorConsumer task : tasks) {
+                try {
+                    task.onConnectorAvailable(connector);
+                } catch (RemoteException e) {
+                    throw new IllegalStateException(e);
+                }
+            }
+
+            synchronized (mConnectorWaitQueue) {
+                done = mConnectorWaitQueue.size() == 0;
+                if (done) {
+                    mConnector = connector;
+                }
+            }
+        } while (!done);
+    }
+
+    private void getConnector(ConnectorConsumer consumer) {
+        final ITetheringConnector connector;
+        synchronized (mConnectorWaitQueue) {
+            connector = mConnector;
+            if (connector == null) {
+                mConnectorWaitQueue.add(consumer);
+                return;
+            }
+        }
+
         try {
-            mConnector.registerTetheringEventCallback(mCallback, pkgName);
+            consumer.onConnectorAvailable(connector);
         } catch (RemoteException e) {
             throw new IllegalStateException(e);
         }
     }
 
     private interface RequestHelper {
-        void runRequest(IIntResultListener listener);
+        void runRequest(ITetheringConnector connector, IIntResultListener listener);
     }
 
     private class RequestDispatcher {
         private final ConditionVariable mWaiting;
-        public int mRemoteResult;
+        public volatile int mRemoteResult;
 
         private final IIntResultListener mListener = new IIntResultListener.Stub() {
                 @Override
@@ -224,7 +307,7 @@ public class TetheringManager {
         }
 
         int waitForResult(final RequestHelper request) {
-            request.runRequest(mListener);
+            getConnector(c -> request.runRequest(c, mListener));
             if (!mWaiting.block(DEFAULT_TIMEOUT_MS)) {
                 throw new IllegalStateException("Callback timeout");
             }
@@ -305,9 +388,9 @@ public class TetheringManager {
         Log.i(TAG, "tether caller:" + callerPkg);
         final RequestDispatcher dispatcher = new RequestDispatcher();
 
-        return dispatcher.waitForResult(listener -> {
+        return dispatcher.waitForResult((connector, listener) -> {
             try {
-                mConnector.tether(iface, callerPkg, listener);
+                connector.tether(iface, callerPkg, listener);
             } catch (RemoteException e) {
                 throw new IllegalStateException(e);
             }
@@ -329,9 +412,9 @@ public class TetheringManager {
 
         final RequestDispatcher dispatcher = new RequestDispatcher();
 
-        return dispatcher.waitForResult(listener -> {
+        return dispatcher.waitForResult((connector, listener) -> {
             try {
-                mConnector.untether(iface, callerPkg, listener);
+                connector.untether(iface, callerPkg, listener);
             } catch (RemoteException e) {
                 throw new IllegalStateException(e);
             }
@@ -355,9 +438,9 @@ public class TetheringManager {
 
         final RequestDispatcher dispatcher = new RequestDispatcher();
 
-        return dispatcher.waitForResult(listener -> {
+        return dispatcher.waitForResult((connector, listener) -> {
             try {
-                mConnector.setUsbTethering(enable, callerPkg, listener);
+                connector.setUsbTethering(enable, callerPkg, listener);
             } catch (RemoteException e) {
                 throw new IllegalStateException(e);
             }
@@ -479,11 +562,7 @@ public class TetheringManager {
                 });
             }
         };
-        try {
-            mConnector.startTethering(request.getParcel(), callerPkg, listener);
-        } catch (RemoteException e) {
-            throw new IllegalStateException(e);
-        }
+        getConnector(c -> c.startTethering(request.getParcel(), callerPkg, listener));
     }
 
     /**
@@ -494,15 +573,12 @@ public class TetheringManager {
         final String callerPkg = mContext.getOpPackageName();
         Log.i(TAG, "stopTethering caller:" + callerPkg);
 
-        final RequestDispatcher dispatcher = new RequestDispatcher();
-
-        dispatcher.waitForResult(listener -> {
-            try {
-                mConnector.stopTethering(type, callerPkg, listener);
-            } catch (RemoteException e) {
-                throw new IllegalStateException(e);
+        getConnector(c -> c.stopTethering(type, callerPkg, new IIntResultListener.Stub() {
+            @Override
+            public void onResult(int resultCode) {
+                // TODO: provide an API to obtain result
             }
-        });
+        }));
     }
 
     /**
@@ -570,12 +646,8 @@ public class TetheringManager {
         final String callerPkg = mContext.getOpPackageName();
         Log.i(TAG, "getLatestTetheringEntitlementResult caller:" + callerPkg);
 
-        try {
-            mConnector.requestLatestTetheringEntitlementResult(type, receiver, showEntitlementUi,
-                    callerPkg);
-        } catch (RemoteException e) {
-            throw new IllegalStateException(e);
-        }
+        getConnector(c -> c.requestLatestTetheringEntitlementResult(
+                type, receiver, showEntitlementUi, callerPkg));
     }
 
     /**
@@ -793,11 +865,7 @@ public class TetheringManager {
                     });
                 }
             };
-            try {
-                mConnector.registerTetheringEventCallback(remoteCallback, callerPkg);
-            } catch (RemoteException e) {
-                throw new IllegalStateException(e);
-            }
+            getConnector(c -> c.registerTetheringEventCallback(remoteCallback, callerPkg));
             mTetheringEventCallbacks.put(callback, remoteCallback);
         }
     }
@@ -817,11 +885,8 @@ public class TetheringManager {
             if (remoteCallback == null) {
                 throw new IllegalArgumentException("callback was not registered.");
             }
-            try {
-                mConnector.unregisterTetheringEventCallback(remoteCallback, callerPkg);
-            } catch (RemoteException e) {
-                throw new IllegalStateException(e);
-            }
+
+            getConnector(c -> c.unregisterTetheringEventCallback(remoteCallback, callerPkg));
         }
     }
 
@@ -959,9 +1024,9 @@ public class TetheringManager {
         final String callerPkg = mContext.getOpPackageName();
 
         final RequestDispatcher dispatcher = new RequestDispatcher();
-        final int ret = dispatcher.waitForResult(listener -> {
+        final int ret = dispatcher.waitForResult((connector, listener) -> {
             try {
-                mConnector.isTetheringSupported(callerPkg, listener);
+                connector.isTetheringSupported(callerPkg, listener);
             } catch (RemoteException e) {
                 throw new IllegalStateException(e);
             }
@@ -977,13 +1042,11 @@ public class TetheringManager {
         final String callerPkg = mContext.getOpPackageName();
         Log.i(TAG, "stopAllTethering caller:" + callerPkg);
 
-        final RequestDispatcher dispatcher = new RequestDispatcher();
-        dispatcher.waitForResult(listener -> {
-            try {
-                mConnector.stopAllTethering(callerPkg, listener);
-            } catch (RemoteException e) {
-                throw new IllegalStateException(e);
+        getConnector(c -> c.stopAllTethering(callerPkg, new IIntResultListener.Stub() {
+            @Override
+            public void onResult(int resultCode) {
+                // TODO: add an API parameter to send result to caller
             }
-        });
+        }));
     }
 }
