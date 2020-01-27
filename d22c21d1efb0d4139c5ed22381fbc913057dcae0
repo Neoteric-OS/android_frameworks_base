@@ -473,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "8d67932b_1c898e07",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2115,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-27T21:34:00Z",
+      "side": 1,
+      "message": "Done. I don\u0027t have a strong opinion either way. My thoughts were that loops help to group all the arguments together, but this also has the nice property of having the algorithms and keys be next to each other.",
+      "parentUuid": "a44f44e5_c13270fd",
+      "range": {
+        "startLine": 2115,
+        "startChar": 29,
+        "endLine": 2115,
+        "endChar": 84
+      },
+      "revId": "d22c21d1efb0d4139c5ed22381fbc913057dcae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba6ad43c_075f7458",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 27
