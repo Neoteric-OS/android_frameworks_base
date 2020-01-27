@@ -16,9 +16,13 @@
 
 package android.telecom;
 
+import static android.Manifest.permission.MODIFY_PHONE_STATE;
+
+import android.annotation.ElapsedRealtimeLong;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.app.Notification;
@@ -474,7 +478,7 @@ public abstract class Connection extends Conferenceable {
      *
      * @see TelecomManager#EXTRA_USE_ASSISTED_DIALING
      */
-    public static final int PROPERTY_ASSISTED_DIALING_USED = 1 << 9;
+    public static final int PROPERTY_ASSISTED_DIALING = 1 << 9;
 
     /**
      * Set by the framework to indicate that the network has identified a Connection as an emergency
@@ -2116,12 +2120,17 @@ public abstract class Connection extends Conferenceable {
     /**
      * Retrieves the connection start time of the {@link Connection}, if specified.  A value of
      * {@link Conference#CONNECT_TIME_NOT_SPECIFIED} indicates that Telecom should determine the
-     * start time of the conference.
+     * start time of the connection.
      * <p>
      * Based on the value of {@link SystemClock#elapsedRealtime()}, which ensures that wall-clock
      * changes do not impact the call duration.
      * <p>
      * Used internally in Telephony when migrating conference participant data for IMS conferences.
+     * <p>
+     * The value returned is the same one set using
+     * {@link #setConnectionStartElapsedRealtimeMillis(long)}.  This value is never updated from
+     * the Telecom framework, so no permission enforcement occurs when retrieving the value with
+     * this method.
      *
      * @return The time at which the {@link Connection} was connected.
      *
@@ -2129,7 +2138,7 @@ public abstract class Connection extends Conferenceable {
      */
     @SystemApi
     @TestApi
-    public final long getConnectElapsedTimeMillis() {
+    public final @ElapsedRealtimeLong long getConnectionStartElapsedRealtimeMillis() {
         return mConnectElapsedTimeMillis;
     }
 
@@ -2575,7 +2584,9 @@ public abstract class Connection extends Conferenceable {
      */
     @SystemApi
     @TestApi
-    public final void setConnectionStartElapsedRealTime(long connectElapsedTimeMillis) {
+    @RequiresPermission(MODIFY_PHONE_STATE)
+    public final void setConnectionStartElapsedRealtimeMillis(
+            @ElapsedRealtimeLong long connectElapsedTimeMillis) {
         mConnectElapsedTimeMillis = connectElapsedTimeMillis;
     }
 
