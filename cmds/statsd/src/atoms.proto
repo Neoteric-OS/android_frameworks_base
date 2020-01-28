@@ -76,154 +76,168 @@ message Atom {
     oneof pushed {
         // For StatsLog reasons, 1 is illegal and will not work. Must start at 2.
         BleScanStateChanged ble_scan_state_changed = 2;
-        ProcessStateChanged process_state_changed = 3;
+        ProcessStateChanged process_state_changed = 3 [(log_from_module) = "framework"];
         BleScanResultReceived ble_scan_result_received = 4;
-        SensorStateChanged sensor_state_changed = 5;
-        GpsScanStateChanged gps_scan_state_changed = 6;
-        SyncStateChanged sync_state_changed = 7;
-        ScheduledJobStateChanged scheduled_job_state_changed = 8;
-        ScreenBrightnessChanged screen_brightness_changed = 9;
-        WakelockStateChanged wakelock_state_changed = 10;
-        LongPartialWakelockStateChanged long_partial_wakelock_state_changed = 11;
-        MobileRadioPowerStateChanged mobile_radio_power_state_changed = 12;
-        WifiRadioPowerStateChanged wifi_radio_power_state_changed = 13;
-        ActivityManagerSleepStateChanged activity_manager_sleep_state_changed = 14;
-        MemoryFactorStateChanged memory_factor_state_changed = 15;
-        ExcessiveCpuUsageReported excessive_cpu_usage_reported = 16;
-        CachedKillReported cached_kill_reported = 17;
-        ProcessMemoryStatReported process_memory_stat_reported = 18;
+        SensorStateChanged sensor_state_changed = 5 [(log_from_module) = "framework"];
+        GpsScanStateChanged gps_scan_state_changed = 6 [(log_from_module) = "framework"];
+        SyncStateChanged sync_state_changed = 7 [(log_from_module) = "framework"];
+        ScheduledJobStateChanged scheduled_job_state_changed = 8 [(log_from_module) = "framework"];
+        ScreenBrightnessChanged screen_brightness_changed = 9 [(log_from_module) = "framework"];
+        WakelockStateChanged wakelock_state_changed = 10 [(log_from_module) = "framework"];
+        LongPartialWakelockStateChanged long_partial_wakelock_state_changed =
+                11 [(log_from_module) = "framework"];
+        MobileRadioPowerStateChanged mobile_radio_power_state_changed = 12
+                [(log_from_module) = "framework"];
+        WifiRadioPowerStateChanged wifi_radio_power_state_changed = 13
+                [(log_from_module) = "framework"];
+        ActivityManagerSleepStateChanged activity_manager_sleep_state_changed =
+                14 [(log_from_module) = "framework"];
+        MemoryFactorStateChanged memory_factor_state_changed = 15
+                [(log_from_module) = "framework"];
+        ExcessiveCpuUsageReported excessive_cpu_usage_reported = 16
+                [(log_from_module) = "framework"];
+        CachedKillReported cached_kill_reported = 17 [(log_from_module) = "framework"];
+        ProcessMemoryStatReported process_memory_stat_reported = 18
+                [(log_from_module) = "framework"];
         LauncherUIChanged launcher_event = 19;
-        BatterySaverModeStateChanged battery_saver_mode_state_changed = 20;
-        DeviceIdleModeStateChanged device_idle_mode_state_changed = 21;
-        DeviceIdlingModeStateChanged device_idling_mode_state_changed = 22;
-        AudioStateChanged audio_state_changed = 23;
-        MediaCodecStateChanged media_codec_state_changed = 24;
-        CameraStateChanged camera_state_changed = 25;
-        FlashlightStateChanged flashlight_state_changed = 26;
-        UidProcessStateChanged uid_process_state_changed = 27;
-        ProcessLifeCycleStateChanged process_life_cycle_state_changed = 28;
-        ScreenStateChanged screen_state_changed = 29;
-        BatteryLevelChanged battery_level_changed = 30;
-        ChargingStateChanged charging_state_changed = 31;
-        PluggedStateChanged plugged_state_changed = 32;
-        InteractiveStateChanged interactive_state_changed = 33;
+        BatterySaverModeStateChanged battery_saver_mode_state_changed = 20
+                [(log_from_module) = "framework"];
+        DeviceIdleModeStateChanged device_idle_mode_state_changed = 21
+                [(log_from_module) = "framework"];
+        DeviceIdlingModeStateChanged device_idling_mode_state_changed = 22
+                [(log_from_module) = "framework"];
+        AudioStateChanged audio_state_changed = 23 [(log_from_module) = "framework"];
+        MediaCodecStateChanged media_codec_state_changed = 24 [(log_from_module) = "framework"];
+        CameraStateChanged camera_state_changed = 25 [(log_from_module) = "framework"];
+        FlashlightStateChanged flashlight_state_changed = 26 [(log_from_module) = "framework"];
+        UidProcessStateChanged uid_process_state_changed = 27 [(log_from_module) = "framework"];
+        ProcessLifeCycleStateChanged process_life_cycle_state_changed = 28
+                [(log_from_module) = "framework"];
+        ScreenStateChanged screen_state_changed = 29 [(log_from_module) = "framework"];
+        BatteryLevelChanged battery_level_changed = 30 [(log_from_module) = "framework"];
+        ChargingStateChanged charging_state_changed = 31 [(log_from_module) = "framework"];
+        PluggedStateChanged plugged_state_changed = 32 [(log_from_module) = "framework"];
+        InteractiveStateChanged interactive_state_changed = 33 [(log_from_module) = "framework"];
         TouchEventReported touch_event_reported = 34;
-        WakeupAlarmOccurred wakeup_alarm_occurred = 35;
-        KernelWakeupReported kernel_wakeup_reported = 36;
+        WakeupAlarmOccurred wakeup_alarm_occurred = 35 [(log_from_module) = "framework"];
+        KernelWakeupReported kernel_wakeup_reported = 36 [(log_from_module) = "framework"];
         WifiLockStateChanged wifi_lock_state_changed = 37;
         WifiSignalStrengthChanged wifi_signal_strength_changed = 38;
         WifiScanStateChanged wifi_scan_state_changed = 39;
-        PhoneSignalStrengthChanged phone_signal_strength_changed = 40;
-        SettingChanged setting_changed = 41;
-        ActivityForegroundStateChanged activity_foreground_state_changed = 42;
-        IsolatedUidChanged isolated_uid_changed = 43;
-        PacketWakeupOccurred packet_wakeup_occurred = 44;
-        WallClockTimeShifted wall_clock_time_shifted = 45;
+        PhoneSignalStrengthChanged phone_signal_strength_changed = 40
+                [(log_from_module) = "framework"];
+        SettingChanged setting_changed = 41 [(log_from_module) = "framework"];
+        ActivityForegroundStateChanged activity_foreground_state_changed =
+                42 [(log_from_module) = "framework"];
+        IsolatedUidChanged isolated_uid_changed = 43 [(log_from_module) = "framework"];
+        PacketWakeupOccurred packet_wakeup_occurred = 44 [(log_from_module) = "framework"];
+        WallClockTimeShifted wall_clock_time_shifted = 45 [(log_from_module) = "framework"];
         AnomalyDetected anomaly_detected = 46;
-        AppBreadcrumbReported app_breadcrumb_reported = 47 [(allow_from_any_uid) = true];
-        AppStartOccurred app_start_occurred = 48;
-        AppStartCanceled app_start_canceled = 49;
-        AppStartFullyDrawn app_start_fully_drawn = 50;
+        AppBreadcrumbReported app_breadcrumb_reported =
+                47 [(allow_from_any_uid) = true, (log_from_module) = "framework"];
+        AppStartOccurred app_start_occurred = 48 [(log_from_module) = "framework"];
+        AppStartCanceled app_start_canceled = 49 [(log_from_module) = "framework"];
+        AppStartFullyDrawn app_start_fully_drawn = 50 [(log_from_module) = "framework"];
         LmkKillOccurred lmk_kill_occurred = 51 [(log_from_module) = "lmkd"];
-        PictureInPictureStateChanged picture_in_picture_state_changed = 52;
+        PictureInPictureStateChanged picture_in_picture_state_changed = 52
+                [(log_from_module) = "framework"];
         WifiMulticastLockStateChanged wifi_multicast_lock_state_changed = 53;
         LmkStateChanged lmk_state_changed = 54 [(log_from_module) = "lmkd"];
-        AppStartMemoryStateCaptured app_start_memory_state_captured = 55;
-        ShutdownSequenceReported shutdown_sequence_reported = 56;
+        AppStartMemoryStateCaptured app_start_memory_state_captured = 55
+                [(log_from_module) = "framework"];
+        ShutdownSequenceReported shutdown_sequence_reported = 56 [(log_from_module) = "framework"];
         BootSequenceReported boot_sequence_reported = 57;
         DaveyOccurred davey_occurred = 58 [(allow_from_any_uid) = true];
-        OverlayStateChanged overlay_state_changed = 59;
-        ForegroundServiceStateChanged foreground_service_state_changed = 60;
+        OverlayStateChanged overlay_state_changed = 59 [(log_from_module) = "framework"];
+        ForegroundServiceStateChanged foreground_service_state_changed
+                = 60 [(log_from_module) = "framework"];
         CallStateChanged call_state_changed = 61;
         KeyguardStateChanged keyguard_state_changed = 62;
         KeyguardBouncerStateChanged keyguard_bouncer_state_changed = 63;
         KeyguardBouncerPasswordEntered keyguard_bouncer_password_entered = 64;
-        AppDied app_died = 65;
-        ResourceConfigurationChanged resource_configuration_changed = 66;
-        BluetoothEnabledStateChanged bluetooth_enabled_state_changed = 67;
+        AppDied app_died = 65 [(log_from_module) = "framework"];
+        ResourceConfigurationChanged resource_configuration_changed = 66
+                [(log_from_module) = "framework"];
+        BluetoothEnabledStateChanged bluetooth_enabled_state_changed = 67
+                [(log_from_module) = "framework"];
         BluetoothConnectionStateChanged bluetooth_connection_state_changed = 68;
-        GpsSignalQualityChanged gps_signal_quality_changed = 69;
-        UsbConnectorStateChanged usb_connector_state_changed = 70;
+        GpsSignalQualityChanged gps_signal_quality_changed = 69 [(log_from_module) = "framework"];
+        UsbConnectorStateChanged usb_connector_state_changed = 70 [(log_from_module) = "framework"];
         SpeakerImpedanceReported speaker_impedance_reported = 71;
         HardwareFailed hardware_failed = 72;
         PhysicalDropDetected physical_drop_detected = 73;
         ChargeCyclesReported charge_cycles_reported = 74;
         MobileConnectionStateChanged mobile_connection_state_changed = 75;
         MobileRadioTechnologyChanged mobile_radio_technology_changed = 76;
-        UsbDeviceAttached usb_device_attached = 77;
-        AppCrashOccurred app_crash_occurred = 78;
-        ANROccurred anr_occurred = 79;
-        WTFOccurred wtf_occurred = 80;
-        LowMemReported low_mem_reported = 81;
+        UsbDeviceAttached usb_device_attached = 77 [(log_from_module) = "framework"];
+        AppCrashOccurred app_crash_occurred = 78 [(log_from_module) = "framework"];
+        ANROccurred anr_occurred = 79 [(log_from_module) = "framework"];
+        WTFOccurred wtf_occurred = 80 [(log_from_module) = "framework"];
+        LowMemReported low_mem_reported = 81 [(log_from_module) = "framework"];
         GenericAtom generic_atom = 82;
-        KeyValuePairsAtom key_value_pairs_atom = 83 [(allow_from_any_uid) = true];
-        VibratorStateChanged vibrator_state_changed = 84;
-        DeferredJobStatsReported deferred_job_stats_reported = 85;
+        KeyValuePairsAtom key_value_pairs_atom =
+                83 [(allow_from_any_uid) = true, (log_from_module) = "framework"];
+        VibratorStateChanged vibrator_state_changed = 84 [(log_from_module) = "framework"];
+        DeferredJobStatsReported deferred_job_stats_reported = 85 [(log_from_module) = "framework"];
         ThermalThrottlingStateChanged thermal_throttling = 86 [deprecated=true];
-        BiometricAcquired biometric_acquired = 87;
-        BiometricAuthenticated biometric_authenticated = 88;
-        BiometricErrorOccurred biometric_error_occurred = 89;
+        BiometricAcquired biometric_acquired = 87 [(log_from_module) = "framework"];
+        BiometricAuthenticated biometric_authenticated = 88 [(log_from_module) = "framework"];
+        BiometricErrorOccurred biometric_error_occurred = 89 [(log_from_module) = "framework"];
         // Atom number 90 is available for use.
         BatteryHealthSnapshot battery_health_snapshot = 91;
         SlowIo slow_io = 92;
         BatteryCausedShutdown battery_caused_shutdown = 93;
-        PhoneServiceStateChanged phone_service_state_changed = 94;
-        PhoneStateChanged phone_state_changed = 95;
+        PhoneServiceStateChanged phone_service_state_changed = 94 [(log_from_module) = "framework"];
+        PhoneStateChanged phone_state_changed = 95 [(log_from_module) = "framework"];
         UserRestrictionChanged user_restriction_changed = 96;
         SettingsUIChanged settings_ui_changed = 97;
-        ConnectivityStateChanged connectivity_state_changed = 98;
+        ConnectivityStateChanged connectivity_state_changed = 98 [(log_from_module) = "framework"];
         // TODO: service state change is very noisy shortly after boot, as well
         // as at other transitions - coming out of doze, device plugged in, etc.
         // Consider removing this if it becomes a problem
-        ServiceStateChanged service_state_changed = 99;
-        ServiceLaunchReported service_launch_reported = 100;
-        FlagFlipUpdateOccurred flag_flip_update_occurred = 101;
-        BinaryPushStateChanged binary_push_state_changed = 102;
-        DevicePolicyEvent device_policy_event = 103;
-        DocsUIFileOperationCanceledReported docs_ui_file_op_canceled =
-            104 [(log_from_module) = "docsui"];
-        DocsUIFileOperationCopyMoveModeReported
-            docs_ui_file_op_copy_move_mode_reported =
-            105 [(log_from_module) = "docsui"];
-        DocsUIFileOperationFailureReported docs_ui_file_op_failure =
-            106 [(log_from_module) = "docsui"];
-        DocsUIFileOperationReported docs_ui_provider_file_op =
-            107 [(log_from_module) = "docsui"];
-        DocsUIInvalidScopedAccessRequestReported
-            docs_ui_invalid_scoped_access_request =
+        ServiceStateChanged service_state_changed = 99 [(log_from_module) = "framework"];
+        ServiceLaunchReported service_launch_reported = 100 [(log_from_module) = "framework"];
+        FlagFlipUpdateOccurred flag_flip_update_occurred = 101 [(log_from_module) = "framework"];
+        BinaryPushStateChanged binary_push_state_changed = 102 [(log_from_module) = "framework"];
+        DevicePolicyEvent device_policy_event = 103 [(log_from_module) = "framework"];
+        DocsUIFileOperationCanceledReported docs_ui_file_op_canceled = 104
+                [(log_from_module) = "docsui"];
+        DocsUIFileOperationCopyMoveModeReported docs_ui_file_op_copy_move_mode_reported =
+                105 [(log_from_module) = "docsui"];
+        DocsUIFileOperationFailureReported docs_ui_file_op_failure = 106
+                [(log_from_module) = "docsui"];
+        DocsUIFileOperationReported docs_ui_provider_file_op = 107 [(log_from_module) = "docsui"];
+        DocsUIInvalidScopedAccessRequestReported docs_ui_invalid_scoped_access_request =
             108 [(log_from_module) = "docsui"];
-        DocsUILaunchReported docs_ui_launch_reported =
-            109 [(log_from_module) = "docsui"];
-        DocsUIRootVisitedReported docs_ui_root_visited =
-            110 [(log_from_module) = "docsui"];
-        DocsUIStartupMsReported docs_ui_startup_ms =
-            111 [(log_from_module) = "docsui"];
-        DocsUIUserActionReported docs_ui_user_action_reported =
-            112 [(log_from_module) = "docsui"];
-        WifiEnabledStateChanged wifi_enabled_state_changed = 113;
-        WifiRunningStateChanged wifi_running_state_changed = 114;
-        AppCompacted app_compacted = 115;
+        DocsUILaunchReported docs_ui_launch_reported = 109 [(log_from_module) = "docsui"];
+        DocsUIRootVisitedReported docs_ui_root_visited = 110 [(log_from_module) = "docsui"];
+        DocsUIStartupMsReported docs_ui_startup_ms = 111 [(log_from_module) = "docsui"];
+        DocsUIUserActionReported docs_ui_user_action_reported = 112 [(log_from_module) = "docsui"];
+        WifiEnabledStateChanged wifi_enabled_state_changed = 113 [(log_from_module) = "framework"];
+        WifiRunningStateChanged wifi_running_state_changed = 114 [(log_from_module) = "framework"];
+        AppCompacted app_compacted = 115 [(log_from_module) = "framework"];
         NetworkDnsEventReported network_dns_event_reported = 116 [(log_from_module) = "resolv"];
         DocsUIPickerLaunchedFromReported docs_ui_picker_launched_from_reported =
-            117 [(log_from_module) = "docsui"];
+                117 [(log_from_module) = "docsui"];
         DocsUIPickResultReported docs_ui_pick_result_reported =
-            118 [(log_from_module) = "docsui"];
+                118 [(log_from_module) = "docsui"];
         DocsUISearchModeReported docs_ui_search_mode_reported =
-            119 [(log_from_module) = "docsui"];
+                119 [(log_from_module) = "docsui"];
         DocsUISearchTypeReported docs_ui_search_type_reported =
-            120 [(log_from_module) = "docsui"];
+                120 [(log_from_module) = "docsui"];
         DataStallEvent data_stall_event = 121 [(log_from_module) = "network_stack"];
-        RescuePartyResetReported rescue_party_reset_reported = 122;
-        SignedConfigReported signed_config_reported = 123;
-        GnssNiEventReported gnss_ni_event_reported = 124;
+        RescuePartyResetReported rescue_party_reset_reported = 122
+                [(log_from_module) = "framework"];
+        SignedConfigReported signed_config_reported = 123 [(log_from_module) = "framework"];
+        GnssNiEventReported gnss_ni_event_reported = 124 [(log_from_module) = "framework"];
         BluetoothLinkLayerConnectionEvent bluetooth_link_layer_connection_event = 125;
         BluetoothAclConnectionStateChanged bluetooth_acl_connection_state_changed = 126;
         BluetoothScoConnectionStateChanged bluetooth_sco_connection_state_changed = 127;
-        AppDowngraded app_downgraded = 128;
+        AppDowngraded app_downgraded = 128 [(log_from_module) = "framework"];
         AppOptimizedAfterDowngraded app_optimized_after_downgraded = 129;
-        LowStorageStateChanged low_storage_state_changed = 130;
-        GnssNfwNotificationReported gnss_nfw_notification_reported = 131;
-        GnssConfigurationReported gnss_configuration_reported = 132;
+        LowStorageStateChanged low_storage_state_changed = 130 [(log_from_module) = "framework"];
+        GnssNfwNotificationReported gnss_nfw_notification_reported = 131 [(log_from_module) = "framework"];
+        GnssConfigurationReported gnss_configuration_reported = 132 [(log_from_module) = "framework"];
         UsbPortOverheatEvent usb_port_overheat_event_reported = 133;
         NfcErrorOccurred nfc_error_occurred = 134;
         NfcStateChanged nfc_state_changed = 135;
@@ -233,15 +247,19 @@ message Atom {
         NfcHceTransactionOccurred nfc_hce_transaction_occurred = 139;
         SeStateChanged se_state_changed = 140;
         SeOmapiReported se_omapi_reported = 141;
-        BroadcastDispatchLatencyReported broadcast_dispatch_latency_reported = 142;
-        AttentionManagerServiceResultReported attention_manager_service_result_reported = 143;
-        AdbConnectionChanged adb_connection_changed = 144;
+        BroadcastDispatchLatencyReported broadcast_dispatch_latency_reported =
+                142 [(log_from_module) = "framework"];
+        AttentionManagerServiceResultReported attention_manager_service_result_reported =
+                143 [(log_from_module) = "framework"];
+        AdbConnectionChanged adb_connection_changed = 144 [(log_from_module) = "framework"];
         SpeechDspStatReported speech_dsp_stat_reported = 145;
-        UsbContaminantReported usb_contaminant_reported = 146;
-        WatchdogRollbackOccurred watchdog_rollback_occurred = 147;
-        BiometricSystemHealthIssueDetected biometric_system_health_issue_detected = 148;
+        UsbContaminantReported usb_contaminant_reported = 146 [(log_from_module) = "framework"];
+        WatchdogRollbackOccurred watchdog_rollback_occurred = 147 [(log_from_module) = "framework"];
+        BiometricSystemHealthIssueDetected biometric_system_health_issue_detected =
+                148 [(log_from_module) = "framework"];
         BubbleUIChanged bubble_ui_changed = 149;
-        ScheduledJobConstraintChanged scheduled_job_constraint_changed = 150;
+        ScheduledJobConstraintChanged scheduled_job_constraint_changed =
+                150 [(log_from_module) = "framework"];
         BluetoothActiveDeviceChanged bluetooth_active_device_changed = 151;
         BluetoothA2dpPlaybackStateChanged bluetooth_a2dp_playback_state_changed = 152;
         BluetoothA2dpCodecConfigChanged bluetooth_a2dp_codec_config_changed = 153;
@@ -259,31 +277,37 @@ message Atom {
         BluetoothBondStateChanged bluetooth_bond_state_changed = 165;
         BluetoothClassicPairingEventReported bluetooth_classic_pairing_event_reported = 166;
         BluetoothSmpPairingEventReported bluetooth_smp_pairing_event_reported = 167;
-        ScreenTimeoutExtensionReported screen_timeout_extension_reported = 168;
-        ProcessStartTime process_start_time = 169;
+        ScreenTimeoutExtensionReported screen_timeout_extension_reported =
+                168 [(log_from_module) = "framework"];
+        ProcessStartTime process_start_time = 169 [(log_from_module) = "framework"];
         PermissionGrantRequestResultReported permission_grant_request_result_reported =
             170 [(log_from_module) = "permissioncontroller"];
         BluetoothSocketConnectionStateChanged bluetooth_socket_connection_state_changed = 171;
         DeviceIdentifierAccessDenied device_identifier_access_denied = 172;
-        BubbleDeveloperErrorReported bubble_developer_error_reported = 173;
+        BubbleDeveloperErrorReported bubble_developer_error_reported = 173
+                [(log_from_module) = "framework"];
         AssistGestureStageReported assist_gesture_stage_reported = 174;
         AssistGestureFeedbackReported assist_gesture_feedback_reported = 175;
         AssistGestureProgressReported assist_gesture_progress_reported = 176;
-        TouchGestureClassified touch_gesture_classified = 177;
-        HiddenApiUsed hidden_api_used = 178 [(allow_from_any_uid) = true];
+        TouchGestureClassified touch_gesture_classified = 177 [(log_from_module) = "framework"];
+        HiddenApiUsed hidden_api_used = 178
+                [(allow_from_any_uid) = true, (log_from_module) = "framework"];
         StyleUIChanged style_ui_changed = 179 [(log_from_module) = "style"];
         PrivacyIndicatorsInteracted privacy_indicators_interacted =
             180 [(log_from_module) = "permissioncontroller"];
-        AppInstallOnExternalStorageReported app_install_on_external_storage_reported = 181;
+        AppInstallOnExternalStorageReported app_install_on_external_storage_reported =
+                181 [(log_from_module) = "framework"];
         NetworkStackReported network_stack_reported = 182 [(log_from_module) = "network_stack"];
-        AppMovedStorageReported app_moved_storage_reported = 183;
-        BiometricEnrolled biometric_enrolled = 184;
-        SystemServerWatchdogOccurred system_server_watchdog_occurred = 185;
-        TombStoneOccurred tomb_stone_occurred = 186;
+        AppMovedStorageReported app_moved_storage_reported = 183 [(log_from_module) = "framework"];
+        BiometricEnrolled biometric_enrolled = 184 [(log_from_module) = "framework"];
+        SystemServerWatchdogOccurred system_server_watchdog_occurred = 185
+                [(log_from_module) = "framework"];
+        TombStoneOccurred tomb_stone_occurred = 186 [(log_from_module) = "framework"];
         BluetoothClassOfDeviceReported bluetooth_class_of_device_reported = 187;
         IntelligenceEventReported intelligence_event_reported =
             188 [(log_from_module) = "intelligence"];
-        ThermalThrottlingSeverityStateChanged thermal_throttling_severity_state_changed = 189;
+        ThermalThrottlingSeverityStateChanged thermal_throttling_severity_state_changed =
+                189 [(log_from_module) = "framework"];
         RoleRequestResultReported role_request_result_reported =
             190 [(log_from_module) = "permissioncontroller"];
         MediametricsAudiopolicyReported mediametrics_audiopolicy_reported = 191;
@@ -299,11 +323,15 @@ message Atom {
         CarPowerStateChanged car_power_state_changed = 203;
         GarageModeInfo garage_mode_info = 204;
         TestAtomReported test_atom_reported = 205 [(log_from_module) = "cts"];
-        ContentCaptureCallerMismatchReported content_capture_caller_mismatch_reported = 206;
-        ContentCaptureServiceEvents content_capture_service_events = 207;
-        ContentCaptureSessionEvents content_capture_session_events = 208;
-        ContentCaptureFlushed content_capture_flushed = 209;
-        LocationManagerApiUsageReported location_manager_api_usage_reported = 210;
+        ContentCaptureCallerMismatchReported content_capture_caller_mismatch_reported =
+                206 [(log_from_module) = "framework"];
+        ContentCaptureServiceEvents content_capture_service_events = 207
+                [(log_from_module) = "framework"];
+        ContentCaptureSessionEvents content_capture_session_events = 208
+                [(log_from_module) = "framework"];
+        ContentCaptureFlushed content_capture_flushed = 209 [(log_from_module) = "framework"];
+        LocationManagerApiUsageReported location_manager_api_usage_reported =
+                210 [(log_from_module) = "framework"];
         ReviewPermissionsFragmentResultReported review_permissions_fragment_result_reported =
             211 [(log_from_module) = "permissioncontroller"];
         RuntimePermissionsUpgradeResult runtime_permissions_upgrade_result =
@@ -320,13 +348,14 @@ message Atom {
             217 [(log_from_module) = "permissioncontroller"];
         PermissionAppsFragmentViewed permission_apps_fragment_viewed =
             218  [(log_from_module) = "permissioncontroller"];
-        ExclusionRectStateChanged exclusion_rect_state_changed = 223;
+        ExclusionRectStateChanged exclusion_rect_state_changed = 223
+                [(log_from_module) = "framework"];
         BackGesture back_gesture_reported_reported = 224;
 
         UpdateEngineUpdateAttemptReported update_engine_update_attempt_reported = 225;
         UpdateEngineSuccessfulUpdateReported update_engine_successful_update_reported = 226;
         AppCompatibilityChangeReported app_compatibility_change_reported =
-            228 [(allow_from_any_uid) = true];
+                228 [(allow_from_any_uid) = true, (log_from_module) = "framework"];
         PerfettoUploaded perfetto_uploaded =
             229 [(log_from_module) = "perfetto"];
     }
@@ -334,68 +363,72 @@ message Atom {
     // Pulled events will start at field 10000.
     // Next: 10062
     oneof pulled {
-        WifiBytesTransfer wifi_bytes_transfer = 10000;
-        WifiBytesTransferByFgBg wifi_bytes_transfer_by_fg_bg = 10001;
-        MobileBytesTransfer mobile_bytes_transfer = 10002;
-        MobileBytesTransferByFgBg mobile_bytes_transfer_by_fg_bg = 10003;
-        BluetoothBytesTransfer bluetooth_bytes_transfer = 10006;
-        KernelWakelock kernel_wakelock = 10004;
+        WifiBytesTransfer wifi_bytes_transfer = 10000 [(log_from_module) = "framework"];
+        WifiBytesTransferByFgBg wifi_bytes_transfer_by_fg_bg = 10001 [(log_from_module) = "framework"];
+        MobileBytesTransfer mobile_bytes_transfer = 10002 [(log_from_module) = "framework"];
+        MobileBytesTransferByFgBg mobile_bytes_transfer_by_fg_bg = 10003 [(log_from_module) = "framework"];
+        BluetoothBytesTransfer bluetooth_bytes_transfer = 10006 [(log_from_module) = "framework"];
+        KernelWakelock kernel_wakelock = 10004 [(log_from_module) = "framework"];
         SubsystemSleepState subsystem_sleep_state = 10005;
-        CpuTimePerFreq cpu_time_per_freq = 10008;
-        CpuTimePerUid cpu_time_per_uid = 10009;
-        CpuTimePerUidFreq cpu_time_per_uid_freq = 10010;
-        WifiActivityInfo wifi_activity_info = 10011;
-        ModemActivityInfo modem_activity_info = 10012;
-        BluetoothActivityInfo bluetooth_activity_info = 10007;
-        ProcessMemoryState process_memory_state = 10013;
-        SystemElapsedRealtime system_elapsed_realtime = 10014;
-        SystemUptime system_uptime = 10015;
-        CpuActiveTime cpu_active_time = 10016;
-        CpuClusterTime cpu_cluster_time = 10017;
+        CpuTimePerFreq cpu_time_per_freq = 10008 [(log_from_module) = "framework"];
+        CpuTimePerUid cpu_time_per_uid = 10009 [(log_from_module) = "framework"];
+        CpuTimePerUidFreq cpu_time_per_uid_freq = 10010 [(log_from_module) = "framework"];
+        WifiActivityInfo wifi_activity_info = 10011 [(log_from_module) = "framework"];
+        ModemActivityInfo modem_activity_info = 10012 [(log_from_module) = "framework"];
+        BluetoothActivityInfo bluetooth_activity_info = 10007 [(log_from_module) = "framework"];
+        ProcessMemoryState process_memory_state = 10013 [(log_from_module) = "framework"];
+        SystemElapsedRealtime system_elapsed_realtime = 10014 [(log_from_module) = "framework"];
+        SystemUptime system_uptime = 10015 [(log_from_module) = "framework"];
+        CpuActiveTime cpu_active_time = 10016 [(log_from_module) = "framework"];
+        CpuClusterTime cpu_cluster_time = 10017 [(log_from_module) = "framework"];
         DiskSpace disk_space = 10018 [deprecated=true];
         RemainingBatteryCapacity remaining_battery_capacity = 10019;
         FullBatteryCapacity full_battery_capacity = 10020;
-        Temperature temperature = 10021;
-        BinderCalls binder_calls = 10022;
-        BinderCallsExceptions binder_calls_exceptions = 10023;
-        LooperStats looper_stats = 10024;
-        DiskStats disk_stats = 10025;
-        DirectoryUsage directory_usage = 10026;
-        AppSize app_size = 10027;
-        CategorySize category_size = 10028;
-        ProcStats proc_stats = 10029;
+        Temperature temperature = 10021 [(log_from_module) = "framework"];
+        BinderCalls binder_calls = 10022 [(log_from_module) = "framework"];
+        BinderCallsExceptions binder_calls_exceptions = 10023 [(log_from_module) = "framework"];
+        LooperStats looper_stats = 10024 [(log_from_module) = "framework"];
+        DiskStats disk_stats = 10025 [(log_from_module) = "framework"];
+        DirectoryUsage directory_usage = 10026 [(log_from_module) = "framework"];
+        AppSize app_size = 10027 [(log_from_module) = "framework"];
+        CategorySize category_size = 10028 [(log_from_module) = "framework"];
+        ProcStats proc_stats = 10029 [(log_from_module) = "framework"];
         BatteryVoltage battery_voltage = 10030;
-        NumFingerprintsEnrolled num_fingerprints_enrolled = 10031;
-        DiskIo disk_io = 10032;
-        PowerProfile power_profile = 10033;
-        ProcStatsPkgProc proc_stats_pkg_proc = 10034;
-        ProcessCpuTime process_cpu_time = 10035;
+        NumFingerprintsEnrolled num_fingerprints_enrolled = 10031 [(log_from_module) = "framework"];
+        DiskIo disk_io = 10032 [(log_from_module) = "framework"];
+        PowerProfile power_profile = 10033 [(log_from_module) = "framework"];
+        ProcStatsPkgProc proc_stats_pkg_proc = 10034 [(log_from_module) = "framework"];
+        ProcessCpuTime process_cpu_time = 10035 [(log_from_module) = "framework"];
         NativeProcessMemoryState native_process_memory_state = 10036;
-        CpuTimePerThreadFreq cpu_time_per_thread_freq = 10037;
+        CpuTimePerThreadFreq cpu_time_per_thread_freq = 10037 [(log_from_module) = "framework"];
         OnDevicePowerMeasurement on_device_power_measurement = 10038;
-        DeviceCalculatedPowerUse device_calculated_power_use = 10039;
-        DeviceCalculatedPowerBlameUid device_calculated_power_blame_uid = 10040;
-        DeviceCalculatedPowerBlameOther device_calculated_power_blame_other = 10041;
-        ProcessMemoryHighWaterMark process_memory_high_water_mark = 10042;
+        DeviceCalculatedPowerUse device_calculated_power_use = 10039 [(log_from_module) = "framework"];
+        DeviceCalculatedPowerBlameUid device_calculated_power_blame_uid =
+                10040 [(log_from_module) = "framework"];
+        DeviceCalculatedPowerBlameOther device_calculated_power_blame_other =
+                10041 [(log_from_module) = "framework"];
+        ProcessMemoryHighWaterMark process_memory_high_water_mark = 10042 [(log_from_module) = "framework"];
         BatteryLevel battery_level = 10043;
-        BuildInformation build_information = 10044;
+        BuildInformation build_information = 10044 [(log_from_module) = "framework"];
         BatteryCycleCount battery_cycle_count = 10045;
-        DebugElapsedClock debug_elapsed_clock = 10046;
-        DebugFailingElapsedClock debug_failing_elapsed_clock = 10047;
-        NumFacesEnrolled num_faces_enrolled = 10048;
-        RoleHolder role_holder = 10049;
-        DangerousPermissionState dangerous_permission_state = 10050;
+        DebugElapsedClock debug_elapsed_clock = 10046 [(log_from_module) = "framework"];
+        DebugFailingElapsedClock debug_failing_elapsed_clock = 10047 [(log_from_module) = "framework"];
+        NumFacesEnrolled num_faces_enrolled = 10048 [(log_from_module) = "framework"];
+        RoleHolder role_holder = 10049 [(log_from_module) = "framework"];
+        DangerousPermissionState dangerous_permission_state = 10050 [(log_from_module) = "framework"];
         TrainInfo train_info = 10051;
-        TimeZoneDataInfo time_zone_data_info = 10052;
-        ExternalStorageInfo external_storage_info = 10053;
+        TimeZoneDataInfo time_zone_data_info = 10052 [(log_from_module) = "framework"];
+        ExternalStorageInfo external_storage_info = 10053 [(log_from_module) = "framework"];
         GpuStatsGlobalInfo gpu_stats_global_info = 10054;
         GpuStatsAppInfo gpu_stats_app_info = 10055;
-        SystemIonHeapSize system_ion_heap_size = 10056;
-        AppsOnExternalStorageInfo apps_on_external_storage_info = 10057;
-        FaceSettings face_settings = 10058;
-        CoolingDevice cooling_device = 10059;
-        AppOps app_ops = 10060;
-        ProcessSystemIonHeapSize process_system_ion_heap_size = 10061;
+        SystemIonHeapSize system_ion_heap_size = 10056 [(log_from_module) = "framework"];
+        AppsOnExternalStorageInfo apps_on_external_storage_info =
+                10057 [(log_from_module) = "framework"];
+        FaceSettings face_settings = 10058 [(log_from_module) = "framework"];
+        CoolingDevice cooling_device = 10059 [(log_from_module) = "framework"];
+        AppOps app_ops = 10060 [(log_from_module) = "framework"];
+        ProcessSystemIonHeapSize process_system_ion_heap_size =
+                10061 [(log_from_module) = "framework"];
     }
 
     // DO NOT USE field numbers above 100,000 in AOSP.
