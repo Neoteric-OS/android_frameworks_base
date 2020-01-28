@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90fcd243_49513ade",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-28T21:59:35Z",
+      "side": 1,
+      "message": "So previously this was named LegacyVpnRunner which made it clear that this is for Settings VPN, and not something used for regular VPNs.\n\nVpnRunner however is quite generic - and makes it sound like something that would be used for all VPN types, which IIUC is not the case - VpnRunner is something only meant to be used for platform VPNs. \n\nConsider adding a note/javadoc comment or rename this variable to something along the lines of platform VPN type.",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 21
+      },
+      "revId": "62a4700ad0c4d4865a63ef6ed88cf8f702b1229c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c39efc1_a9b1b5ab",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 1515,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-28T21:59:35Z",
+      "side": 1,
+      "message": "Comments like these are highly appreciated. It helps reviewers and readers of the code to stop worrying about whether the code path is missing.\nThanks for adding this.",
+      "range": {
+        "startLine": 1515,
+        "startChar": 24,
+        "endLine": 1515,
+        "endChar": 80
+      },
+      "revId": "62a4700ad0c4d4865a63ef6ed88cf8f702b1229c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dee039c7_47d6a431",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 1911,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-28T21:59:35Z",
+      "side": 1,
+      "message": "nit: drop \u0027s\u0027.\nassuming there is going to be only one VpnRunner per Vpn instance?",
+      "range": {
+        "startLine": 1911,
+        "startChar": 23,
+        "endLine": 1911,
+        "endChar": 24
+      },
+      "revId": "62a4700ad0c4d4865a63ef6ed88cf8f702b1229c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93141e2_258787e6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 1913,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-28T21:59:35Z",
+      "side": 1,
+      "message": "style nit: slightly better to return early if !isSettingsVpn().\nThat ways there is one less level of nesting which improves readability.",
+      "range": {
+        "startLine": 1913,
+        "startChar": 8,
+        "endLine": 1913,
+        "endChar": 28
+      },
+      "revId": "62a4700ad0c4d4865a63ef6ed88cf8f702b1229c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d153dc4_13b63462",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 1914,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-28T21:59:35Z",
+      "side": 1,
+      "message": "Can\u0027t we rely on just isSettingsVpn? In my mind, SettingsVPN is same as Legacy VPN. If that\u0027s not the case, then we should add a note to isSettingsVpn method.\n\nIf either of them is fine then I\u0027m left wondering which one is the *most* correct. Would be better to pick one and use that in all places.",
+      "range": {
+        "startLine": 1914,
+        "startChar": 40,
+        "endLine": 1914,
+        "endChar": 77
+      },
+      "revId": "62a4700ad0c4d4865a63ef6ed88cf8f702b1229c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9495014_78dce255",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 1924,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-28T21:59:35Z",
+      "side": 1,
+      "message": "is there a plan to address this in a later CL?",
+      "range": {
+        "startLine": 1923,
+        "startChar": 23,
+        "endLine": 1924,
+        "endChar": 81
+      },
+      "revId": "62a4700ad0c4d4865a63ef6ed88cf8f702b1229c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
