@@ -1,7 +1,7 @@
 #!/bin/bash
 LOCAL_DIR="$( dirname "${BASH_SOURCE}" )"
 
-if git branch -vv | grep -q -P "^\*[^\[]+\[aosp/"; then
+if git branch -vv -no-color | grep -q -P "^\*[^\[]+\[aosp/"; then
     # Change appears to be in AOSP
     exit 0
 else
