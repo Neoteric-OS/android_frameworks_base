@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d8fe41f_36d01999",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-01-28T15:50:22Z",
+      "side": 1,
+      "message": "If Result.error() had a more granular error code, it would be easier to log error in one place, e.g. here.",
+      "revId": "d7c2d417fbbc5f9945d7c047544f35628c228fb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b49e026_5d2433f5",
+        "filename": "services/core/java/com/android/server/om/Result.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-01-28T15:50:22Z",
+      "side": 1,
+      "message": "A more granular set of error codes?",
+      "revId": "d7c2d417fbbc5f9945d7c047544f35628c228fb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
