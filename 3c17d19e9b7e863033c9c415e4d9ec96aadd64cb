@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "590f1ff9_f07cad10",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4303,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2020-01-28T00:29:06Z",
+      "side": 1,
+      "message": "Please, note that telephony internal resources are being moved to frameworks/opt/telephony/res directory. So, it\u0027s very likely that this will need to be moved there by the time you rebase the change.\n\nSimilarly, the change in symbols.xml won\u0027t be necessary.",
+      "range": {
+        "startLine": 4303,
+        "startChar": 16,
+        "endLine": 4303,
+        "endChar": 45
+      },
+      "revId": "3c17d19e9b7e863033c9c415e4d9ec96aadd64cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
