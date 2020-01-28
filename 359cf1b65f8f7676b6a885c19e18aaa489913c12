@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58739b00_ffe14c30",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 1985,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-28T22:01:31Z",
+      "side": 1,
+      "message": "I\u0027m not sure what is this being referenced to?",
+      "range": {
+        "startLine": 1985,
+        "startChar": 34,
+        "endLine": 1985,
+        "endChar": 58
+      },
+      "revId": "359cf1b65f8f7676b6a885c19e18aaa489913c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
