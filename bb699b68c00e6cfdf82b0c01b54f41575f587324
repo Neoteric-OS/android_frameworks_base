@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ebb665e_4b75de79",
+        "filename": "tools/stats_log_api_gen/java_writer_q.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2020-01-29T23:41:16Z",
+      "side": 1,
+      "message": "This would be way better as a runtime flag.  Do you think you could file a bug to change that for after we\u0027re past IC.\n\nAlso, for next time, the better way to write this is \n\n#if STATS_SCHEMA_LEGACY\n\nThat lets someone define it to 0 and have it be false.  Sometimes the build flags are easier to handle that way.  It\u0027s rare but when it matters it\u0027s easier than undefining it.",
+      "revId": "bb699b68c00e6cfdf82b0c01b54f41575f587324",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
