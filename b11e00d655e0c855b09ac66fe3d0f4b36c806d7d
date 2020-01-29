@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d448cf_959a5b42",
+        "filename": "tools/stats_log_api_gen/java_writer_q.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2020-01-29T20:10:45Z",
+      "side": 0,
+      "message": "why was this hidden under the legacy flag? wouldnt we have needed it for the QLogger stuff?\n\nOr, does this just call a bunch of helper functions that are also shared by thee QLogger stuff?\nIn either case, can you add some more comments about code flow in general?",
+      "revId": "b11e00d655e0c855b09ac66fe3d0f4b36c806d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
