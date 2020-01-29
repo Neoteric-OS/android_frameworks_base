@@ -22,6 +22,30 @@
       "revId": "81511e2b339533abaf5b6b6cbac0f9372d7f0fa4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5232dc6f_599fcd6b",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2020-01-29T02:12:22Z",
+      "side": 1,
+      "message": "This is really to just avoid having to think about how the surrounding code formats continuation lines, since inlining them would put us over 100 cols, and we don\u0027t have clang-format here. (having said that, I just noticed a mis-indentation below).",
+      "parentUuid": "c3f429a9_ec28d93f",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "81511e2b339533abaf5b6b6cbac0f9372d7f0fa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
