@@ -16,6 +16,24 @@
       "revId": "b11e00d655e0c855b09ac66fe3d0f4b36c806d7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b86eb176_76106371",
+        "filename": "tools/stats_log_api_gen/java_writer_q.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1431413
+      },
+      "writtenOn": "2020-01-29T22:28:09Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "05d448cf_959a5b42",
+      "revId": "b11e00d655e0c855b09ac66fe3d0f4b36c806d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
