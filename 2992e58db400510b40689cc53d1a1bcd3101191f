@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "680fbaaa_c67e0a4c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6396,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-29T10:15:39Z",
+      "side": 1,
+      "message": "Dumpsys doesn\u0027t make sense at all for this, because it\u0027s transitional state. There is nothing to print when a dumpsys is requested.\n\nAs for logcat I am sympathetic to the argument but this is meant to help debug and not to be printed all the time and surely not in production, which is why I thought this was simple and effective.\nMade this debugString() and made a different toString(), tell me if you like it better. But I think personally I prefer patchset 6.",
+      "parentUuid": "542bbb85_312b7cdf",
+      "range": {
+        "startLine": 6396,
+        "startChar": 22,
+        "endLine": 6396,
+        "endChar": 30
+      },
+      "revId": "2992e58db400510b40689cc53d1a1bcd3101191f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8eef7078_beb84a9e",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2019-12-26T03:31:20Z",
       "side": 1,
       "message": "1. It doesn\u0027t look not very idiomatic to me.\nmaybe a toShortString() inside NAI class?\n2. Also be noticed that we have a naiToString() in this class.\nMaybe we want to reuse them?",
+      "range": {
+        "startLine": 7402,
+        "startChar": 26,
+        "endLine": 7402,
+        "endChar": 43
+      },
+      "revId": "2992e58db400510b40689cc53d1a1bcd3101191f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "270e5de3_ca659a2a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7402,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-29T10:15:39Z",
+      "side": 1,
+      "message": "Agreed with the objections but here are some things to modulate them :\n• NAI#toShortString is great to call but it can\u0027t handle the null case (if only we had Kotlin...)\n• A method in NAI would make it available to everyone who can see NAI, while this is private. Not that there is much of a difference in practice. But really, NAI#name exists and is called all over the place.\n\nSo I moved the implementation of this method into NAI#toShortString and offered a public static method there to deal with nulls. I removed naiToString() also NAI#name(), both of which are not very useful in practice and should be moved to this.",
+      "parentUuid": "8eef7078_beb84a9e",
       "range": {
         "startLine": 7402,
         "startChar": 26,
