@@ -18,7 +18,6 @@ package android.app.timezonedetector;
 
 import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
-import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.content.Context;
 import android.os.RemoteException;
@@ -32,7 +31,6 @@ import android.util.Log;
  * <p>This class is non-final for mockito.
  * @hide
  */
-@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
 @SystemService(Context.TIME_ZONE_DETECTOR_SERVICE)
 public class TimeZoneDetector {
     private static final String TAG = "timezonedetector.TimeZoneDetector";
@@ -53,7 +51,6 @@ public class TimeZoneDetector {
      *
      * @hide
      */
-    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     @RequiresPermission(android.Manifest.permission.SUGGEST_PHONE_TIME_AND_ZONE)
     public void suggestPhoneTimeZone(@NonNull PhoneTimeZoneSuggestion timeZoneSuggestion) {
         if (DEBUG) {
