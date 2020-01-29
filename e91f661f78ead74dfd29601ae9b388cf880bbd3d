@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29d38ea1_11cc1cea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-29T10:13:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85c5105f_6a2627b3",
+      "range": {
+        "startLine": 9,
+        "startChar": 32,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "e91f661f78ead74dfd29601ae9b388cf880bbd3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9518ad42_dec08dcb",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 10
@@ -120,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "e372a9e8_0b8c341f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 6255,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-29T10:13:50Z",
+      "side": 1,
+      "message": "Thanks for noticing this. Let me add a few interesting bits.\n• I think it\u0027s much easier to understand if makeDefault(null) simply makes it so that there is no default network. This was the intention here, but as you point out it doesn\u0027t work because it won\u0027t tell netd about this. The new patchset also takes care of clearing other properties like the proxy.\n• You are right that the loss of the TRUSTED capability is the only case where it can happen in practice, but really it doesn\u0027t matter what causes this to happen : makeDefault(null) should just make it so that there is no default network.\n• I don\u0027t think changing A28 is the right thing to do here, because as of A28 the code path is still such that mDefaultNetworkNai goes to null in rematchNetworkAndRequests, so this is just never called. In other words, the bug is already present but difficult to fix in A28. I prefer to fix it in this patchset, because here is where I\u0027m letting makeDefault make a previously-default network non-default.\n　→ if you have trouble believing the old code also had the bug, do observe that the only way to remove the routing is to call setDefaultNetId(NETID_UNSET) or clearDefaultNetId(), but there was no code path that could do that.\n\nAs for the usage of getOrElse(), it\u0027s simple : now the code handle the case where the old network is not null but the new one is, so I simply removed it. I had to change a little bit how the reassignment is obtained to distinguish between a reassignment to null and no reassignment. See the new patchset.",
+      "parentUuid": "8c4d7c6c_9ed59914",
+      "range": {
+        "startLine": 6255,
+        "startChar": 17,
+        "endLine": 6255,
+        "endChar": 28
+      },
+      "revId": "e91f661f78ead74dfd29601ae9b388cf880bbd3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ae618af_73a0dc5c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 10
@@ -164,6 +212,30 @@
       "revId": "e91f661f78ead74dfd29601ae9b388cf880bbd3d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd1650f_4228ddb0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 6263,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-29T10:13:50Z",
+      "side": 1,
+      "message": "Called clearDefaultNetId when null.\nAnother option would be to call\n\n  setDefaultNetId(newNetwork !\u003d null ? newNetwork.network.netId : UNSET_NETID);\n\n...since setDefaultNetId(UNSET_NETID) reads to me as it clears the default.\nKept clearDefaultNetId for now as it is the dedicated netd method, so I think we should use this, but if someone feels strongly that we should use set(UNSET_NETID) instead I\u0027m happy to change it.\n\n\nAs for the name, I think makeDefault(null) makes sense and should just make it so that there is no default network. If you feel strongly it should be named something else I don\u0027t mind renaming it.",
+      "parentUuid": "0863c4f1_b9ce3bd4",
+      "range": {
+        "startLine": 6261,
+        "startChar": 8,
+        "endLine": 6263,
+        "endChar": 31
+      },
+      "revId": "e91f661f78ead74dfd29601ae9b388cf880bbd3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
