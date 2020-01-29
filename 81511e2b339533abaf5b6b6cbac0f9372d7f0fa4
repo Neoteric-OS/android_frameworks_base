@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f429a9_ec28d93f",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2020-01-29T02:01:50Z",
+      "side": 1,
+      "message": "just inline these since they\u0027re each only used once?",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "81511e2b339533abaf5b6b6cbac0f9372d7f0fa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
