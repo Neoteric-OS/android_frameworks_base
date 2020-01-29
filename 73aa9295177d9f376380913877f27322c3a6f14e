@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b43c28c_4df7e23e",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1005967
+      },
+      "writtenOn": "2020-01-29T21:31:42Z",
+      "side": 1,
+      "message": "This comment does not match the code.",
+      "revId": "73aa9295177d9f376380913877f27322c3a6f14e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d128e738_617cfc6e",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1908,
+      "author": {
+        "id": 1005967
+      },
+      "writtenOn": "2020-01-29T21:31:42Z",
+      "side": 1,
+      "message": "this depends on a CL that is not in the dependency chain",
+      "revId": "73aa9295177d9f376380913877f27322c3a6f14e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a9c02f_203a5b32",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 1005967
+      },
+      "writtenOn": "2020-01-29T21:31:42Z",
+      "side": 1,
+      "message": "Should we add similar appcompat feature gating for MTE ASYNC in apps, or do you want to wait until later? I assume we could define a feature that, for now, can only be enabled manually and not by target api level.",
+      "revId": "73aa9295177d9f376380913877f27322c3a6f14e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
