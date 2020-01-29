@@ -673,8 +673,13 @@ public class SyntheticPasswordManager {
         }
         saveState(PASSWORD_DATA_NAME, pwd.toBytes(), handle, userId);
 
-        createSyntheticPasswordBlob(handle, SYNTHETIC_PASSWORD_PASSWORD_BASED, authToken,
-                applicationId, sid, userId);
+        try {
+            createSyntheticPasswordBlob(handle, SYNTHETIC_PASSWORD_PASSWORD_BASED, authToken,
+                    applicationId, sid, userId);
+        } catch (Exception e) {
+            Log.e(TAG, "sp_blob create failed");
+            throw new RuntimeException("sp_blob create failed");
+        }
         return handle;
     }
 
