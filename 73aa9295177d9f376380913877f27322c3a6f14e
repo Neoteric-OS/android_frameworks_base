@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a20fa17c_2eb69263",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1067098
+      },
+      "writtenOn": "2020-01-29T22:41:37Z",
+      "side": 1,
+      "message": "Will add \"...on hardware that supports memory tagging\".",
+      "parentUuid": "4b43c28c_4df7e23e",
+      "revId": "73aa9295177d9f376380913877f27322c3a6f14e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d128e738_617cfc6e",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "91ec32b7_92d90709",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1908,
+      "author": {
+        "id": 1067098
+      },
+      "writtenOn": "2020-01-29T22:41:37Z",
+      "side": 1,
+      "message": "Yes, although that CL will need to be rewritten anyway to incorporate the changes from internal review. Maybe I\u0027ll just split out the mte_supported() bit into a separate CL.",
+      "parentUuid": "d128e738_617cfc6e",
+      "revId": "73aa9295177d9f376380913877f27322c3a6f14e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29a9c02f_203a5b32",
         "filename": "services/core/java/com/android/server/am/ProcessList.java",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2020-01-29T21:31:42Z",
       "side": 1,
       "message": "Should we add similar appcompat feature gating for MTE ASYNC in apps, or do you want to wait until later? I assume we could define a feature that, for now, can only be enabled manually and not by target api level.",
+      "revId": "73aa9295177d9f376380913877f27322c3a6f14e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956b42cd_cff7a5b5",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 1067098
+      },
+      "writtenOn": "2020-01-29T22:41:37Z",
+      "side": 1,
+      "message": "It seems reasonable to add a feature for it now that is always disabled by default. From https://cs.android.com/android/platform/superproject/+/master:tools/platform-compat/javatest/android/processor/compat/changeid/ChangeIdProcessorTest.java;l\u003d97 it looks like I should be able to do that with a @Disabled annotation.",
+      "parentUuid": "29a9c02f_203a5b32",
       "revId": "73aa9295177d9f376380913877f27322c3a6f14e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
