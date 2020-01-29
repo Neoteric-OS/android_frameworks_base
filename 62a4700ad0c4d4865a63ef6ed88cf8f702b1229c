@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e980b02_c102c78e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T00:47:48Z",
+      "side": 1,
+      "message": "Added a comment what this supports.\n\n(Tacking this on so we can look back in future) In terms of renaming this, it\u0027s a little hard, since this is a top-level interface for the following types of VPNs:\n\n1. LegacyVpnRunner\n2. PlatformVpnRunner\n  a. Ikev2VpnRunner\n  b. (In future) WireguardVpnRunner\n\nSo unfortunately, the concept of \"PlatformVpn\" refers to the new VPN API and structure, and has a specific meaning.",
+      "parentUuid": "90fcd243_49513ade",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 21
+      },
+      "revId": "62a4700ad0c4d4865a63ef6ed88cf8f702b1229c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c39efc1_a9b1b5ab",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 53
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "4ae6d316_61f48f9d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 1911,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T00:47:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dee039c7_47d6a431",
+      "range": {
+        "startLine": 1911,
+        "startChar": 23,
+        "endLine": 1911,
+        "endChar": 24
+      },
+      "revId": "62a4700ad0c4d4865a63ef6ed88cf8f702b1229c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f93141e2_258787e6",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 53
@@ -91,6 +139,30 @@
       "revId": "62a4700ad0c4d4865a63ef6ed88cf8f702b1229c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89400b9c_5f556546",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 1913,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T00:47:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f93141e2_258787e6",
+      "range": {
+        "startLine": 1913,
+        "startChar": 8,
+        "endLine": 1913,
+        "endChar": 28
+      },
+      "revId": "62a4700ad0c4d4865a63ef6ed88cf8f702b1229c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "c5aa7210_b5af4cf7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 1914,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T00:47:48Z",
+      "side": 1,
+      "message": "They\u0027re not exactly the same. SetingsVpn is anything that is run from the Settings app, and LegacyVpn is always a subset of SettingVpn. However, the IKEv2/IPsec VPN can also be configured and run via the Settings UI, so it has some overlap (but is not a subset of).\n\n(If this doesn\u0027t come out properly, copy/paste into a fixed-type font)\n+------------------+-------------------+\n|   Settings VPN   |   App-based VPN   |\n+------------------+-------------------+\n| LegacyVpn | PlatformVpn | VpnService |\n|           |  (Ikev2Vpn) |            |\n+-----------+-------------+------------+\n\nLegacyVpn has external processes that it has to monitor, and as such it requires some additional locking and hackery to make sure that it works properly. Since the new Platform VPNs don\u0027t have those limitations, this is used to prevent unnecessary locking.",
+      "parentUuid": "2d153dc4_13b63462",
+      "range": {
+        "startLine": 1914,
+        "startChar": 40,
+        "endLine": 1914,
+        "endChar": 77
+      },
+      "revId": "62a4700ad0c4d4865a63ef6ed88cf8f702b1229c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9495014_78dce255",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 53
@@ -128,6 +224,30 @@
       "writtenOn": "2020-01-28T21:59:35Z",
       "side": 1,
       "message": "is there a plan to address this in a later CL?",
+      "range": {
+        "startLine": 1923,
+        "startChar": 23,
+        "endLine": 1924,
+        "endChar": 81
+      },
+      "revId": "62a4700ad0c4d4865a63ef6ed88cf8f702b1229c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79d5db9_4313bd8e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 1924,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T00:47:48Z",
+      "side": 1,
+      "message": "No; this is pre-existing behavior, and I\u0027m not planning to touch LegacyVpnRunner short of killing it in a year or two",
+      "parentUuid": "c9495014_78dce255",
       "range": {
         "startLine": 1923,
         "startChar": 23,
