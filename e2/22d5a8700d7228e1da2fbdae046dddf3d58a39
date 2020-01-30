@@ -1,0 +1,11 @@
+Presubmit-Ready+1: Andrei-Valentin Onea <andreionea@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Andrei-Valentin Onea <andreionea@google.com>
+Code-Review+1: chapin <chapin@google.com>
+Code-Review+2: Chad Brubaker <cbrubaker@google.com>
+Autosubmit+1: chapin <chapin@google.com>
+Submitted-by: Andrei-Valentin Onea <andreionea@google.com>
+Submitted-at: Thu, 30 Jan 2020 22:37:00 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1222360
+Project: platform/frameworks/base
+Branch: refs/heads/master
