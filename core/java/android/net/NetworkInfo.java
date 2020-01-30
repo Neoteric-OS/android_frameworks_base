@@ -525,7 +525,7 @@ public class NetworkInfo implements Parcelable {
     @Override
     public String toString() {
         synchronized (this) {
-            StringBuilder builder = new StringBuilder("[");
+            final StringBuilder builder = new StringBuilder("[");
             builder.append("type: ").append(getTypeName()).append("[").append(getSubtypeName()).
             append("], state: ").append(mState).append("/").append(mDetailedState).
             append(", reason: ").append(mReason == null ? "(unspecified)" : mReason).
@@ -534,6 +534,25 @@ public class NetworkInfo implements Parcelable {
             append(", available: ").append(mIsAvailable).
             append(", roaming: ").append(mIsRoaming).
             append("]");
+            return builder.toString();
+        }
+    }
+
+    /**
+     * Returns a brief summary string suitable for debugging.
+     * @hide
+     */
+    public String toShortString() {
+        synchronized (this) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(getTypeName()).append("[").append(getSubtypeName()).append("] ");
+            builder.append(mDetailedState);
+            if (mIsRoaming) {
+                builder.append(" ROAMING");
+            }
+            if (mExtraInfo != null) {
+                builder.append(" extra: ").append(mExtraInfo);
+            }
             return builder.toString();
         }
     }
