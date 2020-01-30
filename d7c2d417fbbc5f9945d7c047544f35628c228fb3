@@ -33,6 +33,41 @@
       "revId": "d7c2d417fbbc5f9945d7c047544f35628c228fb3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9f7604_69271e74",
+        "filename": "services/core/java/com/android/server/om/Result.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2020-01-30T19:21:06Z",
+      "side": 1,
+      "message": "I would actually prefer if we got rid of error codes entirely in favor of String messages. So we can explain what went wrong.",
+      "parentUuid": "2b49e026_5d2433f5",
+      "revId": "d7c2d417fbbc5f9945d7c047544f35628c228fb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ed746d_a7a10f4f",
+        "filename": "services/core/java/com/android/server/om/Result.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2020-01-30T19:21:06Z",
+      "side": 1,
+      "message": "\"hasValue\" may be a little too generic, since this is really an OMS specific class. Maybe something like \"shouldUpdateOverlays\" or \"haveOverlaysChanged\" or something.\n\nAs it stands, if we ever do wrapping of methods that themselves delegate into methods that call result methods, it\u0027s possible to get confused with hasValue vs isOk as indicating success.",
+      "revId": "d7c2d417fbbc5f9945d7c047544f35628c228fb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
