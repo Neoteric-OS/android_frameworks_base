@@ -48,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "3a466b5c_7ab392a0",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:25:52Z",
+      "side": 1,
+      "message": "Please make this function static and pass the context, otherwise you are relying on the fact that mContext is initialized before this is called which is very unclear.",
+      "range": {
+        "startLine": 800,
+        "startChar": 43,
+        "endLine": 800,
+        "endChar": 65
+      },
+      "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2159f33f_42fb5bbc",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:25:52Z",
+      "side": 1,
+      "message": "Can you please give some insight in comments (either here or on the member, or in the place it\u0027s used) explaining when/how this can happen ?",
+      "range": {
+        "startLine": 800,
+        "startChar": 5,
+        "endLine": 800,
+        "endChar": 13
+      },
+      "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b45dba2_8da3a1fc",
         "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
         "patchSetId": 5
@@ -64,6 +110,29 @@
         "startChar": 20,
         "endLine": 810,
         "endChar": 47
+      },
+      "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6cc01f9_a738a9b9",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:25:52Z",
+      "side": 1,
+      "message": "nit : did you mean \"with\" instead of wifi ?",
+      "range": {
+        "startLine": 918,
+        "startChar": 68,
+        "endLine": 918,
+        "endChar": 76
       },
       "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
