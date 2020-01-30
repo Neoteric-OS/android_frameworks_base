@@ -34,6 +34,24 @@
       "revId": "6fdbdcde5832562a50e10502494d6c08f424c3df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3459998_71c6bb57",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-01-30T18:37:08Z",
+      "side": 1,
+      "message": "Actually, it should\u0027ve been added to PlatformCompatChangeRule; I\u0027ve got an almost identical CL pending https://r.android.com/1219718",
+      "parentUuid": "5957efe3_23ac4a46",
+      "revId": "6fdbdcde5832562a50e10502494d6c08f424c3df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
