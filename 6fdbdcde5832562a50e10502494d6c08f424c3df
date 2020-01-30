@@ -16,6 +16,24 @@
       "revId": "6fdbdcde5832562a50e10502494d6c08f424c3df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5957efe3_23ac4a46",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2020-01-30T18:35:02Z",
+      "side": 1,
+      "message": "I\u0027d prefer that go into another change as I don\u0027t see any tests trying to adopt it.",
+      "parentUuid": "fdbce13b_f5b30a25",
+      "revId": "6fdbdcde5832562a50e10502494d6c08f424c3df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
