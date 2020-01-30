@@ -22,6 +22,76 @@
       "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "828a8cbd_0ab66670",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T05:30:49Z",
+      "side": 1,
+      "message": "I think this hunk is good. Anyone who wants to special-case \"TEST\" would have special-cased \"18\" instead.\nThe general outlook on deprecated stuff is correct but the network types tend to be a recurrent headache because a lot of things can\u0027t be made correct without supporting that old and deprecated API :(",
+      "parentUuid": "3658bdf4_54963335",
+      "range": {
+        "startLine": 864,
+        "startChar": 17,
+        "endLine": 864,
+        "endChar": 26
+      },
+      "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f932b13_cd63f05b",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T05:30:49Z",
+      "side": 1,
+      "message": "We are trying to move away from StringNetworkSpecifier as much as possible (see how we now finally have a public TelephonyNetworkSpecifier and how StringNetworkSpecifier has been removed from @SystemApi).\n\nCan we have a TestNetworkSpecifier for test networks ?\n\n(it it\u0027s a lot of work it can be done in another patch or even left as a TODO, but it feels like it\u0027s fairly small)",
+      "range": {
+        "startLine": 231,
+        "startChar": 44,
+        "endLine": 231,
+        "endChar": 66
+      },
+      "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921aa90e_bbef61a2",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T05:30:49Z",
+      "side": 1,
+      "message": "Other identities don\u0027t seem to accept an empty network ID to match them (see matchesWifi for example) ; is there any strong reason for this difference in semantics ? If not I would prefer we don\u0027t have this difference.",
+      "range": {
+        "startLine": 474,
+        "startChar": 29,
+        "endLine": 474,
+        "endChar": 36
+      },
+      "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
