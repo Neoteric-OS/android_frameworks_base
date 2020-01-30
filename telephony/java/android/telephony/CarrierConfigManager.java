@@ -3730,6 +3730,37 @@ public class CarrierConfigManager {
     public static final String KEY_MISSED_INCOMING_CALL_SMS_PATTERN_STRING_ARRAY =
             "missed_incoming_call_sms_pattern_string_array";
 
+    /**
+     * Where there is no preferred APN, specifies the carrier's default preferred APN.
+     * Specifies the {@link android.provider.Telephony.Carriers.APN} of the default preferred apn.
+     * @hide
+     */
+    public static final String KEY_DEFAULT_PREFERRED_APN_NAME_STRING =
+            "default_preferred_apn_name_string";
+
+    /**
+     * Flag indicating whether to use only the preferred apn for setup a packet data connection.
+     * APN with the same {@link android.provider.Telephony.Carriers.APN_SET_ID} as preferred APN is
+     * used too.
+     * When {@code true}, only the preferred apn and the APN with the same APN_SET_ID as preferred
+     * APN are used for setup a packet data connection.
+     * {@code false otherwise}.
+     * @hide
+     */
+    public static final String KEY_USE_PREFERRED_APN_ONLY_BOOL = "use_preferred_apn_only_bool";
+
+    /**
+     * Flag indicating whether to use dun apn when using Preset APN in roaming network.
+     *
+     * If {@code true}, dun apn is used when using Preset APN in roaming network.
+     * If {@code false}, dun apn is not used when using Preset APN in roaming network.
+     * Internet apn is used for tethering data connection instead of dun apn.
+     * The default value is true.
+     * @hide
+     */
+    public static final String KEY_USE_DUN_APN_WHEN_USING_PRESET_APN_IN_ROAMING_NETWORK_BOOL =
+            "use_dun_apn_when_using_preset_apn_in_roaming_network_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -4252,6 +4283,9 @@ public class CarrierConfigManager {
                 "ims:2", "cbs:2", "ia:2", "emergency:2", "mcx:3", "xcap:3"
         });
         sDefaults.putStringArray(KEY_MISSED_INCOMING_CALL_SMS_PATTERN_STRING_ARRAY, new String[0]);
+        sDefaults.putString(KEY_DEFAULT_PREFERRED_APN_NAME_STRING, "");
+        sDefaults.putBoolean(KEY_USE_PREFERRED_APN_ONLY_BOOL, false);
+        sDefaults.putBoolean(KEY_USE_DUN_APN_WHEN_USING_PRESET_APN_IN_ROAMING_NETWORK_BOOL, true);
     }
 
     /**
