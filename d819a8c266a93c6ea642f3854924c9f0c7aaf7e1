@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "332107e2_959a1bc2",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T07:34:03Z",
+      "side": 1,
+      "message": "@VisibleForTesting(visibility \u003d PACKAGE)",
+      "range": {
+        "startLine": 67,
+        "startChar": 9,
+        "endLine": 67,
+        "endChar": 26
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3cf478_e3c68aae",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T07:34:03Z",
+      "side": 1,
+      "message": "s/ze/zing/",
+      "range": {
+        "startLine": 79,
+        "startChar": 81,
+        "endLine": 79,
+        "endChar": 83
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1712742_0af62983",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T07:34:03Z",
+      "side": 1,
+      "message": "ISTM this can be protected. Also probably @VisibleForTesting.",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 14
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ced8dd2_a60d08f2",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T07:34:03Z",
+      "side": 1,
+      "message": "You might just crash here if the other object is a non-null instance of something other than DnsHeader.\n\nStandard idiom is :\n\n  if (o \u003d\u003d null || getClass() !\u003d o.getClass()) return false;\n\nOr if you really need to accept subclasses (which is generally discouraged but sometimes necessary) :\n\n  if (!(o instanceof DnsHeader)) return false;",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 48
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59458c0a_561aab97",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T07:34:03Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 254,
+        "startChar": 12,
+        "endLine": 254,
+        "endChar": 18
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5f519e_97e61eb5",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T07:34:03Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 255,
+        "startChar": 21,
+        "endLine": 255,
+        "endChar": 23
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7916a8_cc8f59f8",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T07:34:03Z",
+      "side": 1,
+      "message": "This will return the \"default character\" (typically \u0027?\u0027) for anything non-ascii. Do we want to check ? Do we want to throw ? Is a question mark fine ? Question mark is not even an allowed character in domain names, as are many of the characters you can pass to this method like space or symbols.",
+      "range": {
+        "startLine": 260,
+        "startChar": 32,
+        "endLine": 260,
+        "endChar": 40
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5b2b78_36c7b2dc",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T07:34:03Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 322,
+        "startChar": 12,
+        "endLine": 322,
+        "endChar": 21
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4878036e_168a7687",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T07:34:03Z",
+      "side": 1,
+      "message": "Also same comment as above",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 322,
+        "endChar": 48
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0996b9_627c297b",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T07:34:03Z",
+      "side": 1,
+      "message": "You don\u0027t need this if, the control won\u0027t enter the loop if it\u0027s \u003c\u003d 0",
+      "range": {
+        "startLine": 396,
+        "startChar": 12,
+        "endLine": 396,
+        "endChar": 28
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffcd2683_bec9c7c8",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T07:34:03Z",
+      "side": 1,
+      "message": "All the same comments",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 44
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135cbf96_39a01ea1",
+        "filename": "core/java/android/net/ParseException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T07:34:03Z",
+      "side": 1,
+      "message": "Should this be @TestApi ?",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 14
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a84544_923aa93d",
+        "filename": "tests/net/java/android/net/DnsPacketTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T07:34:03Z",
+      "side": 1,
+      "message": "If that\u0027s the way you\u0027re going to go I suggest you add a short comment on this class and its friends saying this is only here to let us reduce the visibility of the constructors to protected instead of public.\nBut do remember that as the class is public anyone can do that anyway, so maybe public is simpler.\n\nNot feeling strongly, leaving up to you",
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
