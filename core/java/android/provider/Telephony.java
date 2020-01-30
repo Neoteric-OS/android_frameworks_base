@@ -3948,8 +3948,7 @@ public final class Telephony {
 
         /**
          * The APN set id. When the user manually selects an APN or the framework sets an APN as
-         * preferred, all APNs with the same set id as the selected APN should be prioritized over
-         * APNs in other sets.
+         * preferred, the device can only use APNs with the same set id as the selected APN.
          * <p>Type: INTEGER</p>
          * @hide
          */
@@ -3958,8 +3957,7 @@ public final class Telephony {
 
         /**
          * Possible value for the {@link #APN_SET_ID} field. By default APNs will not belong to a
-         * set. If the user manually selects an APN without apn set id, there is no need to
-         * prioritize any specific APN set ids.
+         * set.
          * <p>Type: INTEGER</p>
          * @hide
          */
