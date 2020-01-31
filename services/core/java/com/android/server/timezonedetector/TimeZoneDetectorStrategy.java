@@ -172,12 +172,12 @@ public class TimeZoneDetectorStrategy {
     private final LocalLog mTimeZoneChangesLog = new LocalLog(30, false /* useLocalTimestamps */);
 
     /**
-     * A mapping from phoneId to a phone time zone suggestion. We typically expect one or two
-     * mappings: devices will have a small number of telephony devices and phoneIds are assumed to
+     * A mapping from slotId to a phone time zone suggestion. We typically expect one or two
+     * mappings: devices will have a small number of telephony devices and slotIds are assumed to
      * be stable.
      */
     @GuardedBy("this")
-    private ArrayMapWithHistory<Integer, QualifiedPhoneTimeZoneSuggestion> mSuggestionByPhoneId =
+    private ArrayMapWithHistory<Integer, QualifiedPhoneTimeZoneSuggestion> mSuggestionBySlotId =
             new ArrayMapWithHistory<>(KEEP_PHONE_SUGGESTION_HISTORY_SIZE);
 
     /**
@@ -205,7 +205,7 @@ public class TimeZoneDetectorStrategy {
     /**
      * Suggests a time zone for the device, or withdraws a previous suggestion if
      * {@link PhoneTimeZoneSuggestion#getZoneId()} is {@code null}. The suggestion is scoped to a
-     * specific {@link PhoneTimeZoneSuggestion#getPhoneId() phone}.
+     * specific {@link PhoneTimeZoneSuggestion#getSlotId() phone}.
      * See {@link PhoneTimeZoneSuggestion} for an explanation of the metadata associated with a
      * suggestion. The strategy uses suggestions to decide whether to modify the device's time zone
      * setting and what to set it to.
@@ -221,8 +221,8 @@ public class TimeZoneDetectorStrategy {
         QualifiedPhoneTimeZoneSuggestion scoredSuggestion =
                 new QualifiedPhoneTimeZoneSuggestion(suggestion, score);
 
-        // Store the suggestion against the correct phoneId.
-        mSuggestionByPhoneId.put(suggestion.getPhoneId(), scoredSuggestion);
+        // Store the suggestion against the correct slotId.
+        mSuggestionBySlotId.put(suggestion.getSlotId(), scoredSuggestion);
 
         // Now perform auto time zone detection. The new suggestion may be used to modify the time
         // zone setting.
@@ -384,8 +384,8 @@ public class TimeZoneDetectorStrategy {
         // and find the best. Note that we deliberately do not look at age: the caller can
         // rate-limit so age is not a strong indicator of confidence. Instead, the callers are
         // expected to withdraw suggestions they no longer have confidence in.
-        for (int i = 0; i < mSuggestionByPhoneId.size(); i++) {
-            QualifiedPhoneTimeZoneSuggestion candidateSuggestion = mSuggestionByPhoneId.valueAt(i);
+        for (int i = 0; i < mSuggestionBySlotId.size(); i++) {
+            QualifiedPhoneTimeZoneSuggestion candidateSuggestion = mSuggestionBySlotId.valueAt(i);
             if (candidateSuggestion == null) {
                 // Unexpected
                 continue;
@@ -396,10 +396,10 @@ public class TimeZoneDetectorStrategy {
             } else if (candidateSuggestion.score > bestSuggestion.score) {
                 bestSuggestion = candidateSuggestion;
             } else if (candidateSuggestion.score == bestSuggestion.score) {
-                // Tie! Use the suggestion with the lowest phoneId.
-                int candidatePhoneId = candidateSuggestion.suggestion.getPhoneId();
-                int bestPhoneId = bestSuggestion.suggestion.getPhoneId();
-                if (candidatePhoneId < bestPhoneId) {
+                // Tie! Use the suggestion with the lowest slotId.
+                int candidateSlotId = candidateSuggestion.suggestion.getSlotId();
+                int bestSlotId = bestSuggestion.suggestion.getSlotId();
+                if (candidateSlotId < bestSlotId) {
                     bestSuggestion = candidateSuggestion;
                 }
             }
@@ -455,7 +455,7 @@ public class TimeZoneDetectorStrategy {
 
         ipw.println("Phone suggestion history:");
         ipw.increaseIndent(); // level 2
-        mSuggestionByPhoneId.dump(ipw);
+        mSuggestionBySlotId.dump(ipw);
         ipw.decreaseIndent(); // level 2
         ipw.decreaseIndent(); // level 1
         ipw.flush();
@@ -465,8 +465,8 @@ public class TimeZoneDetectorStrategy {
      * A method used to inspect strategy state during tests. Not intended for general use.
      */
     @VisibleForTesting
-    public synchronized QualifiedPhoneTimeZoneSuggestion getLatestPhoneSuggestion(int phoneId) {
-        return mSuggestionByPhoneId.get(phoneId);
+    public synchronized QualifiedPhoneTimeZoneSuggestion getLatestPhoneSuggestion(int slotId) {
+        return mSuggestionBySlotId.get(slotId);
     }
 
     /**

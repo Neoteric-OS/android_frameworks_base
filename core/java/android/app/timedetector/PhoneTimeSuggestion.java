@@ -57,19 +57,19 @@ public final class PhoneTimeSuggestion implements Parcelable {
                 }
             };
 
-    private final int mPhoneId;
+    private final int mSlotId;
     @Nullable private final TimestampedValue<Long> mUtcTime;
     @Nullable private ArrayList<String> mDebugInfo;
 
     private PhoneTimeSuggestion(Builder builder) {
-        mPhoneId = builder.mPhoneId;
+        mSlotId = builder.mSlotId;
         mUtcTime = builder.mUtcTime;
         mDebugInfo = builder.mDebugInfo != null ? new ArrayList<>(builder.mDebugInfo) : null;
     }
 
     private static PhoneTimeSuggestion createFromParcel(Parcel in) {
-        int phoneId = in.readInt();
-        PhoneTimeSuggestion suggestion = new PhoneTimeSuggestion.Builder(phoneId)
+        int slotId = in.readInt();
+        PhoneTimeSuggestion suggestion = new PhoneTimeSuggestion.Builder(slotId)
                 .setUtcTime(in.readParcelable(null /* classLoader */))
                 .build();
         @SuppressWarnings("unchecked")
@@ -87,17 +87,17 @@ public final class PhoneTimeSuggestion implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeInt(mPhoneId);
+        dest.writeInt(mSlotId);
         dest.writeParcelable(mUtcTime, 0);
         dest.writeList(mDebugInfo);
     }
 
     /**
-     * Returns an identifier for the source of this suggestion. When a device has several "phones",
-     * i.e. sim slots or equivalent, it is used to identify which one.
+     * Returns an identifier for the source of this suggestion. When a device has several sim slots
+     * or equivalent, it is used to identify which one the suggestion is from.
      */
-    public int getPhoneId() {
-        return mPhoneId;
+    public int getSlotId() {
+        return mSlotId;
     }
 
     /**
@@ -152,19 +152,19 @@ public final class PhoneTimeSuggestion implements Parcelable {
             return false;
         }
         PhoneTimeSuggestion that = (PhoneTimeSuggestion) o;
-        return mPhoneId == that.mPhoneId
+        return mSlotId == that.mSlotId
                 && Objects.equals(mUtcTime, that.mUtcTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mPhoneId, mUtcTime);
+        return Objects.hash(mSlotId, mUtcTime);
     }
 
     @Override
     public String toString() {
         return "PhoneTimeSuggestion{"
-                + "mPhoneId='" + mPhoneId + '\''
+                + "mSlotId='" + mSlotId + '\''
                 + ", mUtcTime=" + mUtcTime
                 + ", mDebugInfo=" + mDebugInfo
                 + '}';
@@ -177,13 +177,13 @@ public final class PhoneTimeSuggestion implements Parcelable {
      */
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public static final class Builder {
-        private final int mPhoneId;
+        private final int mSlotId;
         @Nullable private TimestampedValue<Long> mUtcTime;
         @Nullable private List<String> mDebugInfo;
 
-        /** Creates a builder with the specified {@code phoneId}. */
-        public Builder(int phoneId) {
-            mPhoneId = phoneId;
+        /** Creates a builder with the specified {@code slotId}. */
+        public Builder(int slotId) {
+            mSlotId = slotId;
         }
 
         /** Returns the builder for call chaining. */
