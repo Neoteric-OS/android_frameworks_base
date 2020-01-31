@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b4e4d8c_0fecea53",
+        "filename": "api/module-lib-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-01-31T16:28:45Z",
+      "side": 1,
+      "message": "Maybe getSlotIndex? So it\u0027s consistent with all other APIs in current.txt.",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "d6c2424344db45524ff7c63e2712327280634876",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
