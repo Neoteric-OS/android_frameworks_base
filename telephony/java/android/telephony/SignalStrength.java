@@ -79,7 +79,10 @@ public class SignalStrength implements Parcelable {
     /* The type of signal measurement */
     private static final String MEASUREMENT_TYPE_RSCP = "rscp";
 
-    // timeStamp of signalStrength in nanoseconds since boot
+    /**
+     * timeStamp of signalStrength in nanoseconds since boot
+     * timeStamp is updated during construction of SignalStrength
+     */
     private long mTimestamp = Long.MAX_VALUE;
 
     CellSignalStrengthCdma mCdma;
