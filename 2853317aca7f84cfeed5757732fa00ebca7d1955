@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "440808f0_3642492c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-31T09:03:42Z",
+      "side": 1,
+      "message": "nit: I think the new patchset resolved b/146482072\nmaybe mention it if you like.\nNo strong opinion.",
+      "revId": "2853317aca7f84cfeed5757732fa00ebca7d1955",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9e0162_69969b5e",
+        "filename": "services/core/java/com/android/server/connectivity/LingerMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-31T09:03:42Z",
+      "side": 1,
+      "message": "IIUC this can be called with toNai is null.\nBut no notification will be shown for that case.\nMaybe we should say put up or dismiss?",
+      "range": {
+        "startLine": 212,
+        "startChar": 7,
+        "endLine": 212,
+        "endChar": 13
+      },
+      "revId": "2853317aca7f84cfeed5757732fa00ebca7d1955",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
