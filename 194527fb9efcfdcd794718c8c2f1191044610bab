@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c2111c6_7ffa1404",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 58
+      },
+      "lineNbr": 1924,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T05:16:44Z",
+      "side": 1,
+      "message": "That means legacy+platform ? Can we make this clearer ?\nAlso Locked because you need to call this with the instance lock held",
+      "range": {
+        "startLine": 1924,
+        "startChar": 20,
+        "endLine": 1924,
+        "endChar": 33
+      },
+      "revId": "194527fb9efcfdcd794718c8c2f1191044610bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
