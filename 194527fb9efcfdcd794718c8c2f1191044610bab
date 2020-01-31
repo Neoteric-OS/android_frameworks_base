@@ -46,6 +46,30 @@
       "revId": "194527fb9efcfdcd794718c8c2f1191044610bab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29ad565f_5ea67e55",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 58
+      },
+      "lineNbr": 1924,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T07:50:09Z",
+      "side": 1,
+      "message": "👍\nI wonder if there is a better name than \"SettingsVpn\" but I can\u0027t think of one. Maybe isLegacyOrPlatformVpnLocked\n\nFeel free to submit as is",
+      "parentUuid": "99f938d7_eff5967d",
+      "range": {
+        "startLine": 1924,
+        "startChar": 20,
+        "endLine": 1924,
+        "endChar": 33
+      },
+      "revId": "194527fb9efcfdcd794718c8c2f1191044610bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
