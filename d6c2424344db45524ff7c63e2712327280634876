@@ -22,6 +22,30 @@
       "revId": "d6c2424344db45524ff7c63e2712327280634876",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5700b7c_6852a204",
+        "filename": "api/module-lib-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-31T17:11:09Z",
+      "side": 1,
+      "message": "Good call. Done.",
+      "parentUuid": "2b4e4d8c_0fecea53",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "d6c2424344db45524ff7c63e2712327280634876",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
