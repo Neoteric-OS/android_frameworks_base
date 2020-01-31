@@ -1,0 +1,487 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "916ab349_9222a8b6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2021,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "standard naming for callbacks in onFoo rather than handleFoo",
+      "range": {
+        "startLine": 2021,
+        "startChar": 12,
+        "endLine": 2021,
+        "endChar": 19
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28bb7ea5_d20e7f76",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2068,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "Do we need to clean up anything ? This won\u0027t call handleSessionLost in l.2099.",
+      "range": {
+        "startLine": 2068,
+        "startChar": 20,
+        "endLine": 2068,
+        "endChar": 26
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eeb4f8c_bf63c00d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2086,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "Just to be sure : this may actually prevent this from working at all right ? Chances are it would work even if we use the globally configured DNS, but that\u0027s both wrong and not necessarily working right ?",
+      "range": {
+        "startLine": 2085,
+        "startChar": 0,
+        "endLine": 2086,
+        "endChar": 61
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd49c375_c7ce4138",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2094,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "Do platform DNS not have a managing dialog ?",
+      "range": {
+        "startLine": 2092,
+        "startChar": 23,
+        "endLine": 2094,
+        "endChar": 25
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba47969_f8572ee6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2126,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "Do you want to cut out a handleNetworkConnected method or something ?",
+      "range": {
+        "startLine": 2126,
+        "startChar": 28,
+        "endLine": 2126,
+        "endChar": 39
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163349b3_5b19d7ec",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2127,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "This is grabbing a lock and doing pretty long and heavy stuff on it, and doing that on the connectivity thread of the system. Could you make sure this is done somewhere where it doesn\u0027t do harm ?\n\nAlso a lot of this doesn\u0027t have to be done under lock. Setting the members certainly does have to, but opening a socket, building the params, all of that presumably can be done before and assigned to the member outside of the lock.",
+      "range": {
+        "startLine": 2127,
+        "startChar": 0,
+        "endLine": 2127,
+        "endChar": 45
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7593f3_0ede0126",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2194,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "Use registerDefaultNetworkCallback if what you want is to track the default network. This just looks like you copied the contents of the default request and if that ever changes in the future whoever changes it has no idea they also must update here.",
+      "range": {
+        "startLine": 2194,
+        "startChar": 46,
+        "endLine": 2194,
+        "endChar": 80
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6059ef0_68b9dbe7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2202,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "...say whom did that",
+      "range": {
+        "startLine": 2202,
+        "startChar": 23,
+        "endLine": 2202,
+        "endChar": 97
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c265e559_815bdf42",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2254,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "Should we tell netd about this ? We tell it when it comes online",
+      "range": {
+        "startLine": 2254,
+        "startChar": 16,
+        "endLine": 2254,
+        "endChar": 28
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e6265b_9ac8eddf",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2750,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "NonNull",
+      "range": {
+        "startLine": 2750,
+        "startChar": 72,
+        "endLine": 2750,
+        "endChar": 78
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da9ac370_d7a872c9",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2753,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "This sounds like we\u0027re only calling prepareInternal() for its side effect of stopping the runners, and that therefore stopping them should be done by a method called here and in prepareInternal. If we need to call prepareInternal also for other reasons then the comment needs to be amended.\n\nBut also, the only call here is in startVpnProfile immediately after we called prepare(), which calls prepareInternal if it succeeds (or is unnecessary in which case prepareInternal() should be a no-op), so why do we need to do this again ?",
+      "range": {
+        "startLine": 2751,
+        "startChar": 8,
+        "endLine": 2753,
+        "endChar": 37
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa8d6d0_0f2b73cb",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2771,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "Not feeling strongly but I kind of think we should not be adding new states to this old API. The \"reason\" field has been deprecated into oblivion, and the only states that make any kind of sense now are CONNECTING, CONNECTED and DISCONNECTED, so newly passing FAILED is probably not great.\n\nI suggest you just say updateState(DISCONNECTED, null /* deprecated */)",
+      "range": {
+        "startLine": 2771,
+        "startChar": 0,
+        "endLine": 2771,
+        "endChar": 83
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9ae11c_3d101a77",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2777,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "Don\u0027t we want to set it back to whatever value it had before this method was called ?",
+      "range": {
+        "startLine": 2777,
+        "startChar": 0,
+        "endLine": 2777,
+        "endChar": 27
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5cec55_87136b1f",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2798,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "wtf ? throw IllegalState ?",
+      "range": {
+        "startLine": 2798,
+        "startChar": 12,
+        "endLine": 2798,
+        "endChar": 18
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d3ce98_2601d927",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "See I find the above code MUCH easier to read than patchset 27, and I think here too you should just say\n\n  for (builder : asList(normal, aead)) {\n    builder.addDhGroup(2048)\n    builder.addDhGroup(1024)\n    builder.addPseudorandom(AES)\n    builder.addPseudorandom(HMAC)\n  }",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 183,
+        "endChar": 39
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6e3276_5ab0284d",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "Why do you need this class ?\nI know a lot of framework code needs wrappers for AIDL proxy objects but you have none of this here. Shouldn\u0027t the callback in Vpn just implement IkeSessionCallback directly ?",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 71
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92761ca6_1c1e63a8",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "Okay so now I see the answer to my previous question but shouldn\u0027t that inform the shape of the IKE callback ? Won\u0027t all users of the lib have to do something like this ? (also see the comment below, which if right changes things substantially)",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 60
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4226d277_f3ddd887",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "IIUC children sessions get closed on rekeys right ? But here you\u0027re killing off the whole thing ?",
+      "range": {
+        "startLine": 289,
+        "startChar": 23,
+        "endLine": 289,
+        "endChar": 40
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13893861_451ce143",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "go/avoidwe",
+      "range": {
+        "startLine": 306,
+        "startChar": 35,
+        "endLine": 306,
+        "endChar": 37
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d20a4f_5aabc734",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "Isn\u0027t something wrong with your code formatter ?",
+      "range": {
+        "startLine": 308,
+        "startChar": 12,
+        "endLine": 309,
+        "endChar": 25
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5994eb_6056face",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T06:23:23Z",
+      "side": 1,
+      "message": "Any differences to point out ? If not, should we expose something to help developers do this ?",
+      "range": {
+        "startLine": 314,
+        "startChar": 37,
+        "endLine": 314,
+        "endChar": 44
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
