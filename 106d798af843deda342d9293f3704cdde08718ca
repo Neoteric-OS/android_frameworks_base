@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96367c42_60f871d1",
+        "filename": "core/java/com/android/internal/app/AlertController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2020-01-31T18:58:34Z",
+      "side": 0,
+      "message": "Another null check that I don\u0027t think is necessary. mScrollView must be non-null after the setupContent() call above.",
+      "range": {
+        "startLine": 575,
+        "startChar": 12,
+        "endLine": 575,
+        "endChar": 38
+      },
+      "revId": "106d798af843deda342d9293f3704cdde08718ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

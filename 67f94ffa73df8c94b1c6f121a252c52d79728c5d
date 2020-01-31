@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5b485c00_34d45941",
+        "filename": "core/java/com/android/internal/app/AlertController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2020-01-31T18:58:34Z",
+      "side": 1,
+      "message": "These null checks would only be necessary if the dialog is handling keys before installContent() has been called, which shouldn\u0027t happen unless someone overrides AlertDialog.onCreate() without calling super.onCreate(). I wouldn\u0027t take this as indication that mScrollView can actually be null in correct usage of AlertDialog.",
+      "range": {
+        "startLine": 483,
+        "startChar": 0,
+        "endLine": 493,
+        "endChar": 5
+      },
+      "revId": "67f94ffa73df8c94b1c6f121a252c52d79728c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb638c40_72a75e72",
         "filename": "core/java/com/android/internal/app/AlertController.java",
         "patchSetId": 6
