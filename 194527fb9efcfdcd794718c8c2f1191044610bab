@@ -22,6 +22,30 @@
       "revId": "194527fb9efcfdcd794718c8c2f1191044610bab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f938d7_eff5967d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 58
+      },
+      "lineNbr": 1924,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-31T05:50:39Z",
+      "side": 1,
+      "message": "Done. Also fixed getLegacyVpnConfig that was accessing internal state (mConfig and mVpnRunner) without locks.",
+      "parentUuid": "9c2111c6_7ffa1404",
+      "range": {
+        "startLine": 1924,
+        "startChar": 20,
+        "endLine": 1924,
+        "endChar": 33
+      },
+      "revId": "194527fb9efcfdcd794718c8c2f1191044610bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
