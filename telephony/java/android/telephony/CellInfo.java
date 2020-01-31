@@ -178,18 +178,18 @@ public abstract class CellInfo implements Parcelable {
     /**
      * Approximate time this cell information was received from the modem.
      *
-     * @return a time stamp in nanos since boot.
+     * @return a time stamp in millis since boot.
      */
     @SuppressLint("MethodNameUnits")
-    public long getTimestampNanos() {
-        return mTimeStamp;
+    public long getTimestampMillis() {
+        return mTimeStamp / 1000000;
     }
 
     /**
      * Approximate time this cell information was received from the modem.
      *
      * @return a time stamp in nanos since boot.
-     * @deprecated Use {@link #getTimestampNanos} instead.
+     * @deprecated Use {@link #getTimestampMillis} instead.
      */
     @Deprecated
     public long getTimeStamp() {
