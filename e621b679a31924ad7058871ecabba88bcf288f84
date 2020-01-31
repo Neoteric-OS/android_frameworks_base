@@ -69,6 +69,30 @@
       "revId": "e621b679a31924ad7058871ecabba88bcf288f84",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d434464_8edbb7d3",
+        "filename": "packages/Tethering/common/TetheringLib/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-31T08:32:57Z",
+      "side": 1,
+      "message": "I prefer don\u0027t include library we don\u0027t use. But if there is suggested to put this together to use core_platform, I also fine if we have a comment to explain these and says framework-res are suggest to add although we don\u0027t use it.",
+      "parentUuid": "bb18593b_cf5703d1",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "e621b679a31924ad7058871ecabba88bcf288f84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
