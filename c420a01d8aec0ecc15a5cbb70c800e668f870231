@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f33a56c2_2bc49d50",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T03:26:51Z",
+      "side": 1,
+      "message": "I don\u0027t like the silent-failure characteristic of this ; is it complex to fix ? If all that\u0027s needed to add some mock NM callback in a central place, let\u0027s do that ; if you\u0027d need to change many tests, let\u0027s keep this.",
+      "revId": "c420a01d8aec0ecc15a5cbb70c800e668f870231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
