@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35857219_ce637e6b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T03:17:10Z",
+      "side": 1,
+      "message": "Nit : could you tell your autoformatter to respect the local style ? None of our code aligns arguments like this when they are this short.",
+      "range": {
+        "startLine": 2109,
+        "startChar": 15,
+        "endLine": 2110,
+        "endChar": 20
+      },
+      "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7fed7b_a4afee9f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 2763,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T03:17:10Z",
+      "side": 1,
+      "message": "If this is the only reason you\u0027re not reusing the message I remind you that the connectivity diagnostics handler runs on the same thread and is perfectly capable of getting the NAI from the netId",
+      "range": {
+        "startLine": 2763,
+        "startChar": 43,
+        "endLine": 2763,
+        "endChar": 46
+      },
+      "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d915f871_57df7e55",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 2955,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T03:17:10Z",
+      "side": 1,
+      "message": "Let\u0027s just call notifyNetworkTestedWithExtras(testResult, redirectUrl, SystemClock.elapsedRealtime(), null)",
+      "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c11571c_fab02408",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 2966,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T03:17:10Z",
+      "side": 1,
+      "message": "nullability on this arg",
+      "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc75a15_6c9142a2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 7435,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T03:17:10Z",
+      "side": 1,
+      "message": "I don\u0027t see the point of saying _WITH_EXTRAS considering there always are extra.\n\nI would just say EVENT_NETWORK_TESTED \u003d ConnectivityService.EVENT_NETWORK_TESTED, and you\u0027d simply send the same message to both handlers directly.",
+      "range": {
+        "startLine": 7435,
+        "startChar": 53,
+        "endLine": 7435,
+        "endChar": 65
+      },
+      "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b6e34d7_c12cb438",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 7632,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T03:17:10Z",
+      "side": 1,
+      "message": "Because the administrator uids must contain the owner UID I don\u0027t think you need to check this at all. If you think it\u0027s unclear a comment is fine.",
+      "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683ec8e9_b1771f5c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 7655,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T03:17:10Z",
+      "side": 1,
+      "message": "Just let the security exception be sent back to the caller. They are doing something wrong and they know it.",
+      "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "f51d61d9_958f4220",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T03:17:10Z",
+      "side": 1,
+      "message": "That\u0027s good. Thanks.",
+      "parentUuid": "ff70852d_b9a4a232",
+      "range": {
+        "startLine": 572,
+        "startChar": 22,
+        "endLine": 572,
+        "endChar": 42
+      },
+      "revId": "4eb54bcdbe19cff94e863a7142bca802b56c835e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4724276e_de8dc526",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 18
