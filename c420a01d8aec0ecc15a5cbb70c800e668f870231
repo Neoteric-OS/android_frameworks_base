@@ -16,6 +16,24 @@
       "revId": "c420a01d8aec0ecc15a5cbb70c800e668f870231",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6789ce56_09860b15",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-03T23:57:42Z",
+      "side": 1,
+      "message": "After reviewing the logic for mNmCallbacks, I see that mNmCallbacks is set in the constructor via makeNetworkAgent() so we don\u0027t need this check. Done.",
+      "parentUuid": "f33a56c2_2bc49d50",
+      "revId": "c420a01d8aec0ecc15a5cbb70c800e668f870231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
