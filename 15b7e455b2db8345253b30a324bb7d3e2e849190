@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c7b527d_de5846b3",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2021,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "916ab349_9222a8b6",
+      "range": {
+        "startLine": 2021,
+        "startChar": 12,
+        "endLine": 2021,
+        "endChar": 19
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28bb7ea5_d20e7f76",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-31T06:23:23Z",
       "side": 1,
       "message": "Do we need to clean up anything ? This won\u0027t call handleSessionLost in l.2099.",
+      "range": {
+        "startLine": 2068,
+        "startChar": 20,
+        "endLine": 2068,
+        "endChar": 26
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6482a4b4_0cc8d9da",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2068,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "If we\u0027re not on the currently active network, it means that the previous IKE session has been closed, and we can ignore this call on an outdated session.\n\nThis guards against the case where the phone connects to cell, and then while the IKE session is in negotiation, the phone connect to wifi, which becomes default. In this case, the IKE session for cell MIGHT be triggered (if kill() is not called in time), and the point of this code is to try to handle that gracefully",
+      "parentUuid": "28bb7ea5_d20e7f76",
       "range": {
         "startLine": 2068,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0901f489_dbd8235a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2086,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Yes; we\u0027re plumbing it through IKE right now, and once that is done we can fix this todo.\n\nIf a VPN doesn\u0027t specify any DNS-es, does it fall back to the global DNS?",
+      "parentUuid": "6eeb4f8c_bf63c00d",
+      "range": {
+        "startLine": 2085,
+        "startChar": 0,
+        "endLine": 2086,
+        "endChar": 61
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd49c375_c7ce4138",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -82,6 +154,30 @@
       "writtenOn": "2020-01-31T06:23:23Z",
       "side": 1,
       "message": "Do platform DNS not have a managing dialog ?",
+      "range": {
+        "startLine": 2092,
+        "startChar": 23,
+        "endLine": 2094,
+        "endChar": 25
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc728e7_1118e10e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2094,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Nope. Same with VpnService based VPNs. This intent is how Settings knows to update the \"Connecting/Connected/Timed out/etc\" for LegacyVpn at the moment. For VpnService, it\u0027s solely based on the NetworkAgent.",
+      "parentUuid": "cd49c375_c7ce4138",
       "range": {
         "startLine": 2092,
         "startChar": 23,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "51d0ba65_91a595ba",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2126,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Done. Moved the NetworkCallback to VpnIkev2Util as well",
+      "parentUuid": "3ba47969_f8572ee6",
+      "range": {
+        "startLine": 2126,
+        "startChar": 28,
+        "endLine": 2126,
+        "endChar": 39
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "163349b3_5b19d7ec",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -128,6 +248,30 @@
       "writtenOn": "2020-01-31T06:23:23Z",
       "side": 1,
       "message": "This is grabbing a lock and doing pretty long and heavy stuff on it, and doing that on the connectivity thread of the system. Could you make sure this is done somewhere where it doesn\u0027t do harm ?\n\nAlso a lot of this doesn\u0027t have to be done under lock. Setting the members certainly does have to, but opening a socket, building the params, all of that presumably can be done before and assigned to the member outside of the lock.",
+      "range": {
+        "startLine": 2127,
+        "startChar": 0,
+        "endLine": 2127,
+        "endChar": 45
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25cd820_3de9bf67",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2127,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Half-done: Moved the single-thread-executor tha IKE is going to use to a class member (shared across all IKE sessions), and am running on that to prevent blocking the CS thread.\n\nI think locking the whole block is safer, as if we do not, the following is possible (this is the edge case where we run up against IpSecService quota limits):\n\nAssume an encap socket quota of 1.\n1. Two networks come up in close succession, and each subsequent one becomes the default: NULL -\u003e Network A -\u003e Network B\n2. Encap socket created for A, pre-lock.\n3. Encap socket fails to be created for B, VPN fails.\n\nHowever, if the entire block is locked, the following succeeds:\n1. Two networks come up in close succession, and each subsequent one becomes the default: NULL -\u003e Network A -\u003e Network B\n2. A acquires lock, encap socket created for A, IKE session negotiation starts.\n3. B waits for lock, so does not create encap socket yet.\n4. A releases lock\n5. B acquires lock, kills A\u0027s IKE session, deallocates all resources\n6. B creates a new encap socket using just-freed resources.",
+      "parentUuid": "163349b3_5b19d7ec",
       "range": {
         "startLine": 2127,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "10bbafc3_48ebb418",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2194,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Changed.\n\nAhh, I see. I mistook the NetworkCapabilities generated by createDefaultNetworkCapabilitiesForUid() for TRACK_DEFAULT with the default network request.",
+      "parentUuid": "8e7593f3_0ede0126",
+      "range": {
+        "startLine": 2194,
+        "startChar": 46,
+        "endLine": 2194,
+        "endChar": 80
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6059ef0_68b9dbe7",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "bf755d7e_e852a396",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2202,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6059ef0_68b9dbe7",
+      "range": {
+        "startLine": 2202,
+        "startChar": 23,
+        "endLine": 2202,
+        "endChar": 97
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c265e559_815bdf42",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -197,6 +389,30 @@
       "writtenOn": "2020-01-31T06:23:23Z",
       "side": 1,
       "message": "Should we tell netd about this ? We tell it when it comes online",
+      "range": {
+        "startLine": 2254,
+        "startChar": 16,
+        "endLine": 2254,
+        "endChar": 28
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3946642e_9b64c8d6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2254,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "This calls into IpSecService, which goes to XfrmController in netd to delete the virtual interface. Also, there\u0027s no need for us to bring an interface down if it\u0027s being reset/deleted/killed anyways, while startup currently requires a two-stage create-then-bringup flow (in VPN, done in JNI, also done via two-stage process in TestNetworkManager)",
+      "parentUuid": "c265e559_815bdf42",
       "range": {
         "startLine": 2254,
         "startChar": 16,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "7a6dcc7c_79603aa7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2750,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29e6265b_9ac8eddf",
+      "range": {
+        "startLine": 2750,
+        "startChar": 72,
+        "endLine": 2750,
+        "endChar": 78
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da9ac370_d7a872c9",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -243,6 +483,30 @@
       "writtenOn": "2020-01-31T06:23:23Z",
       "side": 1,
       "message": "This sounds like we\u0027re only calling prepareInternal() for its side effect of stopping the runners, and that therefore stopping them should be done by a method called here and in prepareInternal. If we need to call prepareInternal also for other reasons then the comment needs to be amended.\n\nBut also, the only call here is in startVpnProfile immediately after we called prepare(), which calls prepareInternal if it succeeds (or is unnecessary in which case prepareInternal() should be a no-op), so why do we need to do this again ?",
+      "range": {
+        "startLine": 2751,
+        "startChar": 8,
+        "endLine": 2753,
+        "endChar": 37
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476e8b62_0460f988",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2753,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Updated the doc to specify that this ensures all VPNs are stopped. It\u0027s actually more for the always-on and settings VPN case, since that calls this directly without going through prepare().\n\nI\u0027d be happy to move it to a later CL when we actually need it if you\u0027d like.",
+      "parentUuid": "da9ac370_d7a872c9",
       "range": {
         "startLine": 2751,
         "startChar": 8,
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "8246ba49_b6bffd7f",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2771,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "I think DetailedState.FAILED has a different meaning to the Settings app than just DetailedState.DISCONNECTED.\n\nI\u0027m noticing that this is used for LegacyVpn, and when the state is set to DetailedState.FAILED, the status of the VPN is changed to \"Unsuccessful\", rather than \"Disconnected\" (which means the below catch block should also be FAILED)",
+      "parentUuid": "ffa8d6d0_0f2b73cb",
+      "range": {
+        "startLine": 2771,
+        "startChar": 0,
+        "endLine": 2771,
+        "endChar": 83
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e9ae11c_3d101a77",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -289,6 +577,30 @@
       "writtenOn": "2020-01-31T06:23:23Z",
       "side": 1,
       "message": "Don\u0027t we want to set it back to whatever value it had before this method was called ?",
+      "range": {
+        "startLine": 2777,
+        "startChar": 0,
+        "endLine": 2777,
+        "endChar": 27
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa53533_c9a7a444",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2777,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Since we\u0027ve called prepareInternal (either at the top of this method or via prepare()), any previous VPN is guaranteed to have been disconnected, and thus mConfig should also have been reset to null.",
+      "parentUuid": "5e9ae11c_3d101a77",
       "range": {
         "startLine": 2777,
         "startChar": 0,
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "5f6ac299_767fccf8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2798,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "My plan was that this method would be a no-op if apps called this while their profile was not active. Since they don\u0027t have a mechanism to officially know that their VPN is on (yet), throwing seemed like it may be unexpected.\n\nThoughts?",
+      "parentUuid": "ae5cec55_87136b1f",
+      "range": {
+        "startLine": 2798,
+        "startChar": 12,
+        "endLine": 2798,
+        "endChar": 18
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93d3ce98_2601d927",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 54
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "a2ff4536_efb3a221",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Done. Also changed ordering of algorithms to be based on a priority order.",
+      "parentUuid": "93d3ce98_2601d927",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 183,
+        "endChar": 39
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f6e3276_5ab0284d",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 54
@@ -358,6 +718,30 @@
       "writtenOn": "2020-01-31T06:23:23Z",
       "side": 1,
       "message": "Why do you need this class ?\nI know a lot of framework code needs wrappers for AIDL proxy objects but you have none of this here. Shouldn\u0027t the callback in Vpn just implement IkeSessionCallback directly ?",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 71
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a05395_af31f723",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "It can, it just adds boilerplate code. As per one of your previous comments, I\u0027m trying to pull out as much code as possible that doesn\u0027t rely on the VPN\u0027s internals (mConfig, mInterface, etc)",
+      "parentUuid": "7f6e3276_5ab0284d",
       "range": {
         "startLine": 232,
         "startChar": 0,
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "89330365_ba428f57",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Theoretically this can be inlined as seen a few patchsets back. This Impl class is primarily to try to separate out as much logic as possible from the VPN class as possible (that isn\u0027t reliant on VPN internals)",
+      "parentUuid": "92761ca6_1c1e63a8",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 60
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4226d277_f3ddd887",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 54
@@ -404,6 +812,30 @@
       "writtenOn": "2020-01-31T06:23:23Z",
       "side": 1,
       "message": "IIUC children sessions get closed on rekeys right ? But here you\u0027re killing off the whole thing ?",
+      "range": {
+        "startLine": 289,
+        "startChar": 23,
+        "endLine": 289,
+        "endChar": 40
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58cd723_9d4d473c",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Not quite. The concept of a \"Child Session\" is actually rekey-agnostic.\n\nA Child Session is an abstraction over the IPsec SA pairs, and survives rekeys, while the IPsec SAs do not. This avoids the need for a user to know \"which\" IPsec SA pair a set of rekeyed SAs replaces.\n\nSo a onClosed() callback means that the server has killed our SA (eg server shutting down)",
+      "parentUuid": "4226d277_f3ddd887",
       "range": {
         "startLine": 289,
         "startChar": 23,
@@ -439,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "0a71121d_8f3bfbc7",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13893861_451ce143",
+      "range": {
+        "startLine": 306,
+        "startChar": 35,
+        "endLine": 306,
+        "endChar": 37
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28d20a4f_5aabc734",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 54
@@ -462,6 +918,30 @@
     },
     {
       "key": {
+        "uuid": "eb096137_74cc5ff1",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "That\u0027s actually what the command line \"google-java-format --aosp\" tool does -.-\n\nSo yes, there\u0027s something wrong with it, but it\u0027s WAI apparently.",
+      "parentUuid": "28d20a4f_5aabc734",
+      "range": {
+        "startLine": 308,
+        "startChar": 12,
+        "endLine": 309,
+        "endChar": 25
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd5994eb_6056face",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 54
@@ -473,6 +953,30 @@
       "writtenOn": "2020-01-31T06:23:23Z",
       "side": 1,
       "message": "Any differences to point out ? If not, should we expose something to help developers do this ?",
+      "range": {
+        "startLine": 314,
+        "startChar": 37,
+        "endLine": 314,
+        "endChar": 44
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150fcfea_c2223e22",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Added differences to javadoc.\n\nIn the general case, this will probably just be a email address, FQDN or byte string, which this handles nicely. Most of this is making sure we allow forcing a specific type of ID when it may look like something else (eg if a user is using 1.2.3.4 as a FQDN instead of a IP address)\n\nI\u0027ll list some of these rules in the Ikev2VpnProfile.Builder#setUserIdentity() function\u0027s javadoc in a subsequent CL",
+      "parentUuid": "bd5994eb_6056face",
       "range": {
         "startLine": 314,
         "startChar": 37,

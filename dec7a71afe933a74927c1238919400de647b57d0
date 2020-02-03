@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f3c5525_523f51a4",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Hmm. Good point. I think we may need to lock on the VPN instance during any test verification. Locking here might not work, as the verification of some of the fields in the Ikev2VpnRunner (mVpnRunner) is also guarded by the Vpn.this lock, and doing a two-stage getter introduces potential for race conditions.\n\n(On the upside, the fact that we\u0027re mocking everything out in the tests basically guarantees us that this is run single-threaded. But you\u0027re right in that we shouldn\u0027t rely on that)\n\nThoughts?",
+      "parentUuid": "69226521_97b081b8",
+      "range": {
+        "startLine": 187,
+        "startChar": 5,
+        "endLine": 187,
+        "endChar": 22
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51cc0a19_f83543f2",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 52
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "1d152c09_6b0aa17f",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2103,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "497babaf_fed9c705",
+      "range": {
+        "startLine": 2102,
+        "startChar": 36,
+        "endLine": 2103,
+        "endChar": 75
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68178fbd_7feb9b73",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 52
@@ -82,6 +130,30 @@
       "writtenOn": "2020-01-29T16:16:53Z",
       "side": 1,
       "message": "the default also listens for TRUSTED networks.\nJust pointing out to see whether you want to restrict the scope of the NetworkRequest to trusted networks, else this could potentially also run on top of untrusted networks (which do not become default in today\u0027s world) when a trusted network (say Cell) is available.",
+      "range": {
+        "startLine": 2218,
+        "startChar": 26,
+        "endLine": 2218,
+        "endChar": 33
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32eb03f_36f5b100",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Done. Added here fore readability.\n\nNET_CAPABILITY_TRUSTED is already included in the default capabilities set by the builder [1], but, it\u0027s probably worth adding here for readability or in case default capbilities changes.\n\n[1] https://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/android/net/NetworkCapabilities.java;l\u003d353",
+      "parentUuid": "68178fbd_7feb9b73",
       "range": {
         "startLine": 2218,
         "startChar": 26,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "24b84a94_406b0941",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2227,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Yeah. I think it was actually as a result of that bug/thread that I chose this option - I specifically want ONLY the Network that CS chooses as the (non-VPN) \"default\", since that\u0027s the one that apps would be expecting data to go over anyways (especially for metering purposes)\n\nRegarding the network loss, during both onLost and onAvailable we teardown an old connection (before starting a new one in onAvailable)\n\nAdded some documentation here.",
+      "parentUuid": "c49580c8_ec2c8b90",
+      "range": {
+        "startLine": 2227,
+        "startChar": 15,
+        "endLine": 2227,
+        "endChar": 22
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a856877c_fcdd8229",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 52
@@ -137,6 +233,30 @@
       "revId": "dec7a71afe933a74927c1238919400de647b57d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229a60f0_6ae90240",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2232,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Reworded and moved a line down to the if statement",
+      "parentUuid": "a856877c_fcdd8229",
+      "range": {
+        "startLine": 2231,
+        "startChar": 12,
+        "endLine": 2232,
+        "endChar": 22
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "5cca3196_80bd246e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2311,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8286cca0_2e2453c3",
+      "range": {
+        "startLine": 2311,
+        "startChar": 0,
+        "endLine": 2311,
+        "endChar": 73
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55dbf2fd_a5a59688",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 52
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "82f87683_f35e73e3",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2571,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55dbf2fd_a5a59688",
+      "range": {
+        "startLine": 2571,
+        "startChar": 60,
+        "endLine": 2571,
+        "endChar": 69
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a43778af_4ab759bd",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 52
@@ -197,6 +365,30 @@
       "writtenOn": "2020-01-29T16:16:53Z",
       "side": 1,
       "message": "I think this check can be removed? !isCurrentPreparedPackage seems to be covering all the cases no?",
+      "range": {
+        "startLine": 2824,
+        "startChar": 54,
+        "endLine": 2824,
+        "endChar": 90
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acdc7d2_cbb30673",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2824,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Not quite. isCurrentPreparedPackage will also return true if the app is running a VpnService.\n\nIn order to match the API, this is supposed to stop only the provisioned VPN profile.",
+      "parentUuid": "a43778af_4ab759bd",
       "range": {
         "startLine": 2824,
         "startChar": 54,
@@ -226,6 +418,24 @@
     },
     {
       "key": {
+        "uuid": "b8d19d46_874b9f23",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Yep. I\u0027m adding in aosp/1214253. I\u0027m still adding more and cleaning those up, but didn\u0027t want to block this one on making sure those are done.\n\nI\u0027ve held off on squashing, but i\u0027m open to do so.",
+      "parentUuid": "977e5fe5_2a44e8fa",
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66198019_08397786",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 52
@@ -237,6 +447,30 @@
       "writtenOn": "2020-01-29T16:16:53Z",
       "side": 1,
       "message": "This is called from onAvailable which runs on CM\u0027s handler thread. DNS resolution can be notoriously slow and can take sometimes in the order of tens of seconds.\n\nUnfortunately, getByName does not allow for timeout. A common way around this is to submit a runnable to some thread (or thread pool) and wait here (using CountDownLatch) for a specific amount of time.\n\nSee if there is a util already somewhere for this. If not, you may want to consider adding one for a general purpose use (optional).",
+      "range": {
+        "startLine": 81,
+        "startChar": 51,
+        "endLine": 81,
+        "endChar": 60
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4066f5_df7cec96",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Ack. This call will be moved to IKE within the next few weeks, and that will be doing it on a separate thread, preferably using the async DNS lookup API.\n\nI\u0027m happy to stub this out if we\u0027re concerned about performance in the meantime.",
+      "parentUuid": "66198019_08397786",
       "range": {
         "startLine": 81,
         "startChar": 51,
@@ -295,6 +529,30 @@
     },
     {
       "key": {
+        "uuid": "52f08fef_d13ee858",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1029c416_166dd184",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 267,
+        "endChar": 59
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05997830_64a58987",
         "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
         "patchSetId": 52
@@ -306,6 +564,24 @@
       "writtenOn": "2020-01-29T16:16:53Z",
       "side": 1,
       "message": "Same - any plans to add unit tests around IkeV2VpnRunner\u0027s implementation.",
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff08fb2_016c48ba",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-03T22:34:11Z",
+      "side": 1,
+      "message": "Yep. I\u0027m adding in aosp/1214253. I\u0027m still adding more and cleaning those up, but didn\u0027t want to block this one on making sure those are done.\n\nI\u0027ve held off on squashing, but i\u0027m open to do so",
+      "parentUuid": "05997830_64a58987",
       "revId": "dec7a71afe933a74927c1238919400de647b57d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
