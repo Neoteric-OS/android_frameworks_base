@@ -145,16 +145,6 @@ public class ConnectivityManager {
     public static final String CONNECTIVITY_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
 
     /**
-     * A temporary hack until SUPL system can get off the legacy APIS.
-     * They do too many network requests and the long list of apps listening
-     * and waking due to the CONNECTIVITY_ACTION broadcast makes it expensive.
-     * Use this broadcast intent instead for SUPL requests.
-     * @hide
-     */
-    public static final String CONNECTIVITY_ACTION_SUPL =
-            "android.net.conn.CONNECTIVITY_CHANGE_SUPL";
-
-    /**
      * The device has connected to a network that has presented a captive
      * portal, which is blocking Internet connectivity. The user was presented
      * with a notification that network sign in is required,
@@ -1548,14 +1538,6 @@ public class ConnectivityManager {
         }
 
         if (!netCap.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-            return TYPE_NONE;
-        }
-
-        // Do this only for SUPL, until GnssLocationProvider is fixed. http://b/25876485 .
-        if (!netCap.hasCapability(NetworkCapabilities.NET_CAPABILITY_SUPL)) {
-            // NOTE: if this causes app breakage, we should not just comment out this early return;
-            // instead, we should make this early return conditional on the requesting app's target
-            // SDK version, as described in the comment above.
             return TYPE_NONE;
         }
 

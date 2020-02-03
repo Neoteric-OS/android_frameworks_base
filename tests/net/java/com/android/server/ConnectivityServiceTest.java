@@ -25,7 +25,6 @@ import static android.content.pm.PackageManager.PERMISSION_DENIED;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.net.ConnectivityManager.ACTION_CAPTIVE_PORTAL_SIGN_IN;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
-import static android.net.ConnectivityManager.CONNECTIVITY_ACTION_SUPL;
 import static android.net.ConnectivityManager.EXTRA_NETWORK_INFO;
 import static android.net.ConnectivityManager.EXTRA_NETWORK_TYPE;
 import static android.net.ConnectivityManager.NETID_UNSET;
@@ -1374,7 +1373,6 @@ public class ConnectivityServiceTest {
             @NonNull final Predicate<Intent> filter) {
         final ConditionVariable cv = new ConditionVariable();
         final IntentFilter intentFilter = new IntentFilter(CONNECTIVITY_ACTION);
-        intentFilter.addAction(CONNECTIVITY_ACTION_SUPL);
         final BroadcastReceiver receiver = new BroadcastReceiver() {
                     private int remaining = count;
                     public void onReceive(Context context, Intent intent) {
@@ -1459,19 +1457,15 @@ public class ConnectivityServiceTest {
         // for mobile. Use a small hack to check that both have been sent, but the order is
         // not contractual.
         final AtomicBoolean vanillaAction = new AtomicBoolean(false);
-        final AtomicBoolean suplAction = new AtomicBoolean(false);
         final ConditionVariable cv6 = registerConnectivityBroadcastThat(2, intent -> {
             if (intent.getAction().equals(CONNECTIVITY_ACTION)) {
                 vanillaAction.set(true);
-            } else if (intent.getAction().equals(CONNECTIVITY_ACTION_SUPL)) {
-                suplAction.set(true);
             }
             return !((NetworkInfo) intent.getExtra(EXTRA_NETWORK_INFO, -1)).isConnected();
         });
         mCellNetworkAgent.disconnect();
         waitFor(cv6);
         assertTrue(vanillaAction.get());
-        assertTrue(suplAction.get());
     }
 
     @Test
