@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "a70cd98b_21a6c100",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 24
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "This is the default right ? AOSP doesn\u0027t want to have any icon by default.",
+      "range": {
+        "startLine": 160,
+        "startChar": 17,
+        "endLine": 160,
+        "endChar": 45
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "346d2c44_7170cb9d",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 24
@@ -36,6 +59,30 @@
       "writtenOn": "2020-01-20T05:17:50Z",
       "side": 1,
       "message": "Nit: I found the configuration is not easy to understand at the first sight. We need to configure multiple general icons. Those general icons do not have clear mapping definitions, e.g. The first empty item is useless and the first general icon is usb+wifi...\n\nEither to have a clearer comments, e.g. It\u0027s configured based on the mask calculation...\n\nor we can configure the mask value with it, like\n    \u003carray name\u003d\"tethering_notification_icons\"\u003e\n        \u003citem\u003e1;\u003c/item\u003e\n        \u003citem\u003e2;@drawable/stat_sys_tether_usb\u003c/item\u003e\n        \u003citem\u003e3,5,6,7;@drawable/stat_sys_tether_general\u003c/item\u003e\n        \u003citem\u003e4;@drawable/stat_sys_tether_bluetooth\u003c/item\u003e\n   \u003carray\u003e\n\nor have one default beahavior. Said, no configuration means to show general icon and configured as:\n    \u003carray name\u003d\"tethering_notification_icons\"\u003e\n        \u003citem\u003e1;\u003c/item\u003e\n        \u003citem\u003e2;@drawable/stat_sys_tether_usb\u003c/item\u003e\n        \u003citem\u003e4;@drawable/stat_sys_tether_bluetooth\u003c/item\u003e\n    \u003carray\u003e\n\nAnother concern for this is that the configuration table will grow up to 16 if ethernet tethering is supported. Probably we will have lots of general icon configurations.\n\nNot strong opinion if current design is fine for other reviewers.",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 12
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68272d4e_8bf0552c",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 24
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "I don\u0027t think the multiplicity problem is big, and some OEMs have expressed a desire to actually have different icons for different combinations. This forces them to configure explicitly, which is not a bad thing.\n\nI agree with the comment on how this is difficult to understand though. I think simply comments may be enough to resolve this.\n\n  \u003c!-- Icon for no downstream --\u003e\n  \u003citem\u003e\u003c/item\u003e\n  \u003c!-- Icon for USB downstream only --\u003e\n  \u003citem\u003e@drawable/usb\u003c/item\u003e\n  ...\n  \u003c!-- Icon for USB + bluetooth downstreams --\u003e\n  \u003citem\u003e@drawable/general\u003c/item\u003e\n\nThat being said I do not oppose the scheme that Chiachang suggests to shorten the list, where the item starts with a list of use cases and then an icon. If we do this though I think we should really not use numbers but rather symbols like USB|WIFI,USB|ETHERNET;@drawable/usb_plus_one or something",
+      "parentUuid": "346d2c44_7170cb9d",
       "range": {
         "startLine": 160,
         "startChar": 4,
@@ -64,6 +111,98 @@
         "startChar": 57,
         "endLine": 34,
         "endChar": 87
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932270bb_a0ed0a99",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "Can you please comment on why this has this specific value ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 41,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30c403e_0ea0febc",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "Why is this not private ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2187fb82_1ae3763a",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "nit : initialize this inline",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 35
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af83b7f0_e88819d4",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "There is also a max so it should be filled in here",
+      "range": {
+        "startLine": 67,
+        "startChar": 46,
+        "endLine": 67,
+        "endChar": 54
       },
       "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -140,6 +279,30 @@
     },
     {
       "key": {
+        "uuid": "b2d36e00_feb4bcf2",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "Chiachang is exactly right here, and I did point out the same thing on patchset 6",
+      "parentUuid": "2bccc586_a95095b3",
+      "range": {
+        "startLine": 100,
+        "startChar": 39,
+        "endLine": 100,
+        "endChar": 83
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f072cfeb_b9de3c41",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 24
@@ -197,6 +360,30 @@
       "writtenOn": "2020-01-20T05:17:50Z",
       "side": 1,
       "message": "I think OEM is allowed to rename their own setting package name? so it probably cannot hardcode  with \"com.android.settings\"?",
+      "range": {
+        "startLine": 113,
+        "startChar": 29,
+        "endLine": 113,
+        "endChar": 49
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a37d6ea_a29cf00e",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "+1.\nandroid.provider.Settings has a lot of constants for the various pages that apps could want to invoke. We should add the relevant one for tethering to @SystemApi and reference it here.\n\n\n(that does mean a new SystemApi though :( )",
+      "parentUuid": "12164776_a4afb5d8",
       "range": {
         "startLine": 113,
         "startChar": 29,

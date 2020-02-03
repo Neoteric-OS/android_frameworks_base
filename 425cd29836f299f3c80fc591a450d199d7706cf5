@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fce8513e_ad4dd37e",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "Can you detail a little bit how the index is used ? This is an array of 8 elements but I don\u0027t know what element at index i stands for.",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1621f7_010a9a80",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "IIUC this means the AOSP version will show a notification when USB tethering is on. I don\u0027t think we want AOSP to show such a notification ; in fact, IIUC AOSP should have an empty array here.\n\nOf course for the sake of giving an example it\u0027s fine to have a comment containing an array similar to this.",
+      "range": {
+        "startLine": 31,
+        "startChar": 14,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6c09c1_685f32ef",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "String",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3f8d7c_0e40ef11",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "What if there are clients ?",
+      "range": {
+        "startLine": 39,
+        "startChar": 47,
+        "endLine": 39,
+        "endChar": 56
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa20c9d_7de4e4ef",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "Can you add comments to detail how to do this, ideally with examples ?",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 93
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73946098_dcfc9280",
+        "filename": "packages/Tethering/res/values/overlayable.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "What will %1 resolve to ?",
+      "range": {
+        "startLine": 24,
+        "startChar": 22,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce77284_b0fbd86e",
+        "filename": "packages/Tethering/res/values/strings.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "String",
+      "range": {
+        "startLine": 31,
+        "startChar": 9,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea37ccf5_175067aa",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "Are there any ill effects to calling NotificationUpdater#onActiveDataSubscriptionIdChanged even if tethering is not supported ? Or, should we simply not start TetheringService, or not listen to the active subscription changes ?",
+      "range": {
+        "startLine": 322,
+        "startChar": 22,
+        "endLine": 322,
+        "endChar": 42
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c38b16f_f6a89497",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "Nit : we usually return-fast, so this would be written\n\n  if (!mDeps.isTetheringSupported) return;\n  ...\n\nNot very important.",
+      "range": {
+        "startLine": 695,
+        "startChar": 22,
+        "endLine": 695,
+        "endChar": 42
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0cee5832_998eb62b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "bug id ?",
+      "range": {
+        "startLine": 843,
+        "startChar": 15,
+        "endLine": 843,
+        "endChar": 19
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd4e33f_0a0b1032",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "Can you write a short comment to explain how this is chosen ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 41,
+        "endLine": 49,
+        "endChar": 49
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e32332_cf29eb4f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "Are these visible for testing ? If so annotate with @VisibleForTesting.",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 10
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686ce57d_cd4b8b7b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "Do you want to only do this if the mask has indeed changed, like in onPowerSavingChanged ?",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 28
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b736cc3_be90bf00",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "Likewise, we prefer to return-fast, so\n\n  if (mPowerSaving \u003d\u003d status) return;\n  ...",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 37
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f60945_3491c471",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-03T10:16:33Z",
+      "side": 1,
+      "message": "Would it work to call SubscriptionManager.getResourcesForSubId with INVALID_SUBSCRIPTION_ID ? Then you don\u0027t need this function at all.",
+      "range": {
+        "startLine": 98,
+        "startChar": 19,
+        "endLine": 98,
+        "endChar": 39
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
