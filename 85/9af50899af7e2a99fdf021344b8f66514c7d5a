@@ -1,0 +1,15 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing-1: Sss1 Sss2 <svip532@gmail.com>
+Open-Source-Licensing+2: Lorenzo Colitti <lorenzo@google.com>
+Open-Source-Licensing+2: Xiao Ma <xiaom@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+1: Sss1 Sss2 <svip532@gmail.com>
+Code-Review+1: David Su <dysu@google.com>
+Code-Review+2: Etan Cohen <etancohen@google.com>
+Autosubmit+1: Xiao Ma <xiaom@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Mon, 03 Feb 2020 02:05:10 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1223835
+Project: platform/frameworks/base
+Branch: refs/heads/master
