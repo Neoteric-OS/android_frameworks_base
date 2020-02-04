@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "703d0424_bdbe3d66",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2068,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-04T13:09:41Z",
+      "side": 1,
+      "message": "Sure, then can you write a comment here about where the guarantees that kill() will be called eventually come from ?",
+      "parentUuid": "6482a4b4_0cc8d9da",
+      "range": {
+        "startLine": 2068,
+        "startChar": 20,
+        "endLine": 2068,
+        "endChar": 26
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6eeb4f8c_bf63c00d",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "84f8ed17_c6cf1763",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2086,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-04T13:09:41Z",
+      "side": 1,
+      "message": "I think so",
+      "parentUuid": "0901f489_dbd8235a",
+      "range": {
+        "startLine": 2085,
+        "startChar": 0,
+        "endLine": 2086,
+        "endChar": 61
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd49c375_c7ce4138",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "Nope. Same with VpnService based VPNs. This intent is how Settings knows to update the \"Connecting/Connected/Timed out/etc\" for LegacyVpn at the moment. For VpnService, it\u0027s solely based on the NetworkAgent.",
       "parentUuid": "cd49c375_c7ce4138",
+      "range": {
+        "startLine": 2092,
+        "startChar": 23,
+        "endLine": 2094,
+        "endChar": 25
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9cb49b5_938ee252",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2094,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-04T13:09:41Z",
+      "side": 1,
+      "message": "But don\u0027t we need this for platform VPNs ? The app doesn\u0027t even know, does it ?",
+      "parentUuid": "6bc728e7_1118e10e",
       "range": {
         "startLine": 2092,
         "startChar": 23,
@@ -272,6 +344,30 @@
       "side": 1,
       "message": "Half-done: Moved the single-thread-executor tha IKE is going to use to a class member (shared across all IKE sessions), and am running on that to prevent blocking the CS thread.\n\nI think locking the whole block is safer, as if we do not, the following is possible (this is the edge case where we run up against IpSecService quota limits):\n\nAssume an encap socket quota of 1.\n1. Two networks come up in close succession, and each subsequent one becomes the default: NULL -\u003e Network A -\u003e Network B\n2. Encap socket created for A, pre-lock.\n3. Encap socket fails to be created for B, VPN fails.\n\nHowever, if the entire block is locked, the following succeeds:\n1. Two networks come up in close succession, and each subsequent one becomes the default: NULL -\u003e Network A -\u003e Network B\n2. A acquires lock, encap socket created for A, IKE session negotiation starts.\n3. B waits for lock, so does not create encap socket yet.\n4. A releases lock\n5. B acquires lock, kills A\u0027s IKE session, deallocates all resources\n6. B creates a new encap socket using just-freed resources.",
       "parentUuid": "163349b3_5b19d7ec",
+      "range": {
+        "startLine": 2127,
+        "startChar": 0,
+        "endLine": 2127,
+        "endChar": 45
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b173271e_c8624942",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2127,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-04T13:09:41Z",
+      "side": 1,
+      "message": "I agree with your assessment that doing it locked is safer (maybe we could remove some of the stuff from the critical section though. The good news is that it actually only grabs the lock for the current VPN, so it will only block these paths that require taking the lock of that specific VPN, and they are less numerous than the ones that grab the full VPN lock.\n\nI\u0027m still really uncomfortable approving a change that may block so much code running inside ConnectivityService that is critical for performance (including code running on the CS handler thread) while doing so much. I guess creating the encap socket is mostly trivial, but you\u0027re doing bidirectional blocking IPC locked in this block (I think IpSecService lives in the system server but I\u0027m not sure it will stay this way ; netd commands certainly are 2-way IPCs, and I\u0027m really not sure it\u0027s even fine to call that out of the CS thread).",
+      "parentUuid": "d25cd820_3de9bf67",
       "range": {
         "startLine": 2127,
         "startChar": 0,
@@ -519,6 +615,30 @@
     },
     {
       "key": {
+        "uuid": "3a32b247_1a9cb7b6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2753,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-04T13:09:41Z",
+      "side": 1,
+      "message": "I see how this addresses the second part of the comment. I think it would indeed be better moved to where it\u0027s useful, but I don\u0027t care too much.\n\nHowever I don\u0027t see how this addresses the first part :\nIs this called for its side effects only ? If so it\u0027s bad for readability, and instead the functionality should be split into a separate function that is named by what it\u0027s called for.",
+      "parentUuid": "476e8b62_0460f988",
+      "range": {
+        "startLine": 2751,
+        "startChar": 8,
+        "endLine": 2753,
+        "endChar": 37
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffa8d6d0_0f2b73cb",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -563,6 +683,30 @@
       "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7eec5ba_dc4aa17f",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2771,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-04T13:09:41Z",
+      "side": 1,
+      "message": "We should fix the settings app \u003c.\u003c",
+      "parentUuid": "8246ba49_b6bffd7f",
+      "range": {
+        "startLine": 2771,
+        "startChar": 0,
+        "endLine": 2771,
+        "endChar": 83
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -613,6 +757,30 @@
     },
     {
       "key": {
+        "uuid": "131c098c_1ec02770",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2777,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-04T13:09:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9aa53533_c9a7a444",
+      "range": {
+        "startLine": 2777,
+        "startChar": 0,
+        "endLine": 2777,
+        "endChar": 27
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae5cec55_87136b1f",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -657,6 +825,30 @@
       "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7214afd8_a3b245df",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2798,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-04T13:09:41Z",
+      "side": 1,
+      "message": "Fair enough",
+      "parentUuid": "5f6ac299_767fccf8",
+      "range": {
+        "startLine": 2798,
+        "startChar": 12,
+        "endLine": 2798,
+        "endChar": 18
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
