@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fb2bc90_9edc13f3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 2954,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-04T02:14:48Z",
+      "side": 1,
+      "message": "Thoughts on updating the documentation for ConnectivityDiagnosticsCallback#onConnectivityReport to clarify that the Bundle may be empty when the NetworkStack module is updated on a pre-R build?",
+      "range": {
+        "startLine": 2953,
+        "startChar": 12,
+        "endLine": 2954,
+        "endChar": 44
+      },
+      "revId": "c5326407d592490783259a48a8ca653c4ff13122",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
