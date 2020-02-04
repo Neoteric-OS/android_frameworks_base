@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e81858cf_b0c1dbbc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 2763,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-04T11:57:04Z",
+      "side": 1,
+      "message": "Okay then. Yeah I did think about how this might make the separation harder but hoped we\u0027d have a good idea.\n\nFor the record I would still prefer we have some way of avoiding the extra handler call and importantly to copy the message. But feel free to submit as is.",
+      "parentUuid": "3f5723a0_d11040d6",
+      "range": {
+        "startLine": 2763,
+        "startChar": 43,
+        "endLine": 2763,
+        "endChar": 46
+      },
+      "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d915f871_57df7e55",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 34
@@ -248,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "6f2e1c85_24aeaf9d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 7632,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-04T11:57:04Z",
+      "side": 1,
+      "message": "I think the only party that can meaningfully set these is the party that knows who owns and who administrates this network (in this case, telephony). Wouldn\u0027t it be possible that two UIDs administrate a network, one of them owns it, and transfers ownership to the other and should retain administrative privilege ? I think this is possible in principle, so I don\u0027t think NC should remove the UID from the list of administrator just because it lost owner.\n\nYou could, optionally, decide on a policy for enforcing the presence of the owner UID in the administrators (either add it forcefully when owner is set, or forcefully introduce the owner UID when the administrator is sent, but not both) and then document it carefully. But I think the most sensical thing to do is to say that making sure it\u0027s correctly set is the responsibility of the party who sets them, and that setting them incorrectly leads to undefined behavior. At least that\u0027s easy to understand and the responsibility is clear.\n\nWhat that would mean for this change is : you don\u0027t need to change anything :)",
+      "parentUuid": "2d2f64be_f15ab952",
+      "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "683ec8e9_b1771f5c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 34
@@ -277,6 +319,29 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "683ec8e9_b1771f5c",
+      "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb95d446_83e077b2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 6532,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-04T11:57:04Z",
+      "side": 1,
+      "message": "Sorry if I missed something, why did you remove this from the latest patchset ?",
+      "range": {
+        "startLine": 6513,
+        "startChar": 4,
+        "endLine": 6532,
+        "endChar": 0
+      },
       "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
