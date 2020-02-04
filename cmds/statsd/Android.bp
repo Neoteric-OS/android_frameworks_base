@@ -117,6 +117,13 @@ cc_defaults {
     static_libs: [
         "libhealthhalutils",
         "libplatformprotos",
+        "libbase",
+        "libcutils",
+        "liblog",
+        "libprotoutil",
+        "libstatslog",
+        "libstatssocket",
+        "libsysutils",
     ],
 
     shared_libs: [
@@ -228,8 +235,6 @@ cc_binary {
     },
 
     shared_libs: ["libgtest_prod"],
-
-    vintf_fragments: ["android.frameworks.stats@1.0-service.xml"],
 
     init_rc: ["statsd.rc"],
 }

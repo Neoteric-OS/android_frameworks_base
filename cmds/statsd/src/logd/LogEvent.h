@@ -29,8 +29,6 @@
 #include <string>
 #include <vector>
 
-using namespace android::frameworks::stats::V1_0;
-
 namespace android {
 namespace os {
 namespace statsd {
@@ -109,9 +107,6 @@ public:
     explicit LogEvent(const std::string& trainName, int64_t trainVersionCode, bool requiresStaging,
                       bool rollbackEnabled, bool requiresLowLatencyMonitor, int32_t state,
                       const std::vector<uint8_t>& experimentIds, int32_t userId);
-
-    explicit LogEvent(int64_t wallClockTimestampNs, int64_t elapsedTimestampNs,
-                      const VendorAtom& vendorAtom);
 
     explicit LogEvent(int64_t wallClockTimestampNs, int64_t elapsedTimestampNs,
                       const InstallTrainInfo& installTrainInfo);
