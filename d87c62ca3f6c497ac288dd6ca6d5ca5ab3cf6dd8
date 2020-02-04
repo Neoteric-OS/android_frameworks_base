@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "779c5eed_1d5b6157",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 2763,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-04T17:14:56Z",
+      "side": 1,
+      "message": "I didn\u0027t realize that mConnectivityDiagnosticsHandler.obtainMessage() incurred such a significant penalty. Filed b/148856655 to explore how to reuse the message received in this case.",
+      "parentUuid": "e81858cf_b0c1dbbc",
+      "range": {
+        "startLine": 2763,
+        "startChar": 43,
+        "endLine": 2763,
+        "endChar": 46
+      },
+      "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d915f871_57df7e55",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 34
@@ -290,6 +314,24 @@
     },
     {
       "key": {
+        "uuid": "c97cd456_1395713e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 7632,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-04T17:14:56Z",
+      "side": 1,
+      "message": "That makes sense - thanks for considering this.\n\nI agree that requiring the caller to set the fields appropriately is the most straightforward answer here. Marking resolved.",
+      "parentUuid": "6f2e1c85_24aeaf9d",
+      "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "683ec8e9_b1771f5c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 34
@@ -336,6 +378,30 @@
       "writtenOn": "2020-02-04T11:57:04Z",
       "side": 1,
       "message": "Sorry if I missed something, why did you remove this from the latest patchset ?",
+      "range": {
+        "startLine": 6513,
+        "startChar": 4,
+        "endLine": 6532,
+        "endChar": 0
+      },
+      "revId": "d87c62ca3f6c497ac288dd6ca6d5ca5ab3cf6dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "709d4fab_64aa8108",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 6532,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-04T17:14:56Z",
+      "side": 1,
+      "message": "This test doesn\u0027t make sense now, as Connectivity Diagnostics is only concerned with administrator UIDs (and expect the owner UID to be included there). The subsequent test for Network administrators covers this case.",
+      "parentUuid": "cb95d446_83e077b2",
       "range": {
         "startLine": 6513,
         "startChar": 4,
