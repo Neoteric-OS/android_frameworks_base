@@ -22,6 +22,29 @@
       "revId": "fd4e05f550f99ab49b5c35047e522e23ec528999",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6fb2bf0_2b924c65",
+        "filename": "services/core/java/com/android/server/power/ShutdownThread.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1448822
+      },
+      "writtenOn": "2020-02-04T14:34:54Z",
+      "side": 1,
+      "message": "Nit: Failed",
+      "range": {
+        "startLine": 453,
+        "startChar": 25,
+        "endLine": 453,
+        "endChar": 29
+      },
+      "revId": "fd4e05f550f99ab49b5c35047e522e23ec528999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
