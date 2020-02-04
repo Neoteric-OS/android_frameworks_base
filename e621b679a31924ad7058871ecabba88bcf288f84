@@ -93,6 +93,30 @@
       "revId": "e621b679a31924ad7058871ecabba88bcf288f84",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0367fa32_513a0a8c",
+        "filename": "packages/Tethering/common/TetheringLib/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-02-04T10:45:54Z",
+      "side": 1,
+      "message": "I don\u0027t think you need framework-res here. That\u0027s usually needed for apps where you need to compile XML files like AndroidManifest.xml.",
+      "parentUuid": "7d434464_8edbb7d3",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "e621b679a31924ad7058871ecabba88bcf288f84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
