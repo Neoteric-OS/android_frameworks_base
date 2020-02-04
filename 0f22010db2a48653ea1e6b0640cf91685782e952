@@ -1,0 +1,58 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000001507751",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1219042?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b9b8ebc4_22756b34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-02-04T00:36:38Z",
+      "side": 1,
+      "message": "Unrecognized license :\nlicenses\n",
+      "range": {
+        "startLine": 1,
+        "startChar": 10,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "0f22010db2a48653ea1e6b0640cf91685782e952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000001507751",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1219042?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "33d0d949_a7768c19",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-02-04T00:36:38Z",
+      "side": 1,
+      "message": "Unrecognized license :\nlicenses\n",
+      "range": {
+        "startLine": 8,
+        "startChar": 12,
+        "endLine": 8,
+        "endChar": 20
+      },
+      "revId": "0f22010db2a48653ea1e6b0640cf91685782e952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
