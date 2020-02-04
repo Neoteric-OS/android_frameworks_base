@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "38371c79_0de8ab23",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2071,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-04T00:27:21Z",
+      "side": 1,
+      "message": "Moved the boilerplate out.",
+      "parentUuid": "51cc0a19_f83543f2",
+      "range": {
+        "startLine": 2044,
+        "startChar": 8,
+        "endLine": 2071,
+        "endChar": 62
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "497babaf_fed9c705",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 52
@@ -163,6 +187,30 @@
       "revId": "dec7a71afe933a74927c1238919400de647b57d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eee3112_c466012c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-04T00:27:21Z",
+      "side": 1,
+      "message": "Changed to use DefaultRequest (which is different from DefaultCapabilities). More detail on Jean\u0027s comment",
+      "parentUuid": "c32eb03f_36f5b100",
+      "range": {
+        "startLine": 2218,
+        "startChar": 26,
+        "endLine": 2218,
+        "endChar": 33
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -494,6 +542,30 @@
       "writtenOn": "2020-01-29T16:16:53Z",
       "side": 1,
       "message": "if-else style nit: you can reduce a bunch of nesting by skipping some of the \u0027else\u0027 blocks.\nFor instance the first[.p if block can be reduced to:\n\nif (identityStr.contains(\"@\")) {\n            if (identityStr.startsWith(\"@#\")) {\n                // KEY_ID\n                final String hexStr \u003d identityStr.substring(2);\n                return new IkeKeyIdIdentification(HexDump.hexStringToByteArray(hexStr));\n            } \n            if (identityStr.startsWith(\"@\") \u0026\u0026 !identityStr.startsWith(\"@@\")) {\n                // FQDN\n                return new IkeFqdnIdentification(identityStr.substring(1));\n            } \n            if (identityStr.startsWith(\"@@\")) {\n                // RFC822 (USER_FQDN)\n                return new IkeRfc822AddrIdentification(identityStr.substring(2));\n            }\n            // RFC822 (USER_FQDN)\n            return new IkeRfc822AddrIdentification(identityStr);\n}\n\nSimilarly, the subsequent \u0027else\u0027 after this can be skipped (since those are inferred).\nIt just makes it more readable, less error-prone and less cognitive load.",
+      "range": {
+        "startLine": 226,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 9
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1dc8fce_f959eb47",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-04T00:27:21Z",
+      "side": 1,
+      "message": "Ack. I think for something this nested, and structured, the if-elseif-else blocks help to structure the code, and ensures that nothing falls through.\n\nMy opinion is that the inference of the subsequent else clauses is more error prone, since forgetting to call return in any of them triggers very odd side effects (and thus more cognitive load on the reviewer to make sure all cases are handled). Using the else clauses allows there to be no final return statement, which allows the Java compiler to statically guarantee that we aren\u0027t missing a case.",
+      "parentUuid": "804d9326_ac6e184c",
       "range": {
         "startLine": 226,
         "startChar": 8,
