@@ -1,0 +1,13 @@
+Code-Review+1: Himanshu Shukla <hshukla@qualcomm.corp-partner.google.com>
+Code-Review+2: Brad Ebinger <breadley@google.com>
+Lint+1: Himanshu Shukla <hshukla@qualcomm.corp-partner.google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Brad Ebinger <breadley@google.com>
+Qualcomm-Review+1: David Ng <dave@codeaurora.org>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Tue, 04 Feb 2020 07:08:49 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1215816
+Project: platform/frameworks/base
+Branch: refs/heads/master
