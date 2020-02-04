@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ff745c3_e7592720",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 6471,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-04T07:22:41Z",
+      "side": 1,
+      "message": "1. nit: Now this comment should be removed, right?\nif there is no satisfier anymore,  getReassignment will return an assignment object with null.newSatisfier, instead of null.\n2. I think it is still Nullable, right?",
+      "range": {
+        "startLine": 6471,
+        "startChar": 29,
+        "endLine": 6471,
+        "endChar": 94
+      },
+      "revId": "32a726816cf4b510c8d37ebfd173564d11765f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
