@@ -1,0 +1,12 @@
+Autosubmit+1: Bob Badour <bbadour@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+2: Tsung-Mao Fang <tmfang@google.com>
+Open-Source-Licensing-1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+2: Bob Badour <bbadour@google.com>
+Code-Review+2: Tsung-Mao Fang <tmfang@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Tue, 04 Feb 2020 07:32:55 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1219042
+Project: platform/frameworks/base
+Branch: refs/heads/master
