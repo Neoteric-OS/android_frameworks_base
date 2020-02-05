@@ -22,6 +22,30 @@
       "revId": "654e9139360555a25601ea81f25cfb84ffc0bbed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3fc737e_d6d78641",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-05T23:48:52Z",
+      "side": 1,
+      "message": "It was initially @hide in aosp/1182395. I received feedback to make it public so apps can test their implementations more easily.\n\nNote that ConnectivityReport\u0027s constructor is also public.\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1182395/12/core/java/android/net/ConnectivityDiagnosticsManager.java#393",
+      "parentUuid": "4994f11d_9ecf5e57",
+      "range": {
+        "startLine": 456,
+        "startChar": 15,
+        "endLine": 456,
+        "endChar": 30
+      },
+      "revId": "654e9139360555a25601ea81f25cfb84ffc0bbed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
