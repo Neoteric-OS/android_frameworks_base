@@ -433,6 +433,9 @@ public class ConnectivityDiagnosticsManager {
         /** The detection method used to identify the suspected data stall */
         @DetectionMethod private final int mDetectionMethod;
 
+        /** NetworkCapabilities available on the Network at the reported timestamp */
+        @NonNull private final NetworkCapabilities mNetworkCapabilities;
+
         /** PersistableBundle that may contain additional information on the suspected data stall */
         @NonNull private final PersistableBundle mStallDetails;
 
@@ -446,16 +449,20 @@ public class ConnectivityDiagnosticsManager {
          * @param network The Network for which this DataStallReport applies
          * @param reportTimestamp The timestamp for the report
          * @param detectionMethod The detection method used to identify this data stall
+         * @param networkCapabilities The NetworkCapabilities available on network at
+         *     reportTimestamp
          * @param stallDetails A PersistableBundle that may contain additional info about the report
          */
         public DataStallReport(
                 @NonNull Network network,
                 long reportTimestamp,
                 @DetectionMethod int detectionMethod,
+                @NonNull NetworkCapabilities networkCapabilities,
                 @NonNull PersistableBundle stallDetails) {
             mNetwork = network;
             mReportTimestamp = reportTimestamp;
             mDetectionMethod = detectionMethod;
+            mNetworkCapabilities = networkCapabilities;
             mStallDetails = stallDetails;
         }
 
@@ -488,6 +495,16 @@ public class ConnectivityDiagnosticsManager {
         }
 
         /**
+         * Returns the NetworkCapabilities when this report was taken.
+         *
+         * @return NetworkCapabilities available on the Network at the reported timestamp
+         */
+        @NonNull
+        public NetworkCapabilities getNetworkCapabilities() {
+            return new NetworkCapabilities(mNetworkCapabilities);
+        }
+
+        /**
          * Returns a PersistableBundle with additional info for this report.
          *
          * <p>Gets a bundle with details about the suspected data stall including information
@@ -513,12 +530,18 @@ public class ConnectivityDiagnosticsManager {
             return mReportTimestamp == that.mReportTimestamp
                     && mDetectionMethod == that.mDetectionMethod
                     && mNetwork.equals(that.mNetwork)
+                    && mNetworkCapabilities.equals(that.mNetworkCapabilities)
                     && persistableBundleEquals(mStallDetails, that.mStallDetails);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(mNetwork, mReportTimestamp, mDetectionMethod, mStallDetails);
+            return Objects.hash(
+                    mNetwork,
+                    mReportTimestamp,
+                    mDetectionMethod,
+                    mNetworkCapabilities,
+                    mStallDetails);
         }
 
         /** {@inheritDoc} */
@@ -533,6 +556,7 @@ public class ConnectivityDiagnosticsManager {
             dest.writeParcelable(mNetwork, flags);
             dest.writeLong(mReportTimestamp);
             dest.writeInt(mDetectionMethod);
+            dest.writeParcelable(mNetworkCapabilities, flags);
             dest.writeParcelable(mStallDetails, flags);
         }
 
@@ -544,6 +568,7 @@ public class ConnectivityDiagnosticsManager {
                                 in.readParcelable(null),
                                 in.readLong(),
                                 in.readInt(),
+                                in.readParcelable(null),
                                 in.readParcelable(null));
                     }
 

@@ -208,11 +208,15 @@ public class ConnectivityDiagnosticsManagerTest {
     private DataStallReport createSampleDataStallReport() {
         final PersistableBundle bundle = new PersistableBundle();
         bundle.putString(BUNDLE_KEY, BUNDLE_VALUE);
-        return new DataStallReport(new Network(NET_ID), TIMESTAMP, DETECTION_METHOD, bundle);
+        final NetworkCapabilities networkCapabilities = new NetworkCapabilities();
+        networkCapabilities.addCapability(NetworkCapabilities.NET_CAPABILITY_IMS);
+        return new DataStallReport(
+                new Network(NET_ID), TIMESTAMP, DETECTION_METHOD, networkCapabilities, bundle);
     }
 
     private DataStallReport createDefaultDataStallReport() {
-        return new DataStallReport(new Network(0), 0L, 0, PersistableBundle.EMPTY);
+        return new DataStallReport(
+                new Network(0), 0L, 0, new NetworkCapabilities(), PersistableBundle.EMPTY);
     }
 
     @Test
@@ -220,25 +224,48 @@ public class ConnectivityDiagnosticsManagerTest {
         assertEquals(createSampleDataStallReport(), createSampleDataStallReport());
         assertEquals(createDefaultDataStallReport(), createDefaultDataStallReport());
 
+        final NetworkCapabilities networkCapabilities = new NetworkCapabilities();
+        networkCapabilities.addCapability(NetworkCapabilities.NET_CAPABILITY_IMS);
+
         final PersistableBundle bundle = new PersistableBundle();
         bundle.putString(BUNDLE_KEY, BUNDLE_VALUE);
 
         assertNotEquals(
                 createDefaultDataStallReport(),
-                new DataStallReport(new Network(NET_ID), 0L, 0, PersistableBundle.EMPTY));
+                new DataStallReport(
+                        new Network(NET_ID),
+                        0L,
+                        0,
+                        new NetworkCapabilities(),
+                        PersistableBundle.EMPTY));
         assertNotEquals(
                 createDefaultDataStallReport(),
-                new DataStallReport(new Network(0), TIMESTAMP, 0, PersistableBundle.EMPTY));
+                new DataStallReport(
+                        new Network(0),
+                        TIMESTAMP,
+                        0,
+                        new NetworkCapabilities(),
+                        PersistableBundle.EMPTY));
         assertNotEquals(
                 createDefaultDataStallReport(),
-                new DataStallReport(new Network(0), 0L, DETECTION_METHOD, PersistableBundle.EMPTY));
+                new DataStallReport(
+                        new Network(0),
+                        0L,
+                        DETECTION_METHOD,
+                        new NetworkCapabilities(),
+                        PersistableBundle.EMPTY));
         assertNotEquals(
-                createDefaultDataStallReport(), new DataStallReport(new Network(0), 0L, 0, bundle));
+                createDefaultDataStallReport(),
+                new DataStallReport(
+                        new Network(0), 0L, 0, networkCapabilities, PersistableBundle.EMPTY));
+        assertNotEquals(
+                createDefaultDataStallReport(),
+                new DataStallReport(new Network(0), 0L, 0, new NetworkCapabilities(), bundle));
     }
 
     @Test
     public void testDataStallReportParcelUnparcel() {
-        assertParcelSane(createSampleDataStallReport(), 4);
+        assertParcelSane(createSampleDataStallReport(), 5);
     }
 
     @Test

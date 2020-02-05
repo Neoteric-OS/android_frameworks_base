@@ -7676,7 +7676,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
             @NonNull NetworkAgentInfo nai, long timestampMillis, int detectionMethod,
             @NonNull PersistableBundle extras) {
         final DataStallReport report =
-                new DataStallReport(nai.network, timestampMillis, detectionMethod, extras);
+                new DataStallReport(
+                        nai.network,
+                        timestampMillis,
+                        detectionMethod,
+                        nai.networkCapabilities,
+                        extras);
         final List<IConnectivityDiagnosticsCallback> results =
                 getMatchingPermissionedCallbacks(nai);
         for (final IConnectivityDiagnosticsCallback cb : results) {
