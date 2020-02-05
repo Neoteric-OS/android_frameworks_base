@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73034081_3a9e3251",
+        "filename": "cmds/app_process/is_zygote_note.S",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1005967
+      },
+      "writtenOn": "2020-02-05T02:15:02Z",
+      "side": 1,
+      "message": "Do we need to disable executable stack here?",
+      "revId": "a29402c24934e491e6028c29516b9f80939db07d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
