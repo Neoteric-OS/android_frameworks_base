@@ -185,6 +185,12 @@ public class VpnTest {
     }
 
     @Test
+    public void testTryIkeSession() {
+        final Vpn vpn = createVpn(primaryUser.id);
+        vpn.tryIkeSession();
+    }
+
+    @Test
     public void testRestrictedProfilesAreAddedToVpn() {
         setMockedUsers(primaryUser, secondaryUser, restrictedProfileA, restrictedProfileB);
 

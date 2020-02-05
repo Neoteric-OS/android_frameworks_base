@@ -63,6 +63,7 @@ import android.net.NetworkProvider;
 import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.VpnService;
+import android.net.ipsec.ike.IkeSession;
 import android.os.Binder;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -263,6 +264,10 @@ public class Vpn {
         updateCapabilities(null /* defaultNetwork */);
 
         loadAlwaysOnPackage();
+    }
+
+    public void tryIkeSession() {
+        new IkeSession(mContext, null, null, null, null, null);
     }
 
     /**
