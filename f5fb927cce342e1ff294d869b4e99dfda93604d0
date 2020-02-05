@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c6bba2d_d7288924",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T13:03:06Z",
+      "side": 1,
+      "message": "type?",
+      "range": {
+        "startLine": 177,
+        "startChar": 43,
+        "endLine": 177,
+        "endChar": 48
+      },
+      "revId": "f5fb927cce342e1ff294d869b4e99dfda93604d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2daa0533_56223345",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T13:03:06Z",
+      "side": 1,
+      "message": "Can you give a sample in the comment?",
+      "range": {
+        "startLine": 175,
+        "startChar": 9,
+        "endLine": 177,
+        "endChar": 94
+      },
+      "revId": "f5fb927cce342e1ff294d869b4e99dfda93604d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb4fa1a2_3b8c281c",
+        "filename": "packages/Tethering/res/values/overlayable.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T13:03:06Z",
+      "side": 1,
+      "message": "May be better to put int config.xml instead of here?",
+      "range": {
+        "startLine": 38,
+        "startChar": 11,
+        "endLine": 43,
+        "endChar": 15
+      },
+      "revId": "f5fb927cce342e1ff294d869b4e99dfda93604d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "258278f3_3cdb1ada",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T13:03:06Z",
+      "side": 1,
+      "message": "Nit: I will expect the code below the comment something like \n   mDownstreamTypesMask \u003e 0 ? downstreamTexts[mDownstreamTypesMask] : \"\";\n\nThe comment seems not match with the code.",
+      "range": {
+        "startLine": 150,
+        "startChar": 8,
+        "endLine": 150,
+        "endChar": 35
+      },
+      "revId": "f5fb927cce342e1ff294d869b4e99dfda93604d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef11a6b_b36189a1",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T13:03:06Z",
+      "side": 1,
+      "message": "why not just \n\n  if (TextUtils.isEmpty(text)) \n     return getResources(mContext, mActiveDataSubId).getString(defaultTextId);\n\n  return String.format(text, downstreamText);",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 26
+      },
+      "revId": "f5fb927cce342e1ff294d869b4e99dfda93604d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2644e373_11540578",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T13:03:06Z",
+      "side": 1,
+      "message": "With ethernet tethering, it have to set to 16 ones?",
+      "range": {
+        "startLine": 76,
+        "startChar": 38,
+        "endLine": 77,
+        "endChar": 66
+      },
+      "revId": "f5fb927cce342e1ff294d869b4e99dfda93604d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbec4b74_f0256a79",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T13:03:06Z",
+      "side": 1,
+      "message": "optional: it should get the defaultActiveSub resource. Maybe also test other subId",
+      "range": {
+        "startLine": 208,
+        "startChar": 8,
+        "endLine": 209,
+        "endChar": 63
+      },
+      "revId": "f5fb927cce342e1ff294d869b4e99dfda93604d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a0a2fd_a931a640",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T13:03:06Z",
+      "side": 1,
+      "message": "Nit: Also test non-empty case?",
+      "range": {
+        "startLine": 209,
+        "startChar": 16,
+        "endLine": 209,
+        "endChar": 22
+      },
+      "revId": "f5fb927cce342e1ff294d869b4e99dfda93604d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
