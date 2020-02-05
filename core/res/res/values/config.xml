@@ -2026,6 +2026,12 @@
          Note: This config is deprecated, please use config_defaultSms instead. -->
     <string name="default_sms_application" translatable="false">com.android.messaging</string>
 
+    <!-- Flag indicating whether the current device allows data.
+     If true, this means that the device supports data connectivity through
+     the telephony network.
+     This can be overridden to false for devices that support voice and/or sms . -->
+    <bool name="config_mobile_data_capable">true</bool>
+
     <!-- Default web browser.  This is the package name of the application that will
          be the default browser when the device first boots.  Afterwards the user
          can select whatever browser app they wish to use as the default.
