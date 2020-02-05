@@ -33,7 +33,7 @@ interface ITestNetworkManager
     TestNetworkInterface createTapInterface();
 
     void setupTestNetwork(in String iface, in LinkProperties lp, in boolean isMetered,
-            in IBinder binder);
+            in IBinder binder, in int[] administratorUids);
 
     void teardownTestNetwork(int netId);
 }
