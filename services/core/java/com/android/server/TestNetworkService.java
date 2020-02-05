@@ -229,6 +229,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
             @NonNull Context context,
             @NonNull String iface,
             @Nullable LinkProperties lp,
+            boolean isDefault,
             boolean isMetered,
             int callingUid,
             @NonNull IBinder binder)
@@ -249,6 +250,12 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED);
         nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
         nc.setNetworkSpecifier(new StringNetworkSpecifier(iface));
+
+        if (isDefault) {
+            nc.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+            nc.addCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED);
+            nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN);
+        }
         if (!isMetered) {
             nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
         }
@@ -301,6 +308,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
     public void setupTestNetwork(
             @NonNull String iface,
             @Nullable LinkProperties lp,
+            boolean isDefault,
             boolean isMetered,
             @NonNull IBinder binder) {
         enforceTestNetworkPermissions(mContext);
@@ -334,6 +342,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                                             mContext,
                                             iface,
                                             lp,
+                                            isDefault,
                                             isMetered,
                                             callingUid,
                                             binder);

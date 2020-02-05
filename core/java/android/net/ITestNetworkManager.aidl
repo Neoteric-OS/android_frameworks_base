@@ -32,8 +32,8 @@ interface ITestNetworkManager
     TestNetworkInterface createTunInterface(in LinkAddress[] linkAddrs);
     TestNetworkInterface createTapInterface();
 
-    void setupTestNetwork(in String iface, in LinkProperties lp, in boolean isMetered,
-            in IBinder binder);
+    void setupTestNetwork(in String iface, in LinkProperties lp, in boolean isDefault,
+            in boolean isMetered, in IBinder binder);
 
     void teardownTestNetwork(int netId);
 }
