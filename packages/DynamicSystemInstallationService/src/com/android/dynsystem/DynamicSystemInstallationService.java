@@ -80,6 +80,7 @@ public class DynamicSystemInstallationService extends Service
     static final String KEY_ENABLE_WHEN_COMPLETED = "KEY_ENABLE_WHEN_COMPLETED";
     static final String KEY_DSU_SLOT = "KEY_DSU_SLOT";
     static final String DEFAULT_DSU_SLOT = "dsu";
+    static final String KEY_PUBKEY = "KEY_PUBKEY";
 
     /*
      * Intent actions
@@ -267,6 +268,7 @@ public class DynamicSystemInstallationService extends Service
         long userdataSize = intent.getLongExtra(DynamicSystemClient.KEY_USERDATA_SIZE, 0);
         mEnableWhenCompleted = intent.getBooleanExtra(KEY_ENABLE_WHEN_COMPLETED, false);
         String dsuSlot = intent.getStringExtra(KEY_DSU_SLOT);
+        String publicKey = intent.getStringExtra(KEY_PUBKEY);
 
         if (TextUtils.isEmpty(dsuSlot)) {
             dsuSlot = DEFAULT_DSU_SLOT;
@@ -274,7 +276,7 @@ public class DynamicSystemInstallationService extends Service
         // TODO: better constructor or builder
         mInstallTask =
                 new InstallationAsyncTask(
-                        url, dsuSlot, systemSize, userdataSize, this, mDynSystem, this);
+                        url, dsuSlot, publicKey, systemSize, userdataSize, this, mDynSystem, this);
 
         mInstallTask.execute();
 
