@@ -18,6 +18,12 @@
     <string name="notification_install_inprogress">Install in progress</string>
     <!-- Displayed on notification: Dynamic System installation failed [CHAR LIMIT=128] -->
     <string name="notification_install_failed">Install failed</string>
+    <!-- Displayed on notification: Dynamic System installation failed key revocation list [CHAR LIMIT=128] -->
+    <string name="notification_install_failed_revocation_list">Cannot fetch key revocation list URL</string>
+    <!-- Displayed on notification: Dynamic System installation failed key revoked [CHAR LIMIT=128] -->
+    <string name="notification_install_failed_key_revoked">Image AVB public key is revoked</string>
+    <!-- Displayed on notification: Dynamic System installation failed public key [CHAR LIMIT=128] -->
+    <string name="notification_install_failed_public_key">Cannot read AVB public key</string>
     <!-- Displayed on notification: We are running in Dynamic System [CHAR LIMIT=128] -->
     <string name="notification_dynsystem_in_use">Currently running a dynamic system. Restart to use the original Android version.</string>
 
