@@ -17,6 +17,7 @@
 package com.android.dynsystem;
 
 import android.content.Context;
+import android.gsi.AvbPublicKey;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.MemoryFile;
@@ -70,6 +71,18 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
         }
     }
 
+    static class KeyRevokedException extends RuntimeException {
+        private KeyRevokedException(String message) {
+            super(message);
+        }
+    }
+
+    static class PublicKeyException extends RuntimeException {
+        private PublicKeyException(String message) {
+            super(message);
+        }
+    }
+
     /** UNSET means the installation is not completed */
     static final int RESULT_UNSET = 0;
     static final int RESULT_OK = 1;
@@ -104,6 +117,7 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
 
     private final String mUrl;
     private final String mDsuSlot;
+    private final String mPublicKey;
     private final long mSystemSize;
     private final long mUserdataSize;
     private final Context mContext;
@@ -123,6 +137,7 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
     InstallationAsyncTask(
             String url,
             String dsuSlot,
+            String publicKey,
             long systemSize,
             long userdataSize,
             Context context,
@@ -130,6 +145,7 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
             ProgressListener listener) {
         mUrl = url;
         mDsuSlot = dsuSlot;
+        mPublicKey = publicKey;
         mSystemSize = systemSize;
         mUserdataSize = userdataSize;
         mContext = context;
@@ -171,8 +187,6 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
                 mDynSystem.remove();
                 return null;
             }
-
-            // TODO(yochiang): do post-install public key check (revocation list / boot-ramdisk)
 
             mDynSystem.finishInstallation();
         } catch (Exception e) {
@@ -263,6 +277,9 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
         } catch (IOException | JSONException e) {
             mKeyRevocationList = new KeyRevocationList();
             keyRevocationThrowOrWarning(new RevocationListFetchException(e));
+        }
+        if (mKeyRevocationList.isRevoked(mPublicKey)) {
+            keyRevocationThrowOrWarning(new KeyRevokedException(mPublicKey));
         }
     }
 
@@ -459,6 +476,24 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
                 publishProgress(progress);
             }
         }
+
+        AvbPublicKey avbPublicKey = new AvbPublicKey();
+        if (!mInstallationSession.getAvbPublicKey(avbPublicKey)) {
+            keyRevocationThrowOrWarning(new PublicKeyException("getAvbPublicKey() failed"));
+        } else {
+            String publicKey = toHexString(avbPublicKey.sha1);
+            if (mKeyRevocationList.isRevoked(publicKey)) {
+                keyRevocationThrowOrWarning(new KeyRevokedException(publicKey));
+            }
+        }
+    }
+
+    private static String toHexString(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
     }
 
     private void close() {
