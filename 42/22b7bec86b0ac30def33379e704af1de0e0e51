@@ -1,0 +1,10 @@
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Michael Wright <michaelwr@google.com>
+API-Review+1: Michael Wright <michaelwr@google.com>
+Submitted-by: Neil Fuller <nfuller@google.com>
+Submitted-at: Wed, 05 Feb 2020 11:56:17 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1220999
+Project: platform/frameworks/base
+Branch: refs/heads/master
