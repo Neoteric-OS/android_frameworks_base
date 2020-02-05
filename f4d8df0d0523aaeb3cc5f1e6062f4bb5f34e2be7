@@ -16,6 +16,24 @@
       "revId": "f4d8df0d0523aaeb3cc5f1e6062f4bb5f34e2be7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1086b46f_82165475",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 2131,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-05T21:55:27Z",
+      "side": 1,
+      "message": "Done. Almost all these changes are simply moving logic around for testability reasons. Added to commit message.",
+      "parentUuid": "08fe5b85_aa66557a",
+      "revId": "f4d8df0d0523aaeb3cc5f1e6062f4bb5f34e2be7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
