@@ -16,6 +16,24 @@
       "revId": "a29402c24934e491e6028c29516b9f80939db07d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c274f25_94382089",
+        "filename": "cmds/app_process/is_zygote_note.S",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1067098
+      },
+      "writtenOn": "2020-02-05T02:21:11Z",
+      "side": 1,
+      "message": "This should also be a proper ELF note (with namesz, descsz and type fields), otherwise tools may get confused.",
+      "parentUuid": "73034081_3a9e3251",
+      "revId": "a29402c24934e491e6028c29516b9f80939db07d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
