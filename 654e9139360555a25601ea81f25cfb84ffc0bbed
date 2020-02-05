@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4994f11d_9ecf5e57",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-02-05T23:40:45Z",
+      "side": 1,
+      "message": "Upon review, why is the constructor public?",
+      "range": {
+        "startLine": 456,
+        "startChar": 15,
+        "endLine": 456,
+        "endChar": 30
+      },
+      "revId": "654e9139360555a25601ea81f25cfb84ffc0bbed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
