@@ -22,6 +22,8 @@ import android.os.RemoteException;
 
 import com.android.internal.util.Preconditions;
 
+import java.util.Objects;
+
 /**
  * Class that allows creation and management of per-app, test-only networks
  *
@@ -64,10 +66,11 @@ public class TestNetworkManager {
      * @hide
      */
     public void setupTestNetwork(
-            @NonNull LinkProperties lp, boolean isMetered, @NonNull IBinder binder) {
-        Preconditions.checkNotNull(lp, "Invalid LinkProperties");
+            @NonNull String iface, boolean isDefault, boolean isMetered, @NonNull IBinder binder) {
+        Objects.requireNonNull(iface);
+        Objects.requireNonNull(binder);
         try {
-            mService.setupTestNetwork(lp.getInterfaceName(), lp, isMetered, binder);
+            mService.setupTestNetwork(iface, isDefault, isMetered, binder);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -82,8 +85,10 @@ public class TestNetworkManager {
      */
     @TestApi
     public void setupTestNetwork(@NonNull String iface, @NonNull IBinder binder) {
+        Objects.requireNonNull(iface);
+        Objects.requireNonNull(binder);
         try {
-            mService.setupTestNetwork(iface, null, true, binder);
+            mService.setupTestNetwork(iface, false /* isDefault */, true /* isMetered */, binder);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
