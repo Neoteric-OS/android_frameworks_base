@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b68299b_abf15c4e",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T11:48:06Z",
+      "side": 1,
+      "message": "Nit: You have only one SUBID, maybe TEST_SUBID is enough.",
+      "range": {
+        "startLine": 52,
+        "startChar": 10,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad585958_74f3d93d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T11:48:06Z",
+      "side": 1,
+      "message": "Nit: make it a constant",
+      "range": {
+        "startLine": 73,
+        "startChar": 17,
+        "endLine": 73,
+        "endChar": 18
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6df1ebf_9d376329",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T11:48:06Z",
+      "side": 1,
+      "message": "Nit: make it a constant",
+      "range": {
+        "startLine": 88,
+        "startChar": 83,
+        "endLine": 88,
+        "endChar": 84
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd36d6e_a309e3c4",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T11:48:06Z",
+      "side": 1,
+      "message": "Nit: This may able to put into a function like \n\nfun testNotification(mask: Int, showNoitification: Boolean, title: String, message: String) {\n    notificationUpdater.onDownstreamChanged(mask)\n    when(showNoitification) {\n        true -\u003e  expectShowNotification(title, message)\n        else -\u003e expectClearNotification()\n    }\n}\n\nthen it can be replaced with testNotification(WIFI_DOWNSTREAM_TYPE_MASK or USB_DOWNSTREAM_TYPE_MASK, true, titile, message)\n\n\nsince the code here seems reppeated. The function can also be applied in testNotificationWithActiveDataSubscriptionIdChanged() to replace l.148-149 and l.160-161.",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 46
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0722072_5565c725",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T11:48:06Z",
+      "side": 1,
+      "message": "You may want to test the same SUBID again if you apply the check to skip the same subid.",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 70
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b6884a_27e6988d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T11:48:06Z",
+      "side": 1,
+      "message": "I don\u0027t think the test here make sense. You should probably test usb or bt tethering to expect a notification. With a invalid subID, you will actually get the default resource. Then you may verify notification apply default one. what do you think?",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 157,
+        "endChar": 33
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1667f9_27612e6a",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-05T11:48:06Z",
+      "side": 1,
+      "message": "Similar here. You choose a no notiifcation case at the beginning. Verify the other no notification case seems useless.",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 49
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
