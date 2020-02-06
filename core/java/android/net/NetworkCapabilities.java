@@ -16,6 +16,8 @@
 
 package android.net;
 
+import static com.android.internal.annotations.VisibleForTesting.Visibility.PRIVATE;
+
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -31,13 +33,13 @@ import android.util.ArraySet;
 import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.BitUtils;
 import com.android.internal.util.Preconditions;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -104,7 +106,7 @@ public final class NetworkCapabilities implements Parcelable {
         mTransportInfo = nc.mTransportInfo;
         mSignalStrength = nc.mSignalStrength;
         setUids(nc.mUids); // Will make the defensive copy
-        setAdministratorUids(nc.mAdministratorUids);
+        setAdministratorUids(nc.getAdministratorUids());
         mOwnerUid = nc.mOwnerUid;
         mUnwantedNetworkCapabilities = nc.mUnwantedNetworkCapabilities;
         mSSID = nc.mSSID;
@@ -842,6 +844,9 @@ public final class NetworkCapabilities implements Parcelable {
      * <p>For NetworkCapability instances being sent from the System Server, this value MUST be
      * empty unless the destination is 1) the System Server, or 2) Telephony. In either case, the
      * receiving entity must have the ACCESS_FINE_LOCATION permission and target R+.
+     *
+     * <p>When received from an app in a NetworkRequest this is always cleared out by the system
+     * server. This field is never used for matching.
      */
     private final List<Integer> mAdministratorUids = new ArrayList<>();
 
@@ -861,25 +866,67 @@ public final class NetworkCapabilities implements Parcelable {
      * <p>An app is granted owner privileges over Networks that it supplies. The owner UID MUST
      * always be included in administratorUids.
      *
-     * @param administratorUids the UIDs to be set as administrators of this Network.
+     * <p>The administrator UIDs are set by network agents.
+     *
+     * @param adminUids the UIDs to be set as administrators of this Network.
+     * @see #mAdministratorUids
      * @hide
      */
+    @NonNull
     @SystemApi
-    public void setAdministratorUids(@NonNull final List<Integer> administratorUids) {
+    public NetworkCapabilities setAdministratorUids(@NonNull final int[] adminUids) {
         mAdministratorUids.clear();
-        mAdministratorUids.addAll(administratorUids);
+        for (final int uid : adminUids) mAdministratorUids.add(uid);
+        return this;
     }
 
     /**
      * Retrieves the list of UIDs that are administrators of this Network.
      *
+     * <p>This is only populated in NetworkCapabilities objects that come from network agents
+     * for networks that are managed by specific apps on the system, like the apps that have
+     * carrier privileges.
+     *
      * @return the List of UIDs that are administrators of this Network
+     * @see #mAdministratorUids
      * @hide
      */
     @NonNull
     @SystemApi
-    public List<Integer> getAdministratorUids() {
-        return Collections.unmodifiableList(mAdministratorUids);
+    public int[] getAdministratorUids() {
+        return ArrayUtils.convertToIntArray(mAdministratorUids);
+    }
+
+    /**
+     * Tests if the set of administrator UIDs of this network is the same as that of the passed one.
+     *
+     * <p>The order is ignored.
+     * <p>nc is assumed non-null. Else, NPE.
+     * @hide
+     */
+    @VisibleForTesting(visibility = PRIVATE)
+    public boolean equalsAdministratorUids(@NonNull final NetworkCapabilities nc) {
+        return mAdministratorUids.size() == nc.mAdministratorUids.size()
+                && mAdministratorUids.containsAll(nc.mAdministratorUids);
+    }
+
+    /**
+     * Combine the administrator UIDs of the capabilities.
+     *
+     * <p>This is only legal if either of the administrators lists are empty, or if they
+     * are equal. Combining capabilities is only used for combining non-overlapping sets
+     * of capabilities, and both being non-empty but not equal means they are overlapping and
+     * conflict with each other ; it would not make sense to add them together.
+     */
+    private void combineAdministratorUids(@NonNull final NetworkCapabilities nc) {
+        if (nc.mAdministratorUids.isEmpty()) return;
+        if (mAdministratorUids.isEmpty()) {
+            mAdministratorUids.addAll(nc.mAdministratorUids);
+            return;
+        }
+        if (!equalsAdministratorUids(nc)) {
+            throw new IllegalStateException("Can't combine two different administrator UID lists");
+        }
     }
 
     /**
@@ -1385,6 +1432,7 @@ public final class NetworkCapabilities implements Parcelable {
         combineSignalStrength(nc);
         combineUids(nc);
         combineSSIDs(nc);
+        combineAdministratorUids(nc);
     }
 
     /**
@@ -1496,7 +1544,8 @@ public final class NetworkCapabilities implements Parcelable {
                 && equalsTransportInfo(that)
                 && equalsUids(that)
                 && equalsSSID(that)
-                && equalsPrivateDnsBroken(that));
+                && equalsPrivateDnsBroken(that)
+                && equalsAdministratorUids(that));
     }
 
     @Override
@@ -1514,7 +1563,8 @@ public final class NetworkCapabilities implements Parcelable {
                 + Objects.hashCode(mUids) * 31
                 + Objects.hashCode(mSSID) * 37
                 + Objects.hashCode(mTransportInfo) * 41
-                + Objects.hashCode(mPrivateDnsBroken) * 43;
+                + Objects.hashCode(mPrivateDnsBroken) * 43
+                + mAdministratorUids.hashCode() * 47;
     }
 
     @Override
@@ -1535,7 +1585,7 @@ public final class NetworkCapabilities implements Parcelable {
         dest.writeArraySet(mUids);
         dest.writeString(mSSID);
         dest.writeBoolean(mPrivateDnsBroken);
-        dest.writeList(mAdministratorUids);
+        dest.writeIntArray(getAdministratorUids());
         dest.writeInt(mOwnerUid);
     }
 
@@ -1557,7 +1607,7 @@ public final class NetworkCapabilities implements Parcelable {
                         null /* ClassLoader, null for default */);
                 netCap.mSSID = in.readString();
                 netCap.mPrivateDnsBroken = in.readBoolean();
-                netCap.setAdministratorUids(in.readArrayList(null));
+                netCap.setAdministratorUids(in.createIntArray());
                 netCap.mOwnerUid = in.readInt();
                 return netCap;
             }

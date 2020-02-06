@@ -56,6 +56,7 @@ import androidx.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
 import java.util.Set;
 
 @RunWith(AndroidJUnit4.class)
@@ -265,10 +266,11 @@ public class NetworkCapabilitiesTest {
         uids.add(new UidRange(50, 100));
         uids.add(new UidRange(3000, 4000));
         final NetworkCapabilities netCap = new NetworkCapabilities()
-            .addCapability(NET_CAPABILITY_INTERNET)
-            .setUids(uids)
-            .addCapability(NET_CAPABILITY_EIMS)
-            .addCapability(NET_CAPABILITY_NOT_METERED);
+                .addCapability(NET_CAPABILITY_INTERNET)
+                .setUids(uids)
+                .setAdministratorUids(new int[] { 5, 11 })
+                .addCapability(NET_CAPABILITY_EIMS)
+                .addCapability(NET_CAPABILITY_NOT_METERED);
         netCap.setOwnerUid(123);
         assertParcelingIsLossless(netCap);
         netCap.setSSID(TEST_SSID);
@@ -455,6 +457,26 @@ public class NetworkCapabilitiesTest {
         assertFalse(nc2.appliesToUid(12));
         assertTrue(nc1.appliesToUid(22));
         assertTrue(nc2.appliesToUid(22));
+
+        final int[] adminUids = new int[] { 3, 6, 12 };
+        nc1.setAdministratorUids(adminUids);
+        nc2.combineCapabilities(nc1);
+        assertTrue(nc2.equalsAdministratorUids(nc1));
+        assertArrayEquals(nc2.getAdministratorUids(), adminUids);
+
+        final int[] adminUidsOtherOrder = new int[] { 3, 12, 6 };
+        nc1.setAdministratorUids(adminUids);
+        assertTrue(nc2.equalsAdministratorUids(nc1));
+
+        final int[] adminUids2 = new int[] { 11, 1, 12, 3, 6 };
+        nc1.setAdministratorUids(adminUids2);
+        assertFalse(nc2.equalsAdministratorUids(nc1));
+        // No assertArrayNotEquals in JUnit
+        assertFalse(Arrays.equals(nc2.getAdministratorUids(), adminUids2));
+        try {
+            nc2.combineCapabilities(nc1);
+            fail("Shouldn't be able to combine different lists of admin UIDs");
+        } catch (IllegalStateException expected) { }
     }
 
     @Test

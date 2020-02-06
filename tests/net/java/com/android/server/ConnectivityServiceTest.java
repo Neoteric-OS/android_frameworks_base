@@ -6544,7 +6544,7 @@ public class ConnectivityServiceTest {
     @Test
     public void testCheckConnectivityDiagnosticsPermissionsNetworkAdministrator() throws Exception {
         final NetworkCapabilities nc = new NetworkCapabilities();
-        nc.setAdministratorUids(Arrays.asList(Process.myUid()));
+        nc.setAdministratorUids(new int[] { Process.myUid() });
         final NetworkAgentInfo naiWithUid =
                 new NetworkAgentInfo(
                         null, null, null, null, null, nc, null, mServiceContext, null, null,
@@ -6566,7 +6566,7 @@ public class ConnectivityServiceTest {
     public void testCheckConnectivityDiagnosticsPermissionsFails() throws Exception {
         final NetworkCapabilities nc = new NetworkCapabilities();
         nc.setOwnerUid(Process.myUid());
-        nc.setAdministratorUids(Arrays.asList(Process.myUid()));
+        nc.setAdministratorUids(new int[] { Process.myUid() });
         final NetworkAgentInfo naiWithUid =
                 new NetworkAgentInfo(
                         null, null, null, null, null, nc, null, mServiceContext, null, null,

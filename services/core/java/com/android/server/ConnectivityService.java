@@ -205,6 +205,8 @@ import com.android.server.utils.PriorityDump;
 
 import com.google.android.collect.Lists;
 
+import libcore.util.EmptyArray;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -1659,7 +1661,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (newNc.getNetworkSpecifier() != null) {
             newNc.setNetworkSpecifier(newNc.getNetworkSpecifier().redact());
         }
-        newNc.setAdministratorUids(Collections.EMPTY_LIST);
+        newNc.setAdministratorUids(EmptyArray.INT);
 
         maybeSanitizeLocationInfoForCaller(newNc, callerUid);
 
@@ -1704,7 +1706,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!checkSettingsPermission()) {
             nc.setSingleUid(Binder.getCallingUid());
         }
-        nc.setAdministratorUids(Collections.EMPTY_LIST);
+        nc.setAdministratorUids(EmptyArray.INT);
 
         // Clear owner UID; this can never come from an app.
         nc.setOwnerUid(INVALID_UID);
@@ -7754,7 +7756,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         // Administrator UIDs also contains the Owner UID
-        if (nai.networkCapabilities.getAdministratorUids().contains(callbackUid)) {
+        if (ArrayUtils.contains(nai.networkCapabilities.getAdministratorUids(), callbackUid)) {
             return true;
         }
 
