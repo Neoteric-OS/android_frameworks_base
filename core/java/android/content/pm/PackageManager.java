@@ -2029,7 +2029,7 @@ public abstract class PackageManager {
      * {@link #hasSystemFeature}: The Beam API is enabled on the device.
      */
     @SdkConstant(SdkConstantType.FEATURE)
-    public static final String FEATURE_NFC_BEAM = "android.sofware.nfc.beam";
+    public static final String FEATURE_NFC_BEAM = "android.software.nfc.beam";
 
     /**
      * Feature for {@link #getSystemAvailableFeatures} and
