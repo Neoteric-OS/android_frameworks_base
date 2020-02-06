@@ -225,6 +225,11 @@ public class TimeZoneDetectorServiceTest {
         private boolean mDumpCalled;
 
         @Override
+        public void setAutoMode(int autoMode) {
+            fail("Not implemented");
+        }
+
+        @Override
         public void suggestGeolocationTimeZone(GeolocationTimeZoneSuggestion timeZoneSuggestion) {
             mLastGeolocationSuggestion = timeZoneSuggestion;
         }

@@ -15,12 +15,15 @@
  */
 package com.android.server.timezonedetector;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.app.timezonedetector.GeolocationTimeZoneSuggestion;
 import android.app.timezonedetector.ManualTimeZoneSuggestion;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
 
 import java.io.PrintWriter;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * The interface for the class that implements the time detection algorithm used by the
@@ -29,13 +32,31 @@ import java.io.PrintWriter;
  * <p>The strategy uses suggestions to decide whether to modify the device's time zone setting
  * and what to set it to.
  *
- * <p>Most calls will be handled by a single thread but that is not true for all calls. For example
+ * <p>Most calls will be handled by a single thread, but that is not true for all calls. For example
  * {@link #dump(PrintWriter, String[])}) may be called on a different thread so implementations must
  * handle thread safety.
  *
  * @hide
  */
 public interface TimeZoneDetectorStrategy {
+
+    /** The type that defines automatic time zone detection modes. */
+    @IntDef({ AUTO_MODE_TELEPHONY, AUTO_MODE_GEOLOCATION })
+    @Retention(RetentionPolicy.SOURCE)
+    @interface AutoMode {}
+
+    /** Only use telephony suggestions. */
+    @AutoMode
+    int AUTO_MODE_TELEPHONY = 1;
+
+    /** Only use geolocation suggestions. */
+    @AutoMode
+    int AUTO_MODE_GEOLOCATION = 2;
+
+    /**
+     * Sets the automatic detection mode.
+     */
+    void setAutoMode(@AutoMode int autoMode);
 
     /**
      * Suggests a time zone for the device, or withdraws a previous suggestion if
