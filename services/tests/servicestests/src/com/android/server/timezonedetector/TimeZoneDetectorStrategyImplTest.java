@@ -24,6 +24,8 @@ import static android.app.timezonedetector.TelephonyTimeZoneSuggestion.QUALITY_M
 import static android.app.timezonedetector.TelephonyTimeZoneSuggestion.QUALITY_MULTIPLE_ZONES_WITH_SAME_OFFSET;
 import static android.app.timezonedetector.TelephonyTimeZoneSuggestion.QUALITY_SINGLE_ZONE;
 
+import static com.android.server.timezonedetector.TimeZoneDetectorStrategy.AUTO_MODE_GEOLOCATION;
+import static com.android.server.timezonedetector.TimeZoneDetectorStrategy.AUTO_MODE_TELEPHONY;
 import static com.android.server.timezonedetector.TimeZoneDetectorStrategyImpl.TELEPHONY_SCORE_HIGH;
 import static com.android.server.timezonedetector.TimeZoneDetectorStrategyImpl.TELEPHONY_SCORE_HIGHEST;
 import static com.android.server.timezonedetector.TimeZoneDetectorStrategyImpl.TELEPHONY_SCORE_LOW;
@@ -36,11 +38,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import android.app.timezonedetector.GeolocationTimeZoneSuggestion;
 import android.app.timezonedetector.ManualTimeZoneSuggestion;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion.MatchType;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion.Quality;
 
+import com.android.server.timezonedetector.TimeZoneDetectorStrategy.AutoMode;
 import com.android.server.timezonedetector.TimeZoneDetectorStrategyImpl.QualifiedTelephonyTimeZoneSuggestion;
 
 import org.junit.Before;
@@ -97,7 +101,7 @@ public class TimeZoneDetectorStrategyImplTest {
         TelephonyTimeZoneSuggestion slotIndex2TimeZoneSuggestion =
                 createEmptySlotIndex2Suggestion();
         Script script = new Script()
-                .initializeAutoTimeZoneDetection(true)
+                .initializeAutoTimeZoneDetection(true, AUTO_MODE_TELEPHONY)
                 .initializeTimeZoneSetting(ARBITRARY_TIME_ZONE_ID);
 
         script.suggestTelephonyTimeZone(slotIndex1TimeZoneSuggestion)
@@ -129,6 +133,10 @@ public class TimeZoneDetectorStrategyImplTest {
                 mTimeZoneDetectorStrategy.findBestTelephonySuggestionForTests());
     }
 
+    /**
+     * Telephony suggestions have quality metadata. Ordinarily, low scoring suggestions are not
+     * used, but this is not true if the device's time zone setting is uninitialized.
+     */
     @Test
     public void testTelephonySuggestionsWhenTimeZoneUninitialized() {
         assertTrue(TELEPHONY_SCORE_LOW < TELEPHONY_SCORE_USAGE_THRESHOLD);
@@ -139,7 +147,7 @@ public class TimeZoneDetectorStrategyImplTest {
                 QUALITY_SINGLE_ZONE, TELEPHONY_SCORE_HIGH);
 
         Script script = new Script()
-                .initializeAutoTimeZoneDetection(true);
+                .initializeAutoTimeZoneDetection(true, AUTO_MODE_TELEPHONY);
 
         // A low quality suggestions will not be taken: The device time zone setting is left
         // uninitialized.
@@ -197,15 +205,15 @@ public class TimeZoneDetectorStrategyImplTest {
 
     /**
      * Confirms that toggling the auto time zone detection setting has the expected behavior when
-     * the strategy is "opinionated".
+     * the strategy is "opinionated" when in telephony auto detection mode.
      */
     @Test
-    public void testTogglingAutoTimeZoneDetection() {
+    public void testTogglingAutoTimeZoneDetection_autoModeTelephony() {
         Script script = new Script();
 
         for (TelephonyTestCase testCase : TELEPHONY_TEST_CASES) {
             // Start with the device in a known state.
-            script.initializeAutoTimeZoneDetection(false)
+            script.initializeAutoTimeZoneDetection(false, AUTO_MODE_TELEPHONY)
                     .initializeTimeZoneSetting(ARBITRARY_TIME_ZONE_ID);
 
             TelephonyTimeZoneSuggestion suggestion =
@@ -256,7 +264,7 @@ public class TimeZoneDetectorStrategyImplTest {
     @Test
     public void testTelephonySuggestionsSingleSlotId() {
         Script script = new Script()
-                .initializeAutoTimeZoneDetection(true)
+                .initializeAutoTimeZoneDetection(true, AUTO_MODE_TELEPHONY)
                 .initializeTimeZoneSetting(ARBITRARY_TIME_ZONE_ID);
 
         for (TelephonyTestCase testCase : TELEPHONY_TEST_CASES) {
@@ -322,7 +330,7 @@ public class TimeZoneDetectorStrategyImplTest {
                         TELEPHONY_SCORE_NONE);
 
         Script script = new Script()
-                .initializeAutoTimeZoneDetection(true)
+                .initializeAutoTimeZoneDetection(true, AUTO_MODE_TELEPHONY)
                 .initializeTimeZoneSetting(ARBITRARY_TIME_ZONE_ID)
                 // Initialize the latest suggestions as empty so we don't need to worry about nulls
                 // below for the first loop.
@@ -402,13 +410,13 @@ public class TimeZoneDetectorStrategyImplTest {
 
     /**
      * The {@link TimeZoneDetectorStrategyImpl.Callback} is left to detect whether changing the time
-     * zone is actually necessary. This test proves that the service doesn't assume it knows the
+     * zone is actually necessary. This test proves that the strategy doesn't assume it knows the
      * current setting.
      */
     @Test
-    public void testTimeZoneDetectorStrategyDoesNotAssumeCurrentSetting() {
+    public void testTimeZoneDetectorStrategyDoesNotAssumeCurrentSetting_autoModeTelephony() {
         Script script = new Script()
-                .initializeAutoTimeZoneDetection(true);
+                .initializeAutoTimeZoneDetection(true, AUTO_MODE_TELEPHONY);
 
         TelephonyTestCase testCase = newTelephonyTestCase(
                 MATCH_TYPE_NETWORK_COUNTRY_AND_OFFSET, QUALITY_SINGLE_ZONE, TELEPHONY_SCORE_HIGH);
@@ -442,22 +450,30 @@ public class TimeZoneDetectorStrategyImplTest {
     }
 
     @Test
-    public void testManualSuggestion_autoTimeZoneDetectionEnabled() {
+    public void testManualSuggestion_autoTimeZoneDetectionEnabled_autoTelephonyMode() {
+        checkManualSuggestion_autoTimeZoneDetectionEnabled(AUTO_MODE_TELEPHONY);
+    }
+
+    @Test
+    public void testManualSuggestion_autoTimeZoneDetectionEnabled_autoGeolocationMode() {
+        checkManualSuggestion_autoTimeZoneDetectionEnabled(AUTO_MODE_GEOLOCATION);
+    }
+
+    private void checkManualSuggestion_autoTimeZoneDetectionEnabled(int autoModeGeolocation) {
         Script script = new Script()
                 .initializeTimeZoneSetting(ARBITRARY_TIME_ZONE_ID)
-                .initializeAutoTimeZoneDetection(true);
+                .initializeAutoTimeZoneDetection(true, autoModeGeolocation);
 
         // Auto time zone detection is enabled so the manual suggestion should be ignored.
         script.suggestManualTimeZone(createManualSuggestion("Europe/Paris"))
                 .verifyTimeZoneNotSet();
     }
 
-
     @Test
     public void testManualSuggestion_autoTimeZoneDetectionDisabled() {
         Script script = new Script()
                 .initializeTimeZoneSetting(ARBITRARY_TIME_ZONE_ID)
-                .initializeAutoTimeZoneDetection(false);
+                .initializeAutoTimeZoneDetection(false, AUTO_MODE_TELEPHONY);
 
         // Auto time zone detection is disabled so the manual suggestion should be used.
         ManualTimeZoneSuggestion manualSuggestion = createManualSuggestion("Europe/Paris");
@@ -465,8 +481,186 @@ public class TimeZoneDetectorStrategyImplTest {
                 .verifyTimeZoneSetAndReset(manualSuggestion);
     }
 
+    @Test
+    public void testEmptyGeolocationSuggestion() {
+        Script script = new Script()
+                .initializeAutoTimeZoneDetection(true, AUTO_MODE_GEOLOCATION)
+                .initializeTimeZoneSetting(ARBITRARY_TIME_ZONE_ID);
+
+        GeolocationTimeZoneSuggestion emptySuggestion = createEmptyGeoLocationSuggestion();
+
+        script.suggestGeolocationTimeZone(emptySuggestion)
+                .verifyTimeZoneNotSet();
+
+        // Assert internal service state.
+        assertEquals(emptySuggestion, mTimeZoneDetectorStrategy.getLatestGeolocationSuggestion());
+    }
+
+    /** A basic test that confirms that geolocation suggestions are used. */
+    @Test
+    public void testGeolocationSuggestion() {
+        GeolocationTimeZoneSuggestion suggestion = createGeoLocationSuggestion("Europe/London");
+
+        Script script = new Script()
+                .initializeAutoTimeZoneDetection(true, AUTO_MODE_GEOLOCATION)
+                .initializeTimeZoneSetting(ARBITRARY_TIME_ZONE_ID);
+
+        script.suggestGeolocationTimeZone(suggestion)
+                .verifyTimeZoneSetAndReset(suggestion);
+
+        // Assert internal service state.
+        assertEquals(suggestion, mTimeZoneDetectorStrategy.getLatestGeolocationSuggestion());
+    }
+
+    /**
+     * Confirms that toggling the auto time zone detection enabled setting has the expected behavior
+     * when the strategy is "opinionated" and "un-opinionated" when in geolocation detection mode.
+     */
+    @Test
+    public void testTogglingAutoTimeZoneDetectionEnabled_autoModeGeolocation() {
+        GeolocationTimeZoneSuggestion geolocationSuggestion =
+                createGeoLocationSuggestion("Europe/London");
+        GeolocationTimeZoneSuggestion emptyGeolocationSuggestion =
+                createEmptyGeoLocationSuggestion();
+        ManualTimeZoneSuggestion manualSuggestion = createManualSuggestion("Europe/Paris");
+
+        Script script = new Script()
+                .initializeAutoTimeZoneDetection(false, AUTO_MODE_GEOLOCATION)
+                .initializeTimeZoneSetting(ARBITRARY_TIME_ZONE_ID);
+
+        script.suggestGeolocationTimeZone(geolocationSuggestion);
+
+        // When time zone detection is not enabled, the time zone suggestion will not be set.
+        script.verifyTimeZoneNotSet();
+
+        // Assert internal service state.
+        assertEquals(geolocationSuggestion,
+                mTimeZoneDetectorStrategy.getLatestGeolocationSuggestion());
+
+        // Toggling the time zone setting on should cause the device setting to be set.
+        script.autoTimeZoneDetectionEnabled(true)
+                .verifyTimeZoneSetAndReset(geolocationSuggestion);
+
+        // Toggling the time zone setting should off should do nothing because the device is now
+        // set to that time zone.
+        script.autoTimeZoneDetectionEnabled(false)
+                .verifyTimeZoneNotSet()
+                .autoTimeZoneDetectionEnabled(true)
+                .verifyTimeZoneNotSet();
+
+        // Now toggle auto time zone setting, and confirm it is opinionated.
+        script.autoTimeZoneDetectionEnabled(false)
+                .suggestManualTimeZone(manualSuggestion)
+                .verifyTimeZoneSetAndReset(manualSuggestion)
+                .autoTimeZoneDetectionEnabled(true)
+                .verifyTimeZoneSetAndReset(geolocationSuggestion);
+
+        // Now withdraw the geolocation suggestion, and assert the strategy is no longer
+        // opinionated.
+        script.suggestGeolocationTimeZone(emptyGeolocationSuggestion)
+                .verifyTimeZoneNotSet()
+                .autoTimeZoneDetectionEnabled(false)
+                .verifyTimeZoneNotSet()
+                .suggestManualTimeZone(manualSuggestion)
+                .verifyTimeZoneSetAndReset(manualSuggestion)
+                .autoTimeZoneDetectionEnabled(true)
+                .verifyTimeZoneNotSet();
+
+        // Assert internal service state.
+        assertEquals(emptyGeolocationSuggestion,
+                mTimeZoneDetectorStrategy.getLatestGeolocationSuggestion());
+    }
+
+    /**
+     * Confirms that toggling the auto time zone detection mode has the expected behavior.
+     */
+    @Test
+    public void testTogglingAutoTimeZoneDetectionMode() {
+        GeolocationTimeZoneSuggestion geolocationSuggestion =
+                createGeoLocationSuggestion("Europe/London");
+        TelephonyTimeZoneSuggestion telephonySuggestion = createTelephonySuggestion(
+                SLOT_INDEX1, MATCH_TYPE_NETWORK_COUNTRY_AND_OFFSET, QUALITY_SINGLE_ZONE,
+                "Europe/Paris");
+
+        Script script = new Script()
+                .initializeAutoTimeZoneDetection(false, AUTO_MODE_TELEPHONY)
+                .initializeTimeZoneSetting(ARBITRARY_TIME_ZONE_ID);
+
+        // Add suggestions. Nothing should happen as time zone detection is disabled.
+        script.suggestGeolocationTimeZone(geolocationSuggestion)
+                .verifyTimeZoneNotSet();
+        script.suggestTelephonyTimeZone(telephonySuggestion)
+                .verifyTimeZoneNotSet();
+
+        // Assert internal service state.
+        assertEquals(geolocationSuggestion,
+                mTimeZoneDetectorStrategy.getLatestGeolocationSuggestion());
+        assertEquals(telephonySuggestion,
+                mTimeZoneDetectorStrategy.getLatestTelephonySuggestion(SLOT_INDEX1).suggestion);
+
+        // Toggling the time zone setting on should cause the device setting to be set from the
+        // telephony signal, as we've started in telephony mode.
+        script.autoTimeZoneDetectionEnabled(true)
+                .verifyTimeZoneSetAndReset(telephonySuggestion);
+
+        // Toggling the mode should cause the device setting to change.
+        script.autoTimeZoneDetectionModeSet(AUTO_MODE_GEOLOCATION)
+                .verifyTimeZoneSetAndReset(geolocationSuggestion);
+
+        script.autoTimeZoneDetectionModeSet(AUTO_MODE_TELEPHONY)
+                .verifyTimeZoneSetAndReset(telephonySuggestion);
+    }
+
+    /**
+     * The {@link TimeZoneDetectorStrategyImpl.Callback} is left to detect whether changing the time
+     * zone is actually necessary. This test proves that the strategy doesn't assume it knows the
+     * current setting.
+     */
+    @Test
+    public void testTimeZoneDetectorStrategyDoesNotAssumeCurrentSetting_autoModeGeolocation() {
+        GeolocationTimeZoneSuggestion losAngelesSuggestion =
+                createGeoLocationSuggestion("America/Los_Angeles");
+        GeolocationTimeZoneSuggestion newYorkSuggestion =
+                createGeoLocationSuggestion("America/New_York");
+
+        Script script = new Script()
+                .initializeAutoTimeZoneDetection(true, AUTO_MODE_GEOLOCATION);
+
+        // Initialization.
+        script.suggestGeolocationTimeZone(losAngelesSuggestion)
+                .verifyTimeZoneSetAndReset(losAngelesSuggestion);
+        // Suggest it again - it should not be set because it is already set.
+        script.suggestGeolocationTimeZone(losAngelesSuggestion)
+                .verifyTimeZoneNotSet();
+
+        // Toggling time zone detection should set the device time zone only if the current setting
+        // value is different from the most recent telephony suggestion.
+        script.autoTimeZoneDetectionEnabled(false)
+                .verifyTimeZoneNotSet()
+                .autoTimeZoneDetectionEnabled(true)
+                .verifyTimeZoneNotSet();
+
+        // Simulate a user turning auto detection off, a new suggestion being made while auto
+        // detection is off, and the user turning it on again.
+        script.autoTimeZoneDetectionEnabled(false)
+                .suggestGeolocationTimeZone(newYorkSuggestion)
+                .verifyTimeZoneNotSet();
+        // Latest suggestion should be used.
+        script.autoTimeZoneDetectionEnabled(true)
+                .verifyTimeZoneSetAndReset(newYorkSuggestion);
+    }
+
     private ManualTimeZoneSuggestion createManualSuggestion(String zoneId) {
         return new ManualTimeZoneSuggestion(zoneId);
+    }
+
+    private static TelephonyTimeZoneSuggestion createTelephonySuggestion(
+            int slotIndex, @MatchType int matchType, @Quality int quality, String zoneId) {
+        return new TelephonyTimeZoneSuggestion.Builder(slotIndex)
+                .setMatchType(matchType)
+                .setQuality(quality)
+                .setZoneId(zoneId)
+                .build();
     }
 
     private static TelephonyTimeZoneSuggestion createEmptySlotIndex1Suggestion() {
@@ -477,15 +671,30 @@ public class TimeZoneDetectorStrategyImplTest {
         return new TelephonyTimeZoneSuggestion.Builder(SLOT_INDEX2).build();
     }
 
+    private static GeolocationTimeZoneSuggestion createGeoLocationSuggestion(String zoneId) {
+        return new GeolocationTimeZoneSuggestion(zoneId);
+    }
+
+    private static GeolocationTimeZoneSuggestion createEmptyGeoLocationSuggestion() {
+        return createGeoLocationSuggestion(null);
+    }
+
     static class FakeTimeZoneDetectorStrategyCallback
             implements TimeZoneDetectorStrategyImpl.Callback {
 
         private boolean mAutoTimeZoneDetectionEnabled;
+        private int mAutoTimeZoneDetectionMode;
         private TestState<String> mTimeZoneId = new TestState<>();
 
         @Override
         public boolean isAutoTimeZoneDetectionEnabled() {
             return mAutoTimeZoneDetectionEnabled;
+        }
+
+        @Override
+        @AutoMode
+        public int getAutoTimeZoneDetectionMode() {
+            return mAutoTimeZoneDetectionMode;
         }
 
         @Override
@@ -503,8 +712,9 @@ public class TimeZoneDetectorStrategyImplTest {
             mTimeZoneId.set(zoneId);
         }
 
-        void initializeAutoTimeZoneDetection(boolean enabled) {
+        void initializeAutoTimeZoneDetection(boolean enabled, @AutoMode int autoDetectionMode) {
             mAutoTimeZoneDetectionEnabled = enabled;
+            mAutoTimeZoneDetectionMode = autoDetectionMode;
         }
 
         void initializeTimeZone(String zoneId) {
@@ -513,6 +723,10 @@ public class TimeZoneDetectorStrategyImplTest {
 
         void setAutoTimeZoneDetectionEnabled(boolean enabled) {
             mAutoTimeZoneDetectionEnabled = enabled;
+        }
+
+        void setAutoTimeZoneDetectionMode(int autoDetectionMode) {
+            mAutoTimeZoneDetectionMode = autoDetectionMode;
         }
 
         void assertTimeZoneNotSet() {
@@ -585,8 +799,9 @@ public class TimeZoneDetectorStrategyImplTest {
      */
     private class Script {
 
-        Script initializeAutoTimeZoneDetection(boolean enabled) {
-            mFakeTimeZoneDetectorStrategyCallback.initializeAutoTimeZoneDetection(enabled);
+        Script initializeAutoTimeZoneDetection(boolean enabled, @AutoMode int autoDetectionMode) {
+            mFakeTimeZoneDetectorStrategyCallback.initializeAutoTimeZoneDetection(
+                    enabled, autoDetectionMode);
             return this;
         }
 
@@ -601,11 +816,9 @@ public class TimeZoneDetectorStrategyImplTest {
             return this;
         }
 
-        /**
-         * Simulates the time zone detection strategy receiving a telephony-originated suggestion.
-         */
-        Script suggestTelephonyTimeZone(TelephonyTimeZoneSuggestion timeZoneSuggestion) {
-            mTimeZoneDetectorStrategy.suggestTelephonyTimeZone(timeZoneSuggestion);
+        Script autoTimeZoneDetectionModeSet(@AutoMode int autoDetectionMode) {
+            mFakeTimeZoneDetectorStrategyCallback.setAutoTimeZoneDetectionMode(autoDetectionMode);
+            mTimeZoneDetectorStrategy.handleAutoTimeZoneDetectionChanged();
             return this;
         }
 
@@ -615,21 +828,49 @@ public class TimeZoneDetectorStrategyImplTest {
             return this;
         }
 
+        /**
+         * Simulates the time zone detection strategy receiving a geolocation-originated
+         * suggestion.
+         */
+        Script suggestGeolocationTimeZone(GeolocationTimeZoneSuggestion suggestion) {
+            mTimeZoneDetectorStrategy.suggestGeolocationTimeZone(suggestion);
+            return this;
+        }
+
+        /**
+         * Simulates the time zone detection strategy receiving a telephony-originated suggestion.
+         */
+        Script suggestTelephonyTimeZone(TelephonyTimeZoneSuggestion timeZoneSuggestion) {
+            mTimeZoneDetectorStrategy.suggestTelephonyTimeZone(timeZoneSuggestion);
+            return this;
+        }
+
+        /**
+         * Confirms that the device's time zone has not been set by previous actions since the test
+         * state was last reset.
+         */
         Script verifyTimeZoneNotSet() {
             mFakeTimeZoneDetectorStrategyCallback.assertTimeZoneNotSet();
             return this;
         }
 
-        Script verifyTimeZoneSetAndReset(TelephonyTimeZoneSuggestion suggestion) {
-            mFakeTimeZoneDetectorStrategyCallback.assertTimeZoneSet(suggestion.getZoneId());
+        /** Verifies the device's time zone has been set and clears change tracking history. */
+        Script verifyTimeZoneSetAndReset(String zoneId) {
+            mFakeTimeZoneDetectorStrategyCallback.assertTimeZoneSet(zoneId);
             mFakeTimeZoneDetectorStrategyCallback.commitAllChanges();
             return this;
         }
 
+        Script verifyTimeZoneSetAndReset(TelephonyTimeZoneSuggestion suggestion) {
+            return verifyTimeZoneSetAndReset(suggestion.getZoneId());
+        }
+
         Script verifyTimeZoneSetAndReset(ManualTimeZoneSuggestion suggestion) {
-            mFakeTimeZoneDetectorStrategyCallback.assertTimeZoneSet(suggestion.getZoneId());
-            mFakeTimeZoneDetectorStrategyCallback.commitAllChanges();
-            return this;
+            return verifyTimeZoneSetAndReset(suggestion.getZoneId());
+        }
+
+        Script verifyTimeZoneSetAndReset(GeolocationTimeZoneSuggestion suggestion) {
+            return verifyTimeZoneSetAndReset(suggestion.getZoneId());
         }
 
         Script resetState() {

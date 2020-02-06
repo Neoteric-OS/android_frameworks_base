@@ -16,6 +16,8 @@
 
 package com.android.server.timezonedetector;
 
+import static com.android.server.timezonedetector.TimeZoneDetectorStrategy.AUTO_MODE_TELEPHONY;
+
 import android.annotation.Nullable;
 import android.app.AlarmManager;
 import android.content.ContentResolver;
@@ -33,6 +35,9 @@ public final class TimeZoneDetectorCallbackImpl implements TimeZoneDetectorStrat
 
     private final Context mContext;
     private final ContentResolver mCr;
+
+    // This is defaulted to telephony mode as it's the only mode supported.
+    private final int mAutoDetectionMode = AUTO_MODE_TELEPHONY;
 
     TimeZoneDetectorCallbackImpl(Context context) {
         mContext = context;
@@ -55,6 +60,11 @@ public final class TimeZoneDetectorCallbackImpl implements TimeZoneDetectorStrat
         // TODO b/150583524 Avoid the use of a deprecated API.
         return mContext.getSystemService(ConnectivityManager.class)
                 .isNetworkSupported(ConnectivityManager.TYPE_MOBILE);
+    }
+
+    @Override
+    public int getAutoTimeZoneDetectionMode() {
+        return mAutoDetectionMode;
     }
 
     @Override
