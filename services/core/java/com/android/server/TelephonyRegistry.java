@@ -39,6 +39,7 @@ import android.telephony.CellInfo;
 import android.telephony.CellLocation;
 import android.telephony.DataFailCause;
 import android.telephony.DisconnectCause;
+import android.telephony.DisplayInfo;
 import android.telephony.LocationAccessPolicy;
 import android.telephony.PhoneCapability;
 import android.telephony.PhoneStateListener;
@@ -186,6 +187,8 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
     private boolean[] mUserMobileDataState;
 
+    private DisplayInfo[] mDisplayInfos;
+
     private SignalStrength[] mSignalStrength;
 
     private boolean[] mMessageWaiting;
@@ -261,7 +264,13 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
     static final int ENFORCE_PHONE_STATE_PERMISSION_MASK =
                 PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR
                         | PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR
+<<<<<<< HEAD   (2fd807 Update javadocs for API review)
                         | PhoneStateListener.LISTEN_EMERGENCY_NUMBER_LIST;
+=======
+                        | PhoneStateListener.LISTEN_EMERGENCY_NUMBER_LIST
+                        | PhoneStateListener.LISTEN_REGISTRATION_FAILURE
+                        | PhoneStateListener.LISTEN_DISPLAY_INFO_CHANGED;
+>>>>>>> CHANGE (987b8d Added telephony display info support)
 
     static final int PRECISE_PHONE_STATE_PERMISSION_MASK =
                 PhoneStateListener.LISTEN_PRECISE_CALL_STATE |
@@ -357,6 +366,101 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         }
     };
 
+<<<<<<< HEAD   (2fd807 Update javadocs for API review)
+=======
+    private TelephonyManager getTelephonyManager() {
+        return (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+    }
+
+    private void onMultiSimConfigChanged() {
+        int oldNumPhones = mNumPhones;
+        mNumPhones = getTelephonyManager().getActiveModemCount();
+        if (oldNumPhones == mNumPhones) return;
+
+        if (DBG) {
+            log("TelephonyRegistry: activeModemCount changed from " + oldNumPhones
+                    + " to " + mNumPhones);
+        }
+        mCallState = copyOf(mCallState, mNumPhones);
+        mDataActivity = copyOf(mCallState, mNumPhones);
+        mDataConnectionState = copyOf(mCallState, mNumPhones);
+        mDataConnectionNetworkType = copyOf(mCallState, mNumPhones);
+        mCallIncomingNumber = copyOf(mCallIncomingNumber, mNumPhones);
+        mServiceState = copyOf(mServiceState, mNumPhones);
+        mVoiceActivationState = copyOf(mVoiceActivationState, mNumPhones);
+        mDataActivationState = copyOf(mDataActivationState, mNumPhones);
+        mUserMobileDataState = copyOf(mUserMobileDataState, mNumPhones);
+        if (mSignalStrength != null) {
+            mSignalStrength = copyOf(mSignalStrength, mNumPhones);
+        } else {
+            mSignalStrength = new SignalStrength[mNumPhones];
+        }
+        mMessageWaiting = copyOf(mMessageWaiting, mNumPhones);
+        mCallForwarding = copyOf(mCallForwarding, mNumPhones);
+        mCellIdentity = copyOf(mCellIdentity, mNumPhones);
+        mSrvccState = copyOf(mSrvccState, mNumPhones);
+        mPreciseCallState = copyOf(mPreciseCallState, mNumPhones);
+        mForegroundCallState = copyOf(mForegroundCallState, mNumPhones);
+        mBackgroundCallState = copyOf(mBackgroundCallState, mNumPhones);
+        mRingingCallState = copyOf(mRingingCallState, mNumPhones);
+        mCallDisconnectCause = copyOf(mCallDisconnectCause, mNumPhones);
+        mCallPreciseDisconnectCause = copyOf(mCallPreciseDisconnectCause, mNumPhones);
+        mCallQuality = copyOf(mCallQuality, mNumPhones);
+        mCallNetworkType = copyOf(mCallNetworkType, mNumPhones);
+        mCallAttributes = copyOf(mCallAttributes, mNumPhones);
+        mOutgoingCallEmergencyNumber = copyOf(mOutgoingCallEmergencyNumber, mNumPhones);
+        mOutgoingSmsEmergencyNumber = copyOf(mOutgoingSmsEmergencyNumber, mNumPhones);
+        mDisplayInfos = copyOf(mDisplayInfos, mNumPhones);
+
+        // ds -> ss switch.
+        if (mNumPhones < oldNumPhones) {
+            cutListToSize(mCellInfo, mNumPhones);
+            cutListToSize(mImsReasonInfo, mNumPhones);
+            cutListToSize(mPreciseDataConnectionStates, mNumPhones);
+            return;
+        }
+
+        // mNumPhones > oldNumPhones: ss -> ds switch
+        for (int i = oldNumPhones; i < mNumPhones; i++) {
+            mCallState[i] =  TelephonyManager.CALL_STATE_IDLE;
+            mDataActivity[i] = TelephonyManager.DATA_ACTIVITY_NONE;
+            mDataConnectionState[i] = TelephonyManager.DATA_UNKNOWN;
+            mVoiceActivationState[i] = TelephonyManager.SIM_ACTIVATION_STATE_UNKNOWN;
+            mDataActivationState[i] = TelephonyManager.SIM_ACTIVATION_STATE_UNKNOWN;
+            mCallIncomingNumber[i] =  "";
+            mServiceState[i] =  new ServiceState();
+            mSignalStrength[i] =  null;
+            mUserMobileDataState[i] = false;
+            mMessageWaiting[i] =  false;
+            mCallForwarding[i] =  false;
+            mCellIdentity[i] = null;
+            mCellInfo.add(i, null);
+            mImsReasonInfo.add(i, null);
+            mSrvccState[i] = TelephonyManager.SRVCC_STATE_HANDOVER_NONE;
+            mCallDisconnectCause[i] = DisconnectCause.NOT_VALID;
+            mCallPreciseDisconnectCause[i] = PreciseDisconnectCause.NOT_VALID;
+            mCallQuality[i] = createCallQuality();
+            mCallAttributes[i] = new CallAttributes(createPreciseCallState(),
+                    TelephonyManager.NETWORK_TYPE_UNKNOWN, createCallQuality());
+            mCallNetworkType[i] = TelephonyManager.NETWORK_TYPE_UNKNOWN;
+            mPreciseCallState[i] = createPreciseCallState();
+            mRingingCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
+            mForegroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
+            mBackgroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
+            mPreciseDataConnectionStates.add(new HashMap<String, PreciseDataConnectionState>());
+            mDisplayInfos[i] = null;
+        }
+    }
+
+    private void cutListToSize(List list, int size) {
+        if (list == null) return;
+
+        while (list.size() > size) {
+            list.remove(list.size() - 1);
+        }
+    }
+
+>>>>>>> CHANGE (987b8d Added telephony display info support)
     // we keep a copy of all of the state so we can send it out when folks
     // register for it
     //
@@ -403,6 +507,12 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         mImsReasonInfo = new ArrayList<>();
         mPhysicalChannelConfigs = new ArrayList<>();
         mEmergencyNumberList = new HashMap<>();
+<<<<<<< HEAD   (2fd807 Update javadocs for API review)
+=======
+        mOutgoingCallEmergencyNumber = new EmergencyNumber[numPhones];
+        mOutgoingSmsEmergencyNumber = new EmergencyNumber[numPhones];
+        mDisplayInfos = new DisplayInfo[numPhones];
+>>>>>>> CHANGE (987b8d Added telephony display info support)
         for (int i = 0; i < numPhones; i++) {
             mCallState[i] =  TelephonyManager.CALL_STATE_IDLE;
             mDataActivity[i] = TelephonyManager.DATA_ACTIVITY_NONE;
@@ -431,6 +541,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mRingingCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
             mForegroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
             mBackgroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
+<<<<<<< HEAD   (2fd807 Update javadocs for API review)
             mPreciseDataConnectionState[i] = new PreciseDataConnectionState();
         }
 
@@ -440,6 +551,10 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             for (int i = 0; i < numPhones; i++) {
                 location.fillInNotifierBundle(mCellLocation[i]);
             }
+=======
+            mPreciseDataConnectionStates.add(new HashMap<String, PreciseDataConnectionState>());
+            mDisplayInfos[i] = null;
+>>>>>>> CHANGE (987b8d Added telephony display info support)
         }
 
         mAppOps = mContext.getSystemService(AppOpsManager.class);
@@ -826,10 +941,18 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                             remove(r.binder);
                         }
                     }
+<<<<<<< HEAD   (2fd807 Update javadocs for API review)
                     if ((events & PhoneStateListener.LISTEN_PHYSICAL_CHANNEL_CONFIGURATION) != 0) {
                         try {
                             r.callback.onPhysicalChannelConfigurationChanged(
                                     mPhysicalChannelConfigs.get(phoneId));
+=======
+                    if ((events & PhoneStateListener.LISTEN_DISPLAY_INFO_CHANGED) != 0) {
+                        try {
+                            if (mDisplayInfos[phoneId] != null) {
+                                r.callback.onDisplayInfoChanged(mDisplayInfos[phoneId]);
+                            }
+>>>>>>> CHANGE (987b8d Added telephony display info support)
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
@@ -1341,6 +1464,45 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                             r.callback.onUserMobileDataStateChanged(state);
                         } catch (RemoteException ex) {
                             mRemoveList.add(r.binder);
+                        }
+                    }
+                }
+            }
+            handleRemoveListLocked();
+        }
+    }
+
+    /**
+     * Notify display network info changed.
+     *
+     * @param phoneId Phone id
+     * @param subId Subscription id
+     * @param displayInfo Display network info
+     *
+     * @see PhoneStateListener#onDisplayInfoChanged(DisplayInfo)
+     */
+    public void notifyDisplayInfoChanged(int phoneId, int subId,
+                                         @NonNull DisplayInfo displayInfo) {
+        if (!checkNotifyPermission("notifyDisplayInfoChanged()")) {
+            return;
+        }
+        if (VDBG) {
+            log("notifyDisplayInfoChanged: PhoneId=" + phoneId
+                    + " subId=" + subId + " displayInfo=" + displayInfo);
+        }
+        synchronized (mRecords) {
+            if (validatePhoneId(phoneId)) {
+                if (mDisplayInfos[phoneId] != null) {
+                    mDisplayInfos[phoneId] = displayInfo;
+                    for (Record r : mRecords) {
+                        if (r.matchPhoneStateListenerEvent(
+                                PhoneStateListener.LISTEN_DISPLAY_INFO_CHANGED)
+                                && idMatch(r.subId, subId, phoneId)) {
+                            try {
+                                r.callback.onDisplayInfoChanged(displayInfo);
+                            } catch (RemoteException ex) {
+                                mRemoveList.add(r.binder);
+                            }
                         }
                     }
                 }
@@ -2451,6 +2613,20 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                             + phoneId + " umds=" + mUserMobileDataState[phoneId]);
                 }
                 r.callback.onUserMobileDataStateChanged(mUserMobileDataState[phoneId]);
+            } catch (RemoteException ex) {
+                mRemoveList.add(r.binder);
+            }
+        }
+
+        if ((events & PhoneStateListener.LISTEN_DISPLAY_INFO_CHANGED) != 0) {
+            try {
+                if (VDBG) {
+                    log("checkPossibleMissNotify: onDisplayInfoChanged phoneId="
+                            + phoneId + " dpi=" + mDisplayInfos[phoneId]);
+                }
+                if (mDisplayInfos[phoneId] != null) {
+                    r.callback.onDisplayInfoChanged(mDisplayInfos[phoneId]);
+                }
             } catch (RemoteException ex) {
                 mRemoveList.add(r.binder);
             }
