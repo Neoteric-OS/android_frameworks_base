@@ -985,6 +985,17 @@ public class TelephonyManager {
     public static final String EXTRA_NOTIFICATION_MESSAGE =
             "android.telephony.extra.NOTIFICATION_MESSAGE";
 
+     /**
+     * {@link CharSequence} extra key used with {@link #EVENT_SUPPLEMENTARY_SERVICE_NOTIFICATION}
+     * which contains sim provider name to be displayed to the user for the supplementary service
+     *  notification.
+     * <p>
+     * Set in the extras for the {@link #EVENT_SUPPLEMENTARY_SERVICE_NOTIFICATION} connection event.
+     * @hide
+     */
+     public static final String EXTRA_DISPLAY_NAME =
+            "android.telephony.extra.DISPLAY_NAME";
+
     /* Visual voicemail protocols */
 
     /**
