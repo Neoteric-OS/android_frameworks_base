@@ -46,6 +46,30 @@
       "revId": "654e9139360555a25601ea81f25cfb84ffc0bbed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318a40e4_79a69611",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-06T01:07:28Z",
+      "side": 1,
+      "message": "Filed b/148981097 to have discuss making these constructors @TestApi. Marking resolved as that issue is out of context for this change.",
+      "parentUuid": "a3fc737e_d6d78641",
+      "range": {
+        "startLine": 456,
+        "startChar": 15,
+        "endLine": 456,
+        "endChar": 30
+      },
+      "revId": "654e9139360555a25601ea81f25cfb84ffc0bbed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
