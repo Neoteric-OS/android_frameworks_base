@@ -24,6 +24,7 @@ import static android.app.timezonedetector.TelephonyTimeZoneSuggestion.QUALITY_S
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.timezonedetector.GeolocationTimeZoneSuggestion;
 import android.app.timezonedetector.ManualTimeZoneSuggestion;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
 import android.content.Context;
@@ -196,6 +197,16 @@ public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrat
     @VisibleForTesting
     public TimeZoneDetectorStrategyImpl(Callback callback) {
         mCallback = Objects.requireNonNull(callback);
+    }
+
+    @Override
+    public synchronized void suggestGeolocationTimeZone(
+            @NonNull GeolocationTimeZoneSuggestion suggestion) {
+        Objects.requireNonNull(suggestion);
+
+        // TODO Implement this.
+        throw new UnsupportedOperationException(
+                "Geo-location time zone detection is not currently implemented");
     }
 
     @Override

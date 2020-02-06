@@ -16,8 +16,6 @@
 
 package com.android.server.timezonedetector;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -40,8 +38,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.io.PrintWriter;
 
 @RunWith(AndroidJUnit4.class)
 public class TimeZoneDetectorServiceTest {
@@ -176,57 +172,5 @@ public class TimeZoneDetectorServiceTest {
                 .setMatchType(TelephonyTimeZoneSuggestion.MATCH_TYPE_NETWORK_COUNTRY_AND_OFFSET)
                 .setQuality(TelephonyTimeZoneSuggestion.QUALITY_SINGLE_ZONE)
                 .build();
-    }
-
-    private static class StubbedTimeZoneDetectorStrategy implements TimeZoneDetectorStrategy {
-
-        // Call tracking.
-        private ManualTimeZoneSuggestion mLastManualSuggestion;
-        private TelephonyTimeZoneSuggestion mLastTelephonySuggestion;
-        private boolean mHandleAutoTimeZoneDetectionChangedCalled;
-        private boolean mDumpCalled;
-
-        @Override
-        public void suggestManualTimeZone(ManualTimeZoneSuggestion timeZoneSuggestion) {
-            mLastManualSuggestion = timeZoneSuggestion;
-        }
-
-        @Override
-        public void suggestTelephonyTimeZone(TelephonyTimeZoneSuggestion timeZoneSuggestion) {
-            mLastTelephonySuggestion = timeZoneSuggestion;
-        }
-
-        @Override
-        public void handleAutoTimeZoneDetectionChanged() {
-            mHandleAutoTimeZoneDetectionChangedCalled = true;
-        }
-
-        @Override
-        public void dump(PrintWriter pw, String[] args) {
-            mDumpCalled = true;
-        }
-
-        void resetCallTracking() {
-            mLastManualSuggestion = null;
-            mLastTelephonySuggestion = null;
-            mHandleAutoTimeZoneDetectionChangedCalled = false;
-            mDumpCalled = false;
-        }
-
-        void verifySuggestManualTimeZoneCalled(ManualTimeZoneSuggestion expectedSuggestion) {
-            assertEquals(expectedSuggestion, mLastManualSuggestion);
-        }
-
-        void verifySuggestTelephonyTimeZoneCalled(TelephonyTimeZoneSuggestion expectedSuggestion) {
-            assertEquals(expectedSuggestion, mLastTelephonySuggestion);
-        }
-
-        void verifyHandleAutoTimeZoneDetectionChangedCalled() {
-            assertTrue(mHandleAutoTimeZoneDetectionChangedCalled);
-        }
-
-        void verifyDumpCalled() {
-            assertTrue(mDumpCalled);
-        }
     }
 }
