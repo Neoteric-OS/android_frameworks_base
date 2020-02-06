@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccad455a_a28f84fa",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2020-02-06T20:55:32Z",
+      "side": 1,
+      "message": "extra \u0027i\u0027",
+      "range": {
+        "startLine": 676,
+        "startChar": 69,
+        "endLine": 676,
+        "endChar": 70
+      },
+      "revId": "742aea875e5be10d6884e816fec27906ed2e7192",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
