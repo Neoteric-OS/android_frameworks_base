@@ -22,6 +22,29 @@
       "revId": "742aea875e5be10d6884e816fec27906ed2e7192",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0361b180_705804c0",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2020-02-06T21:28:47Z",
+      "side": 1,
+      "message": "Should the name say something about units, as in the finalizer case? Do we have a convention?",
+      "range": {
+        "startLine": 836,
+        "startChar": 24,
+        "endLine": 836,
+        "endChar": 56
+      },
+      "revId": "742aea875e5be10d6884e816fec27906ed2e7192",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
