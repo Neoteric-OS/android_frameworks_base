@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e82e177b_b60d9bf1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6448,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-06T08:51:31Z",
+      "side": 1,
+      "message": "maybe oldBg\u003d or no prefix if the place print it explains itself?",
+      "range": {
+        "startLine": 6448,
+        "startChar": 26,
+        "endLine": 6448,
+        "endChar": 43
+      },
+      "revId": "0e86769b9c2e877a06d59cda57c0e1fb3fc9e4e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de83d6d1_31b0d82f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6527,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-06T08:51:31Z",
+      "side": 1,
+      "message": "do we also want to print mRematchedNetworks?",
+      "range": {
+        "startLine": 6527,
+        "startChar": 12,
+        "endLine": 6527,
+        "endChar": 13
+      },
+      "revId": "0e86769b9c2e877a06d59cda57c0e1fb3fc9e4e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e15a3779_13470008",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6531,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-06T08:51:31Z",
+      "side": 1,
+      "message": "IIUC no one calls it in this patchset?\nIf you are planning to modify code everytime when debugging since this is more useful,\nthen maybe we should just keep the useful one?",
+      "range": {
+        "startLine": 6531,
+        "startChar": 22,
+        "endLine": 6531,
+        "endChar": 33
+      },
+      "revId": "0e86769b9c2e877a06d59cda57c0e1fb3fc9e4e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

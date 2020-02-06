@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6ceb5bbd_907db580",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6396,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-06T08:51:31Z",
+      "side": 1,
+      "message": "Yes, personally I\u0027ll prefer single line log if feasible in all cases.\nBut in pratice, if it\u0027s very long and hard to read. \nMultiple line log is preferred.\nBut no strong opinion, so if you see output of patchset6 is nicer feel free to use it.",
+      "parentUuid": "680fbaaa_c67e0a4c",
+      "range": {
+        "startLine": 6396,
+        "startChar": 22,
+        "endLine": 6396,
+        "endChar": 30
+      },
+      "revId": "2992e58db400510b40689cc53d1a1bcd3101191f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8eef7078_beb84a9e",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
