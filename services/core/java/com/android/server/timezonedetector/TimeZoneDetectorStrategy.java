@@ -16,6 +16,7 @@
 package com.android.server.timezonedetector;
 
 import android.annotation.NonNull;
+import android.app.timezonedetector.GeolocationTimeZoneSuggestion;
 import android.app.timezonedetector.ManualTimeZoneSuggestion;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
 
@@ -35,6 +36,12 @@ import java.io.PrintWriter;
  * @hide
  */
 public interface TimeZoneDetectorStrategy {
+
+    /**
+     * Suggests a time zone for the device, or withdraws a previous suggestion if
+     * {@link GeolocationTimeZoneSuggestion#getZoneId()} is {@code null}.
+     */
+    void suggestGeolocationTimeZone(@NonNull GeolocationTimeZoneSuggestion suggestion);
 
     /**
      * Suggests a time zone for the device using manually-entered (i.e. user sourced) information.
