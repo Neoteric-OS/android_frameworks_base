@@ -2569,6 +2569,13 @@
     <permission android:name="android.permission.SUGGEST_MANUAL_TIME_AND_ZONE"
         android:protectionLevel="signature" />
 
+    <!-- Allows applications to suggest a time zone from the device's geolocation.
+         <p>Not for use by third-party applications.
+         @hide
+    -->
+    <permission android:name="android.permission.SUGGEST_GEOLOCATION_TIME_ZONE"
+        android:protectionLevel="signature" />
+
     <!-- ==================================================== -->
     <!-- Permissions related to changing status bar   -->
     <!-- ==================================================== -->

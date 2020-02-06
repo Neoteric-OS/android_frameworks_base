@@ -40,6 +40,19 @@ public final class TimeZoneDetectorImpl implements TimeZoneDetector {
     }
 
     @Override
+    public void suggestGeolocationTimeZone(
+            @NonNull GeolocationTimeZoneSuggestion timeZoneSuggestion) {
+        if (DEBUG) {
+            Log.d(TAG, "suggestGeolocationTimeZone called: " + timeZoneSuggestion);
+        }
+        try {
+            mITimeZoneDetectorService.suggestGeolocationTimeZone(timeZoneSuggestion);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    @Override
     public void suggestManualTimeZone(@NonNull ManualTimeZoneSuggestion timeZoneSuggestion) {
         if (DEBUG) {
             Log.d(TAG, "suggestManualTimeZone called: " + timeZoneSuggestion);

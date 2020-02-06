@@ -28,6 +28,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.app.timezonedetector.GeolocationTimeZoneSuggestion;
 import android.app.timezonedetector.ManualTimeZoneSuggestion;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
 import android.content.Context;
@@ -73,6 +74,38 @@ public class TimeZoneDetectorServiceTest {
     public void tearDown() throws Exception {
         mHandlerThread.quit();
         mHandlerThread.join();
+    }
+
+    @Test(expected = SecurityException.class)
+    public void testSuggestGeolocationTimeZone_withoutPermission() {
+        doThrow(new SecurityException("Mock"))
+                .when(mMockContext).enforceCallingPermission(anyString(), any());
+        GeolocationTimeZoneSuggestion timeZoneSuggestion = createGeolocationTimeZoneSuggestion();
+
+        try {
+            mTimeZoneDetectorService.suggestGeolocationTimeZone(timeZoneSuggestion);
+            fail();
+        } finally {
+            verify(mMockContext).enforceCallingPermission(
+                    eq(android.Manifest.permission.SUGGEST_GEOLOCATION_TIME_ZONE),
+                    anyString());
+        }
+    }
+
+    @Test
+    public void testSuggestGeolocationTimeZone() throws Exception {
+        doNothing().when(mMockContext).enforceCallingOrSelfPermission(anyString(), any());
+
+        GeolocationTimeZoneSuggestion timeZoneSuggestion = createGeolocationTimeZoneSuggestion();
+        mTimeZoneDetectorService.suggestGeolocationTimeZone(timeZoneSuggestion);
+        mTestHandler.assertTotalMessagesEnqueued(1);
+
+        verify(mMockContext).enforceCallingOrSelfPermission(
+                eq(android.Manifest.permission.SUGGEST_GEOLOCATION_TIME_ZONE),
+                anyString());
+
+        mTestHandler.waitForMessagesToBeProcessed();
+        mStubbedTimeZoneDetectorStrategy.verifySuggestGeolocationTimeZoneCalled(timeZoneSuggestion);
     }
 
     @Test(expected = SecurityException.class)
@@ -165,6 +198,10 @@ public class TimeZoneDetectorServiceTest {
         mStubbedTimeZoneDetectorStrategy.verifyHandleAutoTimeZoneDetectionChangedCalled();
     }
 
+    private static GeolocationTimeZoneSuggestion createGeolocationTimeZoneSuggestion() {
+        return new GeolocationTimeZoneSuggestion("TestZoneId");
+    }
+
     private static ManualTimeZoneSuggestion createManualTimeZoneSuggestion() {
         return new ManualTimeZoneSuggestion("TestZoneId");
     }
@@ -181,10 +218,16 @@ public class TimeZoneDetectorServiceTest {
     private static class StubbedTimeZoneDetectorStrategy implements TimeZoneDetectorStrategy {
 
         // Call tracking.
+        private GeolocationTimeZoneSuggestion mLastGeolocationSuggestion;
         private ManualTimeZoneSuggestion mLastManualSuggestion;
         private TelephonyTimeZoneSuggestion mLastTelephonySuggestion;
         private boolean mHandleAutoTimeZoneDetectionChangedCalled;
         private boolean mDumpCalled;
+
+        @Override
+        public void suggestGeolocationTimeZone(GeolocationTimeZoneSuggestion timeZoneSuggestion) {
+            mLastGeolocationSuggestion = timeZoneSuggestion;
+        }
 
         @Override
         public void suggestManualTimeZone(ManualTimeZoneSuggestion timeZoneSuggestion) {
@@ -207,10 +250,16 @@ public class TimeZoneDetectorServiceTest {
         }
 
         void resetCallTracking() {
+            mLastGeolocationSuggestion = null;
             mLastManualSuggestion = null;
             mLastTelephonySuggestion = null;
             mHandleAutoTimeZoneDetectionChangedCalled = false;
             mDumpCalled = false;
+        }
+
+        void verifySuggestGeolocationTimeZoneCalled(
+                GeolocationTimeZoneSuggestion expectedSuggestion) {
+            assertEquals(expectedSuggestion, mLastGeolocationSuggestion);
         }
 
         void verifySuggestManualTimeZoneCalled(ManualTimeZoneSuggestion expectedSuggestion) {

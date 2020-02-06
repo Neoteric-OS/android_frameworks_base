@@ -41,6 +41,15 @@ public interface TimeZoneDetector {
     }
 
     /**
+     * Suggests the current time zone, determined using geolocation, to the detector. The detector
+     * may ignore the signal based on system settings.
+     *
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.SUGGEST_GEOLOCATION_TIME_ZONE)
+    void suggestGeolocationTimeZone(@NonNull GeolocationTimeZoneSuggestion timeZoneSuggestion);
+
+    /**
      * Suggests the current time zone, determined using the user's manually entered information, to
      * the detector. The detector may ignore the signal based on system settings.
      *

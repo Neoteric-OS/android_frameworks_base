@@ -16,6 +16,7 @@
 
 package android.app.timezonedetector;
 
+import android.app.timezonedetector.GeolocationTimeZoneSuggestion;
 import android.app.timezonedetector.ManualTimeZoneSuggestion;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
 
@@ -33,6 +34,7 @@ import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
  * {@hide}
  */
 interface ITimeZoneDetectorService {
+  void suggestGeolocationTimeZone(in GeolocationTimeZoneSuggestion timeZoneSuggestion);
   void suggestManualTimeZone(in ManualTimeZoneSuggestion timeZoneSuggestion);
   void suggestTelephonyTimeZone(in TelephonyTimeZoneSuggestion timeZoneSuggestion);
 }
