@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69456bb8_eef987ec",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-06T08:35:47Z",
+      "side": 1,
+      "message": "Maybe add @see mAdministratorUids. It\u0027s not for public consumption so maybe it\u0027s not too bad if the doc is not super expansive. Ideally this would call out that this is sent from network factories to CS, is always nulled out in requests and not used for matching.",
+      "range": {
+        "startLine": 853,
+        "startChar": 5,
+        "endLine": 853,
+        "endChar": 7
+      },
+      "revId": "201fc13e0c4ced06d53e708fef91742862cadfb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76de0f35_b93b7a0e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-06T08:35:47Z",
+      "side": 1,
+      "message": "Likewise, it would be better to explain the conditions to obtaining this data.",
+      "range": {
+        "startLine": 879,
+        "startChar": 73,
+        "endLine": 879,
+        "endChar": 74
+      },
+      "revId": "201fc13e0c4ced06d53e708fef91742862cadfb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65596e76_eae64187",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-06T08:35:47Z",
+      "side": 1,
+      "message": "I think you need to combine the owner UIDs.\n\nA typical way to do this for the unclear stuff like this is to require either for the fields to be equal or for at least one of them to be null.",
+      "range": {
+        "startLine": 1384,
+        "startChar": 16,
+        "endLine": 1384,
+        "endChar": 35
+      },
+      "revId": "201fc13e0c4ced06d53e708fef91742862cadfb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617cbd9f_fbaddb88",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-06T08:35:47Z",
+      "side": 1,
+      "message": "Did you forget to update this ?",
+      "range": {
+        "startLine": 1493,
+        "startChar": 19,
+        "endLine": 1493,
+        "endChar": 25
+      },
+      "revId": "201fc13e0c4ced06d53e708fef91742862cadfb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ad667a_9c38d0df",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-06T08:35:47Z",
+      "side": 1,
+      "message": "...and this ?",
+      "range": {
+        "startLine": 1508,
+        "startChar": 15,
+        "endLine": 1508,
+        "endChar": 23
+      },
+      "revId": "201fc13e0c4ced06d53e708fef91742862cadfb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
