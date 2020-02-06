@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08682388_2613fde3",
+        "filename": "core/java/android/app/job/JobInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2020-02-06T01:07:40Z",
+      "side": 1,
+      "message": "Move this check to BaseBundle#kindofEquals()",
+      "range": {
+        "startLine": 630,
+        "startChar": 46,
+        "endLine": 630,
+        "endChar": 82
+      },
+      "revId": "8209b75e037980bf25dce10911f99b420117c0cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
