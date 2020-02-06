@@ -245,6 +245,11 @@ public class TimeZoneDetectorServiceTest {
         }
 
         @Override
+        public void handleAutoTimeZoneDetectionModeChanged() {
+            fail("Not implemented");
+        }
+
+        @Override
         public void dump(PrintWriter pw, String[] args) {
             mDumpCalled = true;
         }
