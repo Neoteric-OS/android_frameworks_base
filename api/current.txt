@@ -29145,6 +29145,7 @@ package android.net {
     method @NonNull public android.net.NetworkCapabilities addTransportType(int);
     method public void clearAll();
     method public int describeContents();
+    method public boolean equalsAdministratorUids(@NonNull android.net.NetworkCapabilities);
     method public int getLinkDownstreamBandwidthKbps();
     method public int getLinkUpstreamBandwidthKbps();
     method @Nullable public android.net.NetworkSpecifier getNetworkSpecifier();

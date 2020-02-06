@@ -56,6 +56,8 @@ import androidx.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 
 @RunWith(AndroidJUnit4.class)
@@ -265,10 +267,11 @@ public class NetworkCapabilitiesTest {
         uids.add(new UidRange(50, 100));
         uids.add(new UidRange(3000, 4000));
         final NetworkCapabilities netCap = new NetworkCapabilities()
-            .addCapability(NET_CAPABILITY_INTERNET)
-            .setUids(uids)
-            .addCapability(NET_CAPABILITY_EIMS)
-            .addCapability(NET_CAPABILITY_NOT_METERED);
+                .addCapability(NET_CAPABILITY_INTERNET)
+                .setUids(uids)
+                .setAdministratorUids(Arrays.asList(new Integer[] { 5, 11 }))
+                .addCapability(NET_CAPABILITY_EIMS)
+                .addCapability(NET_CAPABILITY_NOT_METERED);
         netCap.setOwnerUid(123);
         assertParcelingIsLossless(netCap);
         netCap.setSSID(TEST_SSID);
@@ -455,6 +458,23 @@ public class NetworkCapabilitiesTest {
         assertFalse(nc2.appliesToUid(12));
         assertTrue(nc1.appliesToUid(22));
         assertTrue(nc2.appliesToUid(22));
+
+        final ArrayList<Integer> adminUids = new ArrayList<>();
+        adminUids.add(3);
+        adminUids.add(6);
+        adminUids.add(12);
+        nc1.setAdministratorUids(adminUids);
+        nc2.combineCapabilities(nc1);
+        assertTrue(nc2.equalsAdministratorUids(nc1));
+        assertEquals(nc2.getAdministratorUids(), adminUids);
+        adminUids.add(8);
+        nc1.setAdministratorUids(adminUids);
+        assertFalse(nc2.equalsAdministratorUids(nc1));
+        assertNotEquals(nc2.getAdministratorUids(), adminUids);
+        try {
+            nc2.combineCapabilities(nc1);
+            fail("Shouldn't be able to combine different lists of admin UIDs");
+        } catch (IllegalStateException expected) { }
     }
 
     @Test
