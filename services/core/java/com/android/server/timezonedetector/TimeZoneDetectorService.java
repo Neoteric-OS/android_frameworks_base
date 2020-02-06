@@ -18,9 +18,11 @@ package com.android.server.timezonedetector;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.timezonedetector.GeolocationTimeZoneSuggestion;
 import android.app.timezonedetector.ITimeZoneDetectorService;
 import android.app.timezonedetector.ManualTimeZoneSuggestion;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
+import android.app.timezonedetector.TimeZoneDetectorInternal;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
@@ -45,9 +47,10 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
     private static final String TAG = "TimeZoneDetectorService";
 
     /**
-     * Handles the lifecycle for {@link TimeZoneDetectorService}.
+     * Handles the service lifecycle for {@link TimeZoneDetectorService} and
+     * {@link TimeZoneDetectorInternalImpl}.
      */
-    public static class Lifecycle extends SystemService {
+    public static final class Lifecycle extends SystemService {
 
         public Lifecycle(@NonNull Context context) {
             super(context);
@@ -55,10 +58,21 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
 
         @Override
         public void onStart() {
-            TimeZoneDetectorService service = TimeZoneDetectorService.create(getContext());
+            // Obtain / create the shared dependencies.
+            Context context = getContext();
+            Handler handler = FgThread.getHandler();
+            TimeZoneDetectorStrategy timeZoneDetectorStrategy =
+                    TimeZoneDetectorStrategyImpl.create(context);
+
+            // Create and publish the local service for use by internal callers.
+            TimeZoneDetectorInternal internal =
+                    TimeZoneDetectorInternalImpl.create(context, handler, timeZoneDetectorStrategy);
+            publishLocalService(TimeZoneDetectorInternal.class, internal);
 
             // Publish the binder service so it can be accessed from other (appropriately
             // permissioned) processes.
+            TimeZoneDetectorService service =
+                    TimeZoneDetectorService.create(context, handler, timeZoneDetectorStrategy);
             publishBinderService(Context.TIME_ZONE_DETECTOR_SERVICE, service);
         }
     }
@@ -67,11 +81,10 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
     @NonNull private final Handler mHandler;
     @NonNull private final TimeZoneDetectorStrategy mTimeZoneDetectorStrategy;
 
-    private static TimeZoneDetectorService create(@NonNull Context context) {
-        final TimeZoneDetectorStrategy timeZoneDetectorStrategy =
-                TimeZoneDetectorStrategyImpl.create(context);
+    private static TimeZoneDetectorService create(
+            @NonNull Context context, @NonNull Handler handler,
+            @NonNull TimeZoneDetectorStrategy timeZoneDetectorStrategy) {
 
-        Handler handler = FgThread.getHandler();
         TimeZoneDetectorService service =
                 new TimeZoneDetectorService(context, handler, timeZoneDetectorStrategy);
 
@@ -92,6 +105,16 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
         mContext = Objects.requireNonNull(context);
         mHandler = Objects.requireNonNull(handler);
         mTimeZoneDetectorStrategy = Objects.requireNonNull(timeZoneDetectorStrategy);
+    }
+
+    /** Provided for command-line access. This is not exposed as a binder API. */
+    void suggestGeolocationTimeZone(
+            @NonNull GeolocationTimeZoneSuggestion timeZoneSuggestion) {
+        enforceSuggestGeolocationTimeZonePermission();
+        Objects.requireNonNull(timeZoneSuggestion);
+
+        mHandler.post(
+                () -> mTimeZoneDetectorStrategy.suggestGeolocationTimeZone(timeZoneSuggestion));
     }
 
     @Override
@@ -122,6 +145,14 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
     @VisibleForTesting
     public void handleAutoTimeZoneDetectionChanged() {
         mHandler.post(mTimeZoneDetectorStrategy::handleAutoTimeZoneDetectionChanged);
+    }
+
+    private void enforceSuggestGeolocationTimeZonePermission() {
+        // The associated method is only used for the shell command interface, it's not possible to
+        // call it via Binder, and Shell currently can set the time zone directly anyway.
+        mContext.enforceCallingOrSelfPermission(
+                android.Manifest.permission.SET_TIME_ZONE,
+                "suggest geolocation time zone");
     }
 
     private void enforceSuggestTelephonyTimeZonePermission() {
