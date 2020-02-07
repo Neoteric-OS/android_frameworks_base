@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+1: Hans Boehm <hboehm@google.com>
+Code-Review+2: Mathieu Chartier <mathieuc@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Lokesh Gidra <lokeshgidra@google.com>
+Submitted-at: Fri, 07 Feb 2020 17:02:43 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1227842
+Project: platform/frameworks/base
+Branch: refs/heads/master
