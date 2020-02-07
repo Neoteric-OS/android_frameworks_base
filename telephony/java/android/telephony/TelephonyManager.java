@@ -2662,6 +2662,7 @@ public class TelephonyManager {
      * subscription if the subscription used to create the TelephonyManager doesn't camp on
      * a network due to some reason (e.g. pin/puk locked), or sim is absent in the corresponding
      * slot.
+     * Note: In case location cannot be determined, the last known country Iso will be returned.
      * Note: Result may be unreliable on CDMA networks (use {@link #getPhoneType()} to determine
      * if on a CDMA network).
      * <p>
@@ -2688,6 +2689,7 @@ public class TelephonyManager {
      * subscription if the subscription used to create the TelephonyManager doesn't camp on
      * a network due to some reason (e.g. pin/puk locked), or sim is absent in the corresponding
      * slot.
+     * Note: In case location cannot be determined, the last known country Iso will be returned.
      * Note: Result may be unreliable on CDMA networks (use {@link #getPhoneType()} to determine
      * if on a CDMA network).
      * <p>
