@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fb6106d_92633735",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-02-07T14:07:09Z",
+      "side": 1,
+      "message": "Nit: lifecycle",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "31a86524ed1699db7f23c1c10b38a7a8a2b097b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8dde9f9_a9e83bbd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-02-07T14:07:09Z",
+      "side": 1,
+      "message": "Nit: maded",
+      "range": {
+        "startLine": 22,
+        "startChar": 58,
+        "endLine": 22,
+        "endChar": 63
+      },
+      "revId": "31a86524ed1699db7f23c1c10b38a7a8a2b097b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cdf6254_fdeecd05",
+        "filename": "packages/services/PacProcessor/src/com/android/pacprocessor/PacService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-02-07T14:07:09Z",
+      "side": 1,
+      "message": "final too, probably\n\nI assume this isn\u0027t dependent on anything that may not be started at the point when the class is initialized?\n\nAlso, that this isn\u0027t going to introduce a delay where you wouldn\u0027t want it (otherwise, you might want to revert to lazily creating it in onCreate() with a \"synchronized (PacService.class) {}\" block ...?).\n\nI also have to assume PacNative is thread safe (because shared) OR there are higher-level guarantees that mean PacService is instantiated once and only one thread is ever in resolvePacFile, startPacSupport, stopPacSupport, setCurrentProxyScript.\n\nAlternative suggestion: if PacNative is inherently a singleton, then I think it should be the one handling the single instance. e.g. PacNative.getInstance() rather than having it determined by the PacService having a static reference.",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "31a86524ed1699db7f23c1c10b38a7a8a2b097b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e379e8a9_4603fed1",
+        "filename": "packages/services/PacProcessor/src/com/android/pacprocessor/PacService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-02-07T14:07:09Z",
+      "side": 1,
+      "message": "Similarly here: might this introduce a delay where you wouldn\u0027t want it?",
+      "range": {
+        "startLine": 35,
+        "startChar": 41,
+        "endLine": 35,
+        "endChar": 57
+      },
+      "revId": "31a86524ed1699db7f23c1c10b38a7a8a2b097b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710bc3cb_6029dc6a",
+        "filename": "packages/services/PacProcessor/src/com/android/pacprocessor/PacService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-02-07T14:07:09Z",
+      "side": 1,
+      "message": "I assume there\u0027s no system health implications for always starting rather than starting on demand. Was it always being started in all cases or just it\u0027s \"cheap\" to do this?",
+      "range": {
+        "startLine": 40,
+        "startChar": 19,
+        "endLine": 40,
+        "endChar": 34
+      },
+      "revId": "31a86524ed1699db7f23c1c10b38a7a8a2b097b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
