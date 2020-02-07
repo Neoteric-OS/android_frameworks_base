@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c432437_3bafb7f5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6530,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-07T06:34:25Z",
+      "side": 1,
+      "message": "For now it is correct, but can we assume future developers are aware of that the reassignment can be only add once per request?\nIf not, how about add comments or unit test or log.wtf to ensure that?",
+      "range": {
+        "startLine": 6530,
+        "startChar": 13,
+        "endLine": 6530,
+        "endChar": 35
+      },
+      "revId": "66a00614e55ec02ce3d09a7431d696c9178246a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
