@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5072f337_d4ee1618",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2020-02-07T05:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db953450_fdc00c38",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "fd4e05f550f99ab49b5c35047e522e23ec528999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6fb2bf0_2b924c65",
         "filename": "services/core/java/com/android/server/power/ShutdownThread.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "fd4e05f550f99ab49b5c35047e522e23ec528999",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f49490d_b97e2179",
+        "filename": "services/core/java/com/android/server/power/ShutdownThread.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2020-02-07T05:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6fb2bf0_2b924c65",
+      "range": {
+        "startLine": 453,
+        "startChar": 25,
+        "endLine": 453,
+        "endChar": 29
+      },
+      "revId": "fd4e05f550f99ab49b5c35047e522e23ec528999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
