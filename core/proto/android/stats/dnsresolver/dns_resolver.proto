@@ -175,6 +175,14 @@ enum NetworkType {
     NT_WIFI_AWARE = 6;
     // Indicates this network uses a LoWPAN transport.
     NT_LOWPAN = 7;
+    // Indicates this network uses a Cellular+VPN transport.
+    NT_CELLULAR_VPN = 8;
+    // Indicates this network uses a Wi-Fi+VPN transport.
+    NT_WIFI_VPN = 9;
+    // Indicates this network uses a Bluetooth+VPN transport.
+    NT_BLUETOOTH_VPN = 10;
+    // Indicates this network uses an Ethernet+VPN transport.
+    NT_ETHERNET_VPN = 11;
 }
 
 enum CacheStatus{
