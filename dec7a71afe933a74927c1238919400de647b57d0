@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "54ca5630_8b6ff75a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-02-07T20:34:21Z",
+      "side": 1,
+      "message": "Yeah things should be mocked out in tests. I find it still a bit better to expose these via test-only getters/setters. That said, see if it possible to use public APIs directly. There is nothing better than that.",
+      "parentUuid": "2f3c5525_523f51a4",
+      "range": {
+        "startLine": 187,
+        "startChar": 5,
+        "endLine": 187,
+        "endChar": 22
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51cc0a19_f83543f2",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 52
@@ -258,6 +282,30 @@
       "revId": "dec7a71afe933a74927c1238919400de647b57d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb008ce9_cf384b5e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2227,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-02-07T20:34:21Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "24b84a94_406b0941",
+      "range": {
+        "startLine": 2227,
+        "startChar": 15,
+        "endLine": 2227,
+        "endChar": 22
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -531,6 +579,30 @@
     },
     {
       "key": {
+        "uuid": "445b367a_9536c7cc",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-02-07T20:34:21Z",
+      "side": 1,
+      "message": "Yeah, it would be better to stub this out in the meantime.",
+      "parentUuid": "3b4066f5_df7cec96",
+      "range": {
+        "startLine": 81,
+        "startChar": 51,
+        "endLine": 81,
+        "endChar": 60
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "804d9326_ac6e184c",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 52
@@ -566,6 +638,30 @@
       "side": 1,
       "message": "Ack. I think for something this nested, and structured, the if-elseif-else blocks help to structure the code, and ensures that nothing falls through.\n\nMy opinion is that the inference of the subsequent else clauses is more error prone, since forgetting to call return in any of them triggers very odd side effects (and thus more cognitive load on the reviewer to make sure all cases are handled). Using the else clauses allows there to be no final return statement, which allows the Java compiler to statically guarantee that we aren\u0027t missing a case.",
       "parentUuid": "804d9326_ac6e184c",
+      "range": {
+        "startLine": 226,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 9
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c368e1_39111eea",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-02-07T20:34:21Z",
+      "side": 1,
+      "message": "Don\u0027t have strong opinion on this. if-else chains usually create higher cognitive load, coz as each else block gets deeper, it becomes harder to keep track of what condition is not being met.\n\nAs for forgetting to not calling return can be tackled with unit tests.",
+      "parentUuid": "f1dc8fce_f959eb47",
       "range": {
         "startLine": 226,
         "startChar": 8,
@@ -657,6 +753,24 @@
       "revId": "dec7a71afe933a74927c1238919400de647b57d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5915aae3_04d225fe",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-02-07T20:34:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aff08fb2_016c48ba",
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

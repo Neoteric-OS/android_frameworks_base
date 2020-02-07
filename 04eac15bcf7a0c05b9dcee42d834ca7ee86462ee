@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4a4a426_23ded99a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 61
+      },
+      "lineNbr": 2082,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-02-07T20:34:21Z",
+      "side": 1,
+      "message": "onChildOpened",
+      "range": {
+        "startLine": 2082,
+        "startChar": 32,
+        "endLine": 2082,
+        "endChar": 40
+      },
+      "revId": "04eac15bcf7a0c05b9dcee42d834ca7ee86462ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
