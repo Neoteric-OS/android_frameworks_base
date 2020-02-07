@@ -287,7 +287,8 @@ public class HdmiControlService extends SystemService {
             new ArrayList<>();
 
     @GuardedBy("mLock")
-    private InputChangeListenerRecord mInputChangeListenerRecord;
+    private final RemoteCallbackList<IHdmiInputChangeListener> mInputChangeListenerRecords =
+            new RemoteCallbackList<>();
 
     @GuardedBy("mLock")
     private HdmiRecordListenerRecord mRecordListenerRecord;
@@ -1911,7 +1912,7 @@ public class HdmiControlService extends SystemService {
         @Override
         public void setInputChangeListener(final IHdmiInputChangeListener listener) {
             enforceAccessPermission();
-            HdmiControlService.this.setInputChangeListener(listener);
+            HdmiControlService.this.addInputChangeListener(listener);
         }
 
         @Override
@@ -2555,44 +2556,22 @@ public class HdmiControlService extends SystemService {
         }
     }
 
-    private final class InputChangeListenerRecord implements IBinder.DeathRecipient {
-        private final IHdmiInputChangeListener mListener;
-
-        public InputChangeListenerRecord(IHdmiInputChangeListener listener) {
-            mListener = listener;
-        }
-
-        @Override
-        public void binderDied() {
-            synchronized (mLock) {
-                if (mInputChangeListenerRecord == this) {
-                    mInputChangeListenerRecord = null;
-                }
-            }
-        }
-    }
-
-    private void setInputChangeListener(IHdmiInputChangeListener listener) {
+    private void addInputChangeListener(IHdmiInputChangeListener listener) {
         synchronized (mLock) {
-            mInputChangeListenerRecord = new InputChangeListenerRecord(listener);
-            try {
-                listener.asBinder().linkToDeath(mInputChangeListenerRecord, 0);
-            } catch (RemoteException e) {
-                Slog.w(TAG, "Listener already died");
-                return;
-            }
+            mInputChangeListenerRecords.register(listener);
         }
     }
 
     void invokeInputChangeListener(HdmiDeviceInfo info) {
         synchronized (mLock) {
-            if (mInputChangeListenerRecord != null) {
+            for (int i = mInputChangeListenerRecords.beginBroadcast() - 1; i >= 0; i--) {
                 try {
-                    mInputChangeListenerRecord.mListener.onChanged(info);
+                    mInputChangeListenerRecords.getBroadcastItem(i).onChanged(info);
                 } catch (RemoteException e) {
                     Slog.w(TAG, "Exception thrown by IHdmiInputChangeListener: " + e);
                 }
             }
+            mInputChangeListenerRecords.finishBroadcast();
         }
     }
 
