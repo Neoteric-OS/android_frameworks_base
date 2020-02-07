@@ -547,7 +547,9 @@ final class LocalDisplayAdapter extends DisplayAdapter {
                                     + "id=" + physicalDisplayId
                                     + ", state=" + Display.stateToString(state) + ")");
                         }
-                        mBacklight.setVrMode(isVrEnabled);
+                        if (mBacklight != null) {
+                            mBacklight.setVrMode(isVrEnabled);
+                        }
                     }
 
                     private void setDisplayState(int state) {
@@ -603,7 +605,9 @@ final class LocalDisplayAdapter extends DisplayAdapter {
                         Trace.traceBegin(Trace.TRACE_TAG_POWER, "setDisplayBrightness("
                                 + "id=" + physicalDisplayId + ", brightness=" + brightness + ")");
                         try {
-                            mBacklight.setBrightness(brightness);
+                            if (mBacklight != null) {
+                                mBacklight.setBrightness(brightness);
+                            }
                             Trace.traceCounter(Trace.TRACE_TAG_POWER,
                                     "ScreenBrightness", brightness);
                         } finally {

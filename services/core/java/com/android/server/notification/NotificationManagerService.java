@@ -1332,7 +1332,9 @@ public class NotificationManagerService extends SystemService {
                 }
             } else if (action.equals(Intent.ACTION_USER_PRESENT)) {
                 // turn off LED when user passes through lock screen
-                mNotificationLight.turnOff();
+                if (mNotificationLight != null) {
+                    mNotificationLight.turnOff();
+                }
             } else if (action.equals(Intent.ACTION_USER_SWITCHED)) {
                 final int userId = intent.getIntExtra(Intent.EXTRA_USER_HANDLE, USER_NULL);
                 mUserProfiles.updateCache(context);
@@ -3481,7 +3483,7 @@ public class NotificationManagerService extends SystemService {
         @Override
         public int getInterruptionFilterFromListener(INotificationListener token)
                 throws RemoteException {
-            synchronized (mNotificationLight) {
+            synchronized (mNotificationLock) {
                 return mInterruptionFilter;
             }
         }
@@ -5916,7 +5918,7 @@ public class NotificationManagerService extends SystemService {
         if (canShowLightsLocked(record, aboveThreshold)) {
             mLights.add(key);
             updateLightsLocked();
-            if (mUseAttentionLight) {
+            if (mUseAttentionLight && mAttentionLight != null) {
                 mAttentionLight.pulse();
             }
             blink = true;
@@ -7079,14 +7081,16 @@ public class NotificationManagerService extends SystemService {
         }
 
         // Don't flash while we are in a call or screen is on
-        if (ledNotification == null || isInCall() || mScreenOn) {
-            mNotificationLight.turnOff();
-        } else {
-            NotificationRecord.Light light = ledNotification.getLight();
-            if (light != null && mNotificationPulseEnabled) {
-                // pulse repeatedly
-                mNotificationLight.setFlashing(light.color, LogicalLight.LIGHT_FLASH_TIMED,
-                        light.onMs, light.offMs);
+        if (mNotificationLight != null) {
+            if (ledNotification == null || isInCall() || mScreenOn) {
+                mNotificationLight.turnOff();
+            } else {
+                NotificationRecord.Light light = ledNotification.getLight();
+                if (light != null && mNotificationPulseEnabled) {
+                    // pulse repeatedly
+                    mNotificationLight.setFlashing(light.color, LogicalLight.LIGHT_FLASH_TIMED,
+                            light.onMs, light.offMs);
+                }
             }
         }
     }
