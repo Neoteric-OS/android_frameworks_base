@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed647f3a_24478583",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3486,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2020-02-07T03:27:37Z",
+      "side": 1,
+      "message": "Pretty sure this was a mistake, so I fixed it.",
+      "range": {
+        "startLine": 3486,
+        "startChar": 26,
+        "endLine": 3486,
+        "endChar": 43
+      },
+      "revId": "52d75e898232db3467c3060eb5c855e5e26ac9d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
