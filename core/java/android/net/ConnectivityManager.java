@@ -2782,7 +2782,8 @@ public class ConnectivityManager {
      *
      * {@hide}
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.Q, publicAlternatives = "Use "
+            + "{@code TetheringManager#startTethering} as alternative")
     @Deprecated
     public int setUsbTethering(boolean enable) {
         return getTetheringManager().setUsbTethering(enable);
