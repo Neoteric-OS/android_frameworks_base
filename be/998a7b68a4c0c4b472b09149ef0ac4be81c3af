@@ -1,0 +1,12 @@
+Lint+2: Xiangyu/Malcolm Chen <refuhoo@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+2: Xiangyu/Malcolm Chen <refuhoo@google.com>
+Verified+1: Xiangyu/Malcolm Chen <refuhoo@google.com>
+Code-Review+2: Xiangyu/Malcolm Chen <refuhoo@google.com>
+Submitted-by: Xiangyu/Malcolm Chen <refuhoo@google.com>
+Submitted-at: Fri, 07 Feb 2020 23:05:06 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1225009
+Project: platform/frameworks/base
+Branch: refs/heads/master
