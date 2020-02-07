@@ -502,8 +502,10 @@ public class Watchdog extends Thread {
             return new ArrayList<Integer>();
         }
     }
-
-    static ArrayList<Integer> getInterestingNativePids() {
+    /**
+     * Watchdog: Dump hal pids when killing a process
+     */
+    public static ArrayList<Integer> getInterestingNativePids() {
         ArrayList<Integer> pids = getInterestingHalPids();
 
         int[] nativePids = Process.getPidsForCommands(NATIVE_STACKS_OF_INTEREST);
