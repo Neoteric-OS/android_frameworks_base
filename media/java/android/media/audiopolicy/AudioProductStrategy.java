@@ -19,6 +19,7 @@ package android.media.audiopolicy;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.media.AudioAttributes;
 import android.media.AudioSystem;
 import android.media.MediaRecorder;
@@ -125,6 +126,31 @@ public final class AudioProductStrategy implements Parcelable {
             }
         }
         return AudioSystem.STREAM_MUSIC;
+    }
+
+    /**
+     * @hide
+     * @param attributes the {@link AudioAttributes} to identify VolumeGroupId with
+     * @param fallbackOnDefault if set, allows to fallback on the default group (e.g. the group
+     *                          associated to {@link AudioManager#STREAM_MUSIC}).
+     * @return volume group id associated with the given {@link AudioAttributes} if found,
+     *     default volume group id if fallbackOnDefault is set
+     *     By convention, the product strategy with default attributes will be associated to the
+     *     default volume group (e.g. associated to {@link AudioManager#STREAM_MUSIC})
+     *     or {@link AudioVolumeGroup#DEFAULT_VOLUME_GROUP} if not found.
+     */
+    @TestApi
+    public static int getVolumeGroupIdForAudioAttributes(
+            @NonNull AudioAttributes attributes, boolean fallbackOnDefault) {
+        Preconditions.checkNotNull(attributes, "attributes must not be null");
+        int volumeGroupId = getVolumeGroupIdForAudioAttributesInt(attributes);
+        if (volumeGroupId != AudioVolumeGroup.DEFAULT_VOLUME_GROUP) {
+            return volumeGroupId;
+        }
+        if (fallbackOnDefault) {
+            return getVolumeGroupIdForAudioAttributesInt(AudioProductStrategy.sDefaultAttributes);
+        }
+        return AudioVolumeGroup.DEFAULT_VOLUME_GROUP;
     }
 
     private static List<AudioProductStrategy> initializeAudioProductStrategies() {
@@ -258,6 +284,17 @@ public final class AudioProductStrategy implements Parcelable {
         for (final AudioAttributesGroup aag : mAudioAttributesGroups) {
             if (aag.supportsAttributes(aa)) {
                 return aag.getVolumeGroupId();
+            }
+        }
+        return AudioVolumeGroup.DEFAULT_VOLUME_GROUP;
+    }
+
+    private static int getVolumeGroupIdForAudioAttributesInt(@NonNull AudioAttributes attributes) {
+        Preconditions.checkNotNull(attributes, "attributes must not be null");
+        for (final AudioProductStrategy productStrategy : getAudioProductStrategies()) {
+            int volumeGroupId = productStrategy.getVolumeGroupIdForAudioAttributes(attributes);
+            if (volumeGroupId != AudioVolumeGroup.DEFAULT_VOLUME_GROUP) {
+                return volumeGroupId;
             }
         }
         return AudioVolumeGroup.DEFAULT_VOLUME_GROUP;
