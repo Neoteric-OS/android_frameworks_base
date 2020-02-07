@@ -1500,11 +1500,17 @@ class ProcessRecord implements WindowProcessListener {
         ProcessCpuTracker processCpuTracker = new ProcessCpuTracker(true);
 
         // don't dump native PIDs for background ANRs unless it is the process of interest
-        String[] nativeProcs = null;
         if (isSilentAnr()) {
             for (int i = 0; i < NATIVE_STACKS_OF_INTEREST.length; i++) {
                 if (NATIVE_STACKS_OF_INTEREST[i].equals(processName)) {
+                    String[] nativeProcs = null;
                     nativeProcs = new String[] { processName };
+                    int[] pids =
+                             nativeProcs == null ? null : Process.getPidsForCommands(nativeProcs);
+                    if (pid != null && pid.length == 1) {
+                        nativePids = new ArrayList<>();
+                        nativePids.add(pid[0]);
+                    }
                     break;
                 }
             }
@@ -1512,15 +1518,7 @@ class ProcessRecord implements WindowProcessListener {
             nativeProcs = NATIVE_STACKS_OF_INTEREST;
         }
 
-        int[] pids = nativeProcs == null ? null : Process.getPidsForCommands(nativeProcs);
         ArrayList<Integer> nativePids = null;
-
-        if (pids != null) {
-            nativePids = new ArrayList<>(pids.length);
-            for (int i : pids) {
-                nativePids.add(i);
-            }
-        }
 
         // For background ANRs, don't pass the ProcessCpuTracker to
         // avoid spending 1/2 second collecting stats to rank lastPids.
