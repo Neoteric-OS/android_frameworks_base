@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "629f4af7_f5ad8474",
+        "filename": "core/java/android/net/TestNetworkManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-08T00:15:07Z",
+      "side": 1,
+      "message": "Should this be \u0027setupTestNetworkWithAdministrators\u0027, since multiple administrators can be assigned with this method?",
+      "range": {
+        "startLine": 108,
+        "startChar": 16,
+        "endLine": 108,
+        "endChar": 49
+      },
+      "revId": "26c74e30bacc382e2c4b242782e58eafa5fe3ed4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
