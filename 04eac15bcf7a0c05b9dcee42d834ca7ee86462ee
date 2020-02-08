@@ -22,6 +22,29 @@
       "revId": "04eac15bcf7a0c05b9dcee42d834ca7ee86462ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beeca74b_b0cffe8d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 61
+      },
+      "lineNbr": 2227,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-08T05:07:05Z",
+      "side": 1,
+      "message": "No that\u0027s not what I meant. I did mean the cm.registerDefaultNetworkCallback method, not grabbing deep into the internals of connectivity service like this. We\u0027re actually trying to get rid of this method and it\u0027s made difficult by calls like this all over tethering, causing difficult backward compatibility issues with network selection because of the reliance on this super internal implementation detail. Here VPN is very byzantinely intricated with CS anyway so you\u0027re not really making the coupling much worse, but it\u0027s incremental changes like this that make it harder to clean it up.\n\nCan you please file a bug to see if we can have a way to do this correctly ? I seem to remember external bugs from VPN app suppliers having the same problem, but being unable to do it correctly because they can\u0027t do this. I don\u0027t remember if there was a solution, but there should be one, and it should be used here.",
+      "range": {
+        "startLine": 2227,
+        "startChar": 37,
+        "endLine": 2227,
+        "endChar": 54
+      },
+      "revId": "04eac15bcf7a0c05b9dcee42d834ca7ee86462ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

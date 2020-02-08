@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "b2271574_9345182b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-08T05:07:05Z",
+      "side": 1,
+      "message": "A few thoughts :\n• 100% agree that using the public APIs is the best thing to do. In this case this doesn\u0027t mean public in the sense of the public SDK, but the public contract that this class exposes to its users.\n• The version of @VFT we use in the framework doesn\u0027t have NONE, only PRIVATE and PROTECTED. That\u0027s mainly because the guidance is \"don\u0027t add test-only code\". (also it calls \u0027otherwise \u003d\u0027 \u0027visibility \u003d\u0027, which is not as good but that\u0027s what we have)\n• Generally having any code at all that\u0027s specific to tests is something to avoid at almost all costs. For the specific case of getters/setters, I tend to agree that the amount of additional code is small and trivial enough that it doesn\u0027t matter, and if you need to make them synchronized(this){} for correctness it gives you that outside code doesn\u0027t have to write the synchronized(variable) code, exploiting even more the escaping of this lock that we desperately want to do away with. So if we need to write these I agree exposing setters/getters as @VFT is better. See the next point however.\n• I find the advice to expose a getter/setter to lock generally dangerous because it\u0027s an extremely rare case that code saying synchronized(){return member} or synchronized(){member\u003darg} is correct, and it\u0027s actually a common bug to do that in reaction to @GuardedBy on a member. Almost always if you need locks it\u0027s because you need to synchronize multiple things changing at the same time. In this case it\u0027s a String anyway ; making it volatile is exactly the same thing as making such a setter and getter.\n• And of course in this case this member has to be set in sync with a number of other things, so that would not give you correctness at all. In fact there are already pretty obvious bugs : the protected constructor is using this without a lock, and you can already create this object with that constructor in a thread and not observe this member set in another. Really what saves this class at all is that in production code it\u0027s almost only ever used on a single thread (and that\u0027s also true of the test). I\u0027d bet it\u0027s probably not entirely correct even, but a large chunk of the thread-correctnessness of this class is really accidental. Which is a part of why it\u0027s so effing hard to deal with.\n\nAnyway.\n\nAt this point I don\u0027t think I care. The code is already not correct and you can\u0027t make it correct in this patch. I don\u0027t think pure synchronized(this){return mPackage;} is a great idea for the reasons above, but I wouldn\u0027t even oppose it. You can make this field volatile if you feel more comfortable with it (and I won\u0027t oppose), but it\u0027s not even more correct, so if you ask me I\u0027d say to leave as is.",
+      "parentUuid": "54ca5630_8b6ff75a",
+      "range": {
+        "startLine": 187,
+        "startChar": 5,
+        "endLine": 187,
+        "endChar": 22
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51cc0a19_f83543f2",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 52
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "Moved the boilerplate out.",
       "parentUuid": "51cc0a19_f83543f2",
+      "range": {
+        "startLine": 2044,
+        "startChar": 8,
+        "endLine": 2071,
+        "endChar": 62
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c671157_7526e23e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2071,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-08T05:07:05Z",
+      "side": 1,
+      "message": "+1. Maybe we want to file a bug to do this ; improving this code will be a very large task and the more we have inside the harder it will be, and the new code is probably easier to move out than the rest (especially because you have all that fresh state in your head).",
+      "parentUuid": "38371c79_0de8ab23",
       "range": {
         "startLine": 2044,
         "startChar": 8,
@@ -238,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "fd1ee237_3ebca3de",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-08T05:07:05Z",
+      "side": 1,
+      "message": "Yeah ; IIUC the semantics of this is that it needs to follow the default request. Adding TRUSTED explicitly means that if we remove TRUSTED from the default request this code becomes incorrect (a drawback that Ben\u0027s code at this patchset doesn\u0027t have, though it has multiple copies of the same drawback on other capabilities).\n\nCM has a method to do exactly this, it\u0027s called registerDefaultNetworkCallback. Whether it\u0027s usable here I\u0027m a bit cloudy about ; the VPN app is excluded by default from applying to itself and that is correctly reflected in network callbacks, but whether that\u0027s correctly reflected in the default callback I\u0027m not 100% sure, and even if it is I\u0027m not sure it\u0027s going to work as expected when the VPN app is the system process.",
+      "parentUuid": "1eee3112_c466012c",
+      "range": {
+        "startLine": 2218,
+        "startChar": 26,
+        "endLine": 2218,
+        "endChar": 33
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c49580c8_ec2c8b90",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 52
@@ -297,6 +369,30 @@
       "side": 1,
       "message": "sgtm",
       "parentUuid": "24b84a94_406b0941",
+      "range": {
+        "startLine": 2227,
+        "startChar": 15,
+        "endLine": 2227,
+        "endChar": 22
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dbf3b7b_36151ef7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2227,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-08T05:07:05Z",
+      "side": 1,
+      "message": "I continue to think that it\u0027s unfair to say \"you may not receive onLost\" to requests. That\u0027s simply not how requests work. They send you onLost when the request stops being satisfied by any network. You will ALWAYS get onLost when this happens and NEVER when it does not happen, and there is no \"may\" about it. That\u0027s the contract, it\u0027s always been this way, it\u0027s not a bug, and it\u0027s not going to change.",
+      "parentUuid": "cb008ce9_cf384b5e",
       "range": {
         "startLine": 2227,
         "startChar": 15,
@@ -532,6 +628,24 @@
     },
     {
       "key": {
+        "uuid": "80ac56d6_aca5710e",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-08T05:07:05Z",
+      "side": 1,
+      "message": "Don\u0027t squash. This is very big and hard already and has gone 60 patchsets. Let\u0027s not go to a hundred.",
+      "parentUuid": "b8d19d46_874b9f23",
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66198019_08397786",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 52
@@ -591,6 +705,30 @@
       "side": 1,
       "message": "Yeah, it would be better to stub this out in the meantime.",
       "parentUuid": "3b4066f5_df7cec96",
+      "range": {
+        "startLine": 81,
+        "startChar": 51,
+        "endLine": 81,
+        "endChar": 60
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6776e712_cf20dc19",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-08T05:07:05Z",
+      "side": 1,
+      "message": "No Varun is right. This is running on the CM thread *OF THE SYSTEM* *WITH THE VPN LOCK HELD* so it\u0027s just not acceptable. Like, I *REALLY* can\u0027t let you submit this, this will will be reverted with prejudice less than 2 hours after it gets to dogfooders devices with a chaselist bug and might just result in the feature being punted altogether on system health worries.\n\nThanks for noticing Varun, I had missed that.\n\nAlso don\u0027t spin up a new thread. Instead please use the public asynchronous DNS API instead of this old thing.\nhttps://developer.android.com/reference/android/net/DnsResolver",
+      "parentUuid": "445b367a_9536c7cc",
       "range": {
         "startLine": 81,
         "startChar": 51,

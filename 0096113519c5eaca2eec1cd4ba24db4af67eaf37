@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba7dfe30_d28eabfc",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 62
+      },
+      "lineNbr": 2317,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-08T05:07:05Z",
+      "side": 1,
+      "message": "You don\u0027t have to say this twice",
+      "range": {
+        "startLine": 2317,
+        "startChar": 12,
+        "endLine": 2317,
+        "endChar": 26
+      },
+      "revId": "0096113519c5eaca2eec1cd4ba24db4af67eaf37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9371254_34459fe9",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 62
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-08T05:07:05Z",
+      "side": 1,
+      "message": "By whom ?\n\ngo/avoidwe is about clarifying who does what, not about removing the use of the word (and it warns explicitly against just rewording the phrase to the passive voice – sometimes it\u0027s the right thing to do, but here I don\u0027t think it helps clarifying who does what).\n\nWhile you\u0027re at it also clarify the \"this\" word here.",
+      "range": {
+        "startLine": 303,
+        "startChar": 71,
+        "endLine": 303,
+        "endChar": 79
+      },
+      "revId": "0096113519c5eaca2eec1cd4ba24db4af67eaf37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
