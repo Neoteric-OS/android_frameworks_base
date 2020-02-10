@@ -741,6 +741,30 @@
     },
     {
       "key": {
+        "uuid": "f19a4653_fead82ee",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-10T04:09:29Z",
+      "side": 1,
+      "message": "Let me add that I don\u0027t think there is any sense in stubbing it out at this point. It would prevent the system from being crashed by this of course, but considering you\u0027ll need a fairly fundamental design change to fix the underlying issue anyway, I don\u0027t see the point of submitting this with a stub now if we know we\u0027ll have to change everything later.\n\nFinally when you fix this don\u0027t only move the DNS resolution. I did say I was pretty uncomfortable with how long and broad this lock was held, and lo and behold, here was a huge fish hidden in there. We need to fix the design for good.",
+      "parentUuid": "6776e712_cf20dc19",
+      "range": {
+        "startLine": 81,
+        "startChar": 51,
+        "endLine": 81,
+        "endChar": 60
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "804d9326_ac6e184c",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 52
