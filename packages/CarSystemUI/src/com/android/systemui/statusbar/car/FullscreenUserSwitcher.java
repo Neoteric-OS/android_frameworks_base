@@ -103,7 +103,13 @@ public class FullscreenUserSwitcher {
     }
 
     private void showDialogForInitialUser() {
-        int initialUser = mCarUserManagerHelper.getInitialUser();
+        int initialUser = UserHandle.USER_SYSTEM;
+        try {
+            initialUser = mCarUserManagerHelper.getInitialUser();
+        } catch (Exception e) {
+            dismissUserSwitcher();
+            return;
+        }
         UserInfo initialUserInfo = mUserManager.getUserInfo(initialUser);
         mSelectedUser = new UserRecord(initialUserInfo,
                 /* isStartGuestSession= */ false,
