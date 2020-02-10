@@ -6809,15 +6809,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // The suspended and roaming bits are managed in NetworkCapabilities.
         final boolean suspended =
                 !nai.networkCapabilities.hasCapability(NET_CAPABILITY_NOT_SUSPENDED);
-        if (suspended && info.getDetailedState() == NetworkInfo.DetailedState.CONNECTED) {
+
+        if ((suspended && info.getDetailedState() == NetworkInfo.DetailedState.CONNECTED)
+                || (!suspended && info.getDetailedState() == NetworkInfo.DetailedState.SUSPENDED)) {
             // Only override the state with SUSPENDED if the network is currently in CONNECTED
             // state. This is because the network could have been suspended before connecting,
             // or it could be disconnecting while being suspended, and in both these cases
             // the state should not be overridden. Note that the only detailed state that
             // maps to State.CONNECTED is DetailedState.CONNECTED, so there is also no need to
             // worry about multiple different substates of CONNECTED.
-            newInfo.setDetailedState(NetworkInfo.DetailedState.SUSPENDED, info.getReason(),
-                    info.getExtraInfo());
+            newInfo.setDetailedState(suspended
+                    ? NetworkInfo.DetailedState.SUSPENDED : NetworkInfo.DetailedState.CONNECTED,
+                    info.getReason(), info.getExtraInfo());
         }
         newInfo.setRoaming(!nai.networkCapabilities.hasCapability(NET_CAPABILITY_NOT_ROAMING));
         return newInfo;
