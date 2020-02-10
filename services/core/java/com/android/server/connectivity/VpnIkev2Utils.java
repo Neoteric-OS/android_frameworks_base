@@ -85,10 +85,10 @@ import java.util.List;
  */
 public class VpnIkev2Utils {
     static IkeSessionParams buildIkeSessionParams(
-            @NonNull Ikev2VpnProfile profile, @NonNull UdpEncapsulationSocket socket)
-            throws UnknownHostException {
+            @NonNull Ikev2VpnProfile profile, @NonNull UdpEncapsulationSocket socket,
+            @NonNull InetAddress address) throws UnknownHostException {
         // TODO: Give IKE the string hostname/IP literal, and let it do DNS resolution.
-        final InetAddress serverAddr = InetAddress.getByName(profile.getServerAddr());
+        final InetAddress serverAddr = address;
         final IkeIdentification localId = parseIkeIdentification(profile.getUserIdentity());
         final IkeIdentification remoteId = parseIkeIdentification(profile.getServerAddr());
 

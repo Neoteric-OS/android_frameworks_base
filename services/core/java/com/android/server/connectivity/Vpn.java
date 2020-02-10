@@ -47,8 +47,10 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.pm.UserInfo;
 import android.net.ConnectivityManager;
+import android.net.DnsResolver;
 import android.net.INetworkManagementEventObserver;
 import android.net.Ikev2VpnProfile;
+import android.net.InetAddresses;
 import android.net.IpPrefix;
 import android.net.IpSecManager;
 import android.net.IpSecManager.IpSecTunnelInterface;
@@ -2152,6 +2154,63 @@ public class Vpn {
             }
         }
 
+        // TODO: Move all this code back to onNetworkConnected once IKEv2 does DNS resolution
+        private void onDnsResolved(@NonNull Network network, @Nullable List<InetAddress> addrs) {
+            synchronized (Vpn.this) {
+                try {
+                    if (!mIsRunning) {
+                        Log.d(TAG, "onDnsResolved after exit");
+                        return; // VPN has been shut down.
+                    }
+
+                    if (addreaddrssses.size() == 0) {
+                        onSessionLost(network);
+                    }
+
+                    // Without MOBIKE, we have no way to seamlessly migrate. Close on old
+                    // (non-default) network, and start the new one.
+                    resetIkeStateLocked();
+                    mActiveNetwork = network;
+
+                    mEncapSocket = mIpSecManager.openUdpEncapsulationSocket();
+
+                    final IkeSessionParams ikeSessionParams =
+                            VpnIkev2Utils.buildIkeSessionParams(
+                            mProfile, mEncapSocket, addrs.get(0));
+                    final ChildSessionParams childSessionParams =
+                            VpnIkev2Utils.buildChildSessionParams();
+
+                    // TODO: Remove the need for adding two unused addresses with
+                    // IPsec tunnels.
+                    mTunnelIface =
+                            mIpSecManager.createIpSecTunnelInterface(
+                                    ikeSessionParams.getServerAddress() /* unused */,
+                                    ikeSessionParams.getServerAddress() /* unused */,
+                                    network);
+                    mNetd.setInterfaceUp(mTunnelIface.getInterfaceName());
+
+                    // Socket must be bound to prevent network switches from causing
+                    // the IKE teardown to fail/timeout.
+                    network.bindSocket(mEncapSocket.getFileDescriptor());
+
+                    mSession =
+                            mIkev2SessionCreator.createIkeSession(
+                                    mContext,
+                                    ikeSessionParams,
+                                    childSessionParams,
+                                    mExecutor,
+                                    new VpnIkev2Utils.IkeSessionCallbackImpl(
+                                            TAG, IkeV2VpnRunner.this, network),
+                                    new VpnIkev2Utils.ChildSessionCallbackImpl(
+                                            TAG, IkeV2VpnRunner.this, network));
+                    Log.d(TAG, "Ike Session started for network " + network);
+                } catch (Exception e) {
+                    Log.i(TAG, "Setup failed for network " + network + ". Aborting", e);
+                    onFatal(network);
+                }
+            }
+        }
+
         /**
          * Called when a new default network is connected.
          *
@@ -2165,56 +2224,34 @@ public class Vpn {
         public void onNetworkConnected(@NonNull Network network) {
             Log.d(TAG, "Starting IKEv2/IPsec session on new network: " + network);
 
-            mExecutor.execute(() -> {
-                synchronized (Vpn.this) {
-                    try {
-                        if (!mIsRunning) {
-                            Log.d(TAG, "onNetworkConnected after exit");
-                            return; // VPN has been shut down.
-                        }
+            // TODO: Remove all this code, and let the IKEv2 library do DNS resolutions where we can
+            // update the code.
+            if (InetAddresses.isNumericAddress(mProfile.getServerAddr())) {
+                final InetAddress address =
+                        InetAddresses.parseNumericAddress(mProfile.getServerAddr());
+                mExecutor.execute(() -> {
+                    onDnsResolved(network, Collections.singletonList(address));
+                });
+                return;
+            }
 
-                        // Without MOBIKE, we have no way to seamlessly migrate. Close on old
-                        // (non-default) network, and start the new one.
-                        resetIkeStateLocked();
-                        mActiveNetwork = network;
+            DnsResolver.Callback<? super List<InetAddress>> cb = new DnsResolver.Callback<>() {
+                @Override
+                public void onAnswer(@NonNull List<InetAddress> answer, int rcode) {
+                    onDnsResolved(network, answer);
+                }
 
-                        mEncapSocket = mIpSecManager.openUdpEncapsulationSocket();
-
-                        final IkeSessionParams ikeSessionParams =
-                                VpnIkev2Utils.buildIkeSessionParams(mProfile, mEncapSocket);
-                        final ChildSessionParams childSessionParams =
-                                VpnIkev2Utils.buildChildSessionParams();
-
-                        // TODO: Remove the need for adding two unused addresses with
-                        // IPsec tunnels.
-                        mTunnelIface =
-                                mIpSecManager.createIpSecTunnelInterface(
-                                        ikeSessionParams.getServerAddress() /* unused */,
-                                        ikeSessionParams.getServerAddress() /* unused */,
-                                        network);
-                        mNetd.setInterfaceUp(mTunnelIface.getInterfaceName());
-
-                        // Socket must be bound to prevent network switches from causing
-                        // the IKE teardown to fail/timeout.
-                        network.bindSocket(mEncapSocket.getFileDescriptor());
-
-                        mSession =
-                                mIkev2SessionCreator.createIkeSession(
-                                        mContext,
-                                        ikeSessionParams,
-                                        childSessionParams,
-                                        mExecutor,
-                                        new VpnIkev2Utils.IkeSessionCallbackImpl(
-                                                TAG, IkeV2VpnRunner.this, network),
-                                        new VpnIkev2Utils.ChildSessionCallbackImpl(
-                                                TAG, IkeV2VpnRunner.this, network));
-                        Log.d(TAG, "Ike Session started for network " + network);
-                    } catch (Exception e) {
-                        Log.i(TAG, "Setup failed for network " + network + ". Aborting", e);
-                        onFatal(network);
+                @Override
+                public void onError(@NonNull DnsException error) {
+                    Log.d(TAG, "DNS error on network " + network, error);
+                            synchronized (Vpn.this) {
+                        onSessionLost(network);
                     }
                 }
-            });
+            };
+
+            DnsResolver.getInstance().query(network, mProfile.getServerAddr(),
+                    DnsResolver.FLAG_EMPTY, mExecutor, null, cb);
         }
 
         @Override
