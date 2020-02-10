@@ -21,11 +21,13 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.testng.Assert.assertThrows;
 
+import android.app.compat.ChangeIdStateCache;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
@@ -61,10 +63,11 @@ public class PlatformCompatTest {
         when(mPackageManager.getPackageUid(eq(PACKAGE_NAME), eq(0))).thenThrow(
                 new PackageManager.NameNotFoundException());
         mCompatConfig = new CompatConfig(mBuildClassifier, mContext);
-        mPlatformCompat = new PlatformCompat(mContext, mCompatConfig);
+        mPlatformCompat = spy(new PlatformCompat(mContext, mCompatConfig));
         // Assume userdebug/eng non-final build
         when(mBuildClassifier.isDebuggableBuild()).thenReturn(true);
         when(mBuildClassifier.isFinalBuild()).thenReturn(false);
+        ChangeIdStateCache.disable();
     }
 
     @Test
