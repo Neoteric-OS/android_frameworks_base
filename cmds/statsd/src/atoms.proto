@@ -2553,6 +2553,7 @@ message BackGesture {
         LEFT = 1;
         RIGHT = 2;
     }
+    optional int32 x_coordinate = 4
     optional WindowHorizontalLocation x_location = 3;
 }
 
