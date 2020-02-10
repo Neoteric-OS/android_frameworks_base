@@ -357,7 +357,7 @@ public final class DeviceConfig {
          * @hide
          */
         String KEY_SYSTEM_GESTURE_EXCLUSION_LOG_DEBOUNCE_MILLIS =
-                "system_gesture_exclusion_log_debounce_millis";
+                "system_gesture_exclusion_log_debounce_millis_";
     }
 
     private static final Object sLock = new Object();
