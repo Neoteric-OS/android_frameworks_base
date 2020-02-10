@@ -262,7 +262,7 @@ public final class DeviceConfig {
     public static final String NAMESPACE_SYSTEMUI = "systemui";
 
     /**
-     * Telephony related properties.
+     * Telephony related properties. Lalala.
      *
      * @hide
      */
