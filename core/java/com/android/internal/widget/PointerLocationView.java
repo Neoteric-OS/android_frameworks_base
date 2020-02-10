@@ -823,7 +823,7 @@ public class PointerLocationView extends View implements InputDeviceListener,
     private void logInputDeviceState(int deviceId, String state) {
         InputDevice device = mIm.getInputDevice(deviceId);
         if (device != null) {
-            Log.i(TAG, state + ": " + device);
+            Log.i(TAG, state + ":" + device);
         } else {
             Log.i(TAG, state + ": " + deviceId);
         }
