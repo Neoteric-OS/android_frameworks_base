@@ -45,6 +45,30 @@
       "revId": "3ad5214ceea79dc07d1984140cd490c2159c46c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa16b55e_0339000a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6956,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-10T08:13:21Z",
+      "side": 1,
+      "message": "1. It could only be safe iff we can assume the original state of suspended state is connected.\nHowever it is unlikely that we can have other state that could enter suspended state.\nSo I think this might be fine.\n\n2. Do we want to use else if to make it more readable?\nAnd probably add some comments about our assupmtion?",
+      "parentUuid": "d4375116_d28cebbe",
+      "range": {
+        "startLine": 6956,
+        "startChar": 86,
+        "endLine": 6956,
+        "endChar": 95
+      },
+      "revId": "3ad5214ceea79dc07d1984140cd490c2159c46c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
