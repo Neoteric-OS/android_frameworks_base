@@ -46,6 +46,98 @@
       "revId": "3c17d19e9b7e863033c9c415e4d9ec96aadd64cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "740b7689_5a991174",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2020-02-10T22:05:18Z",
+      "side": 1,
+      "message": "Should update to reflect the name change in the interface: getPhonebookRecords?",
+      "range": {
+        "startLine": 477,
+        "startChar": 20,
+        "endLine": 477,
+        "endChar": 34
+      },
+      "revId": "3c17d19e9b7e863033c9c415e4d9ec96aadd64cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8055d83e_418fb877",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2020-02-10T22:05:18Z",
+      "side": 1,
+      "message": "Should update to reflect the name change in the interface: updatePhonebookRecord?",
+      "range": {
+        "startLine": 478,
+        "startChar": 8,
+        "endLine": 478,
+        "endChar": 37
+      },
+      "revId": "3c17d19e9b7e863033c9c415e4d9ec96aadd64cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23cac9b3_c8aa2bba",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2020-02-10T22:05:18Z",
+      "side": 1,
+      "message": "Should update to reflect the name change in the interface: phonebookInitDone?",
+      "range": {
+        "startLine": 547,
+        "startChar": 8,
+        "endLine": 547,
+        "endChar": 40
+      },
+      "revId": "3c17d19e9b7e863033c9c415e4d9ec96aadd64cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b6c3bb_b4034523",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2020-02-10T22:05:18Z",
+      "side": 1,
+      "message": "Should update to reflect the name change in the interface: phonebookRecordsReceived?",
+      "range": {
+        "startLine": 548,
+        "startChar": 8,
+        "endLine": 548,
+        "endChar": 38
+      },
+      "revId": "3c17d19e9b7e863033c9c415e4d9ec96aadd64cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
