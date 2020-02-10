@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a38ff1ec_0de08762",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6950,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-10T06:46:46Z",
+      "side": 1,
+      "message": "This comment seems not match the new logic, could you update comment ?",
+      "range": {
+        "startLine": 6949,
+        "startChar": 15,
+        "endLine": 6950,
+        "endChar": 21
+      },
+      "revId": "3ad5214ceea79dc07d1984140cd490c2159c46c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
