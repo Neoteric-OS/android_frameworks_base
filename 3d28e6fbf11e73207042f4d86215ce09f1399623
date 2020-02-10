@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "625c12d8_f9ed35c8",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-10T10:10:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c874f248_0a845e5a",
+      "range": {
+        "startLine": 262,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 9
+      },
+      "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffa977e4_4d44354c",
         "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f65d3af9_b3f62d7b",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-10T10:10:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffa977e4_4d44354c",
+      "range": {
+        "startLine": 782,
+        "startChar": 8,
+        "endLine": 783,
+        "endChar": 69
+      },
+      "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "49b3951f_a1d12735",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-10T10:10:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2159f33f_42fb5bbc",
+      "range": {
+        "startLine": 800,
+        "startChar": 5,
+        "endLine": 800,
+        "endChar": 13
+      },
+      "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c1c483b_4702ceee",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-10T10:10:06Z",
+      "side": 1,
+      "message": "This cannot be static after applying the new design pattern in internal master.\nBut pass context to it, see if it works for you.",
+      "parentUuid": "3a466b5c_7ab392a0",
+      "range": {
+        "startLine": 800,
+        "startChar": 43,
+        "endLine": 800,
+        "endChar": 65
+      },
+      "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b45dba2_8da3a1fc",
         "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
         "patchSetId": 5
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ee2bb02d_130eea38",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-10T10:10:06Z",
+      "side": 1,
+      "message": "It is used by AppOpsManager to check the permission.\nFrom the sdk it needs the name that get from this API.\nhttps://developer.android.com/reference/android/content/Context#getOpPackageName()",
+      "parentUuid": "7b45dba2_8da3a1fc",
+      "range": {
+        "startLine": 810,
+        "startChar": 20,
+        "endLine": 810,
+        "endChar": 47
+      },
+      "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6cc01f9_a738a9b9",
         "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514797ff_0da1e5d6",
+        "filename": "services/core/java/com/android/server/stats/StatsCompanionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-10T10:10:06Z",
+      "side": 1,
+      "message": "Oooooops, my bad.",
+      "parentUuid": "b6cc01f9_a738a9b9",
+      "range": {
+        "startLine": 918,
+        "startChar": 68,
+        "endLine": 918,
+        "endChar": 76
+      },
+      "revId": "3d28e6fbf11e73207042f4d86215ce09f1399623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
