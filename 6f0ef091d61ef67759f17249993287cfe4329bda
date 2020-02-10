@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "89c8a4b1_4b309ed3",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-10T15:32:44Z",
+      "side": 1,
+      "message": "Note that this wasn\u0027t originally part of the ConnectivityDiagnostics design. See go/connectivity-diagnostics-dd under High-Level Design",
+      "parentUuid": "9e05f472_b247fff6",
+      "range": {
+        "startLine": 460,
+        "startChar": 16,
+        "endLine": 460,
+        "endChar": 65
+      },
+      "revId": "6f0ef091d61ef67759f17249993287cfe4329bda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6074e751_251411f1",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 6
