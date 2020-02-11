@@ -310,7 +310,8 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                         mBluetoothLock.readLock().unlock();
                     }
                 } else if (st == BluetoothAdapter.STATE_ON) {
-                    sendDisableMsg(BluetoothProtoEnums.ENABLE_DISABLE_REASON_AIRPLANE_MODE,
+                    if (Settings.Global.getString(mContentResolver, Settings.Global.AIRPLANE_MODE_RADIOS).contains(Settings.Global.RADIO_BLUETOOTH))
+                        sendDisableMsg(BluetoothProtoEnums.ENABLE_DISABLE_REASON_AIRPLANE_MODE,
                             mContext.getPackageName());
                 }
             } else if (mEnableExternal) {
