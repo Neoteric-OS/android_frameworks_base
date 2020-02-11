@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6fbc1e64_3d2eab55",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1583329
+      },
+      "writtenOn": "2020-02-11T11:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "740b7689_5a991174",
+      "range": {
+        "startLine": 477,
+        "startChar": 20,
+        "endLine": 477,
+        "endChar": 34
+      },
+      "revId": "3c17d19e9b7e863033c9c415e4d9ec96aadd64cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8055d83e_418fb877",
         "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
         "patchSetId": 2
@@ -92,6 +116,30 @@
       "revId": "3c17d19e9b7e863033c9c415e4d9ec96aadd64cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690c387e_bd3ccead",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1583329
+      },
+      "writtenOn": "2020-02-11T11:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8055d83e_418fb877",
+      "range": {
+        "startLine": 478,
+        "startChar": 8,
+        "endLine": 478,
+        "endChar": 37
+      },
+      "revId": "3c17d19e9b7e863033c9c415e4d9ec96aadd64cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "50ea00fd_2787ca45",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1583329
+      },
+      "writtenOn": "2020-02-11T11:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23cac9b3_c8aa2bba",
+      "range": {
+        "startLine": 547,
+        "startChar": 8,
+        "endLine": 547,
+        "endChar": 40
+      },
+      "revId": "3c17d19e9b7e863033c9c415e4d9ec96aadd64cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7b6c3bb_b4034523",
         "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
         "patchSetId": 2
@@ -138,6 +210,30 @@
       "revId": "3c17d19e9b7e863033c9c415e4d9ec96aadd64cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0687eec8_b5a2d562",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1583329
+      },
+      "writtenOn": "2020-02-11T11:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7b6c3bb_b4034523",
+      "range": {
+        "startLine": 548,
+        "startChar": 8,
+        "endLine": 548,
+        "endChar": 38
+      },
+      "revId": "3c17d19e9b7e863033c9c415e4d9ec96aadd64cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
