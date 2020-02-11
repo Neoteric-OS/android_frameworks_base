@@ -205,6 +205,7 @@ public class Tethering {
             new SparseArray<>();
 
     // used to synchronize public access to members
+    // TODO(b/153621704): remove mPublicSync to make Tethering lock free
     private final Object mPublicSync;
     private final Context mContext;
     private final ArrayMap<String, TetherState> mTetherStates;
@@ -228,6 +229,7 @@ public class Tethering {
     private final ConnectedClientsTracker mConnectedClientsTracker;
     private final TetheringThreadExecutor mExecutor;
     private final TetheringNotificationUpdater mNotificationUpdater;
+    private final PrivateAddressCoordinator mPrivateAddressCoordinator;
     private int mActiveDataSubId = INVALID_SUBSCRIPTION_ID;
     // All the usage of mTetheringEventCallback should run in the same thread.
     private ITetheringEventCallback mTetheringEventCallback = null;
@@ -308,6 +310,7 @@ public class Tethering {
         mExecutor = new TetheringThreadExecutor(mHandler);
         mActiveDataSubIdListener = new ActiveDataSubIdListener(mExecutor);
         mNetdCallback = new NetdCallback();
+        mPrivateAddressCoordinator = new PrivateAddressCoordinator();
 
         // Load tethering configuration.
         updateConfiguration();
@@ -1058,17 +1061,26 @@ public class Tethering {
             }
         }
 
-        for (int i = 0; i < mTetherStates.size(); i++) {
-            final IpServer ipServer = mTetherStates.valueAt(i).ipServer;
-            if (ipServer.interfaceType() == tetheringType) {
-                ipServer.unwanted();
-                return;
-            }
-        }
+        // TODO: Figure out whether this is still needed.
+        final IpServer ipServer = getActiveIpServer(tetheringType);
+        if (ipServer != null) ipServer.unwanted();
 
         mLog.log("Error disabling Wi-Fi IP serving; "
                 + (TextUtils.isEmpty(ifname) ? "no interface name specified"
                                            : "specified interface: " + ifname));
+    }
+
+    private IpServer getActiveIpServer(final int tetheringType) {
+        for (int i = 0; i < mTetherStates.size(); i++) {
+            final IpServer ipServer = mTetherStates.valueAt(i).ipServer;
+            final int state = ipServer.servingMode();
+            if (state == IpServer.STATE_UNAVAILABLE || state == IpServer.STATE_AVAILABLE) continue;
+
+            if (ipServer.interfaceType() == tetheringType) {
+                return ipServer;
+            }
+        }
+        return null;
     }
 
     private void disableWifiIpServingLocked(String ifname, int apState) {
@@ -1587,6 +1599,30 @@ public class Tethering {
                             who.interfaceName(), IFACE_IP_MODE_UNSPECIFIED);
                 }
             }
+
+            if (who.needRestartTethering()) {
+                who.restartTethering(false /* enabled */);
+                enableTetheringInternal(who.interfaceType(), true /* enabled */, null);
+            }
+        }
+
+        private void addUpstreamPrefixes(final UpstreamNetworkState ns) {
+            final List<String> conflicts =
+                    mPrivateAddressCoordinator.updateUpstreamPrefix(ns.network,
+                    ns.linkProperties);
+            for (String iface : conflicts) {
+                mLog.w("Detect conflict prefix for " + iface);
+                final TetherState state = mTetherStates.get(iface);
+                if (!state.isCurrentlyServing()) continue;
+
+                final IpServer downstream = state.ipServer;
+                downstream.restartTethering(true /* enabled */);
+                enableTetheringInternal(downstream.interfaceType(), false /* enabled */, null);
+            }
+        }
+
+        private void removeUpstreamPrefixes(final UpstreamNetworkState ns) {
+            mPrivateAddressCoordinator.removeUpstreamPrefix(ns.network);
         }
 
         private void handleUpstreamNetworkMonitorCallback(int arg1, Object o) {
@@ -1596,6 +1632,14 @@ public class Tethering {
             }
 
             final UpstreamNetworkState ns = (UpstreamNetworkState) o;
+            switch (arg1) {
+                case UpstreamNetworkMonitor.EVENT_ON_LINKPROPERTIES:
+                    addUpstreamPrefixes(ns);
+                    break;
+                case UpstreamNetworkMonitor.EVENT_ON_LOST:
+                    removeUpstreamPrefixes(ns);
+                    break;
+            }
 
             if (ns == null || !pertainsToCurrentUpstream(ns)) {
                 // TODO: In future, this is where upstream evaluation and selection
@@ -2138,6 +2182,11 @@ public class Tethering {
         mOffloadController.dump(pw);
         pw.decreaseIndent();
 
+        pw.println("Private address coordinator:");
+        pw.increaseIndent();
+        mPrivateAddressCoordinator.dump(pw);
+        pw.decreaseIndent();
+
         pw.println("Log:");
         pw.increaseIndent();
         if (argsContain(args, "--short")) {
@@ -2178,6 +2227,16 @@ public class Tethering {
             @Override
             public void dhcpLeasesChanged() {
                 updateConnectedClients(null /* wifiClients */);
+            }
+
+            @Override
+            public LinkAddress requestAddress(final String iface) {
+                return mPrivateAddressCoordinator.requestDownstreamAddress(iface);
+            }
+
+            @Override
+            public void releaseAddress(final String iface) {
+                mPrivateAddressCoordinator.removeDownstreamPrefix(iface);
             }
         };
     }
