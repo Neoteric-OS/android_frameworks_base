@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64f14d83_fe811cda",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 62
+      },
+      "lineNbr": 2052,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-02-11T05:14:06Z",
+      "side": 1,
+      "message": "(I haven\u0027t gone through the CL one above this one)\nIt seems that there you are adding another lock for mutable fields of this class. If we use Handler, then the state maintained by this class need not be protected by a lock as all the mutations/reads can take place on the Handler thread.",
+      "parentUuid": "96668c06_2965c59f",
+      "range": {
+        "startLine": 2052,
+        "startChar": 31,
+        "endLine": 2052,
+        "endChar": 39
+      },
+      "revId": "0096113519c5eaca2eec1cd4ba24db4af67eaf37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2340007_bdddf2c4",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 62
