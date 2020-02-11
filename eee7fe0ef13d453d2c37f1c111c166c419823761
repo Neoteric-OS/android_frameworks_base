@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b3e5bc1_18072dac",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-02-11T04:58:57Z",
+      "side": 1,
+      "message": "extra space.",
+      "range": {
+        "startLine": 682,
+        "startChar": 49,
+        "endLine": 682,
+        "endChar": 50
+      },
+      "revId": "eee7fe0ef13d453d2c37f1c111c166c419823761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8d426e_89e0f26a",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-02-11T04:58:57Z",
+      "side": 1,
+      "message": "typo: thrown",
+      "range": {
+        "startLine": 687,
+        "startChar": 40,
+        "endLine": 687,
+        "endChar": 47
+      },
+      "revId": "eee7fe0ef13d453d2c37f1c111c166c419823761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
