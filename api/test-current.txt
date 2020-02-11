@@ -3917,7 +3917,7 @@ package android.telephony.ims.feature {
     field @Deprecated protected int mCapabilities;
   }
 
-  protected static class ImsFeature.CapabilityCallbackProxy {
+  public static class ImsFeature.CapabilityCallbackProxy {
     method public void onChangeCapabilityConfigurationError(int, int, int);
   }
 
