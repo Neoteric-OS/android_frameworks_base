@@ -69,6 +69,29 @@ java_library {
     apex_available: ["com.android.tethering"],
 }
 
+droidstubs {
+    name: "framework-tethering-stubs-sources",
+    defaults: ["framework-module-stubs-defaults-module_libs_api"],
+    srcs: [
+        "src/android/net/TetheredClient.java",
+        "src/android/net/TetheringManager.java",
+        "src/android/net/TetheringConstants.java",
+    ],
+    libs: [
+        "tethering-aidl-interfaces-java",
+        "framework-all",
+    ],
+    sdk_version: "core_platform",
+}
+
+java_library {
+    name: "framework-tethering-stubs",
+    srcs: [":framework-tethering-stubs-sources"],
+    libs: ["framework-all"],
+    static_libs: ["tethering-aidl-interfaces-java"],
+    sdk_version: "core_platform",
+}
+
 filegroup {
     name: "framework-tethering-srcs",
     srcs: [
