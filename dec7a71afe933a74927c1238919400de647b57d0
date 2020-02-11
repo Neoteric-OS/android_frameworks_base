@@ -646,6 +646,24 @@
     },
     {
       "key": {
+        "uuid": "53c9dabf_a50b1414",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-11T01:03:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "80ac56d6_aca5710e",
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66198019_08397786",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 52
@@ -753,6 +771,30 @@
       "side": 1,
       "message": "Let me add that I don\u0027t think there is any sense in stubbing it out at this point. It would prevent the system from being crashed by this of course, but considering you\u0027ll need a fairly fundamental design change to fix the underlying issue anyway, I don\u0027t see the point of submitting this with a stub now if we know we\u0027ll have to change everything later.\n\nFinally when you fix this don\u0027t only move the DNS resolution. I did say I was pretty uncomfortable with how long and broad this lock was held, and lo and behold, here was a huge fish hidden in there. We need to fix the design for good.",
       "parentUuid": "6776e712_cf20dc19",
+      "range": {
+        "startLine": 81,
+        "startChar": 51,
+        "endLine": 81,
+        "endChar": 60
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c6bf67_d6814509",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-11T01:03:19Z",
+      "side": 1,
+      "message": "If I may clarify: the reason why this wasn\u0027t moved directly to the async DNS resolution (which I did consider) was that IKE is going to be taking ownership of the DNS resolution as per the IKE acceptance review comments. Moving to the async DNS resolution, only to rip it out once the (awaiting-review) IKE API changes are made seemed like it added un-necessary complexity in the meantime.\n\n\u003e This is running on the CM thread *OF THE SYSTEM* *WITH THE VPN LOCK HELD*\n\nSecondly, my assessment was that since this is now (as a result of yours and Varun\u0027s original round of comments) running on a worker thread (Executor.newSingleThreadExecutor), it won\u0027t be blocking the CS thread (minus the lock-contention case, which is handled as discussed below). This new SingleThreadExecutor is used to service ALL callbacks, and is passed into IKE for that purpose as well (the IKE/Child session callbacks are called on that thread). \n\n\u003e I did say I was pretty uncomfortable with how long and broad this lock was held\n\nThe next patch on top of this one ensures that this method no longer holds the VPN lock itself. That was separated so that we could properly see what the change was, but if you want that squashed into this one, I\u0027m happy to do so (preferably after we\u0027ve scrutinized it, otherwise it might be harder to validate the locking code).\n\nI\u0027ve also moved this out of the entire lock (but still in the executor thread), in an attempt to mitigate any further concerns regarding the DNS lookup",
+      "parentUuid": "f19a4653_fead82ee",
       "range": {
         "startLine": 81,
         "startChar": 51,
