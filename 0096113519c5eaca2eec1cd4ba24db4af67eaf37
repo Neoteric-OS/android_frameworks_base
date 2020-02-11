@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "96668c06_2965c59f",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 62
+      },
+      "lineNbr": 2052,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-02-11T05:08:59Z",
+      "side": 1,
+      "message": "I find it a bit odd for IkeV2VpnRunner (which is a Thread) to create another thread for delegating tasks.\n\nHave you considered the possibility of making IkeV2VpnRunner a Handler thread instead? \nIt seems that the whole reason we create another executor is so we can delegate calls from ConnectivityManager on to this executor. But if we make IkeV2VpnRunner a HandlerThread, then all those calls from CM could easily be delegated to IkeV2VpnRunner. Not only this avoids creating an additional thread (which can be expensive), it will also add more structure to all the operations in this class more tractable. Plus, you get the flexibility of easily queuing up (and canceling them if required) async operations as and when needed.\n\nI get that this would mean restructuring VpnRunner (which is currently a Thread), and by extension, LegacyVpnRunner as well. Since that in itself could be some work, please check with Jean before heading in this direction.",
+      "range": {
+        "startLine": 2052,
+        "startChar": 31,
+        "endLine": 2052,
+        "endChar": 39
+      },
+      "revId": "0096113519c5eaca2eec1cd4ba24db4af67eaf37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2340007_bdddf2c4",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 62
+      },
+      "lineNbr": 2062,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-02-11T05:08:59Z",
+      "side": 1,
+      "message": "Is this still true?",
+      "range": {
+        "startLine": 2062,
+        "startChar": 57,
+        "endLine": 2062,
+        "endChar": 84
+      },
+      "revId": "0096113519c5eaca2eec1cd4ba24db4af67eaf37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "269e9253_69c26d7c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 62
+      },
+      "lineNbr": 2066,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-02-11T05:08:59Z",
+      "side": 1,
+      "message": "Given Ikev2VpnNetworkCallback is a static class, you can get rid of the prefix (may apply to other places in this class as well)",
+      "range": {
+        "startLine": 2066,
+        "startChar": 35,
+        "endLine": 2066,
+        "endChar": 49
+      },
+      "revId": "0096113519c5eaca2eec1cd4ba24db4af67eaf37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba7dfe30_d28eabfc",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 62
@@ -41,6 +110,29 @@
         "startChar": 71,
         "endLine": 303,
         "endChar": 79
+      },
+      "revId": "0096113519c5eaca2eec1cd4ba24db4af67eaf37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "688d3a32_a8eafca1",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 62
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-02-11T05:08:59Z",
+      "side": 1,
+      "message": "is there a reason for this to be plural?",
+      "range": {
+        "startLine": 312,
+        "startChar": 58,
+        "endLine": 312,
+        "endChar": 59
       },
       "revId": "0096113519c5eaca2eec1cd4ba24db4af67eaf37",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
