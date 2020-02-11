@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dd2c0fa_6c0e39c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-11T03:15:25Z",
+      "side": 1,
+      "message": "number of client?",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "4e9f42d6003ef8d7edcc071cdafd1086dd5f4249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e735b8a_6c74d080",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-11T03:15:25Z",
+      "side": 1,
+      "message": "Nit: maybe just 1 if the item is specific to single client?",
+      "range": {
+        "startLine": 191,
+        "startChar": 30,
+        "endLine": 191,
+        "endChar": 34
+      },
+      "revId": "4e9f42d6003ef8d7edcc071cdafd1086dd5f4249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849932e3_837b4056",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-11T03:15:25Z",
+      "side": 1,
+      "message": "Optional: This string may just combine with tethering_notification_text_with_client and fixed content(e.g. \"in power saving mode\"). Also for noclient case",
+      "range": {
+        "startLine": 201,
+        "startChar": 19,
+        "endLine": 201,
+        "endChar": 71
+      },
+      "revId": "4e9f42d6003ef8d7edcc071cdafd1086dd5f4249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c058b5_a8f05fe5",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-11T03:15:25Z",
+      "side": 1,
+      "message": "maybe also test signal client case",
+      "range": {
+        "startLine": 267,
+        "startChar": 8,
+        "endLine": 267,
+        "endChar": 25
+      },
+      "revId": "4e9f42d6003ef8d7edcc071cdafd1086dd5f4249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab874877_47e88c67",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-11T03:15:25Z",
+      "side": 1,
+      "message": "mayve also test client connected but R.array.tethering_notification_icons_with_client length is 0",
+      "range": {
+        "startLine": 273,
+        "startChar": 8,
+        "endLine": 273,
+        "endChar": 9
+      },
+      "revId": "4e9f42d6003ef8d7edcc071cdafd1086dd5f4249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
