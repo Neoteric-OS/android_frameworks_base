@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Ryan Mitchell <rtmitchell@google.com>
+Code-Review+2: Mathieu Chartier <mathieuc@google.com>
+Code-Review+2: Eric Holk <eholk@google.com>
+Autosubmit+1: Chih-hung Hsieh <chh@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Tue, 11 Feb 2020 23:57:06 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1233400
+Project: platform/frameworks/base
+Branch: refs/heads/master
