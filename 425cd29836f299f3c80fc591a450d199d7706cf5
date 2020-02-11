@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08505348_72366a2e",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "Redesign the array and add more details about the design of each item.",
+      "parentUuid": "fce8513e_ad4dd37e",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b1621f7_010a9a80",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 20
@@ -45,6 +69,30 @@
       "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05402a9e_33730964",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "Just follow up current AOSP behavior that only hotspot doesn\u0027t have icon by default.",
+      "parentUuid": "3b1621f7_010a9a80",
+      "range": {
+        "startLine": 31,
+        "startChar": 14,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "555538ed_8d18ae0b",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe6c09c1_685f32ef",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b3f8d7c_0e40ef11",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 20
@@ -91,6 +163,30 @@
       "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b27005_c7134ffe",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "Rename to tethering_notification_title\nWith clients design implements in aosp/1200165.",
+      "parentUuid": "9b3f8d7c_0e40ef11",
+      "range": {
+        "startLine": 39,
+        "startChar": 47,
+        "endLine": 39,
+        "endChar": 56
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "71ad8097_af654efb",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "This part moved to aosp/1211648. Will add comment into that commit.",
+      "parentUuid": "5fa20c9d_7de4e4ef",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 93
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73946098_dcfc9280",
         "filename": "packages/Tethering/res/values/overlayable.xml",
         "patchSetId": 20
@@ -137,6 +257,30 @@
       "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f729e601_ca03edff",
+        "filename": "packages/Tethering/res/values/overlayable.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "This code moved to aosp/1211648 and already updated to %1.",
+      "parentUuid": "73946098_dcfc9280",
+      "range": {
+        "startLine": 24,
+        "startChar": 22,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e967aea5_6ca2c37f",
+        "filename": "packages/Tethering/res/values/strings.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ce77284_b0fbd86e",
+      "range": {
+        "startLine": 31,
+        "startChar": 9,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea37ccf5_175067aa",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 20
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "bc047178_14b37dbb",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "I think we can call TNU#onActiveDataSubscriptionIdChanged even if tethering is not supported because there is no downstream on this situation that notification will not show or change as well. Will update design on aosp/1209984.",
+      "parentUuid": "ea37ccf5_175067aa",
+      "range": {
+        "startLine": 322,
+        "startChar": 22,
+        "endLine": 322,
+        "endChar": 42
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c38b16f_f6a89497",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 20
@@ -197,6 +389,30 @@
       "writtenOn": "2020-02-03T10:16:33Z",
       "side": 1,
       "message": "Nit : we usually return-fast, so this would be written\n\n  if (!mDeps.isTetheringSupported) return;\n  ...\n\nNot very important.",
+      "range": {
+        "startLine": 695,
+        "startChar": 22,
+        "endLine": 695,
+        "endChar": 42
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ece4bd5_18cad84d",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "Will update design on aosp/1200163",
+      "parentUuid": "6c38b16f_f6a89497",
       "range": {
         "startLine": 695,
         "startChar": 22,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "89f437b2_9345c371",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "No bug id but aosp/1188867 is doing this.",
+      "parentUuid": "0cee5832_998eb62b",
+      "range": {
+        "startLine": 843,
+        "startChar": 15,
+        "endLine": 843,
+        "endChar": 19
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bd4e33f_0a0b1032",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 20
@@ -252,6 +492,30 @@
       "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ffd860d_c4c237f6",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bd4e33f_0a0b1032",
+      "range": {
+        "startLine": 49,
+        "startChar": 41,
+        "endLine": 49,
+        "endChar": 49
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "719ca417_54d0d4ee",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62e32332_cf29eb4f",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 10
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "686ce57d_cd4b8b7b",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 20
@@ -298,6 +586,30 @@
       "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2c0685_ca3339cf",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "686ce57d_cd4b8b7b",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 28
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "b12dffdc_4e1b54e2",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "This code moved to aosp/1211647. Will update design there.",
+      "parentUuid": "6b736cc3_be90bf00",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 37
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0f60945_3491c471",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 20
@@ -344,6 +680,30 @@
       "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb8b4f4_b07f5e37",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-11T09:44:16Z",
+      "side": 1,
+      "message": "I think so. Will update design on aosp/1209984.",
+      "parentUuid": "f0f60945_3491c471",
+      "range": {
+        "startLine": 98,
+        "startChar": 19,
+        "endLine": 98,
+        "endChar": 39
+      },
+      "revId": "425cd29836f299f3c80fc591a450d199d7706cf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
