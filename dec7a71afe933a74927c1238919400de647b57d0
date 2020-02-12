@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "8b599191_abcc8a87",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2071,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "FWIW : more and more of these are popping out and I am starting to think we should just cut implementation ties with LegacyVpnRunner, because no matter how hard you want it we\u0027re not likely to be able to remove it soon. If this kind of elementary cleanup is not feasible until we remove LegacyVpnRunner we should change the implementation in such a way that it becomes feasible.\nIf we need to make IkeVpnRunner something completely separate, so be it, but having to wait until we can remove LegacyVpnRunner to clean this up is really not a great idea in terms of workload or in terms of code health.",
+      "parentUuid": "a1222801_8ccbcd8f",
+      "range": {
+        "startLine": 2044,
+        "startChar": 8,
+        "endLine": 2071,
+        "endChar": 62
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "497babaf_fed9c705",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 52
@@ -346,6 +370,30 @@
       "side": 1,
       "message": "Yeah; this was the original reason why I thought I had to build a custom request (and why my note that DefaultRequest !\u003d DefaultCapabilities). I actually hit this while prototyping, that the default network callback gives the VPN back to itself. The current state is:\n\nregisterDefaultNetworkCallback: DEFAULT + INTERNET - NOT_VPN\n    generated from createDefaultNetworkCapabilitiesForUid()\n\ngetDefaultNetworkRequest: DEFAULT + INTERNET\n    generated from createDefaultInternetRequestForTransport()",
       "parentUuid": "fd1ee237_3ebca3de",
+      "range": {
+        "startLine": 2218,
+        "startChar": 26,
+        "endLine": 2218,
+        "endChar": 33
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4a68fa2_16d82293",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "Right. Which is bad when the default network doesn\u0027t apply to you. I think we should fix this, but of course not in the course of this work.",
+      "parentUuid": "b318401b_e61e8563",
       "range": {
         "startLine": 2218,
         "startChar": 26,
@@ -876,6 +924,30 @@
       "revId": "dec7a71afe933a74927c1238919400de647b57d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3f5ee7_14f2a955",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "Fair enough for now.",
+      "parentUuid": "b349f515_e6bc77b0",
+      "range": {
+        "startLine": 81,
+        "startChar": 51,
+        "endLine": 81,
+        "endChar": 60
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {

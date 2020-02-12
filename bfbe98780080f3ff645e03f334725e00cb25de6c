@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d7a2667_1a9e89aa",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "This includes MODE_ERRORED and MODE_IGNORED, it sounds like at least the first of those should actually throw even if the caller has MANAGE_IPSEC_TUNNELS, and IGNORE should... um... in an \u0027enforce\u0027 method, I\u0027d say throw too, like it used to.",
+      "range": {
+        "startLine": 1564,
+        "startChar": 12,
+        "endLine": 1564,
+        "endChar": 19
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c55811_46786914",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2026,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "Should this be onDefaultNetworkChanged ?",
+      "range": {
+        "startLine": 2026,
+        "startChar": 13,
+        "endLine": 2026,
+        "endChar": 31
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c7e0ce_d91ec51f",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "Let\u0027s remove this call from the lock by calling it first and moving it into a local.",
+      "range": {
+        "startLine": 2112,
+        "startChar": 33,
+        "endLine": 2112,
+        "endChar": 64
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "021f53a4_ea62ff38",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2125,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "Do this after the if() block below so as not to do this work for nothing",
+      "range": {
+        "startLine": 2125,
+        "startChar": 0,
+        "endLine": 2125,
+        "endChar": 94
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321e89fe_83f79f78",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2159,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "IIUC the IKE lib guarantees this can\u0027t happen – it would require it calls you to tell you of the failure, THEN calls you again saying a child transform was created for this session, which would be a bug in the IKE lib.",
+      "range": {
+        "startLine": 2158,
+        "startChar": 58,
+        "endLine": 2159,
+        "endChar": 76
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c0aa96_0f9b846b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2199,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "All right, you wanted to see why this is a bad architecture ? Here is the poster child.\n\nYou have a class that extends Thread and implements a merged callback between two heterogeneous interfaces. Some methods are running on a critical thread and throwing runnables to a (separate) worker thread, but only in *some* (let the reader figure out which and why) callbacks because it needs total ordering and can\u0027t get it otherwise. But the callbacks have partitioned ordering, which means you need to know the latest status of one set in the other set. In turn, this will store stuff in a mutable member, and need to check for this member being the latest value when it receives callbacks of another set, which spurs the need for synchronicity, obscure guarantees of cleanup and the like. Of course, none of this is documented anywhere, it\u0027s only implicit in the way the control flows.\n\nAnd it took your reviewer 65 patchsets to finally understand this well.\n\nA very simple improvement in architecture is : stop merging the callbacks. When you have a new default Network, create a new instance of the IKE callbacks that contains a final Network and only services that. No more mutable member, no more difficult synchronization, a very simple lifecycle for the IKE callbacks which are already guaranteed to be ordered which gives you obvious cleanup as long as the underlying lib works as expected. State stored in the callback objects and they are replaced atomically.\nFurther, you could serialize creation of the callbacks so that creating the new session happens after the old one is cleaned up. There goes the need for synchronization of interface state.\n\nFrankly, even the code organization today reflects the original design to have everything done under the VPN lock to protect everything, and export the rest (only a few one-liners) to a separate file, but now there is essentially no reason at all for this runner to even be in this file ; all you\u0027d need is a method to contain the code in ll.2111~2138 and you\u0027d be good to go. I\u0027m not even sure extending VpnRunner was the best decision.\n\nLooking forward to these improvements after IC.",
+      "range": {
+        "startLine": 2199,
+        "startChar": 20,
+        "endLine": 2199,
+        "endChar": 45
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3f2e396_c1f96780",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2225,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "Looks like your formatter is still struggling with the actual AOSP style",
+      "range": {
+        "startLine": 2225,
+        "startChar": 0,
+        "endLine": 2225,
+        "endChar": 66
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b285778_0d3e350a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2243,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "Can we have this function at the start or at the end of the class, instead of sandwiched right between two callbacks ?\n(in a followup at the end of the patch stack is fine)",
+      "range": {
+        "startLine": 2243,
+        "startChar": 0,
+        "endLine": 2243,
+        "endChar": 27
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef30a3f_dd9a8b4c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2250,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "You could also just run the callbacks here instead of throwing away this thread and creating a managed pool of one",
+      "range": {
+        "startLine": 2250,
+        "startChar": 8,
+        "endLine": 2250,
+        "endChar": 9
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "136195b9_de9cb82a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2355,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "mExecutor.shutdown() ?",
+      "range": {
+        "startLine": 2355,
+        "startChar": 8,
+        "endLine": 2355,
+        "endChar": 9
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

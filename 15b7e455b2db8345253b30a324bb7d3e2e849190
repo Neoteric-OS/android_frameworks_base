@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "d9673e4c_badb8a30",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2068,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "Sorry still not happy. A better network was found, how does this code learn about this ? This is extremely obscure in the code. I tried to figure out and gave up after searching for a few minutes. If it takes me multiple minutes to figure out what we do when a better network is found, and the code relies on that code path that I can\u0027t find for correctness, it better say what the code path is. It\u0027s also making it *very* hard for me to check as a reviewer.\n\nYou don\u0027t have to give the stack trace. Say how this Vpn object learns about it. Is it updateCapabilities() ? Is it the broadcast receiver calling interfaceStatusChanged ? Is it the onNetworkConnected callback ? Is it something else ?\n\nFor the shutdown, I expect it\u0027s because you\u0027ll get a callback to onSessionLost, and if that\u0027s correct just say that. It will help readers check the correctness of your assumptions, and understand what are the invariants they need to protect when they change something.",
+      "parentUuid": "f75462af_ebf90582",
+      "range": {
+        "startLine": 2068,
+        "startChar": 20,
+        "endLine": 2068,
+        "endChar": 26
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6eeb4f8c_bf63c00d",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -403,6 +427,30 @@
       "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6230ad73_0e6f6f54",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2094,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "Ah. I was under the misapprehension that this was only sent for legacy VPN and not platform VPN, and I couldn\u0027t figure how Settings would learn about the lifecycle without this. Really, this is just about my misreading of isSettingsVpn().",
+      "parentUuid": "bf01bfd4_dbed49ce",
+      "range": {
+        "startLine": 2092,
+        "startChar": 23,
+        "endLine": 2094,
+        "endChar": 25
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -711,6 +759,30 @@
       "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c084d94_8698a824",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2202,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "For this I think your description is fine. It comes from onLost() (you could say what network callback to clarify, but probably this is enough as I can look up the callers of this), or the IKE lib calling back to say the session was destroyed. That\u0027s sufficient.\n\nIt\u0027s not the same as to say \"the default network changed\" without saying at all how this object figured this out.",
+      "parentUuid": "bd353140_7b4f2efe",
+      "range": {
+        "startLine": 2202,
+        "startChar": 23,
+        "endLine": 2202,
+        "endChar": 97
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -1258,6 +1330,30 @@
     },
     {
       "key": {
+        "uuid": "a800c727_144db8f1",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "Okay but this is additional code that you probably wouldn\u0027t have needed at all, so it\u0027s not really pulled out of there",
+      "parentUuid": "c9a05395_af31f723",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 71
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92761ca6_1c1e63a8",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 54
@@ -1349,6 +1445,30 @@
       "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f4b58d_f1e9a543",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T17:12:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b58cd723_9d4d473c",
+      "range": {
+        "startLine": 289,
+        "startChar": 23,
+        "endLine": 289,
+        "endChar": 40
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
