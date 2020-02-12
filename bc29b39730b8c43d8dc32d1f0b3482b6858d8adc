@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "366ba5ea_6b8d6641",
+        "filename": "core/java/android/net/TestNetworkManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-02-12T04:47:30Z",
+      "side": 1,
+      "message": "My preference is that the IBinder be the last argument. It\u0027s not a huge deal, but keeping the \"network\" parameters all together seems preferable.",
+      "range": {
+        "startLine": 61,
+        "startChar": 21,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "bc29b39730b8c43d8dc32d1f0b3482b6858d8adc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89215e47_109b397d",
+        "filename": "core/java/android/net/TestNetworkManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-02-12T04:47:30Z",
+      "side": 1,
+      "message": "Since this is an overload, ISTM that we can just call it setupTestNetwork.",
+      "range": {
+        "startLine": 107,
+        "startChar": 16,
+        "endLine": 107,
+        "endChar": 49
+      },
+      "revId": "bc29b39730b8c43d8dc32d1f0b3482b6858d8adc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd72f77b_56762772",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-02-12T04:47:30Z",
+      "side": 1,
+      "message": "Why not Arrays.asList?",
+      "range": {
+        "startLine": 297,
+        "startChar": 26,
+        "endLine": 297,
+        "endChar": 40
+      },
+      "revId": "bc29b39730b8c43d8dc32d1f0b3482b6858d8adc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
