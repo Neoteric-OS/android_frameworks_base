@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "eeac4ab8_32312af2",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 24
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-12T03:08:42Z",
+      "side": 1,
+      "message": "Can you also implement Jean\u0027s suggestion with:\nUSB|WIFI,USB|ETHERNET;@drawable/usb_plus_one \n? I think it would make the configuration a lot clearer, and you just need a switch to return the index from strings.",
+      "parentUuid": "d08a8675_e6420488",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 12
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46f8efa0_bf1123dd",
         "filename": "packages/Tethering/res/values/strings.xml",
         "patchSetId": 24

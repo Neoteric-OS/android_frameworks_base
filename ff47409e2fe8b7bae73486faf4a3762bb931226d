@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59db7a50_9343eaed",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 25
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-12T03:08:42Z",
+      "side": 1,
+      "message": "Can you check if this works with overlays ? What does the configuration look like in an overlay (which package is referenced ?)",
+      "range": {
+        "startLine": 171,
+        "startChar": 16,
+        "endLine": 171,
+        "endChar": 79
+      },
+      "revId": "ff47409e2fe8b7bae73486faf4a3762bb931226d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff24205_c97d4d60",
+        "filename": "packages/Tethering/res/values/overlayable.xml",
+        "patchSetId": 25
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-12T03:08:42Z",
+      "side": 1,
+      "message": "Can you also have the full documentation here ? We should be able to refer OEMs to just this file for the values that can be configured.",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 68
+      },
+      "revId": "ff47409e2fe8b7bae73486faf4a3762bb931226d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cf81dc_706fa0a2",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-12T03:08:42Z",
+      "side": 1,
+      "message": "This class needs associated unit tests",
+      "revId": "ff47409e2fe8b7bae73486faf4a3762bb931226d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3fc92f_15c84a8f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-12T03:08:42Z",
+      "side": 1,
+      "message": "Nit: this could be:\nif (tetheringInactive || setupNotificationLocked() \u003d\u003d NO_NOTIFY) {\n    clearNotification();\n}\n\nI\u0027d prefer using \"\u003d\u003d NO_NOTIFY\" because a constant is used in the return value, so the same constant should be used when checking the return value.",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 95,
+        "endChar": 13
+      },
+      "revId": "ff47409e2fe8b7bae73486faf4a3762bb931226d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610b3c6c_7ed7e832",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-12T03:08:42Z",
+      "side": 1,
+      "message": "How about clearNotificationLocked ? If we\u0027re trying to synchronize notification show/hide",
+      "range": {
+        "startLine": 99,
+        "startChar": 17,
+        "endLine": 99,
+        "endChar": 34
+      },
+      "revId": "ff47409e2fe8b7bae73486faf4a3762bb931226d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef481eb_e9ae167e",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-12T03:08:42Z",
+      "side": 1,
+      "message": "Nit: it\u0027s not clear what the hashmap maps (the signature is just int to int), so some javadoc on the method would be helpful",
+      "range": {
+        "startLine": 103,
+        "startChar": 17,
+        "endLine": 103,
+        "endChar": 25
+      },
+      "revId": "ff47409e2fe8b7bae73486faf4a3762bb931226d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1038855_91eba3ee",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-12T03:08:42Z",
+      "side": 1,
+      "message": "Can getIcons create and return the HashMap instead ? It\u0027s strange to pass a hashmap to be filled as argument",
+      "range": {
+        "startLine": 123,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 72
+      },
+      "revId": "ff47409e2fe8b7bae73486faf4a3762bb931226d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bfd3501_8e1d8c89",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-12T03:08:42Z",
+      "side": 1,
+      "message": "How about showNotificationLocked ?",
+      "range": {
+        "startLine": 135,
+        "startChar": 20,
+        "endLine": 135,
+        "endChar": 36
+      },
+      "revId": "ff47409e2fe8b7bae73486faf4a3762bb931226d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5025986_b43d780a",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-12T03:08:42Z",
+      "side": 1,
+      "message": "This always returns true, can it be void ?",
+      "range": {
+        "startLine": 135,
+        "startChar": 12,
+        "endLine": 135,
+        "endChar": 19
+      },
+      "revId": "ff47409e2fe8b7bae73486faf4a3762bb931226d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7512da_64ba41d4",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-12T03:08:42Z",
+      "side": 1,
+      "message": "Is this necessary ? The doc says that this is hidden by default unless setShowWhen(true) is also used",
+      "range": {
+        "startLine": 146,
+        "startChar": 24,
+        "endLine": 146,
+        "endChar": 35
+      },
+      "revId": "ff47409e2fe8b7bae73486faf4a3762bb931226d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
