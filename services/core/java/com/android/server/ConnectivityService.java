@@ -6952,6 +6952,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // worry about multiple different substates of CONNECTED.
             newInfo.setDetailedState(NetworkInfo.DetailedState.SUSPENDED, info.getReason(),
                     info.getExtraInfo());
+        } else if (!suspended && info.getDetailedState() == NetworkInfo.DetailedState.SUSPENDED) {
+            // SUSPENDED state is currently only overridden from CONNECTED state. Update state back
+            // to CONNECTED state.
+            newInfo.setDetailedState(NetworkInfo.DetailedState.CONNECTED, info.getReason(),
+                    info.getExtraInfo());
         }
         newInfo.setRoaming(!nai.networkCapabilities.hasCapability(NET_CAPABILITY_NOT_ROAMING));
         return newInfo;
