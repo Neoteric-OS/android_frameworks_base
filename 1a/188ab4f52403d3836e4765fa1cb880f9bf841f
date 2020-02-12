@@ -1,0 +1,9 @@
+Autosubmit+1: Roshan Pius <rpius@google.com>
+Presubmit-Ready+1: Roshan Pius <rpius@google.com>
+Build-Cop-Override+1: Adrian Salido <salidoa@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Roshan Pius <rpius@google.com>
+Submitted-at: Wed, 12 Feb 2020 23:36:10 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1234374
+Project: platform/frameworks/base
+Branch: refs/heads/master
