@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "c8183338_8349bd6f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6448,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T07:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e82e177b_b60d9bf1",
+      "range": {
+        "startLine": 6448,
+        "startChar": 26,
+        "endLine": 6448,
+        "endChar": 43
+      },
+      "revId": "0e86769b9c2e877a06d59cda57c0e1fb3fc9e4e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de83d6d1_31b0d82f",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 11
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "8cd72fed_ad65d137",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6527,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T07:06:39Z",
+      "side": 1,
+      "message": "Let\u0027s not. The list of reassignments is supposed to be enough to figure out what\u0027s happening ; also having the list of rematched networks is only useful to debug this code and can be printed if we are in debug mode.",
+      "parentUuid": "de83d6d1_31b0d82f",
+      "range": {
+        "startLine": 6527,
+        "startChar": 12,
+        "endLine": 6527,
+        "endChar": 13
+      },
+      "revId": "0e86769b9c2e877a06d59cda57c0e1fb3fc9e4e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e15a3779_13470008",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 11
@@ -91,6 +139,30 @@
       "revId": "0e86769b9c2e877a06d59cda57c0e1fb3fc9e4e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a75e08b5_8fed8271",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6531,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T07:06:39Z",
+      "side": 1,
+      "message": "Ah, you are right. Made the latest patchset use the short form if DBG and the long for if VDBG or DDBG.",
+      "parentUuid": "e15a3779_13470008",
+      "range": {
+        "startLine": 6531,
+        "startChar": 22,
+        "endLine": 6531,
+        "endChar": 33
+      },
+      "revId": "0e86769b9c2e877a06d59cda57c0e1fb3fc9e4e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

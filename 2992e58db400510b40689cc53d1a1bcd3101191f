@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "937ba8f9_9f32248f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6396,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T07:06:39Z",
+      "side": 1,
+      "message": "Nah. I don\u0027t have a strong opinion either, so let\u0027s leave it as in patch 13 since you prefer single line.",
+      "parentUuid": "6ceb5bbd_907db580",
+      "range": {
+        "startLine": 6396,
+        "startChar": 22,
+        "endLine": 6396,
+        "endChar": 30
+      },
+      "revId": "2992e58db400510b40689cc53d1a1bcd3101191f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eef7078_beb84a9e",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
