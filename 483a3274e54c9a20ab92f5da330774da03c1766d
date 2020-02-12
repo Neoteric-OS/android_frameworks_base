@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f4e9a0e7_c0f94e9f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6562,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-12T12:04:35Z",
+      "side": 1,
+      "message": "nit: Hmm, I am not very convinced that it is expensive.\nGiven that there is no statistics on how many times we run this,\nand how much overhead it introduced.\nSo I think it is possible that overhead is not that much.\nBut consider that is no harm to add this.\nAnd our schedule is tight.\nWe could figure out that when we have time to do this.",
+      "parentUuid": "f1c51fdf_8da310bf",
+      "range": {
+        "startLine": 6562,
+        "startChar": 16,
+        "endLine": 6562,
+        "endChar": 62
+      },
+      "revId": "483a3274e54c9a20ab92f5da330774da03c1766d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfebdec8_44b1591b",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 15
