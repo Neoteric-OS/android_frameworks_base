@@ -6633,6 +6633,33 @@ public class ConnectivityServiceTest {
         mServiceContext.setPermission(perm, PERMISSION_GRANTED);
     }
 
+    @Test
+    public void testRegisterConnectivityDiagnosticsCallbackCallsOnConnectivityReport()
+            throws Exception {
+        // Set up the Network, which leads to a ConnectivityReport being cached for the network.
+        final TestNetworkCallback callback = new TestNetworkCallback();
+        mCm.registerDefaultNetworkCallback(callback);
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+        callback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+        callback.assertNoCallback();
+
+        final NetworkRequest request = new NetworkRequest.Builder().build();
+        when(mConnectivityDiagnosticsCallback.asBinder()).thenReturn(mIBinder);
+
+        mServiceContext.setPermission(
+                android.Manifest.permission.NETWORK_STACK, PERMISSION_GRANTED);
+
+        mService.registerConnectivityDiagnosticsCallback(
+                mConnectivityDiagnosticsCallback, request, mContext.getPackageName());
+
+        // Block until all other events are done processing.
+        HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+
+        verify(mConnectivityDiagnosticsCallback)
+                .onConnectivityReport(any(ConnectivityReport.class));
+    }
+
     private void setUpConnectivityDiagnosticsCallback() throws Exception {
         final NetworkRequest request = new NetworkRequest.Builder().build();
         when(mConnectivityDiagnosticsCallback.asBinder()).thenReturn(mIBinder);
