@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1356eaa_6424319a",
+        "filename": "core/java/android/net/NetworkAgentConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-02-12T05:42:23Z",
+      "side": 1,
+      "message": "Address by aosp/1232195",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 8
+      },
+      "revId": "6dc98549961acb0bbb9a1ab4516ff456ff34e89d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
