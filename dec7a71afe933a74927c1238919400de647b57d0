@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "a1222801_8ccbcd8f",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2071,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-12T07:27:56Z",
+      "side": 1,
+      "message": "Ack. Most of this is moved out already to VpnIkev2Util.java. b/149256441 filed to track a broader move of the Ikev2VpnRunner out of this file.\n\nI suspect it\u0027ll only be feasible when we remove LegacyVpnRunner. I think we raised this before, but both got shot down in terms of refactoring the VPN class.",
+      "parentUuid": "6c671157_7526e23e",
+      "range": {
+        "startLine": 2044,
+        "startChar": 8,
+        "endLine": 2071,
+        "endChar": 62
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "497babaf_fed9c705",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 52
@@ -298,6 +322,30 @@
       "side": 1,
       "message": "Yeah ; IIUC the semantics of this is that it needs to follow the default request. Adding TRUSTED explicitly means that if we remove TRUSTED from the default request this code becomes incorrect (a drawback that Ben\u0027s code at this patchset doesn\u0027t have, though it has multiple copies of the same drawback on other capabilities).\n\nCM has a method to do exactly this, it\u0027s called registerDefaultNetworkCallback. Whether it\u0027s usable here I\u0027m a bit cloudy about ; the VPN app is excluded by default from applying to itself and that is correctly reflected in network callbacks, but whether that\u0027s correctly reflected in the default callback I\u0027m not 100% sure, and even if it is I\u0027m not sure it\u0027s going to work as expected when the VPN app is the system process.",
       "parentUuid": "1eee3112_c466012c",
+      "range": {
+        "startLine": 2218,
+        "startChar": 26,
+        "endLine": 2218,
+        "endChar": 33
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b318401b_e61e8563",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-12T07:27:56Z",
+      "side": 1,
+      "message": "Yeah; this was the original reason why I thought I had to build a custom request (and why my note that DefaultRequest !\u003d DefaultCapabilities). I actually hit this while prototyping, that the default network callback gives the VPN back to itself. The current state is:\n\nregisterDefaultNetworkCallback: DEFAULT + INTERNET - NOT_VPN\n    generated from createDefaultNetworkCapabilitiesForUid()\n\ngetDefaultNetworkRequest: DEFAULT + INTERNET\n    generated from createDefaultInternetRequestForTransport()",
+      "parentUuid": "fd1ee237_3ebca3de",
       "range": {
         "startLine": 2218,
         "startChar": 26,
@@ -795,6 +843,30 @@
       "side": 1,
       "message": "If I may clarify: the reason why this wasn\u0027t moved directly to the async DNS resolution (which I did consider) was that IKE is going to be taking ownership of the DNS resolution as per the IKE acceptance review comments. Moving to the async DNS resolution, only to rip it out once the (awaiting-review) IKE API changes are made seemed like it added un-necessary complexity in the meantime.\n\n\u003e This is running on the CM thread *OF THE SYSTEM* *WITH THE VPN LOCK HELD*\n\nSecondly, my assessment was that since this is now (as a result of yours and Varun\u0027s original round of comments) running on a worker thread (Executor.newSingleThreadExecutor), it won\u0027t be blocking the CS thread (minus the lock-contention case, which is handled as discussed below). This new SingleThreadExecutor is used to service ALL callbacks, and is passed into IKE for that purpose as well (the IKE/Child session callbacks are called on that thread). \n\n\u003e I did say I was pretty uncomfortable with how long and broad this lock was held\n\nThe next patch on top of this one ensures that this method no longer holds the VPN lock itself. That was separated so that we could properly see what the change was, but if you want that squashed into this one, I\u0027m happy to do so (preferably after we\u0027ve scrutinized it, otherwise it might be harder to validate the locking code).\n\nI\u0027ve also moved this out of the entire lock (but still in the executor thread), in an attempt to mitigate any further concerns regarding the DNS lookup",
       "parentUuid": "f19a4653_fead82ee",
+      "range": {
+        "startLine": 81,
+        "startChar": 51,
+        "endLine": 81,
+        "endChar": 60
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b349f515_e6bc77b0",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-12T07:27:56Z",
+      "side": 1,
+      "message": "As per GVC discussion, most of this is being moved out, and the DNS resolution is replaced with a synchronous parseNumericAddress().\n\nIf a non-numeric address is passed in, the VPN will simply fail. This will be fixed once IKE API updates are checked in.",
+      "parentUuid": "d6c6bf67_d6814509",
       "range": {
         "startLine": 81,
         "startChar": 51,

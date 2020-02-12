@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "f75462af_ebf90582",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2068,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-12T07:27:56Z",
+      "side": 1,
+      "message": "My current thought is that the two cases listed in the new comment suffice to discuss what the broad conditions are in which the state would have been cleaned up. In addition, the callout to resetIkeState() and the debug logs should make tracing the exact place (of many possible locations) that the state was cleared at.\n\nI\u0027m wary of adding additional detail here, as it feels like it\u0027ll go out of date extremely quickly. But if you feel strongly, I\u0027ll defer to your reading of the code.",
+      "parentUuid": "1bbb42fd_9dc2f6c7",
+      "range": {
+        "startLine": 2068,
+        "startChar": 20,
+        "endLine": 2068,
+        "endChar": 26
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6eeb4f8c_bf63c00d",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -358,6 +382,30 @@
     },
     {
       "key": {
+        "uuid": "bf01bfd4_dbed49ce",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2094,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-12T07:27:56Z",
+      "side": 1,
+      "message": "Settings currently (already) uses these settings intents to find out the status of the VPN. The intent contains information regarding the profile name, and that\u0027s what it uses to match.\n\nRegarding the app API, they absolutely can register a network callback to see if a VPN is brought up.",
+      "parentUuid": "5328806a_e64c397d",
+      "range": {
+        "startLine": 2092,
+        "startChar": 23,
+        "endLine": 2094,
+        "endChar": 25
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ba47969_f8572ee6",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -500,6 +548,30 @@
     },
     {
       "key": {
+        "uuid": "0d46d48a_96d55e95",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2127,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-12T07:27:56Z",
+      "side": 1,
+      "message": "As per in-person discussion, moved basically all the code out of locks.",
+      "parentUuid": "cc5d4d23_25a03766",
+      "range": {
+        "startLine": 2127,
+        "startChar": 0,
+        "endLine": 2127,
+        "endChar": 45
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e7593f3_0ede0126",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -618,6 +690,30 @@
     },
     {
       "key": {
+        "uuid": "bd353140_7b4f2efe",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2202,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-12T07:27:56Z",
+      "side": 1,
+      "message": "As per reply on comment above, I think the \"why\" that this is trying to address is that \"state has already been cleared up at some indeterminate point in the past. nothing to do here.\"\n\nRegarding what the signal is that originates it, I think the two conditions at the start of the new comment already capture why this session may have been torn down in the past?\n\nIf you feel strongly, I\u0027ll defer to your reading of the code.",
+      "parentUuid": "7f5709c4_c14d20da",
+      "range": {
+        "startLine": 2202,
+        "startChar": 23,
+        "endLine": 2202,
+        "endChar": 97
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c265e559_815bdf42",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -686,6 +782,30 @@
       "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52fa7aa3_77e083d6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2254,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-12T07:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63c606cb_5e57f6f7",
+      "range": {
+        "startLine": 2254,
+        "startChar": 16,
+        "endLine": 2254,
+        "endChar": 28
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
