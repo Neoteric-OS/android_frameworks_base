@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f78ad18_14764074",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1798,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T08:27:23Z",
+      "side": 1,
+      "message": "Do we need to specify the downstreams ? If not, we *require* that they have a single page for everything. Maybe it\u0027s fine.",
+      "range": {
+        "startLine": 1798,
+        "startChar": 14,
+        "endLine": 1798,
+        "endChar": 21
+      },
+      "revId": "572c46d354d5d07d96b862fcf5684cd8a928159c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
