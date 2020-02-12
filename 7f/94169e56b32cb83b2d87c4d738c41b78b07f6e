@@ -1,0 +1,10 @@
+Code-Review+2: Aurimas Liutikas <aurimas@google.com>
+API-Review+1: Aurimas Liutikas <aurimas@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Anton Hansson <hansson@google.com>
+Submitted-at: Wed, 12 Feb 2020 18:26:04 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1233736
+Project: platform/frameworks/base
+Branch: refs/heads/master
