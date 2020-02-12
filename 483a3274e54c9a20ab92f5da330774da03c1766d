@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d931975f_07249274",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6562,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-12T08:02:52Z",
+      "side": 1,
+      "message": "nit: do we want to just use NetworkRequest#equals, given that request would be the same if id is the same?",
+      "range": {
+        "startLine": 6562,
+        "startChar": 16,
+        "endLine": 6562,
+        "endChar": 62
+      },
+      "revId": "483a3274e54c9a20ab92f5da330774da03c1766d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfebdec8_44b1591b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6565,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-12T08:02:52Z",
+      "side": 1,
+      "message": "nit: Should be fit with previous line? But keep this if you think it is nicer.",
+      "range": {
+        "startLine": 6565,
+        "startChar": 28,
+        "endLine": 6565,
+        "endChar": 46
+      },
+      "revId": "483a3274e54c9a20ab92f5da330774da03c1766d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
