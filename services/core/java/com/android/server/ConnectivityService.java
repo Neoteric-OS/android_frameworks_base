@@ -7717,6 +7717,34 @@ public class ConnectivityService extends IConnectivityManager.Stub
             cb.asBinder().linkToDeath(cbInfo, 0);
         } catch (RemoteException e) {
             cbInfo.binderDied();
+            return;
+        }
+
+        // Once registered, provide ConnectivityReports for matching Networks
+        final List<NetworkAgentInfo> matchingNetworks = new ArrayList<>();
+        synchronized (mNetworkForNetId) {
+            for (int i = 0; i < mNetworkForNetId.size(); i++) {
+                final int key = mNetworkForNetId.keyAt(i);
+                final NetworkAgentInfo nai = mNetworkForNetId.get(key);
+                if (nai.satisfies(nri.request)) {
+                    matchingNetworks.add(nai);
+                }
+            }
+        }
+        for (final NetworkAgentInfo nai : matchingNetworks) {
+            if (!checkConnectivityDiagnosticsPermissions(
+                    nri.mPid, nri.mUid, nai, cbInfo.mCallingPackageName)) {
+                continue;
+            }
+            if (nai.getConnectivityReport() == null) {
+                continue;
+            }
+
+            try {
+                cb.onConnectivityReport(nai.getConnectivityReport());
+            } catch (RemoteException e) {
+                // Exception while sending the ConnectivityReport. Move on to the next network.
+            }
         }
     }
 
@@ -7749,6 +7777,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         nai.linkProperties,
                         nai.networkCapabilities,
                         extras);
+        nai.setConnectivityReport(report);
         final List<IConnectivityDiagnosticsCallback> results =
                 getMatchingPermissionedCallbacks(nai);
         for (final IConnectivityDiagnosticsCallback cb : results) {
