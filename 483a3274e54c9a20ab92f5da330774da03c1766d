@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1c51fdf_8da310bf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6562,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T11:47:52Z",
+      "side": 1,
+      "message": "Originally I opted against writing this but you comment made me realize it would probably be a bit dangerous not to add it. I had this int check as a substitute for calling equals() in hopes of lowering the overhead, but you\u0027re right it\u0027s better.\n\nSo instead, I went with equals() but only imposed the check on eng and userdebug builds. Tell me what you think.",
+      "parentUuid": "d931975f_07249274",
+      "range": {
+        "startLine": 6562,
+        "startChar": 16,
+        "endLine": 6562,
+        "endChar": 62
+      },
+      "revId": "483a3274e54c9a20ab92f5da330774da03c1766d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfebdec8_44b1591b",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "483a3274e54c9a20ab92f5da330774da03c1766d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6dba859_19f0ea18",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6565,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T11:47:52Z",
+      "side": 1,
+      "message": "No strong opinion. I marginally prefer this, so I didn\u0027t change.",
+      "parentUuid": "bfebdec8_44b1591b",
+      "range": {
+        "startLine": 6565,
+        "startChar": 28,
+        "endLine": 6565,
+        "endChar": 46
+      },
+      "revId": "483a3274e54c9a20ab92f5da330774da03c1766d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
