@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Maciej Żenczykowski <maze@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Ready+1: Junyu Lai <junyulai@google.com>
+Code-Review+2: Junyu Lai <junyulai@google.com>
+Submitted-by: Maciej Żenczykowski <maze@google.com>
+Submitted-at: Thu, 13 Feb 2020 07:37:55 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1219297
+Project: platform/frameworks/base
+Branch: refs/heads/master
