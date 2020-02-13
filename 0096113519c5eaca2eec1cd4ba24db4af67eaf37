@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b49d7bf5_5d871b35",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 62
+      },
+      "lineNbr": 2052,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T08:18:27Z",
+      "side": 1,
+      "message": "Ack. Discussed in person; we\u0027ll consider this as part of the re-architecting.\n\nIt\u0027s possible to remove the extra thread, and I\u0027ll be adding a CL in the stack as a cleanup CL for that. Whether we choose to go that direction is up to future us.",
+      "parentUuid": "64f14d83_fe811cda",
+      "range": {
+        "startLine": 2052,
+        "startChar": 31,
+        "endLine": 2052,
+        "endChar": 39
+      },
+      "revId": "0096113519c5eaca2eec1cd4ba24db4af67eaf37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2340007_bdddf2c4",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 62
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "313b68ef_e2a8a1b0",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 62
+      },
+      "lineNbr": 2062,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T08:18:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2340007_bdddf2c4",
+      "range": {
+        "startLine": 2062,
+        "startChar": 57,
+        "endLine": 2062,
+        "endChar": 84
+      },
+      "revId": "0096113519c5eaca2eec1cd4ba24db4af67eaf37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "269e9253_69c26d7c",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 62
@@ -83,6 +131,30 @@
       "writtenOn": "2020-02-11T05:08:59Z",
       "side": 1,
       "message": "Given Ikev2VpnNetworkCallback is a static class, you can get rid of the prefix (may apply to other places in this class as well)",
+      "range": {
+        "startLine": 2066,
+        "startChar": 35,
+        "endLine": 2066,
+        "endChar": 49
+      },
+      "revId": "0096113519c5eaca2eec1cd4ba24db4af67eaf37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "712f4b5e_58eb66e3",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 62
+      },
+      "lineNbr": 2066,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T08:18:27Z",
+      "side": 1,
+      "message": "Ack; I think I prefer to keep it, so it\u0027s clear where these are coming from.",
+      "parentUuid": "269e9253_69c26d7c",
       "range": {
         "startLine": 2066,
         "startChar": 35,
