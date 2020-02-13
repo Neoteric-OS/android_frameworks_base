@@ -1057,7 +1057,7 @@ public class VpnTest {
 
         synchronized (vpn) {
             runner = (IkeV2VpnRunner) vpn.mVpnRunner;
-            vpn.mVpnRunner.exit();
+            vpn.teardownVpn(runner);
 
             // Verify state is reset
             assertNull(vpn.mConfig);
