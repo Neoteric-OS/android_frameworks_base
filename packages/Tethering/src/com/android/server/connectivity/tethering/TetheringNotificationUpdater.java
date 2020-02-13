@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.UserHandle;
+import android.telephony.SubscriptionManager;
 
 import androidx.annotation.ArrayRes;
 import androidx.annotation.DrawableRes;
@@ -63,6 +64,7 @@ public class TetheringNotificationUpdater {
     // Downstream type is one of ConnectivityManager.TETHERING_* constants, 0 1 or 2.
     // This value has to be made 1 2 and 4, and OR'd with the others.
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
+    private int mActiveDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
         mContext = context;
@@ -82,6 +84,20 @@ public class TetheringNotificationUpdater {
             mDownstreamTypesMask = downstreamTypesMask;
             updateNotification();
         }
+    }
+
+    /** Called when active data subscription id changed */
+    public void onActiveDataSubscriptionIdChanged(final int subId) {
+        synchronized (mUpdateLock) {
+            if (mActiveDataSubId == subId) return;
+            mActiveDataSubId = subId;
+            updateNotification();
+        }
+    }
+
+    @VisibleForTesting
+    Resources getResourcesForSubId(@NonNull final Context c, final int subId) {
+        return SubscriptionManager.getResourcesForSubId(c, subId);
     }
 
     private void updateNotification() {
@@ -122,7 +138,7 @@ public class TetheringNotificationUpdater {
      */
     @NonNull
     private HashMap<Integer, Integer> getIcons(@ArrayRes int id) {
-        final Resources res = mContext.getResources();
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
         final TypedArray array = res.obtainTypedArray(id);
         final HashMap<Integer, Integer> icons = new HashMap<>();
         for (int i = 0; i < array.length(); i++) {
@@ -141,7 +157,7 @@ public class TetheringNotificationUpdater {
     }
 
     private boolean setupNotificationLocked() {
-        final Resources res = mContext.getResources();
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
         final HashMap<Integer, Integer> downstreamIcons =
                 getIcons(R.array.tethering_notification_icons);
 

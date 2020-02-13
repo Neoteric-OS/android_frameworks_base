@@ -331,6 +331,7 @@ public class Tethering {
 
             mActiveDataSubId = subId;
             updateConfiguration();
+            mNotificationUpdater.onActiveDataSubscriptionIdChanged(subId);
             // To avoid launching unexpected provisioning checks, ignore re-provisioning
             // when no CarrierConfig loaded yet. Assume reevaluateSimCardProvisioning()
             // ill be triggered again when CarrierConfig is loaded.
