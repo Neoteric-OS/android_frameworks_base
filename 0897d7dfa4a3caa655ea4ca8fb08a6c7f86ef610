@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "15df4c1e_0919a802",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 24
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-13T09:16:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eeac4ab8_32312af2",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 12
+      },
+      "revId": "0897d7dfa4a3caa655ea4ca8fb08a6c7f86ef610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46f8efa0_bf1123dd",
         "filename": "packages/Tethering/res/values/strings.xml",
         "patchSetId": 24
