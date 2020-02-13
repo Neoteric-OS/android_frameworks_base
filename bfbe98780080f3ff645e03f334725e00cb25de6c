@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6170a6ca_02484659",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T03:24:13Z",
+      "side": 1,
+      "message": "So you\u0027re saying that when called from the system server this will return MODE_ERRORED (but should still be allowed obviously) and this was not a problem before because we just didn\u0027t call this from the system server ? Am I getting this right ? This would then need careful comments.\n\nI also seem to have missed sending the comment that said \"This would be clearer written as :\n\n  if (noteOpNoThrow() \u003d\u003d MODE_ALLOWED) return;\n  enforcePermission()\"\n\nSuggest you do both the commenting and the reshaping in a followup.",
+      "parentUuid": "a91c88bd_74716d06",
+      "range": {
+        "startLine": 1564,
+        "startChar": 12,
+        "endLine": 1564,
+        "endChar": 19
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80c55811_46786914",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 65
@@ -234,6 +258,30 @@
       "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a429a61e_ff942bf0",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2159,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T03:24:13Z",
+      "side": 1,
+      "message": "I see. Thanks for the clarification.",
+      "parentUuid": "bc8625df_7a6704f5",
+      "range": {
+        "startLine": 2158,
+        "startChar": 58,
+        "endLine": 2159,
+        "endChar": 76
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
