@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a91c88bd_74716d06",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T00:09:24Z",
+      "side": 1,
+      "message": "Unfortunately, the existing state results in the system server failing to be able to utilize the IPsec tunnel mode APIs, for better or for worse.\n\nThis was a bug in that the above code was written expecting that the default appops mode was \"MODE_DEFAULT\" (and therefore it\u0027d check calling-or-self), and at some point the AppOpsManager code was checked in with MODE_ERRORED as the default. \n\nSince the MANAGE_IPSEC_TUNNELS permission is non-grantable, this should only succeed (not throw a SecurityException) if the caller is the system server (or we\u0027ve explicitly cleared the binder calling identity).",
+      "parentUuid": "7d7a2667_1a9e89aa",
+      "range": {
+        "startLine": 1564,
+        "startChar": 12,
+        "endLine": 1564,
+        "endChar": 19
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80c55811_46786914",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 65
@@ -45,6 +69,30 @@
       "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f10e567_ae471c57",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2026,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T00:09:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c55811_46786914",
+      "range": {
+        "startLine": 2026,
+        "startChar": 13,
+        "endLine": 2026,
+        "endChar": 31
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "28aa6b86_f2f02a30",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T00:09:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0c7e0ce_d91ec51f",
+      "range": {
+        "startLine": 2112,
+        "startChar": 33,
+        "endLine": 2112,
+        "endChar": 64
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "021f53a4_ea62ff38",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 65
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d10a674e_bcbfd70b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2125,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T00:09:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "021f53a4_ea62ff38",
+      "range": {
+        "startLine": 2125,
+        "startChar": 0,
+        "endLine": 2125,
+        "endChar": 94
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "321e89fe_83f79f78",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 65
@@ -105,6 +201,30 @@
       "writtenOn": "2020-02-12T17:12:44Z",
       "side": 1,
       "message": "IIUC the IKE lib guarantees this can\u0027t happen – it would require it calls you to tell you of the failure, THEN calls you again saying a child transform was created for this session, which would be a bug in the IKE lib.",
+      "range": {
+        "startLine": 2158,
+        "startChar": 58,
+        "endLine": 2159,
+        "endChar": 76
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc8625df_7a6704f5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2159,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T00:09:24Z",
+      "side": 1,
+      "message": "Not entirely. Since this is run on a serializing executor (as required by IKE),the following could happen:\n\n1. IKE sends a childTransformCreated (Outbound)\n2. IKE sends another childTransformCreated (Inbound)\n3. IKE sends the onChildOpened()\n4. The executor pulls the first queued job, and we fail to apply this transform in applyTunnelModeTransform() below, and therefore it triggers onSessionLost(), which shuts down the session.\n5. The executor pulls the second queued childTransformCreated. This should be ignored, since we\u0027ve torn down all other state, but haven\u0027t switched to a new Network.\n6. Similarly, the onChildOpened() must be ignored (otherwise we\u0027ll attempt to send traffic over a non-existent interface)",
+      "parentUuid": "321e89fe_83f79f78",
       "range": {
         "startLine": 2158,
         "startChar": 58,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "1a726c8b_0c108eee",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2199,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T00:09:24Z",
+      "side": 1,
+      "message": "Let\u0027s discuss more after IC. There\u0027s a few points I disagree with, but we can table that discussion. I\u0027ve filed a bug so we don\u0027t forget. (b/149400680)",
+      "parentUuid": "77c0aa96_0f9b846b",
+      "range": {
+        "startLine": 2199,
+        "startChar": 20,
+        "endLine": 2199,
+        "endChar": 45
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3f2e396_c1f96780",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 65
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "dcee29f1_8b1f21e6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2225,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T00:09:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3f2e396_c1f96780",
+      "range": {
+        "startLine": 2225,
+        "startChar": 0,
+        "endLine": 2225,
+        "endChar": 66
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b285778_0d3e350a",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 65
@@ -183,6 +351,30 @@
       "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca13663e_6124f36b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2243,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T00:09:24Z",
+      "side": 1,
+      "message": "Done. If this makes it easier to read for you, it\u0027s worth the change.",
+      "parentUuid": "2b285778_0d3e350a",
+      "range": {
+        "startLine": 2243,
+        "startChar": 0,
+        "endLine": 2243,
+        "endChar": 27
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +421,30 @@
       "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9056e1e3_de8d8878",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 65
+      },
+      "lineNbr": 2355,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T00:09:24Z",
+      "side": 1,
+      "message": "Done. Switched to ExecutorService",
+      "parentUuid": "136195b9_de9cb82a",
+      "range": {
+        "startLine": 2355,
+        "startChar": 8,
+        "endLine": 2355,
+        "endChar": 9
+      },
+      "revId": "bfbe98780080f3ff645e03f334725e00cb25de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

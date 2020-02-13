@@ -216,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "46dbc963_519e66a7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 2068,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T00:09:24Z",
+      "side": 1,
+      "message": "Added more information. Is this sufficient?\n\nPerhaps also the javadoc on the onDefaultNetworkChanged()/onNetworkConnected() clarifies this enough, but added here as well.",
+      "parentUuid": "d9673e4c_badb8a30",
+      "range": {
+        "startLine": 2068,
+        "startChar": 20,
+        "endLine": 2068,
+        "endChar": 26
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6eeb4f8c_bf63c00d",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 54
@@ -1342,6 +1366,30 @@
       "side": 1,
       "message": "Okay but this is additional code that you probably wouldn\u0027t have needed at all, so it\u0027s not really pulled out of there",
       "parentUuid": "c9a05395_af31f723",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 71
+      },
+      "revId": "15b7e455b2db8345253b30a324bb7d3e2e849190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e18cf70b_33481865",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 54
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T00:09:24Z",
+      "side": 1,
+      "message": "Most of this is still code we\u0027d have needed. all the callback overrides are there as far back as the first patchset.\n\nThe only thing that wouldn\u0027t be required is the constructor, and the private final fields.",
+      "parentUuid": "a800c727_144db8f1",
       "range": {
         "startLine": 232,
         "startChar": 0,

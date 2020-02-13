@@ -216,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "ee71471e_ad8ba202",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 52
+      },
+      "lineNbr": 2071,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-13T00:09:24Z",
+      "side": 1,
+      "message": "Let\u0027s discuss with the architecture question. I don\u0027t entirely agree, but it\u0027s part of a bigger discussion.",
+      "parentUuid": "8b599191_abcc8a87",
+      "range": {
+        "startLine": 2044,
+        "startChar": 8,
+        "endLine": 2071,
+        "endChar": 62
+      },
+      "revId": "dec7a71afe933a74927c1238919400de647b57d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "497babaf_fed9c705",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 52
