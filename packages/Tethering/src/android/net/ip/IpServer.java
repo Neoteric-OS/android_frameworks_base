@@ -29,18 +29,21 @@ import android.net.INetworkStackStatusCallback;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
+import android.net.MacAddress;
 import android.net.RouteInfo;
 import android.net.TetheringManager;
 import android.net.dhcp.DhcpServerCallbacks;
 import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.DhcpServingParamsParcelExt;
 import android.net.dhcp.IDhcpServer;
+import android.net.ip.IpNeighborMonitor.NeighborEvent;
 import android.net.ip.RouterAdvertisementDaemon.RaParams;
 import android.net.shared.NetdUtils;
 import android.net.shared.RouteUtils;
 import android.net.util.InterfaceParams;
 import android.net.util.InterfaceSet;
 import android.net.util.SharedLog;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
@@ -52,11 +55,14 @@ import com.android.internal.util.MessageUtils;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 
+import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Random;
@@ -134,6 +140,15 @@ public class IpServer extends StateMachine {
 
     /** Capture IpServer dependencies, for injection. */
     public abstract static class Dependencies {
+        /** Create an IpNeighborMonitor to be used by this IpServer */
+        public IpNeighborMonitor getIpNeighborMonitor(Handler handler, SharedLog log, int ifindex) {
+            return new IpNeighborMonitor(handler, log, (event) -> {
+                if (event.ifindex == ifindex) {
+                    handler.sendMessage(handler.obtainMessage(CMD_NEIGHBOR_EVENT, event));
+                }
+            });
+        }
+
         /** Create a RouterAdvertisementDaemon instance to be used by IpServer.*/
         public RouterAdvertisementDaemon getRouterAdvertisementDaemon(InterfaceParams ifParams) {
             return new RouterAdvertisementDaemon(ifParams);
@@ -169,6 +184,8 @@ public class IpServer extends StateMachine {
     public static final int CMD_TETHER_CONNECTION_CHANGED   = BASE_IPSERVER + 9;
     // new IPv6 tethering parameters need to be processed
     public static final int CMD_IPV6_TETHER_UPDATE          = BASE_IPSERVER + 10;
+    // new neighbor cache entry on our interface
+    public static final int CMD_NEIGHBOR_EVENT              = BASE_IPSERVER + 11;
 
     private final State mInitialState;
     private final State mLocalHotspotState;
@@ -181,7 +198,9 @@ public class IpServer extends StateMachine {
     private final InterfaceController mInterfaceCtrl;
 
     private final String mIfaceName;
+    private final int mIfaceIndex;
     private final int mInterfaceType;
+    private final MacAddress mIfaceMacAddress;
     private final LinkProperties mLinkProperties;
     private final boolean mUsingLegacyDhcp;
 
@@ -206,6 +225,33 @@ public class IpServer extends StateMachine {
     private RaParams mLastRaParams;
     private LinkAddress mIpv4Address;
 
+    private int mLastIPv6UpstreamIfindex = 0;
+
+    static class Ipv6ForwardingRule {
+        public final int upstreamIfindex;
+        public final int downstreamIfindex;
+        public final Inet6Address address;
+        public final MacAddress srcMac;
+        public final MacAddress dstMac;
+
+        Ipv6ForwardingRule(int upstreamIfindex, int downstreamIfIndex, Inet6Address address,
+                MacAddress srcMac, MacAddress dstMac) {
+            this.upstreamIfindex = upstreamIfindex;
+            this.downstreamIfindex = downstreamIfIndex;
+            this.address = address;
+            this.srcMac = srcMac;
+            this.dstMac = dstMac;
+        }
+
+        public Ipv6ForwardingRule onNewUpstream(int newUpstreamIfindex) {
+            return new Ipv6ForwardingRule(newUpstreamIfindex, downstreamIfindex, address, srcMac,
+                    dstMac);
+        }
+    }
+    private final HashMap<Inet6Address, Ipv6ForwardingRule> mIpv6ForwardingRules = new HashMap<>();
+
+    private final IpNeighborMonitor mIpNeighborMonitor;
+
     public IpServer(
             String ifaceName, Looper looper, int interfaceType, SharedLog log,
             INetd netd, Callback callback, boolean usingLegacyDhcp, Dependencies deps) {
@@ -222,6 +268,28 @@ public class IpServer extends StateMachine {
         resetLinkProperties();
         mLastError = TetheringManager.TETHER_ERROR_NO_ERROR;
         mServingMode = STATE_AVAILABLE;
+
+        // Can't assign to mIfaceIndex or mIfaceMacAddress in the try and catch clauses below
+        // because the compiler can't tell that they're only written to once and complains that
+        // they're final and might already have been set.
+        int ifindex;
+        MacAddress macAddress;
+        try {
+            NetworkInterface ni = NetworkInterface.getByName(ifaceName);
+            ifindex = ni.getIndex();
+            macAddress = MacAddress.fromBytes(ni.getHardwareAddress());
+        } catch (Exception e) {
+            // Interface doesn't exist at the moment?
+            ifindex = 0;
+            macAddress = null;
+        }
+        mIfaceIndex = ifindex;
+        mIfaceMacAddress = macAddress;
+        mIpNeighborMonitor = mDeps.getIpNeighborMonitor(getHandler(), mLog, mIfaceIndex);
+        if (!mIpNeighborMonitor.start()) {
+            mLog.e("Failed to craete IpNeighborMonitor, ifindex=" + mIfaceIndex + ", MAC="
+                    + mIfaceMacAddress);
+        }
 
         mInitialState = new InitialState();
         mLocalHotspotState = new LocalHotspotState();
@@ -538,13 +606,16 @@ public class IpServer extends StateMachine {
         }
 
         RaParams params = null;
+        int upstreamIfindex = 0;
 
         if (v6only != null) {
+            String upstreamIface = v6only.getInterfaceName();
+
             params = new RaParams();
             params.mtu = v6only.getMtu();
             params.hasDefaultRoute = v6only.hasIpv6DefaultRoute();
 
-            if (params.hasDefaultRoute) params.hopLimit = getHopLimit(v6only.getInterfaceName());
+            if (params.hasDefaultRoute) params.hopLimit = getHopLimit(upstreamIface);
 
             for (LinkAddress linkAddr : v6only.getLinkAddresses()) {
                 if (linkAddr.getPrefixLength() != RFC7421_PREFIX_LENGTH) continue;
@@ -558,12 +629,24 @@ public class IpServer extends StateMachine {
                     params.dnses.add(dnsServer);
                 }
             }
+
+            try {
+                upstreamIfindex = NetworkInterface.getByName(upstreamIface).getIndex();
+            } catch (IOException e) {
+                // Interface was just deleted?
+                upstreamIfindex = 0;
+            }
         }
+
         // If v6only is null, we pass in null to setRaParams(), which handles
         // deprecation of any existing RA data.
 
         setRaParams(params);
         mLastIPv6LinkProperties = v6only;
+
+        updateIpv6ForwardingRules(mLastIPv6UpstreamIfindex, upstreamIfindex, null);
+
+        mLastIPv6UpstreamIfindex = upstreamIfindex;
     }
 
     private void configureLocalIPv6Routes(
@@ -656,6 +739,61 @@ public class IpServer extends StateMachine {
             mLog.e("Failed to update local DNS caching server");
             if (newDnses != null) newDnses.clear();
         }
+    }
+
+    private void addIpv6ForwardingRule(Ipv6ForwardingRule rule) {
+        try {
+            mNetd.tetherRuleAddDownstreamIpv6(mIfaceIndex, rule.upstreamIfindex,
+                    rule.address.getAddress(),  mIfaceMacAddress.toByteArray(),
+                    rule.dstMac.toByteArray());
+            mIpv6ForwardingRules.put(rule.address, rule);
+        } catch (RemoteException | ServiceSpecificException e) {
+            Log.e(TAG, "Could not add IPv6 downstream rule: " + e);
+        }
+    }
+
+    private void removeIpv6ForwardingRule(Ipv6ForwardingRule rule) {
+        try {
+            mNetd.tetherRuleRemoveDownstreamIpv6(rule.upstreamIfindex, rule.address.getAddress());
+            mIpv6ForwardingRules.remove(rule.address);
+        } catch (RemoteException | ServiceSpecificException e) {
+            Log.e(TAG, "Could not remove IPv6 downstream rule: " + e);
+        }
+    }
+
+    // Handles all updates to IPv6 forwarding rules. These can currently change only if the upstream
+    // changes or if a neighbor event is received.
+    private void updateIpv6ForwardingRules(int prevUpstreamIfindex, int upstreamIfindex,
+            NeighborEvent e) {
+        if (mIfaceIndex == 0 || mIfaceMacAddress == null) return;
+
+        // If the upstream interface has changed, remove all rules and re-add them with the new
+        // upstream interface.
+        if (prevUpstreamIfindex != upstreamIfindex) {
+            for (Ipv6ForwardingRule rule : mIpv6ForwardingRules.values()) {
+                addIpv6ForwardingRule(rule.onNewUpstream(upstreamIfindex));
+                removeIpv6ForwardingRule(rule);
+            }
+        }
+
+        // If we're here to process a NeighborEvent, do so now.
+        if (e == null) return;
+        if (!(e.ip instanceof Inet6Address) || e.ip.isMulticastAddress()
+                || e.ip.isLoopbackAddress() || e.ip.isLinkLocalAddress()) {
+            return;
+        }
+
+        Ipv6ForwardingRule rule = new Ipv6ForwardingRule(mLastIPv6UpstreamIfindex, mIfaceIndex,
+                (Inet6Address) e.ip, mIfaceMacAddress, e.macAddr);
+        if (e.isValid()) {
+            addIpv6ForwardingRule(rule);
+        } else {
+            removeIpv6ForwardingRule(rule);
+        }
+    }
+
+    private void handleNeighborEvent(NeighborEvent e) {
+        updateIpv6ForwardingRules(mLastIPv6UpstreamIfindex, mLastIPv6UpstreamIfindex, e);
     }
 
     private byte getHopLimit(String upstreamIface) {
@@ -811,6 +949,9 @@ public class IpServer extends StateMachine {
                 case CMD_SET_DNS_FORWARDERS_ERROR:
                     mLastError = TetheringManager.TETHER_ERROR_MASTER_ERROR;
                     transitionTo(mInitialState);
+                    break;
+                case CMD_NEIGHBOR_EVENT:
+                    handleNeighborEvent((NeighborEvent) message.obj);
                     break;
                 default:
                     return false;
