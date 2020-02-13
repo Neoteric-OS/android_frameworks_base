@@ -831,8 +831,8 @@ public class Vpn {
                 mContext.unbindService(mConnection);
                 cleanupVpnStateLocked();
             } else if (mVpnRunner != null) {
-                // cleanupVpnStateLocked() is called from mVpnRunner.exit()
-                mVpnRunner.exit();
+                // cleanupVpnStateLocked() is called from teardownVpn()
+                teardownVpn(mVpnRunner);
             }
 
             try {
@@ -1580,8 +1580,8 @@ public class Vpn {
                         mContext.unbindService(mConnection);
                         cleanupVpnStateLocked();
                     } else if (mVpnRunner != null) {
-                        // cleanupVpnStateLocked() is called from mVpnRunner.exit()
-                        mVpnRunner.exit();
+                        // cleanupVpnStateLocked() is called from teardownVpn()
+                        teardownVpn(mVpnRunner);
                     }
                 }
             }
@@ -2036,7 +2036,7 @@ public class Vpn {
 
         // Start a new LegacyVpnRunner and we are done!
         mVpnRunner = new LegacyVpnRunner(config, racoon, mtpd, profile);
-        mVpnRunner.start();
+        ((LegacyVpnRunner) mVpnRunner).start();
     }
 
     /**
@@ -2056,8 +2056,7 @@ public class Vpn {
 
         final boolean isLegacyVpn = mVpnRunner instanceof LegacyVpnRunner;
 
-        mVpnRunner.exit();
-        mVpnRunner = null;
+        teardownVpn(mVpnRunner);
 
         // LegacyVpn uses daemons that must be shut down before new ones are brought up.
         // The same limitation does not apply to Platform VPNs.
@@ -2104,22 +2103,20 @@ public class Vpn {
 
     /** This class represents the common interface for all VPN runners. */
     @VisibleForTesting
-    abstract class VpnRunner extends Thread {
+    interface VpnRunner extends Runnable {
+        void exitVpnRunner();
+    }
 
-        protected VpnRunner(String name) {
-            super(name);
+    /** Exits the VPN and cleans up any current VPN state. */
+    @VisibleForTesting
+    void teardownVpn(@Nullable VpnRunner runner) {
+        if (runner == null) {
+            return;
         }
 
-        public abstract void run();
-
-        protected abstract void exitVpnRunner();
-
-        /** Exits the VPN and cleans up any current VPN state. */
-        protected void exit() {
-            synchronized (Vpn.this) {
-                exitVpnRunner();
-                cleanupVpnStateLocked();
-            }
+        synchronized (Vpn.this) {
+            runner.exitVpnRunner();
+            cleanupVpnStateLocked();
         }
     }
 
@@ -2160,7 +2157,7 @@ public class Vpn {
      *   <li>Subsequent Network changes result in new onDefaultNetworkChanged() callbacks. See (2).
      * </ol>
      */
-    class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
+    class IkeV2VpnRunner implements VpnRunner, IkeV2VpnRunnerCallback {
         @NonNull private static final String TAG = "IkeV2VpnRunner";
 
         @NonNull private final IpSecManager mIpSecManager;
@@ -2186,7 +2183,6 @@ public class Vpn {
         @VisibleForTesting @Nullable Network mActiveNetwork;
 
         IkeV2VpnRunner(@NonNull Ikev2VpnProfile profile) {
-            super(TAG);
             mProfile = profile;
             mIpSecManager = (IpSecManager) mContext.getSystemService(Context.IPSEC_SERVICE);
             mNetworkCallback = new VpnIkev2Utils.Ikev2VpnNetworkCallback(TAG, this);
@@ -2494,7 +2490,7 @@ public class Vpn {
      * requests will pile up. This could be done in a Handler as a state
      * machine, but it is much easier to read in the current form.
      */
-    private class LegacyVpnRunner extends VpnRunner {
+    private class LegacyVpnRunner extends Thread implements VpnRunner {
         private static final String TAG = "LegacyVpnRunner";
 
         private final String[] mDaemons;
@@ -2573,7 +2569,7 @@ public class Vpn {
         public void exitIfOuterInterfaceIs(String interfaze) {
             if (interfaze.equals(mOuterInterface)) {
                 Log.i(TAG, "Legacy VPN is going down with " + interfaze);
-                exit();
+                teardownVpn(this);
             }
         }
 
@@ -2804,7 +2800,7 @@ public class Vpn {
             } catch (Exception e) {
                 Log.i(TAG, "Aborting", e);
                 updateState(DetailedState.FAILED, e.getMessage());
-                exit();
+                teardownVpn(this);
             }
         }
 
