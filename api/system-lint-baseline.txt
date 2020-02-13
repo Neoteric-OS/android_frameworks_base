@@ -13,6 +13,12 @@ ArrayReturn: android.view.contentcapture.ViewNode#getAutofillOptions():
     
 
 
+CallbackMethodName: android.net.NetworkScoreManager.NetworkScoreCallback#updateScores(android.net.ScoredNetwork[]):
+    
+CallbackMethodName: android.net.NetworkScoreManager.NetworkScoreCallback#clearScores():
+    
+
+
 GenericException: android.app.prediction.AppPredictor#finalize():
     
 GenericException: android.hardware.location.ContextHubClient#finalize():

@@ -27,7 +27,6 @@ import android.os.RemoteException;
  * @hide
  */
 @SystemApi
-@SuppressLint("CallbackMethodName")
 public class NetworkStatsProviderCallback {
     @NonNull private final INetworkStatsProviderCallback mBinder;
 
@@ -88,6 +87,7 @@ public class NetworkStatsProviderCallback {
     /**
      * Unregister the provider and the referencing callback.
      */
+    @SuppressLint("CallbackMethodName")
     public void unregister() {
         try {
             mBinder.unregister();
