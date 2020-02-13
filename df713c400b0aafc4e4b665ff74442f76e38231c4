@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1f3ce31_67dcc0c1",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-13T22:34:21Z",
+      "side": 1,
+      "message": "Parcelable. If you can use the codegen tool.",
+      "range": {
+        "startLine": 25,
+        "startChar": 35,
+        "endLine": 25,
+        "endChar": 47
+      },
+      "revId": "df713c400b0aafc4e4b665ff74442f76e38231c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d59239da_215d7fed",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-13T22:34:21Z",
+      "side": 1,
+      "message": "Please check data correctness. E.g. non-null and other things you can check",
+      "revId": "df713c400b0aafc4e4b665ff74442f76e38231c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6a71d3_35755847",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-13T22:34:21Z",
+      "side": 1,
+      "message": "where is this used?\n\nPlease document",
+      "range": {
+        "startLine": 724,
+        "startChar": 52,
+        "endLine": 724,
+        "endChar": 65
+      },
+      "revId": "df713c400b0aafc4e4b665ff74442f76e38231c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13023b4f_fb091640",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-13T22:34:21Z",
+      "side": 1,
+      "message": "throw IllegalArgumentException",
+      "revId": "df713c400b0aafc4e4b665ff74442f76e38231c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b86f71_cfa69128",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-13T22:34:21Z",
+      "side": 1,
+      "message": "What does that mean?",
+      "range": {
+        "startLine": 133,
+        "startChar": 25,
+        "endLine": 133,
+        "endChar": 44
+      },
+      "revId": "df713c400b0aafc4e4b665ff74442f76e38231c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7bc9af4_71be8a3e",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-13T22:34:21Z",
+      "side": 1,
+      "message": "add a user name",
+      "range": {
+        "startLine": 133,
+        "startChar": 23,
+        "endLine": 133,
+        "endChar": 24
+      },
+      "revId": "df713c400b0aafc4e4b665ff74442f76e38231c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d009a1d_3be83574",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-13T22:34:21Z",
+      "side": 1,
+      "message": "Use PooledLambda",
+      "revId": "df713c400b0aafc4e4b665ff74442f76e38231c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
