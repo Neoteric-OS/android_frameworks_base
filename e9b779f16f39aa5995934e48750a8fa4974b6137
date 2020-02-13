@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d42cb9f7_06f55846",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T15:50:37Z",
+      "side": 1,
+      "message": "This is a very private implementation detail of this class. I don\u0027t think we should expose this. Why not instead test for what is actually visible in the contract of this class, namely the interface name in the link properties ?",
+      "range": {
+        "startLine": 195,
+        "startChar": 5,
+        "endLine": 195,
+        "endChar": 22
+      },
+      "revId": "e9b779f16f39aa5995934e48750a8fa4974b6137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d562bb2d_83b9302b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T15:50:37Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem very wise. If you really want to send messages to this, shouldn\u0027t you instead mock INetworkManagementService ?",
+      "range": {
+        "startLine": 1528,
+        "startChar": 5,
+        "endLine": 1528,
+        "endChar": 22
+      },
+      "revId": "e9b779f16f39aa5995934e48750a8fa4974b6137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2108fa_5e5405eb",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 2055,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T15:50:37Z",
+      "side": 1,
+      "message": "I don\u0027t think you\u0027re using this anywhere in the test ?",
+      "range": {
+        "startLine": 2055,
+        "startChar": 5,
+        "endLine": 2055,
+        "endChar": 22
+      },
+      "revId": "e9b779f16f39aa5995934e48750a8fa4974b6137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159910a2_329ab1b9",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 2079,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T15:50:37Z",
+      "side": 1,
+      "message": "I very much prefer the old contract ; is it impossible to create a ChildSessionConfiguration object in the test ?",
+      "range": {
+        "startLine": 2079,
+        "startChar": 16,
+        "endLine": 2079,
+        "endChar": 95
+      },
+      "revId": "e9b779f16f39aa5995934e48750a8fa4974b6137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717c6005_6b24cf66",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 2126,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T15:50:37Z",
+      "side": 1,
+      "message": "This is a very private implementation detail and I don\u0027t think it should be exposed. See my comments in the test.",
+      "range": {
+        "startLine": 2126,
+        "startChar": 9,
+        "endLine": 2126,
+        "endChar": 26
+      },
+      "revId": "e9b779f16f39aa5995934e48750a8fa4974b6137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0847a9_b7eefcd2",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 2135,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T15:50:37Z",
+      "side": 1,
+      "message": "Likewise, all of these probably should stay private.",
+      "range": {
+        "startLine": 2130,
+        "startChar": 8,
+        "endLine": 2135,
+        "endChar": 60
+      },
+      "revId": "e9b779f16f39aa5995934e48750a8fa4974b6137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f548321e_2a11dda5",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T15:50:37Z",
+      "side": 1,
+      "message": "This entire section is a change-detector test.\n\n• It requires that there is an executor, that all processing must be sent to it, that none of the enqueued runnables should enqueue another (otherwise the latch exits before the queue is indeed finished processing). None of this is part of the contract of the class, and indeed can be changed easily without violating said contract, but that will require deep changes to the test.\n• It tests that private members are reset. This is none of the business of anyone outside of the runner, not even this test. In fact, before the previous patchset, as you noticed the legacy test runner did NOT reset these, and it was working well enough.\n\nI think this entire section should be removed. Instead test a visible side effect : that the network agent has disconnected, and/or that the interface has been downed or something like that. It is more useful, more effective, costs less maintenance and lets you remove the uncomfortable exposure of these private members.",
+      "range": {
+        "startLine": 1057,
+        "startChar": 0,
+        "endLine": 1068,
+        "endChar": 39
+      },
+      "revId": "e9b779f16f39aa5995934e48750a8fa4974b6137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "803b066f_c9a5788a",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T15:50:37Z",
+      "side": 1,
+      "message": "Have you checked this is safe and actually useful ? If nobody every runs the loop I\u0027m not sure what good this can do, unless you know ① that this will never actually be used as a looper in the test and ② that this will cause an NPE in the code. The former is fairly difficult to keep as an invariant and the latter is necessarily an implementation detail. It\u0027s not always wrong to do this, but be really sure that\u0027s what you want.",
+      "range": {
+        "startLine": 1204,
+        "startChar": 0,
+        "endLine": 1204,
+        "endChar": 25
+      },
+      "revId": "e9b779f16f39aa5995934e48750a8fa4974b6137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
