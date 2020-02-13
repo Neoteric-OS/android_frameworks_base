@@ -200,7 +200,11 @@ public class OffloadHardwareInterface {
             return stats;
         }
 
-        mLog.log(logmsg + YIELDS + stats);
+        // This would be called frequently since OffloadController is polling, reduce log if stats
+        // is empty.
+        if (stats.txBytes + stats.rxBytes != 0) {
+            mLog.log(logmsg + YIELDS + stats);
+        }
         return stats;
     }
 

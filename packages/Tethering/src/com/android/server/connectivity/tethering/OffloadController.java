@@ -77,6 +77,7 @@ public class OffloadController {
     private static final boolean DBG = false;
     private static final String ANYIP = "0.0.0.0";
     private static final ForwardedStats EMPTY_STATS = new ForwardedStats();
+    private static final int DEFAULT_PERFORM_POLL_DELAY_MS = 1000;
 
     @VisibleForTesting
     enum StatsType {
@@ -115,6 +116,10 @@ public class OffloadController {
     // of whether offload is currently running (or is even supported) on that interface. Only
     // includes upstream interfaces that have a quota set.
     private HashMap<String, Long> mInterfaceQuotas = new HashMap<>();
+
+    // Tracking remaining alert quota. This should be only accessed from handler thread after tether
+    // offload is started.
+    private long mRemainingAlertQuota = AbstractNetworkStatsProvider.QUOTA_UNLIMITED;
 
     private int mNatUpdateCallbacksReceived;
     private int mNatUpdateNetlinkErrors;
@@ -240,6 +245,7 @@ public class OffloadController {
             mLog.log("tethering offload started");
             mNatUpdateCallbacksReceived = 0;
             mNatUpdateNetlinkErrors = 0;
+            mRemainingAlertQuota = AbstractNetworkStatsProvider.QUOTA_UNLIMITED;
         }
         return isStarted;
     }
@@ -335,6 +341,13 @@ public class OffloadController {
         @Override
         public void setAlert(long quotaBytes) {
             // TODO: Ask offload HAL to notify alert without stopping traffic.
+            mLog.i("setAlert(" + quotaBytes + ")");
+            mHandler.post(() -> {
+                updateAlertQuota(quotaBytes);
+                // Schedule polling, this will be automatically stopped if offload has been stopped
+                // or remaining quota reaches zero.
+                schedulePollingStats();
+            });
         }
     }
 
@@ -356,13 +369,59 @@ public class OffloadController {
         // the stats for each interface, and does not observe partial writes where rxBytes is
         // updated and txBytes is not.
         ForwardedStats diff = mHwInterface.getForwardedStats(iface);
+        final long usedAlertQuota = diff.rxBytes + diff.txBytes;
         ForwardedStats base = mForwardedStats.get(iface);
         if (base != null) {
             diff.add(base);
         }
+
+        // Update remaining alert quota if it is still positive.
+        if (mRemainingAlertQuota > 0 && usedAlertQuota > 0) {
+            // Trim to zero if overshoot.
+            final long newQuota = Math.max(mRemainingAlertQuota - usedAlertQuota, 0);
+            updateAlertQuota(newQuota);
+        }
+
         mForwardedStats.put(iface, diff);
         // diff is a new object, just created by getForwardedStats(). Therefore, anyone reading from
         // mForwardedStats (i.e., any caller of getTetherStats) will see the new stats immediately.
+    }
+
+    /**
+     * Update remaining alert quota, fire the {@link NetworkStatsProviderCallback#onAlertReached()}
+     * callback when it reaches zero. This can be invoked either from service setting the alert, or
+     * {@code maybeUpdateStats} when updating stats. Note that this can be only called on
+     * handler thread.
+     *
+     * @param newQuota non-negative value to indicate the new quota, or
+     *                 {@link AbstractNetworkStatsProvider#QUOTA_UNLIMITED} to indicate there is no
+     *                 quota.
+     */
+    private void updateAlertQuota(long newQuota) {
+        if (newQuota < AbstractNetworkStatsProvider.QUOTA_UNLIMITED) {
+            throw new IllegalArgumentException("invalid quota value " + newQuota);
+        }
+        if (mRemainingAlertQuota == newQuota) return;
+
+        mRemainingAlertQuota = newQuota;
+        if (mRemainingAlertQuota == 0) {
+            mLog.i("onAlertReached");
+            if (mStatsProviderCb != null) mStatsProviderCb.onAlertReached();
+        }
+    }
+
+    // This can be only called on handler thread.
+    private void schedulePollingStats() {
+        if (!started() || mRemainingAlertQuota <= 0) return;
+
+        final Runnable task = () -> {
+            updateStatsForCurrentUpstream();
+            schedulePollingStats();
+        };
+        if (mHandler.hasCallbacks(task)) {
+            mHandler.removeCallbacks(task);
+        }
+        mHandler.postDelayed(task, DEFAULT_PERFORM_POLL_DELAY_MS);
     }
 
     private boolean maybeUpdateDataLimit(String iface) {
