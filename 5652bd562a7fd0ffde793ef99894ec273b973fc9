@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c834c7aa_5c689d74",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-14T07:35:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b68299b_abf15c4e",
+      "range": {
+        "startLine": 52,
+        "startChar": 10,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad585958_74f3d93d",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "468cc1bb_aded523b",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-14T07:35:34Z",
+      "side": 1,
+      "message": "Use array.size instead.",
+      "parentUuid": "ad585958_74f3d93d",
+      "range": {
+        "startLine": 73,
+        "startChar": 17,
+        "endLine": 73,
+        "endChar": 18
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6df1ebf_9d376329",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2020-02-05T11:48:06Z",
       "side": 1,
       "message": "Nit: make it a constant",
+      "range": {
+        "startLine": 88,
+        "startChar": 83,
+        "endLine": 88,
+        "endChar": 84
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39819aba_b498368c",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-14T07:35:34Z",
+      "side": 1,
+      "message": "This means no flag. I don\u0027t thik we need to make this a constant.",
+      "parentUuid": "f6df1ebf_9d376329",
       "range": {
         "startLine": 88,
         "startChar": 83,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "aa612cf9_b97ad86d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-14T07:35:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dd36d6e_a309e3c4",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 46
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0722072_5565c725",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1c50d5_8722f7a6",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-14T07:35:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0722072_5565c725",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 70
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "d29f0dff_f2f36e0b",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-14T07:35:34Z",
+      "side": 1,
+      "message": "You are right. Change the verification here.",
+      "parentUuid": "a6b6884a_27e6988d",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 157,
+        "endChar": 33
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e1667f9_27612e6a",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e1af3f_6d4a6726",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-14T07:35:34Z",
+      "side": 1,
+      "message": "Change the verification above that notification was showed before downstream changed.",
+      "parentUuid": "1e1667f9_27612e6a",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 49
+      },
+      "revId": "5652bd562a7fd0ffde793ef99894ec273b973fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
