@@ -14,15 +14,27 @@
 // limitations under the License.
 //
 
-apex {
-    name: "com.android.tethering",
+// Defaults shared between production and test versions of the APEX.
+apex_defaults {
+    name: "com.android.tethering-defaults",
     updatable: true,
     java_libs: ["framework-tethering"],
     apps: ["Tethering"],
-    manifest: "manifest.json",
     key: "com.android.tethering.key",
+    certificate: ":com.android.tethering.certificate",
 
-    androidManifest: "AndroidManifest.xml",
+    androidManifest: ":com.android.tethering-androidManifest",
+}
+
+filegroup {
+    name: "com.android.tethering-androidManifest",
+    srcs: ["AndroidManifest.xml"],
+}
+
+apex {
+    name: "com.android.tethering",
+    defaults: ["com.android.tethering-defaults"],
+    manifest: "manifest.json",
 }
 
 apex_key {
