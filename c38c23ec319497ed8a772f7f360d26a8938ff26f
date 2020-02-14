@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "524a8faf_beb0e13f",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T03:58:30Z",
+      "side": 1,
+      "message": "Why this difference ? Why can\u0027t Settings store its profile the same way an app does ?",
+      "range": {
+        "startLine": 402,
+        "startChar": 40,
+        "endLine": 403,
+        "endChar": 77
+      },
+      "revId": "c38c23ec319497ed8a772f7f360d26a8938ff26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d1017f_40ff8bf5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 2962,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T03:58:30Z",
+      "side": 1,
+      "message": "prepareInternal() is doing IPCs and long-running stuff. It is also called without the lock all over the place.\n\nPlease reduce the scope of this lock to what is actually necessary (and actually not dangerous)",
+      "range": {
+        "startLine": 2962,
+        "startChar": 12,
+        "endLine": 2962,
+        "endChar": 24
+      },
+      "revId": "c38c23ec319497ed8a772f7f360d26a8938ff26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be09fb4_2fba0512",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 2981,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T03:58:30Z",
+      "side": 1,
+      "message": "further",
+      "range": {
+        "startLine": 2981,
+        "startChar": 91,
+        "endLine": 2981,
+        "endChar": 98
+      },
+      "revId": "c38c23ec319497ed8a772f7f360d26a8938ff26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f630912e_a1d5d893",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 2983,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T03:58:30Z",
+      "side": 1,
+      "message": "Until that\u0027s done it should be always metered. Otherwise : overages.",
+      "range": {
+        "startLine": 2983,
+        "startChar": 18,
+        "endLine": 2983,
+        "endChar": 78
+      },
+      "revId": "c38c23ec319497ed8a772f7f360d26a8938ff26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
