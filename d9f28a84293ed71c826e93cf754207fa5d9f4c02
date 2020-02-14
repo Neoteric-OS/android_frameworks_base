@@ -16,6 +16,24 @@
       "revId": "d9f28a84293ed71c826e93cf754207fa5d9f4c02",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c041c85_86beeef8",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2020-02-14T20:00:17Z",
+      "side": 1,
+      "message": "I replied once on https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/10254862/1\n\nIt was intended to be the implementation of isEmpty(), I don\u0027t think I can safely say that it is safe to move it to isEmpty yet.\nDo you still want to keep it separate from isEmpty and still rename it just for clarity?\n\nAlso, I was trying to keep this CL as brief as possible because it is in AOSP. I can follow up in the internal branch with a more proper fix.",
+      "parentUuid": "215198d8_e227794b",
+      "revId": "d9f28a84293ed71c826e93cf754207fa5d9f4c02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
