@@ -17,7 +17,10 @@ android_test {
     srcs: ["src/**/*.java"],
     platform_apis: true,
     certificate: "platform",
-    static_libs: ["androidx.test.rules"],
+    static_libs: [
+        "androidx.test.rules",
+        "testng",
+    ],
     test_suites: ["device-tests"],
     data: [
         ":OverlayDeviceTests_AppOverlayOne",
