@@ -185,4 +185,6 @@
         <item>WIFI|USB,WIFI|BT;com.android.networkstack.tethering:drawable/stat_sys_tether_general</item>
         <item>USB|BT,WIFI|USB|BT;com.android.networkstack.tethering:drawable/stat_sys_tether_general</item>
     </array>
+    <!-- String for tether enable notification message when power saving mode is on. -->
+    <string name="tethered_notification_message_power_saving">@string/tethered_notification_message</string>
 </resources>

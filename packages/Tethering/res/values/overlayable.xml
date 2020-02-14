@@ -55,6 +55,8 @@
             Notification will not show if the downstream type doesn't list in array. Empty array
             means disable all notifications. -->
             <item type="array" name="tethering_notification_icons"/>
+            <!-- String for tether enable notification message when power saving mode is on. -->
+            <item type="string" name="tethered_notification_message_power_saving"/>
             <!-- Params from config.xml that can be overlaid -->
         </policy>
     </overlayable>

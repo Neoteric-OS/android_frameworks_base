@@ -66,6 +66,7 @@ public class TetheringNotificationUpdater {
     // This value has to be made 1 2 and 4, and OR'd with the others.
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
     private int mActiveDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+    private boolean mPowerSaving = false;
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
         mContext = context;
@@ -92,6 +93,15 @@ public class TetheringNotificationUpdater {
         synchronized (mUpdateLock) {
             if (mActiveDataSubId == subId) return;
             mActiveDataSubId = subId;
+            updateNotification();
+        }
+    }
+
+    /** Called when power saving changed status */
+    public void onPowerSavingChanged(final boolean status) {
+        synchronized (mUpdateLock) {
+            if (mPowerSaving == status) return;
+            mPowerSaving = status;
             updateNotification();
         }
     }
@@ -171,7 +181,12 @@ public class TetheringNotificationUpdater {
         if (iconId == NO_ICON_ID) return NO_NOTIFY;
 
         final String title = res.getString(R.string.tethered_notification_title);
-        final String message = res.getString(R.string.tethered_notification_message);
+        final String message;
+        if (mPowerSaving) {
+            message = res.getString(R.string.tethered_notification_message_power_saving);
+        } else {
+            message = res.getString(R.string.tethered_notification_message);
+        }
 
         showNotificationLocked(iconId, title, message);
         return NOTIFY_DONE;

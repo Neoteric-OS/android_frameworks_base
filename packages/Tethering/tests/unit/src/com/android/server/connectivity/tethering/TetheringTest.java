@@ -49,6 +49,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Matchers.anyString;
@@ -109,6 +110,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PersistableBundle;
+import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.os.UserManager;
@@ -178,6 +180,7 @@ public class TetheringTest {
     @Mock private NetworkRequest mNetworkRequest;
     @Mock private ConnectivityManager mCm;
     @Mock private TetheringNotificationUpdater mNotificationUpdater;
+    @Mock private PowerManager mPowerManager;
 
     private final MockIpServerDependencies mIpServerDependencies =
             spy(new MockIpServerDependencies());
@@ -196,7 +199,7 @@ public class TetheringTest {
     private Tethering mTethering;
     private PhoneStateListener mPhoneStateListener;
     private InterfaceConfigurationParcel mInterfaceConfiguration;
-
+    private boolean mIsTetheringSupported = true;
 
     private class TestContext extends BroadcastInterceptingContext {
         TestContext(Context base) {
@@ -231,6 +234,7 @@ public class TetheringTest {
             if (Context.USER_SERVICE.equals(name)) return mUserManager;
             if (Context.NETWORK_STATS_SERVICE.equals(name)) return mStatsManager;
             if (Context.CONNECTIVITY_SERVICE.equals(name)) return mCm;
+            if (Context.POWER_SERVICE.equals(name)) return mPowerManager;
             return super.getSystemService(name);
         }
 
@@ -299,6 +303,7 @@ public class TetheringTest {
         public void reset() {
             mUpstreamNetworkMonitorMasterSM = null;
             mIpv6CoordinatorNotifyList = null;
+            mIsTetheringSupported = true;
         }
 
         @Override
@@ -332,7 +337,7 @@ public class TetheringTest {
 
         @Override
         public boolean isTetheringSupported() {
-            return true;
+            return mIsTetheringSupported;
         }
 
         @Override
@@ -1460,6 +1465,20 @@ public class TetheringTest {
 
     private static <T> void assertContains(Collection<T> collection, T element) {
         assertTrue(element + " not found in " + collection, collection.contains(element));
+    }
+
+    @Test
+    public void testPowerSavingChanged() {
+        final boolean powerSaveOn = true;
+        when(mPowerManager.isPowerSaveMode()).thenReturn(powerSaveOn);
+        final Intent intent = new Intent(PowerManager.ACTION_POWER_SAVE_MODE_CHANGED);
+        mServiceContext.sendBroadcast(intent);
+        verify(mNotificationUpdater, times(1)).onPowerSavingChanged(eq(powerSaveOn));
+        reset(mNotificationUpdater);
+
+        mIsTetheringSupported = false;
+        mServiceContext.sendBroadcast(intent);
+        verify(mNotificationUpdater, never()).onPowerSavingChanged(anyBoolean());
     }
 
     // TODO: Test that a request for hotspot mode doesn't interfere with an

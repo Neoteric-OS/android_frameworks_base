@@ -61,6 +61,7 @@ const val TITTLE = "Tethering active"
 const val MESSAGE = "Tap here to set up."
 const val TEST_TITTLE = "Hotspot active"
 const val TEST_MESSAGE = "Tap to set up hotspot."
+const val TEST_MESSAGE_POWER_SAVE = "Tap to set up hotspot. Power saving on"
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
@@ -92,9 +93,13 @@ class TetheringNotificationUpdaterTest {
         for (i in testIcons.indices) doReturn(testIcons[i]).`when`(testArray).getString(i)
         doReturn(TITTLE).`when`(defaultResources).getString(R.string.tethered_notification_title)
         doReturn(MESSAGE).`when`(defaultResources).getString(R.string.tethered_notification_message)
+        doReturn(MESSAGE).`when`(defaultResources)
+                .getString(R.string.tethered_notification_message_power_saving)
         doReturn(TEST_TITTLE).`when`(testResources).getString(R.string.tethered_notification_title)
         doReturn(TEST_MESSAGE).`when`(testResources)
                 .getString(R.string.tethered_notification_message)
+        doReturn(TEST_MESSAGE_POWER_SAVE).`when`(testResources)
+                .getString(R.string.tethered_notification_message_power_saving)
         doReturn(USB_ICON_ID).`when`(defaultResources)
                 .getIdentifier(eq("android.test:drawable/usb"), any(), any())
         doReturn(BT_ICON_ID).`when`(defaultResources)
@@ -233,5 +238,29 @@ class TetheringNotificationUpdaterTest {
         assertEquals(BT_MASK, notificationUpdater.getDownstreamTypesMask(" WIFI: | BT"))
         assertEquals(WIFI_MASK or USB_MASK,
                 notificationUpdater.getDownstreamTypesMask("1|2|USB|WIFI|BLUETOOTH||"))
+    }
+
+    @Test
+    fun testNotificationWithPowerSavingChanged() {
+        // Usb tethering enabled, showed enable notification
+        assertNotification(USB_MASK, true, USB_ICON_ID, TITTLE, MESSAGE)
+
+        // Power saving on, showed enable notification
+        notificationUpdater.onPowerSavingChanged(true)
+        expectShowNotification(USB_ICON_ID, TITTLE, MESSAGE)
+
+        // Set test sub id, cleared notification with test resource.
+        notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
+        expectClearNotification()
+
+        // Hotspot enabled, showed enable notification with power saving message.
+        assertNotification(WIFI_MASK, true, WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE_POWER_SAVE)
+
+        // Power saving off, showed enable notification with overlay text.
+        notificationUpdater.onPowerSavingChanged(false)
+        expectShowNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
+
+        // No downstream, no notification showed.
+        assertNotification(DOWNSTREAM_NONE)
     }
 }
