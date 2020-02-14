@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a58187ae_1779eb46",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-14T07:51:11Z",
+      "side": 1,
+      "message": "The big difference is in the format that Settings accepts parameters in; for PSKs, Settings accepts Strings, while the VpnManager accepts the more flexible byte[]\n\nSimilarly, Settings accepts certificate/private-key names, rather than the full certificate the VpnManager accepts.\n\nSo in order to build an Ikev2VpnProfile from Settings, we need to special-case the extraction of the private key from the keystore, and treat the VpnProfile\u0027s String as a String, rather than a base64-encoded byte[].\n\nThat said, it IS possible to encode the PSK specially using encodeForIpsecSecret() when storing the profile, but that just shards the special casing into the Settings app.",
+      "parentUuid": "524a8faf_beb0e13f",
+      "range": {
+        "startLine": 402,
+        "startChar": 40,
+        "endLine": 403,
+        "endChar": 77
+      },
+      "revId": "c38c23ec319497ed8a772f7f360d26a8938ff26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3d1017f_40ff8bf5",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 44
@@ -36,6 +60,30 @@
       "writtenOn": "2020-02-14T03:58:30Z",
       "side": 1,
       "message": "prepareInternal() is doing IPCs and long-running stuff. It is also called without the lock all over the place.\n\nPlease reduce the scope of this lock to what is actually necessary (and actually not dangerous)",
+      "range": {
+        "startLine": 2962,
+        "startChar": 12,
+        "endLine": 2962,
+        "endChar": 24
+      },
+      "revId": "c38c23ec319497ed8a772f7f360d26a8938ff26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c46e30f_fcbefc60",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 2962,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-14T07:51:11Z",
+      "side": 1,
+      "message": "From my reading, it looks like prepareInternal() is called exclusively in synchronized methods, or subcalls of a synchronized method.\n\nSince it clears and sets the Vpn instance fields, I think this needs to be locked. The IPCs (other than netd.denyProtect()) do seem to be pretty much asynchronous though?",
+      "parentUuid": "f3d1017f_40ff8bf5",
       "range": {
         "startLine": 2962,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d5ec9f58_3e868c59",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 2981,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-14T07:51:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9be09fb4_2fba0512",
+      "range": {
+        "startLine": 2981,
+        "startChar": 91,
+        "endLine": 2981,
+        "endChar": 98
+      },
+      "revId": "c38c23ec319497ed8a772f7f360d26a8938ff26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f630912e_a1d5d893",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 44
@@ -91,6 +163,30 @@
       "revId": "c38c23ec319497ed8a772f7f360d26a8938ff26f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149c58ba_79d75480",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 2983,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-14T07:51:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f630912e_a1d5d893",
+      "range": {
+        "startLine": 2983,
+        "startChar": 18,
+        "endLine": 2983,
+        "endChar": 78
+      },
+      "revId": "c38c23ec319497ed8a772f7f360d26a8938ff26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
