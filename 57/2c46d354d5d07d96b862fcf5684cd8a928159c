@@ -1,0 +1,12 @@
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Chalard Jean <jchalard@google.com>
+Code-Review+1: Tsung-Mao Fang <tmfang@google.com>
+Code-Review+1: Chiachang Wang <chiachangwang@google.com>
+API-Review+1: Chalard Jean <jchalard@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Paul Hu <paulhu@google.com>
+Submitted-at: Fri, 14 Feb 2020 08:05:30 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1228533
+Project: platform/frameworks/base
+Branch: refs/heads/master
