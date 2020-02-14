@@ -59,6 +59,7 @@ const val TITTLE = "Tethering active"
 const val MESSAGE = "Tap here to set up."
 const val TEST_TITTLE = "Hotspot active"
 const val TEST_MESSAGE = "Tap to set up hotspot."
+const val TEST_MESSAGE_POWER_SAVE = "Tap to set up hotspot. Power saving on"
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
@@ -97,9 +98,13 @@ class TetheringNotificationUpdaterTest {
         doReturn(TITTLE).`when`(defaultResources).getString(R.string.tethering_notification_title)
         doReturn(MESSAGE).`when`(defaultResources)
                 .getString(R.string.tethering_notification_message)
+        doReturn(MESSAGE).`when`(defaultResources)
+                .getString(R.string.tethering_notification_message_power_saving)
         doReturn(TEST_TITTLE).`when`(testResources).getString(R.string.tethering_notification_title)
         doReturn(TEST_MESSAGE).`when`(testResources)
                 .getString(R.string.tethering_notification_message)
+        doReturn(TEST_MESSAGE_POWER_SAVE).`when`(testResources)
+                .getString(R.string.tethering_notification_message_power_saving)
         doReturn(USB_ICON_ID).`when`(defaultResources)
                 .getIdentifier(eq("android.test:drawable/usb"), any(), any())
         doReturn(BT_ICON_ID).`when`(defaultResources)
@@ -145,7 +150,7 @@ class TetheringNotificationUpdaterTest {
     }
 
     @Test
-    fun testNotificationWithDownstreamChanged() {
+    fun testNotification_DownstreamChanged() {
         // Wifi downstream. No notification.
         notificationUpdater.onDownstreamChanged(WIFI_MASK)
         verifyNoNotification()
@@ -168,7 +173,7 @@ class TetheringNotificationUpdaterTest {
     }
 
     @Test
-    fun testNotificationWithActiveDataSubscriptionIdChanged() {
+    fun testNotification_ActiveDataSubscriptionIdChanged() {
         // Usb downstream. Showed enable notification with default resource.
         notificationUpdater.onDownstreamChanged(USB_MASK)
         verifyNotification(USB_ICON_ID, TITTLE, MESSAGE)
@@ -222,5 +227,36 @@ class TetheringNotificationUpdaterTest {
         assertEquals(BT_MASK, notificationUpdater.getDownstreamTypesMask(" WIFI: | BT"))
         assertEquals(WIFI_MASK or USB_MASK,
                 notificationUpdater.getDownstreamTypesMask("1|2|USB|WIFI|BLUETOOTH||"))
+    }
+
+    @Test
+    fun testNotification_PowerSavingChanged() {
+        // Usb downstream. Showed enable notification.
+        notificationUpdater.onDownstreamChanged(USB_MASK)
+        verifyNotification(USB_ICON_ID, TITTLE, MESSAGE)
+
+        // Power saving on. Still show enable notification with same message.
+        notificationUpdater.onPowerSavingChanged(true)
+        verifyNotification(USB_ICON_ID, TITTLE, MESSAGE)
+
+        // Same power saving status. Nothing happened.
+        notificationUpdater.onPowerSavingChanged(true)
+        verifyZeroInteractions(notificationManager)
+
+        // Set test sub id. Clear notification with test resource.
+        notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
+        verifyNoNotification()
+
+        // Wifi downstream. Show enable notification with power saving message.
+        notificationUpdater.onDownstreamChanged(WIFI_MASK)
+        verifyNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE_POWER_SAVE)
+
+        // Power saving off. Show enable notification with test message.
+        notificationUpdater.onPowerSavingChanged(false)
+        verifyNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
+
+        // No downstream. No notification.
+        notificationUpdater.onDownstreamChanged(DOWNSTREAM_NONE)
+        verifyNoNotification()
     }
 }
