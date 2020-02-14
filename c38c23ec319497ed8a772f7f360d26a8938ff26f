@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e09abd80_619d7408",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T08:11:16Z",
+      "side": 1,
+      "message": "Shouldn\u0027t Settings convert the string to a byte[] ?\n\nI don\u0027t understand the special case argument – this here is framework code, it relies on the Vpn profile which is framework code, and has a contractual format. Saying Settings uses a different format and testing for it here is special-casing ; having Settings do the same thing as everyone else seems like the opposite of special-casing.",
+      "parentUuid": "a58187ae_1779eb46",
+      "range": {
+        "startLine": 402,
+        "startChar": 40,
+        "endLine": 403,
+        "endChar": 77
+      },
+      "revId": "c38c23ec319497ed8a772f7f360d26a8938ff26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3d1017f_40ff8bf5",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 44
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "From my reading, it looks like prepareInternal() is called exclusively in synchronized methods, or subcalls of a synchronized method.\n\nSince it clears and sets the Vpn instance fields, I think this needs to be locked. The IPCs (other than netd.denyProtect()) do seem to be pretty much asynchronous though?",
       "parentUuid": "f3d1017f_40ff8bf5",
+      "range": {
+        "startLine": 2962,
+        "startChar": 12,
+        "endLine": 2962,
+        "endChar": 24
+      },
+      "revId": "c38c23ec319497ed8a772f7f360d26a8938ff26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45047df_fd8f9457",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 2962,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T08:11:16Z",
+      "side": 1,
+      "message": "Huh. I thought I had checked all calls, but upon checking again, you\u0027re right. I have no idea how I came to that conclusion, my only theory is old age\n\nCan you please annotate prepareInternal with @GuardedBy(\"this\") so that no other old geezer falls in the same trap",
+      "parentUuid": "7c46e30f_fcbefc60",
       "range": {
         "startLine": 2962,
         "startChar": 12,
