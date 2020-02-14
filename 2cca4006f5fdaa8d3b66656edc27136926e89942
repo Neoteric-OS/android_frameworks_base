@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f03c5ea4_a8acce35",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-14T19:43:31Z",
+      "side": 1,
+      "message": "Do you need this default constructor? It seems to be you can simply default mAdbConnectionInfo to null",
+      "range": {
+        "startLine": 448,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 9
+      },
+      "revId": "2cca4006f5fdaa8d3b66656edc27136926e89942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39beab1_aefeaf0e",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-14T19:43:31Z",
+      "side": 1,
+      "message": "Instead of .clear you\u0027d be setting the var to null instead",
+      "range": {
+        "startLine": 481,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 9
+      },
+      "revId": "2cca4006f5fdaa8d3b66656edc27136926e89942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d38859b_1fa32d20",
+        "filename": "services/core/jni/Android.bp",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-14T19:43:31Z",
+      "side": 1,
+      "message": "use spaces",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 1
+      },
+      "revId": "2cca4006f5fdaa8d3b66656edc27136926e89942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
