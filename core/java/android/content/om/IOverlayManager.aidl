@@ -17,6 +17,7 @@
 package android.content.om;
 
 import android.content.om.OverlayInfo;
+import android.content.om.OverlayManagerTransaction;
 
 /**
  * Api for getting information about overlay packages.
@@ -157,4 +158,18 @@ interface IOverlayManager {
      * Returns the list of default overlay packages, or an empty array if there are none.
      */
     String[] getDefaultOverlayPackages();
+
+    /**
+     * Perform a series of requests related to overlay packages. This is an
+     * atomic operation: either all requests were performed successfully and
+     * the changes were propagated to the rest of the system, or at least one
+     * request could not be performed successfully and nothing is changed and
+     * nothing is propagated to the rest of the system.
+     *
+     * @see OverlayManagerTransaction
+     *
+     * @param transaction the series of overlay related requests to perform
+     * @return true if all the requests could be successfully and atomically executed
+     */
+    boolean commit(in OverlayManagerTransaction transaction);
 }
