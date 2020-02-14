@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9be07926_620f52ed",
+        "filename": "packages/Tethering/common/TetheringLib/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-14T06:25:48Z",
+      "side": 1,
+      "message": "Note for review:\nThis is different with internal master that this can\u0027t be remove in aosp because of below error.\n\nerror: frameworks/base/Android.bp:515:1: module \"framework-annotation-proc\" variant \"android_common\": depends on //frameworks/base/packages/Tethering/common/TetheringLib:framework-tethering which\n is not visible to this module",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "70320a0683051513834022c1e7443d731cdf9356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
