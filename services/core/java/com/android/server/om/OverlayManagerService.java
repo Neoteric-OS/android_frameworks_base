@@ -17,11 +17,14 @@
 package com.android.server.om;
 
 import static android.app.AppGlobals.getPackageManager;
+import static android.content.Intent.ACTION_OVERLAY_CHANGED;
 import static android.content.Intent.ACTION_PACKAGE_ADDED;
 import static android.content.Intent.ACTION_PACKAGE_CHANGED;
 import static android.content.Intent.ACTION_PACKAGE_REMOVED;
 import static android.content.Intent.ACTION_USER_ADDED;
 import static android.content.Intent.ACTION_USER_REMOVED;
+import static android.content.om.OverlayManagerTransaction.Request.TYPE_SET_DISABLED;
+import static android.content.om.OverlayManagerTransaction.Request.TYPE_SET_ENABLED;
 import static android.content.pm.PackageManager.SIGNATURE_MATCH;
 import static android.os.Trace.TRACE_TAG_RRO;
 import static android.os.Trace.traceBegin;
@@ -37,6 +40,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.om.IOverlayManager;
 import android.content.om.OverlayInfo;
+import android.content.om.OverlayManagerTransaction;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManagerInternal;
@@ -81,6 +85,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Service to manage asset overlays.
@@ -742,6 +749,190 @@ public final class OverlayManagerService extends SystemService {
         }
 
         @Override
+        public boolean commit(@NonNull final OverlayManagerTransaction transaction)
+                throws RemoteException {
+            try {
+                traceBegin(TRACE_TAG_RRO, "OMS#commit " + transaction);
+                return commitTraced(transaction);
+            } finally {
+                traceEnd(TRACE_TAG_RRO);
+            }
+        }
+
+        private boolean commitTraced(
+                @NonNull final OverlayManagerTransaction transaction) {
+            if (DEBUG) {
+                Slog.d(TAG, "commit " + transaction);
+            }
+            if (transaction == null) {
+                return false;
+            }
+
+            // First, loop through the requests once to check caller's
+            // permissions and invalid arguments, and to resolve userIds
+            final List<OverlayManagerTransaction.Request> vettedTransaction = new ArrayList<>();
+            for (final OverlayManagerTransaction.Request request : transaction) {
+                if (request.packageName == null) {
+                    return false;
+                }
+                switch (request.type) {
+                    case TYPE_SET_ENABLED:
+                    case TYPE_SET_DISABLED:
+                        enforceChangeOverlayPackagesPermission(request.typeToString());
+                        final int resolvedUserId =
+                                handleIncomingUser(request.userId, request.typeToString());
+                        vettedTransaction.add(
+                                new OverlayManagerTransaction.Request(request.type,
+                                    request.packageName, resolvedUserId));
+                        break;
+                    default:
+                        Slog.e(TAG, "unsupported request: " + request);
+                        return false;
+                }
+            }
+
+            // Second, obtain the lock, switch to system_server and execute the vetted requests
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                // map: userId -> set<targetPackageName>
+                Map<Integer, Set<String>> targetsToUpdate = new ArrayMap<>();
+
+                // closure to rollback changes and abort transaction
+                Consumer<OverlayManagerTransaction.Request> rollback = new Consumer<>() {
+                    @Override
+                    public void accept(OverlayManagerTransaction.Request request) {
+                        Slog.e(TAG, "transaction failed because of " + request);
+                        restoreSettings();
+                    }
+                };
+
+                // closure to remember a (targetPackageName, userId) for later
+                BiConsumer<Integer, String> markForLaterUpdate = new BiConsumer<>() {
+                    @Override
+                    public void accept(Integer userId, String targetPackageName) {
+                        if (!targetsToUpdate.containsKey(userId)) {
+                            targetsToUpdate.put(userId, new ArraySet<String>());
+                        }
+                        targetsToUpdate.get(userId).add(targetPackageName);
+                    }
+                };
+
+                synchronized (mLock) {
+                    for (final OverlayManagerTransaction.Request request : vettedTransaction) {
+                        switch (request.type) {
+                            case TYPE_SET_ENABLED: {
+                                Result result = mImpl.setEnabled(request.packageName, true,
+                                        request.userId);
+                                switch (result.type) {
+                                    case Result.TYPE_OK_WITH_DATA:
+                                        markForLaterUpdate.accept(result.intArg, result.stringArg);
+                                        break;
+                                    case Result.TYPE_OK:
+                                        break;
+                                    default:
+                                        rollback.accept(request);
+                                        return false;
+                                }
+
+                                result =
+                                    mImpl.setHighestPriority(request.packageName, request.userId);
+                                switch (result.type) {
+                                    case Result.TYPE_OK_WITH_DATA:
+                                        markForLaterUpdate.accept(result.intArg, result.stringArg);
+                                        break;
+                                    case Result.TYPE_OK:
+                                        break;
+                                    default:
+                                        rollback.accept(request);
+                                        return false;
+                                }
+                            } break;
+                            case TYPE_SET_DISABLED: {
+                                Result result = mImpl.setEnabled(request.packageName, false,
+                                        request.userId);
+                                switch (result.type) {
+                                    case Result.TYPE_OK_WITH_DATA:
+                                        markForLaterUpdate.accept(result.intArg, result.stringArg);
+                                        break;
+                                    case Result.TYPE_OK:
+                                        break;
+                                    default:
+                                        rollback.accept(request);
+                                        return false;
+                                }
+                            } break;
+                            default:
+                                // rollback changes and abort transaction
+                                Slog.e(TAG, "transaction failed because of " + request);
+                                restoreSettings();
+                                return false;
+                        }
+                    }
+
+                    // point of no return: the entire transaction has been
+                    // processed successfully, we can no longer fail
+                    persistSettings();
+
+                    // inform the package manager about the new paths
+                    final PackageManagerInternal pm =
+                            LocalServices.getService(PackageManagerInternal.class);
+                    for (Map.Entry<Integer, Set<String>> entry : targetsToUpdate.entrySet()) {
+                        final int userId = entry.getKey();
+                        Set<String> targetPackageNames = entry.getValue();
+                        if (targetPackageNames.contains("android")) {
+                            targetPackageNames.clear();
+                            targetPackageNames.addAll(pm.getTargetPackageNames(userId));
+                        }
+                        final List<String> frameworkOverlayPackageNames =
+                                mImpl.getEnabledOverlayPackageNames("android", userId);
+                        for (String t : targetPackageNames) {
+                            List<String> o = new ArrayList<>();
+                            if (!"android".equals(t)) {
+                                o.addAll(frameworkOverlayPackageNames);
+                            }
+                            o.addAll(mImpl.getEnabledOverlayPackageNames(t, userId));
+                            if (!pm.setEnabledOverlayPackages(userId, t, o)) {
+                                Slog.e(TAG, String.format("Failed to change enabled overlays "
+                                            + "for %s user %d", t, userId));
+                            }
+                        }
+                    }
+                } // synchronized (mLock)
+
+                // broadcast the ACTION_OVERLAY_CHANGED intents
+                final IActivityManager am = ActivityManager.getService();
+                for (Map.Entry<Integer, Set<String>> entry : targetsToUpdate.entrySet()) {
+                    final int userId = entry.getKey();
+                    for (String targetPackageName : entry.getValue()) {
+                        final Intent intent = new Intent(ACTION_OVERLAY_CHANGED,
+                                Uri.fromParts("package", targetPackageName, null));
+                        intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
+                        try {
+                            am.broadcastIntent(null, intent, null, null, 0, null, null, null,
+                                    android.app.AppOpsManager.OP_NONE, null, false, false, userId);
+                        } catch (RemoteException e) {
+                            // Intentionally left empty.
+                        }
+                    }
+                }
+
+                // schedule apps to refresh
+                for (Map.Entry<Integer, Set<String>> entry : targetsToUpdate.entrySet()) {
+                    try {
+                        List<String> list = new ArrayList<>();
+                        list.addAll(entry.getValue());
+                        am.scheduleApplicationInfoChanged(list, entry.getKey());
+                    } catch (RemoteException e) {
+                        // Intentionally left empty.
+                    }
+                }
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+            return true;
+        }
+
+        @Override
         public void onShellCommand(@NonNull final FileDescriptor in,
                 @NonNull final FileDescriptor out, @NonNull final FileDescriptor err,
                 @NonNull final String[] args, @NonNull final ShellCallback callback,
@@ -865,6 +1056,7 @@ public final class OverlayManagerService extends SystemService {
     private boolean handleResult(@NonNull Result result) {
         switch (result.type) {
             case Result.TYPE_OK_WITH_DATA:
+                persistSettings();
                 onOverlaysChanged(result.stringArg, result.intArg);
                 return true;
             case Result.TYPE_OK:
@@ -879,7 +1071,6 @@ public final class OverlayManagerService extends SystemService {
     }
 
     private void onOverlaysChanged(@NonNull final String targetPackageName, final int userId) {
-        persistSettings();
         FgThread.getHandler().post(() -> {
             updateAssets(userId, targetPackageName);
 
