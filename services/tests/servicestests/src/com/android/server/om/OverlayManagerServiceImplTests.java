@@ -226,27 +226,27 @@ public class OverlayManagerServiceImplTests {
         installOverlayPackage(OVERLAY, TARGET, USER, true);
         Result r = mImpl.onOverlayPackageReplacing(OVERLAY, USER);
         assertEquals(r.type, TYPE_OK_WITH_DATA);
-        assertEquals(r.stringArg, TARGET);
+        assertEquals(r.packageName, TARGET);
         r = mImpl.onOverlayPackageReplaced(OVERLAY, USER);
         assertEquals(r.type, TYPE_OK_WITH_DATA);
-        assertEquals(r.stringArg, TARGET);
+        assertEquals(r.packageName, TARGET);
 
         // upgrade to a version where the overlay has changed its target
         upgradeOverlayPackage(OVERLAY, "some.other.target", USER, true);
         r = mImpl.onOverlayPackageReplacing(OVERLAY, USER);
         assertEquals(r.type, TYPE_OK_WITH_DATA);
-        assertEquals(r.stringArg, TARGET);
+        assertEquals(r.packageName, TARGET);
         r = mImpl.onOverlayPackageReplaced(OVERLAY, USER);
         assertEquals(r.type, TYPE_OK_WITH_DATA);
-        assertEquals(r.stringArg, "some.other.target");
+        assertEquals(r.packageName, "some.other.target");
 
         upgradeOverlayPackage(OVERLAY, "some.other.target", USER, true);
         r = mImpl.onOverlayPackageReplacing(OVERLAY, USER);
         assertEquals(r.type, TYPE_OK_WITH_DATA);
-        assertEquals(r.stringArg, "some.other.target");
+        assertEquals(r.packageName, "some.other.target");
         r = mImpl.onOverlayPackageReplaced(OVERLAY, USER);
         assertEquals(r.type, TYPE_OK_WITH_DATA);
-        assertEquals(r.stringArg, "some.other.target");
+        assertEquals(r.packageName, "some.other.target");
     }
 
     @Test
@@ -261,8 +261,8 @@ public class OverlayManagerServiceImplTests {
         installOverlayPackage(OVERLAY, TARGET, USER, true);
         r = mImpl.setEnabled(OVERLAY, true, USER);
         assertEquals(r.type, TYPE_OK_WITH_DATA);
-        assertEquals(r.stringArg, TARGET);
-        assertEquals(r.intArg, USER);
+        assertEquals(r.packageName, TARGET);
+        assertEquals(r.userId, USER);
 
         // request succeeded, but nothing changed
         r = mImpl.setEnabled(OVERLAY, true, USER);
