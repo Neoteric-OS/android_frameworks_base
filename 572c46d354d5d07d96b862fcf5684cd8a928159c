@@ -22,6 +22,30 @@
       "revId": "572c46d354d5d07d96b862fcf5684cd8a928159c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea04bf75_c5eeffd1",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1798,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-14T08:05:25Z",
+      "side": 1,
+      "message": "It\u0027s fine because this action will show tether settings page with all downstreams.",
+      "parentUuid": "7f78ad18_14764074",
+      "range": {
+        "startLine": 1798,
+        "startChar": 14,
+        "endLine": 1798,
+        "endChar": 21
+      },
+      "revId": "572c46d354d5d07d96b862fcf5684cd8a928159c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
