@@ -59,7 +59,6 @@ import android.util.Slog;
 import android.util.SparseArray;
 
 import com.android.server.FgThread;
-import com.android.server.IoThread;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
 import com.android.server.pm.Installer;
@@ -81,7 +80,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Service to manage asset overlays.
@@ -228,8 +226,6 @@ public final class OverlayManagerService extends SystemService {
 
     private final OverlayManagerServiceImpl mImpl;
 
-    private final AtomicBoolean mPersistSettingsScheduled = new AtomicBoolean(false);
-
     public OverlayManagerService(@NonNull final Context context,
             @NonNull final Installer installer) {
         super(context);
@@ -303,7 +299,7 @@ public final class OverlayManagerService extends SystemService {
                 final List<String> targets = mImpl.updateOverlaysForUser(newUserId);
                 updateAssets(newUserId, targets);
             }
-            schedulePersistSettings();
+            persistSettings();
         } finally {
             traceEnd(TRACE_TAG_RRO);
         }
@@ -878,7 +874,7 @@ public final class OverlayManagerService extends SystemService {
     }
 
     private void onOverlaysChanged(@NonNull final String targetPackageName, final int userId) {
-        schedulePersistSettings();
+        persistSettings();
         FgThread.getHandler().post(() -> {
             updateAssets(userId, targetPackageName);
 
@@ -967,27 +963,21 @@ public final class OverlayManagerService extends SystemService {
         }
     }
 
-    private void schedulePersistSettings() {
-        if (mPersistSettingsScheduled.getAndSet(true)) {
-            return;
+    private void persistSettings() {
+        if (DEBUG) {
+            Slog.d(TAG, "Writing overlay settings");
         }
-        IoThread.getHandler().post(() -> {
-            mPersistSettingsScheduled.set(false);
-            if (DEBUG) {
-                Slog.d(TAG, "Writing overlay settings");
+        synchronized (mLock) {
+            FileOutputStream stream = null;
+            try {
+                stream = mSettingsFile.startWrite();
+                mSettings.persist(stream);
+                mSettingsFile.finishWrite(stream);
+            } catch (IOException | XmlPullParserException e) {
+                mSettingsFile.failWrite(stream);
+                Slog.e(TAG, "failed to persist overlay state", e);
             }
-            synchronized (mLock) {
-                FileOutputStream stream = null;
-                try {
-                    stream = mSettingsFile.startWrite();
-                    mSettings.persist(stream);
-                    mSettingsFile.finishWrite(stream);
-                } catch (IOException | XmlPullParserException e) {
-                    mSettingsFile.failWrite(stream);
-                    Slog.e(TAG, "failed to persist overlay state", e);
-                }
-            }
-        });
+        }
     }
 
     private void restoreSettings() {
