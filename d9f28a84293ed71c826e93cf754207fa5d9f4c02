@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "215198d8_e227794b",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-02-14T18:41:07Z",
+      "side": 1,
+      "message": "I thought I commented about it, but I think the name \"maybeIsEmpty\" makes this code look buggy. Can we rename it to \"isDefinitelyEmpty\"?",
+      "revId": "d9f28a84293ed71c826e93cf754207fa5d9f4c02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
