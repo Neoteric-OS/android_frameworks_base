@@ -402,6 +402,9 @@ public class BaseBundle {
         if (other == null) {
             return false;
         }
+        if (maybeIsEmpty() && other.maybeIsEmpty()) {
+            return true;
+        }
         if (isParcelled() != other.isParcelled()) {
             // Big kind-of here!
             return false;
