@@ -87,6 +87,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 /**
@@ -388,9 +390,9 @@ public final class OverlayManagerService extends SystemService {
                         if (pi != null && !pi.applicationInfo.isInstantApp()) {
                             mPackageManager.cachePackageInfo(packageName, userId, pi);
                             if (pi.isOverlayPackage()) {
-                                handleResult(mImpl.onOverlayPackageAdded(packageName, userId));
+                                onPackageImpl(mImpl::onOverlayPackageAdded, packageName, userId);
                             } else {
-                                handleResult(mImpl.onTargetPackageAdded(packageName, userId));
+                                onPackageImpl(mImpl::onTargetPackageAdded, packageName, userId);
                             }
                         }
                     }
@@ -411,9 +413,9 @@ public final class OverlayManagerService extends SystemService {
                         if (pi != null && pi.applicationInfo.isInstantApp()) {
                             mPackageManager.cachePackageInfo(packageName, userId, pi);
                             if (pi.isOverlayPackage()) {
-                                handleResult(mImpl.onOverlayPackageChanged(packageName, userId));
+                                onPackageImpl(mImpl::onOverlayPackageChanged, packageName, userId);
                             }  else {
-                                handleResult(mImpl.onTargetPackageChanged(packageName, userId));
+                                onPackageImpl(mImpl::onTargetPackageChanged, packageName, userId);
                             }
                         }
                     }
@@ -432,7 +434,7 @@ public final class OverlayManagerService extends SystemService {
                         mPackageManager.forgetPackageInfo(packageName, userId);
                         final OverlayInfo oi = mImpl.getOverlayInfo(packageName, userId);
                         if (oi != null) {
-                            handleResult(mImpl.onOverlayPackageReplacing(packageName, userId));
+                            onPackageImpl(mImpl::onOverlayPackageReplacing, packageName, userId);
                         }
                     }
                 }
@@ -452,9 +454,9 @@ public final class OverlayManagerService extends SystemService {
                         if (pi != null && !pi.applicationInfo.isInstantApp()) {
                             mPackageManager.cachePackageInfo(packageName, userId, pi);
                             if (pi.isOverlayPackage()) {
-                                handleResult(mImpl.onOverlayPackageReplaced(packageName, userId));
+                                onPackageImpl(mImpl::onOverlayPackageReplaced, packageName, userId);
                             } else {
-                                handleResult(mImpl.onTargetPackageReplaced(packageName, userId));
+                                onPackageImpl(mImpl::onTargetPackageReplaced, packageName, userId);
                             }
                         }
                     }
@@ -473,9 +475,9 @@ public final class OverlayManagerService extends SystemService {
                         mPackageManager.forgetPackageInfo(packageName, userId);
                         final OverlayInfo oi = mImpl.getOverlayInfo(packageName, userId);
                         if (oi != null) {
-                            handleResult(mImpl.onOverlayPackageRemoved(packageName, userId));
+                            onPackageImpl(mImpl::onOverlayPackageRemoved, packageName, userId);
                         } else {
-                            handleResult(mImpl.onTargetPackageRemoved(packageName, userId));
+                            onPackageImpl(mImpl::onTargetPackageRemoved, packageName, userId);
                         }
                     }
                 }
@@ -577,151 +579,108 @@ public final class OverlayManagerService extends SystemService {
         }
 
         @Override
+        @Deprecated
         public boolean setEnabled(@Nullable final String packageName, final boolean enable,
                 int userId) throws RemoteException {
-            try {
-                traceBegin(TRACE_TAG_RRO, "OMS#setEnabled " + packageName + " " + enable);
-                enforceChangeOverlayPackagesPermission("setEnabled");
-                userId = handleIncomingUser(userId, "setEnabled");
-                if (packageName == null) {
-                    return false;
-                }
-
-                final long ident = Binder.clearCallingIdentity();
-                try {
-                    synchronized (mLock) {
-                        return handleResult(mImpl.setEnabled(packageName, enable, userId));
-                    }
-                } finally {
-                    Binder.restoreCallingIdentity(ident);
-                }
-            } finally {
-                traceEnd(TRACE_TAG_RRO);
+            if (packageName == null) {
+                return false;
             }
+            OverlayManagerTransaction t = new OverlayManagerTransaction.Builder()
+                    .setEnabled(packageName, enable, userId)
+                    .build();
+            return commit(t);
         }
 
         @Override
+        @Deprecated
         public boolean setEnabledExclusive(@Nullable final String packageName, final boolean enable,
                 int userId) throws RemoteException {
-            try {
-                traceBegin(TRACE_TAG_RRO, "OMS#setEnabledExclusive " + packageName + " " + enable);
-                enforceChangeOverlayPackagesPermission("setEnabledExclusive");
-                userId = handleIncomingUser(userId, "setEnabledExclusive");
-                if (packageName == null || !enable) {
+            if (packageName == null || !enable) {
+                return false;
+            }
+            userId = handleIncomingUser(userId, "setEnabledExclusive");
+            synchronized (mLock) {
+                // TODO: this is, of course, cheating: a caller of the OMS
+                // transactional API should be able to do this without access
+                // to mLock; revisit when the API has support for something
+                // like Transaction.forEach(disable, select(...))
+                OverlayInfo oi = mImpl.getOverlayInfo(packageName, userId);
+                if (oi == null) {
                     return false;
                 }
-
-                final long ident = Binder.clearCallingIdentity();
-                try {
-                    synchronized (mLock) {
-                        return handleResult(mImpl.setEnabledExclusive(packageName,
-                                    false /* withinCategory */, userId));
-                    }
-                } finally {
-                    Binder.restoreCallingIdentity(ident);
+                OverlayManagerTransaction.Builder builder = new OverlayManagerTransaction.Builder();
+                for (OverlayInfo disable :
+                        mImpl.getOverlayInfosForTarget(oi.targetPackageName, userId)) {
+                    builder.setEnabled(disable.packageName, false, userId);
                 }
-            } finally {
-                traceEnd(TRACE_TAG_RRO);
+                builder.setEnabled(oi.packageName, true, userId);
+                return commit(builder.build());
             }
         }
 
         @Override
+        @Deprecated
         public boolean setEnabledExclusiveInCategory(@Nullable String packageName, int userId)
                 throws RemoteException {
-            try {
-                traceBegin(TRACE_TAG_RRO, "OMS#setEnabledExclusiveInCategory " + packageName);
-                enforceChangeOverlayPackagesPermission("setEnabledExclusiveInCategory");
-                userId = handleIncomingUser(userId, "setEnabledExclusiveInCategory");
-                if (packageName == null) {
+            if (packageName == null) {
+                return false;
+            }
+            userId = handleIncomingUser(userId, "setEnabledExclusiveInCategory");
+            synchronized (mLock) {
+                // TODO: see comment in setEnabledExclusive
+                OverlayInfo oi = mImpl.getOverlayInfo(packageName, userId);
+                if (oi == null) {
                     return false;
                 }
-
-                final long ident = Binder.clearCallingIdentity();
-                try {
-                    synchronized (mLock) {
-                        return handleResult(mImpl.setEnabledExclusive(packageName,
-                                    true /* withinCategory */, userId));
+                OverlayManagerTransaction.Builder builder = new OverlayManagerTransaction.Builder();
+                for (OverlayInfo disable :
+                        mImpl.getOverlayInfosForTarget(oi.targetPackageName, userId)) {
+                    if (Objects.equals(oi.category, disable.category)) {
+                        builder.setEnabled(disable.packageName, false, userId);
                     }
-                } finally {
-                    Binder.restoreCallingIdentity(ident);
                 }
-            } finally {
-                traceEnd(TRACE_TAG_RRO);
+                builder.setEnabled(oi.packageName, true, userId);
+                return commit(builder.build());
             }
         }
 
         @Override
+        @Deprecated
         public boolean setPriority(@Nullable final String packageName,
                 @Nullable final String parentPackageName, int userId) throws RemoteException {
-            try {
-                traceBegin(TRACE_TAG_RRO, "OMS#setPriority " + packageName + " "
-                        + parentPackageName);
-                enforceChangeOverlayPackagesPermission("setPriority");
-                userId = handleIncomingUser(userId, "setPriority");
-                if (packageName == null || parentPackageName == null) {
-                    return false;
-                }
-
-                final long ident = Binder.clearCallingIdentity();
-                try {
-                    synchronized (mLock) {
-                        return handleResult(mImpl.setPriority(packageName,
-                                    parentPackageName, userId));
-                    }
-                } finally {
-                    Binder.restoreCallingIdentity(ident);
-                }
-            } finally {
-                traceEnd(TRACE_TAG_RRO);
+            if (packageName == null || parentPackageName == null) {
+                return false;
             }
+            OverlayManagerTransaction t = new OverlayManagerTransaction.Builder()
+                    .setPriority(packageName, parentPackageName, userId)
+                    .build();
+            return commit(t);
         }
 
         @Override
+        @Deprecated
         public boolean setHighestPriority(@Nullable final String packageName, int userId)
                 throws RemoteException {
-            try {
-                traceBegin(TRACE_TAG_RRO, "OMS#setHighestPriority " + packageName);
-                enforceChangeOverlayPackagesPermission("setHighestPriority");
-                userId = handleIncomingUser(userId, "setHighestPriority");
-                if (packageName == null) {
-                    return false;
-                }
-
-                final long ident = Binder.clearCallingIdentity();
-                try {
-                    synchronized (mLock) {
-                        return handleResult(mImpl.setHighestPriority(packageName, userId));
-                    }
-                } finally {
-                    Binder.restoreCallingIdentity(ident);
-                }
-            } finally {
-                traceEnd(TRACE_TAG_RRO);
+            if (packageName == null) {
+                return false;
             }
+            OverlayManagerTransaction t = new OverlayManagerTransaction.Builder()
+                    .setHighestPriority(packageName, userId)
+                    .build();
+            return commit(t);
         }
 
         @Override
+        @Deprecated
         public boolean setLowestPriority(@Nullable final String packageName, int userId)
                 throws RemoteException {
-            try {
-                traceBegin(TRACE_TAG_RRO, "OMS#setLowestPriority " + packageName);
-                enforceChangeOverlayPackagesPermission("setLowestPriority");
-                userId = handleIncomingUser(userId, "setLowestPriority");
-                if (packageName == null) {
-                    return false;
-                }
-
-                final long ident = Binder.clearCallingIdentity();
-                try {
-                    synchronized (mLock) {
-                        return handleResult(mImpl.setLowestPriority(packageName, userId));
-                    }
-                } finally {
-                    Binder.restoreCallingIdentity(ident);
-                }
-            } finally {
-                traceEnd(TRACE_TAG_RRO);
+            if (packageName == null) {
+                return false;
             }
+            OverlayManagerTransaction t = new OverlayManagerTransaction.Builder()
+                    .setLowestPriority(packageName, userId)
+                    .build();
+            return commit(t);
         }
 
         @Override
@@ -1023,7 +982,9 @@ public final class OverlayManagerService extends SystemService {
         }
     };
 
-    private boolean handleResult(Result r) {
+    private boolean onPackageImpl(BiFunction<String, Integer, Result> func,
+            @NonNull String packageName, int userId) {
+        Result r = func.apply(packageName, userId);
         switch (r.type) {
             case Result.TYPE_OK_WITH_DATA:
                 persistSettings();
