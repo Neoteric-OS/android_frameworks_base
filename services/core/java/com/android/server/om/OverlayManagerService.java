@@ -17,6 +17,7 @@
 package com.android.server.om;
 
 import static android.app.AppGlobals.getPackageManager;
+import static android.content.Intent.ACTION_OVERLAY_CHANGED;
 import static android.content.Intent.ACTION_PACKAGE_ADDED;
 import static android.content.Intent.ACTION_PACKAGE_CHANGED;
 import static android.content.Intent.ACTION_PACKAGE_REMOVED;
@@ -242,7 +243,7 @@ public final class OverlayManagerService extends SystemService {
             IdmapManager im = new IdmapManager(installer, mPackageManager);
             mSettings = new OverlayManagerSettings();
             mImpl = new OverlayManagerServiceImpl(mPackageManager, im, mSettings,
-                    getDefaultOverlayPackages(), new OverlayChangeListener());
+                    getDefaultOverlayPackages());
 
             final IntentFilter packageFilter = new IntentFilter();
             packageFilter.addAction(ACTION_PACKAGE_ADDED);
@@ -384,9 +385,9 @@ public final class OverlayManagerService extends SystemService {
                         if (pi != null && !pi.applicationInfo.isInstantApp()) {
                             mPackageManager.cachePackageInfo(packageName, userId, pi);
                             if (pi.isOverlayPackage()) {
-                                mImpl.onOverlayPackageAdded(packageName, userId);
+                                handleResult(mImpl.onOverlayPackageAdded(packageName, userId));
                             } else {
-                                mImpl.onTargetPackageAdded(packageName, userId);
+                                handleResult(mImpl.onTargetPackageAdded(packageName, userId));
                             }
                         }
                     }
@@ -407,9 +408,9 @@ public final class OverlayManagerService extends SystemService {
                         if (pi != null && pi.applicationInfo.isInstantApp()) {
                             mPackageManager.cachePackageInfo(packageName, userId, pi);
                             if (pi.isOverlayPackage()) {
-                                mImpl.onOverlayPackageChanged(packageName, userId);
+                                handleResult(mImpl.onOverlayPackageChanged(packageName, userId));
                             }  else {
-                                mImpl.onTargetPackageChanged(packageName, userId);
+                                handleResult(mImpl.onTargetPackageChanged(packageName, userId));
                             }
                         }
                     }
@@ -428,7 +429,7 @@ public final class OverlayManagerService extends SystemService {
                         mPackageManager.forgetPackageInfo(packageName, userId);
                         final OverlayInfo oi = mImpl.getOverlayInfo(packageName, userId);
                         if (oi != null) {
-                            mImpl.onOverlayPackageReplacing(packageName, userId);
+                            handleResult(mImpl.onOverlayPackageReplacing(packageName, userId));
                         }
                     }
                 }
@@ -448,9 +449,9 @@ public final class OverlayManagerService extends SystemService {
                         if (pi != null && !pi.applicationInfo.isInstantApp()) {
                             mPackageManager.cachePackageInfo(packageName, userId, pi);
                             if (pi.isOverlayPackage()) {
-                                mImpl.onOverlayPackageReplaced(packageName, userId);
+                                handleResult(mImpl.onOverlayPackageReplaced(packageName, userId));
                             } else {
-                                mImpl.onTargetPackageReplaced(packageName, userId);
+                                handleResult(mImpl.onTargetPackageReplaced(packageName, userId));
                             }
                         }
                     }
@@ -469,9 +470,9 @@ public final class OverlayManagerService extends SystemService {
                         mPackageManager.forgetPackageInfo(packageName, userId);
                         final OverlayInfo oi = mImpl.getOverlayInfo(packageName, userId);
                         if (oi != null) {
-                            mImpl.onOverlayPackageRemoved(packageName, userId);
+                            handleResult(mImpl.onOverlayPackageRemoved(packageName, userId));
                         } else {
-                            mImpl.onTargetPackageRemoved(packageName, userId);
+                            handleResult(mImpl.onTargetPackageRemoved(packageName, userId));
                         }
                     }
                 }
@@ -586,7 +587,7 @@ public final class OverlayManagerService extends SystemService {
                 final long ident = Binder.clearCallingIdentity();
                 try {
                     synchronized (mLock) {
-                        return mImpl.setEnabled(packageName, enable, userId);
+                        return handleResult(mImpl.setEnabled(packageName, enable, userId));
                     }
                 } finally {
                     Binder.restoreCallingIdentity(ident);
@@ -610,8 +611,8 @@ public final class OverlayManagerService extends SystemService {
                 final long ident = Binder.clearCallingIdentity();
                 try {
                     synchronized (mLock) {
-                        return mImpl.setEnabledExclusive(packageName, false /* withinCategory */,
-                                userId);
+                        return handleResult(mImpl.setEnabledExclusive(packageName,
+                                    false /* withinCategory */, userId));
                     }
                 } finally {
                     Binder.restoreCallingIdentity(ident);
@@ -635,8 +636,8 @@ public final class OverlayManagerService extends SystemService {
                 final long ident = Binder.clearCallingIdentity();
                 try {
                     synchronized (mLock) {
-                        return mImpl.setEnabledExclusive(packageName, true /* withinCategory */,
-                                userId);
+                        return handleResult(mImpl.setEnabledExclusive(packageName,
+                                    true /* withinCategory */, userId));
                     }
                 } finally {
                     Binder.restoreCallingIdentity(ident);
@@ -661,7 +662,8 @@ public final class OverlayManagerService extends SystemService {
                 final long ident = Binder.clearCallingIdentity();
                 try {
                     synchronized (mLock) {
-                        return mImpl.setPriority(packageName, parentPackageName, userId);
+                        return handleResult(mImpl.setPriority(packageName,
+                                    parentPackageName, userId));
                     }
                 } finally {
                     Binder.restoreCallingIdentity(ident);
@@ -685,7 +687,7 @@ public final class OverlayManagerService extends SystemService {
                 final long ident = Binder.clearCallingIdentity();
                 try {
                     synchronized (mLock) {
-                        return mImpl.setHighestPriority(packageName, userId);
+                        return handleResult(mImpl.setHighestPriority(packageName, userId));
                     }
                 } finally {
                     Binder.restoreCallingIdentity(ident);
@@ -709,7 +711,7 @@ public final class OverlayManagerService extends SystemService {
                 final long ident = Binder.clearCallingIdentity();
                 try {
                     synchronized (mLock) {
-                        return mImpl.setLowestPriority(packageName, userId);
+                        return handleResult(mImpl.setLowestPriority(packageName, userId));
                     }
                 } finally {
                     Binder.restoreCallingIdentity(ident);
@@ -860,31 +862,42 @@ public final class OverlayManagerService extends SystemService {
         }
     };
 
-    private final class OverlayChangeListener
-            implements OverlayManagerServiceImpl.OverlayChangeListener {
-        @Override
-        public void onOverlaysChanged(@NonNull final String targetPackageName, final int userId) {
-            schedulePersistSettings();
-            FgThread.getHandler().post(() -> {
-                updateAssets(userId, targetPackageName);
-
-                final Intent intent = new Intent(Intent.ACTION_OVERLAY_CHANGED,
-                        Uri.fromParts("package", targetPackageName, null));
-                intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
-
-                if (DEBUG) {
-                    Slog.d(TAG, "send broadcast " + intent);
-                }
-
-                try {
-                    ActivityManager.getService().broadcastIntent(null, intent, null, null, 0,
-                            null, null, null, android.app.AppOpsManager.OP_NONE, null, false, false,
-                            userId);
-                } catch (RemoteException e) {
-                    // Intentionally left empty.
-                }
-            });
+    private boolean handleResult(@NonNull Result result) {
+        switch (result.type) {
+            case Result.TYPE_OK_WITH_DATA:
+                onOverlaysChanged(result.packageName, result.userId);
+                return true;
+            case Result.TYPE_OK:
+                return true;
+            case Result.TYPE_ERROR:
+                Slog.e(TAG, result.errorMessage);
+                return false;
+            default:
+                throw new IllegalArgumentException("unknown result type " + result.type);
         }
+    }
+
+    private void onOverlaysChanged(@NonNull final String targetPackageName, final int userId) {
+        schedulePersistSettings();
+        FgThread.getHandler().post(() -> {
+            updateAssets(userId, targetPackageName);
+
+            final Intent intent = new Intent(ACTION_OVERLAY_CHANGED,
+                    Uri.fromParts("package", targetPackageName, null));
+            intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
+
+            if (DEBUG) {
+                Slog.d(TAG, "send broadcast " + intent);
+            }
+
+            try {
+                ActivityManager.getService().broadcastIntent(null, intent, null, null, 0,
+                        null, null, null, android.app.AppOpsManager.OP_NONE, null, false, false,
+                        userId);
+            } catch (RemoteException e) {
+                // Intentionally left empty.
+            }
+        });
     }
 
     /**

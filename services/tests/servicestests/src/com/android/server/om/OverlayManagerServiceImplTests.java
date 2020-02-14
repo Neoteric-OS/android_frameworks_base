@@ -20,6 +20,10 @@ import static android.content.om.OverlayInfo.STATE_DISABLED;
 import static android.content.om.OverlayInfo.STATE_ENABLED;
 import static android.content.om.OverlayInfo.STATE_MISSING_TARGET;
 
+import static com.android.server.om.Result.TYPE_ERROR;
+import static com.android.server.om.Result.TYPE_OK;
+import static com.android.server.om.Result.TYPE_OK_WITH_DATA;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -48,7 +52,6 @@ import java.util.Set;
 public class OverlayManagerServiceImplTests {
     private OverlayManagerServiceImpl mImpl;
     private DummyDeviceState mState;
-    private DummyListener mListener;
 
     private static final String OVERLAY = "com.dummy.overlay";
     private static final String TARGET = "com.dummy.target";
@@ -65,16 +68,14 @@ public class OverlayManagerServiceImplTests {
     @Before
     public void setUp() throws Exception {
         mState = new DummyDeviceState();
-        mListener = new DummyListener();
         DummyPackageManagerHelper pmh = new DummyPackageManagerHelper(mState);
         mImpl = new OverlayManagerServiceImpl(pmh,
                 new DummyIdmapManager(mState, pmh),
                 new OverlayManagerSettings(),
-                new String[0],
-                mListener);
+                new String[0]);
     }
 
-    // tests: basics
+    // tests
 
     @Test
     public void testGetOverlayInfo() throws Exception {
@@ -148,13 +149,13 @@ public class OverlayManagerServiceImplTests {
 
         assertOverlayInfoList(TARGET, USER, o1, o2, o3);
 
-        assertTrue(mImpl.setLowestPriority(OVERLAY3, USER));
+        assertEquals(mImpl.setLowestPriority(OVERLAY3, USER).type, TYPE_OK_WITH_DATA);
         assertOverlayInfoList(TARGET, USER, o3, o1, o2);
 
-        assertTrue(mImpl.setHighestPriority(OVERLAY3, USER));
+        assertEquals(mImpl.setHighestPriority(OVERLAY3, USER).type, TYPE_OK_WITH_DATA);
         assertOverlayInfoList(TARGET, USER, o1, o2, o3);
 
-        assertTrue(mImpl.setPriority(OVERLAY, OVERLAY2, USER));
+        assertEquals(mImpl.setPriority(OVERLAY, OVERLAY2, USER).type, TYPE_OK_WITH_DATA);
         assertOverlayInfoList(TARGET, USER, o2, o1, o3);
     }
 
@@ -168,7 +169,7 @@ public class OverlayManagerServiceImplTests {
         installTargetPackage(TARGET, USER);
         assertState(STATE_DISABLED, OVERLAY, USER);
 
-        mImpl.setEnabled(OVERLAY, true, USER);
+        assertEquals(mImpl.setEnabled(OVERLAY, true, USER).type, TYPE_OK_WITH_DATA);
         assertState(STATE_ENABLED, OVERLAY, USER);
 
         // target upgrades do not change the state of the overlay
@@ -223,44 +224,49 @@ public class OverlayManagerServiceImplTests {
     public void testOnOverlayPackageUpgraded() throws Exception {
         installTargetPackage(TARGET, USER);
         installOverlayPackage(OVERLAY, TARGET, USER, true);
-        mImpl.onOverlayPackageReplacing(OVERLAY, USER);
-        mListener.count = 0;
-        mImpl.onOverlayPackageReplaced(OVERLAY, USER);
-        assertEquals(1, mListener.count);
+        Result r = mImpl.onOverlayPackageReplacing(OVERLAY, USER);
+        assertEquals(r.type, TYPE_OK_WITH_DATA);
+        assertEquals(r.stringArg, TARGET);
+        r = mImpl.onOverlayPackageReplaced(OVERLAY, USER);
+        assertEquals(r.type, TYPE_OK_WITH_DATA);
+        assertEquals(r.stringArg, TARGET);
 
         // upgrade to a version where the overlay has changed its target
         upgradeOverlayPackage(OVERLAY, "some.other.target", USER, true);
-        mImpl.onOverlayPackageReplacing(OVERLAY, USER);
-        mListener.count = 0;
-        mImpl.onOverlayPackageReplaced(OVERLAY, USER);
-        // expect once for the old target package, once for the new target package
-        assertEquals(2, mListener.count);
+        r = mImpl.onOverlayPackageReplacing(OVERLAY, USER);
+        assertEquals(r.type, TYPE_OK_WITH_DATA);
+        assertEquals(r.stringArg, TARGET);
+        r = mImpl.onOverlayPackageReplaced(OVERLAY, USER);
+        assertEquals(r.type, TYPE_OK_WITH_DATA);
+        assertEquals(r.stringArg, "some.other.target");
 
         upgradeOverlayPackage(OVERLAY, "some.other.target", USER, true);
-        mImpl.onOverlayPackageReplacing(OVERLAY, USER);
-        mListener.count = 0;
-        mImpl.onOverlayPackageReplaced(OVERLAY, USER);
-        assertEquals(1, mListener.count);
+        r = mImpl.onOverlayPackageReplacing(OVERLAY, USER);
+        assertEquals(r.type, TYPE_OK_WITH_DATA);
+        assertEquals(r.stringArg, "some.other.target");
+        r = mImpl.onOverlayPackageReplaced(OVERLAY, USER);
+        assertEquals(r.type, TYPE_OK_WITH_DATA);
+        assertEquals(r.stringArg, "some.other.target");
     }
 
-    // tests: listener interface
-
     @Test
-    public void testListener() throws Exception {
-        installOverlayPackage(OVERLAY, TARGET, USER, true);
-        assertEquals(1, mListener.count);
-        mListener.count = 0;
+    public void testResult() throws Exception {
+        // request failed
+        Result r = mImpl.setEnabled(OVERLAY, true, USER);
+        assertEquals(r.type, TYPE_ERROR);
 
+        // request succeeded, and there was a change that needs to be
+        // propagated to the rest of the system
         installTargetPackage(TARGET, USER);
-        assertEquals(1, mListener.count);
-        mListener.count = 0;
+        installOverlayPackage(OVERLAY, TARGET, USER, true);
+        r = mImpl.setEnabled(OVERLAY, true, USER);
+        assertEquals(r.type, TYPE_OK_WITH_DATA);
+        assertEquals(r.stringArg, TARGET);
+        assertEquals(r.intArg, USER);
 
-        mImpl.setEnabled(OVERLAY, true, USER);
-        assertEquals(1, mListener.count);
-        mListener.count = 0;
-
-        mImpl.setEnabled(OVERLAY, true, USER);
-        assertEquals(0, mListener.count);
+        // request succeeded, but nothing changed
+        r = mImpl.setEnabled(OVERLAY, true, USER);
+        assertEquals(r.type, TYPE_OK);
     }
 
     // helper methods
@@ -280,45 +286,55 @@ public class OverlayManagerServiceImplTests {
         assertEquals(expected, actual);
     }
 
-    private void installTargetPackage(String packageName, int userId) {
+    private void installTargetPackage(String packageName, int userId) throws Exception {
         if (mState.select(packageName, userId) != null) {
             throw new IllegalStateException("package already installed");
         }
         mState.add(packageName, null, userId, false);
-        mImpl.onTargetPackageAdded(packageName, userId);
+        if (mImpl.onTargetPackageAdded(packageName, userId).type == TYPE_ERROR) {
+            throw new Exception("onTargetPackageAdded failed");
+        }
     }
 
-    private void beginUpgradeTargetPackage(String packageName, int userId) {
+    private void beginUpgradeTargetPackage(String packageName, int userId) throws Exception {
         if (mState.select(packageName, userId) == null) {
             throw new IllegalStateException("package not installed");
         }
         mState.add(packageName, null, userId, false);
-        mImpl.onTargetPackageReplacing(packageName, userId);
+        if (mImpl.onTargetPackageReplacing(packageName, userId).type == TYPE_ERROR) {
+            throw new Exception("beginUpgradeTargetPackage failed");
+        }
     }
 
-    private void endUpgradeTargetPackage(String packageName, int userId) {
+    private void endUpgradeTargetPackage(String packageName, int userId)throws Exception  {
         if (mState.select(packageName, userId) == null) {
             throw new IllegalStateException("package not installed");
         }
         mState.add(packageName, null, userId, false);
-        mImpl.onTargetPackageReplaced(packageName, userId);
+        if (mImpl.onTargetPackageReplaced(packageName, userId).type == TYPE_ERROR) {
+            throw new Exception("endUpgradeTargetPackage failed");
+        }
     }
 
-    private void uninstallTargetPackage(String packageName, int userId) {
+    private void uninstallTargetPackage(String packageName, int userId) throws Exception {
         if (mState.select(packageName, userId) == null) {
             throw new IllegalStateException("package not installed");
         }
         mState.remove(packageName, userId);
-        mImpl.onTargetPackageRemoved(packageName, userId);
+        if (mImpl.onTargetPackageRemoved(packageName, userId).type == TYPE_ERROR) {
+            throw new Exception("uninstallTargetPackage failed");
+        }
     }
 
     private void installOverlayPackage(String packageName, String targetPackageName, int userId,
-            boolean canCreateIdmap) {
+            boolean canCreateIdmap) throws Exception {
         if (mState.select(packageName, userId) != null) {
             throw new IllegalStateException("package already installed");
         }
         mState.add(packageName, targetPackageName, userId, canCreateIdmap);
-        mImpl.onOverlayPackageAdded(packageName, userId);
+        if (mImpl.onOverlayPackageAdded(packageName, userId).type == TYPE_ERROR) {
+            throw new Exception("installOverlayPackage failed");
+        }
     }
 
     private void upgradeOverlayPackage(String packageName, String targetPackageName, int userId,
@@ -491,14 +507,6 @@ public class OverlayManagerServiceImplTests {
 
         private String createKey(@NonNull final String packageName, final int userId) {
             return String.format("%s:%d", packageName, userId);
-        }
-    }
-
-    private static class DummyListener implements OverlayManagerServiceImpl.OverlayChangeListener {
-        public int count;
-
-        public void onOverlaysChanged(@NonNull String targetPackage, int userId) {
-            count++;
         }
     }
 }
