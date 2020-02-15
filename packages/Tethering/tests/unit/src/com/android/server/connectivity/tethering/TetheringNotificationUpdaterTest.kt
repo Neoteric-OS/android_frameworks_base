@@ -308,4 +308,32 @@ class TetheringNotificationUpdaterTest {
         assertIconNumbers(2,
                 arrayOf(";", "WIFI", "1;2", " USB,; ", " BT ; Bluetooth"))
     }
+
+    @Test
+    fun testSetupRestrictedNotification() {
+        val title = context.resources.getString(R.string.disable_tether_notification_title)
+        val message = context.resources.getString(R.string.disable_tether_notification_message)
+        val disallowTitle = "Tether function is disallowed"
+        val disallowMessage = "Please contact your admin"
+        doReturn(title).`when`(defaultResources)
+                .getString(R.string.disable_tether_notification_title)
+        doReturn(message).`when`(defaultResources)
+                .getString(R.string.disable_tether_notification_message)
+        doReturn(disallowTitle).`when`(testResources)
+                .getString(R.string.disable_tether_notification_title)
+        doReturn(disallowMessage).`when`(testResources)
+                .getString(R.string.disable_tether_notification_message)
+
+        // User restrictions on. Show restricted notification.
+        notificationUpdater.setupRestrictedNotificationLocked()
+        expectShowNotification(R.drawable.stat_sys_tether_general, title, message)
+
+        // Set test sub id, cleared notification with test resource.
+        notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
+        expectClearNotification()
+
+        // User restrictions on again. Show restricted notification with test resource.
+        notificationUpdater.setupRestrictedNotificationLocked()
+        expectShowNotification(R.drawable.stat_sys_tether_general, disallowTitle, disallowMessage)
+    }
 }

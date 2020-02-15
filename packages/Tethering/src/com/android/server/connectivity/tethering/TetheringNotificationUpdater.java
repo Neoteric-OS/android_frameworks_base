@@ -123,8 +123,20 @@ public class TetheringNotificationUpdater {
         }
     }
 
-    private void clearNotificationLocked() {
-        mNotificationManager.cancel(null /* tag */, NOTIFY_ID);
+    void clearNotificationLocked() {
+        synchronized (mUpdateLock) {
+            mNotificationManager.cancel(null /* tag */, NOTIFY_ID);
+        }
+    }
+
+    void setupRestrictedNotificationLocked() {
+        synchronized (mUpdateLock) {
+            final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
+            final String title = res.getString(R.string.disable_tether_notification_title);
+            final String message = res.getString(R.string.disable_tether_notification_message);
+
+            showNotificationLocked(R.drawable.stat_sys_tether_general, title, message, "");
+        }
     }
 
     @VisibleForTesting
