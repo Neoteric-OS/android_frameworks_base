@@ -59,7 +59,7 @@ const val USB_MASK = 1 shl TETHERING_USB
 const val BT_MASK = 1 shl TETHERING_BLUETOOTH
 const val TITTLE = "Tethering active"
 const val MESSAGE = "Tap here to set up."
-const val TEST_TITTLE = "Hotspot active"
+const val TEST_TITTLE = "%1\$s active"
 const val TEST_MESSAGE = "Tap to set up hotspot."
 const val TEST_MESSAGE_POWER_SAVE = "Tap to set up hotspot. Power saving on"
 
@@ -91,15 +91,22 @@ class TetheringNotificationUpdaterTest {
         doReturn(testIcons.size).`when`(testArray).length()
         for (i in defaultIcons.indices) doReturn(defaultIcons[i]).`when`(defaultArray).getString(i)
         for (i in testIcons.indices) doReturn(testIcons[i]).`when`(testArray).getString(i)
-        doReturn(TITTLE).`when`(defaultResources).getString(R.string.tethered_notification_title)
-        doReturn(MESSAGE).`when`(defaultResources).getString(R.string.tethered_notification_message)
+        val defaultTexts = arrayOfNulls<String>(0)
+        val testTexts = arrayOf("WIFI;Hotspot")
+        doReturn(defaultTexts).`when`(defaultResources)
+                .getStringArray(R.array.tethering_downstream_combinations)
+        doReturn(testTexts).`when`(testResources)
+                .getStringArray(R.array.tethering_downstream_combinations)
+        doReturn(TITTLE).`when`(defaultResources).getString(R.string.tethering_notification_title)
         doReturn(MESSAGE).`when`(defaultResources)
-                .getString(R.string.tethered_notification_message_power_saving)
-        doReturn(TEST_TITTLE).`when`(testResources).getString(R.string.tethered_notification_title)
+                .getString(R.string.tethering_notification_message)
+        doReturn(MESSAGE).`when`(defaultResources)
+                .getString(R.string.tethering_notification_message_power_saving)
+        doReturn(TEST_TITTLE).`when`(testResources).getString(R.string.tethering_notification_title)
         doReturn(TEST_MESSAGE).`when`(testResources)
-                .getString(R.string.tethered_notification_message)
+                .getString(R.string.tethering_notification_message)
         doReturn(TEST_MESSAGE_POWER_SAVE).`when`(testResources)
-                .getString(R.string.tethered_notification_message_power_saving)
+                .getString(R.string.tethering_notification_message_power_saving)
         doReturn(USB_ICON_ID).`when`(defaultResources)
                 .getIdentifier(eq("android.test:drawable/usb"), any(), any())
         doReturn(BT_ICON_ID).`when`(defaultResources)
@@ -207,7 +214,8 @@ class TetheringNotificationUpdaterTest {
         expectClearNotification()
 
         // Remove usb downstream, showed enable notification with test resource.
-        assertNotification(WIFI_MASK, true, WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
+        assertNotification(WIFI_MASK, true, WIFI_ICON_ID,
+                String.format(TEST_TITTLE, "Hotspot"), TEST_MESSAGE)
 
         // No downstream, no notification showed.
         assertNotification(DOWNSTREAM_NONE)
@@ -254,13 +262,50 @@ class TetheringNotificationUpdaterTest {
         expectClearNotification()
 
         // Hotspot enabled, showed enable notification with power saving message.
-        assertNotification(WIFI_MASK, true, WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE_POWER_SAVE)
+        assertNotification(WIFI_MASK, true, WIFI_ICON_ID,
+                String.format(TEST_TITTLE, "Hotspot"), TEST_MESSAGE_POWER_SAVE)
 
         // Power saving off, showed enable notification with overlay text.
         notificationUpdater.onPowerSavingChanged(false)
-        expectShowNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
+        expectShowNotification(WIFI_ICON_ID, String.format(TEST_TITTLE, "Hotspot"), TEST_MESSAGE)
 
         // No downstream, no notification showed.
         assertNotification(DOWNSTREAM_NONE)
+    }
+
+    @Test
+    fun testFormatText() {
+        val enableText = "Tethering enabled"
+        doReturn(TITTLE).`when`(defaultResources).getString(R.string.tethered_notification_title)
+        doReturn(enableText).`when`(testResources)
+                .getString(R.string.tethered_notification_title)
+
+        assertEquals(TITTLE, notificationUpdater.formatText(
+                TITTLE, "Tethering", R.string.tethered_notification_title))
+        assertEquals(TITTLE, notificationUpdater.formatText(
+                TITTLE, "", R.string.tethered_notification_title))
+        assertEquals(enableText, notificationUpdater.formatText(
+                "%1\$s enabled", "Tethering", R.string.tethered_notification_title))
+
+        assertEquals(TITTLE, notificationUpdater.formatText(
+                "%2\$s enabled", "Tethering", R.string.tethered_notification_title))
+        notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
+        assertEquals(enableText, notificationUpdater.formatText(
+                "%2\$s enabled", "Tethering", R.string.tethered_notification_title))
+    }
+
+    private fun assertTextNumbers(number: Int, configs: Array<String?>) {
+        doReturn(configs).`when`(defaultResources)
+                .getStringArray(R.array.tethering_downstream_combinations)
+        assertEquals(number,
+                notificationUpdater.getTexts(R.array.tethering_downstream_combinations).size)
+    }
+
+    @Test
+    fun testGetTexts() {
+        assertTextNumbers(0, arrayOfNulls<String>(0))
+        assertTextNumbers(0, arrayOf(null, ""))
+        assertIconNumbers(2,
+                arrayOf(";", "WIFI", "1;2", " USB,; ", " BT ; Bluetooth"))
     }
 }

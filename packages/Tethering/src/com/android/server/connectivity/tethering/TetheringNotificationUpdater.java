@@ -36,11 +36,13 @@ import androidx.annotation.ArrayRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.networkstack.tethering.R;
 
 import java.util.HashMap;
+import java.util.IllegalFormatException;
 
 /**
  * A class to display tethering-related notifications.
@@ -172,6 +174,36 @@ public class TetheringNotificationUpdater {
         return icons;
     }
 
+    /**
+     * Returns the texts {@link java.util.HashMap} which get from the given string array resource
+     * id.
+     *
+     * @param id String array resource id
+     *
+     * @return {@link java.util.HashMap} with downstream types and string for this downstream.
+     */
+    @NonNull
+    @VisibleForTesting
+    HashMap<Integer, String> getTexts(@ArrayRes int id) {
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
+        final String[] array = res.getStringArray(id);
+        final HashMap<Integer, String> texts = new HashMap<>();
+        for (String config : array) {
+            if (TextUtils.isEmpty(config)) continue;
+
+            final String[] elements = config.split(";");
+            if (elements.length != 2) continue;
+
+            final String[] types = elements[0].split(",");
+            for (String type : types) {
+                int mask = getDownstreamTypesMask(type);
+                if (mask == DOWNSTREAM_NONE) continue;
+                texts.put(mask, elements[1].trim());
+            }
+        }
+        return texts;
+    }
+
     private boolean setupNotificationLocked() {
         final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
         final HashMap<Integer, Integer> downstreamIcons =
@@ -180,20 +212,37 @@ public class TetheringNotificationUpdater {
         final int iconId = downstreamIcons.getOrDefault(mDownstreamTypesMask, NO_ICON_ID);
         if (iconId == NO_ICON_ID) return NO_NOTIFY;
 
-        final String title = res.getString(R.string.tethered_notification_title);
+        final String title = res.getString(R.string.tethering_notification_title);
         final String message;
         if (mPowerSaving) {
-            message = res.getString(R.string.tethered_notification_message_power_saving);
+            message = res.getString(R.string.tethering_notification_message_power_saving);
         } else {
-            message = res.getString(R.string.tethered_notification_message);
+            message = res.getString(R.string.tethering_notification_message);
         }
+        final HashMap<Integer, String> combinationTexts =
+                getTexts(R.array.tethering_downstream_combinations);
+        final String downstreamText = combinationTexts.getOrDefault(mDownstreamTypesMask, "");
 
-        showNotificationLocked(iconId, title, message);
+        showNotificationLocked(iconId, title, message, downstreamText);
         return NOTIFY_DONE;
     }
 
+    @VisibleForTesting
+    String formatText(@NonNull final String text, @NonNull final String downstreamText,
+            @StringRes final int defaultTextId) {
+        try {
+            return String.format(text, downstreamText);
+        } catch (IllegalFormatException e) { }
+
+        return getResourcesForSubId(mContext, mActiveDataSubId).getString(defaultTextId);
+    }
+
     private void showNotificationLocked(@DrawableRes final int iconId, @NonNull final String title,
-            @NonNull final String message) {
+            @NonNull final String message, @NonNull final String downstreamText) {
+        final String formatTitle = formatText(
+                title, downstreamText, R.string.tethered_notification_title);
+        final String formatMessage = formatText(
+                message, downstreamText, R.string.tethered_notification_message);
         final Intent intent = new Intent("android.settings.TETHER_SETTINGS");
         final PendingIntent pi = PendingIntent.getActivity(
                 mContext.createContextAsUser(UserHandle.CURRENT, 0),
@@ -201,8 +250,8 @@ public class TetheringNotificationUpdater {
         final Notification notification =
                 new Notification.Builder(mContext, mChannel.getId())
                         .setSmallIcon(iconId)
-                        .setContentTitle(title)
-                        .setContentText(message)
+                        .setContentTitle(formatTitle)
+                        .setContentText(formatMessage)
                         .setOngoing(true)
                         .setColor(mContext.getColor(
                                 android.R.color.system_notification_accent_color))

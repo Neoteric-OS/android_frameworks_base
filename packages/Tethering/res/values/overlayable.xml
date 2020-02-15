@@ -55,8 +55,60 @@
             Notification will not show if the downstream type doesn't list in array. Empty array
             means disable all notifications. -->
             <item type="array" name="tethering_notification_icons"/>
-            <!-- String for tether enable notification message when power saving mode is on. -->
-            <item type="string" name="tethered_notification_message_power_saving"/>
+            <!-- String for tether enable notification title.
+            Add "%1$s" into string if you'd like to show downstream combinations info. Such as
+
+            %1$s tethering on.
+
+            Then if set combinations info to "Hotspot, USB, Bluetooth", the string after combined
+            downstream combinations info would be
+
+            Hotspot, USB, Bluetooth tethering on.
+            -->
+            <item type="string" name="tethering_notification_title"/>
+            <!-- String for tether enable notification message.
+            Add "%1$s" into string if you'd like to show downstream combinations info. Such as
+
+            Tap to set up %1$s tethering.
+
+            Then if set combinations info to "Hotspot, USB, Bluetooth", the string after combined
+            downstream combinations info would be
+
+            Tap to set up Hotspot, USB, Bluetooth tethering.
+            -->
+            <item type="string" name="tethering_notification_message"/>
+            <!-- String for tether enable notification message when power saving mode is on.
+            Add "%1$s" into string if you'd like to show downstream combinations info. Such as
+
+            Tap to set up %1$s tethering. Power saving on.
+
+            Then if set combinations info to "Hotspot, USB, Bluetooth", the string after combined
+            downstream combinations info would be
+
+            Tap to set up Hotspot, USB, Bluetooth tethering. Power saving on.
+            -->
+            <item type="string" name="tethering_notification_message_power_saving"/>
+            <!-- Strings for combination downstream info.
+            Each item should have two elements and separate with ";".
+
+            The first element is downstream types which is one of tethering. This element has to be
+            made by WIFI, USB, BT, and OR'd with the others. Use "|" to combine multiple downstream
+            types and use "," to separate each combinations. Such as
+
+            USB|BT,WIFI|USB|BT
+
+            The second element is string for the item. Such as
+
+            Hotspot, USB, Bluetooth
+
+            So the entire string of each item would be
+
+            WIFI|USB|BT;Hotspot, USB, Bluetooth
+
+            Please also configure tethering_notification_title and tethering_notification_message if
+            set any item here. Otherwise the combination info wouldn't be contained in notification
+            title or message. -->
+            <item type="array" name="tethering_downstream_combinations"/>
             <!-- Params from config.xml that can be overlaid -->
         </policy>
     </overlayable>
