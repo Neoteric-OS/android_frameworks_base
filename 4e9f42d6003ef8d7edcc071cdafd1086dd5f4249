@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6291adc8_3d2ee624",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-15T09:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dd2c0fa_6c0e39c8",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "4e9f42d6003ef8d7edcc071cdafd1086dd5f4249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e735b8a_6c74d080",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "4e9f42d6003ef8d7edcc071cdafd1086dd5f4249",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e508b652_3a5438bc",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-15T09:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e735b8a_6c74d080",
+      "range": {
+        "startLine": 191,
+        "startChar": 30,
+        "endLine": 191,
+        "endChar": 34
+      },
+      "revId": "4e9f42d6003ef8d7edcc071cdafd1086dd5f4249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1658a590_32399512",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-15T09:35:05Z",
+      "side": 1,
+      "message": "I think we should have this config and OEM can decide whether they want to use it.",
+      "parentUuid": "849932e3_837b4056",
+      "range": {
+        "startLine": 201,
+        "startChar": 19,
+        "endLine": 201,
+        "endChar": 71
+      },
+      "revId": "4e9f42d6003ef8d7edcc071cdafd1086dd5f4249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5c058b5_a8f05fe5",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d09c7ec9_287bf185",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-15T09:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5c058b5_a8f05fe5",
+      "range": {
+        "startLine": 267,
+        "startChar": 8,
+        "endLine": 267,
+        "endChar": 25
+      },
+      "revId": "4e9f42d6003ef8d7edcc071cdafd1086dd5f4249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab874877_47e88c67",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "4e9f42d6003ef8d7edcc071cdafd1086dd5f4249",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15d6838_6bd882ae",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-15T09:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab874877_47e88c67",
+      "range": {
+        "startLine": 273,
+        "startChar": 8,
+        "endLine": 273,
+        "endChar": 9
+      },
+      "revId": "4e9f42d6003ef8d7edcc071cdafd1086dd5f4249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
