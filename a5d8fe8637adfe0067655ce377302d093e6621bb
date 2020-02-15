@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8996e3db_00dc5524",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6963,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-15T02:28:07Z",
+      "side": 1,
+      "message": "nit: maybe merge into one line?\nno strong opinion. keep it as is if you think this is nicer.",
+      "range": {
+        "startLine": 6962,
+        "startChar": 20,
+        "endLine": 6963,
+        "endChar": 41
+      },
+      "revId": "a5d8fe8637adfe0067655ce377302d093e6621bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
