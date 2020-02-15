@@ -50,6 +50,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Matchers.anyString;
@@ -101,6 +102,7 @@ import android.net.ip.RouterAdvertisementDaemon;
 import android.net.util.InterfaceParams;
 import android.net.util.NetworkConstants;
 import android.net.util.SharedLog;
+import android.net.wifi.WifiClient;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pGroup;
@@ -145,6 +147,7 @@ import java.net.Inet6Address;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Vector;
 
 @RunWith(AndroidJUnit4.class)
@@ -199,6 +202,7 @@ public class TetheringTest {
     private Tethering mTethering;
     private PhoneStateListener mPhoneStateListener;
     private InterfaceConfigurationParcel mInterfaceConfiguration;
+    private WifiManager.SoftApCallback mSoftApCallback;
     private boolean mIsTetheringSupported = true;
 
     private class TestContext extends BroadcastInterceptingContext {
@@ -475,6 +479,12 @@ public class TetheringTest {
         verify(mTelephonyManager).listen(phoneListenerCaptor.capture(),
                 eq(PhoneStateListener.LISTEN_ACTIVE_DATA_SUBSCRIPTION_ID_CHANGE));
         mPhoneStateListener = phoneListenerCaptor.getValue();
+
+        final ArgumentCaptor<WifiManager.SoftApCallback> softApCallbackCaptor =
+                ArgumentCaptor.forClass(WifiManager.SoftApCallback.class);
+        verify(mWifiManager, times(1))
+                .registerSoftApCallback(any(), softApCallbackCaptor.capture());
+        mSoftApCallback = softApCallbackCaptor.getValue();
     }
 
     private Tethering makeTethering() {
@@ -1482,6 +1492,20 @@ public class TetheringTest {
         mIsTetheringSupported = false;
         mServiceContext.sendBroadcast(intent);
         verify(mNotificationUpdater, never()).onPowerSavingChanged(anyBoolean());
+    }
+
+    @Test
+    public void testConnectedClientsChanged() {
+        final MacAddress testMacAddr = MacAddress.fromString("22:33:44:55:66:77");
+        final WifiClient testClient = new WifiClient(testMacAddr);
+        final List<WifiClient> testClients = new ArrayList(Arrays.asList(testClient, testClient));
+        mSoftApCallback.onConnectedClientsChanged(testClients);
+        verify(mNotificationUpdater, times(1)).onConnectedClientsChanged(eq(testClients.size()));
+        reset(mNotificationUpdater);
+
+        mIsTetheringSupported = false;
+        mSoftApCallback.onConnectedClientsChanged(testClients);
+        verify(mNotificationUpdater, never()).onConnectedClientsChanged(anyInt());
     }
 
     // TODO: Test that a request for hotspot mode doesn't interfere with an

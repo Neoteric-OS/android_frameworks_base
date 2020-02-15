@@ -109,6 +109,61 @@
             set any item here. Otherwise the combination info wouldn't be contained in notification
             title or message. -->
             <item type="array" name="tethering_downstream_combinations"/>
+            <!-- Icons for showing tether enable notification with client number info.
+            Each item should have two elements and separate with ";".
+
+            The first element is client number. Such as 1,2,3,4,5...
+
+            The second element is icon for the number. This element has to be composed by
+            <package name>:<resource type>/<resource name>. Such as
+
+            1. com.android.networkstack.tethering:drawable/stat_sys_tether_number_one
+            2. android:drawable/xxx
+
+            So the entire string of each item would be
+
+            1;com.android.networkstack.tethering:drawable/stat_sys_tether_number_one
+
+            Will not show default notification w/o client number if the client number doesn't list
+            in array. Empty array means disable this kind of notification. -->
+            <item type="array" name="tethering_notification_icons_with_client"/>
+            <!-- String for tether enable notification title with client number info.
+            Basically, this config should have two items. One for single client and one for multiple
+            clients. Add "%2$d" into string if you'd like to show client number info. Such as
+
+            Hotspot active with %2$d devices connected.
+
+            So the entire config with client number info would be
+
+            <item quantity="one">Hotspot active with 1 device connected.</item>
+            <item quantity="other">Hotspot active with %2$d devices connected.</item>
+            -->
+            <item type="plurals" name="tethering_notification_title_with_client"/>
+            <!-- Strings for tether enable notification message with client number info.
+            Basically, this config should have two items. One for single client and one for multiple
+            clients. Add "%2$d" into string if you'd like to show client number info. Such as
+
+            %2$d devices connected. Tap to set up.
+
+            So the entire config with client number info would be
+
+            <item quantity="one">1 device connected. Tap to set up.</item>
+            <item quantity="other">%2$d devices connected. Tap to set up.</item>
+            -->
+            <item type="plurals" name="tethering_notification_message_with_client"/>
+            <!-- Strings for tether enable notification message with client number info when power
+            saving mode is on.
+            Basically, this config should have two items. One for single client and one for multiple
+            clients. Add "%2$d" into string if you'd like to show client number info. Such as
+
+            %2$d devices connected. Tap to set up. Power saving on.
+
+            So the entire config with client number info would be
+
+            <item quantity="one">1 device connected. Tap to set up. Power saving on.</item>
+            <item quantity="other">%2$d devices connected. Tap to set up. Power saving on.</item>
+            -->
+            <item type="plurals" name="tethering_notification_message_with_client_power_saving"/>
             <!-- Params from config.xml that can be overlaid -->
         </policy>
     </overlayable>

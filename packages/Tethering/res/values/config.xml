@@ -179,12 +179,12 @@
          Notification will not show if the downstream type doesn't list in array. Empty array means
          disable all notifications. -->
     <!-- Hotspot doesn't show notification due to status bar already has an icon -->
-    <array translatable="false" name="tethering_notification_icons">
+    <string-array translatable="false" name="tethering_notification_icons">
         <item>USB;com.android.networkstack.tethering:drawable/stat_sys_tether_usb</item>
         <item>BT;com.android.networkstack.tethering:drawable/stat_sys_tether_bluetooth</item>
         <item>WIFI|USB,WIFI|BT;com.android.networkstack.tethering:drawable/stat_sys_tether_general</item>
         <item>USB|BT,WIFI|USB|BT;com.android.networkstack.tethering:drawable/stat_sys_tether_general</item>
-    </array>
+    </string-array>
     <!-- String for tether enable notification title.
          Add "%1$s" into string if you'd like to show downstream combinations info. Such as
 
@@ -240,4 +240,65 @@
          title or message. -->
     <string-array name="tethering_downstream_combinations">
     </string-array>
+
+    <!-- Tethering notification with connected client number. -->
+    <!-- Icons for showing tether enable notification with client number info.
+         Each item should have two elements and separate with ";".
+
+         The first element is client number. Such as 1,2,3,4,5...
+
+         The second element is icon for the number. This element has to be composed by
+         <package name>:<resource type>/<resource name>. Such as
+
+             1. com.android.networkstack.tethering:drawable/stat_sys_tether_number_one
+             2. android:drawable/xxx
+
+         So the entire string of each item would be
+
+             1;com.android.networkstack.tethering:drawable/stat_sys_tether_number_one
+
+         Will not show default notification w/o client number if the client number doesn't list in
+         array. Empty array means disable this kind of notification. -->
+    <string-array translatable="false" name="tethering_notification_icons_with_client">
+    </string-array>
+    <!-- String for tether enable notification title with client number info.
+         Basically, this config should have two items. One for single client and one for multiple
+         clients. Add "%2$d" into string if you'd like to show client number info. Such as
+
+             Hotspot active with %2$d devices connected.
+
+         So the entire config with client number info would be
+
+             <item quantity="one">Hotspot active with 1 device connected.</item>
+             <item quantity="other">Hotspot active with %2$d devices connected.</item>
+    -->
+    <plurals name="tethering_notification_title_with_client">
+    </plurals>
+    <!-- Strings for tether enable notification message with client number info.
+         Basically, this config should have two items. One for single client and one for multiple
+         clients. Add "%2$d" into string if you'd like to show client number info. Such as
+
+             %2$d devices connected. Tap to set up.
+
+         So the entire config with client number info would be
+
+             <item quantity="one">1 device connected. Tap to set up.</item>
+             <item quantity="other">%2$d devices connected. Tap to set up.</item>
+    -->
+    <plurals name="tethering_notification_message_with_client">
+    </plurals>
+    <!-- Strings for tether enable notification message with client number info when power saving
+         mode is on.
+         Basically, this config should have two items. One for single client and one for multiple
+         clients. Add "%2$d" into string if you'd like to show client number info. Such as
+
+             %2$d devices connected. Tap to set up. Power saving on.
+
+         So the entire config with client number info would be
+
+             <item quantity="one">1 device connected. Tap to set up. Power saving on.</item>
+             <item quantity="other">%2$d devices connected. Tap to set up. Power saving on.</item>
+    -->
+    <plurals name="tethering_notification_message_with_client_power_saving">
+    </plurals>
 </resources>

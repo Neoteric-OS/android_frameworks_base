@@ -27,7 +27,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.UserHandle;
 import android.telephony.SubscriptionManager;
 import android.text.TextUtils;
@@ -68,6 +67,7 @@ public class TetheringNotificationUpdater {
     // This value has to be made 1 2 and 4, and OR'd with the others.
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
     private int mActiveDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+    private int mConnectedClients = 0;
     private boolean mPowerSaving = false;
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
@@ -108,6 +108,15 @@ public class TetheringNotificationUpdater {
         }
     }
 
+    /** Called when the number of connected clients changed */
+    public void onConnectedClientsChanged(@IntRange(from = 0) final int number) {
+        synchronized (mUpdateLock) {
+            if (mConnectedClients == number) return;
+            mConnectedClients = number;
+            updateNotification();
+        }
+    }
+
     @VisibleForTesting
     Resources getResourcesForSubId(@NonNull final Context c, final int subId) {
         return SubscriptionManager.getResourcesForSubId(c, subId);
@@ -117,7 +126,15 @@ public class TetheringNotificationUpdater {
         synchronized (mUpdateLock) {
             final boolean tetheringInactive = mDownstreamTypesMask <= DOWNSTREAM_NONE;
 
-            if (tetheringInactive || setupNotificationLocked() == NO_NOTIFY) {
+            if (tetheringInactive) {
+                clearNotificationLocked();
+            } else {
+                // Show notification if one of conditions is satisfied.
+                if ((mConnectedClients > 0 && setupClientsNotificationLocked() == NOTIFY_DONE)
+                        || setupNotificationLocked() == NOTIFY_DONE) {
+                    return;
+                }
+                // Tethering is active but no need shows notification.
                 clearNotificationLocked();
             }
         }
@@ -166,10 +183,9 @@ public class TetheringNotificationUpdater {
     @VisibleForTesting
     HashMap<Integer, Integer> getIcons(@ArrayRes int id) {
         final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
-        final TypedArray array = res.obtainTypedArray(id);
+        final String[] array = res.getStringArray(id);
         final HashMap<Integer, Integer> icons = new HashMap<>();
-        for (int i = 0; i < array.length(); i++) {
-            final String config = array.getString(i);
+        for (String config : array) {
             if (TextUtils.isEmpty(config)) continue;
 
             final String[] elements = config.split(";");
@@ -177,8 +193,17 @@ public class TetheringNotificationUpdater {
 
             final String[] types = elements[0].split(",");
             for (String type : types) {
-                int mask = getDownstreamTypesMask(type);
-                if (mask == DOWNSTREAM_NONE) continue;
+                int mask;
+                if (id == R.array.tethering_notification_icons_with_client) {
+                    try {
+                        mask = Integer.valueOf(type.trim());
+                    } catch (NumberFormatException e) {
+                        continue;
+                    }
+                } else {
+                    mask = getDownstreamTypesMask(type);
+                    if (mask == DOWNSTREAM_NONE) continue;
+                }
                 icons.put(mask, res.getIdentifier(
                         elements[1].trim(), null /* defType */, null /* defPackage */));
             }
@@ -216,6 +241,33 @@ public class TetheringNotificationUpdater {
         return texts;
     }
 
+    private boolean setupClientsNotificationLocked() {
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
+        final HashMap<Integer, Integer> numberIcons =
+                getIcons(R.array.tethering_notification_icons_with_client);
+
+        final int iconId = numberIcons.getOrDefault(mConnectedClients, NO_ICON_ID);
+        if (iconId == NO_ICON_ID) return NO_NOTIFY;
+
+        final String title = res.getQuantityString(
+                R.plurals.tethering_notification_title_with_client, mConnectedClients);
+        final String message;
+        if (mPowerSaving) {
+            message = res.getQuantityString(
+                    R.plurals.tethering_notification_message_with_client_power_saving,
+                    mConnectedClients);
+        } else {
+            message = res.getQuantityString(
+                    R.plurals.tethering_notification_message_with_client, mConnectedClients);
+        }
+        final HashMap<Integer, String> combinationTexts =
+                getTexts(R.array.tethering_downstream_combinations);
+        final String downstreamText = combinationTexts.getOrDefault(mDownstreamTypesMask, "");
+
+        showNotificationLocked(iconId, title, message, downstreamText);
+        return NOTIFY_DONE;
+    }
+
     private boolean setupNotificationLocked() {
         final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
         final HashMap<Integer, Integer> downstreamIcons =
@@ -243,7 +295,7 @@ public class TetheringNotificationUpdater {
     String formatText(@NonNull final String text, @NonNull final String downstreamText,
             @StringRes final int defaultTextId) {
         try {
-            return String.format(text, downstreamText);
+            return String.format(text, downstreamText, mConnectedClients);
         } catch (IllegalFormatException e) { }
 
         return getResourcesForSubId(mContext, mActiveDataSubId).getString(defaultTextId);
