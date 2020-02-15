@@ -31,6 +31,8 @@ import androidx.test.runner.AndroidJUnit4
 import com.android.internal.util.test.BroadcastInterceptingContext
 import com.android.networkstack.tethering.R
 import com.android.server.connectivity.tethering.TetheringNotificationUpdater.DOWNSTREAM_NONE
+import com.android.server.connectivity.tethering.TetheringNotificationUpdater.ENABLE_NOTIFICATION_ID
+import com.android.server.connectivity.tethering.TetheringNotificationUpdater.RESTRICTED_NOTIFICATION_ID
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -131,11 +133,12 @@ class TetheringNotificationUpdaterTest {
     private fun Notification.title() = this.extras.getString(Notification.EXTRA_TITLE)
     private fun Notification.text() = this.extras.getString(Notification.EXTRA_TEXT)
 
-    private fun expectShowNotification(iconId: Int, title: String, text: String) {
+    private fun expectShowNotification(iconId: Int, title: String, text: String, notifyId: Int) {
         verify(notificationManager, never()).cancel(any(), anyInt())
 
         val notificationCaptor = ArgumentCaptor.forClass(Notification::class.java)
-        verify(notificationManager, times(1)).notify(any(), anyInt(), notificationCaptor.capture())
+        verify(notificationManager, times(1))
+                .notify(any(), eq(notifyId), notificationCaptor.capture())
 
         val notification = notificationCaptor.getValue()
         assertEquals(iconId, notification.smallIcon.resId)
@@ -143,8 +146,8 @@ class TetheringNotificationUpdaterTest {
         assertEquals(text, notification.text())
     }
 
-    private fun expectClearNotification() {
-        verify(notificationManager, times(1)).cancel(any(), anyInt())
+    private fun expectClearNotification(notifyId: Int) {
+        verify(notificationManager, times(1)).cancel(any(), eq(notifyId))
         verify(notificationManager, never()).notify(any(), anyInt(), any())
     }
 
@@ -157,13 +160,15 @@ class TetheringNotificationUpdaterTest {
         iconId: Int = 0,
         title: String = "",
         message: String = "",
-        combinations: String = "Hotspot"
+        combinations: String = "Hotspot",
+        notifyId: Int = ENABLE_NOTIFICATION_ID
     ) {
         when ("" != title) {
             true -> expectShowNotification(iconId,
                     String.format(title, combinations),
-                    String.format(message, combinations))
-            else -> expectClearNotification()
+                    String.format(message, combinations),
+                    notifyId)
+            else -> expectClearNotification(notifyId)
         }
         reset(notificationManager)
     }
@@ -294,5 +299,39 @@ class TetheringNotificationUpdaterTest {
         notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
         assertEquals(enableText, notificationUpdater.formatText(
                 "%10\$s enabled", "Hotspot", R.string.tethered_notification_title))
+    }
+
+    @Test
+    fun testSetupRestrictedNotification() {
+        val title = context.resources.getString(R.string.disable_tether_notification_title)
+        val message = context.resources.getString(R.string.disable_tether_notification_message)
+        val disallowTitle = "Tether function is disallowed"
+        val disallowMessage = "Please contact your admin"
+        doReturn(title).`when`(defaultResources)
+                .getString(R.string.disable_tether_notification_title)
+        doReturn(message).`when`(defaultResources)
+                .getString(R.string.disable_tether_notification_message)
+        doReturn(disallowTitle).`when`(testResources)
+                .getString(R.string.disable_tether_notification_title)
+        doReturn(disallowMessage).`when`(testResources)
+                .getString(R.string.disable_tether_notification_message)
+
+        // User restrictions on. Show restricted notification.
+        notificationUpdater.setupRestrictedNotification()
+        verifyNotification(R.drawable.stat_sys_tether_general,
+                title, message, notifyId = RESTRICTED_NOTIFICATION_ID)
+
+        // User restrictions off. Clear notification.
+        notificationUpdater.clearNotification(RESTRICTED_NOTIFICATION_ID)
+        verifyNotification(notifyId = RESTRICTED_NOTIFICATION_ID)
+
+        // Set test sub id. No notification.
+        notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
+        verifyNotification()
+
+        // User restrictions on again. Show restricted notification with test resource.
+        notificationUpdater.setupRestrictedNotification()
+        verifyNotification(R.drawable.stat_sys_tether_general,
+                disallowTitle, disallowMessage, notifyId = RESTRICTED_NOTIFICATION_ID)
     }
 }

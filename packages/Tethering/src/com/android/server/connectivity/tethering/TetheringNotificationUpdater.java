@@ -35,6 +35,7 @@ import android.util.SparseArray;
 
 import androidx.annotation.ArrayRes;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -57,7 +58,11 @@ public class TetheringNotificationUpdater {
     private static final boolean NOTIFY_DONE = true;
     private static final boolean NO_NOTIFY = false;
     // Id to update and cancel tethering notification. Must be unique within the tethering app.
-    private static final int NOTIFY_ID = 20191115;
+    @VisibleForTesting
+    static final int ENABLE_NOTIFICATION_ID = 1000;
+    // Id to update and cancel restricted notification. Must be unique within the tethering app.
+    @VisibleForTesting
+    static final int RESTRICTED_NOTIFICATION_ID = 1001;
     @VisibleForTesting
     static final int NO_ICON_ID = 0;
     @VisibleForTesting
@@ -70,6 +75,9 @@ public class TetheringNotificationUpdater {
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
     private int mActiveDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
     private boolean mPowerSaving = false;
+
+    @IntDef({ENABLE_NOTIFICATION_ID, RESTRICTED_NOTIFICATION_ID})
+    @interface NotificationId {}
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
         mContext = context;
@@ -112,12 +120,21 @@ public class TetheringNotificationUpdater {
         final boolean tetheringInactive = mDownstreamTypesMask <= DOWNSTREAM_NONE;
 
         if (tetheringInactive || setupNotification() == NO_NOTIFY) {
-            clearNotification();
+            clearNotification(ENABLE_NOTIFICATION_ID);
         }
     }
 
-    private void clearNotification() {
-        mNotificationManager.cancel(null /* tag */, NOTIFY_ID);
+    void clearNotification(@NotificationId final int id) {
+        mNotificationManager.cancel(null /* tag */, id);
+    }
+
+    void setupRestrictedNotification() {
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
+        final String title = res.getString(R.string.disable_tether_notification_title);
+        final String message = res.getString(R.string.disable_tether_notification_message);
+
+        showNotification(RESTRICTED_NOTIFICATION_ID, R.drawable.stat_sys_tether_general,
+                title, message, "");
     }
 
     @VisibleForTesting
@@ -182,7 +199,7 @@ public class TetheringNotificationUpdater {
                 ? R.string.tethering_notification_message_power_saving
                 : R.string.tethering_notification_message);
 
-        showNotification(iconId, title, message, combinationText);
+        showNotification(ENABLE_NOTIFICATION_ID, iconId, title, message, combinationText);
         return NOTIFY_DONE;
     }
 
@@ -196,8 +213,9 @@ public class TetheringNotificationUpdater {
         return getResourcesForSubId(mContext, mActiveDataSubId).getString(defaultTextId);
     }
 
-    private void showNotification(@DrawableRes final int iconId, @NonNull final String title,
-            @NonNull final String message, @NonNull final String downstreamText) {
+    private void showNotification(@NotificationId final int id, @DrawableRes final int iconId,
+            @NonNull final String title, @NonNull final String message,
+            @NonNull final String downstreamText) {
         final String formatTitle = formatText(
                 title, downstreamText, R.string.tethered_notification_title);
         final String formatMessage = formatText(
@@ -219,6 +237,6 @@ public class TetheringNotificationUpdater {
                         .setContentIntent(pi)
                         .build();
 
-        mNotificationManager.notify(null /* tag */, NOTIFY_ID, notification);
+        mNotificationManager.notify(null /* tag */, id, notification);
     }
 }

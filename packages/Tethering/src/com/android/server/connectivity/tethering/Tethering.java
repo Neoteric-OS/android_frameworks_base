@@ -57,6 +57,7 @@ import static android.telephony.CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANG
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import static com.android.server.connectivity.tethering.TetheringNotificationUpdater.DOWNSTREAM_NONE;
+import static com.android.server.connectivity.tethering.TetheringNotificationUpdater.RESTRICTED_NOTIFICATION_ID;
 
 import android.app.usage.NetworkStatsManager;
 import android.bluetooth.BluetoothAdapter;
@@ -293,7 +294,8 @@ public class Tethering {
 
         final UserManager userManager = (UserManager) mContext.getSystemService(
                 Context.USER_SERVICE);
-        mTetheringRestriction = new UserRestrictionActionListener(userManager, this);
+        mTetheringRestriction = new UserRestrictionActionListener(
+                userManager, this, mNotificationUpdater);
         final TetheringThreadExecutor executor = new TetheringThreadExecutor(mHandler);
         mActiveDataSubIdListener = new ActiveDataSubIdListener(executor);
         mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
@@ -967,11 +969,14 @@ public class Tethering {
     protected static class UserRestrictionActionListener {
         private final UserManager mUserManager;
         private final Tethering mWrapper;
+        private final TetheringNotificationUpdater mNotificationUpdater;
         public boolean mDisallowTethering;
 
-        public UserRestrictionActionListener(UserManager um, Tethering wrapper) {
+        public UserRestrictionActionListener(@NonNull UserManager um, @NonNull Tethering wrapper,
+                @NonNull TetheringNotificationUpdater updater) {
             mUserManager = um;
             mWrapper = wrapper;
+            mNotificationUpdater = updater;
             mDisallowTethering = false;
         }
 
@@ -990,11 +995,12 @@ public class Tethering {
                 return;
             }
 
-            // TODO: Add user restrictions notification.
+            mNotificationUpdater.clearNotification(RESTRICTED_NOTIFICATION_ID);
             final boolean isTetheringActiveOnDevice = (mWrapper.getTetheredIfaces().length != 0);
 
             if (newlyDisallowed && isTetheringActiveOnDevice) {
                 mWrapper.untetherAll();
+                mNotificationUpdater.setupRestrictedNotification();
                 // TODO(b/148139325): send tetheringSupported on restriction change
             }
         }
