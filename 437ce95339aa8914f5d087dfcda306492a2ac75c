@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8e2c810_b6037705",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7804,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-16T03:31:42Z",
+      "side": 1,
+      "message": "Hint : \"forCaller\" here means we\u0027ll look at Binder.getCallingUid(). In handle*, this is the system server because we\u0027re running on the CS thread.\n\nPlease write a unit test that will let you see how this doesn\u0027t work as expected.",
+      "range": {
+        "startLine": 7804,
+        "startChar": 27,
+        "endLine": 7804,
+        "endChar": 36
+      },
+      "revId": "437ce95339aa8914f5d087dfcda306492a2ac75c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
