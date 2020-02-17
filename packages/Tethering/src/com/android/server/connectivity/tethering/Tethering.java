@@ -54,6 +54,7 @@ import static android.telephony.CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANG
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import static com.android.server.connectivity.tethering.TetheringNotificationUpdater.DOWNSTREAM_NONE;
+import static com.android.server.connectivity.tethering.TetheringNotificationUpdater.RESTRICT_NOTIFICATION_ID;
 
 import android.app.usage.NetworkStatsManager;
 import android.bluetooth.BluetoothAdapter;
@@ -969,7 +970,7 @@ public class Tethering {
                 return;
             }
 
-            mNotificationUpdater.clearNotificationLocked();
+            mNotificationUpdater.clearNotificationLocked(RESTRICT_NOTIFICATION_ID);
             final boolean isTetheringActiveOnDevice = (mWrapper.getTetheredIfaces().length != 0);
 
             if (newlyDisallowed && isTetheringActiveOnDevice) {

@@ -25,6 +25,8 @@ import android.net.ConnectivityManager.TETHERING_USB
 import android.net.ConnectivityManager.TETHERING_WIFI
 import android.net.NetworkCapabilities
 import android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED
+import android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING
+import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.os.UserHandle
 import android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID
 import androidx.test.InstrumentationRegistry
@@ -33,6 +35,9 @@ import androidx.test.runner.AndroidJUnit4
 import com.android.internal.util.test.BroadcastInterceptingContext
 import com.android.networkstack.tethering.R
 import com.android.server.connectivity.tethering.TetheringNotificationUpdater.DOWNSTREAM_NONE
+import com.android.server.connectivity.tethering.TetheringNotificationUpdater.ENABLE_NOTIFICATION_ID
+import com.android.server.connectivity.tethering.TetheringNotificationUpdater.RESTRICT_NOTIFICATION_ID
+import com.android.server.connectivity.tethering.TetheringNotificationUpdater.ROAMING_NOTIFICATION_ID
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -71,6 +76,8 @@ const val TEST_MESSAGE_WITH_CLIENT_POWER_SAVE =
         "%2\$d devices connected. Tap to set up %1\$s. Power saving on."
 const val TEST_PAUSE_TITTLE = "Tethering pause"
 const val TEST_PAUSE_MESSAGE = "Tap here to set up. Tethering is paused due to network suspended."
+const val TEST_ROAMING_TITLE = "Tethering is on"
+const val TEST_ROAMING_MESSAGE = "Additional charges may apply while roaming."
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
@@ -101,6 +108,8 @@ class TetheringNotificationUpdaterTest {
                 .getStringArray(R.array.tethering_notification_icons_with_client)
         doReturn(arrayOf("WIFI;android.test:drawable/pause")).`when`(testResources)
                 .getStringArray(R.array.tethering_notification_pause_icons)
+        doReturn(true).`when`(testResources)
+                .getBoolean(R.bool.config_upstream_roaming_notification)
         doReturn(TITTLE).`when`(defaultResources).getString(R.string.tethering_notification_title)
         doReturn(MESSAGE).`when`(defaultResources)
                 .getString(R.string.tethering_notification_message)
@@ -124,6 +133,10 @@ class TetheringNotificationUpdaterTest {
                 .getString(R.string.tethering_notification_pause_title)
         doReturn(TEST_PAUSE_MESSAGE).`when`(testResources)
                 .getString(R.string.tethering_notification_pause_message)
+        doReturn(TEST_ROAMING_TITLE).`when`(testResources)
+                .getString(R.string.upstream_roaming_notification_title)
+        doReturn(TEST_ROAMING_MESSAGE).`when`(testResources)
+                .getString(R.string.upstream_roaming_notification_message)
         doReturn(USB_ICON_ID).`when`(defaultResources)
                 .getIdentifier(eq("android.test:drawable/usb"), any(), any())
         doReturn(BT_ICON_ID).`when`(defaultResources)
@@ -165,26 +178,20 @@ class TetheringNotificationUpdaterTest {
         title: String = "",
         message: String = "",
         combinations: String = "Hotspot",
-        clientNumber: Int = 0
+        clientNumber: Int = 0,
+        id: Int = ENABLE_NOTIFICATION_ID
     ) {
-        verify(notificationManager, never()).cancel(any(), anyInt())
-
         val notificationCaptor = ArgumentCaptor.forClass(Notification::class.java)
-        verify(notificationManager, times(1)).notify(any(), anyInt(), notificationCaptor.capture())
+        verify(notificationManager, times(1)).notify(any(), eq(id), notificationCaptor.capture())
 
         val notification = notificationCaptor.getValue()
         assertEquals(iconId, notification.smallIcon.resId)
         assertEquals(String.format(title, combinations, clientNumber), notification.title())
         assertEquals(String.format(message, combinations, clientNumber), notification.text())
-
-        reset(notificationManager)
     }
 
-    private fun expectClearNotification() {
-        verify(notificationManager, times(1)).cancel(any(), anyInt())
-        verify(notificationManager, never()).notify(any(), anyInt(), any())
-        reset(notificationManager)
-    }
+    private fun expectClearNotification(id: Int = ENABLE_NOTIFICATION_ID) =
+        verify(notificationManager, times(1)).cancel(any(), eq(id))
 
     private fun expectNothing() {
         verify(notificationManager, never()).cancel(any(), anyInt())
@@ -192,36 +199,48 @@ class TetheringNotificationUpdaterTest {
     }
 
     private fun assertNotification(
-        mask: Int,
-        showNoitification: Boolean = false,
         iconId: Int = 0,
         title: String = "",
-        message: String = ""
+        message: String = "",
+        combinations: String = "Hotspot",
+        clientNumber: Int = 0,
+        roamingTitle: String = "",
+        roamingMessage: String = ""
     ) {
-        notificationUpdater.onDownstreamChanged(mask)
-        when (showNoitification) {
-            true -> expectShowNotification(iconId, title, message)
+        when ("" != roamingTitle) {
+            true -> expectShowNotification(R.drawable.stat_sys_tether_upstream_roaming,
+                    roamingTitle, roamingMessage, id = ROAMING_NOTIFICATION_ID)
+            else -> expectClearNotification(ROAMING_NOTIFICATION_ID)
+        }
+        when ("" != title) {
+            true -> expectShowNotification(iconId, title, message, combinations, clientNumber)
             else -> expectClearNotification()
         }
+
+        reset(notificationManager)
     }
 
     @Test
     fun testNotificationWithDownstreamChanged() {
         // Hotspot enabled, no notification showed.
-        assertNotification(WIFI_MASK)
+        notificationUpdater.onDownstreamChanged(WIFI_MASK)
+        assertNotification()
 
         // Same downstream changed, nothing happened.
         notificationUpdater.onDownstreamChanged(WIFI_MASK)
         expectNothing()
 
         // Usb tethering enabled, showed enable notification
-        assertNotification(WIFI_MASK or USB_MASK, true, GENERAL_ICON_ID, TITTLE, MESSAGE)
+        notificationUpdater.onDownstreamChanged(WIFI_MASK or USB_MASK)
+        assertNotification(GENERAL_ICON_ID, TITTLE, MESSAGE)
 
         // Remove wifi downstream, showed enable notification.
-        assertNotification(USB_MASK, true, USB_ICON_ID, TITTLE, MESSAGE)
+        notificationUpdater.onDownstreamChanged(USB_MASK)
+        assertNotification(USB_ICON_ID, TITTLE, MESSAGE)
 
         // No downstream, no notification showed.
-        assertNotification(DOWNSTREAM_NONE)
+        notificationUpdater.onDownstreamChanged(DOWNSTREAM_NONE)
+        assertNotification()
     }
 
     @Test
@@ -231,20 +250,24 @@ class TetheringNotificationUpdaterTest {
         expectNothing()
 
         // Hotspot enabled, no notification showed with default resource.
-        assertNotification(WIFI_MASK)
+        notificationUpdater.onDownstreamChanged(WIFI_MASK)
+        assertNotification()
 
         // Usb tethering enabled, showed enable notification with default resource
-        assertNotification(WIFI_MASK or USB_MASK, true, GENERAL_ICON_ID, TITTLE, MESSAGE)
+        notificationUpdater.onDownstreamChanged(WIFI_MASK or USB_MASK)
+        assertNotification(GENERAL_ICON_ID, TITTLE, MESSAGE)
 
         // Set test sub id, cleared notification with test resource.
         notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
-        expectClearNotification()
+        assertNotification()
 
         // Remove usb downstream, showed enable notification with test resource.
-        assertNotification(WIFI_MASK, true, WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
+        notificationUpdater.onDownstreamChanged(WIFI_MASK)
+        assertNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
 
         // No downstream, no notification showed.
-        assertNotification(DOWNSTREAM_NONE)
+        notificationUpdater.onDownstreamChanged(DOWNSTREAM_NONE)
+        assertNotification()
     }
 
     private fun assertIconNumbers(resId: Int, number: Int, configs: Array<String?>) {
@@ -281,11 +304,12 @@ class TetheringNotificationUpdaterTest {
     @Test
     fun testNotificationWithPowerSavingChanged() {
         // Usb tethering enabled, showed enable notification
-        assertNotification(USB_MASK, true, USB_ICON_ID, TITTLE, MESSAGE)
+        notificationUpdater.onDownstreamChanged(USB_MASK)
+        assertNotification(USB_ICON_ID, TITTLE, MESSAGE)
 
         // Power saving on, showed enable notification
         notificationUpdater.onPowerSavingChanged(true)
-        expectShowNotification(USB_ICON_ID, TITTLE, MESSAGE)
+        assertNotification(USB_ICON_ID, TITTLE, MESSAGE)
 
         // Same power saving status. Nothing happened.
         notificationUpdater.onPowerSavingChanged(true)
@@ -293,18 +317,19 @@ class TetheringNotificationUpdaterTest {
 
         // Set test sub id, cleared notification with test resource.
         notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
-        expectClearNotification()
+        assertNotification()
 
         // Hotspot enabled, showed enable notification with power saving message.
-        assertNotification(WIFI_MASK, true, WIFI_ICON_ID,
-                TEST_TITTLE, TEST_MESSAGE_POWER_SAVE)
+        notificationUpdater.onDownstreamChanged(WIFI_MASK)
+        assertNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE_POWER_SAVE)
 
         // Power saving off, showed enable notification with overlay text.
         notificationUpdater.onPowerSavingChanged(false)
-        expectShowNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
+        assertNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
 
         // No downstream, no notification showed.
-        assertNotification(DOWNSTREAM_NONE)
+        notificationUpdater.onDownstreamChanged(DOWNSTREAM_NONE)
+        assertNotification()
     }
 
     @Test
@@ -358,29 +383,33 @@ class TetheringNotificationUpdaterTest {
 
         // User restrictions on. Show restricted notification.
         notificationUpdater.setupRestrictedNotificationLocked()
-        expectShowNotification(R.drawable.stat_sys_tether_general, title, message)
+        expectShowNotification(R.drawable.stat_sys_tether_general, title, message,
+                id = RESTRICT_NOTIFICATION_ID)
+        reset(notificationManager)
 
         // Set test sub id, cleared notification with test resource.
         notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
-        expectClearNotification()
+        assertNotification()
 
         // User restrictions on again. Show restricted notification with test resource.
         notificationUpdater.setupRestrictedNotificationLocked()
-        expectShowNotification(R.drawable.stat_sys_tether_general, disallowTitle, disallowMessage)
+        expectShowNotification(R.drawable.stat_sys_tether_general, disallowTitle, disallowMessage,
+                id = RESTRICT_NOTIFICATION_ID)
     }
 
     @Test
     fun testNotificationWithConnectedClientsChanged() {
         // Set test sub id. Clear notification.
         notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
-        expectClearNotification()
+        assertNotification()
 
         // Enable hotspot. Show enable notification with test resources.
-        assertNotification(WIFI_MASK, true, WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
+        notificationUpdater.onDownstreamChanged(WIFI_MASK)
+        assertNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
 
         // One client connected. Show notification with connected client number.
         notificationUpdater.onConnectedClientsChanged(1)
-        expectShowNotification(NUMBER_ICON_ID, TEST_TITTLE_WITH_CLIENT, TEST_MESSAGE_WITH_CLIENT,
+        assertNotification(NUMBER_ICON_ID, TEST_TITTLE_WITH_CLIENT, TEST_MESSAGE_WITH_CLIENT,
                 clientNumber = 1)
 
         // Same number client connected. Nothing happened.
@@ -389,12 +418,12 @@ class TetheringNotificationUpdaterTest {
 
         // Two client connected. Show notification with connected client number.
         notificationUpdater.onConnectedClientsChanged(2)
-        expectShowNotification(NUMBER_ICON_ID, TEST_TITTLE_WITH_CLIENT, TEST_MESSAGE_WITH_CLIENT,
+        assertNotification(NUMBER_ICON_ID, TEST_TITTLE_WITH_CLIENT, TEST_MESSAGE_WITH_CLIENT,
                 clientNumber = 2)
 
         // Power saving on. Show notification with connected client number and power saving status.
         notificationUpdater.onPowerSavingChanged(true)
-        expectShowNotification(NUMBER_ICON_ID, TEST_TITTLE_WITH_CLIENT,
+        assertNotification(NUMBER_ICON_ID, TEST_TITTLE_WITH_CLIENT,
                 TEST_MESSAGE_WITH_CLIENT_POWER_SAVE, clientNumber = 2)
 
         // Set R.array.tethering_notification_icons_with_client length to 0 and change connected
@@ -402,35 +431,40 @@ class TetheringNotificationUpdaterTest {
         doReturn(arrayOfNulls<String>(0)).`when`(testResources)
                 .getStringArray(R.array.tethering_notification_icons_with_client)
         notificationUpdater.onConnectedClientsChanged(1)
-        expectShowNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE_POWER_SAVE)
+        assertNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE_POWER_SAVE)
     }
 
     @Test
-    fun testNotificationWithUpstreamCapabilitiesChanged() {
+    fun testNotificationWithSuspendedCapabilitiesChanged() {
         // Set test sub id. Clear notification.
         notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
-        expectClearNotification()
+        assertNotification()
 
         // Enable hotspot. Show enable notification with test resources.
-        assertNotification(WIFI_MASK, true, WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
+        notificationUpdater.onDownstreamChanged(WIFI_MASK)
+        assertNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
 
         // Upstream network suspended. Show pause notification.
         notificationUpdater.onUpstreamCapabilitiesChanged(NetworkCapabilities())
-        expectShowNotification(PAUSE_ICON_ID, TEST_PAUSE_TITTLE, TEST_PAUSE_MESSAGE)
+        assertNotification(PAUSE_ICON_ID, TEST_PAUSE_TITTLE, TEST_PAUSE_MESSAGE)
+
+        // Same NetworkCapabilities. Nothing happened.
+        notificationUpdater.onUpstreamCapabilitiesChanged(NetworkCapabilities())
+        expectNothing()
 
         // Power saving on. Still show pause notification
         notificationUpdater.onPowerSavingChanged(true)
-        expectShowNotification(PAUSE_ICON_ID, TEST_PAUSE_TITTLE, TEST_PAUSE_MESSAGE)
+        assertNotification(PAUSE_ICON_ID, TEST_PAUSE_TITTLE, TEST_PAUSE_MESSAGE)
 
         // One client connected. Still show pause notification
         notificationUpdater.onConnectedClientsChanged(1)
-        expectShowNotification(PAUSE_ICON_ID, TEST_PAUSE_TITTLE, TEST_PAUSE_MESSAGE)
+        assertNotification(PAUSE_ICON_ID, TEST_PAUSE_TITTLE, TEST_PAUSE_MESSAGE)
 
         // Upstream network resumed. Show notification with connected client number and power saving
         // status.
         notificationUpdater.onUpstreamCapabilitiesChanged(
                 NetworkCapabilities().addCapability(NET_CAPABILITY_NOT_SUSPENDED))
-        expectShowNotification(NUMBER_ICON_ID, TEST_TITTLE_WITH_CLIENT,
+        assertNotification(NUMBER_ICON_ID, TEST_TITTLE_WITH_CLIENT,
                 TEST_MESSAGE_WITH_CLIENT_POWER_SAVE, clientNumber = 1)
 
         // Set R.array.tethering_notification_icons_with_client length to 0 and change upstream
@@ -439,7 +473,63 @@ class TetheringNotificationUpdaterTest {
         doReturn(arrayOfNulls<String>(0)).`when`(testResources)
                 .getStringArray(R.array.tethering_notification_pause_icons)
         notificationUpdater.onUpstreamCapabilitiesChanged(NetworkCapabilities())
-        expectShowNotification(NUMBER_ICON_ID, TEST_TITTLE_WITH_CLIENT,
+        assertNotification(NUMBER_ICON_ID, TEST_TITTLE_WITH_CLIENT,
                 TEST_MESSAGE_WITH_CLIENT_POWER_SAVE, clientNumber = 1)
+    }
+
+    @Test
+    fun testNotificationWithRoamingCapabilitiesChanged() {
+        // Set test sub id. Clear notification.
+        notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
+        assertNotification()
+
+        // Enable hotspot. Show enable notification with test resources.
+        notificationUpdater.onDownstreamChanged(WIFI_MASK)
+        assertNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
+
+        // Upstream network changed to roaming state. Show both roaming and enable notification.
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addTransportType(TRANSPORT_CELLULAR)
+                        .addCapability(NET_CAPABILITY_NOT_SUSPENDED))
+        assertNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE,
+                roamingTitle = TEST_ROAMING_TITLE, roamingMessage = TEST_ROAMING_MESSAGE)
+
+        // Same NetworkCapabilities. Nothing happened.
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addTransportType(TRANSPORT_CELLULAR)
+                        .addCapability(NET_CAPABILITY_NOT_SUSPENDED))
+        expectNothing()
+
+        // Power saving on. Show both roaming and enable notification with power saving status.
+        notificationUpdater.onPowerSavingChanged(true)
+        assertNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE_POWER_SAVE,
+                roamingTitle = TEST_ROAMING_TITLE, roamingMessage = TEST_ROAMING_MESSAGE)
+
+        // One client connected. Show both roaming and enable notification with connected client
+        // number and power saving status.
+        notificationUpdater.onConnectedClientsChanged(1)
+        assertNotification(NUMBER_ICON_ID, TEST_TITTLE_WITH_CLIENT,
+                TEST_MESSAGE_WITH_CLIENT_POWER_SAVE, clientNumber = 1,
+                roamingTitle = TEST_ROAMING_TITLE, roamingMessage = TEST_ROAMING_MESSAGE)
+
+        // Upstream network suspended. Show both roaming and pause notification.
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addTransportType(TRANSPORT_CELLULAR))
+        assertNotification(PAUSE_ICON_ID, TEST_PAUSE_TITTLE, TEST_PAUSE_MESSAGE,
+                roamingTitle = TEST_ROAMING_TITLE, roamingMessage = TEST_ROAMING_MESSAGE)
+
+        // Upstream network changed to home state. Only show pause notification.
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addTransportType(TRANSPORT_CELLULAR)
+                        .addCapability(NET_CAPABILITY_NOT_ROAMING))
+        assertNotification(PAUSE_ICON_ID, TEST_PAUSE_TITTLE, TEST_PAUSE_MESSAGE)
+
+        // Set R.bool.config_upstream_roaming_notification to false and change upstream
+        // network to roaming state again. Still only show pause notification.
+        doReturn(false).`when`(testResources)
+                .getBoolean(R.bool.config_upstream_roaming_notification)
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addTransportType(TRANSPORT_CELLULAR))
+        assertNotification(PAUSE_ICON_ID, TEST_PAUSE_TITTLE, TEST_PAUSE_MESSAGE)
     }
 }

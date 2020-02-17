@@ -331,4 +331,15 @@
     <string name="tethering_notification_pause_title"></string>
     <!-- String for tether pause notification message -->
     <string name="tethering_notification_pause_message"></string>
+
+    <!-- Upstream roaming notification is shown when upstream is cellular network and in roaming
+         state. -->
+    <!-- Config for showing upstream roaming notification.
+         Please also configure upstream_roaming_notification_title and
+         upstream_roaming_notification_message if enable this config.-->
+    <bool translatable="false" name="config_upstream_roaming_notification">false</bool>
+    <!-- String for upstream roaming notification title -->
+    <string name="upstream_roaming_notification_title"></string>
+    <!-- String for upstream roaming notification message -->
+    <string name="upstream_roaming_notification_message"></string>
 </resources>
