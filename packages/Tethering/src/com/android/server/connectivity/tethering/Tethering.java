@@ -1524,7 +1524,8 @@ public class Tethering {
             }
         }
 
-        private void handleUpstreamNetworkMonitorCallback(int arg1, Object o) {
+        @VisibleForTesting
+        void handleUpstreamNetworkMonitorCallback(int arg1, Object o) {
             if (arg1 == UpstreamNetworkMonitor.NOTIFY_LOCAL_PREFIXES) {
                 mOffload.sendOffloadExemptPrefixes((Set<IpPrefix>) o);
                 return;
@@ -1550,6 +1551,9 @@ public class Tethering {
 
             switch (arg1) {
                 case UpstreamNetworkMonitor.EVENT_ON_CAPABILITIES:
+                    if (mDeps.isTetheringSupported() && ns.network.equals(mTetherUpstream)) {
+                        mNotificationUpdater.onUpstreamCapabilitiesChanged(ns.networkCapabilities);
+                    }
                     handleNewUpstreamNetworkState(ns);
                     break;
                 case UpstreamNetworkMonitor.EVENT_ON_LINKPROPERTIES:

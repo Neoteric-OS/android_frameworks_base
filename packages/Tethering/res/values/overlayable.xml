@@ -164,6 +164,32 @@
             <item quantity="other">%2$d devices connected. Tap to set up. Power saving on.</item>
             -->
             <item type="plurals" name="tethering_notification_message_with_client_power_saving"/>
+            <!-- Icons for showing tether pause notification.
+            Each item should have two elements and separate with ";".
+
+            The first element is downstream types which is one of tethering. This element has to be
+            made by WIFI, USB, BT, and OR'd with the others. Use "|" to combine multiple downstream
+            types and use "," to separate each combinations. Such as
+
+            USB|BT,WIFI|USB|BT
+
+            The second element is icon for the number. This element has to be composed by
+            <package name>:<resource type>/<resource name>. Such as
+
+            1. com.android.networkstack.tethering:drawable/stat_sys_tether_pause_general
+            2. android:drawable/xxx
+
+            So the entire string of each item would be
+
+            WIFI|USB|BT;com.android.networkstack.tethering:drawable/stat_sys_tether_pause_general
+
+            Will show default enable notification if the downstream doesn't config in this array.
+            Empty array means disable this kind of notification. -->
+            <item type="array" name="tethering_notification_pause_icons"/>
+            <!-- String for tether pause notification title -->
+            <item type="string" name="tethering_notification_pause_title"/>
+            <!-- String for tether pause notification message -->
+            <item type="string" name="tethering_notification_pause_message"/>
             <!-- Params from config.xml that can be overlaid -->
         </policy>
     </overlayable>

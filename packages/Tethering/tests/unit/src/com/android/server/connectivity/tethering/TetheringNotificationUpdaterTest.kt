@@ -23,6 +23,8 @@ import android.content.res.Resources
 import android.net.ConnectivityManager.TETHERING_BLUETOOTH
 import android.net.ConnectivityManager.TETHERING_USB
 import android.net.ConnectivityManager.TETHERING_WIFI
+import android.net.NetworkCapabilities
+import android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED
 import android.os.UserHandle
 import android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID
 import androidx.test.InstrumentationRegistry
@@ -54,6 +56,7 @@ const val USB_ICON_ID = 2
 const val BT_ICON_ID = 3
 const val GENERAL_ICON_ID = 4
 const val NUMBER_ICON_ID = 5
+const val PAUSE_ICON_ID = 6
 const val WIFI_MASK = 1 shl TETHERING_WIFI
 const val USB_MASK = 1 shl TETHERING_USB
 const val BT_MASK = 1 shl TETHERING_BLUETOOTH
@@ -66,6 +69,8 @@ const val TEST_TITTLE_WITH_CLIENT = "%1\$s active with %2\$d devices connected."
 const val TEST_MESSAGE_WITH_CLIENT = "%2\$d devices connected. Tap to set up %1\$s."
 const val TEST_MESSAGE_WITH_CLIENT_POWER_SAVE =
         "%2\$d devices connected. Tap to set up %1\$s. Power saving on."
+const val TEST_PAUSE_TITTLE = "Tethering pause"
+const val TEST_PAUSE_MESSAGE = "Tap here to set up. Tethering is paused due to network suspended."
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
@@ -92,10 +97,10 @@ class TetheringNotificationUpdaterTest {
                 .getStringArray(R.array.tethering_downstream_combinations)
         doReturn(arrayOf("WIFI;Hotspot")).`when`(testResources)
                 .getStringArray(R.array.tethering_downstream_combinations)
-        doReturn(arrayOfNulls<String>(0)).`when`(defaultResources)
-                .getStringArray(R.array.tethering_notification_icons_with_client)
         doReturn(arrayOf("1,2,3,4,5;android.test:drawable/number")).`when`(testResources)
                 .getStringArray(R.array.tethering_notification_icons_with_client)
+        doReturn(arrayOf("WIFI;android.test:drawable/pause")).`when`(testResources)
+                .getStringArray(R.array.tethering_notification_pause_icons)
         doReturn(TITTLE).`when`(defaultResources).getString(R.string.tethering_notification_title)
         doReturn(MESSAGE).`when`(defaultResources)
                 .getString(R.string.tethering_notification_message)
@@ -115,6 +120,10 @@ class TetheringNotificationUpdaterTest {
                 .getQuantityString(eq(
                         R.plurals.tethering_notification_message_with_client_power_saving),
                         anyInt())
+        doReturn(TEST_PAUSE_TITTLE).`when`(testResources)
+                .getString(R.string.tethering_notification_pause_title)
+        doReturn(TEST_PAUSE_MESSAGE).`when`(testResources)
+                .getString(R.string.tethering_notification_pause_message)
         doReturn(USB_ICON_ID).`when`(defaultResources)
                 .getIdentifier(eq("android.test:drawable/usb"), any(), any())
         doReturn(BT_ICON_ID).`when`(defaultResources)
@@ -125,6 +134,8 @@ class TetheringNotificationUpdaterTest {
                 .getIdentifier(eq("android.test:drawable/wifi"), any(), any())
         doReturn(NUMBER_ICON_ID).`when`(testResources)
                 .getIdentifier(eq("android.test:drawable/number"), any(), any())
+        doReturn(PAUSE_ICON_ID).`when`(testResources)
+                .getIdentifier(eq("android.test:drawable/pause"), any(), any())
     }
 
     @Before
@@ -392,5 +403,43 @@ class TetheringNotificationUpdaterTest {
                 .getStringArray(R.array.tethering_notification_icons_with_client)
         notificationUpdater.onConnectedClientsChanged(1)
         expectShowNotification(WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE_POWER_SAVE)
+    }
+
+    @Test
+    fun testNotificationWithUpstreamCapabilitiesChanged() {
+        // Set test sub id. Clear notification.
+        notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
+        expectClearNotification()
+
+        // Enable hotspot. Show enable notification with test resources.
+        assertNotification(WIFI_MASK, true, WIFI_ICON_ID, TEST_TITTLE, TEST_MESSAGE)
+
+        // Upstream network suspended. Show pause notification.
+        notificationUpdater.onUpstreamCapabilitiesChanged(NetworkCapabilities())
+        expectShowNotification(PAUSE_ICON_ID, TEST_PAUSE_TITTLE, TEST_PAUSE_MESSAGE)
+
+        // Power saving on. Still show pause notification
+        notificationUpdater.onPowerSavingChanged(true)
+        expectShowNotification(PAUSE_ICON_ID, TEST_PAUSE_TITTLE, TEST_PAUSE_MESSAGE)
+
+        // One client connected. Still show pause notification
+        notificationUpdater.onConnectedClientsChanged(1)
+        expectShowNotification(PAUSE_ICON_ID, TEST_PAUSE_TITTLE, TEST_PAUSE_MESSAGE)
+
+        // Upstream network resumed. Show notification with connected client number and power saving
+        // status.
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addCapability(NET_CAPABILITY_NOT_SUSPENDED))
+        expectShowNotification(NUMBER_ICON_ID, TEST_TITTLE_WITH_CLIENT,
+                TEST_MESSAGE_WITH_CLIENT_POWER_SAVE, clientNumber = 1)
+
+        // Set R.array.tethering_notification_icons_with_client length to 0 and change upstream
+        // network to suspended state. Still show notification with connected client number and
+        // power saving status.
+        doReturn(arrayOfNulls<String>(0)).`when`(testResources)
+                .getStringArray(R.array.tethering_notification_pause_icons)
+        notificationUpdater.onUpstreamCapabilitiesChanged(NetworkCapabilities())
+        expectShowNotification(NUMBER_ICON_ID, TEST_TITTLE_WITH_CLIENT,
+                TEST_MESSAGE_WITH_CLIENT_POWER_SAVE, clientNumber = 1)
     }
 }
