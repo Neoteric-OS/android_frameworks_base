@@ -16,6 +16,7 @@
 
 package com.android.server.connectivity.tethering;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
 import static android.net.TetheringManager.TETHERING_BLUETOOTH;
 import static android.net.TetheringManager.TETHERING_USB;
@@ -35,6 +36,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.ArrayRes;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -55,7 +57,14 @@ public class TetheringNotificationUpdater {
     private static final boolean NOTIFY_DONE = true;
     private static final boolean NO_NOTIFY = false;
     // Id to update and cancel tethering notification. Must be unique within the tethering app.
-    private static final int NOTIFY_ID = 20191115;
+    @VisibleForTesting
+    static final int ENABLE_NOTIFICATION_ID = 1000;
+    // Id to update and cancel restrict notification. Must be unique within the tethering app.
+    @VisibleForTesting
+    static final int RESTRICT_NOTIFICATION_ID = 1001;
+    // Id to update and cancel tethering notification. Must be unique within the tethering app.
+    @VisibleForTesting
+    static final int ROAMING_NOTIFICATION_ID = 1002;
     @VisibleForTesting
     static final int NO_ICON_ID = 0;
     @VisibleForTesting
@@ -72,6 +81,11 @@ public class TetheringNotificationUpdater {
     private int mConnectedClients = 0;
     private boolean mPowerSaving = false;
     private boolean mUpstreamSuspended = false;
+    private boolean mDataRoaming = false;
+    private NetworkCapabilities mUpstreamNetworkCap = null;
+
+    @IntDef({ENABLE_NOTIFICATION_ID, RESTRICT_NOTIFICATION_ID, ROAMING_NOTIFICATION_ID})
+    @interface NotificationId {}
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
         mContext = context;
@@ -125,8 +139,15 @@ public class TetheringNotificationUpdater {
         synchronized (mUpdateLock) {
             final boolean isNetworkSuspended =
                     !capabilities.hasCapability(NET_CAPABILITY_NOT_SUSPENDED);
-            if (mUpstreamSuspended == isNetworkSuspended) return;
+            final boolean isDataRoaming = !capabilities.hasCapability(NET_CAPABILITY_NOT_ROAMING);
+            mUpstreamNetworkCap = capabilities;
+
+            if (mUpstreamSuspended == isNetworkSuspended
+                    && mDataRoaming == isDataRoaming) {
+                return;
+            }
             mUpstreamSuspended = isNetworkSuspended;
+            mDataRoaming = isDataRoaming;
             updateNotification();
         }
     }
@@ -136,13 +157,25 @@ public class TetheringNotificationUpdater {
         return SubscriptionManager.getResourcesForSubId(c, subId);
     }
 
+    private boolean isCellularUpstream() {
+        if (mUpstreamNetworkCap == null) return false;
+        return mUpstreamNetworkCap.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR);
+    }
+
     private void updateNotification() {
         synchronized (mUpdateLock) {
             final boolean tetheringInactive = mDownstreamTypesMask <= DOWNSTREAM_NONE;
 
             if (tetheringInactive) {
-                clearNotificationLocked();
+                clearNotificationLocked(ENABLE_NOTIFICATION_ID);
+                clearNotificationLocked(ROAMING_NOTIFICATION_ID);
             } else {
+                if (!mDataRoaming
+                        || !isCellularUpstream()
+                        || !setupUpstreamRoamingNotificationLocked()) {
+                    clearNotificationLocked(ROAMING_NOTIFICATION_ID);
+                }
+
                 // Show notification if one of conditions is satisfied.
                 if ((mUpstreamSuspended && setupPauseNotificationLocked())
                         || (mConnectedClients > 0 && setupClientsNotificationLocked())
@@ -150,14 +183,14 @@ public class TetheringNotificationUpdater {
                     return;
                 }
                 // Tethering is active but no need shows notification.
-                clearNotificationLocked();
+                clearNotificationLocked(ENABLE_NOTIFICATION_ID);
             }
         }
     }
 
-    void clearNotificationLocked() {
+    void clearNotificationLocked(@NotificationId final int id) {
         synchronized (mUpdateLock) {
-            mNotificationManager.cancel(null /* tag */, NOTIFY_ID);
+            mNotificationManager.cancel(null /* tag */, id);
         }
     }
 
@@ -167,7 +200,8 @@ public class TetheringNotificationUpdater {
             final String title = res.getString(R.string.disable_tether_notification_title);
             final String message = res.getString(R.string.disable_tether_notification_message);
 
-            showNotificationLocked(R.drawable.stat_sys_tether_general, title, message, "");
+            showNotificationLocked(RESTRICT_NOTIFICATION_ID, R.drawable.stat_sys_tether_general,
+                    title, message, "");
         }
     }
 
@@ -256,6 +290,21 @@ public class TetheringNotificationUpdater {
         return texts;
     }
 
+    private boolean setupUpstreamRoamingNotificationLocked() {
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
+        final boolean upstreamRoamingNotification =
+                res.getBoolean(R.bool.config_upstream_roaming_notification);
+
+        if (!upstreamRoamingNotification) return NO_NOTIFY;
+
+        String title = res.getString(R.string.upstream_roaming_notification_title);
+        String message = res.getString(R.string.upstream_roaming_notification_message);
+
+        showNotificationLocked(ROAMING_NOTIFICATION_ID, R.drawable.stat_sys_tether_upstream_roaming,
+                title, message, "");
+        return NOTIFY_DONE;
+    }
+
     private boolean setupPauseNotificationLocked() {
         final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
         final HashMap<Integer, Integer> pauseIcons =
@@ -270,7 +319,7 @@ public class TetheringNotificationUpdater {
                 getTexts(R.array.tethering_downstream_combinations);
         final String downstreamText = combinationTexts.getOrDefault(mDownstreamTypesMask, "");
 
-        showNotificationLocked(iconId, title, message, downstreamText);
+        showNotificationLocked(ENABLE_NOTIFICATION_ID, iconId, title, message, downstreamText);
         return NOTIFY_DONE;
     }
 
@@ -297,7 +346,7 @@ public class TetheringNotificationUpdater {
                 getTexts(R.array.tethering_downstream_combinations);
         final String downstreamText = combinationTexts.getOrDefault(mDownstreamTypesMask, "");
 
-        showNotificationLocked(iconId, title, message, downstreamText);
+        showNotificationLocked(ENABLE_NOTIFICATION_ID, iconId, title, message, downstreamText);
         return NOTIFY_DONE;
     }
 
@@ -320,7 +369,7 @@ public class TetheringNotificationUpdater {
                 getTexts(R.array.tethering_downstream_combinations);
         final String downstreamText = combinationTexts.getOrDefault(mDownstreamTypesMask, "");
 
-        showNotificationLocked(iconId, title, message, downstreamText);
+        showNotificationLocked(ENABLE_NOTIFICATION_ID, iconId, title, message, downstreamText);
         return NOTIFY_DONE;
     }
 
@@ -334,8 +383,9 @@ public class TetheringNotificationUpdater {
         return getResourcesForSubId(mContext, mActiveDataSubId).getString(defaultTextId);
     }
 
-    private void showNotificationLocked(@DrawableRes final int iconId, @NonNull final String title,
-            @NonNull final String message, @NonNull final String downstreamText) {
+    private void showNotificationLocked(@NotificationId final int id, @DrawableRes final int iconId,
+            @NonNull final String title, @NonNull final String message,
+            @NonNull final String downstreamText) {
         final String formatTitle = formatText(
                 title, downstreamText, R.string.tethered_notification_title);
         final String formatMessage = formatText(
@@ -357,6 +407,6 @@ public class TetheringNotificationUpdater {
                         .setContentIntent(pi)
                         .build();
 
-        mNotificationManager.notify(null /* tag */, NOTIFY_ID, notification);
+        mNotificationManager.notify(null /* tag */, id, notification);
     }
 }

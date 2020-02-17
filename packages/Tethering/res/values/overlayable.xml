@@ -190,6 +190,14 @@
             <item type="string" name="tethering_notification_pause_title"/>
             <!-- String for tether pause notification message -->
             <item type="string" name="tethering_notification_pause_message"/>
+            <!-- Config for showing upstream roaming notification.
+            Please also configure tethering_notification_title and tethering_notification_message if
+            enable this config.-->
+            <item type="bool" name="config_upstream_roaming_notification"/>
+            <!-- String for upstream roaming notification title -->
+            <item type="string" name="upstream_roaming_notification_title"/>
+            <!-- String for upstream roaming notification message -->
+            <item type="string" name="upstream_roaming_notification_message"/>
             <!-- Params from config.xml that can be overlaid -->
 
             <!-- Params from strings.xml that can be overlaid -->
@@ -218,6 +226,8 @@
             <item type="drawable" name="stat_sys_tether_pause_usb"/>
             <item type="drawable" name="stat_sys_tether_pause_bluetooth"/>
             <item type="drawable" name="stat_sys_tether_pause_general"/>
+            <!-- Drawable for upstream roaming notification -->
+            <item type="drawable" name="stat_sys_tether_upstream_roaming"/>
             <!-- Params from drawable/ that can be overlaid -->
         </policy>
     </overlayable>
