@@ -22,6 +22,30 @@
       "revId": "70320a0683051513834022c1e7443d731cdf9356",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cf2c9a3_1177fa2c",
+        "filename": "packages/Tethering/common/TetheringLib/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-17T07:01:03Z",
+      "side": 1,
+      "message": "This error is caused by wrong conflict fixed that I miss remove frameworks-tethering under framework-defaults(Refer frameworks/base/Android.bp l.399 as below link).\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1235986/4/Android.bp#b399",
+      "parentUuid": "9be07926_620f52ed",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "70320a0683051513834022c1e7443d731cdf9356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
