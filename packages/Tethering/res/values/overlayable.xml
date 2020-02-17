@@ -191,6 +191,34 @@
             <!-- String for tether pause notification message -->
             <item type="string" name="tethering_notification_pause_message"/>
             <!-- Params from config.xml that can be overlaid -->
+
+            <!-- Params from strings.xml that can be overlaid -->
+            <!-- String for tether disabling notification title [CHAR LIMIT=200] -->
+            <item type="string" name="disable_tether_notification_title"/>
+            <!-- String for tether disabling notification message [CHAR LIMIT=200] -->
+            <item type="string" name="disable_tether_notification_message"/>
+            <!-- String for tether notification channel name [CHAR LIMIT=200] -->
+            <item type="string" name="notification_channel_tethering_status"/>
+            <!-- Params from strings.xml that can be overlaid -->
+
+            <!-- Params from drawable/ that can be overlaid -->
+            <!-- Drawable for enable notification -->
+            <item type="drawable" name="stat_sys_tether_hotspot"/>
+            <item type="drawable" name="stat_sys_tether_usb"/>
+            <item type="drawable" name="stat_sys_tether_bluetooth"/>
+            <item type="drawable" name="stat_sys_tether_general"/>
+            <!-- Drawable for client number notification -->
+            <item type="drawable" name="stat_sys_tether_number_one"/>
+            <item type="drawable" name="stat_sys_tether_number_two"/>
+            <item type="drawable" name="stat_sys_tether_number_three"/>
+            <item type="drawable" name="stat_sys_tether_number_four"/>
+            <item type="drawable" name="stat_sys_tether_number_five"/>
+            <!-- Drawable for pause notification -->
+            <item type="drawable" name="stat_sys_tether_pause_hotspot"/>
+            <item type="drawable" name="stat_sys_tether_pause_usb"/>
+            <item type="drawable" name="stat_sys_tether_pause_bluetooth"/>
+            <item type="drawable" name="stat_sys_tether_pause_general"/>
+            <!-- Params from drawable/ that can be overlaid -->
         </policy>
     </overlayable>
 </resources>
