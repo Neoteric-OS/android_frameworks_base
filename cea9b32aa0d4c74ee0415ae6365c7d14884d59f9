@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8cee9fb3_736d73ff",
+        "filename": "packages/Tethering/common/TetheringLib/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-17T09:38:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24b80383_81633e2a",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 6
+      },
+      "revId": "cea9b32aa0d4c74ee0415ae6365c7d14884d59f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b417aea_f475e5b7",
         "filename": "packages/Tethering/tests/unit/Android.bp",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "cea9b32aa0d4c74ee0415ae6365c7d14884d59f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c081f621_d239ddf8",
+        "filename": "packages/Tethering/tests/unit/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-17T09:38:44Z",
+      "side": 1,
+      "message": "AOSP don\u0027t have \"framework-wifi-stubs\" and \"framework-telephony-stubs\" yet. They only available in internal master.\nAnd these two wifi and telephony stubs is necessary in iternal master if we want to made TetheringTests as unbundled application. Giving that this Android.bp may be rare to touched, I think it is acceptable to keep different here.",
+      "parentUuid": "1b417aea_f475e5b7",
+      "range": {
+        "startLine": 43,
+        "startChar": 22,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "cea9b32aa0d4c74ee0415ae6365c7d14884d59f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
