@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "a3a8b04e_e4dc08e0",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-18T12:04:11Z",
+      "side": 1,
+      "message": "I think the structure is acceptable ; after all startLegacyVpn() is only ever callable by Settings, and hopefully in time is completely removed, so adding the type there is fine.\n\nThat being said, do look at the comments on the new patch because I don\u0027t think the format you chose is acceptable (in particular it lets apps exploit your scheme)",
+      "parentUuid": "b5af85e0_22fa95d8",
+      "range": {
+        "startLine": 402,
+        "startChar": 40,
+        "endLine": 403,
+        "endChar": 77
+      },
+      "revId": "c38c23ec319497ed8a772f7f360d26a8938ff26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3d1017f_40ff8bf5",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 44

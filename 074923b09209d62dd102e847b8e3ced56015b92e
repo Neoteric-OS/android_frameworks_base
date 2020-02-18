@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef31c087_3062fa13",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 49
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-18T12:04:11Z",
+      "side": 1,
+      "message": "Please have something actually principled. Here an app can just prepend this to what it passes you and you\u0027ll happily comply. Presto, feature that apps will rely on ! Hey, maybe we could implement it like that.\n\nBut seriously, even prepending a single character is okay, as long as your code ensures it\u0027s always prepended in BOTH code paths. In isValidVpnProfile make sure the first char is one that\u0027s accepted.",
+      "range": {
+        "startLine": 404,
+        "startChar": 51,
+        "endLine": 404,
+        "endChar": 72
+      },
+      "revId": "074923b09209d62dd102e847b8e3ced56015b92e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db6010a_fc83e126",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 49
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-18T12:04:11Z",
+      "side": 1,
+      "message": "maybe !isLegacyType \u0026\u0026",
+      "range": {
+        "startLine": 354,
+        "startChar": 15,
+        "endLine": 354,
+        "endChar": 30
+      },
+      "revId": "074923b09209d62dd102e847b8e3ced56015b92e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
