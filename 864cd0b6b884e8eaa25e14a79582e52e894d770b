@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9bab509_90072af1",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-18T04:55:04Z",
+      "side": 1,
+      "message": "Why new Ipv6ForwardingRule rather than just update upstreamIfindex -\u003e upstreamIfindex.\nIt seems the only use case is l.774 that you create a new Ipv6ForwardingRule that just change upstreamIfindex and remove old one.",
+      "range": {
+        "startLine": 246,
+        "startChar": 34,
+        "endLine": 246,
+        "endChar": 47
+      },
+      "revId": "864cd0b6b884e8eaa25e14a79582e52e894d770b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c450bd_18799a10",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-18T04:55:04Z",
+      "side": 1,
+      "message": "final String ?",
+      "range": {
+        "startLine": 612,
+        "startChar": 12,
+        "endLine": 612,
+        "endChar": 18
+      },
+      "revId": "864cd0b6b884e8eaa25e14a79582e52e894d770b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3cdc10_7f18e92f",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-18T04:55:04Z",
+      "side": 1,
+      "message": "Does tether offload also support local only hotspot ? If so, maybe move this event to TetheredState(after l.1004)",
+      "range": {
+        "startLine": 953,
+        "startChar": 21,
+        "endLine": 953,
+        "endChar": 39
+      },
+      "revId": "864cd0b6b884e8eaa25e14a79582e52e894d770b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
