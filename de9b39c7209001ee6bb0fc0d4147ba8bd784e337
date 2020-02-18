@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a510cdd_7227b11d",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-02-18T08:59:58Z",
+      "side": 1,
+      "message": "Good catch!\nI choose to make the name as self-explanatory as possible even without javadoc, since this is not a public API",
+      "parentUuid": "b4a60f27_b7326a97",
+      "range": {
+        "startLine": 67,
+        "startChar": 18,
+        "endLine": 67,
+        "endChar": 41
+      },
+      "revId": "de9b39c7209001ee6bb0fc0d4147ba8bd784e337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "330c510f_fa03f4d1",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "de9b39c7209001ee6bb0fc0d4147ba8bd784e337",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6965cfd1_599953ab",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-02-18T08:59:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "330c510f_fa03f4d1",
+      "range": {
+        "startLine": 142,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 9
+      },
+      "revId": "de9b39c7209001ee6bb0fc0d4147ba8bd784e337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
