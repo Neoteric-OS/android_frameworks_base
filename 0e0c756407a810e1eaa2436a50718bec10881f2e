@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6bc9b57_4fa61ba0",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-18T23:20:38Z",
+      "side": 1,
+      "message": "The description should be enough to understand the purpose of this class. E.g. you should mentioned something about ADB in here.",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 59
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297e0580_5d821f3f",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-18T23:20:38Z",
+      "side": 1,
+      "message": "Use Preconditions.checkStringNotEmpty similar to other people",
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8404a7f_dd6d44d7",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-18T23:20:38Z",
+      "side": 1,
+      "message": "Can we have this class immutable instead?",
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "137bb8ab_6dc546f4",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-18T23:20:38Z",
+      "side": 1,
+      "message": "Use proper java docs using\n\n@param\n\nand\n\n@return",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 14
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2044d25f_d7fd03a4",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-18T23:20:38Z",
+      "side": 1,
+      "message": "@NonNull",
+      "range": {
+        "startLine": 104,
+        "startChar": 30,
+        "endLine": 104,
+        "endChar": 36
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf1fe7e_2c872511",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-18T23:20:38Z",
+      "side": 1,
+      "message": "Call constructor that verifies the data instead. It is a common attack to send an invalid parcelable over a binder.\n\nreturn new PairDevice(source.readString(), source.readString(), readBoolean())",
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf3ad0c3_f97dc3f7",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-18T23:20:38Z",
+      "side": 1,
+      "message": "@NonNull?",
+      "range": {
+        "startLine": 161,
+        "startChar": 49,
+        "endLine": 161,
+        "endChar": 52
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eeeb175_d6ef665c",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-18T23:20:38Z",
+      "side": 1,
+      "message": "shouldEnable",
+      "range": {
+        "startLine": 163,
+        "startChar": 24,
+        "endLine": 163,
+        "endChar": 30
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5c7272_adf4926e",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-18T23:20:38Z",
+      "side": 1,
+      "message": "mIsUsbAdbEnabled\n\nbooleans should be named to answer a yes/no question",
+      "range": {
+        "startLine": 185,
+        "startChar": 20,
+        "endLine": 185,
+        "endChar": 34
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835d7ddd_f6e41565",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-02-18T23:20:38Z",
+      "side": 1,
+      "message": "Check input null-ability via Preconditions\n\nsame below\nCan relay until methods are implemented, but please don\u0027t forget",
+      "range": {
+        "startLine": 283,
+        "startChar": 60,
+        "endLine": 283,
+        "endChar": 66
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
