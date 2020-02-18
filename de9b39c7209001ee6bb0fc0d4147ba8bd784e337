@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4a60f27_b7326a97",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-02-18T08:24:16Z",
+      "side": 1,
+      "message": "Add javadoc to describe what the exception means.\nOr have a name that is self-explanatory, say, RevocationListFetchException.",
+      "range": {
+        "startLine": 67,
+        "startChar": 18,
+        "endLine": 67,
+        "endChar": 41
+      },
+      "revId": "de9b39c7209001ee6bb0fc0d4147ba8bd784e337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330c510f_fa03f4d1",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-02-18T08:24:16Z",
+      "side": 1,
+      "message": "Nit:\nmIsDeviceBootloaderUnlocked \u003d (pdbManager !\u003d null) \u0026\u0026\n        (pdbManager.getFlashLockState()\n                \u003d\u003d PersistentDataBlockManager.FLASH_LOCK_UNLOCKED);",
+      "range": {
+        "startLine": 142,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 9
+      },
+      "revId": "de9b39c7209001ee6bb0fc0d4147ba8bd784e337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
