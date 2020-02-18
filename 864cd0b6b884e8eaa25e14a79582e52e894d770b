@@ -68,6 +68,30 @@
       "revId": "864cd0b6b884e8eaa25e14a79582e52e894d770b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ed82e1_5ba4e51f",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-18T11:49:06Z",
+      "side": 1,
+      "message": "Correct the typo, If don\u0027t need to support local only hotspot case, just move event to TetheredState",
+      "parentUuid": "4d3cdc10_7f18e92f",
+      "range": {
+        "startLine": 953,
+        "startChar": 21,
+        "endLine": 953,
+        "endChar": 39
+      },
+      "revId": "864cd0b6b884e8eaa25e14a79582e52e894d770b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
