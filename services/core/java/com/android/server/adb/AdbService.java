@@ -231,7 +231,8 @@ public class AdbService extends IAdbManager.Stub {
 
         boolean secureAdbEnabled = AdbProperties.secure().orElse(false);
         boolean dataEncrypted = "1".equals(SystemProperties.get("vold.decrypt"));
-        if (secureAdbEnabled && !dataEncrypted) {
+        boolean emulatorWantsAuth = "1".equals(SystemProperties.get("qemu.adb.secure"));
+        if ((secureAdbEnabled && !dataEncrypted) || emulatorWantsAuth) {
             mDebuggingManager = new AdbDebuggingManager(context);
         }
 
