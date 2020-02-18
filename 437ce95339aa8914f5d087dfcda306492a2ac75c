@@ -22,6 +22,30 @@
       "revId": "437ce95339aa8914f5d087dfcda306492a2ac75c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334bd850_ca58bd04",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7804,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-18T19:44:01Z",
+      "side": 1,
+      "message": "Changed to unconditionally clear UID ranges, administrator UIDs, and owner UID.\n\nUpdated ConnectivityServiceTest#testConnectivityDiagnosticsCallbackOnConnectivityReport and #testConnectivityDiagnosticsCallbackOnDataStallSuspected to verify that the NetworkCapabilities have their UIDs cleared.",
+      "parentUuid": "b8e2c810_b6037705",
+      "range": {
+        "startLine": 7804,
+        "startChar": 27,
+        "endLine": 7804,
+        "endChar": 36
+      },
+      "revId": "437ce95339aa8914f5d087dfcda306492a2ac75c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
