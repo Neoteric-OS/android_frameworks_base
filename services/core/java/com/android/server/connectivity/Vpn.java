@@ -2355,8 +2355,8 @@ public class Vpn {
                     // IPsec tunnels.
                     mTunnelIface =
                             mIpSecManager.createIpSecTunnelInterface(
-                                    ikeSessionParams.getServerAddress() /* unused */,
-                                    ikeSessionParams.getServerAddress() /* unused */,
+                                    Inet4Address.getLocalHost() /* unused */,
+                                    Inet4Address.getLocalHost() /* unused */,
                                     network);
                     mNetd.setInterfaceUp(mTunnelIface.getInterfaceName());
 
