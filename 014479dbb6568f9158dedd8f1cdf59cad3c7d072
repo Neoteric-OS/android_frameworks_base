@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "750ceb89_650c14c9",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2875,
+      "author": {
+        "id": 1060398
+      },
+      "writtenOn": "2020-02-18T21:02:08Z",
+      "side": 1,
+      "message": "Instead define\nFEATURE_SLICES",
+      "range": {
+        "startLine": 2875,
+        "startChar": 31,
+        "endLine": 2875,
+        "endChar": 54
+      },
+      "revId": "014479dbb6568f9158dedd8f1cdf59cad3c7d072",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
