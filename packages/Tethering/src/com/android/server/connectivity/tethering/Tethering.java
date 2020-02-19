@@ -1617,11 +1617,7 @@ public class Tethering {
                     chooseUpstreamType(false);
                     break;
                 case UpstreamNetworkMonitor.EVENT_ON_LOST:
-                    // TODO: Re-evaluate possible upstreams. Currently upstream
-                    // reevaluation is triggered via received CONNECTIVITY_ACTION
-                    // broadcasts that result in being passed a
-                    // TetherMasterSM.CMD_UPSTREAM_CHANGED.
-                    handleNewUpstreamNetworkState(null);
+                    chooseUpstreamType(true);
                     break;
                 default:
                     mLog.e("Unknown arg1 value: " + arg1);
@@ -2040,6 +2036,11 @@ public class Tethering {
         pw.println("Entitlement:");
         pw.increaseIndent();
         mEntitlementMgr.dump(pw);
+        pw.decreaseIndent();
+
+        pw.println("UpstreamNetworkMonitor:");
+        pw.increaseIndent();
+        mUpstreamNetworkMonitor.dump(pw);
         pw.decreaseIndent();
 
         synchronized (mPublicSync) {

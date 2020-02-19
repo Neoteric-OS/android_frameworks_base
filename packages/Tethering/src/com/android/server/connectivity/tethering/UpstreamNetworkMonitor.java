@@ -46,6 +46,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
 import com.android.internal.util.StateMachine;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -387,13 +388,6 @@ public class UpstreamNetworkMonitor {
     private void handleLost(Network network) {
         // There are few TODOs within ConnectivityService's rematching code
         // pertaining to spurious onLost() notifications.
-        //
-        // TODO: simplify this, probably if favor of code that:
-        //     - selects a new upstream if mTetheringUpstreamNetwork has
-        //       been lost (by any callback)
-        //     - deletes the entry from the map only when the LISTEN_ALL
-        //       callback gets notified.
-
         if (!mNetworkMap.containsKey(network)) {
             // Ignore loss of networks about which we had not previously
             // learned any information or for which we have already processed
@@ -404,9 +398,7 @@ public class UpstreamNetworkMonitor {
         if (VDBG) Log.d(TAG, "EVENT_ON_LOST for " + network);
 
         // TODO: If sufficient information is available to select a more
-        // preferable upstream, do so now and notify the target.  Likewise,
-        // if the current upstream network is gone, notify the target of the
-        // fact that we now have no upstream at all.
+        // preferable upstream, do so now and notify the target.
         notifyTarget(EVENT_ON_LOST, mNetworkMap.remove(network));
     }
 
@@ -481,11 +473,11 @@ public class UpstreamNetworkMonitor {
                 return;
             }
 
-            handleLost(network);
             // Any non-LISTEN_ALL callback will necessarily concern a network that will
             // also match the LISTEN_ALL callback by construction of the LISTEN_ALL callback.
             // So it's not useful to do this work for non-LISTEN_ALL callbacks.
             if (mCallbackType == CALLBACK_LISTEN_ALL) {
+                handleLost(network);
                 recomputeLocalPrefixes();
             }
         }
@@ -601,5 +593,18 @@ public class UpstreamNetworkMonitor {
             nc.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
         }
         return nc;
+    }
+
+    /**
+     * Dump the infromation of UpstreamNewtorkMonitor.
+     * @param pw {@link PrintWriter} is used to print formatted
+     */
+    public void dump(PrintWriter pw) {
+        pw.print("All tracking network: ");
+        final Set<Network> allNetwork = mNetworkMap.keySet();
+        for (Network network : allNetwork) {
+            pw.print(network.toString());
+            pw.print(", ");
+        }
     }
 }
