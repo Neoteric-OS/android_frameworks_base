@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa08b079_e75f60de",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-02-19T18:35:23Z",
+      "side": 1,
+      "message": "I\u0027m using mAdbConnectionInfo for synchronization so it cannot be null.",
+      "parentUuid": "f03c5ea4_a8acce35",
+      "range": {
+        "startLine": 448,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 9
+      },
+      "revId": "2cca4006f5fdaa8d3b66656edc27136926e89942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b39beab1_aefeaf0e",
         "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
         "patchSetId": 16
@@ -36,6 +60,30 @@
       "writtenOn": "2020-02-14T19:43:31Z",
       "side": 1,
       "message": "Instead of .clear you\u0027d be setting the var to null instead",
+      "range": {
+        "startLine": 481,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 9
+      },
+      "revId": "2cca4006f5fdaa8d3b66656edc27136926e89942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad85cd6d_0847bd29",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-02-19T18:35:23Z",
+      "side": 1,
+      "message": "See previous comment.",
+      "parentUuid": "b39beab1_aefeaf0e",
       "range": {
         "startLine": 481,
         "startChar": 0,
