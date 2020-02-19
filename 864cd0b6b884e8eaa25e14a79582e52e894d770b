@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "637c0bf1_8e1098ee",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-19T09:41:03Z",
+      "side": 1,
+      "message": "I did it this way because:\n\n1. It allows Ipv6ForwardingRule to be immutable, with all members being public final. (jchalard++)\n2. We cannot just add the new rule to netd because rules are indexed by input interface. We need to delete the old rule.",
+      "parentUuid": "f9bab509_90072af1",
+      "range": {
+        "startLine": 246,
+        "startChar": 34,
+        "endLine": 246,
+        "endChar": 47
+      },
+      "revId": "864cd0b6b884e8eaa25e14a79582e52e894d770b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7c450bd_18799a10",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "864cd0b6b884e8eaa25e14a79582e52e894d770b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26faba65_d97883ec",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-19T09:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c450bd_18799a10",
+      "range": {
+        "startLine": 612,
+        "startChar": 12,
+        "endLine": 612,
+        "endChar": 18
+      },
+      "revId": "864cd0b6b884e8eaa25e14a79582e52e894d770b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -92,6 +140,30 @@
       "revId": "864cd0b6b884e8eaa25e14a79582e52e894d770b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414fba57_36facbc8",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-19T09:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0ed82e1_5ba4e51f",
+      "range": {
+        "startLine": 953,
+        "startChar": 21,
+        "endLine": 953,
+        "endChar": 39
+      },
+      "revId": "864cd0b6b884e8eaa25e14a79582e52e894d770b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
