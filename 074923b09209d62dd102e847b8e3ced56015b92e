@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c125deef_b6a0033a",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 49
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-19T01:39:27Z",
+      "side": 1,
+      "message": "Done - added a second prefix string for the inline keys.\n\nI have a mild preference towards adding a descriptive prefix string, unless size is a concern?",
+      "parentUuid": "ef31c087_3062fa13",
+      "range": {
+        "startLine": 404,
+        "startChar": 51,
+        "endLine": 404,
+        "endChar": 72
+      },
+      "revId": "074923b09209d62dd102e847b8e3ced56015b92e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4db6010a_fc83e126",
         "filename": "core/java/com/android/internal/net/VpnProfile.java",
         "patchSetId": 49
@@ -36,6 +60,30 @@
       "writtenOn": "2020-02-18T12:04:11Z",
       "side": 1,
       "message": "maybe !isLegacyType \u0026\u0026",
+      "range": {
+        "startLine": 354,
+        "startChar": 15,
+        "endLine": 354,
+        "endChar": 30
+      },
+      "revId": "074923b09209d62dd102e847b8e3ced56015b92e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8a5ddc_995bb5aa",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 49
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-19T01:39:27Z",
+      "side": 1,
+      "message": "This is also checked in the isValidVpnProfile - if it is not a known type, it\u0027ll return false.",
+      "parentUuid": "4db6010a_fc83e126",
       "range": {
         "startLine": 354,
         "startChar": 15,
