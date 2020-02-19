@@ -49,6 +49,24 @@
     },
     {
       "key": {
+        "uuid": "acc1f369_a886e3e8",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-19T18:37:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aa08b079_e75f60de",
+      "revId": "2cca4006f5fdaa8d3b66656edc27136926e89942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b39beab1_aefeaf0e",
         "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
         "patchSetId": 16
@@ -93,6 +111,24 @@
       "revId": "2cca4006f5fdaa8d3b66656edc27136926e89942",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7007703c_ee8c834d",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-19T18:37:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad85cd6d_0847bd29",
+      "revId": "2cca4006f5fdaa8d3b66656edc27136926e89942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
