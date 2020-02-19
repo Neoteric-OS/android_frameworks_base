@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d62953b4_649fd1b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-02-19T09:18:09Z",
+      "side": 1,
+      "message": "Can you test it on unlocked device?",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 16
+      },
+      "revId": "75fa131b2b9643147a5bd7fc439b1fa661ce1c0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
