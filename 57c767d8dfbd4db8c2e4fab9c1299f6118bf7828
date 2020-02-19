@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82b54a29_d742ed52",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-19T11:13:38Z",
+      "side": 1,
+      "message": "nit: true /** removeFromMap */",
+      "range": {
+        "startLine": 788,
+        "startChar": 47,
+        "endLine": 788,
+        "endChar": 48
+      },
+      "revId": "57c767d8dfbd4db8c2e4fab9c1299f6118bf7828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

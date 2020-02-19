@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f2a1eac_c285e7dd",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-19T11:13:38Z",
+      "side": 1,
+      "message": "missing neighB deleting and re-adding ?",
+      "range": {
+        "startLine": 576,
+        "startChar": 44,
+        "endLine": 576,
+        "endChar": 45
+      },
+      "revId": "d50fdd3e5f348271063f95e842176b0d60e501fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
