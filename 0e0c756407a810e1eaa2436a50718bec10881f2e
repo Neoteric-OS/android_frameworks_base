@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9cb8085_81909d8a",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-02-19T00:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6bc9b57_4fa61ba0",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 59
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "297e0580_5d821f3f",
         "filename": "core/java/android/debug/PairDevice.java",
         "patchSetId": 9
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "72e70704_e13bdef5",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-02-19T00:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "297e0580_5d821f3f",
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8404a7f_dd6d44d7",
         "filename": "core/java/android/debug/PairDevice.java",
         "patchSetId": 9
@@ -56,6 +98,24 @@
       "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b4f8c0_8c597683",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-02-19T00:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8404a7f_dd6d44d7",
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "fd277220_7a9cb523",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-02-19T00:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "137bb8ab_6dc546f4",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 14
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2044d25f_d7fd03a4",
         "filename": "core/java/android/debug/PairDevice.java",
         "patchSetId": 9
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "8c77af5c_b37560ca",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-02-19T00:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2044d25f_d7fd03a4",
+      "range": {
+        "startLine": 104,
+        "startChar": 30,
+        "endLine": 104,
+        "endChar": 36
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaf1fe7e_2c872511",
         "filename": "core/java/android/debug/PairDevice.java",
         "patchSetId": 9
@@ -119,6 +227,24 @@
       "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8da2e0d_e86ccd20",
+        "filename": "core/java/android/debug/PairDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-02-19T00:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaf1fe7e_2c872511",
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "3e973194_a3b597b5",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-02-19T00:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf3ad0c3_f97dc3f7",
+      "range": {
+        "startLine": 161,
+        "startChar": 49,
+        "endLine": 161,
+        "endChar": 52
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4eeeb175_d6ef665c",
         "filename": "services/core/java/com/android/server/adb/AdbService.java",
         "patchSetId": 9
@@ -165,6 +315,30 @@
       "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8968d246_255b09a1",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-02-19T00:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eeeb175_d6ef665c",
+      "range": {
+        "startLine": 163,
+        "startChar": 24,
+        "endLine": 163,
+        "endChar": 30
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "8217c1e5_aeec9243",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-02-19T00:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e5c7272_adf4926e",
+      "range": {
+        "startLine": 185,
+        "startChar": 20,
+        "endLine": 185,
+        "endChar": 34
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "835d7ddd_f6e41565",
         "filename": "services/core/java/com/android/server/adb/AdbService.java",
         "patchSetId": 9
@@ -211,6 +409,30 @@
       "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb5cfa2_78ad2d4b",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-02-19T00:38:21Z",
+      "side": 1,
+      "message": "Ack. Implementation is https://android-review.googlesource.com/c/platform/frameworks/base/+/1159180. I\u0027ll make the corrections there.",
+      "parentUuid": "835d7ddd_f6e41565",
+      "range": {
+        "startLine": 283,
+        "startChar": 60,
+        "endLine": 283,
+        "endChar": 66
+      },
+      "revId": "0e0c756407a810e1eaa2436a50718bec10881f2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
