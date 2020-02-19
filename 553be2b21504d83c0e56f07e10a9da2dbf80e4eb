@@ -16,6 +16,24 @@
       "revId": "553be2b21504d83c0e56f07e10a9da2dbf80e4eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a624f143_5b472c54",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-02-19T08:00:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6c4831e9_5e37ad47",
+      "revId": "553be2b21504d83c0e56f07e10a9da2dbf80e4eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
