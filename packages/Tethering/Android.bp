@@ -91,6 +91,7 @@ java_defaults {
         "libnativehelper_compat_libc++",
         "libtetherutilsjni",
     ],
+    jni_uses_platform_apis: true,
     resource_dirs: [
         "res",
     ],
