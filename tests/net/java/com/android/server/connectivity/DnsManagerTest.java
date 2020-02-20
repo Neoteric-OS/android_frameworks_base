@@ -18,6 +18,7 @@ package com.android.server.connectivity;
 
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
+import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.provider.Settings.Global.PRIVATE_DNS_DEFAULT_MODE;
 import static android.provider.Settings.Global.PRIVATE_DNS_MODE;
 import static android.provider.Settings.Global.PRIVATE_DNS_SPECIFIER;
@@ -102,9 +103,11 @@ public class DnsManagerTest {
         lp.addDnsServer(InetAddress.getByName("3.3.3.3"));
         lp.addDnsServer(InetAddress.getByName("4.4.4.4"));
 
+        final int[] transportTypes = {TRANSPORT_TEST};
         // Send a validation event that is tracked on the alternate netId
-        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID, lp, IS_DEFAULT);
-        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID_ALTERNATE, lp, NOT_DEFAULT);
+        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID, lp, transportTypes, IS_DEFAULT);
+        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID_ALTERNATE, lp, transportTypes,
+                NOT_DEFAULT);
         mDnsManager.updatePrivateDnsValidation(
                 new DnsManager.PrivateDnsValidationUpdate(TEST_NETID_ALTERNATE,
                 InetAddress.parseNumericAddress("4.4.4.4"), "", true));
@@ -135,7 +138,7 @@ public class DnsManagerTest {
                     InetAddress.parseNumericAddress("6.6.6.6"),
                     InetAddress.parseNumericAddress("2001:db8:66:66::1")
                     }));
-        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID, lp, IS_DEFAULT);
+        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID, lp, transportTypes, IS_DEFAULT);
         fixedLp = new LinkProperties(lp);
         mDnsManager.updatePrivateDnsStatus(TEST_NETID, fixedLp);
         assertTrue(fixedLp.isPrivateDnsActive());
@@ -168,7 +171,8 @@ public class DnsManagerTest {
         // be tracked.
         LinkProperties lp = new LinkProperties();
         lp.addDnsServer(InetAddress.getByName("3.3.3.3"));
-        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID, lp, IS_DEFAULT);
+        final int[] transportTypes = {TRANSPORT_TEST};
+        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID, lp, transportTypes, IS_DEFAULT);
         mDnsManager.updatePrivateDnsValidation(
                 new DnsManager.PrivateDnsValidationUpdate(TEST_NETID,
                 InetAddress.parseNumericAddress("3.3.3.3"), "", true));
@@ -179,7 +183,7 @@ public class DnsManagerTest {
         // Validation event has untracked netId
         mDnsManager.updatePrivateDns(new Network(TEST_NETID),
                 mDnsManager.getPrivateDnsConfig());
-        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID, lp, IS_DEFAULT);
+        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID, lp, transportTypes, IS_DEFAULT);
         mDnsManager.updatePrivateDnsValidation(
                 new DnsManager.PrivateDnsValidationUpdate(TEST_NETID_UNTRACKED,
                 InetAddress.parseNumericAddress("3.3.3.3"), "", true));
@@ -225,7 +229,7 @@ public class DnsManagerTest {
         Settings.Global.putString(mContentResolver, PRIVATE_DNS_MODE, PRIVATE_DNS_MODE_OFF);
         mDnsManager.updatePrivateDns(new Network(TEST_NETID),
                 mDnsManager.getPrivateDnsConfig());
-        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID, lp, IS_DEFAULT);
+        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID, lp, transportTypes, IS_DEFAULT);
         mDnsManager.updatePrivateDnsValidation(
                 new DnsManager.PrivateDnsValidationUpdate(TEST_NETID,
                 InetAddress.parseNumericAddress("3.3.3.3"), "", true));

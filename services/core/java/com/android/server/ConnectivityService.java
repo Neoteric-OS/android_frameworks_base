@@ -3065,7 +3065,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // in order to restart a validation pass from within netd.
         final PrivateDnsConfig cfg = mDnsManager.getPrivateDnsConfig();
         if (cfg.useTls && TextUtils.isEmpty(cfg.hostname)) {
-            updateDnses(nai.linkProperties, null, nai.network.netId);
+            updateDnses(nai.linkProperties, null, nai.networkCapabilities, nai.networkCapabilities,
+                    nai.network.netId);
         }
     }
 
@@ -3098,7 +3099,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void updatePrivateDns(NetworkAgentInfo nai, PrivateDnsConfig newCfg) {
         mDnsManager.updatePrivateDns(nai.network, newCfg);
-        updateDnses(nai.linkProperties, null, nai.network.netId);
+        updateDnses(nai.linkProperties, null, nai.networkCapabilities, nai.networkCapabilities,
+                nai.network.netId);
     }
 
     private void handlePrivateDnsValidationUpdate(PrivateDnsValidationUpdate update) {
@@ -3316,6 +3318,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         getNetworkPermission(networkAgent.networkCapabilities));
             }
             mDnsResolver.createNetworkCache(networkAgent.network.netId);
+
             return true;
         } catch (RemoteException | ServiceSpecificException e) {
             loge("Error creating network " + networkAgent.network.netId + ": "
@@ -5861,7 +5864,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         updateRoutes(newLp, oldLp, netId);
-        updateDnses(newLp, oldLp, netId);
+        updateDnses(newLp, oldLp, networkAgent.networkCapabilities,
+                networkAgent.networkCapabilities, netId);
         // Make sure LinkProperties represents the latest private DNS status.
         // This does not need to be done before updateDnses because the
         // LinkProperties are not the source of the private DNS configuration.
@@ -6005,20 +6009,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return !routeDiff.added.isEmpty() || !routeDiff.removed.isEmpty();
     }
 
-    private void updateDnses(LinkProperties newLp, LinkProperties oldLp, int netId) {
-        if (oldLp != null && newLp.isIdenticalDnses(oldLp)) {
+    private void updateDnses(@NonNull LinkProperties newLp, @NonNull LinkProperties oldLp,
+            @NonNull NetworkCapabilities newNc, @NonNull NetworkCapabilities prevNc, int netId) {
+        if (oldLp != null && newLp.isIdenticalDnses(oldLp) && newNc.equalsTransportTypes(prevNc)) {
             return;  // no updating necessary
         }
 
         final NetworkAgentInfo defaultNai = getDefaultNetwork();
         final boolean isDefaultNetwork = (defaultNai != null && defaultNai.network.netId == netId);
+        final int[] transportTypes = newNc.getTransportTypes();
 
         if (DBG) {
             final Collection<InetAddress> dnses = newLp.getDnsServers();
             log("Setting DNS servers for network " + netId + " to " + dnses);
         }
         try {
-            mDnsManager.setDnsConfigurationForNetwork(netId, newLp, isDefaultNetwork);
+            mDnsManager.setDnsConfigurationForNetwork(netId, newLp, transportTypes,
+                    isDefaultNetwork);
         } catch (Exception e) {
             loge("Exception in setDnsConfigurationForNetwork: " + e);
         }
@@ -6216,6 +6223,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // bubble those changes through.
             updateAllVpnsCapabilities();
         }
+
+        updateDnses(nai.linkProperties, nai.linkProperties, newNc, prevNc, nai.network.netId);
     }
 
     /**

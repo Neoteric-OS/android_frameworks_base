@@ -27,6 +27,7 @@ import static android.provider.Settings.Global.PRIVATE_DNS_DEFAULT_MODE;
 import static android.provider.Settings.Global.PRIVATE_DNS_MODE;
 import static android.provider.Settings.Global.PRIVATE_DNS_SPECIFIER;
 
+import android.annotation.NonNull;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import android.net.IDnsResolver;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkUtils;
+import android.net.ResolverExperimentalOptionsParcel;
 import android.net.ResolverParamsParcel;
 import android.net.Uri;
 import android.net.shared.PrivateDnsConfig;
@@ -305,7 +307,7 @@ public class DnsManager {
     }
 
     public void setDnsConfigurationForNetwork(
-            int netId, LinkProperties lp, boolean isDefaultNetwork) {
+            int netId, LinkProperties lp, @NonNull int[] transportTypes, boolean isDefaultNetwork) {
 
         updateParametersSettings();
         final ResolverParamsParcel paramsParcel = new ResolverParamsParcel();
@@ -337,6 +339,8 @@ public class DnsManager {
                               .collect(Collectors.toList()))
                 : useTls ? paramsParcel.servers  // Opportunistic
                 : new String[0];            // Off
+        paramsParcel.experimentalOptions = new ResolverExperimentalOptionsParcel();
+        paramsParcel.transportTypes = transportTypes;
         // Prepare to track the validation status of the DNS servers in the
         // resolver config when private DNS is in opportunistic or strict mode.
         if (useTls) {
