@@ -3316,6 +3316,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         getNetworkPermission(networkAgent.networkCapabilities));
             }
             mDnsResolver.createNetworkCache(networkAgent.network.netId);
+            final NetworkAgentInfo defaultNai = getDefaultNetwork();
+            final boolean isDefaultNetwork = (defaultNai != null
+                    && defaultNai.network.netId == networkAgent.network.netId);
+            int[] transportTypes = networkAgent.networkCapabilities.getTransportTypes();
+            try {
+                mDnsManager.setDnsConfigurationForNetwork(networkAgent.network.netId,
+                        networkAgent.linkProperties, transportTypes, isDefaultNetwork);
+            } catch (Exception e) {
+                loge("Exception in setDnsConfigurationForNetwork: " + e);
+            }
             return true;
         } catch (RemoteException | ServiceSpecificException e) {
             loge("Error creating network " + networkAgent.network.netId + ": "
@@ -6012,13 +6022,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         final NetworkAgentInfo defaultNai = getDefaultNetwork();
         final boolean isDefaultNetwork = (defaultNai != null && defaultNai.network.netId == netId);
+        NetworkAgentInfo nai = getNetworkAgentInfoForNetId(netId);
+        int[] transportTypes = nai.networkCapabilities.getTransportTypes();
 
         if (DBG) {
             final Collection<InetAddress> dnses = newLp.getDnsServers();
             log("Setting DNS servers for network " + netId + " to " + dnses);
         }
         try {
-            mDnsManager.setDnsConfigurationForNetwork(netId, newLp, isDefaultNetwork);
+            mDnsManager.setDnsConfigurationForNetwork(netId, newLp, transportTypes,
+                    isDefaultNetwork);
         } catch (Exception e) {
             loge("Exception in setDnsConfigurationForNetwork: " + e);
         }
@@ -6215,6 +6228,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Tell VPNs about updated capabilities, since they may need to
             // bubble those changes through.
             updateAllVpnsCapabilities();
+        }
+        if (!newNc.equalsTransportTypes(prevNc)) {
+            final NetworkAgentInfo defaultNai = getDefaultNetwork();
+            final boolean isDefaultNetwork = (defaultNai != null
+                    && defaultNai.network.netId == nai.network.netId);
+            int[] transportTypes = nai.networkCapabilities.getTransportTypes();
+            try {
+                mDnsManager.setDnsConfigurationForNetwork(nai.network.netId, nai.linkProperties,
+                        transportTypes, isDefaultNetwork);
+            } catch (Exception e) {
+                loge("Exception in setDnsConfigurationForNetwork: " + e);
+            }
         }
     }
 
