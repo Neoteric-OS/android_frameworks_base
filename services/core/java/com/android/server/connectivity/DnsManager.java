@@ -27,6 +27,7 @@ import static android.provider.Settings.Global.PRIVATE_DNS_DEFAULT_MODE;
 import static android.provider.Settings.Global.PRIVATE_DNS_MODE;
 import static android.provider.Settings.Global.PRIVATE_DNS_SPECIFIER;
 
+import android.annotation.Nullable;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import android.net.IDnsResolver;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkUtils;
+import android.net.ResolverExperimentalOptionsParcel;
 import android.net.ResolverParamsParcel;
 import android.net.Uri;
 import android.net.shared.PrivateDnsConfig;
@@ -237,6 +239,7 @@ public class DnsManager {
     // TODO: Replace these Maps with SparseArrays.
     private final Map<Integer, PrivateDnsConfig> mPrivateDnsMap;
     private final Map<Integer, PrivateDnsValidationStatuses> mPrivateDnsValidationMap;
+    private final Map<Integer, int[]> mTransportTypes;
 
     private int mNumDnsEntries;
     private int mSampleValidity;
@@ -253,6 +256,7 @@ public class DnsManager {
         mSystemProperties = sp;
         mPrivateDnsMap = new HashMap<>();
         mPrivateDnsValidationMap = new HashMap<>();
+        mTransportTypes = new HashMap<>();
 
         // TODO: Create and register ContentObservers to track every setting
         // used herein, posting messages to respond to changes.
@@ -304,6 +308,18 @@ public class DnsManager {
         statuses.updateStatus(update);
     }
 
+    /**
+     * Update transport types to a given network.
+     */
+    public void updateTransportTypesForNetwork(int netId, @Nullable int[] transportTypes) {
+
+        if (transportTypes != null) {
+            mTransportTypes.put(netId, transportTypes);
+        } else {
+            mTransportTypes.remove(netId);
+        }
+    }
+
     public void setDnsConfigurationForNetwork(
             int netId, LinkProperties lp, boolean isDefaultNetwork) {
 
@@ -337,6 +353,13 @@ public class DnsManager {
                               .collect(Collectors.toList()))
                 : useTls ? paramsParcel.servers  // Opportunistic
                 : new String[0];            // Off
+        paramsParcel.experimentalOptions = new ResolverExperimentalOptionsParcel();
+        paramsParcel.transportTypes = new int[] {};
+        for (Map.Entry<Integer, int[]> entry : mTransportTypes.entrySet()) {
+            if (paramsParcel.netId == entry.getKey()) {
+                paramsParcel.transportTypes = entry.getValue();
+            }
+        }
         // Prepare to track the validation status of the DNS servers in the
         // resolver config when private DNS is in opportunistic or strict mode.
         if (useTls) {

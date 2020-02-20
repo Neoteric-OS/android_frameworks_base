@@ -3316,6 +3316,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         getNetworkPermission(networkAgent.networkCapabilities));
             }
             mDnsResolver.createNetworkCache(networkAgent.network.netId);
+            int[] transportTypes = networkAgent.networkCapabilities.getTransportTypes();
+            mDnsManager.updateTransportTypesForNetwork(networkAgent.network.netId, transportTypes);
             return true;
         } catch (RemoteException | ServiceSpecificException e) {
             loge("Error creating network " + networkAgent.network.netId + ": "
@@ -3328,6 +3330,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         try {
             mNetd.networkDestroy(networkAgent.network.netId);
             mDnsResolver.destroyNetworkCache(networkAgent.network.netId);
+            mDnsManager.updateTransportTypesForNetwork(networkAgent.network.netId, null);
         } catch (RemoteException | ServiceSpecificException e) {
             loge("Exception destroying network: " + e);
         }
@@ -6215,6 +6218,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Tell VPNs about updated capabilities, since they may need to
             // bubble those changes through.
             updateAllVpnsCapabilities();
+        }
+
+        if (!newNc.equalsTransportTypes(prevNc)) {
+            mDnsManager.updateTransportTypesForNetwork(nai.network.netId,
+                    newNc.getTransportTypes());
         }
     }
 

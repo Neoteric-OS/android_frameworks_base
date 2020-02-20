@@ -18,14 +18,19 @@ package com.android.server.connectivity;
 
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
+import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.provider.Settings.Global.PRIVATE_DNS_DEFAULT_MODE;
 import static android.provider.Settings.Global.PRIVATE_DNS_MODE;
 import static android.provider.Settings.Global.PRIVATE_DNS_SPECIFIER;
 
+import static com.android.testutils.MiscAssertsKt.assertContainsExactly;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
@@ -34,6 +39,7 @@ import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
+import android.net.ResolverParamsParcel;
 import android.net.RouteInfo;
 import android.net.shared.PrivateDnsConfig;
 import android.provider.Settings;
@@ -47,6 +53,7 @@ import com.android.internal.util.test.FakeSettingsProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -75,6 +82,8 @@ public class DnsManagerTest {
     @Mock Context mCtx;
     @Mock IDnsResolver mMockDnsResolver;
     @Mock MockableSystemProperties mSystemProperties;
+    private ArgumentCaptor<ResolverParamsParcel> mResolverParamsParcelCaptor =
+            ArgumentCaptor.forClass(ResolverParamsParcel.class);
 
     @Before
     public void setUp() throws Exception {
@@ -257,5 +266,24 @@ public class DnsManagerTest {
         assertTrue(cfgStrict.useTls);
         assertEquals("strictmode.com", cfgStrict.hostname);
         assertEquals(new InetAddress[0], cfgStrict.ips);
+    }
+
+    @Test
+    public void testSetDnsConfiguration() throws Exception {
+        reset(mMockDnsResolver);
+        mDnsManager.updatePrivateDns(new Network(TEST_NETID),
+                mDnsManager.getPrivateDnsConfig());
+        final LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName(TEST_IFACENAME);
+        lp.addDnsServer(InetAddress.getByName("3.3.3.3"));
+        lp.addDnsServer(InetAddress.getByName("4.4.4.4"));
+        final int[] transportTypes = {TRANSPORT_TEST};
+        mDnsManager.updateTransportTypesForNetwork(TEST_NETID, transportTypes);
+        mDnsManager.setDnsConfigurationForNetwork(TEST_NETID, lp, IS_DEFAULT);
+        verify(mMockDnsResolver, times(1)).setResolverConfiguration(
+                mResolverParamsParcelCaptor.capture());
+        ResolverParamsParcel resolvrParams = mResolverParamsParcelCaptor.getValue();
+        assertEquals(1, resolvrParams.transportTypes.length);
+        assertContainsExactly(resolvrParams.transportTypes, TRANSPORT_TEST);
     }
 }
