@@ -245,12 +245,10 @@ message SystemMessage {
     NOTE_NETWORK_LOST_INTERNET = 742;
     // The system default network switched to a different network
     NOTE_NETWORK_SWITCH = 743;
-    // Device logged-in captive portal network successfully
-    NOTE_NETWORK_LOGGED_IN = 744;
     // A partial connectivity network was detected during network validation
-    NOTE_NETWORK_PARTIAL_CONNECTIVITY = 745;
+    NOTE_NETWORK_PARTIAL_CONNECTIVITY = 744;
     // Private DNS is broken in strict mode
-    NOTE_NETWORK_PRIVATE_DNS_BROKEN = 746;
+    NOTE_NETWORK_PRIVATE_DNS_BROKEN = 745;
 
     // Notify the user that their work profile has been deleted
     // Package: android
