@@ -3316,6 +3316,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         getNetworkPermission(networkAgent.networkCapabilities));
             }
             mDnsResolver.createNetworkCache(networkAgent.network.netId);
+            mDnsManager.updateTransportsForNetwork(networkAgent.network.netId,
+                    networkAgent.networkCapabilities.getTransportTypes());
             return true;
         } catch (RemoteException | ServiceSpecificException e) {
             loge("Error creating network " + networkAgent.network.netId + ": "
@@ -3328,6 +3330,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         try {
             mNetd.networkDestroy(networkAgent.network.netId);
             mDnsResolver.destroyNetworkCache(networkAgent.network.netId);
+            mDnsManager.updateTransportsForNetwork(networkAgent.network.netId, null);
         } catch (RemoteException | ServiceSpecificException e) {
             loge("Exception destroying network: " + e);
         }
@@ -6018,10 +6021,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
             log("Setting DNS servers for network " + netId + " to " + dnses);
         }
         try {
-            mDnsManager.setDnsConfigurationForNetwork(netId, newLp, isDefaultNetwork);
+            mDnsManager.updateLinkPropertiesForNetwork(netId, newLp);
         } catch (Exception e) {
             loge("Exception in setDnsConfigurationForNetwork: " + e);
         }
+
+        // TODO: netd should listen on [::1]:53 and proxy queries to the current
+        // default network, and we should just set net.dns1 to ::1, not least
+        // because applications attempting to use net.dns resolvers will bypass
+        // the privacy protections of things like DNS-over-TLS.
+        if (isDefaultNetwork) mDnsManager.setDefaultDnsSystemProperties(newLp.getDnsServers());
+        mDnsManager.flushVmDnsCache();
     }
 
     private void updateVpnFiltering(LinkProperties newLp, LinkProperties oldLp,
@@ -6215,6 +6225,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Tell VPNs about updated capabilities, since they may need to
             // bubble those changes through.
             updateAllVpnsCapabilities();
+        }
+
+        if (!newNc.equalsTransportTypes(prevNc)) {
+            mDnsManager.updateTransportsForNetwork(nai.network.netId, newNc.getTransportTypes());
         }
     }
 
