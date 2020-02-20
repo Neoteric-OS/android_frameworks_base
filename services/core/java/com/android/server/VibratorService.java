@@ -145,6 +145,7 @@ public class VibratorService extends IVibratorService.Stub
     private SettingsObserver mSettingObserver;
 
     private volatile VibrateThread mThread;
+    private volatile boolean canceled;
 
     // mInputDeviceVibrators lock should be acquired after mLock, if both are
     // to be acquired
@@ -769,6 +770,7 @@ public class VibratorService extends IVibratorService.Stub
         Trace.traceBegin(Trace.TRACE_TAG_VIBRATOR, "doCancelVibrateLocked");
         try {
             mH.removeCallbacks(mVibrationEndRunnable);
+            canceled = true;
             if (mThread != null) {
                 mThread.cancel();
                 mThread = null;
@@ -790,7 +792,12 @@ public class VibratorService extends IVibratorService.Stub
         if (DEBUG) {
             Slog.e(TAG, "Vibration finished, cleaning up");
         }
+        canceled = false;
         synchronized (mLock) {
+            if(canceled) {
+                Log.d(TAG,"canceled by other thread");
+                return;
+            }
             // Make sure the vibration is really done. This also reports that the vibration is
             // finished.
             doCancelVibrateLocked();
