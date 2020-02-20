@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Qasid Sadiq <qasid@google.com>
+Code-Review+2: Phil Weaver <pweaver@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 20 Feb 2020 00:05:42 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1240226
+Project: platform/frameworks/base
+Branch: refs/heads/master
