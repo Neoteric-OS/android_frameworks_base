@@ -4884,6 +4884,31 @@ public class ConnectivityServiceTest {
     }
 
     @Test
+    public void testDnsConfigurationTransTypesPushed() throws Exception {
+        // Clear any interactions that occur as a result of CS starting up.
+        reset(mMockDnsResolver);
+
+        NetworkRequest request = new NetworkRequest.Builder()
+                .clearCapabilities().addCapability(NET_CAPABILITY_INTERNET)
+                .build();
+        TestNetworkCallback callback = new TestNetworkCallback();
+        mCm.registerNetworkCallback(request, callback);
+
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        final LinkProperties wifiLp = new LinkProperties();
+        mWiFiNetworkAgent.sendLinkProperties(wifiLp);
+        mWiFiNetworkAgent.connect(false);
+        callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        verify(mMockDnsResolver, times(1)).createNetworkCache(
+                eq(mWiFiNetworkAgent.getNetwork().netId));
+        verify(mMockDnsResolver, atLeastOnce()).setResolverConfiguration(
+                mResolverParamsParcelCaptor.capture());
+        ResolverParamsParcel resolvrParams = mResolverParamsParcelCaptor.getValue();
+        assertContainsExactly(resolvrParams.transportTypes, TRANSPORT_WIFI);
+        reset(mMockDnsResolver);
+    }
+
+    @Test
     public void testPrivateDnsNotification() throws Exception {
         NetworkRequest request = new NetworkRequest.Builder()
                 .clearCapabilities().addCapability(NET_CAPABILITY_INTERNET)
