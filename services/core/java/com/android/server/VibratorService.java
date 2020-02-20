@@ -145,6 +145,7 @@ public class VibratorService extends IVibratorService.Stub
     private SettingsObserver mSettingObserver;
 
     private volatile VibrateThread mThread;
+    private volatile VibrationEndRunnable mVibrationEndRunnable = new VibrationEndRunnable();
 
     // mInputDeviceVibrators lock should be acquired after mLock, if both are
     // to be acquired
@@ -756,10 +757,15 @@ public class VibratorService extends IVibratorService.Stub
         }
     }
 
-    private final Runnable mVibrationEndRunnable = new Runnable() {
+    private class VibrationEndRunnable implements Runnable {
+        public long startTime;
+
         @Override
         public void run() {
-            onVibrationFinished();
+            synchronized (mLock) {
+                if(mCurrentVibration.startTime == startTime)
+                    onVibrationFinished();
+            }
         }
     };
 
@@ -821,6 +827,7 @@ public class VibratorService extends IVibratorService.Stub
                 Trace.asyncTraceBegin(Trace.TRACE_TAG_VIBRATOR, "vibration", 0);
                 VibrationEffect.OneShot oneShot = (VibrationEffect.OneShot) vib.effect;
                 doVibratorOn(oneShot.getDuration(), oneShot.getAmplitude(), vib.uid, vib.attrs);
+                mVibrationEndRunnable.startTime = vib.startTime;
                 mH.postDelayed(mVibrationEndRunnable, oneShot.getDuration());
             } else if (vib.effect instanceof VibrationEffect.Waveform) {
                 // mThread better be null here. doCancelVibrate should always be
@@ -833,6 +840,7 @@ public class VibratorService extends IVibratorService.Stub
                 Trace.asyncTraceBegin(Trace.TRACE_TAG_VIBRATOR, "vibration", 0);
                 long timeout = doVibratorPrebakedEffectLocked(vib);
                 if (timeout > 0) {
+                    mVibrationEndRunnable.startTime = vib.startTime;
                     mH.postDelayed(mVibrationEndRunnable, timeout);
                 }
             } else {
