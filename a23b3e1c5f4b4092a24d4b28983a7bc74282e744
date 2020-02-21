@@ -22,6 +22,30 @@
       "revId": "a23b3e1c5f4b4092a24d4b28983a7bc74282e744",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805d823a_b16ef391",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-21T02:27:09Z",
+      "side": 1,
+      "message": "I also don\u0027t understand the implications of this change, and the commit message doesn\u0027t provide much help. Generally speaking it\u0027s not allowed for a mainline module to depend on private APIs. Is this something the module can actually do? Should we be dropping our dependency on libnativehelper, or linking it staically, or...?",
+      "parentUuid": "e94b1d51_7c552c9d",
+      "range": {
+        "startLine": 94,
+        "startChar": 28,
+        "endLine": 94,
+        "endChar": 32
+      },
+      "revId": "a23b3e1c5f4b4092a24d4b28983a7bc74282e744",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
