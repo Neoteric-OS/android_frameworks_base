@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5125d675_4693d0be",
+        "filename": "proto/src/system_messages.proto",
+        "patchSetId": 27
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1128973
+      },
+      "writtenOn": "2020-02-21T16:28:48Z",
+      "side": 1,
+      "message": "Note to self: Wait for go/ag/10378196 to go in, as this value may change.",
+      "range": {
+        "startLine": 234,
+        "startChar": 2,
+        "endLine": 235,
+        "endChar": 30
+      },
+      "revId": "377388ef2ad4ac7f7c8b087e8b4d5cef74046c29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
