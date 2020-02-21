@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dbde0cc_1bc1a41c",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-21T01:20:36Z",
+      "side": 1,
+      "message": "Suggest putting before binder; this part of the parameters of the network, which are mostly grouped above.",
+      "range": {
+        "startLine": 236,
+        "startChar": 27,
+        "endLine": 236,
+        "endChar": 44
+      },
+      "revId": "c37fb39230f393ef1bac5ad6644053c5115d9b7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993e35cd_d13291e3",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-21T01:20:36Z",
+      "side": 1,
+      "message": "Hmm, this probably indicates that it should have been an int[]. Out of scope though.",
+      "range": {
+        "startLine": 254,
+        "startChar": 11,
+        "endLine": 254,
+        "endChar": 31
+      },
+      "revId": "c37fb39230f393ef1bac5ad6644053c5115d9b7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
