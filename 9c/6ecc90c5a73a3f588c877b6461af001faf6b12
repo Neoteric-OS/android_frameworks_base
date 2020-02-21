@@ -1,0 +1,10 @@
+Autosubmit+1: Anna Trostanetski <atrost@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Andrei-Valentin Onea <andreionea@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Anna Trostanetski <atrost@google.com>
+Submitted-at: Fri, 21 Feb 2020 19:13:06 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1239711
+Project: platform/frameworks/base
+Branch: refs/heads/master
