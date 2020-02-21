@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c84cc12e_34d9986a",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-21T23:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dbde0cc_1bc1a41c",
+      "range": {
+        "startLine": 236,
+        "startChar": 27,
+        "endLine": 236,
+        "endChar": 44
+      },
+      "revId": "c37fb39230f393ef1bac5ad6644053c5115d9b7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "993e35cd_d13291e3",
         "filename": "services/core/java/com/android/server/TestNetworkService.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2020-02-21T01:20:36Z",
       "side": 1,
       "message": "Hmm, this probably indicates that it should have been an int[]. Out of scope though.",
+      "range": {
+        "startLine": 254,
+        "startChar": 11,
+        "endLine": 254,
+        "endChar": 31
+      },
+      "revId": "c37fb39230f393ef1bac5ad6644053c5115d9b7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e32018f_db643d23",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-21T23:53:45Z",
+      "side": 1,
+      "message": "It seems that general API guidelines encourage Collections over arrays. This is more due to AIDL not supporting Lists of primitives directly.\n\nhttps://groups.google.com/a/google.com/g/android-chatty-eng/c/VPtFbtuChUo/m/E2cxUV_-AwAJ\n\nhttps://g3doc.corp.google.com/company/teams/android-api-council/guidelines.md?cl\u003dhead#prefer-collectiont-types-over-arrays-as-return-or-parameter-type",
+      "parentUuid": "993e35cd_d13291e3",
       "range": {
         "startLine": 254,
         "startChar": 11,
