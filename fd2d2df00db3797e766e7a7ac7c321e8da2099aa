@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "911a28fd_5cfe511f",
+        "filename": "tests/FlickerTests/src/com/android/server/wm/flicker/OpenAppToSplitScreenTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2020-02-21T17:02:11Z",
+      "side": 0,
+      "message": "curious why this was removed",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 53
+      },
+      "revId": "fd2d2df00db3797e766e7a7ac7c321e8da2099aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
