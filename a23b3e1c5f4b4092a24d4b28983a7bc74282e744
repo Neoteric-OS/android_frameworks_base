@@ -118,6 +118,30 @@
       "revId": "a23b3e1c5f4b4092a24d4b28983a7bc74282e744",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6995d61b_c8882ea7",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2020-02-21T06:56:31Z",
+      "side": 1,
+      "message": "Sorry, the liblog issue may have been from a different module.  It looks like the issues with this module were fixed after I made this change by aosp/1226717.  There is still a minor issue that the app packages the platform version of liblog as a JNI library instead of relying on the NDK version because it lists liblog in jni_libs, but that isn\u0027t tripping the check I\u0027m currently working on.  I\u0027ll abandon this change.",
+      "parentUuid": "733c33d1_7f9420a6",
+      "range": {
+        "startLine": 94,
+        "startChar": 28,
+        "endLine": 94,
+        "endChar": 32
+      },
+      "revId": "a23b3e1c5f4b4092a24d4b28983a7bc74282e744",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
