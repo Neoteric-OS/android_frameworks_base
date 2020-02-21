@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce60d847_fa767032",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-21T09:45:18Z",
+      "side": 1,
+      "message": "nit: it is not clear to me what is ready.\nMaybe created?",
+      "range": {
+        "startLine": 7,
+        "startChar": 50,
+        "endLine": 7,
+        "endChar": 55
+      },
+      "revId": "64fb7d2a422f8455ee319986a1d0c90607c214b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a24f8b_141481d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-21T09:45:18Z",
+      "side": 1,
+      "message": "services are",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 10
+      },
+      "revId": "64fb7d2a422f8455ee319986a1d0c90607c214b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366ad1b7_f2198897",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-21T09:45:18Z",
+      "side": 1,
+      "message": "callbacks?",
+      "range": {
+        "startLine": 310,
+        "startChar": 25,
+        "endLine": 310,
+        "endChar": 33
+      },
+      "revId": "64fb7d2a422f8455ee319986a1d0c90607c214b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6660af1b_c47e4b1c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-21T09:45:18Z",
+      "side": 1,
+      "message": "nits:\n1. Is it better if we have way to prevent this from being called twice?\n2. Is it better if we name it more specific? e.g reuse the name of startStateMachineUpdaters/registerCallbacks or something else if it doesn\u0027t fit",
+      "range": {
+        "startLine": 313,
+        "startChar": 15,
+        "endLine": 313,
+        "endChar": 25
+      },
+      "revId": "64fb7d2a422f8455ee319986a1d0c90607c214b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107f28ef_d7a3037f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-21T09:45:18Z",
+      "side": 1,
+      "message": "nit: Does it mean if wifiManager is not there we\u0027ll have no log to debug and no way to recover?",
+      "range": {
+        "startLine": 338,
+        "startChar": 7,
+        "endLine": 338,
+        "endChar": 9
+      },
+      "revId": "64fb7d2a422f8455ee319986a1d0c90607c214b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62f63b6_9abb354f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-21T09:45:18Z",
+      "side": 1,
+      "message": "Per discussed with might calls back to Tethering.java\nI\u0027m not sure if it is good.",
+      "range": {
+        "startLine": 730,
+        "startChar": 19,
+        "endLine": 730,
+        "endChar": 39
+      },
+      "revId": "64fb7d2a422f8455ee319986a1d0c90607c214b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
