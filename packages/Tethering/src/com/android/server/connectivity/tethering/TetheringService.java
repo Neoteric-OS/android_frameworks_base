@@ -79,6 +79,7 @@ public class TetheringService extends Service {
         mContext = mDeps.getContext();
         mUserManager = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
         mTethering = makeTethering(mDeps);
+        mTethering.start();
     }
 
     /**
