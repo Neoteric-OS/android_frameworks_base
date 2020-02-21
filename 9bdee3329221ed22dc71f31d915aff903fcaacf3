@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63bb2b79_c57064e5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3319,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-21T10:24:22Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5326b25f_04bbd6d2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6232,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-21T10:24:22Z",
+      "side": 1,
+      "message": "please call updateDnses with prevNc/newNc instead of setDnsConfigurationForNetwork directly.\nYou can return if both NC have the same transportTypes.\nupdate it without centralized method might not be a good idea for long term from my point of view.",
+      "range": {
+        "startLine": 6232,
+        "startChar": 8,
+        "endLine": 6232,
+        "endChar": 50
+      },
+      "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deec5cac_0d9e7bf2",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-21T10:24:22Z",
+      "side": 1,
+      "message": "can it be nullable as commented at https://android-review.googlesource.com/c/platform/frameworks/base/+/1187516/5/services/core/java/com/android/server/connectivity/DnsManager.java#344",
+      "range": {
+        "startLine": 342,
+        "startChar": 21,
+        "endLine": 342,
+        "endChar": 40
+      },
+      "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd2ce98_375d6303",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-21T10:24:22Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 105,
+        "endChar": 11
+      },
+      "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9c311c_a1e7b6c6",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-21T10:24:22Z",
+      "side": 1,
+      "message": "Maybe define it as constant TEST_TRANSPORTTYPES?",
+      "range": {
+        "startLine": 107,
+        "startChar": 66,
+        "endLine": 107,
+        "endChar": 80
+      },
+      "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ba9da5_bc0d050e",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-21T10:24:22Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 173,
+        "startChar": 8,
+        "endLine": 173,
+        "endChar": 11
+      },
+      "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
