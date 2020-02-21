@@ -46,6 +46,30 @@
       "revId": "a23b3e1c5f4b4092a24d4b28983a7bc74282e744",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0547f97f_f82bbf3e",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2020-02-21T02:47:37Z",
+      "side": 1,
+      "message": "This is simply annotating the current state so that I can turn on stricter checks.  See the attached bug for more info.  To make this an updateable mainline module you\u0027ll have to fix this to only use JNI that depends on NDK APIs, but I\u0027d like to get this in as-is so that I can work towards the stricter checks.\n\nI didn\u0027t spend too long trying to make this work with NDK APIs, but IIRC the primary issue is that the liblog that is part of the NDK does not include the ALOG* macros, just an __android_log_printf symbol.",
+      "parentUuid": "805d823a_b16ef391",
+      "range": {
+        "startLine": 94,
+        "startChar": 28,
+        "endLine": 94,
+        "endChar": 32
+      },
+      "revId": "a23b3e1c5f4b4092a24d4b28983a7bc74282e744",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
