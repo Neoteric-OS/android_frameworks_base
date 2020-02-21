@@ -94,6 +94,30 @@
       "revId": "a23b3e1c5f4b4092a24d4b28983a7bc74282e744",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733c33d1_7f9420a6",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-21T06:18:36Z",
+      "side": 1,
+      "message": "The code we use from liblog is __android_log_print and it is already in liblog.map.txt. Also don\u0027t understand what the actual problem here.",
+      "parentUuid": "43adff97_599e7e74",
+      "range": {
+        "startLine": 94,
+        "startChar": 28,
+        "endLine": 94,
+        "endChar": 32
+      },
+      "revId": "a23b3e1c5f4b4092a24d4b28983a7bc74282e744",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
