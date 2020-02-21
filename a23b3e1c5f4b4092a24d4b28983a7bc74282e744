@@ -70,6 +70,30 @@
       "revId": "a23b3e1c5f4b4092a24d4b28983a7bc74282e744",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43adff97_599e7e74",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-21T05:58:23Z",
+      "side": 1,
+      "message": "Hmm, but wait - what are the actual private APIs here?\n\nBoth this build target (well, more specifically everything that uses this defaults clause) and  has an sdk_version clause. libnetivehelper_compat_libc++ and libtetherutilsjni both have sdk_version, and liblog is an ndk_library. Doesn\u0027t that meant that these build targets can only depend on things that also have an sdk_version? And doesn\u0027t that in turn mean that they can only depend on NDK APIs?\n\nOr is the problem that we are using code from liblog that is not listed in liblog.map.txt? If so, then how would we know what the problem is, other than because you told us?",
+      "parentUuid": "0547f97f_f82bbf3e",
+      "range": {
+        "startLine": 94,
+        "startChar": 28,
+        "endLine": 94,
+        "endChar": 32
+      },
+      "revId": "a23b3e1c5f4b4092a24d4b28983a7bc74282e744",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
