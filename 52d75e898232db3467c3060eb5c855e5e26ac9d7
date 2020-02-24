@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "922f92fa_246b3e9a",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3486,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2020-02-24T13:54:52Z",
+      "side": 1,
+      "message": "this doesn\u0027t need to be protected by a lock at all",
+      "parentUuid": "ed647f3a_24478583",
+      "range": {
+        "startLine": 3486,
+        "startChar": 26,
+        "endLine": 3486,
+        "endChar": 43
+      },
+      "revId": "52d75e898232db3467c3060eb5c855e5e26ac9d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04cd0cb6_d07ad1c1",
         "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
         "patchSetId": 1
