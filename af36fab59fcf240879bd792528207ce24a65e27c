@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "add17806_41389e5b",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2020-02-24T10:49:33Z",
+      "side": 1,
+      "message": "This seems like a very roundabout way of doing things. I think you can do this by having just one class that extends IUpdateEngineCallback.Stub() and contains the logic that you have placed in CleanupAppliedPayloadReturn.",
+      "range": {
+        "startLine": 618,
+        "startChar": 8,
+        "endLine": 628,
+        "endChar": 10
+      },
+      "revId": "af36fab59fcf240879bd792528207ce24a65e27c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
