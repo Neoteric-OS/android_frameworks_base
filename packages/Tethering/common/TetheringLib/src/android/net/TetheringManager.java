@@ -34,6 +34,7 @@ import android.util.Log;
 
 import com.android.internal.annotations.GuardedBy;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -489,6 +490,7 @@ public class TetheringManager {
                 mBuilderParcel = new TetheringRequestParcel();
                 mBuilderParcel.tetheringType = type;
                 mBuilderParcel.localIPv4Address = null;
+                mBuilderParcel.staticClientAddress = null;
                 mBuilderParcel.exemptFromEntitlementCheck = false;
                 mBuilderParcel.showProvisioningUi = true;
             }
@@ -496,12 +498,27 @@ public class TetheringManager {
             /**
              * Configure tethering with static IPv4 assignment (with DHCP disabled).
              *
-             * @param localIPv4Address The preferred local IPv4 address to use.
+             * @param localIPv4Address The preferred local IPv4 link address to use.
              */
             @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
             @NonNull
             public Builder useStaticIpv4Addresses(@NonNull final LinkAddress localIPv4Address) {
                 mBuilderParcel.localIPv4Address = localIPv4Address;
+                return this;
+            }
+
+            /**
+             * Specify static client address. The address should be covered by the prefix of
+             * localIPv4Address which is configured from {@link #useStaticIpv4Addresses}. If
+             * localIPv4Address is null, this configuration would also be ignored.
+             *
+             * @param clientAddress The static client address.
+             */
+            @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
+            @NonNull
+            public Builder setStaticClientAddress(
+                    @NonNull final InetAddress clientAddress) {
+                mBuilderParcel.staticClientAddress = clientAddress.getHostName();
                 return this;
             }
 
@@ -540,6 +557,7 @@ public class TetheringManager {
         public String toString() {
             return "TetheringRequest [ type= " + mRequestParcel.tetheringType
                     + ", localIPv4Address= " + mRequestParcel.localIPv4Address
+                    + ", staticClientAddress= " + mRequestParcel.staticClientAddress
                     + ", exemptFromEntitlementCheck= "
                     + mRequestParcel.exemptFromEntitlementCheck + ", showProvisioningUi= "
                     + mRequestParcel.showProvisioningUi + " ]";
