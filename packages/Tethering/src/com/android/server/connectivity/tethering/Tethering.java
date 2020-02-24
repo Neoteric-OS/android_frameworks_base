@@ -197,6 +197,8 @@ public class Tethering {
     private final SharedLog mLog = new SharedLog(TAG);
     private final RemoteCallbackList<ITetheringEventCallback> mTetheringEventCallbacks =
             new RemoteCallbackList<>();
+    private final SparseArray<TetheringRequestParcel> mUnProcessedStaticIpConfigs =
+            new SparseArray<>();
 
     // used to synchronize public access to members
     private final Object mPublicSync;
@@ -487,15 +489,38 @@ public class Tethering {
         }
     }
 
+    private void maybeConfigureStaticIp(final TetheringRequestParcel request,
+            final IpServer ipServer) {
+        if (ipServer == null) {
+            // If IpServer is not created yet, put the request into unprocessed map.
+            mUnProcessedStaticIpConfigs.put(request.tetheringType, request);
+        } else {
+            if (request.localIPv4Address != null && request.tetheringType != TETHERING_BLUETOOTH) {
+                ipServer.setStaticIpv4Address(request.localIPv4Address);
+                ipServer.setStaticClientAddress(request.staticClientAddress);
+            }
+            mUnProcessedStaticIpConfigs.remove(request.tetheringType);
+        }
+    }
+
     void startTethering(final TetheringRequestParcel request, final IIntResultListener listener) {
-        mEntitlementMgr.startProvisioningIfNeeded(request.tetheringType,
-                request.showProvisioningUi);
-        enableTetheringInternal(request.tetheringType, true /* enabled */, listener);
+        mHandler.post(() -> {
+            final IpServer ipServer = getIpServer(request.tetheringType);
+            maybeConfigureStaticIp(request, ipServer);
+
+            mEntitlementMgr.startProvisioningIfNeeded(request.tetheringType,
+                    request.showProvisioningUi);
+            enableTetheringInternal(request.tetheringType, true /* enabled */, listener);
+        });
     }
 
     void stopTethering(int type) {
-        enableTetheringInternal(type, false /* disabled */, null);
-        mEntitlementMgr.stopProvisioningIfNeeded(type);
+        mHandler.post(() -> {
+            mUnProcessedStaticIpConfigs.remove(type);
+
+            enableTetheringInternal(type, false /* disabled */, null);
+            mEntitlementMgr.stopProvisioningIfNeeded(type);
+        });
     }
 
     /**
@@ -504,39 +529,42 @@ public class Tethering {
      */
     private void enableTetheringInternal(int type, boolean enable,
             final IIntResultListener listener) {
-        int result;
+        int result = TETHER_ERROR_NO_ERROR;
         switch (type) {
             case TETHERING_WIFI:
                 result = setWifiTethering(enable);
-                sendTetherResult(listener, result);
                 break;
             case TETHERING_USB:
                 result = setUsbTethering(enable);
-                sendTetherResult(listener, result);
                 break;
             case TETHERING_BLUETOOTH:
+                // Result of blutooth tethering would callback asynchronously.
                 setBluetoothTethering(enable, listener);
-                break;
+                return;
             case TETHERING_NCM:
                 result = setNcmTethering(enable);
-                sendTetherResult(listener, result);
                 break;
             case TETHERING_ETHERNET:
                 result = setEthernetTethering(enable);
-                sendTetherResult(listener, result);
                 break;
             default:
                 Log.w(TAG, "Invalid tether type.");
-                sendTetherResult(listener, TETHER_ERROR_UNKNOWN_IFACE);
+                result = TETHER_ERROR_UNKNOWN_IFACE;
         }
+        sendTetherResult(listener, result, type);
     }
 
-    private void sendTetherResult(final IIntResultListener listener, int result) {
+    private void sendTetherResult(final IIntResultListener listener, final int result,
+            final int type) {
         if (listener != null) {
             try {
                 listener.onResult(result);
             } catch (RemoteException e) { }
         }
+
+        // If changing tethering fail, remove corresponding request
+        // no matter who trigger the start/stop.
+        if (result != TETHER_ERROR_NO_ERROR) mUnProcessedStaticIpConfigs.remove(type);
     }
 
     private int setWifiTethering(final boolean enable) {
@@ -566,7 +594,7 @@ public class Tethering {
         if (adapter == null || !adapter.isEnabled()) {
             Log.w(TAG, "Tried to enable bluetooth tethering with null or disabled adapter. null: "
                     + (adapter == null));
-            sendTetherResult(listener, TETHER_ERROR_SERVICE_UNAVAIL);
+            sendTetherResult(listener, TETHER_ERROR_SERVICE_UNAVAIL, TETHERING_BLUETOOTH);
             return;
         }
 
@@ -595,7 +623,7 @@ public class Tethering {
                 final int result = (((BluetoothPan) proxy).isTetheringOn() == enable)
                         ? TETHER_ERROR_NO_ERROR
                         : TETHER_ERROR_MASTER_ERROR;
-                sendTetherResult(listener, result);
+                sendTetherResult(listener, result, TETHERING_BLUETOOTH);
                 adapter.closeProfileProxy(BluetoothProfile.PAN, proxy);
             }
         }, BluetoothProfile.PAN);
@@ -1101,17 +1129,23 @@ public class Tethering {
             }
         }
 
-        for (int i = 0; i < mTetherStates.size(); i++) {
-            final IpServer ipServer = mTetherStates.valueAt(i).ipServer;
-            if (ipServer.interfaceType() == tetheringType) {
-                ipServer.unwanted();
-                return;
-            }
-        }
+        // TODO: Figure out whether this is still needed.
+        final IpServer ipServer = getIpServer(tetheringType);
+        if (ipServer != null) ipServer.unwanted();
 
         mLog.log("Error disabling Wi-Fi IP serving; "
                 + (TextUtils.isEmpty(ifname) ? "no interface name specified"
                                            : "specified interface: " + ifname));
+    }
+
+    private IpServer getIpServer(final int tetheringType) {
+        for (int i = 0; i < mTetherStates.size(); i++) {
+            final IpServer ipServer = mTetherStates.valueAt(i).ipServer;
+            if (ipServer.interfaceType() == tetheringType) {
+                return ipServer;
+            }
+        }
+        return null;
     }
 
     private void disableWifiIpServingLocked(String ifname, int apState) {
@@ -2277,6 +2311,10 @@ public class Tethering {
                              makeControlCallback(), mConfig.enableLegacyDhcpServer,
                              mDeps.getIpServerDependencies()));
         mTetherStates.put(iface, tetherState);
+        final TetheringRequestParcel request = mUnProcessedStaticIpConfigs.get(interfaceType);
+        if (request != null) {
+            maybeConfigureStaticIp(request, tetherState.ipServer);
+        }
         tetherState.ipServer.start();
     }
 
