@@ -22,6 +22,30 @@
       "revId": "eb7da0f5b204d8aca20030c0c2547b301accc837",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a35803_5c023afa",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-02-24T07:01:25Z",
+      "side": 1,
+      "message": "Had an offline discussion with Howard and PC, we decide to remove the DEFAULT_USERDATA_SIZE in DynamicSystemClient.java. So that these two default values can consolidate to one single default value.",
+      "parentUuid": "ecb3d85a_a515d28c",
+      "range": {
+        "startLine": 86,
+        "startChar": 30,
+        "endLine": 86,
+        "endChar": 51
+      },
+      "revId": "eb7da0f5b204d8aca20030c0c2547b301accc837",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
