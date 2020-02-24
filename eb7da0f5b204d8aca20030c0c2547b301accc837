@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecb3d85a_a515d28c",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2020-02-24T06:35:42Z",
+      "side": 1,
+      "message": "The default size is defined differently in DynamicSystemClient.java.\nCould you make them consistent?",
+      "range": {
+        "startLine": 86,
+        "startChar": 30,
+        "endLine": 86,
+        "endChar": 51
+      },
+      "revId": "eb7da0f5b204d8aca20030c0c2547b301accc837",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
