@@ -499,10 +499,16 @@ public class TetheringTest {
         return new Tethering(mTetheringDependencies);
     }
 
-    private TetheringRequestParcel createTetheringRquestParcel(final int type) {
+    private TetheringRequestParcel createTetheringRequestParcel(final int type) {
+        return createTetheringRequestParcel(type, null, null);
+    }
+
+    private TetheringRequestParcel createTetheringRequestParcel(final int type,
+            final LinkAddress serverAddr, final String clientAddr) {
         final TetheringRequestParcel request = new TetheringRequestParcel();
         request.tetheringType = type;
-        request.localIPv4Address = null;
+        request.localIPv4Address = serverAddr;
+        request.staticClientAddress = clientAddr;
         request.exemptFromEntitlementCheck = false;
         request.showProvisioningUi = false;
 
@@ -616,7 +622,7 @@ public class TetheringTest {
 
     private void prepareNcmTethering() {
         // Emulate startTethering(TETHERING_NCM) called
-        mTethering.startTethering(createTetheringRquestParcel(TETHERING_NCM), null);
+        mTethering.startTethering(createTetheringRequestParcel(TETHERING_NCM), null);
         mLooper.dispatchAll();
         verify(mUsbManager, times(1)).setCurrentFunctions(UsbManager.FUNCTION_NCM);
 
@@ -629,7 +635,7 @@ public class TetheringTest {
                 .thenReturn(upstreamState);
 
         // Emulate pressing the USB tethering button in Settings UI.
-        mTethering.startTethering(createTetheringRquestParcel(TETHERING_USB), null);
+        mTethering.startTethering(createTetheringRequestParcel(TETHERING_USB), null);
         mLooper.dispatchAll();
         verify(mUsbManager, times(1)).setCurrentFunctions(UsbManager.FUNCTION_RNDIS);
 
@@ -903,7 +909,7 @@ public class TetheringTest {
         when(mWifiManager.startSoftAp(any(WifiConfiguration.class))).thenReturn(true);
 
         // Emulate pressing the WiFi tethering button.
-        mTethering.startTethering(createTetheringRquestParcel(TETHERING_WIFI), null);
+        mTethering.startTethering(createTetheringRequestParcel(TETHERING_WIFI), null);
         mLooper.dispatchAll();
         verify(mWifiManager, times(1)).startSoftAp(null);
         verifyNoMoreInteractions(mWifiManager);
@@ -931,7 +937,7 @@ public class TetheringTest {
         when(mWifiManager.startSoftAp(any(WifiConfiguration.class))).thenReturn(true);
 
         // Emulate pressing the WiFi tethering button.
-        mTethering.startTethering(createTetheringRquestParcel(TETHERING_WIFI), null);
+        mTethering.startTethering(createTetheringRequestParcel(TETHERING_WIFI), null);
         mLooper.dispatchAll();
         verify(mWifiManager, times(1)).startSoftAp(null);
         verifyNoMoreInteractions(mWifiManager);
@@ -1008,7 +1014,7 @@ public class TetheringTest {
         doThrow(new RemoteException()).when(mNetd).ipfwdEnableForwarding(TETHERING_NAME);
 
         // Emulate pressing the WiFi tethering button.
-        mTethering.startTethering(createTetheringRquestParcel(TETHERING_WIFI), null);
+        mTethering.startTethering(createTetheringRequestParcel(TETHERING_WIFI), null);
         mLooper.dispatchAll();
         verify(mWifiManager, times(1)).startSoftAp(null);
         verifyNoMoreInteractions(mWifiManager);
@@ -1303,7 +1309,7 @@ public class TetheringTest {
         tetherState = callback.pollTetherStatesChanged();
         assertArrayEquals(tetherState.availableList, new String[] {TEST_WLAN_IFNAME});
 
-        mTethering.startTethering(createTetheringRquestParcel(TETHERING_WIFI), null);
+        mTethering.startTethering(createTetheringRequestParcel(TETHERING_WIFI), null);
         sendWifiApStateChanged(WIFI_AP_STATE_ENABLED, TEST_WLAN_IFNAME, IFACE_IP_MODE_TETHERED);
         mLooper.dispatchAll();
         tetherState = callback.pollTetherStatesChanged();
@@ -1398,10 +1404,10 @@ public class TetheringTest {
     public void testNoDuplicatedEthernetRequest() throws Exception {
         final TetheredInterfaceRequest mockRequest = mock(TetheredInterfaceRequest.class);
         when(mEm.requestTetheredInterface(any(), any())).thenReturn(mockRequest);
-        mTethering.startTethering(createTetheringRquestParcel(TETHERING_ETHERNET), null);
+        mTethering.startTethering(createTetheringRequestParcel(TETHERING_ETHERNET), null);
         mLooper.dispatchAll();
         verify(mEm, times(1)).requestTetheredInterface(any(), any());
-        mTethering.startTethering(createTetheringRquestParcel(TETHERING_ETHERNET), null);
+        mTethering.startTethering(createTetheringRequestParcel(TETHERING_ETHERNET), null);
         mLooper.dispatchAll();
         verifyNoMoreInteractions(mEm);
         mTethering.stopTethering(TETHERING_ETHERNET);
@@ -1578,6 +1584,23 @@ public class TetheringTest {
 
     private static <T> void assertContains(Collection<T> collection, T element) {
         assertTrue(element + " not found in " + collection, collection.contains(element));
+    }
+
+    @Test
+    public void testRequestStaticServerIp() throws Exception {
+        final String serverLinkAddr = "192.168.20.1/24";
+        final String serverAddr = "192.168.20.1";
+        mTethering.startTethering(createTetheringRequestParcel(TETHERING_USB,
+                  new LinkAddress(serverLinkAddr), null), null);
+        mLooper.dispatchAll();
+        verify(mUsbManager, times(1)).setCurrentFunctions(UsbManager.FUNCTION_RNDIS);
+        mTethering.interfaceStatusChanged(TEST_USB_IFNAME, true);
+        sendUsbBroadcast(true, true, true, TETHERING_USB);
+        mLooper.dispatchAll();
+        verifyNoMoreInteractions(mDhcpServer);
+        verify(mNetd).interfaceSetCfg(argThat(cfg -> serverAddr.equals(cfg.ipv4Addr)));
+
+        // TODO: test static client address.
     }
 
     // TODO: Test that a request for hotspot mode doesn't interfere with an
