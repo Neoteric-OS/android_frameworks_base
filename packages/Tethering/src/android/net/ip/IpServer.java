@@ -242,6 +242,10 @@ public class IpServer extends StateMachine {
     private IDhcpServer mDhcpServer;
     private RaParams mLastRaParams;
     private LinkAddress mIpv4Address;
+
+    private LinkAddress mStaticIpv4ServerAddr;
+    private InetAddress mStaticIpv4ClientAddr;
+
     @NonNull
     private List<TetheredClient> mDhcpLeases = Collections.emptyList();
 
@@ -312,6 +316,15 @@ public class IpServer extends StateMachine {
         addState(mUnavailableState);
 
         setInitialState(mInitialState);
+    }
+
+    /** Configure static server address. */
+    public void setStaticIpv4Address(LinkAddress address) {
+        mStaticIpv4ServerAddr = address;
+    }
+
+    /** Configure static client address. */
+    public void setStaticClientAddress(String address) {
     }
 
     /** Interface name which IpServer served.*/
@@ -554,7 +567,10 @@ public class IpServer extends StateMachine {
         final Inet4Address srvAddr;
         int prefixLen = 0;
         try {
-            if (mInterfaceType == TetheringManager.TETHERING_USB
+            if (mStaticIpv4ServerAddr != null) {
+                srvAddr = (Inet4Address) mStaticIpv4ServerAddr.getAddress();
+                prefixLen = mStaticIpv4ServerAddr.getPrefixLength();
+            } else if (mInterfaceType == TetheringManager.TETHERING_USB
                     || mInterfaceType == TetheringManager.TETHERING_NCM) {
                 srvAddr = (Inet4Address) parseNumericAddress(USB_NEAR_IFACE_ADDR);
                 prefixLen = USB_PREFIX_LENGTH;
@@ -599,10 +615,6 @@ public class IpServer extends StateMachine {
             return false;
         }
 
-        if (!configureDhcp(enabled, srvAddr, prefixLen)) {
-            return false;
-        }
-
         // Directly-connected route.
         final IpPrefix ipv4Prefix = new IpPrefix(mIpv4Address.getAddress(),
                 mIpv4Address.getPrefixLength());
@@ -614,7 +626,15 @@ public class IpServer extends StateMachine {
             mLinkProperties.removeLinkAddress(mIpv4Address);
             mLinkProperties.removeRoute(route);
         }
-        return true;
+
+        if (mStaticIpv4ServerAddr != null) {
+            // TODO: configure specific client address to dhcp server.
+            // if (mStaticIpv4ClientAddr != null) configureDhcp(...).
+
+            return true;
+        }
+
+        return configureDhcp(enabled, srvAddr, prefixLen);
     }
 
     private String getRandomWifiIPv4Address() {

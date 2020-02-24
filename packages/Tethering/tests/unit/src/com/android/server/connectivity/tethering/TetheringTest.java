@@ -494,9 +494,15 @@ public class TetheringTest {
     }
 
     private TetheringRequestParcel createTetheringRquestParcel(final int type) {
+        return createTetheringRquestParcel(type, null, null);
+    }
+
+    private TetheringRequestParcel createTetheringRquestParcel(final int type,
+            final LinkAddress serverAddr, final String clientAddr) {
         final TetheringRequestParcel request = new TetheringRequestParcel();
         request.tetheringType = type;
-        request.localIPv4Address = null;
+        request.localIPv4Address = serverAddr;
+        request.staticClientAddress = clientAddr;
         request.exemptFromEntitlementCheck = false;
         request.showProvisioningUi = false;
 
@@ -1506,6 +1512,23 @@ public class TetheringTest {
 
     private static <T> void assertContains(Collection<T> collection, T element) {
         assertTrue(element + " not found in " + collection, collection.contains(element));
+    }
+
+    @Test
+    public void testRequestStaticIpTethering() throws Exception {
+        final String serverLinkAddr = "192.168.20.1/24";
+        final String serverAddr = "192.168.20.1";
+        mTethering.startTethering(createTetheringRquestParcel(TETHERING_USB,
+                  new LinkAddress(serverLinkAddr), null), null);
+        mLooper.dispatchAll();
+        verify(mUsbManager, times(1)).setCurrentFunctions(UsbManager.FUNCTION_RNDIS);
+        mTethering.interfaceStatusChanged(TEST_USB_IFNAME, true);
+        sendUsbBroadcast(true, true, true, TETHERING_USB);
+        mLooper.dispatchAll();
+        verifyNoMoreInteractions(mDhcpServer);
+        verify(mNetd).interfaceSetCfg(argThat(cfg -> serverAddr.equals(cfg.ipv4Addr)));
+
+        // TODO: test static client address.
     }
 
     // TODO: Test that a request for hotspot mode doesn't interfere with an

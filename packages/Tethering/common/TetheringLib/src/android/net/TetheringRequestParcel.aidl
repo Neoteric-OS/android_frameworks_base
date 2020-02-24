@@ -25,6 +25,7 @@ import android.net.LinkAddress;
 parcelable TetheringRequestParcel {
     int tetheringType;
     LinkAddress localIPv4Address;
+    String staticClientAddress;
     boolean exemptFromEntitlementCheck;
     boolean showProvisioningUi;
 }
