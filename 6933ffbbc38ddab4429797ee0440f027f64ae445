@@ -87,6 +87,24 @@
       "revId": "6933ffbbc38ddab4429797ee0440f027f64ae445",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4ae6f5_b3d8788c",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/KeyguardIndicationControllerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-24T19:35:51Z",
+      "side": 1,
+      "message": "Sorry you\u0027re right the value here can\u0027t be null, while it can for other reasons in the controller.\nUpdated accordingly!",
+      "parentUuid": "c86332d3_f4a89195",
+      "revId": "6933ffbbc38ddab4429797ee0440f027f64ae445",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
