@@ -323,9 +323,10 @@ public class SmsMessage {
      *
      * @hide
      */
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     @SystemApi
     @Nullable
-    public static SmsMessage createFromNativeSmsSubmitPdu(@NonNull byte[] data, boolean isCdma) {
+    public static SmsMessage createSmsSubmitPdu(@NonNull byte[] data, boolean isCdma) {
         SmsMessageBase wrappedMessage;
 
         if (isCdma) {
