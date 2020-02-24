@@ -69,6 +69,24 @@
       "revId": "6933ffbbc38ddab4429797ee0440f027f64ae445",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86332d3_f4a89195",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/KeyguardIndicationControllerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2020-02-24T19:34:19Z",
+      "side": 1,
+      "message": "According to the docs, this method will never return null:\nhttps://developer.android.com/reference/android/content/res/Resources#getString(int)\n\nLet\u0027s remove it from both places?",
+      "parentUuid": "78b67f96_65ffd38a",
+      "revId": "6933ffbbc38ddab4429797ee0440f027f64ae445",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
