@@ -46,6 +46,30 @@
       "revId": "9b28b91e4fd989a6c712a8b0ae1bde819742d6f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b23bf0_f5f9b734",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/KeyguardIndicationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2020-02-24T17:06:23Z",
+      "side": 1,
+      "message": "It\u0027s easy to assume it will only be a line break, but we translate to lots of languages. some might require a different format.",
+      "parentUuid": "b66a40f5_4ca4c0af",
+      "range": {
+        "startLine": 395,
+        "startChar": 47,
+        "endLine": 395,
+        "endChar": 92
+      },
+      "revId": "9b28b91e4fd989a6c712a8b0ae1bde819742d6f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
