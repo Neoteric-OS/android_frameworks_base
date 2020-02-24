@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0aa06483_6844cb14",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/KeyguardIndicationControllerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-24T19:31:02Z",
+      "side": 1,
+      "message": "ack",
+      "parentUuid": "fe1eff10_ad8c194b",
+      "revId": "6933ffbbc38ddab4429797ee0440f027f64ae445",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "495c6311_347d0baa",
         "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/KeyguardIndicationControllerTest.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2020-02-24T19:20:18Z",
       "side": 1,
       "message": "this should never be null, let\u0027s remove the if.\nI\u0027d rather know that the string is invalid.",
+      "revId": "6933ffbbc38ddab4429797ee0440f027f64ae445",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b67f96_65ffd38a",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/KeyguardIndicationControllerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-24T19:31:02Z",
+      "side": 1,
+      "message": "We currently null check in the main controller as well to avoid any possible bad UI.\nI wanted to avoid any code difference.",
+      "parentUuid": "495c6311_347d0baa",
       "revId": "6933ffbbc38ddab4429797ee0440f027f64ae445",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
