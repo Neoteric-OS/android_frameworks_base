@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.telephony.SubscriptionManager;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
@@ -64,6 +65,7 @@ public class TetheringNotificationUpdater {
     // Downstream type is one of ConnectivityManager.TETHERING_* constants, 0 1 or 2.
     // This value has to be made 1 2 and 4, and OR'd with the others.
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
+    private int mActiveDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
         mContext = context;
@@ -81,6 +83,18 @@ public class TetheringNotificationUpdater {
         if (mDownstreamTypesMask == downstreamTypesMask) return;
         mDownstreamTypesMask = downstreamTypesMask;
         updateNotification();
+    }
+
+    /** Called when active data subscription id changed */
+    public void onActiveDataSubscriptionIdChanged(final int subId) {
+        if (mActiveDataSubId == subId) return;
+        mActiveDataSubId = subId;
+        updateNotification();
+    }
+
+    @VisibleForTesting
+    Resources getResourcesForSubId(@NonNull final Context c, final int subId) {
+        return SubscriptionManager.getResourcesForSubId(c, subId);
     }
 
     private void updateNotification() {
@@ -120,7 +134,7 @@ public class TetheringNotificationUpdater {
      */
     @NonNull
     private SparseArray<Integer> getIcons(@ArrayRes int id) {
-        final Resources res = mContext.getResources();
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
         final String[] array = res.getStringArray(id);
         final SparseArray<Integer> icons = new SparseArray<>();
         for (String config : array) {
@@ -141,7 +155,7 @@ public class TetheringNotificationUpdater {
     }
 
     private boolean setupNotification() {
-        final Resources res = mContext.getResources();
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
         final SparseArray<Integer> downstreamIcons = getIcons(R.array.tethering_notification_icons);
 
         final int iconId = downstreamIcons.get(mDownstreamTypesMask, NO_ICON_ID);
