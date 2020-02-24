@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d49928f6_0458f30a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3319,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-02-24T12:46:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "63bb2b79_c57064e5",
+      "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5326b25f_04bbd6d2",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2020-02-21T10:24:22Z",
       "side": 1,
       "message": "please call updateDnses with prevNc/newNc instead of setDnsConfigurationForNetwork directly.\nYou can return if both NC have the same transportTypes.\nupdate it without centralized method might not be a good idea for long term from my point of view.",
+      "range": {
+        "startLine": 6232,
+        "startChar": 8,
+        "endLine": 6232,
+        "endChar": 50
+      },
+      "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7571e8af_411add0f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6232,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-02-24T12:46:04Z",
+      "side": 1,
+      "message": "Use updateDnses(LinkProperties newLp, LinkProperties oldLp, NetworkCapabilities newNc, NetworkCapabilities prevNc, int netId) to get transport types and then setDnsConfigurationForNetwork with transport types directly.",
+      "parentUuid": "5326b25f_04bbd6d2",
       "range": {
         "startLine": 6232,
         "startChar": 8,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "75fe9f0b_b99d7721",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-02-24T12:46:04Z",
+      "side": 1,
+      "message": "if we don\u0027t initialize experimentalOptions, we will get java.lang.NullPointerException.\nConnectivityService: Exception in setDnsConfigurationForNetwork: java.lang.NullPointerException",
+      "parentUuid": "deec5cac_0d9e7bf2",
+      "range": {
+        "startLine": 342,
+        "startChar": 21,
+        "endLine": 342,
+        "endChar": 40
+      },
+      "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcd2ce98_375d6303",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2020-02-21T10:24:22Z",
       "side": 1,
       "message": "final?",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 105,
+        "endChar": 11
+      },
+      "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bbc0bc4_35e6df06",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-02-24T12:46:04Z",
+      "side": 1,
+      "message": "use final",
+      "parentUuid": "fcd2ce98_375d6303",
       "range": {
         "startLine": 105,
         "startChar": 8,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "c596d227_c1a7a244",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-02-24T12:46:04Z",
+      "side": 1,
+      "message": "add TRANSPORT_TEST to transportTypes.\nfinal int[] transportTypes \u003d {TRANSPORT_TEST};",
+      "parentUuid": "5e9c311c_a1e7b6c6",
+      "range": {
+        "startLine": 107,
+        "startChar": 66,
+        "endLine": 107,
+        "endChar": 80
+      },
+      "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67ba9da5_bc0d050e",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 2
@@ -131,6 +245,30 @@
       "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264b5ff8_3e0180df",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-02-24T12:46:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "67ba9da5_bc0d050e",
+      "range": {
+        "startLine": 173,
+        "startChar": 8,
+        "endLine": 173,
+        "endChar": 11
+      },
+      "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
