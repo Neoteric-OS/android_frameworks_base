@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.telephony.SubscriptionManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
@@ -44,16 +45,14 @@ import com.android.networkstack.tethering.R;
 /**
  * A class to display tethering-related notifications.
  *
- * <p>This class is not thread safe, it is intended to be used only from the tethering handler
- * thread. However the constructor is an exception, as it is called on another thread ;
- * therefore for thread safety all members of this class MUST either be final or initialized
- * to their default value (0, false or null).
- *
  * @hide
  */
 public class TetheringNotificationUpdater {
     private static final String TAG = TetheringNotificationUpdater.class.getSimpleName();
     private static final String CHANNEL_ID = "TETHERING_STATUS";
+    private static final String WIFI_DOWNSTREAM = "WIFI";
+    private static final String USB_DOWNSTREAM = "USB";
+    private static final String BLUETOOTH_DOWNSTREAM = "BT";
     private static final boolean NOTIFY_DONE = true;
     private static final boolean NO_NOTIFY = false;
     // Id to update and cancel tethering notification. Must be unique within the tethering app.
@@ -62,16 +61,16 @@ public class TetheringNotificationUpdater {
     static final int NO_ICON_ID = 0;
     @VisibleForTesting
     static final int DOWNSTREAM_NONE = 0;
+    // Used to synchronize update notification
+    private final Object mUpdateLock = new Object();
     private final Context mContext;
     private final NotificationManager mNotificationManager;
     private final NotificationChannel mChannel;
+
     // Downstream type is one of ConnectivityManager.TETHERING_* constants, 0 1 or 2.
     // This value has to be made 1 2 and 4, and OR'd with the others.
-    // WARNING : the constructor is called on a different thread. Thread safety therefore
-    // relies on this value being initialized to 0, and not any other value. If you need
-    // to change this, you will need to change the thread where the constructor is invoked,
-    // or to introduce synchronization.
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
+    private int mActiveDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
         mContext = context;
@@ -86,20 +85,36 @@ public class TetheringNotificationUpdater {
 
     /** Called when downstream has changed */
     public void onDownstreamChanged(@IntRange(from = 0, to = 7) final int downstreamTypesMask) {
-        if (mDownstreamTypesMask == downstreamTypesMask) return;
-        mDownstreamTypesMask = downstreamTypesMask;
-        updateNotification();
-    }
-
-    private void updateNotification() {
-        final boolean tetheringInactive = mDownstreamTypesMask <= DOWNSTREAM_NONE;
-
-        if (tetheringInactive || setupNotification() == NO_NOTIFY) {
-            clearNotification();
+        synchronized (mUpdateLock) {
+            if (mDownstreamTypesMask == downstreamTypesMask) return;
+            mDownstreamTypesMask = downstreamTypesMask;
+            updateNotificationLocked();
         }
     }
 
-    private void clearNotification() {
+    /** Called when active data subscription id changed */
+    public void onActiveDataSubscriptionIdChanged(final int subId) {
+        synchronized (mUpdateLock) {
+            if (mActiveDataSubId == subId) return;
+            mActiveDataSubId = subId;
+            updateNotificationLocked();
+        }
+    }
+
+    @VisibleForTesting
+    Resources getResourcesForSubId(@NonNull final Context c, final int subId) {
+        return SubscriptionManager.getResourcesForSubId(c, subId);
+    }
+
+    private void updateNotificationLocked() {
+        final boolean tetheringInactive = mDownstreamTypesMask <= DOWNSTREAM_NONE;
+
+        if (tetheringInactive || setupNotificationLocked() == NO_NOTIFY) {
+            clearNotificationLocked();
+        }
+    }
+
+    private void clearNotificationLocked() {
         mNotificationManager.cancel(null /* tag */, NOTIFY_ID);
     }
 
@@ -115,11 +130,11 @@ public class TetheringNotificationUpdater {
         int downstreamTypesMask = DOWNSTREAM_NONE;
         final String[] downstreams = types.split("\\|");
         for (String downstream : downstreams) {
-            if ("USB".equals(downstream.trim())) {
+            if (USB_DOWNSTREAM.equals(downstream.trim())) {
                 downstreamTypesMask |= (1 << TETHERING_USB);
-            } else if ("WIFI".equals(downstream.trim())) {
+            } else if (WIFI_DOWNSTREAM.equals(downstream.trim())) {
                 downstreamTypesMask |= (1 << TETHERING_WIFI);
-            } else if ("BT".equals(downstream.trim())) {
+            } else if (BLUETOOTH_DOWNSTREAM.equals(downstream.trim())) {
                 downstreamTypesMask |= (1 << TETHERING_BLUETOOTH);
             }
         }
@@ -136,7 +151,7 @@ public class TetheringNotificationUpdater {
      */
     @NonNull
     private SparseArray<Integer> getIcons(@ArrayRes int id) {
-        final Resources res = mContext.getResources();
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
         final String[] array = res.getStringArray(id);
         final SparseArray<Integer> icons = new SparseArray<>();
         for (String config : array) {
@@ -160,8 +175,8 @@ public class TetheringNotificationUpdater {
         return icons;
     }
 
-    private boolean setupNotification() {
-        final Resources res = mContext.getResources();
+    private boolean setupNotificationLocked() {
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
         final SparseArray<Integer> downstreamIcons = getIcons(R.array.tethering_notification_icons);
 
         final int iconId = downstreamIcons.get(mDownstreamTypesMask, NO_ICON_ID);
@@ -170,11 +185,11 @@ public class TetheringNotificationUpdater {
         final String title = res.getString(R.string.tethering_notification_title);
         final String message = res.getString(R.string.tethering_notification_message);
 
-        showNotification(iconId, title, message);
+        showNotificationLocked(iconId, title, message);
         return NOTIFY_DONE;
     }
 
-    private void showNotification(@DrawableRes final int iconId, @NonNull final String title,
+    private void showNotificationLocked(@DrawableRes final int iconId, @NonNull final String title,
             @NonNull final String message) {
         final Intent intent = new Intent(Settings.ACTION_TETHER_SETTINGS);
         final PendingIntent pi = PendingIntent.getActivity(

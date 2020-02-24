@@ -209,7 +209,6 @@ public class TetheringTest {
     private PhoneStateListener mPhoneStateListener;
     private InterfaceConfigurationParcel mInterfaceConfiguration;
 
-
     private class TestContext extends BroadcastInterceptingContext {
         TestContext(Context base) {
             super(base);
@@ -1392,6 +1391,7 @@ public class TetheringTest {
         mPhoneStateListener.onActiveDataSubscriptionIdChanged(fakeSubId);
         final TetheringConfiguration newConfig = mTethering.getTetheringConfiguration();
         assertEquals(fakeSubId, newConfig.activeDataSubId);
+        verify(mNotificationUpdater, times(1)).onActiveDataSubscriptionIdChanged(eq(fakeSubId));
     }
 
     @Test
