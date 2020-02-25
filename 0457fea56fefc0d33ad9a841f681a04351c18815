@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "453a213d_6d1de830",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-25T00:50:29Z",
+      "side": 1,
+      "message": "Could you also run IpSecManagerTunnelTest? I think that\u0027s one of the pre-existing users that we mustn\u0027t break.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 4
+      },
+      "revId": "0457fea56fefc0d33ad9a841f681a04351c18815",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0030e07b_2a90cb32",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-25T00:50:29Z",
+      "side": 1,
+      "message": "Nit: This probably means that the setAdministratorUids() should have been an int array, but that boat has sailed",
+      "range": {
+        "startLine": 297,
+        "startChar": 26,
+        "endLine": 297,
+        "endChar": 40
+      },
+      "revId": "0457fea56fefc0d33ad9a841f681a04351c18815",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
