@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0081c1ad_cdee9ee7",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-25T12:14:10Z",
+      "side": 1,
+      "message": "Note for review: it is safe to move configureDhcp from l.602 to here. mLinkProperties would be clear if return false here by below flow:\nconfigureIPv4() return false -\u003e startIPv4() return false -\u003e BaseServingState#exist() -\u003e resetLinkProperties()",
+      "range": {
+        "startLine": 637,
+        "startChar": 7,
+        "endLine": 637,
+        "endChar": 58
+      },
+      "revId": "47d5daebdeb90e08d2828a33238a303ded4cc809",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
