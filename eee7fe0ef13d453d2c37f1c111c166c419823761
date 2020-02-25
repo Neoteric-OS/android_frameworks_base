@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25e87501_db7dea37",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-25T16:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b3e5bc1_18072dac",
+      "range": {
+        "startLine": 682,
+        "startChar": 49,
+        "endLine": 682,
+        "endChar": 50
+      },
+      "revId": "eee7fe0ef13d453d2c37f1c111c166c419823761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da8d426e_89e0f26a",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "eee7fe0ef13d453d2c37f1c111c166c419823761",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "092d0e71_b91aa0d1",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-25T16:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da8d426e_89e0f26a",
+      "range": {
+        "startLine": 687,
+        "startChar": 40,
+        "endLine": 687,
+        "endChar": 47
+      },
+      "revId": "eee7fe0ef13d453d2c37f1c111c166c419823761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
