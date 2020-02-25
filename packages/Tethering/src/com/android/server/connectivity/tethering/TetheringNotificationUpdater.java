@@ -38,9 +38,12 @@ import androidx.annotation.ArrayRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.networkstack.tethering.R;
+
+import java.util.IllegalFormatException;
 
 /**
  * A class to display tethering-related notifications.
@@ -153,19 +156,19 @@ public class TetheringNotificationUpdater {
     }
 
     /**
-     * Returns the icons {@link android.util.SparseArray} which get from given string-array resource
-     * id.
+     * Returns the configuration string {@link android.util.SparseArray} which get from given
+     * string-array resource id.
      *
+     * @param res Resources of active data sub id.
      * @param id String-array resource id
      *
-     * @return {@link android.util.SparseArray} with downstream types and icon id info.
+     * @return configuration string {@link android.util.SparseArray} for each downstream types.
      */
     @NonNull
     @VisibleForTesting
-    SparseArray<Integer> getIcons(@ArrayRes int id) {
-        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
+    SparseArray<String> getConfigs(@NonNull final Resources res, @ArrayRes int id) {
         final String[] array = res.getStringArray(id);
-        final SparseArray<Integer> icons = new SparseArray<>();
+        final SparseArray<String> configs = new SparseArray<>();
         for (String config : array) {
             if (TextUtils.isEmpty(config)) continue;
 
@@ -180,34 +183,48 @@ public class TetheringNotificationUpdater {
             for (String type : types) {
                 int mask = getDownstreamTypesMask(type);
                 if (mask == DOWNSTREAM_NONE) continue;
-                icons.put(mask, res.getIdentifier(
-                        elements[1].trim(), null /* defType */, null /* defPackage */));
+                configs.put(mask, elements[1].trim());
             }
         }
-        return icons;
+        return configs;
     }
 
     private boolean setupNotification() {
         final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
-        final SparseArray<Integer> downstreamIcons = getIcons(R.array.tethering_notification_icons);
+        final String downstreamIcon = getConfigs(res, R.array.tethering_notification_icons)
+                .get(mDownstreamTypesMask, "");
+        final int iconId = res.getIdentifier(
+                downstreamIcon, null /* defType */, null /* defPackage */);
 
-        final int iconId = downstreamIcons.get(mDownstreamTypesMask, NO_ICON_ID);
         if (iconId == NO_ICON_ID) return NO_NOTIFY;
 
+        final String combinationText = getConfigs(res, R.array.tethering_downstream_combinations)
+                .get(mDownstreamTypesMask, "");
         final String title = res.getString(R.string.tethering_notification_title);
-        final String message;
-        if (mPowerSaving) {
-            message = res.getString(R.string.tethering_notification_message_power_saving);
-        } else {
-            message = res.getString(R.string.tethering_notification_message);
-        }
+        final String message = res.getString(mPowerSaving
+                ? R.string.tethering_notification_message_power_saving
+                : R.string.tethering_notification_message);
 
-        showNotification(iconId, title, message);
+        showNotification(iconId, title, message, combinationText);
         return NOTIFY_DONE;
     }
 
+    @VisibleForTesting
+    String formatText(@NonNull final String text, @NonNull final String downstreamText,
+            @StringRes final int defaultTextId) {
+        try {
+            return String.format(text, downstreamText);
+        } catch (IllegalFormatException e) { }
+
+        return getResourcesForSubId(mContext, mActiveDataSubId).getString(defaultTextId);
+    }
+
     private void showNotification(@DrawableRes final int iconId, @NonNull final String title,
-            @NonNull final String message) {
+            @NonNull final String message, @NonNull final String downstreamText) {
+        final String formatTitle = formatText(
+                title, downstreamText, R.string.tethered_notification_title);
+        final String formatMessage = formatText(
+                message, downstreamText, R.string.tethered_notification_message);
         final Intent intent = new Intent(Settings.ACTION_TETHER_SETTINGS);
         final PendingIntent pi = PendingIntent.getActivity(
                 mContext.createContextAsUser(UserHandle.CURRENT, 0),
@@ -215,8 +232,8 @@ public class TetheringNotificationUpdater {
         final Notification notification =
                 new Notification.Builder(mContext, mChannel.getId())
                         .setSmallIcon(iconId)
-                        .setContentTitle(title)
-                        .setContentText(message)
+                        .setContentTitle(formatTitle)
+                        .setContentText(formatMessage)
                         .setOngoing(true)
                         .setColor(mContext.getColor(
                                 android.R.color.system_notification_accent_color))
