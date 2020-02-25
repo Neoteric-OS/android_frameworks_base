@@ -367,6 +367,18 @@ public class LruCache<K, V> {
     }
 
     /**
+     * Resets counters.
+     */
+    @SuppressLint("VisiblySynchronized")
+    public final synchronized void resetStatistics() {
+        hitCount = 0;
+        missCount = 0;
+        createCount = 0;
+        putCount = 0;
+        evictionCount = 0;
+    }
+
+    /**
      * Returns a copy of the current contents of the cache, ordered from least
      * recently accessed to most recently accessed.
      */
