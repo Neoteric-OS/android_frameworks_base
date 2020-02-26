@@ -688,13 +688,24 @@ public class PointerLocationView extends View implements InputDeviceListener,
                 if (mActivePointerId == id) {
                     mActivePointerId = event.getPointerId(index == 0 ? 1 : 0);
                 }
+                if (mActivePointerId >= NP) {
+                    Slog.d(TAG, "Got pointer ID out of bounds: id=" + id
+                            + " arraysize=" + NP
+                            + " pointerindex=" + index
+                            + " activeindex=" + mActivePointerId
+                            + " action=0x" + Integer.toHexString(action));
+                    while (NP <= mActivePointerId) {
+                        mPointers.add(new PointerState());
+                        NP++;
+                    }
+                }
                 ps.addTrace(Float.NaN, Float.NaN, false);
             }
         }
 
         invalidate();
     }
-    
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         onPointerEvent(event);
