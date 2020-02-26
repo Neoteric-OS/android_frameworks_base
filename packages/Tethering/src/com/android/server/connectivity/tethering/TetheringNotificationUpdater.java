@@ -44,6 +44,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.networkstack.tethering.R;
 
 import java.util.IllegalFormatException;
+import java.util.function.Function;
 
 /**
  * A class to display tethering-related notifications.
@@ -74,6 +75,7 @@ public class TetheringNotificationUpdater {
     // This value has to be made 1 2 and 4, and OR'd with the others.
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
     private int mActiveDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+    private int mConnectedClients = 0;
     private boolean mPowerSaving = false;
 
     @IntDef({ENABLE_NOTIFICATION_ID, RESTRICTED_NOTIFICATION_ID})
@@ -111,6 +113,13 @@ public class TetheringNotificationUpdater {
         updateNotification();
     }
 
+    /** Called when the number of connected clients changed */
+    public void onConnectedClientsChanged(@IntRange(from = 0) final int number) {
+        if (mConnectedClients == number) return;
+        mConnectedClients = number;
+        updateNotification();
+    }
+
     @VisibleForTesting
     Resources getResourcesForSubId(@NonNull final Context c, final int subId) {
         return SubscriptionManager.getResourcesForSubId(c, subId);
@@ -119,7 +128,15 @@ public class TetheringNotificationUpdater {
     private void updateNotification() {
         final boolean tetheringInactive = mDownstreamTypesMask <= DOWNSTREAM_NONE;
 
-        if (tetheringInactive || setupNotification() == NO_NOTIFY) {
+        if (tetheringInactive) {
+            clearNotification(ENABLE_NOTIFICATION_ID);
+        } else {
+            // Show notification if one of conditions is satisfied.
+            if ((mConnectedClients > 0 && setupClientsNotification() == NOTIFY_DONE)
+                    || setupNotification() == NOTIFY_DONE) {
+                return;
+            }
+            // Tethering is active but no need shows notification.
             clearNotification(ENABLE_NOTIFICATION_ID);
         }
     }
@@ -164,7 +181,8 @@ public class TetheringNotificationUpdater {
      */
     @NonNull
     @VisibleForTesting
-    SparseArray<String> getConfigs(@NonNull final Resources res, @ArrayRes int id) {
+    SparseArray<String> getConfigs(@NonNull final Resources res, @ArrayRes int id,
+            @NonNull Function<String, Integer> function) {
         final String[] array = res.getStringArray(id);
         final SparseArray<String> configs = new SparseArray<>();
         for (String config : array) {
@@ -175,7 +193,7 @@ public class TetheringNotificationUpdater {
 
             final String[] types = elements[0].split(",");
             for (String type : types) {
-                int mask = getDownstreamTypesMask(type);
+                int mask = function.apply(type);
                 if (mask == DOWNSTREAM_NONE) continue;
                 configs.put(mask, elements[1].trim());
             }
@@ -183,16 +201,47 @@ public class TetheringNotificationUpdater {
         return configs;
     }
 
+    private boolean setupClientsNotification() {
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
+        final String numberIcon = getConfigs(res, R.array.tethering_notification_icons_with_client,
+                s -> {
+                    try {
+                        return Integer.valueOf(s.trim());
+                    } catch (NumberFormatException e) {
+                        return DOWNSTREAM_NONE;
+                    }
+                }).get(mConnectedClients, "");
+        final int iconId = res.getIdentifier(
+                numberIcon, null /* defType */, null /* defPackage */);
+
+        if (iconId == NO_ICON_ID) return NO_NOTIFY;
+
+        final String combinationText = getConfigs(res, R.array.tethering_downstream_combinations,
+                s -> getDownstreamTypesMask(s))
+                .get(mDownstreamTypesMask, "");
+        final String title = res.getQuantityString(
+                R.plurals.tethering_notification_title_with_client, mConnectedClients);
+        final String message = res.getQuantityString(mPowerSaving
+                    ? R.plurals.tethering_notification_message_with_client_power_saving
+                    : R.plurals.tethering_notification_message_with_client,
+                    mConnectedClients);
+
+        showNotification(ENABLE_NOTIFICATION_ID, iconId, title, message, combinationText);
+        return NOTIFY_DONE;
+    }
+
     private boolean setupNotification() {
         final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
-        final String downstreamIcon = getConfigs(res, R.array.tethering_notification_icons)
+        final String downstreamIcon = getConfigs(res, R.array.tethering_notification_icons,
+                s -> getDownstreamTypesMask(s))
                 .get(mDownstreamTypesMask, "");
         final int iconId = res.getIdentifier(
                 downstreamIcon, null /* defType */, null /* defPackage */);
 
         if (iconId == NO_ICON_ID) return NO_NOTIFY;
 
-        final String combinationText = getConfigs(res, R.array.tethering_downstream_combinations)
+        final String combinationText = getConfigs(res, R.array.tethering_downstream_combinations,
+                s -> getDownstreamTypesMask(s))
                 .get(mDownstreamTypesMask, "");
         final String title = res.getString(R.string.tethering_notification_title);
         final String message = res.getString(mPowerSaving
@@ -207,7 +256,7 @@ public class TetheringNotificationUpdater {
     String formatText(@NonNull final String text, @NonNull final String downstreamText,
             @StringRes final int defaultTextId) {
         try {
-            return String.format(text, downstreamText);
+            return String.format(text, downstreamText, mConnectedClients);
         } catch (IllegalFormatException e) { }
 
         return getResourcesForSubId(mContext, mActiveDataSubId).getString(defaultTextId);

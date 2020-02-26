@@ -316,9 +316,7 @@ public class Tethering {
 
         final WifiManager wifiManager = getWifiManager();
         if (wifiManager != null) {
-            wifiManager.registerSoftApCallback(
-                  mHandler::post /* executor */,
-                  new TetheringSoftApCallback());
+            wifiManager.registerSoftApCallback(executor, new TetheringSoftApCallback());
         }
     }
 
@@ -428,6 +426,9 @@ public class Tethering {
         // Called by wifi when the number of soft AP clients changed.
         @Override
         public void onConnectedClientsChanged(final List<WifiClient> clients) {
+            if (mDeps.isTetheringSupported()) {
+                mNotificationUpdater.onConnectedClientsChanged(clients.size());
+            }
             if (mConnectedClientsTracker.updateConnectedClients(mForwardedDownstreams, clients)) {
                 reportTetherClientsChanged(mConnectedClientsTracker.getLastTetheredClients());
             }
