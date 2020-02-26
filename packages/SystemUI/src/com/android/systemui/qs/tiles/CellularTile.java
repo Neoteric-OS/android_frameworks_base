@@ -23,6 +23,7 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.telephony.SubscriptionManager;
@@ -46,6 +47,7 @@ import com.android.systemui.plugins.qs.QSTile.SignalState;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.SignalTileView;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
+import com.android.systemui.settings.CurrentUserTracker;
 import com.android.systemui.statusbar.phone.SystemUIDialog;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.NetworkController.IconState;
@@ -63,6 +65,7 @@ public class CellularTile extends QSTileImpl<SignalState> {
 
     private final CellSignalCallback mSignalCallback = new CellSignalCallback();
     private final ActivityStarter mActivityStarter;
+    private final CurrentUserTracker mUserTracker;
 
     @Inject
     public CellularTile(QSHost host, NetworkController networkController,
@@ -73,6 +76,15 @@ public class CellularTile extends QSTileImpl<SignalState> {
         mDataController = mController.getMobileDataController();
         mDetailAdapter = new CellularDetailAdapter();
         mController.observe(getLifecycle(), mSignalCallback);
+        mUserTracker = new CurrentUserTracker(mContext) {
+            @Override
+            public void onUserSwitched(int newUserId) {
+                if (newUserId != UserHandle.USER_SYSTEM) {
+                    mHost.removeTile(getTileSpec());
+                }
+            }
+        };
+        mUserTracker.startTracking();
     }
 
     @Override
