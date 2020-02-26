@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.net.util;
+package android.net.util
 
 import android.system.NetlinkSocketAddress
 import android.system.Os
@@ -58,6 +58,10 @@ class SocketUtilsTest {
         val pkAddress2 = SocketUtils.makePacketSocketAddress(TEST_INDEX,
                 byteArrayOf(ff, ff, ff, ff, ff, ff))
         assertTrue("Not PacketSocketAddress object", pkAddress2 is PacketSocketAddress)
+
+        val pkAddress3 = SocketUtils.makePacketSocketAddress(ETH_P_ALL, TEST_INDEX,
+                byteArrayOf(ff, ff, ff, ff, ff, ff))
+        assertTrue("Not PacketSocketAddress object", pkAddress3 is PacketSocketAddress)
     }
 
     @Test
