@@ -222,13 +222,9 @@ public final class NetworkScanRequest implements Parcelable {
     private NetworkScanRequest(Parcel in) {
         mScanType = in.readInt();
         Parcelable[] tempSpecifiers = in.readParcelableArray(Object.class.getClassLoader());
-        if (tempSpecifiers != null) {
-            mSpecifiers = new RadioAccessSpecifier[tempSpecifiers.length];
-            for (int i = 0; i < tempSpecifiers.length; i++) {
-                mSpecifiers[i] = (RadioAccessSpecifier) tempSpecifiers[i];
-            }
-        } else {
-            mSpecifiers = null;
+        mSpecifiers = new RadioAccessSpecifier[tempSpecifiers.length];
+        for (int i = 0; i < tempSpecifiers.length; i++) {
+            mSpecifiers[i] = (RadioAccessSpecifier) tempSpecifiers[i];
         }
         mSearchPeriodicity = in.readInt();
         mMaxSearchTime = in.readInt();
