@@ -9542,6 +9542,14 @@ public class PackageManagerService extends IPackageManager.Stub
         // We need to re-extract after a pruned cache, as AoT-ed files will be out of date.
         boolean causePrunedCache = VMRuntime.didPruneDalvikCache();
 
+        // We don't want to re-extract after a pruned cache by low space
+        // because it makes undesirable files fill up again.
+        boolean causePrunedCacheByLowSpace = VMRuntime.didPruneDalvikCacheByLowSpace();
+        if (causePrunedCacheByLowSpace) {
+            logCriticalInfo(Log.WARN, "skip dexopt because of low space");
+            return;
+        }
+
         if (!causeUpgrade && !causeFirstBoot && !causePrunedCache) {
             return;
         }
