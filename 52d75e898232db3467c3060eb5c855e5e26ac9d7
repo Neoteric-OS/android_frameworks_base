@@ -87,6 +87,24 @@
       "revId": "52d75e898232db3467c3060eb5c855e5e26ac9d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b27b84_e461c487",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7084,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2020-02-26T22:55:47Z",
+      "side": 1,
+      "message": "That makes sense... This whole function depends on mNotificationLight not being null, or it won\u0027t do anything, so early exit right at the start sounds good.",
+      "parentUuid": "04cd0cb6_d07ad1c1",
+      "revId": "52d75e898232db3467c3060eb5c855e5e26ac9d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
