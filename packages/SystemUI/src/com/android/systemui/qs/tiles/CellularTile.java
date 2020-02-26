@@ -18,11 +18,13 @@ package com.android.systemui.qs.tiles;
 
 import static com.android.systemui.Prefs.Key.QS_HAS_TURNED_OFF_MOBILE_DATA;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.telephony.SubscriptionManager;
@@ -235,7 +237,8 @@ public class CellularTile extends QSTileImpl<SignalState> {
 
     @Override
     public boolean isAvailable() {
-        return mController.hasMobileDataFeature();
+        return mController.hasMobileDataFeature()
+            && ActivityManager.getCurrentUser() == UserHandle.USER_SYSTEM;
     }
 
     private static final class CallbackInfo {
