@@ -791,24 +791,17 @@ public class ProvisioningManager {
 
             @Override
             public final void onIntConfigChanged(int item, int value) {
-                long callingIdentity = Binder.clearCallingIdentity();
-                try {
-                    mExecutor.execute(() ->
-                            mLocalConfigurationCallback.onProvisioningIntChanged(item, value));
-                } finally {
-                    restoreCallingIdentity(callingIdentity);
-                }
+                Binder.withCleanCallingIdentity(() ->
+                        mExecutor.execute(() ->
+                                mLocalConfigurationCallback.onProvisioningIntChanged(item, value)));
             }
 
             @Override
             public final void onStringConfigChanged(int item, String value) {
-                long callingIdentity = Binder.clearCallingIdentity();
-                try {
-                    mExecutor.execute(() ->
-                            mLocalConfigurationCallback.onProvisioningStringChanged(item, value));
-                } finally {
-                    restoreCallingIdentity(callingIdentity);
-                }
+                Binder.withCleanCallingIdentity(() ->
+                        mExecutor.execute(() ->
+                                mLocalConfigurationCallback.onProvisioningStringChanged(item,
+                                        value)));
             }
 
             private void setExecutor(Executor executor) {

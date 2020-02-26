@@ -251,22 +251,15 @@ public class RcsUceAdapter {
         IRcsUceControllerCallback internalCallback = new IRcsUceControllerCallback.Stub() {
             @Override
             public void onCapabilitiesReceived(List<RcsContactUceCapability> contactCapabilities) {
-                long callingIdentity = Binder.clearCallingIdentity();
-                try {
-                    executor.execute(() ->
-                            c.onCapabilitiesReceived(contactCapabilities));
-                } finally {
-                    restoreCallingIdentity(callingIdentity);
-                }
+                Binder.withCleanCallingIdentity(() ->
+                        executor.execute(() ->
+                                c.onCapabilitiesReceived(contactCapabilities)));
             }
             @Override
             public void onError(int errorCode) {
-                long callingIdentity = Binder.clearCallingIdentity();
-                try {
-                    executor.execute(() -> c.onError(errorCode));
-                } finally {
-                    restoreCallingIdentity(callingIdentity);
-                }
+                Binder.withCleanCallingIdentity(() ->
+                        executor.execute(() ->
+                                c.onError(errorCode)));
             }
         };
 
