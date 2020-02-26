@@ -43,6 +43,7 @@ import static android.net.wifi.WifiManager.WIFI_AP_STATE_ENABLED;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import static com.android.server.connectivity.tethering.TetheringNotificationUpdater.DOWNSTREAM_NONE;
+import static com.android.server.connectivity.tethering.UpstreamNetworkMonitor.EVENT_ON_CAPABILITIES;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -418,7 +419,8 @@ public class TetheringTest {
 
 
         final NetworkCapabilities capabilities = new NetworkCapabilities()
-                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
+                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED);
         return new UpstreamNetworkState(prop, capabilities, new Network(100));
     }
 
@@ -1525,6 +1527,32 @@ public class TetheringTest {
         mIsTetheringSupported = false;
         mSoftApCallback.onConnectedClientsChanged(testClients);
         verify(mNotificationUpdater, never()).onConnectedClientsChanged(anyInt());
+    }
+
+    @Test
+    public void testUpstreamCapabilitiesChanged() {
+        final Tethering.TetherMasterSM stateMachine = (Tethering.TetherMasterSM)
+                mTetheringDependencies.mUpstreamNetworkMonitorMasterSM;
+        final UpstreamNetworkState upstreamState = buildMobileIPv4UpstreamState();
+        when(mUpstreamNetworkMonitor.selectPreferredUpstreamType(any())).thenReturn(upstreamState);
+        stateMachine.chooseUpstreamType(true);
+
+        stateMachine.handleUpstreamNetworkMonitorCallback(EVENT_ON_CAPABILITIES, upstreamState);
+        verify(mNotificationUpdater, times(1)).onUpstreamCapabilitiesChanged(any());
+        reset(mNotificationUpdater);
+
+        // Verify that onUpstreamCapabilitiesChanged won't be called if tethering isn't supported.
+        mIsTetheringSupported = false;
+        stateMachine.handleUpstreamNetworkMonitorCallback(EVENT_ON_CAPABILITIES, upstreamState);
+        verify(mNotificationUpdater, never()).onUpstreamCapabilitiesChanged(any());
+
+        // Verify that onUpstreamCapabilitiesChanged won't be called if not current upstream network
+        // capabilities changed.
+        mIsTetheringSupported = true;
+        final UpstreamNetworkState upstreamState2 = new UpstreamNetworkState(
+                upstreamState.linkProperties, upstreamState.networkCapabilities, new Network(101));
+        stateMachine.handleUpstreamNetworkMonitorCallback(EVENT_ON_CAPABILITIES, upstreamState2);
+        verify(mNotificationUpdater, never()).onUpstreamCapabilitiesChanged(any());
     }
 
     // TODO: Test that a request for hotspot mode doesn't interfere with an

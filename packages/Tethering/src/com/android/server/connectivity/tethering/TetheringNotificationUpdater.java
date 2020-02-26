@@ -16,6 +16,7 @@
 
 package com.android.server.connectivity.tethering;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
 import static android.net.TetheringManager.TETHERING_BLUETOOTH;
 import static android.net.TetheringManager.TETHERING_USB;
 import static android.net.TetheringManager.TETHERING_WIFI;
@@ -27,6 +28,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.NetworkCapabilities;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
@@ -77,6 +79,7 @@ public class TetheringNotificationUpdater {
     private int mActiveDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
     private int mConnectedClients = 0;
     private boolean mPowerSaving = false;
+    private boolean mUpstreamSuspended = false;
 
     @IntDef({ENABLE_NOTIFICATION_ID, RESTRICTED_NOTIFICATION_ID})
     @interface NotificationId {}
@@ -120,6 +123,15 @@ public class TetheringNotificationUpdater {
         updateNotification();
     }
 
+    /** Called when upstream network capabilities changed */
+    public void onUpstreamCapabilitiesChanged(@NonNull final NetworkCapabilities capabilities) {
+        final boolean isNetworkSuspended =
+                !capabilities.hasCapability(NET_CAPABILITY_NOT_SUSPENDED);
+        if (mUpstreamSuspended == isNetworkSuspended) return;
+        mUpstreamSuspended = isNetworkSuspended;
+        updateNotification();
+    }
+
     @VisibleForTesting
     Resources getResourcesForSubId(@NonNull final Context c, final int subId) {
         return SubscriptionManager.getResourcesForSubId(c, subId);
@@ -132,7 +144,8 @@ public class TetheringNotificationUpdater {
             clearNotification(ENABLE_NOTIFICATION_ID);
         } else {
             // Show notification if one of conditions is satisfied.
-            if ((mConnectedClients > 0 && setupClientsNotification() == NOTIFY_DONE)
+            if ((mUpstreamSuspended && setupPauseNotification() == NOTIFY_DONE)
+                    || (mConnectedClients > 0 && setupClientsNotification() == NOTIFY_DONE)
                     || setupNotification() == NOTIFY_DONE) {
                 return;
             }
@@ -199,6 +212,26 @@ public class TetheringNotificationUpdater {
             }
         }
         return configs;
+    }
+
+    private boolean setupPauseNotification() {
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
+        final String pauseIcons = getConfigs(res, R.array.tethering_notification_pause_icons,
+                s -> getDownstreamTypesMask(s))
+                .get(mDownstreamTypesMask, "");
+        final int iconId = res.getIdentifier(
+                pauseIcons, null /* defType */, null /* defPackage */);
+
+        if (iconId == NO_ICON_ID) return NO_NOTIFY;
+
+        final String combinationText = getConfigs(res, R.array.tethering_downstream_combinations,
+                s -> getDownstreamTypesMask(s))
+                .get(mDownstreamTypesMask, "");
+        final String title = res.getString(R.string.tethering_notification_pause_title);
+        final String message = res.getString(R.string.tethering_notification_pause_message);
+
+        showNotification(ENABLE_NOTIFICATION_ID, iconId, title, message, combinationText);
+        return NOTIFY_DONE;
     }
 
     private boolean setupClientsNotification() {
