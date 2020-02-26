@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Daniel Colascione <dancol@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Steven Moreland <smoreland@google.com>
+Autosubmit+1: Daniel Colascione <dancol@google.com>
+Presubmit-Ready+1: Daniel Colascione <dancol@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 26 Feb 2020 14:46:55 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1243311
+Project: platform/frameworks/base
+Branch: refs/heads/master
