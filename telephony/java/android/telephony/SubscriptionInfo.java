@@ -16,6 +16,8 @@
 
 package android.telephony;
 
+import com.android.telephony.Rlog;
+
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -38,7 +40,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.android.internal.telephony.util.TelephonyUtils;
-import com.android.telephony.Rlog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -684,8 +685,8 @@ public class SubscriptionInfo implements Parcelable {
             int id = source.readInt();
             String iccId = source.readString();
             int simSlotIndex = source.readInt();
-            CharSequence displayName = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
-            CharSequence carrierName = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
+            CharSequence displayName = source.readCharSequence();
+            CharSequence carrierName = source.readCharSequence();
             int nameSource = source.readInt();
             int iconTint = source.readInt();
             String number = source.readString();
@@ -704,8 +705,8 @@ public class SubscriptionInfo implements Parcelable {
             int carrierid = source.readInt();
             int profileClass = source.readInt();
             int subType = source.readInt();
-            String[] ehplmns = source.createStringArray();
-            String[] hplmns = source.createStringArray();
+            String[] ehplmns = source.readStringArray();
+            String[] hplmns = source.readStringArray();
             String groupOwner = source.readString();
             UiccAccessRule[] carrierConfigAccessRules = source.createTypedArray(
                 UiccAccessRule.CREATOR);
@@ -731,8 +732,8 @@ public class SubscriptionInfo implements Parcelable {
         dest.writeInt(mId);
         dest.writeString(mIccId);
         dest.writeInt(mSimSlotIndex);
-        TextUtils.writeToParcel(mDisplayName, dest, 0);
-        TextUtils.writeToParcel(mCarrierName, dest, 0);
+        dest.writeCharSequence(mDisplayName);
+        dest.writeCharSequence(mCarrierName);
         dest.writeInt(mNameSource);
         dest.writeInt(mIconTint);
         dest.writeString(mNumber);
