@@ -497,6 +497,9 @@
     <!-- Content description of the cell data being disabled but shortened. [CHAR LIMIT=20] -->
     <string name="cell_data_off">Off</string>
 
+    <!-- Content description of the cell data being disabled due to current user is Guest. [CHAR LIMIT=NONE] -->
+    <string name="cell_data_disabled_due_to_guest_user">Not available for Guest</string>
+
     <!-- Content description of the bluetooth tethering icon for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_bluetooth_tether">Bluetooth tethering.</string>
 

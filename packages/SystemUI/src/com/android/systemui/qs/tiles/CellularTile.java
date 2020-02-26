@@ -18,11 +18,13 @@ package com.android.systemui.qs.tiles;
 
 import static com.android.systemui.Prefs.Key.QS_HAS_TURNED_OFF_MOBILE_DATA;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.telephony.SubscriptionManager;
@@ -178,6 +180,9 @@ public class CellularTile extends QSTileImpl<SignalState> {
         if (cb.noSim) {
             state.state = Tile.STATE_UNAVAILABLE;
             state.secondaryLabel = r.getString(R.string.keyguard_missing_sim_message_short);
+        } else if (ActivityManager.getCurrentUser() != UserHandle.USER_SYSTEM) {
+            state.state = Tile.STATE_UNAVAILABLE;
+            state.secondaryLabel = r.getString(R.string.cell_data_disabled_due_to_guest_user);
         } else if (cb.airplaneModeEnabled) {
             state.state = Tile.STATE_UNAVAILABLE;
             state.secondaryLabel = r.getString(R.string.status_bar_airplane);
