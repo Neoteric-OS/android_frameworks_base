@@ -75,13 +75,9 @@ public class ImsRcsManager implements RegistrationManager {
             public void onCapabilitiesStatusChanged(int config) {
                 if (mLocalCallback == null) return;
 
-                long callingIdentity = Binder.clearCallingIdentity();
-                try {
-                    mExecutor.execute(() -> mLocalCallback.onAvailabilityChanged(
-                            new RcsFeature.RcsImsCapabilities(config)));
-                } finally {
-                    restoreCallingIdentity(callingIdentity);
-                }
+                Binder.withCleanCallingIdentity(() ->
+                        mExecutor.execute(() -> mLocalCallback.onAvailabilityChanged(
+                                new RcsFeature.RcsImsCapabilities(config))));
             }
 
             @Override
