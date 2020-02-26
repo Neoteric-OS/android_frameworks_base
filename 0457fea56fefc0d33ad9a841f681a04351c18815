@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c88a0f68_d57fb710",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-26T04:36:44Z",
+      "side": 1,
+      "message": "Added IpSecManagerTunnelTest to the commit message. Confirmed that these changes do not negatively impact IpSecManagerTunnelTest.",
+      "parentUuid": "453a213d_6d1de830",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 4
+      },
+      "revId": "0457fea56fefc0d33ad9a841f681a04351c18815",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0030e07b_2a90cb32",
         "filename": "services/core/java/com/android/server/TestNetworkService.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2020-02-25T00:50:29Z",
       "side": 1,
       "message": "Nit: This probably means that the setAdministratorUids() should have been an int array, but that boat has sailed",
+      "range": {
+        "startLine": 297,
+        "startChar": 26,
+        "endLine": 297,
+        "endChar": 40
+      },
+      "revId": "0457fea56fefc0d33ad9a841f681a04351c18815",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c640f47_3509e9c9",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-26T04:36:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0030e07b_2a90cb32",
       "range": {
         "startLine": 297,
         "startChar": 26,
