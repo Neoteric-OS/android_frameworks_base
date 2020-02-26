@@ -606,14 +606,16 @@ public class Tethering {
                 Context.ETHERNET_SERVICE);
         synchronized (mPublicSync) {
             if (enable) {
+                if (mEthernetCallback != null) return TETHER_ERROR_NO_ERROR;
+
                 mEthernetCallback = new EthernetCallback();
                 mEthernetIfaceRequest = em.requestTetheredInterface(mEthernetCallback);
             } else {
-                if (mConfiguredEthernetIface != null) {
-                    stopEthernetTetheringLocked();
+                stopEthernetTetheringLocked();
+                if (mEthernetCallback != null) {
                     mEthernetIfaceRequest.release();
+                    mEthernetCallback = null;
                 }
-                mEthernetCallback = null;
             }
         }
         return TETHER_ERROR_NO_ERROR;
@@ -629,26 +631,30 @@ public class Tethering {
     private class EthernetCallback implements EthernetManager.TetheredInterfaceCallback {
         @Override
         public void onAvailable(String iface) {
-            synchronized (mPublicSync) {
-                if (this != mEthernetCallback) {
-                    // Ethernet callback arrived after Ethernet tethering stopped. Ignore.
-                    return;
+            mHandler.post(() -> {
+                synchronized (mPublicSync) {
+                    if (this != mEthernetCallback) {
+                        // Ethernet callback arrived after Ethernet tethering stopped. Ignore.
+                        return;
+                    }
+                    maybeTrackNewInterfaceLocked(iface, TETHERING_ETHERNET);
+                    changeInterfaceState(iface, IpServer.STATE_TETHERED);
+                    mConfiguredEthernetIface = iface;
                 }
-                maybeTrackNewInterfaceLocked(iface, TETHERING_ETHERNET);
-                changeInterfaceState(iface, IpServer.STATE_TETHERED);
-                mConfiguredEthernetIface = iface;
-            }
+            });
         }
 
         @Override
         public void onUnavailable() {
-            synchronized (mPublicSync) {
-                if (this != mEthernetCallback) {
-                    // onAvailable called after stopping Ethernet tethering.
-                    return;
+            mHandler.post(() -> {
+                synchronized (mPublicSync) {
+                    if (this != mEthernetCallback) {
+                        // onAvailable called after stopping Ethernet tethering.
+                        return;
+                    }
+                    stopEthernetTetheringLocked();
                 }
-                stopEthernetTetheringLocked();
-            }
+            });
         }
     }
 
