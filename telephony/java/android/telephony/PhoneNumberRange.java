@@ -85,18 +85,18 @@ public final class PhoneNumberRange implements Parcelable {
     }
 
     private PhoneNumberRange(Parcel in) {
-        mCountryCode = in.readString();
-        mPrefix = in.readString();
-        mLowerBound = in.readString();
-        mUpperBound = in.readString();
+        mCountryCode = in.readStringNoHelper();
+        mPrefix = in.readStringNoHelper();
+        mLowerBound = in.readStringNoHelper();
+        mUpperBound = in.readStringNoHelper();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mCountryCode);
-        dest.writeString(mPrefix);
-        dest.writeString(mLowerBound);
-        dest.writeString(mUpperBound);
+        dest.writeStringNoHelper(mCountryCode);
+        dest.writeStringNoHelper(mPrefix);
+        dest.writeStringNoHelper(mLowerBound);
+        dest.writeStringNoHelper(mUpperBound);
     }
 
     @Override
