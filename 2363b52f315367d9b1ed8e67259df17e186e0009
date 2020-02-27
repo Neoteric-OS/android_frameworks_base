@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c23afc7_0b59879b",
+        "filename": "core/java/android/net/EthernetManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-27T05:42:37Z",
+      "side": 1,
+      "message": "Per https://g3doc.corp.google.com/company/teams/android-api-council/guidelines.md I think the executor should come first and the callback second.",
+      "range": {
+        "startLine": 253,
+        "startChar": 12,
+        "endLine": 253,
+        "endChar": 95
+      },
+      "revId": "2363b52f315367d9b1ed8e67259df17e186e0009",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d0f0961_ead03a1f",
+        "filename": "core/java/android/net/EthernetManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-27T05:42:37Z",
+      "side": 1,
+      "message": "What happens if executor is null? Will the system crash when attempting to fire a callback?",
+      "range": {
+        "startLine": 254,
+        "startChar": 16,
+        "endLine": 254,
+        "endChar": 30
+      },
+      "revId": "2363b52f315367d9b1ed8e67259df17e186e0009",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870d81f4_b5b63f8f",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-27T05:42:37Z",
+      "side": 1,
+      "message": "Do we need to call mLooper.dispatchAll() at any point in this testcase?",
+      "range": {
+        "startLine": 1329,
+        "startChar": 68,
+        "endLine": 1329,
+        "endChar": 69
+      },
+      "revId": "2363b52f315367d9b1ed8e67259df17e186e0009",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
