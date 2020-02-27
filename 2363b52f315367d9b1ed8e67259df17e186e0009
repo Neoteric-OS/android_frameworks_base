@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e57793f_fafe3fc5",
+        "filename": "core/java/android/net/EthernetManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-27T06:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c23afc7_0b59879b",
+      "range": {
+        "startLine": 253,
+        "startChar": 12,
+        "endLine": 253,
+        "endChar": 95
+      },
+      "revId": "2363b52f315367d9b1ed8e67259df17e186e0009",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d0f0961_ead03a1f",
         "filename": "core/java/android/net/EthernetManager.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b1ef5f64_df58adaa",
+        "filename": "core/java/android/net/EthernetManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-27T06:34:28Z",
+      "side": 1,
+      "message": "Done. Caller\u0027s process would crash, currently tethering don\u0027t pass null executor but have NonNull check is better.",
+      "parentUuid": "4d0f0961_ead03a1f",
+      "range": {
+        "startLine": 254,
+        "startChar": 16,
+        "endLine": 254,
+        "endChar": 30
+      },
+      "revId": "2363b52f315367d9b1ed8e67259df17e186e0009",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "870d81f4_b5b63f8f",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "2363b52f315367d9b1ed8e67259df17e186e0009",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13582f0d_32a26e87",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-27T06:34:28Z",
+      "side": 1,
+      "message": "Ack, good suggestion. This may able to catch more possible error.",
+      "parentUuid": "870d81f4_b5b63f8f",
+      "range": {
+        "startLine": 1329,
+        "startChar": 68,
+        "endLine": 1329,
+        "endChar": 69
+      },
+      "revId": "2363b52f315367d9b1ed8e67259df17e186e0009",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
