@@ -42,6 +42,7 @@ import java.util.stream.IntStream;
 @SmallTest
 public class DhcpServingParamsParcelExtTest {
     private static final Inet4Address TEST_ADDRESS = inet4Addr("192.168.0.123");
+    private static final String TEST_CLIENT_ADDRESS = "192.168.0.42";
     private static final int TEST_ADDRESS_PARCELED = 0xc0a8007b;
     private static final int TEST_PREFIX_LENGTH = 17;
     private static final int TEST_LEASE_TIME_SECS = 120;
@@ -103,6 +104,13 @@ public class DhcpServingParamsParcelExtTest {
         assertTrue(mParcel.metered);
         mParcel.setMetered(false);
         assertFalse(mParcel.metered);
+    }
+
+    @Test
+    public void testSetClientAddr() {
+        mParcel.setClientAddr(TEST_CLIENT_ADDRESS);
+        assertEquals(TEST_CLIENT_ADDRESS, mParcel.clientAddr);
+
     }
 
     private static Inet4Address inet4Addr(String addr) {
