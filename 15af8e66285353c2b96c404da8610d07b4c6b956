@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9430869e_6c1482a3",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-02-27T14:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14d9cfae_ea23336f",
+      "range": {
+        "startLine": 774,
+        "startChar": 12,
+        "endLine": 774,
+        "endChar": 81
+      },
+      "revId": "15af8e66285353c2b96c404da8610d07b4c6b956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a62ae37c_c8dabbcd",
         "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "15af8e66285353c2b96c404da8610d07b4c6b956",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd64d54_a74ddbe0",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-02-27T14:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a62ae37c_c8dabbcd",
+      "range": {
+        "startLine": 789,
+        "startChar": 24,
+        "endLine": 790,
+        "endChar": 37
+      },
+      "revId": "15af8e66285353c2b96c404da8610d07b4c6b956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4841d330_fc261259",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-02-27T14:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbe4371f_3b70923d",
+      "range": {
+        "startLine": 800,
+        "startChar": 0,
+        "endLine": 807,
+        "endChar": 18
+      },
+      "revId": "15af8e66285353c2b96c404da8610d07b4c6b956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6454dbb1_3365556e",
         "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "15af8e66285353c2b96c404da8610d07b4c6b956",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "775891ab_72e7d47a",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-02-27T14:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6454dbb1_3365556e",
+      "range": {
+        "startLine": 823,
+        "startChar": 28,
+        "endLine": 835,
+        "endChar": 33
+      },
+      "revId": "15af8e66285353c2b96c404da8610d07b4c6b956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9d2ceb6b_7fb93d61",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-02-27T14:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a7dfd36_87faa00d",
+      "range": {
+        "startLine": 866,
+        "startChar": 31,
+        "endLine": 866,
+        "endChar": 88
+      },
+      "revId": "15af8e66285353c2b96c404da8610d07b4c6b956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba61f7d7_5f70e305",
         "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2020-02-27T00:27:20Z",
       "side": 1,
       "message": "Looks like the following code is duplicated logic from updateAssets. Can this logic be shared?",
+      "range": {
+        "startLine": 879,
+        "startChar": 19,
+        "endLine": 879,
+        "endChar": 92
+      },
+      "revId": "15af8e66285353c2b96c404da8610d07b4c6b956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180c7b3c_2660e89f",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-02-27T14:16:55Z",
+      "side": 1,
+      "message": "Most likely. Will fix in the next patch set.",
+      "parentUuid": "ba61f7d7_5f70e305",
       "range": {
         "startLine": 879,
         "startChar": 19,
@@ -160,6 +304,30 @@
       "revId": "15af8e66285353c2b96c404da8610d07b4c6b956",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b839392f_2f35ad54",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-02-27T14:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaef5a8b_c813e80b",
+      "range": {
+        "startLine": 897,
+        "startChar": 28,
+        "endLine": 897,
+        "endChar": 29
+      },
+      "revId": "15af8e66285353c2b96c404da8610d07b4c6b956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
