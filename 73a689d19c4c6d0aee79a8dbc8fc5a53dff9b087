@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f5f0c1cd_cda21f39",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3324,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-27T09:19:04Z",
+      "side": 1,
+      "message": "Per offline discussion with Bruce,\nupdateLinkProperies will also calls updateDnses.\nSo we could remove it here.\n\nHowever it breaks the semantic that we should call this function when transport type changes.\nAlso these 2 information are not really related to each other.\nSo it does not look good to me.\n\nThere is another proposal:\n  1. Create another DnsManager#setTransportTypes(netid, transports):\n  2. DnsManager preserve such information locally.\n  3. CS calls setTransportTypes in createNativeNetwork and updateCapabilities\nThus:\n  1. DnsManager calls the same mDnsResolver.setResolverConfiguration(paramsParcel) with\n       updated pracel, whenever mDnsManager.setDnsConfigurationForNetwork or \n       DnsManager.setTransportType is called, or skip if any information is missing.\n  2. No change in updateDnses or mDnsManager.setDnsConfigurationForNetwork\n\nany thought?",
+      "parentUuid": "96df1541_b21c5713",
+      "range": {
+        "startLine": 3322,
+        "startChar": 0,
+        "endLine": 3324,
+        "endChar": 48
+      },
+      "revId": "73a689d19c4c6d0aee79a8dbc8fc5a53dff9b087",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cecc38d1_7d989219",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bec417d9_c883ac56",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6011,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-27T09:19:04Z",
+      "side": 1,
+      "message": "IIUC this can be @Nullable",
+      "range": {
+        "startLine": 6011,
+        "startChar": 61,
+        "endLine": 6011,
+        "endChar": 68
+      },
+      "revId": "dca0366183838a1bde4f45f1fc15e90e525c059a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f8fa81_84fa8022",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4899,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-27T09:19:04Z",
+      "side": 1,
+      "message": "This is buggy and not recommanded.\nPlease register a callback and wait for callback.expectAvailableCallbacks(Unvalidated|Validated).",
+      "range": {
+        "startLine": 4899,
+        "startChar": 8,
+        "endLine": 4899,
+        "endChar": 19
+      },
+      "revId": "dca0366183838a1bde4f45f1fc15e90e525c059a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b076fffa_c83d698d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4906,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-27T09:19:04Z",
+      "side": 1,
+      "message": "use assertContainsExactly?",
+      "range": {
+        "startLine": 4906,
+        "startChar": 8,
+        "endLine": 4906,
+        "endChar": 18
+      },
+      "revId": "dca0366183838a1bde4f45f1fc15e90e525c059a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4bf139_eed72857",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4906,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-27T09:19:04Z",
+      "side": 1,
+      "message": "TRANSPORT_WIFI",
+      "range": {
+        "startLine": 4906,
+        "startChar": 69,
+        "endLine": 4906,
+        "endChar": 71
+      },
+      "revId": "dca0366183838a1bde4f45f1fc15e90e525c059a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

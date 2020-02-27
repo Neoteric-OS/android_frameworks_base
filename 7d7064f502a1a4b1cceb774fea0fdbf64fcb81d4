@@ -187,6 +187,30 @@
       "revId": "7d7064f502a1a4b1cceb774fea0fdbf64fcb81d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41de660a_aa400b0f",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-27T09:19:04Z",
+      "side": 1,
+      "message": "IIUC that covers different part.\nIn CS test we verify DnsManager is called with correct parameter.\nIn DnsManagerTest we verify DnsResolver is called with correct parcel.",
+      "parentUuid": "4f47ad97_5f6d28d9",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 1
+      },
+      "revId": "7d7064f502a1a4b1cceb774fea0fdbf64fcb81d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
