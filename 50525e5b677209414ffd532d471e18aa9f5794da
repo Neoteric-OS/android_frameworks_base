@@ -34,6 +34,24 @@
       "revId": "50525e5b677209414ffd532d471e18aa9f5794da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f928b38b_ef24aed3",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-02-27T21:56:32Z",
+      "side": 1,
+      "message": "Not really because I dont think this API makes sense for general apps. This is needed specifically for BT. What is the recommendation in such cases?",
+      "parentUuid": "df3ecfb9_25acd1e3",
+      "revId": "50525e5b677209414ffd532d471e18aa9f5794da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
