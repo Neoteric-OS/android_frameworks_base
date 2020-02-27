@@ -47,6 +47,7 @@ import android.net.shared.NetdUtils;
 import android.net.shared.RouteUtils;
 import android.net.util.InterfaceParams;
 import android.net.util.InterfaceSet;
+import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
 import android.os.Handler;
 import android.os.Looper;
@@ -489,17 +490,32 @@ public class IpServer extends StateMachine {
         }
     }
 
-    private boolean startDhcp(Inet4Address addr, int prefixLen) {
+    private boolean startDhcp(final LinkAddress serverLinkAddr, final LinkAddress clientLinkAddr) {
         if (mUsingLegacyDhcp) {
             return true;
         }
+
+        final Inet4Address addr = (Inet4Address) serverLinkAddr.getAddress();
+        final int prefixLen = serverLinkAddr.getPrefixLength();
+        // If clientLinkAddr is configured, it must be in the range of serverLinkAddr.
+        Inet4Address clientAddr = null;
+        if (clientLinkAddr != null) {
+            clientAddr = (Inet4Address) clientLinkAddr.getAddress();
+            // Only support the client which has same prefix length as server's.
+            if (clientLinkAddr.getPrefixLength() != prefixLen
+                    && !PrefixUtils.asIpPrefix(serverLinkAddr).contains(clientAddr)) {
+                return false;
+            }
+        }
+
         final DhcpServingParamsParcel params;
         params = new DhcpServingParamsParcelExt()
                 .setDefaultRouters(addr)
                 .setDhcpLeaseTimeSecs(DHCP_LEASE_TIME_SECS)
                 .setDnsServers(addr)
-                .setServerAddr(new LinkAddress(addr, prefixLen))
-                .setMetered(true);
+                .setServerAddr(serverLinkAddr)
+                .setMetered(true)
+                .setClientAddr(clientAddr);
         // TODO: also advertise link MTU
 
         mDhcpServerStartIndex++;
@@ -534,9 +550,10 @@ public class IpServer extends StateMachine {
         }
     }
 
-    private boolean configureDhcp(boolean enable, Inet4Address addr, int prefixLen) {
+    private boolean configureDhcp(boolean enable, final LinkAddress serverAddr,
+            final LinkAddress clientAddr) {
         if (enable) {
-            return startDhcp(addr, prefixLen);
+            return startDhcp(serverAddr, clientAddr);
         } else {
             stopDhcp();
             return true;
@@ -584,7 +601,7 @@ public class IpServer extends StateMachine {
                 // code that calls into NetworkManagementService directly.
                 srvAddr = (Inet4Address) parseNumericAddress(BLUETOOTH_IFACE_ADDR);
                 mIpv4Address = new LinkAddress(srvAddr, BLUETOOTH_DHCP_PREFIX_LENGTH);
-                return configureDhcp(enabled, srvAddr, BLUETOOTH_DHCP_PREFIX_LENGTH);
+                return configureDhcp(enabled, mIpv4Address, null /* clientAddress */);
             }
             mIpv4Address = new LinkAddress(srvAddr, prefixLen);
         } catch (IllegalArgumentException e) {
@@ -621,7 +638,7 @@ public class IpServer extends StateMachine {
             mLinkProperties.removeRoute(route);
         }
 
-        return configureDhcp(enabled, srvAddr, prefixLen);
+        return configureDhcp(enabled, mIpv4Address, mStaticIpv4ClientAddr);
     }
 
     private String getRandomWifiIPv4Address() {
