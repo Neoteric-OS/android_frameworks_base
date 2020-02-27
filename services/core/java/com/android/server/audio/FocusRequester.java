@@ -24,6 +24,7 @@ import android.media.AudioManager;
 import android.media.IAudioFocusDispatcher;
 import android.os.IBinder;
 import android.util.Log;
+import android.content.Context;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.server.audio.MediaFocusControl.AudioFocusDeathHandler;
@@ -50,7 +51,8 @@ public class FocusRequester {
     private final int mCallingUid;
     private final MediaFocusControl mFocusController; // never null
     private final int mSdkTarget;
-
+    private AudioManager mAudioManager;
+    private Context mContext;
     /**
      * the audio focus gain request that caused the addition of this object in the focus stack.
      */
@@ -258,6 +260,7 @@ public class FocusRequester {
      * @return the audio focus loss type that matches the gain request
      */
     private int focusLossForGainRequest(int gainRequest) {
+        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         switch(gainRequest) {
             case AudioManager.AUDIOFOCUS_GAIN:
                 switch(mFocusLossReceived) {
@@ -265,6 +268,10 @@ public class FocusRequester {
                     case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                     case AudioManager.AUDIOFOCUS_LOSS:
                     case AudioManager.AUDIOFOCUS_NONE:
+                        boolean isMusicActive = mAudioManager.isMusicActive();
+                        if(isMusicActive == true)
+                          return AudioManager.AUDIOFOCUS_LOSS_TRANSIENT;
+
                         return AudioManager.AUDIOFOCUS_LOSS;
                 }
             case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE:
