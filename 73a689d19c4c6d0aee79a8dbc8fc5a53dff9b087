@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96df1541_b21c5713",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3324,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-02-27T08:09:53Z",
+      "side": 1,
+      "message": "It might fail on the networks that without privateDns and validation.\n\ncomment by junyu here.\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1240031/4/services/core/java/com/android/server/ConnectivityService.java#3320",
+      "parentUuid": "fafe40e9_f6e70135",
+      "range": {
+        "startLine": 3322,
+        "startChar": 0,
+        "endLine": 3324,
+        "endChar": 48
+      },
+      "revId": "73a689d19c4c6d0aee79a8dbc8fc5a53dff9b087",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cecc38d1_7d989219",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2c736a58_7669996a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6231,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-02-27T08:09:53Z",
+      "side": 1,
+      "message": "When transport types changed, we should notify resolver because we don\u0027t know how the OEM VPN is implemented.\nIf the given network only have transport type change, we should call updateDnses() here.  \nFor example VPN + Cellular -\u003e VPN + WIFI.",
+      "parentUuid": "cecc38d1_7d989219",
+      "range": {
+        "startLine": 6231,
+        "startChar": 0,
+        "endLine": 6231,
+        "endChar": 94
+      },
+      "revId": "73a689d19c4c6d0aee79a8dbc8fc5a53dff9b087",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55ef9765_6cd7d900",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 5
@@ -59,6 +107,24 @@
       "writtenOn": "2020-02-27T06:57:44Z",
       "side": 1,
       "message": "None of these tests is actually verifying that we\u0027re setting the transport type correctly. Where is the test coverage for this new code?",
+      "revId": "73a689d19c4c6d0aee79a8dbc8fc5a53dff9b087",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1ac7ba_786a5084",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-02-27T08:09:53Z",
+      "side": 1,
+      "message": "Add testDnsConfigurationTransTypesPushed in ConnectivityServiceTest",
+      "parentUuid": "55ef9765_6cd7d900",
       "revId": "73a689d19c4c6d0aee79a8dbc8fc5a53dff9b087",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true

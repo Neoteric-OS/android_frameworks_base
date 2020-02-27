@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "b9b9fd8c_9fc57444",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6011,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-02-27T08:09:53Z",
+      "side": 1,
+      "message": "add @NonNull.",
+      "parentUuid": "ef329318_88df7933",
+      "range": {
+        "startLine": 6011,
+        "startChar": 17,
+        "endLine": 6011,
+        "endChar": 28
+      },
+      "revId": "7d7064f502a1a4b1cceb774fea0fdbf64fcb81d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36c5c265_9e0ad9ed",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4
@@ -130,6 +154,30 @@
       "writtenOn": "2020-02-26T06:09:41Z",
       "side": 1,
       "message": "IIUC you\u0027ll need a test that is to \ncall setDnsConfigurationForNetwork\nand verify parameter on mMockDnsResolver.setResolverConfiguration",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 1
+      },
+      "revId": "7d7064f502a1a4b1cceb774fea0fdbf64fcb81d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f47ad97_5f6d28d9",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-02-27T08:09:53Z",
+      "side": 1,
+      "message": "Add testDnsConfigurationTransTypesPushed in ConnectivityServiceTest",
+      "parentUuid": "0ad73791_2a4886d1",
       "range": {
         "startLine": 265,
         "startChar": 0,
