@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Colin Cross <ccross@android.com>
+Code-Review+2: Tiem Song <tiem@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 27 Feb 2020 00:53:44 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1245006
+Project: platform/frameworks/base
+Branch: refs/heads/master
