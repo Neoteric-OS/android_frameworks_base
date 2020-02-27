@@ -244,7 +244,7 @@ public class IpServer extends StateMachine {
     private LinkAddress mIpv4Address;
 
     private LinkAddress mStaticIpv4ServerAddr;
-    private InetAddress mStaticIpv4ClientAddr;
+    private String mStaticIpv4ClientAddr;
 
     @NonNull
     private List<TetheredClient> mDhcpLeases = Collections.emptyList();
@@ -325,6 +325,7 @@ public class IpServer extends StateMachine {
 
     /** Configure static client address. */
     public void setStaticClientAddress(String address) {
+        mStaticIpv4ClientAddr = address;
     }
 
     /** Interface name which IpServer served.*/
@@ -497,7 +498,7 @@ public class IpServer extends StateMachine {
         }
     }
 
-    private boolean startDhcp(Inet4Address addr, int prefixLen) {
+    private boolean startDhcp(final Inet4Address addr, int prefixLen, final String clientAddr) {
         if (mUsingLegacyDhcp) {
             return true;
         }
@@ -507,7 +508,8 @@ public class IpServer extends StateMachine {
                 .setDhcpLeaseTimeSecs(DHCP_LEASE_TIME_SECS)
                 .setDnsServers(addr)
                 .setServerAddr(new LinkAddress(addr, prefixLen))
-                .setMetered(true);
+                .setMetered(true)
+                .setClientAddr(clientAddr);
         // TODO: also advertise link MTU
 
         mDhcpServerStartIndex++;
@@ -542,9 +544,10 @@ public class IpServer extends StateMachine {
         }
     }
 
-    private boolean configureDhcp(boolean enable, Inet4Address addr, int prefixLen) {
+    private boolean configureDhcp(boolean enable, final Inet4Address addr, final int prefixLen,
+            final String clientAddr) {
         if (enable) {
-            return startDhcp(addr, prefixLen);
+            return startDhcp(addr, prefixLen, clientAddr);
         } else {
             stopDhcp();
             return true;
@@ -590,7 +593,7 @@ public class IpServer extends StateMachine {
                 // code that calls into NetworkManagementService directly.
                 srvAddr = (Inet4Address) parseNumericAddress(BLUETOOTH_IFACE_ADDR);
                 mIpv4Address = new LinkAddress(srvAddr, BLUETOOTH_DHCP_PREFIX_LENGTH);
-                return configureDhcp(enabled, srvAddr, BLUETOOTH_DHCP_PREFIX_LENGTH);
+                return configureDhcp(enabled, srvAddr, BLUETOOTH_DHCP_PREFIX_LENGTH, null);
             }
             mIpv4Address = new LinkAddress(srvAddr, prefixLen);
         } catch (IllegalArgumentException e) {
@@ -628,13 +631,14 @@ public class IpServer extends StateMachine {
         }
 
         if (mStaticIpv4ServerAddr != null) {
-            // TODO: configure specific client address to dhcp server.
-            // if (mStaticIpv4ClientAddr != null) configureDhcp(...).
+            if (mStaticIpv4ClientAddr != null) {
+                return configureDhcp(enabled, srvAddr, prefixLen, mStaticIpv4ClientAddr);
+            }
 
             return true;
         }
 
-        return configureDhcp(enabled, srvAddr, prefixLen);
+        return configureDhcp(enabled, srvAddr, prefixLen, null);
     }
 
     private String getRandomWifiIPv4Address() {
