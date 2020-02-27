@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafe40e9_f6e70135",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3324,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2020-02-27T06:57:44Z",
+      "side": 1,
+      "message": "Why is this new binder call to DnsResolver necessary?\n\nCan\u0027t this wait until later, when we call updateDnses() to actually set some resolvers?",
+      "range": {
+        "startLine": 3322,
+        "startChar": 0,
+        "endLine": 3324,
+        "endChar": 48
+      },
+      "revId": "73a689d19c4c6d0aee79a8dbc8fc5a53dff9b087",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cecc38d1_7d989219",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6231,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2020-02-27T06:57:44Z",
+      "side": 1,
+      "message": "Same here: this is adding a new Binder call from system_server to DnsResolver where previously it wasn\u0027t needed.",
+      "range": {
+        "startLine": 6231,
+        "startChar": 0,
+        "endLine": 6231,
+        "endChar": 94
+      },
+      "revId": "73a689d19c4c6d0aee79a8dbc8fc5a53dff9b087",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ef9765_6cd7d900",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2020-02-27T06:57:44Z",
+      "side": 1,
+      "message": "None of these tests is actually verifying that we\u0027re setting the transport type correctly. Where is the test coverage for this new code?",
+      "revId": "73a689d19c4c6d0aee79a8dbc8fc5a53dff9b087",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
