@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a4c9a80_84225cba",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3320,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-27T03:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aa3b216_7202d316",
+      "revId": "7d7064f502a1a4b1cceb774fea0fdbf64fcb81d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef329318_88df7933",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2020-02-26T06:09:41Z",
       "side": 1,
       "message": "maybe add @NonNull or @Nullable annotations for these parameters?",
+      "range": {
+        "startLine": 6011,
+        "startChar": 17,
+        "endLine": 6011,
+        "endChar": 28
+      },
+      "revId": "7d7064f502a1a4b1cceb774fea0fdbf64fcb81d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65449412_256b3267",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6011,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-27T03:37:33Z",
+      "side": 1,
+      "message": "Also for LinkProperties thanks.",
+      "parentUuid": "ef329318_88df7933",
       "range": {
         "startLine": 6011,
         "startChar": 17,
@@ -56,6 +98,24 @@
       "revId": "7d7064f502a1a4b1cceb774fea0fdbf64fcb81d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5e358e_219119a6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6225,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-27T03:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36c5c265_9e0ad9ed",
+      "revId": "7d7064f502a1a4b1cceb774fea0fdbf64fcb81d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
