@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "169a1089_4c0101e2",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-02-27T00:37:45Z",
+      "side": 1,
+      "message": "Won\u0027t this delay overlay propagation more when packages are added/removed/changed since they will be executing on a thread with higher niceness?\n\nThis could create more lock contention if the transactional API is used while the lock is held by a background thread.",
+      "range": {
+        "startLine": 327,
+        "startChar": 12,
+        "endLine": 327,
+        "endChar": 86
+      },
+      "revId": "75fe2775bd0eedffe853dfe38b6b3c7325b903c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
