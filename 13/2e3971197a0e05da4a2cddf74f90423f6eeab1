@@ -1,0 +1,15 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+1: Sunmeet Gill <sgill@qualcomm.corp-partner.google.com>
+Verified+1: Tyler Wear <twear@quicinc.com>
+Verified+1: Lorenzo Colitti <lorenzo@google.com>
+Code-Review+2: Lorenzo Colitti <lorenzo@google.com>
+Code-Review+1: Sunmeet Gill <sgill@qualcomm.corp-partner.google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Lint+1: Sunmeet Gill <sgill@qualcomm.corp-partner.google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Qualcomm-Review+1: David Ng <dave@codeaurora.org>
+Submitted-by: Lorenzo Colitti <lorenzo@google.com>
+Submitted-at: Thu, 27 Feb 2020 01:00:55 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1235510
+Project: platform/frameworks/base
+Branch: refs/heads/master
