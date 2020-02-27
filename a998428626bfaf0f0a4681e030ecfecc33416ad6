@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4d1710a_0b0e0a50",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-27T06:47:55Z",
+      "side": 1,
+      "message": "Also add:\n\n    mEthernetIfaceRequest \u003d null;\n\nhere as well?",
+      "range": {
+        "startLine": 616,
+        "startChar": 44,
+        "endLine": 616,
+        "endChar": 45
+      },
+      "revId": "a998428626bfaf0f0a4681e030ecfecc33416ad6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
