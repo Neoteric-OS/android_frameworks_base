@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20106c1c_8c3153bf",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-28T07:53:21Z",
+      "side": 1,
+      "message": "Not related to this CL, but... should this be inside an if (isDefaultNetwork)? If so, perhaps we shouldn\u0027t remove the isDefaultNetwork parameter? Alternatively, move the flushVmDnsCache to ConnectivityService#makeDefault.",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 26
+      },
+      "revId": "5ed963cd18f344d52cdb124f555384570c5be248",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
