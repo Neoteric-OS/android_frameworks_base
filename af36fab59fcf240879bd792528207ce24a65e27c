@@ -22,6 +22,30 @@
       "revId": "af36fab59fcf240879bd792528207ce24a65e27c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3ccd53_92ea5c02",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2020-02-28T20:27:41Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "add17806_41389e5b",
+      "range": {
+        "startLine": 618,
+        "startChar": 8,
+        "endLine": 628,
+        "endChar": 10
+      },
+      "revId": "af36fab59fcf240879bd792528207ce24a65e27c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
