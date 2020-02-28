@@ -22,6 +22,30 @@
       "revId": "014479dbb6568f9158dedd8f1cdf59cad3c7d072",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfed7298_ed56aa1c",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2875,
+      "author": {
+        "id": 1355907
+      },
+      "writtenOn": "2020-02-28T22:12:54Z",
+      "side": 1,
+      "message": "This is already submitted in internal gerrit.",
+      "parentUuid": "750ceb89_650c14c9",
+      "range": {
+        "startLine": 2875,
+        "startChar": 31,
+        "endLine": 2875,
+        "endChar": 54
+      },
+      "revId": "014479dbb6568f9158dedd8f1cdf59cad3c7d072",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
