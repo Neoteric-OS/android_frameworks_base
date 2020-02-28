@@ -70,6 +70,24 @@
       "revId": "50525e5b677209414ffd532d471e18aa9f5794da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e4af5f_7f5c173f",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-02-28T23:49:42Z",
+      "side": 1,
+      "message": "Actually since it is replacing @UnsupportedAppUsage APIs (and there are some usages of that based on go/nonsdk-dash), let\u0027s go ahead and make this public.",
+      "parentUuid": "4fbef7c5_aa0449f2",
+      "revId": "50525e5b677209414ffd532d471e18aa9f5794da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
