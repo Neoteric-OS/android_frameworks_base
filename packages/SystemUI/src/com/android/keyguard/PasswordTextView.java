@@ -390,8 +390,9 @@ public class PasswordTextView extends View {
             @Override
             public void onAnimationEnd(Animator animation) {
                 if (!mCancelled) {
-                    mTextChars.remove(CharState.this);
-                    mCharPool.push(CharState.this);
+                    if (mTextChars.remove(CharState.this)) {
+                        mCharPool.push(CharState.this);
+                    }
                     reset();
                     cancelAnimator(textTranslateAnimator);
                     textTranslateAnimator = null;
