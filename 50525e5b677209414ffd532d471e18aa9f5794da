@@ -52,6 +52,24 @@
       "revId": "50525e5b677209414ffd532d471e18aa9f5794da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fbef7c5_aa0449f2",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-02-28T11:22:38Z",
+      "side": 1,
+      "message": "The general recommendation is making it public API if you can\u0027t permission protect it. If you have a strong reason to not do so, please comment on the API review bug and assign the bug back to android-api-council@.",
+      "parentUuid": "f928b38b_ef24aed3",
+      "revId": "50525e5b677209414ffd532d471e18aa9f5794da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
