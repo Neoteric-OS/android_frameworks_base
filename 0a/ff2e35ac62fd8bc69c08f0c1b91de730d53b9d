@@ -1,0 +1,10 @@
+Autosubmit+1: Daniel Bright <dbright@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Evan Laird <evanlaird@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 28 Feb 2020 07:55:30 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1212964
+Project: platform/frameworks/base
+Branch: refs/heads/master
