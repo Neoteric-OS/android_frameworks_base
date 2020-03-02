@@ -94,6 +94,17 @@ public class CompatConfigTest {
     }
 
     @Test
+    public void testLoggingOnlyChangeNotQueryable() throws Exception {
+        CompatConfig compatConfig = CompatConfigBuilder.create(mBuildClassifier, mContext)
+                .addLoggingOnlyChangeWithId(1234L)
+                .build();
+
+        assertThrows(IllegalArgumentException.class,
+                () -> compatConfig.isChangeEnabled(1234L, ApplicationInfoBuilder.create().build())
+        );
+    }
+
+    @Test
     public void testTargetSdkChangeDisabled() throws Exception {
         CompatConfig compatConfig = CompatConfigBuilder.create(mBuildClassifier, mContext)
                 .addTargetSdkChangeWithId(2, 1234L)
@@ -209,6 +220,17 @@ public class CompatConfigTest {
                 () -> compatConfig.addOverride(1234L, "com.some.package", true)
         );
         assertThat(compatConfig.isChangeEnabled(1234L, applicationInfo)).isFalse();
+    }
+
+    @Test
+    public void testLoggingOnlyChangePreventAddOverride() throws Exception {
+        CompatConfig compatConfig = CompatConfigBuilder.create(mBuildClassifier, mContext)
+                .addLoggingOnlyChangeWithId(1234L)
+                .build();
+
+        assertThrows(SecurityException.class,
+                () -> compatConfig.addOverride(1234L, "com.some.package", true)
+        );
     }
 
     @Test

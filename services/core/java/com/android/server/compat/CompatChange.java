@@ -63,7 +63,7 @@ public final class CompatChange extends CompatibilityChangeInfo {
     private Map<String, Boolean> mPackageOverrides;
 
     public CompatChange(long changeId) {
-        this(changeId, null, -1, false, null);
+        this(changeId, null, -1, false, false, null);
     }
 
     /**
@@ -74,8 +74,8 @@ public final class CompatChange extends CompatibilityChangeInfo {
      * @param disabled If {@code true}, overrides any {@code enableAfterTargetSdk} set.
      */
     public CompatChange(long changeId, @Nullable String name, int enableAfterTargetSdk,
-            boolean disabled, String description) {
-        super(changeId, name, enableAfterTargetSdk, disabled, description);
+            boolean disabled, boolean loggingOnly, String description) {
+        super(changeId, name, enableAfterTargetSdk, disabled, loggingOnly, description);
     }
 
     /**
@@ -83,7 +83,7 @@ public final class CompatChange extends CompatibilityChangeInfo {
      */
     public CompatChange(Change change) {
         super(change.getId(), change.getName(), change.getEnableAfterTargetSdk(),
-                change.getDisabled(), change.getDescription());
+                change.getDisabled(), change.getLoggingOnly(), change.getDescription());
     }
 
     void registerListener(ChangeListener listener) {
@@ -105,6 +105,10 @@ public final class CompatChange extends CompatibilityChangeInfo {
      * @param enabled Whether or not to enable the change.
      */
     void addPackageOverride(String pname, boolean enabled) {
+        if (getLoggingOnly()) {
+            throw new IllegalArgumentException(
+                    "Can't add overrides for a logging only change " + toString());
+        }
         if (mPackageOverrides == null) {
             mPackageOverrides = new HashMap<>();
         }
@@ -135,6 +139,10 @@ public final class CompatChange extends CompatibilityChangeInfo {
      * @return {@code true} if the change should be enabled for the package.
      */
     boolean isEnabled(ApplicationInfo app) {
+        if (getLoggingOnly()) {
+            throw new IllegalArgumentException(
+                    "Can't call isEnabled on a logging only change " + toString());
+        }
         if (mPackageOverrides != null && mPackageOverrides.containsKey(app.packageName)) {
             return mPackageOverrides.get(app.packageName);
         }
@@ -159,6 +167,9 @@ public final class CompatChange extends CompatibilityChangeInfo {
         }
         if (getDisabled()) {
             sb.append("; disabled");
+        }
+        if (getLoggingOnly()) {
+            sb.append("; loggingOnly");
         }
         if (mPackageOverrides != null && mPackageOverrides.size() > 0) {
             sb.append("; packageOverrides=").append(mPackageOverrides);
