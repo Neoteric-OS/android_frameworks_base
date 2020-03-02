@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90e07858_90a3a4f7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6011,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-02T06:01:52Z",
+      "side": 1,
+      "message": "modified",
+      "parentUuid": "bec417d9_c883ac56",
+      "range": {
+        "startLine": 6011,
+        "startChar": 61,
+        "endLine": 6011,
+        "endChar": 68
+      },
+      "revId": "dca0366183838a1bde4f45f1fc15e90e525c059a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1f8fa81_84fa8022",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2020-02-27T09:19:04Z",
       "side": 1,
       "message": "This is buggy and not recommanded.\nPlease register a callback and wait for callback.expectAvailableCallbacks(Unvalidated|Validated).",
+      "range": {
+        "startLine": 4899,
+        "startChar": 8,
+        "endLine": 4899,
+        "endChar": 19
+      },
+      "revId": "dca0366183838a1bde4f45f1fc15e90e525c059a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86055a5_9ab4b4a9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4899,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-02T06:01:52Z",
+      "side": 1,
+      "message": "use callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);",
+      "parentUuid": "d1f8fa81_84fa8022",
       "range": {
         "startLine": 4899,
         "startChar": 8,
@@ -87,6 +135,54 @@
         "startChar": 69,
         "endLine": 4906,
         "endChar": 71
+      },
+      "revId": "dca0366183838a1bde4f45f1fc15e90e525c059a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "373fb6f5_de48ad0e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4906,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-02T06:01:52Z",
+      "side": 1,
+      "message": "modified.",
+      "parentUuid": "0d4bf139_eed72857",
+      "range": {
+        "startLine": 4906,
+        "startChar": 69,
+        "endLine": 4906,
+        "endChar": 71
+      },
+      "revId": "dca0366183838a1bde4f45f1fc15e90e525c059a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d2530c_488b6fdd",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4906,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-02T06:01:52Z",
+      "side": 1,
+      "message": "use assertContainsExactly",
+      "parentUuid": "b076fffa_c83d698d",
+      "range": {
+        "startLine": 4906,
+        "startChar": 8,
+        "endLine": 4906,
+        "endChar": 18
       },
       "revId": "dca0366183838a1bde4f45f1fc15e90e525c059a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",

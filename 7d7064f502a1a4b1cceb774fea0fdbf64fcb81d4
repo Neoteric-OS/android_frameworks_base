@@ -211,6 +211,30 @@
       "revId": "7d7064f502a1a4b1cceb774fea0fdbf64fcb81d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c7bc7c3_c14d0750",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-02T06:01:52Z",
+      "side": 1,
+      "message": "Add testSetDnsConfiguration to DnsManagerTest that we verify DnsResolver is called with correct parcel.",
+      "parentUuid": "41de660a_aa400b0f",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 1
+      },
+      "revId": "7d7064f502a1a4b1cceb774fea0fdbf64fcb81d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

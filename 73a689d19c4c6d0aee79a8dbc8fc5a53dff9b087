@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "663c39ea_1de44184",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3324,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-02T06:01:52Z",
+      "side": 1,
+      "message": "I think this proposal is clear and reasonable than previous one.\nIf no one better than this, I can change to the new propodsal.\n@Bernie\ndo you have any idea for this proposal?",
+      "parentUuid": "f5f0c1cd_cda21f39",
+      "range": {
+        "startLine": 3322,
+        "startChar": 0,
+        "endLine": 3324,
+        "endChar": 48
+      },
+      "revId": "73a689d19c4c6d0aee79a8dbc8fc5a53dff9b087",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cecc38d1_7d989219",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
