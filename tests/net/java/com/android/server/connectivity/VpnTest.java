@@ -46,6 +46,7 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import android.annotation.UserIdInt;
@@ -457,7 +458,7 @@ public class VpnTest {
 
         // Remove the restricted user.
         tempProfile.partial = true;
-        vpn.onUserRemoved(tempProfile.id);
+        vpn.onUserRemoved(tempProfile.id, mKeyStore);
         verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
             new UidRange(profile.start, profile.start + PKG_UIDS[3] - 1),
             new UidRange(profile.start + PKG_UIDS[3] + 1, profile.stop)
@@ -796,6 +797,44 @@ public class VpnTest {
             fail("Expected SecurityException due to restricted user");
         } catch (SecurityException expected) {
         }
+    }
+
+    private Vpn setupVpnAndKeystoreVpnList(int userId) throws Exception {
+        final Vpn vpn = createVpnAndSetupUidChecks();
+
+        when(mKeyStore.list(eq(Vpn.getUserPrefix(userId))))
+                .thenReturn(new String[] {vpn.getProfileNameForPackage(TEST_VPN_PKG)});
+
+        return vpn;
+    }
+
+    @Test
+    public void testUserRemovedClearsProfiles() throws Exception {
+        final int userId = primaryUser.id;
+        final Vpn vpn = setupVpnAndKeystoreVpnList(userId);
+
+        vpn.onUserRemoved(userId, mKeyStore);
+
+        verify(mKeyStore).list(eq(Vpn.getUserPrefix(userId)));
+        verify(mKeyStore).delete(eq(vpn.getProfileNameForPackage(TEST_VPN_PKG)));
+        verifyNoMoreInteractions(mKeyStore);
+
+        // Should not make any additional calls if the userId is incorrect.
+        setMockedUsers(secondaryUser);
+        vpn.onUserRemoved(secondaryUser.id, mKeyStore);
+        verifyNoMoreInteractions(mKeyStore);
+    }
+
+    @Test
+    public void testClearUserProfiles() throws Exception {
+        final int userId = primaryUser.id;
+        final Vpn vpn = setupVpnAndKeystoreVpnList(userId);
+
+        vpn.clearUserProfiles(mKeyStore);
+
+        verify(mKeyStore).list(eq(Vpn.getUserPrefix(userId)));
+        verify(mKeyStore).delete(eq(vpn.getProfileNameForPackage(TEST_VPN_PKG)));
+        verifyNoMoreInteractions(mKeyStore);
     }
 
     @Test

@@ -1121,6 +1121,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
         intentFilter.addAction(Intent.ACTION_PACKAGE_REPLACED);
         intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_DATA_CLEARED);
         intentFilter.addDataScheme("package");
         mContext.registerReceiverAsUser(
                 mIntentReceiver,
@@ -5072,7 +5073,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             final int vpnsSize = mVpns.size();
             for (int i = 0; i < vpnsSize; i++) {
                 Vpn vpn = mVpns.valueAt(i);
-                vpn.onUserRemoved(userId);
+                vpn.onUserRemoved(userId, mKeyStore);
                 NetworkCapabilities nc = vpn.updateCapabilities(defaultNetwork);
                 updateVpnCapabilities(vpn, nc);
             }
@@ -5126,6 +5127,27 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         + userId);
                 vpn.setAlwaysOnPackage(null, false, null, mKeyStore);
             }
+
+            if (!isReplacing) {
+                vpn.deleteVpnProfilePrivileged(packageName, mKeyStore);
+            }
+        }
+    }
+
+    private void onPackageDataCleared(String packageName, int userId) {
+        if (TextUtils.isEmpty(packageName) || userId < 0) {
+            Slog.wtf(TAG,
+                    "Invalid package in onPackageDataCleared: " + packageName + " | " + userId);
+            return;
+        }
+
+        synchronized (mVpns) {
+            final Vpn vpn = mVpns.get(userId);
+            if (vpn == null) {
+                return;
+            }
+
+            vpn.deleteVpnProfilePrivileged(packageName, mKeyStore);
         }
     }
 
@@ -5170,6 +5192,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 final boolean isReplacing = intent.getBooleanExtra(
                         Intent.EXTRA_REPLACING, false);
                 onPackageRemoved(packageName, uid, isReplacing);
+            } else if (Intent.ACTION_PACKAGE_DATA_CLEARED.equals(action)) {
+                onPackageDataCleared(packageName, userId);
             }
         }
     };
@@ -7420,6 +7444,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
                         prepareVpn(null, VpnConfig.LEGACY_VPN, userId);
                     }
+                }
+
+                final Vpn vpn = mVpns.get(userId);
+                if (vpn != null) {
+                    vpn.clearUserProfiles(mKeyStore);
                 }
             }
         }
