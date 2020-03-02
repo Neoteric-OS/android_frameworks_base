@@ -1423,7 +1423,9 @@ public class Vpn {
      *
      * <p>Should be called on primary ConnectivityService thread.
      */
-    public void onUserRemoved(int userHandle) {
+    public void onUserRemoved(int userHandle, @NonNull KeyStore keyStore) {
+        checkNotNull(keyStore, "KeyStore missing");
+
         // clean up if restricted
         UserInfo user = UserManager.get(mContext).getUserInfo(userHandle);
         if (user.isRestricted() && user.restrictedProfileParentId == mUserHandle) {
@@ -1443,6 +1445,24 @@ public class Vpn {
                 }
                 setVpnForcedLocked(mLockdown);
             }
+        }
+
+        // Clean up profiles if the user being removed is the user for this Vpn instance.
+        if (mUserHandle == userHandle) {
+            clearUserProfiles(userHandle, keyStore);
+        }
+    }
+
+    /**
+     * Clears all Platform VPN profiles for a given user
+     *
+     * <p>Should be called on primary ConnectivityService thread.
+     */
+    public synchronized void clearUserProfiles(int userHandle, @NonNull KeyStore keyStore) {
+        checkNotNull(keyStore, "KeyStore missing");
+
+        for (final String key : keyStore.list(getUserPrefix(userHandle))) {
+            keyStore.delete(key);
         }
     }
 
@@ -2821,8 +2841,13 @@ public class Vpn {
     }
 
     @VisibleForTesting
+    static String getUserPrefix(int userHandle) {
+        return Credentials.PLATFORM_VPN + userHandle;
+    }
+
+    @VisibleForTesting
     String getProfileNameForPackage(String packageName) {
-        return Credentials.PLATFORM_VPN + mUserHandle + "_" + packageName;
+        return getUserPrefix(mUserHandle) + "_" + packageName;
     }
 
     /**
@@ -2882,21 +2907,34 @@ public class Vpn {
         verifyCallingUidAndPackage(packageName);
         enforceNotRestrictedUser();
 
-        Binder.withCleanCallingIdentity(
-                () -> {
-                    // If this profile is providing the current VPN, turn it off, disabling
-                    // always-on as well if enabled.
-                    if (isCurrentIkev2VpnLocked(packageName)) {
-                        if (mAlwaysOn) {
-                            // Will transitively call prepareInternal(VpnConfig.LEGACY_VPN).
-                            setAlwaysOnPackage(null, false, null, keyStore);
-                        } else {
-                            prepareInternal(VpnConfig.LEGACY_VPN);
-                        }
-                    }
+        Binder.withCleanCallingIdentity(() -> deleteVpnProfilePrivileged(packageName, keyStore));
+    }
 
-                    keyStore.delete(getProfileNameForPackage(packageName), Process.SYSTEM_UID);
-                });
+    /**
+     * Deletes an app-provisioned VPN profile without checking permissions
+     *
+     * <p>The caller MUST check for privileges.
+     *
+     * @param packageName the package name of the app provisioning this profile
+     * @param keyStore the System keystore instance to save VPN profiles
+     */
+    public synchronized void deleteVpnProfilePrivileged(
+            @NonNull String packageName, @NonNull KeyStore keyStore) {
+        checkNotNull(packageName, "No package name provided");
+        checkNotNull(keyStore, "KeyStore missing");
+
+        // If this profile is providing the current VPN, turn it off, disabling
+        // always-on as well if enabled.
+        if (isCurrentIkev2VpnLocked(packageName)) {
+            if (mAlwaysOn) {
+                // Will transitively call prepareInternal(VpnConfig.LEGACY_VPN).
+                setAlwaysOnPackage(null, false, null, keyStore);
+            } else {
+                prepareInternal(VpnConfig.LEGACY_VPN);
+            }
+        }
+
+        keyStore.delete(getProfileNameForPackage(packageName), Process.SYSTEM_UID);
     }
 
     /**
