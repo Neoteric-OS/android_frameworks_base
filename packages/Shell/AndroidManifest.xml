@@ -193,7 +193,9 @@
     <!-- Permission needed to run network tests in CTS -->
     <uses-permission android:name="android.permission.MANAGE_TEST_NETWORKS" />
     <!-- Permission needed to test tcp keepalive offload. -->
-    <uses-permission android:name="android.permission.PACKET_KEEPALIVE_OFFLOAD" />
+    <uses-permission android:name="android.permission.PACKET_KEEPALIVE_OFFLOAD" />  
+    <!-- Permission needed to read wifi network credentials for CtsNetTestCases -->
+    <uses-permission android:name="android.permission.READ_WIFI_CREDENTIAL" />
 
     <!-- Permission needed to run keyguard manager tests in CTS -->
     <uses-permission android:name="android.permission.CONTROL_KEYGUARD_SECURE_NOTIFICATIONS" />
