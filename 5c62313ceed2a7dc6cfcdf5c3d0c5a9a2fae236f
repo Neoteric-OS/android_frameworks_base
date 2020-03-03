@@ -117,6 +117,30 @@
       "revId": "5c62313ceed2a7dc6cfcdf5c3d0c5a9a2fae236f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd8dae24_1101139e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6680,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-03T13:45:47Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean by \"the test doesn\u0027t cover the case I mentioned\". Do you mean that something should check that ConnectivityService always sends non-gatewayed routes first? That\u0027s already implicitly checked by the test, because it does the following:\n\n        cellLp.addRoute(defaultRoute);\n        cellLp.addRoute(ipv6Subnet);\n        ...\n        assertRoutesAdded(cellNetId, ipv6Subnet, defaultRoute);\n\nwhich checks that ipv6Subnet is added before defaultRoute, even though they were added in the opposite order to the LinkProperties. Or did I misunderstand your comment?\n\nAs for deletion order, I don\u0027t think we do anything special about that. Probably the more correct behaviour is to remove the gatewayed routes first. But in practice the kernel doesn\u0027t seem to care. Notice how \"10.1.0.0/16 via 10.0.0.1\" survives the deletion of the route to 10.0.0.1, even though it can\u0027t be created without a route to 10.0.0.1:\n\n$ ip r\ndefault via 192.168.0.1 dev enx3 proto dhcp metric 100 \ndefault via 192.168.0.1 dev wlp4s0 proto dhcp metric 600 \n10.0.0.1 dev wlp4s0 scope link \n10.1.0.0/16 via 10.0.0.1 dev wlp4s0 \n192.168.0.0/24 dev enx3 proto kernel scope link src 192.168.0.153 metric 100 \n192.168.0.0/24 dev wlp4s0 proto kernel scope link src 192.168.0.182 metric 600 \n$ sudo ip -4 route del 10.0.0.1 dev wlp4s0 scope link \n$ ip r\ndefault via 192.168.0.1 dev enx3 proto dhcp metric 100 \ndefault via 192.168.0.1 dev wlp4s0 proto dhcp metric 600 \n10.1.0.0/16 via 10.0.0.1 dev wlp4s0 \n192.168.0.0/24 dev enx3 proto kernel scope link src 192.168.0.153 metric 100 \n192.168.0.0/24 dev wlp4s0 proto kernel scope link src 192.168.0.182 metric 600 \n$ sudo ip -4 route del 10.1.0.0/16 via 10.0.0.1 dev wlp4s0\n$ sudo ip -4 route add 10.1.0.0/16 via 10.0.0.1 dev wlp4s0\nError: Nexthop has invalid gateway.\n\nOn my laptop, attempting to use the 10.1.0.0/16 via 10.0.0.1 route results in the kernel ARPing for 10.0.0.1 Not sure what it would do if it found it. Use it, perhaps?",
+      "parentUuid": "e20d235b_6f72f367",
+      "range": {
+        "startLine": 6680,
+        "startChar": 11,
+        "endLine": 6680,
+        "endChar": 81
+      },
+      "revId": "5c62313ceed2a7dc6cfcdf5c3d0c5a9a2fae236f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
