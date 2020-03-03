@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "006060e5_9e7712f5",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-03T06:17:14Z",
+      "side": 1,
+      "message": "Suggest adding here a little bit of context, e.g. :\n\n  This is useful for system components that query this API on behalf of an app. In particular, Bluetooth has @UnsupportedAppUsage calls that will let apps turn on bluetooth tethering if they have the right permissions, but such an app needs to know whether it can (permissions as well as support from the device) turn on tethering in the first place to show the appropriate UI.",
+      "range": {
+        "startLine": 1159,
+        "startChar": 5,
+        "endLine": 1159,
+        "endChar": 6
+      },
+      "revId": "4036d062ee65c47b65b59bb272afbc1e44604eef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
