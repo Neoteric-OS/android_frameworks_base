@@ -2068,8 +2068,11 @@ public class Vpn {
         updateState(DetailedState.CONNECTING, "startLegacyVpn");
 
         // Start a new LegacyVpnRunner and we are done!
-        mVpnRunner = new LegacyVpnRunner(config, racoon, mtpd, profile);
-        mVpnRunner.start();
+        LegacyVpnRunner runner = new LegacyVpnRunner(config, racoon, mtpd, profile);
+        Thread thread = new Thread(mVpnRunner);
+        runner.setThread(thread);
+        mVpnRunner = runner;
+        thread.start();
     }
 
     /**
@@ -2136,12 +2139,7 @@ public class Vpn {
     }
 
     /** This class represents the common interface for all VPN runners. */
-    private abstract class VpnRunner extends Thread {
-
-        protected VpnRunner(String name) {
-            super(name);
-        }
-
+    private abstract class VpnRunner implements Runnable {
         public abstract void run();
 
         /**
@@ -2186,7 +2184,9 @@ public class Vpn {
      *
      * <p>This class uses locking minimally - the Vpn instance lock is only ever held when fields of
      * the outer class are modified. As such, care must be taken to ensure that no calls are added
-     * that might modify the outer class' state without acquiring a lock.
+     * that might modify the outer class' state without acquiring a lock. All callbacks are run on
+     * the mExecutor thread, either by the IKE library (for IKEv2-related callbacks), or by the
+     * {@link VpnIkev2Utils.Ikev2VpnNetworkCallback} (for network callbacks).
      *
      * <p>The overall structure of the Ikev2VpnRunner is as follows:
      *
@@ -2210,11 +2210,12 @@ public class Vpn {
         @NonNull private final ConnectivityManager.NetworkCallback mNetworkCallback;
 
         /**
-         * Executor upon which ALL callbacks must be run.
+         * Executor upon which ALL processing must be run.
          *
          * <p>This executor MUST be a single threaded executor, in order to ensure the consistency
-         * of the mutable Ikev2VpnRunner fields. The Ikev2VpnRunner is built mostly lock-free by
-         * virtue of everything being serialized on this executor.
+         * of the mutable Ikev2VpnRunner fields. The Ikev2VpnRunner is built (mostly) lock-free by
+         * virtue of everything being serialized on this executor. The exception is the accessing of
+         * fields on the outer Vpn instance.
          */
         @NonNull private final ExecutorService mExecutor = Executors.newSingleThreadExecutor();
 
@@ -2226,10 +2227,9 @@ public class Vpn {
         @Nullable private Network mActiveNetwork;
 
         IkeV2VpnRunner(@NonNull Ikev2VpnProfile profile) {
-            super(TAG);
             mProfile = profile;
             mIpSecManager = (IpSecManager) mContext.getSystemService(Context.IPSEC_SERVICE);
-            mNetworkCallback = new VpnIkev2Utils.Ikev2VpnNetworkCallback(TAG, this);
+            mNetworkCallback = new VpnIkev2Utils.Ikev2VpnNetworkCallback(TAG, this, mExecutor);
         }
 
         @Override
@@ -2249,8 +2249,8 @@ public class Vpn {
         /**
          * Called when an IKE Child session has been opened, signalling completion of the startup.
          *
-         * <p>This method is only ever called once per IkeSession, and MUST run on the mExecutor
-         * thread in order to ensure consistency of the Ikev2VpnRunner fields.
+         * <p>This method is only ever called once per IkeSession. All IKE callbacks are run on the
+         * mExecutor thread by the IKE library, ensuring consistency of the Ikev2VpnRunner fields.
          */
         public void onChildOpened(
                 @NonNull Network network, @NonNull ChildSessionConfiguration childConfig) {
@@ -2318,7 +2318,7 @@ public class Vpn {
          * Called when an IPsec transform has been created, and should be applied.
          *
          * <p>This method is called multiple times over the lifetime of an IkeSession (or default
-         * network), and is MUST always be called on the mExecutor thread in order to ensure
+         * network). All IKE callbacks are run on the mExecutor thread by the IKE library, ensuring
          * consistency of the Ikev2VpnRunner fields.
          */
         public void onChildTransformCreated(
@@ -2350,57 +2350,51 @@ public class Vpn {
          * <p>The Ikev2VpnRunner will unconditionally switch to the new network, killing the old IKE
          * state in the process, and starting a new IkeSession instance.
          *
-         * <p>This method is called multiple times over the lifetime of the Ikev2VpnRunner, and is
-         * called on the ConnectivityService thread. Thus, the actual work MUST be proxied to the
-         * mExecutor thread in order to ensure consistency of the Ikev2VpnRunner fields.
+         * <p>This method is called multiple times over the lifetime of the Ikev2VpnRunner, and will
+         * be proxied to the mExecutor thread by the Ikev2VpnNetworkCallback, ensuring consistency
+         * of the Ikev2VpnRunner fields.
          */
         public void onDefaultNetworkChanged(@NonNull Network network) {
-            Log.d(TAG, "Starting IKEv2/IPsec session on new network: " + network);
-
-            // Proxy to the Ikev2VpnRunner (single-thread) executor to ensure consistency in lieu
-            // of locking.
-            mExecutor.execute(() -> {
-                try {
-                    if (!mIsRunning) {
-                        Log.d(TAG, "onDefaultNetworkChanged after exit");
-                        return; // VPN has been shut down.
-                    }
-
-                    // Without MOBIKE, we have no way to seamlessly migrate. Close on old
-                    // (non-default) network, and start the new one.
-                    resetIkeState();
-                    mActiveNetwork = network;
-
-                    final IkeSessionParams ikeSessionParams =
-                            VpnIkev2Utils.buildIkeSessionParams(mContext, mProfile, network);
-                    final ChildSessionParams childSessionParams =
-                            VpnIkev2Utils.buildChildSessionParams();
-
-                    // TODO: Remove the need for adding two unused addresses with
-                    // IPsec tunnels.
-                    final InetAddress address = InetAddress.getLocalHost();
-                    mTunnelIface =
-                            mIpSecManager.createIpSecTunnelInterface(
-                                    address /* unused */,
-                                    address /* unused */,
-                                    network);
-                    mNetd.setInterfaceUp(mTunnelIface.getInterfaceName());
-
-                    mSession = mIkev2SessionCreator.createIkeSession(
-                            mContext,
-                            ikeSessionParams,
-                            childSessionParams,
-                            mExecutor,
-                            new VpnIkev2Utils.IkeSessionCallbackImpl(
-                                    TAG, IkeV2VpnRunner.this, network),
-                            new VpnIkev2Utils.ChildSessionCallbackImpl(
-                                    TAG, IkeV2VpnRunner.this, network));
-                    Log.d(TAG, "Ike Session started for network " + network);
-                } catch (Exception e) {
-                    Log.i(TAG, "Setup failed for network " + network + ". Aborting", e);
-                    onSessionLost(network);
+            try {
+                if (!mIsRunning) {
+                    Log.d(TAG, "onDefaultNetworkChanged after exit");
+                    return; // VPN has been shut down.
                 }
-            });
+
+                // Without MOBIKE, we have no way to seamlessly migrate. Close on old
+                // (non-default) network, and start the new one.
+                resetIkeState();
+                mActiveNetwork = network;
+
+                final IkeSessionParams ikeSessionParams =
+                        VpnIkev2Utils.buildIkeSessionParams(mContext, mProfile, network);
+                final ChildSessionParams childSessionParams =
+                        VpnIkev2Utils.buildChildSessionParams();
+
+                // TODO: Remove the need for adding two unused addresses with
+                // IPsec tunnels.
+                final InetAddress address = InetAddress.getLocalHost();
+                mTunnelIface =
+                        mIpSecManager.createIpSecTunnelInterface(
+                                address /* unused */,
+                                address /* unused */,
+                                network);
+                mNetd.setInterfaceUp(mTunnelIface.getInterfaceName());
+
+                mSession = mIkev2SessionCreator.createIkeSession(
+                        mContext,
+                        ikeSessionParams,
+                        childSessionParams,
+                        mExecutor,
+                        new VpnIkev2Utils.IkeSessionCallbackImpl(
+                                TAG, IkeV2VpnRunner.this, network),
+                        new VpnIkev2Utils.ChildSessionCallbackImpl(
+                                TAG, IkeV2VpnRunner.this, network));
+                Log.d(TAG, "Ike Session started for network " + network);
+            } catch (Exception e) {
+                Log.i(TAG, "Setup failed for network " + network + ". Aborting", e);
+                onSessionLost(network);
+            }
         }
 
         /**
@@ -2516,6 +2510,7 @@ public class Vpn {
                 new AtomicInteger(ConnectivityManager.TYPE_NONE);
         private final VpnProfile mProfile;
 
+        private Thread mThread;
         private long mBringupStartTime = -1;
 
         /**
@@ -2542,7 +2537,6 @@ public class Vpn {
         };
 
         LegacyVpnRunner(VpnConfig config, String[] racoon, String[] mtpd, VpnProfile profile) {
-            super(TAG);
             mConfig = config;
             mDaemons = new String[] {"racoon", "mtpd"};
             // TODO: clear arguments from memory once launched
@@ -2575,6 +2569,11 @@ public class Vpn {
             mContext.registerReceiver(mBroadcastReceiver, filter);
         }
 
+        /** Sets the that this LegacyVpnRunner is running on */
+        public void setThread(@NonNull Thread thread) {
+            mThread = thread;
+        }
+
         /**
          * Checks if the parameter matches the underlying interface
          *
@@ -2592,7 +2591,7 @@ public class Vpn {
         @Override
         public void exitVpnRunner() {
             // We assume that everything is reset after stopping the daemons.
-            interrupt();
+            if (mThread != null) mThread.interrupt();
             try {
                 mContext.unregisterReceiver(mBroadcastReceiver);
             } catch (IllegalArgumentException e) {}
@@ -2607,7 +2606,8 @@ public class Vpn {
                 try {
                     bringup();
                     waitForDaemonsToStop();
-                    interrupted(); // Clear interrupt flag if execute called exit.
+                    // Clear interrupt flag if execute called exit.
+                    Thread.currentThread().interrupted();
                 } catch (InterruptedException e) {
                 } finally {
                     for (LocalSocket socket : mSockets) {
@@ -3029,7 +3029,7 @@ public class Vpn {
                 case VpnProfile.TYPE_IKEV2_IPSEC_RSA:
                     mVpnRunner =
                             new IkeV2VpnRunner(Ikev2VpnProfile.fromVpnProfile(profile, keyStore));
-                    mVpnRunner.start();
+                    mVpnRunner.run();
                     break;
                 default:
                     updateState(DetailedState.FAILED, "Invalid platform VPN type");
