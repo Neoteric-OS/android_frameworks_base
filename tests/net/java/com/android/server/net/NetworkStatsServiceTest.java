@@ -60,10 +60,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.annotation.NonNull;
 import android.app.AlarmManager;
 import android.app.usage.NetworkStatsManager;
 import android.content.Context;
@@ -191,15 +194,11 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         PowerManager.WakeLock wakeLock =
                 powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
 
-        mService = new NetworkStatsService(
-                mServiceContext, mNetManager, mAlarmManager, wakeLock, mClock,
-                mServiceContext.getSystemService(TelephonyManager.class), mSettings,
-                mStatsFactory, new NetworkStatsObservers(),  mStatsDir, getBaseDir(mStatsDir));
         mHandlerThread = new HandlerThread("HandlerThread");
-        mHandlerThread.start();
-        Handler.Callback callback = new NetworkStatsService.HandlerCallback(mService);
-        final Handler handler = new Handler(mHandlerThread.getLooper(), callback);
-        mService.setHandler(handler, callback);
+        final NetworkStatsService.Dependencies deps = makeDependencies();
+        mService = new NetworkStatsService(mServiceContext, mNetManager, mAlarmManager, wakeLock,
+                mClock, mServiceContext.getSystemService(TelephonyManager.class), mSettings,
+                mStatsFactory, new NetworkStatsObservers(), mStatsDir, getBaseDir(mStatsDir), deps);
 
         mElapsedRealtime = 0L;
 
@@ -216,9 +215,16 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
 
         // catch INetworkManagementEventObserver during systemReady()
         ArgumentCaptor<INetworkManagementEventObserver> networkObserver =
-              ArgumentCaptor.forClass(INetworkManagementEventObserver.class);
+                ArgumentCaptor.forClass(INetworkManagementEventObserver.class);
         verify(mNetManager).registerObserver(networkObserver.capture());
         mNetworkObserver = networkObserver.getValue();
+    }
+
+    @NonNull
+    private NetworkStatsService.Dependencies makeDependencies() {
+        final NetworkStatsService.Dependencies deps = mock(NetworkStatsService.Dependencies.class);
+        doReturn(mHandlerThread).when(deps).makeHandlerThread();
+        return deps;
     }
 
     @After
