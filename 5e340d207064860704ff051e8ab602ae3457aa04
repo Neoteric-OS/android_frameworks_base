@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ecf7784e_508d6e2a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6679,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-03T14:20:12Z",
+      "side": 1,
+      "message": "I\u0027d prefer not to do the CL for this, since this code will be deleted by the next CL in the stack.",
+      "parentUuid": "6b046ff0_c6b2ab1b",
+      "range": {
+        "startLine": 6679,
+        "startChar": 8,
+        "endLine": 6679,
+        "endChar": 15
+      },
+      "revId": "5e340d207064860704ff051e8ab602ae3457aa04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a0eb568_1d41c067",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "5e340d207064860704ff051e8ab602ae3457aa04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b3f46d_f29d352b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6686,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-03T14:20:12Z",
+      "side": 1,
+      "message": "Ditto, this code will be deleted by the next CL.",
+      "parentUuid": "7a0eb568_1d41c067",
+      "range": {
+        "startLine": 6686,
+        "startChar": 8,
+        "endLine": 6686,
+        "endChar": 15
+      },
+      "revId": "5e340d207064860704ff051e8ab602ae3457aa04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
