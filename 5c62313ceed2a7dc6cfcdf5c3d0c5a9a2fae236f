@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d02f7398_94290fa1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-03T12:49:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e550bd30_c485769e",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "5c62313ceed2a7dc6cfcdf5c3d0c5a9a2fae236f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72487cb2_4de4a5d4",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "5c62313ceed2a7dc6cfcdf5c3d0c5a9a2fae236f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eab2478_c258a505",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6680,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-03T12:49:04Z",
+      "side": 1,
+      "message": "Done. The order in line 5962 is actually the correct order in which routes are added. This is because ConnectivityService#updateRoutes first adds all directly-connected routes and then all gatewayed routes. It has to do that because if it tries to add a gatewayed route and there is no route to reach the gateway the operation fails with ENETUNREACH.",
+      "parentUuid": "72487cb2_4de4a5d4",
+      "range": {
+        "startLine": 6680,
+        "startChar": 11,
+        "endLine": 6680,
+        "endChar": 81
+      },
+      "revId": "5c62313ceed2a7dc6cfcdf5c3d0c5a9a2fae236f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
