@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23eda77e_c97c5697",
+        "filename": "packages/Tethering/res/values/overlayable.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-03T12:48:52Z",
+      "side": 1,
+      "message": "Nit: maybe \"downstream enabled\" or something else.   \"disable enable\" looks confusing.",
+      "range": {
+        "startLine": 56,
+        "startChar": 26,
+        "endLine": 56,
+        "endChar": 32
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

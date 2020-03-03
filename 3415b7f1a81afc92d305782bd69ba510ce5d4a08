@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "5f692b44_39b07674",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 26
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-03T12:48:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c65502a3_992ce638",
+      "range": {
+        "startLine": 170,
+        "startChar": 9,
+        "endLine": 170,
+        "endChar": 23
+      },
+      "revId": "3415b7f1a81afc92d305782bd69ba510ce5d4a08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e2e1d21_fd03d598",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 26
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "I don\u0027t think we should log downstream.length \u003d 0 case. If the configuration is wrong, there is no icon for it.",
       "parentUuid": "ec7d5024_6a718101",
+      "range": {
+        "startLine": 103,
+        "startChar": 23,
+        "endLine": 103,
+        "endChar": 34
+      },
+      "revId": "3415b7f1a81afc92d305782bd69ba510ce5d4a08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73725db5_f28d760d",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-03T12:48:52Z",
+      "side": 1,
+      "message": "If it\u0027s overlaid by other resouce with no icon, could we identify it?",
+      "parentUuid": "223f8712_80fa20d0",
       "range": {
         "startLine": 103,
         "startChar": 23,
