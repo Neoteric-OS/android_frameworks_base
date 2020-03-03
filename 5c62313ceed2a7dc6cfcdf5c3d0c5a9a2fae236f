@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72487cb2_4de4a5d4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6680,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-03T12:18:38Z",
+      "side": 1,
+      "message": "This doesn\u0027t verify the order of addRoute,\nthat\u0027s why you can pass l.5962.\nIIUC we might want to verify the order given that wrong order will make the command failed.\nIf so, do we want to verify that by using InOrder?",
+      "range": {
+        "startLine": 6680,
+        "startChar": 11,
+        "endLine": 6680,
+        "endChar": 81
+      },
+      "revId": "5c62313ceed2a7dc6cfcdf5c3d0c5a9a2fae236f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
