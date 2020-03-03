@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e550bd30_c485769e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-03T12:20:04Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "5c62313ceed2a7dc6cfcdf5c3d0c5a9a2fae236f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72487cb2_4de4a5d4",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
