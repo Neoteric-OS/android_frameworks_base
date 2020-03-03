@@ -212,6 +212,9 @@ public class BarController {
                 return StatusBarManager.WINDOW_STATE_HIDDEN;
             } else if (mState == StatusBarManager.WINDOW_STATE_HIDDEN && vis) {
                 return StatusBarManager.WINDOW_STATE_SHOWING;
+            } else if (mState == StatusBarManager.WINDOW_STATE_SHOWING && !vis
+                    && !wasVis && !change && !anim && !wasAnim) {
+                return StatusBarManager.WINDOW_STATE_HIDDEN;
             } else if (change) {
                 if (wasVis && vis && !wasAnim && anim) {
                     return StatusBarManager.WINDOW_STATE_HIDING;
