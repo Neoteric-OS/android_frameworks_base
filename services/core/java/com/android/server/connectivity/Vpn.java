@@ -1931,6 +1931,11 @@ public class Vpn {
             throw new SecurityException("Restricted users cannot establish VPNs");
         }
 
+        if (mAlwaysOn) {
+            throw new IllegalStateException(
+                    "Cannot start Legacy VPN while app-based VPN is set to always-on");
+        }
+
         final RouteInfo ipv4DefaultRoute = findIPv4DefaultRoute(egress);
         final String gateway = ipv4DefaultRoute.getGateway().getHostAddress();
         final String iface = ipv4DefaultRoute.getInterface();
