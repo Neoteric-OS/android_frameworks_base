@@ -93,6 +93,30 @@
       "revId": "5c62313ceed2a7dc6cfcdf5c3d0c5a9a2fae236f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e20d235b_6f72f367",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6680,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-03T13:27:30Z",
+      "side": 1,
+      "message": "question: Ack, how about the order of removing routes for the same interface.\nDo we need to remove them in the reverse order? Or it doesn\u0027t really matter.\n\nnit: it looks like the test doesn\u0027t cover the case I mentioned? Add that if feeling needed.",
+      "parentUuid": "3eab2478_c258a505",
+      "range": {
+        "startLine": 6680,
+        "startChar": 11,
+        "endLine": 6680,
+        "endChar": 81
+      },
+      "revId": "5c62313ceed2a7dc6cfcdf5c3d0c5a9a2fae236f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
