@@ -45,6 +45,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.concurrent.Executor;
+
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -314,13 +316,15 @@ public class ConnectivityManagerTest {
 
         mustFail(() -> { manager.requestNetwork(null, callback); });
         mustFail(() -> { manager.requestNetwork(request, nullCallback); });
-        mustFail(() -> { manager.requestNetwork(request, callback, null); });
+        mustFail(() -> { manager.requestNetwork(request, callback, (Handler) null); });
+        mustFail(() -> { manager.requestNetwork(request, callback, (Executor) null); });
         mustFail(() -> { manager.requestNetwork(request, callback, -1); });
         mustFail(() -> { manager.requestNetwork(request, nullIntent); });
 
         mustFail(() -> { manager.registerNetworkCallback(null, callback, handler); });
         mustFail(() -> { manager.registerNetworkCallback(request, null, handler); });
-        mustFail(() -> { manager.registerNetworkCallback(request, callback, null); });
+        mustFail(() -> { manager.registerNetworkCallback(request, callback, (Handler) null); });
+        mustFail(() -> { manager.registerNetworkCallback(request, callback, (Executor) null); });
         mustFail(() -> { manager.registerNetworkCallback(request, nullIntent); });
 
         mustFail(() -> { manager.registerDefaultNetworkCallback(null, handler); });

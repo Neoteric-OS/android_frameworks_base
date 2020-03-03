@@ -227,7 +227,7 @@ public class MultipathPolicyTrackerTest {
         ArgumentCaptor<ConnectivityManager.NetworkCallback> networkCallback =
                 ArgumentCaptor.forClass(ConnectivityManager.NetworkCallback.class);
         mTracker.start();
-        verify(mCM).registerNetworkCallback(any(), networkCallback.capture(), any());
+        verify(mCM).registerNetworkCallback(any(), networkCallback.capture(), any(Handler.class));
 
         // Simulate callback after capability changes
         NetworkCapabilities capabilities = new NetworkCapabilities()

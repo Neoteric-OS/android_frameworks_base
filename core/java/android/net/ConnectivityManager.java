@@ -1696,8 +1696,8 @@ public class ConnectivityManager {
         l.networkCapabilities = netCap;
         l.delay = delay;
         l.expireSequenceNumber = 0;
-        l.networkRequest = sendRequestForNetwork(
-                netCap, l.networkCallback, 0, REQUEST, type, getDefaultHandler());
+        l.networkRequest = sendRequestForNetwork(netCap, l.networkCallback, 0, REQUEST, type,
+                getDefaultHandler(), null /* executor */);
         if (l.networkRequest == null) return null;
         sLegacyRequests.put(netCap, l);
         sendExpireMsgForFeature(netCap, l.expireSequenceNumber, delay);
@@ -3362,6 +3362,19 @@ public class ConnectivityManager {
      * A {@code NetworkCallback} that has been unregistered can be registered again.
      */
     public static class NetworkCallback {
+        /** Reference to the executor the callback should be run on (if any). */
+        private Executor mExecutorRef = null;
+
+        /** @hide */
+        public void setExecutor(Executor executor) {
+            mExecutorRef = executor;
+        }
+
+        /** @hide */
+        public Executor getExecutor() {
+            return mExecutorRef;
+        }
+
         /**
          * Called when the framework connects to a new network to evaluate whether it satisfies this
          * request. If evaluation succeeds, this callback may be followed by an {@link #onAvailable}
@@ -3673,6 +3686,20 @@ public class ConnectivityManager {
                 Log.d(TAG, getCallbackName(message.what) + " for network " + network);
             }
 
+            Executor executor = callback.getExecutor();
+            if (executor == null) {
+                executeCallback(callback, message, network);
+            } else {
+                executor.execute(() -> executeCallback(callback, message, network));
+            }
+        }
+
+        private <T> T getObject(Message msg, Class<T> c) {
+            return (T) msg.getData().getParcelable(c.getSimpleName());
+        }
+
+        private void executeCallback(@NonNull NetworkCallback callback, @NonNull Message message,
+                @NonNull Network network) {
             switch (message.what) {
                 case CALLBACK_PRECHECK: {
                     callback.onPreCheck(network);
@@ -3720,10 +3747,6 @@ public class ConnectivityManager {
                 }
             }
         }
-
-        private <T> T getObject(Message msg, Class<T> c) {
-            return (T) msg.getData().getParcelable(c.getSimpleName());
-        }
     }
 
     private CallbackHandler getDefaultHandler() {
@@ -3742,7 +3765,8 @@ public class ConnectivityManager {
     private static final int REQUEST = 2;
 
     private NetworkRequest sendRequestForNetwork(NetworkCapabilities need, NetworkCallback callback,
-            int timeoutMs, int action, int legacyType, CallbackHandler handler) {
+            int timeoutMs, int action, int legacyType, CallbackHandler handler,
+            @Nullable Executor executor) {
         printStackTrace();
         checkCallbackNotNull(callback);
         Preconditions.checkArgument(action == REQUEST || need != null, "null NetworkCapabilities");
@@ -3769,6 +3793,7 @@ public class ConnectivityManager {
                     sCallbacks.put(request, callback);
                 }
                 callback.networkRequest = request;
+                callback.setExecutor(executor);
             }
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
@@ -3776,6 +3801,15 @@ public class ConnectivityManager {
             throw convertServiceException(e);
         }
         return request;
+    }
+
+    private void requestNetwork(@NonNull NetworkRequest request,
+            @NonNull NetworkCallback networkCallback, int timeoutMs, int legacyType,
+            @NonNull Handler handler, @Nullable Executor executor) {
+        CallbackHandler cbHandler = new CallbackHandler(handler);
+        NetworkCapabilities nc = request.networkCapabilities;
+        sendRequestForNetwork(
+                nc, networkCallback, timeoutMs, REQUEST, legacyType, cbHandler, executor);
     }
 
     /**
@@ -3804,9 +3838,8 @@ public class ConnectivityManager {
     public void requestNetwork(@NonNull NetworkRequest request,
             @NonNull NetworkCallback networkCallback, int timeoutMs, int legacyType,
             @NonNull Handler handler) {
-        CallbackHandler cbHandler = new CallbackHandler(handler);
-        NetworkCapabilities nc = request.networkCapabilities;
-        sendRequestForNetwork(nc, networkCallback, timeoutMs, REQUEST, legacyType, cbHandler);
+        requestNetwork(
+                request, networkCallback, timeoutMs, legacyType, handler, null /* executor */);
     }
 
     /**
@@ -3903,7 +3936,31 @@ public class ConnectivityManager {
             @NonNull NetworkCallback networkCallback, @NonNull Handler handler) {
         int legacyType = inferLegacyTypeForNetworkCapabilities(request.networkCapabilities);
         CallbackHandler cbHandler = new CallbackHandler(handler);
-        requestNetwork(request, networkCallback, 0, legacyType, cbHandler);
+        requestNetwork(request, networkCallback, 0, legacyType, cbHandler, null /* executor */);
+    }
+
+    /**
+     * Request a network to satisfy a set of {@link android.net.NetworkCapabilities}.
+     *
+     * This method behaves identically to {@link #requestNetwork(NetworkRequest, NetworkCallback)}
+     * but runs all the callbacks on the passed Executor.
+     *
+     * <p>This method has the same permission requirements as
+     * {@link #requestNetwork(NetworkRequest, NetworkCallback)} and throws the same exceptions in
+     * the same conditions.
+     *
+     * @param request {@link NetworkRequest} describing this request.
+     * @param networkCallback The {@link NetworkCallback} to be utilized for this request. Note
+     *                        the callback must not be shared - it uniquely specifies this request.
+     * @param executor The {@link Executor} to specify the executor upon which the callback will be
+     *                 invoked.
+     * @hide
+     */
+    public void requestNetwork(@NonNull NetworkRequest request,
+            @NonNull NetworkCallback networkCallback, @NonNull Executor executor) {
+        Objects.requireNonNull(executor, "Supplied executor was null");
+        int legacyType = inferLegacyTypeForNetworkCapabilities(request.networkCapabilities);
+        requestNetwork(request, networkCallback, 0, legacyType, getDefaultHandler(), executor);
     }
 
     /**
@@ -4113,7 +4170,30 @@ public class ConnectivityManager {
             @NonNull NetworkCallback networkCallback, @NonNull Handler handler) {
         CallbackHandler cbHandler = new CallbackHandler(handler);
         NetworkCapabilities nc = request.networkCapabilities;
-        sendRequestForNetwork(nc, networkCallback, 0, LISTEN, TYPE_NONE, cbHandler);
+        sendRequestForNetwork(
+                nc, networkCallback, 0, LISTEN, TYPE_NONE, cbHandler, null /* executor */);
+    }
+
+    /**
+     * Registers to receive notifications about all networks which satisfy the given
+     * {@link NetworkRequest}.  The callbacks will continue to be called until
+     * either the application exits or {@link #unregisterNetworkCallback(NetworkCallback)} is
+     * called.
+     *
+     * @param request {@link NetworkRequest} describing this request.
+     * @param networkCallback The {@link NetworkCallback} that the system will call as suitable
+     *                        networks change state.
+     * @param executor The {@link Executor} to specify the executor upon which the callback will be
+     *                 invoked.
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    public void registerNetworkCallback(@NonNull NetworkRequest request,
+            @NonNull NetworkCallback networkCallback, @NonNull Executor executor) {
+        Objects.requireNonNull(executor, "Supplied executor was null");
+        NetworkCapabilities nc = request.networkCapabilities;
+        sendRequestForNetwork(
+                nc, networkCallback, 0, LISTEN, TYPE_NONE, getDefaultHandler(), executor);
     }
 
     /**
@@ -4195,7 +4275,7 @@ public class ConnectivityManager {
         // request, i.e., the system default network.
         CallbackHandler cbHandler = new CallbackHandler(handler);
         sendRequestForNetwork(null /* NetworkCapabilities need */, networkCallback, 0,
-                REQUEST, TYPE_NONE, cbHandler);
+                REQUEST, TYPE_NONE, cbHandler, null /* executor */);
     }
 
     /**
