@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e6c02b9_ec98800d",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-03-03T20:52:02Z",
+      "side": 1,
+      "message": "Is there some kind of industry standards body that has dictated that these are the ranges?  They seem pretty arbitrary.  The ITU has a pretty different interpretation of radio frequency bands:  https://en.wikipedia.org/wiki/Radio_spectrum#ITU\nLow frequency\t30–300 kHz\nMedium frequency 300–3,000 kHz\n..etc.\n\nIt would be nice to be able to relate these to something in an industry spec.  Especially since its consistent from L, M, H, and then MMWAVE seems out of place.\n\nAlso, where are these used?",
+      "revId": "d41254d09a2d38325915288a97f7928fd202dafb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
