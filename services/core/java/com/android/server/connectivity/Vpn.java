@@ -2186,7 +2186,7 @@ public class Vpn {
      * the outer class are modified. As such, care must be taken to ensure that no calls are added
      * that might modify the outer class' state without acquiring a lock. All callbacks are run on
      * the mExecutor thread, either by the IKE library (for IKEv2-related callbacks), or by the
-     * {@link VpnIkev2Utils.Ikev2VpnNetworkCallback} (for network callbacks).
+     * {@link ConnectivityManager} (for network callbacks).
      *
      * <p>The overall structure of the Ikev2VpnRunner is as follows:
      *
@@ -2229,7 +2229,7 @@ public class Vpn {
         IkeV2VpnRunner(@NonNull Ikev2VpnProfile profile) {
             mProfile = profile;
             mIpSecManager = (IpSecManager) mContext.getSystemService(Context.IPSEC_SERVICE);
-            mNetworkCallback = new VpnIkev2Utils.Ikev2VpnNetworkCallback(TAG, this, mExecutor);
+            mNetworkCallback = new VpnIkev2Utils.Ikev2VpnNetworkCallback(TAG, this);
         }
 
         @Override
@@ -2239,7 +2239,7 @@ public class Vpn {
             // that in both onLost() and onConnected(), any old sessions MUST be torn down. This
             // does NOT include VPNs.
             final ConnectivityManager cm = ConnectivityManager.from(mContext);
-            cm.requestNetwork(cm.getDefaultRequest(), mNetworkCallback);
+            cm.requestNetwork(cm.getDefaultRequest(), mNetworkCallback, mExecutor);
         }
 
         private boolean isActiveNetwork(@Nullable Network network) {
@@ -2351,8 +2351,8 @@ public class Vpn {
          * state in the process, and starting a new IkeSession instance.
          *
          * <p>This method is called multiple times over the lifetime of the Ikev2VpnRunner, and will
-         * be proxied to the mExecutor thread by the Ikev2VpnNetworkCallback, ensuring consistency
-         * of the Ikev2VpnRunner fields.
+         * be proxied to the mExecutor thread by the ConnectivityManager, ensuring consistency of
+         * the Ikev2VpnRunner fields.
          */
         public void onDefaultNetworkChanged(@NonNull Network network) {
             try {

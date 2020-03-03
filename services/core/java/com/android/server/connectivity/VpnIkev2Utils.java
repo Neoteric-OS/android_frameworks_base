@@ -76,7 +76,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 /**
  * Utility class to build and convert IKEv2/IPsec parameters.
@@ -307,31 +306,22 @@ public class VpnIkev2Utils {
     static class Ikev2VpnNetworkCallback extends NetworkCallback {
         private final String mTag;
         private final Vpn.IkeV2VpnRunnerCallback mCallback;
-        private final Executor mExecutor;
 
-        Ikev2VpnNetworkCallback(
-                String tag, Vpn.IkeV2VpnRunnerCallback callback, Executor executor) {
+        Ikev2VpnNetworkCallback(String tag, Vpn.IkeV2VpnRunnerCallback callback) {
             mTag = tag;
             mCallback = callback;
-            mExecutor = executor;
         }
 
         @Override
         public void onAvailable(@NonNull Network network) {
-            // Proxy to executor thread to ensure all callbacks are performed serially.
-            mExecutor.execute(() -> {
-                Log.d(mTag, "Starting IKEv2/IPsec session on new network: " + network);
-                mCallback.onDefaultNetworkChanged(network);
-            });
+            Log.d(mTag, "Starting IKEv2/IPsec session on new network: " + network);
+            mCallback.onDefaultNetworkChanged(network);
         }
 
         @Override
         public void onLost(@NonNull Network network) {
-            // Proxy to executor thread to ensure all callbacks are performed serially.
-            mExecutor.execute(() -> {
-                Log.d(mTag, "Tearing down; lost network: " + network);
-                mCallback.onSessionLost(network);
-            });
+            Log.d(mTag, "Tearing down; lost network: " + network);
+            mCallback.onSessionLost(network);
         }
     }
 
