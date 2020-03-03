@@ -141,6 +141,30 @@
       "revId": "5c62313ceed2a7dc6cfcdf5c3d0c5a9a2fae236f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa1bdbf_f3376b9e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6680,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-03T13:56:55Z",
+      "side": 1,
+      "message": "Ah, thanks for the explanation, that fulfill my question.\n\nMy 2nd point is that we don\u0027t have a place that verifies remove the gateway routes first.\nBut as you said the kernel doesn\u0027t even care.\nAnd framework doesn\u0027t do that either.\nSo no action is needed.",
+      "parentUuid": "bd8dae24_1101139e",
+      "range": {
+        "startLine": 6680,
+        "startChar": 11,
+        "endLine": 6680,
+        "endChar": 81
+      },
+      "revId": "5c62313ceed2a7dc6cfcdf5c3d0c5a9a2fae236f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
