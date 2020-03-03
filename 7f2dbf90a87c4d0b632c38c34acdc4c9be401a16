@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f77e886_35163094",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-03T08:49:36Z",
+      "side": 1,
+      "message": "Bug id?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 1
+      },
+      "revId": "7f2dbf90a87c4d0b632c38c34acdc4c9be401a16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7990ce62_9285fdf7",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-03T08:49:36Z",
+      "side": 1,
+      "message": "Maybe not for this commit. Don\u0027t we need to do mHandlerThread.quit()?",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 22
+      },
+      "revId": "7f2dbf90a87c4d0b632c38c34acdc4c9be401a16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
