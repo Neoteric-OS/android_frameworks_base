@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2816cb7e_bcc9fed7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7074,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-04T12:19:20Z",
+      "side": 1,
+      "message": "nit: maybe @NonNull this?",
+      "range": {
+        "startLine": 7074,
+        "startChar": 36,
+        "endLine": 7074,
+        "endChar": 52
+      },
+      "revId": "5a052599034e980bae84d2f7b7d731771f690ace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b451c5b_e178d8da",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-04T12:19:20Z",
+      "side": 1,
+      "message": "not needed?",
+      "range": {
+        "startLine": 524,
+        "startChar": 4,
+        "endLine": 524,
+        "endChar": 12
+      },
+      "revId": "5a052599034e980bae84d2f7b7d731771f690ace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653c376f_f9518ef9",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-04T12:19:20Z",
+      "side": 1,
+      "message": "redundant blank line?",
+      "revId": "5a052599034e980bae84d2f7b7d731771f690ace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
