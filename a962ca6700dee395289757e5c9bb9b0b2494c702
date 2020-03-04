@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd00208c_eb11f970",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2020-03-04T10:19:29Z",
+      "side": 1,
+      "message": "Please add an @GuardedBy annotation or add a comment to signify that all accesses are guarded by mLock.",
+      "range": {
+        "startLine": 563,
+        "startChar": 8,
+        "endLine": 564,
+        "endChar": 43
+      },
+      "revId": "a962ca6700dee395289757e5c9bb9b0b2494c702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad2e311_85cb7290",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2020-03-04T10:19:29Z",
+      "side": 1,
+      "message": "this should be final.",
+      "range": {
+        "startLine": 565,
+        "startChar": 8,
+        "endLine": 565,
+        "endChar": 44
+      },
+      "revId": "a962ca6700dee395289757e5c9bb9b0b2494c702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4448ee5c_4ee5a892",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2020-03-04T10:19:29Z",
+      "side": 1,
+      "message": "nit: please leave a blank line between this method and the field declarations.",
+      "range": {
+        "startLine": 566,
+        "startChar": 8,
+        "endLine": 566,
+        "endChar": 33
+      },
+      "revId": "a962ca6700dee395289757e5c9bb9b0b2494c702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
