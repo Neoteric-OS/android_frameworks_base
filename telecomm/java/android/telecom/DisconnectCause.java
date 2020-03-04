@@ -110,6 +110,7 @@ public final class DisconnectCause implements Parcelable {
     private CharSequence mDisconnectDescription;
     private String mDisconnectReason;
     private int mToneToPlay;
+    private boolean mShouldAddToCallLog;
 
     /**
      * Creates a new DisconnectCause.
@@ -153,11 +154,27 @@ public final class DisconnectCause implements Parcelable {
      */
     public DisconnectCause(int code, CharSequence label, CharSequence description, String reason,
             int toneToPlay) {
+        this(code, label, description, reason, ToneGenerator.TONE_UNKNOWN, toneToPlay, true);
+    }
+
+    /**
+     * Creates a new DisconnectCause.
+     *
+     * @param code The code for the disconnect cause.
+     * @param label The localized label to show to the user to explain the disconnect.
+     * @param description The localized description to show to the user to explain the disconnect.
+     * @param reason The reason for the disconnect.
+     * @param toneToPlay The tone to play on disconnect, as defined in {@link ToneGenerator}.
+     * @param shouldAddToCallLog The value to define whether to add to call log on disconnect.
+     */
+    public DisconnectCause(int code, CharSequence label, CharSequence description, String reason,
+            int toneToPlay, boolean shouldAddToCallLog) {
         mDisconnectCode = code;
         mDisconnectLabel = label;
         mDisconnectDescription = description;
         mDisconnectReason = reason;
         mToneToPlay = toneToPlay;
+        mShouldAddToCallLog = shouldAddToCallLog;
     }
 
     /**
@@ -215,6 +232,15 @@ public final class DisconnectCause implements Parcelable {
         return mToneToPlay;
     }
 
+    /**
+     * Returns the value to define whether to add to call log when disconnected.
+     *
+     * @return whether to add to call log when disconnected.
+     */
+    public boolean shouldAddToCallLog() {
+        return mShouldAddToCallLog;
+    }
+
     public static final @android.annotation.NonNull Creator<DisconnectCause> CREATOR = new Creator<DisconnectCause>() {
         @Override
         public DisconnectCause createFromParcel(Parcel source) {
@@ -223,7 +249,8 @@ public final class DisconnectCause implements Parcelable {
             CharSequence description = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
             String reason = source.readString();
             int tone = source.readInt();
-            return new DisconnectCause(code, label, description, reason, tone);
+            boolean shouldAddToCallLog = source.readBoolean();
+            return new DisconnectCause(code, label, description, reason, tone, shouldAddToCallLog);
         }
 
         @Override
@@ -239,6 +266,7 @@ public final class DisconnectCause implements Parcelable {
         TextUtils.writeToParcel(mDisconnectDescription, destination, flags);
         destination.writeString(mDisconnectReason);
         destination.writeInt(mToneToPlay);
+        destination.writeBoolean(mShouldAddToCallLog);
     }
 
     @Override
@@ -252,7 +280,8 @@ public final class DisconnectCause implements Parcelable {
                 + Objects.hashCode(mDisconnectLabel)
                 + Objects.hashCode(mDisconnectDescription)
                 + Objects.hashCode(mDisconnectReason)
-                + Objects.hashCode(mToneToPlay);
+                + Objects.hashCode(mToneToPlay)
+                + Objects.hashCode(mShouldAddToCallLog);
     }
 
     @Override
@@ -263,7 +292,8 @@ public final class DisconnectCause implements Parcelable {
                     && Objects.equals(mDisconnectLabel, d.getLabel())
                     && Objects.equals(mDisconnectDescription, d.getDescription())
                     && Objects.equals(mDisconnectReason, d.getReason())
-                    && Objects.equals(mToneToPlay, d.getTone());
+                    && Objects.equals(mToneToPlay, d.getTone())
+                    && Objects.equals(mShouldAddToCallLog, d.shouldAddToCallLog());
         }
         return false;
     }
@@ -323,6 +353,7 @@ public final class DisconnectCause implements Parcelable {
                 + " Label: (" + label + ")"
                 + " Description: (" + description + ")"
                 + " Reason: (" + reason + ")"
-                + " Tone: (" + mToneToPlay + ") ]";
+                + " Tone: (" + mToneToPlay + ")"
+                + " ShouldAddToCallLog: (" + mShouldAddToCallLog + ") ]";
     }
 }
