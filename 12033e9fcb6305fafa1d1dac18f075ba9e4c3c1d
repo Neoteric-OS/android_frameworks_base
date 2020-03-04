@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d612c896_ada72d54",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-04T05:48:22Z",
+      "side": 1,
+      "message": "Nit: Maybe use TAG like original design.",
+      "range": {
+        "startLine": 421,
+        "startChar": 37,
+        "endLine": 421,
+        "endChar": 64
+      },
+      "revId": "12033e9fcb6305fafa1d1dac18f075ba9e4c3c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd609171_cc4b64b9",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-04T05:48:22Z",
+      "side": 1,
+      "message": "Not for this commit. Shouldn\u0027t you do Thread.quitSafely() on tearDwon() like ConnectivityServiceTest\nhttps://source.corp.google.com/aosp-master/frameworks/base/tests/net/java/com/android/server/ConnectivityServiceTest.java;l\u003d1305-1306",
+      "range": {
+        "startLine": 195,
+        "startChar": 8,
+        "endLine": 195,
+        "endChar": 60
+      },
+      "revId": "12033e9fcb6305fafa1d1dac18f075ba9e4c3c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b34f04_0422232f",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-04T05:48:22Z",
+      "side": 1,
+      "message": "Not for this commit. You should use mock TelphonyManager here.",
+      "range": {
+        "startLine": 198,
+        "startChar": 24,
+        "endLine": 198,
+        "endChar": 80
+      },
+      "revId": "12033e9fcb6305fafa1d1dac18f075ba9e4c3c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
