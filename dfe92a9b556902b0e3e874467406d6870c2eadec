@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f55eeebf_8fe4cdc8",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-03-04T08:54:56Z",
+      "side": 1,
+      "message": "Up to 4 active VPNs/IWLAN with potential soft handover.",
+      "range": {
+        "startLine": 363,
+        "startChar": 60,
+        "endLine": 363,
+        "endChar": 61
+      },
+      "revId": "dfe92a9b556902b0e3e874467406d6870c2eadec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437b5188_49aa82f8",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-03-04T08:54:56Z",
+      "side": 1,
+      "message": "SPIs and Transforms are both cheap, and are 1:1 correlated, so the increased SPI quota over Transforms seems like it no longer makes sense.",
+      "range": {
+        "startLine": 365,
+        "startChar": 53,
+        "endLine": 365,
+        "endChar": 55
+      },
+      "revId": "dfe92a9b556902b0e3e874467406d6870c2eadec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
