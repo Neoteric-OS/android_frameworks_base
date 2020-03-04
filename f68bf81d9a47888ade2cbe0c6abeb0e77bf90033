@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4132f6fb_4db6961a",
+        "filename": "cmds/incident/main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-03-04T08:56:05Z",
+      "side": 1,
+      "message": "nit: mExitCode",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 18
+      },
+      "revId": "f68bf81d9a47888ade2cbe0c6abeb0e77bf90033",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49136432_06b945a0",
+        "filename": "cmds/incident/main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-03-04T08:56:05Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 214,
+        "startChar": 8,
+        "endLine": 214,
+        "endChar": 51
+      },
+      "revId": "f68bf81d9a47888ade2cbe0c6abeb0e77bf90033",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1db724c_fb88b4fc",
+        "filename": "cmds/incident/main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-03-04T08:56:05Z",
+      "side": 1,
+      "message": "The logic here is not obvious at the first glance. I think this looks more clear:\n\nint status \u003d stream_output(fds[0], STDOUT_FILENO);\nif (status !\u003d 0) return status;\nreturn listener-\u003egetExitCode();\n\nwhere getExitCode() simply returns the exit code saved in the listener",
+      "range": {
+        "startLine": 390,
+        "startChar": 8,
+        "endLine": 390,
+        "endChar": 75
+      },
+      "revId": "f68bf81d9a47888ade2cbe0c6abeb0e77bf90033",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
