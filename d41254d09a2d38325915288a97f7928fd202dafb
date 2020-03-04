@@ -16,6 +16,24 @@
       "revId": "d41254d09a2d38325915288a97f7928fd202dafb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "019dbdb0_0a6244d9",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2020-03-04T18:43:50Z",
+      "side": 1,
+      "message": "looks like the sysUI logic got moved to telephony so we don\u0027t need this any more - ag/10274737",
+      "parentUuid": "2e6c02b9_ec98800d",
+      "revId": "d41254d09a2d38325915288a97f7928fd202dafb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
