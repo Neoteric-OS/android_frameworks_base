@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99e209e7_944903a2",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-04T11:12:13Z",
+      "side": 1,
+      "message": "optional: Maybe also note capital/lower case does matter or not",
+      "range": {
+        "startLine": 315,
+        "startChar": 13,
+        "endLine": 315,
+        "endChar": 19
+      },
+      "revId": "9468df7faa6dcf45ae62d1bc03135519672ccad1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55bfc6f_c0e7f50b",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-04T11:12:13Z",
+      "side": 1,
+      "message": "tethering?",
+      "range": {
+        "startLine": 331,
+        "startChar": 20,
+        "endLine": 331,
+        "endChar": 26
+      },
+      "revId": "9468df7faa6dcf45ae62d1bc03135519672ccad1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1df5eed_c966344f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1581,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-04T11:12:13Z",
+      "side": 1,
+      "message": "network inside UpstreamNetworkState looks nullable. Maybe mTetherUpstream.equals() or check if ns.network is null.",
+      "range": {
+        "startLine": 1581,
+        "startChar": 59,
+        "endLine": 1581,
+        "endChar": 66
+      },
+      "revId": "9468df7faa6dcf45ae62d1bc03135519672ccad1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df353821_3edb4571",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-04T11:12:13Z",
+      "side": 1,
+      "message": "Optional: Looks it can be checked inside setupPauseNotification() because they\u0027re all related to suspend status. It should be reasonable to check that inside setupPauseNotification()",
+      "range": {
+        "startLine": 147,
+        "startChar": 17,
+        "endLine": 147,
+        "endChar": 35
+      },
+      "revId": "9468df7faa6dcf45ae62d1bc03135519672ccad1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40bc3ade_9f173bff",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-04T11:12:13Z",
+      "side": 1,
+      "message": "Nit: suppose it\u0027s one icon? s may not be needed.",
+      "range": {
+        "startLine": 219,
+        "startChar": 30,
+        "endLine": 219,
+        "endChar": 31
+      },
+      "revId": "9468df7faa6dcf45ae62d1bc03135519672ccad1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeee8436_3053e344",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-04T11:12:13Z",
+      "side": 1,
+      "message": "TITLE",
+      "range": {
+        "startLine": 74,
+        "startChar": 21,
+        "endLine": 74,
+        "endChar": 27
+      },
+      "revId": "9468df7faa6dcf45ae62d1bc03135519672ccad1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f11bd0c_5736f2bf",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-04T11:12:13Z",
+      "side": 1,
+      "message": "Nit: It will help to say what the behavior is instead of saying the assignment of the code.\nE.g. Remove pause icon customization or something else.",
+      "range": {
+        "startLine": 454,
+        "startChar": 11,
+        "endLine": 454,
+        "endChar": 69
+      },
+      "revId": "9468df7faa6dcf45ae62d1bc03135519672ccad1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
