@@ -20,6 +20,8 @@ android_test {
     srcs: [
         "src/**/*.java",
         "src/**/*.kt",
+        ":tethering-tests-networkstack-shared-srcs",
+        ":tethering-test-networkstack-apishim-shared-src",
     ],
     test_suites: [
         "device-tests",
