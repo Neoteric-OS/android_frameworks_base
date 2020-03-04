@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2afb0335_b9cce03b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7804,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-04T05:32:04Z",
+      "side": 1,
+      "message": "As this is always going to need a copy in practice, I think it\u0027s easier if this method does the copy and returns the new object rather than mutate its argument (which is also uncustomary in Java)",
+      "range": {
+        "startLine": 7804,
+        "startChar": 12,
+        "endLine": 7804,
+        "endChar": 16
+      },
+      "revId": "16e7ca81601b8254e0662125af3b9a22efee5b86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
