@@ -37,7 +37,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeFalse;
 
+import android.os.Build;
 import android.os.SystemClock;
 
 import androidx.test.filters.SmallTest;
@@ -328,6 +330,9 @@ public class LinkAddressTest {
 
     @Test
     public void testDeprecationTime() {
+        // testDeprecationTime() and constructor with deprecationTime is exposed as system API in
+        // API 30.
+        assumeFalse(Build.VERSION.SDK_INT <= Build.VERSION_CODES.R);
         try {
             new LinkAddress(V6_ADDRESS, 64, 0, 456,
                     LinkAddress.LIFETIME_UNKNOWN, 100000L);
@@ -345,10 +350,16 @@ public class LinkAddressTest {
                     -2, 100000L);
             fail("negative deprecation time should cause exception");
         } catch (IllegalArgumentException expected) { }
+
+        LinkAddress addr = new LinkAddress(V6_ADDRESS, 64, 0, 456, 100000L, 200000L);
+        assertEquals(100000L, addr.getDeprecationTime());
     }
 
     @Test
     public void testExpirationTime() {
+        // getExpirationTime() and constructor with expirationTime is exposed as system API in API
+        // 30.
+        assumeFalse(Build.VERSION.SDK_INT <= Build.VERSION_CODES.R);
         try {
             new LinkAddress(V6_ADDRESS, 64, 0, 456,
                     200000L, LinkAddress.LIFETIME_UNKNOWN);
@@ -360,6 +371,9 @@ public class LinkAddressTest {
                     100000L, -2);
             fail("negative expiration time should cause exception");
         } catch (IllegalArgumentException expected) { }
+
+        LinkAddress addr = new LinkAddress(V6_ADDRESS, 64, 0, 456, 100000L, 200000L);
+        assertEquals(200000L, addr.getExpirationTime());
     }
 
     @Test
