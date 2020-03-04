@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9a6df13_ce8a8bcd",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-04T08:08:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d612c896_ada72d54",
+      "range": {
+        "startLine": 421,
+        "startChar": 37,
+        "endLine": 421,
+        "endChar": 64
+      },
+      "revId": "12033e9fcb6305fafa1d1dac18f075ba9e4c3c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd609171_cc4b64b9",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "edc8656d_ff19a8df",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-04T08:08:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd609171_cc4b64b9",
+      "range": {
+        "startLine": 195,
+        "startChar": 8,
+        "endLine": 195,
+        "endChar": 60
+      },
+      "revId": "12033e9fcb6305fafa1d1dac18f075ba9e4c3c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57b34f04_0422232f",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "12033e9fcb6305fafa1d1dac18f075ba9e4c3c1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4c7a32_83c31b7b",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-04T08:08:14Z",
+      "side": 1,
+      "message": "This parameter is dead code for now but will soon be used in SM05, fixed in SM05 instead.",
+      "parentUuid": "57b34f04_0422232f",
+      "range": {
+        "startLine": 198,
+        "startChar": 24,
+        "endLine": 198,
+        "endChar": 80
+      },
+      "revId": "12033e9fcb6305fafa1d1dac18f075ba9e4c3c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
