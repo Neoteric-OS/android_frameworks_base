@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6222a415_3564dcfe",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-03-04T14:15:14Z",
+      "side": 1,
+      "message": "Nice catch.",
+      "parentUuid": "648157e8_9673d474",
+      "revId": "5e105e721265c833aeb672d4087d583ca5313686",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab07debb_98366fde",
         "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0d153c11_3261dc8d",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-03-04T14:15:14Z",
+      "side": 1,
+      "message": "This is the outcome of our discussion on how to rename priority to something that makes sense for a user of the API who may not be intimately familiar with RRO. By only allowing setEnable, setDisable and tying loading order to the last called setEnable we simplify the API, and with the transactional API there\u0027s no real cost to disabling all overlays and enabling them again (but in a different order) in a single transaction.\n\nI don\u0027t feel we need an explicit setLoadingOrder.",
+      "parentUuid": "ab07debb_98366fde",
+      "revId": "5e105e721265c833aeb672d4087d583ca5313686",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "728f29cd_c9dd78ef",
         "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2020-03-04T14:08:00Z",
       "side": 1,
       "message": "So priority change through transactional API is executed via ordering of setEnabled calls? Somehow it doesn\u0027t feel right at this level.",
+      "revId": "5e105e721265c833aeb672d4087d583ca5313686",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4aa5f9f_74dbd5f8",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-03-04T14:15:14Z",
+      "side": 1,
+      "message": "When calling into the OverlayManagerSettings, enabling an overlay should also reorder the data structure in settings, but as long as we support the non-transactional API we have no choice but to keep it this way.",
+      "parentUuid": "728f29cd_c9dd78ef",
       "revId": "5e105e721265c833aeb672d4087d583ca5313686",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
