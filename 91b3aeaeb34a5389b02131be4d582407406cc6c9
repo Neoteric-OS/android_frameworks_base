@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a7346d7_b22b4169",
+        "filename": "services/core/java/com/android/server/DynamicSystemService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2020-03-05T17:05:58Z",
+      "side": 1,
+      "message": "Do you still need this?",
+      "revId": "91b3aeaeb34a5389b02131be4d582407406cc6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
