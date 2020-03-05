@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c98a89fc_55e8be0b",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T06:49:09Z",
+      "side": 1,
+      "message": "You\u0027re not only using it for mocks. Please either update this comment, or remove lateinit from the non-mocks members.",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 35
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2519d47d_894563aa",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T06:49:09Z",
+      "side": 1,
+      "message": "Maybe put this in a constant",
+      "range": {
+        "startLine": 77,
+        "startChar": 17,
+        "endLine": 80,
+        "endChar": 94
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9997d7e_b97a44aa",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T06:49:09Z",
+      "side": 1,
+      "message": "This sounds like you\u0027re using a spy only to modify the behavior of one method (you never actually check anything on the spy). This is not the right abstraction ; you probably just want to make a subclass of TetheringNotificationUpdater that behaves like this.\n\nThis may also apply to the context member.",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 9
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc0b9b6_e1e2bf57",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T06:49:09Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s clear to write it like this. Here in effect you have two overloaded functions, one with three arguments and one with none, and that\u0027s how it should be written.\n\nWhat is the expected behavior if, like your interface allows doing, I call verifyNotification(my_title) ? It doesn\u0027t make sense to call it this way, so it shouldn\u0027t be possible. It\u0027s also not very clear that calling this with no args means checking for no notification.\n\nSo I think you should just inline these, or if you really want to bundle reset() together then have two functions :\n\n  private fun verifyNotification(iconId: Int, title: String, message: String) {\n    expectShow\n    reset\n  }\n\n  private fun verifyNoNotification() {\n    expectClear\n    reset\n  }",
+      "range": {
+        "startLine": 150,
+        "startChar": 8,
+        "endLine": 150,
+        "endChar": 28
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517afcef_fc90e5e1",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T06:49:09Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this is 2. To me \";\" is invalid, \"WIFI\" is invalid, \"1;2\" is invalid, \"USB,;\" is invalid. Only the last one is valid, insofar as we accept whitespace.\n\nAlso please do test with more complex specs that do have | and , in them.",
+      "range": {
+        "startLine": 215,
+        "startChar": 16,
+        "endLine": 215,
+        "endChar": 90
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
