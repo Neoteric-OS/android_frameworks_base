@@ -7827,7 +7827,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
 
             try {
-                cb.onConnectivityReport(report);
+                cb.onConnectivityReportAvailable(report);
             } catch (RemoteException e) {
                 // Exception while sending the ConnectivityReport. Move on to the next network.
             }
@@ -7871,7 +7871,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 getMatchingPermissionedCallbacks(nai);
         for (final IConnectivityDiagnosticsCallback cb : results) {
             try {
-                cb.onConnectivityReport(report);
+                cb.onConnectivityReportAvailable(report);
             } catch (RemoteException ex) {
                 loge("Error invoking onConnectivityReport", ex);
             }
