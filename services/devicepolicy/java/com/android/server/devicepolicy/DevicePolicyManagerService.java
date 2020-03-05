@@ -10873,31 +10873,21 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
     public boolean setTime(ComponentName who, long millis) {
         Preconditions.checkNotNull(who, "ComponentName is null in setTime");
         enforceDeviceOwner(who);
-        // Don't allow set time when auto time is on.
-        if (mInjector.settingsGlobalGetInt(Global.AUTO_TIME, 0) == 1) {
-            return false;
-        }
+
         ManualTimeSuggestion manualTimeSuggestion = TimeDetector.createManualTimeSuggestion(
                 millis, "DevicePolicyManagerService: setTime");
-        mInjector.binderWithCleanCallingIdentity(
-                () -> mInjector.getTimeDetector().suggestManualTime(manualTimeSuggestion));
-        return true;
+        return mInjector.getTimeDetector().suggestManualTime(manualTimeSuggestion);
     }
 
     @Override
     public boolean setTimeZone(ComponentName who, String timeZone) {
         Preconditions.checkNotNull(who, "ComponentName is null in setTimeZone");
         enforceDeviceOwner(who);
-        // Don't allow set timezone when auto timezone is on.
-        if (mInjector.settingsGlobalGetInt(Global.AUTO_TIME_ZONE, 0) == 1) {
-            return false;
-        }
+
         ManualTimeZoneSuggestion manualTimeZoneSuggestion =
                 TimeZoneDetector.createManualTimeZoneSuggestion(
                         timeZone, "DevicePolicyManagerService: setTimeZone");
-        mInjector.binderWithCleanCallingIdentity(() ->
-                mInjector.getTimeZoneDetector().suggestManualTimeZone(manualTimeZoneSuggestion));
-        return true;
+        return mInjector.getTimeZoneDetector().suggestManualTimeZone(manualTimeZoneSuggestion);
     }
 
     @Override

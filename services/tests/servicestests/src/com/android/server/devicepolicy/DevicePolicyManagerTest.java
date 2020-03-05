@@ -3473,6 +3473,8 @@ public class DevicePolicyManagerTest extends DpmTestBase {
     }
 
     public void testSetTime() throws Exception {
+        when(getServices().timeDetector.suggestManualTime(any())).thenReturn(true);
+
         mContext.binder.callingUid = DpmMockContext.CALLER_SYSTEM_USER_UID;
         setupDeviceOwner();
         dpm.setTime(admin1, 0);
@@ -3497,20 +3499,22 @@ public class DevicePolicyManagerTest extends DpmTestBase {
     }
 
     public void testSetTimeWithAutoTimeOn() throws Exception {
+        when(getServices().timeDetector.suggestManualTime(any())).thenReturn(false);
+
         mContext.binder.callingUid = DpmMockContext.CALLER_SYSTEM_USER_UID;
         setupDeviceOwner();
-        when(getServices().settings.settingsGlobalGetInt(Settings.Global.AUTO_TIME, 0))
-                .thenReturn(1);
         assertFalse(dpm.setTime(admin1, 0));
     }
 
     public void testSetTimeZone() throws Exception {
+        when(getServices().timeZoneDetector.suggestManualTimeZone(any())).thenReturn(true);
+
         mContext.binder.callingUid = DpmMockContext.CALLER_SYSTEM_USER_UID;
         setupDeviceOwner();
         dpm.setTimeZone(admin1, "Asia/Shanghai");
-        ManualTimeZoneSuggestion suggestion =
+        ManualTimeZoneSuggestion expectedSuggestion =
                 TimeZoneDetector.createManualTimeZoneSuggestion("Asia/Shanghai", "Test debug info");
-        verify(getServices().timeZoneDetector).suggestManualTimeZone(suggestion);
+        verify(getServices().timeZoneDetector).suggestManualTimeZone(expectedSuggestion);
     }
 
     public void testSetTimeZoneFailWithPO() throws Exception {
@@ -3520,10 +3524,10 @@ public class DevicePolicyManagerTest extends DpmTestBase {
     }
 
     public void testSetTimeZoneWithAutoTimeZoneOn() throws Exception {
+        when(getServices().timeZoneDetector.suggestManualTimeZone(any())).thenReturn(false);
+
         mContext.binder.callingUid = DpmMockContext.CALLER_SYSTEM_USER_UID;
         setupDeviceOwner();
-        when(getServices().settings.settingsGlobalGetInt(Settings.Global.AUTO_TIME_ZONE, 0))
-                .thenReturn(1);
         assertFalse(dpm.setTimeZone(admin1, "Asia/Shanghai"));
     }
 

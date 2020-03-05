@@ -34,7 +34,7 @@ import java.io.PrintWriter;
 public interface TimeZoneDetectorStrategy {
 
     /** Process the suggested manually-entered (i.e. user sourced) time zone. */
-    void suggestManualTimeZone(@NonNull ManualTimeZoneSuggestion suggestion);
+    boolean suggestManualTimeZone(@NonNull ManualTimeZoneSuggestion suggestion);
 
     /**
      * Suggests a time zone for the device, or withdraws a previous suggestion if

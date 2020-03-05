@@ -81,7 +81,7 @@ public interface TimeDetectorStrategy {
     void suggestTelephonyTime(@NonNull TelephonyTimeSuggestion timeSuggestion);
 
     /** Process the suggested manually entered time. */
-    void suggestManualTime(@NonNull ManualTimeSuggestion timeSuggestion);
+    boolean suggestManualTime(@NonNull ManualTimeSuggestion timeSuggestion);
 
     /** Process the suggested time from network sources. */
     void suggestNetworkTime(@NonNull NetworkTimeSuggestion timeSuggestion);

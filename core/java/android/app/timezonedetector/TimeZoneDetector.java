@@ -51,11 +51,14 @@ public interface TimeZoneDetector {
     void suggestTelephonyTimeZone(@NonNull TelephonyTimeZoneSuggestion timeZoneSuggestion);
 
     /**
-     * Suggests the current time zone, determined for the user's manually information, to the
-     * detector. The detector may ignore the signal based on system settings.
+     * Suggests the current time zone, determined from the user's manually entered information, to
+     * the detector. Returns {@code false} if the suggestion was invalid, or the device
+     * configuration prevented the suggestion being used, {@code true} if the suggestion was
+     * accepted. A suggestion that is valid but does not change the time zone because it matches
+     * the current device time zone is considered accepted.
      *
      * @hide
      */
     @RequiresPermission(android.Manifest.permission.SUGGEST_MANUAL_TIME_AND_ZONE)
-    void suggestManualTimeZone(@NonNull ManualTimeZoneSuggestion timeZoneSuggestion);
+    boolean suggestManualTimeZone(@NonNull ManualTimeZoneSuggestion timeZoneSuggestion);
 }
