@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f3eddad_be848c02",
+        "filename": "identity/java/android/security/identity/ResultData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2020-03-05T15:26:43Z",
+      "side": 1,
+      "message": "I was asked \"In ResultData, can you add your @IntDef to the int return value from getStatus()?\" but I think it\u0027s already there. Not sure this change changes anything except to make it easier to catch.",
+      "range": {
+        "startLine": 199,
+        "startChar": 20,
+        "endLine": 199,
+        "endChar": 27
+      },
+      "revId": "ba7b3600708af9dee2d98c4e267519c241945608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
