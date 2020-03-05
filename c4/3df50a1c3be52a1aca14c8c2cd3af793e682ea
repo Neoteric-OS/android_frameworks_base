@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Boleyn Su <boleynsu@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Mike Ma <yanmin@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Boleyn Su <boleynsu@google.com>
+Submitted-at: Thu, 05 Mar 2020 23:32:03 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1244666
+Project: platform/frameworks/base
+Branch: refs/heads/master
