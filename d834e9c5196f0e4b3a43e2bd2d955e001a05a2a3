@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "91b2cd9c_6ebbe5da",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T07:42:04Z",
+      "side": 1,
+      "message": "Also locally : when (boolean) is better simply written as if()",
+      "parentUuid": "9cc0b9b6_e1e2bf57",
+      "range": {
+        "startLine": 150,
+        "startChar": 8,
+        "endLine": 150,
+        "endChar": 28
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "517afcef_fc90e5e1",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 4
