@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4da80773_8dacefd0",
+        "filename": "media/java/android/media/tv/TvInputService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-03-05T01:10:05Z",
+      "side": 1,
+      "message": "Overall this looks good and it is backwards compatible.\n\nI will talk to my internal API team about if we can instead use the process  shown at \nhttps://android-review.googlesource.com/c/platform/hardware/interfaces/+/1168984",
+      "range": {
+        "startLine": 109,
+        "startChar": 17,
+        "endLine": 109,
+        "endChar": 24
+      },
+      "revId": "4a133c2db4b8157f5e2753c3e987322c3017121c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5cc4ce7_ea1a69c9",
+        "filename": "media/java/android/media/tv/TvInputService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-03-05T01:10:05Z",
+      "side": 1,
+      "message": "I think we should define a new Intent action for this.",
+      "range": {
+        "startLine": 185,
+        "startChar": 10,
+        "endLine": 185,
+        "endChar": 14
+      },
+      "revId": "4a133c2db4b8157f5e2753c3e987322c3017121c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
