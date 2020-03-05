@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e36b117_57e84faa",
+        "filename": "tools/aapt2/java/ProguardRules_test.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-03-05T19:58:22Z",
+      "side": 1,
+      "message": "Line length",
+      "range": {
+        "startLine": 137,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 109
+      },
+      "revId": "bb6344c5097d713a3c01762c89b6d9832098b07b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0aa917_e0c879b6",
+        "filename": "tools/aapt2/java/ProguardRules_test.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-03-05T19:58:22Z",
+      "side": 1,
+      "message": "Line length",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 109
+      },
+      "revId": "bb6344c5097d713a3c01762c89b6d9832098b07b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
