@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e39e397a_28adbff3",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T07:45:34Z",
+      "side": 1,
+      "message": "IIUC this contains the name of the resource – you did not resolve it to the actual string.",
+      "range": {
+        "startLine": 185,
+        "startChar": 49,
+        "endLine": 185,
+        "endChar": 64
+      },
+      "revId": "25d2fc73ee05cf2bae69d1a4d94085be315f75c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26aa5d8f_d9b1af50",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T07:45:34Z",
+      "side": 1,
+      "message": "Question : are you sure the behavior of \"\" is the same as if this had not been called ?",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 54
+      },
+      "revId": "25d2fc73ee05cf2bae69d1a4d94085be315f75c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
