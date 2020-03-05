@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "a5a802da_8a495dd1",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T05:35:50Z",
+      "side": 1,
+      "message": "be separated",
+      "range": {
+        "startLine": 161,
+        "startChar": 48,
+        "endLine": 161,
+        "endChar": 56
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c833b8_7b099265",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T05:35:50Z",
+      "side": 1,
+      "message": "isn\u0027t listed",
+      "range": {
+        "startLine": 179,
+        "startChar": 59,
+        "endLine": 179,
+        "endChar": 71
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0dcae89_4547169f",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T05:35:50Z",
+      "side": 1,
+      "message": "s/enable //",
+      "range": {
+        "startLine": 180,
+        "startChar": 17,
+        "endLine": 180,
+        "endChar": 23
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5629336f_ca088ba9",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T05:35:50Z",
+      "side": 1,
+      "message": "IIUC how this works, there is no reason to have two separate lines here, right ? You could just write the specifier as\n\n  WIFI|USB,WIFI|BT,USB|BT,WIFI|USB|BT\n\nIf that\u0027s correct, what\u0027s the reason to split ? If you want to showcase that this is also fine for readability, I suggest you call this out in a comment.\n\nNot very important.",
+      "range": {
+        "startLine": 186,
+        "startChar": 8,
+        "endLine": 187,
+        "endChar": 107
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23eda77e_c97c5697",
         "filename": "packages/Tethering/res/values/overlayable.xml",
         "patchSetId": 27
@@ -18,6 +110,98 @@
         "startChar": 26,
         "endLine": 56,
         "endChar": 32
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28da14c_26ca8977",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T05:35:50Z",
+      "side": 1,
+      "message": "You violate this contract by creating an instance of this class on another thread. Concretely that means fields that are not final can be seen uninitialized by threads other than the one that constructed this object.\n\nIn this case the only mutable member you have is mDownstreamTypesMask, and the code in onDownstreamChanged is not required to see the value after initialization. (java spec 17.5)\n\nWhat saves you here is that there are two possible values the member can take on the handler thread : the value you initialized it to, or 0. In this case it\u0027s the same thing so you\u0027re guaranteed to see 0 and you never call anything after the constructor on another thread, so this works.\nHowever, if mDownstreamTypesMask was initialized to anything other than zero, it would not work.\n\nThat being said, this is a bitmask and I don\u0027t see how anything else than 0 makes sense, so I don\u0027t think it\u0027s worth fixing this bug in advance. My suggestion, therefore, is to write another comment on mDownstreamTypesMask just to avoid someone changing this by mistake.\n\n  // Downstream type is one of ConnectivityManager.TETHERING_* constants, 0 1 or 2.\n  // This value has to be made 1 2 and 4, and OR\u0027d with the others.\n  // WARNING : the constructor is called on a different thread. Thread safety therefore\n  // relies on this value being initialized to 0, and not any other value. If you need\n  // to change this, you will need to change the thread where the constructor is invoked,\n  // or to introduce synchronization.\n  private int mDownstreamTypesMask \u003d DOWNSTREAM_NONE;\n\nAlso update the class comment :\n\n  * \u003cp\u003eThis class is not thread safe, it is intended to be used only from the tethering handler\n  * thread. However the constructor is an exception, as it is called on another thread ;\n  * therefore for thread safety all members of this class MUST either be final or initialized\n  * to their default value (0, false or null).\n\nInstead you could make the field volatile, as that would solve the problem for this member, but you\u0027d still have to keep the class comment because I think it should be called out that the constructor is called on another thread.",
+      "range": {
+        "startLine": 46,
+        "startChar": 3,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0f0a18_4fca3af0",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T05:35:50Z",
+      "side": 1,
+      "message": "Suggest having some small comments here describing the expected format.",
+      "range": {
+        "startLine": 98,
+        "startChar": 16,
+        "endLine": 98,
+        "endChar": 38
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a97d85b4_ffb8fd8a",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T05:35:50Z",
+      "side": 1,
+      "message": "As this is a configuration error, let\u0027s Log.wtf if it happens. Example\n\n  Log.wtf(\"Unexpected format in Tethering notification configuration : \" + config)",
+      "range": {
+        "startLine": 130,
+        "startChar": 38,
+        "endLine": 130,
+        "endChar": 46
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f425659e_dd9a1cc8",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-05T05:35:50Z",
+      "side": 1,
+      "message": "IIUC we need to re-read configuration every time because the OEM can dynamically enable/disable the overlay, correct ?\n→ If not correct, move this into a final member to avoid re-reading it every time\n→ If correct, do we need to listen to configuration changes and call setupNotification again ?",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 100
       },
       "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
