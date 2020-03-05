@@ -3906,7 +3906,7 @@ public class AudioManager {
      /**
       * {@hide}
       */
-     private final IBinder mICallBack = new Binder();
+     private final static IBinder mICallBack = new Binder();
 
     /**
      * Checks whether the phone is in silent mode, with or without vibrate.
