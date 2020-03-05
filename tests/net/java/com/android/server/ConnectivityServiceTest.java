@@ -6863,7 +6863,7 @@ public class ConnectivityServiceTest {
     }
 
     @Test
-    public void testRegisterConnectivityDiagnosticsCallbackCallsOnConnectivityReport()
+    public void testRegisterConnectivityDiagnosticsCallbackCallsOnConnectivityReportAvailable()
             throws Exception {
         // Set up the Network, which leads to a ConnectivityReport being cached for the network.
         final TestNetworkCallback callback = new TestNetworkCallback();
@@ -6888,7 +6888,7 @@ public class ConnectivityServiceTest {
         HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
 
         verify(mConnectivityDiagnosticsCallback)
-                .onConnectivityReport(argThat(report -> {
+                .onConnectivityReportAvailable(argThat(report -> {
                     return INTERFACE_NAME.equals(report.getLinkProperties().getInterfaceName())
                             && report.getNetworkCapabilities().hasTransport(TRANSPORT_CELLULAR);
                 }));
@@ -6917,14 +6917,15 @@ public class ConnectivityServiceTest {
     }
 
     @Test
-    public void testConnectivityDiagnosticsCallbackOnConnectivityReport() throws Exception {
+    public void testConnectivityDiagnosticsCallbackOnConnectivityReportAvailable()
+            throws Exception {
         setUpConnectivityDiagnosticsCallback();
 
         // Block until all other events are done processing.
         HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
 
         // Verify onConnectivityReport fired
-        verify(mConnectivityDiagnosticsCallback).onConnectivityReport(
+        verify(mConnectivityDiagnosticsCallback).onConnectivityReportAvailable(
                 argThat(report -> {
                     final NetworkCapabilities nc = report.getNetworkCapabilities();
                     return nc.getUids() == null
