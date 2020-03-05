@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f86f0da6_5f7d2254",
+        "filename": "cmds/incident/main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1590355
+      },
+      "writtenOn": "2020-03-05T04:23:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d49e90d_fc0124ef",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 18
+      },
+      "revId": "f68bf81d9a47888ade2cbe0c6abeb0e77bf90033",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49136432_06b945a0",
         "filename": "cmds/incident/main.cpp",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "49136432_06b945a0",
+      "range": {
+        "startLine": 214,
+        "startChar": 8,
+        "endLine": 214,
+        "endChar": 51
+      },
+      "revId": "f68bf81d9a47888ade2cbe0c6abeb0e77bf90033",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aecfecb9_107b12b9",
+        "filename": "cmds/incident/main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1590355
+      },
+      "writtenOn": "2020-03-05T04:23:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4df75899_bda62c45",
       "range": {
         "startLine": 214,
         "startChar": 8,
