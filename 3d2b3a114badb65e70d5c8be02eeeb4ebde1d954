@@ -22,6 +22,30 @@
       "revId": "3d2b3a114badb65e70d5c8be02eeeb4ebde1d954",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefe9f4c_2237bbc7",
+        "filename": "tools/aapt2/java/ProguardRules.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1442279
+      },
+      "writtenOn": "2020-03-05T17:13:36Z",
+      "side": 0,
+      "message": "Correct, we do. Done.",
+      "parentUuid": "e71afaef_4a0f3012",
+      "range": {
+        "startLine": 140,
+        "startChar": 27,
+        "endLine": 140,
+        "endChar": 61
+      },
+      "revId": "3d2b3a114badb65e70d5c8be02eeeb4ebde1d954",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
