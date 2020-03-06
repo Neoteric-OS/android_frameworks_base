@@ -45,6 +45,30 @@
       "revId": "d24193dcf5d855b59e0fa124ef40be31141aaa20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b7fb39_7856c190",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-03-06T08:08:18Z",
+      "side": 1,
+      "message": "BTW, in ServiceStateTracker#isNrPhysicalChannelConfig\nhttps://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/ServiceStateTracker.java#2043\n\nIt looks like PhysicalChannelConfig#getRat is more like TelephonyManager#NETWORK_TYPE_XXX\n\nThanks",
+      "parentUuid": "dd8d3400_08d88e1c",
+      "range": {
+        "startLine": 289,
+        "startChar": 12,
+        "endLine": 289,
+        "endChar": 61
+      },
+      "revId": "d24193dcf5d855b59e0fa124ef40be31141aaa20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
