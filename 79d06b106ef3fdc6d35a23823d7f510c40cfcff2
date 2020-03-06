@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95d63185_bfba5c45",
+        "filename": "tests/net/common/java/android/net/CaptivePortalTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-06T09:11:49Z",
+      "side": 1,
+      "message": "To me \"until Q\" suggests that Q should not be ignored, which is the opposite of what you mean here. Maybe use something less ambiguous like IgnoreUpTo?",
+      "range": {
+        "startLine": 94,
+        "startChar": 11,
+        "endLine": 94,
+        "endChar": 16
+      },
+      "revId": "79d06b106ef3fdc6d35a23823d7f510c40cfcff2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
