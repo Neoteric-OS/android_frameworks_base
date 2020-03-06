@@ -628,6 +628,8 @@ public final class DisplayCutout {
 
     private static Pair<Path, DisplayCutout> pathAndDisplayCutoutFromSpec(String spec,
             int displayWidth, int displayHeight, float density) {
+      android.util.Log.d("shawn", "1 pathAndDisplayCutoutFromSpec (" + spec + ", "
+                + sCachedSpec + ", " +  sCachedCutout + ")");
         if (TextUtils.isEmpty(spec)) {
             return NULL_PAIR;
         }
@@ -714,6 +716,8 @@ public final class DisplayCutout {
             sCachedDisplayHeight = displayHeight;
             sCachedDensity = density;
             sCachedCutout = result;
+            android.util.Log.d("tcman", "2 pathAndDisplayCutoutFromSpec ("
+                    + spec + ", " + sCachedSpec + ", " +  sCachedCutout + ")");
         }
         return result;
     }
