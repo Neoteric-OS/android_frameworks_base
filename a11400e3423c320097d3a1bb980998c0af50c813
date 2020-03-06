@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000001851257",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1227840?revision\u003d11",
+      "fixSuggestions": [
+        {
+          "fixId": "8db9e294_4410566a",
+          "description": "Change to \"core/java/android/net/TestNetworkManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/net/TestNetworkManager.java",
+              "range": {
+                "startLine": 103,
+                "startChar": 70,
+                "endLine": 103,
+                "endChar": 77
+              },
+              "replacement": "the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "b4a9fc04_a69bfbb7",
+        "filename": "core/java/android/net/TestNetworkManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-03-06T02:16:27Z",
+      "side": 1,
+      "message": "Common typo found: \"the the\" -- should it be \"the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 103,
+        "startChar": 70,
+        "endLine": 103,
+        "endChar": 77
+      },
+      "revId": "a11400e3423c320097d3a1bb980998c0af50c813",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
