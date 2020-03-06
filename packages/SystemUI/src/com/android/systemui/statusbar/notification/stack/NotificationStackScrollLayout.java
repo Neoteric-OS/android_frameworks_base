@@ -244,7 +244,7 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
     private ArrayList<ExpandableView> mChildrenChangingPositions = new ArrayList<>();
     private HashSet<View> mFromMoreCardAdditions = new HashSet<>();
     private ArrayList<AnimationEvent> mAnimationEvents = new ArrayList<>();
-    private ArrayList<View> mSwipedOutViews = new ArrayList<>();
+    private ArrayList<Integer> mSwipedOutViews = new ArrayList<>();
     private final StackStateAnimator mStateAnimator = new StackStateAnimator(this);
     private boolean mAnimationsEnabled;
     private boolean mChangePositionInProgress;
@@ -2941,7 +2941,7 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
                 child.setTransientContainer(container);
             }
         } else {
-            mSwipedOutViews.remove(child);
+            mSwipedOutViews.remove((Integer) child.hashCode());
         }
         updateAnimationState(false, child);
 
@@ -3544,7 +3544,7 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
             event.viewAfterChangingView = getFirstChildBelowTranlsationY(removedTranslation,
                     ignoreChildren);
             mAnimationEvents.add(event);
-            mSwipedOutViews.remove(child);
+            mSwipedOutViews.remove((Integer) child.hashCode());
         }
         mChildrenToRemoveAnimated.clear();
     }
@@ -6241,8 +6241,8 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
                         row.performDismissWithBlockingHelper(false /* fromAccessibility */);
             }
 
-            if (!isBlockingHelperShown) {
-                mSwipedOutViews.add(view);
+            if (!isBlockingHelperShown && null != view) {
+                mSwipedOutViews.add(view.hashCode());
             }
             mFalsingManager.onNotificationDismissed();
             if (mFalsingManager.shouldEnforceBouncer()) {
