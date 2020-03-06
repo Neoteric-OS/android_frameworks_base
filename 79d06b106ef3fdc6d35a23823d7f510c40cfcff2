@@ -46,6 +46,30 @@
       "revId": "79d06b106ef3fdc6d35a23823d7f510c40cfcff2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e12722_c3588c91",
+        "filename": "tests/net/common/java/android/net/CaptivePortalTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-06T09:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a0d5c88_2eb5bbd3",
+      "range": {
+        "startLine": 94,
+        "startChar": 11,
+        "endLine": 94,
+        "endChar": 16
+      },
+      "revId": "79d06b106ef3fdc6d35a23823d7f510c40cfcff2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
