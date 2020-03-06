@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Chris Tate <ctate@android.com>
+Code-Review+2: John Reck <jreck@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Christian Wailes <chriswailes@google.com>
+Submitted-at: Fri, 06 Mar 2020 18:11:52 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1250448
+Project: platform/frameworks/base
+Branch: refs/heads/master
