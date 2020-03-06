@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91d20b40_f9701275",
+        "filename": "tests/net/common/java/android/net/LinkAddressTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-06T10:59:45Z",
+      "side": 1,
+      "message": "Is it possible to put more than one of these one line? If so, I\u0027d do something like:\n\n    @Test @IgnoreUpTo(Build.VERSION_CODES.Q)",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 334,
+        "endChar": 9
+      },
+      "revId": "1f646f117108e6c7ccb87e8c24dd5fabd6f82de9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a36eee_28970ef7",
+        "filename": "tests/net/common/java/android/net/LinkAddressTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-06T10:59:45Z",
+      "side": 1,
+      "message": "By marking this test IgnoreUpTo Q we lose test coverage on Q. Should we also have an:\n\n    @Test @IgnoreAfter(Build.VERSION_CODES.Q)\n    public void testFieldCount_Q() {\n        assertFieldCountEquals(4, LinkAddress.class);\n    }\n\nbefore this one?",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 344,
+        "endChar": 53
+      },
+      "revId": "1f646f117108e6c7ccb87e8c24dd5fabd6f82de9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
