@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "2adbb344_208587fa",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-03-06T09:53:28Z",
+      "side": 1,
+      "message": "Looking at this again makes me want to add a new patch focusing on consolidating all the code paths that trigger the refresh flow, the current implementation is starting to sprawling too much.",
+      "parentUuid": "180c7b3c_2660e89f",
+      "range": {
+        "startLine": 879,
+        "startChar": 19,
+        "endLine": 879,
+        "endChar": 92
+      },
+      "revId": "15af8e66285353c2b96c404da8610d07b4c6b956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaef5a8b_c813e80b",
         "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
         "patchSetId": 3
