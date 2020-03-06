@@ -78,15 +78,30 @@ public abstract class IdentityCredentialStore {
 
     /**
      * Specifies that the cipher suite that will be used to secure communications between the reader
-     * is:
+     * and the prover is:
      *
      * <ul>
-     * <li>ECDHE with HKDF-SHA-256 for key agreement.</li>
-     * <li>AES-256 with GCM block mode for authenticated encryption (nonces are incremented by one
-     * for every message).</li>
-     * <li>ECDSA with SHA-256 for signing (used for signing session transcripts to defeat
-     * man-in-the-middle attacks), signing keys are not ephemeral. See {@link IdentityCredential}
-     * for details on reader and prover signing keys.</li>
+     * <li>For ECDH, ECKA-DH (Elliptic Curve Key Agreement Algorithm - Diffie-Hellman)
+     * according to BSI TR03111 shall be used. The output of this function is the shared secret
+     * value Zab.</li>
+     * <li>The key derivation shall use HKDF instantiated with SHA-256 as defined in RFC 5869.
+     * The info parameter shall be empty, the output key length is 256 bits. Two keys shall be
+     * derived, SKReader shall be derived using a salt of 0x00, SKDevice shall be derived using
+     * a salt of 0x01.</li>
+     * <li>For encryption AES-256-GCM (GCM: Galois Counter Mode) shall be used. The reader shall
+     * encrypt its messages with SKReader, the prover shall encrypt its messages with SKDevice.
+     * Therefore, both the prover and the reader need to generate both session keys in order to
+     * be able to also decrypt the messages they receive. The nonce used for encryption shall be
+     * built up according to the following structure: identifier | counter. The identifier is
+     * an 8 byte value. The reader shall use the following identifier: 0x00 0x00 0x00 0x00
+     * 0x00 0x00 0x00 0x00. The provier shall use the following identifier: 0x00 0x00 0x00 0x00
+     * 0x00 0x00 0x00 0x01. Each session key has its own counter value. The counter value is an
+     * unsigned integer. The first encryption with a key shall use a counter value of 1. For
+     * each following encryption the counter value shall be increased by 1. The counter value
+     * shall be formatted as a 4 byte big endian value. A counter value shall never be reused
+     * in any future encryption using the same key. For the encryption, the IV is the nonce
+     * value and the AAD is an empty string. The format of the encrypted message is the
+     * ciphertext, followed by 16 bytes of the tag.</li>
      * </ul>
      *
      * <p>
@@ -135,6 +150,15 @@ public abstract class IdentityCredentialStore {
     /**
      * Creates a new credential.
      *
+     * <p>When a credential is created, a cryptographic key - CredentialKey - is created which is
+     * used to authenticate the store to the Issuing Authority. CredentialKey is a 256-bit EC key
+     * using the P-256 curve.
+     *
+     * <p>In addition, all of the Credential data content is imported and a certificate for the
+     * CredentialKey and a signature produced with the CredentialKey are created.  These latter
+     * values may be checked by an issuing authority to verify that the data was imported into
+     * secure hardware and that it was imported unmodified.
+     *
      * @param credentialName The name used to identify the credential.
      * @param docType        The document type for the credential.
      * @return A @{link WritableIdentityCredential} that can be used to create a new credential.
@@ -147,6 +171,10 @@ public abstract class IdentityCredentialStore {
 
     /**
      * Retrieve a named credential.
+     *
+     * <p>The cipher suite used to communicate with the remote verifier must also be specified.
+     * Currently only a single cipher-suite is supported. Support for other cipher suites may be
+     * added in a future version of this API.
      *
      * @param credentialName the name of the credential to retrieve.
      * @param cipherSuite    the cipher suite to use for communicating with the verifier.

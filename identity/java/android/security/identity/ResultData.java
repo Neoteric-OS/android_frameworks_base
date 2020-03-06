@@ -34,23 +34,23 @@ public abstract class ResultData {
     /** Value was successfully retrieved. */
     public static final int STATUS_OK = 0;
 
-    /** Requested entry does not exist. */
+    /** The entry does not exist. */
     public static final int STATUS_NO_SUCH_ENTRY = 1;
 
-    /** Requested entry was not requested. */
+    /** The entry was not requested. */
     public static final int STATUS_NOT_REQUESTED = 2;
 
-    /** Requested entry wasn't in the request message. */
+    /** The entry wasn't in the request message. */
     public static final int STATUS_NOT_IN_REQUEST_MESSAGE = 3;
 
-    /** The requested entry was not retrieved because user authentication wasn't performed. */
+    /** The entry was not retrieved because user authentication failed. */
     public static final int STATUS_USER_AUTHENTICATION_FAILED = 4;
 
-    /** The requested entry was not retrieved because reader authentication wasn't performed. */
+    /** The entry was not retrieved because reader authentication failed. */
     public static final int STATUS_READER_AUTHENTICATION_FAILED = 5;
 
     /**
-     * The requested entry was not retrieved because it was configured without any access
+     * The entry was not retrieved because it was configured without any access
      * control profile.
      */
     public static final int STATUS_NO_ACCESS_CONTROL_PROFILES = 6;
@@ -116,9 +116,9 @@ public abstract class ResultData {
     public abstract @NonNull byte[] getAuthenticatedData();
 
     /**
-     * Returns a message authentication code over the data returned by
-     * {@link #getAuthenticatedData}, to prove to the reader that the data is from a trusted
-     * credential.
+     * Returns a message authentication code over the {@code DeviceAuthentication} CBOR
+     * specified in {@link #getAuthenticatedData()}, to prove to the reader that the data
+     * is from a trusted credential.
      *
      * <p>The MAC proves to the reader that the data is from a trusted credential. This code is
      * produced by using the key agreement and key derivation function from the ciphersuite
