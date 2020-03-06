@@ -911,13 +911,19 @@ public class PreferencesHelper implements RankingConfig {
                                 if (channelId == null) {
                                     // lock all channels for the app
                                     r.oemLockedImportance = true;
+                                    // enable notifications for the app
+                                    setEnabled(r.pkg, r.uid, true);
                                     for (NotificationChannel channel : r.channels.values()) {
                                         channel.setImportanceLockedByOEM(true);
+                                        // reset the channel importance to default
+                                        channel.setImportance(DEFAULT_IMPORTANCE);
                                     }
                                 } else {
                                     NotificationChannel channel = r.channels.get(channelId);
                                     if (channel != null) {
                                         channel.setImportanceLockedByOEM(true);
+                                        // reset the channel importance to default
+                                        channel.setImportance(DEFAULT_IMPORTANCE);
                                     } else {
                                         // if this channel shows up in the future, make sure it'll
                                         // be locked immediately
