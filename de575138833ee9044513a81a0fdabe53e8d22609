@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0b06440_964b1701",
+        "filename": "packages/Tethering/src/android/net/dhcp/DhcpServingParamsParcelExt.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-06T13:12:48Z",
+      "side": 1,
+      "message": "To have a better API (which is the goal of DhcpServingParamsParcelExt) and be consistent with the other methods, keep this an Inet4Address, and have the method do the conversion to an int (like setExcludedAddrs)",
+      "range": {
+        "startLine": 170,
+        "startChar": 52,
+        "endLine": 170,
+        "endChar": 79
+      },
+      "revId": "de575138833ee9044513a81a0fdabe53e8d22609",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f8bf3b_c9ea3021",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-06T13:12:48Z",
+      "side": 1,
+      "message": "Nit: add comment /* clientAddress */",
+      "range": {
+        "startLine": 596,
+        "startChar": 89,
+        "endLine": 596,
+        "endChar": 90
+      },
+      "revId": "de575138833ee9044513a81a0fdabe53e8d22609",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c2fa3c_4a70f916",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-06T13:12:48Z",
+      "side": 1,
+      "message": "I\u0027d suggest never setting mStaticIpv4ClientAddr to non-null if mStaticIpv4ServerAddr is null (this avoids keeping state that is an invalid config); then do:\n\nif (mStaticIpv4ServerAddr !\u003d null \u0026\u0026 mStaticIpv4ClientAddr \u003d\u003d null) return true\n\nreturn configureDhcp(enabled, srvAddr, prefixLen, mStaticIpv4ClientAddr);",
+      "range": {
+        "startLine": 633,
+        "startChar": 8,
+        "endLine": 641,
+        "endChar": 64
+      },
+      "revId": "de575138833ee9044513a81a0fdabe53e8d22609",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b45ea7e_777baff3",
+        "filename": "packages/Tethering/tests/unit/src/android/net/dhcp/DhcpServingParamsParcelExtTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-06T13:12:48Z",
+      "side": 1,
+      "message": "super-nit: extra blank line",
+      "revId": "de575138833ee9044513a81a0fdabe53e8d22609",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
