@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6644e652_82bde7a3",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-03-06T11:46:27Z",
+      "side": 1,
+      "message": "nit: also setDisabled as an example",
+      "revId": "998f69ef5a76782f12f1ad459198061ae0e14a94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bd38d7_f140425f",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-03-06T11:46:27Z",
+      "side": 1,
+      "message": "\"A single unit of a transaction that can only be a request to enable OR disable and overlay.\"",
+      "revId": "998f69ef5a76782f12f1ad459198061ae0e14a94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0249f6_85a236b9",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-03-06T11:46:27Z",
+      "side": 1,
+      "message": "Also something along the lines of: \"Also note that even OverlayManager has other APIs than setEnabled and setDisabled, they cannot be chained through the Builder and are separate from a transaction and don\u0027t affect the call of transaction\u0027s commit.\"",
+      "revId": "998f69ef5a76782f12f1ad459198061ae0e14a94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
