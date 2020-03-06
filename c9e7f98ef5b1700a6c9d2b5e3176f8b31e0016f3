@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44592174_d4436737",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7859,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-03-06T20:49:36Z",
+      "side": 1,
+      "message": "Not relevant to this CL, but this is such a misnamed method -.-\n\n\"enforce\" implies a simple check, not an increment-and-check...",
+      "range": {
+        "startLine": 7859,
+        "startChar": 11,
+        "endLine": 7859,
+        "endChar": 35
+      },
+      "revId": "c9e7f98ef5b1700a6c9d2b5e3176f8b31e0016f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
