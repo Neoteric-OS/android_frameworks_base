@@ -308,44 +308,6 @@ java_library_static {
 }
 
 /////////////////////////////////////////////////////////////////////
-// Stubs for hiddenapi processing.
-/////////////////////////////////////////////////////////////////////
-
-droidstubs {
-    name: "hiddenapi-lists-docs",
-    defaults: ["metalava-api-stubs-default"],
-    arg_files: [
-        "core/res/AndroidManifest.xml",
-    ],
-    dex_api_filename: "public-dex.txt",
-    private_dex_api_filename: "private-dex.txt",
-    removed_dex_api_filename: "removed-dex.txt",
-    args: metalava_framework_docs_args +
-        " --show-unannotated " +
-        priv_apps +
-        " --show-annotation android.annotation.TestApi ",
-}
-
-droidstubs {
-    name: "hiddenapi-mappings",
-    defaults: ["metalava-api-stubs-default"],
-    srcs: [
-        ":opt-telephony-common-srcs",
-    ],
-
-    arg_files: [
-        "core/res/AndroidManifest.xml",
-    ],
-    dex_mapping_filename: "dex-mapping.txt",
-    args: metalava_framework_docs_args +
-        " --hide ReferencesHidden " +
-        " --hide UnhiddenSystemApi " +
-        " --show-unannotated " +
-        priv_apps +
-        " --show-annotation android.annotation.TestApi ",
-}
-
-/////////////////////////////////////////////////////////////////////
 // api/*-current.txt files for use by modules in other directories
 // like the CTS test
 /////////////////////////////////////////////////////////////////////
