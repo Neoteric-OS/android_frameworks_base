@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "99ff018a_e297738b",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-06T13:12:31Z",
+      "side": 1,
+      "message": "Also this should be enforced",
+      "parentUuid": "0618346c_629bc856",
+      "range": {
+        "startLine": 500,
+        "startChar": 33,
+        "endLine": 500,
+        "endChar": 81
+      },
+      "revId": "5ecda9b0144b12e55dc9f5b78ede47f169961277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dbf210c_342c3d62",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 9
@@ -179,6 +203,29 @@
         "startChar": 0,
         "endLine": 28,
         "endChar": 31
+      },
+      "revId": "5ecda9b0144b12e55dc9f5b78ede47f169961277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daac9ab8_46831171",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-06T13:12:31Z",
+      "side": 1,
+      "message": "Inet4Address",
+      "range": {
+        "startLine": 247,
+        "startChar": 12,
+        "endLine": 247,
+        "endChar": 23
       },
       "revId": "5ecda9b0144b12e55dc9f5b78ede47f169961277",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
