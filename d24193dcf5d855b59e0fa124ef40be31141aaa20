@@ -69,6 +69,30 @@
       "revId": "d24193dcf5d855b59e0fa124ef40be31141aaa20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56794117_a9455a58",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-03-06T22:32:32Z",
+      "side": 1,
+      "message": "Sorry for my misunderstanding, I just noticed ServiceState#rilRadioTechnologyToNetworkType is already triggered here:\nhttps://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/RadioIndication.java?autodive\u003d0%2F#1081\n\nSo the value of mRat is consistent with its annotation(i.e. android.telephony.TelephonyManager.NetworkType).\nAnd from the code logic perspective, it runs good...\n\nBut mRat means radio access technology(as it is said at line#66), so it might be better we use mNetworkType instead to avoid confusion. \u003d\u003d\u003e This is just my personal suggestion, optional action.\n\nI think at least, for line#289, it\u0027s better to update as below:\nmRat \u003d TelephonyManager.NETWORK_TYPE_UNKNOWN\n\nPlease kindly share your opinion.\n\nThanks",
+      "parentUuid": "29b7fb39_7856c190",
+      "range": {
+        "startLine": 289,
+        "startChar": 12,
+        "endLine": 289,
+        "endChar": 61
+      },
+      "revId": "d24193dcf5d855b59e0fa124ef40be31141aaa20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
