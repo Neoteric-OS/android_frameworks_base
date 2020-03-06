@@ -45,6 +45,30 @@
       "revId": "4a133c2db4b8157f5e2753c3e987322c3017121c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339dfd99_25c4c520",
+        "filename": "media/java/android/media/tv/TvInputService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2020-03-06T06:05:51Z",
+      "side": 1,
+      "message": "Here is the comment from Morita-san who is in charge of TIF.\n\n----------------------------------------\nI think Nick\u0027s idea is like below.\n\npublic abstract class TvInputService extends Service {\n    ...\n    public static final String SERVICE_INTERFACE \u003d \"android.media.tv.TvInputService\";\n    ...\n    public static final String APP_PRIVATE_INTERFACE \u003d \"android.media.tv.TvInputServiceExtension\"; // what\u0027s good name ?\n    ...\n\n    @Override\n    public final IBinder onBind(Intent intent) {\n        if (SERVICE_INTERFACE.equals(intent.getAction())) {\n            return new ITvInputService.Stub() {\n                ...\n            };\n        } else if (APP_PRIVATE_INTERFACE.equals(intent.getAction()))\n            return getAppPrivateInterface(intent);\n        } else {\n            return null;\n        }\n    }\n\nHowever, in my understanding, Intent action should represent interface of the service.\n\nBut the actual app private interfaces depend on vendor implementation.\n\nFor example, some vendor may want to define different app private interfaces for Tuner TV Inputs and Passthrough TV Inputs.\nIf the Intent actions are same, client application (e.g TIF Extension Service) cannot identify the Tuner TV Inputs and the Passthrough TV Inputs with queryIntentServices().\n\nSo, I suggest not introducing TIF-defined Intent action for app private interfaces.\n-------------------------------------------------",
+      "parentUuid": "b5cc4ce7_ea1a69c9",
+      "range": {
+        "startLine": 185,
+        "startChar": 10,
+        "endLine": 185,
+        "endChar": 14
+      },
+      "revId": "4a133c2db4b8157f5e2753c3e987322c3017121c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
