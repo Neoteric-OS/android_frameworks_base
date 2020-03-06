@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5572d50_913c3995",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-03-06T02:07:16Z",
+      "side": 1,
+      "message": "Suggest just \"Indicates...\"",
+      "range": {
+        "startLine": 372,
+        "startChar": 11,
+        "endLine": 372,
+        "endChar": 22
+      },
+      "revId": "e40933a21fc6c542f86d87fe1d2e113ef7549693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
