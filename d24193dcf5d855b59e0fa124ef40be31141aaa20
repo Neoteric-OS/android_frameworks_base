@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ced7421_41db98fa",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-03-06T07:58:25Z",
+      "side": 1,
+      "message": "Sorry for cutting in.\n\nFrom this line, we can see, mRat should be sth. like TelephonyManager#NETWORK_TYPE_XXX\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/telephony/java/android/telephony/TelephonyManager.java#2820\n\nThen please check my next comment at line#289.\n\nThanks",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 16
+      },
+      "revId": "d24193dcf5d855b59e0fa124ef40be31141aaa20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8d3400_08d88e1c",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-03-06T07:58:25Z",
+      "side": 1,
+      "message": "Please check my previous comment at line#68, then check this comment.\n\nFrom this line, it indicates mRat should be radio technology.\nIt seems mismatch behavior.\nShould we take below steps?\n1) rename mRat to mNetworkType to make it more clearly, function name also needs update: i.e.\n   setRat --\u003e setNetworkType\n   getRat --\u003e getNetworkType\n2) in function PhysicalChannelConfig#setNetworkType,trigger ServiceState#rilRadioTechnologyToNetworkType to take necessary adaption.\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/telephony/java/android/telephony/ServiceState.java#1509\n\nBecause radio technology comes from radio hal:\nhttps://android.googlesource.com/platform/hardware/interfaces/+/refs/heads/master/radio/1.4/types.hal#1436\n\nIf my understanding is wrong, please kindly correct me.\n\nThanks",
+      "range": {
+        "startLine": 289,
+        "startChar": 12,
+        "endLine": 289,
+        "endChar": 61
+      },
+      "revId": "d24193dcf5d855b59e0fa124ef40be31141aaa20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
