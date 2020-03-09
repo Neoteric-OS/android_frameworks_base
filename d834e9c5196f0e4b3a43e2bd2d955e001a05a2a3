@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6186d501_723c9e2d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T08:10:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c98a89fc_55e8be0b",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 35
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2519d47d_894563aa",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "51d22885_ba2b832d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T08:10:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2519d47d_894563aa",
+      "range": {
+        "startLine": 77,
+        "startChar": 17,
+        "endLine": 80,
+        "endChar": 94
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9997d7e_b97a44aa",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a30fa9_15578690",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T08:10:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9997d7e_b97a44aa",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 9
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "8f9f0809_9e55ccd8",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T08:10:31Z",
+      "side": 1,
+      "message": "ACK. Remove this method and use expectClearNotification() \u0026 expectShowNotification() directly as your suggestion.",
+      "parentUuid": "91b2cd9c_6ebbe5da",
+      "range": {
+        "startLine": 150,
+        "startChar": 8,
+        "endLine": 150,
+        "endChar": 28
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "517afcef_fc90e5e1",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 4
@@ -129,6 +225,30 @@
       "writtenOn": "2020-03-05T06:49:09Z",
       "side": 1,
       "message": "I don\u0027t understand why this is 2. To me \";\" is invalid, \"WIFI\" is invalid, \"1;2\" is invalid, \"USB,;\" is invalid. Only the last one is valid, insofar as we accept whitespace.\n\nAlso please do test with more complex specs that do have | and , in them.",
+      "range": {
+        "startLine": 215,
+        "startChar": 16,
+        "endLine": 215,
+        "endChar": 90
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd213f89_86da7d56",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T08:10:31Z",
+      "side": 1,
+      "message": "\" USB,; \" is valid even it doesn\u0027t contain drawable resource because we can\u0027t verify which drawable resource is valid. Actually this test only verifies whether the first element is valid. I add more configs with complex symbols(, ; |) in them.",
+      "parentUuid": "517afcef_fc90e5e1",
       "range": {
         "startLine": 215,
         "startChar": 16,
