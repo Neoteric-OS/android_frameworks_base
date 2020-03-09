@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "446bd70a_29e642c1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6011,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-09T11:00:13Z",
+      "side": 1,
+      "message": "rollback to previous code(updateDnses(LinkProperties newLp, LinkProperties oldLp, int netId)).\nWe add a new function (updateTransportTypesForNetwork()) for new proposal.",
+      "parentUuid": "c5c50342_30d7a29d",
+      "range": {
+        "startLine": 6011,
+        "startChar": 30,
+        "endLine": 6011,
+        "endChar": 38
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbaa61b7_989f3c90",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2020-03-09T03:35:46Z",
       "side": 1,
       "message": "maybe final?\nalso for variables below.",
+      "range": {
+        "startLine": 4891,
+        "startChar": 8,
+        "endLine": 4891,
+        "endChar": 22
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5931f92_1b611768",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4891,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-09T11:00:13Z",
+      "side": 1,
+      "message": "add final to all variables.",
+      "parentUuid": "dbaa61b7_989f3c90",
       "range": {
         "startLine": 4891,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c6b13467_7fb7bf6f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4899,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-09T11:00:13Z",
+      "side": 1,
+      "message": "remove these two lines.",
+      "parentUuid": "252e3c0c_2ed2b8a1",
+      "range": {
+        "startLine": 4898,
+        "startChar": 0,
+        "endLine": 4899,
+        "endChar": 53
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f540e400_9a10bbdc",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 11
@@ -82,6 +154,30 @@
       "writtenOn": "2020-03-09T03:35:46Z",
       "side": 1,
       "message": "final?",
+      "range": {
+        "startLine": 275,
+        "startChar": 8,
+        "endLine": 275,
+        "endChar": 22
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da9b5c74_c2b4b82d",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-09T11:00:13Z",
+      "side": 1,
+      "message": "add final",
+      "parentUuid": "f540e400_9a10bbdc",
       "range": {
         "startLine": 275,
         "startChar": 8,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e821d3b0_d7969c25",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-09T11:00:13Z",
+      "side": 1,
+      "message": "add 2 dns servers.\n        lp.addDnsServer(InetAddress.getByName(\"3.3.3.3\"));\n        lp.addDnsServer(InetAddress.getByName(\"4.4.4.4\"));",
+      "parentUuid": "1b5b007d_da7903fe",
+      "range": {
+        "startLine": 277,
+        "startChar": 7,
+        "endLine": 277,
+        "endChar": 58
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99b33012_9a9e9f36",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 11
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5f03ce3d_06ecac75",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-09T11:00:13Z",
+      "side": 1,
+      "message": "TRANSPORT_TEST is defined from frameworks/base/core/java/android/net/NetworkCapabilities.java\ntransportTypes can be TRANSPORT_TEST + TRANSPORT_VPN or TRANSPORT_TEST.\nTherefore we use TRANSPORT_TEST for testing and transportTypes is not a constant.",
+      "parentUuid": "99b33012_9a9e9f36",
+      "range": {
+        "startLine": 278,
+        "startChar": 20,
+        "endLine": 278,
+        "endChar": 34
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08090add_f3f43d16",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 11
@@ -151,6 +295,30 @@
       "writtenOn": "2020-03-09T03:35:46Z",
       "side": 1,
       "message": "IIUC you need to create an expected parcelable object to verify the output.",
+      "range": {
+        "startLine": 280,
+        "startChar": 68,
+        "endLine": 280,
+        "endChar": 73
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da726e34_0bc5b96a",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-09T11:00:13Z",
+      "side": 1,
+      "message": "Create an expected parcelable object to verify the output.",
+      "parentUuid": "08090add_f3f43d16",
       "range": {
         "startLine": 280,
         "startChar": 68,
