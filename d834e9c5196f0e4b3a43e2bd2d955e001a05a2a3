@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1a046986_29b06d67",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-09T09:48:24Z",
+      "side": 1,
+      "message": "Um sorry this is not what I mean. It IS used for mocks. You\u0027re also using it for something else.\n\nBecause lateinit is very dangerous, we try to justify every use of it in comments. That\u0027s why this comment was there on the code you copied this from.\n\nYou should keep \"for mocks\" in the comment as you are indeed using this for mocks. But you should either give appropriate justification for notificationUpdater, or remove lateinit from notificationUpdater.",
+      "parentUuid": "6186d501_723c9e2d",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 35
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2519d47d_894563aa",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 4
@@ -258,6 +282,30 @@
       "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1c1398_897b28e3",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-09T09:48:24Z",
+      "side": 1,
+      "message": "Ahhh I see. This would override a setting for no downstream.",
+      "parentUuid": "bd213f89_86da7d56",
+      "range": {
+        "startLine": 215,
+        "startChar": 16,
+        "endLine": 215,
+        "endChar": 90
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

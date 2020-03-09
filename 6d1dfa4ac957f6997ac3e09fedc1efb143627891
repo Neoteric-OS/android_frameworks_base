@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6bf38b6_4a1b1374",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-09T09:48:24Z",
+      "side": 1,
+      "message": "Why inner ? You\u0027re not using the outer instance",
+      "range": {
+        "startLine": 79,
+        "startChar": 12,
+        "endLine": 79,
+        "endChar": 17
+      },
+      "revId": "6d1dfa4ac957f6997ac3e09fedc1efb143627891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edef3d95_c5e482ba",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-09T09:48:24Z",
+      "side": 1,
+      "message": "Maybe add a comment to explain which of these are valid",
+      "range": {
+        "startLine": 201,
+        "startChar": 26,
+        "endLine": 201,
+        "endChar": 27
+      },
+      "revId": "6d1dfa4ac957f6997ac3e09fedc1efb143627891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
