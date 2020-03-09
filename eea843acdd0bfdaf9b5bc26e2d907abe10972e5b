@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8417a647_c4781372",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T01:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5a802da_8a495dd1",
+      "range": {
+        "startLine": 161,
+        "startChar": 48,
+        "endLine": 161,
+        "endChar": 56
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95c833b8_7b099265",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 27
@@ -45,6 +69,30 @@
       "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a892f398_aa2f732e",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T01:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95c833b8_7b099265",
+      "range": {
+        "startLine": 179,
+        "startChar": 59,
+        "endLine": 179,
+        "endChar": 71
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6e3f0d86_49ae79ef",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T01:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0dcae89_4547169f",
+      "range": {
+        "startLine": 180,
+        "startChar": 17,
+        "endLine": 180,
+        "endChar": 23
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5629336f_ca088ba9",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 27
@@ -91,6 +163,30 @@
       "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b0cdd10_71442189",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T01:22:29Z",
+      "side": 1,
+      "message": "Yes, just want to showcase that this is also fine for readability. Combine these two items into one and add more comments in guideline.",
+      "parentUuid": "5629336f_ca088ba9",
+      "range": {
+        "startLine": 186,
+        "startChar": 8,
+        "endLine": 187,
+        "endChar": 107
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "deca765b_e20375b1",
+        "filename": "packages/Tethering/res/values/overlayable.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T01:22:29Z",
+      "side": 1,
+      "message": "Just remove \"enable\" as Jean\u0027s suggestion.",
+      "parentUuid": "23eda77e_c97c5697",
+      "range": {
+        "startLine": 56,
+        "startChar": 26,
+        "endLine": 56,
+        "endChar": 32
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c28da14c_26ca8977",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 27
@@ -137,6 +257,30 @@
       "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e52848_423f60b8",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T01:22:29Z",
+      "side": 1,
+      "message": "Thanks for your explaining. I don\u0027t realize that constructor is running on different thread. Update the comment as your suggestion.",
+      "parentUuid": "c28da14c_26ca8977",
+      "range": {
+        "startLine": 46,
+        "startChar": 3,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "875d60de_eed7bf1c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T01:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e0f0a18_4fca3af0",
+      "range": {
+        "startLine": 98,
+        "startChar": 16,
+        "endLine": 98,
+        "endChar": 38
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a97d85b4_ffb8fd8a",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 27
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "f1c5198e_d5c22180",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T01:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a97d85b4_ffb8fd8a",
+      "range": {
+        "startLine": 130,
+        "startChar": 38,
+        "endLine": 130,
+        "endChar": 46
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f425659e_dd9a1cc8",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 27
@@ -206,6 +398,30 @@
       "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0715733e_479e2b4c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T01:22:29Z",
+      "side": 1,
+      "message": "It\u0027s not correct. Will move this into a final member in followup commit.",
+      "parentUuid": "f425659e_dd9a1cc8",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 100
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

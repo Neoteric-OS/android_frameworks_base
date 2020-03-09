@@ -379,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "e6ada377_9423019e",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-09T01:22:29Z",
+      "side": 1,
+      "message": "As we discussed offline, we should print all configurations in bugreport for debugging. Will add dump method in follow up commit.",
+      "parentUuid": "73725db5_f28d760d",
+      "range": {
+        "startLine": 103,
+        "startChar": 23,
+        "endLine": 103,
+        "endChar": 34
+      },
+      "revId": "3415b7f1a81afc92d305782bd69ba510ce5d4a08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb0ea6cd_793c590f",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 26
