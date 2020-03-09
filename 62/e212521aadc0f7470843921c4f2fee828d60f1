@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Roopesh Nataraja <roopeshr@quicinc.com>
+Code-Review+2: Steven Moreland <smoreland@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Qualcomm-Review+1: Dheeresh Mathur <dmathur@quicinc.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Mon, 09 Mar 2020 20:08:53 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1243970
+Project: platform/frameworks/base
+Branch: refs/heads/master
