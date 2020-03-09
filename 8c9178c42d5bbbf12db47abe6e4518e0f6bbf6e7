@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f5d6e1c7_52290bc4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4891,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5931f92_1b611768",
+      "range": {
+        "startLine": 4891,
+        "startChar": 8,
+        "endLine": 4891,
+        "endChar": 22
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "252e3c0c_2ed2b8a1",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 11
@@ -140,6 +164,30 @@
       "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ec820c_7448ec7a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4899,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6b13467_7fb7bf6f",
+      "range": {
+        "startLine": 4898,
+        "startChar": 0,
+        "endLine": 4899,
+        "endChar": 53
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "ec1ca7bc_c03d53d8",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da9b5c74_c2b4b82d",
+      "range": {
+        "startLine": 275,
+        "startChar": 8,
+        "endLine": 275,
+        "endChar": 22
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b5b007d_da7903fe",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 11
@@ -234,6 +306,30 @@
       "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebe272b_97baa09d",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e821d3b0_d7969c25",
+      "range": {
+        "startLine": 277,
+        "startChar": 7,
+        "endLine": 277,
+        "endChar": 58
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -284,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "fc027a78_c1f0b1b3",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "Surely we can put anything in the parameter,\nand it might or might not changed in production code.\nHowever in this file, it is a const array that can never\nchanges after assignment (it is final). And keep declare redundantly several times.\nThus, like TEST_IMSI or TEST_IFACE, a const definition for this\nspecfic array for testing is preferred.\nMaybe seek for other reviewer\u0027s opinion if disagreed.",
+      "parentUuid": "5f03ce3d_06ecac75",
+      "range": {
+        "startLine": 278,
+        "startChar": 20,
+        "endLine": 278,
+        "endChar": 34
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08090add_f3f43d16",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 11
@@ -319,6 +439,30 @@
       "side": 1,
       "message": "Create an expected parcelable object to verify the output.",
       "parentUuid": "08090add_f3f43d16",
+      "range": {
+        "startLine": 280,
+        "startChar": 68,
+        "endLine": 280,
+        "endChar": 73
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecbafefd_e41a2bdd",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "1. nit: IIUC we need to verify other fields too.\n\n2. question: is it feasible to use below?\nverify(mMockDnsResolver, times(1)).setResolverConfiguration(\n                eq(expectedParams));",
+      "parentUuid": "da726e34_0bc5b96a",
       "range": {
         "startLine": 280,
         "startChar": 68,

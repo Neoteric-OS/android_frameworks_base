@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1b1639a_4049477b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3320,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "mDnsManager.updateTransportTypesForNetwork(networkAgent.network.netId, \n                    networkAgent.networkCapabilities.getTransportTypes());",
+      "range": {
+        "startLine": 3319,
+        "startChar": 12,
+        "endLine": 3320,
+        "endChar": 99
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1066f2c7_f0ca6800",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "Maybe mTransportsForNetwork or mTransportsMap?",
+      "range": {
+        "startLine": 242,
+        "startChar": 38,
+        "endLine": 242,
+        "endChar": 53
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f803ed4_b56f2478",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "IIUC you are assuming:\n  1. When creating network, transport types are always set before update dns config.\n  2. When transport type changes, you don\u0027t really need this info sent to resolver.\n  3. The hashMap is always accessed on the same thread.\n\nFor 1,2 maybe update the javadoc if it is what you are expecting.\nFor 3, if true, maybe update the javadoc, if false, add multi-thread protection for it.",
+      "range": {
+        "startLine": 312,
+        "startChar": 5,
+        "endLine": 312,
+        "endChar": 49
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55922167_e8a96aca",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "nit: maybe setTransportsForNetwork? or updateTransportsForNetwork?\nNo strong opinion",
+      "range": {
+        "startLine": 314,
+        "startChar": 16,
+        "endLine": 314,
+        "endChar": 46
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385557db_aca70618",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "Do you need to called mDnsResolver.setResolverConfiguration(paramsParcel)\n from both this function and the function below.\nIf so , maybe create a new xyz function that do this. And in\n 1. updateTransportTypeForNetwork: update mTransportTypes, then calls xyz\n 2. setDnsConfigurationForNetwork: stores infos locally, then calls xyz.",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 5
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3404244b_efebe527",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "IIUC this is wrong since it didn\u0027t get the right entry of current network.",
+      "range": {
+        "startLine": 358,
+        "startChar": 8,
+        "endLine": 362,
+        "endChar": 9
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc18e76f_428bf031",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4904,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 4904,
+        "startChar": 8,
+        "endLine": 4904,
+        "endChar": 28
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076af96b_864f08fc",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-09T14:01:33Z",
+      "side": 1,
+      "message": "1. nit: final\n2. I don\u0027t see anywhere use this variable.\n  If so, can we make this local?",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 11
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
