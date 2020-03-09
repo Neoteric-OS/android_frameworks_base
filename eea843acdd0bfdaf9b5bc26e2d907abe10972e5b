@@ -422,6 +422,30 @@
       "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cabb09f0_125d947f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-09T07:27:56Z",
+      "side": 1,
+      "message": "As we spoke offline, let\u0027s keep your current code to avoid clinging to this memory. setupNotification() is not called often.",
+      "parentUuid": "0715733e_479e2b4c",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 100
+      },
+      "revId": "eea843acdd0bfdaf9b5bc26e2d907abe10972e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
