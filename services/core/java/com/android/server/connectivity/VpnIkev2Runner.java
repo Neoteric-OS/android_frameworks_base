@@ -16,47 +16,80 @@
 
 package com.android.server.connectivity;
 
+import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Ikev2VpnProfile;
+import android.net.IpSecManager;
+import android.net.IpSecManager.IpSecTunnelInterface;
+import android.net.IpSecTransform;
+import android.net.LinkAddress;
+import android.net.Network;
+import android.net.RouteInfo;
+import android.net.ipsec.ike.ChildSessionConfiguration;
+import android.net.ipsec.ike.ChildSessionParams;
+import android.net.ipsec.ike.IkeSession;
+import android.net.ipsec.ike.IkeSessionParams;
+import android.os.Handler;
+import android.os.HandlerExecutor;
+import android.os.HandlerThread;
+import android.os.INetworkManagementService;
+import android.util.Log;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+
 /**
  * Internal class managing IKEv2/IPsec VPN connectivity
  *
- * <p>The IKEv2 VPN will listen to, and run based on the lifecycle of Android's default Network.
- * As a new default is selected, old IKE sessions will be torn down, and a new one will be
- * started.
+ * <p>The IKEv2 VPN will listen to, and run based on the lifecycle of Android's default Network. As
+ * a new default is selected, old IKE sessions will be torn down, and a new one will be started.
  *
- * <p>This class uses locking minimally - the Vpn instance lock is only ever held when fields of
- * the outer class are modified. As such, care must be taken to ensure that no calls are added
- * that might modify the outer class' state without acquiring a lock. All callbacks are run on
- * the mHandler, either by the IKE library (for IKEv2-related callbacks), or by the
- * {@link ConnectivityManager} (for network callbacks).
+ * <p>This class uses locking minimally - the Vpn instance lock is only ever held when fields of the
+ * outer class are modified. As such, care must be taken to ensure that no calls are added that
+ * might modify the outer class' state without acquiring a lock. All callbacks are run on the
+ * mHandler, either by the IKE library (for IKEv2-related callbacks), or by the {@link
+ * ConnectivityManager} (for network callbacks).
  *
- * <p>The overall structure of the Ikev2VpnRunner is as follows:
+ * <p>The overall structure of the VpnIkev2Runner is as follows:
  *
  * <ol>
- *   <li>Upon startup, a NetworkRequest is registered with ConnectivityManager. This is called
- *       any time a new default network is selected
- *   <li>When a new default is connected, an IKE session is started on that Network. If there
- *       were any existing IKE sessions on other Networks, they are torn down before starting
- *       the new IKE session
- *   <li>Upon establishment, the onChildTransformCreated() callback is called twice, one for
- *       each direction, and finally onChildOpened() is called
+ *   <li>Upon startup, a NetworkRequest is registered with ConnectivityManager. This is called any
+ *       time a new default network is selected
+ *   <li>When a new default is connected, an IKE session is started on that Network. If there were
+ *       any existing IKE sessions on other Networks, they are torn down before starting the new IKE
+ *       session
+ *   <li>Upon establishment, the onChildTransformCreated() callback is called twice, one for each
+ *       direction, and finally onChildOpened() is called
  *   <li>Upon the onChildOpened() call, the VPN is fully set up.
  *   <li>Subsequent Network changes result in new onDefaultNetworkChanged() callbacks. See (2).
  * </ol>
+ *
+ * @hide
  */
-class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
-    @NonNull private static final String TAG = "IkeV2VpnRunner";
+public class VpnIkev2Runner extends Vpn.VpnRunner implements VpnIkev2Utils.VpnIkev2RunnerCallback {
+    @NonNull private static final String TAG = VpnIkev2Runner.class.getSimpleName();
 
+    @NonNull private final Context mContext;
+    @NonNull private final INetworkManagementService mNetd;
+    @NonNull private final Vpn.Ikev2SessionCreator mIkev2SessionCreator;
     @NonNull private final IpSecManager mIpSecManager;
     @NonNull private final Ikev2VpnProfile mProfile;
     @NonNull private final ConnectivityManager.NetworkCallback mNetworkCallback;
+    @NonNull private final Vpn.VpnRunnerCallback mVpnCallback;
 
     /**
      * Handler upon which ALL processing must be run.
      *
-     * <p>This handler and associated handler thread help to ensure the consistency
-     * of the mutable Ikev2VpnRunner fields. The Ikev2VpnRunner is built (mostly) lock-free by
-     * virtue of everything being serialized on this handler. The exception is the accessing of
-     * fields on the outer Vpn instance.
+     * <p>This handler and associated handler thread help to ensure the consistency of the mutable
+     * VpnIkev2Runner fields. The VpnIkev2Runner is built (mostly) lock-free by virtue of everything
+     * being serialized on this handler. The exception is the accessing of fields on the outer Vpn
+     * instance.
      */
     @NonNull private final Handler mHandler;
     @NonNull private final HandlerThread mHandlerThread;
@@ -68,10 +101,18 @@ class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
     @Nullable private IkeSession mSession;
     @Nullable private Network mActiveNetwork;
 
-    IkeV2VpnRunner(@NonNull Ikev2VpnProfile profile) {
+    VpnIkev2Runner(@NonNull Context context, @NonNull INetworkManagementService netService,
+            @NonNull Vpn vpn, @NonNull Ikev2VpnProfile profile,
+            @NonNull Vpn.VpnRunnerCallback vpnCallback,
+            @NonNull Vpn.Ikev2SessionCreator ikev2SessionCreator) {
+        super(vpn);
+        mContext = context;
+        mNetd = netService;
+        mIkev2SessionCreator = ikev2SessionCreator;
         mProfile = profile;
         mIpSecManager = (IpSecManager) mContext.getSystemService(Context.IPSEC_SERVICE);
         mNetworkCallback = new VpnIkev2Utils.Ikev2VpnNetworkCallback(TAG, this);
+        mVpnCallback = vpnCallback;
 
         mHandlerThread = new HandlerThread(TAG);
         mHandlerThread.start();
@@ -96,7 +137,7 @@ class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
      * Called when an IKE Child session has been opened, signalling completion of the startup.
      *
      * <p>This method is only ever called once per IkeSession. All IKE callbacks are run on the
-     * mHandler by the IKE library, ensuring consistency of the Ikev2VpnRunner fields.
+     * mHandler by the IKE library, ensuring consistency of the VpnIkev2Runner fields.
      */
     public void onChildOpened(
             @NonNull Network network, @NonNull ChildSessionConfiguration childConfig) {
@@ -104,7 +145,7 @@ class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
             Log.d(TAG, "onOpened called for obsolete network " + network);
 
             // Do nothing; this signals that either: (1) a new/better Network was found,
-            // and the Ikev2VpnRunner has switched to it in onDefaultNetworkChanged, or (2) this
+            // and the VpnIkev2Runner has switched to it in onDefaultNetworkChanged, or (2) this
             // IKE session was already shut down (exited, or an error was encountered somewhere
             // else). In both cases, all resources and sessions are torn down via
             // resetIkeState().
@@ -126,38 +167,8 @@ class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
                 dnsAddrStrings.add(addr.getHostAddress());
             }
 
-            final NetworkAgent networkAgent;
-            final LinkProperties lp;
-
-            synchronized (Vpn.this) {
-                mConfig.mtu = maxMtu;
-                mConfig.interfaze = interfaceName;
-
-                mConfig.addresses.clear();
-                mConfig.addresses.addAll(internalAddresses);
-
-                mConfig.routes.clear();
-                mConfig.routes.addAll(newRoutes);
-
-                mConfig.dnsServers.clear();
-                mConfig.dnsServers.addAll(dnsAddrStrings);
-
-                networkAgent = mNetworkAgent;
-
-                // The below must be done atomically with the mConfig update, otherwise
-                // isRunningLocked() will be racy.
-                if (networkAgent == null) {
-                    if (isSettingsVpnLocked()) {
-                        prepareStatusIntent();
-                    }
-                    agentConnect();
-                    return; // Link properties are already sent.
-                }
-
-                lp = makeLinkProperties(); // Accesses VPN instance fields; must be locked
-            }
-
-            networkAgent.sendLinkProperties(lp);
+            mVpnCallback.onConnected(
+                    interfaceName, maxMtu, internalAddresses, newRoutes, dnsAddrStrings);
         } catch (Exception e) {
             Log.d(TAG, "Error in ChildOpened for network " + network, e);
             onSessionLost(network);
@@ -168,8 +179,8 @@ class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
      * Called when an IPsec transform has been created, and should be applied.
      *
      * <p>This method is called multiple times over the lifetime of an IkeSession (or default
-     * network). All IKE callbacks are run on the mHandler by the IKE library, ensuring
-     * consistency of the Ikev2VpnRunner fields.
+     * network). All IKE callbacks are run on the mHandler by the IKE library, ensuring consistency
+     * of the VpnIkev2Runner fields.
      */
     public void onChildTransformCreated(
             @NonNull Network network, @NonNull IpSecTransform transform, int direction) {
@@ -177,7 +188,7 @@ class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
             Log.d(TAG, "ChildTransformCreated for obsolete network " + network);
 
             // Do nothing; this signals that either: (1) a new/better Network was found,
-            // and the Ikev2VpnRunner has switched to it in onDefaultNetworkChanged, or (2) this
+            // and the VpnIkev2Runner has switched to it in onDefaultNetworkChanged, or (2) this
             // IKE session was already shut down (exited, or an error was encountered somewhere
             // else). In both cases, all resources and sessions are torn down via
             // resetIkeState().
@@ -197,12 +208,12 @@ class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
     /**
      * Called when a new default network is connected.
      *
-     * <p>The Ikev2VpnRunner will unconditionally switch to the new network, killing the old IKE
+     * <p>The VpnIkev2Runner will unconditionally switch to the new network, killing the old IKE
      * state in the process, and starting a new IkeSession instance.
      *
-     * <p>This method is called multiple times over the lifetime of the Ikev2VpnRunner, and will
-     * be proxied to the mHandler by the Ikev2VpnNetworkCallback, ensuring consistency
-     * of the Ikev2VpnRunner fields.
+     * <p>This method is called multiple times over the lifetime of the VpnIkev2Runner, and will be
+     * proxied to the mHandler by the Ikev2VpnNetworkCallback, ensuring consistency of the
+     * VpnIkev2Runner fields.
      */
     public void onDefaultNetworkChanged(@NonNull Network network) {
         try {
@@ -237,9 +248,9 @@ class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
                     childSessionParams,
                     new HandlerExecutor(mHandler),
                     new VpnIkev2Utils.IkeSessionCallbackImpl(
-                            TAG, IkeV2VpnRunner.this, network),
+                            TAG, VpnIkev2Runner.this, network),
                     new VpnIkev2Utils.ChildSessionCallbackImpl(
-                            TAG, IkeV2VpnRunner.this, network));
+                            TAG, VpnIkev2Runner.this, network));
             Log.d(TAG, "Ike Session started for network " + network);
         } catch (Exception e) {
             Log.i(TAG, "Setup failed for network " + network + ". Aborting", e);
@@ -250,18 +261,18 @@ class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
     /**
      * Handles loss of a session
      *
-     * <p>The loss of a session might be due to an onLost() call, the IKE session getting torn
-     * down for any reason, or an error in updating state (transform application, VPN setup)
+     * <p>The loss of a session might be due to an onLost() call, the IKE session getting torn down
+     * for any reason, or an error in updating state (transform application, VPN setup)
      *
-     * <p>This method MUST always be called on the mHandler in order to ensure
-     * consistency of the Ikev2VpnRunner fields.
+     * <p>This method MUST always be called on the mHandler in order to ensure consistency of the
+     * VpnIkev2Runner fields.
      */
     public void onSessionLost(@NonNull Network network) {
         if (!isActiveNetwork(network)) {
             Log.d(TAG, "onSessionLost() called for obsolete network " + network);
 
             // Do nothing; this signals that either: (1) a new/better Network was found,
-            // and the Ikev2VpnRunner has switched to it in onDefaultNetworkChanged, or (2) this
+            // and the VpnIkev2Runner has switched to it in onDefaultNetworkChanged, or (2) this
             // IKE session was already shut down (exited, or an error was encountered somewhere
             // else). In both cases, all resources and sessions are torn down via
             // onSessionLost() and resetIkeState().
@@ -274,29 +285,17 @@ class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
         // (Mirrors VpnService behavior)
         Log.d(TAG, "Resetting state for network: " + network);
 
-        synchronized (Vpn.this) {
-            // Set as unroutable to prevent traffic leaking while the interface is down.
-            if (mConfig != null && mConfig.routes != null) {
-                final List<RouteInfo> oldRoutes = new ArrayList<>(mConfig.routes);
+        mVpnCallback.makeAllRoutesUnreachable();
 
-                mConfig.routes.clear();
-                for (final RouteInfo route : oldRoutes) {
-                    mConfig.routes.add(new RouteInfo(route.getDestination(), RTN_UNREACHABLE));
-                }
-                if (mNetworkAgent != null) {
-                    mNetworkAgent.sendLinkProperties(makeLinkProperties());
-                }
-            }
-        }
-
+        // Set as unroutable to prevent traffic leaking while the interface is down.
         resetIkeState();
     }
 
     /**
      * Cleans up all IKE state
      *
-     * <p>This method MUST always be called on the mHandler in order to ensure
-     * consistency of the Ikev2VpnRunner fields.
+     * <p>This method MUST always be called on the mHandler in order to ensure consistency of the
+     * VpnIkev2Runner fields.
      */
     private void resetIkeState() {
         if (mTunnelIface != null) {
@@ -311,10 +310,10 @@ class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
     }
 
     /**
-     * Cleans up all Ikev2VpnRunner internal state
+     * Cleans up all VpnIkev2Runner internal state
      *
-     * <p>This method MUST always be called on the mHandler in order to ensure
-     * consistency of the Ikev2VpnRunner fields.
+     * <p>This method MUST always be called on the mHandler in order to ensure consistency of the
+     * VpnIkev2Runner fields.
      */
     private void shutdownVpnRunner() {
         mActiveNetwork = null;

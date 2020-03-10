@@ -50,9 +50,6 @@ import android.net.ConnectivityManager;
 import android.net.INetworkManagementEventObserver;
 import android.net.Ikev2VpnProfile;
 import android.net.IpPrefix;
-import android.net.IpSecManager;
-import android.net.IpSecManager.IpSecTunnelInterface;
-import android.net.IpSecTransform;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.LocalSocket;
@@ -69,7 +66,6 @@ import android.net.UidRange;
 import android.net.VpnManager;
 import android.net.VpnService;
 import android.net.ipsec.ike.ChildSessionCallback;
-import android.net.ipsec.ike.ChildSessionConfiguration;
 import android.net.ipsec.ike.ChildSessionParams;
 import android.net.ipsec.ike.IkeSession;
 import android.net.ipsec.ike.IkeSessionCallback;
@@ -78,9 +74,6 @@ import android.os.Binder;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.FileUtils;
-import android.os.Handler;
-import android.os.HandlerExecutor;
-import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.INetworkManagementService;
 import android.os.Looper;
@@ -1768,7 +1761,7 @@ public class Vpn {
             return VpnManager.TYPE_VPN_NONE;
         }
 
-        if (mVpnRunner != null && mVpnRunner instanceof IkeV2VpnRunner) {
+        if (mVpnRunner != null && mVpnRunner instanceof VpnIkev2Runner) {
             return VpnManager.TYPE_VPN_PLATFORM;
         } else {
             return VpnManager.TYPE_VPN_SERVICE;
@@ -2154,7 +2147,13 @@ public class Vpn {
     }
 
     /** This class represents the common interface for all VPN runners. */
-    private abstract class VpnRunner implements Runnable {
+    abstract static class VpnRunner implements Runnable {
+        private final Vpn mVpn;
+
+        protected VpnRunner(Vpn vpn) {
+            mVpn = vpn;
+        }
+
         public abstract void run();
 
         /**
@@ -2171,9 +2170,70 @@ public class Vpn {
          * properly.
          */
         protected final void exit() {
-            synchronized (Vpn.this) {
+            synchronized (mVpn) {
                 exitVpnRunner();
-                cleanupVpnStateLocked();
+                mVpn.cleanupVpnStateLocked();
+            }
+        }
+    }
+
+    interface VpnRunnerCallback {
+        void onConnected(String interfaceName, int mtu, List<LinkAddress> internalAddresses,
+                Collection<RouteInfo> newRoutes, List<String> dnsAddrs);
+        void makeAllRoutesUnreachable();
+    }
+
+    private class PlatformVpnCallback implements VpnRunnerCallback {
+        public void onConnected(String interfaceName, int mtu, List<LinkAddress> internalAddresses,
+                Collection<RouteInfo> newRoutes, List<String> dnsAddrs) {
+            final NetworkAgent networkAgent;
+            final LinkProperties lp;
+
+            synchronized (Vpn.this) {
+                mConfig.interfaze = interfaceName;
+                mConfig.mtu = mtu;
+
+                mConfig.addresses.clear();
+                mConfig.addresses.addAll(internalAddresses);
+
+                mConfig.routes.clear();
+                mConfig.routes.addAll(newRoutes);
+
+                mConfig.dnsServers.clear();
+                mConfig.dnsServers.addAll(dnsAddrs);
+
+                networkAgent = mNetworkAgent;
+
+                // The below must be done atomically with the mConfig update, otherwise
+                // isRunningLocked() will be racy.
+                if (networkAgent == null) {
+                    if (isSettingsVpnLocked()) {
+                        prepareStatusIntent();
+                    }
+                    agentConnect();
+                    return; // Link properties are already sent.
+                }
+
+                lp = makeLinkProperties(); // Accesses VPN instance fields; must be locked
+            }
+
+            networkAgent.sendLinkProperties(lp);
+        }
+
+        public void makeAllRoutesUnreachable() {
+            synchronized (Vpn.this) {
+                // Set as unroutable to prevent traffic leaking while the interface is down.
+                if (mConfig != null && mConfig.routes != null) {
+                    final List<RouteInfo> oldRoutes = new ArrayList<>(mConfig.routes);
+
+                    mConfig.routes.clear();
+                    for (final RouteInfo route : oldRoutes) {
+                        mConfig.routes.add(new RouteInfo(route.getDestination(), RTN_UNREACHABLE));
+                    }
+                    if (mNetworkAgent != null) {
+                        mNetworkAgent.sendLinkProperties(makeLinkProperties());
+                    }
+                }
             }
         }
     }
@@ -2224,6 +2284,7 @@ public class Vpn {
 
         LegacyVpnRunner(VpnConfig config, String[] racoon, String[] mtpd, VpnProfile profile,
                 String outerIface) {
+            super(Vpn.this);
             mConfig = config;
             mDaemons = new String[] {"racoon", "mtpd"};
             // TODO: clear arguments from memory once launched
@@ -2584,7 +2645,7 @@ public class Vpn {
     }
 
     private boolean isCurrentIkev2VpnLocked(@NonNull String packageName) {
-        return isCurrentPreparedPackage(packageName) && mVpnRunner instanceof IkeV2VpnRunner;
+        return isCurrentPreparedPackage(packageName) && mVpnRunner instanceof VpnIkev2Runner;
     }
 
     /**
@@ -2721,8 +2782,10 @@ public class Vpn {
                 case VpnProfile.TYPE_IKEV2_IPSEC_USER_PASS:
                 case VpnProfile.TYPE_IKEV2_IPSEC_PSK:
                 case VpnProfile.TYPE_IKEV2_IPSEC_RSA:
-                    mVpnRunner =
-                            new IkeV2VpnRunner(Ikev2VpnProfile.fromVpnProfile(profile, keyStore));
+                    mVpnRunner = new VpnIkev2Runner(
+                            mContext, mNetd, this,
+                            Ikev2VpnProfile.fromVpnProfile(profile, keyStore),
+                            new PlatformVpnCallback(), mIkev2SessionCreator);
                     mVpnRunner.run();
                     break;
                 default:

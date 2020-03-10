@@ -224,10 +224,10 @@ public class VpnIkev2Utils {
 
     static class IkeSessionCallbackImpl implements IkeSessionCallback {
         private final String mTag;
-        private final Vpn.IkeV2VpnRunnerCallback mCallback;
+        private final VpnIkev2RunnerCallback mCallback;
         private final Network mNetwork;
 
-        IkeSessionCallbackImpl(String tag, Vpn.IkeV2VpnRunnerCallback callback, Network network) {
+        IkeSessionCallbackImpl(String tag, VpnIkev2RunnerCallback callback, Network network) {
             mTag = tag;
             mCallback = callback;
             mNetwork = network;
@@ -260,10 +260,10 @@ public class VpnIkev2Utils {
 
     static class ChildSessionCallbackImpl implements ChildSessionCallback {
         private final String mTag;
-        private final Vpn.IkeV2VpnRunnerCallback mCallback;
+        private final VpnIkev2RunnerCallback mCallback;
         private final Network mNetwork;
 
-        ChildSessionCallbackImpl(String tag, Vpn.IkeV2VpnRunnerCallback callback, Network network) {
+        ChildSessionCallbackImpl(String tag, VpnIkev2RunnerCallback callback, Network network) {
             mTag = tag;
             mCallback = callback;
             mNetwork = network;
@@ -305,9 +305,9 @@ public class VpnIkev2Utils {
 
     static class Ikev2VpnNetworkCallback extends NetworkCallback {
         private final String mTag;
-        private final Vpn.IkeV2VpnRunnerCallback mCallback;
+        private final VpnIkev2RunnerCallback mCallback;
 
-        Ikev2VpnNetworkCallback(String tag, Vpn.IkeV2VpnRunnerCallback callback) {
+        Ikev2VpnNetworkCallback(String tag, VpnIkev2RunnerCallback callback) {
             mTag = tag;
             mCallback = callback;
         }
@@ -384,7 +384,7 @@ public class VpnIkev2Utils {
         return routes;
     }
 
-    interface IkeV2VpnRunnerCallback {
+    interface VpnIkev2RunnerCallback {
         void onDefaultNetworkChanged(@NonNull Network network);
 
         void onChildOpened(
