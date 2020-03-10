@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa82964e_1ee95d56",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-10T03:07:10Z",
+      "side": 1,
+      "message": "Combination config is set to string directly instead of string resource. So I don\u0027t need to resolve it to the actual string.",
+      "parentUuid": "e39e397a_28adbff3",
+      "range": {
+        "startLine": 185,
+        "startChar": 49,
+        "endLine": 185,
+        "endChar": 64
+      },
+      "revId": "25d2fc73ee05cf2bae69d1a4d94085be315f75c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26aa5d8f_d9b1af50",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2020-03-05T07:45:34Z",
       "side": 1,
       "message": "Question : are you sure the behavior of \"\" is the same as if this had not been called ?",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 54
+      },
+      "revId": "25d2fc73ee05cf2bae69d1a4d94085be315f75c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b5124f_4cafb625",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-10T03:07:10Z",
+      "side": 1,
+      "message": "I don\u0027t catch your point. Do you mean formatMessage is \"\" or downstreamText is \"\" case?",
+      "parentUuid": "26aa5d8f_d9b1af50",
       "range": {
         "startLine": 213,
         "startChar": 0,
