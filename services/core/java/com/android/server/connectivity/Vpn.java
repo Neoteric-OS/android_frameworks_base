@@ -2250,7 +2250,7 @@ public class Vpn {
                 final List<LinkAddress> internalAddresses = childConfig.getInternalAddresses();
 
                 final Collection<RouteInfo> newRoutes = VpnIkev2Utils.getRoutesFromTrafficSelectors(
-                        childConfig.getOutboundTrafficSelectors());
+                        childConfig.getRemoteTrafficSelectors());
                 for (final LinkAddress address : internalAddresses) {
                     mTunnelIface.addAddress(address.getAddress(), address.getPrefixLength());
                 }
