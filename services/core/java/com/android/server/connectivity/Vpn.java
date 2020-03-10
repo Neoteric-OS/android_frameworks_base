@@ -193,7 +193,6 @@ public class Vpn {
     @VisibleForTesting protected String mPackage;
     private int mOwnerUID;
     private boolean mIsPackageTargetingAtLeastQ;
-    private String mInterface;
     private Connection mConnection;
 
     /** Tracks the runners for all VPN types managed by the platform (eg. LegacyVpn, PlatformVpn) */
@@ -824,11 +823,11 @@ public class Vpn {
         long token = Binder.clearCallingIdentity();
         try {
             // Reset the interface.
-            if (mInterface != null) {
+            if (mConfig != null && mConfig.interfaze != null) {
                 mStatusIntent = null;
                 agentDisconnect();
-                jniReset(mInterface);
-                mInterface = null;
+                jniReset(mConfig.interfaze);
+                mConfig.interfaze = null;
                 mNetworkCapabilities.setUids(null);
             }
 
@@ -999,7 +998,7 @@ public class Vpn {
 
         LinkProperties lp = new LinkProperties();
 
-        lp.setInterfaceName(mInterface);
+        lp.setInterfaceName(mConfig.interfaze);
 
         if (mConfig.addresses != null) {
             for (LinkAddress address : mConfig.addresses) {
@@ -1186,7 +1185,6 @@ public class Vpn {
 
         // Save the old config in case we need to go back.
         VpnConfig oldConfig = mConfig;
-        String oldInterface = mInterface;
         Connection oldConnection = mConnection;
         NetworkAgent oldNetworkAgent = mNetworkAgent;
         Set<UidRange> oldUsers = mNetworkCapabilities.getUids();
@@ -1213,11 +1211,10 @@ public class Vpn {
             }
 
             mConnection = connection;
-            mInterface = interfaze;
 
             // Fill more values.
             config.user = mPackage;
-            config.interfaze = mInterface;
+            config.interfaze = interfaze;
             config.startTime = SystemClock.elapsedRealtime();
             mConfig = config;
 
@@ -1242,8 +1239,10 @@ public class Vpn {
                 mContext.unbindService(oldConnection);
             }
 
-            if (oldInterface != null && !oldInterface.equals(interfaze)) {
-                jniReset(oldInterface);
+            // Reset the old interface if there existed one
+            if (oldConfig != null && oldConfig.interfaze != null
+                    && !oldConfig.interfaze.equals(interfaze)) {
+                jniReset(oldConfig.interfaze);
             }
 
             try {
@@ -1264,15 +1263,15 @@ public class Vpn {
             mConnection = oldConnection;
             mNetworkCapabilities.setUids(oldUsers);
             mNetworkAgent = oldNetworkAgent;
-            mInterface = oldInterface;
             throw e;
         }
-        Log.i(TAG, "Established by " + config.user + " on " + mInterface);
+        Log.i(TAG, "Established by " + config.user + " on "
+                + mConfig == null ? "null" : mConfig.interfaze);
         return tun;
     }
 
     private boolean isRunningLocked() {
-        return mNetworkAgent != null && mInterface != null;
+        return mNetworkAgent != null && mConfig != null && mConfig.interfaze != null;
     }
 
     // Returns true if the VPN has been established and the calling UID is its owner. Used to check
@@ -1609,7 +1608,8 @@ public class Vpn {
         @Override
         public void interfaceRemoved(String interfaze) {
             synchronized (Vpn.this) {
-                if (interfaze.equals(mInterface) && jniCheck(interfaze) == 0) {
+                if (mConfig != null && interfaze.equals(mConfig.interfaze)
+                        && jniCheck(interfaze) == 0) {
                     if (mConnection != null) {
                         mContext.unbindService(mConnection);
                         cleanupVpnStateLocked();
@@ -1626,7 +1626,6 @@ public class Vpn {
         mStatusIntent = null;
         mNetworkCapabilities.setUids(null);
         mConfig = null;
-        mInterface = null;
 
         // Unconditionally clear both VpnService and VpnRunner fields.
         mVpnRunner = null;
@@ -1677,7 +1676,11 @@ public class Vpn {
         if (!isCallerEstablishedOwnerLocked()) {
             return false;
         }
-        boolean success = jniAddAddress(mInterface, address, prefixLength);
+        if (mConfig == null) {
+            return false;
+        }
+
+        boolean success = jniAddAddress(mConfig.interfaze, address, prefixLength);
         mNetworkAgent.sendLinkProperties(makeLinkProperties());
         return success;
     }
@@ -1686,7 +1689,11 @@ public class Vpn {
         if (!isCallerEstablishedOwnerLocked()) {
             return false;
         }
-        boolean success = jniDelAddress(mInterface, address, prefixLength);
+        if (mConfig == null) {
+            return false;
+        }
+
+        boolean success = jniDelAddress(mConfig.interfaze, address, prefixLength);
         mNetworkAgent.sendLinkProperties(makeLinkProperties());
         return success;
     }
@@ -1734,7 +1741,7 @@ public class Vpn {
 
         VpnInfo info = new VpnInfo();
         info.ownerUid = mOwnerUID;
-        info.vpnIface = mInterface;
+        info.vpnIface = mConfig.interfaze;
         return info;
     }
 
@@ -2049,7 +2056,6 @@ public class Vpn {
         VpnConfig config = new VpnConfig();
         config.legacy = true;
         config.user = profile.key;
-        config.interfaze = iface;
         config.session = profile.name;
         config.isMetered = false;
         config.proxyInfo = profile.proxy;
@@ -2061,11 +2067,11 @@ public class Vpn {
         if (!profile.searchDomains.isEmpty()) {
             config.searchDomains = Arrays.asList(profile.searchDomains.split(" +"));
         }
-        startLegacyVpn(config, racoon, mtpd, profile);
+        startLegacyVpn(config, racoon, mtpd, profile, iface);
     }
 
     private synchronized void startLegacyVpn(VpnConfig config, String[] racoon, String[] mtpd,
-            VpnProfile profile) {
+            VpnProfile profile, String outerIface) {
         stopVpnRunnerPrivileged();
 
         // Prepare for the new request.
@@ -2073,7 +2079,7 @@ public class Vpn {
         updateState(DetailedState.CONNECTING, "startLegacyVpn");
 
         // Start a new LegacyVpnRunner and we are done!
-        LegacyVpnRunner runner = new LegacyVpnRunner(config, racoon, mtpd, profile);
+        LegacyVpnRunner runner = new LegacyVpnRunner(config, racoon, mtpd, profile, outerIface);
         Thread thread = new Thread(mVpnRunner, LegacyVpnRunner.TAG);
         runner.setThread(thread);
         mVpnRunner = runner;
@@ -2294,9 +2300,8 @@ public class Vpn {
                 final LinkProperties lp;
 
                 synchronized (Vpn.this) {
-                    mInterface = interfaceName;
                     mConfig.mtu = maxMtu;
-                    mConfig.interfaze = mInterface;
+                    mConfig.interfaze = interfaceName;
 
                     mConfig.addresses.clear();
                     mConfig.addresses.addAll(internalAddresses);
@@ -2440,10 +2445,9 @@ public class Vpn {
             Log.d(TAG, "Resetting state for network: " + network);
 
             synchronized (Vpn.this) {
-                // Since this method handles non-fatal errors only, set mInterface to null to
+                // Since this method handles non-fatal errors only, set interface to null to
                 // prevent the NetworkManagementEventObserver from killing this VPN based on the
                 // interface going down (which we expect).
-                mInterface = null;
                 mConfig.interfaze = null;
 
                 // Set as unroutable to prevent traffic leaking while the interface is down.
@@ -2550,20 +2554,19 @@ public class Vpn {
             }
         };
 
-        LegacyVpnRunner(VpnConfig config, String[] racoon, String[] mtpd, VpnProfile profile) {
+        LegacyVpnRunner(VpnConfig config, String[] racoon, String[] mtpd, VpnProfile profile,
+                String outerIface) {
             mConfig = config;
             mDaemons = new String[] {"racoon", "mtpd"};
             // TODO: clear arguments from memory once launched
             mArguments = new String[][] {racoon, mtpd};
             mSockets = new LocalSocket[mDaemons.length];
 
-            // This is the interface which VPN is running on,
-            // mConfig.interfaze will change to point to OUR
-            // internal interface soon. TODO - add inner/outer to mconfig
+            // This is the interface which VPN is running on.
             // TODO - we have a race - if the outer iface goes away/disconnects before we hit this
             // we will leave the VPN up.  We should check that it's still there/connected after
             // registering
-            mOuterInterface = mConfig.interfaze;
+            mOuterInterface = outerIface;
 
             mProfile = profile;
 
@@ -2768,7 +2771,7 @@ public class Vpn {
                 }
 
                 // Set the interface and the addresses in the config.
-                mConfig.interfaze = parameters[0].trim();
+                final String innerIface = parameters[0].trim();
 
                 mConfig.addLegacyAddresses(parameters[1]);
                 // Set the routes if they are not set in the config.
@@ -2818,12 +2821,12 @@ public class Vpn {
                     checkInterruptAndDelay(false);
 
                     // Check if the interface is gone while we are waiting.
-                    if (jniCheck(mConfig.interfaze) == 0) {
-                        throw new IllegalStateException(mConfig.interfaze + " is gone");
+                    if (jniCheck(innerIface) == 0) {
+                        throw new IllegalStateException(innerIface + " is gone");
                     }
 
                     // Now INetworkManagementEventObserver is watching our back.
-                    mInterface = mConfig.interfaze;
+                    mConfig.interfaze = innerIface;
                     prepareStatusIntent();
 
                     agentConnect();
