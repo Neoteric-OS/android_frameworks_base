@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18c83112_4e72c3b3",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-10T07:34:00Z",
+      "side": 1,
+      "message": "I\u0027m using mockContext in createContextAsUser() below.",
+      "parentUuid": "b6bf38b6_4a1b1374",
+      "range": {
+        "startLine": 79,
+        "startChar": 12,
+        "endLine": 79,
+        "endChar": 17
+      },
+      "revId": "6d1dfa4ac957f6997ac3e09fedc1efb143627891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edef3d95_c5e482ba",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "6d1dfa4ac957f6997ac3e09fedc1efb143627891",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "519e47f5_38184270",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-10T07:34:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edef3d95_c5e482ba",
+      "range": {
+        "startLine": 201,
+        "startChar": 26,
+        "endLine": 201,
+        "endChar": 27
+      },
+      "revId": "6d1dfa4ac957f6997ac3e09fedc1efb143627891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

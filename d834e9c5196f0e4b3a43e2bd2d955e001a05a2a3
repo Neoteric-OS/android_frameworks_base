@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "bdc2c3bf_48f63801",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-10T07:34:00Z",
+      "side": 1,
+      "message": "Done. Add comment for notificationUpdater.",
+      "parentUuid": "1a046986_29b06d67",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 35
+      },
+      "revId": "d834e9c5196f0e4b3a43e2bd2d955e001a05a2a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2519d47d_894563aa",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 4
