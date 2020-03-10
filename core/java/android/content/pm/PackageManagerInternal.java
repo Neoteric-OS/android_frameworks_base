@@ -59,7 +59,6 @@ public abstract class PackageManagerInternal {
     public static final int PACKAGE_CONFIGURATOR = 9;
     public static final int PACKAGE_INCIDENT_REPORT_APPROVER = 10;
     public static final int PACKAGE_APP_PREDICTOR = 11;
-    public static final int PACKAGE_TELEPHONY = 12;
     @IntDef(value = {
         PACKAGE_SYSTEM,
         PACKAGE_SETUP_WIZARD,
@@ -73,7 +72,6 @@ public abstract class PackageManagerInternal {
         PACKAGE_CONFIGURATOR,
         PACKAGE_INCIDENT_REPORT_APPROVER,
         PACKAGE_APP_PREDICTOR,
-        PACKAGE_TELEPHONY,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface KnownPackage {}
@@ -717,11 +715,10 @@ public abstract class PackageManagerInternal {
      */
     public abstract boolean isResolveActivityComponent(@NonNull ComponentInfo component);
 
-
     /**
-     * Returns a list of package names for a known package
+     * Returns the package name for a known package.
      */
-    public abstract @NonNull String[] getKnownPackageNames(
+    public abstract @Nullable String getKnownPackageName(
             @KnownPackage int knownPackage, int userId);
 
     /**

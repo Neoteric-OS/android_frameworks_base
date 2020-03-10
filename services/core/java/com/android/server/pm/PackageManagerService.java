@@ -1406,7 +1406,6 @@ public class PackageManagerService extends IPackageManager.Stub
     final @Nullable String mConfiguratorPackage;
     final @Nullable String mAppPredictionServicePackage;
     final @Nullable String mIncidentReportApproverPackage;
-    final @Nullable String[] mTelephonyPackages;
     final @NonNull String mServicesSystemSharedLibraryPackageName;
     final @NonNull String mSharedSystemSharedLibraryPackageName;
 
@@ -3117,7 +3116,6 @@ public class PackageManagerService extends IPackageManager.Stub
                     mContext.getString(R.string.config_deviceConfiguratorPackageName);
             mAppPredictionServicePackage = getAppPredictionServicePackageName();
             mIncidentReportApproverPackage = getIncidentReportApproverPackageName();
-            mTelephonyPackages = getTelephonyPackageNames();
 
             // Now that we know all of the shared libraries, update all clients to have
             // the correct library paths.
@@ -21177,16 +21175,6 @@ public class PackageManagerService extends IPackageManager.Stub
     }
 
     @Override
-    public String[] getTelephonyPackageNames() {
-        String names = mContext.getString(R.string.config_telephonyPackages);
-        String[] telephonyPackageNames = null;
-        if (!TextUtils.isEmpty(names)) {
-            telephonyPackageNames = names.trim().split(",");
-        }
-        return telephonyPackageNames;
-    }
-
-    @Override
     public void setApplicationEnabledSetting(String appPackageName,
             int newState, int flags, int userId, String callingPackage) {
         if (!sUserManager.exists(userId)) return;
@@ -24335,36 +24323,34 @@ public class PackageManagerService extends IPackageManager.Stub
         }
 
         @Override
-        public @NonNull String[] getKnownPackageNames(int knownPackage, int userId) {
+        public String getKnownPackageName(int knownPackage, int userId) {
             switch(knownPackage) {
                 case PackageManagerInternal.PACKAGE_BROWSER:
-                    return new String[]{getDefaultBrowserPackageName(userId)};
+                    return getDefaultBrowserPackageName(userId);
                 case PackageManagerInternal.PACKAGE_INSTALLER:
-                    return new String[]{mRequiredInstallerPackage};
+                    return mRequiredInstallerPackage;
                 case PackageManagerInternal.PACKAGE_SETUP_WIZARD:
-                    return new String[]{mSetupWizardPackage};
+                    return mSetupWizardPackage;
                 case PackageManagerInternal.PACKAGE_SYSTEM:
-                    return new String[]{"android"};
+                    return "android";
                 case PackageManagerInternal.PACKAGE_VERIFIER:
-                    return new String[]{mRequiredVerifierPackage};
+                    return mRequiredVerifierPackage;
                 case PackageManagerInternal.PACKAGE_SYSTEM_TEXT_CLASSIFIER:
-                    return new String[]{mSystemTextClassifierPackage};
+                    return mSystemTextClassifierPackage;
                 case PackageManagerInternal.PACKAGE_PERMISSION_CONTROLLER:
-                    return new String[]{mRequiredPermissionControllerPackage};
+                    return mRequiredPermissionControllerPackage;
                 case PackageManagerInternal.PACKAGE_WELLBEING:
-                    return new String[]{mWellbeingPackage};
+                    return mWellbeingPackage;
                 case PackageManagerInternal.PACKAGE_DOCUMENTER:
-                    return new String[]{mDocumenterPackage};
+                    return mDocumenterPackage;
                 case PackageManagerInternal.PACKAGE_CONFIGURATOR:
-                    return new String[]{mConfiguratorPackage};
+                    return mConfiguratorPackage;
                 case PackageManagerInternal.PACKAGE_INCIDENT_REPORT_APPROVER:
-                    return new String[]{mIncidentReportApproverPackage};
+                    return mIncidentReportApproverPackage;
                 case PackageManagerInternal.PACKAGE_APP_PREDICTOR:
-                    return new String[]{mAppPredictionServicePackage};
-                case PackageManagerInternal.PACKAGE_TELEPHONY:
-                    return mTelephonyPackages;
+                    return mAppPredictionServicePackage;
             }
-            return ArrayUtils.emptyArray(String.class);
+            return null;
         }
 
         @Override
