@@ -1613,7 +1613,11 @@ public class Vpn {
                     if (mConnection != null) {
                         mContext.unbindService(mConnection);
                         cleanupVpnStateLocked();
-                    } else if (mVpnRunner != null) {
+                    } else if (mVpnRunner != null && mVpnRunner instanceof LegacyVpnRunner) {
+                        // Only LegacyVPN needs to be torn down when the interface dies. Platform
+                        // VPNs (eg. IKEv2) handle their own lifecycle separately from the
+                        // interface.
+
                         // cleanupVpnStateLocked() is called from mVpnRunner.exit()
                         mVpnRunner.exit();
                     }
@@ -2445,11 +2449,6 @@ public class Vpn {
             Log.d(TAG, "Resetting state for network: " + network);
 
             synchronized (Vpn.this) {
-                // Since this method handles non-fatal errors only, set interface to null to
-                // prevent the NetworkManagementEventObserver from killing this VPN based on the
-                // interface going down (which we expect).
-                mConfig.interfaze = null;
-
                 // Set as unroutable to prevent traffic leaking while the interface is down.
                 if (mConfig != null && mConfig.routes != null) {
                     final List<RouteInfo> oldRoutes = new ArrayList<>(mConfig.routes);
