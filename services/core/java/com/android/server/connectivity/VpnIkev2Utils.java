@@ -383,4 +383,16 @@ public class VpnIkev2Utils {
 
         return routes;
     }
+
+    interface IkeV2VpnRunnerCallback {
+        void onDefaultNetworkChanged(@NonNull Network network);
+
+        void onChildOpened(
+                @NonNull Network network, @NonNull ChildSessionConfiguration childConfig);
+
+        void onChildTransformCreated(
+                @NonNull Network network, @NonNull IpSecTransform transform, int direction);
+
+        void onSessionLost(@NonNull Network network);
+    }
 }
