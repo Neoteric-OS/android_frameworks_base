@@ -22,4 +22,5 @@ package android.os;
 interface IDeviceIdentifiersPolicyService {
     String getSerial();
     String getSerialForPackage(in String callingPackage, String callingFeatureId);
+    String getSkuForPackage(in String callingPackage);
 }

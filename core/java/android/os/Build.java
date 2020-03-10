@@ -169,6 +169,31 @@ public class Build {
     }
 
     /**
+     * Gets the hardware variant (SKU), if available.
+     *
+     * <p>Requires Permission: READ_PHONE_STATE, or that the calling app has carrier
+     * privileges (see {@link android.telephony.TelephonyManager#hasCarrierPrivileges}).
+     *
+     * <p>If the calling app does not meet one of these requirements then a SecurityException is
+     * thrown.
+     *
+     * @return The hardware variant if specified.
+     */
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+    public static String getSku() {
+        IDeviceIdentifiersPolicyService service = IDeviceIdentifiersPolicyService.Stub
+                .asInterface(ServiceManager.getService(Context.DEVICE_IDENTIFIERS_SERVICE));
+        try {
+            Application application = ActivityThread.currentApplication();
+            String callingPackage = application != null ? application.getPackageName() : null;
+            return service.getSkuForPackage(callingPackage);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+        return UNKNOWN;
+    }
+
+    /**
      * An ordered list of ABIs supported by this device. The most preferred ABI is the first
      * element in the list.
      *

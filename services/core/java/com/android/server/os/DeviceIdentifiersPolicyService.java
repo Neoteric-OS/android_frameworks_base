@@ -25,6 +25,7 @@ import android.os.RemoteException;
 import android.os.SystemProperties;
 
 import com.android.internal.telephony.TelephonyPermissions;
+import com.android.internal.telephony.SubscriptionManager;
 import com.android.server.SystemService;
 
 /**
@@ -70,6 +71,15 @@ public final class DeviceIdentifiersPolicyService extends SystemService {
                 return Build.UNKNOWN;
             }
             return SystemProperties.get("ro.serialno", Build.UNKNOWN);
+        }
+
+        @Override
+        public @Nullable String getSkuForPackage(String callingPackage) throws RemoteException {
+            if (!TelephonyPermissions.checkCallingOrSelfReadPhoneState(mContext,
+                    SubscriptionManager.INVALID_SUBSCRIPTION_ID, callingPackage, null, "getSku")) {
+                return Build.UNKNOWN;
+            }
+            return SystemProperties.get("ro.boot.hardware.sku", Build.UNKNOWN);
         }
     }
 }
