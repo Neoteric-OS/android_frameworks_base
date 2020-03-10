@@ -241,6 +241,8 @@
 
     <!-- Permission needed to read wifi network credentials for CtsNetTestCases -->
     <uses-permission android:name="android.permission.READ_WIFI_CREDENTIAL" />
+    <!-- Permission needed to use the privileged WifiScanner interface for CtsNetTestCases -->
+    <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
 
     <application android:label="@string/app_label"
                 android:theme="@android:style/Theme.DeviceDefault.DayNight"
