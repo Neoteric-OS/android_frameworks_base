@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1fe02ba2_cc7ae555",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-11T08:56:16Z",
+      "side": 1,
+      "message": "It\u0027s actually mActiveTetheringRequests now right ? Since the requests are cleared when tethering stops, not when it starts.",
+      "range": {
+        "startLine": 202,
+        "startChar": 54,
+        "endLine": 202,
+        "endChar": 82
+      },
+      "revId": "b565d108967a8a99fd5d5463ca0d8cad5625890a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b04ef89_3f394ff0",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 10
@@ -22,6 +45,52 @@
       "revId": "b565d108967a8a99fd5d5463ca0d8cad5625890a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6a0b30d_a8b03a5e",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-11T08:56:16Z",
+      "side": 1,
+      "message": "Otherwise, we\u0027ll report success in the listener even if the tethering that was started does not match the parameters. For example if tethering is already started and you try to start it with static IPs, will it report success even though the config was not changed ?\n\nWould it be reasonable to report failure if tethering is already enabled - maybe it can break some callers ? Or report failure if tethering is already enabled and the request has different parameters ?",
+      "range": {
+        "startLine": 498,
+        "startChar": 12,
+        "endLine": 498,
+        "endChar": 13
+      },
+      "revId": "b565d108967a8a99fd5d5463ca0d8cad5625890a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f23204e_12955c26",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-11T08:56:16Z",
+      "side": 1,
+      "message": "Is it fine to call this multiple times for the same tethering type without calling stopTethering ? If yes maybe add a comment here and in the enableTetheringInternal javadoc.",
+      "range": {
+        "startLine": 502,
+        "startChar": 12,
+        "endLine": 502,
+        "endChar": 89
+      },
+      "revId": "b565d108967a8a99fd5d5463ca0d8cad5625890a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
