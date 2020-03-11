@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0005f055_cd866bad",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-11T07:44:30Z",
+      "side": 1,
+      "message": "This code path is probably not going to be well tested. Instead, can the check be in maybeConfigureStaticIp, so that the common code paths are used instead ? Such as:\n\nmStaticIpv4ClientAddr \u003d maybeParseStaticIpv4ClientAddr(mStaticIpv4ServerAddr, request.staticClientAddress);\n\nprivate static Inet4Address maybeParseStaticIpv4ClientAddr(LinkAddress serverAddr, String clientAddr) {\n    // Only allow static client IP assignment if the server also has a static IP, and the client is in the right subnet\n    if (serverAddr \u003d\u003d null || TextUtils.isEmpty(clientAddr)) return null;\n    final InetAddress addr \u003d (Inet4Address) InetAddresses.parseNumericAddress(clientAddr);\n    if (!PrefixUtils.asIpPrefix(serverAddr).contains(addr)) return null;\n    return (Inet4Address) addr;\n}\n\nNote the additional check for the client address to be in the right subnet too.\nThis follows a pattern to check external inputs where they are parsed, and then not worry about consistency of the parameters.",
+      "range": {
+        "startLine": 628,
+        "startChar": 8,
+        "endLine": 629,
+        "endChar": 88
+      },
+      "revId": "84258d283697e8c5582af16cebdf08350161a896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363a46ca_a389a922",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-11T07:44:30Z",
+      "side": 1,
+      "message": "With the suggestion I added above you won\u0027t need this",
+      "range": {
+        "startLine": 952,
+        "startChar": 27,
+        "endLine": 952,
+        "endChar": 64
+      },
+      "revId": "84258d283697e8c5582af16cebdf08350161a896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fcf4185_ebe986ff",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-11T07:44:30Z",
+      "side": 1,
+      "message": "InetAddresses.parseNumericAddress (getByName can do name lookups), but see suggestion above",
+      "range": {
+        "startLine": 959,
+        "startChar": 50,
+        "endLine": 959,
+        "endChar": 72
+      },
+      "revId": "84258d283697e8c5582af16cebdf08350161a896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
