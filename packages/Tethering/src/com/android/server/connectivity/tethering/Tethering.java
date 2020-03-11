@@ -457,6 +457,7 @@ public class Tethering {
 
     private int ifaceNameToType(String iface) {
         final TetheringConfiguration cfg = mConfig;
+        if (iface == null) return TETHERING_INVALID;
 
         if (cfg.isWifi(iface)) {
             return TETHERING_WIFI;
@@ -468,6 +469,8 @@ public class Tethering {
             return TETHERING_BLUETOOTH;
         } else if (cfg.isNcm(iface)) {
             return TETHERING_NCM;
+        } else if (iface.equals(mConfiguredEthernetIface)) {
+            return TETHERING_ETHERNET;
         }
         return TETHERING_INVALID;
     }
@@ -610,21 +613,18 @@ public class Tethering {
                 mEthernetCallback = new EthernetCallback();
                 mEthernetIfaceRequest = em.requestTetheredInterface(mExecutor, mEthernetCallback);
             } else {
-                stopEthernetTetheringLocked();
-                if (mEthernetCallback != null) {
-                    mEthernetIfaceRequest.release();
-                    mEthernetCallback = null;
-                    mEthernetIfaceRequest = null;
-                }
+                stopTrackingInterfaceLocked(mConfiguredEthernetIface);
+                releaseEthernetIfaceRequest();
             }
         }
         return TETHER_ERROR_NO_ERROR;
     }
 
-    private void stopEthernetTetheringLocked() {
-        if (mConfiguredEthernetIface == null) return;
-        changeInterfaceState(mConfiguredEthernetIface, IpServer.STATE_AVAILABLE);
-        stopTrackingInterfaceLocked(mConfiguredEthernetIface);
+    private void releaseEthernetIfaceRequest() {
+        if (mEthernetCallback == null) return;
+        mEthernetIfaceRequest.release();
+        mEthernetCallback = null;
+        mEthernetIfaceRequest = null;
         mConfiguredEthernetIface = null;
     }
 
@@ -646,10 +646,11 @@ public class Tethering {
         public void onUnavailable() {
             synchronized (mPublicSync) {
                 if (this != mEthernetCallback) {
-                    // onAvailable called after stopping Ethernet tethering.
+                    // onUnAvailable called after stopping Ethernet tethering.
                     return;
                 }
-                stopEthernetTetheringLocked();
+                changeInterfaceState(mConfiguredEthernetIface, IpServer.STATE_AVAILABLE);
+                mConfiguredEthernetIface = null;
             }
         }
     }
@@ -2220,6 +2221,9 @@ public class Tethering {
         }
         tetherState.ipServer.stop();
         mLog.log("removing TetheringInterfaceStateMachine for: " + iface);
+        if (tetherState.ipServer.interfaceType() == TETHERING_ETHERNET) {
+            releaseEthernetIfaceRequest();
+        }
         mTetherStates.remove(iface);
     }
 

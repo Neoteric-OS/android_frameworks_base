@@ -81,6 +81,7 @@ import android.content.res.Resources;
 import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
 import android.net.EthernetManager;
+import android.net.EthernetManager.TetheredInterfaceCallback;
 import android.net.EthernetManager.TetheredInterfaceRequest;
 import android.net.INetd;
 import android.net.ITetheringEventCallback;
@@ -165,6 +166,7 @@ public class TetheringTest {
     private static final String TEST_WLAN_IFNAME = "test_wlan0";
     private static final String TEST_P2P_IFNAME = "test_p2p-p2p0-0";
     private static final String TEST_NCM_IFNAME = "test_ncm0";
+    private static final String TEST_ETHERNET_IFNAME = "test_eth0";
     private static final String TETHERING_NAME = "Tethering";
 
     private static final int DHCPSERVER_START_TIMEOUT_MS = 1000;
@@ -268,10 +270,11 @@ public class TetheringTest {
                             || ifName.equals(TEST_WLAN_IFNAME)
                             || ifName.equals(TEST_MOBILE_IFNAME)
                             || ifName.equals(TEST_P2P_IFNAME)
-                            || ifName.equals(TEST_NCM_IFNAME));
+                            || ifName.equals(TEST_NCM_IFNAME)
+                            || ifName.equals(TEST_ETHERNET_IFNAME));
             final String[] ifaces = new String[] {
                     TEST_USB_IFNAME, TEST_WLAN_IFNAME, TEST_MOBILE_IFNAME, TEST_P2P_IFNAME,
-                    TEST_NCM_IFNAME};
+                    TEST_NCM_IFNAME, TEST_ETHERNET_IFNAME};
             return new InterfaceParams(ifName, ArrayUtils.indexOf(ifaces, ifName) + IFINDEX_OFFSET,
                     MacAddress.ALL_ZEROS_ADDRESS);
         }
@@ -1410,6 +1413,26 @@ public class TetheringTest {
         mTethering.stopTethering(TETHERING_ETHERNET);
         mLooper.dispatchAll();
         verifyNoMoreInteractions(mEm);
+    }
+
+    @Test
+    public void testReleaseEthernetIfaceRequestIfInterfaceRemoved() throws Exception {
+        final ArgumentCaptor<TetheredInterfaceCallback> ethernetCallbackCaptor =
+                ArgumentCaptor.forClass(TetheredInterfaceCallback.class);
+        final TetheredInterfaceRequest mockRequest = mock(TetheredInterfaceRequest.class);
+        when(mEm.requestTetheredInterface(any(), any())).thenReturn(mockRequest);
+        mTethering.startTethering(createTetheringRquestParcel(TETHERING_ETHERNET), null);
+        mLooper.dispatchAll();
+        verify(mEm, times(1)).requestTetheredInterface(any(), ethernetCallbackCaptor.capture());
+        final TetheredInterfaceCallback ethernetCallback = ethernetCallbackCaptor.getValue();
+        ethernetCallback.onAvailable(TEST_ETHERNET_IFNAME);
+        mLooper.dispatchAll();
+        verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).startWithCallbacks(
+                any(), any());
+
+        mTethering.interfaceRemoved(TEST_ETHERNET_IFNAME);
+        mLooper.dispatchAll();
+        verify(mockRequest, times(1)).release();
     }
 
     private void workingWifiP2pGroupOwner(
