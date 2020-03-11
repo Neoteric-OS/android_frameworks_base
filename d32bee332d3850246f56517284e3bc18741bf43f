@@ -22,6 +22,30 @@
       "revId": "d32bee332d3850246f56517284e3bc18741bf43f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b653d9_a0a709e4",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-11T07:22:13Z",
+      "side": 1,
+      "message": "It\u0027s simpler. Thanks for your suggestion.",
+      "parentUuid": "31f27a20_8c1e4454",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 81
+      },
+      "revId": "d32bee332d3850246f56517284e3bc18741bf43f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
