@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000001923624",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1254952?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "735ad6f8_c53f2123",
+          "description": "Change to \"telephony/java/android/telephony/ims/RcsUceAdapter.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/ims/RcsUceAdapter.java",
+              "range": {
+                "startLine": 382,
+                "startChar": 16,
+                "endLine": 382,
+                "endChar": 25
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "1b3eeef4_33a56b97",
+        "filename": "telephony/java/android/telephony/ims/RcsUceAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-03-11T13:19:12Z",
+      "side": 1,
+      "message": "Common typo found: \"receiever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 382,
+        "startChar": 16,
+        "endLine": 382,
+        "endChar": 25
+      },
+      "revId": "367e78f0698ecbea16c5006d6fab960a1bac8294",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
