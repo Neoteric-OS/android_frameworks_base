@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd805a1a_5e61db37",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-11T13:33:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fe02ba2_cc7ae555",
+      "range": {
+        "startLine": 202,
+        "startChar": 54,
+        "endLine": 202,
+        "endChar": 82
+      },
+      "revId": "b565d108967a8a99fd5d5463ca0d8cad5625890a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b04ef89_3f394ff0",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 10
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "8b518e5d_90ddd569",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-11T13:33:18Z",
+      "side": 1,
+      "message": "change to report failure and retry unfinished request if already enabled. Just ignore request if risky because there is no guarantee that request would always successful.\nnew request -\u003e Tethering#setXXXTethering -\u003e downstream service(e.g. from WifiManager, Usbmanager, ...). There is no callback mechanism in each downstream service to report starting fail.",
+      "parentUuid": "a6a0b30d_a8b03a5e",
+      "range": {
+        "startLine": 498,
+        "startChar": 12,
+        "endLine": 498,
+        "endChar": 13
+      },
+      "revId": "b565d108967a8a99fd5d5463ca0d8cad5625890a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f23204e_12955c26",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 10
@@ -91,6 +139,30 @@
       "revId": "b565d108967a8a99fd5d5463ca0d8cad5625890a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010877cf_60a33454",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-11T13:33:18Z",
+      "side": 1,
+      "message": "Tethering do not protect multiple startTethering here. It may fail if downstream service(wifi, usb, bluetooth or ethernet) also do not handle multiple start. After reviewing each downstream\u0027s code, it seems safe to call multiple start. But I do not want to explicitly saying here because it depend on other services.",
+      "parentUuid": "7f23204e_12955c26",
+      "range": {
+        "startLine": 502,
+        "startChar": 12,
+        "endLine": 502,
+        "endChar": 89
+      },
+      "revId": "b565d108967a8a99fd5d5463ca0d8cad5625890a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
