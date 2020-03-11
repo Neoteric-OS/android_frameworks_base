@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8e0f42ec_ebde026a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3320,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T11:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b8724cf_e0a4820c",
+      "range": {
+        "startLine": 3319,
+        "startChar": 12,
+        "endLine": 3320,
+        "endChar": 99
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1066f2c7_f0ca6800",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 12
@@ -93,6 +117,30 @@
       "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4cebd7d_36a08136",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T11:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30dd6627_74b3e1de",
+      "range": {
+        "startLine": 242,
+        "startChar": 38,
+        "endLine": 242,
+        "endChar": 53
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "36a694b7_1f022b06",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T11:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f9eb15_2944f5f8",
+      "range": {
+        "startLine": 312,
+        "startChar": 5,
+        "endLine": 312,
+        "endChar": 49
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55922167_e8a96aca",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 12
@@ -190,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "c13f7370_013aca64",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T11:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00a62d8e_81818384",
+      "range": {
+        "startLine": 314,
+        "startChar": 16,
+        "endLine": 314,
+        "endChar": 46
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "385557db_aca70618",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 12
@@ -225,6 +321,30 @@
       "side": 1,
       "message": "No, I only need to call mDnsResolver.setResolverConfiguration(paramsParcel) in setDnsConfigurationForNetwork().",
       "parentUuid": "385557db_aca70618",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 5
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff9b763_a32e72a1",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T11:37:42Z",
+      "side": 1,
+      "message": "It is super confusing in CS that sometimes you need to call  \nsetDnsConfigurationForNetwork but sometimes don\u0027t,\ngiven updateTransportTypesForNetwork is already called.\nI think you\u0027ll need to judge that when calling into updateTransportTypeForNetwork",
+      "parentUuid": "12d7ab5a_40ca36cf",
       "range": {
         "startLine": 321,
         "startChar": 4,
@@ -281,6 +401,30 @@
       "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27ef0bd_44fa8f8c",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T11:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ccfe006_b991857c",
+      "range": {
+        "startLine": 358,
+        "startChar": 8,
+        "endLine": 362,
+        "endChar": 9
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -375,6 +519,30 @@
       "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229b35ed_69508a8e",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T11:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee7b46cf_f6c1b86d",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 11
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

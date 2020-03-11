@@ -428,6 +428,30 @@
     },
     {
       "key": {
+        "uuid": "088d0c12_065e53e7",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T11:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad93a57e_9013c76e",
+      "range": {
+        "startLine": 278,
+        "startChar": 20,
+        "endLine": 278,
+        "endChar": 34
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08090add_f3f43d16",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 11
@@ -511,6 +535,30 @@
       "side": 1,
       "message": "1. verify all fields.\n2. \nI used \"verify(mMockDnsResolver, times(1)).setResolverConfiguration(mResolverParamsParcelCaptor.capture());\" and caused exception ad following. \n\nThis exception may occur if matchers are combined with raw values:\n    //incorrect:\n    someMethod(anyObject(), \"raw String\");\nWhen using matchers, all arguments have to be provided by matchers.\nFor example:\n    //correct:\n    someMethod(anyObject(), eq(\"String by matcher\"));",
       "parentUuid": "ecbafefd_e41a2bdd",
+      "range": {
+        "startLine": 280,
+        "startChar": 68,
+        "endLine": 280,
+        "endChar": 73
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282eaa69_6dc6dbed",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T11:37:42Z",
+      "side": 1,
+      "message": "My point is that is it feasible to use single line to assert two params objects equals? If not, maybe make one.\n\nstatic boolean isResolverParamsEquals(left, right) { \n ...\n}\n\nstatic void assertResolverParamsEquals(expectedParams, actualParams) {\n   assertTrue(\"message...\", isResolverParamsEquals(left, right));\n}\n\nThus in this function you can say\n  expectedParams \u003d new ResolverParamsParcel();\n  expectedParams.netId \u003d...\n  ... ( you can omit fields that with default values)...\n  assertResolverParamsEquals(expectedParams, mResolverParamsParcelCaptor.getValue())",
+      "parentUuid": "df67a173_9d392283",
       "range": {
         "startLine": 280,
         "startChar": 68,

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45b33169_e1323bc3",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T11:37:42Z",
+      "side": 1,
+      "message": "Please use getOrDefault if feasible.\nhttps://docs.oracle.com/javase/8/docs/api/java/util/Map.html#getOrDefault-java.lang.Object-V-",
+      "range": {
+        "startLine": 364,
+        "startChar": 8,
+        "endLine": 365,
+        "endChar": 93
+      },
+      "revId": "54b763cdb0190ee652520834deb16107379d2cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae3b90b_cc5964be",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T11:37:42Z",
+      "side": 1,
+      "message": "local variable should not have m- prefix.",
+      "range": {
+        "startLine": 288,
+        "startChar": 51,
+        "endLine": 288,
+        "endChar": 78
+      },
+      "revId": "54b763cdb0190ee652520834deb16107379d2cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a2474b_f45308c5",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T11:37:42Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 292,
+        "startChar": 29,
+        "endLine": 292,
+        "endChar": 42
+      },
+      "revId": "54b763cdb0190ee652520834deb16107379d2cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc669ced_c7c7950f",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T11:37:42Z",
+      "side": 1,
+      "message": "IIUC you can use assertContainsExactly?",
+      "range": {
+        "startLine": 304,
+        "startChar": 8,
+        "endLine": 304,
+        "endChar": 41
+      },
+      "revId": "54b763cdb0190ee652520834deb16107379d2cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
