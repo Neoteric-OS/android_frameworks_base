@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b04ef89_3f394ff0",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-11T02:18:02Z",
+      "side": 1,
+      "message": "Note for review: currently mUnProcessedTetheringRequest only be used for static IP configuration. Will have follow up change to replace mWifiTetherRequested and used for showProvisioningUi",
+      "range": {
+        "startLine": 496,
+        "startChar": 16,
+        "endLine": 496,
+        "endChar": 44
+      },
+      "revId": "b565d108967a8a99fd5d5463ca0d8cad5625890a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
