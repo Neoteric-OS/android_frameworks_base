@@ -12588,7 +12588,6 @@ public class TelephonyManager {
     }
 
     /**
-<<<<<<< HEAD
      * Gets the voice call forwarding info {@link CallForwardingInfo}, given the call forward
      * reason.
      *
