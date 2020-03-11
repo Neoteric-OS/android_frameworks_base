@@ -134,6 +134,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -986,7 +987,7 @@ public class LocationManagerService extends ILocationManager.Stub {
 
         @GuardedBy("mLock")
         public void attachLocked(AbstractLocationProvider provider) {
-            checkNotNull(provider);
+            Objects.requireNonNull(provider);
             checkState(mProvider == null);
 
             if (D) {

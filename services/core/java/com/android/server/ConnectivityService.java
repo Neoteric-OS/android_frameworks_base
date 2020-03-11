@@ -934,7 +934,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
          * @see IpConnectivityMetrics.Logger
          */
         public IpConnectivityMetrics.Logger getMetricsLogger() {
-            return checkNotNull(LocalServices.getService(IpConnectivityMetrics.Logger.class),
+            return Objects.requireNonNull(LocalServices.getService(IpConnectivityMetrics.Logger.class),
                     "no IpConnectivityMetrics service");
         }
 
@@ -5561,7 +5561,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public void releasePendingNetworkRequest(PendingIntent operation) {
-        checkNotNull(operation, "PendingIntent cannot be null.");
+        Objects.requireNonNull(operation, "PendingIntent cannot be null.");
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_RELEASE_NETWORK_REQUEST_WITH_INTENT,
                 getCallingUid(), 0, operation));
     }
