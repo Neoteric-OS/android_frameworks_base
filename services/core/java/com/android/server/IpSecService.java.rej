@@ -1,0 +1,10 @@
+diff a/services/core/java/com/android/server/IpSecService.java b/services/core/java/com/android/server/IpSecService.java	(rejected hunks)
+@@ -1556,7 +1555,7 @@
+                     "IPsec Tunnel Mode requires PackageManager.FEATURE_IPSEC_TUNNELS");
+         }
+ 
+-        checkNotNull(callingPackage, "Null calling package cannot create IpSec tunnels");
++        Objects.requireNonNull(callingPackage, "Null calling package cannot create IpSec tunnels");
+         switch (getAppOpsManager().noteOp(TUNNEL_OP, Binder.getCallingUid(), callingPackage)) {
+             case AppOpsManager.MODE_DEFAULT:
+                 mContext.enforceCallingOrSelfPermission(

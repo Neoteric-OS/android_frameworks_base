@@ -1,0 +1,58 @@
+diff a/services/core/java/com/android/server/ConnectivityService.java b/services/core/java/com/android/server/ConnectivityService.java	(rejected hunks)
+@@ -47,8 +47,6 @@
+ import static android.system.OsConstants.IPPROTO_TCP;
+ import static android.system.OsConstants.IPPROTO_UDP;
+ 
+-import static com.android.internal.util.Preconditions.checkNotNull;
+-
+ import android.annotation.NonNull;
+ import android.annotation.Nullable;
+ import android.app.BroadcastOptions;
+@@ -933,7 +931,7 @@
+             IDnsResolver dnsresolver, IpConnectivityLog logger, INetd netd, Dependencies deps) {
+         if (DBG) log("ConnectivityService starting up");
+ 
+-        mDeps = checkNotNull(deps, "missing Dependencies");
++        mDeps = Objects.requireNonNull(deps, "missing Dependencies");
+         mSystemProperties = mDeps.getSystemProperties();
+         mNetIdManager = mDeps.makeNetIdManager();
+ 
+@@ -962,14 +960,14 @@
+ 
+         mLingerDelayMs = mSystemProperties.getInt(LINGER_DELAY_PROPERTY, DEFAULT_LINGER_DELAY_MS);
+ 
+-        mContext = checkNotNull(context, "missing Context");
+-        mNMS = checkNotNull(netManager, "missing INetworkManagementService");
+-        mStatsService = checkNotNull(statsService, "missing INetworkStatsService");
+-        mPolicyManager = checkNotNull(policyManager, "missing INetworkPolicyManager");
+-        mPolicyManagerInternal = checkNotNull(
++        mContext = Objects.requireNonNull(context, "missing Context");
++        mNMS = Objects.requireNonNull(netManager, "missing INetworkManagementService");
++        mStatsService = Objects.requireNonNull(statsService, "missing INetworkStatsService");
++        mPolicyManager = Objects.requireNonNull(policyManager, "missing INetworkPolicyManager");
++        mPolicyManagerInternal = Objects.requireNonNull(
+                 LocalServices.getService(NetworkPolicyManagerInternal.class),
+                 "missing NetworkPolicyManagerInternal");
+-        mDnsResolver = checkNotNull(dnsresolver, "missing IDnsResolver");
++        mDnsResolver = Objects.requireNonNull(dnsresolver, "missing IDnsResolver");
+         mProxyTracker = mDeps.makeProxyTracker(mContext, mHandler);
+ 
+         mNetd = netd;
+@@ -5195,7 +5193,7 @@
+     @Override
+     public NetworkRequest pendingRequestForNetwork(NetworkCapabilities networkCapabilities,
+             PendingIntent operation) {
+-        checkNotNull(operation, "PendingIntent cannot be null.");
++        Objects.requireNonNull(operation, "PendingIntent cannot be null.");
+         networkCapabilities = new NetworkCapabilities(networkCapabilities);
+         enforceNetworkRequestPermissions(networkCapabilities);
+         enforceMeteredApnPolicy(networkCapabilities);
+@@ -5280,7 +5278,7 @@
+     @Override
+     public void pendingListenForNetwork(NetworkCapabilities networkCapabilities,
+             PendingIntent operation) {
+-        checkNotNull(operation, "PendingIntent cannot be null.");
++        Objects.requireNonNull(operation, "PendingIntent cannot be null.");
+         if (!hasWifiNetworkListenPermission(networkCapabilities)) {
+             enforceAccessPermission();
+         }

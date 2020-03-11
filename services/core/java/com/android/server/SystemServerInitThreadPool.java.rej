@@ -1,0 +1,10 @@
+diff a/services/core/java/com/android/server/SystemServerInitThreadPool.java b/services/core/java/com/android/server/SystemServerInitThreadPool.java	(rejected hunks)
+@@ -73,7 +74,7 @@
+      */
+     public static @NonNull Future<?> submit(@NonNull Runnable runnable,
+             @NonNull String description) {
+-        Preconditions.checkNotNull(description, "description cannot be null");
++        Objects.requireNonNull(description, "description cannot be null");
+ 
+         SystemServerInitThreadPool instance;
+         synchronized (LOCK) {
