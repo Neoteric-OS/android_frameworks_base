@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "751ac5b3_1d0515ad",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-11T16:13:23Z",
+      "side": 1,
+      "message": "Hmm, parsing static client address here means we need to have global variable for TetheringRequest. But I don\u0027t prefer to have TetheringRequest variable in IpServer that IpServer maybe reused for same tethering type and also be possible to start without TetheringRequest for local only mode. Or probably back back to my first version ?\n\n        if (mStaticIpv4ServerAddr !\u003d null) {\n            if (mStaticIpv4ClientAddr !\u003d null) {\n                return configureDhcp(enabled, srvAddr, prefixLen, mStaticIpv4ClientAddr);\n            }\n\n            return true;\n        }\n\n        return configureDhcp(enabled, srvAddr, prefixLen, null);",
+      "parentUuid": "0005f055_cd866bad",
+      "range": {
+        "startLine": 628,
+        "startChar": 8,
+        "endLine": 629,
+        "endChar": 88
+      },
+      "revId": "84258d283697e8c5582af16cebdf08350161a896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "363a46ca_a389a922",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3907f4ab_372724e7",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-11T16:13:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "363a46ca_a389a922",
+      "range": {
+        "startLine": 952,
+        "startChar": 27,
+        "endLine": 952,
+        "endChar": 64
+      },
+      "revId": "84258d283697e8c5582af16cebdf08350161a896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fcf4185_ebe986ff",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "84258d283697e8c5582af16cebdf08350161a896",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3737845_6f01dcd4",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-11T16:13:23Z",
+      "side": 1,
+      "message": "Done as suggested",
+      "parentUuid": "1fcf4185_ebe986ff",
+      "range": {
+        "startLine": 959,
+        "startChar": 50,
+        "endLine": 959,
+        "endChar": 72
+      },
+      "revId": "84258d283697e8c5582af16cebdf08350161a896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
