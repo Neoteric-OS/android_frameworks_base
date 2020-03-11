@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31f27a20_8c1e4454",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-11T07:10:40Z",
+      "side": 1,
+      "message": "Nit: alternatively, I think\nByteArray(6) { FF_BYTE }\nwould work",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 81
+      },
+      "revId": "d32bee332d3850246f56517284e3bc18741bf43f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
