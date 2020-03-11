@@ -22,6 +22,30 @@
       "revId": "7cadca43f25b604bbf3fa77e71b9b3a80bf42bb2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e6415c_496c2e89",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-11T02:03:03Z",
+      "side": 0,
+      "message": "I have added review note. It is fine that mLinkProperties would be clear if fail.\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1243486/4/packages/Tethering/src/android/net/ip/IpServer.java#637",
+      "parentUuid": "37c44e0f_f9d65613",
+      "range": {
+        "startLine": 602,
+        "startChar": 0,
+        "endLine": 604,
+        "endChar": 9
+      },
+      "revId": "7cadca43f25b604bbf3fa77e71b9b3a80bf42bb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
