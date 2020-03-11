@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c0b7fd5_0ffb59ad",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2020-03-11T12:11:06Z",
+      "side": 1,
+      "message": "I think this should be initialed in aidl file.",
+      "parentUuid": "45b33169_e1323bc3",
+      "range": {
+        "startLine": 364,
+        "startChar": 8,
+        "endLine": 365,
+        "endChar": 93
+      },
+      "revId": "54b763cdb0190ee652520834deb16107379d2cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dae3b90b_cc5964be",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 13

@@ -227,6 +227,30 @@
     },
     {
       "key": {
+        "uuid": "5348d62c_b84b71ec",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2020-03-11T12:11:06Z",
+      "side": 1,
+      "message": "No, as I know give the parcelable member a default value is not supported.\n\n+smoreland@, Am I right? Or do we have any alternative way?",
+      "parentUuid": "a465dd26_f786023e",
+      "range": {
+        "startLine": 342,
+        "startChar": 21,
+        "endLine": 342,
+        "endChar": 40
+      },
+      "revId": "9bdee3329221ed22dc71f31d915aff903fcaacf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcd2ce98_375d6303",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 2
