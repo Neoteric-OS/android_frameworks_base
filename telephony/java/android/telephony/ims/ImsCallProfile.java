@@ -182,6 +182,14 @@ public final class ImsCallProfile implements Parcelable {
      *      {@link ImsCallProfile#DIALSTRING_USSD}
      */
     public static final String EXTRA_DIALSTRING = "dialstring";
+    // Holds the call fail cause because of which redial is attempted
+    /**@hide*/
+    public static final String EXTRA_RETRY_CALL_FAIL_REASON =
+            "android.telephony.ims.extra.RETRY_CALL_FAIL_REASON";
+    // Holds the call radiotech on which lower layers may try attempting redial
+    /**@hide*/
+    public static final String EXTRA_RETRY_CALL_FAIL_RADIOTECH =
+            "android.telephony.ims.extra.RETRY_CALL_FAIL_RADIOTECH";
 
     /**
      * Values for EXTRA_OIR / EXTRA_CNAP
