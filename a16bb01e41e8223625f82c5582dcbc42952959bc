@@ -45,6 +45,30 @@
       "revId": "a16bb01e41e8223625f82c5582dcbc42952959bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df2ae1f2_a44bcc92",
+        "filename": "telephony/java/android/telephony/ims/ImsCallProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-03-11T20:58:16Z",
+      "side": 1,
+      "message": "Should this should really be:\nEXTRA_RETRY_CALL_NETWORK_TYPE\nand map to the TelephonyManager#NETWORK_TYPE_* values.",
+      "parentUuid": "f579b6b4_113d5def",
+      "range": {
+        "startLine": 190,
+        "startChar": 66,
+        "endLine": 190,
+        "endChar": 88
+      },
+      "revId": "a16bb01e41e8223625f82c5582dcbc42952959bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
