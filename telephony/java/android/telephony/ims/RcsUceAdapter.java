@@ -31,7 +31,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.telephony.ims.aidl.IImsRcsController;
 import android.telephony.ims.aidl.IRcsUceControllerCallback;
-import android.telephony.ims.feature.RcsFeature;
+import android.telephony.ims.aidl.IRcsUcePublishStateCallback;
 import android.util.Log;
 
 import java.lang.annotation.Retention;
@@ -300,6 +300,56 @@ public class RcsUceAdapter {
     }
 
     /**
+     * A class which can be registered to get the publish state changed.
+     */
+    public static class UcePublishStateCallback {
+
+        private static class PublishStateBinder extends IRcsUcePublishStateCallback.Stub {
+
+            private final UcePublishStateCallback mLocalCallback;
+            private Executor mExecutor;
+
+            PublishStateBinder(UcePublishStateCallback c) {
+                mLocalCallback = c;
+            }
+
+            @Override
+            public void onPublishStateChanged(int publishState) {
+                if (mLocalCallback == null) return;
+
+                long callingIdentity = Binder.clearCallingIdentity();
+                try {
+                    mExecutor.execute(() -> mLocalCallback.onChanged(publishState));
+                } finally {
+                    restoreCallingIdentity(callingIdentity);
+                }
+            }
+
+            private void setExecutor(Executor executor) {
+                mExecutor = executor;
+            }
+        }
+
+        private final PublishStateBinder mBinder = new PublishStateBinder(this);
+
+        /**@hide*/
+        public final IRcsUcePublishStateCallback getBinder() {
+            return mBinder;
+        }
+
+        private void setExecutor(Executor executor) {
+            mBinder.setExecutor(executor);
+        }
+
+        /**
+         * The callback method if publish state has changed.
+         * @param publishState The latest changed of publish state.
+         */
+        public void onChanged(@PublishState int publishState) {
+        }
+    }
+
+    /**
      * Gets the last publish result from the UCE service if the device is using an RCS presence
      * server.
      * @return The last publish result from the UCE service. If the device is using SIP OPTIONS,
@@ -323,6 +373,61 @@ public class RcsUceAdapter {
             return imsRcsController.getUcePublishState(mSubId);
         } catch (RemoteException e) {
             Log.e(TAG, "Error calling IImsRcsController#getUcePublishState", e);
+            throw new ImsException("Remote IMS Service is not available",
+                    ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
+    }
+
+    /**
+     * Register receiever to listen to the publish state changed callback.
+     */
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public void registerUcePublishStateCallback(@NonNull @CallbackExecutor Executor executor,
+            @NonNull UcePublishStateCallback c) throws ImsException {
+        if (c == null) {
+            throw new IllegalArgumentException("Must include a non-null UcePublishStateCallback.");
+        }
+        if (executor == null) {
+            throw new IllegalArgumentException("Must include a non-null Executor.");
+        }
+
+        IImsRcsController imsRcsController = getIImsRcsController();
+        if (imsRcsController == null) {
+            Log.e(TAG, "registerUcePublishStateCallback: IImsRcsController is null");
+            throw new ImsException("Cannot find remote IMS service",
+                    ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
+
+        c.setExecutor(executor);
+        try {
+            imsRcsController.registerUcePublishStateCallback(mSubId, c.getBinder());
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling IImsRcsController#registerUcePublishStateCallback", e);
+            throw new ImsException("Remote IMS Service is not available",
+                    ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
+    }
+
+    /**
+     * Unregister the publish state changed callback
+     */
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public void unregisterUcePublishStateCallback(@NonNull UcePublishStateCallback c)
+            throws ImsException {
+        if (c == null) {
+            throw new IllegalArgumentException("Must include a non-null UcePublishStateCallback.");
+        }
+        IImsRcsController imsRcsController = getIImsRcsController();
+        if (imsRcsController == null) {
+            Log.e(TAG, "unregisterUcePublishStateCallback: IImsRcsController is null");
+            throw new ImsException("Cannot find remote IMS service",
+                    ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
+
+        try {
+            imsRcsController.unregisterUcePublishStateCallback(mSubId, c.getBinder());
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling IImsRcsController#unregisterUcePublishStateCallback", e);
             throw new ImsException("Remote IMS Service is not available",
                     ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
         }
