@@ -70,6 +70,30 @@
       "revId": "ccf29801e2cbd48842ea91194453e50ae14125a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910c705b_744e8996",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2020-03-12T23:56:16Z",
+      "side": 1,
+      "message": "Jack, I did not got you why ask if this thread can be killed. The handler thread is create when DataService is created and quit when DataService is destroyed. The new patch does not introduce more risk to kill the handler thread.\n\nI check QualifiedNetworksServiceImpl do follow the same design pattern. In theory, it can modify with same to save resource to create its own HandlerThread. But it seems QualifiedNetworksServiceImpl do not have race condition. And it is in QC\u0027s proprietary repo, I assume we can ignore it.\n\nFor Wifi call tested on Pixel 4, most probably I can borrow one h/w. Would you pls help to confirm is Wifi Call supported at all on aosp/master for Pixel4?",
+      "parentUuid": "a475aed9_3e27f717",
+      "range": {
+        "startLine": 449,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 70
+      },
+      "revId": "ccf29801e2cbd48842ea91194453e50ae14125a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
