@@ -16,6 +16,7 @@
 
 package com.android.networkstack.tethering;
 
+import android.app.usage.NetworkStatsManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.net.INetd;
@@ -39,6 +40,15 @@ import java.util.ArrayList;
  * @hide
  */
 public abstract class TetheringDependencies {
+    /**
+     * Get a reference to the BpfTetheringCoordinator to be used by tethering.
+     */
+    public @NonNull BpfTetheringCoordinator getBpfTetheringCoordinator(
+            @NonNull Handler handler, @NonNull INetd netd, @NonNull NetworkStatsManager nsm,
+            @NonNull SharedLog log) {
+        return new BpfTetheringCoordinator(handler, netd, nsm, log);
+    }
+
     /**
      * Get a reference to the offload hardware interface to be used by tethering.
      */
