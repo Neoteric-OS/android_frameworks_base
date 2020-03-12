@@ -568,6 +568,30 @@
       "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5d41d0_bfd2f9ef",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-12T03:48:10Z",
+      "side": 1,
+      "message": "I created 2 functions for compart string array and ResolverParamsParcel.\n\nprivate void assertContainsString (String[] actual, String... expected) {\n    String[] sortedActual \u003d Arrays.copyOf(actual, actual.length);\n    Arrays.sort(sortedActual);\n    Arrays.sort(expected);\n    assertArrayEquals(expected, sortedActual);\n}\n\nI omit some fields that with default values.\nprivate void assertResolverEqual (ResolverParamsParcel actual, ResolverParamsParcel expected) {\n    assertEquals(actual.netId, expected.netId);\n    assertContainsString(actual.tlsServers, expected.tlsServers);\n    assertContainsExactly(actual.transportTypes, expected.transportTypes);\n}",
+      "parentUuid": "282eaa69_6dc6dbed",
+      "range": {
+        "startLine": 280,
+        "startChar": 68,
+        "endLine": 280,
+        "endChar": 73
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

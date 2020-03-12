@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "23d38704_f4604f03",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-12T03:48:10Z",
+      "side": 1,
+      "message": "We assign transport types to  paramsParcel.transportTypes if we find it in hashmap.\nif (mTransportsMap.containsKey(netId)) {\n    paramsParcel.transportTypes \u003d mTransportsMap.get(netId);\n}\nOr  paramsParcel.transportTypes is initialed in aidl file.",
+      "parentUuid": "0c0b7fd5_0ffb59ad",
+      "range": {
+        "startLine": 364,
+        "startChar": 8,
+        "endLine": 365,
+        "endChar": 93
+      },
+      "revId": "54b763cdb0190ee652520834deb16107379d2cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dae3b90b_cc5964be",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 13
@@ -60,6 +84,30 @@
       "writtenOn": "2020-03-11T11:37:42Z",
       "side": 1,
       "message": "local variable should not have m- prefix.",
+      "range": {
+        "startLine": 288,
+        "startChar": 51,
+        "endLine": 288,
+        "endChar": 78
+      },
+      "revId": "54b763cdb0190ee652520834deb16107379d2cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43fea0ee_390818b1",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-12T03:48:10Z",
+      "side": 1,
+      "message": "modify mResolverParamsParcelCaptor to resolverParamsParcelCaptor.",
+      "parentUuid": "dae3b90b_cc5964be",
       "range": {
         "startLine": 288,
         "startChar": 51,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "88f1f176_6b6c5cf0",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-12T03:48:10Z",
+      "side": 1,
+      "message": "Changing resolvrParams to resolverParams.",
+      "parentUuid": "b1a2474b_f45308c5",
+      "range": {
+        "startLine": 292,
+        "startChar": 29,
+        "endLine": 292,
+        "endChar": 42
+      },
+      "revId": "54b763cdb0190ee652520834deb16107379d2cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc669ced_c7c7950f",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 13
@@ -106,6 +178,30 @@
       "writtenOn": "2020-03-11T11:37:42Z",
       "side": 1,
       "message": "IIUC you can use assertContainsExactly?",
+      "range": {
+        "startLine": 304,
+        "startChar": 8,
+        "endLine": 304,
+        "endChar": 41
+      },
+      "revId": "54b763cdb0190ee652520834deb16107379d2cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5be73a_3575a08a",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-12T03:48:10Z",
+      "side": 1,
+      "message": "It seems we can\u0027t use this one becuase of the type. \nfun assertContainsExactly(actual: IntArray, vararg expected: Int) {\n    // IntArray#sorted() returns a list, so it\u0027s fine to test with equals()\n    assertEquals(actual.sorted(), expected.sorted(),\n            \"${actual} does not contain exactly ${expected}\")\n}\n\nI add a function for it.\n\n    private void assertContainsString (String[] actual, String... expected) {\n        String[] sortedActual \u003d Arrays.copyOf(actual, actual.length);\n        Arrays.sort(sortedActual);\n        Arrays.sort(expected);\n        assertArrayEquals(expected, sortedActual);\n    }",
+      "parentUuid": "fc669ced_c7c7950f",
       "range": {
         "startLine": 304,
         "startChar": 8,

@@ -357,6 +357,30 @@
     },
     {
       "key": {
+        "uuid": "fc8a7f56_685b545c",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-12T03:48:10Z",
+      "side": 1,
+      "message": "Transport types needs to be updated in two places. One is that when creating a Native Network, the other is that when transport types changed. After that, resolver can keep the transport types in the given network. Both places are call updateTransportsForNetwork() first and then setDnsConfigurationForNetwork().\n1. When creating a Native Network, createNativeNetwork() calls updateTransportsForNetwork() and then updateLinkProperties() will call updateDnses() which calls setDnsConfigurationForNetwork().\n2. When transport types changed, we add updateTransportsForNetwork() to updateCapabilities() but it\u0027s not enough. Because in updateCapabilities(), tranport types won\u0027t be notified to  resolver. Therefore, we also add setDnsConfigurationForNetwork() to updateCapabilities() when transport types changed.",
+      "parentUuid": "cff9b763_a32e72a1",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 5
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3404244b_efebe527",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 12
