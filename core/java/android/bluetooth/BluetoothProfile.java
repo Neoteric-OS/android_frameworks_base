@@ -143,18 +143,12 @@ public interface BluetoothProfile {
 
     /**
      * A2DP Sink Profile
-     *
-     * @hide
      */
-    @SystemApi
     int A2DP_SINK = 11;
 
     /**
      * AVRCP Controller Profile
-     *
-     * @hide
      */
-    @SystemApi
     int AVRCP_CONTROLLER = 12;
 
     /**
@@ -166,18 +160,12 @@ public interface BluetoothProfile {
 
     /**
      * Headset Client - HFP HF Role
-     *
-     * @hide
      */
-    @SystemApi
     int HEADSET_CLIENT = 16;
 
     /**
      * PBAP Client
-     *
-     * @hide
      */
-    @SystemApi
     int PBAP_CLIENT = 17;
 
     /**
