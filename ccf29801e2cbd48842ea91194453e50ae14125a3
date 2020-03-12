@@ -46,6 +46,30 @@
       "revId": "ccf29801e2cbd48842ea91194453e50ae14125a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a475aed9_3e27f717",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-03-12T22:22:54Z",
+      "side": 1,
+      "message": "and BTW, QualifiedNetworksService copied/pasted from this file. thanks",
+      "parentUuid": "a0b15fb3_6ab420d9",
+      "range": {
+        "startLine": 449,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 70
+      },
+      "revId": "ccf29801e2cbd48842ea91194453e50ae14125a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
