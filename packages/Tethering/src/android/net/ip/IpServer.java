@@ -64,6 +64,7 @@ import androidx.annotation.NonNull;
 import com.android.internal.util.MessageUtils;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.networkstack.tethering.BpfTetherStatsProvider;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -220,6 +221,7 @@ public class IpServer extends StateMachine {
 
     private final SharedLog mLog;
     private final INetd mNetd;
+    private final BpfTetherStatsProvider mBpfTetherStatsProvider;
     private final Callback mCallback;
     private final InterfaceController mInterfaceCtrl;
 
@@ -303,11 +305,13 @@ public class IpServer extends StateMachine {
     private final IpNeighborMonitor mIpNeighborMonitor;
 
     public IpServer(
-            String ifaceName, Looper looper, int interfaceType, SharedLog log,
-            INetd netd, Callback callback, boolean usingLegacyDhcp, Dependencies deps) {
+            String ifaceName, Looper looper, int interfaceType, SharedLog log, INetd netd,
+            BpfTetherStatsProvider provider, Callback callback, boolean usingLegacyDhcp,
+            Dependencies deps) {
         super(ifaceName, looper);
         mLog = log.forSubComponent(ifaceName);
         mNetd = netd;
+        mBpfTetherStatsProvider = provider;
         mCallback = callback;
         mInterfaceCtrl = new InterfaceController(ifaceName, mNetd, mLog);
         mIfaceName = ifaceName;
@@ -885,14 +889,33 @@ public class IpServer extends StateMachine {
         // If we no longer have an upstream, clear forwarding rules and do nothing else.
         if (upstreamIfindex == 0) {
             clearIpv6ForwardingRules();
+
+            // Release previous upstream after all relevant forwarding rules are removed.
+            if (mBpfTetherStatsProvider != null) {
+                if (prevUpstreamIfindex != 0) {
+                    mBpfTetherStatsProvider.releaseUpstream(prevUpstreamIfindex);
+                }
+            }
             return;
         }
 
         // If the upstream interface has changed, remove all rules and re-add them with the new
         // upstream interface.
         if (prevUpstreamIfindex != upstreamIfindex) {
+            // Setup new upstream before adding forwarding rules on.
+            if (mBpfTetherStatsProvider != null) {
+                mBpfTetherStatsProvider.setupUpstream(upstreamIfindex);
+            }
+
             for (Ipv6ForwardingRule rule : mIpv6ForwardingRules.values()) {
                 updateIpv6ForwardingRule(rule, upstreamIfindex);
+            }
+
+            // Release previous upstream after all relevant forwarding rules are removed.
+            if (mBpfTetherStatsProvider != null) {
+                if (prevUpstreamIfindex != 0) {
+                    mBpfTetherStatsProvider.releaseUpstream(prevUpstreamIfindex);
+                }
             }
         }
 

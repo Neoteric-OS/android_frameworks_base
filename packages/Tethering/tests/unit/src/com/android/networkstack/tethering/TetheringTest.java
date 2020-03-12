@@ -194,6 +194,7 @@ public class TetheringTest {
     @Mock private ConnectivityManager mCm;
     @Mock private EthernetManager mEm;
     @Mock private TetheringNotificationUpdater mNotificationUpdater;
+    @Mock private BpfTetherStatsProvider mBpfTetherStatsProvider;
 
     private final MockIpServerDependencies mIpServerDependencies =
             spy(new MockIpServerDependencies());
@@ -320,6 +321,12 @@ public class TetheringTest {
         public void reset() {
             mUpstreamNetworkMonitorMasterSM = null;
             mIpv6CoordinatorNotifyList = null;
+        }
+
+        @Override
+        public BpfTetherStatsProvider getBpfTetherStatsProvider(Handler handler, INetd netd,
+                SharedLog log) {
+            return mBpfTetherStatsProvider;
         }
 
         @Override
@@ -500,7 +507,8 @@ public class TetheringTest {
                 new IntentFilter(ACTION_TETHER_STATE_CHANGED));
         mTethering = makeTethering();
         mTethering.startStateMachineUpdaters();
-        verify(mStatsManager, times(1)).registerNetworkStatsProvider(anyString(), any());
+        // Hardware offload and BPF offload are registered as network stats provider.
+        verify(mStatsManager, times(2)).registerNetworkStatsProvider(anyString(), any());
         verify(mNetd).registerUnsolicitedEventListener(any());
         final ArgumentCaptor<PhoneStateListener> phoneListenerCaptor =
                 ArgumentCaptor.forClass(PhoneStateListener.class);

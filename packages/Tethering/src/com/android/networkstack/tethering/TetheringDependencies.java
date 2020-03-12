@@ -40,6 +40,14 @@ import java.util.ArrayList;
  */
 public abstract class TetheringDependencies {
     /**
+     * Get a reference to the BpfOffloadStatsProvider to be used by tethering.
+     */
+    public @NonNull BpfTetherStatsProvider getBpfTetherStatsProvider(
+            @NonNull Handler handler, @NonNull INetd netd, @NonNull SharedLog log) {
+        return new BpfTetherStatsProvider(handler, netd, log);
+    }
+
+    /**
      * Get a reference to the offload hardware interface to be used by tethering.
      */
     public OffloadHardwareInterface getOffloadHardwareInterface(Handler h, SharedLog log) {
