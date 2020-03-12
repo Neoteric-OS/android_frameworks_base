@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e486c2fc_0e2371a7",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-12T08:47:24Z",
+      "side": 1,
+      "message": "Not for this CL, but it feels like USB and NCM should be treated independently; in particular what if you get:\n - One callback where USB is enabled and NCM disabled\n - Then one callback where USB is disabled and NCM is enabled\n\nWould that work ? Or would we miss enabling NCM and only enable USB ?\n\nAlso why do we know why we need mRndisEnabled ? And why not mNcmEnabled ?\n\nMaybe file a bug for this or something ?",
+      "range": {
+        "startLine": 894,
+        "startChar": 16,
+        "endLine": 903,
+        "endChar": 17
+      },
+      "revId": "0bf267dbbf407b710ca60bbb99ebe747af0dedb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
