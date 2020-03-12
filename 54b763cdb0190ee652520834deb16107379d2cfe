@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "3ea05859_28cbd896",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-12T04:43:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43fea0ee_390818b1",
+      "range": {
+        "startLine": 288,
+        "startChar": 51,
+        "endLine": 288,
+        "endChar": 78
+      },
+      "revId": "54b763cdb0190ee652520834deb16107379d2cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1a2474b_f45308c5",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 13
@@ -167,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "95e6a3fb_cd141443",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-12T04:43:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88f1f176_6b6c5cf0",
+      "range": {
+        "startLine": 292,
+        "startChar": 29,
+        "endLine": 292,
+        "endChar": 42
+      },
+      "revId": "54b763cdb0190ee652520834deb16107379d2cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc669ced_c7c7950f",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 13
@@ -211,6 +259,30 @@
       "revId": "54b763cdb0190ee652520834deb16107379d2cfe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab481df_9292ac9e",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-12T04:43:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a5be73a_3575a08a",
+      "range": {
+        "startLine": 304,
+        "startChar": 8,
+        "endLine": 304,
+        "endChar": 41
+      },
+      "revId": "54b763cdb0190ee652520834deb16107379d2cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

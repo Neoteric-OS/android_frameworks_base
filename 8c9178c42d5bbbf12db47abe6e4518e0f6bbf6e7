@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2a223475_44b52083",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6011,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-12T04:43:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "446bd70a_29e642c1",
+      "range": {
+        "startLine": 6011,
+        "startChar": 30,
+        "endLine": 6011,
+        "endChar": 38
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbaa61b7_989f3c90",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 11
@@ -583,6 +607,30 @@
       "side": 1,
       "message": "I created 2 functions for compart string array and ResolverParamsParcel.\n\nprivate void assertContainsString (String[] actual, String... expected) {\n    String[] sortedActual \u003d Arrays.copyOf(actual, actual.length);\n    Arrays.sort(sortedActual);\n    Arrays.sort(expected);\n    assertArrayEquals(expected, sortedActual);\n}\n\nI omit some fields that with default values.\nprivate void assertResolverEqual (ResolverParamsParcel actual, ResolverParamsParcel expected) {\n    assertEquals(actual.netId, expected.netId);\n    assertContainsString(actual.tlsServers, expected.tlsServers);\n    assertContainsExactly(actual.transportTypes, expected.transportTypes);\n}",
       "parentUuid": "282eaa69_6dc6dbed",
+      "range": {
+        "startLine": 280,
+        "startChar": 68,
+        "endLine": 280,
+        "endChar": 73
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "434e4c52_185fe905",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-12T04:43:53Z",
+      "side": 1,
+      "message": "You can omit the assignments that with default values.\nBut for assertion function it needs to test all fields.",
+      "parentUuid": "2f5d41d0_bfd2f9ef",
       "range": {
         "startLine": 280,
         "startChar": 68,

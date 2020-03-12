@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0d021b1_b890b2fd",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-12T04:43:53Z",
+      "side": 1,
+      "message": "IIUC put() replaces what exists.\nHence remove is not needed.",
+      "range": {
+        "startLine": 321,
+        "startChar": 12,
+        "endLine": 323,
+        "endChar": 13
+      },
+      "revId": "8f0e7a69efd02463ccf10bdfbe9dd34f6d8b9edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b831cc0_fbac61d6",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-12T04:43:53Z",
+      "side": 1,
+      "message": "1. assertContainsStringsExactly ? given that the expected is a array of string which is exactly matched.\n2. Consider move this to MiscAsserts.kt\n3. Please add Nullable or NonNull annotations.",
+      "range": {
+        "startLine": 88,
+        "startChar": 17,
+        "endLine": 88,
+        "endChar": 37
+      },
+      "revId": "8f0e7a69efd02463ccf10bdfbe9dd34f6d8b9edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f4a3ef_343ce8dc",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-12T04:43:53Z",
+      "side": 1,
+      "message": "one blank line before this?",
+      "revId": "8f0e7a69efd02463ccf10bdfbe9dd34f6d8b9edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa29ee5_d1fb0e5f",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-12T04:43:53Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 14
+      },
+      "revId": "8f0e7a69efd02463ccf10bdfbe9dd34f6d8b9edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82d31b39_97838ef0",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-12T04:43:53Z",
+      "side": 1,
+      "message": "IIUC this only compares object reference. Hence it is not useful for string.\nIIUC you need to use TextUtils.isEqual() with loop",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 25
+      },
+      "revId": "8f0e7a69efd02463ccf10bdfbe9dd34f6d8b9edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70483525_e197f10c",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-12T04:43:53Z",
+      "side": 1,
+      "message": "1. This does not actually compares resolver.\nIIUC it needs to be assertResovlerParams(Parcel)Equal or something.\n2. Please add Nullable or NonNull annotations.\n3. IIUC you need to test all fields.",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 36
+      },
+      "revId": "8f0e7a69efd02463ccf10bdfbe9dd34f6d8b9edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
