@@ -27,6 +27,13 @@ import static android.net.ConnectivityManager.ACTION_RESTRICT_BACKGROUND_CHANGED
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.EXTRA_NETWORK_INFO;
 import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
+import static android.net.NetworkStats.DEFAULT_NETWORK_NO;
+import static android.net.NetworkStats.METERED_NO;
+import static android.net.NetworkStats.ROAMING_NO;
+import static android.net.NetworkStats.SET_DEFAULT;
+import static android.net.NetworkStats.TAG_NONE;
+import static android.net.NetworkStats.UID_ALL;
+import static android.net.NetworkStats.UID_TETHERING;
 import static android.net.TetheringManager.ACTION_TETHER_STATE_CHANGED;
 import static android.net.TetheringManager.EXTRA_ACTIVE_LOCAL_ONLY;
 import static android.net.TetheringManager.EXTRA_ACTIVE_TETHER;
@@ -81,12 +88,16 @@ import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkInfo;
+import android.net.NetworkStats;
+import android.net.NetworkStats.Entry;
 import android.net.TetherStatesParcel;
+import android.net.TetherStatsParcel;
 import android.net.TetheredClient;
 import android.net.TetheringCallbackStartedParcel;
 import android.net.TetheringConfigurationParcel;
 import android.net.TetheringRequestParcel;
 import android.net.ip.IpServer;
+import android.net.netstats.provider.AbstractNetworkStatsProvider;
 import android.net.shared.NetdUtils;
 import android.net.util.BaseNetdUnsolicitedEventListener;
 import android.net.util.InterfaceSet;
@@ -133,10 +144,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
 
@@ -221,6 +235,7 @@ public class Tethering {
     private final ConnectedClientsTracker mConnectedClientsTracker;
     private final TetheringThreadExecutor mExecutor;
     private final TetheringNotificationUpdater mNotificationUpdater;
+    private final @NonNull BpfOffloadTetheringStatsProvider mBpfStatsProvider;
     private int mActiveDataSubId = INVALID_SUBSCRIPTION_ID;
     // All the usage of mTetheringEventCallback should run in the same thread.
     private ITetheringEventCallback mTetheringEventCallback = null;
@@ -269,6 +284,8 @@ public class Tethering {
         mUpstreamNetworkMonitor = mDeps.getUpstreamNetworkMonitor(mContext, mTetherMasterSM, mLog,
                 TetherMasterSM.EVENT_UPSTREAM_CALLBACK);
         mForwardedDownstreams = new LinkedHashSet<>();
+        mBpfStatsProvider = new BpfOffloadTetheringStatsProvider();
+        mBpfStatsProvider.setAlert(0);  // debug for starting update thread, TODO: remove
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_CARRIER_CONFIG_CHANGED);
@@ -659,6 +676,7 @@ public class Tethering {
     }
 
     private int tether(String iface, int requestedState) {
+        Log.e(TAG, "Tethering: " + iface);   // debug, remove
         if (DBG) Log.d(TAG, "Tethering " + iface);
         synchronized (mPublicSync) {
             TetherState tetherState = mTetherStates.get(iface);
@@ -1881,6 +1899,196 @@ public class Tethering {
                 mOffloadStatus = newStatus;
                 reportOffloadStatusChanged(mOffloadStatus);
             }
+        }
+    }
+
+    @VisibleForTesting
+    class BpfOffloadTetheringStatsProvider extends AbstractNetworkStatsProvider {
+        private class BpfTetherStats {
+            public long rxBytes = 0;
+            public long rxPackets = 0;
+            public long txBytes = 0;
+            public long txPackets = 0;
+
+            BpfTetherStats(long rxBytes, long rxPackets, long txBytes, long txPackets) {
+                this.rxBytes = rxBytes;
+                this.rxPackets = rxPackets;
+                this.txBytes = txBytes;
+                this.txPackets = txPackets;
+            }
+
+            public BpfTetherStats subtract(BpfTetherStats other) {
+                final long rxBytesDiff = Math.max(rxBytes - other.rxBytes, 0);
+                final long rxPacketsDiff = Math.max(rxPackets - other.rxPackets, 0);
+                final long txBytesDiff = Math.max(txBytes - other.txBytes, 0);
+                final long txPacketsDiff = Math.max(txPackets - other.txPackets, 0);
+                return new BpfTetherStats(rxBytesDiff, rxPacketsDiff, txBytesDiff, txPacketsDiff);
+            }
+        }
+
+        private static final boolean STATS_PER_IFACE = false;
+        private static final boolean STATS_PER_UID = true;
+        private static final int DEFAULT_PERFORM_POLL_DELAY_MS = 2000;
+
+        private ConcurrentHashMap<String, BpfTetherStats> mBpfTetherStats =
+                new ConcurrentHashMap<>(0, 0.75F, 1);
+        private NetworkStats mIfaceStats = new NetworkStats(0L, 0);
+        private NetworkStats mUidStats = new NetworkStats(0L, 0);
+        private HashMap<String, Long> mInterfaceQuotas = new HashMap<>();
+        private long mRemainingAlertQuota = AbstractNetworkStatsProvider.QUOTA_UNLIMITED;
+        private final Runnable mSchedulePollingTask = () -> {
+            updateTetherStats();
+            maybeSchedulePollingStats();
+        };
+
+        private boolean maybeUpdateDataLimit(String iface) {
+            // TODO: check if offload is occurring on this upstream.
+
+            Long limit = mInterfaceQuotas.get(iface);
+            if (limit == null) {
+                limit = Long.MAX_VALUE;
+            }
+
+            // TODO: set data limit to netd.
+            return true;
+        }
+
+        private void updateAlertQuota(long newQuota) {
+            mLog.w("updateTetherStats:" + newQuota);
+
+            if (newQuota < AbstractNetworkStatsProvider.QUOTA_UNLIMITED) {
+                throw new IllegalArgumentException("invalid quota value " + newQuota);
+            }
+            if (mRemainingAlertQuota == newQuota) return;
+
+            mRemainingAlertQuota = newQuota;
+            if (mRemainingAlertQuota == 0) {
+                mLog.i("onAlertReached");
+                // TODO: notify service
+            }
+        }
+
+        NetworkStats getTetherStats(boolean how) {
+            mLog.w("getTetherStats");
+
+            NetworkStats stats = new NetworkStats(0L, 0);
+            final int uid = (how == STATS_PER_UID) ? UID_TETHERING : UID_ALL;
+
+            for (final Map.Entry<String, BpfTetherStats> kv : mBpfTetherStats.entrySet()) {
+                final BpfTetherStats value = kv.getValue();
+                final Entry entry = new Entry(kv.getKey(), uid, SET_DEFAULT, TAG_NONE, METERED_NO,
+                        ROAMING_NO, DEFAULT_NETWORK_NO, value.rxBytes, 0L, value.txBytes, 0L, 0L);
+                stats = stats.addValues(entry);
+            }
+
+            return stats;
+        }
+
+        public void pushTetherStats() {
+            mLog.w("pushTetherStats");
+
+            final NetworkStats ifaceDiff =
+                    getTetherStats(STATS_PER_IFACE).subtract(mIfaceStats);
+            final NetworkStats uidDiff =
+                    getTetherStats(STATS_PER_UID).subtract(mUidStats);
+            try {
+                // TODO: push stats to service.
+                mIfaceStats = mIfaceStats.add(ifaceDiff);
+                mUidStats = mUidStats.add(uidDiff);
+            } catch (RuntimeException e) {
+                mLog.e("Cannot report network stats: ", e);
+            }
+        }
+
+        private void updateTetherStats() {
+            mLog.w("updateTetherStats");
+
+            final TetherStatsParcel[] tetherStatsVec;
+            try {
+                tetherStatsVec = mNetd.tetherGetStats();  // TODO: use tetherGetStatsBpf
+            } catch (RemoteException | ServiceSpecificException e) {
+                mLog.e("problem parsing tethering stats");
+                throw new IllegalStateException("problem parsing tethering stats: ", e);
+            }
+
+            long usedAlertQuota = 0;
+            for (TetherStatsParcel tetherStats : tetherStatsVec) {
+                try {
+                    BpfTetherStats curr = new BpfTetherStats(tetherStats.rxBytes,
+                            tetherStats.rxPackets, tetherStats.txBytes, tetherStats.txPackets);
+
+                    BpfTetherStats base = mBpfTetherStats.get(tetherStats.iface);
+                    if (base != null) {
+                        mLog.w("found: " + tetherStats.iface);
+                        BpfTetherStats diff = curr.subtract(base);
+                        usedAlertQuota += diff.rxBytes;
+                        usedAlertQuota += diff.txBytes;
+                    } else {
+                        mLog.w("not found: " + tetherStats.iface);
+                        usedAlertQuota += curr.rxBytes;
+                        usedAlertQuota += curr.txBytes;
+                    }
+                    mBpfTetherStats.put(tetherStats.iface, curr);
+                    mLog.w("tetherStats.iface: " + tetherStats.iface);
+                    mLog.w("tetherStats.rxBytes: " + tetherStats.rxBytes);
+                    mLog.w("tetherStats.rxPackets: " + tetherStats.rxPackets);
+                    mLog.w("tetherStats.txBytes: " + tetherStats.txBytes);
+                    mLog.w("tetherStats.txPackets: " + tetherStats.txPackets);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    throw new IllegalStateException("invalid tethering stats " + e);
+                }
+            }
+
+            if (mRemainingAlertQuota > 0 && usedAlertQuota > 0) {
+                // Trim to zero if overshoot.
+                final long newQuota = Math.max(mRemainingAlertQuota - usedAlertQuota, 0);
+                updateAlertQuota(newQuota);
+            }
+        }
+
+        private void maybeSchedulePollingStats() {
+            // TODO: check if need to stop
+
+            mLog.w("maybeSchedulePollingStats");
+            if (mHandler.hasCallbacks(mSchedulePollingTask)) {
+                mHandler.removeCallbacks(mSchedulePollingTask);
+            }
+            mHandler.postDelayed(mSchedulePollingTask, DEFAULT_PERFORM_POLL_DELAY_MS);
+        }
+
+        @Override
+        public void requestStatsUpdate(int token) {
+            mHandler.post(() -> {
+                pushTetherStats();
+            });
+        }
+
+        @Override
+        public void setAlert(long quotaBytes) {
+            mLog.w("setAlert");
+
+            mHandler.post(() -> {
+                updateAlertQuota(quotaBytes);
+                maybeSchedulePollingStats();
+            });
+        }
+
+        @Override
+        public void setLimit(String iface, long quotaBytes) {
+            mLog.w("setLimits");
+
+            mHandler.post(() -> {
+                final Long curIfaceQuota = mInterfaceQuotas.get(iface);
+
+                if (null == curIfaceQuota && QUOTA_UNLIMITED == quotaBytes) return;
+
+                if (quotaBytes == QUOTA_UNLIMITED) {
+                    mInterfaceQuotas.remove(iface);
+                } else {
+                    mInterfaceQuotas.put(iface, quotaBytes);
+                }
+                maybeUpdateDataLimit(iface);
+            });
         }
     }
 
