@@ -212,6 +212,8 @@ public class Tethering {
     private final BroadcastReceiver mStateReceiver;
     private final Looper mLooper;
     private final StateMachine mTetherMasterSM;
+    // TODO: Naming OffloadController more accurately because it controls hardware offload only and
+    // the BPF offload is controlled by class BpfTetherStatsProvider.
     private final OffloadController mOffloadController;
     private final UpstreamNetworkMonitor mUpstreamNetworkMonitor;
     // TODO: Figure out how to merge this and other downstream-tracking objects
@@ -229,6 +231,8 @@ public class Tethering {
     private final ConnectedClientsTracker mConnectedClientsTracker;
     private final TetheringThreadExecutor mExecutor;
     private final TetheringNotificationUpdater mNotificationUpdater;
+    @Nullable
+    private final BpfTetherStatsProvider mBpfStatsProvider;
     private int mActiveDataSubId = INVALID_SUBSCRIPTION_ID;
     // All the usage of mTetheringEventCallback should run in the same thread.
     private ITetheringEventCallback mTetheringEventCallback = null;
@@ -277,6 +281,15 @@ public class Tethering {
         mUpstreamNetworkMonitor = mDeps.getUpstreamNetworkMonitor(mContext, mTetherMasterSM, mLog,
                 TetherMasterSM.EVENT_UPSTREAM_CALLBACK);
         mForwardedDownstreams = new LinkedHashSet<>();
+        BpfTetherStatsProvider bpfProvider = mDeps.getBpfTetherStatsProvider(
+                mHandler, mNetd, mLog);
+        try {
+            statsManager.registerNetworkStatsProvider(getClass().getSimpleName(), bpfProvider);
+        } catch (RuntimeException e) {
+            Log.wtf(TAG, "Cannot register bpf offload stats provider: " + e);
+            bpfProvider = null;
+        }
+        mBpfStatsProvider = bpfProvider;
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_CARRIER_CONFIG_CHANGED);
@@ -1541,6 +1554,9 @@ public class Tethering {
         }
 
         protected void handleNewUpstreamNetworkState(UpstreamNetworkState ns) {
+            if (mBpfStatsProvider != null) {
+                mBpfStatsProvider.updateUpstreamNetworkState(ns);
+            }
             mIPv6TetheringCoordinator.updateUpstreamNetworkState(ns);
             mOffload.updateUpstreamNetworkState(ns);
         }
@@ -1668,6 +1684,11 @@ public class Tethering {
                     chooseUpstreamType(true);
                     mTryCell = false;
                 }
+
+                // TODO: Check the upstream interface if it is managed by BPF offload.
+                if (mBpfStatsProvider != null) {
+                    mBpfStatsProvider.start();
+                }
             }
 
             @Override
@@ -1679,6 +1700,9 @@ public class Tethering {
                 if (mTetherUpstream != null) {
                     mTetherUpstream = null;
                     reportUpstreamChanged(null);
+                }
+                if (mBpfStatsProvider != null) {
+                    mBpfStatsProvider.stop();
                 }
             }
 
@@ -2159,6 +2183,16 @@ public class Tethering {
         mOffloadController.dump(pw);
         pw.decreaseIndent();
 
+        pw.println("BPF offload:");
+        pw.increaseIndent();
+        // TODO: Dump the BPF offload device config once it is added.
+        if (mBpfStatsProvider != null) {
+            mBpfStatsProvider.dump(pw);
+        } else {
+            pw.println("<not registered>");
+        }
+        pw.decreaseIndent();
+
         pw.println("Log:");
         pw.increaseIndent();
         if (argsContain(args, "--short")) {
@@ -2281,7 +2315,7 @@ public class Tethering {
 
         mLog.log("adding TetheringInterfaceStateMachine for: " + iface);
         final TetherState tetherState = new TetherState(
-                new IpServer(iface, mLooper, interfaceType, mLog, mNetd,
+                new IpServer(iface, mLooper, interfaceType, mLog, mNetd, mBpfStatsProvider,
                              makeControlCallback(), mConfig.enableLegacyDhcpServer,
                              mDeps.getIpServerDependencies()));
         mTetherStates.put(iface, tetherState);
