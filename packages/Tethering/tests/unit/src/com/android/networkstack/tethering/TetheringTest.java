@@ -199,6 +199,7 @@ public class TetheringTest {
     @Mock private ConnectivityManager mCm;
     @Mock private EthernetManager mEm;
     @Mock private TetheringNotificationUpdater mNotificationUpdater;
+    @Mock private BpfCoordinator mBpfCoordinator;
 
     private final MockIpServerDependencies mIpServerDependencies =
             spy(new MockIpServerDependencies());
@@ -329,6 +330,12 @@ public class TetheringTest {
         public void reset() {
             mUpstreamNetworkMonitorMasterSM = null;
             mIpv6CoordinatorNotifyList = null;
+        }
+
+        @Override
+        public BpfCoordinator getBpfCoordinator(Handler handler, INetd netd,
+                SharedLog log, BpfCoordinator.Dependencies deps) {
+            return mBpfCoordinator;
         }
 
         @Override
