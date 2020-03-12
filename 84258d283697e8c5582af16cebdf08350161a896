@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3dbe9b96_1ada7180",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-12T08:56:32Z",
+      "side": 1,
+      "message": "Sorry the code snippet I pasted above was referring to add the check in maybeConfigureStaticIp, not do the parsing here. I think you implemented it there in the end.\n\nI think I was confused with the line here, LGTM",
+      "parentUuid": "751ac5b3_1d0515ad",
+      "range": {
+        "startLine": 628,
+        "startChar": 8,
+        "endLine": 629,
+        "endChar": 88
+      },
+      "revId": "84258d283697e8c5582af16cebdf08350161a896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "363a46ca_a389a922",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 7
