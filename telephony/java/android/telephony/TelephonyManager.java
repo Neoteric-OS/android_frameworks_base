@@ -70,9 +70,7 @@ import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.telephony.Annotation.ApnType;
-import android.telephony.Annotation.CallForwardingReason;
 import android.telephony.Annotation.CallState;
-import android.telephony.Annotation.CallWaitingStatus;
 import android.telephony.Annotation.NetworkType;
 import android.telephony.Annotation.RadioPowerState;
 import android.telephony.Annotation.SimActivationState;
@@ -12640,10 +12638,9 @@ public class TelephonyManager {
      *
      * @hide
      */
-    @SystemApi
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @NonNull
-    public CallForwardingInfo getCallForwarding(@CallForwardingReason int callForwardingReason) {
+    public CallForwardingInfo getCallForwarding(int callForwardingReason) {
         if (callForwardingReason < CallForwardingInfo.REASON_UNCONDITIONAL
                 || callForwardingReason > CallForwardingInfo.REASON_ALL_CONDITIONAL) {
             throw new IllegalArgumentException("callForwardingReason is out of range");
@@ -12687,7 +12684,6 @@ public class TelephonyManager {
      *
      * @hide
      */
-    @SystemApi
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     public boolean setCallForwarding(@NonNull CallForwardingInfo callForwardingInfo) {
         if (callForwardingInfo == null) {
@@ -12728,7 +12724,6 @@ public class TelephonyManager {
      *
      * @hide
      */
-    @SystemApi
     public static final int CALL_WAITING_STATUS_ACTIVE = 1;
 
     /**
@@ -12736,7 +12731,6 @@ public class TelephonyManager {
      *
      * @hide
      */
-    @SystemApi
     public static final int CALL_WAITING_STATUS_INACTIVE = 2;
 
     /**
@@ -12744,7 +12738,6 @@ public class TelephonyManager {
      *
      * @hide
      */
-    @SystemApi
     public static final int CALL_WAITING_STATUS_UNKNOWN_ERROR = 3;
 
     /**
@@ -12752,7 +12745,6 @@ public class TelephonyManager {
      *
      * @hide
      */
-    @SystemApi
     public static final int CALL_WAITING_STATUS_NOT_SUPPORTED = 4;
 
     /**
@@ -12763,9 +12755,8 @@ public class TelephonyManager {
      * @return the status of call waiting function.
      * @hide
      */
-    @SystemApi
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    public @CallWaitingStatus int getCallWaitingStatus() {
+    public int getCallWaitingStatus() {
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
@@ -12789,7 +12780,6 @@ public class TelephonyManager {
      *
      * @hide
      */
-    @SystemApi
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     public boolean setCallWaitingStatus(boolean isEnable) {
         try {
