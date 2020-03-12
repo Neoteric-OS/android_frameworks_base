@@ -98,6 +98,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.RouteInfo;
 import android.net.TetherStatesParcel;
+import android.net.TetherStatsParcel;
 import android.net.TetheredClient;
 import android.net.TetheringCallbackStartedParcel;
 import android.net.TetheringConfigurationParcel;
@@ -111,6 +112,7 @@ import android.net.ip.RouterAdvertisementDaemon;
 import android.net.util.InterfaceParams;
 import android.net.util.NetworkConstants;
 import android.net.util.SharedLog;
+import android.net.util.TetheringUtils.ForwardedStats;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pGroup;
@@ -177,7 +179,7 @@ public class TetheringTest {
     @Mock private Context mContext;
     @Mock private NetworkStatsManager mStatsManager;
     @Mock private OffloadHardwareInterface mOffloadHardwareInterface;
-    @Mock private OffloadHardwareInterface.ForwardedStats mForwardedStats;
+    @Mock private ForwardedStats mForwardedStats;
     @Mock private Resources mResources;
     @Mock private TelephonyManager mTelephonyManager;
     @Mock private UsbManager mUsbManager;
@@ -500,7 +502,8 @@ public class TetheringTest {
                 new IntentFilter(ACTION_TETHER_STATE_CHANGED));
         mTethering = makeTethering();
         mTethering.startStateMachineUpdaters();
-        verify(mStatsManager, times(1)).registerNetworkStatsProvider(anyString(), any());
+        when(mNetd.tetherOffloadGetStats()).thenReturn(new TetherStatsParcel[] {});
+        verify(mStatsManager, times(2)).registerNetworkStatsProvider(anyString(), any());
         verify(mNetd).registerUnsolicitedEventListener(any());
         final ArgumentCaptor<PhoneStateListener> phoneListenerCaptor =
                 ArgumentCaptor.forClass(PhoneStateListener.class);

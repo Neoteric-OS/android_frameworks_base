@@ -41,6 +41,7 @@ import android.net.netlink.NetlinkConstants;
 import android.net.netlink.NetlinkSocket;
 import android.net.netstats.provider.NetworkStatsProvider;
 import android.net.util.SharedLog;
+import android.net.util.TetheringUtils.ForwardedStats;
 import android.os.Handler;
 import android.provider.Settings;
 import android.system.ErrnoException;
@@ -50,7 +51,6 @@ import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.IndentingPrintWriter;
-import com.android.networkstack.tethering.OffloadHardwareInterface.ForwardedStats;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;

@@ -28,7 +28,6 @@ import static android.provider.Settings.Global.TETHER_OFFLOAD_DISABLED;
 
 import static com.android.networkstack.tethering.OffloadController.StatsType.STATS_PER_IFACE;
 import static com.android.networkstack.tethering.OffloadController.StatsType.STATS_PER_UID;
-import static com.android.networkstack.tethering.OffloadHardwareInterface.ForwardedStats;
 import static com.android.testutils.MiscAssertsKt.assertContainsAll;
 import static com.android.testutils.MiscAssertsKt.assertThrows;
 import static com.android.testutils.NetworkStatsUtilsKt.orderInsensitiveEquals;
@@ -65,6 +64,7 @@ import android.net.NetworkStats.Entry;
 import android.net.RouteInfo;
 import android.net.netstats.provider.INetworkStatsProviderCallback;
 import android.net.util.SharedLog;
+import android.net.util.TetheringUtils.ForwardedStats;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;

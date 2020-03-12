@@ -27,14 +27,13 @@ import android.hardware.tetheroffload.control.V1_0.OffloadCallbackEvent;
 import android.net.netlink.NetlinkSocket;
 import android.net.util.SharedLog;
 import android.net.util.SocketUtils;
+import android.net.util.TetheringUtils.ForwardedStats;
 import android.os.Handler;
 import android.os.NativeHandle;
 import android.os.RemoteException;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.OsConstants;
-
-import com.android.internal.annotations.VisibleForTesting;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -94,34 +93,6 @@ public class OffloadHardwareInterface {
         public void onNatTimeoutUpdate(int proto,
                                        String srcAddr, int srcPort,
                                        String dstAddr, int dstPort) {}
-    }
-
-    /** The object which records Tx/Rx forwarded bytes. */
-    public static class ForwardedStats {
-        public long rxBytes;
-        public long txBytes;
-
-        public ForwardedStats() {
-            rxBytes = 0;
-            txBytes = 0;
-        }
-
-        @VisibleForTesting
-        public ForwardedStats(long rxBytes, long txBytes) {
-            this.rxBytes = rxBytes;
-            this.txBytes = txBytes;
-        }
-
-        /** Add Tx/Rx bytes. */
-        public void add(ForwardedStats other) {
-            rxBytes += other.rxBytes;
-            txBytes += other.txBytes;
-        }
-
-        /** Returns the string representation of this object. */
-        public String toString() {
-            return String.format("rx:%s tx:%s", rxBytes, txBytes);
-        }
     }
 
     public OffloadHardwareInterface(Handler h, SharedLog log) {
