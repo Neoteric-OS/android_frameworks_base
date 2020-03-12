@@ -450,6 +450,7 @@ public class LinkPropertiesTest {
         assertEquals(1, rmnet0.getLinkAddresses().size());
         assertEquals(1, rmnet0.getAllAddresses().size());
         assertEquals(1, rmnet0.getAllLinkAddresses().size());
+        assertEquals(1, rmnet0.getAllInterfaceNames().size());
 
         rmnet0.addStackedLink(clat4);
         assertEquals(1, rmnet0.getStackedLinks().size());
@@ -457,6 +458,7 @@ public class LinkPropertiesTest {
         assertEquals(1, rmnet0.getLinkAddresses().size());
         assertEquals(2, rmnet0.getAllAddresses().size());
         assertEquals(2, rmnet0.getAllLinkAddresses().size());
+        assertEquals(2, rmnet0.getAllInterfaceNames().size());
 
         rmnet0.addStackedLink(clat4);
         assertEquals(1, rmnet0.getStackedLinks().size());
@@ -464,6 +466,7 @@ public class LinkPropertiesTest {
         assertEquals(1, rmnet0.getLinkAddresses().size());
         assertEquals(2, rmnet0.getAllAddresses().size());
         assertEquals(2, rmnet0.getAllLinkAddresses().size());
+        assertEquals(2, rmnet0.getAllInterfaceNames().size());
 
         assertEquals(0, clat4.getStackedLinks().size());
 
@@ -483,6 +486,7 @@ public class LinkPropertiesTest {
         assertEquals(1, rmnet0.getLinkAddresses().size());
         assertEquals(1, rmnet0.getAllAddresses().size());
         assertEquals(1, rmnet0.getAllLinkAddresses().size());
+        assertEquals(1, rmnet0.getAllInterfaceNames().size());
 
         assertFalse(rmnet0.removeStackedLink("clat4"));
     }
