@@ -22,6 +22,30 @@
       "revId": "0bf267dbbf407b710ca60bbb99ebe747af0dedb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e8338f_5d539e61",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-12T09:25:51Z",
+      "side": 1,
+      "message": "NCM logic is contributed from partner. Android only have sudo NCM function define but do not have detail implementation for NCM. I assume NCM can\u0027t live with rndis together. If it can, it should be the bug here. It is hard for us to know whether it is problem here or not. We can talk with partner about this flow",
+      "parentUuid": "e486c2fc_0e2371a7",
+      "range": {
+        "startLine": 894,
+        "startChar": 16,
+        "endLine": 903,
+        "endChar": 17
+      },
+      "revId": "0bf267dbbf407b710ca60bbb99ebe747af0dedb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
