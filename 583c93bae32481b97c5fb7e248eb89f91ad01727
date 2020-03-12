@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6b0f39f_5b274f91",
+        "filename": "tests/net/common/java/android/net/KeepalivePacketDataTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-12T13:58:48Z",
+      "side": 1,
+      "message": "This is not needed until line 90, so maybe it can just be a val there ?",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "583c93bae32481b97c5fb7e248eb89f91ad01727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15343bba_5d967183",
+        "filename": "tests/net/common/java/android/net/KeepalivePacketDataTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-12T13:58:48Z",
+      "side": 1,
+      "message": "Nit: just \".packet\" for consistency",
+      "range": {
+        "startLine": 96,
+        "startChar": 49,
+        "endLine": 96,
+        "endChar": 60
+      },
+      "revId": "583c93bae32481b97c5fb7e248eb89f91ad01727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f621012_3070950c",
+        "filename": "tests/net/common/java/android/net/KeepalivePacketDataTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-12T13:58:48Z",
+      "side": 1,
+      "message": "This is kind of a different test on the constructor (not testing input sanitization, but instead testing the fields). Maybe put it in a different test method ?",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 62
+      },
+      "revId": "583c93bae32481b97c5fb7e248eb89f91ad01727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
