@@ -86,6 +86,8 @@ import android.text.TextUtils;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.android.networkstack.tethering.BpfCoordinator;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -120,6 +122,7 @@ public class IpServerTest {
     private static final int MAKE_DHCPSERVER_TIMEOUT_MS = 1000;
 
     @Mock private INetd mNetd;
+    @Mock private BpfCoordinator mBpfCoordinator;
     @Mock private IpServer.Callback mCallback;
     @Mock private SharedLog mSharedLog;
     @Mock private IDhcpServer mDhcpServer;
@@ -173,7 +176,8 @@ public class IpServerTest {
 
         mIpServer = new IpServer(
                 IFACE_NAME, mLooper.getLooper(), interfaceType, mSharedLog, mNetd,
-                mCallback, usingLegacyDhcp, usingBpfOffload, mDependencies);
+                mBpfCoordinator, mCallback, usingLegacyDhcp, usingBpfOffload,
+                mDependencies);
         mIpServer.start();
         mNeighborEventConsumer = neighborCaptor.getValue();
 
@@ -213,8 +217,8 @@ public class IpServerTest {
         when(mDependencies.getIpNeighborMonitor(any(), any(), any()))
                 .thenReturn(mIpNeighborMonitor);
         mIpServer = new IpServer(IFACE_NAME, mLooper.getLooper(), TETHERING_BLUETOOTH, mSharedLog,
-                mNetd, mCallback, false /* usingLegacyDhcp */, DEFAULT_USING_BPF_OFFLOAD,
-                mDependencies);
+                mNetd, mBpfCoordinator, mCallback, false /* usingLegacyDhcp */,
+                DEFAULT_USING_BPF_OFFLOAD, mDependencies);
         mIpServer.start();
         mLooper.dispatchAll();
         verify(mCallback).updateInterfaceState(
