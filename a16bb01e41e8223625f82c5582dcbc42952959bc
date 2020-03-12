@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "109a5741_56ede9e8",
+        "filename": "telephony/java/android/telephony/ims/ImsCallProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-03-12T07:03:39Z",
+      "side": 1,
+      "message": "I renamed the extra as suggested. Please check next patch-set.\n\nThe allowed values are the reasons already defined in ImsReasonInfo. For this requirement, it maps to ImsReasonInfo#CODE_RETRY_ON_IMS_WITHOUT_RTT",
+      "parentUuid": "12c82ecd_ed00cc10",
+      "range": {
+        "startLine": 187,
+        "startChar": 63,
+        "endLine": 187,
+        "endChar": 82
+      },
+      "revId": "a16bb01e41e8223625f82c5582dcbc42952959bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f579b6b4_113d5def",
         "filename": "telephony/java/android/telephony/ims/ImsCallProfile.java",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Should this should really be:\nEXTRA_RETRY_CALL_NETWORK_TYPE\nand map to the TelephonyManager#NETWORK_TYPE_* values.",
       "parentUuid": "f579b6b4_113d5def",
+      "range": {
+        "startLine": 190,
+        "startChar": 66,
+        "endLine": 190,
+        "endChar": 88
+      },
+      "revId": "a16bb01e41e8223625f82c5582dcbc42952959bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14be0464_970fcb34",
+        "filename": "telephony/java/android/telephony/ims/ImsCallProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-03-12T07:03:39Z",
+      "side": 1,
+      "message": "I renamed the extra as suggested. Please check next patch-set.\n\nThe extra name should be EXTRA_RETRY_CALL_FAIL_RADIOTECH since com.android.internal.telephony.Connection#getCallRadioTech returns android.telephony.ServiceState.ServiceState#RIL_RADIO_TECHNOLOGY_* values.",
+      "parentUuid": "df2ae1f2_a44bcc92",
       "range": {
         "startLine": 190,
         "startChar": 66,
