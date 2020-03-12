@@ -231,6 +231,7 @@ public class Tethering {
     private final TetheringThreadExecutor mExecutor;
     private final TetheringNotificationUpdater mNotificationUpdater;
     private final UserManager mUserManager;
+    private final BpfTetheringCoordinator mBpfTetheringCoordinator;
     private int mActiveDataSubId = INVALID_SUBSCRIPTION_ID;
     // All the usage of mTetheringEventCallback should run in the same thread.
     private ITetheringEventCallback mTetheringEventCallback = null;
@@ -282,6 +283,8 @@ public class Tethering {
         mUpstreamNetworkMonitor = mDeps.getUpstreamNetworkMonitor(mContext, mTetherMasterSM, mLog,
                 TetherMasterSM.EVENT_UPSTREAM_CALLBACK);
         mForwardedDownstreams = new LinkedHashSet<>();
+        mBpfTetheringCoordinator = mDeps.getBpfTetheringCoordinator(
+                mHandler, mNetd, mLog, new BpfTetheringCoordinator.Dependencies());
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_CARRIER_CONFIG_CHANGED);
@@ -1685,6 +1688,9 @@ public class Tethering {
                     chooseUpstreamType(true);
                     mTryCell = false;
                 }
+
+                // TODO: Check the upstream interface if it is managed by BPF offload.
+                mBpfTetheringCoordinator.start();
             }
 
             @Override
@@ -1697,6 +1703,7 @@ public class Tethering {
                     mTetherUpstream = null;
                     reportUpstreamChanged(null);
                 }
+                mBpfTetheringCoordinator.stop();
             }
 
             private boolean updateUpstreamWanted() {
@@ -2312,7 +2319,7 @@ public class Tethering {
 
         mLog.log("adding TetheringInterfaceStateMachine for: " + iface);
         final TetherState tetherState = new TetherState(
-                new IpServer(iface, mLooper, interfaceType, mLog, mNetd,
+                new IpServer(iface, mLooper, interfaceType, mLog, mNetd, mBpfTetheringCoordinator,
                              makeControlCallback(), mConfig.enableLegacyDhcpServer,
                              mConfig.enableBpfOffload, mDeps.getIpServerDependencies()));
         mTetherStates.put(iface, tetherState);
