@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87c5e6c5_beb42b11",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T09:41:25Z",
+      "side": 0,
+      "message": "On some Q devices, captive portal login is signed by the platform key (and does not come from the mainline module). In that case, it will need these permissions. Are you saying it cannot get these because it\u0027s not in priv-app, even if it\u0027s signed by the platform key?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "7488b79ea0fd0e2ff71a8cdbcff2b7e4dc27ca0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
