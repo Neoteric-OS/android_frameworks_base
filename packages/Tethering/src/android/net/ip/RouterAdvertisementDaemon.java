@@ -18,6 +18,7 @@ package android.net.ip;
 
 import static android.net.util.NetworkConstants.IPV6_MIN_MTU;
 import static android.net.util.NetworkConstants.RFC7421_PREFIX_LENGTH;
+import static android.net.util.TetheringUtils.getAllNodesForScopeId;
 import static android.system.OsConstants.AF_INET6;
 import static android.system.OsConstants.IPPROTO_ICMPV6;
 import static android.system.OsConstants.SOCK_RAW;
@@ -92,9 +93,7 @@ public class RouterAdvertisementDaemon {
 
     private static final int DAY_IN_SECONDS = 86_400;
 
-    private static final byte[] ALL_NODES = new byte[] {
-            (byte) 0xff, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
-    };
+    private final TetheringUtils.Native mNative;
 
     private final InterfaceParams mInterface;
     private final InetSocketAddress mAllNodes;
@@ -240,11 +239,15 @@ public class RouterAdvertisementDaemon {
         }
     }
 
-
     public RouterAdvertisementDaemon(InterfaceParams ifParams) {
+        this(ifParams, new TetheringUtils.Native());
+    }
+
+    public RouterAdvertisementDaemon(InterfaceParams ifParams, TetheringUtils.Native aNative) {
         mInterface = ifParams;
         mAllNodes = new InetSocketAddress(getAllNodesForScopeId(mInterface.index), 0);
         mDeprecatedInfoTracker = new DeprecatedInfoTracker();
+        mNative = aNative;
     }
 
     /** Build new RA.*/
@@ -360,15 +363,6 @@ public class RouterAdvertisementDaemon {
         final MulticastTransmitter m = mMulticastTransmitter;
         if (m != null) {
             m.hup();
-        }
-    }
-
-    private static Inet6Address getAllNodesForScopeId(int scopeId) {
-        try {
-            return Inet6Address.getByAddress("ff02::1", ALL_NODES, scopeId);
-        } catch (UnknownHostException uhe) {
-            Log.wtf(TAG, "Failed to construct ff02::1 InetAddress: " + uhe);
-            return null;
         }
     }
 
@@ -610,7 +604,7 @@ public class RouterAdvertisementDaemon {
             Os.setsockoptTimeval(
                     mSocket, SOL_SOCKET, SO_SNDTIMEO, StructTimeval.fromMillis(send_timout_ms));
             SocketUtils.bindSocketToInterface(mSocket, mInterface.name);
-            TetheringUtils.setupRaSocket(mSocket, mInterface.index);
+            mNative.setupRaSocket(mSocket, mInterface.index);
         } catch (ErrnoException | IOException e) {
             Log.e(TAG, "Failed to create RA daemon socket: " + e);
             return false;
