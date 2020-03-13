@@ -83,6 +83,7 @@ import android.net.util.InterfaceParams;
 import android.net.util.InterfaceSet;
 import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
+import android.os.Build;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.test.TestLooper;
@@ -97,8 +98,12 @@ import com.android.networkstack.tethering.BpfCoordinator;
 import com.android.networkstack.tethering.BpfCoordinator.Ipv6ForwardingRule;
 import com.android.networkstack.tethering.PrivateAddressCoordinator;
 import com.android.networkstack.tethering.TetheringConfiguration;
+import com.android.testutils.DevSdkIgnoreRule;
+import com.android.testutils.DevSdkIgnoreRule.IgnoreAfter;
+import com.android.testutils.DevSdkIgnoreRule.IgnoreUpTo;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -117,6 +122,9 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class IpServerTest {
+    @Rule
+    public final DevSdkIgnoreRule mIgnoreRule = new DevSdkIgnoreRule();
+
     private static final String IFACE_NAME = "testnet1";
     private static final String UPSTREAM_IFACE = "upstream0";
     private static final String UPSTREAM_IFACE2 = "upstream1";
@@ -129,6 +137,11 @@ public class IpServerTest {
 
     private static final InterfaceParams TEST_IFACE_PARAMS = new InterfaceParams(
             IFACE_NAME, 42 /* index */, MacAddress.ALL_ZEROS_ADDRESS, 1500 /* defaultMtu */);
+    private static final InterfaceParams UPSTREAM_IFACE_PARAMS = new InterfaceParams(
+            UPSTREAM_IFACE, UPSTREAM_IFINDEX, MacAddress.ALL_ZEROS_ADDRESS, 1500 /* defaultMtu */);
+    private static final InterfaceParams UPSTREAM_IFACE_PARAMS2 = new InterfaceParams(
+            UPSTREAM_IFACE2, UPSTREAM_IFINDEX2, MacAddress.ALL_ZEROS_ADDRESS,
+            1500 /* defaultMtu */);
 
     private static final int MAKE_DHCPSERVER_TIMEOUT_MS = 1000;
 
@@ -139,6 +152,7 @@ public class IpServerTest {
     @Mock private IpServer.Callback mCallback;
     @Mock private SharedLog mSharedLog;
     @Mock private IDhcpServer mDhcpServer;
+    @Mock private DadProxy mDadProxy;
     @Mock private RouterAdvertisementDaemon mRaDaemon;
     @Mock private IpNeighborMonitor mIpNeighborMonitor;
     @Mock private IpServer.Dependencies mDependencies;
@@ -173,6 +187,7 @@ public class IpServerTest {
             }).run();
             return null;
         }).when(mDependencies).makeDhcpServer(any(), mDhcpParamsCaptor.capture(), any());
+        when(mDependencies.getDadProxy(null, any())).thenReturn(mDadProxy);
         when(mDependencies.getRouterAdvertisementDaemon(any())).thenReturn(mRaDaemon);
         when(mDependencies.getInterfaceParams(IFACE_NAME)).thenReturn(TEST_IFACE_PARAMS);
 
@@ -1069,5 +1084,63 @@ public class IpServerTest {
             }
         }
         return true;
+    }
+
+    @Test @IgnoreUpTo(Build.VERSION_CODES.R)
+    public void dadProxyUpdates() throws Exception {
+        initTetheredStateMachine(TETHERING_WIFI, UPSTREAM_IFACE);
+        InOrder inOrder = inOrder(mDadProxy);
+
+        // Add an upstream without IPv6.
+        dispatchTetherConnectionChanged(UPSTREAM_IFACE, null, 0);
+        inOrder.verifyNoMoreInteractions();
+
+        // Add IPv6 to the upstream.
+        LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName(UPSTREAM_IFACE);
+        inOrder.verify(mDadProxy).setUpstreamIface(UPSTREAM_IFACE_PARAMS);
+
+        // Change upstream.
+        lp.setInterfaceName(UPSTREAM_IFACE2);
+        dispatchTetherConnectionChanged(UPSTREAM_IFACE2, lp, 0);
+        inOrder.verify(mDadProxy).setUpstreamIface(UPSTREAM_IFACE_PARAMS2);
+
+        // Lose IPv6 on the upstream...
+        dispatchTetherConnectionChanged(UPSTREAM_IFACE2, null, 0);
+        inOrder.verify(mDadProxy).setUpstreamIface(null);
+
+        // ... and regain it on a different upstream.
+        lp.setInterfaceName(UPSTREAM_IFACE);
+        dispatchTetherConnectionChanged(UPSTREAM_IFACE, lp, 0);
+        inOrder.verify(mDadProxy).setUpstreamIface(UPSTREAM_IFACE_PARAMS);
+
+        // Lose upstream.
+        dispatchTetherConnectionChanged(null, null, 0);
+        inOrder.verify(mDadProxy).setUpstreamIface(null);
+
+        // Regain upstream.
+        dispatchTetherConnectionChanged(UPSTREAM_IFACE, lp, 0);
+        inOrder.verify(mDadProxy).setUpstreamIface(UPSTREAM_IFACE_PARAMS);
+
+        // Stop tethering.
+        mIpServer.stop();
+        mLooper.dispatchAll();
+        inOrder.verify(mDadProxy).setUpstreamIface(null);
+    }
+
+    @Test @IgnoreAfter(Build.VERSION_CODES.R)
+    public void testDadProxyUpdates_DisabledUpToR() throws Exception {
+        initTetheredStateMachine(TETHERING_WIFI, UPSTREAM_IFACE);
+        InOrder inOrder = inOrder(mDadProxy);
+
+        // Add IPv6 to the upstream.
+        LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName(UPSTREAM_IFACE);
+        inOrder.verifyNoMoreInteractions();
+
+        // Stop tethering.
+        mIpServer.stop();
+        mLooper.dispatchAll();
+        inOrder.verifyNoMoreInteractions();
     }
 }

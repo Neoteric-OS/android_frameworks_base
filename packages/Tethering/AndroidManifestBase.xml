@@ -17,10 +17,12 @@
  */
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.android.networkstack.tethering"
           android:versionCode="1"
           android:versionName="R-initial">
     <application
+        tools:replace="android:label"
         android:label="Tethering"
         android:defaultToDeviceProtectedStorage="true"
         android:directBootAware="true">
