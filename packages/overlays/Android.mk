@@ -25,14 +25,18 @@ LOCAL_REQUIRED_MODULES := \
 	DisplayCutoutEmulationHoleOverlay \
 	DisplayCutoutEmulationTallOverlay \
 	DisplayCutoutEmulationWaterfallOverlay \
-	IconShapeCylinderOverlay \
+	IconShapeCloudyOverlay \
+        IconShapeCylinderOverlay \
+        IconShapeFlowerOverlay \
         IconShapeHeartOverlay \
         IconShapeHexagonOverlay \
         IconShapeLeafOverlay \
         IconShapePebbleOverlay \
+        IconShapeRoundedHexagonOverlay \
         IconShapeRoundedRectOverlay \
         IconShapeSquareOverlay \
         IconShapeSquircleOverlay \
+        IconShapeStretchedOverlay \
         IconShapeTaperedRectOverlay \
         IconShapeTeardropOverlay \
         IconShapeVesselOverlay \
