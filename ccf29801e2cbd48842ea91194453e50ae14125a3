@@ -118,6 +118,30 @@
       "revId": "ccf29801e2cbd48842ea91194453e50ae14125a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93baae8b_8f4a5d7d",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2020-03-13T05:05:15Z",
+      "side": 1,
+      "message": "Thanks, Jack. \nFor the Wifi-calling, I found a Pixel 4 XL h/w and mad a build on internal branch with patch to test wifi-calling. I made 15+ MT calls and 15+ MO calls and did not find issue.",
+      "parentUuid": "3d5da603_a554dd24",
+      "range": {
+        "startLine": 449,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 70
+      },
+      "revId": "ccf29801e2cbd48842ea91194453e50ae14125a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
