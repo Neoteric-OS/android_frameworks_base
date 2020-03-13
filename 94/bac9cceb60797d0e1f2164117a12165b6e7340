@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Aurimas Liutikas <aurimas@google.com>
+Code-Review+2: Makoto Onuki <omakoto@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 13 Mar 2020 02:13:56 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1257972
+Project: platform/frameworks/base
+Branch: refs/heads/master
