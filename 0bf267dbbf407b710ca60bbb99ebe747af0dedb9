@@ -46,6 +46,30 @@
       "revId": "0bf267dbbf407b710ca60bbb99ebe747af0dedb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e66492a_2824b4c8",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-13T03:32:46Z",
+      "side": 1,
+      "message": "Review this again. I am sure that tethering assume NCM and RNDIS can\u0027t be enabled at the same. They reuse the same server IP.\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/packages/Tethering/src/android/net/ip/IpServer.java;l\u003d558?ss\u003dandroid\u0026q\u003dipserver.java",
+      "parentUuid": "10e8338f_5d539e61",
+      "range": {
+        "startLine": 894,
+        "startChar": 16,
+        "endLine": 903,
+        "endChar": 17
+      },
+      "revId": "0bf267dbbf407b710ca60bbb99ebe747af0dedb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
