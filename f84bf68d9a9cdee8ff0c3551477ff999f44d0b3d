@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "282b5c9b_1eeefe27",
+        "filename": "media/tests/EffectsTest/src/com/android/effectstest/VisualizerInstanceMT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2020-03-13T17:17:53Z",
+      "side": 1,
+      "message": "visibility?",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 9
+      },
+      "revId": "f84bf68d9a9cdee8ff0c3551477ff999f44d0b3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0eaa4e_c6a522a7",
+        "filename": "media/tests/EffectsTest/src/com/android/effectstest/VisualizerInstanceSync.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2020-03-13T17:17:53Z",
+      "side": 1,
+      "message": "comment on class? Assumes external locking?",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "f84bf68d9a9cdee8ff0c3551477ff999f44d0b3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b8ca91_1aca7b17",
+        "filename": "media/tests/EffectsTest/src/com/android/effectstest/VisualizerInstanceSync.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2020-03-13T17:17:53Z",
+      "side": 1,
+      "message": "private?  visibility correct here and above?",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 10
+      },
+      "revId": "f84bf68d9a9cdee8ff0c3551477ff999f44d0b3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
