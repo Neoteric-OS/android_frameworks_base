@@ -17,8 +17,13 @@ package android.net.util;
 
 import android.net.TetheringRequestParcel;
 
+import com.android.internal.annotations.VisibleForTesting;
+
 import java.io.FileDescriptor;
+import java.net.Inet6Address;
 import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -27,6 +32,37 @@ import java.util.Objects;
  * {@hide}
  */
 public class TetheringUtils {
+    public static final byte[] ALL_NODES = new byte[] {
+        (byte) 0xff, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+
+    @VisibleForTesting
+    public static class TetheringUtilsNative {
+        public void setupNaSocket(FileDescriptor fd) throws SocketException {
+            native_setupNaSocket(fd);
+        }
+
+        public void setupNsSocket(FileDescriptor fd) throws SocketException {
+            native_setupNsSocket(fd);
+        }
+
+        // TODO: Should setupRaSocket() be moved as well?
+    }
+
+    /**
+     * Configures a socket for receiving and sending ICMPv6 neighbor advertisments.
+     * @param fd the socket's {@link FileDescriptor}.
+     */
+    private static native void native_setupNaSocket(FileDescriptor fd)
+            throws SocketException;
+
+    /**
+     * Configures a socket for receiving and sending ICMPv6 neighbor solicitations.
+     * @param fd the socket's {@link FileDescriptor}.
+     */
+    private static native void native_setupNsSocket(FileDescriptor fd)
+            throws SocketException;
+
     /**
      * Configures a socket for receiving ICMPv6 router solicitations and sending advertisements.
      * @param fd the socket's {@link FileDescriptor}.
@@ -53,5 +89,15 @@ public class TetheringUtils {
                 && Objects.equals(request.staticClientAddress, otherRequest.staticClientAddress)
                 && request.exemptFromEntitlementCheck == otherRequest.exemptFromEntitlementCheck
                 && request.showProvisioningUi == otherRequest.showProvisioningUi;
+    }
+
+    public static Inet6Address getAllNodesForScopeId(int scopeId) {
+        try {
+            return Inet6Address.getByAddress("ff02::1", ALL_NODES, scopeId);
+        } catch (UnknownHostException uhe) {
+            Log.wtf("TetheringUtils", "Failed to construct Inet6Address from "
+                + Arrays.toString(ALL_NODES) + " and scopedId " + scopeId);
+            return null;
+        }
     }
 }
