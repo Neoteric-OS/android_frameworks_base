@@ -44,8 +44,6 @@ public class ImsManager {
      * issues.
      * @hide
      */
-    @SystemApi
-    @TestApi
     // Moved from TelephonyIntents, need to keep backwards compatibility with OEM apps that have
     // this value hard-coded in BroadcastReceiver.
     @SuppressLint("ActionValue")
