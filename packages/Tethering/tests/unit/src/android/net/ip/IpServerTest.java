@@ -139,6 +139,7 @@ public class IpServerTest {
     @Mock private IpServer.Callback mCallback;
     @Mock private SharedLog mSharedLog;
     @Mock private IDhcpServer mDhcpServer;
+    @Mock private DadProxy mDadProxy;
     @Mock private RouterAdvertisementDaemon mRaDaemon;
     @Mock private IpNeighborMonitor mIpNeighborMonitor;
     @Mock private IpServer.Dependencies mDependencies;
@@ -173,6 +174,7 @@ public class IpServerTest {
             }).run();
             return null;
         }).when(mDependencies).makeDhcpServer(any(), mDhcpParamsCaptor.capture(), any());
+        when(mDependencies.getDadProxy(null, any())).thenReturn(mDadProxy);
         when(mDependencies.getRouterAdvertisementDaemon(any())).thenReturn(mRaDaemon);
         when(mDependencies.getInterfaceParams(IFACE_NAME)).thenReturn(TEST_IFACE_PARAMS);
 
@@ -1069,5 +1071,46 @@ public class IpServerTest {
             }
         }
         return true;
+    }
+
+    private static final InterfaceParams UPSTREAM_IFACE_PARAMS = new InterfaceParams(
+            UPSTREAM_IFACE, UPSTREAM_IFINDEX, MacAddress.ALL_ZEROS_ADDRESS,
+            1500 /* defaultMtu */);
+    private static final InterfaceParams UPSTREAM_IFACE_PARAMS2 = new InterfaceParams(
+            UPSTREAM_IFACE2, UPSTREAM_IFINDEX2, MacAddress.ALL_ZEROS_ADDRESS,
+            1500 /* defaultMtu */);
+
+    @Test
+    public void dadProxyUpdates() throws Exception {
+        initTetheredStateMachine(TETHERING_WIFI, UPSTREAM_IFACE);
+        InOrder inOrder = inOrder(mDadProxy);
+        // Add an upstream without IPv6.
+        dispatchTetherConnectionChanged(UPSTREAM_IFACE, null, 0);
+        inOrder.verifyNoMoreInteractions();
+        // Add IPv6 to the upstream.
+        LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName(UPSTREAM_IFACE);
+        inOrder.verify(mDadProxy).setUpstreamIface(UPSTREAM_IFACE_PARAMS);
+        // Change upstream.
+        lp.setInterfaceName(UPSTREAM_IFACE2);
+        dispatchTetherConnectionChanged(UPSTREAM_IFACE2, lp, 0);
+        inOrder.verify(mDadProxy).setUpstreamIface(UPSTREAM_IFACE_PARAMS2);
+        // Lose IPv6 on the upstream...
+        dispatchTetherConnectionChanged(UPSTREAM_IFACE2, null, 0);
+        inOrder.verify(mDadProxy).setUpstreamIface(null);
+        // ... and regain it on a different upstream.
+        lp.setInterfaceName(UPSTREAM_IFACE);
+        dispatchTetherConnectionChanged(UPSTREAM_IFACE, lp, 0);
+        inOrder.verify(mDadProxy).setUpstreamIface(UPSTREAM_IFACE_PARAMS);
+        // Lose upstream.
+        dispatchTetherConnectionChanged(null, null, 0);
+        inOrder.verify(mDadProxy).setUpstreamIface(null);
+        // Regain upstream.
+        dispatchTetherConnectionChanged(UPSTREAM_IFACE, lp, 0);
+        inOrder.verify(mDadProxy).setUpstreamIface(UPSTREAM_IFACE_PARAMS);
+        // Stop tethering.
+        mIpServer.stop();
+        mLooper.dispatchAll();
+        inOrder.verify(mDadProxy).setUpstreamIface(null);
     }
 }

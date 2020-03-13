@@ -27,6 +27,7 @@ android_test {
         "mts",
     ],
     static_libs: [
+        "TetheringApiCurrentLib",
         "TetheringIntegrationTestsLib",
     ],
     jni_libs: [
