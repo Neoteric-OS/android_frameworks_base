@@ -1,0 +1,389 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e82f4d19_8800a818",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "A DHCP",
+      "range": {
+        "startLine": 524,
+        "startChar": 70,
+        "endLine": 524,
+        "endChar": 74
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83cfe3b2_4425c9a8",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "no DHCP server will be started",
+      "range": {
+        "startLine": 525,
+        "startChar": 91,
+        "endLine": 526,
+        "endChar": 33
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e20865_4580c4fd",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "the server address and subnet will be determined by the system, and the client address will be assigned via DHCP.",
+      "range": {
+        "startLine": 526,
+        "startChar": 61,
+        "endLine": 530,
+        "endChar": 62
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b62fe1_a40092b4",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "The docs say this can be null. Either make this @NonNull or fix the docs.",
+      "range": {
+        "startLine": 534,
+        "startChar": 50,
+        "endLine": 534,
+        "endChar": 58
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5e2d7a_e6aa9652",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "Why not InetAddress? Seems like we should use LinkAddress, and check that the prefix length of the two addresses is the same.",
+      "range": {
+        "startLine": 535,
+        "startChar": 36,
+        "endLine": 535,
+        "endChar": 47
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14bce1f5_6b096b10",
+        "filename": "packages/Tethering/src/android/net/util/TetheringUtils.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "Nit: you could also do:\n\n    return request !\u003d null \u0026\u0026 otherRequest !\u003d null\n            \u0026\u0026 request.tetheringType \u003d\u003d otherRequest.tetheringType\n            \u0026\u0026 Objects.equals(request.localIPv4Address, otherRequest.localIPv4Address)\n            ...\n            \u0026\u0026 ...;",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 21
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf74d48_2960e385",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "This is a big change and should be mentioned and discussed in the commit message. Remi and I looked at it carefully and we think it\u0027s correct, but the commit message should explain why because we will all forget after a while.\n\nIIRC the reason it\u0027s correct is that the system never actually does anything synchronously when startTethering is called:\n- startProvisioningIfNeeded just posts a message to the handler thread.\n- enableTetheringInternal doesn\u0027t do anything synchronously, it just asks the downstreams to get their interfaces ready and waits for callbacks.\n\nTherefore, I think callers cannot be depending on something to have happened by the time this method returns.",
+      "range": {
+        "startLine": 496,
+        "startChar": 8,
+        "endLine": 496,
+        "endChar": 29
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6643f93d_53119219",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "Nit: unfinished is one word, so maybe this should be unfinishedRequest?",
+      "range": {
+        "startLine": 497,
+        "startChar": 41,
+        "endLine": 497,
+        "endChar": 51
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad387ffe_a07ff0aa",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "Is it safe to call stopProvisioningIfNeeded and then call startProvisioningIfNeeded immediately afterwards? Or could it cause a race within EntitlementManager or in the communication between EntitlementManager and Settings? Might want to add a comment to the code or to the commit message to explain why.\n\nIf this happens all the time today, then maybe a comment is not needed though.",
+      "range": {
+        "startLine": 504,
+        "startChar": 32,
+        "endLine": 504,
+        "endChar": 56
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d86c7e_0523291e",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "Can you explain where? Is it a method in this class? Something like:\n\n    ... will be called back asynchronously by methodFoo.\n    ... will be called back asynchronously after \u003cxyz happens\u003e.",
+      "range": {
+        "startLine": 551,
+        "startChar": 58,
+        "endLine": 551,
+        "endChar": 72
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a430c7a_c306cc4c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "will be called back",
+      "range": {
+        "startLine": 551,
+        "startChar": 40,
+        "endLine": 551,
+        "endChar": 57
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0e404d_26a53bd0",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "Do you need the key? Can you just do:\n\n    final int type \u003d tetherState.ipServer.interfaceType();\n    final TetheringRequestParcel request \u003d mActiveTetheringRequests.get(type, null);\n    if (request !\u003d null) {\n        mActiveTetheringRequests.delete(type);\n    }",
+      "range": {
+        "startLine": 709,
+        "startChar": 0,
+        "endLine": 714,
+        "endChar": 57
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c01fea_4b4813af",
+        "filename": "packages/Tethering/tests/unit/src/android/net/util/TetheringUtilsTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "Would be good to check the other elemtns too. Suggest:\n\n    public TetheringRequestParcel makeTetheringRequestParcel() {\n        request.tetheringType \u003d TEST_TYPE;\n        request.localIPv4Address \u003d TEST_SERVER_LINKADDR;\n        request.staticClientAddress \u003d null;\n        request.exemptFromEntitlementCheck \u003d false;\n        request.showProvisioningUi \u003d true;\n        return request;\n    }\n\nThen you can do things like:\n\n    request \u003d makeTetheringRequestParcel();\n    request.tetheringType \u003d TETHERING_BLUETOOTH;\n    assertFalse(...);\n\n    request \u003d makeTetheringRequestParcel();\n    request.localIPv4Address \u003d null;\n    assertFalse(...);",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 89
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01de1a17_2ea2c74d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "For readability, add blank lines and comments between the different operations.\n\n    // Enable USB tethering and check that Tethering starts USB.\n    ...\n\n    // Enable USB tethering again with the same request and expect no change to USB.\n    ...\n\n    // Enable USB tethering with a different request and expect that USB is stopped and started.\n    ...",
+      "range": {
+        "startLine": 1617,
+        "startChar": 0,
+        "endLine": 1617,
+        "endChar": 77
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdce6617_2dbc507e",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1625,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "never()",
+      "range": {
+        "startLine": 1625,
+        "startChar": 28,
+        "endLine": 1625,
+        "endChar": 36
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5763d561_06bab243",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1634,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "Is there a reason why these three are at the end? Shouldn\u0027t firstResult.assertHasResult be before line 1622?",
+      "range": {
+        "startLine": 1632,
+        "startChar": 0,
+        "endLine": 1634,
+        "endChar": 38
+      },
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f82fab3_3926d53c",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1635,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T08:43:54Z",
+      "side": 1,
+      "message": "Explain what this does.\n\n    // Expect that when USB comes up, the DHCP server is configured with the requested address.",
+      "revId": "31d15fe001c396a3a54f28a594014be845e12e07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
