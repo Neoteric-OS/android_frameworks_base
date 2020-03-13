@@ -22,6 +22,30 @@
       "revId": "7488b79ea0fd0e2ff71a8cdbcff2b7e4dc27ca0e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b41ea4_5244f1a0",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-13T09:56:56Z",
+      "side": 0,
+      "message": "On Go it could get these for being signed with the platform key, but I think this whitelist would still not do anything since it\u0027s not a priv-app.\n\nI think on Go the permissions are not useful because MAINLINE_NETWORK_STACK is also granted, as on non-Go. I kicked a crosshatch_svelte build to check that with the CL that removes the permissions from the manifest: https://android-build.googleplex.com/builds/forrest/run/L80600000493909440\n\nThis CL should still be safe though.",
+      "parentUuid": "87c5e6c5_beb42b11",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "7488b79ea0fd0e2ff71a8cdbcff2b7e4dc27ca0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
