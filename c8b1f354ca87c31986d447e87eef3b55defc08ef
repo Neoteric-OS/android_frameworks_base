@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "008d7bfc_b1992272",
+        "filename": "telephony/java/android/telephony/ims/ImsCallProfile.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-03-13T16:00:49Z",
+      "side": 1,
+      "message": "You can\u0027t use RIL_RADIO_TECHNOLOGY_*; those are all @hide, so:\na) You can\u0027t use them in your code.\nb) consumers of this extra can\u0027t use them either.\n\nDon\u0027t expose the RIL_RADIO_TECHNOLOGY constants; you should use TelephonyManager#NETWORK_TYPE_* constants since those are already in the public API - no sense having multiple constants for the same thing.",
+      "range": {
+        "startLine": 196,
+        "startChar": 11,
+        "endLine": 197,
+        "endChar": 47
+      },
+      "revId": "c8b1f354ca87c31986d447e87eef3b55defc08ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
