@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000001958615",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1256349?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "a210f671_26f33580",
+          "description": "Change to \"tests/net/common/java/android/net/NattKeepalivePacketDataTest.kt\"",
+          "replacements": [
+            {
+              "path": "tests/net/common/java/android/net/NattKeepalivePacketDataTest.kt",
+              "range": {
+                "startLine": 44,
+                "startChar": 16,
+                "endLine": 44,
+                "endChar": 25
+              },
+              "replacement": "definition"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "8d59e8e9_cf9f227a",
+        "filename": "tests/net/common/java/android/net/NattKeepalivePacketDataTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-03-13T10:01:11Z",
+      "side": 1,
+      "message": "Common typo found: \"defintion\" -- should it be \"definition\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "5f90540fc37b7e51590fa9d9450418aecab723a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
