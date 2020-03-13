@@ -28,19 +28,17 @@
 
 namespace android {
 
-static void android_net_util_setupRaSocket(JNIEnv *env, jobject clazz, jobject javaFd,
-        jint ifIndex)
-{
+static void android_net_util_setupIcmpSocket(JNIEnv *env, jobject javaFd, jint ifIndex, uint8_t icmpType) {
     static const int kLinkLocalHopLimit = 255;
 
     int fd = jniGetFDFromFileDescriptor(env, javaFd);
 
     // Set an ICMPv6 filter that only passes Router Solicitations.
-    struct icmp6_filter rs_only;
-    ICMP6_FILTER_SETBLOCKALL(&rs_only);
-    ICMP6_FILTER_SETPASS(ND_ROUTER_SOLICIT, &rs_only);
-    socklen_t len = sizeof(rs_only);
-    if (setsockopt(fd, IPPROTO_ICMPV6, ICMP6_FILTER, &rs_only, len) != 0) {
+    struct icmp6_filter socket_filter;
+    ICMP6_FILTER_SETBLOCKALL(&socket_filter);
+    ICMP6_FILTER_SETPASS(icmpType, &socket_filter);
+    socklen_t len = sizeof(socket_filter);
+    if (setsockopt(fd, IPPROTO_ICMPV6, ICMP6_FILTER, &socket_filter, len) != 0) {
         jniThrowExceptionFmt(env, "java/net/SocketException",
                 "setsockopt(ICMP6_FILTER): %s", strerror(errno));
         return;
@@ -119,11 +117,31 @@ static void android_net_util_setupRaSocket(JNIEnv *env, jobject clazz, jobject j
     }
 }
 
+static void android_net_util_setupNaSocket(JNIEnv *env, jobject clazz, jobject javaFd,
+        jint ifIndex)
+{
+    android_net_util_setupIcmpSocket(env, javaFd, ifIndex, ND_NEIGHBOR_ADVERT);
+}
+
+static void android_net_util_setupNsSocket(JNIEnv *env, jobject clazz, jobject javaFd,
+        jint ifIndex)
+{
+    android_net_util_setupIcmpSocket(env, javaFd, ifIndex, ND_NEIGHBOR_SOLICIT);
+}
+
+static void android_net_util_setupRaSocket(JNIEnv *env, jobject clazz, jobject javaFd,
+        jint ifIndex)
+{
+    android_net_util_setupIcmpSocket(env, javaFd, ifIndex, ND_ROUTER_SOLICIT);
+}
+
 /*
  * JNI registration.
  */
 static const JNINativeMethod gMethods[] = {
     /* name, signature, funcPtr */
+    { "setupNaSocket", "(Ljava/io/FileDescriptor;I)V", (void*) android_net_util_setupNaSocket },
+    { "setupNsSocket", "(Ljava/io/FileDescriptor;I)V", (void*) android_net_util_setupNsSocket },
     { "setupRaSocket", "(Ljava/io/FileDescriptor;I)V", (void*) android_net_util_setupRaSocket },
 };
 

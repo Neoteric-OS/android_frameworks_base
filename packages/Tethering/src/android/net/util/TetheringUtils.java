@@ -28,6 +28,22 @@ import java.util.Objects;
  */
 public class TetheringUtils {
     /**
+     * Configures a socket for receiving and sending ICMPv6 neighbor advertisments.
+     * @param fd the socket's {@link FileDescriptor}.
+     * @param ifIndex the interface index.
+     */
+    public static native void setupNaSocket(FileDescriptor fd, int ifIndex)
+            throws SocketException;
+
+    /**
+     * Configures a socket for receiving and sending ICMPv6 neighbor solicitations.
+     * @param fd the socket's {@link FileDescriptor}.
+     * @param ifIndex the interface index.
+     */
+    public static native void setupNsSocket(FileDescriptor fd, int ifIndex)
+            throws SocketException;
+
+    /**
      * Configures a socket for receiving ICMPv6 router solicitations and sending advertisements.
      * @param fd the socket's {@link FileDescriptor}.
      * @param ifIndex the interface index.

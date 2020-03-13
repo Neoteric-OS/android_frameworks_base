@@ -160,10 +160,13 @@ public class IpServer extends StateMachine {
 
     /** Capture IpServer dependencies, for injection. */
     public abstract static class Dependencies {
-        /** Create an IpNeighborMonitor to be used by this IpServer */
-        public IpNeighborMonitor getIpNeighborMonitor(Handler handler, SharedLog log,
-                IpNeighborMonitor.NeighborEventConsumer consumer) {
-            return new IpNeighborMonitor(handler, log, consumer);
+        /**
+         * Create a DadProxyDaemon instance to be used by IpServer.
+         * To support multiple tethered interfaces concurrently DAD Proxy
+         * needs to be supported per IpServer instead of per upstream.
+         */
+        public DadProxyDaemon getDadProxyDaemon(Handler handler, InterfaceParams ifParams) {
+            return new DadProxyDaemon(handler, ifParams);
         }
 
         /** Create a RouterAdvertisementDaemon instance to be used by IpServer.*/
@@ -242,6 +245,7 @@ public class IpServer extends StateMachine {
     // Advertisements (otherwise, we do not add them to mLinkProperties at all).
     private LinkProperties mLastIPv6LinkProperties;
     private RouterAdvertisementDaemon mRaDaemon;
+    private DadProxyDaemon mDadProxyDaemon;
 
     // To be accessed only on the handler thread
     private int mDhcpServerStartIndex = 0;
@@ -681,6 +685,9 @@ public class IpServer extends StateMachine {
             return false;
         }
 
+        mDadProxyDaemon = mDeps.getDadProxyDaemon(getHandler(), mInterfaceParams);
+        // DAD Proxy starts after upstream iface is present
+
         return true;
     }
 
@@ -691,6 +698,11 @@ public class IpServer extends StateMachine {
         if (mRaDaemon != null) {
             mRaDaemon.stop();
             mRaDaemon = null;
+        }
+
+        if (mDadProxyDaemon != null) {
+            mDadProxyDaemon.stop();
+            mDadProxyDaemon = null;
         }
     }
 
@@ -710,10 +722,9 @@ public class IpServer extends StateMachine {
 
         RaParams params = null;
         int upstreamIfindex = 0;
+        final String upstreamIface = v6only.getInterfaceName();
 
         if (v6only != null) {
-            final String upstreamIface = v6only.getInterfaceName();
-
             params = new RaParams();
             // We advertise an mtu lower by 16, which is the closest multiple of 8 >= 14,
             // the ethernet header size.  This makes kernel ebpf tethering offload happy.
@@ -737,8 +748,6 @@ public class IpServer extends StateMachine {
                     params.dnses.add(dnsServer);
                 }
             }
-
-            upstreamIfindex = mDeps.getIfindex(upstreamIface);
         }
 
         // If v6only is null, we pass in null to setRaParams(), which handles
@@ -749,6 +758,7 @@ public class IpServer extends StateMachine {
 
         updateIpv6ForwardingRules(mLastIPv6UpstreamIfindex, upstreamIfindex, null);
         mLastIPv6UpstreamIfindex = upstreamIfindex;
+        mDadProxyDaemon.setUpstreamIface(upstreamIface);
     }
 
     private void configureLocalIPv6Routes(
