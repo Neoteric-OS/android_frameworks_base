@@ -21,4 +21,7 @@
     <!-- QS button to enable adaptive brightness -->
     <string name="accessibility_adaptive_brightness">Adaptive brightness</string>
 
+    <!-- Alert slide extras -->
+    <string name="volume_ringer_priority_only">Priority</string>
+    <string name="volume_ringer_alarms_only">Alarms</string>
 </resources>
