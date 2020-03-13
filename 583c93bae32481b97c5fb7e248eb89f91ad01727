@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ae32a944_3e11ed21",
+        "filename": "tests/net/common/java/android/net/KeepalivePacketDataTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-13T08:02:27Z",
+      "side": 1,
+      "message": "Nit: You can rewrite this to \n\nprivate fun String.address() \u003d InetAddress.parseNumericAddress(this)\n\nthen the Address(\"198.168.0.2\") can rewrite to \"198.168.0.2\".address().",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 90
+      },
+      "revId": "583c93bae32481b97c5fb7e248eb89f91ad01727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db1bda8_7676f63e",
+        "filename": "tests/net/common/java/android/net/KeepalivePacketDataTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-13T08:02:27Z",
+      "side": 1,
+      "message": "I think you don\u0027t need this because you are not using any inner object in this class.",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 18
+      },
+      "revId": "583c93bae32481b97c5fb7e248eb89f91ad01727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6b0f39f_5b274f91",
         "filename": "tests/net/common/java/android/net/KeepalivePacketDataTest.kt",
         "patchSetId": 2
@@ -46,6 +92,29 @@
       "revId": "583c93bae32481b97c5fb7e248eb89f91ad01727",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93043cd8_7493181a",
+        "filename": "tests/net/common/java/android/net/KeepalivePacketDataTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-13T08:02:27Z",
+      "side": 1,
+      "message": "Nit: You can assign default value for each arguments like \n\n    class TestKeepalivePacketData(\n        srcAddress: InetAddress? \u003d Address(\"198.168.0.2\"),\n        srcPort: Int \u003d 4243,\n        dstAddress: InetAddress? \u003d Address(\"198.168.0.2\"),\n        dstPort: Int \u003d 4244,\n        data: ByteArray \u003d byteArrayOf(12, 31, 22, 44)\n    ) : KeepalivePacketData(srcAddress, srcPort, dstAddress, dstPort, data)\n\nthen this can write to TestKeepalivePacketData(null)",
+      "range": {
+        "startLine": 56,
+        "startChar": 19,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "583c93bae32481b97c5fb7e248eb89f91ad01727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
