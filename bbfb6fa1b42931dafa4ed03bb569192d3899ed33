@@ -45,6 +45,30 @@
       "revId": "bbfb6fa1b42931dafa4ed03bb569192d3899ed33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a4d9fd_ff0e83d8",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-13T03:50:33Z",
+      "side": 1,
+      "message": "No, mActiveTetheringRequests is SparseArray which is more memory efficient than HashMap. But it do return removed object for #remove function.\nhttps://developer.android.com/reference/android/util/SparseArray#remove(int)",
+      "parentUuid": "69fa50c3_e50aecb7",
+      "range": {
+        "startLine": 707,
+        "startChar": 12,
+        "endLine": 715,
+        "endChar": 13
+      },
+      "revId": "bbfb6fa1b42931dafa4ed03bb569192d3899ed33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
