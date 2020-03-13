@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8cf3472_a6556240",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-13T03:42:26Z",
+      "side": 1,
+      "message": "Nit: since it\u0027s not very clear from the function calls (it\u0027s just a \"false\" parameter that means \"disable\"), maybe add a comment saying that if tethering is already enabled with a different request, disable before re-enabling ?",
+      "range": {
+        "startLine": 501,
+        "startChar": 72,
+        "endLine": 501,
+        "endChar": 80
+      },
+      "revId": "bbfb6fa1b42931dafa4ed03bb569192d3899ed33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69fa50c3_e50aecb7",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-13T03:42:26Z",
+      "side": 1,
+      "message": "I think this can be all replaced by:\nfinal TetheringRequestParcel request \u003d mActiveTetheringRequests.remove(interfaceType)",
+      "range": {
+        "startLine": 707,
+        "startChar": 12,
+        "endLine": 715,
+        "endChar": 13
+      },
+      "revId": "bbfb6fa1b42931dafa4ed03bb569192d3899ed33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
