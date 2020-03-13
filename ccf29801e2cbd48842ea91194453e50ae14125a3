@@ -94,6 +94,30 @@
       "revId": "ccf29801e2cbd48842ea91194453e50ae14125a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5da603_a554dd24",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-03-13T03:29:35Z",
+      "side": 1,
+      "message": "What I really asked is if this handler can run in main looper so that we don\u0027t need to create a new thread for that. But that\u0027s fine, it\u0027s not a big deal.",
+      "parentUuid": "910c705b_744e8996",
+      "range": {
+        "startLine": 449,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 70
+      },
+      "revId": "ccf29801e2cbd48842ea91194453e50ae14125a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
