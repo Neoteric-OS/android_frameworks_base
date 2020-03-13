@@ -14,8 +14,26 @@
 // limitations under the License.
 //
 
+java_defaults {
+    name: "TetheringPrivilegeTestsJniDefaults",
+    privileged: true,
+    jni_libs: [
+        "libdexmakerjvmtiagent",
+        "libstaticjvmtiagent",
+        "libtetherutilsjni",
+    ],
+    jni_uses_sdk_apis: true,
+    visibility: ["//visibility:private"],
+    libs: [
+        "framework-tethering",
+    ],
+}
+
 android_test {
     name: "TetheringPrivilegeTests",
+    defaults: [
+        "TetheringPrivilegeTestsJniDefaults",
+    ],
     srcs: [
         "src/**/*.java",
         "src/**/*.kt",
@@ -27,12 +45,9 @@ android_test {
         "mts",
     ],
     static_libs: [
+        "TetheringApiCurrentLib",
         "TetheringIntegrationTestsLib",
-    ],
-    jni_libs: [
-        // For mockito extended
-        "libdexmakerjvmtiagent",
-        "libstaticjvmtiagent",
+        "compatibility-device-util-axt",
     ],
     compile_multilib: "both",
 }
