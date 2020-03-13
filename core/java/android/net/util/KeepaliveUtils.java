@@ -88,6 +88,9 @@ public final class KeepaliveUtils {
             }
             ret[transport] = supported;
         }
+        // TRANSPORT_TEST allows one keepalive slot to allow for testing keepalive over test
+        // networks.
+        ret[NetworkCapabilities.TRANSPORT_TEST] = 1;
         return ret;
     }
 
