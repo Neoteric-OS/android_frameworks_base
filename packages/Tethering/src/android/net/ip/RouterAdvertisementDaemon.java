@@ -92,10 +92,6 @@ public class RouterAdvertisementDaemon {
 
     private static final int DAY_IN_SECONDS = 86_400;
 
-    private static final byte[] ALL_NODES = new byte[] {
-            (byte) 0xff, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
-    };
-
     private final InterfaceParams mInterface;
     private final InetSocketAddress mAllNodes;
 
@@ -243,7 +239,7 @@ public class RouterAdvertisementDaemon {
 
     public RouterAdvertisementDaemon(InterfaceParams ifParams) {
         mInterface = ifParams;
-        mAllNodes = new InetSocketAddress(getAllNodesForScopeId(mInterface.index), 0);
+        mAllNodes = new InetSocketAddress(TetheringUtils.getAllNodesForScopeId(mInterface.index), 0);
         mDeprecatedInfoTracker = new DeprecatedInfoTracker();
     }
 
@@ -365,7 +361,7 @@ public class RouterAdvertisementDaemon {
 
     private static Inet6Address getAllNodesForScopeId(int scopeId) {
         try {
-            return Inet6Address.getByAddress("ff02::1", ALL_NODES, scopeId);
+            return Inet6Address.getByAddress("ff02::1", TetheringUtils.ALL_NODES, scopeId);
         } catch (UnknownHostException uhe) {
             Log.wtf(TAG, "Failed to construct ff02::1 InetAddress: " + uhe);
             return null;

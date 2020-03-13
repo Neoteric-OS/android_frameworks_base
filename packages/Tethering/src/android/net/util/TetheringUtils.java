@@ -18,7 +18,9 @@ package android.net.util;
 import android.net.TetheringRequestParcel;
 
 import java.io.FileDescriptor;
+import java.net.Inet6Address;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Objects;
 
 /**
@@ -27,6 +29,24 @@ import java.util.Objects;
  * {@hide}
  */
 public class TetheringUtils {
+    public static final byte[] ALL_NODES = new byte[] {
+        (byte) 0xff, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+    };
+
+    /**
+     * Configures a socket for receiving and sending ICMPv6 neighbor advertisments.
+     * @param fd the socket's {@link FileDescriptor}.
+     */
+    public static native void setupNaSocket(FileDescriptor fd)
+            throws SocketException;
+
+    /**
+     * Configures a socket for receiving and sending ICMPv6 neighbor solicitations.
+     * @param fd the socket's {@link FileDescriptor}.
+     */
+    public static native void setupNsSocket(FileDescriptor fd)
+            throws SocketException;
+
     /**
      * Configures a socket for receiving ICMPv6 router solicitations and sending advertisements.
      * @param fd the socket's {@link FileDescriptor}.
@@ -53,5 +73,14 @@ public class TetheringUtils {
                 && Objects.equals(request.staticClientAddress, otherRequest.staticClientAddress)
                 && request.exemptFromEntitlementCheck == otherRequest.exemptFromEntitlementCheck
                 && request.showProvisioningUi == otherRequest.showProvisioningUi;
+    }
+
+    public static Inet6Address getAllNodesForScopeId(int scopeId) {
+        try {
+            return Inet6Address.getByAddress("ff02::1", ALL_NODES, scopeId);
+        } catch (UnknownHostException uhe) {
+            //Log.wtf(TAG, "Failed to construct ff02::1 InetAddress: " + uhe);
+            return null;
+        }
     }
 }
