@@ -107,6 +107,7 @@ import android.net.dhcp.DhcpServerCallbacks;
 import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.IDhcpServer;
 import android.net.ip.IpNeighborMonitor;
+import android.net.ip.DadProxy;
 import android.net.ip.IpServer;
 import android.net.ip.RouterAdvertisementDaemon;
 import android.net.util.InterfaceParams;
@@ -190,6 +191,7 @@ public class TetheringTest {
     @Mock private CarrierConfigManager mCarrierConfigManager;
     @Mock private UpstreamNetworkMonitor mUpstreamNetworkMonitor;
     @Mock private IPv6TetheringCoordinator mIPv6TetheringCoordinator;
+    @Mock private DadProxy mDadProxy;
     @Mock private RouterAdvertisementDaemon mRouterAdvertisementDaemon;
     @Mock private IpNeighborMonitor mIpNeighborMonitor;
     @Mock private IDhcpServer mDhcpServer;
@@ -266,6 +268,12 @@ public class TetheringTest {
     }
 
     public class MockIpServerDependencies extends IpServer.Dependencies {
+        @Override
+        public DadProxy getDadProxy(
+                Handler handler, InterfaceParams ifParams) {
+            return mDadProxy;
+        }
+
         @Override
         public RouterAdvertisementDaemon getRouterAdvertisementDaemon(
                 InterfaceParams ifParams) {
@@ -796,6 +804,7 @@ public class TetheringTest {
         verify(mNetd, times(1)).ipfwdAddInterfaceForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
 
         sendIPv6TetherUpdates(upstreamState);
+        verify(mDadProxy, times(1)).setUpstreamIface(notNull());
         verify(mRouterAdvertisementDaemon, never()).buildNewRa(any(), notNull());
         verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).startWithCallbacks(
                 any(), any());
@@ -822,6 +831,7 @@ public class TetheringTest {
         verify(mNetd, times(1)).ipfwdAddInterfaceForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
 
         sendIPv6TetherUpdates(upstreamState);
+        verify(mDadProxy, times(1)).setUpstreamIface(notNull());
         verify(mRouterAdvertisementDaemon, times(1)).buildNewRa(any(), notNull());
         verify(mNetd, times(1)).tetherApplyDnsInterfaces();
     }
@@ -838,6 +848,7 @@ public class TetheringTest {
                 any(), any());
 
         sendIPv6TetherUpdates(upstreamState);
+        verify(mDadProxy, times(1)).setUpstreamIface(notNull());
         verify(mRouterAdvertisementDaemon, times(1)).buildNewRa(any(), notNull());
         verify(mNetd, times(1)).tetherApplyDnsInterfaces();
     }
@@ -855,6 +866,7 @@ public class TetheringTest {
         verify(mNetd, times(1)).ipfwdAddInterfaceForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
 
         sendIPv6TetherUpdates(upstreamState);
+        verify(mDadProxy, times(1)).setUpstreamIface(notNull());
         verify(mRouterAdvertisementDaemon, times(1)).buildNewRa(any(), notNull());
         verify(mNetd, times(1)).tetherApplyDnsInterfaces();
     }

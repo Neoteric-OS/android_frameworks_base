@@ -117,6 +117,7 @@ public class IpServerTest {
     @Mock private IpServer.Callback mCallback;
     @Mock private SharedLog mSharedLog;
     @Mock private IDhcpServer mDhcpServer;
+    @Mock private DadProxy mDadProxy;
     @Mock private RouterAdvertisementDaemon mRaDaemon;
     @Mock private IpNeighborMonitor mIpNeighborMonitor;
     @Mock private IpServer.Dependencies mDependencies;
@@ -147,6 +148,7 @@ public class IpServerTest {
             }).run();
             return null;
         }).when(mDependencies).makeDhcpServer(any(), mDhcpParamsCaptor.capture(), any());
+        when(mDependencies.getDadProxy(null, any())).thenReturn(mDadProxy);
         when(mDependencies.getRouterAdvertisementDaemon(any())).thenReturn(mRaDaemon);
         when(mDependencies.getInterfaceParams(IFACE_NAME)).thenReturn(TEST_IFACE_PARAMS);
 
