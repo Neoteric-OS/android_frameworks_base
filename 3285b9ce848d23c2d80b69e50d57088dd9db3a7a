@@ -405,6 +405,30 @@
     },
     {
       "key": {
+        "uuid": "b368d9df_c5fadbe0",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-13T09:41:39Z",
+      "side": 1,
+      "message": "Per discsussed, we modify setDnsConfigurationForNetwork() and add two functions ( updateTransportsForNetwork() and updateLinkPropertiesForNetwork()). Both calls setDnsConfigurationForNetwork() if link properties or transports types are changed.",
+      "parentUuid": "a221261e_c415d10e",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 5
+      },
+      "revId": "3285b9ce848d23c2d80b69e50d57088dd9db3a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3404244b_efebe527",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 12

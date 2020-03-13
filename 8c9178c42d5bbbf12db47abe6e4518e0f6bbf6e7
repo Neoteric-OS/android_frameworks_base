@@ -640,6 +640,30 @@
       "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f921d5d3_4f17afa7",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-13T09:41:39Z",
+      "side": 1,
+      "message": "Set expected value and omit fields that with default values in testSetDnsConfiguration().Test all ResolverParamsParcel fields in assertResolverParamsEqual().\n\n        final ResolverParamsParcel expectedParams \u003d new ResolverParamsParcel();\n        expectedParams.netId \u003d TEST_NETID;\n        expectedParams.sampleValiditySeconds \u003d TEST_DEFAULT_SAMPLE_VALIDITY_SECONDS;\n        expectedParams.successThreshold \u003d TEST_DEFAULT_SUCCESS_THRESHOLD_PERCENT;\n        expectedParams.minSamples \u003d TEST_DEFAULT_MIN_SAMPLES;\n        expectedParams.maxSamples \u003d TEST_DEFAULT_MAX_SAMPLES;\n        expectedParams.servers \u003d new String[]{\"3.3.3.3\", \"4.4.4.4\"};\n        expectedParams.domains \u003d new String[]{};\n        expectedParams.tlsName \u003d \"\";\n        expectedParams.tlsServers \u003d new String[]{\"3.3.3.3\", \"4.4.4.4\"};\n        expectedParams.transportTypes \u003d TEST_TRANSPORT_TYPES;\n\texpectedParams.experimentalOptions \u003d new ResolverExperimentalOptionsParcel();\n        assertResolverParamsEqual(actualParams, expectedParams);",
+      "parentUuid": "434e4c52_185fe905",
+      "range": {
+        "startLine": 280,
+        "startChar": 68,
+        "endLine": 280,
+        "endChar": 73
+      },
+      "revId": "8c9178c42d5bbbf12db47abe6e4518e0f6bbf6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
