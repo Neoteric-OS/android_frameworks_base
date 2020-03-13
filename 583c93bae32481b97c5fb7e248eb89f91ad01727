@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a71a6ca_27e5318a",
+        "filename": "tests/net/common/java/android/net/KeepalivePacketDataTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-13T03:50:36Z",
+      "side": 1,
+      "message": "Compiler will consider it reassigned in l.63.",
+      "parentUuid": "d6b0f39f_5b274f91",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "583c93bae32481b97c5fb7e248eb89f91ad01727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15343bba_5d967183",
         "filename": "tests/net/common/java/android/net/KeepalivePacketDataTest.kt",
         "patchSetId": 2
@@ -68,6 +92,54 @@
       "revId": "583c93bae32481b97c5fb7e248eb89f91ad01727",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a84406d_6ac1bc9f",
+        "filename": "tests/net/common/java/android/net/KeepalivePacketDataTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-13T03:50:36Z",
+      "side": 1,
+      "message": "Separate into different test.",
+      "parentUuid": "7f621012_3070950c",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 62
+      },
+      "revId": "583c93bae32481b97c5fb7e248eb89f91ad01727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de3854d3_6d12728d",
+        "filename": "tests/net/common/java/android/net/KeepalivePacketDataTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-13T03:50:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15343bba_5d967183",
+      "range": {
+        "startLine": 96,
+        "startChar": 49,
+        "endLine": 96,
+        "endChar": 60
+      },
+      "revId": "583c93bae32481b97c5fb7e248eb89f91ad01727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
