@@ -2582,7 +2582,7 @@ public class ConnectivityManager {
         };
 
         final TetheringRequest request = new TetheringRequest.Builder(type)
-                .setSilentProvisioning(!showProvisioningUi).build();
+                .setShowEntitlementUi(showProvisioningUi).build();
 
         mTetheringManager.startTethering(request, executor, tetheringCallback);
     }
@@ -2802,11 +2802,12 @@ public class ConnectivityManager {
     public static final int TETHER_ERROR_UNAVAIL_IFACE =
             TetheringManager.TETHER_ERROR_UNAVAIL_IFACE;
     /**
-     * @deprecated Use {@link TetheringManager#TETHER_ERROR_MASTER_ERROR}.
+     * @deprecated Use {@link TetheringManager#TETHER_ERROR_INTERNAL_ERROR}.
      * {@hide}
      */
     @Deprecated
-    public static final int TETHER_ERROR_MASTER_ERROR = TetheringManager.TETHER_ERROR_MASTER_ERROR;
+    public static final int TETHER_ERROR_MASTER_ERROR =
+            TetheringManager.TETHER_ERROR_INTERNAL_ERROR;
     /**
      * @deprecated Use {@link TetheringManager#TETHER_ERROR_TETHER_IFACE_ERROR}.
      * {@hide}
@@ -2822,19 +2823,19 @@ public class ConnectivityManager {
     public static final int TETHER_ERROR_UNTETHER_IFACE_ERROR =
             TetheringManager.TETHER_ERROR_UNTETHER_IFACE_ERROR;
     /**
-     * @deprecated Use {@link TetheringManager#TETHER_ERROR_ENABLE_NAT_ERROR}.
+     * @deprecated Use {@link TetheringManager#TETHER_ERROR_ENABLE_FORWARDING_ERROR}.
      * {@hide}
      */
     @Deprecated
     public static final int TETHER_ERROR_ENABLE_NAT_ERROR =
-            TetheringManager.TETHER_ERROR_ENABLE_NAT_ERROR;
+            TetheringManager.TETHER_ERROR_ENABLE_FORWARDING_ERROR;
     /**
-     * @deprecated Use {@link TetheringManager#TETHER_ERROR_DISABLE_NAT_ERROR}.
+     * @deprecated Use {@link TetheringManager#TETHER_ERROR_DISABLE_FORWARDING_ERROR}.
      * {@hide}
      */
     @Deprecated
     public static final int TETHER_ERROR_DISABLE_NAT_ERROR =
-            TetheringManager.TETHER_ERROR_DISABLE_NAT_ERROR;
+            TetheringManager.TETHER_ERROR_DISABLE_FORWARDING_ERROR;
     /**
      * @deprecated Use {@link TetheringManager#TETHER_ERROR_IFACE_CFG_ERROR}.
      * {@hide}
@@ -2843,13 +2844,13 @@ public class ConnectivityManager {
     public static final int TETHER_ERROR_IFACE_CFG_ERROR =
             TetheringManager.TETHER_ERROR_IFACE_CFG_ERROR;
     /**
-     * @deprecated Use {@link TetheringManager#TETHER_ERROR_PROVISION_FAILED}.
+     * @deprecated Use {@link TetheringManager#TETHER_ERROR_PROVISIONING_FAILED}.
      * {@hide}
      */
     @SystemApi
     @Deprecated
     public static final int TETHER_ERROR_PROVISION_FAILED =
-            TetheringManager.TETHER_ERROR_PROVISION_FAILED;
+            TetheringManager.TETHER_ERROR_PROVISIONING_FAILED;
     /**
      * @deprecated Use {@link TetheringManager#TETHER_ERROR_DHCPSERVER_ERROR}.
      * {@hide}
