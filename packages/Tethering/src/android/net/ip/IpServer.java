@@ -1035,7 +1035,7 @@ public class IpServer extends StateMachine {
                 case CMD_START_TETHERING_ERROR:
                 case CMD_STOP_TETHERING_ERROR:
                 case CMD_SET_DNS_FORWARDERS_ERROR:
-                    mLastError = TetheringManager.TETHER_ERROR_MASTER_ERROR;
+                    mLastError = TetheringManager.TETHER_ERROR_INTERNAL_ERROR;
                     transitionTo(mInitialState);
                     break;
                 default:
@@ -1166,7 +1166,7 @@ public class IpServer extends StateMachine {
                         } catch (RemoteException | ServiceSpecificException e) {
                             mLog.e("Exception enabling NAT: " + e.toString());
                             cleanupUpstream();
-                            mLastError = TetheringManager.TETHER_ERROR_ENABLE_NAT_ERROR;
+                            mLastError = TetheringManager.TETHER_ERROR_ENABLE_FORWARDING_ERROR;
                             transitionTo(mInitialState);
                             return true;
                         }
