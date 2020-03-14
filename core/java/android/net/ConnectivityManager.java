@@ -2582,7 +2582,7 @@ public class ConnectivityManager {
         };
 
         final TetheringRequest request = new TetheringRequest.Builder(type)
-                .setSilentProvisioning(!showProvisioningUi).build();
+                .setShowEntitlementUi(showProvisioningUi).build();
 
         mTetheringManager.startTethering(request, executor, tetheringCallback);
     }
