@@ -96,9 +96,8 @@ package android.net {
     method public void onTetheringEntitlementResult(int);
   }
 
-  public abstract static class TetheringManager.StartTetheringCallback {
-    ctor public TetheringManager.StartTetheringCallback();
-    method public void onTetheringFailed(int);
+  public static interface TetheringManager.StartTetheringCallback {
+    method public default void onTetheringFailed(int);
     method public void onTetheringStarted();
   }
 
@@ -107,18 +106,18 @@ package android.net {
     method public void onClientsChanged(@NonNull java.util.Collection<android.net.TetheredClient>);
     method public void onError(@NonNull String, int);
     method public void onOffloadStatusChanged(int);
-    method @Deprecated public void onTetherableInterfaceRegexpsChanged(@NonNull android.net.TetheringManager.TetheringInterfaceRegexps);
+    method public void onTetherableInterfaceRegexpsChanged(@NonNull android.net.TetheringManager.TetheringInterfaceRegexps);
     method public void onTetherableInterfacesChanged(@NonNull java.util.List<java.lang.String>);
     method public void onTetheredInterfacesChanged(@NonNull java.util.List<java.lang.String>);
     method public void onTetheringSupported(boolean);
     method public void onUpstreamChanged(@Nullable android.net.Network);
   }
 
-  @Deprecated public static class TetheringManager.TetheringInterfaceRegexps {
-    ctor @Deprecated public TetheringManager.TetheringInterfaceRegexps(@NonNull String[], @NonNull String[], @NonNull String[]);
-    method @Deprecated @NonNull public java.util.List<java.lang.String> getTetherableBluetoothRegexs();
-    method @Deprecated @NonNull public java.util.List<java.lang.String> getTetherableUsbRegexs();
-    method @Deprecated @NonNull public java.util.List<java.lang.String> getTetherableWifiRegexs();
+  public static class TetheringManager.TetheringInterfaceRegexps {
+    ctor public TetheringManager.TetheringInterfaceRegexps(@NonNull String[], @NonNull String[], @NonNull String[]);
+    method @NonNull public java.util.List<java.lang.String> getTetherableBluetoothRegexs();
+    method @NonNull public java.util.List<java.lang.String> getTetherableUsbRegexs();
+    method @NonNull public java.util.List<java.lang.String> getTetherableWifiRegexs();
   }
 
   public static class TetheringManager.TetheringRequest {
@@ -127,6 +126,10 @@ package android.net {
   public static class TetheringManager.TetheringRequest.Builder {
     ctor public TetheringManager.TetheringRequest.Builder(int);
     method @NonNull public android.net.TetheringManager.TetheringRequest build();
+    method @Nullable public android.net.LinkAddress getStaticServerAddress();
+    method public int getTetheringType();
+    method public boolean isExemptFromEntitlementCheck();
+    method public boolean isShowEntitlementUi();
     method @NonNull @RequiresPermission("android.permission.TETHER_PRIVILEGED") public android.net.TetheringManager.TetheringRequest.Builder setExemptFromEntitlementCheck(boolean);
     method @NonNull @RequiresPermission("android.permission.TETHER_PRIVILEGED") public android.net.TetheringManager.TetheringRequest.Builder setSilentProvisioning(boolean);
     method @NonNull @RequiresPermission("android.permission.TETHER_PRIVILEGED") public android.net.TetheringManager.TetheringRequest.Builder useStaticIpv4Addresses(@NonNull android.net.LinkAddress);
