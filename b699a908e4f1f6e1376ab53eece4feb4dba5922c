@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a07fe73b_2e752274",
+        "filename": "api/module-lib-current.txt",
+        "patchSetId": 20
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-16T13:42:46Z",
+      "side": 1,
+      "message": "getClientStaticIpv4Address?",
+      "range": {
+        "startLine": 129,
+        "startChar": 52,
+        "endLine": 129,
+        "endChar": 74
+      },
+      "revId": "b699a908e4f1f6e1376ab53eece4feb4dba5922c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20fd0943_e7e03509",
+        "filename": "api/module-lib-current.txt",
+        "patchSetId": 20
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-16T13:42:46Z",
+      "side": 1,
+      "message": "This isn\u0027t really a server. More appropriate words would be \"router\", or \"hotspot\". Or maybe just nothing? Maybe just call it getStaticIpv4Address? Actually, maybe getLocalIpv4Address is best.",
+      "range": {
+        "startLine": 130,
+        "startChar": 52,
+        "endLine": 130,
+        "endChar": 74
+      },
+      "revId": "b699a908e4f1f6e1376ab53eece4feb4dba5922c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d58aed3_f72e73ab",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-16T13:42:46Z",
+      "side": 1,
+      "message": "A DHCP server will be started, but will only be able to offer the client address. The two addresses must be in the same prefix.",
+      "range": {
+        "startLine": 573,
+        "startChar": 0,
+        "endLine": 575,
+        "endChar": 61
+      },
+      "revId": "b699a908e4f1f6e1376ab53eece4feb4dba5922c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd0c6ae_2817b95b",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-16T13:42:46Z",
+      "side": 1,
+      "message": "If you rename the Builder method to getStaticIpv4Address (or getLocalStaticIpv4Address or getLocalIpv4Address), then rename this accordingly. Remember to update the documentation above.",
+      "range": {
+        "startLine": 582,
+        "startChar": 77,
+        "endLine": 582,
+        "endChar": 90
+      },
+      "revId": "b699a908e4f1f6e1376ab53eece4feb4dba5922c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd4cd31_d741ffc5",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-16T13:42:46Z",
+      "side": 1,
+      "message": "You should also check that the the addresses are in the same prefix. The easiest way to do this might be to check that new IpPrefix(serverAddress.toString()).equals(new IpPrefix(clientAddress.toString()), because IpPrefix will do the truncation for you.\n\nYou should also put these on the server side (Tethering.java, perhaps?), because a malicious app can easily craft and send to the tethering service a TetheringRequest that does not pass these checks. That doesn\u0027t need to be in this CL.",
+      "range": {
+        "startLine": 586,
+        "startChar": 20,
+        "endLine": 586,
+        "endChar": 86
+      },
+      "revId": "b699a908e4f1f6e1376ab53eece4feb4dba5922c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb05e86_8ae154bd",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-16T13:42:46Z",
+      "side": 1,
+      "message": "Per IM conversation: I thought the purpose of mActiveTetheringRequests was to track the latest request for each tethering type, so that the following happens:\n\n1. startTethering with IP address X\n2. time passes.\n3. startTethering with IP address Y\n\nThen #3 would stop the downstream and restart it.\n\nBut I now see that it\u0027s just used locally for the time between the call to startTethering (which asks the downstream to start) and the time when the downstream actually calls back and we start IpServer.\n\nThat said, it would be good to support changing the configuration though. Maybe we could do it with something like this?\n\n    private static class TetheringRequestInfo {\n        TetheringRequestParcel request;\n        boolean isActive;  // true iff this request is currently active, i.e., being served by IpServer\n    }\n\nWe could add one of these in startTethering with isActive \u003d false, and then set isActive to true when we actually start the IpServer. Then, if someone later calls startTethering, and there is an active configuration, we would stop IpServer and start it again.\n\nNot for this CL.",
+      "range": {
+        "startLine": 501,
+        "startChar": 0,
+        "endLine": 507,
+        "endChar": 0
+      },
+      "revId": "b699a908e4f1f6e1376ab53eece4feb4dba5922c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a69471_9a8ffa77",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-16T13:42:46Z",
+      "side": 1,
+      "message": "sent by setBluetoothTethering.\n\nAlso would suggest:\n\n    // The result of Bluetooth tethering will be sent by #setBluetoothTethering.\n    if (type !\u003d TETHERING_BLUETOOTH) {\n        sendTetherResult(listener, result, type);\n    }",
+      "range": {
+        "startLine": 551,
+        "startChar": 48,
+        "endLine": 552,
+        "endChar": 34
+      },
+      "revId": "b699a908e4f1f6e1376ab53eece4feb4dba5922c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af7161c_46a34a06",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-16T13:42:46Z",
+      "side": 1,
+      "message": "It\u0027s suspicious that this code code checks TetherStates and mActiveTetheringRequests synchronously, but then actually takes effect asynchronously by sending a message to IpServer. I can\u0027t tell without more thought whether it\u0027s correct or incorrect, and whether it was already incorrect to some extent. Perhaps the lock makes it correct.\n\nCan you add a comment explaining that this code cannot race with untether() because they both synchronize on mPublicSync?",
+      "range": {
+        "startLine": 710,
+        "startChar": 0,
+        "endLine": 716,
+        "endChar": 29
+      },
+      "revId": "b699a908e4f1f6e1376ab53eece4feb4dba5922c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
