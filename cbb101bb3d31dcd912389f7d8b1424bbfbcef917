@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc344abb_971e0cc9",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-16T05:26:14Z",
+      "side": 1,
+      "message": "packets",
+      "range": {
+        "startLine": 254,
+        "startChar": 67,
+        "endLine": 254,
+        "endChar": 73
+      },
+      "revId": "cbb101bb3d31dcd912389f7d8b1424bbfbcef917",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef67cb8_07f10b94",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-16T05:26:14Z",
+      "side": 1,
+      "message": "given",
+      "range": {
+        "startLine": 255,
+        "startChar": 43,
+        "endLine": 255,
+        "endChar": 50
+      },
+      "revId": "cbb101bb3d31dcd912389f7d8b1424bbfbcef917",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3cfab9_90710881",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-16T05:26:14Z",
+      "side": 1,
+      "message": "Do we have the telephony UID for VT, or something else ? If in R it\u0027s only ever UID_TETHERING or UID_ALL, then your current doc is fine.",
+      "range": {
+        "startLine": 336,
+        "startChar": 37,
+        "endLine": 336,
+        "endChar": 39
+      },
+      "revId": "cbb101bb3d31dcd912389f7d8b1424bbfbcef917",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ee9ee8_fc10d72a",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-16T05:26:14Z",
+      "side": 1,
+      "message": "NO\n\nWhat if this entry contains stats for multiple networks, only some of which were the default ?",
+      "range": {
+        "startLine": 347,
+        "startChar": 56,
+        "endLine": 347,
+        "endChar": 59
+      },
+      "revId": "cbb101bb3d31dcd912389f7d8b1424bbfbcef917",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63da6c36_57299d1d",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-16T05:26:14Z",
+      "side": 1,
+      "message": "Suggest just removing this part of the comment. It doesn\u0027t bring anything (readers really are interested in knowing whether IP headers are interested, but they don\u0027t care about where it\u0027s measured) and I\u0027m not sure it\u0027s even clear (the application layer is traditionally \"above\" the network layer and it doesn\u0027t see the IP headers).",
+      "range": {
+        "startLine": 354,
+        "startChar": 80,
+        "endLine": 355,
+        "endChar": 67
+      },
+      "revId": "cbb101bb3d31dcd912389f7d8b1424bbfbcef917",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
