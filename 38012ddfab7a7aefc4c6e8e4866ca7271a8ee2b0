@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48c414f9_4da46629",
+        "filename": "tests/net/common/java/android/net/KeepalivePacketDataTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-16T07:04:10Z",
+      "side": 1,
+      "message": "Please do optimize imports.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "38012ddfab7a7aefc4c6e8e4866ca7271a8ee2b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
