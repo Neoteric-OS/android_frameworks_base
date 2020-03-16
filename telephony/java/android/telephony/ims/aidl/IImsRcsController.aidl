@@ -19,6 +19,7 @@ package android.telephony.ims.aidl;
 import android.net.Uri;
 import android.telephony.ims.aidl.IImsCapabilityCallback;
 import android.telephony.ims.aidl.IRcsUceControllerCallback;
+import android.telephony.ims.aidl.IRcsUcePublishStateListener;
 import android.telephony.ims.aidl.IImsRegistrationCallback;
 
 import com.android.internal.telephony.IIntegerConsumer;
@@ -44,6 +45,8 @@ interface IImsRcsController {
     // ImsUceAdapter specific
     void requestCapabilities(int subId, in List<Uri> contactNumbers, IRcsUceControllerCallback c);
     int getUcePublishState(int subId);
+    void registerUcePublishStateListener(int subId, IRcsUcePublishStateListener c);
+    void unregisterUcePublishStateListener(int subId, IRcsUcePublishStateListener c);
     boolean isUceSettingEnabled(int subId);
     void setUceSettingEnabled(int subId, boolean isEnabled);
 }

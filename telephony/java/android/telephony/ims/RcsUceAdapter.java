@@ -29,9 +29,10 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.ServiceSpecificException;
 import android.telephony.ims.aidl.IImsRcsController;
 import android.telephony.ims.aidl.IRcsUceControllerCallback;
-import android.telephony.ims.feature.RcsFeature;
+import android.telephony.ims.aidl.IRcsUcePublishStateListener;
 import android.util.Log;
 
 import java.lang.annotation.Retention;
@@ -216,6 +217,58 @@ public class RcsUceAdapter {
         }
     }
 
+    /**
+     * An application can use {@link #registerPublishStateListener} to register a
+     * {@link PublishStateCallback), which will notify the user when the publish state to the
+     * network changes.
+     */
+    public static class PublishStateCallback {
+
+        private static class PublishStateBinder extends IRcsUcePublishStateListener.Stub {
+
+            private final PublishStateCallback mLocalCallback;
+            private Executor mExecutor;
+
+            PublishStateBinder(PublishStateCallback c) {
+                mLocalCallback = c;
+            }
+
+            @Override
+            public void onPublishStateChanged(int publishState) {
+                if (mLocalCallback == null) return;
+
+                long callingIdentity = Binder.clearCallingIdentity();
+                try {
+                    mExecutor.execute(() -> mLocalCallback.onChanged(publishState));
+                } finally {
+                    restoreCallingIdentity(callingIdentity);
+                }
+            }
+
+            private void setExecutor(Executor executor) {
+                mExecutor = executor;
+            }
+        }
+
+        private final PublishStateBinder mBinder = new PublishStateBinder(this);
+
+        /**@hide*/
+        public final IRcsUcePublishStateListener getBinder() {
+            return mBinder;
+        }
+
+        private void setExecutor(Executor executor) {
+            mBinder.setExecutor(executor);
+        }
+
+        /**
+         * Notifies the listener when the publish state has changed.
+         * @param publishState The latest update to the publish state.
+         */
+        public void onChanged(@PublishState int publishState) {
+        }
+    }
+
     private final int mSubId;
 
     /**
@@ -292,6 +345,8 @@ public class RcsUceAdapter {
 
         try {
             imsRcsController.requestCapabilities(mSubId, contactNumbers, internalCallback);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
         } catch (RemoteException e) {
             Log.e(TAG, "Error calling IImsRcsController#requestCapabilities", e);
             throw new ImsException("Remote IMS Service is not available",
@@ -321,8 +376,93 @@ public class RcsUceAdapter {
 
         try {
             return imsRcsController.getUcePublishState(mSubId);
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
         } catch (RemoteException e) {
             Log.e(TAG, "Error calling IImsRcsController#getUcePublishState", e);
+            throw new ImsException("Remote IMS Service is not available",
+                    ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
+    }
+
+    /**
+     * Registers a {@link PublishStateCallback} with the system, which will provide publish state
+     * updates for the subscription specified in {@link ImsManager@getRcsManager(subid)}.
+     * <p>
+     * Use {@link SubscriptionManager.OnSubscriptionsChangedListener} to listen to subscription
+     * changed events and call {@link #unregisterPublishStateListener} to clean up.
+     * <p>
+     * The registered {@link PublishStateCallback} will also receive a callback when it is
+     * registered with the current publish state.
+     *
+     * @param executor The executor the listener callback events should be run on.
+     * @param c The {@link PublishStateListener} to be added.
+     * @throws ImsException if the subscription associated with this callback is valid, but
+     * the {@link ImsService} associated with the subscription is not available. This can happen if
+     * the service crashed, for example. See {@link ImsException#getCode()} for a more detailed
+     * reason.
+     */
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public void registerPublishStateCallback(@NonNull @CallbackExecutor Executor executor,
+            @NonNull PublishStateCallback c) throws ImsException {
+        if (c == null) {
+            throw new IllegalArgumentException("Must include a non-null PublishStateCallback.");
+        }
+        if (executor == null) {
+            throw new IllegalArgumentException("Must include a non-null Executor.");
+        }
+
+        IImsRcsController imsRcsController = getIImsRcsController();
+        if (imsRcsController == null) {
+            Log.e(TAG, "registerPublishStateCallback : IImsRcsController is null");
+            throw new ImsException("Cannot find remote IMS service",
+                    ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
+
+        c.setExecutor(executor);
+        try {
+            imsRcsController.registerUcePublishStateListener(mSubId, c.getBinder());
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling IImsRcsController#registerUcePublishStateListener", e);
+            throw new ImsException("Remote IMS Service is not available",
+                    ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
+    }
+
+    /**
+     * Removes an existing {@link PublishStateCallback}.
+     * <p>
+     * When the subscription associated with this callback is removed
+     * (SIM removed, ESIM swap,etc...), this listener will automatically be removed. If this method
+     * is called for an inactive subscription, it will result in a no-op.
+     *
+     * @param c The listener to be unregistered.
+     * @throws ImsException if the subscription associated with this callback is valid, but
+     * the {@link ImsService} associated with the subscription is not available. This can happen if
+     * the service crashed, for example. See {@link ImsException#getCode()} for a more detailed
+     * reason.
+     */
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public void unregisterPublishStateCallback(@NonNull PublishStateCallback c)
+            throws ImsException {
+        if (c == null) {
+            throw new IllegalArgumentException("Must include a non-null PublishStateCallback.");
+        }
+        IImsRcsController imsRcsController = getIImsRcsController();
+        if (imsRcsController == null) {
+            Log.e(TAG, "unregisterPublishStateCallback: IImsRcsController is null");
+            throw new ImsException("Cannot find remote IMS service",
+                    ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
+
+        try {
+            imsRcsController.unregisterUcePublishStateListener(mSubId, c.getBinder());
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling IImsRcsController#unregisterUcePublishStateListener", e);
             throw new ImsException("Remote IMS Service is not available",
                     ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
         }
