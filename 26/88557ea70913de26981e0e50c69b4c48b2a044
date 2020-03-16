@@ -1,0 +1,13 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Albert Wang <albertccwang@google.com>
+Code-Review+1: James Wei <jameswei@google.com>
+Code-Review+1: Philip P. Moltmann <moltmann@google.com>
+Verified+1: James Wei <jameswei@google.com>
+Autosubmit+1: James Wei <jameswei@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Mon, 16 Mar 2020 04:30:32 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1256109
+Project: platform/frameworks/base
+Branch: refs/heads/master
