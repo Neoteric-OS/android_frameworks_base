@@ -9629,6 +9629,21 @@ public class ActivityManagerService extends IActivityManager.Stub
         if (crashInfo != null && crashInfo.crashTag != null && !crashInfo.crashTag.isEmpty()) {
             sb.append("Crash-Tag: ").append(crashInfo.crashTag).append("\n");
         }
+        if (process != null) {
+            sb.append("OOM: ")
+                    .append(process.maxAdj)
+                    .append("  ")
+                    .append(process.getCurRawAdj())
+                    .append("  ")
+                    .append(process.setRawAdj)
+                    .append("  ")
+                    .append(process.curAdj)
+                    .append("  ")
+                    .append(process.setAdj)
+                    .append("  ")
+                    .append(process.verifiedAdj)
+                    .append("\n");
+        }
         sb.append("\n");
 
         // Do the rest in a worker thread to avoid blocking the caller on I/O
