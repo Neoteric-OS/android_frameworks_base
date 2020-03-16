@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5414fb83_b4aaefeb",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-16T08:59:13Z",
+      "side": 1,
+      "message": "Sorry I can\u0027t API+1 a change without an implementation. It\u0027s against the rules.",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 318,
+        "endChar": 80
+      },
+      "revId": "2d4d8eb523d9f5f0678a48a6867982a53f50e6a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
