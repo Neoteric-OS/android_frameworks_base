@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdf7d03a_e918386d",
+        "filename": "tests/net/common/java/android/net/KeepalivePacketDataTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-16T09:23:19Z",
+      "side": 1,
+      "message": "Nit: InetAddresses (this one is deprecated)",
+      "range": {
+        "startLine": 49,
+        "startChar": 35,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "880d92bcf039298a334a02c7a46600eca95f1b89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
