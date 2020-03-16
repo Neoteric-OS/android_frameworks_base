@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90031d20_19b7a551",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-16T06:34:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc344abb_971e0cc9",
+      "range": {
+        "startLine": 254,
+        "startChar": 67,
+        "endLine": 254,
+        "endChar": 73
+      },
+      "revId": "cbb101bb3d31dcd912389f7d8b1424bbfbcef917",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ef67cb8_07f10b94",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "cbb101bb3d31dcd912389f7d8b1424bbfbcef917",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91d7aad_00126207",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-16T06:34:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ef67cb8_07f10b94",
+      "range": {
+        "startLine": 255,
+        "startChar": 43,
+        "endLine": 255,
+        "endChar": 50
+      },
+      "revId": "cbb101bb3d31dcd912389f7d8b1424bbfbcef917",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "eb5a08d1_0c58f2ae",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-16T06:34:10Z",
+      "side": 1,
+      "message": "no, VT does not identify by UID, we have IFACE_VT in l.70.",
+      "parentUuid": "2f3cfab9_90710881",
+      "range": {
+        "startLine": 336,
+        "startChar": 37,
+        "endLine": 336,
+        "endChar": 39
+      },
+      "revId": "cbb101bb3d31dcd912389f7d8b1424bbfbcef917",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23ee9ee8_fc10d72a",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b952b388_dc40a7ca",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-16T06:34:10Z",
+      "side": 1,
+      "message": "Done, then it should be sperated to a different entry.",
+      "parentUuid": "23ee9ee8_fc10d72a",
+      "range": {
+        "startLine": 347,
+        "startChar": 56,
+        "endLine": 347,
+        "endChar": 59
+      },
+      "revId": "cbb101bb3d31dcd912389f7d8b1424bbfbcef917",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63da6c36_57299d1d",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "cbb101bb3d31dcd912389f7d8b1424bbfbcef917",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d6c0c0_e35353ed",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-16T06:34:10Z",
+      "side": 1,
+      "message": "Done, see if the newest patch works for you.",
+      "parentUuid": "63da6c36_57299d1d",
+      "range": {
+        "startLine": 354,
+        "startChar": 80,
+        "endLine": 355,
+        "endChar": 67
+      },
+      "revId": "cbb101bb3d31dcd912389f7d8b1424bbfbcef917",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
