@@ -1065,12 +1065,17 @@ public class TetheringTest {
         when(mUserManager.getUserRestrictions()).thenReturn(newRestrictions);
 
         final Tethering.UserRestrictionActionListener ural =
-                new Tethering.UserRestrictionActionListener(mUserManager, mockTethering);
+                new Tethering.UserRestrictionActionListener(
+                        mUserManager, mockTethering, mNotificationUpdater);
         ural.mDisallowTethering = currentDisallow;
 
         ural.onUserRestrictionsChanged();
 
-        verify(mockTethering, times(expectedInteractionsWithShowNotification))
+        verify(mNotificationUpdater, times(expectedInteractionsWithShowNotification))
+                .notifyTetheringDisabledByRestriction();
+        final boolean hasActiveTetheringIfaces = activeTetheringIfacesList.length > 0;
+        verify(mockTethering,
+                times(hasActiveTetheringIfaces ? expectedInteractionsWithShowNotification : 0))
                 .untetherAll();
     }
 
@@ -1079,7 +1084,7 @@ public class TetheringTest {
         final String[] emptyActiveIfacesList = new String[]{};
         final boolean currDisallow = false;
         final boolean nextDisallow = true;
-        final int expectedInteractionsWithShowNotification = 0;
+        final int expectedInteractionsWithShowNotification = 1;
 
         runUserRestrictionsChange(currDisallow, nextDisallow, emptyActiveIfacesList,
                 expectedInteractionsWithShowNotification);

@@ -296,7 +296,8 @@ public class Tethering {
 
         final UserManager userManager = (UserManager) mContext.getSystemService(
                 Context.USER_SERVICE);
-        mTetheringRestriction = new UserRestrictionActionListener(userManager, this);
+        mTetheringRestriction = new UserRestrictionActionListener(
+                userManager, this, mNotificationUpdater);
         mExecutor = new TetheringThreadExecutor(mHandler);
         mActiveDataSubIdListener = new ActiveDataSubIdListener(mExecutor);
 
@@ -961,11 +962,14 @@ public class Tethering {
     protected static class UserRestrictionActionListener {
         private final UserManager mUserManager;
         private final Tethering mWrapper;
+        private final TetheringNotificationUpdater mNotificationUpdater;
         public boolean mDisallowTethering;
 
-        public UserRestrictionActionListener(UserManager um, Tethering wrapper) {
+        public UserRestrictionActionListener(@NonNull UserManager um, @NonNull Tethering wrapper,
+                @NonNull TetheringNotificationUpdater updater) {
             mUserManager = um;
             mWrapper = wrapper;
+            mNotificationUpdater = updater;
             mDisallowTethering = false;
         }
 
@@ -984,13 +988,22 @@ public class Tethering {
                 return;
             }
 
-            // TODO: Add user restrictions notification.
-            final boolean isTetheringActiveOnDevice = (mWrapper.getTetheredIfaces().length != 0);
-
-            if (newlyDisallowed && isTetheringActiveOnDevice) {
-                mWrapper.untetherAll();
-                // TODO(b/148139325): send tetheringSupported on restriction change
+            if (!newlyDisallowed) {
+                // Clear the restricted notification when user is allowed to have tethering
+                // function.
+                mNotificationUpdater.tetheringRestrictionLifted();
+                return;
             }
+
+            // Restricted notification is shown when tethering function is disallowed on
+            // user's device.
+            mNotificationUpdater.notifyTetheringDisabledByRestriction();
+
+            // Untether from all downstreams since tethering is disallowed.
+            if (mWrapper.getTetheredIfaces().length != 0) {
+                mWrapper.untetherAll();
+            }
+            // TODO(b/148139325): send tetheringSupported on restriction change
         }
     }
 
