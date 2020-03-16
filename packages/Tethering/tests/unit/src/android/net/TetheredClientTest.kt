@@ -33,8 +33,10 @@ private val TEST_MACADDR = MacAddress.fromBytes(byteArrayOf(12, 23, 34, 45, 56, 
 private val TEST_OTHER_MACADDR = MacAddress.fromBytes(byteArrayOf(23, 34, 45, 56, 67, 78))
 private val TEST_ADDR1 = makeLinkAddress("192.168.113.3", prefixLength = 24, expTime = 123L)
 private val TEST_ADDR2 = makeLinkAddress("fe80::1:2:3", prefixLength = 64, expTime = 456L)
+private val TEST_ADDR2_OTHEREXP = makeLinkAddress("fe80::1:2:3", prefixLength = 64, expTime = 789L)
 private val TEST_ADDRINFO1 = AddressInfo(TEST_ADDR1, "test_hostname")
 private val TEST_ADDRINFO2 = AddressInfo(TEST_ADDR2, null)
+private val TEST_ADDRINFO2_OTHEREXP = AddressInfo(TEST_ADDR2_OTHEREXP, null)
 
 private fun makeLinkAddress(addr: String, prefixLength: Int, expTime: Long) = LinkAddress(
         parseNumericAddress(addr),
@@ -85,6 +87,12 @@ class TetheredClientTest {
                 TEST_MACADDR,
                 listOf(TEST_ADDRINFO1, TEST_ADDRINFO2),
                 TETHERING_USB))
+
+        // Address with different expiration
+        assertNotEquals(makeTestClient(), TetheredClient(
+                TEST_MACADDR,
+                listOf(TEST_ADDRINFO1, TEST_ADDRINFO2_OTHEREXP),
+                TETHERING_BLUETOOTH))
     }
 
     @Test
