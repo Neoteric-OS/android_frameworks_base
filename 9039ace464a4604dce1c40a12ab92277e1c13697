@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9f2beff_418eb8e9",
+        "filename": "tests/net/common/java/android/net/NattKeepalivePacketDataTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-17T07:43:44Z",
+      "side": 1,
+      "message": "Sorry seeing it now, I think this should rather be in testEquals (testEquals is the one that should be updated if fields are added).",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 66
+      },
+      "revId": "9039ace464a4604dce1c40a12ab92277e1c13697",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3158b634_efb2f673",
+        "filename": "tests/net/common/java/android/net/NattKeepalivePacketDataTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-17T07:43:44Z",
+      "side": 1,
+      "message": "Technically this is not required: it will not be true with some combinations of parameters, so I\u0027d recommend to remove it as behavior depends on implementation of Objects.hash, and on the test values used.",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 49
+      },
+      "revId": "9039ace464a4604dce1c40a12ab92277e1c13697",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
