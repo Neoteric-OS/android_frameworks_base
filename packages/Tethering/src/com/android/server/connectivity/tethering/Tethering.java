@@ -1973,6 +1973,7 @@ public class Tethering {
         } finally {
             mTetheringEventCallbacks.finishBroadcast();
         }
+        mNotificationUpdater.onUpstreamNetworkChanged(network);
     }
 
     private void reportConfigurationChanged(TetheringConfigurationParcel config) {

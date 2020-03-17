@@ -200,4 +200,9 @@
     <string name="tethering_notification_title">@string/tethered_notification_title</string>
     <!-- String for tether enable notification message. -->
     <string name="tethering_notification_message">@string/tethered_notification_message</string>
+
+    <!-- No upstream notification is shown when there is a downstream but no upstream that is not
+         able to do the tethering. -->
+    <!-- Config for showing no upstream notification. -->
+    <bool translatable="false" name="config_no_upstream_notification">false</bool>
 </resources>

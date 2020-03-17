@@ -27,6 +27,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Network;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
@@ -39,6 +40,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.networkstack.tethering.R;
@@ -62,9 +64,14 @@ public class TetheringNotificationUpdater {
     private static final boolean NOTIFY_DONE = true;
     private static final boolean NO_NOTIFY = false;
     // Id to update and cancel tethering notification. Must be unique within the tethering app.
-    private static final int ENABLE_NOTIFICATION_ID = 1000;
+    @VisibleForTesting
+    static final int ENABLE_NOTIFICATION_ID = 1000;
     // Id to update and cancel restricted notification. Must be unique within the tethering app.
-    private static final int RESTRICTED_NOTIFICATION_ID = 1001;
+    @VisibleForTesting
+    static final int RESTRICTED_NOTIFICATION_ID = 1001;
+    // Id to update and cancel no upstream notification. Must be unique within the tethering app.
+    @VisibleForTesting
+    static final int NO_UPSTREAM_NOTIFICATION_ID = 1002;
     @VisibleForTesting
     static final int NO_ICON_ID = 0;
     @VisibleForTesting
@@ -74,15 +81,16 @@ public class TetheringNotificationUpdater {
     private final NotificationChannel mChannel;
 
     // WARNING : the constructor is called on a different thread. Thread safety therefore
-    // relies on these values being initialized to 0, and not any other value. If you need
+    // relies on these values being initialized to 0, false, and not any other value. If you need
     // to change this, you will need to change the thread where the constructor is invoked,
     // or to introduce synchronization.
     // Downstream type is one of ConnectivityManager.TETHERING_* constants, 0 1 or 2.
     // This value has to be made 1 2 and 4, and OR'd with the others.
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
     private int mActiveDataSubId = 0;
+    private boolean mNoUpstream = false;
 
-    @IntDef({ENABLE_NOTIFICATION_ID, RESTRICTED_NOTIFICATION_ID})
+    @IntDef({ENABLE_NOTIFICATION_ID, RESTRICTED_NOTIFICATION_ID, NO_UPSTREAM_NOTIFICATION_ID})
     @interface NotificationId {}
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
@@ -110,6 +118,14 @@ public class TetheringNotificationUpdater {
         updateNotification();
     }
 
+    /** Called when upstream network changed */
+    public void onUpstreamNetworkChanged(@Nullable final Network network) {
+        final boolean isNoUpstream = (network == null);
+        if (mNoUpstream == isNoUpstream) return;
+        mNoUpstream = isNoUpstream;
+        updateNotification();
+    }
+
     @VisibleForTesting
     Resources getResourcesForSubId(@NonNull final Context c, final int subId) {
         return SubscriptionManager.getResourcesForSubId(c, subId);
@@ -118,8 +134,19 @@ public class TetheringNotificationUpdater {
     private void updateNotification() {
         final boolean tetheringInactive = mDownstreamTypesMask <= DOWNSTREAM_NONE;
 
-        if (tetheringInactive || setupNotification() == NO_NOTIFY) {
+        if (tetheringInactive) {
             clearNotification(ENABLE_NOTIFICATION_ID);
+            clearNotification(NO_UPSTREAM_NOTIFICATION_ID);
+        } else {
+            // Hide no upstream notification if one of conditions is satisfied.
+            if (!mNoUpstream
+                    || setupNoUpstreamNotification() == NO_NOTIFY) {
+                clearNotification(NO_UPSTREAM_NOTIFICATION_ID);
+            }
+
+            if (setupNotification() == NO_NOTIFY) {
+                clearNotification(ENABLE_NOTIFICATION_ID);
+            }
         }
     }
 
@@ -200,6 +227,22 @@ public class TetheringNotificationUpdater {
         }
         return icons;
     }
+
+    private boolean setupNoUpstreamNotification() {
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
+        final boolean noUpstreamNotification =
+                res.getBoolean(R.bool.config_no_upstream_notification);
+
+        if (!noUpstreamNotification) return NO_NOTIFY;
+
+        String title = res.getString(R.string.no_upstream_notification_title);
+        String message = res.getString(R.string.tethering_notification_message);
+
+        showNotification(R.drawable.stat_sys_tether_general, title, message,
+                NO_UPSTREAM_NOTIFICATION_ID);
+        return NOTIFY_DONE;
+    }
+
 
     private boolean setupNotification() {
         final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);

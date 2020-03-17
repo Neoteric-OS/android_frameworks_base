@@ -208,6 +208,7 @@ public class TetheringTest {
     private Tethering mTethering;
     private PhoneStateListener mPhoneStateListener;
     private InterfaceConfigurationParcel mInterfaceConfiguration;
+    private boolean mIsTetheringSupported = true;
 
     private class TestContext extends BroadcastInterceptingContext {
         TestContext(Context base) {
@@ -316,6 +317,7 @@ public class TetheringTest {
         public void reset() {
             mUpstreamNetworkMonitorMasterSM = null;
             mIpv6CoordinatorNotifyList = null;
+            mIsTetheringSupported = true;
         }
 
         @Override
@@ -349,7 +351,7 @@ public class TetheringTest {
 
         @Override
         public boolean isTetheringSupported() {
-            return true;
+            return mIsTetheringSupported;
         }
 
         @Override
@@ -1583,6 +1585,18 @@ public class TetheringTest {
 
     private static <T> void assertContains(Collection<T> collection, T element) {
         assertTrue(element + " not found in " + collection, collection.contains(element));
+    }
+
+    @Test
+    public void testUpstreamNetworkChanged() {
+        final Tethering.TetherMasterSM stateMachine = (Tethering.TetherMasterSM)
+                mTetheringDependencies.mUpstreamNetworkMonitorMasterSM;
+        final UpstreamNetworkState upstreamState = buildMobileIPv4UpstreamState();
+        when(mUpstreamNetworkMonitor.selectPreferredUpstreamType(any())).thenReturn(upstreamState);
+        stateMachine.chooseUpstreamType(true);
+
+        verify(mUpstreamNetworkMonitor, times(1)).setCurrentUpstream(eq(upstreamState.network));
+        verify(mNotificationUpdater, times(1)).onUpstreamNetworkChanged(eq(upstreamState.network));
     }
 
     // TODO: Test that a request for hotspot mode doesn't interfere with an
