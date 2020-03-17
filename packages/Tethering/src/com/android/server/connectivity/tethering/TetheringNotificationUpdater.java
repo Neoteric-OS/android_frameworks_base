@@ -27,9 +27,15 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Network;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
@@ -39,6 +45,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.networkstack.tethering.R;
@@ -56,10 +63,16 @@ public class TetheringNotificationUpdater {
     private static final String BLUETOOTH_DOWNSTREAM = "BT";
     private static final boolean NOTIFY_DONE = true;
     private static final boolean NO_NOTIFY = false;
-    // Id to update and cancel tethering notification. Must be unique within the tethering app.
-    private static final int ENABLE_NOTIFICATION_ID = 1000;
+    private static final int MSG_SHOW_NO_UPSTREAM = 1;
+    // Id to update and cancel enable notification. Must be unique within the tethering app.
+    @VisibleForTesting
+    static final int ENABLE_NOTIFICATION_ID = 1000;
     // Id to update and cancel restricted notification. Must be unique within the tethering app.
-    private static final int RESTRICTED_NOTIFICATION_ID = 1001;
+    @VisibleForTesting
+    static final int RESTRICTED_NOTIFICATION_ID = 1001;
+    // Id to update and cancel no upstream notification. Must be unique within the tethering app.
+    @VisibleForTesting
+    static final int NO_UPSTREAM_NOTIFICATION_ID = 1002;
     @VisibleForTesting
     static final int NO_ICON_ID = 0;
     @VisibleForTesting
@@ -69,13 +82,16 @@ public class TetheringNotificationUpdater {
     private final Context mContext;
     private final NotificationManager mNotificationManager;
     private final NotificationChannel mChannel;
+    private final HandlerThread mThread;
+    private final Handler mHandler;
 
     // Downstream type is one of ConnectivityManager.TETHERING_* constants, 0 1 or 2.
     // This value has to be made 1 2 and 4, and OR'd with the others.
     private int mDownstreamTypesMask = DOWNSTREAM_NONE;
     private int mActiveDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+    private boolean mNoUpstream = false;
 
-    @IntDef({ENABLE_NOTIFICATION_ID, RESTRICTED_NOTIFICATION_ID})
+    @IntDef({ENABLE_NOTIFICATION_ID, RESTRICTED_NOTIFICATION_ID, NO_UPSTREAM_NOTIFICATION_ID})
     @interface NotificationId {}
 
     public TetheringNotificationUpdater(@NonNull final Context context) {
@@ -87,6 +103,32 @@ public class TetheringNotificationUpdater {
                 context.getResources().getString(R.string.notification_channel_tethering_status),
                 NotificationManager.IMPORTANCE_LOW);
         mNotificationManager.createNotificationChannel(mChannel);
+        mThread = new HandlerThread(TetheringNotificationUpdater.class.getSimpleName());
+        mThread.start();
+        mHandler = new NotificationHandler(mThread.getLooper());
+    }
+
+    private class NotificationHandler extends Handler {
+        NotificationHandler(Looper looper) {
+            super(looper);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch(msg.what) {
+                case MSG_SHOW_NO_UPSTREAM:
+                    synchronized (mUpdateLock) {
+                        final String title = getResourcesForSubId(mContext, mActiveDataSubId)
+                                .getString(R.string.no_upstream_notification_title);
+                        final String message = getResourcesForSubId(mContext, mActiveDataSubId)
+                                .getString(R.string.tethering_notification_message);
+
+                        showNotificationLocked(R.drawable.stat_sys_tether_general, title, message,
+                                NO_UPSTREAM_NOTIFICATION_ID);
+                    }
+                    break;
+            }
+        }
     }
 
     /** Called when downstream has changed */
@@ -107,6 +149,16 @@ public class TetheringNotificationUpdater {
         }
     }
 
+    /** Called when upstream network changed */
+    public void onUpstreamNetworkChanged(@Nullable final Network network) {
+        synchronized (mUpdateLock) {
+            final boolean isNoUpstream = (network == null);
+            if (mNoUpstream == isNoUpstream) return;
+            mNoUpstream = isNoUpstream;
+            updateNotificationLocked();
+        }
+    }
+
     @VisibleForTesting
     Resources getResourcesForSubId(@NonNull final Context c, final int subId) {
         return SubscriptionManager.getResourcesForSubId(c, subId);
@@ -115,8 +167,21 @@ public class TetheringNotificationUpdater {
     private void updateNotificationLocked() {
         final boolean tetheringInactive = mDownstreamTypesMask <= DOWNSTREAM_NONE;
 
-        if (tetheringInactive || setupNotificationLocked() == NO_NOTIFY) {
+        if (tetheringInactive) {
             clearNotificationLocked(ENABLE_NOTIFICATION_ID);
+            clearNotificationLocked(NO_UPSTREAM_NOTIFICATION_ID);
+            mHandler.removeMessages(MSG_SHOW_NO_UPSTREAM);
+        } else {
+            // Hide no upstream notification if one of conditions is satisfied.
+            if (!mNoUpstream
+                    || setupNoUpstreamNotificationLocked() == NO_NOTIFY) {
+                clearNotificationLocked(NO_UPSTREAM_NOTIFICATION_ID);
+                mHandler.removeMessages(MSG_SHOW_NO_UPSTREAM);
+            }
+
+            if (setupNotificationLocked() == NO_NOTIFY) {
+                clearNotificationLocked(ENABLE_NOTIFICATION_ID);
+            }
         }
     }
 
@@ -200,6 +265,26 @@ public class TetheringNotificationUpdater {
             }
         }
         return icons;
+    }
+
+    private boolean setupNoUpstreamNotificationLocked() {
+        final Resources res = getResourcesForSubId(mContext, mActiveDataSubId);
+        final int timeToShowUpstreamNotification =
+                res.getInteger(R.integer.time_to_show_no_upstream_after_no_backhaul);
+
+        if (timeToShowUpstreamNotification <= 0) return NO_NOTIFY;
+
+        // Check GID1 value further if the MCC/MNC value is 20404.
+        final TelephonyManager tm =
+                (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        final String mccmnc = tm.getSimOperator();
+        final String gid1 = tm.getGroupIdLevel1();
+
+        if (mccmnc.equals("20404") && !gid1.equals("BAE0000000000000")) return NO_NOTIFY;
+
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SHOW_NO_UPSTREAM),
+                timeToShowUpstreamNotification);
+        return NOTIFY_DONE;
     }
 
     private boolean setupNotificationLocked() {
