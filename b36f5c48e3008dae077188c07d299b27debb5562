@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8f75186_f2e77dd1",
+        "filename": "packages/Tethering/src/android/net/dhcp/DhcpServingParamsParcelExt.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-17T13:24:27Z",
+      "side": 1,
+      "message": "Suggest renaming to setSingleClientAddr.",
+      "range": {
+        "startLine": 171,
+        "startChar": 38,
+        "endLine": 171,
+        "endChar": 51
+      },
+      "revId": "b36f5c48e3008dae077188c07d299b27debb5562",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab7d8ae_39bbc355",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-17T13:24:27Z",
+      "side": 1,
+      "message": "Is this check the same as the one in TetheringManager#setStaticIpv4Addresses? Is it different? If the same, then why not factor it out to a common function? Something like TetheringManager.checkStaticAddressConfiguration (or a better name :-))? If it\u0027s different, then why is it different?\n\nIf the check is different because here the server address is always set, then - why not put this check earlier in the code (e.g., around where you call maybeConfigureStaticIp)? If you do that, you can make the check the same. That would ensure that the two checks are always the same and will remove the possibility that the two checks might disagree or that we might later on change one check but not the other. It also makes it more likely that you\u0027ll be able to return an error to the client.",
+      "range": {
+        "startLine": 498,
+        "startChar": 0,
+        "endLine": 509,
+        "endChar": 9
+      },
+      "revId": "b36f5c48e3008dae077188c07d299b27debb5562",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
