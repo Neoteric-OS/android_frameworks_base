@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0c51e45e_53129ac1",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-17T02:44:33Z",
+      "side": 1,
+      "message": "Ah indeed. Sorry.",
+      "parentUuid": "18c83112_4e72c3b3",
+      "range": {
+        "startLine": 79,
+        "startChar": 12,
+        "endLine": 79,
+        "endChar": 17
+      },
+      "revId": "6d1dfa4ac957f6997ac3e09fedc1efb143627891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edef3d95_c5e482ba",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 5

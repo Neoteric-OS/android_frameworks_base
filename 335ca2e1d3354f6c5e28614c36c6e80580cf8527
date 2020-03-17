@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dcd52fc_ccf93b6e",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-17T02:44:33Z",
+      "side": 1,
+      "message": "But subId 0 is a valid ID. I don\u0027t think it\u0027s fine starting with subId 0.",
+      "range": {
+        "startLine": 177,
+        "startChar": 62,
+        "endLine": 177,
+        "endChar": 63
+      },
+      "revId": "335ca2e1d3354f6c5e28614c36c6e80580cf8527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
