@@ -22,6 +22,30 @@
       "revId": "d672f24232bcbf2c97fe4a7ed192580ecba5bb4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5db9a6_b1fcd417",
+        "filename": "media/java/android/media/tv/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1183657
+      },
+      "writtenOn": "2020-03-18T14:33:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c07d2f7_d2bbd704",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 28
+      },
+      "revId": "d672f24232bcbf2c97fe4a7ed192580ecba5bb4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
