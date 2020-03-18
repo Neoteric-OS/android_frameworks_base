@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3558a7c4_65cfe512",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-18T12:16:09Z",
+      "side": 1,
+      "message": "question: Not sure why NetworkCapabilities.TRANSPORT_* is not enough for you. maybe explain in comments?\nTo me this funtion looks like not suitable.",
+      "range": {
+        "startLine": 507,
+        "startChar": 7,
+        "endLine": 507,
+        "endChar": 58
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a64c61f2_7b278625",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-18T12:16:09Z",
+      "side": 1,
+      "message": "1. IIUC this need test to ensure we won\u0027t forget to add mapping when adding new TRANSPORT.\n2. static",
+      "range": {
+        "startLine": 509,
+        "startChar": 18,
+        "endLine": 509,
+        "endChar": 41
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60434781_21acebbc",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-18T12:16:09Z",
+      "side": 1,
+      "message": "Please don\u0027t alter the original array.\nmake a new one instead.",
+      "range": {
+        "startLine": 513,
+        "startChar": 20,
+        "endLine": 513,
+        "endChar": 34
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f5cc59_767379dc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4933,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-18T12:16:09Z",
+      "side": 1,
+      "message": "can this be times(1) ?",
+      "range": {
+        "startLine": 4933,
+        "startChar": 33,
+        "endLine": 4933,
+        "endChar": 46
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f6b81d_58152190",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4936,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-18T12:16:09Z",
+      "side": 1,
+      "message": "question: why you need to define a new transport constant instead of using exising one?",
+      "range": {
+        "startLine": 4936,
+        "startChar": 60,
+        "endLine": 4936,
+        "endChar": 87
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17fc0d62_ce1201f2",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-18T12:16:09Z",
+      "side": 1,
+      "message": "ResolverParamsParcel ?",
+      "range": {
+        "startLine": 104,
+        "startChar": 35,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
