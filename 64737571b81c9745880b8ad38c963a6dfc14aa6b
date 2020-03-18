@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f33b5186_a90d8e71",
+        "filename": "services/core/java/com/android/server/timezonedetector/TimeZoneDetectorStrategyImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1336500
+      },
+      "writtenOn": "2020-03-18T00:31:00Z",
+      "side": 0,
+      "message": "without this code section, this method will not call suggestionGoodEnough, right?\nAnd it will return somewhere at the below code section?",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 9
+      },
+      "revId": "64737571b81c9745880b8ad38c963a6dfc14aa6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
