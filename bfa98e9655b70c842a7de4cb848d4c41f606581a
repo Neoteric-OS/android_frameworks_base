@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdf884a1_eed4865b",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-18T22:51:22Z",
+      "side": 0,
+      "message": "You need to reinstate the @UnsupportedAppUsage annotation that was present in Q.",
+      "range": {
+        "startLine": 67,
+        "startChar": 5,
+        "endLine": 67,
+        "endChar": 14
+      },
+      "revId": "bfa98e9655b70c842a7de4cb848d4c41f606581a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
