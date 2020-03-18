@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: nchalko <nchalko@google.com>
+Code-Review+2: Sergej Salnikov <skill@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Andrei Litvin <andreilitvin@google.com>
+Submitted-at: Wed, 18 Mar 2020 16:17:04 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1260566
+Project: platform/frameworks/base
+Branch: refs/heads/master
