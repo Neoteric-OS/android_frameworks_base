@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c07d2f7_d2bbd704",
+        "filename": "media/java/android/media/tv/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-03-18T14:24:32Z",
+      "side": 1,
+      "message": "You should be able to do something like\n\nper-file ITvRemoteServiceInput.aidl \u003d file: /media/lib/tvremote/OWNERS",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 28
+      },
+      "revId": "d672f24232bcbf2c97fe4a7ed192580ecba5bb4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
