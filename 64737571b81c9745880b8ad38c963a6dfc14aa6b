@@ -22,6 +22,30 @@
       "revId": "64737571b81c9745880b8ad38c963a6dfc14aa6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5a1a18_d2cd1b01",
+        "filename": "services/core/java/com/android/server/timezonedetector/TimeZoneDetectorStrategyImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-03-18T09:18:26Z",
+      "side": 0,
+      "message": "Correct. This conditional was bypassing the usual logic for \"Is this suggestion good enough?\" and just setting the first suggestion it receives when the device was first booted. Without the block, all suggestions must hit a certain score threshold.\n\nTelephony suggestions come with metadata that indicates \"what triggered this suggestion\" (match type) and \"how sure are we this is correct\" (quality). The suggestion is scored based on match type and quality. For the common \"NITZ + country code\" detection case, the threshold is set so that the suggested zone must at least have the correct offset as an NITZ signal received (it can still be wrong - see Colorado and Arizona in the US for 6 months of the year).",
+      "parentUuid": "f33b5186_a90d8e71",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 9
+      },
+      "revId": "64737571b81c9745880b8ad38c963a6dfc14aa6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
