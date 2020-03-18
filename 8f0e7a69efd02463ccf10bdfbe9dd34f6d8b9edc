@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "4ccfbdf1_23e49774",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "Change assertContainsString() to assertContainsStringsExactly() and move to MiscAsserts.kt.",
+      "parentUuid": "513453ac_c217537f",
+      "range": {
+        "startLine": 88,
+        "startChar": 17,
+        "endLine": 88,
+        "endChar": 37
+      },
+      "revId": "8f0e7a69efd02463ccf10bdfbe9dd34f6d8b9edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfa29ee5_d1fb0e5f",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 14

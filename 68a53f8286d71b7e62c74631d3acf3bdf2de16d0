@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "588d9676_722970db",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 6023,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "modified to noteLinkPropertiesForNetwork.",
+      "parentUuid": "989e2c55_566b91ba",
+      "range": {
+        "startLine": 6023,
+        "startChar": 24,
+        "endLine": 6023,
+        "endChar": 54
+      },
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4860272f_bc5433ed",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 17
@@ -36,6 +60,30 @@
       "writtenOn": "2020-03-16T17:06:46Z",
       "side": 1,
       "message": "Not sure why you need to put this here.\nsee the other comment",
+      "range": {
+        "startLine": 6033,
+        "startChar": 8,
+        "endLine": 6033,
+        "endChar": 38
+      },
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c8c582c_d9df2504",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 6033,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "If I keep this line in sendDnsConfigurationForNetwork().\nThe logic shouldn\u0027t the same becuase I move line 6032 here. \nThat\u0027s why I also move flushVmDnsCache here.\nOr it\u0027s ok to keep in the same position?\nIn aosp/567262, this function is in ConnectivityService.java originally.\nMove to here isn\u0027t suitable?\nIs there any goode place I can put flushVmDnsCache()?",
+      "parentUuid": "4860272f_bc5433ed",
       "range": {
         "startLine": 6033,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "10193495_0a100405",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "b9a97081_63ab888b",
+      "range": {
+        "startLine": 324,
+        "startChar": 8,
+        "endLine": 324,
+        "endChar": 49
+      },
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6077ae81_dca9b41e",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 17
@@ -82,6 +154,30 @@
       "writtenOn": "2020-03-16T17:06:46Z",
       "side": 1,
       "message": "{@link LinkProperties}, also for below.",
+      "range": {
+        "startLine": 330,
+        "startChar": 12,
+        "endLine": 330,
+        "endChar": 27
+      },
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6047e4_447d8044",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "modified.",
+      "parentUuid": "6077ae81_dca9b41e",
       "range": {
         "startLine": 330,
         "startChar": 12,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "35be295a_20482baa",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "modified.",
+      "parentUuid": "f956a54e_2f79a0a1",
+      "range": {
+        "startLine": 344,
+        "startChar": 16,
+        "endLine": 344,
+        "endChar": 45
+      },
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8940d3b5_7b9d25fb",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 17
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "21f99f74_21a4ce87",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "Store mLinkPropertiesMap.get(netId) in a local variable.\nIf it\u0027s null, return.",
+      "parentUuid": "8940d3b5_7b9d25fb",
+      "range": {
+        "startLine": 367,
+        "startChar": 41,
+        "endLine": 367,
+        "endChar": 70
+      },
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abb2ce79_ad914edb",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 17
@@ -151,6 +295,30 @@
       "writtenOn": "2020-03-16T17:06:46Z",
       "side": 1,
       "message": "1. question: what are connectivity events?\n2. question: when do we want to run this?  maybe we want to put this at the end of updateLinkPropertiesForNetwork and write some comments? If so, maybe it doesn\u0027t have to be public?",
+      "range": {
+        "startLine": 422,
+        "startChar": 32,
+        "endLine": 422,
+        "endChar": 51
+      },
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03032b4_8a0b7014",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "1. I move the code comment for this function. \n2. It seems we need to keep the same logic. Or it may change some behaviors.\nThat\u0027s why i moved it to updateDnses() and set it to public.",
+      "parentUuid": "abb2ce79_ad914edb",
       "range": {
         "startLine": 422,
         "startChar": 32,
@@ -203,6 +371,48 @@
     },
     {
       "key": {
+        "uuid": "2ce5cf97_5c510cca",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "use assertFieldCountEquals() for checking if we add field in params.",
+      "parentUuid": "48e64fc2_c9608100",
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86147f5_02c15015",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "modified.",
+      "parentUuid": "81ed4891_e3911b2a",
+      "range": {
+        "startLine": 95,
+        "startChar": 37,
+        "endLine": 95,
+        "endChar": 42
+      },
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86f68198_aef17bc8",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 17
@@ -214,6 +424,30 @@
       "writtenOn": "2020-03-16T17:06:46Z",
       "side": 1,
       "message": "IIUC you need a function that compares two arrays of strings.\nAnd calls it whenever needed. e.g. servers, domains, tlsservers, tlsFingerprints, ...",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 9
+      },
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0393c98_c2d7d6fa",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "use assertContainsStringsExactly() for servers, domains, tlsservers, tlsFingerprints to compare two arrays of strings.",
+      "parentUuid": "86f68198_aef17bc8",
       "range": {
         "startLine": 104,
         "startChar": 8,
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "e0926be8_ae71b967",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "Wrong checking item.\nChange to ssertContainsStringsExactly(actual.tlsServers, expected.tlsServers);",
+      "parentUuid": "0fbd5b07_b44e6608",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 110,
+        "endChar": 69
+      },
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c603c16_1e0cb82d",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 17
@@ -260,6 +518,30 @@
       "writtenOn": "2020-03-16T17:06:46Z",
       "side": 1,
       "message": "If there are lots of fields in the options.\nThen you need to refactor it to other function and calls it here.",
+      "range": {
+        "startLine": 118,
+        "startChar": 28,
+        "endLine": 118,
+        "endChar": 47
+      },
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0436e4a9_5dbe5e59",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "add assertResolverExperimentalOptionsEquals() for testing experimentalOptions.",
+      "parentUuid": "9c603c16_1e0cb82d",
       "range": {
         "startLine": 118,
         "startChar": 28,
@@ -295,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "2a381898_44afe014",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "remove unused code in this file.",
+      "parentUuid": "172891cb_10c17622",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 23
+      },
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81e4a1b8_42d1f3e7",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 17
@@ -306,6 +612,30 @@
       "writtenOn": "2020-03-16T17:06:46Z",
       "side": 1,
       "message": "Is this needed?",
+      "range": {
+        "startLine": 346,
+        "startChar": 8,
+        "endLine": 346,
+        "endChar": 36
+      },
+      "revId": "68a53f8286d71b7e62c74631d3acf3bdf2de16d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f0bc009_34cb4a42",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-18T08:45:04Z",
+      "side": 1,
+      "message": "yes. Or we will get fail result.\njava.lang.AssertionError: expected:\u003c\u003e but was:\u003cnull\u003e",
+      "parentUuid": "81e4a1b8_42d1f3e7",
       "range": {
         "startLine": 346,
         "startChar": 8,
