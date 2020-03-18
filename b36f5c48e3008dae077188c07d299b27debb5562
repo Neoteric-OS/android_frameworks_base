@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24dc7d19_46305741",
+        "filename": "packages/Tethering/src/android/net/dhcp/DhcpServingParamsParcelExt.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-18T17:49:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8f75186_f2e77dd1",
+      "range": {
+        "startLine": 171,
+        "startChar": 38,
+        "endLine": 171,
+        "endChar": 51
+      },
+      "revId": "b36f5c48e3008dae077188c07d299b27debb5562",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ab7d8ae_39bbc355",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "b36f5c48e3008dae077188c07d299b27debb5562",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b919872_9a06eb82",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-18T17:49:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ab7d8ae_39bbc355",
+      "range": {
+        "startLine": 498,
+        "startChar": 0,
+        "endLine": 509,
+        "endChar": 9
+      },
+      "revId": "b36f5c48e3008dae077188c07d299b27debb5562",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
