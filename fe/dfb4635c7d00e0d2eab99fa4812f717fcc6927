@@ -1,0 +1,12 @@
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Autosubmit+1: Vishnu Nair <vishnun@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Mark Hong <sungmin.h@samsung.com>
+Code-Review+1: Mark Hong <sungmin.h@samsung.com>
+Code-Review+2: Adrian Roos <roosa@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 18 Mar 2020 22:10:41 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1205272
+Project: platform/frameworks/base
+Branch: refs/heads/master
