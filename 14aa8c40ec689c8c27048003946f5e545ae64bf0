@@ -22,6 +22,30 @@
       "revId": "14aa8c40ec689c8c27048003946f5e545ae64bf0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6951df_447ee23f",
+        "filename": "packages/Tethering/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-19T07:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "243424a3_7b96a486",
+      "range": {
+        "startLine": 23,
+        "startChar": 47,
+        "endLine": 23,
+        "endChar": 58
+      },
+      "revId": "14aa8c40ec689c8c27048003946f5e545ae64bf0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
