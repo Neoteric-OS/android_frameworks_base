@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "802d6c3c_40e75731",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-03-19T00:41:42Z",
+      "side": 1,
+      "message": "Why is this the only exposed API that is modified? In all other places you have passed the parameter as null - why not here?",
+      "range": {
+        "startLine": 926,
+        "startChar": 16,
+        "endLine": 926,
+        "endChar": 40
+      },
+      "revId": "d7c1bba6902be03404112147c8b4749fd5067204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
