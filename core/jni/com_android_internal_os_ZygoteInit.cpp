@@ -19,8 +19,12 @@
 #include <EGL/egl.h>
 #include <Properties.h>
 #include <ui/GraphicBufferMapper.h>
+#include <android-base/logging.h>
+#include <pthread.h>
 
 #include "core_jni_helpers.h"
+
+#define LOG_TAG "Zygote"
 
 namespace {
 
@@ -81,6 +85,19 @@ const JNINativeMethod gMethods[] = {
 namespace android {
 
 int register_com_android_internal_os_ZygoteInit(JNIEnv* env) {
+    int stack_cache_size = 128;
+    if (int rc = pthread_set_stack_cache_size_np(stack_cache_size); rc) {
+        ALOGW("pthread_set_stack_cache_size_np(%d) failed: %d", stack_cache_size, rc);
+    } else {
+        ALOGI("pthread_set_stack_cache_size_np(%d) succeeded", stack_cache_size);
+    }
+
+    if (int rc = pthread_precache_thread_stacks_np(stack_cache_size); rc) {
+        ALOGW("pthread_precache_thread_stacks_np(%d) failed: %d", stack_cache_size, rc);
+    } else {
+        ALOGW("pthread_precache_thread_stacks_np(%d) succeeded", stack_cache_size);
+    }
+
     return RegisterMethodsOrDie(env, "com/android/internal/os/ZygoteInit",
             gMethods, NELEM(gMethods));
 }
