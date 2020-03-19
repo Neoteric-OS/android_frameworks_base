@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f2c9b5a_bca3f21e",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-19T12:24:07Z",
+      "side": 1,
+      "message": "The transportTypes mapping doesn\u0027t match the resolver. Remapping transport types when sending dns config to resolver.\nmore detail explain here.  \nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1240031/18/tests/net/java/com/android/server/ConnectivityServiceTest.java#4936",
+      "parentUuid": "3558a7c4_65cfe512",
+      "range": {
+        "startLine": 507,
+        "startChar": 7,
+        "endLine": 507,
+        "endChar": 58
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a64c61f2_7b278625",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2020-03-18T12:16:09Z",
       "side": 1,
       "message": "1. IIUC this need test to ensure we won\u0027t forget to add mapping when adding new TRANSPORT.\n2. static",
+      "range": {
+        "startLine": 509,
+        "startChar": 18,
+        "endLine": 509,
+        "endChar": 41
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0de6cd_a574df11",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-19T12:24:07Z",
+      "side": 1,
+      "message": "1. add DnsManagerTest#testRemappingTransportTypes\n2. add static",
+      "parentUuid": "a64c61f2_7b278625",
       "range": {
         "startLine": 509,
         "startChar": 18,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "73b99641_e17a8169",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-19T12:24:07Z",
+      "side": 1,
+      "message": "use newTransportTypes instead.",
+      "parentUuid": "60434781_21acebbc",
+      "range": {
+        "startLine": 513,
+        "startChar": 20,
+        "endLine": 513,
+        "endChar": 34
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6f5cc59_767379dc",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
@@ -82,6 +154,30 @@
       "writtenOn": "2020-03-18T12:16:09Z",
       "side": 1,
       "message": "can this be times(1) ?",
+      "range": {
+        "startLine": 4933,
+        "startChar": 33,
+        "endLine": 4933,
+        "endChar": 46
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2deb407a_901ae9d2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4933,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-19T12:24:07Z",
+      "side": 1,
+      "message": "It\u0027s times(2). Therefore I use atLeastOnce().\nChange to times(2).",
+      "parentUuid": "f6f5cc59_767379dc",
       "range": {
         "startLine": 4933,
         "startChar": 33,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c654fbc4_ca990d3a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4936,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-19T12:24:07Z",
+      "side": 1,
+      "message": "Framework transport type is defined from TRANSPORT_CELLULAR(0).\nResolver network type is defined from 1(NT_CELLULAR) and NT_UNKNOWN is 0.\nThey should be having the same mapping becuase they are the same meaning. Therefore I redefine transport types in IDnsResolver.aidl.\n    const int TRANSPORT_UNKNOWN \u003d 0;\n    const int TRANSPORT_CELLULA \u003d 1;\n    const int TRANSPORT_WIFI \u003d 2;\n    const int TRANSPORT_BLUETOOTH \u003d 3;\n    const int TRANSPORT_ETHERNET \u003d 4;\n    const int TRANSPORT_VPN \u003d 5;\n    const int TRANSPORT_WIFI_AWARE \u003d 6;\n    const int TRANSPORT_LOWPAN \u003d 7;\n\nBefore TRANSPORT_* is sent to resolver, I should remap TRANSPORT_*. \nThis can make framwork and resolver has the same tranport type mapping.\nAnd the default value is reasonable becuase it\u0027s TRANSPORT_UNKNOWN that is defined in     \nResolverParamsParcel.aidl.\nIf we don\u0027t remap, the default value would be empty or we should choose a number for it. I think remapping should be better than prevous options.",
+      "parentUuid": "15f6b81d_58152190",
+      "range": {
+        "startLine": 4936,
+        "startChar": 60,
+        "endLine": 4936,
+        "endChar": 87
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17fc0d62_ce1201f2",
         "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
         "patchSetId": 18
@@ -128,6 +248,30 @@
       "writtenOn": "2020-03-18T12:16:09Z",
       "side": 1,
       "message": "ResolverParamsParcel ?",
+      "range": {
+        "startLine": 104,
+        "startChar": 35,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038e2bee_8b107109",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-19T12:24:07Z",
+      "side": 1,
+      "message": "modified.",
+      "parentUuid": "17fc0d62_ce1201f2",
       "range": {
         "startLine": 104,
         "startChar": 35,
