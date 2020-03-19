@@ -46,6 +46,30 @@
       "revId": "1859e648d618820a8f4debefd2b24facee520455",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530de7f0_3c99a349",
+        "filename": "telephony/common/com/google/android/mms/pdu/PduComposer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-03-19T21:28:25Z",
+      "side": 0,
+      "message": "Btw this is optional so return value may be PDU_COMPOSE_FIELD_NOT_SET, which is valid and should not map to PDU_COMPOSE_CONTENT_ERROR, correct?",
+      "parentUuid": "892651ca_8e820fc3",
+      "range": {
+        "startLine": 748,
+        "startChar": 32,
+        "endLine": 748,
+        "endChar": 40
+      },
+      "revId": "1859e648d618820a8f4debefd2b24facee520455",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
