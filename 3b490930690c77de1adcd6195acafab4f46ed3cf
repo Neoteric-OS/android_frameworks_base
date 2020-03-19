@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f11d149a_6caee7a4",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2020-03-19T13:00:44Z",
+      "side": 1,
+      "message": "Can we just drop disable messages if we\u0027re already disabling?",
+      "range": {
+        "startLine": 1669,
+        "startChar": 24,
+        "endLine": 1669,
+        "endChar": 77
+      },
+      "revId": "3b490930690c77de1adcd6195acafab4f46ed3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cbae3fe_2dd0361d",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1696,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2020-03-19T13:00:44Z",
+      "side": 1,
+      "message": "Bluetooth is turning off, wait for STATE_OFF",
+      "range": {
+        "startLine": 1696,
+        "startChar": 23,
+        "endLine": 1696,
+        "endChar": 63
+      },
+      "revId": "3b490930690c77de1adcd6195acafab4f46ed3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d098e09c_4823f61f",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2020-03-19T13:00:44Z",
+      "side": 1,
+      "message": "Could we invert this logic?  It seems like it would be simpler to read if it were:\n\nif (mState !\u003d BluetoothAdapter.STATE_OFF\n\n        \u0026\u0026 mWaitForEnableRetry \u003c MAX_WAIT_FOR_ENABLE_DISABLE_RETRIES) {\n    mWaitForEnableRetry++;\n    Message enableDelayedMsg \u003d\n            mHandler.obtainMessage(MESSAGE_HANDLE_ENABLE_DELAYED);\n    mHandler.sendMessageDelayed(enableDelayedMsg, ENABLE_DISABLE_DELAY_MS);\n    break;\n}\nif (mWaitForEnableRetry \u003e\u003d MAX_WAIT_FOR_ENABLE_DISABLE_RETRIES) {\n\n    Slog.e(TAG, \"Timed out waiting for STATE_OFF\");\n}\nmWaitForEnableRetry \u003d 0;\nMessage restartMsg \u003d\n\n        mHandler.obtainMessage(MESSAGE_RESTART_BLUETOOTH_SERVICE);\nmHandler.sendMessageDelayed(restartMsg, getServiceRestartMs());\nSlog.d(TAG, \"Handle enable is finished\");\nbreak;",
+      "range": {
+        "startLine": 1697,
+        "startChar": 0,
+        "endLine": 1715,
+        "endChar": 26
+      },
+      "revId": "3b490930690c77de1adcd6195acafab4f46ed3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
