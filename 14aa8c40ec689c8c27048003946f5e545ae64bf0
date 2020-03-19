@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "243424a3_7b96a486",
+        "filename": "packages/Tethering/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-19T07:24:44Z",
+      "side": 1,
+      "message": "with_client_number or with_client_count",
+      "range": {
+        "startLine": 23,
+        "startChar": 47,
+        "endLine": 23,
+        "endChar": 58
+      },
+      "revId": "14aa8c40ec689c8c27048003946f5e545ae64bf0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
