@@ -495,7 +495,9 @@ public class Tethering {
     }
 
     void startTethering(final TetheringRequestParcel request, final IIntResultListener listener) {
+Log.d(TAG, "startTethering " + request.tetheringType);
         mHandler.post(() -> {
+Log.d(TAG, "startTethering: " + request);
             final TetheringRequestParcel unfinishedRequest = mActiveTetheringRequests.get(
                     request.tetheringType);
             // If tethering is already enabled with a different request,
@@ -503,6 +505,8 @@ public class Tethering {
             if (unfinishedRequest != null
                     && !TetheringUtils.isTetheringRequestEquals(unfinishedRequest, request)) {
                 enableTetheringInternal(request.tetheringType, false /* disabled */, null);
+Log.d(TAG, "Unfinished request detected for type " + request.tetheringType
++ ", stopping tethering");
                 mEntitlementMgr.stopProvisioningIfNeeded(request.tetheringType);
             }
             mActiveTetheringRequests.put(request.tetheringType, request);
@@ -632,6 +636,7 @@ public class Tethering {
     }
 
     private int setEthernetTethering(final boolean enable) {
+Log.d(TAG, "setting Ethernet tethering to " + enable);
         final EthernetManager em = (EthernetManager) mContext.getSystemService(
                 Context.ETHERNET_SERVICE);
         synchronized (mPublicSync) {
@@ -642,6 +647,7 @@ public class Tethering {
                 }
 
                 mEthernetCallback = new EthernetCallback();
+Log.d(TAG, "Requesting tethered interface");
                 mEthernetIfaceRequest = em.requestTetheredInterface(mExecutor, mEthernetCallback);
             } else {
                 stopEthernetTetheringLocked();
@@ -651,6 +657,7 @@ public class Tethering {
     }
 
     private void stopEthernetTetheringLocked() {
+Log.d(TAG, "stopEthernetTetheringLocked mConfiguredEthernetIface=" + mConfiguredEthernetIface);
         if (mConfiguredEthernetIface != null) {
             stopTrackingInterfaceLocked(mConfiguredEthernetIface);
             mConfiguredEthernetIface = null;
@@ -665,6 +672,7 @@ public class Tethering {
     private class EthernetCallback implements EthernetManager.TetheredInterfaceCallback {
         @Override
         public void onAvailable(String iface) {
+Log.d(TAG, "Ethernet available: " + iface);
             synchronized (mPublicSync) {
                 if (this != mEthernetCallback) {
                     // Ethernet callback arrived after Ethernet tethering stopped. Ignore.
@@ -681,8 +689,10 @@ public class Tethering {
             synchronized (mPublicSync) {
                 if (this != mEthernetCallback) {
                     // onAvailable called after stopping Ethernet tethering.
+Log.d(TAG, "Ethernet available on stale callback, ignoring");
                     return;
                 }
+Log.d(TAG, "Ethernet unavailable, stopping tethering");
                 stopEthernetTetheringLocked();
             }
         }
