@@ -148,6 +148,7 @@ public class TetheringService extends Service {
                 IIntResultListener listener) {
             if (checkAndNotifyCommonError(callerPkg, listener)) return;
 
+Log.d(TAG, "startTethering " + request);
             mTethering.startTethering(request, listener);
         }
 
