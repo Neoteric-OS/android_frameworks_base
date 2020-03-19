@@ -140,7 +140,10 @@ public final class BluetoothMapClient implements BluetoothProfile {
     /**
      * Initiate connection. Initiation of outgoing connections is not
      * supported for MAP server.
+     *
+     * @hide
      */
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public boolean connect(BluetoothDevice device) {
         if (DBG) Log.d(TAG, "connect(" + device + ")" + "for MAPS MCE");
         final IBluetoothMapClient service = getService();
@@ -162,7 +165,10 @@ public final class BluetoothMapClient implements BluetoothProfile {
      *
      * @param device Remote Bluetooth Device
      * @return false on error, true otherwise
+     *
+     * @hide
      */
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public boolean disconnect(BluetoothDevice device) {
         if (DBG) Log.d(TAG, "disconnect(" + device + ")");
         final IBluetoothMapClient service = getService();

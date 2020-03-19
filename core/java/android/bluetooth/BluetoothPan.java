@@ -204,9 +204,6 @@ public final class BluetoothPan implements BluetoothProfile, AutoCloseable {
      * the state. Users can get the connection state of the profile
      * from this intent.
      *
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}
-     * permission.
-     *
      * @param device Remote Bluetooth Device
      * @return false on immediate error, true otherwise
      * @hide
@@ -244,9 +241,6 @@ public final class BluetoothPan implements BluetoothProfile, AutoCloseable {
      * state {@link #STATE_DISCONNECTED}. The transition to
      * {@link #STATE_DISCONNECTING} can be used to distinguish between the
      * two scenarios.
-     *
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}
-     * permission.
      *
      * @param device Remote Bluetooth Device
      * @return false on immediate error, true otherwise

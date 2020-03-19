@@ -639,7 +639,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
      * @hide
      */
     @SystemApi
-    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public @ConnectionPolicy int getConnectionPolicy(@NonNull BluetoothDevice device) {
         if (VDBG) log("getConnectionPolicy(" + device + ")");
         final IBluetoothHeadset service = mService;
@@ -1126,16 +1126,13 @@ public final class BluetoothHeadset implements BluetoothProfile {
     /**
      * Get the connected device that is active.
      *
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH}
-     * permission.
-     *
      * @return the connected device that is active or null if no device
      * is active.
      * @hide
      */
     @SystemApi
     @Nullable
-    @RequiresPermission(android.Manifest.permission.BLUETOOTH)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public BluetoothDevice getActiveDevice() {
         if (VDBG) {
             Log.d(TAG, "getActiveDevice");

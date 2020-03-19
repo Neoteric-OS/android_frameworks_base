@@ -101,7 +101,10 @@ public final class BluetoothPbapClient implements BluetoothProfile {
      * @param device a remote device we want connect to
      * @return <code>true</code> if command has been issued successfully; <code>false</code>
      * otherwise;
+     *
+     * @hide
      */
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public boolean connect(BluetoothDevice device) {
         if (DBG) {
             log("connect(" + device + ") for PBAP Client.");
@@ -126,7 +129,10 @@ public final class BluetoothPbapClient implements BluetoothProfile {
      *
      * @param device Remote Bluetooth Device
      * @return false on error, true otherwise
+     *
+     * @hide
      */
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public boolean disconnect(BluetoothDevice device) {
         if (DBG) {
             log("disconnect(" + device + ")" + new Exception());

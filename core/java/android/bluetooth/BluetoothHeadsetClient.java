@@ -442,6 +442,8 @@ public final class BluetoothHeadsetClient implements BluetoothProfile {
      * @param device a remote device we want connect to
      * @return <code>true</code> if command has been issued successfully; <code>false</code>
      * otherwise; upon completion HFP sends {@link #ACTION_CONNECTION_STATE_CHANGED} intent.
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     public boolean connect(BluetoothDevice device) {
@@ -466,6 +468,8 @@ public final class BluetoothHeadsetClient implements BluetoothProfile {
      * @param device a remote device we want disconnect
      * @return <code>true</code> if command has been issued successfully; <code>false</code>
      * otherwise; upon completion HFP sends {@link #ACTION_CONNECTION_STATE_CHANGED} intent.
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     public boolean disconnect(BluetoothDevice device) {

@@ -435,7 +435,7 @@ public final class BluetoothA2dp implements BluetoothProfile {
      */
     @SystemApi
     @Nullable
-    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public BluetoothDevice getActiveDevice() {
         if (VDBG) log("getActiveDevice()");
         try {
@@ -462,7 +462,7 @@ public final class BluetoothA2dp implements BluetoothProfile {
      * @return true if priority is set, false on error
      * @hide
      */
-    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public boolean setPriority(BluetoothDevice device, int priority) {
         if (DBG) log("setPriority(" + device + ", " + priority + ")");
         return setConnectionPolicy(device, BluetoothAdapter.priorityToConnectionPolicy(priority));
@@ -481,7 +481,7 @@ public final class BluetoothA2dp implements BluetoothProfile {
      * @hide
      */
     @SystemApi
-    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public boolean setConnectionPolicy(@NonNull BluetoothDevice device,
             @ConnectionPolicy int connectionPolicy) {
         if (DBG) log("setConnectionPolicy(" + device + ", " + connectionPolicy + ")");
@@ -517,7 +517,18 @@ public final class BluetoothA2dp implements BluetoothProfile {
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public int getPriority(BluetoothDevice device) {
         if (VDBG) log("getPriority(" + device + ")");
-        return BluetoothAdapter.connectionPolicyToPriority(getConnectionPolicy(device));
+        try {
+            final IBluetoothA2dp service = getService();
+            if (service != null && isEnabled()
+                    && isValidDevice(device)) {
+                return BluetoothAdapter.connectionPolicyToPriority(service.getPriority(device));
+            }
+            if (service == null) Log.w(TAG, "Proxy not attached to service");
+            return BluetoothProfile.PRIORITY_OFF;
+        } catch (RemoteException e) {
+            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
+            return BluetoothProfile.PRIORITY_OFF;
+        }
     }
 
     /**
@@ -532,7 +543,7 @@ public final class BluetoothA2dp implements BluetoothProfile {
      * @hide
      */
     @SystemApi
-    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public @ConnectionPolicy int getConnectionPolicy(@NonNull BluetoothDevice device) {
         if (VDBG) log("getConnectionPolicy(" + device + ")");
         try {
@@ -642,7 +653,7 @@ public final class BluetoothA2dp implements BluetoothProfile {
      */
     @SystemApi
     @Nullable
-    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public BluetoothCodecStatus getCodecStatus(@Nullable BluetoothDevice device) {
         if (DBG) Log.d(TAG, "getCodecStatus(" + device + ")");
         try {
@@ -748,7 +759,7 @@ public final class BluetoothA2dp implements BluetoothProfile {
      * @hide
      */
     @SystemApi
-    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     @OptionalCodecsSupportStatus
     public int supportsOptionalCodecs(@Nullable BluetoothDevice device) {
         try {
@@ -773,7 +784,7 @@ public final class BluetoothA2dp implements BluetoothProfile {
      * @hide
      */
     @SystemApi
-    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     @OptionalCodecsPreferenceStatus
     public int getOptionalCodecsEnabled(@Nullable BluetoothDevice device) {
         try {

@@ -1620,7 +1620,7 @@ public final class BluetoothAdapter {
      * @hide
      */
     @SystemApi
-    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public long getDiscoveryEndMillis() {
         try {
             mServiceLock.readLock().lock();
