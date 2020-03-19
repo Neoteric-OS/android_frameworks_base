@@ -1,0 +1,14 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Mark Hong <sungmin.h@samsung.com>
+Code-Review+1: Mark Hong <sungmin.h@samsung.com>
+Code-Review+2: Vishnu Nair <vishnun@google.com>
+Lint+1: Mark Hong <sungmin.h@samsung.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Vishnu Nair <vishnun@google.com>
+DrNo-Review+1: Hung-ying Tyan <tyanh@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 19 Mar 2020 04:10:45 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1260745
+Project: platform/frameworks/base
+Branch: refs/heads/android10-gsi
