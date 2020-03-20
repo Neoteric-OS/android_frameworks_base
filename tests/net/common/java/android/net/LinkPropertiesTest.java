@@ -484,6 +484,7 @@ public class LinkPropertiesTest {
         assertEquals(1, rmnet0.getLinkAddresses().size());
         assertEquals(1, rmnet0.getAllAddresses().size());
         assertEquals(1, rmnet0.getAllLinkAddresses().size());
+        assertEquals(1, rmnet0.getAllInterfaceNames().size());
 
         rmnet0.addStackedLink(clat4);
         assertEquals(1, rmnet0.getStackedLinks().size());
@@ -491,6 +492,7 @@ public class LinkPropertiesTest {
         assertEquals(1, rmnet0.getLinkAddresses().size());
         assertEquals(2, rmnet0.getAllAddresses().size());
         assertEquals(2, rmnet0.getAllLinkAddresses().size());
+        assertEquals(2, rmnet0.getAllInterfaceNames().size());
 
         rmnet0.addStackedLink(clat4);
         assertEquals(1, rmnet0.getStackedLinks().size());
@@ -498,6 +500,7 @@ public class LinkPropertiesTest {
         assertEquals(1, rmnet0.getLinkAddresses().size());
         assertEquals(2, rmnet0.getAllAddresses().size());
         assertEquals(2, rmnet0.getAllLinkAddresses().size());
+        assertEquals(2, rmnet0.getAllInterfaceNames().size());
 
         assertEquals(0, clat4.getStackedLinks().size());
 
@@ -517,6 +520,7 @@ public class LinkPropertiesTest {
         assertEquals(1, rmnet0.getLinkAddresses().size());
         assertEquals(1, rmnet0.getAllAddresses().size());
         assertEquals(1, rmnet0.getAllLinkAddresses().size());
+        assertEquals(1, rmnet0.getAllInterfaceNames().size());
 
         assertFalse(rmnet0.removeStackedLink("clat4"));
     }
@@ -1200,5 +1204,49 @@ public class LinkPropertiesTest {
 
         lp.clear();
         assertNull(lp.getCaptivePortalData());
+    }
+
+    private LinkProperties makeIpv4LinkProperties() {
+        final LinkProperties linkProperties = new LinkProperties();
+        linkProperties.setInterfaceName(NAME);
+        linkProperties.addLinkAddress(LINKADDRV4);
+        linkProperties.addDnsServer(DNS1);
+        linkProperties.addRoute(new RouteInfo(GATEWAY1));
+        linkProperties.addRoute(new RouteInfo(GATEWAY2));
+        return linkProperties;
+    }
+
+    private LinkProperties makeIpv6LinkProperties() {
+        final LinkProperties linkProperties = new LinkProperties();
+        linkProperties.setInterfaceName(NAME);
+        linkProperties.addLinkAddress(LINKADDRV6);
+        linkProperties.addDnsServer(DNS6);
+        linkProperties.addRoute(new RouteInfo(GATEWAY61));
+        linkProperties.addRoute(new RouteInfo(GATEWAY62));
+        return linkProperties;
+    }
+
+    @Test
+    public void testHasIpv4DefaultRoute() {
+        final LinkProperties Ipv4 = makeIpv4LinkProperties();
+        assertTrue(Ipv4.hasIpv4DefaultRoute());
+        final LinkProperties Ipv6 = makeIpv6LinkProperties();
+        assertFalse(Ipv6.hasIpv4DefaultRoute());
+    }
+
+    @Test
+    public void testHasIpv4DnsServer() {
+        final LinkProperties Ipv4 = makeIpv4LinkProperties();
+        assertTrue(Ipv4.hasIpv4DnsServer());
+        final LinkProperties Ipv6 = makeIpv6LinkProperties();
+        assertFalse(Ipv6.hasIpv4DnsServer());
+    }
+
+    @Test
+    public void testHasIpv6DnsServer() {
+        final LinkProperties Ipv4 = makeIpv4LinkProperties();
+        assertFalse(Ipv4.hasIpv6DnsServer());
+        final LinkProperties Ipv6 = makeIpv6LinkProperties();
+        assertTrue(Ipv6.hasIpv6DnsServer());
     }
 }
