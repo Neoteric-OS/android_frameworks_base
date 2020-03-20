@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45bcc635_b1924da4",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-03-20T02:33:21Z",
+      "side": 1,
+      "message": "We can definitely do that but it will change the behavior of doing quick disable-\u003eenable-\u003edisable, the second disable would be dropped and sometime we will see mismatch between the Settings UI and the actual Bluetooth state.\nI would prefer focus on fixing the bug in this CL and have another deep dive to the problem I mentioned above.",
+      "parentUuid": "f11d149a_6caee7a4",
+      "range": {
+        "startLine": 1669,
+        "startChar": 24,
+        "endLine": 1669,
+        "endChar": 77
+      },
+      "revId": "3b490930690c77de1adcd6195acafab4f46ed3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cbae3fe_2dd0361d",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "918fbb72_82b299f1",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1696,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-03-20T02:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cbae3fe_2dd0361d",
+      "range": {
+        "startLine": 1696,
+        "startChar": 23,
+        "endLine": 1696,
+        "endChar": 63
+      },
+      "revId": "3b490930690c77de1adcd6195acafab4f46ed3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d098e09c_4823f61f",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "3b490930690c77de1adcd6195acafab4f46ed3cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435e12d5_450ea2ec",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-03-20T02:33:21Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "d098e09c_4823f61f",
+      "range": {
+        "startLine": 1697,
+        "startChar": 0,
+        "endLine": 1715,
+        "endChar": 26
+      },
+      "revId": "3b490930690c77de1adcd6195acafab4f46ed3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
