@@ -94,6 +94,30 @@
       "revId": "1859e648d618820a8f4debefd2b24facee520455",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0707737_cba61172",
+        "filename": "telephony/common/com/google/android/mms/pdu/PduComposer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1226402
+      },
+      "writtenOn": "2020-03-20T07:32:42Z",
+      "side": 0,
+      "message": "Agreed and updated the patch. Thanks.",
+      "parentUuid": "fae19148_acf3a653",
+      "range": {
+        "startLine": 748,
+        "startChar": 32,
+        "endLine": 748,
+        "endChar": 40
+      },
+      "revId": "1859e648d618820a8f4debefd2b24facee520455",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
