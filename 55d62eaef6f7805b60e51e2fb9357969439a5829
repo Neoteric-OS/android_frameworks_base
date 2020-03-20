@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "080a8cb6_8e8c8e8f",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-20T02:12:47Z",
+      "side": 1,
+      "message": "nit: make this final, too. If respin",
+      "range": {
+        "startLine": 510,
+        "startChar": 58,
+        "endLine": 510,
+        "endChar": 61
+      },
+      "revId": "55d62eaef6f7805b60e51e2fb9357969439a5829",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f17bab_3defbf22",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-20T02:12:47Z",
+      "side": 1,
+      "message": "nit: Send?",
+      "range": {
+        "startLine": 325,
+        "startChar": 20,
+        "endLine": 325,
+        "endChar": 23
+      },
+      "revId": "55d62eaef6f7805b60e51e2fb9357969439a5829",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdabed3_f3c68977",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-20T02:12:47Z",
+      "side": 1,
+      "message": "IIUC in this test you only need to test for several cases assert the output transport type is expected.\ne.g.\nexpectEquals(IDnsResolver.TRANSPORT_XXX, remappingTransportTypes(TRANSPORT_XXX))\nNote that boundaries and problematic numbers are needed.",
+      "range": {
+        "startLine": 360,
+        "startChar": 16,
+        "endLine": 360,
+        "endChar": 43
+      },
+      "revId": "55d62eaef6f7805b60e51e2fb9357969439a5829",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
