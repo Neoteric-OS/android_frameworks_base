@@ -70,6 +70,30 @@
       "revId": "1859e648d618820a8f4debefd2b24facee520455",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae19148_acf3a653",
+        "filename": "telephony/common/com/google/android/mms/pdu/PduComposer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-03-20T00:08:30Z",
+      "side": 0,
+      "message": "Right. It should be same as Line #780.",
+      "parentUuid": "530de7f0_3c99a349",
+      "range": {
+        "startLine": 748,
+        "startChar": 32,
+        "endLine": 748,
+        "endChar": 40
+      },
+      "revId": "1859e648d618820a8f4debefd2b24facee520455",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
