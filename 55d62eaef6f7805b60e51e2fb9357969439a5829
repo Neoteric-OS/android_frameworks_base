@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "17e6d678_dbf69e52",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-20T03:44:23Z",
+      "side": 1,
+      "message": "1. nit: final\n2. nit: move up\n3. check transport type",
+      "range": {
+        "startLine": 369,
+        "startChar": 8,
+        "endLine": 369,
+        "endChar": 22
+      },
+      "revId": "55d62eaef6f7805b60e51e2fb9357969439a5829",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "080a8cb6_8e8c8e8f",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 19
