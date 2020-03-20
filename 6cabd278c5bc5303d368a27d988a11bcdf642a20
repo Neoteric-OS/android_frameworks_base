@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f75b8ddd_2165d1cd",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-20T00:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e0de6cd_a574df11",
+      "range": {
+        "startLine": 509,
+        "startChar": 18,
+        "endLine": 509,
+        "endChar": 41
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60434781_21acebbc",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 18
@@ -140,6 +164,30 @@
       "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53015df7_4f243a9a",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-20T00:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73b99641_e17a8169",
+      "range": {
+        "startLine": 513,
+        "startChar": 20,
+        "endLine": 513,
+        "endChar": 34
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "a571f5bd_ffde6d8e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4933,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-20T00:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2deb407a_901ae9d2",
+      "range": {
+        "startLine": 4933,
+        "startChar": 33,
+        "endLine": 4933,
+        "endChar": 46
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15f6b81d_58152190",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
@@ -225,6 +297,30 @@
       "side": 1,
       "message": "Framework transport type is defined from TRANSPORT_CELLULAR(0).\nResolver network type is defined from 1(NT_CELLULAR) and NT_UNKNOWN is 0.\nThey should be having the same mapping becuase they are the same meaning. Therefore I redefine transport types in IDnsResolver.aidl.\n    const int TRANSPORT_UNKNOWN \u003d 0;\n    const int TRANSPORT_CELLULA \u003d 1;\n    const int TRANSPORT_WIFI \u003d 2;\n    const int TRANSPORT_BLUETOOTH \u003d 3;\n    const int TRANSPORT_ETHERNET \u003d 4;\n    const int TRANSPORT_VPN \u003d 5;\n    const int TRANSPORT_WIFI_AWARE \u003d 6;\n    const int TRANSPORT_LOWPAN \u003d 7;\n\nBefore TRANSPORT_* is sent to resolver, I should remap TRANSPORT_*. \nThis can make framwork and resolver has the same tranport type mapping.\nAnd the default value is reasonable becuase it\u0027s TRANSPORT_UNKNOWN that is defined in     \nResolverParamsParcel.aidl.\nIf we don\u0027t remap, the default value would be empty or we should choose a number for it. I think remapping should be better than prevous options.",
       "parentUuid": "15f6b81d_58152190",
+      "range": {
+        "startLine": 4936,
+        "startChar": 60,
+        "endLine": 4936,
+        "endChar": 87
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3114dc87_e5e841c8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4936,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-20T00:59:21Z",
+      "side": 1,
+      "message": "IIUC there is no such case that framework will pass TRANSPORT_UNKNOWN to resolver, right? It will be empty array if there is no transport.\n\nIf it is only locally used in resolver, does it resolve the problem if we make unknown -1 locally in resolver?\n\nIt will be efforts to maintain such table, and given that it is totally the same with table in NetworkCapabilites but only 1 number shifted, I\u0027m not sure this is good idea.",
+      "parentUuid": "c654fbc4_ca990d3a",
       "range": {
         "startLine": 4936,
         "startChar": 60,
@@ -281,6 +377,30 @@
       "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9262fc_72d38a29",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-20T00:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "038e2bee_8b107109",
+      "range": {
+        "startLine": 104,
+        "startChar": 35,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "6cabd278c5bc5303d368a27d988a11bcdf642a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
