@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef9d3ebd_2cef4cf9",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3476,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-03-21T01:35:45Z",
+      "side": 1,
+      "message": "must be synchronized on mScoClients",
+      "range": {
+        "startLine": 3476,
+        "startChar": 0,
+        "endLine": 3476,
+        "endChar": 69
+      },
+      "revId": "f040d486dbdfe77773fe39f45a2503c499bc7f52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c2758c_3c6a1cd4",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3640,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-03-21T01:35:45Z",
+      "side": 1,
+      "message": "use an iterator to safely remove from a list :\nIterator\u003cScoClient\u003e ci \u003d mScoClients.iterator();\nwhile (ci.hasNext()) {\n   ScoClient cl \u003d ci.next();\n     :\n   ci.remove();\n}",
+      "range": {
+        "startLine": 3640,
+        "startChar": 0,
+        "endLine": 3640,
+        "endChar": 43
+      },
+      "revId": "f040d486dbdfe77773fe39f45a2503c499bc7f52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
