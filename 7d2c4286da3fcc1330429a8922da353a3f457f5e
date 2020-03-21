@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e3eaf12_4c82319d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-03-21T01:45:50Z",
+      "side": 1,
+      "message": "explain more why we\u0027re doing this?\n\nsomething like:\n\nSince changing the permissions for these SystemApis would break the unsupported app contract that was previously there, we\u0027re choosing to hide them until we have a good story on how to deal with them next release.",
+      "range": {
+        "startLine": 8,
+        "startChar": 51,
+        "endLine": 9,
+        "endChar": 69
+      },
+      "revId": "7d2c4286da3fcc1330429a8922da353a3f457f5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
