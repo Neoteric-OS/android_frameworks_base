@@ -1,0 +1,12 @@
+Lint-1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Lint+2: Rahul Sabnis <rahulsabnis@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Autosubmit+1: Rahul Sabnis <rahulsabnis@google.com>
+Code-Review+2: Zach Johnson <zachoverflow@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+API-Review+1: Zach Johnson <zachoverflow@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Sun, 22 Mar 2020 08:30:53 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1260746
+Project: platform/frameworks/base
+Branch: refs/heads/master
