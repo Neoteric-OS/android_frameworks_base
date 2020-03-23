@@ -143,6 +143,23 @@
     },
     {
       "key": {
+        "uuid": "5892096c_bcc3ea29",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2020-03-23T14:00:38Z",
+      "side": 1,
+      "message": "If we invert the logic here, does it get simpler to read?  Maybe something like this:\n\nThis could be first:\n\nif (mWaitForDisableRetry \u003e\u003d MAX_WAIT_FOR_ENABLE_DISABLE_RETRIES) {                        \n    Slog.e(TAG, \"Wait for exiting STATE_ON timeout\");\n    if (!disabling) {\n        mWaitForDisableRetry \u003d 0;\n        mEnable \u003d false;\n        handleDisable();\n        // Wait for state exiting STATE_ON\n        Message disableDelayedMsg \u003d\n                mHandler.obtainMessage(MESSAGE_HANDLE_DISABLE_DELAYED, 1, 0);\n        mHandler.sendMessageDelayed(disableDelayedMsg, ENABLE_DISABLE_DELAY_MS);\n    }\n    break;\n}\n\nThen:\nmWaitForDisableRetry++;\nMessage disableDelayedMsg \u003d\n        mHandler.obtainMessage(MESSAGE_HANDLE_DISABLE_DELAYED, msg.arg1, 0);\nmHandler.sendMessageDelayed(disableDelayedMsg, ENABLE_DISABLE_DELAY_MS);",
+      "revId": "c3312a483669847c8f56d7e2cd2d72d19074f38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00afeeac_734b53e3",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 3
