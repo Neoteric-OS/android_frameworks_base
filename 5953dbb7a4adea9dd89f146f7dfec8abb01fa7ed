@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a14655e_b9cc86b4",
+        "filename": "core/java/android/content/pm/PackageInstaller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2020-03-23T15:36:22Z",
+      "side": 1,
+      "message": "Please do this without the use of streams.\n\nCopy it to an ArrayList, reverse iterate and remove as necessary.",
+      "range": {
+        "startLine": 511,
+        "startChar": 15,
+        "endLine": 513,
+        "endChar": 45
+      },
+      "revId": "5953dbb7a4adea9dd89f146f7dfec8abb01fa7ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
