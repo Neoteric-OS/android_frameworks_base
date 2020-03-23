@@ -21,6 +21,7 @@ import static com.android.testutils.ParcelUtilsKt.assertParcelSane;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import androidx.test.filters.SmallTest;
@@ -58,5 +59,22 @@ public class ApfCapabilitiesTest {
 
         caps = new ApfCapabilities(4 /* apfVersionSupported */, 5, 6);
         assertTrue(caps.hasDataAccess());
+    }
+
+    @Test
+    public void testGetApfDrop8023Frames() {
+        // Either true or false returned from this API is valid result. Just make sure
+        // calling this API doesn't crash.
+        final boolean result = ApfCapabilities.getApfDrop8023Frames();
+    }
+
+    @Test
+    public void testGetApfEtherTypeBlackList() {
+        final int[] blackedEtherTypeArray = ApfCapabilities.getApfEtherTypeBlackList();
+        // EtherType is a just two-octet field in an Ethernet frame. This black list can be
+        // overridden by OEMs to drop packets with arbitrary EtherType. Just check returned
+        // EtherType array is non-null and not empty.
+        assertNotNull(blackedEtherTypeArray);
+        assertNotEquals(0, blackedEtherTypeArray.length);
     }
 }
