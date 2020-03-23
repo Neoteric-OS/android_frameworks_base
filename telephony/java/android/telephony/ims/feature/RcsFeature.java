@@ -372,6 +372,8 @@ public class RcsFeature extends ImsFeature {
      * exchange if it is supported by the device.
      * @hide
      */
+    @SystemApi
+    @TestApi
     public @NonNull RcsPresenceExchangeImplBase getPresenceExchangeImpl() {
         // Base Implementation, override to implement functionality.
         return new RcsPresenceExchangeImplBase();
