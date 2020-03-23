@@ -652,6 +652,17 @@ public class TelecomManager {
             "android.telecom.INCLUDE_SELF_MANAGED_CALLS";
 
     /**
+     * A boolean meta-data value indicating whether an {@link InCallService} wants to be informed of
+     * emergency calls. Dialer implementations (see {@link #getDefaultDialerPackage()}) which
+     * would also like to replace the in-call interface should set this meta-data to {@code true} in
+     * the manifest registration of their {@link InCallService}.
+     * <p>
+     * It is only supported in privileged app.
+     */
+    public static final String METADATA_PLACE_EMERGENCY_CALLS =
+            "android.telecom.PLACE_EMERGENCY_CALLS";
+
+    /**
      * The dual tone multi-frequency signaling character sent to indicate the dialing system should
      * pause for a predefined period.
      */
