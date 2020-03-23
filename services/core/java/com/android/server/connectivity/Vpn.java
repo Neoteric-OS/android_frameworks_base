@@ -2268,11 +2268,15 @@ public class Vpn {
                 final String interfaceName = mTunnelIface.getInterfaceName();
                 final int maxMtu = mProfile.getMaxMtu();
                 final List<LinkAddress> internalAddresses = childConfig.getInternalAddresses();
+                final List<String> dnsAddrStrings = new ArrayList<>();
 
                 final Collection<RouteInfo> newRoutes = VpnIkev2Utils.getRoutesFromTrafficSelectors(
                         childConfig.getOutboundTrafficSelectors());
                 for (final LinkAddress address : internalAddresses) {
                     mTunnelIface.addAddress(address.getAddress(), address.getPrefixLength());
+                }
+                for (InetAddress addr : childConfig.getInternalDnsServers()) {
+                    dnsAddrStrings.add(addr.getHostAddress());
                 }
 
                 final NetworkAgent networkAgent;
@@ -2289,7 +2293,8 @@ public class Vpn {
                     mConfig.routes.clear();
                     mConfig.routes.addAll(newRoutes);
 
-                    // TODO: Add DNS servers from negotiation
+                    mConfig.dnsServers.clear();
+                    mConfig.dnsServers.addAll(dnsAddrStrings);
 
                     networkAgent = mNetworkAgent;
 
