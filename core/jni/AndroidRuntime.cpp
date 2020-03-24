@@ -36,8 +36,8 @@
 #include <SkGraphics.h>
 
 #include "jni.h"
+#include <jniart/JniInvocation.h>
 #include <nativehelper/JNIHelp.h>
-#include <nativehelper/JniInvocation.h>
 #include "android_util_Binder.h"
 
 #include <stdio.h>

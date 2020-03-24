@@ -297,6 +297,7 @@ cc_library_shared {
         "libprocessgroup",
         "libnativebridge_lazy",
         "libnativeloader_lazy",
+        "libjniart",
         "libmemunreachable",
         "libhidlbase",
         "libvintf",
