@@ -142,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "48de6391_cab29296",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-03-24T02:32:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5715efed_e222ec65",
+      "range": {
+        "startLine": 1686,
+        "startChar": 88,
+        "endLine": 1686,
+        "endChar": 91
+      },
+      "revId": "c3312a483669847c8f56d7e2cd2d72d19074f38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d657f350_799ccca6",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 3
@@ -189,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "15f693cd_1f3fa36c",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1707,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-03-24T02:32:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4e9229a_9aa2100b",
+      "range": {
+        "startLine": 1707,
+        "startChar": 82,
+        "endLine": 1707,
+        "endChar": 83
+      },
+      "revId": "c3312a483669847c8f56d7e2cd2d72d19074f38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5892096c_bcc3ea29",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 3
@@ -203,6 +251,24 @@
       "revId": "c3312a483669847c8f56d7e2cd2d72d19074f38a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c3f5c5_8c604181",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-03-24T02:32:21Z",
+      "side": 1,
+      "message": "I have changed the code a bit and hopefully it gets simpler now.",
+      "parentUuid": "5892096c_bcc3ea29",
+      "revId": "c3312a483669847c8f56d7e2cd2d72d19074f38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -241,6 +307,30 @@
       "side": 1,
       "message": "If we reach the maximum retry, we should continue regardless the current state.",
       "parentUuid": "00afeeac_734b53e3",
+      "range": {
+        "startLine": 1733,
+        "startChar": 87,
+        "endLine": 1733,
+        "endChar": 88
+      },
+      "revId": "c3312a483669847c8f56d7e2cd2d72d19074f38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f044d74_181c6ec4",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-03-24T02:32:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45cf19ae_b2fdcf87",
       "range": {
         "startLine": 1733,
         "startChar": 87,
