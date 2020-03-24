@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f99762f9_e560b362",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-03-24T00:52:02Z",
+      "side": 1,
+      "message": "this CL does not mark the method as @SystemApi.\nWe cannot not change the system APIs at his point for R.\nCan it be an @TestApi?",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 16
+      },
+      "revId": "03a3a7f559ba68f3e087e30b98d8a14fefb2e042",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
