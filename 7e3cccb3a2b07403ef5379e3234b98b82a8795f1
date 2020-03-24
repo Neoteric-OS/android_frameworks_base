@@ -46,6 +46,30 @@
       "revId": "7e3cccb3a2b07403ef5379e3234b98b82a8795f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c83f87_a062a11b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1535,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-24T14:26:14Z",
+      "side": 1,
+      "message": "No, our code do not handle switching IpServer between local-only and tethered state. It should going to inactive first.",
+      "parentUuid": "66ae3cac_463d3671",
+      "range": {
+        "startLine": 1535,
+        "startChar": 16,
+        "endLine": 1535,
+        "endChar": 63
+      },
+      "revId": "7e3cccb3a2b07403ef5379e3234b98b82a8795f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
