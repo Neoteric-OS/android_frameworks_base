@@ -22,6 +22,30 @@
       "revId": "7e3cccb3a2b07403ef5379e3234b98b82a8795f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ae3cac_463d3671",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1535,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-24T14:03:47Z",
+      "side": 1,
+      "message": "Hmm, not sure. Probably not since the tethered clients is mostly for the purpose of displaying this information to users, and there is no UI for local-only hotspot.\n\nCan it happen that the same IpServer goes from tethered state to local-only state without first  going to inactive? If so, we still need this code. If not, I\u0027ll remove it.",
+      "parentUuid": "69dc8b66_e1b90121",
+      "range": {
+        "startLine": 1535,
+        "startChar": 16,
+        "endLine": 1535,
+        "endChar": 63
+      },
+      "revId": "7e3cccb3a2b07403ef5379e3234b98b82a8795f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
