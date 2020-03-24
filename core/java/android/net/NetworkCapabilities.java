@@ -901,12 +901,19 @@ public final class NetworkCapabilities implements Parcelable {
      * always be included in administratorUids.
      *
      * @param administratorUids the UIDs to be set as administrators of this Network.
+     * @throws IllegalArgumentException iff duplicate UIDs are contained in administratorUids
      * @hide
      */
     @NonNull
     @SystemApi
     public NetworkCapabilities setAdministratorUids(@NonNull final int[] administratorUids) {
         mAdministratorUids = Arrays.copyOf(administratorUids, administratorUids.length);
+        Arrays.sort(mAdministratorUids);
+        for (int i = 0; i < mAdministratorUids.length - 1; i++) {
+            if (mAdministratorUids[i] >= mAdministratorUids[i + 1]) {
+                throw new IllegalArgumentException("All administrator UIDs must be unique");
+            }
+        }
         return this;
     }
 
