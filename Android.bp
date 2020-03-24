@@ -516,6 +516,10 @@ java_library {
     srcs: [":framework-all-sources"],
     installable: false,
     apex_available: ["//apex_available:platform"],
+    static_libs: [
+        // Additional dependencies needed to build the ike API classes.
+        "ike-internals",
+    ],
     visibility: [
         // DO NOT ADD ANY MORE ENTRIES TO THIS LIST
         "//external/robolectric-shadows:__subpackages__",
@@ -526,11 +530,14 @@ java_library {
 
 java_library {
     name: "framework-annotation-proc",
+    visibility: ["//visibility:private"],
     defaults: ["framework-defaults"],
     srcs: [":framework-all-sources"],
     libs: [
         "app-compat-annotations",
         "unsupportedappusage",
+        // Additional dependencies needed to build the ike API classes.
+        "ike-internals",
     ],
     installable: false,
     plugins: [
