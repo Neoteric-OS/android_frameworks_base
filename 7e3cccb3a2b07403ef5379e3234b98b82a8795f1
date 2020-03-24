@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69dc8b66_e1b90121",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1535,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-24T13:53:26Z",
+      "side": 1,
+      "message": "This else condition is used for local only tethering(e.g. local only hotspot). The flow here means local only tethering is active. Should we also support connected client for local only hotspot(usually use for android auto) ?",
+      "range": {
+        "startLine": 1535,
+        "startChar": 16,
+        "endLine": 1535,
+        "endChar": 63
+      },
+      "revId": "7e3cccb3a2b07403ef5379e3234b98b82a8795f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
