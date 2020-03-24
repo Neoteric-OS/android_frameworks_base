@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c8433d1_201a4b4a",
+        "filename": "core/java/android/os/BadParcelableException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1245797
+      },
+      "writtenOn": "2020-03-24T20:09:10Z",
+      "side": 1,
+      "message": "Are you dropping msg intentionally?\nIf so, should we just use BadParcelableException(Exception cause).",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 21
+      },
+      "revId": "a17ddced69f4ba2ed934bbf6c9371919647ba66f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
