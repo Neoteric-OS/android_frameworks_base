@@ -381,7 +381,7 @@ public class TetheringTest {
         }
 
         @Override
-        public TetheringNotificationUpdater getNotificationUpdater(Context ctx) {
+        public TetheringNotificationUpdater getNotificationUpdater(Context ctx, Looper looper) {
             return mNotificationUpdater;
         }
     }
@@ -1667,6 +1667,18 @@ public class TetheringTest {
         verify(mNetd).interfaceSetCfg(argThat(cfg -> serverAddr.equals(cfg.ipv4Addr)));
 
         // TODO: test static client address.
+    }
+
+    @Test
+    public void testUpstreamNetworkChanged() {
+        final Tethering.TetherMasterSM stateMachine = (Tethering.TetherMasterSM)
+                mTetheringDependencies.mUpstreamNetworkMonitorMasterSM;
+        final UpstreamNetworkState upstreamState = buildMobileIPv4UpstreamState();
+        when(mUpstreamNetworkMonitor.selectPreferredUpstreamType(any())).thenReturn(upstreamState);
+        stateMachine.chooseUpstreamType(true);
+
+        verify(mUpstreamNetworkMonitor, times(1)).setCurrentUpstream(eq(upstreamState.network));
+        verify(mNotificationUpdater, times(1)).onUpstreamNetworkChanged(eq(upstreamState.network));
     }
 
     // TODO: Test that a request for hotspot mode doesn't interfere with an

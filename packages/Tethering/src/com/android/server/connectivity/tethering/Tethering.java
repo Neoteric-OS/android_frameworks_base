@@ -257,7 +257,7 @@ public class Tethering {
         mContext = mDeps.getContext();
         mNetd = mDeps.getINetd(mContext);
         mLooper = mDeps.getTetheringLooper();
-        mNotificationUpdater = mDeps.getNotificationUpdater(mContext);
+        mNotificationUpdater = mDeps.getNotificationUpdater(mContext, mLooper);
 
         mPublicSync = new Object();
 
@@ -341,6 +341,7 @@ public class Tethering {
         filter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         filter.addAction(UserManager.ACTION_USER_RESTRICTIONS_CHANGED);
         filter.addAction(ACTION_RESTRICT_BACKGROUND_CHANGED);
+        filter.addAction(TetheringNotificationUpdater.ACTION_DISABLE_TETHERING);
         mContext.registerReceiver(mStateReceiver, filter, null, handler);
     }
 
@@ -854,6 +855,8 @@ public class Tethering {
             } else if (action.equals(ACTION_RESTRICT_BACKGROUND_CHANGED)) {
                 mLog.log("OBSERVED data saver changed");
                 handleDataSaverChanged();
+            } else if (action.equals(TetheringNotificationUpdater.ACTION_DISABLE_TETHERING)) {
+                untetherAll();
             }
         }
 
@@ -2010,6 +2013,7 @@ public class Tethering {
         } finally {
             mTetheringEventCallbacks.finishBroadcast();
         }
+        mNotificationUpdater.onUpstreamNetworkChanged(network);
     }
 
     private void reportConfigurationChanged(TetheringConfigurationParcel config) {
