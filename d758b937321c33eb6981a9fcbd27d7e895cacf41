@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "acda1ecc_ef04dae4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 23
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-25T11:26:09Z",
+      "side": 1,
+      "message": "update new commit.",
+      "parentUuid": "82773087_8c92419d",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "047348ab_736c80ee",
         "filename": "services/core/Android.bp",
         "patchSetId": 23
@@ -36,6 +60,30 @@
       "writtenOn": "2020-03-25T07:55:12Z",
       "side": 1,
       "message": "Can you upload a CL to freeze a new version of the dnsresolver interface?",
+      "range": {
+        "startLine": 56,
+        "startChar": 9,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a77b01a_de6a62fd",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 23
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-25T11:26:09Z",
+      "side": 1,
+      "message": "Will add a Cl to freeze a new version of the dnsresolver interface.",
+      "parentUuid": "047348ab_736c80ee",
       "range": {
         "startLine": 56,
         "startChar": 9,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7142d049_fb483748",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-25T11:26:09Z",
+      "side": 1,
+      "message": "ConnectivitySer.",
+      "parentUuid": "62d2b844_4d9ee385",
+      "range": {
+        "startLine": 319,
+        "startChar": 45,
+        "endLine": 319,
+        "endChar": 56
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "695891c7_c3b20dc8",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 23
@@ -82,6 +154,30 @@
       "writtenOn": "2020-03-25T07:55:12Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 330,
+        "startChar": 45,
+        "endLine": 330,
+        "endChar": 56
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3674d2ec_03d06c4b",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-25T11:26:09Z",
+      "side": 1,
+      "message": "ConnectivitySer",
+      "parentUuid": "695891c7_c3b20dc8",
       "range": {
         "startLine": 330,
         "startChar": 45,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "60aee296_3187d7ce",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-25T11:26:09Z",
+      "side": 1,
+      "message": "a fix cl for this.",
+      "parentUuid": "12bcaa1d_187e81b3",
+      "range": {
+        "startLine": 332,
+        "startChar": 16,
+        "endLine": 332,
+        "endChar": 44
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f30414fa_482eca8d",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 23
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f879c8b2_fe2a323b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 4920,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-25T11:26:09Z",
+      "side": 1,
+      "message": "a fix cl for this.",
+      "parentUuid": "f30414fa_482eca8d",
+      "range": {
+        "startLine": 4920,
+        "startChar": 35,
+        "endLine": 4920,
+        "endChar": 42
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e3c1326_355fae0a",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 23
@@ -151,6 +295,30 @@
       "writtenOn": "2020-03-25T07:55:12Z",
       "side": 1,
       "message": "Don\u0027t you need a test to check that the parameters are pushed when there is a NetworkCapabilities change? That\u0027s what this change does, right?",
+      "range": {
+        "startLine": 4923,
+        "startChar": 4,
+        "endLine": 4923,
+        "endChar": 5
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034da74e_1c717e2b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 4923,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-03-25T11:26:09Z",
+      "side": 1,
+      "message": "Ok. I will create a fix cl that add one more test case.",
+      "parentUuid": "3e3c1326_355fae0a",
       "range": {
         "startLine": 4923,
         "startChar": 4,
