@@ -22,6 +22,30 @@
       "revId": "fb16184c6e65e304f9ef3d677d79ed17438e885c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdddece_e1aae6d6",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringNotificationUpdater.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-25T05:33:25Z",
+      "side": 1,
+      "message": "Oops, I missed that but I have added it back on TNU05(aosp/1237036)",
+      "parentUuid": "0019fcb7_24c24a55",
+      "range": {
+        "startLine": 162,
+        "startChar": 5,
+        "endLine": 162,
+        "endChar": 22
+      },
+      "revId": "fb16184c6e65e304f9ef3d677d79ed17438e885c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
