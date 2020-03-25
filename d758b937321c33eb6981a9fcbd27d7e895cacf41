@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82773087_8c92419d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 23
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-25T07:55:12Z",
+      "side": 1,
+      "message": "This needs more detail to explain what the change is doing. It should mention that the way it works is that it sends all NetworkCapabilities and all LinkProperties for all networks to DnsManager, and ensures that every time anything changes, DnsManager will reconfigure netd with the new servers.\n\nIt should mention that this results in calling setResolverConfiguration more often than before and explain why this does not create any issues such as performance problems or side effects (or mention that those issues are dealt with in another change).",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047348ab_736c80ee",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 23
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-25T07:55:12Z",
+      "side": 1,
+      "message": "Can you upload a CL to freeze a new version of the dnsresolver interface?",
+      "range": {
+        "startLine": 56,
+        "startChar": 9,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d2b844_4d9ee385",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-25T07:55:12Z",
+      "side": 1,
+      "message": "Which thread? The ConnectivityService handler thread?",
+      "range": {
+        "startLine": 319,
+        "startChar": 45,
+        "endLine": 319,
+        "endChar": 56
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695891c7_c3b20dc8",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-25T07:55:12Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 330,
+        "startChar": 45,
+        "endLine": 330,
+        "endChar": 56
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12bcaa1d_187e81b3",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-25T07:55:12Z",
+      "side": 1,
+      "message": "This method is named noteLinkPropertiesForNetwork, but it\u0027s only called when the DNS servers for that network change. This could get confusing in the future. Can we rename it to something else like noteDnsServersForNetwork? It can still take the same arguments.",
+      "range": {
+        "startLine": 332,
+        "startChar": 16,
+        "endLine": 332,
+        "endChar": 44
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30414fa_482eca8d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 4920,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-25T07:55:12Z",
+      "side": 1,
+      "message": "Typo, resolver.",
+      "range": {
+        "startLine": 4920,
+        "startChar": 35,
+        "endLine": 4920,
+        "endChar": 42
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3c1326_355fae0a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 4923,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-25T07:55:12Z",
+      "side": 1,
+      "message": "Don\u0027t you need a test to check that the parameters are pushed when there is a NetworkCapabilities change? That\u0027s what this change does, right?",
+      "range": {
+        "startLine": 4923,
+        "startChar": 4,
+        "endLine": 4923,
+        "endChar": 5
+      },
+      "revId": "d758b937321c33eb6981a9fcbd27d7e895cacf41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
