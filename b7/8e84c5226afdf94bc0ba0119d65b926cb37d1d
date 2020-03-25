@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+1: Hunter Knepshield <hknepshield@google.com>
+Code-Review+2: Amit Mahajan <amitmahajan@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Mingming Cai <mingcai@google.com>
+Submitted-at: Wed, 25 Mar 2020 19:15:40 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1266626
+Project: platform/frameworks/base
+Branch: refs/heads/master
