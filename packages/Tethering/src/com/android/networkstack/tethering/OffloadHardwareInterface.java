@@ -63,6 +63,9 @@ public class OffloadHardwareInterface {
     private static final int NF_NETLINK_CONNTRACK_UPDATE = 2;
     private static final int NF_NETLINK_CONNTRACK_DESTROY = 4;
 
+    public static final short NFNL_SUBSYS_CTNETLINK = 1;
+    public static final short IPCTNL_MSG_CT_GET = 1;
+
     private final Handler mHandler;
     private final SharedLog mLog;
     private IOffloadControl mOffloadControl;
@@ -162,6 +165,8 @@ public class OffloadHardwareInterface {
                 NF_NETLINK_CONNTRACK_NEW | NF_NETLINK_CONNTRACK_DESTROY);
         if (h1 == null) return false;
 
+        sendNetlinkMessage(IPCTNL_MSG_CT_GET, NLM_F_REQUEST|NLM_F_DUMP);
+
         final NativeHandle h2 = createConntrackSocket(
                 NF_NETLINK_CONNTRACK_UPDATE | NF_NETLINK_CONNTRACK_DESTROY);
         if (h2 == null) {
@@ -187,6 +192,24 @@ public class OffloadHardwareInterface {
         record("initOffloadConfig, setHandles results:", results);
         return results.mSuccess;
     }
+
+    private void sendNetlinkMessage(int type, int flags) {
+        final StructNlMsgHdr nlh = new StructNlMsgHdr();
+        final int length = StructNlMsgHdr.STRUCT_SIZE;
+        final byte[] msg = new byte[length];
+        final ByteBuffer byteBuffer = ByteBuffer.wrap(msg);
+        final long TIMEOUT = 500;
+        nlh.nlmsg_len = length;
+        nlh.nlmsg_type = (NFNL_SUBSYS_CTNETLINK << 8) | type;
+        nlh.nlmsg_flags = flags;
+        nlh.nlmsg_seq = 1;
+        nlh.pack(byteBuffer);
+        try {
+            NetlinkSocket.sendMessage(h1.getFileDescriptor(), msg, 0, length, TIMEOUT)
+        } catch (ErrnoException e) {
+            mLog.e("Unable to send netfilter message, error: " + e);
+        }
+    }      
 
     private void closeFdInNativeHandle(final NativeHandle h) {
         try {
