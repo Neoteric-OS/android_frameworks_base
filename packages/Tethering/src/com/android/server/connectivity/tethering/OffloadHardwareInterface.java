@@ -229,6 +229,16 @@ public class OffloadHardwareInterface {
             }
             return null;
         }
+        try {
+            Os.shutdown(fd, OsConstants.SHUT_WR);
+        } catch (ErrnoException e) {
+            try {
+                SocketUtils.closeSocket(fd);
+            } catch (IOException ie) {
+                // Nothing we can do here
+            }
+            return null;
+        }
 
         return new NativeHandle(fd, true);
     }
