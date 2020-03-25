@@ -18,12 +18,17 @@ package com.android.networkstack.tethering;
 
 import static android.net.util.TetheringUtils.uint16;
 
+import static android.system.OsConstants.SOCK_STREAM;
+import static android.system.OsConstants.AF_UNIX;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import android.hardware.tetheroffload.config.V1_0.IOffloadConfig;
 import android.hardware.tetheroffload.control.V1_0.IOffloadControl;
@@ -35,7 +40,9 @@ import android.net.util.SharedLog;
 import android.os.Handler;
 import android.os.NativeHandle;
 import android.os.test.TestLooper;
+import android.system.ErrnoException;
 import android.system.OsConstants;
+import android.system.Os;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -48,6 +55,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+
+import java.io.FileDescriptor;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -63,6 +74,11 @@ public final class OffloadHardwareInterfaceTest {
     @Mock private IOffloadConfig mIOffloadConfig;
     @Mock private IOffloadControl mIOffloadControl;
     @Mock private NativeHandle mNativeHandle;
+
+    // Random values to test Netlink message.
+    private static final int TEST_SIZE = 16;
+    private static final short TEST_TYPE = 184;
+    private static final short TEST_FLAGS = 263;
 
     class MyDependencies extends OffloadHardwareInterface.Dependencies {
         MyDependencies(SharedLog log) {
@@ -201,6 +217,31 @@ public final class OffloadHardwareInterfaceTest {
                 eq(uint16(udpParams.src.port)),
                 eq(udpParams.dst.addr),
                 eq(uint16(udpParams.dst.port)));
+    }
+
+    @Test
+    public void testNetlinkMessage() throws Exception {
+        FileDescriptor mWriteSocket = new FileDescriptor();
+        FileDescriptor mReadSocket = new FileDescriptor();
+        try {
+            Os.socketpair(AF_UNIX, SOCK_STREAM, 0, mWriteSocket, mReadSocket);
+        } catch (ErrnoException e) {
+            fail();
+            return;
+        }
+        when(mNativeHandle.getFileDescriptor()).thenReturn(mWriteSocket);
+
+        mOffloadHw.sendNetlinkMessage(mNativeHandle, TEST_SIZE, TEST_TYPE, TEST_FLAGS);
+
+        ByteBuffer buffer = ByteBuffer.allocate(TEST_SIZE);
+        int read = Os.read(mReadSocket, buffer);
+
+        buffer.flip();
+        assertEquals(TEST_SIZE, buffer.getInt());
+        assertEquals(TEST_TYPE, buffer.getShort());
+        assertEquals(TEST_FLAGS, buffer.getShort());
+        assertEquals(1 /* seq */, buffer.getInt());
+        assertEquals(0 /* pid */, buffer.getInt());
     }
 
     private NatTimeoutUpdate buildNatTimeoutUpdate(final int proto) {
