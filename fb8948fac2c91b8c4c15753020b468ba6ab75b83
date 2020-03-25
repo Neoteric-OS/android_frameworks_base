@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e30415b0_7dce1d88",
+        "filename": "media/java/android/media/AudioAttributes.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-03-25T18:45:29Z",
+      "side": 1,
+      "message": "not need: getContentType() returns mContentType directly",
+      "range": {
+        "startLine": 514,
+        "startChar": 15,
+        "endLine": 514,
+        "endChar": 32
+      },
+      "revId": "fb8948fac2c91b8c4c15753020b468ba6ab75b83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
