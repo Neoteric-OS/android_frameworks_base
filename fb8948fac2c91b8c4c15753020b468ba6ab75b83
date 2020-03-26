@@ -46,6 +46,30 @@
       "revId": "fb8948fac2c91b8c4c15753020b468ba6ab75b83",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6a7a1d_34f7313f",
+        "filename": "media/java/android/media/AudioAttributes.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-03-26T15:24:46Z",
+      "side": 1,
+      "message": "I will merge internally with getSystemUsage() but we can merge this version to AOSP only without getSystemUsage()",
+      "parentUuid": "e67ef058_dcac0e41",
+      "range": {
+        "startLine": 514,
+        "startChar": 15,
+        "endLine": 514,
+        "endChar": 32
+      },
+      "revId": "fb8948fac2c91b8c4c15753020b468ba6ab75b83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
