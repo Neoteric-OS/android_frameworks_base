@@ -1040,7 +1040,7 @@ public final class NetworkStats implements Parcelable {
                 entry.operations = Math.max(entry.operations, 0);
             }
 
-            result.insertEntry(entry);
+            if (!entry.isEmpty()) result.insertEntry(entry);
         }
 
         return result;

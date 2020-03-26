@@ -95,7 +95,7 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
     public void testNetworkStatsDetail() throws Exception {
         final NetworkStats stats = parseDetailedStats(R.raw.xt_qtaguid_typical);
 
-        assertEquals(70, stats.size());
+        assertEquals(37, stats.size());
         assertStatsEntry(stats, "wlan0", 0, SET_DEFAULT, 0x0, 18621L, 2898L);
         assertStatsEntry(stats, "wlan0", 10011, SET_DEFAULT, 0x0, 35777L, 5718L);
         assertStatsEntry(stats, "wlan0", 10021, SET_DEFAULT, 0x7fffff01, 562386L, 49228L);
@@ -351,7 +351,7 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
     @Test
     public void testNetworkStatsWithSet() throws Exception {
         final NetworkStats stats = parseDetailedStats(R.raw.xt_qtaguid_typical);
-        assertEquals(70, stats.size());
+        assertEquals(37, stats.size());
         assertStatsEntry(stats, "rmnet1", 10021, SET_DEFAULT, 0x30100000, 219110L, 578L, 227423L,
                 676L);
         assertStatsEntry(stats, "rmnet1", 10021, SET_FOREGROUND, 0x30100000, 742L, 3L, 1265L, 3L);
@@ -389,7 +389,7 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
         //  - 41 sent 464xlat packets of size 100 bytes
         //  - no other traffic on base interface for root uid.
         NetworkStats stats = parseDetailedStats(R.raw.xt_qtaguid_with_clat_simple);
-        assertEquals(3, stats.size());
+        assertEquals(2, stats.size());
 
         assertStatsEntry(stats, "v4-wlan0", 10060, SET_DEFAULT, 0x0, 46860L, 4920L);
         assertStatsEntry(stats, "wlan0", 0, SET_DEFAULT, 0x0, 0L, 0L);
@@ -400,7 +400,7 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
         mFactory.noteStackedIface("v4-wlan0", "wlan0");
 
         NetworkStats stats = parseDetailedStats(R.raw.xt_qtaguid_with_clat);
-        assertEquals(42, stats.size());
+        assertEquals(25, stats.size());
 
         assertStatsEntry(stats, "v4-wlan0", 0, SET_DEFAULT, 0x0, 356L, 276L);
         assertStatsEntry(stats, "v4-wlan0", 1000, SET_DEFAULT, 0x0, 30812L, 2310L);

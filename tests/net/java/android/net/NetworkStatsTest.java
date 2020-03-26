@@ -225,10 +225,7 @@ public class NetworkStatsTest {
         final NetworkStats result = after.subtract(before);
 
         // identical data should result in zero delta
-        assertValues(result, 0, TEST_IFACE, 100, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
-                DEFAULT_NETWORK_NO, 0L, 0L, 0L, 0L, 0);
-        assertValues(result, 1, TEST_IFACE, 101, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
-                DEFAULT_NETWORK_NO, 0L, 0L, 0L, 0L, 0);
+        assertEquals(0, result.size());
     }
 
     @Test
@@ -264,11 +261,8 @@ public class NetworkStatsTest {
         final NetworkStats result = after.subtract(before);
 
         // its okay to have new rows
-        assertValues(result, 0, TEST_IFACE, 100, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
-                DEFAULT_NETWORK_NO, 0L, 0L, 0L, 0L, 0);
-        assertValues(result, 1, TEST_IFACE, 101, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
-                DEFAULT_NETWORK_NO, 0L, 0L, 0L, 0L, 0);
-        assertValues(result, 2, TEST_IFACE, 102, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
+        assertEquals(1, result.size());
+        assertValues(result, 0, TEST_IFACE, 102, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
                 DEFAULT_NETWORK_NO, 1024L, 8L, 1024L, 8L, 20);
     }
 
