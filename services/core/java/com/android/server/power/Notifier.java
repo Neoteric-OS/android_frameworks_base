@@ -457,6 +457,7 @@ public class Notifier {
                 // Going to sleep...
                 // Tell the policy that we started going to sleep.
                 final int why = translateOffReason(mInteractiveChangeReason);
+                mSuspendBlocker.acquire();
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -527,6 +528,7 @@ public class Notifier {
                 mPendingInteractiveState = INTERACTIVE_STATE_ASLEEP;
                 mPendingGoToSleepBroadcast = true;
                 updatePendingBroadcastLocked();
+                mSuspendBlocker.release();
             }
         }
     }
