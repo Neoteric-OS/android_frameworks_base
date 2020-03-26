@@ -1596,7 +1596,8 @@ public class Tethering {
             }
         }
 
-        private void handleUpstreamNetworkMonitorCallback(int arg1, Object o) {
+        @VisibleForTesting
+        void handleUpstreamNetworkMonitorCallback(int arg1, Object o) {
             if (arg1 == UpstreamNetworkMonitor.NOTIFY_LOCAL_PREFIXES) {
                 mOffload.sendOffloadExemptPrefixes((Set<IpPrefix>) o);
                 return;
@@ -1622,6 +1623,9 @@ public class Tethering {
 
             switch (arg1) {
                 case UpstreamNetworkMonitor.EVENT_ON_CAPABILITIES:
+                    if (ns.network.equals(mTetherUpstream)) {
+                        mNotificationUpdater.onUpstreamCapabilitiesChanged(ns.networkCapabilities);
+                    }
                     handleNewUpstreamNetworkState(ns);
                     break;
                 case UpstreamNetworkMonitor.EVENT_ON_LINKPROPERTIES:
@@ -2019,6 +2023,12 @@ public class Tethering {
             mTetheringEventCallbacks.finishBroadcast();
         }
         mNotificationUpdater.onUpstreamNetworkChanged(network);
+
+        // Need to notify capabilities change after upstream network changed because new network's
+        // capabilities should be checked every time.
+        final ConnectivityManager connMgr = (ConnectivityManager) mContext.getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+        mNotificationUpdater.onUpstreamCapabilitiesChanged(connMgr.getNetworkCapabilities(network));
     }
 
     private void reportConfigurationChanged(TetheringConfigurationParcel config) {

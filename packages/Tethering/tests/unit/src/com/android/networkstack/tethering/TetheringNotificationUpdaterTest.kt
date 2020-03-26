@@ -27,6 +27,9 @@ import android.net.Network
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
+import android.net.NetworkCapabilities
+import android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING
+import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.os.UserHandle
 import android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID
 import android.telephony.TelephonyManager
@@ -39,6 +42,7 @@ import com.android.networkstack.tethering.TetheringNotificationUpdater.ENABLE_NO
 import com.android.networkstack.tethering.TetheringNotificationUpdater.EVENT_SHOW_NO_UPSTREAM
 import com.android.networkstack.tethering.TetheringNotificationUpdater.NO_UPSTREAM_NOTIFICATION_ID
 import com.android.networkstack.tethering.TetheringNotificationUpdater.RESTRICTED_NOTIFICATION_ID
+import com.android.networkstack.tethering.TetheringNotificationUpdater.ROAMING_NOTIFICATION_ID
 import com.android.testutils.waitForIdle
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -74,6 +78,8 @@ const val TEST_MESSAGE = "Tap to set up hotspot."
 const val TEST_NO_UPSTREAM_TITLE = "Hotspot has no internet access"
 const val TEST_NO_UPSTREAM_MESSAGE = "Device cannot connect to internet."
 const val TEST_NO_UPSTREAM_BUTTON = "Turn off hotspot"
+const val TEST_ROAMING_TITLE = "Hotspot is on"
+const val TEST_ROAMING_MESSAGE = "Additional charges may apply while roaming."
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
@@ -122,6 +128,8 @@ class TetheringNotificationUpdaterTest {
                 .getStringArray(R.array.tethering_notification_icons)
         doReturn(5).`when`(testResources)
                 .getInteger(R.integer.delay_to_show_no_upstream_after_no_backhaul)
+        doReturn(true).`when`(testResources)
+                .getBoolean(R.bool.config_upstream_roaming_notification)
         doReturn(TITLE).`when`(defaultResources).getString(R.string.tethering_notification_title)
         doReturn(MESSAGE).`when`(defaultResources)
                 .getString(R.string.tethering_notification_message)
@@ -134,6 +142,10 @@ class TetheringNotificationUpdaterTest {
                 .getString(R.string.no_upstream_notification_message)
         doReturn(TEST_NO_UPSTREAM_BUTTON).`when`(testResources)
                 .getString(R.string.no_upstream_notification_disable_button)
+        doReturn(TEST_ROAMING_TITLE).`when`(testResources)
+                .getString(R.string.upstream_roaming_notification_title)
+        doReturn(TEST_ROAMING_MESSAGE).`when`(testResources)
+                .getString(R.string.upstream_roaming_notification_message)
         doReturn(USB_ICON_ID).`when`(defaultResources)
                 .getIdentifier(eq("android.test:drawable/usb"), any(), any())
         doReturn(BT_ICON_ID).`when`(defaultResources)
@@ -181,7 +193,7 @@ class TetheringNotificationUpdaterTest {
         verify(notificationManager, times(1)).cancel(any(), eq(id))
 
     private val tetheringActiveNotifications =
-            listOf(NO_UPSTREAM_NOTIFICATION_ID, ENABLE_NOTIFICATION_ID)
+            listOf(NO_UPSTREAM_NOTIFICATION_ID, ENABLE_NOTIFICATION_ID, ROAMING_NOTIFICATION_ID)
 
     private fun verifyCancelAllTetheringActiveNotifications() {
         tetheringActiveNotifications.forEach {
@@ -426,5 +438,67 @@ class TetheringNotificationUpdaterTest {
         res = notificationUpdater.getResourcesForSubId(context, subId)
         assertEquals(311, res.configuration.mcc)
         assertEquals(480, res.configuration.mnc)
+    }
+
+    @Test
+    fun testNotificationWithRoamingCapabilitiesChanged() {
+        // Set test sub id. Clear notification.
+        notificationUpdater.onActiveDataSubscriptionIdChanged(TEST_SUBID)
+        verifyCancelAllTetheringActiveNotifications()
+
+        // Wifi downstream. Show enable notification with test resource.
+        notificationUpdater.onDownstreamChanged(WIFI_MASK)
+        verifyOnlyTetheringActiveNotification(
+                ENABLE_NOTIFICATION_ID, WIFI_ICON_ID, TEST_TITLE, TEST_MESSAGE)
+
+        // Upstream network changed to roaming state. Show roaming notification.
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addTransportType(TRANSPORT_CELLULAR))
+        verifyNotification(R.drawable.stat_sys_tether_general, TEST_ROAMING_TITLE,
+                TEST_ROAMING_MESSAGE, ROAMING_NOTIFICATION_ID)
+        reset(notificationManager)
+
+        // Same NetworkCapabilities. Nothing happened.
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addTransportType(TRANSPORT_CELLULAR))
+        verifyZeroInteractions(notificationManager)
+
+        // Upstream network changed to home state. Clear roaming notification.
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addTransportType(TRANSPORT_CELLULAR)
+                        .addCapability(NET_CAPABILITY_NOT_ROAMING))
+        verifyNotificationCancelled(ROAMING_NOTIFICATION_ID)
+        reset(notificationManager)
+
+        // Upstream network changed to roaming state again. Show roaming notification.
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addTransportType(TRANSPORT_CELLULAR))
+        verifyNotification(R.drawable.stat_sys_tether_general, TEST_ROAMING_TITLE,
+                TEST_ROAMING_MESSAGE, ROAMING_NOTIFICATION_ID)
+        reset(notificationManager)
+
+        // No downstream. No notification.
+        notificationUpdater.onDownstreamChanged(DOWNSTREAM_NONE)
+        verifyCancelAllTetheringActiveNotifications()
+
+        // Upstream network changed to home state again. Clear roaming notification.
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addTransportType(TRANSPORT_CELLULAR)
+                        .addCapability(NET_CAPABILITY_NOT_ROAMING))
+        verifyNotificationCancelled(ROAMING_NOTIFICATION_ID)
+        reset(notificationManager)
+
+        // Wifi downstream again. Show enable notification with test resource.
+        notificationUpdater.onDownstreamChanged(WIFI_MASK)
+        verifyOnlyTetheringActiveNotification(
+                ENABLE_NOTIFICATION_ID, WIFI_ICON_ID, TEST_TITLE, TEST_MESSAGE)
+
+        // Set R.bool.config_upstream_roaming_notification to false and change upstream
+        // network to roaming state again. No roaming notification.
+        doReturn(false).`when`(testResources)
+                .getBoolean(R.bool.config_upstream_roaming_notification)
+        notificationUpdater.onUpstreamCapabilitiesChanged(
+                NetworkCapabilities().addTransportType(TRANSPORT_CELLULAR))
+        verifyNotificationCancelled(ROAMING_NOTIFICATION_ID)
     }
 }
