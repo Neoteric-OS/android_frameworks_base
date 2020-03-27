@@ -52,6 +52,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.hardware.camera2.CameraManager;
+import android.media.AudioManager;
 import android.media.MediaActionSound;
 import android.net.Uri;
 import android.os.Handler;
@@ -223,6 +225,8 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
 
     private MediaActionSound mCameraSound;
 
+    private final AudioManager mAudioManager;
+    private final CameraManager mCameraManager;
     private int mNavMode;
     private int mLeftInset;
     private int mRightInset;
@@ -291,6 +295,9 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
         // Setup the Camera shutter sound
         mCameraSound = new MediaActionSound();
         mCameraSound.load(MediaActionSound.SHUTTER_CLICK);
+
+        mAudioManager = mContext.getSystemService(AudioManager.class);
+        mCameraManager = mContext.getSystemService(CameraManager.class);
     }
 
     @Override // ViewTreeObserver.OnComputeInternalInsetsListener
@@ -808,8 +815,17 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
                     }
                 });
 
-                // Play the shutter sound to notify that we've taken a screenshot
-                mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
+                // Play the shutter sound to notify that we've taken a screenshot if audio
+                // is not muted or the camera sound is forced and a camera is open.
+                if (mAudioManager.isCameraSoundForced()) {
+                    if (mCameraManager.isCameraOpen()) {
+                        mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
+                    } else {
+                        // Do nothing.
+                    }
+                } else {
+                    mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
+                }
 
                 mScreenshotPreview.setLayerType(View.LAYER_TYPE_HARDWARE, null);
                 mScreenshotPreview.buildLayer();
