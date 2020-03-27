@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e2a11fa_6acc3dc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-27T14:42:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e236b35_652f7923",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "610ffee50835406780f335998aaba797324ab6d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40295330_0252b739",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "610ffee50835406780f335998aaba797324ab6d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e0f8ae_227ebf2c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5396,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-27T14:42:35Z",
+      "side": 1,
+      "message": "Ack, b/152603518",
+      "parentUuid": "40295330_0252b739",
+      "range": {
+        "startLine": 5396,
+        "startChar": 42,
+        "endLine": 5396,
+        "endChar": 66
+      },
+      "revId": "610ffee50835406780f335998aaba797324ab6d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0deef41f_31458c85",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5409,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-27T14:42:35Z",
+      "side": 1,
+      "message": "Ack, b/152603518",
+      "parentUuid": "36e16744_99292c35",
+      "range": {
+        "startLine": 5409,
+        "startChar": 26,
+        "endLine": 5409,
+        "endChar": 43
+      },
+      "revId": "610ffee50835406780f335998aaba797324ab6d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93f9d3e7_a496b9b1",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "610ffee50835406780f335998aaba797324ab6d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec38f2df_106a4243",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5410,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-27T14:42:35Z",
+      "side": 1,
+      "message": "Ack, b/152603518",
+      "parentUuid": "93f9d3e7_a496b9b1",
+      "range": {
+        "startLine": 5408,
+        "startChar": 0,
+        "endLine": 5410,
+        "endChar": 13
+      },
+      "revId": "610ffee50835406780f335998aaba797324ab6d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
