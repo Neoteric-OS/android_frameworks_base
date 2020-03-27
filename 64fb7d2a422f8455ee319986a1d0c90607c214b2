@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5a847691_60f3783b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-27T08:19:17Z",
+      "side": 1,
+      "message": "Will add the log in follow up CL.",
+      "parentUuid": "107f28ef_d7a3037f",
+      "range": {
+        "startLine": 338,
+        "startChar": 7,
+        "endLine": 338,
+        "endChar": 9
+      },
+      "revId": "64fb7d2a422f8455ee319986a1d0c90607c214b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a62f63b6_9abb354f",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 1
