@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "b89c8b8f_c7b2355a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-27T08:17:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d284d6ab_e022bf5e",
+      "range": {
+        "startLine": 9,
+        "startChar": 61,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "07981a344600059e132ddc0501e89ce9b1b2ee8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e833bb91_b55f4e38",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -91,6 +115,30 @@
       "revId": "07981a344600059e132ddc0501e89ce9b1b2ee8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb06916_7e5f3e0a",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-27T08:17:50Z",
+      "side": 1,
+      "message": "Ack, thanks for suggestion. Will address this in follow up change.",
+      "parentUuid": "81883e89_7fbaae57",
+      "range": {
+        "startLine": 342,
+        "startChar": 7,
+        "endLine": 342,
+        "endChar": 9
+      },
+      "revId": "07981a344600059e132ddc0501e89ce9b1b2ee8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
