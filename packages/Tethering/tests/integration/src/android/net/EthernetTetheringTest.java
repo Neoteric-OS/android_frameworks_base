@@ -18,6 +18,7 @@ package android.net;
 
 import static android.Manifest.permission.MANAGE_TEST_NETWORKS;
 import static android.Manifest.permission.NETWORK_SETTINGS;
+import static android.net.TetheringManager.TETHERING_ETHERNET;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -57,6 +58,7 @@ import org.junit.runner.RunWith;
 
 import java.io.FileDescriptor;
 import java.net.Inet4Address;
+import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
@@ -110,7 +112,7 @@ public class EthernetTetheringTest {
     }
 
     private void cleanUp() throws Exception {
-        mTm.stopTethering(TetheringManager.TETHERING_ETHERNET);
+        mTm.stopTethering(TETHERING_ETHERNET);
         if (mTetheringEventCallback != null) {
             mTetheringEventCallback.awaitInterfaceUntethered();
             mTetheringEventCallback.unregister();
@@ -174,6 +176,34 @@ public class EthernetTetheringTest {
                 mTestIface.getInterfaceName(), iface);
 
         checkVirtualEthernet(mTestIface, getMTU(mTestIface));
+    }
+
+    @Test
+    public void testStaticIpv4() throws Exception {
+        assumeFalse(mEm.isAvailable());
+
+        mEm.setIncludeTestInterfaces(true);
+
+        mTestIface = createTestInterface();
+
+        final String iface = mTetheredInterfaceRequester.getInterface();
+        assertEquals("TetheredInterfaceCallback for unexpected interface",
+                mTestIface.getInterfaceName(), iface);
+
+        assertInvalidStaticIpv4Request(iface, null, null);
+        assertInvalidStaticIpv4Request(iface, "2001:db8::1/64", "2001:db8:2::/64");
+        assertInvalidStaticIpv4Request(iface, "192.0.2.2/28", "2001:db8:2::/28");
+        assertInvalidStaticIpv4Request(iface, "192.0.2.2/28", null);
+        assertInvalidStaticIpv4Request(iface, null, "192.0.2.2/28");
+        assertInvalidStaticIpv4Request(iface, "192.0.2.3/27", "192.0.2.2/28");
+
+        mTetheringEventCallback = enableEthernetTethering(iface,
+                requestWithStaticIpv4("192.0.2.3/28", "192.0.2.2/28"));
+
+        mTetheringEventCallback.awaitInterfaceTethered();
+        assertInterfaceHasIpAddress(iface, "192.0.2.3/28");
+
+        checkSingleClientAddress(mTestIface, getMTU(mTestIface), "192.0.2.2/28");
     }
 
     @Test
@@ -271,7 +301,8 @@ public class EthernetTetheringTest {
         }
     }
 
-    private MyTetheringEventCallback enableEthernetTethering(String iface) throws Exception {
+    private MyTetheringEventCallback enableEthernetTethering(String iface,
+            TetheringRequest request) throws Exception {
         MyTetheringEventCallback callback = new MyTetheringEventCallback(mTm, iface);
         mTm.registerTetheringEventCallback(mHandler::post, callback);
 
@@ -282,11 +313,14 @@ public class EthernetTetheringTest {
             }
         };
         Log.d(TAG, "Starting Ethernet tethering");
-        mTm.startTethering(
-                new TetheringRequest.Builder(TetheringManager.TETHERING_ETHERNET).build(),
-                mHandler::post /* executor */,  startTetheringCallback);
+        mTm.startTethering(request, mHandler::post /* executor */,  startTetheringCallback);
         callback.awaitInterfaceTethered();
         return callback;
+    }
+
+    private MyTetheringEventCallback enableEthernetTethering(String iface) throws Exception {
+        return enableEthernetTethering(iface,
+                new TetheringRequest.Builder(TETHERING_ETHERNET).build());
     }
 
     private int getMTU(TestNetworkInterface iface) throws SocketException {
@@ -295,21 +329,36 @@ public class EthernetTetheringTest {
         return nif.getMTU();
     }
 
-    private void checkVirtualEthernet(TestNetworkInterface iface, int mtu) throws Exception {
+    private FileDescriptor makePacketReader(TestNetworkInterface iface, int mtu) {
         FileDescriptor fd = iface.getFileDescriptor().getFileDescriptor();
         mTapPacketReader = new TapPacketReader(mHandler, fd, mtu);
         mHandler.post(() -> mTapPacketReader.start());
         HandlerUtilsKt.waitForIdle(mHandler, TIMEOUT_MS);
+        return fd;
+    }
 
+    private void checkVirtualEthernet(TestNetworkInterface iface, int mtu) throws Exception {
+        FileDescriptor fd = makePacketReader(iface, mtu);
         mTetheringEventCallback = enableEthernetTethering(iface.getInterfaceName());
         checkTetheredClientCallbacks(fd);
     }
 
-    private void checkTetheredClientCallbacks(FileDescriptor fd) throws Exception {
-        // Create a fake client.
-        byte[] clientMacAddr = new byte[6];
-        new Random().nextBytes(clientMacAddr);
+    private void checkSingleClientAddress(TestNetworkInterface iface, int mtu, String addr)
+            throws Exception {
+        byte[] client1 = MacAddress.fromString("1:2:3:4:5:6").toByteArray();
+        byte[] client2 = MacAddress.fromString("a:b:c:d:e:f").toByteArray();
 
+        FileDescriptor fd = makePacketReader(iface, mtu);
+        DhcpResults dhcpResults = runDhcp(fd, client1);
+        assertEquals(new LinkAddress(addr), dhcpResults.ipAddress);
+
+        try {
+            runDhcp(fd, client2);
+            fail("Only one client should get an IP address");
+        } catch (AssertionError expected) { }
+    }
+
+    private DhcpResults runDhcp(FileDescriptor fd, byte[] clientMacAddr) throws Exception {
         // We have to retransmit DHCP requests because IpServer declares itself to be ready before
         // its DhcpServer is actually started. TODO: fix this race and remove this loop.
         DhcpPacket offerPacket = null;
@@ -327,13 +376,23 @@ public class EthernetTetheringTest {
         assertTrue("No DHCPACK received on interface within timeout",
                 ackPacket instanceof DhcpAckPacket);
 
+        return ackPacket.toDhcpResults();
+    }
+
+    private void checkTetheredClientCallbacks(FileDescriptor fd) throws Exception {
+        // Create a fake client.
+        byte[] clientMacAddr = new byte[6];
+        new Random().nextBytes(clientMacAddr);
+
+        DhcpResults dhcpResults = runDhcp(fd, clientMacAddr);
+
         final Collection<TetheredClient> clients = mTetheringEventCallback.awaitClientConnected();
         assertEquals(1, clients.size());
         final TetheredClient client = clients.iterator().next();
 
         // Check the MAC address.
         assertEquals(MacAddress.fromBytes(clientMacAddr), client.getMacAddress());
-        assertEquals(TetheringManager.TETHERING_ETHERNET, client.getTetheringType());
+        assertEquals(TETHERING_ETHERNET, client.getTetheringType());
 
         // Check the hostname.
         assertEquals(1, client.getAddresses().size());
@@ -341,7 +400,6 @@ public class EthernetTetheringTest {
         assertEquals(DHCP_HOSTNAME, info.getHostname());
 
         // Check the address is the one that was handed out in the DHCP ACK.
-        DhcpResults dhcpResults = offerPacket.toDhcpResults();
         assertLinkAddressMatches(dhcpResults.ipAddress, info.getAddress());
 
         // Check that the lifetime is correct +/- 10s.
@@ -439,6 +497,34 @@ public class EthernetTetheringTest {
         assertTrue(msg, l1.isSameAddressAs(l2));
         assertEquals("LinkAddress flags do not match", l1.getFlags(), l2.getFlags());
         assertEquals("LinkAddress scope does not match", l1.getScope(), l2.getScope());
+    }
+
+    private TetheringRequest requestWithStaticIpv4(String local, String client) {
+        LinkAddress localAddr = local == null ? null : new LinkAddress(local);
+        LinkAddress clientAddr = client == null ? null : new LinkAddress(client);
+        return new TetheringRequest.Builder(TETHERING_ETHERNET)
+                .setStaticIpv4Addresses(localAddr, clientAddr).build();
+    }
+
+    private void assertInvalidStaticIpv4Request(String iface, String local, String client)
+            throws Exception {
+        try {
+            enableEthernetTethering(iface, requestWithStaticIpv4(local, client));
+            fail("Unexpectedly accepted invalid IPv4 configuration: " + local + ", " + client);
+        } catch (IllegalArgumentException | NullPointerException expected) { }
+    }
+
+    private void assertInterfaceHasIpAddress(String iface, String address) throws Exception {
+        NetworkInterface nif = NetworkInterface.getByName(iface);
+        StringBuffer sb = new StringBuffer("Addresses:");
+        for (InterfaceAddress addr : nif.getInterfaceAddresses()) {
+            sb.append(" ").append(addr.getAddress());
+            if (new LinkAddress(address).equals(
+                    new LinkAddress(addr.getAddress(), addr.getNetworkPrefixLength()))) {
+                return;
+            }
+        }
+        fail("Expected " + iface + " to have IP address " + address + ", found "  + sb.toString());
     }
 
     private TestNetworkInterface createTestInterface() throws Exception {
