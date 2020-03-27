@@ -209,6 +209,36 @@ public final class ContentValues implements Parcelable {
     }
 
     /**
+     * Checks a value belongs to proper type group
+     *
+     * @param value
+     *            the data for the value to type check
+     * @return {@code true} if the value belongs proper type, {@code false}
+     *         otherwise
+     */
+    public boolean isProperTypes(Object value) {
+    	return value instanceof String || value instanceof Byte || value instanceof Short || value instanceof Integer
+    			|| value instanceof Long || value instanceof Float || value instanceof Double
+    			|| value instanceof Boolean || value instanceof byte[];
+    }
+
+    /**
+     * Adds a value to the set.
+     *
+     * @param key
+     *            the name of the value to put
+     * @param value
+     *            the data for the value to put
+     */
+    public void put(String key, Object value) throws IllegalArgumentException {
+    	if (isProperTypes(value)) {
+    		mMap.put(key, value);
+    	} else {
+    		throw new IllegalArgumentException();
+    	}
+    }
+
+    /**
      * Adds a null value to the set.
      *
      * @param key the name of the value to make null
