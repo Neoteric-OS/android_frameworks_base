@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ff9fc341_246fb635",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-27T04:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "366ad1b7_f2198897",
+      "range": {
+        "startLine": 310,
+        "startChar": 25,
+        "endLine": 310,
+        "endChar": 33
+      },
+      "revId": "64fb7d2a422f8455ee319986a1d0c90607c214b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6660af1b_c47e4b1c",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 1
