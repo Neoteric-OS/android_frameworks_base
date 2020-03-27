@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfde3d5f_3a40c5f1",
+        "filename": "core/tests/overlaytests/device/src/com/android/overlaytest/LocalOverlayManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-03-27T11:40:35Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these be strictly equal?",
+      "revId": "98ecceedba1f96f1fe03768b978be68a0b28a367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
