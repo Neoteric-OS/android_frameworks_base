@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Wale Ogunwale <ogunwale@google.com>
+Autosubmit+1: Winson Chung <winsonc@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Winson Chung <winsonc@google.com>
+Submitted-at: Sat, 28 Mar 2020 02:48:04 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1271123
+Project: platform/frameworks/base
+Branch: refs/heads/master
