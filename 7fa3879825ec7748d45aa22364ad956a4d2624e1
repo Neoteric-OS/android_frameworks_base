@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7ce6aa9_b6ec7781",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2018,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-03-30T19:22:42Z",
+      "side": 1,
+      "message": "Doesn\u0027t it make more complicated if we have different behavior for different paths?",
+      "parentUuid": "bc6030ef_c1e88731",
+      "range": {
+        "startLine": 2018,
+        "startChar": 47,
+        "endLine": 2018,
+        "endChar": 68
+      },
+      "revId": "7fa3879825ec7748d45aa22364ad956a4d2624e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa1c8af1_b5f57755",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a5709920_89cb26c0",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2234,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-03-30T19:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa1c8af1_b5f57755",
+      "range": {
+        "startLine": 2234,
+        "startChar": 100,
+        "endLine": 2234,
+        "endChar": 101
+      },
+      "revId": "7fa3879825ec7748d45aa22364ad956a4d2624e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c0dc543_8f3bc423",
         "filename": "core/java/android/net/IConnectivityManager.aidl",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "7fa3879825ec7748d45aa22364ad956a4d2624e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d535e923_2e473b60",
+        "filename": "core/java/android/net/IConnectivityManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-03-30T19:22:42Z",
+      "side": 1,
+      "message": "ConnectivityService#requestNetwork\nConnectivityServive#enforceNetworkRequestPermissions\nConnectivityServive#enforceChangePermission\nConnectivityManager#enforceChangePermission\nConnectivityManager#checkAndNoteChangeNetworkStateOperation\nSettings#checkAndNoteWriteSettingsOperation\nSettings#isCallingPackageAllowedToPerformAppOpsProtectedOperation\nAppOpsManager#noteOpNoThrow",
+      "parentUuid": "8c0dc543_8f3bc423",
+      "range": {
+        "startLine": 172,
+        "startChar": 37,
+        "endLine": 172,
+        "endChar": 67
+      },
+      "revId": "7fa3879825ec7748d45aa22364ad956a4d2624e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
