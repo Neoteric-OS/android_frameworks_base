@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cb44612_eda4d24c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2076,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-30T09:55:42Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 2076,
+        "startChar": 8,
+        "endLine": 2076,
+        "endChar": 23
+      },
+      "revId": "d70860d546cf388eb1d185f80692f1cbee971ce9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae19321e_4a474460",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2077,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-30T09:55:42Z",
+      "side": 1,
+      "message": "So null, then, since presumably when the control comes here it\u0027s not already running.",
+      "range": {
+        "startLine": 2077,
+        "startChar": 35,
+        "endLine": 2077,
+        "endChar": 45
+      },
+      "revId": "d70860d546cf388eb1d185f80692f1cbee971ce9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5b69a7_4435ad62",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2241,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-30T09:55:42Z",
+      "side": 1,
+      "message": "Okay so start() being called here means that when this handler thread starts, the IkeV2VpnRunner instance is not actually finished building, so unless you have an edge somewhere it is not obliged to observe this object as being constructed. While start() is such an edge with respect to mProfile, mIpSecManager and mNetworkCallback, you don\u0027t have such an edge for \u0027this\u0027, making the whole enterprise a bit adventurous.",
+      "range": {
+        "startLine": 2241,
+        "startChar": 0,
+        "endLine": 2241,
+        "endChar": 35
+      },
+      "revId": "d70860d546cf388eb1d185f80692f1cbee971ce9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0ff25b_4f0769a3",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2589,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-30T09:55:42Z",
+      "side": 1,
+      "message": "Ouch, what happened to final ? Can\u0027t you create the thread in the constructor for LegacyVpnRunner instead of taking this kind of audacious (to say the least) risk ? Don\u0027t call start() in the constructor though – you wouldn\u0027t have a happens-before relationship between the freeze and code running in the thread – but have expose start() method in LegacyVpnRunner that you\u0027ll call from l.2080.",
+      "range": {
+        "startLine": 2589,
+        "startChar": 12,
+        "endLine": 2589,
+        "endChar": 19
+      },
+      "revId": "d70860d546cf388eb1d185f80692f1cbee971ce9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3adea709_d986a76e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2609,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-30T09:55:42Z",
+      "side": 1,
+      "message": "In a modern language this doesn\u0027t build because your mutable field can have changed between these two accesses. Any such code should always put the mutable member inside an immutable local.\n\nNote that this doesn\u0027t even *work*. exitVpnRunner is called in mObserver.interfaceStatusChanged, which is called in-situ in response to a broadcast of CONNECTIVITY_ACTION. Net result : the thread calling this is under no obligation to observe the write resulting from the call to setThread, mThread is null, and you never stop the thread. Of course making the field final fixes the issue forever, courtesy of Java 17.5.\n\nNo seriously. Make your fields final. Human brains are not smart enough to get mutability right.",
+      "range": {
+        "startLine": 2609,
+        "startChar": 0,
+        "endLine": 2609,
+        "endChar": 53
+      },
+      "revId": "d70860d546cf388eb1d185f80692f1cbee971ce9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
