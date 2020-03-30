@@ -1053,8 +1053,9 @@ final class ActivityRecord extends ConfigurationContainer {
 
         mRotationAnimationHint = aInfo.rotationAnimation;
         lockTaskLaunchMode = aInfo.lockTaskLaunchMode;
-        if (appInfo.isPrivilegedApp() && (lockTaskLaunchMode == LOCK_TASK_LAUNCH_MODE_ALWAYS
+        if (!appInfo.isPrivilegedApp() && (lockTaskLaunchMode == LOCK_TASK_LAUNCH_MODE_ALWAYS
                 || lockTaskLaunchMode == LOCK_TASK_LAUNCH_MODE_NEVER)) {
+            // Non-priv apps are not allowed to use always or never, fall back to default
             lockTaskLaunchMode = LOCK_TASK_LAUNCH_MODE_DEFAULT;
         }
 
