@@ -15,6 +15,8 @@
 ** limitations under the License.
 */
 
+#include <iterator>
+
 //#define LOG_NDEBUG 0
 #define LOG_TAG "Camera-JNI"
 #include <utils/Log.h>
@@ -1149,7 +1151,7 @@ int register_android_hardware_Camera(JNIEnv *env)
         { "android/graphics/Point", "y", "I", &fields.point_y},
     };
 
-    find_fields(env, fields_to_find, NELEM(fields_to_find));
+    find_fields(env, fields_to_find, std::size(fields_to_find));
 
     jclass clazz = FindClassOrDie(env, "android/hardware/Camera");
     fields.post_event = GetStaticMethodIDOrDie(env, clazz, "postEventFromNative",

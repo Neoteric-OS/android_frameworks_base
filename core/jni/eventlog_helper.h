@@ -57,18 +57,17 @@ public:
                 { &gCollectionClass, "add", "(Ljava/lang/Object;)Z", &gCollectionAddID },
         };
 
-        for (size_t i = 0; i < NELEM(gClasses); ++i) {
-            ScopedLocalRef<jclass> clazz(env, FindClassOrDie(env, gClasses[i].name));
-            *gClasses[i].clazz = MakeGlobalRefOrDie(env, clazz.get());
+        for (auto& currentClass : gClasses) {
+            ScopedLocalRef<jclass> clazz(env, FindClassOrDie(env, currentClass.name));
+            *currentClass.clazz = MakeGlobalRefOrDie(env, clazz.get());
         }
-        for (size_t i = 0; i < NELEM(gFields); ++i) {
-            *gFields[i].id = GetFieldIDOrDie(env,
-                    *gFields[i].c, gFields[i].name, gFields[i].ft);
+        for (auto& currentField : gFields) {
+            *currentField.id = GetFieldIDOrDie(env,
+                    *currentField.c, currentField.name, currentField.ft);
         }
-
-        for (size_t i = 0; i < NELEM(gMethods); ++i) {
-            *gMethods[i].id = GetMethodIDOrDie(env,
-                    *gMethods[i].c, gMethods[i].name, gMethods[i].mt);
+        for (auto& currentMethod : gMethods) {
+            *currentMethod.id = GetMethodIDOrDie(env,
+                    *currentMethod.c, currentMethod.name, currentMethod.mt);
         }
     }
 

@@ -49,6 +49,7 @@
 #include <assert.h>
 #include <bionic/malloc.h>
 
+#include <iterator>
 #include <string>
 #include <vector>
 
@@ -1667,7 +1668,7 @@ static const RegJNIRec gRegJNI[] = {
      */
     env->PushLocalFrame(200);
 
-    if (register_jni_procs(gRegJNI, NELEM(gRegJNI), env) < 0) {
+    if (register_jni_procs(gRegJNI, std::size(gRegJNI), env) < 0) {
         env->PopLocalFrame(NULL);
         return -1;
     }
@@ -1688,6 +1689,6 @@ AndroidRuntime* AndroidRuntime::getRuntime()
  * the framework.
  */
 extern "C" jint registerFrameworkNatives(JNIEnv* env) {
-    return register_jni_procs(gRegJNI, NELEM(gRegJNI), env);
+    return register_jni_procs(gRegJNI, std::size(gRegJNI), env);
 }
 }   // namespace android

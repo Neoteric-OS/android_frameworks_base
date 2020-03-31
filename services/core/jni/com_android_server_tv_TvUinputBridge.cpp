@@ -57,8 +57,8 @@ static BitSet32 mtSlots;
 
 static void initKeysMap() {
     if (keysMap.empty()) {
-        for (size_t i = 0; i < NELEM(KEYS); i++) {
-            keysMap[KEYS[i].androidKeyCode] = KEYS[i].linuxKeyCode;
+      for (const Key& currentKey : KEYS) {
+            keysMap[currentKey.androidKeyCode] = currentKey.linuxKeyCode;
         }
     }
 }
@@ -149,8 +149,8 @@ NativeConnection* NativeConnection::open(const char* name, const char* uniqueId,
 
     // set the keys mapped
     ioctl(fd, UI_SET_EVBIT, EV_KEY);
-    for (size_t i = 0; i < NELEM(KEYS); i++) {
-        ioctl(fd, UI_SET_KEYBIT, KEYS[i].linuxKeyCode);
+    for (const Key& currentKey : KEYS) {
+        ioctl(fd, UI_SET_KEYBIT, currentKey.linuxKeyCode);
     }
 
     // set the misc events maps
@@ -254,8 +254,8 @@ static void nativeClear(JNIEnv* env, jclass clazz, jlong ptr) {
     NativeConnection* connection = reinterpret_cast<NativeConnection*>(ptr);
 
     // Clear keys.
-    for (size_t i = 0; i < NELEM(KEYS); i++) {
-        connection->sendEvent(EV_KEY, KEYS[i].linuxKeyCode, 0);
+    for (const Key& currentKey : KEYS) {
+        connection->sendEvent(EV_KEY, currentKey.linuxKeyCode, 0);
     }
 
     // Clear pointers.
