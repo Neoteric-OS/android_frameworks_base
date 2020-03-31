@@ -443,7 +443,7 @@ int register_android_os_SELinux(JNIEnv *env) {
 
     isSELinuxDisabled = (is_selinux_enabled() != 1) ? true : false;
 
-    return RegisterMethodsOrDie(env, "android/os/SELinux", method_table, NELEM(method_table));
+    return RegisterMethodsOrDie(env, "android/os/SELinux", method_table);
 }
 
 }

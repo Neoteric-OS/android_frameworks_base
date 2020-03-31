@@ -962,6 +962,6 @@ int register_android_hardware_SoundTrigger(JNIEnv *env)
     gSoundModelEventCstor = GetMethodIDOrDie(env, soundModelEventClass, "<init>", "(II[B)V");
 
 
-    RegisterMethodsOrDie(env, kSoundTriggerClassPathName, gMethods, NELEM(gMethods));
-    return RegisterMethodsOrDie(env, kModuleClassPathName, gModuleMethods, NELEM(gModuleMethods));
+    RegisterMethodsOrDie(env, kSoundTriggerClassPathName, gMethods);
+    return RegisterMethodsOrDie(env, kModuleClassPathName, gModuleMethods);
 }

@@ -86,7 +86,7 @@ int register_android_database_SQLiteGlobal(JNIEnv *env)
     sqliteInitialize();
 
     return RegisterMethodsOrDie(env, "android/database/sqlite/SQLiteGlobal",
-            sMethods, NELEM(sMethods));
+            sMethods);
 }
 
 } // namespace android

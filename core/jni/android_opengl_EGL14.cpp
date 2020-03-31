@@ -1255,6 +1255,6 @@ static const JNINativeMethod methods[] = {
 int register_android_opengl_jni_EGL14(JNIEnv *_env)
 {
     int err;
-    err = android::AndroidRuntime::registerNativeMethods(_env, classPathName, methods, NELEM(methods));
+    err = jniRegisterNativeMethods(_env, classPathName, methods);
     return err;
 }

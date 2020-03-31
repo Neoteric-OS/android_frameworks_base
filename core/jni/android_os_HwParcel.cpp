@@ -1182,7 +1182,7 @@ static JNINativeMethod gMethods[] = {
 namespace android {
 
 int register_android_os_HwParcel(JNIEnv *env) {
-    return RegisterMethodsOrDie(env, CLASS_PATH, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, CLASS_PATH, gMethods);
 }
 
 }  // namespace android

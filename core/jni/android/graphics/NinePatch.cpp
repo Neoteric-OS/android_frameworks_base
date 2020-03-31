@@ -166,5 +166,5 @@ int register_android_graphics_NinePatch(JNIEnv* env) {
     gInsetStruct_constructorMethodID = GetMethodIDOrDie(env, gInsetStruct_class, "<init>",
             "(IIIIIIIIFIF)V");
     return android::RegisterMethodsOrDie(env,
-            "android/graphics/NinePatch", gNinePatchMethods, NELEM(gNinePatchMethods));
+            "android/graphics/NinePatch", gNinePatchMethods);
 }

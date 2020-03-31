@@ -115,6 +115,6 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_util_PathParser(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/util/PathParser", gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/util/PathParser", gMethods);
 }
 };

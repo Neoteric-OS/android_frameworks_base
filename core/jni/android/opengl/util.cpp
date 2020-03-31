@@ -1050,27 +1050,12 @@ static const JNINativeMethod gEtc1Methods[] = {
     { "getHeight", "(Ljava/nio/Buffer;)I", (void*) etc1_getHeight },
 };
 
-typedef struct _ClassRegistrationInfo {
-    const char* classPath;
-    const JNINativeMethod* methods;
-    size_t methodCount;
-} ClassRegistrationInfo;
-
-static const ClassRegistrationInfo gClasses[] = {
-    {"android/opengl/Matrix", gMatrixMethods, NELEM(gMatrixMethods)},
-    {"android/opengl/Visibility", gVisibilityMethods, NELEM(gVisibilityMethods)},
-    {"android/opengl/GLUtils", gUtilsMethods, NELEM(gUtilsMethods)},
-    {"android/opengl/ETC1", gEtc1Methods, NELEM(gEtc1Methods)},
-};
-
 int register_android_opengl_classes(JNIEnv* env)
 {
-    int result = 0;
-    for (int i = 0; i < NELEM(gClasses); i++) {
-        const ClassRegistrationInfo* cri = &gClasses[i];
-        result = RegisterMethodsOrDie(env, cri->classPath, cri->methods, cri->methodCount);
-    }
-    return result;
+    RegisterMethodsOrDie(env, "android/opengl/Matrix", gMatrixMethods);
+    RegisterMethodsOrDie(env, "android/opengl/Visibility", gVisibilityMethods);
+    RegisterMethodsOrDie(env, "android/opengl/GLUtils", gUtilsMethods);
+    return RegisterMethodsOrDie(env, "android/opengl/ETC1", gEtc1Methods);
 }
 
 } // namespace android

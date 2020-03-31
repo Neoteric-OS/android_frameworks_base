@@ -107,7 +107,7 @@ int register_android_backup_BackupDataOutput(JNIEnv* env)
 {
     //ALOGD("register_android_backup_BackupDataOutput");
     return RegisterMethodsOrDie(env, "android/app/backup/BackupDataOutput",
-            g_methods, NELEM(g_methods));
+            g_methods);
 }
 
 }

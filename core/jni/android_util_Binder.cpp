@@ -1116,7 +1116,7 @@ static int int_register_android_os_Binder(JNIEnv* env)
 
     return RegisterMethodsOrDie(
         env, kBinderPathName,
-        gBinderMethods, NELEM(gBinderMethods));
+        gBinderMethods);
 }
 
 // ****************************************************************************
@@ -1255,7 +1255,7 @@ static int int_register_android_os_BinderInternal(JNIEnv* env)
 
     return RegisterMethodsOrDie(
         env, kBinderInternalPathName,
-        gBinderInternalMethods, NELEM(gBinderInternalMethods));
+        gBinderInternalMethods);
 }
 
 // ****************************************************************************
@@ -1591,7 +1591,7 @@ static int int_register_android_os_BinderProxy(JNIEnv* env)
 
     return RegisterMethodsOrDie(
         env, kBinderProxyPathName,
-        gBinderProxyMethods, NELEM(gBinderProxyMethods));
+        gBinderProxyMethods);
 }
 
 // ****************************************************************************

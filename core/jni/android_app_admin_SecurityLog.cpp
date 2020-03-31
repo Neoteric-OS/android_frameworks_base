@@ -116,7 +116,7 @@ int register_android_app_admin_SecurityLog(JNIEnv* env) {
     return RegisterMethodsOrDie(
             env,
             "android/app/admin/SecurityLog",
-            gRegisterMethods, NELEM(gRegisterMethods));
+            gRegisterMethods);
 }
 
 }; // namespace android

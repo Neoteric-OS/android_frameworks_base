@@ -104,7 +104,7 @@ namespace android {
 
 int register_android_graphics_ColorSpace(JNIEnv* env) {
     return android::RegisterMethodsOrDie(env, "android/graphics/ColorSpace$Rgb",
-                                         gColorSpaceRgbMethods, NELEM(gColorSpaceRgbMethods));
+                                         gColorSpaceRgbMethods);
 }
 
 }; // namespace android

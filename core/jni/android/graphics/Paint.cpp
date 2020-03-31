@@ -1154,7 +1154,7 @@ int register_android_graphics_Paint(JNIEnv* env) {
     gFontMetricsInt_fieldID.bottom = GetFieldIDOrDie(env, gFontMetricsInt_class, "bottom", "I");
     gFontMetricsInt_fieldID.leading = GetFieldIDOrDie(env, gFontMetricsInt_class, "leading", "I");
 
-    return RegisterMethodsOrDie(env, "android/graphics/Paint", methods, NELEM(methods));
+    return RegisterMethodsOrDie(env, "android/graphics/Paint", methods);
 }
 
 }

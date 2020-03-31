@@ -292,5 +292,5 @@ static const JNINativeMethod gBitmapRegionDecoderMethods[] = {
 int register_android_graphics_BitmapRegionDecoder(JNIEnv* env)
 {
     return android::RegisterMethodsOrDie(env, "android/graphics/BitmapRegionDecoder",
-            gBitmapRegionDecoderMethods, NELEM(gBitmapRegionDecoderMethods));
+            gBitmapRegionDecoderMethods);
 }

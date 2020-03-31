@@ -243,20 +243,13 @@ static const JNINativeMethod gComposeShaderMethods[] = {
 
 int register_android_graphics_Shader(JNIEnv* env)
 {
-    android::RegisterMethodsOrDie(env, "android/graphics/Color", gColorMethods,
-                                  NELEM(gColorMethods));
-    android::RegisterMethodsOrDie(env, "android/graphics/Shader", gShaderMethods,
-                                  NELEM(gShaderMethods));
-    android::RegisterMethodsOrDie(env, "android/graphics/BitmapShader", gBitmapShaderMethods,
-                                  NELEM(gBitmapShaderMethods));
-    android::RegisterMethodsOrDie(env, "android/graphics/LinearGradient", gLinearGradientMethods,
-                                  NELEM(gLinearGradientMethods));
-    android::RegisterMethodsOrDie(env, "android/graphics/RadialGradient", gRadialGradientMethods,
-                                  NELEM(gRadialGradientMethods));
-    android::RegisterMethodsOrDie(env, "android/graphics/SweepGradient", gSweepGradientMethods,
-                                  NELEM(gSweepGradientMethods));
-    android::RegisterMethodsOrDie(env, "android/graphics/ComposeShader", gComposeShaderMethods,
-                                  NELEM(gComposeShaderMethods));
+    android::RegisterMethodsOrDie(env, "android/graphics/Color", gColorMethods);
+    android::RegisterMethodsOrDie(env, "android/graphics/Shader", gShaderMethods);
+    android::RegisterMethodsOrDie(env, "android/graphics/BitmapShader", gBitmapShaderMethods);
+    android::RegisterMethodsOrDie(env, "android/graphics/LinearGradient", gLinearGradientMethods);
+    android::RegisterMethodsOrDie(env, "android/graphics/RadialGradient", gRadialGradientMethods);
+    android::RegisterMethodsOrDie(env, "android/graphics/SweepGradient", gSweepGradientMethods);
+    android::RegisterMethodsOrDie(env, "android/graphics/ComposeShader", gComposeShaderMethods);
 
     return 0;
 }

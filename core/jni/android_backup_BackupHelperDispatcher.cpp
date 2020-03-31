@@ -232,8 +232,7 @@ int register_android_backup_BackupHelperDispatcher(JNIEnv* env)
     s_chunkSizeField = GetFieldIDOrDie(env, clazz, "chunkSize", "I");
     s_keyPrefixField = GetFieldIDOrDie(env, clazz, "keyPrefix", "Ljava/lang/String;");
 
-    return RegisterMethodsOrDie(env, "android/app/backup/BackupHelperDispatcher", g_methods,
-                                NELEM(g_methods));
+    return RegisterMethodsOrDie(env, "android/app/backup/BackupHelperDispatcher", g_methods);
 }
 
 }

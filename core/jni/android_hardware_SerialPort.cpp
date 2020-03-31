@@ -264,5 +264,5 @@ int register_android_hardware_SerialPort(JNIEnv *env)
     field_context = GetFieldIDOrDie(env, clazz, "mNativeContext", "I");
 
     return RegisterMethodsOrDie(env, "android/hardware/SerialPort",
-            method_table, NELEM(method_table));
+            method_table);
 }

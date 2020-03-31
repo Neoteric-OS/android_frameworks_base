@@ -306,7 +306,7 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_view_InputEventSender(JNIEnv* env) {
-    int res = RegisterMethodsOrDie(env, "android/view/InputEventSender", gMethods, NELEM(gMethods));
+    int res = RegisterMethodsOrDie(env, "android/view/InputEventSender", gMethods);
 
     jclass clazz = FindClassOrDie(env, "android/view/InputEventSender");
     gInputEventSenderClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);

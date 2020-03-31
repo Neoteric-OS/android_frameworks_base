@@ -215,7 +215,7 @@ int register_android_graphics_drawable_AnimatedVectorDrawable(JNIEnv* env) {
             env, gVectorDrawableAnimatorClassInfo.clazz, "callOnFinished",
             "(Landroid/graphics/drawable/AnimatedVectorDrawable$VectorDrawableAnimatorRT;I)V");
     return RegisterMethodsOrDie(env, "android/graphics/drawable/AnimatedVectorDrawable",
-            gMethods, NELEM(gMethods));
+            gMethods);
 }
 
 }; // namespace android

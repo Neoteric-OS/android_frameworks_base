@@ -141,8 +141,7 @@ int register_android_backup_BackupDataInput(JNIEnv* env)
     s_keyField = GetFieldIDOrDie(env, clazz, "key", "Ljava/lang/String;");
     s_dataSizeField = GetFieldIDOrDie(env, clazz, "dataSize", "I");
 
-    return RegisterMethodsOrDie(env, "android/app/backup/BackupDataInput", g_methods,
-                                NELEM(g_methods));
+    return RegisterMethodsOrDie(env, "android/app/backup/BackupDataInput", g_methods);
 }
 
 }

@@ -238,5 +238,5 @@ int register_android_media_AudioProductStrategies(JNIEnv *env)
     env->DeleteLocalRef(audioProductStrategyClass);
     env->DeleteLocalRef(audioAttributesGroupClass);
 
-    return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, kClassPathName, gMethods);
 }

@@ -829,6 +829,5 @@ int register_android_hardware_camera2_legacy_LegacyCameraDevice(JNIEnv* env)
     // Register native functions
     return RegisterMethodsOrDie(env,
             CAMERA_DEVICE_CLASS_NAME,
-            gCameraDeviceMethods,
-            NELEM(gCameraDeviceMethods));
+            gCameraDeviceMethods);
 }

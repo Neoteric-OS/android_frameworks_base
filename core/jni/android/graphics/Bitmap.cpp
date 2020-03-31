@@ -1220,6 +1220,5 @@ int register_android_graphics_Bitmap(JNIEnv* env)
     gBitmap_nativePtr = GetFieldIDOrDie(env, gBitmap_class, "mNativePtr", "J");
     gBitmap_constructorMethodID = GetMethodIDOrDie(env, gBitmap_class, "<init>", "(JIIIZ[BLandroid/graphics/NinePatch$InsetStruct;Z)V");
     gBitmap_reinitMethodID = GetMethodIDOrDie(env, gBitmap_class, "reinit", "(IIZ)V");
-    return android::RegisterMethodsOrDie(env, "android/graphics/Bitmap", gBitmapMethods,
-                                         NELEM(gBitmapMethods));
+    return android::RegisterMethodsOrDie(env, "android/graphics/Bitmap", gBitmapMethods);
 }

@@ -322,5 +322,5 @@ int register_android_hardware_UsbDeviceConnection(JNIEnv *env)
     field_context = GetFieldIDOrDie(env, clazz, "mNativeContext", "J");
 
     return RegisterMethodsOrDie(env, "android/hardware/usb/UsbDeviceConnection",
-            method_table, NELEM(method_table));
+            method_table);
 }

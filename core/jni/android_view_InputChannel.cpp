@@ -291,8 +291,7 @@ static const JNINativeMethod gInputChannelMethods[] = {
 };
 
 int register_android_view_InputChannel(JNIEnv* env) {
-    int res = RegisterMethodsOrDie(env, "android/view/InputChannel", gInputChannelMethods,
-                                   NELEM(gInputChannelMethods));
+    int res = RegisterMethodsOrDie(env, "android/view/InputChannel", gInputChannelMethods);
 
     jclass clazz = FindClassOrDie(env, "android/view/InputChannel");
     gInputChannelClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);

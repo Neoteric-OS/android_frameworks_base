@@ -270,8 +270,7 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_hardware_HardwareBuffer(JNIEnv* env) {
-    int err = RegisterMethodsOrDie(env, kClassPathName, gMethods,
-            NELEM(gMethods));
+    int err = RegisterMethodsOrDie(env, kClassPathName, gMethods);
 
     jclass clazz = FindClassOrDie(env, "android/hardware/HardwareBuffer");
     gHardwareBufferClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);

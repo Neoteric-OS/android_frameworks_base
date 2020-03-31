@@ -179,5 +179,5 @@ int register_android_media_AudioVolumeGroups(JNIEnv *env)
 
     env->DeleteLocalRef(audioVolumeGroupClass);
 
-    return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, kClassPathName, gMethods);
 }

@@ -1271,5 +1271,5 @@ static const JNINativeMethod methods[] = {
 
 int register_android_os_Process(JNIEnv* env)
 {
-    return RegisterMethodsOrDie(env, "android/os/Process", methods, NELEM(methods));
+    return RegisterMethodsOrDie(env, "android/os/Process", methods);
 }

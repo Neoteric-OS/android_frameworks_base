@@ -289,8 +289,7 @@ static const JNINativeMethod gPdfEditor_Methods[] = {
 
 int register_android_graphics_pdf_PdfEditor(JNIEnv* env) {
     const int result = RegisterMethodsOrDie(
-            env, "android/graphics/pdf/PdfEditor", gPdfEditor_Methods,
-            NELEM(gPdfEditor_Methods));
+            env, "android/graphics/pdf/PdfEditor", gPdfEditor_Methods);
 
     jclass pointClass = FindClassOrDie(env, "android/graphics/Point");
     gPointClassInfo.x = GetFieldIDOrDie(env, pointClass, "x", "I");

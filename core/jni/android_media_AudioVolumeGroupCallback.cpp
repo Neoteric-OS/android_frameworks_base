@@ -169,7 +169,6 @@ int register_android_media_AudioVolumeGroupChangeHandler(JNIEnv *env)
 
     return RegisterMethodsOrDie(env,
                                 kAudioVolumeGroupChangeHandlerClassPathName,
-                                gMethods,
-                                NELEM(gMethods));
+                                gMethods);
 }
 

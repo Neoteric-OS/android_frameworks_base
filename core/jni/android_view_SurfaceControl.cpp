@@ -1395,7 +1395,7 @@ static const JNINativeMethod sSurfaceControlMethods[] = {
 int register_android_view_SurfaceControl(JNIEnv* env)
 {
     int err = RegisterMethodsOrDie(env, "android/view/SurfaceControl",
-            sSurfaceControlMethods, NELEM(sSurfaceControlMethods));
+            sSurfaceControlMethods);
 
     jclass clazz = FindClassOrDie(env, "android/view/SurfaceControl$PhysicalDisplayInfo");
     gPhysicalDisplayInfoClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);

@@ -1201,7 +1201,7 @@ int register_android_view_ThreadedRenderer(JNIEnv* env) {
     gFrameCompleteCallback.onFrameComplete = GetMethodIDOrDie(env, frameCompleteClass,
             "onFrameComplete", "(J)V");
 
-    return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, kClassPathName, gMethods);
 }
 
 }; // namespace android

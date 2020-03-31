@@ -132,7 +132,7 @@ int register_android_util_Log(JNIEnv* env)
     levels.error = env->GetStaticIntField(clazz, GetStaticFieldIDOrDie(env, clazz, "ERROR", "I"));
     levels.assert = env->GetStaticIntField(clazz, GetStaticFieldIDOrDie(env, clazz, "ASSERT", "I"));
 
-    return RegisterMethodsOrDie(env, "android/util/Log", gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/util/Log", gMethods);
 }
 
 }; // namespace android

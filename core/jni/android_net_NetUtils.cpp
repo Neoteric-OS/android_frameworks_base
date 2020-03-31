@@ -285,8 +285,7 @@ static const JNINativeMethod gNetworkUtilMethods[] = {
 
 int register_android_net_NetworkUtils(JNIEnv* env)
 {
-    return RegisterMethodsOrDie(env, NETUTILS_PKG_NAME, gNetworkUtilMethods,
-                                NELEM(gNetworkUtilMethods));
+    return RegisterMethodsOrDie(env, NETUTILS_PKG_NAME, gNetworkUtilMethods);
 }
 
 }; // namespace android

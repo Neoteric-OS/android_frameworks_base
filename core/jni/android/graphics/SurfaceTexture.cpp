@@ -405,8 +405,7 @@ int register_android_graphics_SurfaceTexture(JNIEnv* env)
     ScopedLocalRef<jclass> klass(env, FindClassOrDie(env, kSurfaceTextureClassPathName));
     SurfaceTexture_classInit(env, klass.get());
 
-    return RegisterMethodsOrDie(env, kSurfaceTextureClassPathName, gSurfaceTextureMethods,
-                                NELEM(gSurfaceTextureMethods));
+    return RegisterMethodsOrDie(env, kSurfaceTextureClassPathName, gSurfaceTextureMethods);
 }
 
 } // namespace android

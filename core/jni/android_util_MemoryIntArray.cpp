@@ -220,7 +220,7 @@ static const JNINativeMethod methods[] = {
 
 int register_android_util_MemoryIntArray(JNIEnv* env)
 {
-    return RegisterMethodsOrDie(env, "android/util/MemoryIntArray", methods, NELEM(methods));
+    return RegisterMethodsOrDie(env, "android/util/MemoryIntArray", methods);
 }
 
 }

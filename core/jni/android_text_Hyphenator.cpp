@@ -179,7 +179,7 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_text_Hyphenator(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/text/Hyphenator", gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/text/Hyphenator", gMethods);
 }
 
 }  // namespace android

@@ -197,7 +197,7 @@ static const JNINativeMethod gMethods[] = {
 
 int register_android_text_AndroidCharacter(JNIEnv* env)
 {
-    return RegisterMethodsOrDie(env, "android/text/AndroidCharacter", gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/text/AndroidCharacter", gMethods);
 }
 
 }

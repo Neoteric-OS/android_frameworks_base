@@ -79,7 +79,7 @@ const char* const kVintfRuntimeInfoPathName = "android/os/VintfRuntimeInfo";
 
 int register_android_os_VintfRuntimeInfo(JNIEnv* env)
 {
-    return RegisterMethodsOrDie(env, kVintfRuntimeInfoPathName, gVintfRuntimeInfoMethods, NELEM(gVintfRuntimeInfoMethods));
+    return RegisterMethodsOrDie(env, kVintfRuntimeInfoPathName, gVintfRuntimeInfoMethods);
 }
 
 };

@@ -545,6 +545,5 @@ int register_android_graphics_ImageDecoder(JNIEnv* env) {
     gCanvas_constructorMethodID = GetMethodIDOrDie(env, gCanvas_class, "<init>", "(J)V");
     gCanvas_releaseMethodID = GetMethodIDOrDie(env, gCanvas_class, "release", "()V");
 
-    return android::RegisterMethodsOrDie(env, "android/graphics/ImageDecoder", gImageDecoderMethods,
-                                         NELEM(gImageDecoderMethods));
+    return android::RegisterMethodsOrDie(env, "android/graphics/ImageDecoder", gImageDecoderMethods);
 }

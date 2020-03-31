@@ -345,9 +345,8 @@ int register_android_graphics_Region(JNIEnv* env)
 
     gRegion_nativeInstanceFieldID = GetFieldIDOrDie(env, clazz, "mNativeRegion", "J");
 
-    RegisterMethodsOrDie(env, "android/graphics/Region", gRegionMethods, NELEM(gRegionMethods));
-    return RegisterMethodsOrDie(env, "android/graphics/RegionIterator", gRegionIterMethods,
-                                NELEM(gRegionIterMethods));
+    RegisterMethodsOrDie(env, "android/graphics/Region", gRegionMethods);
+    return RegisterMethodsOrDie(env, "android/graphics/RegionIterator", gRegionIterMethods);
 }
 
 SkRegion* android_graphics_Region_getSkRegion(JNIEnv* env, jobject regionObj) {

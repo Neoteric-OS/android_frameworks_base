@@ -746,7 +746,7 @@ int register_android_view_RenderNode(JNIEnv* env) {
             "positionChanged", "(JIIII)V");
     gPositionListener_PositionLostMethod = GetMethodIDOrDie(env, clazz,
             "positionLost", "(J)V");
-    return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, kClassPathName, gMethods);
 }
 
 };

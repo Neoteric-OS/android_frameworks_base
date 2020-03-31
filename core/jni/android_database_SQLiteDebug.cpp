@@ -75,7 +75,7 @@ int register_android_database_SQLiteDebug(JNIEnv *env)
             "pageCacheOverflow", "I");
 
     return RegisterMethodsOrDie(env, "android/database/sqlite/SQLiteDebug",
-            gMethods, NELEM(gMethods));
+            gMethods);
 }
 
 } // namespace android

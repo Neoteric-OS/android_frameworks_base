@@ -264,7 +264,7 @@ int register_android_view_InputQueue(JNIEnv* env)
     gInputQueueClassInfo.finishInputEvent = GetMethodIDOrDie(env, clazz, "finishInputEvent",
                                                              "(JZ)V");
 
-    return RegisterMethodsOrDie(env, kInputQueuePathName, g_methods, NELEM(g_methods));
+    return RegisterMethodsOrDie(env, kInputQueuePathName, g_methods);
 }
 
 } // namespace android

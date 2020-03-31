@@ -1895,6 +1895,6 @@ int register_com_android_internal_os_Zygote(JNIEnv* env) {
   gCallPostForkChildHooks = GetStaticMethodIDOrDie(env, gZygoteClass, "callPostForkChildHooks",
                                                    "(IZZLjava/lang/String;)V");
 
-  return RegisterMethodsOrDie(env, "com/android/internal/os/Zygote", gMethods, NELEM(gMethods));
+  return RegisterMethodsOrDie(env, "com/android/internal/os/Zygote", gMethods);
 }
 }  // namespace android

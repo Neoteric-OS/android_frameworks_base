@@ -47,7 +47,7 @@ namespace android
 {
 
 int register_com_android_internal_os_ClassLoaderFactory(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, kClassLoaderFactoryPathName, g_methods, NELEM(g_methods));
+    return RegisterMethodsOrDie(env, kClassLoaderFactoryPathName, g_methods);
 }
 
 } // namespace android

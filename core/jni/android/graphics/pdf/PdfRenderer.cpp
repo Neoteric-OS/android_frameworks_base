@@ -124,8 +124,7 @@ static const JNINativeMethod gPdfRenderer_Methods[] = {
 
 int register_android_graphics_pdf_PdfRenderer(JNIEnv* env) {
     int result = RegisterMethodsOrDie(
-            env, "android/graphics/pdf/PdfRenderer", gPdfRenderer_Methods,
-            NELEM(gPdfRenderer_Methods));
+            env, "android/graphics/pdf/PdfRenderer", gPdfRenderer_Methods);
 
     jclass clazz = FindClassOrDie(env, "android/graphics/Point");
     gPointClassInfo.x = GetFieldIDOrDie(env, clazz, "x", "I");

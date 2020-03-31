@@ -204,7 +204,7 @@ int register_android_view_DisplayListCanvas(JNIEnv* env) {
     jclass runnableClass = FindClassOrDie(env, "java/lang/Runnable");
     gRunnableMethodId = GetMethodIDOrDie(env, runnableClass, "run", "()V");
 
-    return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, kClassPathName, gMethods);
 }
 
 };

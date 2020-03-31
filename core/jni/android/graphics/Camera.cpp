@@ -141,6 +141,5 @@ static const JNINativeMethod gCameraMethods[] = {
 int register_android_graphics_Camera(JNIEnv* env) {
     jclass clazz = android::FindClassOrDie(env, "android/graphics/Camera");
     gNativeInstanceFieldID = android::GetFieldIDOrDie(env, clazz, "native_instance", "J");
-    return android::RegisterMethodsOrDie(env, "android/graphics/Camera", gCameraMethods,
-                                         NELEM(gCameraMethods));
+    return android::RegisterMethodsOrDie(env, "android/graphics/Camera", gCameraMethods);
 }

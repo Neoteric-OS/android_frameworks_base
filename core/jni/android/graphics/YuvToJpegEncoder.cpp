@@ -265,6 +265,5 @@ static const JNINativeMethod gYuvImageMethods[] = {
 
 int register_android_graphics_YuvImage(JNIEnv* env)
 {
-    return android::RegisterMethodsOrDie(env, "android/graphics/YuvImage", gYuvImageMethods,
-                                         NELEM(gYuvImageMethods));
+    return android::RegisterMethodsOrDie(env, "android/graphics/YuvImage", gYuvImageMethods);
 }

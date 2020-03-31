@@ -158,8 +158,7 @@ int register_android_os_FileObserver(JNIEnv* env)
 
     method_onEvent = GetMethodIDOrDie(env, clazz, "onEvent", "(IILjava/lang/String;)V");
 
-    return RegisterMethodsOrDie(env, "android/os/FileObserver$ObserverThread", sMethods,
-                                NELEM(sMethods));
+    return RegisterMethodsOrDie(env, "android/os/FileObserver$ObserverThread", sMethods);
 }
 
 } /* namespace android */

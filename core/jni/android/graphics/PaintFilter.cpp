@@ -73,10 +73,8 @@ static const JNINativeMethod paintflags_methods[] = {
 };
 
 int register_android_graphics_DrawFilter(JNIEnv* env) {
-    int result = RegisterMethodsOrDie(env, "android/graphics/DrawFilter", drawfilter_methods,
-                                      NELEM(drawfilter_methods));
-    result |= RegisterMethodsOrDie(env, "android/graphics/PaintFlagsDrawFilter", paintflags_methods,
-                                   NELEM(paintflags_methods));
+    int result = RegisterMethodsOrDie(env, "android/graphics/DrawFilter", drawfilter_methods);
+    result |= RegisterMethodsOrDie(env, "android/graphics/PaintFlagsDrawFilter", paintflags_methods);
 
     return 0;
 }

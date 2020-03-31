@@ -82,7 +82,7 @@ namespace android {
 
 int register_com_android_internal_os_ZygoteInit(JNIEnv* env) {
     return RegisterMethodsOrDie(env, "com/android/internal/os/ZygoteInit",
-            gMethods, NELEM(gMethods));
+            gMethods);
 }
 
 }  // namespace android

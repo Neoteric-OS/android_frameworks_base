@@ -193,8 +193,7 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_view_DisplayEventReceiver(JNIEnv* env) {
-    int res = RegisterMethodsOrDie(env, "android/view/DisplayEventReceiver", gMethods,
-                                   NELEM(gMethods));
+    int res = RegisterMethodsOrDie(env, "android/view/DisplayEventReceiver", gMethods);
 
     jclass clazz = FindClassOrDie(env, "android/view/DisplayEventReceiver");
     gDisplayEventReceiverClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);

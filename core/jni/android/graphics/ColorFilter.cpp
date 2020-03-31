@@ -74,16 +74,12 @@ static const JNINativeMethod colormatrix_methods[] = {
 };
 
 int register_android_graphics_ColorFilter(JNIEnv* env) {
-    android::RegisterMethodsOrDie(env, "android/graphics/ColorFilter", colorfilter_methods,
-                                  NELEM(colorfilter_methods));
-    android::RegisterMethodsOrDie(env, "android/graphics/PorterDuffColorFilter", blendmode_methods,
-                                  NELEM(blendmode_methods));
-    android::RegisterMethodsOrDie(env, "android/graphics/BlendModeColorFilter", blendmode_methods,
-                                  NELEM(blendmode_methods));
-    android::RegisterMethodsOrDie(env, "android/graphics/LightingColorFilter", lighting_methods,
-                                  NELEM(lighting_methods));
+    android::RegisterMethodsOrDie(env, "android/graphics/ColorFilter", colorfilter_methods);
+    android::RegisterMethodsOrDie(env, "android/graphics/PorterDuffColorFilter", blendmode_methods);
+    android::RegisterMethodsOrDie(env, "android/graphics/BlendModeColorFilter", blendmode_methods);
+    android::RegisterMethodsOrDie(env, "android/graphics/LightingColorFilter", lighting_methods);
     android::RegisterMethodsOrDie(env, "android/graphics/ColorMatrixColorFilter",
-                                  colormatrix_methods, NELEM(colormatrix_methods));
+                                  colormatrix_methods);
     
     return 0;
 }

@@ -2608,5 +2608,5 @@ static const JNINativeMethod gDngCreatorMethods[] = {
 
 int register_android_hardware_camera2_DngCreator(JNIEnv *env) {
     return RegisterMethodsOrDie(env,
-            "android/hardware/camera2/DngCreator", gDngCreatorMethods, NELEM(gDngCreatorMethods));
+            "android/hardware/camera2/DngCreator", gDngCreatorMethods);
 }

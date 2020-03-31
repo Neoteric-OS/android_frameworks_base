@@ -670,5 +670,5 @@ int register_android_graphics_BitmapFactory(JNIEnv* env) {
             "nativeToConfig", "(I)Landroid/graphics/Bitmap$Config;");
 
     return android::RegisterMethodsOrDie(env, "android/graphics/BitmapFactory",
-                                         gMethods, NELEM(gMethods));
+                                         gMethods);
 }

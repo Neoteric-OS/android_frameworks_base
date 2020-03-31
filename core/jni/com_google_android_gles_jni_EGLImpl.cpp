@@ -508,7 +508,7 @@ static const JNINativeMethod methods[] = {
 int register_com_google_android_gles_jni_EGLImpl(JNIEnv *_env)
 {
     int err;
-    err = android::AndroidRuntime::registerNativeMethods(_env,
-            android::classPathName, android::methods, NELEM(android::methods));
+    err = jniRegisterNativeMethods(_env,
+            android::classPathName, android::methods);
     return err;
 }

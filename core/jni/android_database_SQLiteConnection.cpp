@@ -874,8 +874,7 @@ int register_android_database_SQLiteConnection(JNIEnv *env)
     clazz = FindClassOrDie(env, "java/lang/String");
     gStringClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);
 
-    return RegisterMethodsOrDie(env, "android/database/sqlite/SQLiteConnection", sMethods,
-                                NELEM(sMethods));
+    return RegisterMethodsOrDie(env, "android/database/sqlite/SQLiteConnection", sMethods);
 }
 
 } // namespace android

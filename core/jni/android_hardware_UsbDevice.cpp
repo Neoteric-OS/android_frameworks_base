@@ -55,5 +55,5 @@ static const JNINativeMethod method_table[] = {
 int register_android_hardware_UsbDevice(JNIEnv *env)
 {
     return RegisterMethodsOrDie(env, "android/hardware/usb/UsbDevice",
-            method_table, NELEM(method_table));
+            method_table);
 }

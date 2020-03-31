@@ -221,7 +221,7 @@ int register_android_view_TextureView(JNIEnv* env) {
     clazz = FindClassOrDie(env, "android/view/TextureView");
     gTextureViewClassInfo.nativeWindow = GetFieldIDOrDie(env, clazz, "mNativeWindow", "J");
 
-    return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, kClassPathName, gMethods);
 }
 
 };

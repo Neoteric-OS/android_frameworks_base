@@ -48,7 +48,7 @@ static const JNINativeMethod g_single_methods[] = {
 
 int register_com_android_internal_os_KernelSingleUidTimeReader(JNIEnv *env) {
     return RegisterMethodsOrDie(env, "com/android/internal/os/KernelSingleUidTimeReader$Injector",
-                                g_single_methods, NELEM(g_single_methods));
+                                g_single_methods);
 }
 
 }

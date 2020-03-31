@@ -63,7 +63,7 @@ static const JNINativeMethod methods[] = {
 };
 
 int register_android_os_MemoryFile(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/os/MemoryFile", methods, NELEM(methods));
+    return RegisterMethodsOrDie(env, "android/os/MemoryFile", methods);
 }
 
 }

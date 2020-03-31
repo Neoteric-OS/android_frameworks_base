@@ -108,7 +108,7 @@ const char* const kGraphicsEnvironmentName = "android/os/GraphicsEnvironment";
 namespace android {
 
 int register_android_os_GraphicsEnvironment(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, kGraphicsEnvironmentName, g_methods, NELEM(g_methods));
+    return RegisterMethodsOrDie(env, kGraphicsEnvironmentName, g_methods);
 }
 
 } // namespace android

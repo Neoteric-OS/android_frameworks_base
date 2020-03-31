@@ -105,7 +105,7 @@ int register_android_os_SharedMemory(JNIEnv* env) {
         MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/system/ErrnoException"));
     errnoExceptionCtor =
         GetMethodIDOrDie(env, errnoExceptionClass, "<init>", "(Ljava/lang/String;I)V");
-    return RegisterMethodsOrDie(env, "android/os/SharedMemory", methods, NELEM(methods));
+    return RegisterMethodsOrDie(env, "android/os/SharedMemory", methods);
 }
 
 } // namespace android

@@ -720,7 +720,7 @@ int register_android_app_NativeActivity(JNIEnv* env)
     gNativeActivityClassInfo.showIme = GetMethodIDOrDie(env, clazz, "showIme", "(I)V");
     gNativeActivityClassInfo.hideIme = GetMethodIDOrDie(env, clazz, "hideIme", "(I)V");
 
-    return RegisterMethodsOrDie(env, kNativeActivityPathName, g_methods, NELEM(g_methods));
+    return RegisterMethodsOrDie(env, kNativeActivityPathName, g_methods);
 }
 
 } // namespace android

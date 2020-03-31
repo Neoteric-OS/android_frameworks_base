@@ -119,7 +119,7 @@ static const JNINativeMethod g_methods[] = {
 int register_android_backup_FileBackupHelperBase(JNIEnv* env)
 {
     return RegisterMethodsOrDie(env, "android/app/backup/FileBackupHelperBase",
-            g_methods, NELEM(g_methods));
+            g_methods);
 }
 
 }

@@ -60,7 +60,7 @@ static const JNINativeMethod gRegisterMethods[] = {
 
 int register_com_android_internal_os_AtomicDirectory(JNIEnv* env) {
     return RegisterMethodsOrDie(env, "com/android/internal/os/AtomicDirectory",
-            gRegisterMethods, NELEM(gRegisterMethods));
+            gRegisterMethods);
 }
 
 }; // namespace android

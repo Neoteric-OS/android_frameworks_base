@@ -226,7 +226,7 @@ int register_com_android_internal_os_FuseAppLoop(JNIEnv* env) {
     gFuseAppLoopClass = MakeGlobalRefOrDie(env, FindClassOrDie(env, CLASS_NAME));
     gOnCommandMethod = GetMethodIDOrDie(env, gFuseAppLoopClass, "onCommand", "(IJJJI[B)V");
     gOnOpenMethod = GetMethodIDOrDie(env, gFuseAppLoopClass, "onOpen", "(JJ)[B");
-    RegisterMethodsOrDie(env, CLASS_NAME, methods, NELEM(methods));
+    RegisterMethodsOrDie(env, CLASS_NAME, methods);
     return 0;
 }
 }  // namespace android

@@ -547,10 +547,10 @@ static const JNINativeMethod gBaseEventQueueMethods[] = {
 int register_android_hardware_SensorManager(JNIEnv *env)
 {
     RegisterMethodsOrDie(env, "android/hardware/SystemSensorManager",
-            gSystemSensorManagerMethods, NELEM(gSystemSensorManagerMethods));
+            gSystemSensorManagerMethods);
 
     RegisterMethodsOrDie(env, "android/hardware/SystemSensorManager$BaseEventQueue",
-            gBaseEventQueueMethods, NELEM(gBaseEventQueueMethods));
+            gBaseEventQueueMethods);
 
     gBaseEventQueueClassInfo.clazz = FindClassOrDie(env,
             "android/hardware/SystemSensorManager$BaseEventQueue");

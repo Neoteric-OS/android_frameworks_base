@@ -153,7 +153,7 @@ int register_android_os_HidlMemory(JNIEnv* env) {
                                          "getHandle",
                                          "()L" PACKAGE_PATH "/NativeHandle;");
 
-    RegisterMethodsOrDie(env, CLASS_PATH, gMethods, NELEM(gMethods));
+    RegisterMethodsOrDie(env, CLASS_PATH, gMethods);
 
     return 0;
 }

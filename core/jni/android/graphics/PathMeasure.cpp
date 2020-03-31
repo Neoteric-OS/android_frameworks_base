@@ -156,7 +156,7 @@ static const JNINativeMethod methods[] = {
 };
 
 int register_android_graphics_PathMeasure(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/graphics/PathMeasure", methods, NELEM(methods));
+    return RegisterMethodsOrDie(env, "android/graphics/PathMeasure", methods);
 }
 
 }

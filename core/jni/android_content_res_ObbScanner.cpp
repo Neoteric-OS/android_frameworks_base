@@ -92,7 +92,7 @@ int register_android_content_res_ObbScanner(JNIEnv* env)
     gObbInfoClassInfo.flags = GetFieldIDOrDie(env, clazz, "flags", "I");
     gObbInfoClassInfo.salt = GetFieldIDOrDie(env, clazz, "salt", "[B");
 
-    return RegisterMethodsOrDie(env, "android/content/res/ObbScanner", gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/content/res/ObbScanner", gMethods);
 }
 
 }; // namespace android

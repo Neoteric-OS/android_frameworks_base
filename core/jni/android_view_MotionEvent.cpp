@@ -894,8 +894,7 @@ static const JNINativeMethod gMotionEventMethods[] = {
 };
 
 int register_android_view_MotionEvent(JNIEnv* env) {
-    int res = RegisterMethodsOrDie(env, "android/view/MotionEvent", gMotionEventMethods,
-                                   NELEM(gMotionEventMethods));
+    int res = RegisterMethodsOrDie(env, "android/view/MotionEvent", gMotionEventMethods);
 
     gMotionEventClassInfo.clazz = FindClassOrDie(env, "android/view/MotionEvent");
     gMotionEventClassInfo.clazz = MakeGlobalRefOrDie(env, gMotionEventClassInfo.clazz);

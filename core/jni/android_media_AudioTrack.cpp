@@ -1406,7 +1406,7 @@ bool android_media_getIntConstantFromClass(JNIEnv* pEnv, jclass theClass, const 
 int register_android_media_AudioTrack(JNIEnv *env)
 {
     // must be first
-    int res = RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
+    int res = RegisterMethodsOrDie(env, kClassPathName, gMethods);
 
     javaAudioTrackFields.nativeTrackInJavaObj = NULL;
     javaAudioTrackFields.postNativeEventInJava = NULL;

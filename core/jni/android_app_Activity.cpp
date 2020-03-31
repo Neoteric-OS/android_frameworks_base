@@ -45,7 +45,7 @@ static const JNINativeMethod g_methods[] = {
 static const char* const kActivityPathName = "android/app/Activity";
 
 int register_android_app_Activity(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, kActivityPathName, g_methods, NELEM(g_methods));
+    return RegisterMethodsOrDie(env, kActivityPathName, g_methods);
 }
 
 } // namespace android

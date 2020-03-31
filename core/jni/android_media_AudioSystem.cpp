@@ -2361,7 +2361,7 @@ static const JNINativeMethod gGetFCC8Methods[] = {
 int register_android_media_AudioSystem(JNIEnv *env)
 {
     // This needs to be done before hooking up methods AudioTrackRoutingProxy (below)
-    RegisterMethodsOrDie(env, kClassPathName, gGetFCC8Methods, NELEM(gGetFCC8Methods));
+    RegisterMethodsOrDie(env, kClassPathName, gGetFCC8Methods);
 
     jclass arrayListClass = FindClassOrDie(env, "java/util/ArrayList");
     gArrayListClass = MakeGlobalRefOrDie(env, arrayListClass);
@@ -2534,7 +2534,6 @@ int register_android_media_AudioSystem(JNIEnv *env)
 
     AudioSystem::setErrorCallback(android_media_AudioSystem_error_callback);
 
-    RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
-    return RegisterMethodsOrDie(env, kEventHandlerClassPathName, gEventHandlerMethods,
-                                NELEM(gEventHandlerMethods));
+    RegisterMethodsOrDie(env, kClassPathName, gMethods);
+    return RegisterMethodsOrDie(env, kEventHandlerClassPathName, gEventHandlerMethods);
 }

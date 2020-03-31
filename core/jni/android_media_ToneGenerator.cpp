@@ -139,5 +139,5 @@ int register_android_media_ToneGenerator(JNIEnv *env) {
     fields.context = GetFieldIDOrDie(env, clazz, "mNativeContext", "J");
     ALOGV("register_android_media_ToneGenerator ToneGenerator fields.context: %p", fields.context);
 
-    return RegisterMethodsOrDie(env, "android/media/ToneGenerator", gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/media/ToneGenerator", gMethods);
 }

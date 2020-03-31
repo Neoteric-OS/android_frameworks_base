@@ -104,7 +104,7 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_graphics_Picture(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/graphics/Picture", gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/graphics/Picture", gMethods);
 }
 
 }; // namespace android

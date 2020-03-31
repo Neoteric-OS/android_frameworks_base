@@ -243,7 +243,7 @@ int register_android_view_KeyCharacterMap(JNIEnv* env)
     gFallbackActionClassInfo.keyCode = GetFieldIDOrDie(env, clazz, "keyCode", "I");
     gFallbackActionClassInfo.metaState = GetFieldIDOrDie(env, clazz, "metaState", "I");
 
-    return RegisterMethodsOrDie(env, "android/view/KeyCharacterMap", g_methods, NELEM(g_methods));
+    return RegisterMethodsOrDie(env, "android/view/KeyCharacterMap", g_methods);
 }
 
 }; // namespace android

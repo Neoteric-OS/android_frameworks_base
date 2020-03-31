@@ -159,10 +159,8 @@ static const JNINativeMethod gMTMethods[] = {
 };
 
 int register_android_graphics_text_MeasuredText(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/graphics/text/MeasuredText",
-            gMTMethods, NELEM(gMTMethods))
-        + RegisterMethodsOrDie(env, "android/graphics/text/MeasuredText$Builder",
-            gMTBuilderMethods, NELEM(gMTBuilderMethods));
+  return RegisterMethodsOrDie(env, "android/graphics/text/MeasuredText", gMTMethods) +
+         RegisterMethodsOrDie(env, "android/graphics/text/MeasuredText$Builder", gMTBuilderMethods);
 }
 
 }

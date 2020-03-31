@@ -89,7 +89,7 @@ int register_android_util_EventLog(JNIEnv* env) {
     return RegisterMethodsOrDie(
             env,
             "android/util/EventLog",
-            gRegisterMethods, NELEM(gRegisterMethods));
+            gRegisterMethods);
 }
 
 }; // namespace android

@@ -101,20 +101,17 @@ static const JNINativeMethod gDiscretePathEffectMethods[] = {
 
 int register_android_graphics_PathEffect(JNIEnv* env)
 {
-    android::RegisterMethodsOrDie(env, "android/graphics/PathEffect", gPathEffectMethods,
-                         NELEM(gPathEffectMethods));
+    android::RegisterMethodsOrDie(env, "android/graphics/PathEffect", gPathEffectMethods);
     android::RegisterMethodsOrDie(env, "android/graphics/ComposePathEffect",
-                                  gComposePathEffectMethods, NELEM(gComposePathEffectMethods));
-    android::RegisterMethodsOrDie(env, "android/graphics/SumPathEffect", gSumPathEffectMethods,
-                                  NELEM(gSumPathEffectMethods));
-    android::RegisterMethodsOrDie(env, "android/graphics/DashPathEffect", gDashPathEffectMethods,
-                                  NELEM(gDashPathEffectMethods));
+                                  gComposePathEffectMethods);
+    android::RegisterMethodsOrDie(env, "android/graphics/SumPathEffect", gSumPathEffectMethods);
+    android::RegisterMethodsOrDie(env, "android/graphics/DashPathEffect", gDashPathEffectMethods);
     android::RegisterMethodsOrDie(env, "android/graphics/PathDashPathEffect",
-                                  gPathDashPathEffectMethods, NELEM(gPathDashPathEffectMethods));
+                                  gPathDashPathEffectMethods);
     android::RegisterMethodsOrDie(env, "android/graphics/CornerPathEffect",
-                                  gCornerPathEffectMethods, NELEM(gCornerPathEffectMethods));
+                                  gCornerPathEffectMethods);
     android::RegisterMethodsOrDie(env, "android/graphics/DiscretePathEffect",
-                                  gDiscretePathEffectMethods, NELEM(gDiscretePathEffectMethods));
+                                  gDiscretePathEffectMethods);
 
     return 0;
 }

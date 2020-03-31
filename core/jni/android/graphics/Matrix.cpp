@@ -384,7 +384,7 @@ static const JNINativeMethod methods[] = {
 static jfieldID sNativeInstanceField;
 
 int register_android_graphics_Matrix(JNIEnv* env) {
-    int result = RegisterMethodsOrDie(env, "android/graphics/Matrix", methods, NELEM(methods));
+    int result = RegisterMethodsOrDie(env, "android/graphics/Matrix", methods);
 
     jclass clazz = FindClassOrDie(env, "android/graphics/Matrix");
     sNativeInstanceField = GetFieldIDOrDie(env, clazz, "native_instance", "J");

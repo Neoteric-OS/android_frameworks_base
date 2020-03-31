@@ -157,7 +157,7 @@ int register_android_view_KeyEvent(JNIEnv* env) {
     gKeyEventClassInfo.mCharacters = GetFieldIDOrDie(env, gKeyEventClassInfo.clazz, "mCharacters",
                                                      "Ljava/lang/String;");
 
-    return RegisterMethodsOrDie(env, "android/view/KeyEvent", g_methods, NELEM(g_methods));
+    return RegisterMethodsOrDie(env, "android/view/KeyEvent", g_methods);
 }
 
 } // namespace android

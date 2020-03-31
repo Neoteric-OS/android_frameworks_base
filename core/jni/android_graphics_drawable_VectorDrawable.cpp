@@ -419,7 +419,7 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_graphics_drawable_VectorDrawable(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/graphics/drawable/VectorDrawable", gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/graphics/drawable/VectorDrawable", gMethods);
 }
 
 }; // namespace android

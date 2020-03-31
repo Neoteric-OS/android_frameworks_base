@@ -266,6 +266,6 @@ int register_android_graphics_drawable_AnimatedImageDrawable(JNIEnv* env) {
     gAnimatedImageDrawable_onAnimationEndMethodID = GetMethodIDOrDie(env, animatedImageDrawable_class, "onAnimationEnd", "()V");
 
     return android::RegisterMethodsOrDie(env, "android/graphics/drawable/AnimatedImageDrawable",
-            gAnimatedImageDrawableMethods, NELEM(gAnimatedImageDrawableMethods));
+            gAnimatedImageDrawableMethods);
 }
 

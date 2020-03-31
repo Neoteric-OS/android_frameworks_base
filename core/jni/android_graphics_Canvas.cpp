@@ -727,9 +727,9 @@ static const JNINativeMethod gDrawMethods[] = {
 
 int register_android_graphics_Canvas(JNIEnv* env) {
     int ret = 0;
-    ret |= RegisterMethodsOrDie(env, "android/graphics/Canvas", gMethods, NELEM(gMethods));
-    ret |= RegisterMethodsOrDie(env, "android/graphics/BaseCanvas", gDrawMethods, NELEM(gDrawMethods));
-    ret |= RegisterMethodsOrDie(env, "android/graphics/BaseRecordingCanvas", gDrawMethods, NELEM(gDrawMethods));
+    ret |= RegisterMethodsOrDie(env, "android/graphics/Canvas", gMethods);
+    ret |= RegisterMethodsOrDie(env, "android/graphics/BaseCanvas", gDrawMethods);
+    ret |= RegisterMethodsOrDie(env, "android/graphics/BaseRecordingCanvas", gDrawMethods);
     return ret;
 
 }

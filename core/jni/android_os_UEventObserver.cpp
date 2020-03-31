@@ -119,7 +119,7 @@ int register_android_os_UEventObserver(JNIEnv *env)
 {
     FindClassOrDie(env, "android/os/UEventObserver");
 
-    return RegisterMethodsOrDie(env, "android/os/UEventObserver", gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/os/UEventObserver", gMethods);
 }
 
 }   // namespace android

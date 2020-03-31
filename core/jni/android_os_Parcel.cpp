@@ -776,7 +776,7 @@ int register_android_os_Parcel(JNIEnv* env)
     gParcelOffsets.obtain = GetStaticMethodIDOrDie(env, clazz, "obtain", "()Landroid/os/Parcel;");
     gParcelOffsets.recycle = GetMethodIDOrDie(env, clazz, "recycle", "()V");
 
-    return RegisterMethodsOrDie(env, kParcelPathName, gParcelMethods, NELEM(gParcelMethods));
+    return RegisterMethodsOrDie(env, kParcelPathName, gParcelMethods);
 }
 
 };

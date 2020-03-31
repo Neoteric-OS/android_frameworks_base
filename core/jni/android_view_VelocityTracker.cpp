@@ -244,8 +244,7 @@ static const JNINativeMethod gVelocityTrackerMethods[] = {
 };
 
 int register_android_view_VelocityTracker(JNIEnv* env) {
-    int res = RegisterMethodsOrDie(env, "android/view/VelocityTracker", gVelocityTrackerMethods,
-                                   NELEM(gVelocityTrackerMethods));
+    int res = RegisterMethodsOrDie(env, "android/view/VelocityTracker", gVelocityTrackerMethods);
 
     jclass clazz = FindClassOrDie(env, "android/view/VelocityTracker$Estimator");
 

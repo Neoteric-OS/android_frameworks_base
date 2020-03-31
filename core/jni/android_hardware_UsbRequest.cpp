@@ -250,6 +250,6 @@ int register_android_hardware_UsbRequest(JNIEnv *env)
     }
 
     return RegisterMethodsOrDie(env, "android/hardware/usb/UsbRequest",
-            method_table, NELEM(method_table));
+            method_table);
 }
 

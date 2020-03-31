@@ -430,7 +430,7 @@ static const JNINativeMethod gXmlBlockMethods[] = {
 int register_android_content_XmlBlock(JNIEnv* env)
 {
     return RegisterMethodsOrDie(env,
-            "android/content/res/XmlBlock", gXmlBlockMethods, NELEM(gXmlBlockMethods));
+            "android/content/res/XmlBlock", gXmlBlockMethods);
 }
 
 }; // namespace android

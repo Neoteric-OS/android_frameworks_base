@@ -641,8 +641,7 @@ int register_android_hardware_camera2_CameraMetadata(JNIEnv *env)
     // Register native functions
     return RegisterMethodsOrDie(env,
             CAMERA_METADATA_CLASS_NAME,
-            gCameraMetadataMethods,
-            NELEM(gCameraMetadataMethods));
+            gCameraMetadataMethods);
 }
 
 extern "C" {

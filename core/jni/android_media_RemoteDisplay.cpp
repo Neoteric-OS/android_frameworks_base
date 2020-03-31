@@ -190,7 +190,7 @@ static const JNINativeMethod gMethods[] = {
 
 int register_android_media_RemoteDisplay(JNIEnv* env)
 {
-    int err = RegisterMethodsOrDie(env, "android/media/RemoteDisplay", gMethods, NELEM(gMethods));
+    int err = RegisterMethodsOrDie(env, "android/media/RemoteDisplay", gMethods);
 
     jclass clazz = FindClassOrDie(env, "android/media/RemoteDisplay");
     gRemoteDisplayClassInfo.notifyDisplayConnected = GetMethodIDOrDie(env,

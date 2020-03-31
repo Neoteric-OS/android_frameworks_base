@@ -1169,5 +1169,5 @@ int register_android_hardware_Camera(JNIEnv *env)
     }
 
     // Register native functions
-    return RegisterMethodsOrDie(env, "android/hardware/Camera", camMethods, NELEM(camMethods));
+    return RegisterMethodsOrDie(env, "android/hardware/Camera", camMethods);
 }

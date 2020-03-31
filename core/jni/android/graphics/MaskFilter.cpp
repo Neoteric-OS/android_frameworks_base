@@ -81,14 +81,11 @@ static const JNINativeMethod gTableMaskFilterMethods[] = {
 
 int register_android_graphics_MaskFilter(JNIEnv* env)
 {
-    android::RegisterMethodsOrDie(env, "android/graphics/MaskFilter", gMaskFilterMethods,
-                                  NELEM(gMaskFilterMethods));
-    android::RegisterMethodsOrDie(env, "android/graphics/BlurMaskFilter", gBlurMaskFilterMethods,
-                                  NELEM(gBlurMaskFilterMethods));
+    android::RegisterMethodsOrDie(env, "android/graphics/MaskFilter", gMaskFilterMethods);
+    android::RegisterMethodsOrDie(env, "android/graphics/BlurMaskFilter", gBlurMaskFilterMethods);
     android::RegisterMethodsOrDie(env, "android/graphics/EmbossMaskFilter",
-                                  gEmbossMaskFilterMethods, NELEM(gEmbossMaskFilterMethods));
-    android::RegisterMethodsOrDie(env, "android/graphics/TableMaskFilter", gTableMaskFilterMethods,
-                                  NELEM(gTableMaskFilterMethods));
+                                  gEmbossMaskFilterMethods);
+    android::RegisterMethodsOrDie(env, "android/graphics/TableMaskFilter", gTableMaskFilterMethods);
 
     return 0;
 }

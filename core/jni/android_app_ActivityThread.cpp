@@ -56,7 +56,7 @@ static JNINativeMethod gActivityThreadMethods[] = {
 
 int register_android_app_ActivityThread(JNIEnv* env) {
     return RegisterMethodsOrDie(env, "android/app/ActivityThread",
-            gActivityThreadMethods, NELEM(gActivityThreadMethods));
+            gActivityThreadMethods);
 }
 
 };

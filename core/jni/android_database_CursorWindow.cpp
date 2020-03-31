@@ -572,7 +572,7 @@ int register_android_database_CursorWindow(JNIEnv* env)
 
     gEmptyString = MakeGlobalRefOrDie(env, env->NewStringUTF(""));
 
-    return RegisterMethodsOrDie(env, "android/database/CursorWindow", sMethods, NELEM(sMethods));
+    return RegisterMethodsOrDie(env, "android/database/CursorWindow", sMethods);
 }
 
 } // namespace android

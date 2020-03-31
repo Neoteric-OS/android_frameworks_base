@@ -115,8 +115,7 @@ static const JNINativeMethod method_table[] = {
 };
 
 int register_android_ddm_DdmHandleNativeHeap(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/ddm/DdmHandleNativeHeap", method_table,
-                                NELEM(method_table));
+    return RegisterMethodsOrDie(env, "android/ddm/DdmHandleNativeHeap", method_table);
 }
 
 };

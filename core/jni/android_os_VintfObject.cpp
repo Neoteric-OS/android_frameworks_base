@@ -171,8 +171,7 @@ int register_android_os_VintfObject(JNIEnv* env)
     gLongClazz = MakeGlobalRefOrDie(env, FindClassOrDie(env, "java/lang/Long"));
     gLongValueOf = GetStaticMethodIDOrDie(env, gLongClazz, "valueOf", "(J)Ljava/lang/Long;");
 
-    return RegisterMethodsOrDie(env, kVintfObjectPathName, gVintfObjectMethods,
-            NELEM(gVintfObjectMethods));
+    return RegisterMethodsOrDie(env, kVintfObjectPathName, gVintfObjectMethods);
 }
 
 };

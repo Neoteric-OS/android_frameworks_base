@@ -159,6 +159,5 @@ static const JNINativeMethod gTypefaceMethods[] = {
 
 int register_android_graphics_Typeface(JNIEnv* env)
 {
-    return RegisterMethodsOrDie(env, "android/graphics/Typeface", gTypefaceMethods,
-                                NELEM(gTypefaceMethods));
+    return RegisterMethodsOrDie(env, "android/graphics/Typeface", gTypefaceMethods);
 }

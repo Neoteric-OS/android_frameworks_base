@@ -57,7 +57,7 @@ static const JNINativeMethod gMethods[] = {
 
 int register_android_util_StatsLog(JNIEnv* env)
 {
-    return RegisterMethodsOrDie(env, "android/util/StatsLog", gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/util/StatsLog", gMethods);
 }
 
 }; // namespace android

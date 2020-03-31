@@ -219,7 +219,7 @@ int register_android_view_RenderNodeAnimator(JNIEnv* env) {
             env, gRenderNodeAnimatorClassInfo.clazz, "callOnFinished",
             "(Landroid/view/RenderNodeAnimator;)V");
 
-    return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, kClassPathName, gMethods);
 }
 
 

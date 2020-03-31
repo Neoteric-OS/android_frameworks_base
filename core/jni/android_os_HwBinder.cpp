@@ -384,7 +384,7 @@ int register_android_os_HwBinder(JNIEnv *env) {
     jclass errorClass = FindClassOrDie(env, "java/lang/Error");
     gErrorClass = MakeGlobalRefOrDie(env, errorClass);
 
-    return RegisterMethodsOrDie(env, CLASS_PATH, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, CLASS_PATH, gMethods);
 }
 
 }  // namespace android

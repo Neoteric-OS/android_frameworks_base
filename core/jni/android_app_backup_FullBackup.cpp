@@ -136,7 +136,7 @@ int register_android_app_backup_FullBackup(JNIEnv* env)
     jclass bdoClazz = FindClassOrDie(env, "android/app/backup/BackupDataOutput");
     sBackupDataOutput.mBackupWriter = GetFieldIDOrDie(env, bdoClazz, "mBackupWriter", "J");
 
-    return RegisterMethodsOrDie(env, "android/app/backup/FullBackup", g_methods, NELEM(g_methods));
+    return RegisterMethodsOrDie(env, "android/app/backup/FullBackup", g_methods);
 }
 
 }

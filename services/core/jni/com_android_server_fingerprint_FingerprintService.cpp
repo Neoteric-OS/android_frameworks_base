@@ -273,7 +273,7 @@ int register_android_server_fingerprint_FingerprintService(JNIEnv* env) {
     gFingerprintServiceClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);
     gFingerprintServiceClassInfo.notify =
             GetMethodIDOrDie(env, gFingerprintServiceClassInfo.clazz,"notify", "(IIII)V");
-    int result = RegisterMethodsOrDie(env, FINGERPRINT_SERVICE, g_methods, NELEM(g_methods));
+    int result = RegisterMethodsOrDie(env, FINGERPRINT_SERVICE, g_methods);
     ALOG(LOG_VERBOSE, LOG_TAG, "FingerprintManager JNI ready.\n");
     return result;
 }

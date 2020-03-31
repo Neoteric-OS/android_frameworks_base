@@ -172,7 +172,7 @@ static const JNINativeMethod gStringBlockMethods[] = {
 int register_android_content_StringBlock(JNIEnv* env)
 {
     return RegisterMethodsOrDie(env,
-            "android/content/res/StringBlock", gStringBlockMethods, NELEM(gStringBlockMethods));
+            "android/content/res/StringBlock", gStringBlockMethods);
 }
 
 }; // namespace android

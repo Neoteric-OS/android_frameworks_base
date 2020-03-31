@@ -168,7 +168,7 @@ static const JNINativeMethod gMethods[] = {
 
 int register_android_animation_PropertyValuesHolder(JNIEnv* env)
 {
-    return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, kClassPathName, gMethods);
 }
 
 };

@@ -200,8 +200,7 @@ static const JNINativeMethod gFontBuilderMethods[] = {
 };
 
 int register_android_graphics_fonts_Font(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/graphics/fonts/Font$Builder", gFontBuilderMethods,
-            NELEM(gFontBuilderMethods));
+    return RegisterMethodsOrDie(env, "android/graphics/fonts/Font$Builder", gFontBuilderMethods);
 }
 
 }

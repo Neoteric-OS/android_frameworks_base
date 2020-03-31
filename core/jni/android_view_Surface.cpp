@@ -565,7 +565,7 @@ static const JNINativeMethod gSurfaceMethods[] = {
 int register_android_view_Surface(JNIEnv* env)
 {
     int err = RegisterMethodsOrDie(env, "android/view/Surface",
-            gSurfaceMethods, NELEM(gSurfaceMethods));
+            gSurfaceMethods);
 
     jclass clazz = FindClassOrDie(env, "android/view/Surface");
     gSurfaceClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);

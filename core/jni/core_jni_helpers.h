@@ -81,9 +81,15 @@ static inline T MakeGlobalRefOrDie(JNIEnv* env, T in) {
 
 static inline int RegisterMethodsOrDie(JNIEnv* env, const char* className,
                                        const JNINativeMethod* gMethods, int numMethods) {
-    int res = AndroidRuntime::registerNativeMethods(env, className, gMethods, numMethods);
+    int res = jniRegisterNativeMethods(env, className, gMethods, numMethods);
     LOG_ALWAYS_FATAL_IF(res < 0, "Unable to register native methods.");
     return res;
+}
+
+template <int N>
+static inline int RegisterMethodsOrDie(JNIEnv* env, const char* className,
+                                       const JNINativeMethod (&gMethods)[N]) {
+    return RegisterMethodsOrDie(env, className, gMethods, N);
 }
 
 /**

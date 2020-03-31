@@ -1659,8 +1659,7 @@ int register_android_content_AssetManager(JNIEnv* env) {
       GetMethodIDOrDie(env, gArrayMapOffsets.classObject, "put",
                        "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
 
-  return RegisterMethodsOrDie(env, "android/content/res/AssetManager", gAssetManagerMethods,
-                              NELEM(gAssetManagerMethods));
+  return RegisterMethodsOrDie(env, "android/content/res/AssetManager", gAssetManagerMethods);
 }
 
 }; // namespace android

@@ -963,7 +963,7 @@ int register_android_media_AudioRecord(JNIEnv *env)
     gArrayListClass = MakeGlobalRefOrDie(env, arrayListClass);
     gArrayListMethods.add = GetMethodIDOrDie(env, arrayListClass, "add", "(Ljava/lang/Object;)Z");
 
-    return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, kClassPathName, gMethods);
 }
 
 // ----------------------------------------------------------------------------

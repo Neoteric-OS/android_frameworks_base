@@ -83,5 +83,5 @@ static const JNINativeMethod gInterpolatorMethods[] = {
 int register_android_graphics_Interpolator(JNIEnv* env)
 {
     return android::RegisterMethodsOrDie(env, "android/graphics/Interpolator",
-                                         gInterpolatorMethods, NELEM(gInterpolatorMethods));
+                                         gInterpolatorMethods);
 }

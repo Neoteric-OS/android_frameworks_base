@@ -287,8 +287,7 @@ static const JNINativeMethod gFontFamilyMethods[] = {
 
 int register_android_graphics_FontFamily(JNIEnv* env)
 {
-    int err = RegisterMethodsOrDie(env, "android/graphics/FontFamily", gFontFamilyMethods,
-            NELEM(gFontFamilyMethods));
+    int err = RegisterMethodsOrDie(env, "android/graphics/FontFamily", gFontFamilyMethods);
 
     init_FontUtils(env);
     return err;

@@ -275,7 +275,7 @@ int register_android_os_SystemProperties(JNIEnv *env)
           (void*) SystemProperties_report_sysprop_change },
     };
     return RegisterMethodsOrDie(env, "android/os/SystemProperties",
-                                method_table, NELEM(method_table));
+                                method_table);
 }
 
 }  // namespace android

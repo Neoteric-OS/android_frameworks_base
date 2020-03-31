@@ -158,8 +158,7 @@ static const JNINativeMethod gPdfDocument_Methods[] = {
 
 int register_android_graphics_pdf_PdfDocument(JNIEnv* env) {
     return RegisterMethodsOrDie(
-            env, "android/graphics/pdf/PdfDocument", gPdfDocument_Methods,
-            NELEM(gPdfDocument_Methods));
+            env, "android/graphics/pdf/PdfDocument", gPdfDocument_Methods);
 }
 
 };

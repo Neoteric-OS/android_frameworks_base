@@ -610,7 +610,7 @@ static const JNINativeMethod gMethods[] = {
 int register_com_android_internal_content_NativeLibraryHelper(JNIEnv *env)
 {
     return RegisterMethodsOrDie(env,
-            "com/android/internal/content/NativeLibraryHelper", gMethods, NELEM(gMethods));
+            "com/android/internal/content/NativeLibraryHelper", gMethods);
 }
 
 };

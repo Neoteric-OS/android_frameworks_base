@@ -162,5 +162,5 @@ int register_android_graphics_Movie(JNIEnv* env)
 
     gMovie_nativeInstanceID = android::GetFieldIDOrDie(env, gMovie_class, "mNativeMovie", "J");
 
-    return android::RegisterMethodsOrDie(env, "android/graphics/Movie", gMethods, NELEM(gMethods));
+    return android::RegisterMethodsOrDie(env, "android/graphics/Movie", gMethods);
 }

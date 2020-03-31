@@ -32,7 +32,7 @@ const char* const kHidlSupportPathName = "android/os/HidlSupport";
 
 int register_android_os_HidlSupport(JNIEnv* env)
 {
-    return RegisterMethodsOrDie(env, kHidlSupportPathName, gHidlSupportMethods, NELEM(gHidlSupportMethods));
+    return RegisterMethodsOrDie(env, kHidlSupportPathName, gHidlSupportMethods);
 }
 
 }  // namespace android

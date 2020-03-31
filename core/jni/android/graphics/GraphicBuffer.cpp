@@ -326,5 +326,5 @@ int register_android_graphics_GraphicBuffer(JNIEnv* env) {
     gRectClassInfo.right = GetFieldIDOrDie(env, clazz, "right", "I");
     gRectClassInfo.bottom = GetFieldIDOrDie(env, clazz, "bottom", "I");
 
-    return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, kClassPathName, gMethods);
 }

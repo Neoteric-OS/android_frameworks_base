@@ -154,6 +154,6 @@ void register_android_server_storage_AppFuse(JNIEnv* env) {
     gAppFuseClass = MakeGlobalRefOrDie(env, FindClassOrDie(env, CLASS_NAME));
     gAppFuseOnMount = GetMethodIDOrDie(env, gAppFuseClass, "onMount", "(I)V");
     gAppFuseOnClosed = GetMethodIDOrDie(env, gAppFuseClass, "onClosed", "(I)V");
-    RegisterMethodsOrDie(env, CLASS_NAME, methods, NELEM(methods));
+    RegisterMethodsOrDie(env, CLASS_NAME, methods);
 }
 }  // namespace android

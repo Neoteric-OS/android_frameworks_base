@@ -221,8 +221,7 @@ static const JNINativeMethod gMessageQueueMethods[] = {
 };
 
 int register_android_os_MessageQueue(JNIEnv* env) {
-    int res = RegisterMethodsOrDie(env, "android/os/MessageQueue", gMessageQueueMethods,
-                                   NELEM(gMessageQueueMethods));
+    int res = RegisterMethodsOrDie(env, "android/os/MessageQueue", gMessageQueueMethods);
 
     jclass clazz = FindClassOrDie(env, "android/os/MessageQueue");
     gMessageQueueClassInfo.mPtr = GetFieldIDOrDie(env, clazz, "mPtr", "J");

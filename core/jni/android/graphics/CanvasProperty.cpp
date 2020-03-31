@@ -45,8 +45,7 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_graphics_CanvasProperty(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/graphics/CanvasProperty", gMethods,
-                                NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/graphics/CanvasProperty", gMethods);
 }
 
 }; // namespace android

@@ -330,6 +330,5 @@ int register_android_hardware_camera2_legacy_PerfMeasurement(JNIEnv* env)
     // Register native functions
     return RegisterMethodsOrDie(env,
             PERF_MEASUREMENT_CLASS_NAME,
-            gPerfMeasurementMethods,
-            NELEM(gPerfMeasurementMethods));
+            gPerfMeasurementMethods);
 }
