@@ -463,7 +463,6 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_media_Descrambler(JNIEnv *env) {
-    return AndroidRuntime::registerNativeMethods(env,
-                "android/media/MediaDescrambler", gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env, "android/media/MediaDescrambler", gMethods);
 }
 

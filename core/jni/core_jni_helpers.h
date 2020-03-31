@@ -79,6 +79,11 @@ static inline T MakeGlobalRefOrDie(JNIEnv* env, T in) {
     return static_cast<T>(res);
 }
 
+// TODO(b/151443957): Remove this method when possible.
+static inline int RegisterMethodsOrDie(JNIEnv* env, const char* className,
+                                       const JNINativeMethod* gMethods, int numMethods)
+    __attribute__((deprecated("Use RegisterMethodsOrDie(env, className, gMethodArray)")));
+
 static inline int RegisterMethodsOrDie(JNIEnv* env, const char* className,
                                        const JNINativeMethod* gMethods, int numMethods) {
     int res = jniRegisterNativeMethods(env, className, gMethods, numMethods);
@@ -88,8 +93,10 @@ static inline int RegisterMethodsOrDie(JNIEnv* env, const char* className,
 
 template <int N>
 static inline int RegisterMethodsOrDie(JNIEnv* env, const char* className,
-                                       const JNINativeMethod (&gMethods)[N]) {
-    return RegisterMethodsOrDie(env, className, gMethods, N);
+                                       const JNINativeMethod (&gMethodArray)[N]) {
+    int res = jniRegisterNativeMethods(env, className, gMethodArray, N);
+    LOG_ALWAYS_FATAL_IF(res < 0, "Unable to register native methods.");
+    return res;
 }
 
 /**

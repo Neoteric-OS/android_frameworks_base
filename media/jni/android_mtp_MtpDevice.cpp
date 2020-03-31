@@ -1031,6 +1031,5 @@ int register_android_mtp_MtpDevice(JNIEnv *env)
     }
     clazz_operation_canceled_exception = (jclass)env->NewGlobalRef(clazz);
 
-    return AndroidRuntime::registerNativeMethods(env,
-                "android/mtp/MtpDevice", gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env, "android/mtp/MtpDevice", gMethods);
 }

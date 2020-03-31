@@ -347,25 +347,21 @@ static const char* const kCameraProfileClassPathName = "android/media/CameraProf
 // JNI_OnLoad in android_media_MediaPlayer.cpp
 int register_android_media_MediaProfiles(JNIEnv *env)
 {
-    int ret1 = AndroidRuntime::registerNativeMethods(env,
+    int ret1 = jniRegisterNativeMethods(env,
                kEncoderCapabilitiesClassPathName,
-               gMethodsForEncoderCapabilitiesClass,
-               NELEM(gMethodsForEncoderCapabilitiesClass));
+               gMethodsForEncoderCapabilitiesClass);
 
-    int ret2 = AndroidRuntime::registerNativeMethods(env,
+    int ret2 = jniRegisterNativeMethods(env,
                kCamcorderProfileClassPathName,
-               gMethodsForCamcorderProfileClass,
-               NELEM(gMethodsForCamcorderProfileClass));
+               gMethodsForCamcorderProfileClass);
 
-    int ret3 = AndroidRuntime::registerNativeMethods(env,
+    int ret3 = jniRegisterNativeMethods(env,
                kDecoderCapabilitiesClassPathName,
-               gMethodsForDecoderCapabilitiesClass,
-               NELEM(gMethodsForDecoderCapabilitiesClass));
+               gMethodsForDecoderCapabilitiesClass);
 
-    int ret4 = AndroidRuntime::registerNativeMethods(env,
+    int ret4 = jniRegisterNativeMethods(env,
                kCameraProfileClassPathName,
-               gMethodsForCameraProfileClass,
-               NELEM(gMethodsForCameraProfileClass));
+               gMethodsForCameraProfileClass);
 
     // Success if all return values from above are 0
     return (ret1 || ret2 || ret3 || ret4);

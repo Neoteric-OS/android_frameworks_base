@@ -562,6 +562,5 @@ static JNINativeMethod gMethods[] = {
 };
 
 int register_android_media_MediaSync(JNIEnv *env) {
-    return AndroidRuntime::registerNativeMethods(
-                   env, "android/media/MediaSync", gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env, "android/media/MediaSync", gMethods);
 }

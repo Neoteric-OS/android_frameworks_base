@@ -790,7 +790,7 @@ extern int register_android_media_visualizer(JNIEnv *env);
 
 int register_android_media_AudioEffect(JNIEnv *env)
 {
-    return AndroidRuntime::registerNativeMethods(env, kClassPathName, gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env, kClassPathName, gMethods);
 }
 
 jint JNI_OnLoad(JavaVM* vm, void* reserved __unused)

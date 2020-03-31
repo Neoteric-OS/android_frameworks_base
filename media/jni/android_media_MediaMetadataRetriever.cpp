@@ -750,6 +750,5 @@ static const JNINativeMethod nativeMethods[] = {
 // JNI_OnLoad in android_media_MediaPlayer.cpp
 int register_android_media_MediaMetadataRetriever(JNIEnv *env)
 {
-    return AndroidRuntime::registerNativeMethods
-        (env, kClassPathName, nativeMethods, NELEM(nativeMethods));
+    return jniRegisterNativeMethods(env, kClassPathName, nativeMethods);
 }

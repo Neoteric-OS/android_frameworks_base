@@ -138,5 +138,5 @@ static const JNINativeMethod gMethods[] = {
 
 int register_android_media_SourceDefaultEffect(JNIEnv *env)
 {
-    return AndroidRuntime::registerNativeMethods(env, kClassPathName, gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env, kClassPathName, gMethods);
 }

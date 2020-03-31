@@ -849,11 +849,10 @@ static const JNINativeMethod gImageMethods[] = {
 
 int register_android_media_ImageReader(JNIEnv *env) {
 
-    int ret1 = AndroidRuntime::registerNativeMethods(env,
-                   "android/media/ImageReader", gImageReaderMethods, NELEM(gImageReaderMethods));
+    int ret1 = jniRegisterNativeMethods(env, "android/media/ImageReader", gImageReaderMethods);
 
-    int ret2 = AndroidRuntime::registerNativeMethods(env,
-                   "android/media/ImageReader$SurfaceImage", gImageMethods, NELEM(gImageMethods));
+    int ret2 = jniRegisterNativeMethods(env,
+                                        "android/media/ImageReader$SurfaceImage", gImageMethods);
 
     return (ret1 || ret2);
 }

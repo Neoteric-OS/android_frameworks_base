@@ -534,5 +534,5 @@ int register_android_media_JetPlayer(JNIEnv *env)
             javaJetPlayerFields.jetClass, JAVA_NATIVEJETPOSTEVENT_CALLBACK_NAME,
             "(Ljava/lang/Object;III)V");
 
-    return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, kClassPathName, gMethods);
 }

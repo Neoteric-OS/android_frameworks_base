@@ -986,11 +986,10 @@ static JNINativeMethod gImageMethods[] = {
 
 int register_android_media_ImageWriter(JNIEnv *env) {
 
-    int ret1 = AndroidRuntime::registerNativeMethods(env,
-                   "android/media/ImageWriter", gImageWriterMethods, NELEM(gImageWriterMethods));
+    int ret1 = jniRegisterNativeMethods(env, "android/media/ImageWriter", gImageWriterMethods);
 
-    int ret2 = AndroidRuntime::registerNativeMethods(env,
-                   "android/media/ImageWriter$WriterSurfaceImage", gImageMethods, NELEM(gImageMethods));
+    int ret2 = jniRegisterNativeMethods(env,
+                   "android/media/ImageWriter$WriterSurfaceImage", gImageMethods);
 
     return (ret1 || ret2);
 }

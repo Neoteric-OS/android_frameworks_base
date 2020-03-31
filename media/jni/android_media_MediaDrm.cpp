@@ -2040,6 +2040,5 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_media_Drm(JNIEnv *env) {
-    return AndroidRuntime::registerNativeMethods(env,
-                "android/media/MediaDrm", gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env, "android/media/MediaDrm", gMethods);
 }

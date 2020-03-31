@@ -273,8 +273,7 @@ static const JNINativeMethod gMethods[] = {
 // This function only registers the native methods, and is called from
 // JNI_OnLoad in android_media_MediaPlayer.cpp
 int register_android_media_MediaMuxer(JNIEnv *env) {
-    int err = AndroidRuntime::registerNativeMethods(env,
-                "android/media/MediaMuxer", gMethods, NELEM(gMethods));
+    int err = jniRegisterNativeMethods(env, "android/media/MediaMuxer", gMethods);
 
     jclass byteBufClass = env->FindClass("java/nio/ByteBuffer");
     CHECK(byteBufClass != NULL);

@@ -342,7 +342,7 @@ jint JNI_OnLoad(JavaVM* vm, void* /* reserved */)
     // since it's a static object.
     fields.mSoundPoolClass = (jclass) env->NewGlobalRef(clazz);
 
-    if (AndroidRuntime::registerNativeMethods(env, kClassPathName, gMethods, NELEM(gMethods)) < 0)
+    if (jniRegisterNativeMethods(env, kClassPathName, gMethods) < 0)
         return result;
 
     // Get the AudioAttributes class and fields

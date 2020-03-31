@@ -860,6 +860,5 @@ static const JNINativeMethod gMethods[] = {
 // JNI_OnLoad in android_media_MediaPlayer.cpp
 int register_android_media_MediaRecorder(JNIEnv *env)
 {
-    return AndroidRuntime::registerNativeMethods(env,
-                "android/media/MediaRecorder", gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env, "android/media/MediaRecorder", gMethods);
 }

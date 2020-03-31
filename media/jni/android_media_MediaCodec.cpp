@@ -2255,6 +2255,5 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_media_MediaCodec(JNIEnv *env) {
-    return AndroidRuntime::registerNativeMethods(env,
-                "android/media/MediaCodec", gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env, "android/media/MediaCodec", gMethods);
 }

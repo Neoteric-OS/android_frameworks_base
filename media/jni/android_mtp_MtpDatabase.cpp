@@ -1357,10 +1357,9 @@ int register_android_mtp_MtpDatabase(JNIEnv *env)
     GET_METHOD_ID(getLongValues, clazz, "()[J");
     GET_METHOD_ID(getStringValues, clazz, "()[Ljava/lang/String;");
 
-    if (AndroidRuntime::registerNativeMethods(env,
-                "android/mtp/MtpDatabase", gMtpDatabaseMethods, NELEM(gMtpDatabaseMethods)))
+    if (jniRegisterNativeMethods(env,
+                "android/mtp/MtpDatabase", gMtpDatabaseMethods))
         return -1;
 
-    return AndroidRuntime::registerNativeMethods(env,
-                "android/mtp/MtpPropertyGroup", gMtpPropertyGroupMethods, NELEM(gMtpPropertyGroupMethods));
+    return jniRegisterNativeMethods(env, "android/mtp/MtpPropertyGroup", gMtpPropertyGroupMethods);
 }

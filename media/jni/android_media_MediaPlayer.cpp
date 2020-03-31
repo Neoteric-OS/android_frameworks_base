@@ -1431,8 +1431,7 @@ static const JNINativeMethod gMethods[] = {
 // This function only registers the native methods
 static int register_android_media_MediaPlayer(JNIEnv *env)
 {
-    return AndroidRuntime::registerNativeMethods(env,
-                "android/media/MediaPlayer", gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env, "android/media/MediaPlayer", gMethods);
 }
 extern int register_android_media_ImageReader(JNIEnv *env);
 extern int register_android_media_ImageWriter(JNIEnv *env);
