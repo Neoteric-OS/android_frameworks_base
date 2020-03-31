@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b2e6c860_51f58d54",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-03-31T15:02:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "533a3313_2b5884f6",
+      "range": {
+        "startLine": 1268,
+        "startChar": 0,
+        "endLine": 1268,
+        "endChar": 0
+      },
+      "revId": "ec21585a4d6e80d7d9908d2137bf17b9a1d08ab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6cb02f9_660130be",
         "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "ec21585a4d6e80d7d9908d2137bf17b9a1d08ab1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79d20ee_9916f16a",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-03-31T15:02:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6cb02f9_660130be",
+      "range": {
+        "startLine": 1271,
+        "startChar": 4,
+        "endLine": 1271,
+        "endChar": 5
+      },
+      "revId": "ec21585a4d6e80d7d9908d2137bf17b9a1d08ab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "68c4bc67_33a952a4",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-03-31T15:02:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0841fff0_1ac98dfd",
+      "range": {
+        "startLine": 1277,
+        "startChar": 0,
+        "endLine": 1277,
+        "endChar": 0
+      },
+      "revId": "ec21585a4d6e80d7d9908d2137bf17b9a1d08ab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b190947_85961395",
         "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7112d9b7_5fd00e24",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-03-31T15:02:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b190947_85961395",
+      "range": {
+        "startLine": 1280,
+        "startChar": 4,
+        "endLine": 1280,
+        "endChar": 5
+      },
+      "revId": "ec21585a4d6e80d7d9908d2137bf17b9a1d08ab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d29aefa_7bf7de54",
         "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "ec21585a4d6e80d7d9908d2137bf17b9a1d08ab1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1f4b84_a9473bca",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-03-31T15:02:31Z",
+      "side": 1,
+      "message": "Done. Went for the the approach of wrapping everything under isAtLeastR() since that feels more explicit. Also added IgnoreUpTo to LinkPropertiesTest.",
+      "parentUuid": "8d29aefa_7bf7de54",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 50
+      },
+      "revId": "ec21585a4d6e80d7d9908d2137bf17b9a1d08ab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
