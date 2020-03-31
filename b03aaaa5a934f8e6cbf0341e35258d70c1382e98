@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82f70ac7_ff58088e",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-31T15:11:59Z",
+      "side": 1,
+      "message": "t",
+      "range": {
+        "startLine": 1265,
+        "startChar": 44,
+        "endLine": 1265,
+        "endChar": 45
+      },
+      "revId": "b03aaaa5a934f8e6cbf0341e35258d70c1382e98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88bf758e_c0f4881a",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-31T15:11:59Z",
+      "side": 1,
+      "message": "t",
+      "range": {
+        "startLine": 1276,
+        "startChar": 44,
+        "endLine": 1276,
+        "endChar": 45
+      },
+      "revId": "b03aaaa5a934f8e6cbf0341e35258d70c1382e98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49048f2_96c725e9",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-31T15:11:59Z",
+      "side": 1,
+      "message": "This should probably be in a more useful location. Maybe com.android.testutils ? Doesn\u0027t need to be in this change.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 5
+      },
+      "revId": "b03aaaa5a934f8e6cbf0341e35258d70c1382e98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
