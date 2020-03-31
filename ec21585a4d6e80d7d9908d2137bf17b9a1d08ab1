@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "533a3313_2b5884f6",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-31T03:46:39Z",
+      "side": 1,
+      "message": "assertFalse(lp.hasIpv6UnreachableDefaultRoute());",
+      "range": {
+        "startLine": 1268,
+        "startChar": 0,
+        "endLine": 1268,
+        "endChar": 0
+      },
+      "revId": "ec21585a4d6e80d7d9908d2137bf17b9a1d08ab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6cb02f9_660130be",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-31T03:46:39Z",
+      "side": 1,
+      "message": "assertFalse(lp.hasIpv6UnreachableDefaultRoute());",
+      "range": {
+        "startLine": 1271,
+        "startChar": 4,
+        "endLine": 1271,
+        "endChar": 5
+      },
+      "revId": "ec21585a4d6e80d7d9908d2137bf17b9a1d08ab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0841fff0_1ac98dfd",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-31T03:46:39Z",
+      "side": 1,
+      "message": "assertFalse(lp.hasIpv4UnreachableDefaultRoute());",
+      "range": {
+        "startLine": 1277,
+        "startChar": 0,
+        "endLine": 1277,
+        "endChar": 0
+      },
+      "revId": "ec21585a4d6e80d7d9908d2137bf17b9a1d08ab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b190947_85961395",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-31T03:46:39Z",
+      "side": 1,
+      "message": "assertFalse(lp.hasIpv4UnreachableDefaultRoute());",
+      "range": {
+        "startLine": 1280,
+        "startChar": 4,
+        "endLine": 1280,
+        "endChar": 5
+      },
+      "revId": "ec21585a4d6e80d7d9908d2137bf17b9a1d08ab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d29aefa_7bf7de54",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-31T03:46:39Z",
+      "side": 1,
+      "message": "I think you might have to skip these new assertions when running the test on Q devices (this is required because this test is run as part of mainline module qualification). You can\u0027t use @IgnoreUpTo(Build.VERSION_CODES.Q) because that applies to the entire test. But you could use something like LinkPropertiesTest#isAtLeastR and then do something like:\n\n    void assertUnreachableDefault(RouteInfo r, boolean ipv6, boolean expected) {\n        if (!isAtleastR()) return;\n        if (ipv6) {\n            assertEquals(expected, r.isIPv6UnreachableDefault());\n        } else {\n            assertEquals(expected, r.isIPv4UnreachableDefault());\n        }\n    }\n\n    void assertIsIpv6UnreachableDefault(RouteInfo r) {\n        assertUnreachableDefault(r, true, true);\n    }\n\n    void assertIsNotIpv6UnreachableDefault(RouteInfo r) {\n        assertUnreachableDefault(r, true, true);\n    }\n\n    ...\n\nor you could leave the code mostly as is and wrap all these assertions in \"if isAtLeastR()\".",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 50
+      },
+      "revId": "ec21585a4d6e80d7d9908d2137bf17b9a1d08ab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
