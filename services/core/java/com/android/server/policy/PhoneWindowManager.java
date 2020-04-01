@@ -494,6 +494,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     int mVeryLongPressTimeout;
     boolean mAllowStartActivityForLongPressOnPowerDuringSetup;
     MetricsLogger mLogger;
+    boolean mButtonWakeAndProcess;
 
     private boolean mHandleVolumeKeysInWM;
 
@@ -1759,6 +1760,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mAccessibilityShortcutController =
                 new AccessibilityShortcutController(mContext, new Handler(), mCurrentUserId);
         mLogger = new MetricsLogger();
+
+        Resources res = mContext.getResources();
+        mButtonWakeAndProcess =
+                res.getBoolean(com.android.internal.R.bool.config_buttonWakeAndProcess);
+
         // Init display burn-in protection
         boolean burnInProtectionEnabled = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_enableBurnInProtection);
@@ -3720,6 +3726,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             result = ACTION_PASS_TO_USER;
             // Since we're dispatching the input, reset the pending key
             mPendingWakeKey = PENDING_KEY_NULL;
+        } else if (!interactive && isWakeKeyWhenScreenOff(keyCode)
+                   && shouldButtonWakeAndProcess(keyCode)) {
+            // If key event should be handled by Android TV, to wake up device, as well as
+            // serve the function.
+            result = ACTION_PASS_TO_USER;
+            if (DEBUG_INPUT) {
+                Log.d(TAG, "Button " + keyCode
+                        + " from ATV remote wakes up device and process the function");
+            }
         } else {
             // When the screen is off and the key is not injected, determine whether
             // to wake the device but don't pass the key to the application.
@@ -4185,6 +4200,19 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 return false;
         }
         return true;
+    }
+
+    /**
+     * When the screen is off, some keys that wake up the device, can also trigger
+     * their functions. We filter them out here.
+     */
+    private boolean shouldButtonWakeAndProcess(int keyCode) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_HOME:
+            case KeyEvent.KEYCODE_SEARCH:
+                return mButtonWakeAndProcess;
+        }
+        return false;
     }
 
     // TODO(b/117479243): handle it in InputPolicy
