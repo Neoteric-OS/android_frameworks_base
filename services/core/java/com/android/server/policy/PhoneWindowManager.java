@@ -494,6 +494,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     int mVeryLongPressTimeout;
     boolean mAllowStartActivityForLongPressOnPowerDuringSetup;
     MetricsLogger mLogger;
+    boolean mButtonWakeAndProcess;
 
     private boolean mHandleVolumeKeysInWM;
 
@@ -1759,6 +1760,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mAccessibilityShortcutController =
                 new AccessibilityShortcutController(mContext, new Handler(), mCurrentUserId);
         mLogger = new MetricsLogger();
+
+        Resources res = mContext.getResources();
+        mButtonWakeAndProcess =
+                res.getBoolean(com.android.internal.R.bool.config_buttonWakeAndProcess);
+
         // Init display burn-in protection
         boolean burnInProtectionEnabled = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_enableBurnInProtection);
@@ -4187,6 +4193,19 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         return true;
     }
 
+    /**
+     * When the screen is off, some keys that wake up the device, can also trigger
+     * their functions. We filter them out here.
+     */
+    private boolean shouldButtonWakeAndProcess(int keyCode) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_HOME:
+            case KeyEvent.KEYCODE_SEARCH:
+                return mButtonWakeAndProcess;
+        }
+        return false;
+    }
+
     // TODO(b/117479243): handle it in InputPolicy
     /** {@inheritDoc} */
     @Override
@@ -4226,6 +4245,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         if (displayOff && !mHasFeatureWatch) {
             return false;
+        }
+
+        if (isWakeKeyWhenScreenOff(keyCode) && shouldButtonWakeAndProcess(keyCode)) {
+            // If key event should be handled by Android TV, to wake up device, as well as
+            // serve the function.
+            if (DEBUG_INPUT) {
+                Log.d(TAG, "Button " + keyCode
+                        + " from ATV remote wakes up device and process the function");
+            }
+            return true;
         }
 
         // Send events to keyguard while the screen is on and it's showing.
