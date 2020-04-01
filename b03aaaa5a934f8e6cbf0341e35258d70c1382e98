@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e475273_afce598e",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-04-01T08:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82f70ac7_ff58088e",
+      "range": {
+        "startLine": 1265,
+        "startChar": 44,
+        "endLine": 1265,
+        "endChar": 45
+      },
+      "revId": "b03aaaa5a934f8e6cbf0341e35258d70c1382e98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88bf758e_c0f4881a",
         "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c0afff78_9f6fa0d5",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-04-01T08:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88bf758e_c0f4881a",
+      "range": {
+        "startLine": 1276,
+        "startChar": 44,
+        "endLine": 1276,
+        "endChar": 45
+      },
+      "revId": "b03aaaa5a934f8e6cbf0341e35258d70c1382e98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d49048f2_96c725e9",
         "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "b03aaaa5a934f8e6cbf0341e35258d70c1382e98",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538fda46_e206f994",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-04-01T08:40:12Z",
+      "side": 1,
+      "message": "Will check with Remi.",
+      "parentUuid": "d49048f2_96c725e9",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 5
+      },
+      "revId": "b03aaaa5a934f8e6cbf0341e35258d70c1382e98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
