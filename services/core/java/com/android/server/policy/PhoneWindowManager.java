@@ -494,6 +494,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     int mVeryLongPressTimeout;
     boolean mAllowStartActivityForLongPressOnPowerDuringSetup;
     MetricsLogger mLogger;
+    boolean mHomeButtonWakeAndShowHome;
 
     private boolean mHandleVolumeKeysInWM;
 
@@ -1759,6 +1760,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mAccessibilityShortcutController =
                 new AccessibilityShortcutController(mContext, new Handler(), mCurrentUserId);
         mLogger = new MetricsLogger();
+
+        Resources res = mContext.getResources();
+        mHomeButtonWakeAndShowHome =
+                res.getBoolean(com.android.internal.R.bool.config_homeButtonWakeAndShowHome);
+
         // Init display burn-in protection
         boolean burnInProtectionEnabled = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_enableBurnInProtection);
@@ -3727,9 +3733,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (isWakeKey && (!down || !isWakeKeyWhenScreenOff(keyCode))) {
                 isWakeKey = false;
             }
-            // Cache the wake key on down event so we can also avoid sending the up event to the app
-            if (isWakeKey && down) {
-                mPendingWakeKey = keyCode;
+            if (keyCode == KeyEvent.KEYCODE_HOME && isWakeKeyWhenScreenOff(keyCode)
+                    && mHomeButtonWakeAndShowHome) {
+                result = ACTION_PASS_TO_USER;
+                isWakeKey = true;
+                Log.d(TAG, "Home button from ATV remote wakes up device and shows home screen");
+            } else {
+                // Cache the wake key on down event so we can also avoid sending the up event to the app
+                if (isWakeKey && down) {
+                    mPendingWakeKey = keyCode;
+                }
             }
         }
 
