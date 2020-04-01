@@ -3785,6 +3785,56 @@ package android.telephony.ims {
     method public void onProvisioningStringChanged(int, @NonNull String);
   }
 
+  public final class RcsContactUceCapability implements android.os.Parcelable {
+    method public int describeContents();
+    method @NonNull public java.util.List<java.lang.String> getCapableExtensionTags();
+    method @NonNull public android.net.Uri getContactUri();
+    method @Nullable public android.net.Uri getServiceUri(long);
+    method public boolean isCapable(long);
+    method public boolean isCapable(@NonNull String);
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CAPABILITY_CALL_COMPOSER = 4194304; // 0x400000
+    field public static final int CAPABILITY_CHAT_BOT = 67108864; // 0x4000000
+    field public static final int CAPABILITY_CHAT_BOT_ROLE = 134217728; // 0x8000000
+    field public static final int CAPABILITY_CHAT_SESSION = 2; // 0x2
+    field public static final int CAPABILITY_CHAT_SESSION_STORE_FORWARD = 4; // 0x4
+    field public static final int CAPABILITY_CHAT_STANDALONE = 1; // 0x1
+    field public static final int CAPABILITY_DISCOVERY_VIA_PRESENCE = 4096; // 0x1000
+    field public static final int CAPABILITY_FILE_TRANSFER = 8; // 0x8
+    field public static final int CAPABILITY_FILE_TRANSFER_HTTP = 64; // 0x40
+    field public static final int CAPABILITY_FILE_TRANSFER_SMS = 128; // 0x80
+    field public static final int CAPABILITY_FILE_TRANSFER_STORE_FORWARD = 32; // 0x20
+    field public static final int CAPABILITY_FILE_TRANSFER_THUMBNAIL = 16; // 0x10
+    field public static final int CAPABILITY_GEOLOCATION_PULL = 131072; // 0x20000
+    field public static final int CAPABILITY_GEOLOCATION_PULL_FILE_TRANSFER = 262144; // 0x40000
+    field public static final int CAPABILITY_GEOLOCATION_PUSH = 32768; // 0x8000
+    field public static final int CAPABILITY_GEOLOCATION_PUSH_SMS = 65536; // 0x10000
+    field public static final int CAPABILITY_IMAGE_SHARE = 256; // 0x100
+    field public static final int CAPABILITY_IP_VIDEO_CALL = 16384; // 0x4000
+    field public static final int CAPABILITY_IP_VOICE_CALL = 8192; // 0x2000
+    field public static final int CAPABILITY_MMTEL_CALL_COMPOSER = 1073741824; // 0x40000000
+    field public static final int CAPABILITY_PLUG_IN = 268435456; // 0x10000000
+    field public static final int CAPABILITY_POST_CALL = 8388608; // 0x800000
+    field public static final int CAPABILITY_RCS_VIDEO_CALL = 1048576; // 0x100000
+    field public static final int CAPABILITY_RCS_VIDEO_ONLY_CALL = 2097152; // 0x200000
+    field public static final int CAPABILITY_RCS_VOICE_CALL = 524288; // 0x80000
+    field public static final int CAPABILITY_SHARED_MAP = 16777216; // 0x1000000
+    field public static final int CAPABILITY_SHARED_SKETCH = 33554432; // 0x2000000
+    field public static final int CAPABILITY_SOCIAL_PRESENCE = 2048; // 0x800
+    field public static final int CAPABILITY_STANDALONE_CHAT_BOT = 536870912; // 0x20000000
+    field public static final int CAPABILITY_VIDEO_SHARE = 1024; // 0x400
+    field public static final int CAPABILITY_VIDEO_SHARE_DURING_CS_CALL = 512; // 0x200
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.ims.RcsContactUceCapability> CREATOR;
+  }
+
+  public static class RcsContactUceCapability.Builder {
+    ctor public RcsContactUceCapability.Builder(@NonNull android.net.Uri);
+    method @NonNull public android.telephony.ims.RcsContactUceCapability.Builder add(long, @NonNull android.net.Uri);
+    method @NonNull public android.telephony.ims.RcsContactUceCapability.Builder add(long);
+    method @NonNull public android.telephony.ims.RcsContactUceCapability.Builder add(@NonNull String);
+    method @NonNull public android.telephony.ims.RcsContactUceCapability build();
+  }
+
   public class RcsUceAdapter {
     method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public void setUceSettingEnabled(boolean) throws android.telephony.ims.ImsException;
   }
@@ -3878,6 +3928,7 @@ package android.telephony.ims.feature {
   public class RcsFeature extends android.telephony.ims.feature.ImsFeature {
     ctor public RcsFeature();
     method public void changeEnabledCapabilities(@NonNull android.telephony.ims.feature.CapabilityChangeRequest, @NonNull android.telephony.ims.feature.ImsFeature.CapabilityCallbackProxy);
+    method @NonNull public android.telephony.ims.stub.RcsPresenceExchangeImplBase getPresenceExchangeImpl();
     method public void onFeatureReady();
     method public void onFeatureRemoved();
   }
@@ -4055,6 +4106,55 @@ package android.telephony.ims.stub {
     field public static final int CALL_BARRING_SPECIFIC_INCOMING_CALLS = 10; // 0xa
     field public static final int CALL_BLOCKING_INCOMING_WHEN_ROAMING = 5; // 0x5
     field public static final int INVALID_RESULT = -1; // 0xffffffff
+  }
+
+  public class RcsCapabilityExchange {
+    ctor public RcsCapabilityExchange();
+    method public final void onCommandUpdate(int, int) throws android.telephony.ims.ImsException;
+    field public static final int COMMAND_CODE_FETCH_ERROR = 4; // 0x4
+    field public static final int COMMAND_CODE_GENERIC_FAILURE = 2; // 0x2
+    field public static final int COMMAND_CODE_INSUFFICIENT_MEMORY = 6; // 0x6
+    field public static final int COMMAND_CODE_INVALID_PARAM = 3; // 0x3
+    field public static final int COMMAND_CODE_LOST_NETWORK_CONNECTION = 7; // 0x7
+    field public static final int COMMAND_CODE_NOT_FOUND = 9; // 0x9
+    field public static final int COMMAND_CODE_NOT_SUPPORTED = 8; // 0x8
+    field public static final int COMMAND_CODE_NO_CHANGE_IN_CAP = 11; // 0xb
+    field public static final int COMMAND_CODE_REQUEST_TIMEOUT = 5; // 0x5
+    field public static final int COMMAND_CODE_SERVICE_UNAVAILABLE = 10; // 0xa
+    field public static final int COMMAND_CODE_SERVICE_UNKNOWN = 0; // 0x0
+    field public static final int COMMAND_CODE_SUCCESS = 1; // 0x1
+  }
+
+  public class RcsPresenceExchangeImplBase extends android.telephony.ims.stub.RcsCapabilityExchange {
+    ctor public RcsPresenceExchangeImplBase();
+    method public final void onCapabilityRequestResponse(@NonNull java.util.List<android.telephony.ims.RcsContactUceCapability>, int) throws android.telephony.ims.ImsException;
+    method public final void onNetworkResponse(int, @NonNull String, int) throws android.telephony.ims.ImsException;
+    method public final void onNotifyUpdateCapabilites(int) throws android.telephony.ims.ImsException;
+    method public final void onUnpublish() throws android.telephony.ims.ImsException;
+    method public void requestCapabilities(@NonNull java.util.List<android.net.Uri>, int);
+    method public void updateCapabilities(@NonNull android.telephony.ims.RcsContactUceCapability, int);
+    field public static final int CAPABILITY_UPDATE_TRIGGER_ETAG_EXPIRED = 0; // 0x0
+    field public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_2G = 6; // 0x6
+    field public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_3G = 5; // 0x5
+    field public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_EHRPD = 3; // 0x3
+    field public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_HSPAPLUS = 4; // 0x4
+    field public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_IWLAN = 8; // 0x8
+    field public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_LTE_VOPS_DISABLED = 1; // 0x1
+    field public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_LTE_VOPS_ENABLED = 2; // 0x2
+    field public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_NR5G_VOPS_DISABLED = 10; // 0xa
+    field public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_NR5G_VOPS_ENABLED = 11; // 0xb
+    field public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_WLAN = 7; // 0x7
+    field public static final int CAPABILITY_UPDATE_TRIGGER_UNKNOWN = 9; // 0x9
+    field public static final int RESPONSE_FORBIDDEN = 3; // 0x3
+    field public static final int RESPONSE_NOT_AUTHORIZED_FOR_PRESENCE = 2; // 0x2
+    field public static final int RESPONSE_NOT_FOUND = 4; // 0x4
+    field public static final int RESPONSE_NOT_REGISTERED = 1; // 0x1
+    field public static final int RESPONSE_SIP_INTERVAL_TOO_SHORT = 7; // 0x7
+    field public static final int RESPONSE_SIP_REQUEST_TIMEOUT = 5; // 0x5
+    field public static final int RESPONSE_SIP_SERVICE_UNAVAILABLE = 8; // 0x8
+    field public static final int RESPONSE_SUBSCRIBE_GENERIC_FAILURE = -1; // 0xffffffff
+    field public static final int RESPONSE_SUBSCRIBE_TOO_LARGE = 6; // 0x6
+    field public static final int RESPONSE_SUCCESS = 0; // 0x0
   }
 
 }
