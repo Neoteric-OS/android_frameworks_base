@@ -44,6 +44,9 @@ java_defaults {
 android_library {
     name: "TetheringApiCurrentLib",
     defaults: ["TetheringAndroidLibraryDefaults"],
+    optimize: {
+        shrink: true,
+    },
 }
 
 // Due to b/143733063, APK can't access a jni lib that is in APEX (but not in the APK).
