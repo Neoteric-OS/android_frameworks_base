@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000002252128",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1276631?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "8ea160bf_88857579",
+          "description": "Change to \"config/boot-image-profile.txt\"",
+          "replacements": [
+            {
+              "path": "config/boot-image-profile.txt",
+              "range": {
+                "startLine": 27786,
+                "startChar": 32,
+                "endLine": 27786,
+                "endChar": 42
+              },
+              "replacement": "JavaScript"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "033f2ee2_a702dd34",
+        "filename": "config/boot-image-profile.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 27786,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-04-02T02:46:50Z",
+      "side": 1,
+      "message": "Common typo found: \"Javascript\" -- should it be \"JavaScript\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 27786,
+        "startChar": 32,
+        "endLine": 27786,
+        "endChar": 42
+      },
+      "revId": "ec6457686697fc45da8ae126c834e5aa962aa9da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000002252128",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1276631?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "4c7ba3e8_db637f41",
+          "description": "Change to \"config/boot-image-profile.txt\"",
+          "replacements": [
+            {
+              "path": "config/boot-image-profile.txt",
+              "range": {
+                "startLine": 27797,
+                "startChar": 37,
+                "endLine": 27797,
+                "endChar": 47
+              },
+              "replacement": "JavaScript"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "b059cbbb_ec01820a",
+        "filename": "config/boot-image-profile.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 27797,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-04-02T02:46:50Z",
+      "side": 1,
+      "message": "Common typo found: \"Javascript\" -- should it be \"JavaScript\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 27797,
+        "startChar": 37,
+        "endLine": 27797,
+        "endChar": 47
+      },
+      "revId": "ec6457686697fc45da8ae126c834e5aa962aa9da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000002252128",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1276631?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "803b0312_542049f0",
+          "description": "Change to \"config/boot-image-profile.txt\"",
+          "replacements": [
+            {
+              "path": "config/boot-image-profile.txt",
+              "range": {
+                "startLine": 27824,
+                "startChar": 35,
+                "endLine": 27824,
+                "endChar": 45
+              },
+              "replacement": "JavaScript"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "8d48b103_af362e29",
+        "filename": "config/boot-image-profile.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 27824,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-04-02T02:46:50Z",
+      "side": 1,
+      "message": "Common typo found: \"Javascript\" -- should it be \"JavaScript\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 27824,
+        "startChar": 35,
+        "endLine": 27824,
+        "endChar": 45
+      },
+      "revId": "ec6457686697fc45da8ae126c834e5aa962aa9da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
