@@ -1,0 +1,9 @@
+Code-Review+2: Oli Lan <olilan@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Chun-Wei Wang <wangchun@google.com>
+Submitted-at: Thu, 02 Apr 2020 01:01:19 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1274606
+Project: platform/frameworks/base
+Branch: refs/heads/master
