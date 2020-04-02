@@ -16,16 +16,6 @@ Expected interface: [QSFactory](/packages/SystemUI/plugin/src/com/android/system
 
 Use: Controls the creation of QS Tiles and their views, can used to add or change system QS tiles, can also be used to change the layout/interaction of the tile views.
 
-### Action: com.android.systemui.action.PLUGIN_NAV_BUTTON
-Expected interface: [NavBarButtonProvider](/packages/SystemUI/plugin/src/com/android/systemui/plugins/statusbar/phone/NavBarButtonProvider.java)
-
-Use: Allows a plugin to create a new nav bar button, or override an existing one with a view of its own.
-
-### Action: com.android.systemui.action.PLUGIN_NAV_GESTURE
-Expected interface: [NavGesture](/packages/SystemUI/plugin/src/com/android/systemui/plugins/statusbar/phone/NavGesture.java)
-
-Use: Allows touch events from the nav bar to be intercepted and used for other gestures.
-
 ### Action: com.android.systemui.action.PLUGIN_LOCKSCREEN_RIGHT_BUTTON
 Expected interface: [IntentButtonProvider](/packages/SystemUI/plugin/src/com/android/systemui/plugins/IntentButtonProvider.java)
 
