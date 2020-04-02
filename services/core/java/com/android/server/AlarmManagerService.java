@@ -1736,7 +1736,8 @@ class AlarmManagerService extends SystemService {
         final long nowElapsed = mInjector.getElapsedRealtime();
         final long nominalTrigger = convertToElapsed(triggerAtTime, type);
         // Try to prevent spamming by making sure we aren't firing alarms in the immediate future
-        final long minTrigger = nowElapsed + mConstants.MIN_FUTURITY;
+        final long minTrigger = nowElapsed
+                + (callingUid >= Process.FIRST_APPLICATION_UID ? mConstants.MIN_FUTURITY : 0);
         final long triggerElapsed = (nominalTrigger > minTrigger) ? nominalTrigger : minTrigger;
 
         final long maxElapsed;
