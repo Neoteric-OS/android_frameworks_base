@@ -16,6 +16,24 @@
       "revId": "a5774ec3cb8d58ee2d8f3dca2731ca91e2b84fd6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a82e6e_43df632e",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3736,
+      "author": {
+        "id": 1498329
+      },
+      "writtenOn": "2020-04-02T23:35:34Z",
+      "side": 1,
+      "message": "You are right, more than just HOME. I have added a generic solution to check whether the incoming button should be treated as wake and process. This patch is for AOSP branch, therefore only HOME and SEARCH are defined.",
+      "parentUuid": "37d303b3_14b520a4",
+      "revId": "a5774ec3cb8d58ee2d8f3dca2731ca91e2b84fd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
