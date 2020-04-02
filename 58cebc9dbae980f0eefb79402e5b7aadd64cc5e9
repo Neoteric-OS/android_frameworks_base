@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f15e2cf_d30a8068",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-02T04:42:55Z",
+      "side": 1,
+      "message": "This relies on the IDnsResolver.TRANSPORT_* constants always being the same as the NetworkCapabilities.TRANSPORT_* constants. We should do one of the following:\n\n1. Have an explicit conversion function that converts between NetworkCapabilities.TRANSPORT_xxx to IDnsResolver.TRANSPORT_xxx, and call it for each element of the array.\n2. Write a test that ensures that NetworkCapabilities.TRANSPORT_xxx \u003d\u003d IDnsResolver.TRANSPORT_xxx for every possible value of each.\n\nFor #2, I don\u0027t think you can write those tests in C++, but you can have a Java test that depends on netd_aidl_interface-unstable-java (or -v3, once this is frozen) and simply does:\n\n    assertEquals(NetworkCapabilites.TRANSPORT_CELLULAR, IDnsResolver.TRANSPORT_CELLULAR);\n    assertEquals(NetworkCapabilites.TRANSPORT_WIFI, IDnsResolver.TRANSPORT_WIFI);\n    ...\n\nor something equivalent but more elegant like reflection into the generated class.",
+      "range": {
+        "startLine": 342,
+        "startChar": 8,
+        "endLine": 342,
+        "endChar": 63
+      },
+      "revId": "58cebc9dbae980f0eefb79402e5b7aadd64cc5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
