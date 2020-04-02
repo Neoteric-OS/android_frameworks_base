@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37d303b3_14b520a4",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3736,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2020-04-02T11:52:53Z",
+      "side": 1,
+      "message": "Is this only a problem for the home button? I am wondering if Netflix / Youtube buttons behave similarly and require a more generic solution.",
+      "revId": "a5774ec3cb8d58ee2d8f3dca2731ca91e2b84fd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
