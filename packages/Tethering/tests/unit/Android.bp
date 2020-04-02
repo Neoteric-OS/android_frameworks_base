@@ -14,8 +14,17 @@
 // limitations under the License.
 //
 
-java_defaults {
-    name: "TetheringTestsDefaults",
+android_test {
+    name: "TetheringTests",
+    certificate: "platform",
+    srcs: [
+        "src/**/*.java",
+        "src/**/*.kt",
+    ],
+    test_suites: [
+        "device-tests",
+        "mts",
+    ],
     compile_multilib: "both",
     static_libs: [
         "androidx.test.rules",
@@ -43,23 +52,4 @@ java_defaults {
         "libstaticjvmtiagent",
     ],
     jarjar_rules: "jarjar-rules.txt",
-}
-
-android_library {
-    name: "TetheringTestsLib",
-    compile_multilib: "both",
-    defaults: ["TetheringTestsDefaults"],
-    srcs: [
-        "src/**/*.java",
-        "src/**/*.kt",
-    ],
-}
-
-android_test {
-    name: "TetheringTests",
-    compile_multilib: "both",
-    sdk_version: "core_platform",
-    certificate: "platform",
-    static_libs: ["TetheringTestsLib"],
-    test_suites: ["device-tests", "mts"],
 }
