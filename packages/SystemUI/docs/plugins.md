@@ -62,8 +62,6 @@ void addPluginListener(String action, PluginListener<T> listener,
 ### Examples
 [Allow quick settings panel to be replaced with another view](/packages/SystemUI/plugin/src/com/android/systemui/plugins/qs/QS.java)
 
-[Allow plugins to create new nav bar buttons](/packages/SystemUI/plugin/src/com/android/systemui/plugins/statusbar/phone/NavBarButtonProvider.java)
-
 [Allow lockscreen camera/phone/assistant buttons to be replaced](/packages/SystemUI/plugin/src/com/android/systemui/plugins/IntentButtonProvider.java)
 
 ## Writing Plugins
