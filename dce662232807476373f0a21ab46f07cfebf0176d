@@ -16,6 +16,24 @@
       "revId": "dce662232807476373f0a21ab46f07cfebf0176d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d34e869_8ab00dbd",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4240,
+      "author": {
+        "id": 1128983
+      },
+      "writtenOn": "2020-04-03T20:24:12Z",
+      "side": 1,
+      "message": "That\u0027s a good point.  IMO TV should not be using isWakeKeyWhenScreenOff at all.  TV Wake keys are defined via kl files (work done by you Patrick in b/144979700).",
+      "parentUuid": "f62b1887_854f7d14",
+      "revId": "dce662232807476373f0a21ab46f07cfebf0176d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
