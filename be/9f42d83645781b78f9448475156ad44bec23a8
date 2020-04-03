@@ -1,0 +1,13 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+2: Svetoslav Ganov <svetoslavganov@google.com>
+Code-Review+2: Svetoslav Ganov <svetoslavganov@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Lint+2: Svetoslav Ganov <svetoslavganov@google.com>
+Verified+1: Michael Hoogasian <michael.hoogasian@gmail.com>
+Verified+1: Svetoslav Ganov <svetoslavganov@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Eugene Susla <eugenesusla@google.com>
+Submitted-at: Fri, 03 Apr 2020 16:58:18 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1263906
+Project: platform/frameworks/base
+Branch: refs/heads/master
