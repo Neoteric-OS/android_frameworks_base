@@ -1899,7 +1899,17 @@ static jboolean com_android_internal_os_Zygote_nativeSupportsMemoryTagging(JNIEn
 #endif
 }
 
+static jboolean com_android_internal_os_Zygote_nativeSupportsTaggedPointers(JNIEnv* env, jclass) {
+#ifdef __aarch64__
+  int res = prctl(PR_GET_TAGGED_ADDR_CTRL, 0, 0, 0, 0);
+  return res >= 0 && res & PR_TAGGED_ADDR_ENABLE;
+#else
+  return false;
+#endif
+}
+
 static const JNINativeMethod gMethods[] = {
+<<<<<<< HEAD
     { "nativeForkAndSpecialize",
       "(II[II[[IILjava/lang/String;Ljava/lang/String;[I[IZLjava/lang/String;Ljava/lang/String;Z)I",
       (void *) com_android_internal_os_Zygote_nativeForkAndSpecialize },
@@ -1938,6 +1948,8 @@ static const JNINativeMethod gMethods[] = {
       (void* ) com_android_internal_os_Zygote_nativeParseSigChld},
     { "nativeSupportsMemoryTagging", "()Z",
       (void *) com_android_internal_os_Zygote_nativeSupportsMemoryTagging },
+    {"nativeSupportsTaggedPointers", "()Z",
+     (void*)com_android_internal_os_Zygote_nativeSupportsTaggedPointers},
 };
 
 int register_com_android_internal_os_Zygote(JNIEnv* env) {
