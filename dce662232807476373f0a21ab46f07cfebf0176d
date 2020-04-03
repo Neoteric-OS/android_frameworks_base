@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f62b1887_854f7d14",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4240,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2020-04-03T06:31:50Z",
+      "side": 1,
+      "message": "This is called before isWakeKeyWhenScreenOff(). If isWakeKeyWhenScreenOff() overrides the isWakeKey flag to false, could this be a problem?",
+      "revId": "dce662232807476373f0a21ab46f07cfebf0176d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
