@@ -1,0 +1,12 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Daniel Bright <dbright@google.com>
+Code-Review+1: nazish tabassum <quic_ntabassu@quicinc.com>
+Qualcomm-Review+1: Ajay Nambi <anambi@quicinc.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+1: nazish tabassum <quic_ntabassu@quicinc.com>
+Submitted-by: Daniel Bright <dbright@google.com>
+Submitted-at: Fri, 03 Apr 2020 22:18:11 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1277032
+Project: platform/frameworks/base
+Branch: refs/heads/master
