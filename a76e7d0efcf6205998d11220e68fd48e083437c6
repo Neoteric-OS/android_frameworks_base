@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45cba68c_d1b3310b",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4374,
+      "author": {
+        "id": 1128983
+      },
+      "writtenOn": "2020-04-03T00:33:40Z",
+      "side": 1,
+      "message": "I wonder if we need to introduce this flag.  I think this is only needed for TV, and maybe we can just rely on that.",
+      "range": {
+        "startLine": 4374,
+        "startChar": 16,
+        "endLine": 4374,
+        "endChar": 43
+      },
+      "revId": "a76e7d0efcf6205998d11220e68fd48e083437c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56b103a_d334eea6",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4246,
+      "author": {
+        "id": 1128983
+      },
+      "writtenOn": "2020-04-03T00:33:40Z",
+      "side": 1,
+      "message": "I think it\u0027s better to place your conditional before this one.  Just to make sure it still applies when display is off.",
+      "revId": "a76e7d0efcf6205998d11220e68fd48e083437c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dfbec4d_f647fe94",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4250,
+      "author": {
+        "id": 1128983
+      },
+      "writtenOn": "2020-04-03T00:33:40Z",
+      "side": 1,
+      "message": "I think the idea of a wake key is different from what you\u0027re trying to do, which is dispatch when non-interactive. In this method, I think we can check if it\u0027s a global key (for Netflix \u0026 youtube) and if the key is HOME or SEARCH or ASSIST.  \n\nAnd maybe add mHasFeatureLeanback to indicate this is only for TV.",
+      "range": {
+        "startLine": 4250,
+        "startChar": 12,
+        "endLine": 4250,
+        "endChar": 44
+      },
+      "revId": "a76e7d0efcf6205998d11220e68fd48e083437c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
