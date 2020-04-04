@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000002293196",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1232197?revision\u003d10",
+      "fixSuggestions": [
+        {
+          "fixId": "077a1090_ac9e66ba",
+          "description": "Change to \"packages/Tethering/src/com/android/server/connectivity/tethering/PrivateAddressCoordinator.java\"",
+          "replacements": [
+            {
+              "path": "packages/Tethering/src/com/android/server/connectivity/tethering/PrivateAddressCoordinator.java",
+              "range": {
+                "startLine": 72,
+                "startChar": 66,
+                "endLine": 72,
+                "endChar": 71
+              },
+              "replacement": "empty"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "779316f6_545c07b0",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-04-04T15:13:26Z",
+      "side": 1,
+      "message": "Common typo found: \"emtpy\" -- should it be \"empty\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 72,
+        "startChar": 66,
+        "endLine": 72,
+        "endChar": 71
+      },
+      "revId": "e17051a396493dfcdac5f12fd3fc49848035e4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
