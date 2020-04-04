@@ -1,0 +1,10 @@
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Elliott Hughes <enh@google.com>
+Code-Review+2: Ryan Mitchell <rtmitchell@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Tianjie Xu <xunchang@google.com>
+Submitted-at: Sat, 04 Apr 2020 20:00:17 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1276868
+Project: platform/frameworks/base
+Branch: refs/heads/master
