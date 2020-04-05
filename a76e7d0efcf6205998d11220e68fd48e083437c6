@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef51d199_64dff47f",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4374,
+      "author": {
+        "id": 1498329
+      },
+      "writtenOn": "2020-04-05T00:44:17Z",
+      "side": 1,
+      "message": "Thank you for pointing it out. You are right, I don\u0027t need to introduce this new variable.",
+      "parentUuid": "45cba68c_d1b3310b",
+      "range": {
+        "startLine": 4374,
+        "startChar": 16,
+        "endLine": 4374,
+        "endChar": 43
+      },
+      "revId": "a76e7d0efcf6205998d11220e68fd48e083437c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e56b103a_d334eea6",
         "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "a76e7d0efcf6205998d11220e68fd48e083437c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccfa79c7_103b108c",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4246,
+      "author": {
+        "id": 1498329
+      },
+      "writtenOn": "2020-04-05T00:44:17Z",
+      "side": 1,
+      "message": "Moved. It is necessary.",
+      "parentUuid": "e56b103a_d334eea6",
+      "revId": "a76e7d0efcf6205998d11220e68fd48e083437c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "a76e7d0efcf6205998d11220e68fd48e083437c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a738f7e0_4f3b82a6",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4250,
+      "author": {
+        "id": 1498329
+      },
+      "writtenOn": "2020-04-05T00:44:17Z",
+      "side": 1,
+      "message": "This is AOSP branch, only Home and SEARCH are needed here. Netflix and others might be added to function shouldButtonWakeAndProcess() on other branches.\n\nAnd, yes, mHasFeatureLeanback serves my purpose well, it is the one I should check. Changed in patch set 5.",
+      "parentUuid": "3dfbec4d_f647fe94",
+      "range": {
+        "startLine": 4250,
+        "startChar": 12,
+        "endLine": 4250,
+        "endChar": 44
+      },
+      "revId": "a76e7d0efcf6205998d11220e68fd48e083437c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

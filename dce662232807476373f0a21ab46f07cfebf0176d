@@ -34,6 +34,24 @@
       "revId": "dce662232807476373f0a21ab46f07cfebf0176d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45cb2358_226c2815",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4240,
+      "author": {
+        "id": 1498329
+      },
+      "writtenOn": "2020-04-05T00:44:17Z",
+      "side": 1,
+      "message": "It doesn\u0027t post a problem.\n\n1st, If condition \"(!interactive \u0026\u0026 shouldDispatchInputWhenNonInteractive(displayId, keyCode))\" is true (line 3727), it won\u0027t fall into the block where isWakeKeyWhenScreenOff() is called.\n2ns, function isWakeKeyWhenScreenOff() filters out keys that are allowed to wake the system up.  My function shouldButtonWakeAndProcess() filters out keys not only allowed to wake, but also need to be served, it is a smaller subset.\n\nall keys set \u003e wake-able keys set \u003e wake-able \u0026 functional key set",
+      "parentUuid": "f62b1887_854f7d14",
+      "revId": "dce662232807476373f0a21ab46f07cfebf0176d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
