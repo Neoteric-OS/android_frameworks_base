@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0034b134_784c050d",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1890,
+      "author": {
+        "id": 1581772
+      },
+      "writtenOn": "2020-04-06T17:38:45Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it make more sense to always define mte_supported() in mte.h and remove that ifdef here? In the same file we already define ScopedDisableMTE regardless of the architecture.",
+      "revId": "f78e085068639b98f9d6cc0549bfdd6677a8f6d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
