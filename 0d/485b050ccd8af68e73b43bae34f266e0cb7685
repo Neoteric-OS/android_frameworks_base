@@ -1,0 +1,7 @@
+Build-Cop-Override+1: Colin Cross <ccross@android.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Colin Cross <ccross@android.com>
+Submitted-at: Tue, 07 Apr 2020 04:25:31 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1279720
+Project: platform/frameworks/base
+Branch: refs/heads/master
