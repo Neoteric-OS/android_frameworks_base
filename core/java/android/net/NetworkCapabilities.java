@@ -26,6 +26,7 @@ import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -666,16 +667,42 @@ public final class NetworkCapabilities implements Parcelable {
      * restrictions.
      * @hide
      */
-    public void restrictCapabilitesForTestNetwork() {
+    public void restrictCapabilitesForTestNetwork(@Nullable NetworkCapabilities previous) {
         final long originalCapabilities = mNetworkCapabilities;
         final NetworkSpecifier originalSpecifier = mNetworkSpecifier;
         final int originalSignalStrength = mSignalStrength;
+        final int ownerUid = getOwnerUid();
+        final int[] administratorUids = getAdministratorUids();
         clearAll();
         // Reset the transports to only contain TRANSPORT_TEST.
         mTransportTypes = (1 << TRANSPORT_TEST);
         mNetworkCapabilities = originalCapabilities & TEST_NETWORKS_ALLOWED_CAPABILITIES;
         mNetworkSpecifier = originalSpecifier;
         mSignalStrength = originalSignalStrength;
+
+        // Only retain the owner and administrator UIDs if they match the app registering the test
+        // network.
+        if (previous == null) {
+            // The network is being registered. There is no previous NetworkCapabilities to compare
+            // against, so check the calling uid.
+            final int callingUid = Binder.getCallingUid();
+            if (callingUid == ownerUid) {
+                setOwnerUid(callingUid);
+            }
+            if (ArrayUtils.contains(administratorUids, callingUid)) {
+                setAdministratorUids(new int[] {callingUid});
+            }
+        } else {
+            // NetworkCapabilities are being updated. Only retain the uids if they match the
+            // previous values. If this is true, they implicitly match those of the app that
+            // registered the test network.
+            if (ownerUid == previous.getOwnerUid()) {
+                setOwnerUid(ownerUid);
+            }
+            if (Arrays.equals(administratorUids, previous.getAdministratorUids())) {
+                setAdministratorUids(administratorUids);
+            }
+        }
     }
 
     /**
