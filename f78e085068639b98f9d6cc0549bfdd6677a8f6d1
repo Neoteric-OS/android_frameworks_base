@@ -16,6 +16,24 @@
       "revId": "f78e085068639b98f9d6cc0549bfdd6677a8f6d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc02b824_5dc83a7a",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1890,
+      "author": {
+        "id": 1067098
+      },
+      "writtenOn": "2020-04-07T20:30:12Z",
+      "side": 1,
+      "message": "My thinking was that it doesn\u0027t normally make sense to call mte_supported() on non-aarch64, so you need to ifdef it if that\u0027s what you really want. For ScopedDisableMTE it\u0027s a little different because MTE is always \"disabled\" on non-aarch64, so it makes sense to provide a class that does nothing on those architectures.",
+      "parentUuid": "0034b134_784c050d",
+      "revId": "f78e085068639b98f9d6cc0549bfdd6677a8f6d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
