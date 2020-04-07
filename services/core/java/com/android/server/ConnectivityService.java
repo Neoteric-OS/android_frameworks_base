@@ -2706,7 +2706,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         // the Messenger, but if this ever changes, not making a defensive copy
                         // here will give attack vectors to clients using this code path.
                         networkCapabilities = new NetworkCapabilities(networkCapabilities);
-                        networkCapabilities.restrictCapabilitesForTestNetwork();
+                        networkCapabilities.restrictCapabilitesForTestNetwork(
+                                nai.networkCapabilities);
                     }
                     updateCapabilities(nai.getCurrentScore(), nai, networkCapabilities);
                     break;
@@ -5799,7 +5800,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // the call to mixInCapabilities below anyway, but sanitizing here means the NAI never
             // sees capabilities that may be malicious, which might prevent mistakes in the future.
             networkCapabilities = new NetworkCapabilities(networkCapabilities);
-            networkCapabilities.restrictCapabilitesForTestNetwork();
+            networkCapabilities.restrictCapabilitesForTestNetwork(null);
         } else {
             enforceNetworkFactoryPermission();
         }
