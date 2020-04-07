@@ -30,8 +30,8 @@ import android.net.NetworkStats.SET_FOREGROUND
 import android.net.NetworkStats.TAG_NONE
 import android.os.Build
 import androidx.test.filters.SmallTest
+import androidx.test.runner.AndroidJUnit4
 import com.android.testutils.DevSdkIgnoreRule
-import com.android.testutils.DevSdkIgnoreRule.IgnoreUpTo
 import com.android.testutils.assertFieldCountEquals
 import com.android.testutils.assertNetworkStatsEquals
 import com.android.testutils.assertParcelingIsLossless
@@ -39,15 +39,14 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import kotlin.test.assertEquals
 
-@RunWith(JUnit4::class)
+@RunWith(AndroidJUnit4::class)
 @SmallTest
 class NetworkStatsApiTest {
     @Rule
     @JvmField
-    val ignoreRule = DevSdkIgnoreRule()
+    val ignoreRule = DevSdkIgnoreRule(ignoreClassUpTo = Build.VERSION_CODES.Q)
 
     private val testStatsEmpty = NetworkStats(0L, 0)
 
@@ -126,7 +125,6 @@ class NetworkStatsApiTest {
     }
 
     @Test
-    @IgnoreUpTo(Build.VERSION_CODES.Q)
     fun testAddEntry() {
         val expectedEntriesInStats2 = arrayOf(
                 Entry(TEST_IFACE, TEST_UID1, SET_DEFAULT, 0x80,
@@ -156,7 +154,6 @@ class NetworkStatsApiTest {
     }
 
     @Test
-    @IgnoreUpTo(Build.VERSION_CODES.Q)
     fun testAdd() {
         var stats = NetworkStats(0L, 0)
         assertNetworkStatsEquals(testStatsEmpty, stats)
@@ -168,7 +165,6 @@ class NetworkStatsApiTest {
     }
 
     @Test
-    @IgnoreUpTo(Build.VERSION_CODES.Q)
     fun testParcelUnparcel() {
         assertParcelingIsLossless(testStatsEmpty)
         assertParcelingIsLossless(testStats1)
@@ -177,7 +173,6 @@ class NetworkStatsApiTest {
     }
 
     @Test
-    @IgnoreUpTo(Build.VERSION_CODES.Q)
     fun testDescribeContents() {
         assertEquals(0, testStatsEmpty.describeContents())
         assertEquals(0, testStats1.describeContents())
@@ -186,7 +181,6 @@ class NetworkStatsApiTest {
     }
 
     @Test
-    @IgnoreUpTo(Build.VERSION_CODES.Q)
     fun testSubtract() {
         // STATS3 - STATS2 = STATS1
         assertNetworkStatsEquals(testStats1, testStats3.subtract(testStats2))
@@ -195,7 +189,6 @@ class NetworkStatsApiTest {
     }
 
     @Test
-    @IgnoreUpTo(Build.VERSION_CODES.Q)
     fun testMethodsDontModifyReceiver() {
         listOf(testStatsEmpty, testStats1, testStats2, testStats3).forEach {
             val origStats = it.clone()
