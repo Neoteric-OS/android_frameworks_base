@@ -128,6 +128,30 @@
       "revId": "a76e7d0efcf6205998d11220e68fd48e083437c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88dc6633_a05c3cf5",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4250,
+      "author": {
+        "id": 1128983
+      },
+      "writtenOn": "2020-04-07T17:23:07Z",
+      "side": 1,
+      "message": "They are set as global keys with corresponding global key handlers, hence the change in pi-tv-dev. If you add it here as well, we\u0027d cover all the TV cases. \n\nWe should avoid differences between branches unless absolutely necessary.  I\u0027d suggest this patch be picked to master after submitting there (it might already be auto-merged).",
+      "parentUuid": "a738f7e0_4f3b82a6",
+      "range": {
+        "startLine": 4250,
+        "startChar": 12,
+        "endLine": 4250,
+        "endChar": 44
+      },
+      "revId": "a76e7d0efcf6205998d11220e68fd48e083437c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
