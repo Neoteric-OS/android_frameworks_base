@@ -21,6 +21,7 @@ import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Build;
@@ -569,6 +570,20 @@ public abstract class NetworkAgent {
             mInitialConfiguration = null; // All this memory can now be GC'd
         }
         return mNetwork;
+    }
+
+    /**
+     * Register this network agent with a testing harness.
+     * @hide
+     */
+    @TestApi
+    public Messenger registerForTest(final Network network) {
+        log("Registering NetworkAgent for test");
+        synchronized (mRegisterLock) {
+            mNetwork = network;
+            mInitialConfiguration = null;
+        }
+        return new Messenger(mHandler);
     }
 
     /**
