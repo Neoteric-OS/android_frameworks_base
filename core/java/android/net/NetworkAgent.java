@@ -572,6 +572,19 @@ public abstract class NetworkAgent {
     }
 
     /**
+     * Register this network agent with a testing harness.
+     * @hide
+     */
+    public Messenger registerForTest(final Network network) {
+        log("Registering NetworkAgent for test");
+        synchronized (mRegisterLock) {
+            mNetwork = network;
+            mInitialConfiguration = null;
+        }
+        return new Messenger(mHandler);
+    }
+
+    /**
      * @return The Network associated with this agent, or null if it's not registered yet.
      */
     @Nullable
