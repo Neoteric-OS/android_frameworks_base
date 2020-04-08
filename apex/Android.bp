@@ -128,6 +128,8 @@ stubs_defaults {
             removed_api_file: "api/module-lib-removed.txt",
         },
     },
+    // Do not generate stubs as they are not needed
+    generate_stubs: false,
 }
 
 stubs_defaults {
