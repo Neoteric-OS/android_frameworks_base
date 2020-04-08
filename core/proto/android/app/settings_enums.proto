@@ -2449,4 +2449,9 @@ enum PageId {
     // CATEGORY: SETTINGS
     // OS: R
     ADB_WIRELESS_DEVICE_DETAILS = 1836;
+
+    // OPEN: Settings > System > Gestures > Camera lift trigger gesture
+    // CATEGORY: SETTINGS
+    // OS: R
+    SETTINGS_GESTURE_CAMERA_LIFT_TRIGGER = 1841;
 }
