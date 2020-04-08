@@ -2454,4 +2454,9 @@ enum PageId {
     // CATEGORY: SETTINGS
     // OS: R
     SETTINGS_GESTURE_LONG_PRESS_CAMERA = 1840;
+
+    // OPEN: Settings > System > Gestures > Camera lift trigger gesture
+    // CATEGORY: SETTINGS
+    // OS: R
+    SETTINGS_GESTURE_CAMERA_LIFT_TRIGGER = 1841;
 }
