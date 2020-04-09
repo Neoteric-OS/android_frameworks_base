@@ -1137,6 +1137,7 @@ abstract public class ManagedServices {
                 @Override
                 public void onServiceDisconnected(ComponentName name) {
                     Slog.v(TAG, userid + " " + getCaption() + " connection lost: " + name);
+                    mServicesBound.remove(servicesBindingTag);
                 }
 
                 @Override
