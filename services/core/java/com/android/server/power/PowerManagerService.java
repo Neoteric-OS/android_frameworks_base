@@ -835,7 +835,6 @@ public final class PowerManagerService extends SystemService
             mDisplayManagerInternal = getLocalService(DisplayManagerInternal.class);
             mPolicy = getLocalService(WindowManagerPolicy.class);
             mBatteryManagerInternal = getLocalService(BatteryManagerInternal.class);
-            mAttentionDetector.systemReady(mContext);
 
             PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
             mScreenBrightnessSettingMinimum = pm.getMinimumScreenBrightnessSetting();
@@ -883,6 +882,7 @@ public final class PowerManagerService extends SystemService
 
         mBatterySaverController.systemReady();
         mBatterySaverPolicy.systemReady();
+        mAttentionDetector.systemReady(mContext);
 
         // Register for settings changes.
         resolver.registerContentObserver(Settings.Secure.getUriFor(
