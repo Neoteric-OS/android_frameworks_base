@@ -395,9 +395,14 @@ public final class PermissionChecker {
         }
 
         if (forDataDelivery) {
-            if (appOpsManager.noteProxyOpNoThrow(op, packageName, uid)
-                    != AppOpsManager.MODE_ALLOWED) {
-                return PERMISSION_DENIED_APP_OP;
+            long token = Binder.clearCallingIdentity();
+            try {
+                if (appOpsManager.noteProxyOpNoThrow(op, packageName, uid)
+                        != AppOpsManager.MODE_ALLOWED) {
+                    return PERMISSION_DENIED_APP_OP;
+                }
+            } finally {
+                Binder.restoreCallingIdentity(token);
             }
         } else {
             final int mode = appOpsManager.unsafeCheckOpRawNoThrow(op, uid, packageName);
