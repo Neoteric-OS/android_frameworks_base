@@ -22,6 +22,30 @@
       "revId": "198edb4c97eee0de32d7b5826c18fcb04dbf5798",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c074ee40_558a80ad",
+        "filename": "apex/sdkextensions/derive_sdk/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-04-09T08:45:50Z",
+      "side": 1,
+      "message": "Even when \"//apex_available:platform\" is missing, the platform variant is generated and emitted to Make. This is because the platform variant might be required to build tests, etc.\n\nPreventing the installation of the platform variants is still ongoing. b/153073816",
+      "parentUuid": "852fb88f_b8555309",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 23
+      },
+      "revId": "198edb4c97eee0de32d7b5826c18fcb04dbf5798",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
