@@ -1,0 +1,9 @@
+Build-Cop-Override+1: Colin Cross <ccross@android.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Colin Cross <ccross@android.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 09 Apr 2020 05:00:40 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1281745
+Project: platform/frameworks/base
+Branch: refs/heads/master
