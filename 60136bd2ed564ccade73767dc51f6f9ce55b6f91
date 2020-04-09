@@ -22,6 +22,30 @@
       "revId": "60136bd2ed564ccade73767dc51f6f9ce55b6f91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f64d327_a9cb0f54",
+        "filename": "apex/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-09T17:12:45Z",
+      "side": 1,
+      "message": "It\u0027s a new flag I just added.\n\nDone.",
+      "parentUuid": "c0c325e9_b95beeee",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 0
+      },
+      "revId": "60136bd2ed564ccade73767dc51f6f9ce55b6f91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
