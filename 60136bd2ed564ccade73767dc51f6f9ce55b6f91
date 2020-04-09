@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0c325e9_b95beeee",
+        "filename": "apex/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-04-09T14:03:27Z",
+      "side": 1,
+      "message": "Didn\u0027t know about this flag, that\u0027s good to know (however, the cost of generating the stub srcs is small I hear).\n\nWe have another instance of this problem in frameworks/base/StubLibraries.bp if you want to deal with that at the same time?",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 0
+      },
+      "revId": "60136bd2ed564ccade73767dc51f6f9ce55b6f91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
