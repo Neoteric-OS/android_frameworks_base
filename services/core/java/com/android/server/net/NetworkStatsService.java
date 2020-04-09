@@ -1209,7 +1209,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             final int collapsedRatType = getCollapsedRatType(networkType);
             if (collapsedRatType == mLastCollapsedRatType) return;
 
-            if (LOGD) {
+            if (LOGV) {
                 Log.d(TAG, "subtype changed for mobile: "
                         + mLastCollapsedRatType + " -> " + collapsedRatType);
             }
@@ -1217,7 +1217,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             mHandler.removeMessages(MSG_UPDATE_IFACES);
             mLastCollapsedRatType = collapsedRatType;
             mHandler.sendMessageDelayed(
-                    mHandler.obtainMessage(MSG_UPDATE_IFACES), mSettings.getPollDelay());
+                    mHandler.obtainMessage(MSG_UPDATE_IFACES), SECOND_IN_MILLIS);
         }
     }
 
