@@ -7129,6 +7129,72 @@ public class TelephonyManager {
     }
 
     /**
+     * Get network name for the provided PLMN and LAC/TAC.
+     *
+     * <p>Resolves network name based on available information sources including the
+     * {@link CarrierConfigManager}, the contents of the SIM card, and the
+     * {@link android.provider.Telephony.CarrierId}. If the name cannot be resolved via
+     * one or more of these sources, then this API returns null.
+     *
+     * <p>Requires Permission:
+     * {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
+     * or that the calling app has carrier privileges (see {@link #hasCarrierPrivileges}).
+     *
+     * @param plmn PLMN including MCC and MNC
+     * @param lacTac LAC or TAC, depending on the technology
+     * @return carrier name of the provided plmn and lacTac. Returns null if the query fails.
+     *
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    @Nullable public String getNetworkNameForPlmn(String plmn, int lacTac) {
+        return getNetworkNameForPlmn(getSubId(), APPTYPE_USIM, plmn, lacTac);
+    }
+
+    /**
+     * Get network name for the provided PLMN and LAC/TAC.
+     *
+     * <p>Resolves network name based on available information sources including the
+     * {@link CarrierConfigManager}, the contents of the SIM card, and the
+     * {@link android.provider.Telephony.CarrierId}. If the name cannot be resolved via
+     * one or more of these sources, then this API returns null.
+     *
+     * <p>Requires Permission:
+     * {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
+     * or that the calling app has carrier privileges (see {@link #hasCarrierPrivileges}).
+     *
+     * @param subId subscription ID used for authentication
+     * @param appType the icc application type, like {@link #APPTYPE_USIM}
+     * @param plmn PLMN including MCC and MNC
+     * @param lacTac LAC or TAC, depending on the technology
+     * @return carrier name of the provided plmn and lacTac. Returns null if the query fails.
+     *
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    @Nullable public String getNetworkNameForPlmn(int subId, int appType,
+            String plmn, int lacTac) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony == null) {
+                Rlog.d(TAG, "getNetworkNameForPlmn: telephony is null");
+                return null;
+            }
+            String carrierName = telephony.getNetworkNameForPlmn(subId, appType, plmn, lacTac,
+                    mContext.getOpPackageName(), getFeatureId());
+            return carrierName;
+
+        } catch (RemoteException ex) {
+            Rlog.e(TAG, "getNetworkNameForPlmn: exception " + ex);
+            return null;
+        } catch (NullPointerException ex) {
+            Rlog.e(TAG, "getNetworkNameForPlmn: exception " + ex);
+            // This could happen before phone starts
+            return null;
+        }
+    }
+
+    /**
      * Returns an array of Forbidden PLMNs from the USIM App
      * Returns null if the query fails.
      *
