@@ -46,6 +46,30 @@
       "revId": "198edb4c97eee0de32d7b5826c18fcb04dbf5798",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c202a5a9_6990405e",
+        "filename": "apex/sdkextensions/derive_sdk/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-04-09T08:47:24Z",
+      "side": 1,
+      "message": "thanks!",
+      "parentUuid": "c074ee40_558a80ad",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 23
+      },
+      "revId": "198edb4c97eee0de32d7b5826c18fcb04dbf5798",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
