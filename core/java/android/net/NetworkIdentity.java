@@ -40,6 +40,13 @@ import java.util.Objects;
 public class NetworkIdentity implements Comparable<NetworkIdentity> {
     private static final String TAG = "NetworkIdentity";
 
+    /**
+     * When enabled, combine all {@link #mSubType} together under
+     * {@link #SUBTYPE_COMBINED}.
+     */
+    // TODO: make this flag configurable through settings. See http://b/146415925
+    public static final boolean COMBINE_SUBTYPE_ENABLED = false;
+
     public static final int SUBTYPE_COMBINED = -1;
 
     final int mType;
@@ -54,7 +61,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
             int type, int subType, String subscriberId, String networkId, boolean roaming,
             boolean metered, boolean defaultNetwork) {
         mType = type;
-        mSubType = subType;
+        mSubType = COMBINE_SUBTYPE_ENABLED ? SUBTYPE_COMBINED : subType;
         mSubscriberId = subscriberId;
         mNetworkId = networkId;
         mRoaming = roaming;
@@ -86,7 +93,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
         final StringBuilder builder = new StringBuilder("{");
         builder.append("type=").append(getNetworkTypeName(mType));
         builder.append(", subType=");
-        if (mSubType == SUBTYPE_COMBINED) {
+        if (COMBINE_SUBTYPE_ENABLED) {
             builder.append("COMBINED");
         } else {
             builder.append(mSubType);
