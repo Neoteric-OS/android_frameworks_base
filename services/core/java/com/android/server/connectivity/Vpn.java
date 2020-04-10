@@ -2359,7 +2359,7 @@ public class Vpn {
                     final IkeSessionParams ikeSessionParams =
                             VpnIkev2Utils.buildIkeSessionParams(mContext, mProfile, network);
                     final ChildSessionParams childSessionParams =
-                            VpnIkev2Utils.buildChildSessionParams();
+                            VpnIkev2Utils.buildChildSessionParams(mProfile.getAllowedAlgorithms());
 
                     // TODO: Remove the need for adding two unused addresses with
                     // IPsec tunnels.
