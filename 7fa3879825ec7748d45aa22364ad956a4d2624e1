@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4790d6f7_87343a7e",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2018,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-10T11:46:15Z",
+      "side": 1,
+      "message": "Fair enough. I thought we could simply not pass the attribution tag through since this method is now so rare. But since you\u0027ve already done it...",
+      "parentUuid": "b7ce6aa9_b6ec7781",
+      "range": {
+        "startLine": 2018,
+        "startChar": 47,
+        "endLine": 2018,
+        "endChar": 68
+      },
+      "revId": "7fa3879825ec7748d45aa22364ad956a4d2624e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa1c8af1_b5f57755",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 1
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "ConnectivityService#requestNetwork\nConnectivityServive#enforceNetworkRequestPermissions\nConnectivityServive#enforceChangePermission\nConnectivityManager#enforceChangePermission\nConnectivityManager#checkAndNoteChangeNetworkStateOperation\nSettings#checkAndNoteWriteSettingsOperation\nSettings#isCallingPackageAllowedToPerformAppOpsProtectedOperation\nAppOpsManager#noteOpNoThrow",
       "parentUuid": "8c0dc543_8f3bc423",
+      "range": {
+        "startLine": 172,
+        "startChar": 37,
+        "endLine": 172,
+        "endChar": 67
+      },
+      "revId": "7fa3879825ec7748d45aa22364ad956a4d2624e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7e0fe7c_b3101d2c",
+        "filename": "core/java/android/net/IConnectivityManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-10T11:46:15Z",
+      "side": 1,
+      "message": ":-(\n\nReally, this should only require CHANGE_NETWORK_STATE.\n\nThis is because in M we mistakenly made requestNetwork require WRITE_SETTINGS (which is an appop) instead of CHANGE_NETWORK_STATE (which is a normal permission). We fixed that in M MR1, but since there might be apps that rely on being able to use WRITE_SETTINGS for this, we end up calling the appop just in case. It\u0027s unfortunate that we have to pass this information along just to deal with that rare case, but, well.",
+      "parentUuid": "d535e923_2e473b60",
       "range": {
         "startLine": 172,
         "startChar": 37,

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8c923f7_c8b89334",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-10T11:46:15Z",
+      "side": 1,
+      "message": "No need to call getAttributionTag here?",
+      "range": {
+        "startLine": 370,
+        "startChar": 62,
+        "endLine": 370,
+        "endChar": 66
+      },
+      "revId": "99d1b9eae30034610af20dbc23f7697d6ff3061d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a8ad91_a900db09",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2238,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-10T11:46:15Z",
+      "side": 1,
+      "message": "What happened to this code in Settings.checkAndNoteChangeNetworkStateOperation?\n\n        if (context.checkCallingOrSelfPermission(android.Manifest.permission.CHANGE_NETWORK_STATE)\n                \u003d\u003d PackageManager.PERMISSION_GRANTED) {\n            return true;\n        }\n\nAn app with the CHANGE_NETWORK_STATE permission must be able to call requestNetwork without having WRITE_SETTINGS.",
+      "range": {
+        "startLine": 2237,
+        "startChar": 0,
+        "endLine": 2238,
+        "endChar": 32
+      },
+      "revId": "99d1b9eae30034610af20dbc23f7697d6ff3061d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292747e7_157d6072",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2273,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-10T11:46:15Z",
+      "side": 1,
+      "message": "Could you add a TODO to delete this method (and maybe add one to the other checkAndNoteXyz method above) once R ships?",
+      "range": {
+        "startLine": 2262,
+        "startChar": 0,
+        "endLine": 2273,
+        "endChar": 5
+      },
+      "revId": "99d1b9eae30034610af20dbc23f7697d6ff3061d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd54a8a_229732cb",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-10T11:46:15Z",
+      "side": 1,
+      "message": "Could you add a TODO to delete this (and call into Settings directly) after R ships?",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 5
+      },
+      "revId": "99d1b9eae30034610af20dbc23f7697d6ff3061d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
