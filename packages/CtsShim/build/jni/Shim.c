@@ -14,4 +14,3 @@
  * limitations under the License.
  */
 
-#include <jni.h>
