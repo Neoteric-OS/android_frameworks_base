@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe4f8de3_5b352409",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-11T12:32:09Z",
+      "side": 1,
+      "message": "Can you say a bit more here? Something like:\n\nThe returned Messenger sends messages to the Handler. This allows a test to send this object {@code CMD_*} messages as if they came from ConnectivityService.\n\nAlso, is there a way to make it so that a caller of this method doesn\u0027t need to do the AsyncChannel dance? Maybe if you have this method return an AsyncChannel, like the registerForTest method that you currently have in NetworkAgentTest.kt?",
+      "range": {
+        "startLine": 575,
+        "startChar": 57,
+        "endLine": 575,
+        "endChar": 58
+      },
+      "revId": "8e4f6513ebf0699a826a3c58415213b45e980ecf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
