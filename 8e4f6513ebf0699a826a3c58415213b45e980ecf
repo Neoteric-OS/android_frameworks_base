@@ -22,6 +22,30 @@
       "revId": "8e4f6513ebf0699a826a3c58415213b45e980ecf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5069d8_dabf9361",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-12T13:13:00Z",
+      "side": 1,
+      "message": "Added comments.\n\nI thought of doing what you suggest too, but I think this is the best way on accounts of realism and parcimony of testing-only code in production.\n\nIn the real case, the agent is sending the Messenger to ConnectivityService, which then calls AsyncChannel.connect. That in turn (and interestingly) sends a HALF_CONNECTED message to its *local* messenger for it to process and reply. ConnectivityService is doing that.\n\nSo this *could* call connect(), but it would require to be passed the Messenger from the test and that would still be required to implement HALF_CONNECTED, so it would be the same just more obscure and with a sliver more testing code in production.\n\nOr, we could do away with AsyncChannel in the test completely and simply have the test send a FULL_CONNECTION message, after which mostly it\u0027s just Messenger. But this is further from the real case and will need updates if AsyncChannel ever gets updated, and I\u0027m not sure it doesn\u0027t require handling some subtle other behaviors of AsyncChannel. It\u0027s likely more complex than to just use AsyncChannel in the test, which at the end of the day only requires handling three messages for CS fakery.\n\nThe last option I can think of is to have more pervasive changes to this class that we could call a \"test mode\" where it would not use AsyncChannel. I would prefer not to depart that much from production code.",
+      "parentUuid": "fe4f8de3_5b352409",
+      "range": {
+        "startLine": 575,
+        "startChar": 57,
+        "endLine": 575,
+        "endChar": 58
+      },
+      "revId": "8e4f6513ebf0699a826a3c58415213b45e980ecf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
