@@ -227,6 +227,7 @@ public class IpServer extends StateMachine {
     private final int mInterfaceType;
     private final LinkProperties mLinkProperties;
     private final boolean mUsingLegacyDhcp;
+    private final boolean mUsingBpfOffload;
 
     private final Dependencies mDeps;
 
@@ -304,7 +305,8 @@ public class IpServer extends StateMachine {
 
     public IpServer(
             String ifaceName, Looper looper, int interfaceType, SharedLog log,
-            INetd netd, Callback callback, boolean usingLegacyDhcp, Dependencies deps) {
+            INetd netd, Callback callback, boolean usingLegacyDhcp, boolean usingBpfOffload,
+            Dependencies deps) {
         super(ifaceName, looper);
         mLog = log.forSubComponent(ifaceName);
         mNetd = netd;
@@ -314,6 +316,7 @@ public class IpServer extends StateMachine {
         mInterfaceType = interfaceType;
         mLinkProperties = new LinkProperties();
         mUsingLegacyDhcp = usingLegacyDhcp;
+        mUsingBpfOffload = usingBpfOffload;
         mDeps = deps;
         resetLinkProperties();
         mLastError = TetheringManager.TETHER_ERROR_NO_ERROR;
@@ -715,12 +718,12 @@ public class IpServer extends StateMachine {
             final String upstreamIface = v6only.getInterfaceName();
 
             params = new RaParams();
-            // We advertise an mtu lower by 16, which is the closest multiple of 8 >= 14,
-            // the ethernet header size.  This makes kernel ebpf tethering offload happy.
-            // This hack should be reverted once we have the kernel fixed up.
+            // When BPF offload is enabled, we advertise an mtu lower by 16, which is the closest
+            // multiple of 8 >= 14, the ethernet header size. This makes kernel ebpf tethering
+            // offload happy. This hack should be reverted once we have the kernel fixed up.
             // Note: this will automatically clamp to at least 1280 (ipv6 minimum mtu)
             // see RouterAdvertisementDaemon.java putMtu()
-            params.mtu = v6only.getMtu() - 16;
+            params.mtu = mUsingBpfOffload ? v6only.getMtu() - 16 : v6only.getMtu();
             params.hasDefaultRoute = v6only.hasIpv6DefaultRoute();
 
             if (params.hasDefaultRoute) params.hopLimit = getHopLimit(upstreamIface);
@@ -845,7 +848,9 @@ public class IpServer extends StateMachine {
 
     private void addIpv6ForwardingRule(Ipv6ForwardingRule rule) {
         try {
-            mNetd.tetherOffloadRuleAdd(rule.toTetherOffloadRuleParcel());
+            if (mUsingBpfOffload) {
+                mNetd.tetherOffloadRuleAdd(rule.toTetherOffloadRuleParcel());
+            }
             mIpv6ForwardingRules.put(rule.address, rule);
         } catch (RemoteException | ServiceSpecificException e) {
             mLog.e("Could not add IPv6 downstream rule: ", e);
@@ -854,7 +859,9 @@ public class IpServer extends StateMachine {
 
     private void removeIpv6ForwardingRule(Ipv6ForwardingRule rule, boolean removeFromMap) {
         try {
-            mNetd.tetherOffloadRuleRemove(rule.toTetherOffloadRuleParcel());
+            if (mUsingBpfOffload) {
+                mNetd.tetherOffloadRuleRemove(rule.toTetherOffloadRuleParcel());
+            }
             if (removeFromMap) {
                 mIpv6ForwardingRules.remove(rule.address);
             }
