@@ -45,13 +45,13 @@ import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
-import android.util.ArraySet;
 import android.util.SparseIntArray;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.StateMachine;
 
 import java.io.PrintWriter;
+import java.util.BitSet;
 
 /**
  * Re-check tethering provisioning for enabled downstream tether types.
@@ -74,11 +74,12 @@ public class EntitlementManager {
     private final ComponentName mSilentProvisioningService;
     private static final int MS_PER_HOUR = 60 * 60 * 1000;
 
-    // The ArraySet contains enabled downstream types, ex:
+    // The BitSet is the bit map of each enabled downstream types, ex:
     // {@link TetheringManager.TETHERING_WIFI}
     // {@link TetheringManager.TETHERING_USB}
     // {@link TetheringManager.TETHERING_BLUETOOTH}
-    private final ArraySet<Integer> mCurrentTethers;
+    private final BitSet mDownstreamTypes;
+    private final BitSet mExemptedTypes;
     private final Context mContext;
     private final int mPermissionChangeMessageCode;
     private final SharedLog mLog;
@@ -97,10 +98,10 @@ public class EntitlementManager {
 
     public EntitlementManager(Context ctx, StateMachine tetherMasterSM, SharedLog log,
             int permissionChangeMessageCode) {
-
         mContext = ctx;
         mLog = log.forSubComponent(TAG);
-        mCurrentTethers = new ArraySet<Integer>();
+        mDownstreamTypes = new BitSet();
+        mExemptedTypes = new BitSet();
         mCellularPermitted = new SparseIntArray();
         mEntitlementCacheValue = new SparseIntArray();
         mTetherMasterSM = tetherMasterSM;
@@ -144,13 +145,29 @@ public class EntitlementManager {
      * Check if cellular upstream is permitted.
      */
     public boolean isCellularUpstreamPermitted() {
-        // If provisioning is required and EntitlementManager don't know any downstream,
-        // cellular upstream should not be allowed.
         final TetheringConfiguration config = mFetcher.fetchTetheringConfiguration();
-        if (mCurrentTethers.size() == 0 && isTetherProvisioningRequired(config)) {
-            return false;
-        }
-        return mCellularUpstreamPermitted;
+
+        return isCellularUpstreamPermitted(config);
+    }
+
+    private boolean isCellularUpstreamPermitted(final TetheringConfiguration config) {
+        if (!isTetherProvisioningRequired(config)) return true;
+
+        // If provisioning is required and EntitlementManager doesn't know any downstreams,
+        // cellular upstream should not be allowed unless there are exempted downstreams.
+        if (mDownstreamTypes.isEmpty()) return !mExemptedTypes.isEmpty();
+
+        return mCellularPermitted.indexOfValue(TETHER_ERROR_NO_ERROR) > -1;
+    }
+
+    /**
+     * Set exempted downstream type. If there is only exempted downstream type active,
+     * corresponding entitlement check will not be run and cellular upstream will be permitted
+     * by default. If any non-exempted downstream type is active, the cellular upstream will be
+     * gated by the result of entitlement check from non-exempted downstream type.
+     */
+    public void setExemptedDownstreamType(final int type) {
+        mExemptedTypes.set(type, true);
     }
 
     /**
@@ -164,29 +181,24 @@ public class EntitlementManager {
     public void startProvisioningIfNeeded(int downstreamType, boolean showProvisioningUi) {
         if (!isValidDownstreamType(downstreamType)) return;
 
-        if (!mCurrentTethers.contains(downstreamType)) mCurrentTethers.add(downstreamType);
+        mDownstreamTypes.set(downstreamType, true);
+
+        mExemptedTypes.set(downstreamType, false);
 
         final TetheringConfiguration config = mFetcher.fetchTetheringConfiguration();
-        if (isTetherProvisioningRequired(config)) {
-            // If provisioning is required and the result is not available yet,
-            // cellular upstream should not be allowed.
-            if (mCellularPermitted.size() == 0) {
-                mCellularUpstreamPermitted = false;
-            }
-            // If upstream is not cellular, provisioning app would not be launched
-            // till upstream change to cellular.
-            if (mUsingCellularAsUpstream) {
-                if (showProvisioningUi) {
-                    runUiTetherProvisioning(downstreamType, config.activeDataSubId);
-                } else {
-                    runSilentTetherProvisioning(downstreamType, config.activeDataSubId);
-                }
-                mNeedReRunProvisioningUi = false;
+        if (!isTetherProvisioningRequired(config)) return;
+
+        // If upstream is not cellular, provisioning app would not be launched
+        // till upstream change to cellular.
+        if (mUsingCellularAsUpstream) {
+            if (showProvisioningUi) {
+                runUiTetherProvisioning(downstreamType, config.activeDataSubId);
             } else {
-                mNeedReRunProvisioningUi |= showProvisioningUi;
+                runSilentTetherProvisioning(downstreamType, config.activeDataSubId);
             }
+            mNeedReRunProvisioningUi = false;
         } else {
-            mCellularUpstreamPermitted = true;
+            mNeedReRunProvisioningUi |= showProvisioningUi;
         }
     }
 
@@ -195,14 +207,15 @@ public class EntitlementManager {
      *
      * @param type tethering type from TetheringManager.TETHERING_{@code *}
      */
-    public void stopProvisioningIfNeeded(int type) {
-        if (!isValidDownstreamType(type)) return;
+    public void stopProvisioningIfNeeded(int downstreamType) {
+        if (!isValidDownstreamType(downstreamType)) return;
 
-        mCurrentTethers.remove(type);
+        mDownstreamTypes.set(downstreamType, false);
         // There are lurking bugs where the notion of "provisioning required" or
         // "tethering supported" may change without without tethering being notified properly.
         // Remove the mapping all the time no matter provisioning is required or not.
-        removeDownstreamMapping(type);
+        removeDownstreamMapping(downstreamType);
+        mExemptedTypes.set(downstreamType, false);
     }
 
     /**
@@ -231,7 +244,7 @@ public class EntitlementManager {
     }
 
     private void maybeRunProvisioning(final TetheringConfiguration config) {
-        if (mCurrentTethers.size() == 0 || !isTetherProvisioningRequired(config)) {
+        if (mDownstreamTypes.isEmpty() || !isTetherProvisioningRequired(config)) {
             return;
         }
 
@@ -239,7 +252,8 @@ public class EntitlementManager {
         // are allowed. Therefore even if the silent check here ends in a failure and the UI later
         // yields success, then the downstream that got a failure will re-evaluate as a result of
         // the change and get the new correct value.
-        for (Integer downstream : mCurrentTethers) {
+        for (int downstream = mDownstreamTypes.nextSetBit(0); downstream >= 0;
+                downstream = mDownstreamTypes.nextSetBit(downstream + 1)) {
             if (mCellularPermitted.indexOfKey(downstream) < 0) {
                 if (mNeedReRunProvisioningUi) {
                     mNeedReRunProvisioningUi = false;
@@ -411,8 +425,7 @@ public class EntitlementManager {
 
     private void evaluateCellularPermission(final TetheringConfiguration config) {
         final boolean oldPermitted = mCellularUpstreamPermitted;
-        mCellularUpstreamPermitted = (!isTetherProvisioningRequired(config)
-                || mCellularPermitted.indexOfValue(TETHER_ERROR_NO_ERROR) > -1);
+        mCellularUpstreamPermitted = isCellularUpstreamPermitted(config);
 
         if (DBG) {
             mLog.i("Cellular permission change from " + oldPermitted
@@ -441,8 +454,8 @@ public class EntitlementManager {
      */
     protected void addDownstreamMapping(int type, int resultCode) {
         mLog.i("addDownstreamMapping: " + type + ", result: " + resultCode
-                + " ,TetherTypeRequested: " + mCurrentTethers.contains(type));
-        if (!mCurrentTethers.contains(type)) return;
+                + " ,TetherTypeRequested: " + mDownstreamTypes.get(type));
+        if (!mDownstreamTypes.get(type)) return;
 
         mCellularPermitted.put(type, resultCode);
         final TetheringConfiguration config = mFetcher.fetchTetheringConfiguration();
@@ -489,8 +502,9 @@ public class EntitlementManager {
      */
     public void dump(PrintWriter pw) {
         pw.print("mCellularUpstreamPermitted: ");
-        pw.println(mCellularUpstreamPermitted);
-        for (Integer type : mCurrentTethers) {
+        pw.println(isCellularUpstreamPermitted());
+        for (int type = mDownstreamTypes.nextSetBit(0); type >= 0;
+                type = mDownstreamTypes.nextSetBit(type + 1)) {
             pw.print("Type: ");
             pw.print(typeString(type));
             if (mCellularPermitted.indexOfKey(type) > -1) {
@@ -500,6 +514,13 @@ public class EntitlementManager {
                 pw.println(", Value: empty");
             }
         }
+        pw.print("Exempted: [");
+        for (int type = mExemptedTypes.nextSetBit(0); type >= 0;
+                type = mExemptedTypes.nextSetBit(type + 1)) {
+            pw.print(typeString(type));
+            pw.print(", ");
+        }
+        pw.println("]");
     }
 
     private static String typeString(int type) {
