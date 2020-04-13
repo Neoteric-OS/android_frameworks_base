@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ad3b0db_626787d6",
+        "filename": "services/core/java/com/android/server/audio/PlaybackActivityMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2020-04-13T22:50:55Z",
+      "side": 1,
+      "message": "Do you know where the concurrent modification happened? When reading your change, I was confused about this method, I think there is a mistake in the use of \"synchronized (mPlayers)\" vs \"synchronized (mPlayerLock)\": everything touching mPlayers should be synchronized on it, but some parts of the code are synchronized on mPlayerLock instead. I imagine the concurrent exception you found is because of that. Can you confirm?",
+      "range": {
+        "startLine": 595,
+        "startChar": 16,
+        "endLine": 595,
+        "endChar": 42
+      },
+      "revId": "736107e11736622341ed7b51a94f2903f5f692db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
