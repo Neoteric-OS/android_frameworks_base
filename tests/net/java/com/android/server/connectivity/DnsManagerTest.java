@@ -18,8 +18,14 @@ package com.android.server.connectivity;
 
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
+import static android.net.NetworkCapabilities.TRANSPORT_BLUETOOTH;
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_ETHERNET;
+import static android.net.NetworkCapabilities.TRANSPORT_LOWPAN;
+import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+import static android.net.NetworkCapabilities.TRANSPORT_WIFI_AWARE;
 import static android.provider.Settings.Global.PRIVATE_DNS_DEFAULT_MODE;
 import static android.provider.Settings.Global.PRIVATE_DNS_MODE;
 import static android.provider.Settings.Global.PRIVATE_DNS_SPECIFIER;
@@ -353,5 +359,17 @@ public class DnsManagerTest {
         expectedParams.transportTypes = TEST_TRANSPORT_TYPES;
         expectedParams.resolverOptions = new ResolverOptionsParcel();
         assertResolverParamsEquals(actualParams, expectedParams);
+    }
+
+    @Test
+    public void testTransportTypesEqual() throws Exception {
+        assertEquals(TRANSPORT_CELLULAR, IDnsResolver.TRANSPORT_CELLULAR);
+        assertEquals(TRANSPORT_WIFI, IDnsResolver.TRANSPORT_WIFI);
+        assertEquals(TRANSPORT_BLUETOOTH, IDnsResolver.TRANSPORT_BLUETOOTH);
+        assertEquals(TRANSPORT_ETHERNET, IDnsResolver.TRANSPORT_ETHERNET);
+        assertEquals(TRANSPORT_VPN, IDnsResolver.TRANSPORT_VPN);
+        assertEquals(TRANSPORT_WIFI_AWARE, IDnsResolver.TRANSPORT_WIFI_AWARE);
+        assertEquals(TRANSPORT_LOWPAN, IDnsResolver.TRANSPORT_LOWPAN);
+        assertEquals(TRANSPORT_TEST, IDnsResolver.TRANSPORT_TEST);
     }
 }
