@@ -4190,7 +4190,8 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         public void reconcileSoftKeyboardModeWithSettingsLocked() {
             final ContentResolver cr = mContext.getContentResolver();
             final boolean showWithHardKeyboardSettings =
-                    Settings.Secure.getInt(cr, Settings.Secure.SHOW_IME_WITH_HARD_KEYBOARD, 0) != 0;
+                    Settings.Secure.getIntForUser(cr,
+                        Settings.Secure.SHOW_IME_WITH_HARD_KEYBOARD, 0, mUserId) != 0;
             if (mSoftKeyboardShowMode == SHOW_MODE_IGNORE_HARD_KEYBOARD) {
                 if (!showWithHardKeyboardSettings) {
                     // The user has overridden the setting. Respect that and prevent further changes
@@ -4246,9 +4247,9 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         }
 
         private int getSoftKeyboardValueFromSettings() {
-            return Settings.Secure.getInt(mContext.getContentResolver(),
+            return Settings.Secure.getIntForUser(mContext.getContentResolver(),
                     Settings.Secure.ACCESSIBILITY_SOFT_KEYBOARD_MODE,
-                    SHOW_MODE_AUTO) & SHOW_MODE_MASK;
+                    SHOW_MODE_AUTO, mUserId) & SHOW_MODE_MASK;
         }
 
         private boolean getOriginalHardKeyboardValue() {
