@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2925ff_b812e6a2",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-14T14:32:26Z",
+      "side": 1,
+      "message": "Callback here is in different with tethering thread. Since you touch some global variable(e.g. mLinkProperties, mIpv4Address), we will have synchronized problem here.  You can choose to post to tethering thread like l.504(mHandler.post()). More solid way may sendMessage to IpServer itself because IpServer is statemachine, we can handle this in LocalHotspotState(maybe also rename it to LocalOnlyState or other similar name)",
+      "range": {
+        "startLine": 511,
+        "startChar": 20,
+        "endLine": 511,
+        "endChar": 38
+      },
+      "revId": "51faaa691eab636d8307a924011faa9cbf0fc7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1dd365_71a46cac",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-14T14:32:26Z",
+      "side": 1,
+      "message": "This usage is similar as #configureIpv4. How about make them be a function and can both use here and confiugreIpv4.\ne.g.\n    private boolean setupTetherInterface(final LinkAddress ipv4Address)\n        final IpPrefix ipv4Prefix \u003d new IpPrefix(ipv4Address.getAddress(),\n                mIpv4Address.getPrefixLength());\n        final RouteInfo route \u003d new RouteInfo(ipv4Prefix, null, null, RTN_UNICAST);\n        if (enabled) {\n            mLinkProperties.addLinkAddress(ipv4Address);\n            mLinkProperties.addRoute(route);\n        } else {\n            mLinkProperties.removeLinkAddress(ipv4Address);\n            mLinkProperties.removeRoute(route);\n        }\n        try {\n            NetdUtils.tetherInterface(mNetd, mIfaceName, ipv4Prefix);\n        } catch (RemoteException | ServiceSpecificException | IllegalStateException e) {\n            mLog.e(\"Error Tethering: \" + e);\n            return false;\n        }\n        return true;\n    }",
+      "range": {
+        "startLine": 537,
+        "startChar": 0,
+        "endLine": 546,
+        "endChar": 13
+      },
+      "revId": "51faaa691eab636d8307a924011faa9cbf0fc7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
