@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b60b4df1_971a1c8d",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2020-04-14T09:25:31Z",
+      "side": 1,
+      "message": "Can attentionDetector.systemReady() call be moved here instead?",
+      "range": {
+        "startLine": 884,
+        "startChar": 8,
+        "endLine": 884,
+        "endChar": 26
+      },
+      "revId": "90c68f8cd4cb0d52e54d23cafa38874fd49fadb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
