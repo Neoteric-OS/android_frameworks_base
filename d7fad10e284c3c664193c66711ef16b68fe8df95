@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a69a0d3_07807759",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-04-14T18:21:29Z",
+      "side": 1,
+      "message": "You also need to deal with service death.\n\nSee https://source.android.com/devices/architecture/hidl-java/interfaces#errors",
+      "range": {
+        "startLine": 726,
+        "startChar": 22,
+        "endLine": 726,
+        "endChar": 32
+      },
+      "revId": "d7fad10e284c3c664193c66711ef16b68fe8df95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
