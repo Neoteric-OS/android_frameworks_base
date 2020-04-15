@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "209e928a_a7843dd1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2819,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-15T12:22:34Z",
+      "side": 1,
+      "message": "Looks like you swapped these by mistake.",
+      "range": {
+        "startLine": 2818,
+        "startChar": 0,
+        "endLine": 2819,
+        "endChar": 98
+      },
+      "revId": "388b6be8e3b08956df0c59f36523de7d21f2e588",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d972d56d_ce3d7876",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3003,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-15T12:22:34Z",
+      "side": 1,
+      "message": "Can we add a TODO to delete this after R is released?",
+      "range": {
+        "startLine": 3003,
+        "startChar": 59,
+        "endLine": 3003,
+        "endChar": 60
+      },
+      "revId": "388b6be8e3b08956df0c59f36523de7d21f2e588",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
