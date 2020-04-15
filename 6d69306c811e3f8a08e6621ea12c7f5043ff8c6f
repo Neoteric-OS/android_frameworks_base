@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "538f1fb3_094c9278",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-15T08:34:48Z",
+      "side": 1,
+      "message": "1. nit: assertEquals.\n2. nit: This doesn\u0027t protect us when adding IDnsResovler.TRANSPORT_XYZ but not a new one in NetCapabilities. But I don\u0027t think this will happen in pratice.",
+      "range": {
+        "startLine": 376,
+        "startChar": 8,
+        "endLine": 376,
+        "endChar": 18
+      },
+      "revId": "6d69306c811e3f8a08e6621ea12c7f5043ff8c6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
