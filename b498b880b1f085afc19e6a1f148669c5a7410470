@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "938a4250_c43df1c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-15T03:02:37Z",
+      "side": 1,
+      "message": "redundant -?",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "b498b880b1f085afc19e6a1f148669c5a7410470",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8a769a_b35cacc4",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-15T03:02:37Z",
+      "side": 1,
+      "message": "Do we want to test number of NetworkCapabilities.TRANSPORT* or IDnsResolver.TRANSPORT* constants?\nIf so we won\u0027t forget to visit here when adding new one.",
+      "range": {
+        "startLine": 374,
+        "startChar": 4,
+        "endLine": 374,
+        "endChar": 5
+      },
+      "revId": "b498b880b1f085afc19e6a1f148669c5a7410470",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
