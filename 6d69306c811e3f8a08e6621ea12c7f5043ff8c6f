@@ -22,6 +22,30 @@
       "revId": "6d69306c811e3f8a08e6621ea12c7f5043ff8c6f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bded8ab9_dfa51581",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-15T14:20:46Z",
+      "side": 1,
+      "message": "In order not to update this test manually, I think you might be able to do something like:\n\n    SparseArray\u003cString\u003e ncTransports \u003d MessageUtils.findMessageNames(new Class[]{NetworkCapabilities.class}, \"TRANSPORT_\");\n    SparseArray\u003cString\u003e dnsTransports \u003d MessageUtils.findMessageNames(new Class[]{IDnsResolver.class}, \"TRANSPORT_\");\n\n    assertEquals(0, MIN_TRANSPORT);\n    assertEquals(MAX_TRANSPORT + 1, ncTransports.size());\n    assertEquals(MAX_TRANSPORT + 1, dnsTransports.size());\n    for (int i \u003d MIN_TRANSPORT; i \u003c MAX_TRANSPORT; i++) {\n        String name \u003d ncTransports.get(i, null);\n        assertNotNull(\"Could not find NetworkCapabilies.TRANSPORT_* constant equal to \" + i, name);\n        assertEquals(name, dnsTransports.getValue(i));\n    }",
+      "parentUuid": "538f1fb3_094c9278",
+      "range": {
+        "startLine": 376,
+        "startChar": 8,
+        "endLine": 376,
+        "endChar": 18
+      },
+      "revId": "6d69306c811e3f8a08e6621ea12c7f5043ff8c6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
