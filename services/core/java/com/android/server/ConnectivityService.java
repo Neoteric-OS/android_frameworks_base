@@ -18,6 +18,14 @@ package com.android.server;
 
 import static android.Manifest.permission.RECEIVE_DATA_ACTIVITY_CHANGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport.KEY_NETWORK_PROBES_ATTEMPTED_BITMASK;
+import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport.KEY_NETWORK_PROBES_SUCCEEDED_BITMASK;
+import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport.KEY_NETWORK_VALIDATION_RESULT;
+import static android.net.ConnectivityDiagnosticsManager.DataStallReport.DETECTION_METHOD_DNS_EVENTS;
+import static android.net.ConnectivityDiagnosticsManager.DataStallReport.DETECTION_METHOD_TCP_METRICS;
+import static android.net.ConnectivityDiagnosticsManager.DataStallReport.KEY_DNS_CONSECUTIVE_TIMEOUTS;
+import static android.net.ConnectivityDiagnosticsManager.DataStallReport.KEY_TCP_METRICS_COLLECTION_PERIOD_MILLIS;
+import static android.net.ConnectivityDiagnosticsManager.DataStallReport.KEY_TCP_PACKET_FAIL_RATE;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OPPORTUNISTIC;
@@ -72,6 +80,7 @@ import android.net.ConnectionInfo;
 import android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
 import android.net.ConnectivityDiagnosticsManager.DataStallReport;
 import android.net.ConnectivityManager;
+import android.net.DataStallReportParcelable;
 import android.net.ICaptivePortal;
 import android.net.IConnectivityDiagnosticsCallback;
 import android.net.IConnectivityManager;
@@ -108,6 +117,7 @@ import android.net.NetworkSpecifier;
 import android.net.NetworkStack;
 import android.net.NetworkStackClient;
 import android.net.NetworkState;
+import android.net.NetworkTestResultParcelable;
 import android.net.NetworkUtils;
 import android.net.NetworkWatchlistManager;
 import android.net.PrivateDnsConfigParcel;
@@ -2817,7 +2827,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             mConnectivityDiagnosticsHandler.obtainMessage(
                                     ConnectivityDiagnosticsHandler.EVENT_NETWORK_TESTED,
                                     new ConnectivityReportEvent(results.mTimestampMillis, nai));
-                    m.setData(msg.getData());
+
+                    final PersistableBundle extras = new PersistableBundle();
+
+                    extras.putInt(KEY_NETWORK_VALIDATION_RESULT, results.mTestResult);
+                    extras.putInt(KEY_NETWORK_PROBES_SUCCEEDED_BITMASK, results.mProbesSucceeded);
+                    extras.putInt(KEY_NETWORK_PROBES_ATTEMPTED_BITMASK, results.mProbesAttempted);
+
+                    m.setData(new Bundle(extras));
                     mConnectivityDiagnosticsHandler.sendMessage(m);
                     break;
                 }
@@ -2997,22 +3014,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         @Override
         public void notifyNetworkTested(int testResult, @Nullable String redirectUrl) {
-            notifyNetworkTestedWithExtras(testResult, redirectUrl, SystemClock.elapsedRealtime(),
-                    PersistableBundle.EMPTY);
+            // Legacy version of notifyNetworkTestedWithParcelable.
+            // Would only be called if the system has a NetworkStack module older than the
+            // framework, which does not happen in practice.
         }
 
         @Override
-        public void notifyNetworkTestedWithExtras(
-                int testResult,
-                @Nullable String redirectUrl,
-                long timestampMillis,
-                @NonNull PersistableBundle extras) {
+        public void notifyNetworkTestedWithExtras(NetworkTestResultParcelable p) {
             final Message msg =
                     mTrackerHandler.obtainMessage(
                             EVENT_NETWORK_TESTED,
                             new NetworkTestedResults(
-                                    mNetId, testResult, timestampMillis, redirectUrl));
-            msg.setData(new Bundle(extras));
+                                    mNetId,
+                                    p.timestampMillis,
+                                    p.result,
+                                    p.probesSucceeded,
+                                    p.probesAttempted,
+                                    p.redirectUrl));
             mTrackerHandler.sendMessage(msg);
         }
 
@@ -3062,12 +3080,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         @Override
-        public void notifyDataStallSuspected(
-                long timestampMillis, int detectionMethod, PersistableBundle extras) {
-            final Message msg =
-                    mConnectivityDiagnosticsHandler.obtainMessage(
-                            ConnectivityDiagnosticsHandler.EVENT_DATA_STALL_SUSPECTED,
-                            detectionMethod, mNetId, timestampMillis);
+        public void notifyDataStallSuspected(DataStallReportParcelable p) {
+            final Message msg = mConnectivityDiagnosticsHandler.obtainMessage(
+                    ConnectivityDiagnosticsHandler.EVENT_DATA_STALL_SUSPECTED,
+                    p.detectionMethod, mNetId, p.timestampMillis);
+
+            final PersistableBundle extras = new PersistableBundle();
+            switch (p.detectionMethod) {
+                case DETECTION_METHOD_DNS_EVENTS:
+                    extras.putInt(KEY_DNS_CONSECUTIVE_TIMEOUTS, p.dnsConsecutiveTimeouts);
+                    break;
+                case DETECTION_METHOD_TCP_METRICS:
+                    extras.putInt(KEY_TCP_PACKET_FAIL_RATE, p.tcpPacketFailRate);
+                    extras.putInt(KEY_TCP_METRICS_COLLECTION_PERIOD_MILLIS,
+                            p.tcpMetricsCollectionPeriodMillis);
+                    break;
+                default:
+                    log("Unknown data stall detection method, ignoring: " + p.detectionMethod);
+                    return;
+            }
             msg.setData(new Bundle(extras));
 
             // NetworkStateTrackerHandler currently doesn't take any actions based on data
@@ -7776,7 +7807,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             (ConnectivityReportEvent) msg.obj;
 
                     // This is safe because {@link
-                    // NetworkMonitorCallbacks#notifyNetworkTestedWithExtras} receives a
+                    // NetworkMonitorCallbacks#notifyNetworkTestedWithParcelable} receives a
                     // PersistableBundle and converts it to the Bundle in the incoming Message. If
                     // {@link NetworkMonitorCallbacks#notifyNetworkTested} is called, msg.data will
                     // not be set. This is also safe, as msg.getData() will return an empty Bundle.
@@ -7832,18 +7863,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     /**
      * Class used for sending information from {@link
-     * NetworkMonitorCallbacks#notifyNetworkTestedWithExtras} to the handler for processing it.
+     * NetworkMonitorCallbacks#notifyNetworkTestedWithParcelable} to the handler for processing it.
      */
     private static class NetworkTestedResults {
         private final int mNetId;
-        private final int mTestResult;
         private final long mTimestampMillis;
+        private final int mTestResult;
+        private final int mProbesSucceeded;
+        private final int mProbesAttempted;
         @Nullable private final String mRedirectUrl;
 
         private NetworkTestedResults(
-                int netId, int testResult, long timestampMillis, @Nullable String redirectUrl) {
+                int netId, long timestampMillis, int testResult, int probesSucceeded,
+                int probesAttempted, @Nullable String redirectUrl) {
             mNetId = netId;
             mTestResult = testResult;
+            mProbesSucceeded = probesSucceeded;
+            mProbesAttempted = probesAttempted;
             mTimestampMillis = timestampMillis;
             mRedirectUrl = redirectUrl;
         }
