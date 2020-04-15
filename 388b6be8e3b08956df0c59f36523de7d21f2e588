@@ -45,6 +45,99 @@
       "revId": "388b6be8e3b08956df0c59f36523de7d21f2e588",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ed7c4e_fe5a0a96",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3003,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-15T13:10:58Z",
+      "side": 1,
+      "message": "Or maybe even delete it right now? It should be safe on all launch devices and all dogfood devices and everything built from head. I don\u0027t think anyone is testing any other combination (e.g., rvc modules on rvc-d1 for example).",
+      "parentUuid": "d972d56d_ce3d7876",
+      "range": {
+        "startLine": 3003,
+        "startChar": 59,
+        "endLine": 3003,
+        "endChar": 60
+      },
+      "revId": "388b6be8e3b08956df0c59f36523de7d21f2e588",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72c6691_5f026bb1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3007,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-15T13:10:58Z",
+      "side": 1,
+      "message": "Where does this 0xff come from? Looking at the networkmonitor code it looks like the result is 0, 1, or 2, and the probe results are 0x4, 0x8, 0x10, 0x20, 0x40. Shouldn\u0027t this be:\n\n    p.result \u003d testResult \u0026 0x3;\n    p.probesSucceeded \u003d testResult \u0026 ~0x3;\n    p.probesAttempted \u003d p.probesSucceeded;\n\n?",
+      "range": {
+        "startLine": 3005,
+        "startChar": 0,
+        "endLine": 3007,
+        "endChar": 50
+      },
+      "revId": "388b6be8e3b08956df0c59f36523de7d21f2e588",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9118981c_543bb89b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3025,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-15T13:10:58Z",
+      "side": 1,
+      "message": "FWIW you don\u0027t need this class. You can put mNetId in msg.arg1 and pass p in msg.obj.",
+      "range": {
+        "startLine": 3019,
+        "startChar": 0,
+        "endLine": 3025,
+        "endChar": 52
+      },
+      "revId": "388b6be8e3b08956df0c59f36523de7d21f2e588",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed770a27_d2b579fc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7866,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-15T13:10:58Z",
+      "side": 1,
+      "message": "Per other comment, I think we can delete this. Doesn\u0027t need to be in this CL.",
+      "range": {
+        "startLine": 7844,
+        "startChar": 0,
+        "endLine": 7866,
+        "endChar": 5
+      },
+      "revId": "388b6be8e3b08956df0c59f36523de7d21f2e588",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
