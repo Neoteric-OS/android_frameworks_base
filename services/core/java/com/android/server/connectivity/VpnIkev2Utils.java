@@ -17,7 +17,6 @@
 package com.android.server.connectivity;
 
 import static android.net.ConnectivityManager.NetworkCallback;
-import static android.net.ipsec.ike.SaProposal.DH_GROUP_1024_BIT_MODP;
 import static android.net.ipsec.ike.SaProposal.DH_GROUP_2048_BIT_MODP;
 import static android.net.ipsec.ike.SaProposal.ENCRYPTION_ALGORITHM_AES_CBC;
 import static android.net.ipsec.ike.SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_12;
@@ -83,6 +82,13 @@ import java.util.List;
  * @hide
  */
 public class VpnIkev2Utils {
+    // TODO: Use IKE library exposed constants when @SystemApi is updated.
+
+    /** IANA-defined 3072 group for use in IKEv2 */
+    private static final int DH_GROUP_3072_BIT_MODP = 15;
+    /** IANA-defined 4096 group for use in IKEv2 */
+    private static final int DH_GROUP_4096_BIT_MODP = 16;
+
     static IkeSessionParams buildIkeSessionParams(
             @NonNull Context context, @NonNull Ikev2VpnProfile profile, @NonNull Network network) {
         final IkeIdentification localId = parseIkeIdentification(profile.getUserIdentity());
@@ -176,8 +182,9 @@ public class VpnIkev2Utils {
 
         // Add dh, prf for both builders
         for (final IkeSaProposal.Builder builder : Arrays.asList(normalModeBuilder, aeadBuilder)) {
+            builder.addDhGroup(DH_GROUP_4096_BIT_MODP);
+            builder.addDhGroup(DH_GROUP_3072_BIT_MODP);
             builder.addDhGroup(DH_GROUP_2048_BIT_MODP);
-            builder.addDhGroup(DH_GROUP_1024_BIT_MODP);
             builder.addPseudorandomFunction(PSEUDORANDOM_FUNCTION_AES128_XCBC);
             builder.addPseudorandomFunction(PSEUDORANDOM_FUNCTION_HMAC_SHA1);
         }
