@@ -251,6 +251,10 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
         nc.setNetworkSpecifier(new StringNetworkSpecifier(iface));
         nc.setAdministratorUids(administratorUids);
+
+        // Unconditionally set the owner UID for the Test Network. Note that this may not be
+        // included in the administrator UIDs. However, this should be okay for a Test Network.
+        nc.setOwnerUid(callingUid);
         if (!isMetered) {
             nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
         }
