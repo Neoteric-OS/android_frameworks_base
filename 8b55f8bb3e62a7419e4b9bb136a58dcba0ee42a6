@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4392dca_3348c346",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8083,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-04-16T22:46:08Z",
+      "side": 1,
+      "message": "This isn\u0027t guarded in any way - Are there any permissions we can require to limit the impact of this? Or perhaps limit the netId to ensure that it can only be fired if the caller is also the owner of the network?",
+      "range": {
+        "startLine": 8083,
+        "startChar": 16,
+        "endLine": 8083,
+        "endChar": 33
+      },
+      "revId": "8b55f8bb3e62a7419e4b9bb136a58dcba0ee42a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9c6681_b2ca6719",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8085,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-04-16T22:46:08Z",
+      "side": 1,
+      "message": "Note: this is called on a binder thread. I suspect that it is safe, given that it just proxies to ConnectivityDiagnosticsHandler, but could you confirm?",
+      "range": {
+        "startLine": 8085,
+        "startChar": 8,
+        "endLine": 8085,
+        "endChar": 35
+      },
+      "revId": "8b55f8bb3e62a7419e4b9bb136a58dcba0ee42a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
