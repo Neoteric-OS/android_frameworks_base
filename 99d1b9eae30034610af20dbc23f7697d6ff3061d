@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1bbb0751_7d694da4",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-04-16T21:37:04Z",
+      "side": 1,
+      "message": "yes. This will be fixed up in the goog/master change",
+      "parentUuid": "d8c923f7_c8b89334",
+      "range": {
+        "startLine": 370,
+        "startChar": 62,
+        "endLine": 370,
+        "endChar": 66
+      },
+      "revId": "99d1b9eae30034610af20dbc23f7697d6ff3061d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4a8ad91_a900db09",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "99d1b9eae30034610af20dbc23f7697d6ff3061d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f2a2e2_e82a0cd7",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2238,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-04-16T21:37:04Z",
+      "side": 1,
+      "message": "yes, that is wrong. Copy pasta.\n\nIt should call Settings.checkAndNoteChangeNetworkStateOperation",
+      "parentUuid": "c4a8ad91_a900db09",
+      "range": {
+        "startLine": 2237,
+        "startChar": 0,
+        "endLine": 2238,
+        "endChar": 32
+      },
+      "revId": "99d1b9eae30034610af20dbc23f7697d6ff3061d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0a64783c_bf42dcd2",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2273,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-04-16T21:37:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "292747e7_157d6072",
+      "range": {
+        "startLine": 2262,
+        "startChar": 0,
+        "endLine": 2273,
+        "endChar": 5
+      },
+      "revId": "99d1b9eae30034610af20dbc23f7697d6ff3061d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bd54a8a_229732cb",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "99d1b9eae30034610af20dbc23f7697d6ff3061d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e5debc_6d6d5033",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-04-16T21:37:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bd54a8a_229732cb",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 5
+      },
+      "revId": "99d1b9eae30034610af20dbc23f7697d6ff3061d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
