@@ -7796,6 +7796,17 @@ public class PackageManagerService extends IPackageManager.Stub
             }
 
             if (!mOnlyCore) {
+                // Remove apps that are privileged if only installed on data
+                for (int i = 0; i < mPackages.size(); i++) {
+                    AndroidPackage pkg = mPackages.valueAt(i);
+                    if (pkg.isPrivileged() && !pkg.isSystem()) {
+                        Slog.e(TAG, "Removing " + pkg.getPackageName()
+                                + ", privileged apps cannot only be installed on /data.");
+                        deletePackageX(pkg.getPackageName(), PackageManager.VERSION_CODE_HIGHEST,
+                                UserHandle.USER_SYSTEM, PackageManager.DELETE_ALL_USERS, true);
+                    }
+                }
+
                 // Remove disable package settings for updated system apps that were
                 // removed via an OTA. If the update is no longer present, remove the
                 // app completely. Otherwise, revoke their system privileges.
