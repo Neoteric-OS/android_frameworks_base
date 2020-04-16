@@ -46,6 +46,30 @@
       "revId": "6d69306c811e3f8a08e6621ea12c7f5043ff8c6f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993ac911_d8221a7a",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1343198
+      },
+      "writtenOn": "2020-04-16T09:27:12Z",
+      "side": 1,
+      "message": "Modify this test by Lorenzo\u0027s suggestion.",
+      "parentUuid": "bded8ab9_dfa51581",
+      "range": {
+        "startLine": 376,
+        "startChar": 8,
+        "endLine": 376,
+        "endChar": 18
+      },
+      "revId": "6d69306c811e3f8a08e6621ea12c7f5043ff8c6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
