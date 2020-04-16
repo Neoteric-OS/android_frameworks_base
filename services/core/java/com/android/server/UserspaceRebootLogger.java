@@ -24,6 +24,7 @@ import static com.android.internal.util.FrameworkStatsLog.USERSPACE_REBOOT_REPOR
 import static com.android.internal.util.FrameworkStatsLog.USERSPACE_REBOOT_REPORTED__USER_ENCRYPTION_STATE__LOCKED;
 import static com.android.internal.util.FrameworkStatsLog.USERSPACE_REBOOT_REPORTED__USER_ENCRYPTION_STATE__UNLOCKED;
 
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.text.TextUtils;
@@ -53,8 +54,15 @@ public final class UserspaceRebootLogger {
     /**
      * Modifies internal state to note that {@code UserspaceRebootReported} atom needs to be
      * logged on the next successful boot.
+     *
+     * <p>This call should only be made on devices supporting userspace reboot.
      */
     public static void noteUserspaceRebootWasRequested() {
+        if (!PowerManager.isRebootingUserspaceSupportedImpl()) {
+            Slog.wtf(TAG, "Userspace reboot is not supported.");
+            return;
+        }
+
         SystemProperties.set(USERSPACE_REBOOT_SHOULD_LOG_PROPERTY, "1");
         SystemProperties.set(USERSPACE_REBOOT_LAST_STARTED_PROPERTY,
                 String.valueOf(SystemClock.elapsedRealtime()));
@@ -64,16 +72,30 @@ public final class UserspaceRebootLogger {
      * Updates internal state on boot after successful userspace reboot.
      *
      * <p>Should be called right before framework sets {@code sys.boot_completed} property.
+     *
+     * <p>This call should only be made on devices supporting userspace reboot.
      */
     public static void noteUserspaceRebootSuccess() {
+        if (!PowerManager.isRebootingUserspaceSupportedImpl()) {
+            Slog.wtf(TAG, "Userspace reboot is not supported.");
+            return;
+        }
+
         SystemProperties.set(USERSPACE_REBOOT_LAST_FINISHED_PROPERTY,
                 String.valueOf(SystemClock.elapsedRealtime()));
     }
 
     /**
      * Returns {@code true} if {@code UserspaceRebootReported} atom should be logged.
+     *
+     * <p>This call should only be made on devices supporting userspace reboot.
      */
     public static boolean shouldLogUserspaceRebootEvent() {
+        if (!PowerManager.isRebootingUserspaceSupportedImpl()) {
+            Slog.wtf(TAG, "Userspace reboot is not supported.");
+            return false;
+        }
+
         return SystemProperties.getBoolean(USERSPACE_REBOOT_SHOULD_LOG_PROPERTY, false);
     }
 
@@ -83,26 +105,35 @@ public final class UserspaceRebootLogger {
      * <p>Should be called in the end of {@link
      * com.android.server.am.ActivityManagerService#finishBooting()} method, after framework have
      * tried to proactivelly unlock storage of the primary user.
+     *
+     * <p>This call should only be made on devices supporting userspace reboot.
      */
     public static void logEventAsync(boolean userUnlocked, Executor executor) {
+        if (!PowerManager.isRebootingUserspaceSupportedImpl()) {
+            Slog.wtf(TAG, "Userspace reboot is not supported.");
+            return;
+        }
+
         final int outcome = computeOutcome();
         final long durationMillis;
         if (outcome == USERSPACE_REBOOT_REPORTED__OUTCOME__SUCCESS) {
-            durationMillis = SystemProperties.getLong(USERSPACE_REBOOT_LAST_FINISHED_PROPERTY, 0)
+            durationMillis = SystemProperties.getLong(USERSPACE_REBOOT_LAST_FINISHED_PROPERTY,
+                    0)
                     - SystemProperties.getLong(USERSPACE_REBOOT_LAST_STARTED_PROPERTY, 0);
         } else {
             durationMillis = 0;
         }
         final int encryptionState =
                 userUnlocked
-                    ? USERSPACE_REBOOT_REPORTED__USER_ENCRYPTION_STATE__UNLOCKED
-                    : USERSPACE_REBOOT_REPORTED__USER_ENCRYPTION_STATE__LOCKED;
+                        ? USERSPACE_REBOOT_REPORTED__USER_ENCRYPTION_STATE__UNLOCKED
+                        : USERSPACE_REBOOT_REPORTED__USER_ENCRYPTION_STATE__LOCKED;
         executor.execute(
                 () -> {
-                    Slog.i(TAG, "Logging UserspaceRebootReported atom: { outcome: " + outcome
-                            + " durationMillis: " + durationMillis + " encryptionState: "
-                            + encryptionState + " }");
-                    FrameworkStatsLog.write(FrameworkStatsLog.USERSPACE_REBOOT_REPORTED, outcome,
+                    Slog.i(TAG, "Logging UserspaceRebootReported atom: { outcome: "
+                            + outcome + " durationMillis: " + durationMillis
+                            + " encryptionState: " + encryptionState + " }");
+                    FrameworkStatsLog.write(FrameworkStatsLog.USERSPACE_REBOOT_REPORTED,
+                            outcome,
                             durationMillis, encryptionState);
                     SystemProperties.set(USERSPACE_REBOOT_SHOULD_LOG_PROPERTY, "");
                 });
