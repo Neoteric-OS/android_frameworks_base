@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6665ffd_e983f5f8",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/net/DataUsageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1591842
+      },
+      "writtenOn": "2020-04-17T09:19:08Z",
+      "side": 1,
+      "message": "We should add a NULL check for telephonyManager here as we\u0027re getting the ServiceObject via binder?",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 48
+      },
+      "revId": "89d2828ba8690af4ff614ec8067b155e11b4926c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c3ec01_5994c8e0",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/net/DataUsageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1591842
+      },
+      "writtenOn": "2020-04-17T09:19:08Z",
+      "side": 1,
+      "message": "Similarly, can we add a NULL check for SubscriptionManager object?",
+      "range": {
+        "startLine": 43,
+        "startChar": 34,
+        "endLine": 43,
+        "endChar": 54
+      },
+      "revId": "89d2828ba8690af4ff614ec8067b155e11b4926c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
