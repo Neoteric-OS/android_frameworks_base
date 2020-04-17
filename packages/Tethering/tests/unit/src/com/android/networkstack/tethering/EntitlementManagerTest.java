@@ -492,6 +492,35 @@ public final class EntitlementManagerTest {
         verify(mEntitlementFailedListener, times(1)).onUiEntitlementFailed(TETHERING_WIFI);
     }
 
+    @Test
+    public void testsetExemptedDownstreamType() throws Exception {
+        setupForRequiredProvisioning();
+        // Cellular upstream is not permitted when no entitlement result.
+        assertFalse(mEnMgr.isCellularUpstreamPermitted());
+
+        // If there is exempted downstream and no other non-exempted downstreams, cellular is
+        // permitted.
+        mEnMgr.setExemptedDownstreamType(TETHERING_WIFI);
+        assertTrue(mEnMgr.isCellularUpstreamPermitted());
+
+        // If second downstream run entitlement check fail, cellular upstream is not permitted.
+        mEnMgr.fakeEntitlementResult = TETHER_ERROR_PROVISIONING_FAILED;
+        mEnMgr.notifyUpstream(true);
+        mLooper.dispatchAll();
+        mEnMgr.startProvisioningIfNeeded(TETHERING_USB, true);
+        mLooper.dispatchAll();
+        assertFalse(mEnMgr.isCellularUpstreamPermitted());
+
+        // When second downstream is down, exempted downstream can use cellular upstream.
+        assertEquals(1, mEnMgr.uiProvisionCount);
+        verify(mEntitlementFailedListener).onUiEntitlementFailed(TETHERING_USB);
+        mEnMgr.stopProvisioningIfNeeded(TETHERING_USB);
+        assertTrue(mEnMgr.isCellularUpstreamPermitted());
+
+        mEnMgr.stopProvisioningIfNeeded(TETHERING_WIFI);
+        assertFalse(mEnMgr.isCellularUpstreamPermitted());
+    }
+
     public class TestStateMachine extends StateMachine {
         public final ArrayList<Message> messages = new ArrayList<>();
         private final State

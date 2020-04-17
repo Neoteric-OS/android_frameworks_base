@@ -79,6 +79,7 @@ public class EntitlementManager {
     // {@link TetheringManager.TETHERING_USB}
     // {@link TetheringManager.TETHERING_BLUETOOTH}
     private final BitSet mCurrentDownstreams;
+    private final BitSet mExemptedDownstreams;
     private final Context mContext;
     private final int mPermissionChangeMessageCode;
     private final SharedLog mLog;
@@ -100,6 +101,7 @@ public class EntitlementManager {
         mContext = ctx;
         mLog = log.forSubComponent(TAG);
         mCurrentDownstreams = new BitSet();
+        mExemptedDownstreams = new BitSet();
         mCurrentEntitlementResults = new SparseIntArray();
         mEntitlementCacheValue = new SparseIntArray();
         mTetherMasterSM = tetherMasterSM;
@@ -151,11 +153,27 @@ public class EntitlementManager {
     private boolean isCellularUpstreamPermitted(final TetheringConfiguration config) {
         if (!isTetherProvisioningRequired(config)) return true;
 
-        // If provisioning is required and EntitlementManager doesn't know any downstreams,
-        // cellular upstream should not be allowed.
-        if (mCurrentDownstreams.isEmpty()) return false;
+        // If provisioning is required and EntitlementManager doesn't know any downstreams, cellular
+        // upstream should not be enabled. Enable cellular upstream for exempted downstreams only
+        // when there is no non-exempted downstream.
+        if (mCurrentDownstreams.isEmpty()) return !mExemptedDownstreams.isEmpty();
 
         return mCurrentEntitlementResults.indexOfValue(TETHER_ERROR_NO_ERROR) > -1;
+    }
+
+    /**
+     * Set exempted downstream type. If there is only exempted downstream type active,
+     * corresponding entitlement check will not be run and cellular upstream will be permitted
+     * by default. If a privileged app enables tethering without a provisioning check, and then
+     * another app enables tethering of the same type but does not disable the provisioning check,
+     * then the downstream immediately loses exempt status and a provisioning check is run.
+     * If any non-exempted downstream type is active, the cellular upstream will be gated by the
+     * result of entitlement check from non-exempted downstreams. If entitlement check is still
+     * in progress on non-exempt downstreams, ceullar upstream would default be disabled. Any
+     * non-exempted downstream get positive entitlement result, ceullar upstream would be enabled.
+     */
+    public void setExemptedDownstreamType(final int type) {
+        mExemptedDownstreams.set(type, true);
     }
 
     /**
@@ -170,6 +188,8 @@ public class EntitlementManager {
         if (!isValidDownstreamType(downstreamType)) return;
 
         mCurrentDownstreams.set(downstreamType, true);
+
+        mExemptedDownstreams.set(downstreamType, false);
 
         final TetheringConfiguration config = mFetcher.fetchTetheringConfiguration();
         if (!isTetherProvisioningRequired(config)) return;
@@ -201,6 +221,7 @@ public class EntitlementManager {
         // "tethering supported" may change without without tethering being notified properly.
         // Remove the mapping all the time no matter provisioning is required or not.
         removeDownstreamMapping(downstreamType);
+        mExemptedDownstreams.set(downstreamType, false);
     }
 
     /**
@@ -499,6 +520,13 @@ public class EntitlementManager {
                 pw.println(", Value: empty");
             }
         }
+        pw.print("Exempted: [");
+        for (int type = mExemptedDownstreams.nextSetBit(0); type >= 0;
+                type = mExemptedDownstreams.nextSetBit(type + 1)) {
+            pw.print(typeString(type));
+            pw.print(", ");
+        }
+        pw.println("]");
     }
 
     private static String typeString(int type) {
