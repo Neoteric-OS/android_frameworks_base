@@ -547,4 +547,20 @@ public class EthernetTetheringTest {
             mTestIface = null;
         }
     }
+
+    @Test
+    public void testOnError() throws Exception {
+        assumeFalse(mEm.isAvailable());
+
+        CompletableFuture<String> futureIface = mTetheredInterfaceRequester.requestInterface();
+
+        mEm.setIncludeTestInterfaces(true);
+
+        mTestIface = createTestInterface();
+
+        final String iface = futureIface.get(TIMEOUT_MS, TimeUnit.MILLISECONDS);
+        mTetheringEventCallback = enableEthernetTethering(iface);
+        maybeDeleteTestInterface();
+        mTm.tether(iface);
+    }
 }

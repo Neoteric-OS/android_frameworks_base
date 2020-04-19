@@ -1345,4 +1345,29 @@ public class TetheringManager {
             }
         }));
     }
+
+    /**
+     * Whether to treat "iface" which is created by {@link TestNetworkManager#createTapInterface}
+     * as specific "tetheringType"
+     *
+     * @hide
+     */
+    @TestApi
+    public void setTestTethering(final boolean enabled, @TetheringType final int tetheringType,
+            @NonNull final String iface) {
+        final String callerPkg = mContext.getOpPackageName();
+        Log.i(TAG, "stopAllTethering caller:" + callerPkg);
+        final ConditionVariable waitingForResult = new ConditionVariable();
+
+        getConnector(c -> c.setTestTethering(enabled, tetheringType, iface,
+                new IIntResultListener.Stub() {
+                    @Override
+                    public void onResult(int resultCode) {
+                        waitingForResult.open();
+                    };
+                }));
+        if (!waitingForResult.block(DEFAULT_TIMEOUT_MS)) {
+            throw new IllegalStateException("Callback timeout");
+        }
+    }
 }

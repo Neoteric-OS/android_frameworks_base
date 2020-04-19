@@ -122,27 +122,21 @@ public class TetheringService extends Service {
         public void tether(String iface, String callerPkg, IIntResultListener listener) {
             if (checkAndNotifyCommonError(callerPkg, listener)) return;
 
-            try {
-                listener.onResult(mTethering.tether(iface));
-            } catch (RemoteException e) { }
+            sendResult(listener, mTethering.tether(iface));
         }
 
         @Override
         public void untether(String iface, String callerPkg, IIntResultListener listener) {
             if (checkAndNotifyCommonError(callerPkg, listener)) return;
 
-            try {
-                listener.onResult(mTethering.untether(iface));
-            } catch (RemoteException e) { }
+            sendResult(listener, mTethering.untether(iface));
         }
 
         @Override
         public void setUsbTethering(boolean enable, String callerPkg, IIntResultListener listener) {
             if (checkAndNotifyCommonError(callerPkg, listener)) return;
 
-            try {
-                listener.onResult(mTethering.setUsbTethering(enable));
-            } catch (RemoteException e) { }
+            sendResult(listener, mTethering.setUsbTethering(enable));
         }
 
         @Override
@@ -161,10 +155,8 @@ public class TetheringService extends Service {
         public void stopTethering(int type, String callerPkg, IIntResultListener listener) {
             if (checkAndNotifyCommonError(callerPkg, listener)) return;
 
-            try {
-                mTethering.stopTethering(type);
-                listener.onResult(TETHER_ERROR_NO_ERROR);
-            } catch (RemoteException e) { }
+            mTethering.stopTethering(type);
+            sendResult(listener, TETHER_ERROR_NO_ERROR);
         }
 
         @Override
@@ -203,19 +195,25 @@ public class TetheringService extends Service {
         public void stopAllTethering(String callerPkg, IIntResultListener listener) {
             if (checkAndNotifyCommonError(callerPkg, listener)) return;
 
-            try {
-                mTethering.untetherAll();
-                listener.onResult(TETHER_ERROR_NO_ERROR);
-            } catch (RemoteException e) { }
+            mTethering.untetherAll();
+            sendResult(listener, TETHER_ERROR_NO_ERROR);
         }
 
         @Override
         public void isTetheringSupported(String callerPkg, IIntResultListener listener) {
             if (checkAndNotifyCommonError(callerPkg, listener)) return;
 
-            try {
-                listener.onResult(TETHER_ERROR_NO_ERROR);
-            } catch (RemoteException e) { }
+            sendResult(listener, TETHER_ERROR_NO_ERROR);
+        }
+
+        @Override
+        public void setTestTethering(boolean enabled, int tetheringType, String iface,
+                IIntResultListener listener) {
+            if (!hasTetherPrivilegedPermission()) {
+                sendResult(listener, TETHER_ERROR_NO_CHANGE_TETHERING_PERMISSION);
+            }
+
+            mTethering.setTestTethering(enabled, tetheringType, iface, listener);
         }
 
         @Override
@@ -293,6 +291,12 @@ public class TetheringService extends Service {
             }
 
             return false;
+        }
+
+        private void sendResult(final IIntResultListener listener, final int result) {
+            try {
+                listener.onResult(result);
+            } catch (RemoteException e) { }
         }
     }
 

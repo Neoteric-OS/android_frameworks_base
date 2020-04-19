@@ -2029,6 +2029,21 @@ public class Tethering {
         mNotificationUpdater.onUpstreamNetworkChanged(network);
     }
 
+    void setTestTethering(final boolean enabled, final int tetheringType, final String iface,
+            final IIntResultListener listener) {
+        mHandler.post(() -> {
+            if (enabled) {
+                maybeTrackNewInterfaceLocked(iface, tetheringType);
+            } else {
+                stopTrackingInterfaceLocked(iface);
+            }
+
+            try {
+                listener.onResult(TETHER_ERROR_NO_ERROR);
+            } catch (RemoteException e) { }
+        });
+    }
+
     private void reportConfigurationChanged(TetheringConfigurationParcel config) {
         final int length = mTetheringEventCallbacks.beginBroadcast();
         try {
