@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e7e09caa_cd32a754",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8083,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-04-20T23:57:32Z",
+      "side": 1,
+      "message": "Per our conversation offline, updated to check for MANAGE_TEST_NETWORKS. Done.",
+      "parentUuid": "576d3fb9_74eb15da",
+      "range": {
+        "startLine": 8083,
+        "startChar": 16,
+        "endLine": 8083,
+        "endChar": 33
+      },
+      "revId": "8b55f8bb3e62a7419e4b9bb136a58dcba0ee42a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e9c6681_b2ca6719",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
