@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d4c38391_becc8fb7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2819,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-21T13:49:28Z",
+      "side": 1,
+      "message": "Oops- thanks !",
+      "parentUuid": "209e928a_a7843dd1",
+      "range": {
+        "startLine": 2818,
+        "startChar": 0,
+        "endLine": 2819,
+        "endChar": 98
+      },
+      "revId": "388b6be8e3b08956df0c59f36523de7d21f2e588",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d972d56d_ce3d7876",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "03adad9c_dc66c821",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3003,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-21T13:49:28Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "33ed7c4e_fe5a0a96",
+      "range": {
+        "startLine": 3003,
+        "startChar": 59,
+        "endLine": 3003,
+        "endChar": 60
+      },
+      "revId": "388b6be8e3b08956df0c59f36523de7d21f2e588",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e72c6691_5f026bb1",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
@@ -92,6 +140,30 @@
       "revId": "388b6be8e3b08956df0c59f36523de7d21f2e588",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a8c013_b76c0548",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3007,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-21T13:49:28Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "e72c6691_5f026bb1",
+      "range": {
+        "startLine": 3005,
+        "startChar": 0,
+        "endLine": 3007,
+        "endChar": 50
+      },
+      "revId": "388b6be8e3b08956df0c59f36523de7d21f2e588",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
