@@ -27,12 +27,18 @@ import android.media.audiopolicy.AudioProductStrategy;
 import android.media.audiopolicy.AudioVolumeGroup;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.common.primitives.Ints;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class AudioManagerTest extends AudioVolumesTestBase {
     private static final String TAG = "AudioManagerTest";
+    final List<Integer> mPublicStreams = Ints.asList(PUBLIC_STREAM_TYPES);
+    private AudioVolumeGroupCallbackHelper mVgCbReceiver;
 
     //-----------------------------------------------------------------
     // Test getAudioProductStrategies and validate strategies
@@ -251,17 +257,16 @@ public class AudioManagerTest extends AudioVolumesTestBase {
         List<AudioVolumeGroup> audioVolumeGroups = mAudioManager.getAudioVolumeGroups();
         assertTrue(audioVolumeGroups.size() > 0);
 
-        AudioVolumeGroupCallbackHelper vgCbReceiver = new AudioVolumeGroupCallbackHelper();
-        mAudioManager.registerVolumeGroupCallback(mContext.getMainExecutor(), vgCbReceiver);
+        mVgCbReceiver = new AudioVolumeGroupCallbackHelper();
+        mAudioManager.registerVolumeGroupCallback(mContext.getMainExecutor(), mVgCbReceiver);
 
-        final List<Integer> publicStreams = Ints.asList(PUBLIC_STREAM_TYPES);
         try {
             // Validate Audio Volume Groups callback reception
             for (final AudioVolumeGroup audioVolumeGroup : audioVolumeGroups) {
                 int volumeGroupId = audioVolumeGroup.getId();
 
                 // Set the receiver to filter only the current group callback
-                vgCbReceiver.setExpectedVolumeGroup(volumeGroupId);
+                mVgCbReceiver.setExpectedVolumeGroup(volumeGroupId);
 
                 List<AudioAttributes> avgAttributes = audioVolumeGroup.getAudioAttributes();
                 int[] avgStreamTypes = audioVolumeGroup.getLegacyStreamTypes();
@@ -283,9 +288,9 @@ public class AudioManagerTest extends AudioVolumesTestBase {
                     indexMin = mAudioManager.getMinVolumeIndexForAttributes(aa);
                     index = incrementVolumeIndex(index, indexMin, indexMax);
 
-                    vgCbReceiver.setExpectedVolumeGroup(volumeGroupId);
+                    mVgCbReceiver.setExpectedVolumeGroup(volumeGroupId);
                     mAudioManager.setVolumeIndexForAttributes(aa, index, 0/*flags*/);
-                    assertTrue(vgCbReceiver.waitForExpectedVolumeGroupChanged(
+                    assertTrue(mVgCbReceiver.waitForExpectedVolumeGroupChanged(
                             AudioVolumeGroupCallbackHelper.ASYNC_TIMEOUT_MS));
 
                     int readIndex = mAudioManager.getVolumeIndexForAttributes(aa);
@@ -300,7 +305,7 @@ public class AudioManagerTest extends AudioVolumesTestBase {
                         // so bailing out strategy retrieval from stream type
                         continue;
                     }
-                    if (!publicStreams.contains(avgStreamType)
+                    if (!mPublicStreams.contains(avgStreamType)
                             || avgStreamType == AudioManager.STREAM_ACCESSIBILITY) {
                         // Limit scope of test to public stream that do not require any
                         // permission (e.g. Changing ACCESSIBILITY is subject to permission).
@@ -311,9 +316,9 @@ public class AudioManagerTest extends AudioVolumesTestBase {
                     indexMin = mAudioManager.getStreamMinVolumeInt(avgStreamType);
                     index = incrementVolumeIndex(index, indexMin, indexMax);
 
-                    vgCbReceiver.setExpectedVolumeGroup(volumeGroupId);
+                    mVgCbReceiver.setExpectedVolumeGroup(volumeGroupId);
                     mAudioManager.setStreamVolume(avgStreamType, index, 0/*flags*/);
-                    assertTrue(vgCbReceiver.waitForExpectedVolumeGroupChanged(
+                    assertTrue(mVgCbReceiver.waitForExpectedVolumeGroupChanged(
                             AudioVolumeGroupCallbackHelper.ASYNC_TIMEOUT_MS));
 
                     int readIndex = mAudioManager.getStreamVolume(avgStreamType);
@@ -321,7 +326,411 @@ public class AudioManagerTest extends AudioVolumesTestBase {
                 }
             }
         } finally {
-            mAudioManager.unregisterVolumeGroupCallback(vgCbReceiver);
+            mAudioManager.unregisterVolumeGroupCallback(mVgCbReceiver);
         }
+    }
+
+    //-----------------------------------------------------------------
+    // Test adjustAttributesVolume
+    //-----------------------------------------------------------------
+    public void testAdjustAttributesVolume() throws Exception {
+        List<AudioVolumeGroup> audioVolumeGroups = mAudioManager.getAudioVolumeGroups();
+        assertTrue(audioVolumeGroups.size() > 0);
+
+        mVgCbReceiver = new AudioVolumeGroupCallbackHelper();
+        mAudioManager.registerVolumeGroupCallback(mContext.getMainExecutor(), mVgCbReceiver);
+
+        try {
+            // Validate Audio Volume Groups callback reception
+            for (final AudioVolumeGroup audioVolumeGroup : audioVolumeGroups) {
+                int volumeGroupId = audioVolumeGroup.getId();
+
+                List<AudioAttributes> avgAttributes = audioVolumeGroup.getAudioAttributes();
+                int[] avgStreamTypes = audioVolumeGroup.getLegacyStreamTypes();
+
+                // Set the volume per attributes (if valid) and wait the callback
+                for (final AudioAttributes aa : avgAttributes) {
+                    if (aa.equals(sDefaultAttributes)) {
+                        // Some volume groups may not have valid attributes, used for internal
+                        // volume management like patch/rerouting
+                        // so bailing out strategy retrieval from attributes
+                        continue;
+                    }
+                    final int indexMin = mAudioManager.getMinVolumeIndexForAttributes(aa);
+                    final int indexMax = mAudioManager.getMaxVolumeIndexForAttributes(aa);
+                    int index = resetVolumeIndex(indexMin, indexMax);
+                    mAudioManager.setVolumeIndexForAttributes(aa, index, 0/*flags*/);
+                    assertEquals(mAudioManager.getVolumeIndexForAttributes(aa), index);
+
+                    // ADJUST_RAISE
+                    mVgCbReceiver.setExpectedVolumeGroup(volumeGroupId);
+                    mAudioManager.adjustAttributesVolume(aa, AudioManager.ADJUST_RAISE, 0/*flags*/);
+                    assertTrue(mVgCbReceiver.waitForExpectedVolumeGroupChanged(
+                            AudioVolumeGroupCallbackHelper.ASYNC_TIMEOUT_MS));
+
+                    int readIndex = mAudioManager.getVolumeIndexForAttributes(aa);
+                    assertEquals(readIndex, index + 1);
+
+                    for (final int avgStreamType : avgStreamTypes) {
+                        if (avgStreamType != AudioSystem.STREAM_DEFAULT
+                                && mPublicStreams.contains(avgStreamType)
+                                && avgStreamType == AudioManager.STREAM_ACCESSIBILITY) {
+                            // scope of matching stream API limited to public stream
+                            assertEquals(index + 1, mAudioManager.getStreamVolume(avgStreamType));
+                        }
+                    }
+
+                    // ADJUST_LOWER
+                    mVgCbReceiver.setExpectedVolumeGroup(volumeGroupId);
+                    mAudioManager.adjustAttributesVolume(aa, AudioManager.ADJUST_LOWER, 0/*flags*/);
+                    assertTrue(mVgCbReceiver.waitForExpectedVolumeGroupChanged(
+                            AudioVolumeGroupCallbackHelper.ASYNC_TIMEOUT_MS));
+
+                    readIndex = mAudioManager.getVolumeIndexForAttributes(aa);
+                    assertEquals(readIndex, index);
+
+                    for (final int avgStreamType : avgStreamTypes) {
+                        if (avgStreamType != AudioSystem.STREAM_DEFAULT
+                                && mPublicStreams.contains(avgStreamType)
+                                && avgStreamType == AudioManager.STREAM_ACCESSIBILITY) {
+                            // scope of matching stream API limited to public stream
+                            assertEquals(index, mAudioManager.getStreamVolume(avgStreamType));
+                        }
+                    }
+
+                    ///////////////////////////////////////////////////////////////////////////////
+                    // Mute using ADJUST_MUTE
+                    // Unmute using ADJUST_UNMUTE
+                    ///////////////////////////////////////////////////////////////////////////////
+                    index = mAudioManager.getVolumeIndexForAttributes(aa);
+
+                    muteVolumeGroup(audioVolumeGroup, aa, AudioManager.ADJUST_MUTE);
+
+                    unmuteVolumeGroup(audioVolumeGroup, aa, AudioManager.ADJUST_UNMUTE, index);
+
+                    ///////////////////////////////////////////////////////////////////////////////
+                    // Mute using ADJUST_TOGGLE_MUTE
+                    // Unmute using ADJUST_TOGGLE_MUTE
+                    ///////////////////////////////////////////////////////////////////////////////
+                    index = mAudioManager.getVolumeIndexForAttributes(aa);
+
+                    muteVolumeGroup(audioVolumeGroup, aa, AudioManager.ADJUST_TOGGLE_MUTE);
+
+                    unmuteVolumeGroup(audioVolumeGroup, aa, AudioManager.ADJUST_TOGGLE_MUTE, index);
+
+                    ///////////////////////////////////////////////////////////////////////////////
+                    // Mute using ADJUST_TOGGLE_MUTE
+                    // Unmute using ADJUST_RAISE
+                    ///////////////////////////////////////////////////////////////////////////////
+                    index = mAudioManager.getVolumeIndexForAttributes(aa);
+
+                    muteVolumeGroup(audioVolumeGroup, aa, AudioManager.ADJUST_TOGGLE_MUTE);
+
+                    unmuteVolumeGroup(audioVolumeGroup, aa, AudioManager.ADJUST_RAISE, index + 1);
+                }
+            }
+        } finally {
+            mAudioManager.unregisterVolumeGroupCallback(mVgCbReceiver);
+        }
+    }
+
+    //-----------------------------------------------------------------
+    // Test adjustAttributesVolume / adjustStreamVolume compatibility
+    //-----------------------------------------------------------------
+    public void testAdjustStreamVolumeCompatibility() throws Exception {
+        List<AudioVolumeGroup> audioVolumeGroups = mAudioManager.getAudioVolumeGroups();
+        assertTrue(audioVolumeGroups.size() > 0);
+
+        mVgCbReceiver = new AudioVolumeGroupCallbackHelper();
+        mAudioManager.registerVolumeGroupCallback(mContext.getMainExecutor(), mVgCbReceiver);
+
+        try {
+            // Validate Audio Volume Groups callback reception
+            for (final AudioVolumeGroup avg : audioVolumeGroups) {
+                int volumeGroupId = avg.getId();
+
+                final AudioAttributes aa = getVolumeControlAttributes(avg);
+                if (aa == null) {
+                    // Cannot address mute API by attributes
+                    continue;
+                }
+                final int stream = getStreamVolumeForMute(avg, aa);
+                if (stream == AudioSystem.STREAM_DEFAULT) {
+                    // Cannot address mute API by stream & attributes for this group, bailing out
+                    // compatibility test
+                    continue;
+                }
+                final int index = mAudioManager.getVolumeIndexForAttributes(aa);
+                final int indexMin = mAudioManager.getMinVolumeIndexForAttributes(aa);
+
+                // Mute using adjustStreamVolume TOGGLE
+                // Unmute using adjustAttributesVolume TOGGLE
+                muteGroupByStream(avg, aa, stream, AudioManager.ADJUST_TOGGLE_MUTE);
+                unmuteGroupByAttributes(
+                        avg, aa, stream, AudioManager.ADJUST_TOGGLE_MUTE, index);
+
+                // Mute using adjustStreamVolume MUTE
+                // Unmute using adjustAttributesVolume TOGGLE
+                muteGroupByStream(avg, aa, stream, AudioManager.ADJUST_MUTE);
+                unmuteGroupByAttributes(
+                        avg, aa, stream, AudioManager.ADJUST_TOGGLE_MUTE, index);
+
+                // Mute using adjustStreamVolume MUTE
+                // Unmute using adjustAttributesVolume UNMUTE
+                muteGroupByStream(avg, aa, stream, AudioManager.ADJUST_MUTE);
+                unmuteGroupByAttributes(
+                        avg, aa, stream, AudioManager.ADJUST_UNMUTE, index);
+
+                // Mute using adjustStreamVolume TOGGLE
+                // Unmute using adjustAttributesVolume UNMUTE
+                muteGroupByStream(avg, aa, stream, AudioManager.ADJUST_TOGGLE_MUTE);
+                unmuteGroupByAttributes(
+                        avg, aa, stream, AudioManager.ADJUST_TOGGLE_MUTE, index);
+
+                // Mute using adjustStreamVolume TOGGLE
+                // Unmute using adjustAttributesVolume RAISE
+                muteGroupByStream(avg, aa, stream, AudioManager.ADJUST_TOGGLE_MUTE);
+                unmuteGroupByAttributes(avg, aa, stream, AudioManager.ADJUST_RAISE, index + 1);
+
+                // Mute using adjustStreamVolume TOGGLE
+                // Unmute using setVolumeIndexForAttributes
+                muteGroupByStream(avg, aa, stream, AudioManager.ADJUST_TOGGLE_MUTE);
+                unmuteGroupBySetAttributesIndex(avg, aa, stream, index);
+
+                // Mute using adjustAttributesVolume TOGGLE
+                // Unmute using adjustStreamVolume TOGGLE
+                muteGroupByAttributes(avg, aa, stream, AudioManager.ADJUST_TOGGLE_MUTE);
+                unmuteGroupByStream(avg, aa, stream, AudioManager.ADJUST_TOGGLE_MUTE, index);
+
+                // Mute using adjustAttributesVolume MUTE
+                // Unmute using adjustStreamVolume TOGGLE
+                muteGroupByAttributes(avg, aa, stream, AudioManager.ADJUST_MUTE);
+                unmuteGroupByStream(avg, aa, stream, AudioManager.ADJUST_TOGGLE_MUTE, index);
+
+                // Mute using adjustAttributesVolume MUTE
+                // Unmute using adjustStreamVolume UNMUTE
+                muteGroupByAttributes(avg, aa, stream, AudioManager.ADJUST_MUTE);
+                unmuteGroupByStream(avg, aa, stream, AudioManager.ADJUST_UNMUTE, index);
+
+                // Mute using adjustAttributesVolume TOGGLE
+                // Unmute using adjustStreamVolume UNMUTE
+                muteGroupByAttributes(avg, aa, stream, AudioManager.ADJUST_TOGGLE_MUTE);
+                unmuteGroupByStream(avg, aa, stream, AudioManager.ADJUST_UNMUTE, index);
+
+                // Mute using adjustAttributesVolume TOGGLE
+                // Unmute using adjustStreamVolume RAISE
+                muteGroupByAttributes(avg, aa, stream, AudioManager.ADJUST_TOGGLE_MUTE);
+                unmuteGroupByStream(avg, aa, stream, AudioManager.ADJUST_RAISE, index + 1);
+
+                // AudioManager#setStreamVolume is not sync within AudioService with
+                // VolumeGroupState
+                // Mute using adjustAttributesVolume TOGGLE
+                // Unmute using setStreamVolume
+                muteGroupByAttributes(avg, aa, stream, AudioManager.ADJUST_TOGGLE_MUTE);
+                unmuteGroupBySetStreamIndex(avg, aa, stream, index);
+            }
+        } finally {
+            mAudioManager.unregisterVolumeGroupCallback(mVgCbReceiver);
+        }
+    }
+
+    private void muteGroupByStream(@NonNull AudioVolumeGroup avg, @NonNull AudioAttributes aa,
+            int stream, int adjustEvent) {
+        final int index = mAudioManager.getVolumeIndexForAttributes(aa);
+        final int indexMin = mAudioManager.getMinVolumeIndexForAttributes(aa);
+
+        mVgCbReceiver.setExpectedVolumeGroup(avg.getId());
+        mAudioManager.adjustStreamVolume(stream, adjustEvent, 0/*flags*/);
+        assertTrue(mVgCbReceiver.waitForExpectedVolumeGroupChanged(
+                AudioVolumeGroupCallbackHelper.ASYNC_TIMEOUT_MS));
+
+        final int readIndex = mAudioManager.getVolumeIndexForAttributes(aa);
+
+        assertEquals(indexMin, mAudioManager.getStreamVolume(stream));
+        assertTrue(mAudioManager.isStreamMute(stream));
+        assertEquals(index, mAudioManager.getLastAudibleStreamVolume(stream));
+
+        assertEquals(readIndex, indexMin);
+        assertTrue(mAudioManager.isAttributesMuted(aa));
+        assertEquals(index, mAudioManager.getLastAudibleAttributesVolume(aa));
+    }
+
+    private void muteGroupByAttributes(@NonNull AudioVolumeGroup avg, @NonNull AudioAttributes aa,
+            int stream, int adjustEvent) {
+        final int index = mAudioManager.getVolumeIndexForAttributes(aa);
+        final int indexMin = mAudioManager.getMinVolumeIndexForAttributes(aa);
+
+        mVgCbReceiver.setExpectedVolumeGroup(avg.getId());
+        mAudioManager.adjustAttributesVolume(aa, adjustEvent, 0/*flags*/);
+        assertTrue(mVgCbReceiver.waitForExpectedVolumeGroupChanged(
+                AudioVolumeGroupCallbackHelper.ASYNC_TIMEOUT_MS));
+
+        final int readIndex = mAudioManager.getVolumeIndexForAttributes(aa);
+
+        assertEquals(readIndex, indexMin);
+        assertTrue(mAudioManager.isAttributesMuted(aa));
+        assertEquals(index, mAudioManager.getLastAudibleAttributesVolume(aa));
+
+        assertEquals(indexMin, mAudioManager.getStreamVolume(stream));
+        assertTrue(mAudioManager.isStreamMute(stream));
+        assertEquals(index, mAudioManager.getLastAudibleStreamVolume(stream));
+    }
+
+    private void unmuteGroupByStream(@NonNull AudioVolumeGroup avg, @NonNull AudioAttributes aa,
+            int stream, int adjustEvent, int indexBeforeMute) {
+
+        mVgCbReceiver.setExpectedVolumeGroup(avg.getId());
+        mAudioManager.adjustStreamVolume(stream, adjustEvent, 0/*flags*/);
+        assertTrue(mVgCbReceiver.waitForExpectedVolumeGroupChanged(
+                AudioVolumeGroupCallbackHelper.ASYNC_TIMEOUT_MS));
+
+        final int readIndex = mAudioManager.getVolumeIndexForAttributes(aa);
+
+        assertEquals(indexBeforeMute, mAudioManager.getStreamVolume(stream));
+        assertFalse(mAudioManager.isStreamMute(stream));
+        assertEquals(indexBeforeMute, mAudioManager.getLastAudibleStreamVolume(stream));
+
+        assertEquals(readIndex, indexBeforeMute);
+        assertFalse(mAudioManager.isAttributesMuted(aa));
+        assertEquals(indexBeforeMute, mAudioManager.getLastAudibleAttributesVolume(aa));
+    }
+
+    private void unmuteGroupByAttributes(@NonNull AudioVolumeGroup avg, @NonNull AudioAttributes aa,
+            int stream, int adjustEvent, int indexBeforeMute) {
+        mVgCbReceiver.setExpectedVolumeGroup(avg.getId());
+        mAudioManager.adjustAttributesVolume(aa, adjustEvent, 0/*flags*/);
+        assertTrue(mVgCbReceiver.waitForExpectedVolumeGroupChanged(
+                AudioVolumeGroupCallbackHelper.ASYNC_TIMEOUT_MS));
+
+        final int readIndex = mAudioManager.getVolumeIndexForAttributes(aa);
+
+        assertEquals(readIndex, indexBeforeMute);
+        assertFalse(mAudioManager.isAttributesMuted(aa));
+        assertEquals(indexBeforeMute, mAudioManager.getLastAudibleAttributesVolume(aa));
+
+        assertEquals(indexBeforeMute, mAudioManager.getStreamVolume(stream));
+        assertFalse(mAudioManager.isStreamMute(stream));
+        assertEquals(indexBeforeMute, mAudioManager.getLastAudibleStreamVolume(stream));
+    }
+
+    private void unmuteGroupBySetStreamIndex(@NonNull AudioVolumeGroup avg,
+            @NonNull AudioAttributes aa, int stream, int index) {
+
+        mVgCbReceiver.setExpectedVolumeGroup(avg.getId());
+        mAudioManager.setStreamVolume(stream, index, 0/*flags*/);
+        assertTrue(mVgCbReceiver.waitForExpectedVolumeGroupChanged(
+                AudioVolumeGroupCallbackHelper.ASYNC_TIMEOUT_MS));
+
+        final int readIndex = mAudioManager.getVolumeIndexForAttributes(aa);
+
+        assertEquals(index, mAudioManager.getStreamVolume(stream));
+        assertFalse(mAudioManager.isStreamMute(stream));
+        assertEquals(index, mAudioManager.getLastAudibleStreamVolume(stream));
+
+        assertEquals(readIndex, index);
+        assertFalse(mAudioManager.isAttributesMuted(aa));
+        assertEquals(index, mAudioManager.getLastAudibleAttributesVolume(aa));
+    }
+
+    private void unmuteGroupBySetAttributesIndex(@NonNull AudioVolumeGroup avg,
+            @NonNull AudioAttributes aa, int stream, int index) {
+        mVgCbReceiver.setExpectedVolumeGroup(avg.getId());
+        mAudioManager.setVolumeIndexForAttributes(aa, index, 0/*flags*/);
+        assertTrue(mVgCbReceiver.waitForExpectedVolumeGroupChanged(
+                AudioVolumeGroupCallbackHelper.ASYNC_TIMEOUT_MS));
+
+        final int readIndex = mAudioManager.getVolumeIndexForAttributes(aa);
+
+        assertEquals(readIndex, index);
+        assertFalse(mAudioManager.isAttributesMuted(aa));
+        assertEquals(index, mAudioManager.getLastAudibleAttributesVolume(aa));
+
+        assertEquals(index, mAudioManager.getStreamVolume(stream));
+        assertFalse(mAudioManager.isStreamMute(stream));
+        assertEquals(index, mAudioManager.getLastAudibleStreamVolume(stream));
+    }
+
+    private void muteVolumeGroup(@NonNull AudioVolumeGroup avg, @NonNull AudioAttributes aa,
+            int adjustEvent) {
+        final int index = mAudioManager.getVolumeIndexForAttributes(aa);
+        final int indexMin = mAudioManager.getMinVolumeIndexForAttributes(aa);
+
+        mVgCbReceiver.setExpectedVolumeGroup(avg.getId());
+        mAudioManager.adjustAttributesVolume(aa, adjustEvent, 0/*flags*/);
+        assertTrue(mVgCbReceiver.waitForExpectedVolumeGroupChanged(
+                AudioVolumeGroupCallbackHelper.ASYNC_TIMEOUT_MS));
+
+        int readIndex = mAudioManager.getVolumeIndexForAttributes(aa);
+        assertEquals(readIndex, indexMin);
+        assertTrue(mAudioManager.isAttributesMuted(aa));
+        assertEquals(index, mAudioManager.getLastAudibleAttributesVolume(aa));
+
+        for (final int avgStreamType : avg.getLegacyStreamTypes()) {
+            if (avgStreamType != AudioSystem.STREAM_DEFAULT
+                    && mPublicStreams.contains(avgStreamType)
+                    && avgStreamType == AudioManager.STREAM_ACCESSIBILITY
+                    && indexMin == 0
+                    && mAudioManager.isStreamAffectedByMute(avgStreamType)) {
+                // scope of matching stream API limited to public stream
+                // We can only run compatibility test with stream/attributes is
+                //  - a valid public stream type is attached to the group
+                //  - a 0 min index is supported (otherwise stream cannot be muted).
+                //  - the stream shall be affected by mute
+                assertEquals(0, mAudioManager.getStreamVolume(avgStreamType));
+                assertTrue(mAudioManager.isStreamMute(avgStreamType));
+                assertEquals(index, mAudioManager.getLastAudibleStreamVolume(avgStreamType));
+            }
+        }
+    }
+
+    private void unmuteVolumeGroup(@NonNull AudioVolumeGroup avg, @NonNull AudioAttributes aa,
+            int adjustEvent, int indexBeforeMute) {
+
+        mVgCbReceiver.setExpectedVolumeGroup(avg.getId());
+        mAudioManager.adjustAttributesVolume(aa, adjustEvent, 0/*flags*/);
+        assertTrue(mVgCbReceiver.waitForExpectedVolumeGroupChanged(
+                AudioVolumeGroupCallbackHelper.ASYNC_TIMEOUT_MS));
+
+        int readIndex = mAudioManager.getVolumeIndexForAttributes(aa);
+        assertEquals(readIndex, indexBeforeMute);
+        assertFalse(mAudioManager.isAttributesMuted(aa));
+        assertEquals(indexBeforeMute, mAudioManager.getLastAudibleAttributesVolume(aa));
+
+        final int indexMin = mAudioManager.getMinVolumeIndexForAttributes(aa);
+
+        for (final int avgStreamType : avg.getLegacyStreamTypes()) {
+            if (avgStreamType != AudioSystem.STREAM_DEFAULT
+                    && mPublicStreams.contains(avgStreamType)
+                    && avgStreamType != AudioManager.STREAM_ACCESSIBILITY
+                    && indexMin == 0
+                    && mAudioManager.isStreamAffectedByMute(avgStreamType)) {
+                // scope of matching stream API limited to public stream
+                // We can only run compatibility test with stream/attributes is
+                //  - a valid public stream type is attached to the group
+                //  - a 0 min index is supported (otherwise stream cannot be muted).
+                //  - the stream shall be affected by mute
+                assertEquals(indexBeforeMute, mAudioManager.getStreamVolume(avgStreamType));
+                assertFalse(mAudioManager.isStreamMute(avgStreamType));
+                assertEquals(indexBeforeMute,
+                        mAudioManager.getLastAudibleStreamVolume(avgStreamType));
+            }
+        }
+    }
+
+    private int getStreamVolumeForMute(@NonNull AudioVolumeGroup avg, @NonNull AudioAttributes aa) {
+        final int indexMin = mAudioManager.getMinVolumeIndexForAttributes(aa);
+        return Arrays.stream(avg.getLegacyStreamTypes())
+                .filter(stream -> {
+                    return (stream != AudioSystem.STREAM_DEFAULT)
+                            && mPublicStreams.contains(stream)
+                            && (stream != AudioManager.STREAM_ACCESSIBILITY)
+                            && (indexMin == 0)
+                            && mAudioManager.isStreamAffectedByMute(stream); })
+                .findFirst().orElse(AudioSystem.STREAM_DEFAULT);
+    }
+
+    private @Nullable AudioAttributes getVolumeControlAttributes(@NonNull AudioVolumeGroup avg) {
+        return avg.getAudioAttributes().stream().filter(aa -> !aa.equals(sDefaultAttributes))
+                .findFirst().orElse(null);
     }
 }

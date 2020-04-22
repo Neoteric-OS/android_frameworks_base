@@ -2131,6 +2131,67 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
+    /** @see AudioManager#adjustAttributesVolume(int, int, int) */
+    public void adjustAttributesVolume(@NonNull AudioAttributes attr, int direction, int flags,
+            String callingPackage) {
+        Preconditions.checkNotNull(attr, "attr must not be null");
+        final int volumeGroup = AudioProductStrategy.getVolumeGroupIdForAudioAttributes(attr, true);
+        if (sVolumeGroupStates.indexOfKey(volumeGroup) < 0) {
+            Log.e(TAG, ": no volume group found for attributes " + attr.toString());
+            return;
+        }
+        final VolumeGroupState vgs = sVolumeGroupStates.get(volumeGroup);
+        // For compatibility reason, use stream API is group linked to a valid stream
+        for (final int stream : vgs.getLegacyStreamTypes()) {
+            try {
+                ensureValidStreamType(stream);
+            } catch (IllegalArgumentException e) {
+                Log.d(TAG, "volume group " + volumeGroup + " has internal streams (" + stream
+                        + "), do not change associated stream volume");
+                continue;
+            }
+            // Call only for the first valid stream, legacy API will propagate to aliased streams.
+            // Note: Group and Stream does not share same convention, 0 is mute for stream,
+            // min index is acting as mute for Groups
+            if (mStreamStates[stream].mIndexMin == 0 && isStreamAffectedByMute(stream)) {
+                adjustStreamVolume(stream, direction, flags, callingPackage);
+                return;
+            }
+        }
+        ensureValidDirection(direction);
+        sVolumeLogger.log(new VolumeEvent(VolumeEvent.VOL_ADJUST_GROUP_VOL, attr, vgs.name(),
+                direction/*val1*/, flags/*val2*/, callingPackage));
+        vgs.adjustVolume(direction, flags);
+    }
+
+    /**
+     * Get last audible volume before group associated to given {@link AudioAttrributes} was muted.
+     */
+    public int getLastAudibleAttributesVolume(@NonNull AudioAttributes attr) {
+        Preconditions.checkNotNull(attr, "attr must not be null");
+        final int volumeGroup = AudioProductStrategy.getVolumeGroupIdForAudioAttributes(attr, true);
+        if (sVolumeGroupStates.indexOfKey(volumeGroup) < 0) {
+            Log.e(TAG, ": no volume group found for attributes " + attr.toString());
+            return 0;
+        }
+        final VolumeGroupState vgs = sVolumeGroupStates.get(volumeGroup);
+        return vgs.getVolumeIndex();
+    }
+
+    /** get stream mute state. */
+    public boolean isAttributesMuted(@NonNull AudioAttributes attr) {
+        synchronized (VolumeGroupState.class) {
+            final int volumeGroup =
+                    AudioProductStrategy.getVolumeGroupIdForAudioAttributes(attr, true);
+            if (sVolumeGroupStates.indexOfKey(volumeGroup) < 0) {
+                Log.e(TAG, ": no volume group found for attributes " + attr.toString());
+                return false;
+            }
+            final VolumeGroupState vgs = sVolumeGroupStates.get(volumeGroup);
+            return vgs.isMuted();
+        }
+    }
+
     /** @see AudioManager#setVolumeIndexForAttributes(attr, int, int) */
     public void setVolumeIndexForAttributes(@NonNull AudioAttributes attr, int index, int flags,
                                             String callingPackage) {
@@ -2183,7 +2244,7 @@ public class AudioService extends IAudioService.Stub
             throw new IllegalArgumentException("No volume group for attributes " + attr);
         }
         final VolumeGroupState vgs = sVolumeGroupStates.get(volumeGroup);
-        return vgs.getVolumeIndex();
+        return vgs.isMuted() ? vgs.getMinIndex() : vgs.getVolumeIndex();
     }
 
     /** @see AudioManager#getMaxVolumeIndexForAttributes(attr) */
@@ -4566,6 +4627,7 @@ public class AudioService extends IAudioService.Stub
         private int mLegacyStreamType = AudioSystem.STREAM_DEFAULT;
         private int mPublicStreamType = AudioSystem.STREAM_MUSIC;
         private AudioAttributes mAudioAttributes = AudioProductStrategy.sDefaultAttributes;
+        private boolean mIsMuted = false;
 
         // No API in AudioSystem to get a device from strategy or from attributes.
         // Need a valid public stream type to use current API getDeviceForStream
@@ -4628,11 +4690,67 @@ public class AudioService extends IAudioService.Stub
             setVolumeIndex(index, getDeviceForVolume(), flags);
         }
 
+        public void mute(boolean muted) {
+            mIsMuted = muted;
+        }
+
+        public boolean isMuted() {
+            return mIsMuted;
+        }
+
         private void setVolumeIndex(int index, int device, int flags) {
+            // setting non-min volume for a muted stream unmutes the stream and vice versa,
+            mute(index == mIndexMin);
             // Set the volume index
             setVolumeIndexInt(index, device, flags);
             // Update cache & persist
             updateVolumeIndex(index, device, flags);
+        }
+
+        public void adjustVolume(int direction, int flags) {
+            final int device = getDeviceForVolume();
+            final int previousIndex = getIndex(device);
+
+            switch (direction) {
+                case AudioManager.ADJUST_TOGGLE_MUTE: {
+                    mIsMuted = !mIsMuted;
+                    final int newIndex = mIsMuted ? mIndexMin : previousIndex;
+                    setVolumeIndexInt(mIsMuted ? mIndexMin : previousIndex, device, flags);
+                    break;
+                }
+                case AudioManager.ADJUST_UNMUTE:
+                    mIsMuted = false;
+                    setVolumeIndexInt(previousIndex, device, flags);
+                    break;
+                case AudioManager.ADJUST_MUTE:
+                    mIsMuted = true;
+                    // May be already muted by setvolume 0, prevent from setting same value
+                    if (previousIndex != mIndexMin) {
+                        // bypass persist
+                        setVolumeIndexInt(mIndexMin, device, flags);
+                    }
+                    break;
+                case AudioManager.ADJUST_RAISE:
+                    if (mIsMuted) {
+                        // As for stream, RAISE during mute will increment the index
+                        mIsMuted = false;
+                    }
+                    setVolumeIndex(Math.min(previousIndex + 1, mIndexMax),  device, flags);
+                    break;
+                case AudioManager.ADJUST_LOWER:
+                    // For stream, ADJUST_LOWER on mute group is a no-op
+                    // If we decide to support it, cannot fallback on adjustStreamVolume
+                    // for group associated to legacy stream type
+                    if (mIsMuted && previousIndex != mIndexMin) {
+                        mIsMuted = false;
+                        setVolumeIndexInt(previousIndex, device, flags);
+                    }
+                    if (!mIsMuted) {
+                        final int newIndex = Math.max(previousIndex - 1, mIndexMin);
+                        setVolumeIndex(newIndex, device, flags);
+                    }
+                    break;
+            }
         }
 
         public void updateVolumeIndex(int index, int device, int flags) {
@@ -4704,7 +4822,7 @@ public class AudioService extends IAudioService.Stub
                                     + mAudioVolumeGroup.name() + " and device "
                                     + AudioSystem.getOutputDeviceName(device));
                         }
-                        setVolumeIndexInt(index, device, 0 /*flags*/);
+                        setVolumeIndexInt(mIsMuted ? mIndexMin : index, device, 0 /*flags*/);
                     }
                 }
                 // apply default volume last: by convention , default device volume will be used
@@ -4720,7 +4838,8 @@ public class AudioService extends IAudioService.Stub
                         return;
                     }
                 }
-                setVolumeIndexInt(index, AudioSystem.DEVICE_OUT_DEFAULT, 0 /*flags*/);
+                setVolumeIndexInt(
+                        mIsMuted ? mIndexMin : index, AudioSystem.DEVICE_OUT_DEFAULT, 0 /*flags*/);
             }
         }
 
@@ -4799,6 +4918,8 @@ public class AudioService extends IAudioService.Stub
 
         private void dump(PrintWriter pw) {
             pw.println("- VOLUME GROUP " + mAudioVolumeGroup.name() + ":");
+            pw.print("   Muted: ");
+            pw.println(mIsMuted);
             pw.print("   Min: ");
             pw.println(mIndexMin);
             pw.print("   Max: ");

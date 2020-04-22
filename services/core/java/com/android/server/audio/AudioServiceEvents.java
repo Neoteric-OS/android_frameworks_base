@@ -99,6 +99,7 @@ public class AudioServiceEvents {
         static final int VOL_VOICE_ACTIVITY_HEARING_AID = 6;
         static final int VOL_MODE_CHANGE_HEARING_AID = 7;
         static final int VOL_SET_GROUP_VOL = 8;
+        static final int VOL_ADJUST_GROUP_VOL = 9;
 
         final int mOp;
         final int mStream;
@@ -186,6 +187,14 @@ public class AudioServiceEvents {
             switch (mOp) {
                 case VOL_ADJUST_SUGG_VOL:
                     return new StringBuilder("adjustSuggestedStreamVolume(sugg:")
+                            .append(mAudioAttributes.toString())
+                            .append(" group: ").append(mGroupName)
+                            .append(" dir:").append(AudioManager.adjustToString(mVal1))
+                            .append(" flags:0x").append(Integer.toHexString(mVal2))
+                            .append(") from ").append(mCaller)
+                            .toString();
+                case VOL_ADJUST_GROUP_VOL:
+                    return new StringBuilder("adjustAttributesVolume(attr:")
                             .append(AudioSystem.streamToString(mStream))
                             .append(" dir:").append(AudioManager.adjustToString(mVal1))
                             .append(" flags:0x").append(Integer.toHexString(mVal2))
