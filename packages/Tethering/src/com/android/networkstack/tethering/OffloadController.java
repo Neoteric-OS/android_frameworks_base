@@ -130,8 +130,19 @@ public class OffloadController {
     private int mNatUpdateCallbacksReceived;
     private int mNatUpdateNetlinkErrors;
 
+    @NonNull
+    private final Dependencies mDeps;
+
+    // TODO: Put more parameters in constructor into dependency object.
+    static class Dependencies {
+        int getPerformPollDelay() {
+            return DEFAULT_PERFORM_POLL_DELAY_MS;
+        }
+    }
+
     public OffloadController(Handler h, OffloadHardwareInterface hwi,
-            ContentResolver contentResolver, NetworkStatsManager nsm, SharedLog log) {
+            ContentResolver contentResolver, NetworkStatsManager nsm, SharedLog log,
+            @NonNull Dependencies deps) {
         mHandler = h;
         mHwInterface = hwi;
         mContentResolver = contentResolver;
@@ -147,6 +158,7 @@ public class OffloadController {
             provider = null;
         }
         mStatsProvider = provider;
+        mDeps = deps;
     }
 
     /** Start hardware offload. */
@@ -438,7 +450,7 @@ public class OffloadController {
         if (mHandler.hasCallbacks(mSchedulePollingTask)) {
             mHandler.removeCallbacks(mSchedulePollingTask);
         }
-        mHandler.postDelayed(mSchedulePollingTask, DEFAULT_PERFORM_POLL_DELAY_MS);
+        mHandler.postDelayed(mSchedulePollingTask, mDeps.getPerformPollDelay());
     }
 
     private boolean isPollingStatsNeeded() {
