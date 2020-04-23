@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a095ae59_4406b13c",
+        "filename": "core/tests/utiltests/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1439319
+      },
+      "writtenOn": "2020-04-23T20:28:58Z",
+      "side": 1,
+      "message": "Maybe we can also change this to:\n\n```\nsrcs: [\n \"abc\",\n \"xyz\",\n]\n```",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 77
+      },
+      "revId": "48d5ec5dc6639a852366ccaa2add9f087f66c752",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
