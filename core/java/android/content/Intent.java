@@ -27,6 +27,7 @@ import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemApi;
+import android.annotation.SystemApi.Client;
 import android.annotation.TestApi;
 import android.app.AppGlobals;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -636,7 +637,29 @@ import java.util.Set;
  * {@link #setFlags} and {@link #addFlags}.  See {@link #setFlags} for a list
  * of all possible flags.
  */
-public class Intent implements Parcelable, Cloneable {
+public final class Intent implements Parcelable, Cloneable {
+    public void extraPublic() { }
+    /** @hide */
+    @SystemApi
+    public void extraSystem() { }
+    /** @hide */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
+    public void extraModLib() { }
+    /** @hide */
+    @TestApi
+    public void extraTest() { }
+
+    public synchronized void extraSyncPublic() { }
+    /** @hide */
+    @SystemApi
+    public synchronized void extraSyncSystem() { }
+    /** @hide */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
+    public synchronized void extraSyncModLib() { }
+    /** @hide */
+    @TestApi
+    public synchronized void extraSyncTest() { }
+
     private static final String TAG = "Intent";
 
     private static final String ATTR_ACTION = "action";
