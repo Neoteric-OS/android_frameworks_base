@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "d3eaaa58_c33c81ab",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3019,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-24T06:53:05Z",
+      "side": 1,
+      "message": "I\u0027d guess it can\u0027t be removed because the code won\u0027t compile if we don\u0027t implement this method? But you could consider throwing an AssertionError or other unchecked exception.",
+      "parentUuid": "09534ae2_091fa3c7",
+      "range": {
+        "startLine": 3019,
+        "startChar": 26,
+        "endLine": 3019,
+        "endChar": 60
+      },
+      "revId": "6241c78d89c2af2615170f72527fbdd0ea46b7c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4adcd722_90723d9d",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4
@@ -151,6 +175,30 @@
       "writtenOn": "2020-04-24T05:16:31Z",
       "side": 1,
       "message": "z ?",
+      "range": {
+        "startLine": 2820,
+        "startChar": 59,
+        "endLine": 2820,
+        "endChar": 60
+      },
+      "revId": "6241c78d89c2af2615170f72527fbdd0ea46b7c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4f8ae0_b91daefb",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2820,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-24T06:53:05Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "daf2fc5b_80c7e319",
       "range": {
         "startLine": 2820,
         "startChar": 59,
