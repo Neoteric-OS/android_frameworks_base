@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9014f6d5_d3f0c05e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3004,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-24T11:56:07Z",
+      "side": 1,
+      "message": "Done in followup CL",
+      "parentUuid": "904b2fd3_7b333280",
+      "range": {
+        "startLine": 3004,
+        "startChar": 59,
+        "endLine": 3004,
+        "endChar": 60
+      },
+      "revId": "b955ac2f736b503e81f706c917ceeec0b9e84beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd62d556_38111952",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "b955ac2f736b503e81f706c917ceeec0b9e84beb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3632cfdf_b0c8e9fe",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3015,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-24T11:56:07Z",
+      "side": 1,
+      "message": "As per discussion added comment in followup CL.",
+      "parentUuid": "fd62d556_38111952",
+      "range": {
+        "startLine": 3015,
+        "startChar": 12,
+        "endLine": 3015,
+        "endChar": 80
+      },
+      "revId": "b955ac2f736b503e81f706c917ceeec0b9e84beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
