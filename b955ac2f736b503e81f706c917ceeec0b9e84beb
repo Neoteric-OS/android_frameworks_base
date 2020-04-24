@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "904b2fd3_7b333280",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3004,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-24T10:44:41Z",
+      "side": 1,
+      "message": "Consider throwing AssertionError or similar unchecked exception. Not for this CL.",
+      "range": {
+        "startLine": 3004,
+        "startChar": 59,
+        "endLine": 3004,
+        "endChar": 60
+      },
+      "revId": "b955ac2f736b503e81f706c917ceeec0b9e84beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd62d556_38111952",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3015,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-24T10:44:41Z",
+      "side": 1,
+      "message": "Looks like this event is fired before ConnectivityService itself processes it. Is that what we want? Also, do we want to do this on a binder thread with the networkstack\u0027s calling identity?\n\nAs far as I can see everything here is thread-safe and there are no IPCs out, but if in the future we add some non-thread-safe code or IPCs we could introduce bugs. It\u0027s also different from the convention usually used in ConnectivityService that most work is done on the handler thread.\n\nGiven the choice, I\u0027d do both this work and the data stall work on the handler thread.",
+      "range": {
+        "startLine": 3015,
+        "startChar": 12,
+        "endLine": 3015,
+        "endChar": 80
+      },
+      "revId": "b955ac2f736b503e81f706c917ceeec0b9e84beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
