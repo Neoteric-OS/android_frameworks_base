@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0ee61cb1_87b9c73d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2836,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-24T09:55:08Z",
+      "side": 1,
+      "message": "Done in the receiving method. Also removes changes in NetworkTestedResults.",
+      "parentUuid": "b1fb594c_20ce63cc",
+      "range": {
+        "startLine": 2831,
+        "startChar": 20,
+        "endLine": 2836,
+        "endChar": 0
+      },
+      "revId": "6241c78d89c2af2615170f72527fbdd0ea46b7c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8e88088_1e847e8e",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "6241c78d89c2af2615170f72527fbdd0ea46b7c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b355aa62_27ade9fb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3017,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-24T09:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8e88088_1e847e8e",
+      "range": {
+        "startLine": 3017,
+        "startChar": 56,
+        "endLine": 3017,
+        "endChar": 66
+      },
+      "revId": "6241c78d89c2af2615170f72527fbdd0ea46b7c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "2090b1ff_cab46157",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3019,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-24T09:55:08Z",
+      "side": 1,
+      "message": "The contents of the method is actually removed in the last patch. I can\u0027t remove the definition because it\u0027s abstract in INetworkMonitorCallbacks.Stub",
+      "parentUuid": "09534ae2_091fa3c7",
+      "range": {
+        "startLine": 3019,
+        "startChar": 26,
+        "endLine": 3019,
+        "endChar": 60
+      },
+      "revId": "6241c78d89c2af2615170f72527fbdd0ea46b7c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4adcd722_90723d9d",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4
@@ -115,6 +187,30 @@
       "revId": "6241c78d89c2af2615170f72527fbdd0ea46b7c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20cce2c_be907108",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7810,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-24T09:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4adcd722_90723d9d",
+      "range": {
+        "startLine": 7810,
+        "startChar": 70,
+        "endLine": 7810,
+        "endChar": 80
+      },
+      "revId": "6241c78d89c2af2615170f72527fbdd0ea46b7c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "95816968_04ecf4a8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7866,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-24T09:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e0e4aca_b22e6d81",
+      "range": {
+        "startLine": 7866,
+        "startChar": 54,
+        "endLine": 7866,
+        "endChar": 64
+      },
+      "revId": "6241c78d89c2af2615170f72527fbdd0ea46b7c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bbd688b_ad98f6f1",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 4
@@ -161,6 +281,30 @@
       "revId": "6241c78d89c2af2615170f72527fbdd0ea46b7c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f740c7_b2f32594",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-24T09:55:08Z",
+      "side": 1,
+      "message": "Done - actually I think VALIDATION_RESULT_INVALID was plain wrong here as you say it\u0027s a bitmask of the completed probes, while VALIDATION_RESULT_INVALID is used for the result of the evaluation (not the probes bitmask)",
+      "parentUuid": "7bbd688b_ad98f6f1",
+      "range": {
+        "startLine": 766,
+        "startChar": 0,
+        "endLine": 766,
+        "endChar": 60
+      },
+      "revId": "6241c78d89c2af2615170f72527fbdd0ea46b7c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +352,30 @@
       "revId": "6241c78d89c2af2615170f72527fbdd0ea46b7c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b739a8_a938a235",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2820,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-24T09:55:08Z",
+      "side": 1,
+      "message": "Oops...",
+      "parentUuid": "daf2fc5b_80c7e319",
+      "range": {
+        "startLine": 2820,
+        "startChar": 59,
+        "endLine": 2820,
+        "endChar": 60
+      },
+      "revId": "6241c78d89c2af2615170f72527fbdd0ea46b7c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
