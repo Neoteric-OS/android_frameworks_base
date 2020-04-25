@@ -1,0 +1,8 @@
+Code-Review+2: Nikita Ioffe <ioffe@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Anton Hansson <hansson@google.com>
+Submitted-at: Sat, 25 Apr 2020 07:22:09 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1295744
+Project: platform/frameworks/base
+Branch: refs/heads/master
