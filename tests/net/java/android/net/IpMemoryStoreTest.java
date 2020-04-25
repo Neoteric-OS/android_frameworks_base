@@ -25,7 +25,6 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -37,9 +36,12 @@ import android.net.ipmemorystore.NetworkAttributesParcelable;
 import android.net.ipmemorystore.Status;
 import android.net.networkstack.ModuleNetworkStackClient;
 import android.os.RemoteException;
+import android.util.Pair;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
+
+import com.android.server.connectivity.ipmemorystore.Utils;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -52,6 +54,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -328,5 +331,32 @@ public class IpMemoryStoreTest {
         startIpMemoryStore(true /* supplyService */);
         mStore.factoryReset();
         verify(mMockService, times(1)).factoryReset();
+    }
+
+    private final List<Pair<byte[], String>> mByteArrayTests = List.of(
+            new Pair<>(null, "null"),
+            new Pair<>(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 },
+                    "[0102030405060708090A0B0C]"),
+            new Pair<>(new byte[] { 15, 16, -128, -1 }, "[0F108080FF]"),
+            new Pair<>(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+                    17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 },
+                    "[0102030405060708090A0B0C0D0E0F10...1415161718191A1B1C]")
+    );
+
+    @Test
+    public void testByteArrayToString() {
+        for (final Pair<byte[], String> testCase : mByteArrayTests) {
+            assertEquals(Utils.byteArrayToString(testCase.first), testCase.second);
+        }
+    }
+
+    @Test
+    public void testBlobToString() {
+        for (final Pair<byte[], String> testCase : mByteArrayTests) {
+            final Blob b = new Blob();
+            b.data = testCase.first;
+            assertEquals(Utils.blobToString(b), "Blob : " + testCase.second);
+        }
+        assertEquals(null, "Blob : null");
     }
 }
