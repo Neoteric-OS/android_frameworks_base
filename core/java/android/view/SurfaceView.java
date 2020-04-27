@@ -1034,6 +1034,9 @@ public class SurfaceView extends View implements ViewRootImpl.WindowStoppedCallb
 
     private void setParentSpaceRectangle(Rect position, long frameNumber) {
         final ViewRootImpl viewRoot = getViewRootImpl();
+        if (!viewRoot.mSurface.isValid()) {
+            return;
+        }
 
         applySurfaceTransforms(mSurfaceControl, position, frameNumber);
 
