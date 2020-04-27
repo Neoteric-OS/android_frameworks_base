@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fe792fa_5fb0bb20",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4712,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-27T02:16:41Z",
+      "side": 1,
+      "message": "Maybe also allow apps that hold NETWORK_STACK or MAINLINE_NETWORK_STACK to call this",
+      "range": {
+        "startLine": 4712,
+        "startChar": 5,
+        "endLine": 4712,
+        "endChar": 23
+      },
+      "revId": "0b280df4315e601e2163fa2e823ec7bd39609465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ad3c32_6ab34509",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3068,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-27T02:16:41Z",
+      "side": 1,
+      "message": "Can\u0027t you just overload to a method written immediately next to this ?\n\nAlso please keep the same argument order.",
+      "range": {
+        "startLine": 3068,
+        "startChar": 12,
+        "endLine": 3068,
+        "endChar": 58
+      },
+      "revId": "0b280df4315e601e2163fa2e823ec7bd39609465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb3af47_0face86d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 8115,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-27T02:16:41Z",
+      "side": 1,
+      "message": "Please also check that the nc has TRANSPORT_TEST. An agent with MANAGE_TEST_NETWORKS should probably not be able to do this to the other (non-test) networks it may be providing.",
+      "range": {
+        "startLine": 8115,
+        "startChar": 8,
+        "endLine": 8115,
+        "endChar": 57
+      },
+      "revId": "0b280df4315e601e2163fa2e823ec7bd39609465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050b0fc9_3e8dc343",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-27T02:16:41Z",
+      "side": 1,
+      "message": "No it\u0027s absolutely not okay. NetworkCapabilities.java:946 says\n\n  The owner UID MUST always be included in administratorUids.\n\nIn fact I\u0027m thinking we should throw an exception in the face of whomever tries to send a capability with an ownerUid where it\u0027s not included in the administrators.",
+      "range": {
+        "startLine": 256,
+        "startChar": 61,
+        "endLine": 256,
+        "endChar": 75
+      },
+      "revId": "0b280df4315e601e2163fa2e823ec7bd39609465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
