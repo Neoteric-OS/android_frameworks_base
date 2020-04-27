@@ -1433,6 +1433,10 @@ public class SurfaceView extends View implements ViewRootImpl.SurfaceChangedCall
 
     private void applyOrMergeTransaction(Transaction t, long frameNumber) {
         final ViewRootImpl viewRoot = getViewRootImpl();
+        if (!viewRoot.mSurface.isValid()) {
+            return;
+        }
+
         boolean useBLAST = viewRoot != null && useBLASTSync(viewRoot);
         if (useBLAST) {
             // If we are using BLAST, merge the transaction with the viewroot buffer transaction.
