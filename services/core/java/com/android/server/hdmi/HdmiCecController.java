@@ -30,8 +30,8 @@ import android.os.Handler;
 import android.os.IHwBinder;
 import android.os.Looper;
 import android.os.RemoteException;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.Slog;
-import android.util.SparseArray;
 
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.hdmi.HdmiAnnotations.IoThreadOnly;
@@ -43,8 +43,10 @@ import libcore.util.EmptyArray;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.function.Predicate;
 
@@ -77,7 +79,7 @@ final class HdmiCecController {
          *                       {@link Constants#ADDR_UNREGISTERED}, it means that
          *                       it failed to allocate logical address for the given device type
          */
-        void onAllocated(int deviceType, int logicalAddress);
+        void onAllocated(cec_device_types_values deviceType, int logicalAddress);
     }
 
     private static final byte[] EMPTY_BODY = EmptyArray.BYTE;
@@ -103,7 +105,7 @@ final class HdmiCecController {
     private final Predicate<Integer> mSystemAudioAddressPredicate = new Predicate<Integer>() {
         @Override
         public boolean test(Integer address) {
-            return HdmiUtils.getTypeFromAddress(address) == Constants.ADDR_AUDIO_SYSTEM;
+            return address == Constants.ADDR_AUDIO_SYSTEM;
         }
     };
 
@@ -117,7 +119,8 @@ final class HdmiCecController {
     private final HdmiControlService mService;
 
     // Stores the local CEC devices in the system. Device type is used for key.
-    private final SparseArray<HdmiCecLocalDevice> mLocalDevices = new SparseArray<>();
+    private final HashMap<cec_device_types_values, HdmiCecLocalDevice> mLocalDevices =
+            new HashMap<cec_device_types_values, HdmiCecLocalDevice>();
 
     // Stores recent CEC messages and HDMI Hotplug event history for debugging purpose.
     private final ArrayBlockingQueue<Dumpable> mMessageHistory =
@@ -167,7 +170,7 @@ final class HdmiCecController {
     }
 
     @ServiceThreadOnly
-    void addLocalDevice(int deviceType, HdmiCecLocalDevice device) {
+    void addLocalDevice(cec_device_types_values deviceType, HdmiCecLocalDevice device) {
         assertRunOnServiceThread();
         mLocalDevices.put(deviceType, device);
     }
@@ -186,8 +189,8 @@ final class HdmiCecController {
      * @param callback callback interface to report allocated logical address to caller
      */
     @ServiceThreadOnly
-    void allocateLogicalAddress(final int deviceType, final int preferredAddress,
-            final AllocateAddressCallback callback) {
+    void allocateLogicalAddress(final cec_device_types_values deviceType,
+            final int preferredAddress, final AllocateAddressCallback callback) {
         assertRunOnServiceThread();
 
         runOnIoThread(new Runnable() {
@@ -199,8 +202,8 @@ final class HdmiCecController {
     }
 
     @IoThreadOnly
-    private void handleAllocateLogicalAddress(final int deviceType, int preferredAddress,
-            final AllocateAddressCallback callback) {
+    private void handleAllocateLogicalAddress(final cec_device_types_values deviceType,
+            int preferredAddress, final AllocateAddressCallback callback) {
         assertRunOnIoThread();
         int startAddress = preferredAddress;
         // If preferred address is "unregistered", start address will be the smallest
@@ -237,7 +240,7 @@ final class HdmiCecController {
         }
 
         final int assignedAddress = logicalAddress;
-        HdmiLogger.debug("New logical address for device [%d]: [preferred:%d, assigned:%d]",
+        HdmiLogger.debug("New logical address for device [%s]: [preferred:%d, assigned:%d]",
                         deviceType, preferredAddress, assignedAddress);
         if (callback != null) {
             runOnServiceThread(new Runnable() {
@@ -268,7 +271,7 @@ final class HdmiCecController {
      * @return {@link HdmiCecLocalDevice} instance if the instance of the type is available;
      *          otherwise null.
      */
-    HdmiCecLocalDevice getLocalDevice(int deviceType) {
+    HdmiCecLocalDevice getLocalDevice(cec_device_types_values deviceType) {
         return mLocalDevices.get(deviceType);
     }
 
@@ -300,8 +303,9 @@ final class HdmiCecController {
     @ServiceThreadOnly
     void clearLogicalAddress() {
         assertRunOnServiceThread();
-        for (int i = 0; i < mLocalDevices.size(); ++i) {
-            mLocalDevices.valueAt(i).clearAddress();
+        for (Map.Entry<cec_device_types_values, HdmiCecLocalDevice> device :
+                mLocalDevices.entrySet()) {
+            device.getValue().clearAddress();
         }
         mNativeWrapperImpl.nativeClearLogicalAddress();
     }
@@ -429,7 +433,7 @@ final class HdmiCecController {
     @ServiceThreadOnly
     List<HdmiCecLocalDevice> getLocalDeviceList() {
         assertRunOnServiceThread();
-        return HdmiUtils.sparseArrayToList(mLocalDevices);
+        return new ArrayList<HdmiCecLocalDevice>(mLocalDevices.values());
     }
 
     private List<Integer> pickPollCandidates(int pickStrategy) {
@@ -470,8 +474,9 @@ final class HdmiCecController {
     @ServiceThreadOnly
     private boolean isAllocatedLocalDeviceAddress(int address) {
         assertRunOnServiceThread();
-        for (int i = 0; i < mLocalDevices.size(); ++i) {
-            if (mLocalDevices.valueAt(i).isAddressOf(address)) {
+        for (Map.Entry<cec_device_types_values, HdmiCecLocalDevice> device :
+                mLocalDevices.entrySet()) {
+            if (device.getValue().isAddressOf(address)) {
                 return true;
             }
         }
@@ -690,10 +695,11 @@ final class HdmiCecController {
     }
 
     void dump(final IndentingPrintWriter pw) {
-        for (int i = 0; i < mLocalDevices.size(); ++i) {
-            pw.println("HdmiCecLocalDevice #" + mLocalDevices.keyAt(i) + ":");
+        for (Map.Entry<cec_device_types_values, HdmiCecLocalDevice> device :
+                mLocalDevices.entrySet()) {
+            pw.println("HdmiCecLocalDevice - " + device.getKey() + ":");
             pw.increaseIndent();
-            mLocalDevices.valueAt(i).dump(pw);
+            device.getValue().dump(pw);
             pw.decreaseIndent();
         }
 

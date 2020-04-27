@@ -21,6 +21,7 @@ import android.hardware.hdmi.IHdmiControlCallback;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.HdmiControlManager;
 import android.os.RemoteException;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.Slog;
 
 import com.android.server.hdmi.HdmiCecLocalDevice.ActiveSource;
@@ -59,7 +60,7 @@ final class ActiveSourceHandler {
      * @param newActive new active source information
      * @param deviceType device type of the new active source
      */
-    void process(ActiveSource newActive, int deviceType) {
+    void process(ActiveSource newActive, cec_device_types_values deviceType) {
         // Seq #17
         HdmiCecLocalDeviceTv tv = mSource;
         HdmiDeviceInfo device = mService.getDeviceInfo(newActive.logicalAddress);

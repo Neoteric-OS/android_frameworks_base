@@ -18,10 +18,10 @@ package com.android.server.hdmi;
 
 import android.annotation.Nullable;
 import android.hardware.hdmi.HdmiControlManager;
-import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.IHdmiControlCallback;
 import android.hardware.tv.cec.V1_0.SendMessageResult;
 import android.os.RemoteException;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.Slog;
 import java.util.List;
 
@@ -65,7 +65,7 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
     SystemAudioAction(HdmiCecLocalDevice source, int avrAddress, boolean targetStatus,
             IHdmiControlCallback callback) {
         super(source);
-        HdmiUtils.verifyAddressType(avrAddress, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
+        HdmiUtils.verifyAddressType(avrAddress, cec_device_types_values.AUDIO_SYSTEM);
         mAvrLogicalAddress = avrAddress;
         mTargetAudioStatus = targetStatus;
         mCallback = callback;

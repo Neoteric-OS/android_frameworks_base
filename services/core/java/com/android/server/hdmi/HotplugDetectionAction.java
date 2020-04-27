@@ -17,6 +17,7 @@
 package com.android.server.hdmi;
 
 import android.hardware.hdmi.HdmiDeviceInfo;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.Slog;
 
 import com.android.server.hdmi.HdmiControlService.DevicePollingCallback;
@@ -258,7 +259,7 @@ final class HotplugDetectionAction extends HdmiCecFeatureAction {
     }
 
     private void mayDisableSystemAudioAndARC(int address) {
-        if (HdmiUtils.getTypeFromAddress(address) != HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM) {
+        if (HdmiUtils.getTypeFromAddress(address) != cec_device_types_values.AUDIO_SYSTEM) {
             return;
         }
 

@@ -17,6 +17,8 @@ package com.android.server.hdmi;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import android.hardware.hdmi.HdmiDeviceInfo;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.Slog;
 
 import androidx.test.filters.SmallTest;
@@ -142,5 +144,42 @@ public class HdmiUtilsTest {
         expectedConfig.add(expectedDevice2);
 
         assertThat(config).isEqualTo(expectedConfig);
+    }
+
+    @Test
+    public void cecDeviceTypesSameAsDeviceType() {
+        assertThat(HdmiUtils.cecDeviceTypeToInteger(cec_device_types_values.TV))
+                .isEqualTo(HdmiDeviceInfo.DEVICE_TV);
+        assertThat(HdmiUtils.cecDeviceTypeToInteger(cec_device_types_values.RECORDING_DEVICE))
+                .isEqualTo(HdmiDeviceInfo.DEVICE_RECORDER);
+        assertThat(HdmiUtils.cecDeviceTypeToInteger(cec_device_types_values.RESERVED))
+                .isEqualTo(HdmiDeviceInfo.DEVICE_RESERVED);
+        assertThat(HdmiUtils.cecDeviceTypeToInteger(cec_device_types_values.TUNER))
+                .isEqualTo(HdmiDeviceInfo.DEVICE_TUNER);
+        assertThat(HdmiUtils.cecDeviceTypeToInteger(cec_device_types_values.PLAYBACK_DEVICE))
+                .isEqualTo(HdmiDeviceInfo.DEVICE_PLAYBACK);
+        assertThat(HdmiUtils.cecDeviceTypeToInteger(cec_device_types_values.AUDIO_SYSTEM))
+                .isEqualTo(HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
+        assertThat(HdmiUtils.cecDeviceTypeToInteger(cec_device_types_values.PURE_CEC_SWITCH))
+                .isEqualTo(HdmiDeviceInfo.DEVICE_PURE_CEC_SWITCH);
+        assertThat(HdmiUtils.cecDeviceTypeToInteger(cec_device_types_values.VIDEO_PROCESSOR))
+                .isEqualTo(HdmiDeviceInfo.DEVICE_VIDEO_PROCESSOR);
+
+        assertThat(HdmiUtils.integerToCecDeviceType(HdmiDeviceInfo.DEVICE_TV))
+                .isEqualTo(cec_device_types_values.TV);
+        assertThat(HdmiUtils.integerToCecDeviceType(HdmiDeviceInfo.DEVICE_RECORDER))
+                .isEqualTo(cec_device_types_values.RECORDING_DEVICE);
+        assertThat(HdmiUtils.integerToCecDeviceType(HdmiDeviceInfo.DEVICE_RESERVED))
+                .isEqualTo(cec_device_types_values.RESERVED);
+        assertThat(HdmiUtils.integerToCecDeviceType(HdmiDeviceInfo.DEVICE_TUNER))
+                .isEqualTo(cec_device_types_values.TUNER);
+        assertThat(HdmiUtils.integerToCecDeviceType(HdmiDeviceInfo.DEVICE_PLAYBACK))
+                .isEqualTo(cec_device_types_values.PLAYBACK_DEVICE);
+        assertThat(HdmiUtils.integerToCecDeviceType(HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM))
+                .isEqualTo(cec_device_types_values.AUDIO_SYSTEM);
+        assertThat(HdmiUtils.integerToCecDeviceType(HdmiDeviceInfo.DEVICE_PURE_CEC_SWITCH))
+                .isEqualTo(cec_device_types_values.PURE_CEC_SWITCH);
+        assertThat(HdmiUtils.integerToCecDeviceType(HdmiDeviceInfo.DEVICE_VIDEO_PROCESSOR))
+                .isEqualTo(cec_device_types_values.VIDEO_PROCESSOR);
     }
 }

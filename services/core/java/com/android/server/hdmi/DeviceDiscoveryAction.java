@@ -18,6 +18,7 @@ package com.android.server.hdmi;
 
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.Slog;
 
 import com.android.internal.util.Preconditions;
@@ -80,15 +81,16 @@ final class DeviceDiscoveryAction extends HdmiCecFeatureAction {
         private int mVendorId = Constants.UNKNOWN_VENDOR_ID;
         private int mPowerStatus = HdmiControlManager.POWER_STATUS_UNKNOWN;
         private String mDisplayName = "";
-        private int mDeviceType = HdmiDeviceInfo.DEVICE_INACTIVE;
+        private cec_device_types_values mDeviceType = null;
 
         private DeviceInfo(int logicalAddress) {
             mLogicalAddress = logicalAddress;
         }
 
         private HdmiDeviceInfo toHdmiDeviceInfo() {
-            return new HdmiDeviceInfo(mLogicalAddress, mPhysicalAddress, mPortId, mDeviceType,
-                    mVendorId, mDisplayName, mPowerStatus);
+            return new HdmiDeviceInfo(mLogicalAddress, mPhysicalAddress, mPortId,
+                    HdmiUtils.cecDeviceTypeToInteger(mDeviceType), mVendorId, mDisplayName,
+                    mPowerStatus);
         }
     }
 
@@ -333,7 +335,7 @@ final class DeviceDiscoveryAction extends HdmiCecFeatureAction {
         byte params[] = cmd.getParams();
         current.mPhysicalAddress = HdmiUtils.twoBytesToInt(params);
         current.mPortId = getPortId(current.mPhysicalAddress);
-        current.mDeviceType = params[2] & 0xFF;
+        current.mDeviceType = HdmiUtils.integerToCecDeviceType(params[2] & 0xFF);
         // Keep display name empty. TIF fallbacks to the service label provided by the package mg.
         current.mDisplayName = "";
 

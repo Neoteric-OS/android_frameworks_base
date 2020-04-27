@@ -18,6 +18,7 @@ package com.android.server.hdmi;
 
 import android.annotation.Nullable;
 import android.hardware.hdmi.HdmiDeviceInfo;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.Xml;
@@ -47,22 +48,22 @@ final class HdmiUtils {
 
     private static final String TAG = "HdmiUtils";
 
-    private static final int[] ADDRESS_TO_TYPE = {
-        HdmiDeviceInfo.DEVICE_TV,  // ADDR_TV
-        HdmiDeviceInfo.DEVICE_RECORDER,  // ADDR_RECORDER_1
-        HdmiDeviceInfo.DEVICE_RECORDER,  // ADDR_RECORDER_2
-        HdmiDeviceInfo.DEVICE_TUNER,  // ADDR_TUNER_1
-        HdmiDeviceInfo.DEVICE_PLAYBACK,  // ADDR_PLAYBACK_1
-        HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM,  // ADDR_AUDIO_SYSTEM
-        HdmiDeviceInfo.DEVICE_TUNER,  // ADDR_TUNER_2
-        HdmiDeviceInfo.DEVICE_TUNER,  // ADDR_TUNER_3
-        HdmiDeviceInfo.DEVICE_PLAYBACK,  // ADDR_PLAYBACK_2
-        HdmiDeviceInfo.DEVICE_RECORDER,  // ADDR_RECORDER_3
-        HdmiDeviceInfo.DEVICE_TUNER,  // ADDR_TUNER_4
-        HdmiDeviceInfo.DEVICE_PLAYBACK,  // ADDR_PLAYBACK_3
-        HdmiDeviceInfo.DEVICE_RESERVED,
-        HdmiDeviceInfo.DEVICE_RESERVED,
-        HdmiDeviceInfo.DEVICE_TV,  // ADDR_SPECIFIC_USE
+    private static final cec_device_types_values[] ADDRESS_TO_CEC_DEVICE_TYPE = {
+        cec_device_types_values.TV,  // ADDR_TV
+        cec_device_types_values.RECORDING_DEVICE,  // ADDR_RECORDER_1
+        cec_device_types_values.RECORDING_DEVICE,  // ADDR_RECORDER_2
+        cec_device_types_values.TUNER,  // ADDR_TUNER_1
+        cec_device_types_values.PLAYBACK_DEVICE,  // ADDR_PLAYBACK_1
+        cec_device_types_values.AUDIO_SYSTEM,  // ADDR_AUDIO_SYSTEM
+        cec_device_types_values.TUNER,  // ADDR_TUNER_2
+        cec_device_types_values.TUNER,  // ADDR_TUNER_3
+        cec_device_types_values.PLAYBACK_DEVICE,  // ADDR_PLAYBACK_2
+        cec_device_types_values.RECORDING_DEVICE,  // ADDR_RECORDER_3
+        cec_device_types_values.TUNER,  // ADDR_TUNER_4
+        cec_device_types_values.PLAYBACK_DEVICE,  // ADDR_PLAYBACK_3
+        cec_device_types_values.RESERVED,
+        cec_device_types_values.RESERVED,
+        cec_device_types_values.TV,  // ADDR_SPECIFIC_USE
     };
 
     private static final String[] DEFAULT_NAMES = {
@@ -110,11 +111,12 @@ final class HdmiUtils {
      * @return device type for the given logical address; DEVICE_INACTIVE
      *         if the address is not valid.
      */
-    static int getTypeFromAddress(int address) {
+    @Nullable
+    static cec_device_types_values getTypeFromAddress(int address) {
         if (isValidAddress(address)) {
-            return ADDRESS_TO_TYPE[address];
+            return ADDRESS_TO_CEC_DEVICE_TYPE[address];
         }
-        return HdmiDeviceInfo.DEVICE_INACTIVE;
+        return null;
     }
 
     /**
@@ -140,8 +142,8 @@ final class HdmiUtils {
      * @param deviceType the device type to check
      * @throws IllegalArgumentException
      */
-    static void verifyAddressType(int logicalAddress, int deviceType) {
-        int actualDeviceType = getTypeFromAddress(logicalAddress);
+    static void verifyAddressType(int logicalAddress, cec_device_types_values deviceType) {
+        cec_device_types_values actualDeviceType = getTypeFromAddress(logicalAddress);
         if (actualDeviceType != deviceType) {
             throw new IllegalArgumentException("Device type missmatch:[Expected:" + deviceType
                     + ", Actual:" + actualDeviceType);
@@ -479,6 +481,52 @@ final class HdmiUtils {
     @AbortReason
     static int getAbortReason(HdmiCecMessage cmd) {
         return cmd.getParams()[1];
+    }
+
+    public static int cecDeviceTypeToInteger(@Nullable cec_device_types_values cecDeviceType) {
+        if (cecDeviceType == null) return HdmiDeviceInfo.DEVICE_INACTIVE;
+        switch (cecDeviceType) {
+            case TV:
+                return HdmiDeviceInfo.DEVICE_TV;
+            case RECORDING_DEVICE:
+                return HdmiDeviceInfo.DEVICE_RECORDER;
+            case RESERVED:
+                return HdmiDeviceInfo.DEVICE_RESERVED;
+            case TUNER:
+                return HdmiDeviceInfo.DEVICE_TUNER;
+            case PLAYBACK_DEVICE:
+                return HdmiDeviceInfo.DEVICE_PLAYBACK;
+            case AUDIO_SYSTEM:
+                return HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM;
+            case PURE_CEC_SWITCH:
+                return HdmiDeviceInfo.DEVICE_PURE_CEC_SWITCH;
+            case VIDEO_PROCESSOR:
+                return HdmiDeviceInfo.DEVICE_VIDEO_PROCESSOR;
+        }
+        return HdmiDeviceInfo.DEVICE_INACTIVE;
+    }
+
+    @Nullable
+    public static cec_device_types_values integerToCecDeviceType(int deviceType) {
+        switch (deviceType) {
+            case HdmiDeviceInfo.DEVICE_TV:
+                return cec_device_types_values.TV;
+            case HdmiDeviceInfo.DEVICE_RECORDER:
+                return cec_device_types_values.RECORDING_DEVICE;
+            case HdmiDeviceInfo.DEVICE_RESERVED:
+                return cec_device_types_values.RESERVED;
+            case HdmiDeviceInfo.DEVICE_TUNER:
+                return cec_device_types_values.TUNER;
+            case HdmiDeviceInfo.DEVICE_PLAYBACK:
+                return cec_device_types_values.PLAYBACK_DEVICE;
+            case HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM:
+                return cec_device_types_values.AUDIO_SYSTEM;
+            case HdmiDeviceInfo.DEVICE_PURE_CEC_SWITCH:
+                return cec_device_types_values.PURE_CEC_SWITCH;
+            case HdmiDeviceInfo.DEVICE_VIDEO_PROCESSOR:
+                return cec_device_types_values.VIDEO_PROCESSOR;
+        }
+        return null;
     }
 
     public static class ShortAudioDescriptorXmlParser {

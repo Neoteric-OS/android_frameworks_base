@@ -26,6 +26,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.SystemClock;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.Slog;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;
@@ -60,7 +61,7 @@ abstract class HdmiCecLocalDevice {
     private static final int FOLLOWER_SAFETY_TIMEOUT = 550;
 
     protected final HdmiControlService mService;
-    protected final int mDeviceType;
+    protected final cec_device_types_values mDeviceType;
     protected int mAddress;
     protected int mPreferredAddress;
     @GuardedBy("mLock")
@@ -173,7 +174,7 @@ abstract class HdmiCecLocalDevice {
 
     protected PendingActionClearedCallback mPendingActionClearedCallback;
 
-    protected HdmiCecLocalDevice(HdmiControlService service, int deviceType) {
+    protected HdmiCecLocalDevice(HdmiControlService service, cec_device_types_values deviceType) {
         mService = service;
         mDeviceType = deviceType;
         mAddress = Constants.ADDR_UNREGISTERED;
@@ -181,13 +182,14 @@ abstract class HdmiCecLocalDevice {
     }
 
     // Factory method that returns HdmiCecLocalDevice of corresponding type.
-    static HdmiCecLocalDevice create(HdmiControlService service, int deviceType) {
+    static HdmiCecLocalDevice create(HdmiControlService service,
+            cec_device_types_values deviceType) {
         switch (deviceType) {
-            case HdmiDeviceInfo.DEVICE_TV:
+            case TV:
                 return new HdmiCecLocalDeviceTv(service);
-            case HdmiDeviceInfo.DEVICE_PLAYBACK:
+            case PLAYBACK_DEVICE:
                 return new HdmiCecLocalDevicePlayback(service);
-            case HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM:
+            case AUDIO_SYSTEM:
                 return new HdmiCecLocalDeviceAudioSystem(service);
             default:
                 return null;
@@ -735,7 +737,7 @@ abstract class HdmiCecLocalDevice {
         setPreferredAddress(logicalAddress);
     }
 
-    int getType() {
+    cec_device_types_values getType() {
         return mDeviceType;
     }
 

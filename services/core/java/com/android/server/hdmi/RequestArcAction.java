@@ -16,7 +16,7 @@
 
 package com.android.server.hdmi;
 
-import android.hardware.hdmi.HdmiDeviceInfo;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 
 /**
  * Base feature action class for &lt;Request ARC Initiation&gt;/&lt;Request ARC Termination&gt;.
@@ -40,8 +40,8 @@ abstract class RequestArcAction extends HdmiCecFeatureAction {
      */
     RequestArcAction(HdmiCecLocalDevice source, int avrAddress) {
         super(source);
-        HdmiUtils.verifyAddressType(getSourceAddress(), HdmiDeviceInfo.DEVICE_TV);
-        HdmiUtils.verifyAddressType(avrAddress, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
+        HdmiUtils.verifyAddressType(getSourceAddress(), cec_device_types_values.TV);
+        HdmiUtils.verifyAddressType(avrAddress, cec_device_types_values.AUDIO_SYSTEM);
         mAvrAddress = avrAddress;
     }
 

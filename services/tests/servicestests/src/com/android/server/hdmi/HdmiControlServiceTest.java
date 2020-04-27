@@ -15,9 +15,6 @@
  */
 package com.android.server.hdmi;
 
-import static android.hardware.hdmi.HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM;
-import static android.hardware.hdmi.HdmiDeviceInfo.DEVICE_PLAYBACK;
-
 import static com.android.server.SystemService.PHASE_BOOT_COMPLETED;
 import static com.android.server.hdmi.HdmiControlService.INITIATED_BY_ENABLE_CEC;
 
@@ -40,6 +37,7 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.test.TestLooper;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
@@ -66,7 +64,8 @@ public class HdmiControlServiceTest {
         private boolean mIsStandby;
         private boolean mIsDisabled;
 
-        protected HdmiCecLocalDeviceMyDevice(HdmiControlService service, int deviceType) {
+        protected HdmiCecLocalDeviceMyDevice(HdmiControlService service,
+                cec_device_types_values deviceType) {
             super(service, deviceType);
         }
 
@@ -146,9 +145,10 @@ public class HdmiControlServiceTest {
         };
         mMyLooper = mTestLooper.getLooper();
 
-        mMyAudioSystemDevice =
-                new HdmiCecLocalDeviceMyDevice(mHdmiControlService, DEVICE_AUDIO_SYSTEM);
-        mMyPlaybackDevice = new HdmiCecLocalDeviceMyDevice(mHdmiControlService, DEVICE_PLAYBACK);
+        mMyAudioSystemDevice = new HdmiCecLocalDeviceMyDevice(mHdmiControlService,
+                cec_device_types_values.AUDIO_SYSTEM);
+        mMyPlaybackDevice = new HdmiCecLocalDeviceMyDevice(mHdmiControlService,
+                cec_device_types_values.PLAYBACK_DEVICE);
         mMyAudioSystemDevice.init();
         mMyPlaybackDevice.init();
 

@@ -31,6 +31,7 @@ import static junit.framework.Assert.assertTrue;
 
 import android.hardware.hdmi.HdmiControlManager;
 import android.os.test.TestLooper;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
@@ -64,7 +65,8 @@ public class HdmiCecLocalDeviceTest {
 
     private class MyHdmiCecLocalDevice extends HdmiCecLocalDevice {
 
-        protected MyHdmiCecLocalDevice(HdmiControlService service, int deviceType) {
+        protected MyHdmiCecLocalDevice(HdmiControlService service,
+                cec_device_types_values deviceType) {
             super(service, deviceType);
         }
 
@@ -119,7 +121,8 @@ public class HdmiCecLocalDeviceTest {
                 HdmiCecController.createWithNativeWrapper(
                         mHdmiControlService, new FakeNativeWrapper());
         mHdmiControlService.setCecController(mHdmiCecController);
-        mHdmiLocalDevice = new MyHdmiCecLocalDevice(mHdmiControlService, DEVICE_TV);
+        mHdmiLocalDevice =
+                new MyHdmiCecLocalDevice(mHdmiControlService, cec_device_types_values.TV);
         mMessageValidator =
                 new HdmiCecMessageValidator(mHdmiControlService) {
                     @Override

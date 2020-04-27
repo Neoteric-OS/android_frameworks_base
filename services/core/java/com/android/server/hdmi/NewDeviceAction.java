@@ -16,6 +16,7 @@
 package com.android.server.hdmi;
 
 import android.hardware.hdmi.HdmiDeviceInfo;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.Slog;
 
 import com.android.server.hdmi.HdmiCecLocalDevice.ActiveSource;
@@ -47,7 +48,7 @@ final class NewDeviceAction extends HdmiCecFeatureAction {
 
     private final int mDeviceLogicalAddress;
     private final int mDevicePhysicalAddress;
-    private final int mDeviceType;
+    private final cec_device_types_values mDeviceType;
 
     private int mVendorId;
     private String mDisplayName;
@@ -62,7 +63,7 @@ final class NewDeviceAction extends HdmiCecFeatureAction {
      * @param deviceType type of the device
      */
     NewDeviceAction(HdmiCecLocalDevice source, int deviceLogicalAddress,
-            int devicePhysicalAddress, int deviceType) {
+            int devicePhysicalAddress, cec_device_types_values deviceType) {
         super(source);
         mDeviceLogicalAddress = deviceLogicalAddress;
         mDevicePhysicalAddress = devicePhysicalAddress;
@@ -175,14 +176,14 @@ final class NewDeviceAction extends HdmiCecFeatureAction {
         HdmiDeviceInfo deviceInfo = new HdmiDeviceInfo(
                 mDeviceLogicalAddress, mDevicePhysicalAddress,
                 tv().getPortId(mDevicePhysicalAddress),
-                mDeviceType, mVendorId, mDisplayName);
+                HdmiUtils.cecDeviceTypeToInteger(mDeviceType), mVendorId, mDisplayName);
         tv().addCecDevice(deviceInfo);
 
         // Consume CEC messages we already got for this newly found device.
         tv().processDelayedMessages(mDeviceLogicalAddress);
 
         if (HdmiUtils.getTypeFromAddress(mDeviceLogicalAddress)
-                == HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM) {
+                == cec_device_types_values.AUDIO_SYSTEM) {
             tv().onNewAvrAdded(deviceInfo);
         }
     }

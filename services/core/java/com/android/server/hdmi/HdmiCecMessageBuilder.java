@@ -16,6 +16,8 @@
 
 package com.android.server.hdmi;
 
+import android.sysprop.HdmiProperties.cec_device_types_values;
+
 import com.android.server.hdmi.Constants.AudioCodec;
 
 import java.io.UnsupportedEncodingException;
@@ -151,13 +153,14 @@ public class HdmiCecMessageBuilder {
      * @param deviceType type of device
      * @return newly created {@link HdmiCecMessage}
      */
-    static HdmiCecMessage buildReportPhysicalAddressCommand(int src, int address, int deviceType) {
+    static HdmiCecMessage buildReportPhysicalAddressCommand(int src, int address,
+            cec_device_types_values deviceType) {
         byte[] params = new byte[] {
                 // Two bytes for physical address
                 (byte) ((address >> 8) & 0xFF),
                 (byte) (address & 0xFF),
                 // One byte device type
-                (byte) (deviceType & 0xFF)
+                (byte) (HdmiUtils.cecDeviceTypeToInteger(deviceType) & 0xFF)
         };
         // <Report Physical Address> is broadcast message.
         return buildCommand(src, Constants.ADDR_BROADCAST,

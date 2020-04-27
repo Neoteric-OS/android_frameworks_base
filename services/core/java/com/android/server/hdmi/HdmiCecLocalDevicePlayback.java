@@ -17,7 +17,6 @@
 package com.android.server.hdmi;
 
 import android.hardware.hdmi.HdmiControlManager;
-import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.IHdmiControlCallback;
 import android.hardware.tv.cec.V1_0.SendMessageResult;
 import android.os.PowerManager;
@@ -25,6 +24,7 @@ import android.os.PowerManager.WakeLock;
 import android.os.SystemProperties;
 import android.provider.Settings.Global;
 import android.sysprop.HdmiProperties;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -72,7 +72,7 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
     protected String mPowerStateChangeOnActiveSourceLost;
 
     HdmiCecLocalDevicePlayback(HdmiControlService service) {
-        super(service, HdmiDeviceInfo.DEVICE_PLAYBACK);
+        super(service, cec_device_types_values.PLAYBACK_DEVICE);
 
         mAutoTvOff = mService.readBooleanSetting(Global.HDMI_CONTROL_AUTO_DEVICE_OFF_ENABLED, false);
 
@@ -94,8 +94,8 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
     protected void onAddressAllocated(int logicalAddress, int reason) {
         assertRunOnServiceThread();
         if (reason == mService.INITIATED_BY_ENABLE_CEC) {
-            mService.setAndBroadcastActiveSource(mService.getPhysicalAddress(),
-                    getDeviceInfo().getDeviceType(), Constants.ADDR_BROADCAST);
+            mService.setAndBroadcastActiveSource(mService.getPhysicalAddress(), mDeviceType,
+                    Constants.ADDR_BROADCAST);
         }
         mService.sendCecCommand(HdmiCecMessageBuilder.buildReportPhysicalAddressCommand(
                 mAddress, mService.getPhysicalAddress(), mDeviceType));

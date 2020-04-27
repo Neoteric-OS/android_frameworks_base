@@ -42,6 +42,7 @@ import android.media.AudioSystem;
 import android.media.tv.TvInputInfo;
 import android.media.tv.TvInputManager.TvInputCallback;
 import android.provider.Settings.Global;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.ArraySet;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -182,7 +183,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     private SelectRequestBuffer mSelectRequestBuffer;
 
     HdmiCecLocalDeviceTv(HdmiControlService service) {
-        super(service, HdmiDeviceInfo.DEVICE_TV);
+        super(service, cec_device_types_values.TV);
         mPrevPortId = Constants.INVALID_PORT_ID;
         mAutoDeviceOff = mService.readBooleanSetting(Global.HDMI_CONTROL_AUTO_DEVICE_OFF_ENABLED,
                 true);
@@ -463,7 +464,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                 || info.getDeviceType() == HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM) {
             updateDevicePowerStatus(logicalAddress, HdmiControlManager.POWER_STATUS_ON);
             ActiveSource activeSource = ActiveSource.of(logicalAddress, physicalAddress);
-            ActiveSourceHandler.create(this, null).process(activeSource, info.getDeviceType());
+            ActiveSourceHandler.create(this, null)
+                    .process(activeSource, HdmiUtils.integerToCecDeviceType(info.getDeviceType()));
         } else {
             HdmiLogger.debug("Input not ready for device: %X; buffering the command", info.getId());
             mDelayedMessageBuffer.add(message);
@@ -550,8 +552,9 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         int path = HdmiUtils.twoBytesToInt(message.getParams());
         int address = message.getSource();
         int type = message.getParams()[2];
+        cec_device_types_values cecDeviceType = HdmiUtils.integerToCecDeviceType(type);
 
-        if (updateCecSwitchInfo(address, type, path)) return true;
+        if (updateCecSwitchInfo(address, cecDeviceType, path)) return true;
 
         // Ignore if [Device Discovery Action] is going on.
         if (hasAction(DeviceDiscoveryAction.class)) {
@@ -568,7 +571,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         HdmiDeviceInfo deviceInfo = new HdmiDeviceInfo(address, path, getPortId(path), type,
                 Constants.UNKNOWN_VENDOR_ID, HdmiUtils.getDefaultDeviceName(address));
         addCecDevice(deviceInfo);
-        startNewDeviceAction(ActiveSource.of(address, path), type);
+        startNewDeviceAction(ActiveSource.of(address, path), cecDeviceType);
         return true;
     }
 
@@ -591,20 +594,20 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         return true;
     }
 
-    boolean updateCecSwitchInfo(int address, int type, int path) {
+    boolean updateCecSwitchInfo(int address, cec_device_types_values type, int path) {
         if (address == Constants.ADDR_UNREGISTERED
-                && type == HdmiDeviceInfo.DEVICE_PURE_CEC_SWITCH) {
+                && type == cec_device_types_values.PURE_CEC_SWITCH) {
             mCecSwitches.add(path);
             updateSafeDeviceInfoList();
             return true;  // Pure switch does not need further processing. Return here.
         }
-        if (type == HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM) {
+        if (type == cec_device_types_values.AUDIO_SYSTEM) {
             mCecSwitches.add(path);
         }
         return false;
     }
 
-    void startNewDeviceAction(ActiveSource activeSource, int deviceType) {
+    void startNewDeviceAction(ActiveSource activeSource, cec_device_types_values deviceType) {
         for (NewDeviceAction action : getActions(NewDeviceAction.class)) {
             // If there is new device action which has the same logical address and path
             // ignore new request.
@@ -1765,7 +1768,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         HdmiDeviceInfo device = getCecDeviceInfo(recorderAddress);
         return (device != null)
                 && (HdmiUtils.getTypeFromAddress(recorderAddress)
-                        == HdmiDeviceInfo.DEVICE_RECORDER);
+                        == cec_device_types_values.RECORDING_DEVICE);
     }
 
     private boolean checkRecordSource(byte[] recordSource) {

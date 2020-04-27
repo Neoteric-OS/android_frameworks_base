@@ -26,6 +26,7 @@ import android.hardware.hdmi.IHdmiControlCallback;
 import android.os.Looper;
 import android.os.SystemProperties;
 import android.os.test.TestLooper;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.Slog;
 
 import androidx.test.InstrumentationRegistry;
@@ -50,7 +51,8 @@ public class HdmiControlServiceBinderAPITest {
         private boolean mIsStandby;
         private boolean mIsDisabled;
 
-        protected HdmiCecLocalDeviceMyDevice(HdmiControlService service, int deviceType) {
+        protected HdmiCecLocalDeviceMyDevice(HdmiControlService service,
+                cec_device_types_values deviceType) {
             super(service, deviceType);
         }
 

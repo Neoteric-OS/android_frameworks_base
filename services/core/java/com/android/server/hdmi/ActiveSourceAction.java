@@ -16,7 +16,7 @@
 
 package com.android.server.hdmi;
 
-import android.hardware.hdmi.HdmiDeviceInfo;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 
 /**
  * Action that sends {@code <Active Source>} to make this device the currently active source.
@@ -42,7 +42,7 @@ public class ActiveSourceAction extends HdmiCecFeatureAction {
         sendCommand(HdmiCecMessageBuilder.buildActiveSource(getSourceAddress(),
                 source().mService.getPhysicalAddress()));
 
-        if (source().getType() == HdmiDeviceInfo.DEVICE_PLAYBACK) {
+        if (source().getType() == cec_device_types_values.PLAYBACK_DEVICE) {
             // Reports menu-status active to receive <User Control Pressed>.
             sendCommand(
                     HdmiCecMessageBuilder.buildReportMenuStatus(getSourceAddress(), mDestination,

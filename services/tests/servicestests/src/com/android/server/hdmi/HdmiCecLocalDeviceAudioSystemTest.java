@@ -17,6 +17,7 @@ package com.android.server.hdmi;
 
 import static android.hardware.hdmi.HdmiControlManager.DEVICE_EVENT_ADD_DEVICE;
 import static android.hardware.hdmi.HdmiControlManager.DEVICE_EVENT_UPDATE_DEVICE;
+import static android.sysprop.HdmiProperties.cec_device_types_values.PLAYBACK_DEVICE;
 
 import static com.android.server.hdmi.Constants.ADDR_AUDIO_SYSTEM;
 import static com.android.server.hdmi.Constants.ADDR_BROADCAST;
@@ -693,8 +694,7 @@ public class HdmiCecLocalDeviceAudioSystemTest {
                 ADDR_PLAYBACK_2, 0x2200, 1, HdmiDeviceInfo.DEVICE_PLAYBACK,
                 Constants.UNKNOWN_VENDOR_ID, HdmiUtils.getDefaultDeviceName(ADDR_PLAYBACK_2));
         HdmiCecMessage reportPhysicalAddress = HdmiCecMessageBuilder
-                .buildReportPhysicalAddressCommand(
-                        ADDR_PLAYBACK_2, 0x2200, HdmiDeviceInfo.DEVICE_PLAYBACK);
+                .buildReportPhysicalAddressCommand(ADDR_PLAYBACK_2, 0x2200, PLAYBACK_DEVICE);
         mHdmiCecLocalDeviceAudioSystem.handleReportPhysicalAddress(reportPhysicalAddress);
 
         mTestLooper.dispatchAll();

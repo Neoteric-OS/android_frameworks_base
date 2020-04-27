@@ -36,6 +36,7 @@ import android.media.tv.TvInputManager.TvInputCallback;
 import android.os.SystemProperties;
 import android.provider.Settings.Global;
 import android.sysprop.HdmiProperties;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.Slog;
 import android.util.SparseArray;
 
@@ -119,7 +120,7 @@ public class HdmiCecLocalDeviceAudioSystem extends HdmiCecLocalDeviceSource {
     private final DelayedMessageBuffer mDelayedMessageBuffer = new DelayedMessageBuffer(this);
 
     protected HdmiCecLocalDeviceAudioSystem(HdmiControlService service) {
-        super(service, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
+        super(service, cec_device_types_values.AUDIO_SYSTEM);
         mRoutingControlFeatureEnabled =
             mService.readBooleanSetting(Global.HDMI_CEC_SWITCH_ENABLED, false);
         mSystemAudioControlFeatureEnabled =
@@ -377,8 +378,8 @@ public class HdmiCecLocalDeviceAudioSystem extends HdmiCecLocalDeviceSource {
     protected void onAddressAllocated(int logicalAddress, int reason) {
         assertRunOnServiceThread();
         if (reason == mService.INITIATED_BY_ENABLE_CEC) {
-            mService.setAndBroadcastActiveSource(mService.getPhysicalAddress(),
-                    getDeviceInfo().getDeviceType(), Constants.ADDR_BROADCAST);
+            mService.setAndBroadcastActiveSource(mService.getPhysicalAddress(), mDeviceType,
+                    Constants.ADDR_BROADCAST);
         }
         mService.sendCecCommand(
                 HdmiCecMessageBuilder.buildReportPhysicalAddressCommand(

@@ -15,13 +15,13 @@
  */
 package com.android.server.hdmi;
 
+import static android.sysprop.HdmiProperties.cec_device_types_values.PLAYBACK_DEVICE;
+
 import static com.android.server.hdmi.Constants.ADDR_AUDIO_SYSTEM;
 import static com.android.server.hdmi.Constants.ADDR_PLAYBACK_1;
 import static com.android.server.hdmi.Constants.ADDR_TV;
 
 import static com.google.common.truth.Truth.assertThat;
-
-import android.hardware.hdmi.HdmiDeviceInfo;
 
 import androidx.test.filters.SmallTest;
 
@@ -38,7 +38,7 @@ public class HdmiCecMessageBuilderTest {
     public void buildReportPhysicalAddressCommand() {
         HdmiCecMessage message =
                 HdmiCecMessageBuilder.buildReportPhysicalAddressCommand(
-                        ADDR_PLAYBACK_1, 0x1234, HdmiDeviceInfo.DEVICE_PLAYBACK);
+                        ADDR_PLAYBACK_1, 0x1234, PLAYBACK_DEVICE);
         assertThat(message).isEqualTo(buildMessage("4f:84:12:34:04"));
     }
 
