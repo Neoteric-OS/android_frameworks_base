@@ -22,6 +22,30 @@
       "revId": "dba6859449209fcdd8bb06e19bb19fec15e7060f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468edc6c_6233ada7",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-27T07:04:35Z",
+      "side": 1,
+      "message": "Hmmm, prefer to keep this because:\n 1. dependency object might be useful for future test injections.\n 2. It will be more deterministic to mock as 0, since it is guaranteed that the message is processed after waitForIdle. It might be more code to use correct time in moveTimeForward due to customizable interval.\n\nReopen if disagreed.",
+      "parentUuid": "2fe3a2c1_54838218",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 9
+      },
+      "revId": "dba6859449209fcdd8bb06e19bb19fec15e7060f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
