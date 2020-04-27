@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fe3a2c1_54838218",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-27T04:38:22Z",
+      "side": 1,
+      "message": "Not sure whether this is really needed.\nIf this is just for testing.\nHow about use TestLooper for the handler of OffloadControllerTest.\nThen you test your schedule by moving time forward by yourself(TestLooper#moveTimeForward).\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/tests/utils/testutils/java/android/os/test/TestLooper.java;l\u003d103?q\u003dtestlooper\u0026ss\u003dandroid%2Fplatform%2Fsuperproject",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 9
+      },
+      "revId": "dba6859449209fcdd8bb06e19bb19fec15e7060f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
