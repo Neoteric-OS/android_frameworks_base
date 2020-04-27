@@ -1658,12 +1658,14 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             }
         }
 
-        // usage: dumpsys netstats --full --uid --tag --poll --checkin
+        // usage: dumpsys netstats --full --nouid --notag --poll --checkin
         final boolean poll = argSet.contains("--poll") || argSet.contains("poll");
         final boolean checkin = argSet.contains("--checkin");
         final boolean fullHistory = argSet.contains("--full") || argSet.contains("full");
-        final boolean includeUid = argSet.contains("--uid") || argSet.contains("detail");
-        final boolean includeTag = argSet.contains("--tag") || argSet.contains("detail");
+        // Include UID and tag data by default. Now that most devices don't use xt_qtaguid, the
+        // netstats service dump is the only place where these are visible.
+        final boolean includeUid = !argSet.contains("--nouid");
+        final boolean includeTag = !argSet.contains("--notag");
 
         final IndentingPrintWriter pw = new IndentingPrintWriter(rawWriter, "  ");
 
