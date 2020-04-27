@@ -22,3 +22,14 @@ java_library_static {
     ],
     sdk_version: "system_current",
 }
+
+java_library_static {
+    name: "tetheringprotos",
+    proto: {
+        type: "lite",
+    },
+    srcs: [
+        "tethering.proto",
+    ],
+    sdk_version: "system_current",
+}
