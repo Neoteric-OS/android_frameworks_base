@@ -18,6 +18,7 @@ package com.android.server.hdmi;
 
 import android.annotation.Nullable;
 import android.hardware.hdmi.HdmiDeviceInfo;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.Xml;
@@ -455,6 +456,28 @@ final class HdmiUtils {
             port >>= 4;
         }
         return port;
+    }
+
+    public static int cecDeviceTypeToInteger(cec_device_types_values cecDeviceType) {
+        switch (cecDeviceType) {
+            case TV:
+                return HdmiDeviceInfo.DEVICE_TV;
+            case RECORDING_DEVICE:
+                return HdmiDeviceInfo.DEVICE_RECORDER;
+            case RESERVED:
+                return HdmiDeviceInfo.DEVICE_RESERVED;
+            case TUNER:
+                return HdmiDeviceInfo.DEVICE_TUNER;
+            case PLAYBACK_DEVICE:
+                return HdmiDeviceInfo.DEVICE_PLAYBACK;
+            case AUDIO_SYSTEM:
+                return HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM;
+            case PURE_CEC_SWITCH:
+                return HdmiDeviceInfo.DEVICE_PURE_CEC_SWITCH;
+            case VIDEO_PROCESSOR:
+                return HdmiDeviceInfo.DEVICE_VIDEO_PROCESSOR;
+        }
+        return HdmiDeviceInfo.DEVICE_INACTIVE;
     }
 
     public static class ShortAudioDescriptorXmlParser {

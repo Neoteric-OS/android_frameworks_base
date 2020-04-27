@@ -67,6 +67,7 @@ import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings.Global;
 import android.sysprop.HdmiProperties;
+import android.sysprop.HdmiProperties.cec_device_types_values;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Slog;
@@ -433,14 +434,16 @@ public class HdmiControlService extends SystemService {
 
     public HdmiControlService(Context context) {
         super(context);
-        List<Integer> deviceTypes = HdmiProperties.device_type();
-        if (deviceTypes.contains(null)) {
-            Slog.w(TAG, "Error parsing ro.hdmi.device.type: " + SystemProperties.get(
-                    "ro.hdmi.device_type"));
-            deviceTypes = deviceTypes.stream().filter(Objects::nonNull).collect(
-                    Collectors.toList());
+        List<cec_device_types_values> cecDeviceTypes = HdmiProperties.cec_device_types();
+        if (cecDeviceTypes.contains(null)) {
+            Slog.w(TAG, "Error parsing ro.hdmi.cec_device_types: " + SystemProperties.get(
+                    "ro.hdmi.cec_device_types"));
         }
-        mLocalDevices = deviceTypes;
+        mLocalDevices = cecDeviceTypes.stream()
+                .filter(Objects::nonNull)
+                .map(HdmiUtils::cecDeviceTypeToInteger)
+                .collect(Collectors
+                        .collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
         mSettingsObserver = new SettingsObserver(mHandler);
     }
 
