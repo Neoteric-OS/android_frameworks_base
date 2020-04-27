@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0b31e67_48503fc1",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/OffloadControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-27T11:08:30Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with this class, and it\u0027s not in code search yet. Does this method block until the alert is fired?\n\nAlso - why is the alert fired? Is it because the handler loop is full of delayed messages posted with a delay of 0? Might want to say so here in a comment, because otherwise this code is hard to understand.",
+      "range": {
+        "startLine": 806,
+        "startChar": 31,
+        "endLine": 806,
+        "endChar": 55
+      },
+      "revId": "883975083a372f88d8ee927306876b7ac5b5d063",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d68a0f_d34b3603",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/OffloadControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-27T11:08:30Z",
+      "side": 1,
+      "message": "Nit: why add this when(), if two lines later you verify that it is never() called?",
+      "range": {
+        "startLine": 813,
+        "startChar": 0,
+        "endLine": 814,
+        "endChar": 46
+      },
+      "revId": "883975083a372f88d8ee927306876b7ac5b5d063",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
