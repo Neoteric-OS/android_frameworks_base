@@ -297,7 +297,7 @@ filegroup {
 java_library {
     name: "framework-updatable-stubs-module_libs_api",
     static_libs: [
-        "framework-sdkextensions-stubs-module_libs_api",
+        "framework-sdkextensions.stubs.module_lib",
         "framework-tethering-stubs-module_libs_api",
         "updatable_media_stubs",
     ],
