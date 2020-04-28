@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "32a8185e_18c59782",
+        "filename": "apex/sdkextensions/framework/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-28T18:56:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6645a527_d22c2473",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "449caeb65732adca9e16acf34d1e6e7757b92d68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61b3a9ae_897c1415",
         "filename": "apex/sdkextensions/framework/Android.bp",
         "patchSetId": 1
@@ -212,6 +236,30 @@
       "revId": "449caeb65732adca9e16acf34d1e6e7757b92d68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a068e2ac_d94f7284",
+        "filename": "apex/sdkextensions/framework/api/test-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-28T18:56:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feca9fb5_3246e416",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 24
+      },
+      "revId": "449caeb65732adca9e16acf34d1e6e7757b92d68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
