@@ -1,0 +1,9 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Ryan Mitchell <rtmitchell@google.com>
+Autosubmit+1: Roshan Pius <rpius@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Tue, 28 Apr 2020 01:24:29 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1295822
+Project: platform/frameworks/base
+Branch: refs/heads/master
