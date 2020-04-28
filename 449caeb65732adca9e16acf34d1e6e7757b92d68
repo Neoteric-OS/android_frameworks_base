@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9af34db8_ff09f2d8",
+        "filename": "apex/sdkextensions/framework/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-04-28T15:19:35Z",
+      "side": 1,
+      "message": "well, I don\u0027t know what the right way of doing this is in Android.bp syntax, but conceptually what I want is\n\n    api_surfaces \u003d [ x, y, z ]\n\nwith a reasonable default, as opposed to enable_x: true, enable_y: false etc",
+      "parentUuid": "f7e0953b_6d4f8d8b",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "449caeb65732adca9e16acf34d1e6e7757b92d68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61b3a9ae_897c1415",
         "filename": "apex/sdkextensions/framework/Android.bp",
         "patchSetId": 1
