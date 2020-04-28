@@ -28,6 +28,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -206,6 +207,11 @@ public class NetworkStatsSubscriptionsMonitor extends
             }
             mLastCollapsedRatType = collapsedRatType;
             mMonitor.mDelegate.onCollapsedRatTypeChanged(mSubscriberId, mLastCollapsedRatType);
+        }
+
+        @VisibleForTesting
+        public int getSubId() {
+            return mSubId;
         }
     }
 }
