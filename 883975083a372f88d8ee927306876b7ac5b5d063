@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "963e41f3_44515a4b",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/OffloadControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-28T10:30:56Z",
+      "side": 1,
+      "message": "IIUC you missed SP18.2, see aosp/1295484.\nYes it will block until alert is fired or timeout.\n\nComment added.",
+      "parentUuid": "f0b31e67_48503fc1",
+      "range": {
+        "startLine": 806,
+        "startChar": 31,
+        "endLine": 806,
+        "endChar": 55
+      },
+      "revId": "883975083a372f88d8ee927306876b7ac5b5d063",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3d68a0f_d34b3603",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/OffloadControllerTest.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "883975083a372f88d8ee927306876b7ac5b5d063",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba64cb3_73a901c2",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/OffloadControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-28T10:30:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3d68a0f_d34b3603",
+      "range": {
+        "startLine": 813,
+        "startChar": 0,
+        "endLine": 814,
+        "endChar": 46
+      },
+      "revId": "883975083a372f88d8ee927306876b7ac5b5d063",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
