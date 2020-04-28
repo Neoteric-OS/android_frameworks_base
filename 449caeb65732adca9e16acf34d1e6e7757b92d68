@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7e0953b_6d4f8d8b",
+        "filename": "apex/sdkextensions/framework/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-28T14:21:18Z",
+      "side": 1,
+      "message": "What do you mean by enum? Could you provide an example of what you mean?",
+      "parentUuid": "8eb200d7_c300de6c",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "449caeb65732adca9e16acf34d1e6e7757b92d68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61b3a9ae_897c1415",
         "filename": "apex/sdkextensions/framework/Android.bp",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c663287a_5c8ac49a",
+        "filename": "apex/sdkextensions/framework/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-28T14:21:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "61b3a9ae_897c1415",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 38,
+        "endChar": 41
+      },
+      "revId": "449caeb65732adca9e16acf34d1e6e7757b92d68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c106d842_6770d3de",
         "filename": "apex/sdkextensions/framework/api/test-current.txt",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2020-04-28T13:41:19Z",
       "side": 1,
       "message": "we don\u0027t want test apis for modules",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 24
+      },
+      "revId": "449caeb65732adca9e16acf34d1e6e7757b92d68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feca9fb5_3246e416",
+        "filename": "apex/sdkextensions/framework/api/test-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-28T14:21:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c106d842_6770d3de",
       "range": {
         "startLine": 1,
         "startChar": 0,
