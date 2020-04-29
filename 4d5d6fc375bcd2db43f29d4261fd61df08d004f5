@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "969a3eeb_a3a7257d",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "It looks like the function does not save you any effort?\nMaybe just inline the content?",
+      "range": {
+        "startLine": 78,
+        "startChar": 45,
+        "endLine": 78,
+        "endChar": 88
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6269558c_58b257b6",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "IIUC every test will need this.\nmaybe make monitor class global and initialize it in setUp()?",
+      "range": {
+        "startLine": 85,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 92
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848413be_409fe31d",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "1. Maybe // Verify that addOnSubscriptionsChangedListener() is never called before start().\n2. question: not sure if this verify is useful, why?",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 72
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ae6a4c_63db7a51",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 95,
+        "startChar": 8,
+        "endLine": 95,
+        "endChar": 92
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "543860a8_1c82bf5e",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "maybe we want to verify onCollapsedRatTypeChanged is called/never called when stop?",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 5
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b857900_544adbc8",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "IIUC this will be common for every test that need telephony manager, maybe put in setUp()?",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 112,
+        "endChar": 96
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4a18cf_66f83661",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "IIUC we also need to at least fake a rat type change and verify the expected callback is fired.",
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca34368_f40ed1c7",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "IIUC these can be refactored into something like setSubIdList(int []) or something similar.\n\nfinal int[] testSubIdList2 \u003d {1};\nwhen(mSubscriptionManager.getActiveAndHiddenSubscriptionIdList())\n                .thenReturn(testSubIdList2);\n monitor.onSubscriptionsChanged();",
+      "range": {
+        "startLine": 121,
+        "startChar": 20,
+        "endLine": 121,
+        "endChar": 34
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4f04aa_8389173a",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "IIUC you don\u0027t need to do this multiple times.",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 47
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad1b6f4_53ed1dd7",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "nit: Consider using full mock string such as TEST_IMSI1.\nOtherwise readers might wonder why they looks like this.",
+      "range": {
+        "startLine": 137,
+        "startChar": 40,
+        "endLine": 137,
+        "endChar": 55
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7cc5c9d_7bbc2bb6",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "SubscriberId is imsi, so maybe just testImsi1?",
+      "range": {
+        "startLine": 137,
+        "startChar": 21,
+        "endLine": 137,
+        "endChar": 36
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf0245b_582f6235",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "maybe refactor this into something like setSubscriberIdForSub(int subId, String ..)",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 93
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b770dec_9a18dc1c",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "IIUC this can be in setUp()",
+      "range": {
+        "startLine": 145,
+        "startChar": 8,
+        "endLine": 146,
+        "endChar": 47
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450b0f69_95910be9",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "maybe refactor this to setRatTypeForSub(int subId, int ratType);\nNote that 0 here is not the subId, but you may get subId by creating a getter that get the RatTypeListener#mSubId.",
+      "range": {
+        "startLine": 163,
+        "startChar": 7,
+        "endLine": 164,
+        "endChar": 89
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c1e74af_8795fb73",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-29T11:34:12Z",
+      "side": 1,
+      "message": "IIUC this is not enough to test the mixed case (add/remove sub, but also change rattype).\nWe\u0027ll need to verify the callback is fired from the right listener when multiple listeners are there.\nMaybe combine these 3 tests.",
+      "range": {
+        "startLine": 179,
+        "startChar": 16,
+        "endLine": 179,
+        "endChar": 41
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
