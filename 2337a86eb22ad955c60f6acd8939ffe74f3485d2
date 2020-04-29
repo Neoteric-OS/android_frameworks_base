@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "6f01ec7b_bc91f4c1",
+        "filename": "apex/sdkextensions/framework/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-04-29T08:36:23Z",
+      "side": 1,
+      "message": "Can we add a defaults in frameworks/base/apex/Android.bp and use that? Should specify at least these:\n\n- api_surfaces\n- sdk_version (should be modules_current though)\n- plugins, probably\n- frameworks/base stub library visibility",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 36
+      },
+      "revId": "2337a86eb22ad955c60f6acd8939ffe74f3485d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d77007a6_c1c4d314",
         "filename": "apex/sdkextensions/framework/Android.bp",
         "patchSetId": 3
