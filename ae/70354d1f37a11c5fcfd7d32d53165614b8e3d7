@@ -1,0 +1,13 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Hung-ying Tyan <tyanh@google.com>
+Code-Review+1: SzuWei Lin <szuweilin@google.com>
+Code-Review+1: Winson Chung <winsonc@google.com>
+Code-Review+1: Jeff Sharkey <jsharkey@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Isaac Chen <ycchen@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Isaac Chen <ycchen@google.com>
+Submitted-at: Wed, 29 Apr 2020 02:19:09 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1277605
+Project: platform/frameworks/base
+Branch: refs/heads/master
