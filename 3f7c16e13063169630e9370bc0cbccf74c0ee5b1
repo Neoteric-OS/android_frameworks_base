@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e15f3fd_c2f81815",
+        "filename": "apex/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-29T22:21:59Z",
+      "side": 1,
+      "message": "I think this should be \"current\". The public API stubs should not be referencing anything built for module_current. java_sdk_library will automatically use the appropriate sdk_version for each api surface.\n\nAnton, would you be able to change this so that we can identify any issues before switching over to java_sdk_library.",
+      "revId": "3f7c16e13063169630e9370bc0cbccf74c0ee5b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962a966b_6acdb406",
+        "filename": "apex/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-29T22:21:59Z",
+      "side": 1,
+      "message": "Similarly, this should be system_current. java_sdk_library will automatically use the appropriate sdk_version for each api surface.\n\nAnton, would you be able to change this so that we can identify any issues before switching over to java_sdk_library.",
+      "revId": "3f7c16e13063169630e9370bc0cbccf74c0ee5b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
