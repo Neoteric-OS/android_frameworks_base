@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0853334_a7f82f8c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-29T22:16:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9673327_11010cc1",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "2337a86eb22ad955c60f6acd8939ffe74f3485d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f01ec7b_bc91f4c1",
         "filename": "apex/sdkextensions/framework/Android.bp",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "dd5d991f_6e3cb28c",
+        "filename": "apex/sdkextensions/framework/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-29T22:16:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f01ec7b_bc91f4c1",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 36
+      },
+      "revId": "2337a86eb22ad955c60f6acd8939ffe74f3485d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d77007a6_c1c4d314",
         "filename": "apex/sdkextensions/framework/Android.bp",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "2337a86eb22ad955c60f6acd8939ffe74f3485d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72873ce_6ed5320c",
+        "filename": "apex/sdkextensions/framework/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-29T22:16:01Z",
+      "side": 1,
+      "message": "No, at least not easily because it will break those usages of java_sdk_library that rely on the inheritance of the visibility property. It would be possible to add that to a defaults module though. Which I have started working on.",
+      "parentUuid": "d77007a6_c1c4d314",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 53
+      },
+      "revId": "2337a86eb22ad955c60f6acd8939ffe74f3485d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
