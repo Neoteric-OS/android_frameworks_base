@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9673327_11010cc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-04-29T08:31:55Z",
+      "side": 1,
+      "message": "needs to be updated I think?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "2337a86eb22ad955c60f6acd8939ffe74f3485d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77007a6_c1c4d314",
+        "filename": "apex/sdkextensions/framework/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-04-29T08:31:55Z",
+      "side": 1,
+      "message": "Can we make this the default and remove it from the .bp?",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 53
+      },
+      "revId": "2337a86eb22ad955c60f6acd8939ffe74f3485d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
