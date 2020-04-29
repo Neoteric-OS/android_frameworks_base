@@ -1,0 +1,13 @@
+Verified+1: Denis Hsu <denis.hsu@mediatek.com>
+Autosubmit+1: Denis Hsu <denis.hsu@mediatek.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Jing Ji <jji@google.com>
+Code-Review+1: Amith Yamasani <yamasani@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+DrNo-Review+1: Hung-ying Tyan <tyanh@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 29 Apr 2020 11:58:19 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1292439
+Project: platform/frameworks/base
+Branch: refs/heads/android10-gsi
