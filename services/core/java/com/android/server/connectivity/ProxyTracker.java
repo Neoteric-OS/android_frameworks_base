@@ -73,6 +73,8 @@ public class ProxyTracker {
     @GuardedBy("mProxyLock")
     private boolean mDefaultProxyEnabled = true;
 
+    private final Handler mConnectivityServiceHandler;
+
     // The object responsible for Proxy Auto Configuration (PAC).
     @NonNull
     private final PacManager mPacManager;
@@ -80,6 +82,7 @@ public class ProxyTracker {
     public ProxyTracker(@NonNull final Context context,
             @NonNull final Handler connectivityServiceInternalHandler, final int pacChangedEvent) {
         mContext = context;
+        mConnectivityServiceHandler = connectivityServiceInternalHandler;
         mPacManager = new PacManager(context, connectivityServiceInternalHandler, pacChangedEvent);
     }
 
@@ -169,9 +172,12 @@ public class ProxyTracker {
             synchronized (mProxyLock) {
                 mGlobalProxy = proxyProperties;
             }
+            if (!TextUtils.isEmpty(pacFileUrl)) {
+                mConnectivityServiceHandler.post(
+                        () -> mPacManager.setCurrentProxyScriptUrl(proxyProperties));
+            }
         }
         loadDeprecatedGlobalHttpProxy();
-        // TODO : shouldn't this function call mPacManager.setCurrentProxyScriptUrl ?
     }
 
     /**
