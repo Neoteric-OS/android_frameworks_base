@@ -168,10 +168,10 @@ public class ProxyTracker {
 
             synchronized (mProxyLock) {
                 mGlobalProxy = proxyProperties;
+                mPacManager.setCurrentProxyScriptUrl(mGlobalProxy);
             }
         }
         loadDeprecatedGlobalHttpProxy();
-        // TODO : shouldn't this function call mPacManager.setCurrentProxyScriptUrl ?
     }
 
     /**
