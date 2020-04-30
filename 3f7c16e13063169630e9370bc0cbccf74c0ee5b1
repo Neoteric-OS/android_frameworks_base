@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "89593cf8_4f8e3faf",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-30T17:07:39Z",
+      "side": 1,
+      "message": "Oops. I didn\u0027t notice it right down there (5 lines below) at the bottom. I am used to seeing it  at the top just below name.\n\nYes, that is equivalent.",
+      "parentUuid": "697a1860_970c9243",
+      "revId": "3f7c16e13063169630e9370bc0cbccf74c0ee5b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e15f3fd_c2f81815",
         "filename": "apex/Android.bp",
         "patchSetId": 4

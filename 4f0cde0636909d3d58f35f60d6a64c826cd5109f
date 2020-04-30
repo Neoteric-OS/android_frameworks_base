@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "ee0fc71a_4eb47719",
+        "filename": "apex/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-30T17:07:39Z",
+      "side": 1,
+      "message": "java_sdk_library_defaults does not exist because it is a lot of boilerplate for very little value as a java_sdk_library is a java_library with a few extra bits.\n\nI\u0027ll remove it from the name and just add something to the comment.",
+      "parentUuid": "af3a3fb1_02f310fd",
+      "range": {
+        "startLine": 68,
+        "startChar": 28,
+        "endLine": 68,
+        "endChar": 45
+      },
+      "revId": "4f0cde0636909d3d58f35f60d6a64c826cd5109f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e71f8342_ab9dc520",
         "filename": "apex/Android.bp",
         "patchSetId": 6
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "- current usages of java_sdk_library don\u0027t contribute to the monolithic api surfaces so don\u0027t have to deal with the problems we have here. I think the way current users build makes sense, but it won\u0027t work for BCP libs\n- per-surface override.. hmm. I think perhaps what we need is just \"if sdk_version \u003d\u003d module_current, then use module_current for all the stubs too\". A little implicit, but it is kind of a special case.",
       "parentUuid": "38a86f86_69690ecf",
+      "range": {
+        "startLine": 98,
+        "startChar": 25,
+        "endLine": 98,
+        "endChar": 100
+      },
+      "revId": "4f0cde0636909d3d58f35f60d6a64c826cd5109f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93b79c6_fbab973b",
+        "filename": "apex/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-30T17:07:39Z",
+      "side": 1,
+      "message": "There is already too much special case logic in java_sdk_library for my liking. It has made itt much harder to do this than strictly necessary. So, I want to move away from that to something a bit simpler and more explicit and use defaults (which did not work properly before) to manage that better.",
+      "parentUuid": "8eb7d934_38a2d648",
       "range": {
         "startLine": 98,
         "startChar": 25,
