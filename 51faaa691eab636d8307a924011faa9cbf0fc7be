@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "8a6a9853_a49d2f92",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-04-30T14:39:33Z",
+      "side": 1,
+      "message": "I see, moved the command to LocalOnlyState and modify the unit test with LocalOnly state machine to verify the onNewPrefixRequest callback behavior. Thanks!",
+      "parentUuid": "8ef6eec6_8fd259b5",
+      "range": {
+        "startLine": 511,
+        "startChar": 20,
+        "endLine": 511,
+        "endChar": 38
+      },
+      "revId": "51faaa691eab636d8307a924011faa9cbf0fc7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc1dd365_71a46cac",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 2
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Right, it is not exactly similar but still have some code duplicated. I am fine if you prefer to keep your current code.\nMy original idea is we can try to function some duplicated code like below:\n\n    private void handleNewPrefixRequest(@NonNull IpPrefix currentPrefix) {\n        // We can check whether currentPrefix is belong to mIpv4Address here\n        if (!currentPrefix.contains(mIpv4Address.getAddress()) || !currentPrefix.getPrefixLength().equals(mIpv4Address.getPrefixLength())) {\n            // print the error log here\n            return;\n        }\n\n        final LinkAddress deprecatedLinkAddress \u003d mIpv4Address;\n\n        // TODO: call PrivateAddressCoordinator.requestDownstreamPrefix instead. Temporarily\n        // starting subnet id from 51 to avoid possible conflict with Bluetooth, WiFi or\n        // Ethernet.\n        int subnetId \u003d 0;\n        int prefixLen \u003d USB_PREFIX_LENGTH;\n        for (;;) {\n            subnetId \u003d ((new Random()).nextInt() \u0026 0xFF) % 8 + 51;\n            final String prefix \u003d \"192.168.\" + subnetId + \".0\";\n            if (DBG) Log.d(TAG, \"new selected IP Prefix: \" + prefix);\n            if (!prefix.equals(currentPrefix.getAddress().getHostAddress())) break;\n        }\n        final String ipv4Addr \u003d \"192.168.\" + subnetId + \".129\";\n        final Inet4Address srvAddr \u003d (Inet4Address) parseNumericAddress(ipv4Addr);\n        mIpv4Address \u003d new LinkAddress(srvAddr, prefixLen);\n\n        udpateIpv4LinkAddress(deprecatedLinkAddress, mIpv4Address, true);\n\n        sendLinkProperties();\n    ....\n    }\n\n    private boolean udpateIpv4LinkAddress(final LinkAddress deprecatedAddress, final LinkAddress newAddress, final Boolean setIfaceUp) {\n        if (!mInterfaceCtrl.setInterfaceConfiguration(newAddress, setIfaceUp)) {\n            mLog.e(\"Error configuring interface\");\n            return false;\n        }\n\n        if (newAddress !\u003d null) {\n            mLinkProperties.addLinkAddress(newAddress);\n            mLinkProperties.addRoute(getDirectConnectedRoute(newAddress));\n        }\n\n        if (deprecatedAddress !\u003d null) {\n            mLinkProperties.removeLinkAddress(deprecatedAddress);\n            mLinkProperties.removeRoute(getDirectConnectedRoute(deprecatedAddress));\n        }\n        return true;\n    }\n\n    private void getDirectConnectedRoute(final LinkAddress ipv4Address) {\n        // Directly-connected route.\n        final IpPrefix ipv4Prefix \u003d new IpPrefix(ipv4Address.getAddress(),\n                ipv4Address.getPrefixLength());\n        return new RouteInfo(ipv4Prefix, null, null, RTN_UNICAST);\n    }\n\n    private boolean configureIPv4(boolean enabled) {\n        if (VDBG) Log.d(TAG, \"configureIPv4(\" + enabled + \")\");\n\n        ....\n\n        final Boolean setIfaceUp;\n        if (mInterfaceType \u003d\u003d TetheringManager.TETHERING_WIFI\n                || mInterfaceType \u003d\u003d TetheringManager.TETHERING_WIFI_P2P) {\n            // The WiFi stack has ownership of the interface up/down state.\n            // It is unclear whether the Bluetooth or USB stacks will manage their own\n            // state.\n            setIfaceUp \u003d null;\n        } else {\n            setIfaceUp \u003d enabled;\n        }\n\n        final boolean ret \u003d enabled ? udpateIpv4LinkAddress(null, mIpv4Address, setIfaceUp) : \n                udpateIpv4LinkAddress(mIpv4Address, null, setIfaceUp);\n\n        return configureDhcp(ret ? enabled : false, mIpv4Address, mStaticIpv4ClientAddr);\n    }",
       "parentUuid": "23b3d98a_4e00594c",
+      "range": {
+        "startLine": 537,
+        "startChar": 0,
+        "endLine": 546,
+        "endChar": 13
+      },
+      "revId": "51faaa691eab636d8307a924011faa9cbf0fc7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9bc688b_a8c3b957",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-04-30T14:39:33Z",
+      "side": 1,
+      "message": "Yes, looks much clean, I adjust the refactor function slightly, maybe we don\u0027t need to setInterfaceConfiguration when updating IPv4 link address.",
+      "parentUuid": "e973fb3f_631b5643",
       "range": {
         "startLine": 537,
         "startChar": 0,
