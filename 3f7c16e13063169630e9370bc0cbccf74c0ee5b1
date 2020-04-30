@@ -122,6 +122,24 @@
       "revId": "3f7c16e13063169630e9370bc0cbccf74c0ee5b1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a42efe_f1d06cc1",
+        "filename": "apex/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-30T16:49:45Z",
+      "side": 1,
+      "message": "I think I can answer my own question. module_current will only contain classes from the non-updateable part and will not include any classes from the modules. There are some types provided by modules in the non-updateable part and they will be resolved by building against an earlier version of the system api (29) to break the cycle.",
+      "parentUuid": "dce95f01_0f51d4b8",
+      "revId": "3f7c16e13063169630e9370bc0cbccf74c0ee5b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
