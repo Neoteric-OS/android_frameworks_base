@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "777e84ee_bacfc8f3",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-04-30T16:53:23Z",
+      "side": 1,
+      "message": "Should this be marked as //visibility:private as it is only used in the package? Or is it intended to be used elsewhere too?",
+      "revId": "3f7c16e13063169630e9370bc0cbccf74c0ee5b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e15f3fd_c2f81815",
         "filename": "apex/Android.bp",
         "patchSetId": 4
