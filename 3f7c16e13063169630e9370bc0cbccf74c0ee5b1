@@ -157,6 +157,24 @@
       "revId": "3f7c16e13063169630e9370bc0cbccf74c0ee5b1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6273161_3447283b",
+        "filename": "apex/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-04-30T16:54:49Z",
+      "side": 1,
+      "message": "\u003e Based on the above comments why is this ok?\n\nWe should be able to build the resulting merged stub against nothing. I think that prevents the \"depending on systemapi from a publicapi stub\" problem.\n\n\u003e Presumably module_current is not going to be built by combining this and other stubs so what is going to be done instead?\n\nmodule_current we be build from the srcs of all of these modules, but only modules are allowed to build against it, so it avoids the cycle without sacrificing any safety I think.\n\n\u003e Is it because there are already circular dependencies in it?\n\nYeah, there are circular dependencies between the non-updatable part and the modules, so I don\u0027t think we can draw a DAG without module_current or something else like it",
+      "parentUuid": "dce95f01_0f51d4b8",
+      "revId": "3f7c16e13063169630e9370bc0cbccf74c0ee5b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

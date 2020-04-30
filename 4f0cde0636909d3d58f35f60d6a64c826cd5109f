@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "af3a3fb1_02f310fd",
+        "filename": "apex/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-04-30T16:54:49Z",
+      "side": 1,
+      "message": "hmmm so we can specify attributes in a java_defaults that java_library doesn\u0027t support. That\u0027s odd! I wonder why we don\u0027t have a java_sdk_library_defaults -- is that cumbersome to add? Anyway, I think either is fine, but I have a preference for dropping the java-sdk-library bit to make it a little less verbose. Up to you.",
+      "parentUuid": "60eff1bf_e6964f59",
+      "range": {
+        "startLine": 68,
+        "startChar": 28,
+        "endLine": 68,
+        "endChar": 45
+      },
+      "revId": "4f0cde0636909d3d58f35f60d6a64c826cd5109f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e71f8342_ab9dc520",
         "filename": "apex/Android.bp",
         "patchSetId": 6
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Presumably because of circular references. That is currently how it behaves so I wanted to make the behavior clear here.\n\nI spent a little time wondering how this would work for the other usages and it seems as though there are two separate categories:\n* If you specify sdk_version: \"none\" then \"none\" is used for all the stubs libraries. This is used for the ART APIs that have to bootstrap themselves up from nothing.\n* Otherwise, it uses \"current\" for \"public\" and \"system_current\" for \"system\" as described here. This is used for modules that provide public/test/system APIs but which do not themselves contribute to the main current/test_current/system_current APIs hence avoiding the cycle.\n\nIt looks as though we will need a way to provide per surface overrides of the sdk_version property.",
       "parentUuid": "e71f8342_ab9dc520",
+      "range": {
+        "startLine": 98,
+        "startChar": 25,
+        "endLine": 98,
+        "endChar": 100
+      },
+      "revId": "4f0cde0636909d3d58f35f60d6a64c826cd5109f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb7d934_38a2d648",
+        "filename": "apex/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-04-30T16:54:49Z",
+      "side": 1,
+      "message": "- current usages of java_sdk_library don\u0027t contribute to the monolithic api surfaces so don\u0027t have to deal with the problems we have here. I think the way current users build makes sense, but it won\u0027t work for BCP libs\n- per-surface override.. hmm. I think perhaps what we need is just \"if sdk_version \u003d\u003d module_current, then use module_current for all the stubs too\". A little implicit, but it is kind of a special case.",
+      "parentUuid": "38a86f86_69690ecf",
       "range": {
         "startLine": 98,
         "startChar": 25,
