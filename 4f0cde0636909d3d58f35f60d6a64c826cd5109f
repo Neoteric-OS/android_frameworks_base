@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a61a8f18_c883dcb2",
+        "filename": "apex/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-04-30T14:44:55Z",
+      "side": 1,
+      "message": "I\u0027d be tempted to drop the java-sdk-library- bit from this name as it encompasses everything for a framework-* target now. \"framework-module-defaults\"",
+      "range": {
+        "startLine": 68,
+        "startChar": 28,
+        "endLine": 68,
+        "endChar": 45
+      },
+      "revId": "4f0cde0636909d3d58f35f60d6a64c826cd5109f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71f8342_ab9dc520",
+        "filename": "apex/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-04-30T14:44:55Z",
+      "side": 1,
+      "message": "we cannot do this",
+      "range": {
+        "startLine": 98,
+        "startChar": 25,
+        "endLine": 98,
+        "endChar": 100
+      },
+      "revId": "4f0cde0636909d3d58f35f60d6a64c826cd5109f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
