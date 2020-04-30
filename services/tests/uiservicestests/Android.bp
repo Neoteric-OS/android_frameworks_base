@@ -55,6 +55,5 @@ android_test {
         "libui",
         "libunwindstack",
         "libutils",
-        "netd_aidl_interface-cpp",
     ],
 }
