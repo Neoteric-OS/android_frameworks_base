@@ -625,14 +625,16 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                 return;
             }
         }
-        final FocusRequester fr;
-        if (requestResult == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
-            fr = mFocusOwnersForFocusPolicy.remove(afi.getClientId());
-        } else {
-            fr = mFocusOwnersForFocusPolicy.get(afi.getClientId());
-        }
-        if (fr != null) {
-            fr.dispatchFocusResultFromExtPolicy(requestResult);
+        synchronized (mAudioFocusLock) {
+            final FocusRequester fr;
+            if (requestResult == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
+                fr = mFocusOwnersForFocusPolicy.remove(afi.getClientId());
+            } else {
+                fr = mFocusOwnersForFocusPolicy.get(afi.getClientId());
+            }
+            if (fr != null) {
+                fr.dispatchFocusResultFromExtPolicy(requestResult);
+            }
         }
     }
 
