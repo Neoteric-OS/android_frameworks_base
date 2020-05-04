@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d74104a_f68f54e5",
+        "filename": "packages/Tethering/apex/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2020-05-04T05:33:33Z",
+      "side": 1,
+      "message": "set to \"current\" to match with \"Tethering\"\u0027s min_sdk_verion(\"current\") because codenames are not supported for android_app.min_sdk_version property.\n\nWhen SDK finalization for R lands in aosp master, we need to change this to \"30\" though.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 31
+      },
+      "revId": "87d5a8fac5c1322c1bd241673d1c1c6448b98a61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
