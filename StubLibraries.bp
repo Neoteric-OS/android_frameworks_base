@@ -92,6 +92,9 @@ droidstubs {
     arg_files: [
         "core/res/AndroidManifest.xml",
     ],
+    implicits: [
+        "**/package.html",
+    ],
     args: metalava_framework_docs_args,
     check_api: {
         current: {
@@ -134,6 +137,9 @@ droidstubs {
     arg_files: [
         "core/res/AndroidManifest.xml",
     ],
+    implicits: [
+        "**/package.html",
+    ],
     args: metalava_framework_docs_args + priv_apps,
     check_api: {
         current: {
@@ -164,6 +170,9 @@ droidstubs {
     defaults: ["metalava-full-api-stubs-default"],
     arg_files: [
         "core/res/AndroidManifest.xml",
+    ],
+    implicits: [
+        "**/package.html",
     ],
     args: metalava_framework_docs_args + " --show-annotation android.annotation.TestApi",
     check_api: {
@@ -198,6 +207,9 @@ droidstubs {
     name: "module-lib-api",
     defaults: ["metalava-full-api-stubs-default"],
     arg_files: ["core/res/AndroidManifest.xml"],
+    implicits: [
+        "**/package.html",
+    ],
     args: metalava_framework_docs_args + module_libs,
 
     // Do not generate stubs as they are not needed
@@ -235,6 +247,9 @@ droidstubs {
     name: "module-lib-api-stubs-docs",
     defaults: ["metalava-non-updatable-api-stubs-default"],
     arg_files: ["core/res/AndroidManifest.xml"],
+    implicits: [
+        "**/package.html",
+    ],
     args: metalava_framework_docs_args + priv_apps + module_libs,
 }
 
