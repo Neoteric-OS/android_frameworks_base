@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f440346a_7ba32866",
+        "filename": "services/core/java/com/android/server/hdmi/Constants.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-05-04T21:16:43Z",
+      "side": 1,
+      "message": "Put DDP_ATMOs in a separate CL.",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 78
+      },
+      "revId": "c5d32c735ced149811e6d3cc2b5b6205c75b9d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c881837c_76f457fa",
+        "filename": "services/core/java/com/android/server/hdmi/SystemAudioAction.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-05-04T21:16:43Z",
+      "side": 1,
+      "message": "don\u0027t hard code the formats to request.  Instead use the same config file used by audio device.  See \nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/hdmi/HdmiUtils.java;bpv\u003d1;bpt\u003d1;l\u003d460?q\u003dHdmiUtils.ShortAudioDescriptorXmlParser",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "c5d32c735ced149811e6d3cc2b5b6205c75b9d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7358752_af07409a",
+        "filename": "services/core/java/com/android/server/hdmi/SystemAudioAutoInitiationAction.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-05-04T21:16:43Z",
+      "side": 1,
+      "message": "why do we need this?",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 20
+      },
+      "revId": "c5d32c735ced149811e6d3cc2b5b6205c75b9d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
