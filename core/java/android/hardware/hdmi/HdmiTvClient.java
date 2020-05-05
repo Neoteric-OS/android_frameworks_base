@@ -17,6 +17,7 @@ package android.hardware.hdmi;
 
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
+import android.annotation.Nullable;
 import android.hardware.hdmi.HdmiRecordSources.RecordSource;
 import android.hardware.hdmi.HdmiTimerRecordSources.TimerRecordSource;
 import android.os.RemoteException;
@@ -237,6 +238,15 @@ public final class HdmiTvClient extends HdmiClient {
             mService.sendStandby(getDeviceType(), deviceId);
         } catch (RemoteException e) {
             Log.e(TAG, "sendStandby threw exception ", e);
+        }
+    }
+
+    public @Nullable byte[] getAvrSupportedAudioFormat() {
+        try {
+            return mService.getAvrSupportedAudioFormat();
+        } catch (RemoteException e) {
+            Log.e(TAG, "getAvrSupportedAudioFormat threw exception ", e);
+            return null;
         }
     }
 
