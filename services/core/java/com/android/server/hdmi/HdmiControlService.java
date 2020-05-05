@@ -1753,6 +1753,24 @@ public class HdmiControlService extends SystemService {
         }
 
         @Override
+        public byte[] getAvrSupportedAudioFormat() {
+               enforceAccessPermission();
+               HdmiCecLocalDeviceTv tv = tv();
+               if (tv == null) {
+                   return null;
+               }
+               int size = tv.mAvrSupportedFormats.size();
+               if (!tv.isSystemAudioActivated()) {
+                   return null;
+               }
+               byte[] array = new byte[size];
+               for (int i = 0; i < size; i++) {
+                    array[i] = tv.mAvrSupportedFormats.get(i);
+               }
+               return array;
+        }
+
+        @Override
         public void setInputChangeListener(final IHdmiInputChangeListener listener) {
             enforceAccessPermission();
             HdmiControlService.this.setInputChangeListener(listener);
