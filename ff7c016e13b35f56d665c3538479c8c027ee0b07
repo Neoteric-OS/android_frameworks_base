@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b19d9c4_af091150",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/CellularTile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2020-05-05T18:31:50Z",
+      "side": 1,
+      "message": "Instead of doing this, override isAvailable to return false on Guest users.",
+      "revId": "ff7c016e13b35f56d665c3538479c8c027ee0b07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
