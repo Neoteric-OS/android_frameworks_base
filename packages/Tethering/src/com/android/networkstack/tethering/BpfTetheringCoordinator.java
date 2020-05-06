@@ -23,6 +23,7 @@ import static android.net.NetworkStats.SET_DEFAULT;
 import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
 import static android.net.NetworkStats.UID_TETHERING;
+import static android.net.netstats.provider.NetworkStatsProvider.QUOTA_UNLIMITED;
 
 import android.app.usage.NetworkStatsManager;
 import android.net.INetd;
@@ -45,6 +46,7 @@ import com.android.internal.annotations.VisibleForTesting;
 /**
  *  This coordinator is responsible for providing BPF offload relevant stuff.
  *  - Get tethering stats.
+ *  - Set global alert.
  *
  * @hide
  */
@@ -70,6 +72,10 @@ public class BpfTetheringCoordinator {
     @Nullable
     private final BpfTetherStatsProvider mStatsProvider;
     private boolean mStarted = false;
+
+    // Tracking remaining alert quota. Unlike limit quota is subject to interface, the alert
+    // quota is interface independent and global for tether offload.
+    private long mRemainingAlertQuota = QUOTA_UNLIMITED;
 
     // Maps upstream interface index to offloaded traffic statistics.
     // Always contains the latest value received from the BPF maps for each interface, regardless
@@ -179,7 +185,8 @@ public class BpfTetheringCoordinator {
 
         @Override
         public void onSetAlert(long quotaBytes) {
-            // no-op
+            mLog.i("onSetAlert: " + quotaBytes);
+            mHandler.post(() -> updateAlertQuota(quotaBytes));
         }
 
         @Override
@@ -224,6 +231,19 @@ public class BpfTetheringCoordinator {
         return stats;
     }
 
+    private void updateAlertQuota(long newQuota) {
+        if (newQuota < QUOTA_UNLIMITED) {
+            throw new IllegalArgumentException("invalid quota value " + newQuota);
+        }
+        if (mRemainingAlertQuota == newQuota) return;
+
+        mRemainingAlertQuota = newQuota;
+        if (mRemainingAlertQuota == 0) {
+            mLog.i("onAlertReached");
+            if (mStatsProvider != null) mStatsProvider.notifyAlertReached();
+        }
+    }
+
     private void updateForwardedStatsFromNetd() {
         final TetherStatsParcel[] tetherStatsList;
         try {
@@ -234,12 +254,14 @@ public class BpfTetheringCoordinator {
             throw new IllegalStateException("problem parsing tethering stats: ", e);
         }
 
+        long usedAlertQuota = 0;
         for (TetherStatsParcel tetherStats : tetherStatsList) {
             try {
                 final Integer ifIndex = tetherStats.ifIndex;
                 final ForwardedStats curr = new ForwardedStats(tetherStats);
                 final ForwardedStats base = mOffloadTetherStats.get(ifIndex);
                 final ForwardedStats diff = (base != null) ? curr.subtract(base) : curr;
+                usedAlertQuota += diff.rxBytes + diff.txBytes;
 
                 // Update the local cache for counting tether stats delta.
                 mOffloadTetherStats.put(ifIndex, curr);
@@ -255,6 +277,13 @@ public class BpfTetheringCoordinator {
                 throw new IllegalStateException("invalid tethering stats " + e);
             }
         }
+
+        if (mRemainingAlertQuota > 0 && usedAlertQuota > 0) {
+            // Trim to zero if overshoot.
+            final long newQuota = Math.max(mRemainingAlertQuota - usedAlertQuota, 0);
+            updateAlertQuota(newQuota);
+        }
+
     }
 
     private void maybeSchedulePollingStats() {
