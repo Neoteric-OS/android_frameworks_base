@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79a98119_07182805",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-05-06T17:35:38Z",
+      "side": 1,
+      "message": "Vendor",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "3f5739c7d824334e927d2668b5f8ffc309684d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2487c6_5c324088",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-05-06T17:35:38Z",
+      "side": 1,
+      "message": "I feel obligated to mention fixing the generic version of this problem would be too large of an undertaking here, but I still hope you will take it up or keep it in mind, John.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "3f5739c7d824334e927d2668b5f8ffc309684d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "694e43e5_d69d1a70",
+        "filename": "native/android/trace/android/trace.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-05-06T17:35:38Z",
+      "side": 1,
+      "message": "2020",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "3f5739c7d824334e927d2668b5f8ffc309684d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fecdd1_73bedc17",
+        "filename": "native/android/trace/android/trace.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-05-06T17:35:38Z",
+      "side": 1,
+      "message": "Nice!\n\nThis fits our usecase, but not the general usecase. Should we rename the library to be specific to HAL/AIDL? Should it be something more generic?",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 31
+      },
+      "revId": "3f5739c7d824334e927d2668b5f8ffc309684d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929b4640_efe0dab9",
+        "filename": "native/android/trace/android/trace.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-05-06T17:35:38Z",
+      "side": 1,
+      "message": "spacing",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 2
+      },
+      "revId": "3f5739c7d824334e927d2668b5f8ffc309684d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38389153_8037a600",
+        "filename": "native/android/trace/android/trace.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-05-06T17:35:38Z",
+      "side": 1,
+      "message": "should we YAGNI this?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 1
+      },
+      "revId": "3f5739c7d824334e927d2668b5f8ffc309684d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
