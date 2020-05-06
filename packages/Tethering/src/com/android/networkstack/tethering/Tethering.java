@@ -1561,6 +1561,7 @@ public class Tethering {
         }
 
         protected void handleNewUpstreamNetworkState(UpstreamNetworkState ns) {
+            mBpfCoordinator.updateUpstreamNetworkState(ns);
             mIPv6TetheringCoordinator.updateUpstreamNetworkState(ns);
             mOffload.updateUpstreamNetworkState(ns);
         }

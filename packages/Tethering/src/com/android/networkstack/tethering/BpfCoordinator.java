@@ -27,6 +27,9 @@ import static android.net.netstats.provider.NetworkStatsProvider.QUOTA_UNLIMITED
 
 import android.app.usage.NetworkStatsManager;
 import android.net.INetd;
+import android.net.LinkProperties;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkStats;
 import android.net.NetworkStats.Entry;
 import android.net.TetherStatsParcel;
@@ -36,6 +39,7 @@ import android.net.util.TetheringUtils.ForwardedStats;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -44,9 +48,14 @@ import androidx.annotation.Nullable;
 
 import com.android.internal.annotations.VisibleForTesting;
 
+import java.io.IOException;
+import java.net.NetworkInterface;
+import java.util.HashMap;
+
 /**
  *  This coordinator is responsible for providing BPF offload relevant functionality.
  *  - Get tethering stats.
+ *  - Set data limit.
  *  - Set global alert.
  *
  * @hide
@@ -72,6 +81,8 @@ public class BpfCoordinator {
     private final Dependencies mDeps;
     @Nullable
     private final BpfTetherStatsProvider mStatsProvider;
+    @Nullable
+    private UpstreamNetworkState mUpstreamNetworkState;
     private boolean mStarted = false;
 
     // Tracking remaining alert quota. Unlike limit quota is subject to interface, the alert
@@ -82,6 +93,14 @@ public class BpfCoordinator {
     // Always contains the latest total bytes/packets, since each upstream was started, received
     // from the BPF maps for each interface.
     private SparseArray<ForwardedStats> mStats = new SparseArray<>();
+
+    // Maps upstream interface names to interface quotas.
+    // Always contains the latest value received from the framework for each interface, regardless
+    // of whether offload is currently running (or is even supported) on that interface. Only
+    // includes interfaces that have a quota set. Note that this map is used for storing the quota
+    // which is set from the service. Because the service uses the interface name to present the
+    // interface, this map uses the interface name to be the mapping index.
+    private HashMap<String, Long> mInterfaceQuotas = new HashMap<>();
 
     // Maps upstream interface index to interface names.
     // Store all interface name since boot. Used for lookup what interface name it is from the
@@ -148,9 +167,29 @@ public class BpfCoordinator {
         }
         updateForwardedStatsFromNetd();
 
+        mUpstreamNetworkState = null;
         mStarted = false;
+        // TODO: Remove data limit stubs once IpServer could notify no more downstream.
 
         mLog.i("BPF tethering coordinator stopped");
+    }
+
+    /**
+     * Call when UpstreamNetworkState may be changed.
+     * Note that this can be only called on handler thread.
+     */
+    public void updateUpstreamNetworkState(@Nullable UpstreamNetworkState ns) {
+        if (!mStarted) return;
+
+        if (ns == null) {
+            mUpstreamNetworkState = null;
+        } else {
+            // Make a deep copy of the parts we need.
+            mUpstreamNetworkState = new UpstreamNetworkState(
+                    new LinkProperties(ns.linkProperties),
+                    new NetworkCapabilities(ns.networkCapabilities),
+                    new Network(ns.network));
+        }
     }
 
     /**
@@ -200,7 +239,22 @@ public class BpfCoordinator {
 
         @Override
         public void onSetLimit(@NonNull String iface, long quotaBytes) {
-            // no-op
+            if (quotaBytes < QUOTA_UNLIMITED) {
+                throw new IllegalArgumentException("invalid quota value " + quotaBytes);
+            }
+
+            mHandler.post(() -> {
+                final Long curIfaceQuota = mInterfaceQuotas.get(iface);
+
+                if (null == curIfaceQuota && QUOTA_UNLIMITED == quotaBytes) return;
+
+                if (quotaBytes == QUOTA_UNLIMITED) {
+                    mInterfaceQuotas.remove(iface);
+                } else {
+                    mInterfaceQuotas.put(iface, quotaBytes);
+                }
+                maybeUpdateDataLimit(iface);
+            });
         }
 
         @VisibleForTesting
@@ -222,6 +276,54 @@ public class BpfCoordinator {
             mIfaceStats = mIfaceStats.add(ifaceDiff);
             mUidStats = mUidStats.add(uidDiff);
         }
+    }
+
+    @Nullable
+    private String currentUpstreamInterface() {
+        // Get IPv6 tethering upstream because BPF tethering offload supports IPv6 only.
+        return (mUpstreamNetworkState != null)
+                ? TetheringInterfaceUtils.getIPv6Interface(mUpstreamNetworkState) : null;
+    }
+
+    // Used to get the interface index on current upstream.
+    private int getInterfaceIndex(String ifName) {
+        try {
+            return NetworkInterface.getByName(ifName).getIndex();
+        } catch (IOException | NullPointerException e) {
+            // TODO: Consider throwing an exception if get interface index failed.
+            mLog.e("Can't determine interface index for interface " + ifName + " : " + e);
+            return 0;
+        }
+    }
+
+    @NonNull
+    private Long getQuotaBytes(String iface) {
+        final Long limit = mInterfaceQuotas.get(iface);
+        final Long quotaBytes = (limit != null) ? limit : QUOTA_UNLIMITED;
+
+        return quotaBytes;
+    }
+
+    private boolean setDataLimitToNetd(Integer ifindex, Long quotaBytes) {
+        if (ifindex == null || ifindex <= 0) return false;
+
+        try {
+            mNetd.tetherOffloadSetInterfaceQuota(ifindex, quotaBytes);
+        } catch (RemoteException | ServiceSpecificException e) {
+            mLog.e("Exception when updating quota " + quotaBytes + ": " + e);
+            return false;
+        }
+
+        return true;
+    }
+
+    // Handle the data limit update from the service which is the stats provider registered for.
+    private void maybeUpdateDataLimit(String iface) {
+        if (!mStarted || !TextUtils.equals(iface, currentUpstreamInterface())) return;
+
+        final Integer ifindex = getInterfaceIndex(iface);
+        final Long quotaBytes = getQuotaBytes(iface);
+        setDataLimitToNetd(ifindex, quotaBytes);
     }
 
     @NonNull
@@ -299,6 +401,7 @@ public class BpfCoordinator {
             updateAlertQuota(newQuota);
         }
 
+        // TODO: Count the used limit quota for notifying data limit reached.
     }
 
     private void maybeSchedulePollingStats() {
