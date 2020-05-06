@@ -702,6 +702,7 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote, bool p
     char jdwpProviderBuf[sizeof("-XjdwpProvider:") - 1 + PROPERTY_VALUE_MAX];
     char opaqueJniIds[sizeof("-Xopaque-jni-ids:") - 1 + PROPERTY_VALUE_MAX];
     char bootImageBuf[sizeof("-Ximage:") - 1 + PROPERTY_VALUE_MAX];
+    char autofastjniOptsBuf[sizeof("-XAutoFastJni:")-1 + PROPERTY_VALUE_MAX];
 
     // Read if we are using the profile configuration, do this at the start since the last ART args
     // take precedence.
@@ -852,6 +853,10 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote, bool p
     parseRuntimeOption("dalvik.vm.jittransitionweight",
                        jittransitionweightOptBuf,
                        "-Xjittransitionweight:");
+    /*
+     * AutoFastJni related option.
+     */
+    parseRuntimeOption("dalvik.vm.useautofastjni", autofastjniOptsBuf, "-XAutoFastJni:");
     /*
      * Madvise related options.
      */
