@@ -82,6 +82,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     private boolean mArcEstablished = false;
 
+    private boolean mAtmosSupported = false;
+
     // Stores whether ARC feature is enabled per port.
     // True by default for all the ARC-enabled ports.
     private final SparseBooleanArray mArcFeatureEnabled = new SparseBooleanArray();
@@ -225,6 +227,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         launchRoutingControl(reason != HdmiControlService.INITIATED_BY_ENABLE_CEC &&
                 reason != HdmiControlService.INITIATED_BY_BOOT_UP);
         mLocalDeviceAddresses = initLocalDeviceAddresses();
+        notifyAtmosSupported(mAtmosSupported);
         resetSelectRequestBuffer();
         launchDeviceDiscovery();
         if (!mDelayedMessageBuffer.isBuffered(Constants.MESSAGE_ACTIVE_SOURCE)) {
@@ -725,12 +728,30 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             mAvrSupportedFormats.add(params[i]);
             if( i % 3 == 0 ) {
                 switch (params[i] & Constants.AUDIO_FORMAT_MASK) {
-                    // TODO: Add necessary SAD parser
+                    case Constants.AUDIO_FORMAT_DDP:
+                        Slog.i(TAG, "AVR supports DDP");
+                        setAtmosSuppotedEnabled(params[i + 2] % 2);
+                        break;
                     default:
                         break;
                  }
              }
         }
+    }
+
+    void setAtmosSuppotedEnabled(int atmosBit) {
+        assertRunOnServiceThread();
+        if (atmosBit != 0) {
+            Slog.w(TAG, "AVR supports ATMOS");
+            mAtmosSupported = true;
+        } else {
+            mAtmosSupported = false;
+        }
+        notifyAtmosSupported(mAtmosSupported);
+    }
+
+    private void notifyAtmosSupported(boolean atmosEnable) {
+        mService.notifyAtmosSupported(atmosEnable);
     }
 
     @Override
@@ -1693,6 +1714,12 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         if (!connected) {
             removeCecSwitches(portId);
         }
+        if (mAtmosSupported && !connected && getAvrDeviceInfo() != null &&
+                portId == getAvrDeviceInfo().getPortId()) {
+            mAtmosSupported = false;
+            notifyAtmosSupported(false);
+        }
+
         // Tv device will have permanent HotplugDetectionAction.
         List<HotplugDetectionAction> hotplugActions = getActions(HotplugDetectionAction.class);
         if (!hotplugActions.isEmpty()) {

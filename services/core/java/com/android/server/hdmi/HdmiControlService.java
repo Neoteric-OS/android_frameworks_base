@@ -2866,6 +2866,11 @@ public class HdmiControlService extends SystemService {
     }
 
     @ServiceThreadOnly
+    void notifyAtmosSupported(boolean supported) {
+        HdmiControlService.this.writeBooleanSetting(Constants.AVR_CAPABILITY_DDP_ATMOS, supported);
+    }
+
+    @ServiceThreadOnly
     void setControlEnabled(boolean enabled) {
         assertRunOnServiceThread();
 
