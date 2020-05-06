@@ -28,10 +28,12 @@ import static android.net.netstats.provider.NetworkStatsProvider.QUOTA_UNLIMITED
 import android.app.usage.NetworkStatsManager;
 import android.net.INetd;
 import android.net.LinkProperties;
+import android.net.MacAddress;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkStats;
 import android.net.NetworkStats.Entry;
+import android.net.TetherOffloadRuleParcel;
 import android.net.TetherStatsParcel;
 import android.net.netstats.provider.NetworkStatsProvider;
 import android.net.util.SharedLog;
@@ -46,8 +48,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.io.IOException;
+import java.net.Inet6Address;
 import java.net.NetworkInterface;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -55,6 +59,7 @@ import java.util.Map;
  *  - Get tethering stats.
  *  - Set data limit.
  *  - Set global alert.
+ *  - Add/remove forwarding rules.
  *
  * @hide
  */
@@ -95,6 +100,11 @@ public class BpfTetheringCoordinator {
     // Store all interface name since boot. Used for lookup what interface name it is from the
     // tether stats got from netd because netd reports interface index to present an interface.
     private HashMap<Integer, String> mInterfaceNames = new HashMap<>();
+
+    // Maps upstream interface index to the client address who is using on the upstream.
+    // Used to monitor if any client is using a given upstream. It helps to do upstream
+    // initialization and cleanup. Note that we don't care the client on which downstream.
+    private HashMap<Integer, HashSet<Inet6Address>> mClientAddresses = new HashMap<>();
 
     // Runnable that used by scheduling next polling of stats.
     private final Runnable mScheduledPollingTask = () -> {
@@ -143,6 +153,9 @@ public class BpfTetheringCoordinator {
 
     /**
      * Stop BPF tethering offload stats polling and cleanup upstream parameters.
+     * The data limit cleanup and the tether stats maps cleanup are not implemented here.
+     * These cleanups reply on that all IpServers calls #removeForwardingRule. After the
+     * last rule is removed from the upstream, #removeForwardingRule does the cleanup stuff.
      * Note that this can be only called on handler thread.
      */
     public void stop() {
@@ -156,7 +169,6 @@ public class BpfTetheringCoordinator {
 
         mUpstreamNetworkState = null;
         mStarted = false;
-        // TODO: Remove data limit stubs once IpServer could notify no more downstream.
 
         mLog.i("BPF tethering coordinator stopped");
     }
@@ -179,6 +191,79 @@ public class BpfTetheringCoordinator {
         }
     }
 
+    /**
+     * Add forwarding rule. Before adding the first rule on a given upstream, must add data
+     * limit on the given upstream.
+     * Note that this can be only called on handler thread.
+     * TODO: Help IpServer to add forwarding rules.
+     */
+    public void addForwardingRule(@NonNull Ipv6ForwardingRule rule) {
+        Integer upstreamIfindex = rule.upstreamIfindex;
+        HashSet<Inet6Address> clients = mClientAddresses.get(upstreamIfindex);
+        if (clients == null) {
+            clients = new HashSet<Inet6Address>();
+        }
+
+        // Setup the data limit on the given upstream before adding the first rule.
+        if (!isAnyClientOnUpstream(upstreamIfindex)) {
+            // If we failed to set a data limit, probably should not use this upstream, because we
+            // may not want to blow through the data limit that we were told to apply.
+            // TODO: Perhaps stop adding or removing forwarding rules.
+            boolean success = updateDataLimit(upstreamIfindex);
+            if (!success) {
+                final String iface = mInterfaceNames.get(upstreamIfindex);
+                mLog.e("Setting data limit for " + iface + " failed.");
+            }
+        }
+
+        clients.add(rule.address);
+        mClientAddresses.put(upstreamIfindex, clients);
+
+        // TODO: Move the adding forwarding rule mechanism from IpServer to here.
+    }
+
+    /**
+     * Remove forwarding rule. After removing the last rule on a given upstream, must clear data
+     * limit, update the last tether stats and remove the tether stats in the BPF maps.
+     * Note that this can be only called on handler thread.
+     * TODO: Help IpServer to remove forwarding rules.
+     */
+    public void removeForwardingRule(@NonNull Ipv6ForwardingRule rule) {
+        Integer upstreamIfindex = rule.upstreamIfindex;
+        HashSet<Inet6Address> clients = mClientAddresses.get(upstreamIfindex);
+
+        // Avoid unnecessary work on a non-existent rule which may have never been added or
+        // removed already.
+        if (clients == null) return;
+
+        clients.remove(rule.address);
+        // TODO: Move the removing forwarding rule mechanism from IpServer to here.
+
+        // If there are no more downstream on the upstream, remove the entry, clean up the data
+        // limit, tether stats map and local cache.
+        if (clients.isEmpty()) {
+            // Remove the entry and clear the data limit on the given upstream. Note that
+            // #clearDataLimit only clears the data limit on the upstream which has no more
+            // downstream. It invokes |mClientAddresses| to check.
+            mClientAddresses.remove(upstreamIfindex);
+            clearDataLimit(upstreamIfindex);
+
+            // After updating the latest tether stats, clear the tether stats from BPF map and
+            // local cache.
+            updateForwardedStatsFromNetd();
+            try {
+                mNetd.tetherOffloadStatsRemove(upstreamIfindex);
+            } catch (RemoteException | ServiceSpecificException e) {
+                mLog.e("Exception when removing tether stats for upstream index "
+                        + upstreamIfindex + ": " + e);
+            }
+            mOffloadTetherStats.remove(upstreamIfindex);
+            return;
+        }
+
+        mClientAddresses.put(upstreamIfindex, clients);
+    }
+
     /** Add upstream name to lookup table. The lookup table is used for tether stats interface name
       * lookup because the netd only reports interface index in BPF tether stats but the service
       * expects the interface name in NetworkStats object.
@@ -190,6 +275,45 @@ public class BpfTetheringCoordinator {
         // The same interface index to name mapping may be added by different IpServer objects.
         // Put it simply without checking.
         mInterfaceNames.put(upstreamIfindex, upstreamIface);
+    }
+
+    /** IPv6 forwarding rule class. */
+    public static class Ipv6ForwardingRule {
+        public final int upstreamIfindex;
+        public final int downstreamIfindex;
+        public final Inet6Address address;
+        public final MacAddress srcMac;
+        public final MacAddress dstMac;
+
+        public Ipv6ForwardingRule(int upstreamIfindex, int downstreamIfIndex,
+                @NonNull Inet6Address address, @NonNull MacAddress srcMac,
+                @NonNull MacAddress dstMac) {
+            this.upstreamIfindex = upstreamIfindex;
+            this.downstreamIfindex = downstreamIfIndex;
+            this.address = address;
+            this.srcMac = srcMac;
+            this.dstMac = dstMac;
+        }
+
+        /** Return a new rule object which updates with new upstream index. */
+        public Ipv6ForwardingRule onNewUpstream(int newUpstreamIfindex) {
+            return new Ipv6ForwardingRule(newUpstreamIfindex, downstreamIfindex, address, srcMac,
+                    dstMac);
+        }
+
+        /** Don't manipulate TetherOffloadRuleParcel directly because implementing onNewUpstream()
+         *  would be error-prone due to generated stable AIDL classes not having a copy constructor.
+         */
+        public TetherOffloadRuleParcel toTetherOffloadRuleParcel() {
+            final TetherOffloadRuleParcel parcel = new TetherOffloadRuleParcel();
+            parcel.inputInterfaceIndex = upstreamIfindex;
+            parcel.outputInterfaceIndex = downstreamIfindex;
+            parcel.destination = address.getAddress();
+            parcel.prefixLength = 128;
+            parcel.srcL2Address = srcMac.toByteArray();
+            parcel.dstL2Address = dstMac.toByteArray();
+            return parcel;
+        }
     }
 
     private class BpfTetherStatsProvider extends NetworkStatsProvider {
@@ -318,9 +442,39 @@ public class BpfTetheringCoordinator {
     private void maybeUpdateDataLimit(String iface) {
         if (!mStarted || !TextUtils.equals(iface, currentUpstreamInterface())) return;
 
+        // Set data limit only on a given upstream which has client(s) because it implies the
+        // upstream is under tethering.
         final Integer ifindex = getInterfaceIndex(iface);
+        if (!isAnyClientOnUpstream(ifindex)) return;
+
         final Long quotaBytes = getQuotaBytes(iface);
         pushDataLimit(ifindex, quotaBytes);
+    }
+
+    // Handle the data limit update while adding forwarding rules.
+    private boolean updateDataLimit(Integer ifindex) {
+        final String iface = mInterfaceNames.get(ifindex);
+        if (iface == null) {
+            mLog.e("Fail to get the interface name for index " + ifindex);
+            return false;
+        }
+        final Long quotaBytes = getQuotaBytes(iface);
+
+        return pushDataLimit(ifindex, quotaBytes);
+    }
+
+    // Clear the data limit while removing forwarding rules.
+    private boolean clearDataLimit(Integer ifindex) {
+        if (isAnyClientOnUpstream(ifindex)) {
+            mLog.e("Can't clear data limit because the upstream index " + ifindex
+                    + " is under tethering.");
+            return false;
+        }
+        return pushDataLimit(ifindex, Long.valueOf(QUOTA_UNLIMITED));
+    }
+
+    boolean isAnyClientOnUpstream(Integer upstreamIfindex) {
+        return mClientAddresses.get(upstreamIfindex) != null;
     }
 
     private void updateAlertQuota(long newQuota) {
