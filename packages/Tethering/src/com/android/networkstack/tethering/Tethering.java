@@ -2198,6 +2198,12 @@ public class Tethering {
         mOffloadController.dump(pw);
         pw.decreaseIndent();
 
+        pw.println("BPF offload:");
+        pw.increaseIndent();
+        // TODO: Dump the BPF offload device config once it has been added.
+        mBpfTetheringCoordinator.dump(pw);
+        pw.decreaseIndent();
+
         pw.println("Log:");
         pw.increaseIndent();
         if (argsContain(args, "--short")) {

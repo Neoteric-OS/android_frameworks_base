@@ -48,6 +48,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.IndentingPrintWriter;
 
 import java.io.IOException;
 import java.net.Inet6Address;
@@ -278,6 +279,21 @@ public class BpfTetheringCoordinator {
         // re-added by reconnection on the same upstream interface. Ignore the duplicate one.
         if (!mInterfaceNames.contains(upstreamIfindex)) {
             mInterfaceNames.put(upstreamIfindex, upstreamIface);
+        }
+    }
+
+    /** Dump information. */
+    public void dump(@NonNull IndentingPrintWriter pw) {
+        pw.println("Tethering coordinator " + (mStarted ? "started" : "not started"));
+        pw.println("Stats provider " + (mStatsProvider != null ? "registered" : "not registered"));
+        String upstream = currentUpstreamInterface();
+        if (upstream != null) {
+            final Integer ifindex = getInterfaceIndex(upstream);
+            pw.println("Current IPv6 upstream: [" + upstream + "] (index " + ifindex + ")");
+            pw.println("Current client address(es): " + mClientAddresses.toString());
+            pw.println("Interface name lookup table: " + mInterfaceNames.toString());
+        } else {
+            pw.println("<no IPv6 upstream>");
         }
     }
 
