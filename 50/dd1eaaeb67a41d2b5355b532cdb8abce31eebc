@@ -1,0 +1,10 @@
+Code-Review+2: Andrew Sapperstein <asapperstein@google.com>
+Build-Cop-Override+1: Tim Lin <timtmlin@google.com>
+Presubmit-Ready+1: Andrew Sapperstein <asapperstein@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Andrew Sapperstein <asapperstein@google.com>
+Submitted-by: Andrew Sapperstein <asapperstein@google.com>
+Submitted-at: Wed, 06 May 2020 02:07:48 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1301970
+Project: platform/frameworks/base
+Branch: refs/heads/master
