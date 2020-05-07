@@ -40,6 +40,8 @@ import android.util.SparseArray;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.android.internal.annotations.VisibleForTesting;
+
 /**
  *  This coordinator is responsible for providing BPF offload relevant stuff.
  *  - Get tethering stats.
@@ -48,10 +50,11 @@ import androidx.annotation.Nullable;
  */
 public class BpfTetheringCoordinator {
     private static final String TAG = BpfTetheringCoordinator.class.getSimpleName();
-    // TODO: Make it customizable.
-    private static final int DEFAULT_PERFORM_POLL_INTERVAL_MS = 5000;
+    @VisibleForTesting
+    static final int DEFAULT_PERFORM_POLL_INTERVAL_MS = 5000; // TODO: Make it customizable.
 
-    private enum StatsType {
+    @VisibleForTesting
+    enum StatsType {
         STATS_PER_IFACE,
         STATS_PER_UID,
     }
@@ -84,6 +87,7 @@ public class BpfTetheringCoordinator {
         maybeSchedulePollingStats();
     };
 
+    @VisibleForTesting
     static class Dependencies {
         int getPerformPollInterval() {
             // TODO: Consider make this configurable.
@@ -158,7 +162,8 @@ public class BpfTetheringCoordinator {
         }
     }
 
-    private class BpfTetherStatsProvider extends NetworkStatsProvider {
+    @VisibleForTesting
+    class BpfTetherStatsProvider extends NetworkStatsProvider {
         // The offloaded traffic statistics per interface that has not been reported since the
         // latest stats update. Only the interfaces that were ever tethering upstreams and has
         // pending tether stats delta are included in this NetworkStats object.
@@ -182,7 +187,8 @@ public class BpfTetheringCoordinator {
             // no-op
         }
 
-        private void pushTetherStats() {
+        @VisibleForTesting
+        void pushTetherStats() {
             try {
                 notifyStatsUpdated(0 /* token */, mIfaceStats, mUidStats);
 
