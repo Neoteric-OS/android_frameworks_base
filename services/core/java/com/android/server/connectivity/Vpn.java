@@ -21,6 +21,7 @@ import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_CONGESTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
 import static android.net.RouteInfo.RTN_THROW;
 import static android.net.RouteInfo.RTN_UNREACHABLE;
 
@@ -317,8 +318,7 @@ public class Vpn {
      *
      * @param defaultNetwork underlying network for VPNs following platform's default
      */
-    public synchronized NetworkCapabilities updateCapabilities(
-            @Nullable Network defaultNetwork) {
+    public synchronized NetworkCapabilities updateCapabilities(@Nullable Network defaultNetwork) {
         if (mConfig == null) {
             // VPN is not running.
             return null;
@@ -350,11 +350,10 @@ public class Vpn {
         int[] transportTypes = new int[] { NetworkCapabilities.TRANSPORT_VPN };
         int downKbps = NetworkCapabilities.LINK_BANDWIDTH_UNSPECIFIED;
         int upKbps = NetworkCapabilities.LINK_BANDWIDTH_UNSPECIFIED;
-        // VPN's meteredness is OR'd with isAlwaysMetered and meteredness of its underlying
-        // networks.
-        boolean metered = isAlwaysMetered;
-        boolean roaming = false;
-        boolean congested = false;
+        boolean metered = isAlwaysMetered; // metered if any underlying is metered, or alwaysMetered
+        boolean roaming = false; // roaming if any underlying is roaming
+        boolean congested = false; // congested if any underlying is congested
+        boolean suspended = false; // suspended if any underlying is suspended
 
         boolean hadUnderlyingNetworks = false;
         if (null != underlyingNetworks) {
@@ -376,6 +375,7 @@ public class Vpn {
                 metered |= !underlyingCaps.hasCapability(NET_CAPABILITY_NOT_METERED);
                 roaming |= !underlyingCaps.hasCapability(NET_CAPABILITY_NOT_ROAMING);
                 congested |= !underlyingCaps.hasCapability(NET_CAPABILITY_NOT_CONGESTED);
+                suspended |= !underlyingCaps.hasCapability(NET_CAPABILITY_NOT_SUSPENDED);
             }
         }
         if (!hadUnderlyingNetworks) {
@@ -383,6 +383,7 @@ public class Vpn {
             metered = true;
             roaming = false;
             congested = false;
+            suspended = false;
         }
 
         caps.setTransportTypes(transportTypes);
@@ -391,6 +392,7 @@ public class Vpn {
         caps.setCapability(NET_CAPABILITY_NOT_METERED, !metered);
         caps.setCapability(NET_CAPABILITY_NOT_ROAMING, !roaming);
         caps.setCapability(NET_CAPABILITY_NOT_CONGESTED, !congested);
+        caps.setCapability(NET_CAPABILITY_NOT_SUSPENDED, !suspended);
     }
 
     /**
