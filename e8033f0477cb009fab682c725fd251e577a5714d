@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7be9e5b_93b46214",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-07T17:21:16Z",
+      "side": 1,
+      "message": "nits: return new RouteInfo(PrefixUtils.asIpPrefix(ipv4Address), null, mIfaceName, RTN_UNICAST);",
+      "range": {
+        "startLine": 410,
+        "startChar": 8,
+        "endLine": 412,
+        "endChar": 72
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512757cb_a04ac87d",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-07T17:21:16Z",
+      "side": 1,
+      "message": "nits:\n        if (!setupTetherInterface(PrefixUtils.asIpPrefix(mIpv4Address))) {\n            mLog.e(\"Failed to setup tether interface on new prefix request\");\n            return;\n        }",
+      "range": {
+        "startLine": 987,
+        "startChar": 0,
+        "endLine": 992,
+        "endChar": 9
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02920d71_f473fe7d",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-07T17:21:16Z",
+      "side": 1,
+      "message": "How about trigger callback directly, then we can also test whether this callback would send CMD_NEW_PREFIX_REQUEST message.\nmEventCallbacks.onNewPrefixRequest(new IpPrefix(\"192.168.42.0/24\"));\nmLooper.dispatchAll();",
+      "range": {
+        "startLine": 520,
+        "startChar": 0,
+        "endLine": 522,
+        "endChar": 89
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
