@@ -1,0 +1,406 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07e18947_9dfdd794",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 58,
+        "startChar": 43,
+        "endLine": 58,
+        "endChar": 68
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a068625_53cd8cb9",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 34
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "663f57cc_4f4353b8",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "IIUC this should be a local variable.",
+      "range": {
+        "startLine": 61,
+        "startChar": 31,
+        "endLine": 61,
+        "endChar": 44
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e87c5b_3e9b00e0",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "question: which part needs the looper?",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deabaed3_bf1b296e",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "1. maybe just setSubIdList? Or just setSubscriptions\nNote that Subscription \u003d Sub \u003d Sim\nWhile SubscriberId \u003d Imsi\n\n2. This is to simulate the sim card insertion/deletion.\nIIUC onSubscriptionChanged should be put inside this function.",
+      "range": {
+        "startLine": 98,
+        "startChar": 17,
+        "endLine": 98,
+        "endChar": 38
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2baeb23a_e052ec5b",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "IIUC this is not needed.",
+      "range": {
+        "startLine": 103,
+        "startChar": 17,
+        "endLine": 103,
+        "endChar": 40
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73222ffe_82615fc7",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "maybe setRatTypeForSub?",
+      "range": {
+        "startLine": 107,
+        "startChar": 17,
+        "endLine": 107,
+        "endChar": 40
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffcf7d27_2ef24de7",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 110,
+        "startChar": 13,
+        "endLine": 110,
+        "endChar": 28
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab7f181_dc531bc0",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "IIUC you can write this:\nfinal RatTypeListener match \u003d CollectionUtils.find(listeners, it -\u003e it.getSubId() \u003d\u003d subid);\nif(match !\u003d null) \n   ....",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 114,
+        "endChar": 9
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d403f313_708e8bf0",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "IIUC it would be more clear if you define something like TEST_SUBID1, and also put TEST_IMSI1 in top level.",
+      "range": {
+        "startLine": 129,
+        "startChar": 30,
+        "endLine": 129,
+        "endChar": 47
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f294429b_1125e1dc",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "maybe describe in more straightforword way? e.g.\nInsert sim1 and sim2.\nSet RAT type of sim1 to UMTS, sim2 to LTE.\nRemove sim2.\n...",
+      "range": {
+        "startLine": 150,
+        "startChar": 8,
+        "endLine": 150,
+        "endChar": 47
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b999c72e_8998181b",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "TEST_SUBID1\nIf so, maybe choose other arbitrary number like 3 or 7.",
+      "range": {
+        "startLine": 151,
+        "startChar": 70,
+        "endLine": 151,
+        "endChar": 71
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c63c05_3952cab6",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "TEST_SUBID2",
+      "range": {
+        "startLine": 153,
+        "startChar": 70,
+        "endLine": 153,
+        "endChar": 71
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5790eb39_4745bfb1",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "1. IIUC we also need to verify mDelegate gets the callback?\n\n2. IIUC we always want to verify onCollapsedRatTypeChanged is called,\n and getRatTypeForSubscriberId can get correct answer, right?\nIf so, is it better if we refactor them into one function call?\ne.g.\nassertRatTypeChangedForSub(int subId, int ratType)",
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8834ec_e7212ea1",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "Maybe describe it with behavioral description?\ne.g.\n// Remove Sim 2.\n...\n\n// Verify that callbacks are fired and RAT type is correct after removing sim.",
+      "range": {
+        "startLine": 171,
+        "startChar": 11,
+        "endLine": 171,
+        "endChar": 47
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca78161_ff885c50",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "Maybe we don\u0027t need this variable, right?",
+      "range": {
+        "startLine": 172,
+        "startChar": 20,
+        "endLine": 172,
+        "endChar": 34
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623b99ec_592e90cc",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "maybe verify sim1 does not get any callback, and the get rat type is not changed.",
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106d7be0_79207b2c",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-07T07:28:13Z",
+      "side": 1,
+      "message": "1. Need comment IIUC\n2. maybe need to verify getRatTypeForSubscriberId",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 59
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
