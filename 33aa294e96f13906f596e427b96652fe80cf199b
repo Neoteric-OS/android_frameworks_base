@@ -46,6 +46,30 @@
       "revId": "33aa294e96f13906f596e427b96652fe80cf199b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcffc394_64b0c1a2",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-08T03:36:17Z",
+      "side": 1,
+      "message": "I see. I think we can pick this CL(also cherry-pick to rvc-dev) and have follow up CL that change min_sdk_version to 30 in rvc-dev. Although AOSP would keep in \"current\" for now, but it will get the CL which switch min_sdk_version to 30 when AOSP codebase is totally switch to R. WDYT ?",
+      "parentUuid": "5c839532_18e633df",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 31
+      },
+      "revId": "33aa294e96f13906f596e427b96652fe80cf199b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
