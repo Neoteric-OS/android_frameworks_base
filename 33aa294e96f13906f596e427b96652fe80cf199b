@@ -118,6 +118,30 @@
       "revId": "33aa294e96f13906f596e427b96652fe80cf199b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a4f1f2d_63ce6ea6",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2020-05-08T04:17:54Z",
+      "side": 1,
+      "message": "You\u0027re right. 30 is correct for com.android.tethering and its dependencies. \n\nI meant the \"rvc-dev\" branch. The rvc-dev branch has fixed \"current\" as 30. In rvc-dev branch the meaning of \"current\" doesn\u0027t change in the future. That\u0027s why we don\u0027t have to switch it to 30 or something in the rvc-dev branch. \n\nBut in other branches (like AOSP or in internal master), the meaning of \"current\" will change over time. So we need to fix it to 30 to ensure that com.android.tethering is built against SDK 30 and run on 30 devices.",
+      "parentUuid": "8f1ca28f_893a9650",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 31
+      },
+      "revId": "33aa294e96f13906f596e427b96652fe80cf199b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
