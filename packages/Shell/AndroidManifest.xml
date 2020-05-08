@@ -222,7 +222,10 @@
     <!-- Permission required for CTS test - UiModeManagerTest -->
     <uses-permission android:name="android.permission.ENTER_CAR_MODE_PRIORITIZED"/>
 
-      <!-- Permission required for CTS test - CarModeInCallServiceTest -->
+    <!-- Permission required for CTS test - BatterySaverTest -->
+    <uses-permission android:name="android.permission.MODIFY_DAY_NIGHT_MODE"/>
+
+    <!-- Permission required for CTS test - CarModeInCallServiceTest -->
     <uses-permission android:name="android.permission.CONTROL_INCALL_EXPERIENCE"/>
 
     <!-- Permission required for CTS test - TetheringManagerTest -->
