@@ -94,6 +94,30 @@
       "revId": "33aa294e96f13906f596e427b96652fe80cf199b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f1ca28f_893a9650",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-08T04:02:47Z",
+      "side": 1,
+      "message": "If I understand min_sdk_version correctly, the min_sdk_version is define for the minimum sdk that our module want to support. If yes, 30 is more correct than \"current\". Says if we move to development 31, the \"current\" would become to 31, right ?",
+      "parentUuid": "29216054_020969d4",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 31
+      },
+      "revId": "33aa294e96f13906f596e427b96652fe80cf199b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
