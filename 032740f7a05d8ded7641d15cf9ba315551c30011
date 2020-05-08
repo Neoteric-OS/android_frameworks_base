@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000002870822",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1302437?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "556ed79f_945348cd",
+          "description": "Change to \"packages/Tethering/src/com/android/networkstack/tethering/BpfTetheringCoordinator.java\"",
+          "replacements": [
+            {
+              "path": "packages/Tethering/src/com/android/networkstack/tethering/BpfTetheringCoordinator.java",
+              "range": {
+                "startLine": 253,
+                "startChar": 18,
+                "endLine": 253,
+                "endChar": 26
+              },
+              "replacement": "Forwarded"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "c52095da_4e30b60d",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfTetheringCoordinator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-05-08T11:34:32Z",
+      "side": 1,
+      "message": "Common typo found: \"Forwaded\" -- should it be \"Forwarded\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 253,
+        "startChar": 18,
+        "endLine": 253,
+        "endChar": 26
+      },
+      "revId": "032740f7a05d8ded7641d15cf9ba315551c30011",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
