@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "6fc07230_60c9ddb0",
+        "filename": "apex/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-05-08T17:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee0fc71a_4eb47719",
+      "range": {
+        "startLine": 68,
+        "startChar": 28,
+        "endLine": 68,
+        "endChar": 45
+      },
+      "revId": "4f0cde0636909d3d58f35f60d6a64c826cd5109f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e71f8342_ab9dc520",
         "filename": "apex/Android.bp",
         "patchSetId": 6
@@ -189,6 +213,30 @@
       "revId": "4f0cde0636909d3d58f35f60d6a64c826cd5109f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748fb8e1_23e55a70",
+        "filename": "apex/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-05-08T17:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a93b79c6_fbab973b",
+      "range": {
+        "startLine": 98,
+        "startChar": 25,
+        "endLine": 98,
+        "endChar": 100
+      },
+      "revId": "4f0cde0636909d3d58f35f60d6a64c826cd5109f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
