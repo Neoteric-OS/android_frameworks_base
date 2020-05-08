@@ -22,6 +22,30 @@
       "revId": "87d5a8fac5c1322c1bd241673d1c1c6448b98a61",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7adba6_b33d6894",
+        "filename": "packages/Tethering/apex/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2020-05-08T08:45:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1d74104a_f68f54e5",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 31
+      },
+      "revId": "87d5a8fac5c1322c1bd241673d1c1c6448b98a61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
