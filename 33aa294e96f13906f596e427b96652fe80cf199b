@@ -70,6 +70,30 @@
       "revId": "33aa294e96f13906f596e427b96652fe80cf199b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29216054_020969d4",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2020-05-08T03:47:28Z",
+      "side": 1,
+      "message": "I\u0027ll cherry-pick this to rvc-dev. However, we don\u0027t have to switch it to 30 in rvc-dev because in rvc-dev branch \"current\" is treated as \"30\". Of course it\u0027s okay to do it ;-)\n\nIn AOSP, we\u0027ll have to switch it to 30 later. I\u0027ll file a bug for it (In fact, there\u0027re more modules to switch \"current\" or \"R\"(codename) to \"30\" in AOSP).",
+      "parentUuid": "bcffc394_64b0c1a2",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 31
+      },
+      "revId": "33aa294e96f13906f596e427b96652fe80cf199b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
