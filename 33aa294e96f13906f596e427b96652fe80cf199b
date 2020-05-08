@@ -142,6 +142,30 @@
       "revId": "33aa294e96f13906f596e427b96652fe80cf199b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54057fb8_f0d88b15",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-08T04:29:43Z",
+      "side": 1,
+      "message": "LGTM, thanks clarification.",
+      "parentUuid": "8a4f1f2d_63ce6ea6",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 31
+      },
+      "revId": "33aa294e96f13906f596e427b96652fe80cf199b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
