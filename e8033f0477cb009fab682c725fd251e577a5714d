@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "eddedd25_c7944137",
+        "filename": "packages/Tethering/src/android/net/dhcp/DhcpServingParamsParcelExt.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "This is not very clear; the DHCP server would request a new prefix regardless of the link when this is set to true right ? In that case maybe remove it ?\n\nAlso nit: maybe mention that this only happens if there is only one client",
+      "range": {
+        "startLine": 178,
+        "startChar": 27,
+        "endLine": 178,
+        "endChar": 53
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae60ddd_7009774c",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Change to \", e\" instead of \" + e\" to avoid losing the exception cause and stacktrace",
+      "range": {
+        "startLine": 402,
+        "startChar": 38,
+        "endLine": 402,
+        "endChar": 41
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7be9e5b_93b46214",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 4
@@ -18,6 +64,305 @@
         "startChar": 8,
         "endLine": 412,
         "endChar": 72
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcf1c38_7f27212e",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Nit: maybe add Objects.requireNonNull as an additional check, in case someone messed up the AIDL transaction IDs, so it becomes easier to debug.",
+      "range": {
+        "startLine": 535,
+        "startChar": 57,
+        "endLine": 535,
+        "endChar": 70
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba470bfd_d353a36a",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Nit: just\nfinal boolean changePrefixOnDecline \u003d (mInterfaceType \u003d\u003d TetheringManager.TETHERING_NCM);\n\nOr alternatively just put it in the setter on line 570 if it fits",
+      "range": {
+        "startLine": 560,
+        "startChar": 16,
+        "endLine": 560,
+        "endChar": 81
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34e05d9_b8d2c67b",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Maybe set to false if clientAddr !\u003d null ? Since it\u0027s not possible to use a different prefix in that case",
+      "range": {
+        "startLine": 570,
+        "startChar": 42,
+        "endLine": 570,
+        "endChar": 63
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff95f45_921ae4f1",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "The fact that updateIpv4LinkAddress has another if() for separate, independent logic based on which argument is null indicates that it should actually be split into two different methods. I think you could have \"addLinkAddress\" and \"removeLinkAddress\" separate, or some other naming.",
+      "range": {
+        "startLine": 683,
+        "startChar": 12,
+        "endLine": 683,
+        "endChar": 54
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79366a3f_26c20d1f",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "IpPrefix#toString already does:\n InetAddress.getByAddress(address).getHostAddress() + \"/\" + prefixLength\n\nso I don\u0027t think you need to add the prefix length here",
+      "range": {
+        "startLine": 961,
+        "startChar": 58,
+        "endLine": 961,
+        "endChar": 97
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b460e7_1bc1e546",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Can you move the code to a separate method, documented as a temporary measure, so it\u0027s clear what will be removed ?",
+      "range": {
+        "startLine": 966,
+        "startChar": 8,
+        "endLine": 968,
+        "endChar": 20
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6925a1_5d201fce",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Would currentPrefix.getPrefixLength work ? There is no guarantee just in this method that this mechanism is for USB (it\u0027s ensured in some other place of the code, in startDhcp), so the code should not assume it or it would break if startDhcp is changed.",
+      "range": {
+        "startLine": 970,
+        "startChar": 24,
+        "endLine": 970,
+        "endChar": 41
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886bba3e_867e35b1",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "The code below only works for prefix \u003d\u003d 24, even though it seems to take a generic prefixLen as input.\n\nBefore PrivateAddressCoordinator is available, I\u0027m wondering if it would be cleaner to just rotate on 3-4 hardcoded prefixes, instead of trying to replicate what PrivateAddressCoordinator should do (which is difficult esp. if you consider variable prefix length).\n\nSo:\n - setChangePrefixOnDecline(isTetheringNcm \u0026\u0026 NCM_PREFIXES.contains(serverLinkAddr)) to make sure this behavior is not used from other prefixes\n - in handleNewPrefixRequest, use something like:\n\n// TODO: use PrivateAddressCoordinator instead of this temporary logic\noldIndex \u003d Arrays.asList(NCM_PREFIXES).indexOf(oldPrefix);\nif (oldIndex \u003d\u003d -1) // error\nnewPrefix \u003d NCM_PREFIXES[(oldIndex + 1) % NCM_PREFIXES.length];",
+      "range": {
+        "startLine": 971,
+        "startChar": 8,
+        "endLine": 971,
+        "endChar": 18
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8e57f0_6fb84d71",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "both the bitwise-and and the modulo seem to do something similar; maybe just nextInt(8) ?",
+      "range": {
+        "startLine": 972,
+        "startChar": 49,
+        "endLine": 972,
+        "endChar": 61
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5583d0_ba3f33d3",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "EMAGICNUMBER; this should at least be a constant",
+      "range": {
+        "startLine": 972,
+        "startChar": 63,
+        "endLine": 972,
+        "endChar": 65
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aca06dc_610a88f8",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Nit: can you reuse the same Random instance ?",
+      "range": {
+        "startLine": 972,
+        "startChar": 25,
+        "endLine": 972,
+        "endChar": 37
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ad5e4a_bf56a389",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Nit: using string concatenation and parsing for handling addresses is inefficient and unusual; generally the address bytes are used, so you could use:\n\nfinal byte[] addr \u003d new byte[] { (byte) 192, (byte) 168, (byte) subnetId, 0 };\n(Inet4Address) InetAddress.getByAddress(addr)\n\nBut see comment above about generating the prefixes",
+      "range": {
+        "startLine": 973,
+        "startChar": 12,
+        "endLine": 973,
+        "endChar": 63
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ba4b16_6e9f3d07",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Is it OK to call this before calling untetherInterface ? What does it do when called twice with different prefixes ?",
+      "range": {
+        "startLine": 989,
+        "startChar": 13,
+        "endLine": 989,
+        "endChar": 33
       },
       "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -48,6 +393,121 @@
     },
     {
       "key": {
+        "uuid": "9b3a0089_217afaeb",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Can you factor this out to a common method with the usage in startDhcp ?",
+      "range": {
+        "startLine": 998,
+        "startChar": 8,
+        "endLine": 998,
+        "endChar": 79
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f89a40_07fdfddf",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Even though the feature is only enabled for NCM tethering, and NCM is supposed to be local, I don\u0027t think this should be used as an assumption when writing the StateMachine code, and that assumption could be broken: I think this should be in BaseServingState instead. BaseServingState ensures that DHCP is only started / stopped in that state via enter/exit, so it makes sense to handle this DHCP message from there.",
+      "range": {
+        "startLine": 1220,
+        "startChar": 21,
+        "endLine": 1220,
+        "endChar": 43
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc53081_7a31c07f",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "testStartDhcpServerOnNcm",
+      "range": {
+        "startLine": 500,
+        "startChar": 16,
+        "endLine": 500,
+        "endChar": 37
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7157d78b_18ef43e1",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Why is this different from what startsDhcpServerOnNcm does ? Maybe add comments if it needs to be different ?",
+      "range": {
+        "startLine": 509,
+        "startChar": 8,
+        "endLine": 509,
+        "endChar": 40
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f63d07_6c5731f6",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Nit: just eventCallbacks",
+      "range": {
+        "startLine": 512,
+        "startChar": 34,
+        "endLine": 512,
+        "endChar": 49
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02920d71_f473fe7d",
         "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
         "patchSetId": 4
@@ -64,6 +524,75 @@
         "startChar": 0,
         "endLine": 522,
         "endChar": 89
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d49e89_7bae4ae7",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Nit: just linkProperties and linkAddresses / prefix below",
+      "range": {
+        "startLine": 539,
+        "startChar": 29,
+        "endLine": 539,
+        "endChar": 44
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3e0a3c_1c20186b",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "Using a captor as argument makes the code less self-contained as it forces us to use the method only after calling verify()\nMaybe just have DhcpServingParamsParcel as argument, and call the method with getValue ?",
+      "range": {
+        "startLine": 737,
+        "startChar": 47,
+        "endLine": 737,
+        "endChar": 61
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2a771f_e0d39155",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-08T07:51:25Z",
+      "side": 1,
+      "message": "supernit: on Message, arg1 and arg2 are ints, and the object is called \"obj\"",
+      "range": {
+        "startLine": 777,
+        "startChar": 53,
+        "endLine": 777,
+        "endChar": 57
       },
       "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
