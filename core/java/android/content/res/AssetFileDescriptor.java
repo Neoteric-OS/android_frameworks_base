@@ -360,6 +360,7 @@ public class AssetFileDescriptor implements Parcelable, Closeable {
     }
 
     AssetFileDescriptor(Parcel src) {
+        src.setDataPosition(0);
         mFd = ParcelFileDescriptor.CREATOR.createFromParcel(src);
         mStartOffset = src.readLong();
         mLength = src.readLong();
