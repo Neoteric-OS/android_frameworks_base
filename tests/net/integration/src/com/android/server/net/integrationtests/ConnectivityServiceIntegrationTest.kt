@@ -28,10 +28,13 @@ import android.net.INetd
 import android.net.INetworkPolicyManager
 import android.net.INetworkStatsService
 import android.net.LinkProperties
+import android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL
 import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
+import android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED
 import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.net.NetworkRequest
 import android.net.TestNetworkStackClient
+import android.net.Uri
 import android.net.metrics.IpConnectivityLog
 import android.os.ConditionVariable
 import android.os.IBinder
@@ -64,6 +67,8 @@ import org.mockito.Mockito.spy
 import org.mockito.MockitoAnnotations
 import org.mockito.Spy
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
@@ -189,11 +194,9 @@ class ConnectivityServiceIntegrationTest {
 
         cm.registerNetworkCallback(request, testCallback)
         nsInstrumentation.addHttpResponse(HttpResponse(
-                "http://test.android.com",
-                responseCode = 204, contentLength = 42, redirectUrl = null))
+                "http://test.android.com", responseCode = 204))
         nsInstrumentation.addHttpResponse(HttpResponse(
-                "https://secure.test.android.com",
-                responseCode = 204, contentLength = 42, redirectUrl = null))
+                "https://secure.test.android.com", responseCode = 204))
 
         val na = NetworkAgentWrapper(TRANSPORT_CELLULAR, LinkProperties(), context)
         networkStackClient.verifyNetworkMonitorCreated(na.network, TEST_TIMEOUT_MS)
@@ -203,5 +206,52 @@ class ConnectivityServiceIntegrationTest {
 
         testCallback.expectAvailableThenValidatedCallbacks(na.network, TEST_TIMEOUT_MS)
         assertEquals(2, nsInstrumentation.getRequestUrls().size)
+    }
+
+    @Test
+    fun testCapportApi() {
+        val request = NetworkRequest.Builder()
+                .clearCapabilities()
+                .addCapability(NET_CAPABILITY_INTERNET)
+                .build()
+        val testCb = TestableNetworkCallback()
+        val apiUrl = "https://capport.android.com"
+
+        cm.registerNetworkCallback(request, testCb)
+        nsInstrumentation.addHttpResponse(HttpResponse(
+                apiUrl,
+                """
+                    |{
+                    |  "captive": true,
+                    |  "user-portal-url": "https://login.capport.android.com",
+                    |  "venue-info-url": "https://venueinfo.capport.android.com"
+                    |}
+                """.trimMargin()))
+
+        // Tests will fail if a non-mocked query is received: mock the HTTPS probe, but not the
+        // HTTP probe as it should not be sent.
+        nsInstrumentation.addHttpResponse(HttpResponse(
+                "https://secure.test.android.com", responseCode = 500))
+
+        val lp = LinkProperties()
+        lp.captivePortalApiUrl = Uri.parse(apiUrl)
+        val na = NetworkAgentWrapper(TRANSPORT_CELLULAR, lp, context)
+        networkStackClient.verifyNetworkMonitorCreated(na.network, TEST_TIMEOUT_MS)
+
+        na.addCapability(NET_CAPABILITY_INTERNET)
+        na.connect()
+
+        testCb.expectAvailableCallbacks(na.network, validated = false, tmt = TEST_TIMEOUT_MS)
+
+        val capportData = testCb.expectLinkPropertiesThat(na, TEST_TIMEOUT_MS) {
+            it.captivePortalData != null
+        }.lp.captivePortalData
+        assertNotNull(capportData)
+        assertTrue(capportData.isCaptive)
+        assertEquals(Uri.parse("https://login.capport.android.com"), capportData.userPortalUrl)
+        assertEquals(Uri.parse("https://venueinfo.capport.android.com"), capportData.venueInfoUrl)
+
+        val nc = testCb.expectCapabilitiesWith(NET_CAPABILITY_CAPTIVE_PORTAL, na, TEST_TIMEOUT_MS)
+        assertFalse(nc.hasCapability(NET_CAPABILITY_VALIDATED))
     }
 }
