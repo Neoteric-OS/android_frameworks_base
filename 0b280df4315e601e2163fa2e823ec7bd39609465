@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "a0f0fa5a_e82f2394",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3068,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-05-11T20:06:14Z",
+      "side": 1,
+      "message": "Ack - fixed in aosp/1308637",
+      "parentUuid": "fe9df979_a2ea48f9",
+      "range": {
+        "startLine": 3068,
+        "startChar": 12,
+        "endLine": 3068,
+        "endChar": 58
+      },
+      "revId": "0b280df4315e601e2163fa2e823ec7bd39609465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fb3af47_0face86d",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4
