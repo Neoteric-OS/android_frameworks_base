@@ -1,0 +1,11 @@
+Autosubmit+1: kwekua <kwekua@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Makoto Onuki <omakoto@google.com>
+Code-Review+2: Amith Yamasani <yamasani@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Mon, 11 May 2020 22:36:25 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1306576
+Project: platform/frameworks/base
+Branch: refs/heads/master
