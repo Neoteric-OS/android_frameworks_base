@@ -51,6 +51,10 @@ void throwErrnoException(JNIEnv* env, const char* functionName, int error) {
 }
 
 jobject SharedMemory_nCreate(JNIEnv* env, jobject, jstring jname, jint size) {
+    jobject jifd = jniCreateFileDescriptor(env);
+    if (jifd == nullptr) {
+        return nullptr; // OOME
+    }
 
     // Name is optional so we can't use ScopedUtfChars for this as it throws NPE on null
     const char* name = jname ? env->GetStringUTFChars(jname, nullptr) : nullptr;
@@ -69,7 +73,8 @@ jobject SharedMemory_nCreate(JNIEnv* env, jobject, jstring jname, jint size) {
         return nullptr;
     }
 
-    return jniCreateFileDescriptor(env, fd);
+    jniSetFileDescriptorOfFD(env, jifd, fd);
+    return jifd;
 }
 
 jint SharedMemory_nGetSize(JNIEnv* env, jobject, jobject fileDescriptor) {

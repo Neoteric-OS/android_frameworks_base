@@ -423,12 +423,13 @@ static jobject ReturnParcelFileDescriptor(JNIEnv* env, std::unique_ptr<Asset> as
 
   env->ReleasePrimitiveArrayCritical(out_offsets, offsets, 0);
 
-  jobject file_desc = jniCreateFileDescriptor(env, fd);
+  ScopedLocalRef<jobject> file_desc(env, jniCreateFileDescriptor(env));
   if (file_desc == nullptr) {
     close(fd);
     return nullptr;
   }
-  return newParcelFileDescriptor(env, file_desc);
+  jniSetFileDescriptorOfFD(env, file_desc.get(), fd);
+  return newParcelFileDescriptor(env, file_desc.get());
 }
 
 static jint NativeGetGlobalAssetCount(JNIEnv* /*env*/, jobject /*clazz*/) {
