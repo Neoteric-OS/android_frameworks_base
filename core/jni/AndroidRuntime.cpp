@@ -807,6 +807,14 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote, bool p
     addOption("-verbose:gc");
     //addOption("-verbose:class");
 
+    // On Android, we always want to allow loading the PerfettoHprof plugin.
+    // Even with this option set, we will still only actually load the plugin
+    // if we are on a userdebug build or the app is debuggable or profileable.
+    //
+    // We do not want to enable this by default because PerfettoHprof does not
+    // work on host, and we do not want to enable it in tests.
+    addOption("-XX:PerfettoHprof=true");
+
     if (primary_zygote) {
         addOption("-Xprimaryzygote");
     }
