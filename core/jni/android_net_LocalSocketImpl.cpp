@@ -16,7 +16,6 @@
 
 #define LOG_TAG "LocalSocketImpl"
 
-#include <nativehelper/JNIHelp.h>
 #include "jni.h"
 #include "utils/Log.h"
 #include "utils/misc.h"
@@ -37,6 +36,8 @@
 #include <android-base/macros.h>
 #include <cutils/sockets.h>
 #include <netinet/tcp.h>
+#include <nativehelper/JNIHelp.h>
+#include <nativehelper/ScopedLocalRef.h>
 #include <nativehelper/ScopedUtfChars.h>
 
 using android::base::ReceiveFileDescriptorVector;
