@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c7d94bf_9dfcc1ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-05-11T07:34:44Z",
+      "side": 1,
+      "message": "I highly doubt about this. The userId could be a value in a multi-user environment like Tablet.",
+      "range": {
+        "startLine": 11,
+        "startChar": 35,
+        "endLine": 11,
+        "endChar": 61
+      },
+      "revId": "c47a350c13c2ad2fa303ba8166e312fec5461839",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
