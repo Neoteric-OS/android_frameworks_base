@@ -159,7 +159,14 @@ static jobject android_net_utils_resNetworkQuery(JNIEnv *env, jobject thiz, jint
         return nullptr;
     }
 
-    return jniCreateFileDescriptor(env, fd);
+    jobject jifd = jniCreateFileDescriptor(env);
+    if (jifd == nullptr) {
+        // OOME, could not allocate FileDescriptor.
+        close(fd);
+        return nullptr;
+    }
+    jniSetFileDescriptorOfFD(env, jifd, fd);
+    return jifd;
 }
 
 static jobject android_net_utils_resNetworkSend(JNIEnv *env, jobject thiz, jint netId,
@@ -174,7 +181,14 @@ static jobject android_net_utils_resNetworkSend(JNIEnv *env, jobject thiz, jint 
         return nullptr;
     }
 
-    return jniCreateFileDescriptor(env, fd);
+    jobject jifd = jniCreateFileDescriptor(env);
+    if (jifd == nullptr) {
+        // OOME, could not allocate FileDescriptor.
+        close(fd);
+        return nullptr;
+    }
+    jniSetFileDescriptorOfFD(env, jifd, fd);
+    return jifd;
 }
 
 static jobject android_net_utils_resNetworkResult(JNIEnv *env, jobject thiz, jobject javaFd) {

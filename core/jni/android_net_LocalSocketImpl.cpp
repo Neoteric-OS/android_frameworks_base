@@ -145,33 +145,26 @@ static ssize_t socket_read_all(JNIEnv *env, jobject thisJ, int fd,
     }
 
     if (received_fds.size() > 0) {
-        jobjectArray fdArray = env->NewObjectArray(received_fds.size(), class_FileDescriptor, NULL);
-
+        ScopedLocalRef<jobjectArray>
+            fdArray(env, env->NewObjectArray(received_fds.size(), class_FileDescriptor, NULL));
         if (fdArray == NULL) {
-            // NewObjectArray has thrown.
-            return -1;
+            return -1; // OutOfMemoryError
         }
 
         for (size_t i = 0; i < received_fds.size(); i++) {
-            jobject fdObject = jniCreateFileDescriptor(env, received_fds[i].get());
-
-            if (env->ExceptionCheck()) {
-                return -1;
+            ScopedLocalRef<jobject> fdObject(env, jniCreateFileDescriptor(env));
+            if (fdObject == NULL) {
+                return -1; // OutOfMemoryError
             }
-
-            env->SetObjectArrayElement(fdArray, i, fdObject);
-
-            if (env->ExceptionCheck()) {
-                return -1;
-            }
+            env->SetObjectArrayElement(fdArray.get(), i, fdObject.get());
         }
 
-        for (auto &fd : received_fds) {
-            // The fds are stored in java.io.FileDescriptors now.
-            static_cast<void>(fd.release());
+        for (size_t i = 0; i < received_fds.size(); i++) {
+            ScopedLocalRef<jobject> fdObject(env, env->GetObjectArrayElement(fdArray.get(), i));
+            jniSetFileDescriptorOfFD(env, fdObject.get(), received_fds[i].release());
         }
 
-        env->SetObjectField(thisJ, field_inboundFileDescriptors, fdArray);
+        env->SetObjectField(thisJ, field_inboundFileDescriptors, fdArray.get());
     }
 
     return ret;
