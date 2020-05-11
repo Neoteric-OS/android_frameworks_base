@@ -19,6 +19,7 @@
 
 #include "jni.h"
 #include <nativehelper/JNIHelp.h>
+#include <nativehelper/ScopedUtfChars.h>
 #include "android_runtime/AndroidRuntime.h"
 #include "android_runtime/Log.h"
 #include "MtpDescriptors.h"
@@ -86,10 +87,12 @@ static jobject android_server_UsbDeviceManager_openAccessory(JNIEnv *env, jobjec
         ALOGE("could not open %s", DRIVER_NAME);
         return NULL;
     }
-    jobject fileDescriptor = jniCreateFileDescriptor(env, fd);
+    jobject fileDescriptor = jniCreateFileDescriptor(env);
     if (fileDescriptor == NULL) {
+        close(fd);
         return NULL;
     }
+    jniSetFileDescriptorOfFD(env, fileDescriptor, fd);
     return env->NewObject(gParcelFileDescriptorOffsets.mClass,
         gParcelFileDescriptorOffsets.mConstructor, fileDescriptor);
 }
@@ -120,35 +123,31 @@ static jint android_server_UsbDeviceManager_getAudioMode(JNIEnv* /* env */, jobj
 }
 
 static jobject android_server_UsbDeviceManager_openControl(JNIEnv *env, jobject /* thiz */, jstring jFunction) {
-    const char *function = env->GetStringUTFChars(jFunction, NULL);
+    ScopedUtfChars function(env, jFunction);
     bool ptp = false;
     int fd = -1;
-    if (!strcmp(function, "ptp")) {
+    if (!strcmp(function.c_str(), "ptp")) {
         ptp = true;
     }
-    if (!strcmp(function, "mtp") || ptp) {
+    if (!strcmp(function.c_str(), "mtp") || ptp) {
         fd = TEMP_FAILURE_RETRY(open(ptp ? FFS_PTP_EP0 : FFS_MTP_EP0, O_RDWR));
         if (fd < 0) {
-            ALOGE("could not open control for %s %s", function, strerror(errno));
-            goto error;
+            ALOGE("could not open control for %s %s", function.c_str(), strerror(errno));
+            return NULL;
         }
         if (!writeDescriptors(fd, ptp)) {
-            goto error;
+            close(fd);
+            return NULL;
         }
     }
 
-    if (function != NULL) {
-        env->ReleaseStringUTFChars(jFunction, function);
-    }
-    return jniCreateFileDescriptor(env, fd);
-error:
-    if (fd != -1) {
+    jobject jifd = jniCreateFileDescriptor(env);
+    if (jifd == NULL) {
         close(fd);
+        return NULL; // OOME
     }
-    if (function != NULL) {
-        env->ReleaseStringUTFChars(jFunction, function);
-    }
-    return NULL;
+    jniSetFileDescriptorOfFD(env, jifd, fd);
+    return jifd;
 }
 
 static const JNINativeMethod method_table[] = {

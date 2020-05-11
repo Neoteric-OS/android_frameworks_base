@@ -132,10 +132,12 @@ static jobject android_server_UsbHostManager_openDevice(JNIEnv *env, jobject /* 
     int newFD = dup(fd);
     usb_device_close(device);
 
-    jobject fileDescriptor = jniCreateFileDescriptor(env, newFD);
+    jobject fileDescriptor = jniCreateFileDescriptor(env);
     if (fileDescriptor == NULL) {
+        close(newFD);
         return NULL;
     }
+    jniSetFileDescriptorOfFD(env, fileDescriptor, newFD);
     return env->NewObject(gParcelFileDescriptorOffsets.mClass,
         gParcelFileDescriptorOffsets.mConstructor, fileDescriptor);
 }

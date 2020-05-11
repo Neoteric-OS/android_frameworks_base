@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
+#include "nativehelper/libnativehelper_api.h"
 #define LOG_TAG "UsbMidiDeviceJNI"
 #define LOG_NDEBUG 0
 #include "utils/Log.h"
 
 #include "jni.h"
 #include <nativehelper/JNIHelp.h>
+#include <nativehelper/ScopedLocalRef.h>
 #include "android_runtime/AndroidRuntime.h"
 #include "android_runtime/Log.h"
 
@@ -93,30 +95,51 @@ android_server_UsbMidiDevice_open(JNIEnv *env, jobject thiz, jint card, jint dev
     if (!fds) {
         return NULL;
     }
+    for (int i = 0; i < subdevice_count + 1; i++) {
+        ScopedLocalRef<jobject> jifd(env, jniCreateFileDescriptor(env));
+        if (jifd.get() == NULL) {
+            return NULL; // OOME
+        }
+        env->SetObjectArrayElement(fds, i, jifd.get());
+    }
 
     // to support multiple subdevices we open the same file multiple times
     for (int i = 0; i < subdevice_count; i++) {
         int fd = open(path, O_RDWR);
         if (fd < 0) {
             ALOGE("open failed on %s for index %d", path, i);
-            return NULL;
+            goto release_fds;
         }
-
-        jobject fileDescriptor = jniCreateFileDescriptor(env, fd);
-        env->SetObjectArrayElement(fds, i, fileDescriptor);
-        env->DeleteLocalRef(fileDescriptor);
+        ScopedLocalRef<jobject> jifd(env, env->GetObjectArrayElement(fds, i));
+        jniSetFileDescriptorOfFD(env, jifd.get(), fd);;
     }
 
     // create a pipe to use for unblocking our input thread
-    int pipeFD[2];
-    pipe(pipeFD);
-    jobject fileDescriptor = jniCreateFileDescriptor(env, pipeFD[0]);
-    env->SetObjectArrayElement(fds, subdevice_count, fileDescriptor);
-    env->DeleteLocalRef(fileDescriptor);
-    // store our end of the pipe in mPipeFD
-    env->SetIntField(thiz, sPipeFDField, pipeFD[1]);
+    {
+        int pipeFD[2];
+        if (pipe(pipeFD) == -1) {
+            ALOGE("pipe() failed, errno = %d", errno);
+            return NULL;
+        }
 
+        ScopedLocalRef<jobject> jifd(env, env->GetObjectArrayElement(fds, subdevice_count));
+        jniSetFileDescriptorOfFD(env, jifd.get(), pipeFD[0]);
+
+        // store our end of the pipe in mPipeFD
+        env->SetIntField(thiz, sPipeFDField, pipeFD[1]);
+    }
     return fds;
+
+release_fds:
+    for (int i = 0; i < subdevice_count + 1; ++i) {
+        ScopedLocalRef<jobject> jifd(env, env->GetObjectArrayElement(fds, i));
+        int fd = jniGetFDFromFileDescriptor(env, jifd.get());
+        if (fd == -1) {
+            break;
+        }
+        close(fd);
+    }
+    return NULL;
 }
 
 static void

@@ -19,6 +19,7 @@
 
 #include "jni.h"
 #include <nativehelper/JNIHelp.h>
+#include <nativehelper/ScopedUtfChars.h>
 #include "android_runtime/AndroidRuntime.h"
 
 #include <sys/types.h>
@@ -36,20 +37,19 @@ static struct parcel_file_descriptor_offsets_t
 
 static jobject android_server_SerialService_open(JNIEnv *env, jobject /* thiz */, jstring path)
 {
-    const char *pathStr = env->GetStringUTFChars(path, NULL);
-
-    int fd = open(pathStr, O_RDWR | O_NOCTTY);
-    if (fd < 0) {
-        ALOGE("could not open %s", pathStr);
-        env->ReleaseStringUTFChars(path, pathStr);
-        return NULL;
-    }
-    env->ReleaseStringUTFChars(path, pathStr);
-
-    jobject fileDescriptor = jniCreateFileDescriptor(env, fd);
+    jobject fileDescriptor = jniCreateFileDescriptor(env);
     if (fileDescriptor == NULL) {
+        return NULL; // OOME
+    }
+
+    ScopedUtfChars pathStr (env, path);
+    int fd = open(pathStr.c_str(), O_RDWR | O_NOCTTY);
+    if (fd < 0) {
+        ALOGE("could not open %s", pathStr.c_str());
         return NULL;
     }
+
+    jniSetFileDescriptorOfFD(env, fileDescriptor, fd);
     return env->NewObject(gParcelFileDescriptorOffsets.mClass,
         gParcelFileDescriptorOffsets.mConstructor, fileDescriptor);
 }
