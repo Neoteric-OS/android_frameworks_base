@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "fe9df979_a2ea48f9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3068,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-11T01:33:20Z",
+      "side": 1,
+      "message": "Not done ; the new patchset still has a \"proxyDataStallTo...\" method instead of an overload",
+      "parentUuid": "af2b9e4a_58e18e2e",
+      "range": {
+        "startLine": 3068,
+        "startChar": 12,
+        "endLine": 3068,
+        "endChar": 58
+      },
+      "revId": "0b280df4315e601e2163fa2e823ec7bd39609465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fb3af47_0face86d",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4

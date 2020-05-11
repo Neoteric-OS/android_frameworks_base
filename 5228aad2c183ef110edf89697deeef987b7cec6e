@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e4ecb38_85d8d9ce",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3112,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-11T01:33:20Z",
+      "side": 1,
+      "message": "Please name this \"NetworkMonitorCallbacks#notifyDataStallSuspected\" and move to l.3101, or if it\u0027s too difficult to get a ref to the relevant NMC object, make the overloaded methods here and have the one in NMC just proxy to the equivalent one in CS, like :\n\n  NMC {\n    ...\n    @Override\n    public void notifyDataStallSuspected(DataStallReportParcelable p) {\n      CS.this.notifyDataStallSuspected(p);\n    }\n    ...\n  }\n\n  public void notifyDataStallSuspected(DataStallReportParcelable p) {\n    // current code\n    notifyDataStallSuspected(int int long pb)\n  }\n\n  public void notifyDataStallSuspected(int, int, long, PB) {\n    // code in this patchset\n  }",
+      "range": {
+        "startLine": 3112,
+        "startChar": 17,
+        "endLine": 3112,
+        "endChar": 63
+      },
+      "revId": "5228aad2c183ef110edf89697deeef987b7cec6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
