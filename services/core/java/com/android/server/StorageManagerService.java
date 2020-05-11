@@ -2983,7 +2983,6 @@ class StorageManagerService extends IStorageManager.Stub
         final int callingUid = Binder.getCallingUid();
         final int userId = UserHandle.getUserId(callingUid);
         final UserEnvironment userEnv = new UserEnvironment(userId);
-        final String propertyName = "sys.user." + userId + ".ce_available";
 
         // Ignore requests to create directories while storage is locked
         if (!isUserKeyUnlocked(userId)) {
@@ -2992,7 +2991,7 @@ class StorageManagerService extends IStorageManager.Stub
 
         // Ignore requests to create directories if CE storage is not available
         if ((userId == UserHandle.USER_SYSTEM)
-                && !SystemProperties.getBoolean(propertyName, false)) {
+                && !SystemProperties.getBoolean("sys.user.0.ce_available", false)) {
             throw new IllegalStateException("Failed to prepare " + appPath);
         }
 

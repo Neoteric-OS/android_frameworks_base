@@ -22,10 +22,10 @@ import android.content.Context;
 import android.content.pm.UserInfo;
 import android.os.Environment;
 import android.os.FileUtils;
-import android.os.storage.StorageManager;
-import android.os.storage.VolumeInfo;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.os.storage.StorageManager;
+import android.os.storage.VolumeInfo;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.OsConstants;
@@ -42,7 +42,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Helper class for preparing and destroying user storage
@@ -102,7 +101,7 @@ class UserDataPreparer {
             // CE storage is available after they are prepared.
             if ((flags & StorageManager.FLAG_STORAGE_CE) != 0 &&
                     (userId == UserHandle.USER_SYSTEM)) {
-                String propertyName = "sys.user." + userId + ".ce_available";
+                final String propertyName = "sys.user.0.ce_available";
                 Slog.d(TAG, "Setting property: " + propertyName + "=true");
                 SystemProperties.set(propertyName, "true");
             }
