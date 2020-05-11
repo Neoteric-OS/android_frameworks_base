@@ -202,7 +202,7 @@ message SystemPropertiesProto {
     optional Log log = 16;
 
     optional bool   media_mediadrmservice_enable = 17;
-    optional bool   media_recorder_show_manufacturer_and_model = 18;
+    reserved 18; // Removed media_recorder_show_manufacturer_and_model.
 
     message Persist {
         optional string config_calibration_fac = 1;
