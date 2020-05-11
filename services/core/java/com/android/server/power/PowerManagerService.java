@@ -818,6 +818,9 @@ public final class PowerManagerService extends SystemService
                 mDirty |= DIRTY_BOOT_COMPLETED;
 
                 mBatterySaverStateMachine.onBootCompleted();
+                if (PowerManager.isRebootingUserspaceSupportedImpl()) {
+                    UserspaceRebootLogger.onBootCompleted();
+                }
                 userActivityNoUpdateLocked(
                         now, PowerManager.USER_ACTIVITY_EVENT_OTHER, 0, Process.SYSTEM_UID);
                 updatePowerStateLocked();
@@ -3578,6 +3581,9 @@ public final class PowerManagerService extends SystemService
 
         if (wcd != null) {
             wcd.dump(pw);
+        }
+        if (PowerManager.isRebootingUserspaceSupportedImpl()) {
+            UserspaceRebootLogger.dump(mContext, pw);
         }
     }
 
