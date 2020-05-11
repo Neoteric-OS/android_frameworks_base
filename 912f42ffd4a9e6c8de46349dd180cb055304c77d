@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "977a5ce1_ca57990a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-05-11T22:30:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a318c7b_43bb92d1",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "912f42ffd4a9e6c8de46349dd180cb055304c77d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec7aa447_eb86f3c1",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2020-05-11T20:28:30Z",
       "side": 1,
       "message": "why is this factored out? ISTM that the parcelable is an implementation detail of the NetworkAgent, so keeping this code where it was looked reasonable.",
+      "range": {
+        "startLine": 3096,
+        "startChar": 17,
+        "endLine": 3096,
+        "endChar": 41
+      },
+      "revId": "912f42ffd4a9e6c8de46349dd180cb055304c77d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf3d3c4_55e654be",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3096,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-05-11T22:30:28Z",
+      "side": 1,
+      "message": "This is requested in aosp/1286932. This groups all of the logic for translating Data Stall events (from NetworkStack or from data stall simulation) to the ConnectivityDiagnosticsHandler into one location in ConnectivityService.",
+      "parentUuid": "ec7aa447_eb86f3c1",
       "range": {
         "startLine": 3096,
         "startChar": 17,
@@ -68,6 +116,30 @@
       "revId": "912f42ffd4a9e6c8de46349dd180cb055304c77d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7c4565_30ef6f0c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3109,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-05-11T22:30:28Z",
+      "side": 1,
+      "message": "Bug filed for this (b/156294356). Done.",
+      "parentUuid": "776637be_3ebe2c1c",
+      "range": {
+        "startLine": 3109,
+        "startChar": 16,
+        "endLine": 3109,
+        "endChar": 22
+      },
+      "revId": "912f42ffd4a9e6c8de46349dd180cb055304c77d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
