@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f503fadd_cae22313",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-12T09:17:07Z",
+      "side": 1,
+      "message": "Nit : maybe also mention the bugfix in TetheringTest.java:714 and the small readability improvement in TetheringTest.",
+      "revId": "f8826af065ad74e32959e94f90519055c7b1173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1420313b_01fec51b",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-12T09:17:07Z",
+      "side": 1,
+      "message": "Nit : maybe call this makeTetheringDependencies now that it will make a new object every time.",
+      "range": {
+        "startLine": 72,
+        "startChar": 43,
+        "endLine": 72,
+        "endChar": 46
+      },
+      "revId": "f8826af065ad74e32959e94f90519055c7b1173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d434e1e7_69f080f5",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-12T09:17:07Z",
+      "side": 1,
+      "message": "Nit : maybe add a comment saying that the Tethering object needs a fully functional context to start, so this can\u0027t be done in the constructor",
+      "range": {
+        "startLine": 73,
+        "startChar": 44,
+        "endLine": 73,
+        "endChar": 63
+      },
+      "revId": "f8826af065ad74e32959e94f90519055c7b1173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd4396d_635a7d51",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-12T09:17:07Z",
+      "side": 1,
+      "message": "p",
+      "range": {
+        "startLine": 506,
+        "startChar": 41,
+        "endLine": 506,
+        "endChar": 42
+      },
+      "revId": "f8826af065ad74e32959e94f90519055c7b1173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
