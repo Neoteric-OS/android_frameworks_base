@@ -519,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "87c039d1_69405e82",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-12T13:04:52Z",
+      "side": 1,
+      "message": "There\u0027s less guarantee that it\u0027s true the first time IpServer receives CMD_NEW_PREFIX_REQUEST, as the \"CMD_NEW_PREFIX_REQUEST is only received when type is NCM\" guarantee is ensured in startDhcp, so a separate part of the code that could be changed without noticing the mismatch. \nIt\u0027s true that after introducing PrivateAddressCoordinator, that may not be necessary anymore though.\n\nPrivateAddressCoordinator will need to use the tethering type in requestDownstreamPrefix, so I think you can add a tetheringType parameter to handleNewPrefixRequest and requestDownstreamAddress, and fail if that parameter is not TYPE_NCM. Then the parameter will already be here when switching to PrivateAddressCoordinator.\n\nI see you have a check that the current prefix is in the NCM_PREFIXES list though, which is roughly equivalent to that. So current code LGTM without adding the parameter.",
+      "parentUuid": "59c959d2_dcbd8151",
+      "range": {
+        "startLine": 971,
+        "startChar": 8,
+        "endLine": 971,
+        "endChar": 18
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a8e57f0_6fb84d71",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 4
@@ -754,6 +778,30 @@
     },
     {
       "key": {
+        "uuid": "cfcf0188_6fbc1294",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-12T13:04:52Z",
+      "side": 1,
+      "message": "L.814 calls networkAddInterface, but setupTetherInterface seems to do more stuff (tetherInterfaceAdd, networkAddInterface, addRoutesToLocalNetwork)\n\ntetherInterfaceAdd in particular seems to add the interface to a list:\nhttps://cs.android.com/android/platform/superproject/+/master:system/netd/server/TetherController.cpp;drc\u003ddde0c026a156858d0ac6df5ae08118f46a9a681b;l\u003d493\n\nIf I read this right this would cause the list to get additional duplicate entries ?\n\nDo you really need to go through the \"add interface\" part considering that the interface is already configured as a tethered interface ? If you don\u0027t call untetherInterface, It seems that just calling addRoutesToLocalNetwork instead of setupTetherInterface would be enough, since the interface is already setup.",
+      "parentUuid": "d6f1862d_d4dd2848",
+      "range": {
+        "startLine": 989,
+        "startChar": 13,
+        "endLine": 989,
+        "endChar": 33
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "512757cb_a04ac87d",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 4
@@ -939,6 +987,30 @@
       "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b51a75f_350c79a4",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-12T13:04:52Z",
+      "side": 1,
+      "message": "Oh you\u0027re right sorry",
+      "parentUuid": "c6425c2a_a17b8a79",
+      "range": {
+        "startLine": 500,
+        "startChar": 16,
+        "endLine": 500,
+        "endChar": 37
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
