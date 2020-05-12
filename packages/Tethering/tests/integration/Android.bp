@@ -63,7 +63,7 @@ android_test {
 // NetworkStackTests.
 android_test {
     name: "TetheringCoverageTests",
-    certificate: "platform",
+    certificate: "networkstack",
     platform_apis: true,
     test_suites: ["device-tests", "mts"],
     test_config: "AndroidTest_Coverage.xml",
