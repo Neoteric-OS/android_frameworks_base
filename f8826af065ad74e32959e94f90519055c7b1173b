@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bbab7642_418d4764",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-12T09:47:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f503fadd_cae22313",
+      "revId": "f8826af065ad74e32959e94f90519055c7b1173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1420313b_01fec51b",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringService.java",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "f8826af065ad74e32959e94f90519055c7b1173b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ba0e05_faf40dd8",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-12T09:47:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1420313b_01fec51b",
+      "range": {
+        "startLine": 72,
+        "startChar": 43,
+        "endLine": 72,
+        "endChar": 46
+      },
+      "revId": "f8826af065ad74e32959e94f90519055c7b1173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3d357564_2852517f",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-12T09:47:20Z",
+      "side": 1,
+      "message": "Done, thanks for suggestion.",
+      "parentUuid": "d434e1e7_69f080f5",
+      "range": {
+        "startLine": 73,
+        "startChar": 44,
+        "endLine": 73,
+        "endChar": 63
+      },
+      "revId": "f8826af065ad74e32959e94f90519055c7b1173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fd4396d_635a7d51",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
         "patchSetId": 1
@@ -85,6 +151,47 @@
       "revId": "f8826af065ad74e32959e94f90519055c7b1173b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab22770_e590194d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-12T09:47:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fd4396d_635a7d51",
+      "range": {
+        "startLine": 506,
+        "startChar": 41,
+        "endLine": 506,
+        "endChar": 42
+      },
+      "revId": "f8826af065ad74e32959e94f90519055c7b1173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64e26595_5675a9ad",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-12T09:47:20Z",
+      "side": 1,
+      "message": "Since the config_tether_upstream_automatic is change from false to true(l.544), tethering is calling different method to select upstream.",
+      "revId": "f8826af065ad74e32959e94f90519055c7b1173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
