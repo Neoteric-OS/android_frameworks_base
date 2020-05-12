@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: satayev <satayev@google.com>
+Code-Review+2: Andrei-Valentin Onea <andreionea@google.com>
+Code-Review+2: Tor Norbye <tnorbye@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Anna Trostanetski <atrost@google.com>
+Submitted-at: Tue, 12 May 2020 15:33:56 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1308100
+Project: platform/frameworks/base
+Branch: refs/heads/master
