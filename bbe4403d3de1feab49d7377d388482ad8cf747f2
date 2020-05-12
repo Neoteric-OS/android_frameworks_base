@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3830b91e_2adbbefd",
+        "filename": "apex/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-05-12T17:19:13Z",
+      "side": 1,
+      "message": "the diffs outside the main block in this file are IMO not an improvement (even if it\u0027s how bpfix prefers it). Guess changing it back is kind of irritating though",
+      "revId": "bbe4403d3de1feab49d7377d388482ad8cf747f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b830cc69_026e7f02",
+        "filename": "apex/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-05-12T17:19:13Z",
+      "side": 1,
+      "message": "If we remove this from the defaults and add it to the individual java_sdk_libraries instead it allows cleanup one-by-one without littering the individual rules with the default naming scheme.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 39
+      },
+      "revId": "bbe4403d3de1feab49d7377d388482ad8cf747f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d073db_1128eda4",
+        "filename": "apex/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-05-12T17:19:13Z",
+      "side": 1,
+      "message": "Is there a reason private can\u0027t be the soong default? Does anything actually pull out the stub srcs of existing java_sdk_libraries ?",
+      "revId": "bbe4403d3de1feab49d7377d388482ad8cf747f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c000709_323d52c1",
+        "filename": "apex/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-05-12T17:19:13Z",
+      "side": 1,
+      "message": "What\u0027s this comment for?",
+      "range": {
+        "startLine": 97,
+        "startChar": 31,
+        "endLine": 97,
+        "endChar": 57
+      },
+      "revId": "bbe4403d3de1feab49d7377d388482ad8cf747f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863d5956_7a01649f",
+        "filename": "apex/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-05-12T17:19:13Z",
+      "side": 1,
+      "message": "Seems like this belongs in the documentation of java_sdk_library rather than here",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 107,
+        "endChar": 77
+      },
+      "revId": "bbe4403d3de1feab49d7377d388482ad8cf747f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

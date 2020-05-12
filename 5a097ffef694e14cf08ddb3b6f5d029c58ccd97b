@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79c5680f_e72315be",
+        "filename": "apex/sdkextensions/framework/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-05-12T17:19:13Z",
+      "side": 0,
+      "message": "w00t!",
+      "revId": "5a097ffef694e14cf08ddb3b6f5d029c58ccd97b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
