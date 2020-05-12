@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b3b5950_f2fcfe9b",
+        "filename": "keystore/java/android/security/keystore/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-05-12T09:29:14Z",
+      "side": 0,
+      "message": "This seems like a bug and should probably have been |new DERSequence(v)|.  So it looks like in the fallback to face signatures for the EC case the signature might be invalid as well as fake.\n\nLet\u0027s see what the correct fix here is before submitting the rest of the topic.",
+      "range": {
+        "startLine": 684,
+        "startChar": 16,
+        "endLine": 684,
+        "endChar": 59
+      },
+      "revId": "15418261cc587f3343a0a835eb87e2764b53fd7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
