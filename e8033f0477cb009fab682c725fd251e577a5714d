@@ -543,6 +543,30 @@
     },
     {
       "key": {
+        "uuid": "86b7458e_fad72576",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-13T14:54:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "87c039d1_69405e82",
+      "range": {
+        "startLine": 971,
+        "startChar": 8,
+        "endLine": 971,
+        "endChar": 18
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a8e57f0_6fb84d71",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 4
@@ -799,6 +823,30 @@
       "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f33d6b_b15a0c5e",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-13T14:54:53Z",
+      "side": 1,
+      "message": "Yes, you are right. Actually I had a debug and confirmed with Mark, tetherInterfaceAdd also does applyDnsInterface to notify dnsmasq listen on the interface bound with IPv4 address. This is required when we applying a new generated IPv4 address on the interface, otherwise, that results DNS validation failure problem although appropriate routes have been configured.\n\nInstead of calling tetherInterfaceAdd which might put the same interface in the end of interface list, we can just call Netd.tetherApplyDnsInterface, that has the same behavior and avoid messing up the interface list. Then we don\u0027t bother to call untetherInterface first and follow tetherInterfaece neither.",
+      "parentUuid": "cfcf0188_6fbc1294",
+      "range": {
+        "startLine": 989,
+        "startChar": 13,
+        "endLine": 989,
+        "endChar": 33
+      },
+      "revId": "e8033f0477cb009fab682c725fd251e577a5714d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
