@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7f1e8f3_94f6b38d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-05-13T17:17:37Z",
+      "side": 1,
+      "message": "could you test some other stuff too?\n- add an api, m \u003d\u003e fails \u003d\u003e m update-api (txt files updated)\n- add an api with a lint error \u003d\u003e verify api lint fails, cp msg etc",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "16d0eecedd83cb02e66a1716e4e922a782db5b92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
