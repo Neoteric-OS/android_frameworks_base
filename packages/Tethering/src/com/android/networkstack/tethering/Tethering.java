@@ -292,7 +292,7 @@ public class Tethering {
                 TetherMasterSM.EVENT_UPSTREAM_PERMISSION_CHANGED));
         mEntitlementMgr.setOnUiEntitlementFailedListener((int downstream) -> {
             mLog.log("OBSERVED UiEnitlementFailed");
-            stopTethering(downstream);
+            stopTethering(downstream, null);
         });
         mEntitlementMgr.setTetheringConfigurationFetcher(() -> {
             return mConfig;
@@ -530,11 +530,11 @@ public class Tethering {
         });
     }
 
-    void stopTethering(int type) {
+    void stopTethering(int type, final IIntResultListener listener) {
         mHandler.post(() -> {
             mActiveTetheringRequests.remove(type);
 
-            enableTetheringInternal(type, false /* disabled */, null);
+            enableTetheringInternal(type, false /* disabled */, listener);
             mEntitlementMgr.stopProvisioningIfNeeded(type);
         });
     }
@@ -757,11 +757,11 @@ public class Tethering {
     }
 
     void untetherAll() {
-        stopTethering(TETHERING_WIFI);
-        stopTethering(TETHERING_WIFI_P2P);
-        stopTethering(TETHERING_USB);
-        stopTethering(TETHERING_BLUETOOTH);
-        stopTethering(TETHERING_ETHERNET);
+        stopTethering(TETHERING_WIFI, null);
+        stopTethering(TETHERING_WIFI_P2P, null);
+        stopTethering(TETHERING_USB, null);
+        stopTethering(TETHERING_BLUETOOTH, null);
+        stopTethering(TETHERING_ETHERNET, null);
     }
 
     int getLastTetherError(String iface) {

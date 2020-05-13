@@ -147,10 +147,7 @@ public class TetheringService extends Service {
                 IIntResultListener listener) {
             if (checkAndNotifyCommonError(callerPkg, callingAttributionTag, listener)) return;
 
-            try {
-                mTethering.stopTethering(type);
-                listener.onResult(TETHER_ERROR_NO_ERROR);
-            } catch (RemoteException e) { }
+            mTethering.stopTethering(type, listener);
         }
 
         @Override

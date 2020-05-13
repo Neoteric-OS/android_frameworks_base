@@ -784,16 +784,15 @@ public class TetheringManager {
         final String callerPkg = mContext.getOpPackageName();
         Log.i(TAG, "stopTethering caller:" + callerPkg);
 
-        getConnector(c -> c.stopTethering(type, callerPkg, getAttributionTag(),
-                new IIntResultListener.Stub() {
-            @Override
-            public void onResult(int resultCode) {
-                // TODO: provide an API to obtain result
-                // This has never been possible as stopTethering has always been void and never
-                // taken a callback object. The only indication that callers have is if the call
-                // results in a TETHER_STATE_CHANGE broadcast.
+        final RequestDispatcher dispatcher = new RequestDispatcher();
+
+        dispatcher.waitForResult((connector, listener) -> {
+            try {
+                connector.stopTethering(type, callerPkg, getAttributionTag(), listener);
+            } catch (RemoteException e) {
+                throw new IllegalStateException(e);
             }
-        }));
+        });
     }
 
     /**

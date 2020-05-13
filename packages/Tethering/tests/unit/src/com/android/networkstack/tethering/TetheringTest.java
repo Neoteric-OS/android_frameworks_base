@@ -1031,7 +1031,7 @@ public class TetheringTest {
         /////
 
         // Emulate pressing the WiFi tethering button.
-        mTethering.stopTethering(TETHERING_WIFI);
+        mTethering.stopTethering(TETHERING_WIFI, null);
         mLooper.dispatchAll();
         verify(mWifiManager, times(1)).stopSoftAp();
         verifyNoMoreInteractions(mWifiManager);
@@ -1382,7 +1382,7 @@ public class TetheringTest {
         // 4. Unregister first callback and disable wifi tethering
         mTethering.unregisterTetheringEventCallback(callback);
         mLooper.dispatchAll();
-        mTethering.stopTethering(TETHERING_WIFI);
+        mTethering.stopTethering(TETHERING_WIFI, null);
         sendWifiApStateChanged(WifiManager.WIFI_AP_STATE_DISABLED);
         mLooper.dispatchAll();
         tetherState = callback2.pollTetherStatesChanged();
@@ -1427,7 +1427,7 @@ public class TetheringTest {
     }
 
     private void runStopUSBTethering() {
-        mTethering.stopTethering(TETHERING_USB);
+        mTethering.stopTethering(TETHERING_USB, null);
         mLooper.dispatchAll();
         mTethering.interfaceRemoved(TEST_USB_IFNAME);
         mLooper.dispatchAll();
@@ -1463,10 +1463,10 @@ public class TetheringTest {
         mTethering.startTethering(createTetheringRequestParcel(TETHERING_ETHERNET), null);
         mLooper.dispatchAll();
         verifyNoMoreInteractions(mEm);
-        mTethering.stopTethering(TETHERING_ETHERNET);
+        mTethering.stopTethering(TETHERING_ETHERNET, null);
         mLooper.dispatchAll();
         verify(mockRequest, times(1)).release();
-        mTethering.stopTethering(TETHERING_ETHERNET);
+        mTethering.stopTethering(TETHERING_ETHERNET, null);
         mLooper.dispatchAll();
         verifyNoMoreInteractions(mEm);
     }
@@ -1783,7 +1783,7 @@ public class TetheringTest {
         verify(mEntitleMgr).startProvisioningIfNeeded(TETHERING_WIFI, false);
         verify(mEntitleMgr, never()).setExemptedDownstreamType(TETHERING_WIFI);
         assertFalse(mEntitleMgr.isCellularUpstreamPermitted());
-        mTethering.stopTethering(TETHERING_WIFI);
+        mTethering.stopTethering(TETHERING_WIFI, null);
         mLooper.dispatchAll();
         verify(mEntitleMgr).stopProvisioningIfNeeded(TETHERING_WIFI);
         reset(mEntitleMgr);
@@ -1796,7 +1796,7 @@ public class TetheringTest {
         verify(mEntitleMgr, never()).startProvisioningIfNeeded(TETHERING_WIFI, false);
         verify(mEntitleMgr).setExemptedDownstreamType(TETHERING_WIFI);
         assertTrue(mEntitleMgr.isCellularUpstreamPermitted());
-        mTethering.stopTethering(TETHERING_WIFI);
+        mTethering.stopTethering(TETHERING_WIFI, null);
         mLooper.dispatchAll();
         verify(mEntitleMgr).stopProvisioningIfNeeded(TETHERING_WIFI);
         reset(mEntitleMgr);
@@ -1816,7 +1816,7 @@ public class TetheringTest {
         verify(mEntitleMgr).startProvisioningIfNeeded(TETHERING_WIFI, false);
         verify(mEntitleMgr, never()).setExemptedDownstreamType(TETHERING_WIFI);
         assertFalse(mEntitleMgr.isCellularUpstreamPermitted());
-        mTethering.stopTethering(TETHERING_WIFI);
+        mTethering.stopTethering(TETHERING_WIFI, null);
         mLooper.dispatchAll();
         verify(mEntitleMgr).stopProvisioningIfNeeded(TETHERING_WIFI);
         reset(mEntitleMgr);
