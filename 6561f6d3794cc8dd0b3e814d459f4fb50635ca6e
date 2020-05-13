@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "e196eace_551e41f2",
+        "filename": "apex/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-05-13T14:36:49Z",
+      "side": 1,
+      "message": "should this also have visibility:override ?",
+      "range": {
+        "startLine": 89,
+        "startChar": 35,
+        "endLine": 90,
+        "endChar": 31
+      },
+      "revId": "6561f6d3794cc8dd0b3e814d459f4fb50635ca6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2772331b_f43b905e",
         "filename": "apex/Android.bp",
         "patchSetId": 2
