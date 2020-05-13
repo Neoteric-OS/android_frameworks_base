@@ -16,6 +16,24 @@
       "revId": "5102ffcff3559800d3636b16df900325fb14c45e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca17d1e_e3f5aac9",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2020-05-13T12:33:22Z",
+      "side": 1,
+      "message": "Thanks, yes, this is a good observation.\n\nThere is a C++ wrapper that could be moved to unique_fd. However, there will always be a C version of this function that this doesn\u0027t apply to.\n\nAn alternative approach would be for jniCreateFileDescriptor to simply create an invalid descriptor and rely on a subsequent call to jniSetFileDescriptor. This is what it does internally anyway. This would make some of the awkward initializations we have in native code a bit easier, e.g. some folks initialize and array of file descriptors and that might end up a bit cleaner.\n\nI lean towards the latter as it\u0027s consistent between the C and C++ APIs. WDYT?",
+      "parentUuid": "2a0e9ef5_6febcf12",
+      "revId": "5102ffcff3559800d3636b16df900325fb14c45e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
