@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000002942179",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1310993?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "8a880d03_f5b49770",
+          "description": "Change to \"core/java/android/bluetooth/le/BluetoothLeScanner.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
+              "range": {
+                "startLine": 115,
+                "startChar": 36,
+                "endLine": 115,
+                "endChar": 46
+              },
+              "replacement": "targeting"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "147aae3e_26b0b49e",
+        "filename": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-05-13T17:16:23Z",
+      "side": 1,
+      "message": "Common typo found: \"targetting\" -- should it be \"targeting\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 115,
+        "startChar": 36,
+        "endLine": 115,
+        "endChar": 46
+      },
+      "revId": "ba6a2156d1d575efc9da251b286b4b0b15e66d0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000002942179",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1310993?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "eeebe19d_41483eaf",
+          "description": "Change to \"core/java/android/bluetooth/le/BluetoothLeScanner.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
+              "range": {
+                "startLine": 135,
+                "startChar": 36,
+                "endLine": 135,
+                "endChar": 46
+              },
+              "replacement": "targeting"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "d8fb2e94_4cf68acf",
+        "filename": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-05-13T17:16:23Z",
+      "side": 1,
+      "message": "Common typo found: \"targetting\" -- should it be \"targeting\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 135,
+        "startChar": 36,
+        "endLine": 135,
+        "endChar": 46
+      },
+      "revId": "ba6a2156d1d575efc9da251b286b4b0b15e66d0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000002942179",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1310993?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "86af1c3b_5537ddd4",
+          "description": "Change to \"core/java/android/bluetooth/le/BluetoothLeScanner.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
+              "range": {
+                "startLine": 157,
+                "startChar": 36,
+                "endLine": 157,
+                "endChar": 46
+              },
+              "replacement": "targeting"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "006689ad_cd992440",
+        "filename": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-05-13T17:16:23Z",
+      "side": 1,
+      "message": "Common typo found: \"targetting\" -- should it be \"targeting\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 157,
+        "startChar": 36,
+        "endLine": 157,
+        "endChar": 46
+      },
+      "revId": "ba6a2156d1d575efc9da251b286b4b0b15e66d0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
