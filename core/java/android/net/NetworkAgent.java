@@ -720,6 +720,12 @@ public abstract class NetworkAgent {
         if (mIsLegacy) {
             throw new UnsupportedOperationException("Legacy agents can't call setLegacyExtraInfo.");
         }
+        // Update value to mInitialConfiguration to ensure extraInfo is ready if the extra info is
+        // set before registering.
+        // TODO: update it in NetworkAgentConfig.
+        if (mInitialConfiguration != null) {
+            mInitialConfiguration.info.setExtraInfo(extraInfo);
+        }
         mNetworkInfo.setExtraInfo(extraInfo);
         queueOrSendMessage(EVENT_NETWORK_INFO_CHANGED, mNetworkInfo);
     }
