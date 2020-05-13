@@ -118,7 +118,16 @@ public interface Parcelable {
      * by this Parcelable object instance.
      */
     public @ContentsFlags int describeContents();
-    
+
+    /** @hide
+     *  WARNING: isVintf() is only expected to be overridden by auto-generated code.
+     *  VINTF stability means this parcelable is guaranteed to be stable for multiple years.
+     *  @return true if this parcelable is VINTF stable.
+     */
+    default boolean isVintf() {
+        return false;
+    }
+
     /**
      * Flatten this object in to a Parcel.
      * 
