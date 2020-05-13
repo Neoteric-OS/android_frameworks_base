@@ -22,6 +22,30 @@
       "revId": "cb8836dfcbefbbc285a5c11449aba2f8184feefb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a069954e_b32ee39a",
+        "filename": "apex/sdkextensions/framework/Android.bp",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-05-13T17:33:15Z",
+      "side": 0,
+      "message": "AFAICT they are yes. I\u0027ve looked at the defaults and the java_sdk_library code and they appear to do the same thing.",
+      "parentUuid": "0e93e067_5a9aaf4f",
+      "range": {
+        "startLine": 115,
+        "startChar": 6,
+        "endLine": 116,
+        "endChar": 50
+      },
+      "revId": "cb8836dfcbefbbc285a5c11449aba2f8184feefb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
