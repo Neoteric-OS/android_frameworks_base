@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a1c047b_a2e20961",
+        "filename": "apex/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-05-13T12:35:57Z",
+      "side": 1,
+      "message": "Oops. Didn\u0027t notice them. It is kind of annoying that frameworks/base does not simply use and enforce the standard bpfmt formatting. I will revert them because I don\u0027t like mixing functional and formatting changes together. It always comes back to bite me.",
+      "parentUuid": "3830b91e_2adbbefd",
+      "revId": "bbe4403d3de1feab49d7377d388482ad8cf747f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b830cc69_026e7f02",
         "filename": "apex/Android.bp",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "bbe4403d3de1feab49d7377d388482ad8cf747f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51925af_1f320af9",
+        "filename": "apex/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-05-13T12:35:57Z",
+      "side": 1,
+      "message": "I\u0027m hoping to avoid having any dependencies on the internal structure of the java_sdk_library components. It is an implementation detail that should never have been relied upon by anything.\n\nThe advantage of hiding it is that it gives us a lot more flexibility in how we generate the different API surfaces. e.g. We could replace three (or even 4 with module_lib) invocations of droidstubs with one that generates all API surfaces in one go. That is impossible in the current situation because of direct dependencies on the internals.\n\nIn that case we won\u0027t be migrating from the framework-modules naming scheme to default naming scheme we will be migrating from the framework-modules naming scheme to references to the java_sdk_library directly.\n\nI\u0027ve just found that ike is using java_sdk_library for public/system and then separate modules for module_lib using the default naming scheme so it will be easier to handle that as you suggested by adding this in the individual modules.",
+      "parentUuid": "b830cc69_026e7f02",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 39
+      },
+      "revId": "bbe4403d3de1feab49d7377d388482ad8cf747f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,48 @@
     },
     {
       "key": {
+        "uuid": "1413538d_af0c5e60",
+        "filename": "apex/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-05-13T12:35:57Z",
+      "side": 1,
+      "message": "It won\u0027t work at the moment. A change to support this is in progress.",
+      "parentUuid": "3c000709_323d52c1",
+      "range": {
+        "startLine": 97,
+        "startChar": 31,
+        "endLine": 97,
+        "endChar": 57
+      },
+      "revId": "bbe4403d3de1feab49d7377d388482ad8cf747f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab949a61_ae933a59",
+        "filename": "apex/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-05-13T12:35:57Z",
+      "side": 1,
+      "message": "Yes. conscrypt\u0027s stubs sources are used in the creation of the public docs.",
+      "parentUuid": "69d073db_1128eda4",
+      "revId": "bbe4403d3de1feab49d7377d388482ad8cf747f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "863d5956_7a01649f",
         "filename": "apex/Android.bp",
         "patchSetId": 9
@@ -93,6 +177,30 @@
       "writtenOn": "2020-05-12T17:19:13Z",
       "side": 1,
       "message": "Seems like this belongs in the documentation of java_sdk_library rather than here",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 107,
+        "endChar": 77
+      },
+      "revId": "bbe4403d3de1feab49d7377d388482ad8cf747f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ec0bad_1cd5473e",
+        "filename": "apex/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-05-13T12:35:57Z",
+      "side": 1,
+      "message": "It was basically there to explain what it was doing to you. It\u0027s also wrong as it\u0027s overridden by sdk_version_for_stubs above.",
+      "parentUuid": "863d5956_7a01649f",
       "range": {
         "startLine": 104,
         "startChar": 6,
