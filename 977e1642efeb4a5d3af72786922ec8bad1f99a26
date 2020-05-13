@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "322ab35b_a5815f55",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-13T05:39:07Z",
+      "side": 1,
+      "message": "1. IIUC you also need to write test for this.\nNot necessarily in the same CL.\n\n2. IIUC you need bug ID for every CL to merge into rvc-dev.",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 12
+      },
+      "revId": "977e1642efeb4a5d3af72786922ec8bad1f99a26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
