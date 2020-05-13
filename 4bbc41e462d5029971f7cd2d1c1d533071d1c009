@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "015c987d_5ec6eadb",
+        "filename": "apex/sdkextensions/framework/Android.bp",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-05-13T14:37:32Z",
+      "side": 1,
+      "message": "this is in \"visibility\" which seems like it should propagate given this new \"override\" concept ... ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 45,
+        "endChar": 47
+      },
+      "revId": "4bbc41e462d5029971f7cd2d1c1d533071d1c009",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
