@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a0e9ef5_6febcf12",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2020-05-13T11:26:02Z",
+      "side": 1,
+      "message": "jniCreateFileDescriptor() has error-prone semantics.\n\nI suggest changing the interface to transfer ownership of the fd with unique_fd. There are only 19 call sites to update, and this change will ensure that the bug will never be introduced again.\n\nAs a lazy alternative, we could add an overload with move semantics which wraps the original unsafe function, then mark it [[deprecated]].",
+      "revId": "5102ffcff3559800d3636b16df900325fb14c45e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
