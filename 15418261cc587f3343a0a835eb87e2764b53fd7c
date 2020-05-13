@@ -22,6 +22,30 @@
       "revId": "15418261cc587f3343a0a835eb87e2764b53fd7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea82feb7_f3bf24bd",
+        "filename": "keystore/java/android/security/keystore/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2020-05-13T15:40:55Z",
+      "side": 0,
+      "message": "I\u0027ll change this to equivalent logic with ASN1Integer, will log a bug to fix this by the owners since this is apparently not tested.",
+      "parentUuid": "9b3b5950_f2fcfe9b",
+      "range": {
+        "startLine": 684,
+        "startChar": 16,
+        "endLine": 684,
+        "endChar": 59
+      },
+      "revId": "15418261cc587f3343a0a835eb87e2764b53fd7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
