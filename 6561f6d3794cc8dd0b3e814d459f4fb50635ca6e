@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "1131456c_293cd856",
+        "filename": "apex/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-05-13T16:18:12Z",
+      "side": 1,
+      "message": "I don\u0027t think so. Because of the implicit use of stubs library when you depend on a java_sdk_library I think that anywhere you depend on the java_sdk_library you also have to depend on the stubs library. We can always tweak it later.",
+      "parentUuid": "e196eace_551e41f2",
+      "range": {
+        "startLine": 89,
+        "startChar": 35,
+        "endLine": 90,
+        "endChar": 31
+      },
+      "revId": "6561f6d3794cc8dd0b3e814d459f4fb50635ca6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2772331b_f43b905e",
         "filename": "apex/Android.bp",
         "patchSetId": 2
@@ -68,6 +92,30 @@
       "revId": "6561f6d3794cc8dd0b3e814d459f4fb50635ca6e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73966691_2dc58ed3",
+        "filename": "apex/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-05-13T16:18:12Z",
+      "side": 1,
+      "message": "The inheritance of visibility from the java_sdk_library to the component modules it creates is not new, it has been in there for a long time. I only just realised it recently. The override concept is to prevent that happening. The override mechanism is also useful with defaults and fixes a gap in functionality there.\n\nI know that conscrypt (and also eventually icu and ART) will expose the stubs source but I am not sure if anything else does. We can come back and clean this up later if we need to.",
+      "parentUuid": "2772331b_f43b905e",
+      "range": {
+        "startLine": 95,
+        "startChar": 30,
+        "endLine": 98,
+        "endChar": 32
+      },
+      "revId": "6561f6d3794cc8dd0b3e814d459f4fb50635ca6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
