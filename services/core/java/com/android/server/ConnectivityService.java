@@ -3809,13 +3809,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         @Override
         public void appResponse(final int response) {
+            final NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(mNetwork);
+            if (nai == null) return;
+
             if (response == CaptivePortal.APP_RETURN_WANTED_AS_IS) {
                 enforceSettingsPermission();
+            } else if (response == CaptivePortal.APP_RETURN_UNWANTED) {
+                // Teardown the network since user doesn't want to use this network.
+                nai.asyncChannel.sendMessage(NetworkAgent.CMD_PREVENT_AUTOMATIC_RECONNECT);
+                teardownUnneededNetwork(nai);
+                return;
             }
-
-            final NetworkMonitorManager nm = getNetworkMonitorManager(mNetwork);
-            if (nm == null) return;
-            nm.notifyCaptivePortalAppFinished(response);
+            nai.networkMonitor().notifyCaptivePortalAppFinished(response);
         }
 
         @Override
