@@ -561,6 +561,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static final int EVENT_CAPPORT_DATA_CHANGED = 46;
 
     /**
+     * Event for internal handler to tear down the network when user chooses "Do not use this
+     * network" from captive portal app.
+     */
+    private static final int EVENT_HANDLE_UNWANTED_NETWORK = 47;
+
+    /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
      * should be shown.
      */
@@ -3694,10 +3700,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         if (!accept) {
-            // Tell the NetworkAgent to not automatically reconnect to the network.
-            nai.asyncChannel.sendMessage(NetworkAgent.CMD_PREVENT_AUTOMATIC_RECONNECT);
-            // Teardown the network.
-            teardownUnneededNetwork(nai);
+            stopReconnectingAndDisconnectNetwork(nai);
         }
 
     }
@@ -3731,10 +3734,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         if (!accept) {
-            // Tell the NetworkAgent to not automatically reconnect to the network.
-            nai.asyncChannel.sendMessage(NetworkAgent.CMD_PREVENT_AUTOMATIC_RECONNECT);
-            // Tear down the network.
-            teardownUnneededNetwork(nai);
+            stopReconnectingAndDisconnectNetwork(nai);
         } else {
             // Inform NetworkMonitor that partial connectivity is acceptable. This will likely
             // result in a partial connectivity result which will be processed by
@@ -3800,6 +3800,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mContext.startActivityAsUser(appIntent, UserHandle.CURRENT));
     }
 
+    private void stopReconnectingAndDisconnectNetwork(NetworkAgentInfo nai) {
+        // Tell the NetworkAgent to not automatically reconnect to the network.
+        nai.asyncChannel.sendMessage(NetworkAgent.CMD_PREVENT_AUTOMATIC_RECONNECT);
+        // Teardown the network.
+        teardownUnneededNetwork(nai);
+    }
+
     private class CaptivePortalImpl extends ICaptivePortal.Stub {
         private final Network mNetwork;
 
@@ -3809,13 +3816,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         @Override
         public void appResponse(final int response) {
+            // getNetworkAgentInfoForNetwork and nai.networkMonitor() are thread-safe.
+            final NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(mNetwork);
+            if (nai == null || nai.networkMonitor() == null) return;
+
             if (response == CaptivePortal.APP_RETURN_WANTED_AS_IS) {
                 enforceSettingsPermission();
+            } else if (response == CaptivePortal.APP_RETURN_UNWANTED) {
+                mHandler.sendMessage(mHandler.obtainMessage(EVENT_HANDLE_UNWANTED_NETWORK, nai));
+                return;
             }
-
-            final NetworkMonitorManager nm = getNetworkMonitorManager(mNetwork);
-            if (nm == null) return;
-            nm.notifyCaptivePortalAppFinished(response);
+            nai.networkMonitor().notifyCaptivePortalAppFinished(response);
         }
 
         @Override
@@ -4156,6 +4167,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 case EVENT_DATA_SAVER_CHANGED:
                     handleRestrictBackgroundChanged(toBool(msg.arg1));
+                    break;
+                case EVENT_HANDLE_UNWANTED_NETWORK:
+                    final NetworkAgentInfo nai = (NetworkAgentInfo) msg.obj;
+                    stopReconnectingAndDisconnectNetwork(nai);
                     break;
             }
         }
