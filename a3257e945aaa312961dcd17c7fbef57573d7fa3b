@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f39147f_760e2acf",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2020-05-14T13:34:22Z",
+      "side": 1,
+      "message": "The name of this has been bugging me.  It just makes no sense in English.  How about \"isDevicePropertyAttestationIncluded\"?  isDevicePropertiesAttested\" is also okay, though a little annoying due to the verb/object cardinality mismatch.  Hmm.  Since all of the device properties in question boil down to product idendification, how about \"isProductAttested\"?",
+      "range": {
+        "startLine": 661,
+        "startChar": 19,
+        "endLine": 661,
+        "endChar": 45
+      },
+      "revId": "a3257e945aaa312961dcd17c7fbef57573d7fa3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
