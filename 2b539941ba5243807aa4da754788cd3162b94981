@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "215af276_b509821f",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-14T02:52:03Z",
+      "side": 1,
+      "message": "This is not a copy so this method mutates the argument; which could be dangerous if the caller kept using rawAddr after calling this method.\nFortunately, currently this is not done because InetAddress#getAddress() returns a buffer that is not used by InetAddress, and IpPrefix#getRawAddress() returns a copy of its own buffer.\n\nOne way to avoid doing too many byte array copies would be to take an Inet4Address as argument directly instead of a byte[]. I think this can be in a followup.",
+      "range": {
+        "startLine": 692,
+        "startChar": 32,
+        "endLine": 692,
+        "endChar": 39
+      },
+      "revId": "2b539941ba5243807aa4da754788cd3162b94981",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfaa7a6a_06e168ce",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-14T02:52:03Z",
+      "side": 1,
+      "message": "Nit: it\u0027s rare to have more than one IPv4 address on an interface, so there\u0027s sometimes assumptions in the code that it\u0027s the case; is it possible to add the address only after removing the previous one ?\n\nSo the order would end up being:\n - Remove routes\n - Remove old address\n - Add new address\n - Add new routes\n\nCan be in a followup",
+      "range": {
+        "startLine": 1010,
+        "startChar": 28,
+        "endLine": 1010,
+        "endChar": 38
+      },
+      "revId": "2b539941ba5243807aa4da754788cd3162b94981",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e0002b_5d23be38",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-14T02:52:03Z",
+      "side": 1,
+      "message": "supernit: IP address (also don\u0027t need to address in this change)",
+      "range": {
+        "startLine": 1011,
+        "startChar": 38,
+        "endLine": 1011,
+        "endChar": 41
+      },
+      "revId": "2b539941ba5243807aa4da754788cd3162b94981",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252833a2_b43f9a54",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-14T02:52:03Z",
+      "side": 1,
+      "message": "Nit: since this is done in the 2 places calling makeServingParams, maybe move it inside that method and change clientAddr to LinkAddress",
+      "range": {
+        "startLine": 1037,
+        "startChar": 8,
+        "endLine": 1038,
+        "endChar": 66
+      },
+      "revId": "2b539941ba5243807aa4da754788cd3162b94981",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817917e8_145f1a0f",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-14T02:52:03Z",
+      "side": 1,
+      "message": "Nit: there is no assert for these captured LPs, it would be nice to verify what they contain\nNot a blocker for this change",
+      "range": {
+        "startLine": 535,
+        "startChar": 70,
+        "endLine": 535,
+        "endChar": 88
+      },
+      "revId": "2b539941ba5243807aa4da754788cd3162b94981",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
