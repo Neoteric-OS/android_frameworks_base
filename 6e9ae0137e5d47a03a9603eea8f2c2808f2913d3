@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "aca8b200_b93c15d8",
+        "filename": "native/android/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2020-05-14T22:01:08Z",
+      "side": 1,
+      "message": "or if this is how you want to disambig that this is aidl-specific then the source should be somewhere in an aidl directory instead of a top-level frameworks/base/native/ that\u0027s otherwise very generic",
+      "range": {
+        "startLine": 98,
+        "startChar": 11,
+        "endLine": 98,
+        "endChar": 31
+      },
+      "revId": "6e9ae0137e5d47a03a9603eea8f2c2808f2913d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a68c081_26ddddb5",
         "filename": "native/android/trace/android/trace.h",
         "patchSetId": 1
