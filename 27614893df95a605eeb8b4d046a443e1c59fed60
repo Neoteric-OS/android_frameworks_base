@@ -22,6 +22,30 @@
       "revId": "27614893df95a605eeb8b4d046a443e1c59fed60",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c10e16_a702c89d",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-14T07:43:40Z",
+      "side": 1,
+      "message": "Ohh, yes. getDeviceConfigProperty is more clear. Since this is minor, leave this as unresoved. Per talk, lets just merged as-in. Will change this when I have other changes.",
+      "parentUuid": "8f951a92_1a719c24",
+      "range": {
+        "startLine": 392,
+        "startChar": 68,
+        "endLine": 392,
+        "endChar": 79
+      },
+      "revId": "27614893df95a605eeb8b4d046a443e1c59fed60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
