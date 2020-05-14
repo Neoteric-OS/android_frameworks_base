@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b5002c33_70a80f6a",
+        "filename": "native/android/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2020-05-14T22:45:25Z",
+      "side": 1,
+      "message": "LGTM",
+      "parentUuid": "e9cfb0e1_527bdf6a",
+      "range": {
+        "startLine": 98,
+        "startChar": 11,
+        "endLine": 98,
+        "endChar": 31
+      },
+      "revId": "6e9ae0137e5d47a03a9603eea8f2c2808f2913d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a68c081_26ddddb5",
         "filename": "native/android/trace/android/trace.h",
         "patchSetId": 1
