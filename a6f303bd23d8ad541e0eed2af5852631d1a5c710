@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4f21ba3_abe620fc",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-14T04:22:55Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is the right thing to do: if the test reads real config from the device, then it may fail when we push flags or change that config; or it may fail if we ever run it on OEM devices that use different configs.\nInstead, could you have the test mock the config so that it uses well-known values ?",
+      "range": {
+        "startLine": 492,
+        "startChar": 51,
+        "endLine": 492,
+        "endChar": 69
+      },
+      "revId": "a6f303bd23d8ad541e0eed2af5852631d1a5c710",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
