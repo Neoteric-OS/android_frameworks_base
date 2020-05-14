@@ -69,6 +69,7 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.XmlUtils;
 import com.android.server.LocalServices;
+import com.android.server.SystemConfig;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -823,7 +824,8 @@ public final class DefaultPermissionGrantPolicy {
             return;
         }
         for (String packageName : packageNames) {
-            grantPermissionsToSystemPackage(packageName, userId,
+            grantPermissionsToPackage(packageName, userId,
+                    false /* ignoreSystemPackage */, true /* whitelistRestrictedPermissions */,
                     PHONE_PERMISSIONS, ALWAYS_LOCATION_PERMISSIONS, SMS_PERMISSIONS);
         }
     }
