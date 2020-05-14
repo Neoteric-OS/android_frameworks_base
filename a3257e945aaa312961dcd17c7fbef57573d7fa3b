@@ -22,6 +22,30 @@
       "revId": "a3257e945aaa312961dcd17c7fbef57573d7fa3b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc04319b_55aefa06",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2020-05-14T14:47:50Z",
+      "side": 1,
+      "message": "API changed to isDevicePropertiesAttestationIncluded.",
+      "parentUuid": "1f39147f_760e2acf",
+      "range": {
+        "startLine": 661,
+        "startChar": 19,
+        "endLine": 661,
+        "endChar": 45
+      },
+      "revId": "a3257e945aaa312961dcd17c7fbef57573d7fa3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
