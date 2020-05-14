@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f951a92_1a719c24",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-14T07:37:45Z",
+      "side": 1,
+      "message": "getDeviceConfigProperty ? Otherwise this refers to the method call inside another method call, so the comment should not be here",
+      "range": {
+        "startLine": 392,
+        "startChar": 68,
+        "endLine": 392,
+        "endChar": 79
+      },
+      "revId": "27614893df95a605eeb8b4d046a443e1c59fed60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
