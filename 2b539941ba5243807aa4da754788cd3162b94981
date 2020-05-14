@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "ea6853bf_dfeda6b3",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-14T06:26:47Z",
+      "side": 1,
+      "message": "Looks like the potential failures are caused by calling netd methods, it might throw RemoteException or ServiceSpecificException. Maybe we can make this function return boolean, if this function returns false, then we can just stop and log the error; However, failing to remove the deprecated routes seems not effect the routing functionality, since we will add a new route on that local network in below. Maybe we can keep the consistency with above situation checking, if failure happens, then quit. Will improve this in a following CL. Thanks!",
+      "parentUuid": "12d9a3b6_1dc7d95c",
+      "range": {
+        "startLine": 1016,
+        "startChar": 8,
+        "endLine": 1016,
+        "endChar": 36
+      },
+      "revId": "2b539941ba5243807aa4da754788cd3162b94981",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e541c564_df2bfafb",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 6
@@ -137,6 +161,30 @@
       "revId": "2b539941ba5243807aa4da754788cd3162b94981",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d05162_636c3a70",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-14T06:26:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e541c564_df2bfafb",
+      "range": {
+        "startLine": 1021,
+        "startChar": 8,
+        "endLine": 1021,
+        "endChar": 31
+      },
+      "revId": "2b539941ba5243807aa4da754788cd3162b94981",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
