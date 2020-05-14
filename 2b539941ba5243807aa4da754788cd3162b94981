@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "6e811321_ab4177bd",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-14T03:47:23Z",
+      "side": 1,
+      "message": "nits: now removeRoutesFromLocalNetwork would be used for both ipv4 and ipv6.",
+      "range": {
+        "startLine": 796,
+        "startChar": 54,
+        "endLine": 796,
+        "endChar": 58
+      },
+      "revId": "2b539941ba5243807aa4da754788cd3162b94981",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfaa7a6a_06e168ce",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 6
@@ -64,6 +87,52 @@
         "startChar": 38,
         "endLine": 1011,
         "endChar": 41
+      },
+      "revId": "2b539941ba5243807aa4da754788cd3162b94981",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12d9a3b6_1dc7d95c",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-14T03:47:23Z",
+      "side": 1,
+      "message": "Question: if remove route fail, removeRoutesFromLocalNetwork just print the log. This is expected for ipv6 because it may remove route when interface already be unavailable.\nFor the condition here, if remove deprecated routes fail, is it harmful ?",
+      "range": {
+        "startLine": 1016,
+        "startChar": 8,
+        "endLine": 1016,
+        "endChar": 36
+      },
+      "revId": "2b539941ba5243807aa4da754788cd3162b94981",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e541c564_df2bfafb",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-14T03:47:23Z",
+      "side": 1,
+      "message": "Same question as above: in ipv6 case, adding fail just print the log because the local routes may already existing(IIUC, kernel may auto generate it ?)\nFor this case, what should we do if we add route to local network fail here.",
+      "range": {
+        "startLine": 1021,
+        "startChar": 8,
+        "endLine": 1021,
+        "endChar": 31
       },
       "revId": "2b539941ba5243807aa4da754788cd3162b94981",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
