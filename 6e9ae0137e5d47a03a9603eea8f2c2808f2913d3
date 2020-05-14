@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a68c081_26ddddb5",
+        "filename": "native/android/trace/android/trace.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-05-14T21:51:22Z",
+      "side": 1,
+      "message": "fyi - you can always use \u0027#pragma once\u0027 instead. It works in Android, if you don\u0027t want to have to mess with these things 😊",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "6e9ae0137e5d47a03a9603eea8f2c2808f2913d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
