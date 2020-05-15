@@ -22,6 +22,30 @@
       "revId": "1248887fb95f2b9d6ba29f157f759aca8f42e189",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4bca08f_98700201",
+        "filename": "core/jni/android_net_LocalSocketImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2020-05-15T16:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2dc8dce_66be2a34",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 40
+      },
+      "revId": "1248887fb95f2b9d6ba29f157f759aca8f42e189",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
