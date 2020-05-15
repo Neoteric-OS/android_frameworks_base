@@ -22,6 +22,30 @@
       "revId": "977e1642efeb4a5d3af72786922ec8bad1f99a26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b4dc04_be627d47",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-05-15T02:49:05Z",
+      "side": 1,
+      "message": "1. Yes, I will add a test\n2. Done. \n\nThanks for your reminder",
+      "parentUuid": "322ab35b_a5815f55",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 12
+      },
+      "revId": "977e1642efeb4a5d3af72786922ec8bad1f99a26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
