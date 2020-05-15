@@ -110,6 +110,15 @@ public final class DeviceConfig {
     public static final String NAMESPACE_AUTOFILL = "autofill";
 
     /**
+     * Namespace for all Bluetooth related features.
+     *
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    public static final String NAMESPACE_BLUETOOTH = "bluetooth";
+
+    /**
      * Namespace for all networking connectivity related features.
      *
      * @hide
