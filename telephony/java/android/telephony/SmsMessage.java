@@ -323,7 +323,7 @@ public class SmsMessage {
      * @return An SmsMessage representing the message.
      */
     @Nullable
-    public static SmsMessage createSmsSubmitPdu(@NonNull byte[] data, boolean isCdma) {
+    public static SmsMessage createFromNativeSmsSubmitPdu(@NonNull byte[] data, boolean isCdma) {
         SmsMessageBase wrappedMessage;
 
         if (isCdma) {

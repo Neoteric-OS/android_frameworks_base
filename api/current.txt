@@ -45791,9 +45791,9 @@ package android.telephony {
   public class SmsMessage {
     method public static int[] calculateLength(CharSequence, boolean);
     method public static int[] calculateLength(String, boolean);
+    method @Nullable public static android.telephony.SmsMessage createFromNativeSmsSubmitPdu(@NonNull byte[], boolean);
     method @Deprecated public static android.telephony.SmsMessage createFromPdu(byte[]);
     method public static android.telephony.SmsMessage createFromPdu(byte[], String);
-    method @Nullable public static android.telephony.SmsMessage createSmsSubmitPdu(@NonNull byte[], boolean);
     method public String getDisplayMessageBody();
     method public String getDisplayOriginatingAddress();
     method public String getEmailBody();
