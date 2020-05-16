@@ -16,6 +16,8 @@
 
 package com.android.networkstack.tethering;
 
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_ETHERNET;
 import static android.net.NetworkStats.DEFAULT_NETWORK_NO;
 import static android.net.NetworkStats.METERED_NO;
 import static android.net.NetworkStats.ROAMING_NO;
@@ -23,6 +25,7 @@ import static android.net.NetworkStats.SET_DEFAULT;
 import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
 import static android.net.NetworkStats.UID_TETHERING;
+import static android.net.RouteInfo.RTN_UNICAST;
 import static android.net.netstats.provider.NetworkStatsProvider.QUOTA_UNLIMITED;
 
 import static com.android.networkstack.tethering.BpfTetheringCoordinator
@@ -33,8 +36,12 @@ import static com.android.networkstack.tethering.BpfTetheringCoordinator.StatsTy
 
 import static junit.framework.Assert.assertNotNull;
 
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -42,8 +49,16 @@ import static org.mockito.Mockito.when;
 import android.annotation.NonNull;
 import android.app.usage.NetworkStatsManager;
 import android.net.INetd;
+import android.net.InetAddresses;
+import android.net.IpPrefix;
+import android.net.LinkAddress;
+import android.net.LinkProperties;
+import android.net.MacAddress;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkStats;
 import android.net.NetworkStats.Entry;
+import android.net.RouteInfo;
 import android.net.TetherStatsParcel;
 import android.net.util.SharedLog;
 import android.os.Handler;
@@ -52,15 +67,19 @@ import android.os.test.TestLooper;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.android.networkstack.tethering.BpfTetheringCoordinator.Ipv6ForwardingRule;
 import com.android.testutils.TestableNetworkStatsProviderCbBinder;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.net.Inet6Address;
+import java.net.InetAddress;
 import java.util.ArrayList;
 
 @RunWith(AndroidJUnit4.class)
@@ -244,4 +263,126 @@ public class BpfTetheringCoordinatorTest {
         waitForIdle();
         mTetherStatsProviderCb.assertNoCallback();
     }
+
+    @NonNull
+    private UpstreamNetworkState createDualStackUpstream(
+            final int transportType, final String interfaceName) {
+        final String testDnsServer = "2001:4860:4860::8888";
+        final String testIpv6Address = "2001:db8::1/64";
+        final String testIpv4Address = "192.168.100.1/24";
+
+        final Network network = mock(Network.class);
+        final NetworkCapabilities netCap =
+                new NetworkCapabilities.Builder().addTransportType(transportType).build();
+        final InetAddress dns = InetAddresses.parseNumericAddress(testDnsServer);
+        final LinkProperties linkProp = new LinkProperties();
+        linkProp.setInterfaceName(interfaceName);
+        linkProp.addLinkAddress(new LinkAddress(testIpv6Address));
+        linkProp.addLinkAddress(new LinkAddress(testIpv4Address));
+        linkProp.addRoute(new RouteInfo(new IpPrefix("::/0"), null, interfaceName, RTN_UNICAST));
+        linkProp.addRoute(new RouteInfo(new IpPrefix("0.0.0.0/0"), null, interfaceName,
+                    RTN_UNICAST));
+        linkProp.addDnsServer(dns);
+        return new UpstreamNetworkState(linkProp, netCap, network);
+    }
+
+    @NonNull
+    private static Ipv6ForwardingRule buildTestForwardingRule(
+            int upstreamIfindex, @NonNull InetAddress address, @NonNull MacAddress dstMac) {
+        final int downstreamIfindex = 1000;
+        final MacAddress srcMac = MacAddress.ALL_ZEROS_ADDRESS;
+        return new Ipv6ForwardingRule(upstreamIfindex, downstreamIfindex, (Inet6Address) address,
+                srcMac, dstMac);
+    }
+
+    @Test
+    public void testSetInterfaceQuota() throws Exception {
+        setupFunctioningNetdInterface();
+
+        final BpfTetheringCoordinator coordinator = makeBpfTetheringCoordinator();
+        coordinator.start();
+
+        final String ethernetIface = "eth1";
+        final String mobileIface = "rmnet_data0";
+        final Integer ethernetIfIndex = 100;
+        final Integer mobileIfIndex = 101;
+        final long ethernetLimit = 12345;
+        final long mobileLimit = QUOTA_UNLIMITED;
+
+        final InetAddress neighA = InetAddresses.parseNumericAddress("2001:db8::1");
+        final InetAddress neighB = InetAddresses.parseNumericAddress("2001:db8::2");
+        final MacAddress macA = MacAddress.fromString("00:00:00:00:00:0a");
+        final MacAddress macB = MacAddress.fromString("11:22:33:00:00:0b");
+
+        coordinator.addUpstreamNameToLookupTable(ethernetIfIndex, ethernetIface);
+        coordinator.addUpstreamNameToLookupTable(mobileIfIndex, mobileIface);
+
+        final InOrder inOrder = inOrder(mNetd);
+        when(mNetd.tetherOffloadGetAndClearStats(ethernetIfIndex))
+                .thenReturn(buildTestTetherStatsParcel(ethernetIfIndex, 10, 20, 30, 40));
+
+        // Update current upstream to ethernet.
+        final UpstreamNetworkState ethernetUpstream = createDualStackUpstream(
+                TRANSPORT_ETHERNET, ethernetIface);
+        coordinator.updateUpstreamNetworkState(ethernetUpstream);
+
+        // Applying an interface quota to the current upstream does not take any immediate action.
+        mTetherStatsProvider.onSetLimit(ethernetIface, ethernetLimit);
+        waitForIdle();
+        inOrder.verify(mNetd, never()).tetherOffloadSetInterfaceQuota(anyInt(), anyLong());
+
+        // Adding first rule on current upstream immediately send the quota to netd.
+        Ipv6ForwardingRule ethernetRuleA = buildTestForwardingRule(ethernetIfIndex, neighA, macA);
+        coordinator.addForwardingRule(ethernetRuleA);
+        waitForIdle();
+        inOrder.verify(mNetd).tetherOffloadSetInterfaceQuota(ethernetIfIndex, ethernetLimit);
+        inOrder.verifyNoMoreInteractions();
+
+        // Adding second rule on current upstream does not send the quota to netd.
+        Ipv6ForwardingRule ethernetRuleB = buildTestForwardingRule(ethernetIfIndex, neighB, macB);
+        coordinator.addForwardingRule(ethernetRuleB);
+        waitForIdle();
+        inOrder.verify(mNetd, never()).tetherOffloadSetInterfaceQuota(anyInt(), anyLong());
+
+        // Removing second rule on current upstream does not send the quota to netd.
+        coordinator.removeForwardingRule(ethernetRuleB);
+        waitForIdle();
+        inOrder.verify(mNetd, never()).tetherOffloadSetInterfaceQuota(anyInt(), anyLong());
+
+        // Removing first rule on current upstream immediately send the cleanup stucff to netd.
+        coordinator.removeForwardingRule(ethernetRuleA);
+        waitForIdle();
+        inOrder.verify(mNetd).tetherOffloadGetAndClearStats(ethernetIfIndex);
+        inOrder.verifyNoMoreInteractions();
+
+        // Force pushing stats update to verify that the last diff of stats is reported on
+        // current upstream.
+        mTetherStatsProvider.pushTetherStats();
+        mTetherStatsProviderCb.expectNotifyStatsUpdated(
+                new NetworkStats(0L, 1)
+                .addEntry(buildTestEntry(STATS_PER_IFACE, ethernetIface, 10, 20, 30, 40)),
+                new NetworkStats(0L, 1)
+                .addEntry(buildTestEntry(STATS_PER_UID, ethernetIface, 10, 20, 30, 40)));
+
+        // Applying an interface quota to another upstream, mobile, does not take any immediate
+        // action.
+        mTetherStatsProvider.onSetLimit(mobileIface, mobileLimit);
+        waitForIdle();
+        inOrder.verify(mNetd, never()).tetherOffloadSetInterfaceQuota(mobileIfIndex, mobileLimit);
+
+        // Switching to that upstream does not take any immediate action.
+        final UpstreamNetworkState mobileUpstream = createDualStackUpstream(
+                TRANSPORT_CELLULAR, mobileIface);
+        coordinator.updateUpstreamNetworkState(mobileUpstream);
+        waitForIdle();
+        inOrder.verify(mNetd, never()).tetherOffloadSetInterfaceQuota(mobileIfIndex, mobileLimit);
+
+        // Adding first rule on current upstream immediately send the quota to netd.
+        Ipv6ForwardingRule mobileRuleA = buildTestForwardingRule(mobileIfIndex, neighA, macA);
+        coordinator.addForwardingRule(mobileRuleA);
+        waitForIdle();
+        inOrder.verify(mNetd).tetherOffloadSetInterfaceQuota(mobileIfIndex, mobileLimit);
+        inOrder.verifyNoMoreInteractions();
+    }
+
 }
