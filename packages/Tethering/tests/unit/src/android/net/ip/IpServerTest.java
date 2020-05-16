@@ -533,6 +533,7 @@ public class IpServerTest {
         inOrder.verify(mCallback).updateInterfaceState(
                 mIpServer, STATE_LOCAL_ONLY, TETHER_ERROR_NO_ERROR);
         inOrder.verify(mCallback).updateLinkProperties(eq(mIpServer), lpCaptor.capture());
+        assertIPv4AddressAndDirectlyConnectedRoute(lpCaptor.getValue());
         inOrder.verify(mNetd).networkAddInterface(INetd.LOCAL_NET_ID, IFACE_NAME);
         // One for ipv4 route, one for ipv6 link local route.
         inOrder.verify(mNetd, times(2)).networkAddRoute(eq(INetd.LOCAL_NET_ID), eq(IFACE_NAME),
@@ -541,12 +542,11 @@ public class IpServerTest {
         inOrder.verify(mCallback).updateLinkProperties(eq(mIpServer), lpCaptor.capture());
         verifyNoMoreInteractions(mCallback);
 
-        final LinkProperties linkProperties = lpCaptor.getValue();
-        final List<LinkAddress> linkAddresses = linkProperties.getLinkAddresses();
-        assertEquals(1, linkProperties.getLinkAddresses().size());
-        assertEquals(1, linkProperties.getRoutes().size());
+        final LinkProperties lp = lpCaptor.getValue();
+        final List<LinkAddress> linkAddresses = lp.getLinkAddresses();
         final IpPrefix prefix = new IpPrefix(linkAddresses.get(0).getAddress(),
                 linkAddresses.get(0).getPrefixLength());
+        assertIPv4AddressAndDirectlyConnectedRoute(lp);
         assertNotEquals(prefix, new IpPrefix("192.168.42.0/24"));
 
         verify(mDhcpServer).updateParams(mDhcpParamsCaptor.capture(), any());

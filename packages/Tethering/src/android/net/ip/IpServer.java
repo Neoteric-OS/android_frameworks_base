@@ -545,7 +545,9 @@ public class IpServer extends StateMachine {
 
     private DhcpServingParamsParcel makeServingParams(@NonNull final Inet4Address defaultRouter,
             @NonNull final Inet4Address dnsServer, @NonNull LinkAddress serverAddr,
-            @Nullable Inet4Address clientAddr) {
+            @Nullable LinkAddress clientLinkAddr) {
+        final Inet4Address clientAddr = (clientLinkAddr == null)
+                ? null : (Inet4Address) clientLinkAddr.getAddress();
         final boolean changePrefixOnDecline =
                 (mInterfaceType == TetheringManager.TETHERING_NCM && clientAddr == null);
         return new DhcpServingParamsParcelExt()
@@ -565,11 +567,8 @@ public class IpServer extends StateMachine {
         }
 
         final Inet4Address addr = (Inet4Address) serverLinkAddr.getAddress();
-        final Inet4Address clientAddr = clientLinkAddr == null ? null :
-                (Inet4Address) clientLinkAddr.getAddress();
-
         final DhcpServingParamsParcel params = makeServingParams(addr /* defaultRouter */,
-                addr /* dnsServer */, serverLinkAddr, clientAddr);
+                addr /* dnsServer */, serverLinkAddr, clientLinkAddr);
         mDhcpServerStartIndex++;
         mDeps.makeDhcpServer(
                 mIfaceName, params, new DhcpServerCallbacksImpl(mDhcpServerStartIndex));
@@ -700,8 +699,8 @@ public class IpServer extends StateMachine {
     }
 
     private String getRandomWifiIPv4Address() {
-        final Inet4Address ipv4Addr =
-                getRandomIPv4Address(parseNumericAddress(WIFI_HOST_IFACE_ADDR).getAddress());
+        final byte[] rawIpv4Addr = parseNumericAddress(WIFI_HOST_IFACE_ADDR).getAddress();
+        final Inet4Address ipv4Addr = getRandomIPv4Address(rawIpv4Addr.clone());
         return ipv4Addr != null ? ipv4Addr.getHostAddress() : WIFI_HOST_IFACE_ADDR;
     }
 
@@ -789,18 +788,20 @@ public class IpServer extends StateMachine {
         mLastIPv6UpstreamIfindex = upstreamIfindex;
     }
 
-    private void removeRoutesFromLocalNetwork(@NonNull final List<RouteInfo> toBeRemoved) {
+    private boolean removeRoutesFromLocalNetwork(@NonNull final List<RouteInfo> toBeRemoved) {
         final int removalFailures = RouteUtils.removeRoutesFromLocalNetwork(
                 mNetd, toBeRemoved);
         if (removalFailures > 0) {
-            mLog.e(String.format("Failed to remove %d IPv6 routes from local table.",
+            mLog.e(String.format("Failed to remove %d IPv4/v6 routes from local table.",
                     removalFailures));
+            return false;
         }
 
         for (RouteInfo route : toBeRemoved) mLinkProperties.removeRoute(route);
+        return true;
     }
 
-    private void addRoutesToLocalNetwork(@NonNull final List<RouteInfo> toBeAdded) {
+    private boolean addRoutesToLocalNetwork(@NonNull final List<RouteInfo> toBeAdded) {
         try {
             // It's safe to call networkAddInterface() even if
             // the interface is already in the local_network.
@@ -811,14 +812,15 @@ public class IpServer extends StateMachine {
                 RouteUtils.addRoutesToLocalNetwork(mNetd, mIfaceName, toBeAdded);
             } catch (IllegalStateException e) {
                 mLog.e("Failed to add IPv4/v6 routes to local table: " + e);
-                return;
+                return false;
             }
         } catch (ServiceSpecificException | RemoteException e) {
             mLog.e("Failed to add " + mIfaceName + " to local table: ", e);
-            return;
+            return false;
         }
 
         for (RouteInfo route : toBeAdded) mLinkProperties.addRoute(route);
+        return true;
     }
 
     private void configureLocalIPv6Routes(
@@ -988,7 +990,7 @@ public class IpServer extends StateMachine {
         }
 
         final IpPrefix newPrefix = NCM_PREFIXES.get((oldIndex + 1) % NCM_PREFIXES.size());
-        return getRandomIPv4Address(newPrefix.getRawAddress());
+        return getRandomIPv4Address(newPrefix.getRawAddress().clone());
     }
 
     private void handleNewPrefixRequest(@NonNull final IpPrefix currentPrefix) {
@@ -1006,20 +1008,28 @@ public class IpServer extends StateMachine {
         }
         mIpv4Address = new LinkAddress(srvAddr, currentPrefix.getPrefixLength());
 
+        // Remove deprecated route from local network and deprecated LinkAddress.
+        final List<RouteInfo> toBeRemoved =
+                Collections.singletonList(getDirectConnectedRoute(deprecatedLinkAddress));
+        if (!removeRoutesFromLocalNetwork(toBeRemoved)) {
+            mLog.e("Failed to remove the deprecated route " + toBeRemoved);
+            return;
+        }
+        mLinkProperties.removeLinkAddress(deprecatedLinkAddress);
+
         // Add new IPv4 address on the interface.
         if (!mInterfaceCtrl.addAddress(srvAddr, currentPrefix.getPrefixLength())) {
-            mLog.e("Failed to add new IP " + srvAddr);
+            mLog.e("Failed to add new IP address " + srvAddr);
             return;
         }
 
-        // Remove deprecated routes from local network.
-        removeRoutesFromLocalNetwork(
-                Collections.singletonList(getDirectConnectedRoute(deprecatedLinkAddress)));
-        mLinkProperties.removeLinkAddress(deprecatedLinkAddress);
-
-        // Add new routes to local network.
-        addRoutesToLocalNetwork(
-                Collections.singletonList(getDirectConnectedRoute(mIpv4Address)));
+        // Add new routes to local network and new LinkAddress.
+        final List<RouteInfo> toBeAdded =
+                Collections.singletonList(getDirectConnectedRoute(mIpv4Address));
+        if (!addRoutesToLocalNetwork(toBeAdded)) {
+            mLog.e("Failed to add new route " + toBeAdded);
+            return;
+        }
         mLinkProperties.addLinkAddress(mIpv4Address);
 
         // Update local DNS caching server with new IPv4 address, otherwise, dnsmasq doesn't
@@ -1034,10 +1044,9 @@ public class IpServer extends StateMachine {
         sendLinkProperties();
 
         // Notify DHCP server that new prefix/route has been applied on IpServer.
-        final Inet4Address clientAddr = mStaticIpv4ClientAddr == null ? null :
-                (Inet4Address) mStaticIpv4ClientAddr.getAddress();
         final DhcpServingParamsParcel params = makeServingParams(srvAddr /* defaultRouter */,
-                srvAddr /* dnsServer */, mIpv4Address /* serverLinkAddress */, clientAddr);
+                srvAddr /* dnsServer */, mIpv4Address /* serverLinkAddress */,
+                mStaticIpv4ClientAddr);
         try {
             mDhcpServer.updateParams(params, new OnHandlerStatusCallback() {
                     @Override
