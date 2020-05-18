@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000003009223",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1310539?revision\u003d4",
+      "fixSuggestions": [
+        {
+          "fixId": "594e400a_a9d823e8",
+          "description": "Change to \"core/java/android/os/Parcelable.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/os/Parcelable.java",
+              "range": {
+                "startLine": 125,
+                "startChar": 10,
+                "endLine": 125,
+                "endChar": 19
+              },
+              "replacement": "explicitly"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "f6362331_2301fd6e",
+        "filename": "core/java/android/os/Parcelable.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-05-18T04:11:04Z",
+      "side": 1,
+      "message": "Common typo found: \"explictly\" -- should it be \"explicitly\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 125,
+        "startChar": 10,
+        "endLine": 125,
+        "endChar": 19
+      },
+      "revId": "ffd53fed05cacf11c5d91dd1ff5f7f6c24ab9648",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
