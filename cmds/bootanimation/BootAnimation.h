@@ -21,6 +21,8 @@
 #include <sys/types.h>
 
 #include <androidfw/AssetManager.h>
+#include <gui/DisplayEventReceiver.h>
+#include <utils/Looper.h>
 #include <utils/Thread.h>
 #include <binder/IBinder.h>
 
@@ -143,6 +145,11 @@ private:
         BootAnimation* mBootAnimation;
     };
 
+    // Display event handling
+    class DisplayEventCallback;
+    int displayEventCallback(int fd, int events, void* data);
+    void processDisplayEvents();
+
     status_t initTexture(Texture* texture, AssetManager& asset, const char* name);
     status_t initTexture(FileMap* map, int* width, int* height);
     status_t initFont(Font* font, const char* fallback);
@@ -158,6 +165,9 @@ private:
     bool preloadZip(Animation &animation);
     void findBootAnimationFile();
     bool preloadAnimation();
+    EGLConfig getEglConfig(const EGLDisplay&);
+    ui::Size limitSurfaceSize(int width, int height) const;
+    void resizeSurface(int newWidth, int newHeight);
 
     void checkExit();
 
@@ -168,6 +178,8 @@ private:
     Texture     mAndroid[2];
     int         mWidth;
     int         mHeight;
+    int         mMaxWidth = 0;
+    int         mMaxHeight = 0;
     int         mCurrentInset;
     int         mTargetInset;
     bool        mUseNpotTextures = false;
@@ -186,6 +198,8 @@ private:
     sp<TimeCheckThread> mTimeCheckThread = nullptr;
     sp<Callbacks> mCallbacks;
     Animation* mAnimation = nullptr;
+    std::unique_ptr<DisplayEventReceiver> mDisplayEventReceiver;
+    sp<Looper> mLooper;
 };
 
 // ---------------------------------------------------------------------------
