@@ -288,8 +288,8 @@ public class MmTelFeature extends ImsFeature {
         public static final int CAPABILITY_TYPE_SMS = 1 << 3;
 
         /**
-        * @hide
-        */
+         * @hide
+         */
         @Override
         @SystemApi @TestApi
         public final void addCapabilities(@MmTelCapability int capabilities) {
@@ -297,8 +297,8 @@ public class MmTelFeature extends ImsFeature {
         }
 
         /**
-        * @hide
-        */
+         * @hide
+         */
         @Override
         @SystemApi @TestApi
         public final void removeCapabilities(@MmTelCapability int capability) {
@@ -306,17 +306,18 @@ public class MmTelFeature extends ImsFeature {
         }
 
         /**
-        * @hide
-        */
+         * @param capabilities a bitmask of one or more {@link MmTelCapability}.
+         *
+         * @return true if all queried capabilities are true, otherwise false.
+         */
         @Override
-        @SystemApi @TestApi
         public final boolean isCapable(@MmTelCapability int capabilities) {
             return super.isCapable(capabilities);
         }
 
         /**
-        * @hide
-        */
+         * @hide
+         */
         @NonNull
         @Override
         public String toString() {
