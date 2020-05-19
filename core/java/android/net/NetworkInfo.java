@@ -195,6 +195,13 @@ public class NetworkInfo implements Parcelable {
                 mIsAvailable = source.mIsAvailable;
                 mIsRoaming = source.mIsRoaming;
             }
+        } else {
+            mNetworkType = ConnectivityManager.TYPE_NONE;
+            mSubtype = ConnectivityManager.TYPE_NONE;
+            mTypeName = "";
+            mSubtypeName = "";
+            mState = State.UNKNOWN;
+            mDetailedState = DetailedState.IDLE;
         }
     }
 
@@ -480,7 +487,7 @@ public class NetworkInfo implements Parcelable {
      * @param detailedState the {@link DetailedState}.
      * @param reason a {@code String} indicating the reason for the state change,
      * if one was supplied. May be {@code null}.
-     * @param extraInfo an optional {@code String} providing addditional network state
+     * @param extraInfo an optional {@code String} providing additional network state
      * information passed up from the lower networking layers.
      * @deprecated Use {@link NetworkCapabilities} instead.
      */
@@ -492,6 +499,8 @@ public class NetworkInfo implements Parcelable {
             this.mState = stateMap.get(detailedState);
             this.mReason = reason;
             this.mExtraInfo = extraInfo;
+            if (null == mState) mState = State.UNKNOWN;
+            if (null == mDetailedState) mDetailedState = DetailedState.FAILED;
         }
     }
 
