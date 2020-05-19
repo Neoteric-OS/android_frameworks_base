@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58cd39ac_24212450",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-05-19T03:45:15Z",
+      "side": 1,
+      "message": "TODO: move to L.877 in next patchset.\n\nOnce INetd#tetherOffloadRuleAdd failed, ignore other stuff (set limit, add rule map, etc). The limit doesn\u0027t need to be set before adding the fist rule in new design because the tethering needs to start with the limit has set",
+      "range": {
+        "startLine": 874,
+        "startChar": 12,
+        "endLine": 874,
+        "endChar": 61
+      },
+      "revId": "17a3302827be60348d558eb94af9f884760e53fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
