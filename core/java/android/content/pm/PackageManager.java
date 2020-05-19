@@ -3398,6 +3398,13 @@ public abstract class PackageManager {
     public int getUserId() {
         return UserHandle.myUserId();
     }
+  
+    /**
+     * @deprecated Do not instantiate or subclass - obtain an instance from 
+     * {@link Context#getPackageManager}
+     */
+    @Deprecated 
+    public PackageManager() {}
 
     /**
      * Retrieve overall information about an application package that is
