@@ -17,6 +17,8 @@
 java_defaults {
     name: "TetheringAndroidLibraryDefaults",
     sdk_version: "module_current",
+    apex_available: ["com.android.tethering"],
+
     srcs: [
         "src/**/*.java",
         ":framework-tethering-shared-srcs",
