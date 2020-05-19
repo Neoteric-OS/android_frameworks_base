@@ -1,0 +1,15 @@
+android_test {
+    name: "MtpDocumentsProviderTests",
+    srcs: ["src/**/*.java"],
+    libs: [
+        "android.test.runner",
+        "android.test.base",
+        "android.test.mock",
+    ],
+    static_libs: ["junit"],
+    platform_apis: true,
+    instrumentation_for: "MtpDocumentsProvider",
+    certificate: "media",
+    test_suites: ["device-tests"],
+
+}

@@ -1,0 +1,10 @@
+android_test {
+    name: "MtpDocumentsProviderPerfTests",
+    srcs: ["src/**/*.java"],
+    static_libs: ["androidx.test.rules"],
+    platform_apis: true,
+    instrumentation_for: "MtpDocumentsProvider",
+    certificate: "media",
+    test_suites: ["device-tests"],
+
+}
