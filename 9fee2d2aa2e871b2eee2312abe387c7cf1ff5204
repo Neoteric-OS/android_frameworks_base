@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9fc08cd_6da260eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-19T15:21:58Z",
+      "side": 1,
+      "message": "Looks like incorrect bug id?",
+      "range": {
+        "startLine": 15,
+        "startChar": 5,
+        "endLine": 15,
+        "endChar": 13
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03316a96_54c4bbd1",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 5914,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-19T15:21:58Z",
+      "side": 1,
+      "message": "maybe (us) to keep the consistency with below comments. Or we can just say the latency of xxx, since we can know it\u0027s micro-sec from the name of latency_us. The same for below other comments.",
+      "range": {
+        "startLine": 5914,
+        "startChar": 18,
+        "endLine": 5914,
+        "endChar": 29
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e1eb0c_7f7a9e24",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 5950,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-19T15:21:58Z",
+      "side": 1,
+      "message": "duplicate address detection",
+      "range": {
+        "startLine": 5950,
+        "startChar": 32,
+        "endLine": 5950,
+        "endChar": 47
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e0def5_f379cfb2",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 5979,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-19T15:21:58Z",
+      "side": 1,
+      "message": "IP Provisioning?\n\nBtw, please remind me the reason why we need this filed. Is it redundant with above ipv4/6_latency_us?",
+      "range": {
+        "startLine": 5979,
+        "startChar": 28,
+        "endLine": 5979,
+        "endChar": 40
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b843586_77126847",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 5980,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-19T15:21:58Z",
+      "side": 1,
+      "message": "provisioning start and end (success or failure)?",
+      "range": {
+        "startLine": 5980,
+        "startChar": 33,
+        "endLine": 5980,
+        "endChar": 66
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91fdc2a_ba224d78",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 5999,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-19T15:21:58Z",
+      "side": 1,
+      "message": "（re）transmit? keep the consistency with above comment.",
+      "range": {
+        "startLine": 5999,
+        "startChar": 26,
+        "endLine": 5999,
+        "endChar": 36
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9be47c_748da291",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 6004,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-19T15:21:58Z",
+      "side": 1,
+      "message": "Noticed that we haven\u0027t implement address duplicate detection during renewal process yet. So this filed seems a bit useless, can we remove this filed in this version?",
+      "range": {
+        "startLine": 6004,
+        "startChar": 19,
+        "endLine": 6004,
+        "endChar": 33
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34430e8b_b21ba3ce",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 6022,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-19T15:21:58Z",
+      "side": 1,
+      "message": "incorrect indent?",
+      "range": {
+        "startLine": 6022,
+        "startChar": 5,
+        "endLine": 6022,
+        "endChar": 7
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25997d5e_14b79861",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-19T15:21:58Z",
+      "side": 1,
+      "message": "what does this mean? Seems that stopping IpClient normally won\u0027t cause provisioning failure, is it?",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66213d5c_dd8a3fc0",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-19T15:21:58Z",
+      "side": 1,
+      "message": "how about DF_DAD? DAD: duplicate address detection.",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
