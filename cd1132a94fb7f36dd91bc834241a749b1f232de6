@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c29f787_e82b1a7a",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-19T06:34:09Z",
+      "side": 1,
+      "message": "What is the point of doing this ?\n\nAlso, do you need to add a 204 response to the default URL to make sure the capport API is prioritized ?",
+      "range": {
+        "startLine": 230,
+        "startChar": 8,
+        "endLine": 231,
+        "endChar": 71
+      },
+      "revId": "cd1132a94fb7f36dd91bc834241a749b1f232de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
