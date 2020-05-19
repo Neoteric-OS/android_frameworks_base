@@ -882,9 +882,9 @@ public class UsbDeviceManager implements ActivityTaskManagerInternal.ScreenObser
                             configurationCount--;
                             int interfaceCount = config.getInterfaceCount() - 1;
                             while (interfaceCount >= 0) {
-                                UsbInterface intrface = config.getInterface(interfaceCount);
+                                UsbInterface usbInterface = config.getInterface(interfaceCount);
                                 interfaceCount--;
-                                if (sBlackListedInterfaces.contains(intrface.getInterfaceClass())) {
+                                if (sBlackListedInterfaces.contains(usbInterface.getInterfaceClass())) {
                                     mHideUsbNotification = true;
                                     break;
                                 }
