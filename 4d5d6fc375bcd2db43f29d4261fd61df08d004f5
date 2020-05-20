@@ -507,6 +507,30 @@
     },
     {
       "key": {
+        "uuid": "852fcf73_0def3e2d",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done but with style error which wants these variables should be camel-cased.",
+      "parentUuid": "03760681_300ceae5",
+      "range": {
+        "startLine": 137,
+        "startChar": 40,
+        "endLine": 137,
+        "endChar": 55
+      },
+      "revId": "4d5d6fc375bcd2db43f29d4261fd61df08d004f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adf0245b_582f6235",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 1

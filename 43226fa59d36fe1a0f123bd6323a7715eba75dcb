@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "40774a8d_69a11408",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07e18947_9dfdd794",
+      "range": {
+        "startLine": 58,
+        "startChar": 43,
+        "endLine": 58,
+        "endChar": 68
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a068625_53cd8cb9",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80d0394_d8c4465d",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a068625_53cd8cb9",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 34
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "eff7bb1c_37946341",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "663f57cc_4f4353b8",
+      "range": {
+        "startLine": 61,
+        "startChar": 31,
+        "endLine": 61,
+        "endChar": 44
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5e87c5b_3e9b00e0",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2020-05-07T07:28:13Z",
       "side": 1,
       "message": "question: which part needs the looper?",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24c7b46_5155fbf4",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "It\u0027s needed while creating OnSubscriptionsChangedListener instance which extends Handler.\nWithout this, will get the following error\nSTACKTRACE:\njava.lang.RuntimeException: Can\u0027t create handler inside thread Thread[Instr: androidx.test.runner.AndroidJUnitRunner,5,main] that has not called Looper.prepare()\n\tat android.os.Handler.\u003cinit\u003e(Handler.java:227)\n\tat android.os.Handler.\u003cinit\u003e(Handler.java:129)\n\tat android.telephony.SubscriptionManager$OnSubscriptionsChangedListener$OnSubscriptionsChangedListenerHandler.\u003cinit\u003e(SubscriptionManager.java:907)",
+      "parentUuid": "a5e87c5b_3e9b00e0",
       "range": {
         "startLine": 69,
         "startChar": 8,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "68e7d433_e44c2ef8",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Method is removed in new patch and merge this part into setSubscriberIdForSub().",
+      "parentUuid": "deabaed3_bf1b296e",
+      "range": {
+        "startLine": 98,
+        "startChar": 17,
+        "endLine": 98,
+        "endChar": 38
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2baeb23a_e052ec5b",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0285d5a_e29938ac",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done, removed.",
+      "parentUuid": "2baeb23a_e052ec5b",
+      "range": {
+        "startLine": 103,
+        "startChar": 17,
+        "endLine": 103,
+        "endChar": 40
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4f859bbb_3c360508",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73222ffe_82615fc7",
+      "range": {
+        "startLine": 107,
+        "startChar": 17,
+        "endLine": 107,
+        "endChar": 40
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffcf7d27_2ef24de7",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3b1134_93401d15",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffcf7d27_2ef24de7",
+      "range": {
+        "startLine": 110,
+        "startChar": 13,
+        "endLine": 110,
+        "endChar": 28
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "17552f78_8d760c4b",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cab7f181_dc531bc0",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 114,
+        "endChar": 9
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d403f313_708e8bf0",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 2
@@ -229,6 +445,30 @@
       "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940e490f_98abb62f",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Generate subIdList by new method updateSubList(int, int)",
+      "parentUuid": "d403f313_708e8bf0",
+      "range": {
+        "startLine": 129,
+        "startChar": 30,
+        "endLine": 129,
+        "endChar": 47
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "13b277fe_d48b0772",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f294429b_1125e1dc",
+      "range": {
+        "startLine": 150,
+        "startChar": 8,
+        "endLine": 150,
+        "endChar": 47
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b999c72e_8998181b",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 2
@@ -275,6 +539,30 @@
       "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b5d047_10807450",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b999c72e_8998181b",
+      "range": {
+        "startLine": 151,
+        "startChar": 70,
+        "endLine": 151,
+        "endChar": 71
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "01bfd4bf_edb137a1",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6c63c05_3952cab6",
+      "range": {
+        "startLine": 153,
+        "startChar": 70,
+        "endLine": 153,
+        "endChar": 71
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5790eb39_4745bfb1",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 2
@@ -315,6 +627,24 @@
       "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48db7a2_6df681e0",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5790eb39_4745bfb1",
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -341,6 +671,30 @@
     },
     {
       "key": {
+        "uuid": "66884dae_6a347671",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f8834ec_e7212ea1",
+      "range": {
+        "startLine": 171,
+        "startChar": 11,
+        "endLine": 171,
+        "endChar": 47
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dca78161_ff885c50",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 2
@@ -364,6 +718,30 @@
     },
     {
       "key": {
+        "uuid": "b8d4135c_cdb55818",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "dca78161_ff885c50",
+      "range": {
+        "startLine": 172,
+        "startChar": 20,
+        "endLine": 172,
+        "endChar": 34
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "623b99ec_592e90cc",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 2
@@ -378,6 +756,24 @@
       "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d003c660_27baffbe",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "623b99ec_592e90cc",
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -401,6 +797,30 @@
       "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c238b7bf_87da24f7",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-20T06:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "106d7be0_79207b2c",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 59
+      },
+      "revId": "43226fa59d36fe1a0f123bd6323a7715eba75dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
