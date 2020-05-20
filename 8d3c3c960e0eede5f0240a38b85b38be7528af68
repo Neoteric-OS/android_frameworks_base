@@ -22,6 +22,30 @@
       "revId": "8d3c3c960e0eede5f0240a38b85b38be7528af68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d028f3_f514ab00",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-20T06:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d1a6545_c4fdaabe",
+      "range": {
+        "startLine": 236,
+        "startChar": 16,
+        "endLine": 236,
+        "endChar": 49
+      },
+      "revId": "8d3c3c960e0eede5f0240a38b85b38be7528af68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
