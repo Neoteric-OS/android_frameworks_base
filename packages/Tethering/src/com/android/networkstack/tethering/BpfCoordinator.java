@@ -25,6 +25,8 @@ import static android.net.NetworkStats.UID_ALL;
 import static android.net.NetworkStats.UID_TETHERING;
 import static android.net.netstats.provider.NetworkStatsProvider.QUOTA_UNLIMITED;
 
+import static com.android.networkstack.tethering.TetheringConfiguration.DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS;
+
 import android.app.usage.NetworkStatsManager;
 import android.net.INetd;
 import android.net.MacAddress;
@@ -69,8 +71,6 @@ import java.util.Objects;
 public class BpfCoordinator {
     private static final String TAG = BpfCoordinator.class.getSimpleName();
     private static final int DUMP_TIMEOUT = 10_000;
-    @VisibleForTesting
-    static final int DEFAULT_PERFORM_POLL_INTERVAL_MS = 5000; // TODO: Make it customizable.
 
     @VisibleForTesting
     enum StatsType {
@@ -156,14 +156,6 @@ public class BpfCoordinator {
 
     @VisibleForTesting
     public abstract static class Dependencies {
-        /**
-         * Get polling Interval in milliseconds.
-         */
-        public int getPerformPollInterval() {
-            // TODO: Consider make this configurable.
-            return DEFAULT_PERFORM_POLL_INTERVAL_MS;
-        }
-
         /** Get handler. */
         @NonNull public abstract Handler getHandler();
 
@@ -406,6 +398,7 @@ public class BpfCoordinator {
             pw.println("Stats provider " + (mStatsProvider != null
                     ? "registered" : "not registered"));
             pw.println("Upstream quota: " + mInterfaceQuotas.toString());
+            pw.println("Polling interval: " + getPollingInterval() + " ms");
 
             pw.println("Forwarding stats:");
             pw.increaseIndent();
@@ -748,6 +741,15 @@ public class BpfCoordinator {
         updateQuotaAndStatsFromSnapshot(tetherStatsList);
     }
 
+    @VisibleForTesting
+    int getPollingInterval() {
+        // The valid range of intervals is DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS..max_long.
+        // Ignore the config value is less than the minimum polling interval.
+        int configInterval = (mDeps.getTetherConfig() != null)
+                ? mDeps.getTetherConfig().getOffloadPollInterval() : 0;
+        return Math.max(DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS, configInterval);
+    }
+
     private void maybeSchedulePollingStats() {
         if (!mPollingStarted) return;
 
@@ -755,6 +757,6 @@ public class BpfCoordinator {
             mHandler.removeCallbacks(mScheduledPollingTask);
         }
 
-        mHandler.postDelayed(mScheduledPollingTask, mDeps.getPerformPollInterval());
+        mHandler.postDelayed(mScheduledPollingTask, getPollingInterval());
     }
 }
