@@ -62,6 +62,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -94,6 +95,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.PowerManager;
 import android.os.SimpleClock;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
 import androidx.test.InstrumentationRegistry;
@@ -105,6 +107,7 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.server.net.NetworkStatsService.NetworkStatsSettings;
 import com.android.server.net.NetworkStatsService.NetworkStatsSettings.Config;
+import com.android.server.net.NetworkStatsService.SettingsObserver;
 import com.android.testutils.HandlerUtilsKt;
 import com.android.testutils.TestableNetworkStatsProviderBinder;
 
@@ -173,6 +176,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     private NetworkStatsService mService;
     private INetworkStatsSession mSession;
     private INetworkManagementEventObserver mNetworkObserver;
+    private SettingsObserver mSettingsObserver;
 
     private final Clock mClock = new SimpleClock(ZoneOffset.UTC) {
         @Override
@@ -212,6 +216,9 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         mService.systemReady();
         // Verify that system ready fetches realtime stats
         verify(mStatsFactory).readNetworkStatsDetail(UID_ALL, INTERFACES_ALL, TAG_ALL);
+        // Verify start monitoring data usage per RAT type while system ready.
+        verify(mNetworkStatsSubscriptionsMonitor).start();
+        reset(mNetworkStatsSubscriptionsMonitor);
 
         mSession = mService.openSession();
         assertNotNull("openSession() failed", mSession);
@@ -238,6 +245,16 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
 
                 return mNetworkStatsSubscriptionsMonitor;
             }
+
+            @Override
+            public SettingsObserver makeSettingsObserver(Context context, Handler handler,
+                    NetworkStatsSettings settings) {
+                final SettingsObserver observer =
+                        super.makeSettingsObserver(context, handler, settings);
+                mSettingsObserver = observer;
+                return observer;
+            }
+
         };
     }
 
@@ -1191,6 +1208,81 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         provider.expectOnSetAlert(MB_IN_BYTES);
     }
 
+    @Test
+    public void testDynamicWatchForNetworkTypeChanges() throws Exception {
+        // Build 3g templates and make some traffics
+        final NetworkTemplate template3g =
+                buildTemplateMobileWithRatType(null, TelephonyManager.NETWORK_TYPE_UMTS);
+        final NetworkTemplate templateUnknown =
+                buildTemplateMobileWithRatType(null, TelephonyManager.NETWORK_TYPE_UNKNOWN);
+        final NetworkState[] states = new NetworkState[]{buildMobile3gState(IMSI_1)};
+
+        // 3G network comes online.
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(buildEmptyStats());
+
+        setMobileRatTypeAndWaitForIdle(TelephonyManager.NETWORK_TYPE_UMTS);
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, states, getActiveIface(states),
+                new VpnInfo[0]);
+
+        // Create some traffic.
+        incrementCurrentTime(MINUTE_IN_MILLIS);
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1)
+                .addEntry(new NetworkStats.Entry(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE,
+                        12L, 18L, 14L, 1L, 0L)));
+        forcePollAndWaitForIdle();
+
+        // Verify 3g templates gets stats.
+        assertUidTotal(template3g, UID_RED, 12L, 18L, 14L, 1L, 0);
+        assertUidTotal(templateUnknown, UID_RED, 0L, 0L, 0L, 0L, 0);
+
+        // Stop monitoring data usage per RAT type changes.
+        when(mSettings.getCombineSubtypeEnabled()).thenReturn(true);
+        mSettingsObserver.onChange(false, Settings.Global
+                .getUriFor(Settings.Global.NETSTATS_COMBINE_SUBTYPE_ENABLED));
+        waitForIdle();
+        verify(mNetworkStatsSubscriptionsMonitor).stop();
+
+        // Currently, the traffic is indeed assigned to combined.
+        incrementCurrentTime(MINUTE_IN_MILLIS);
+        setMobileRatTypeAndWaitForIdle(TelephonyManager.NETWORK_TYPE_UNKNOWN);
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1)
+                // Append more traffic on existing 3g stats entry.
+                .addEntry(new NetworkStats.Entry(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE,
+                        16L, 22L, 17L, 2L, 0L))
+                .addEntry(new NetworkStats.Entry(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE,
+                        35L, 29L, 7L, 11L, 1L)));
+        forcePollAndWaitForIdle();
+
+        // Verify 3g counters do not increase.
+        assertUidTotal(template3g, UID_RED, 12L, 18L, 14L, 1L, 0);
+        // Verify the new traffic is assigned to combined.
+        assertUidTotal(templateUnknown, UID_RED, 4L + 35L, 4L + 29L, 3L + 7L, 1L + 11L, 1);
+
+        when(mSettings.getCombineSubtypeEnabled()).thenReturn(false);
+        mSettingsObserver.onChange(false, Settings.Global
+                .getUriFor(Settings.Global.NETSTATS_COMBINE_SUBTYPE_ENABLED));
+        waitForIdle();
+        verify(mNetworkStatsSubscriptionsMonitor).start();
+
+        // Start monitoring data usage per RAT type changes.
+        incrementCurrentTime(MINUTE_IN_MILLIS);
+        setMobileRatTypeAndWaitForIdle(TelephonyManager.NETWORK_TYPE_UMTS);
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1)
+                // Append more traffic on existing 3g stats entry.
+                .addEntry(new NetworkStats.Entry(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE,
+                        22L, 26L, 19L, 5L, 0L))
+                .addEntry(new NetworkStats.Entry(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE,
+                        35L, 29L, 7L, 11L, 1L)));
+        forcePollAndWaitForIdle();
+
+        // Verify traffic is split by RAT type.
+        assertUidTotal(template3g, UID_RED, 22L - 16L + 12L , 26L - 22L + 18L,
+                19L - 17L + 14L, 5L - 2L + 1L, 0);
+        // Verify no increase on unknown type.
+        assertUidTotal(templateUnknown, UID_RED, 4L + 35L, 4L + 29L, 3L + 7L, 1L + 11L, 1);
+    }
+
     private static File getBaseDir(File statsDir) {
         File baseDir = new File(statsDir, "netstats");
         baseDir.mkdirs();
@@ -1403,6 +1495,10 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
 
     private void forcePollAndWaitForIdle() {
         mServiceContext.sendBroadcast(new Intent(ACTION_NETWORK_STATS_POLL));
+        waitForIdle();
+    }
+
+    private void waitForIdle() {
         HandlerUtilsKt.waitForIdle(mHandlerThread, WAIT_TIMEOUT);
     }
 
