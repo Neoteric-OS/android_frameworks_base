@@ -473,9 +473,7 @@ public class CarStatusBar extends StatusBar implements CarBatteryController.Batt
         }
 
         buildNavBarContent();
-        if (mBootCompleted) {
-            initHvac();
-        }
+        initHvac();
         // If the UI was rebuilt (day/night change) while the keyguard was up we need to
         // correctly respect that state.
         if (mIsKeyguard) {
