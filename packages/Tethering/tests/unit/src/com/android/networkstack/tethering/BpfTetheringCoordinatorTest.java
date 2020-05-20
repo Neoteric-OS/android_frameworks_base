@@ -28,11 +28,11 @@ import static android.net.NetworkStats.UID_TETHERING;
 import static android.net.RouteInfo.RTN_UNICAST;
 import static android.net.netstats.provider.NetworkStatsProvider.QUOTA_UNLIMITED;
 
-import static com.android.networkstack.tethering.BpfTetheringCoordinator
-        .DEFAULT_PERFORM_POLL_INTERVAL_MS;
 import static com.android.networkstack.tethering.BpfTetheringCoordinator.StatsType;
 import static com.android.networkstack.tethering.BpfTetheringCoordinator.StatsType.STATS_PER_IFACE;
 import static com.android.networkstack.tethering.BpfTetheringCoordinator.StatsType.STATS_PER_UID;
+import static com.android.networkstack.tethering.TetheringConfiguration
+.DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS;
 
 import static junit.framework.Assert.assertNotNull;
 
@@ -101,10 +101,6 @@ public class BpfTetheringCoordinatorTest {
     private BpfTetheringCoordinator.Dependencies mDeps =
             new BpfTetheringCoordinator.Dependencies() {
             @Override
-            int getPerformPollInterval() {
-                return DEFAULT_PERFORM_POLL_INTERVAL_MS;
-            }
-            @Override
             int getInterfaceIndex(@NonNull String iface) {
                 Integer ifIndex = mInterfaceIndices.get(iface);
                 return (ifIndex != null) ? ifIndex : 0;
@@ -133,6 +129,10 @@ public class BpfTetheringCoordinatorTest {
 
     private void waitForIdle() {
         mTestLooper.dispatchAll();
+    }
+
+    private void setOffloadPollInterval(int interval) {
+        when(mTetherConfig.getOffloadPollInterval()).thenReturn(interval);
     }
 
     private void setInterfaceIndex(@NonNull String iface, int ifIndex) {
@@ -202,7 +202,7 @@ public class BpfTetheringCoordinatorTest {
                 buildTestTetherStatsParcel(wlanIfIndex, 1000, 100, 2000, 200),
                 buildTestTetherStatsParcel(mobileIfIndex, 3000, 300, 4000, 400)};
         when(mNetd.tetherOffloadGetStats()).thenReturn(tetherStatsList);
-        mTestLooper.moveTimeForward(DEFAULT_PERFORM_POLL_INTERVAL_MS);
+        mTestLooper.moveTimeForward(DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS);
         waitForIdle();
 
         final NetworkStats expectedIfaceStats = new NetworkStats(0L, 2)
@@ -226,7 +226,7 @@ public class BpfTetheringCoordinatorTest {
                 buildTestTetherStatsParcel(wlanIfIndex, 1000, 100, 2000, 200),
                 buildTestTetherStatsParcel(mobileIfIndex, 3010, 320, 4030, 440)};
         when(mNetd.tetherOffloadGetStats()).thenReturn(tetherStatsListAccu);
-        mTestLooper.moveTimeForward(DEFAULT_PERFORM_POLL_INTERVAL_MS);
+        mTestLooper.moveTimeForward(DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS);
         waitForIdle();
 
         final NetworkStats expectedIfaceStatsDiff = new NetworkStats(0L, 2)
@@ -249,7 +249,7 @@ public class BpfTetheringCoordinatorTest {
         clearInvocations(mNetd);
 
         // Verify the polling update thread stopped.
-        mTestLooper.moveTimeForward(DEFAULT_PERFORM_POLL_INTERVAL_MS);
+        mTestLooper.moveTimeForward(DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS);
         waitForIdle();
         verify(mNetd, never()).tetherOffloadGetStats();
     }
@@ -274,20 +274,20 @@ public class BpfTetheringCoordinatorTest {
         when(mNetd.tetherOffloadGetStats()).thenReturn(
                 new TetherStatsParcel[] {buildTestTetherStatsParcel(mobileIfIndex, 0, 0, 0, 0)});
         mTetherStatsProvider.onSetAlert(100);
-        mTestLooper.moveTimeForward(DEFAULT_PERFORM_POLL_INTERVAL_MS);
+        mTestLooper.moveTimeForward(DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS);
         waitForIdle();
         mTetherStatsProviderCb.assertNoCallback();
 
         // Verify that notifyAlertReached fired when quota is reached.
         when(mNetd.tetherOffloadGetStats()).thenReturn(
                 new TetherStatsParcel[] {buildTestTetherStatsParcel(mobileIfIndex, 50, 0, 50, 0)});
-        mTestLooper.moveTimeForward(DEFAULT_PERFORM_POLL_INTERVAL_MS);
+        mTestLooper.moveTimeForward(DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS);
         waitForIdle();
         mTetherStatsProviderCb.expectNotifyAlertReached();
 
         // Verify that set quota with UNLIMITED won't trigger any callback.
         mTetherStatsProvider.onSetAlert(QUOTA_UNLIMITED);
-        mTestLooper.moveTimeForward(DEFAULT_PERFORM_POLL_INTERVAL_MS);
+        mTestLooper.moveTimeForward(DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS);
         waitForIdle();
         mTetherStatsProviderCb.assertNoCallback();
     }
@@ -433,7 +433,7 @@ public class BpfTetheringCoordinatorTest {
         coordinator.start();
 
         // The tether stats polling task should not be scheduled.
-        mTestLooper.moveTimeForward(DEFAULT_PERFORM_POLL_INTERVAL_MS);
+        mTestLooper.moveTimeForward(DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS);
         waitForIdle();
         verify(mNetd, never()).tetherOffloadGetStats();
 
@@ -457,5 +457,30 @@ public class BpfTetheringCoordinatorTest {
         coordinator.mClientAddresses.put(ifIndex, clients);
         coordinator.removeForwardingRule(rule);
         assertEquals(1 /* can't be removed */, coordinator.mClientAddresses.size());
+    }
+
+    @Test
+    public void testTetheringConfigInitializePollingInterval() throws Exception {
+        setupFunctioningNetdInterface();
+
+        final BpfTetheringCoordinator coordinator = makeBpfTetheringCoordinator();
+
+        // The default polling interval is DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS.
+        coordinator.start();
+        assertEquals(DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS, coordinator.mPollingIntervalMs);
+        coordinator.stop();
+
+        // The minimum polling interval is DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS. Expect the
+        // invalid value isn't applied.
+        setOffloadPollInterval(0);
+        coordinator.start();
+        assertEquals(DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS, coordinator.mPollingIntervalMs);
+        coordinator.stop();
+
+        // Set a specific polling interval which is larger than default value. Expect the specific
+        // value is applied.
+        setOffloadPollInterval(10000);
+        coordinator.start();
+        assertEquals(10000, coordinator.mPollingIntervalMs);
     }
 }

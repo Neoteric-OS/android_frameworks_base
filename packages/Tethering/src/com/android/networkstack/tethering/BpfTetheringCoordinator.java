@@ -25,6 +25,9 @@ import static android.net.NetworkStats.UID_ALL;
 import static android.net.NetworkStats.UID_TETHERING;
 import static android.net.netstats.provider.NetworkStatsProvider.QUOTA_UNLIMITED;
 
+import static com.android.networkstack.tethering.TetheringConfiguration
+.DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS;
+
 import android.app.usage.NetworkStatsManager;
 import android.net.INetd;
 import android.net.LinkProperties;
@@ -67,8 +70,6 @@ import java.util.HashSet;
  */
 public class BpfTetheringCoordinator {
     private static final String TAG = BpfTetheringCoordinator.class.getSimpleName();
-    @VisibleForTesting
-    static final int DEFAULT_PERFORM_POLL_INTERVAL_MS = 5000; // TODO: Make it customizable.
 
     @VisibleForTesting
     enum StatsType {
@@ -88,6 +89,9 @@ public class BpfTetheringCoordinator {
     private final BpfTetherStatsProvider mStatsProvider;
     private UpstreamNetworkState mUpstreamNetworkState;
     private boolean mStarted = false;
+
+    @VisibleForTesting
+    int mPollingIntervalMs = DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS;
 
     // Tracking remaining alert quota. Unlike limit quota is subject to interface, the alert
     // quota is interface independent and global for tether offload.
@@ -124,11 +128,6 @@ public class BpfTetheringCoordinator {
 
     @VisibleForTesting
     abstract static class Dependencies {
-        int getPerformPollInterval() {
-            // TODO: Consider make this configurable.
-            return DEFAULT_PERFORM_POLL_INTERVAL_MS;
-        }
-
         // Used to get the interface index on current upstream.
         int getInterfaceIndex(@NonNull String iface) {
             try {
@@ -177,6 +176,7 @@ public class BpfTetheringCoordinator {
             return;
         }
 
+        initializePollingInterval();
         mStarted = true;
         maybeSchedulePollingStats();
 
@@ -320,6 +320,7 @@ public class BpfTetheringCoordinator {
         }
         pw.println("Tethering coordinator " + (mStarted ? "started" : "not started"));
         pw.println("Stats provider " + (mStatsProvider != null ? "registered" : "not registered"));
+        pw.println("Polling interval " + mPollingIntervalMs + " ms");
         String upstream = currentUpstreamInterface();
         if (upstream != null) {
             final Integer ifindex = mDeps.getInterfaceIndex(upstream);
@@ -571,6 +572,13 @@ public class BpfTetheringCoordinator {
         accumulateUsedQuotaAndStatsDiff(tetherStatsList);
     }
 
+    private void initializePollingInterval() {
+        // The minimum polling interval value is DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS.
+        int configInterval = (mDeps.getTetherConfig() != null)
+                ? mDeps.getTetherConfig().getOffloadPollInterval() : 0;
+        mPollingIntervalMs = Math.max(DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS, configInterval);
+    }
+
     private void maybeSchedulePollingStats() {
         if (!mStarted) return;
 
@@ -578,6 +586,6 @@ public class BpfTetheringCoordinator {
             mHandler.removeCallbacks(mScheduledPollingTask);
         }
 
-        mHandler.postDelayed(mScheduledPollingTask, mDeps.getPerformPollInterval());
+        mHandler.postDelayed(mScheduledPollingTask, mPollingIntervalMs);
     }
 }
