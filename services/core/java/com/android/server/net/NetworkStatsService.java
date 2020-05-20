@@ -87,6 +87,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.database.ContentObserver;
 import android.net.DataUsageRequest;
 import android.net.INetworkManagementEventObserver;
 import android.net.INetworkStatsService;
@@ -103,6 +104,7 @@ import android.net.NetworkStats.NonMonotonicObserver;
 import android.net.NetworkStatsHistory;
 import android.net.NetworkTemplate;
 import android.net.TrafficStats;
+import android.net.Uri;
 import android.net.netstats.provider.INetworkStatsProvider;
 import android.net.netstats.provider.INetworkStatsProviderCallback;
 import android.net.netstats.provider.NetworkStatsProvider;
@@ -157,12 +159,15 @@ import java.io.PrintWriter;
 import java.time.Clock;
 import java.time.ZoneOffset;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+
 
 /**
  * Collect and persist detailed network statistics, and provide this data to
@@ -178,6 +183,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     // Perform polling, persist network, and register the global alert again.
     private static final int MSG_PERFORM_POLL_REGISTER_ALERT = 2;
     private static final int MSG_UPDATE_IFACES = 3;
+    // To dynamically enable/disable watch for networkType changes.
+    private static final int MSG_COMBINE_SUBTYPE_CHANGE = 4;
 
     /** Flags to control detail level of poll event. */
     private static final int FLAG_PERSIST_NETWORK = 0x1;
@@ -386,6 +393,15 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                     registerGlobalAlert();
                     break;
                 }
+                case MSG_COMBINE_SUBTYPE_CHANGE: {
+                    boolean enabled = (boolean) msg.obj;
+                    if (!enabled) {
+                        mNetworkStatsSubscriptionsMonitor.start();
+                    } else {
+                        mNetworkStatsSubscriptionsMonitor.stop();
+                    }
+                    break;
+                }
             }
         }
     }
@@ -406,6 +422,48 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
         return service;
     }
+
+    /** A class to describe settings observer */
+    @VisibleForTesting
+    public static class SettingsObserver extends ContentObserver {
+        private final Map<Uri, Integer> mEventMap;
+        private final ContentResolver mResolver;
+        private static final String TAG = "SettingsObserver";
+        private final Handler mHandler;
+        private final NetworkStatsSettings mSettings;
+
+        public SettingsObserver(Context context, Handler handler, NetworkStatsSettings settings) {
+            super(null);
+            mEventMap = new HashMap<>();
+            mResolver = context.getContentResolver();
+            mHandler = handler;
+            mSettings = settings;
+        }
+
+        /** Start observing a content. */
+        public void register(Uri uri, int what) {
+            mEventMap.put(uri, what);
+            mResolver.registerContentObserver(uri, false, this);
+        }
+
+        /** Stop observing a content. */
+        public void unregister() {
+            mResolver.unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            final Integer what = mEventMap.get(uri);
+            final boolean enabled = mSettings.getCombineSubtypeEnabled();
+            if (what != null) {
+                mHandler.obtainMessage(what.intValue(), enabled).sendToTarget();
+            } else {
+                Log.e(TAG, "No matching event to send for URI=" + uri);
+            }
+        }
+    }
+
+    private final SettingsObserver mSettingsObserver;
 
     // This must not be called outside of tests, even within the same package, as this constructor
     // does not register the local service. Use the create() helper above.
@@ -434,6 +492,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mHandler = new NetworkStatsHandler(handlerThread.getLooper());
         mNetworkStatsSubscriptionsMonitor = deps.makeSubscriptionsMonitor(mContext,
                 new HandlerExecutor(mHandler), this);
+        mSettingsObserver = mDeps.makeSettingsObserver(mContext, mHandler, mSettings);
+        registerSettingsObserver();
     }
 
     /**
@@ -462,11 +522,23 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             return new NetworkStatsSubscriptionsMonitor(context, executor, (subscriberId, type) ->
                     service.handleOnCollapsedRatTypeChanged());
         }
+
+        /** Create a SettingsObserver instance which is used to observe settings changes */
+        public SettingsObserver makeSettingsObserver(Context context, Handler handler,
+                NetworkStatsSettings settings) {
+            return new SettingsObserver(context, handler, settings);
+        }
     }
 
     private void registerLocalService() {
         LocalServices.addService(NetworkStatsManagerInternal.class,
                 new NetworkStatsManagerInternalImpl());
+    }
+
+    private void registerSettingsObserver() {
+        mSettingsObserver.register(Settings.Global
+                .getUriFor(Settings.Global.NETSTATS_COMBINE_SUBTYPE_ENABLED),
+                MSG_COMBINE_SUBTYPE_CHANGE);
     }
 
     public void systemReady() {
@@ -526,8 +598,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, currentRealtime,
                 mSettings.getPollInterval(), pollIntent);
 
-        // TODO: listen to settings changed to support dynamically enable/disable.
-        // watch for networkType changes
         if (!mSettings.getCombineSubtypeEnabled()) {
             mNetworkStatsSubscriptionsMonitor.start();
         }
@@ -555,6 +625,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         if (!mSettings.getCombineSubtypeEnabled()) {
             mNetworkStatsSubscriptionsMonitor.stop();
         }
+        mSettingsObserver.unregister();
 
         final long currentTime = mClock.millis();
 
