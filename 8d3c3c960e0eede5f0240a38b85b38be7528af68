@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d1a6545_c4fdaabe",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-20T04:44:08Z",
+      "side": 1,
+      "message": "This is obscure. Can you fetch this from the config in setUp() or something so that it doesn\u0027t break if we change the xml config (and also so that readers of this code have an inkling what this is)",
+      "range": {
+        "startLine": 236,
+        "startChar": 16,
+        "endLine": 236,
+        "endChar": 49
+      },
+      "revId": "8d3c3c960e0eede5f0240a38b85b38be7528af68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
