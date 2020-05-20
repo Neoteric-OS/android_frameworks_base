@@ -22,6 +22,30 @@
       "revId": "cd1132a94fb7f36dd91bc834241a749b1f232de6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "647717ce_2c5df90f",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-20T04:03:46Z",
+      "side": 1,
+      "message": "The test will fail if a non-mocked request is sent. So not adding the 204 response for the HTTP URL also makes sure that the HTTP probe is not sent.\nChanged the responseCode for the HTTPS probe to 204 to make sure the capport probe gets priority, and added some comments.",
+      "parentUuid": "7c29f787_e82b1a7a",
+      "range": {
+        "startLine": 230,
+        "startChar": 8,
+        "endLine": 231,
+        "endChar": 71
+      },
+      "revId": "cd1132a94fb7f36dd91bc834241a749b1f232de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
