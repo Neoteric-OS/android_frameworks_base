@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9db6f21b_b16c1cde",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-20T01:05:08Z",
+      "side": 1,
+      "message": "IIUC this will make the stopTethering call synchronous across the board, so that it will take considerably longer than it used to. This includes ConnectivityManager#stopTethering.\n\nThis means all callers of this API are suddenly subject to a blocking call. Though this lives on the client side it can certainly ANR apps (e.g. Settings and QS in SystemUI are calling ConnectivityManager#stopTether on their main thread), and if there are any calls to this from the system server it can be really dangerous.",
+      "range": {
+        "startLine": 783,
+        "startChar": 16,
+        "endLine": 783,
+        "endChar": 29
+      },
+      "revId": "6c00e409f51fd3393b0c99e40d7ecafecacf678b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
