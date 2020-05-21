@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a64fede7_3c29389e",
+        "filename": "Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-05-21T20:51:34Z",
+      "side": 1,
+      "message": "I know you didn\u0027t add this comment but I don\u0027t think it is strictly true.\n\nThe API signatures (i.e. those parts that are listed in api/current.txt/system_current.txt) DO NOT include any references to private classes. If they did then the stubs would also contains references to those and they would fail to compile because the public stubs are compiled against sdk_version: \"current\" and the system stubs are compiled against sdk_version: \"system_current\".\n\nWhat is true is that the implementation of android.test.mock references private members of various components. That is the main reason it exists, to allow mocking of classes that cannot be mocked without access to those internal implementation details. If that was not necessary then all this code would be in androidx support libraries.\n\nI think it would be worth correcting this comment as it is highly misleading.\n\nNow, it may be the case that the classes which this mocks are spread around various mainline modules. If so then:\n1) This library should be split into multiple pieces, with each part being provided by the relevant mainline modules as a java_sdk_library so they are represented as a shared library (usable in a \u003cuses-library\u003e manifest entry).\n2) The stubs for all those mocks should be combined into a stubs library that is the equivalent of the existing stubs for android.test.mock.\n3) The shared library handling should be updated to make \"android.test.mock\" an alias for using all the individual shared libraries - in a similar way to how \"android.test.runner\" is an alias for \"android.test.base\" and \"android.test.mock\".\n4) The developer documentation should be updated.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 81
+      },
+      "revId": "0c40560fae2a05ecdca1e998bf8e8b486fbc0496",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b068529_fe71ec6f",
         "filename": "Android.bp",
         "patchSetId": 6
