@@ -8603,7 +8603,7 @@ package android.bluetooth {
     method public java.util.List<android.bluetooth.BluetoothDevice> getDevicesMatchingConnectionStates(int[]);
     method public boolean isAudioConnected(android.bluetooth.BluetoothDevice);
     method public boolean sendVendorSpecificResultCode(android.bluetooth.BluetoothDevice, String, String);
-    method public boolean startVoiceRecognition(android.bluetooth.BluetoothDevice);
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN) public boolean startVoiceRecognition(android.bluetooth.BluetoothDevice);
     method public boolean stopVoiceRecognition(android.bluetooth.BluetoothDevice);
     field public static final String ACTION_AUDIO_STATE_CHANGED = "android.bluetooth.headset.profile.action.AUDIO_STATE_CHANGED";
     field public static final String ACTION_CONNECTION_STATE_CHANGED = "android.bluetooth.headset.profile.action.CONNECTION_STATE_CHANGED";

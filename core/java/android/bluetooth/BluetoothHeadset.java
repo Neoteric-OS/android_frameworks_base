@@ -694,13 +694,12 @@ public final class BluetoothHeadset implements BluetoothProfile {
      * audio connection is established and to {@link #STATE_AUDIO_DISCONNECTED}
      * in case of failure to establish the audio connection.
      *
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH} permission.
-     *
      * @param device Bluetooth headset
      * @return false if there is no headset connected, or the connected headset doesn't support
      * voice recognition, or voice recognition is already started, or audio channel is occupied,
      * or on error, true otherwise
      */
+    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
     public boolean startVoiceRecognition(BluetoothDevice device) {
         if (DBG) log("startVoiceRecognition()");
         final IBluetoothHeadset service = mService;
