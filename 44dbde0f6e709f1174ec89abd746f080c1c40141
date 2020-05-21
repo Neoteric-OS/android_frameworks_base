@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63efa023_e834d0bb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8186,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-21T08:01:16Z",
+      "side": 1,
+      "message": "Maybe add a short comment to explain why we decided to do this complex dance instead of sending the bundle directly, for the benefit of future maintainers",
+      "range": {
+        "startLine": 8186,
+        "startChar": 8,
+        "endLine": 8186,
+        "endChar": 76
+      },
+      "revId": "44dbde0f6e709f1174ec89abd746f080c1c40141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
