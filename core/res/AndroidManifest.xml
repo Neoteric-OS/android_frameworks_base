@@ -1009,7 +1009,7 @@
     <permission android:name="android.permission.ACCESS_IMS_CALL_SERVICE"
         android:label="@string/permlab_accessImsCallService"
         android:description="@string/permdesc_accessImsCallService"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- Allows an application to read the user's call log.
          <p class="note"><strong>Note:</strong> If your app uses the
@@ -1250,14 +1250,14 @@
     -->
     <permission android:name="android.permission.ACCESS_UCE_PRESENCE_SERVICE"
         android:permissionGroup="android.permission-group.PHONE"
-        android:protectionLevel="signature|privileged"/>
+        android:protectionLevel="signature|privileged|vendorPrivileged"/>
 
     <!-- @hide Allows an application to Access UCE-OPTIONS.
-         <p>Protection level: signature|privileged
+         <p>Protection level: signature|privileged|vendorPrivileged
     -->
     <permission android:name="android.permission.ACCESS_UCE_OPTIONS_SERVICE"
         android:permissionGroup="android.permission-group.PHONE"
-        android:protectionLevel="signature|privileged"/>
+        android:protectionLevel="signature|privileged|vendorPrivileged"/>
 
 
 
@@ -1426,7 +1426,7 @@
          to handle the respond-via-message action during incoming calls.
          <p>Not for use by third-party applications. -->
     <permission android:name="android.permission.SEND_RESPOND_VIA_MESSAGE"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- @SystemApi Allows an application to send SMS to premium shortcodes without user permission.
          <p>Not for use by third-party applications.
@@ -1437,7 +1437,7 @@
     <!-- Allows an application to filter carrier specific sms.
          @hide -->
     <permission android:name="android.permission.CARRIER_FILTER_SMS"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- @SystemApi Allows an application to receive emergency cell broadcast messages,
          to record or display them to the user.
@@ -1482,16 +1482,16 @@
     <eat-comment />
 
     <!-- Allows an application to modify and remove existing voicemails in the system.
-        <p>Protection level: signature|privileged
+        <p>Protection level: signature|privileged|vendorPrivileged
     -->
     <permission android:name="com.android.voicemail.permission.WRITE_VOICEMAIL"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- Allows an application to read voicemails in the system.
-         <p>Protection level: signature|privileged
+         <p>Protection level: signature|privileged|vendorPrivileged
     -->
     <permission android:name="com.android.voicemail.permission.READ_VOICEMAIL"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- ======================================= -->
     <!-- Permissions for accessing location info -->
@@ -2077,18 +2077,18 @@
          Does not include placing calls.
          <p>Not for use by third-party applications. -->
     <permission android:name="android.permission.MODIFY_PHONE_STATE"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- Allows read only access to precise phone state.
          Allows reading of detailed information about phone state for special-use applications
          such as dialers, carrier applications, or ims applications. -->
     <permission android:name="android.permission.READ_PRECISE_PHONE_STATE"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- @SystemApi Allows read access to privileged phone state.
          @hide Used internally. -->
     <permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- @SystemApi Allows read access to emergency number information for ongoing calls or SMS
          sessions.
@@ -2106,19 +2106,19 @@
          corresponds to a device SIM.
          @hide -->
     <permission android:name="android.permission.REGISTER_SIM_SUBSCRIPTION"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- @SystemApi Protects the ability to register any PhoneAccount with
          PhoneAccount#CAPABILITY_CALL_PROVIDER.
          @hide -->
     <permission android:name="android.permission.REGISTER_CALL_PROVIDER"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- @SystemApi Protects the ability to register any PhoneAccount with
          PhoneAccount#CAPABILITY_CONNECTION_MANAGER
          @hide -->
     <permission android:name="android.permission.REGISTER_CONNECTION_MANAGER"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- Must be required by a {@link android.telecom.InCallService},
          to ensure that only the system can bind to it.
@@ -2131,7 +2131,7 @@
          <p>Not for use by third-party applications.
          @SystemApi @hide-->
     <permission android:name="android.permission.NETWORK_SCAN"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- Must be required by a link {@link android.telephony.VisualVoicemailService} to ensure that
          only the system can bind to it.
@@ -2159,10 +2159,10 @@
 
     <!-- Must be required by a {@link android.telecom.CallRedirectionService},
          to ensure that only the system can bind to it.
-         <p>Protection level: signature|privileged
+         <p>Protection level: signature|privileged|vendorPrivileged
     -->
     <permission android:name="android.permission.BIND_CALL_REDIRECTION_SERVICE"
-                android:protectionLevel="signature|privileged" />
+                android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- Must be required by a {@link android.telecom.ConnectionService},
          to ensure that only the system can bind to it.
@@ -2175,10 +2175,10 @@
 
     <!-- Must be required by a {@link android.telecom.ConnectionService},
          to ensure that only the system can bind to it.
-         <p>Protection level: signature|privileged
+         <p>Protection level: signature|privileged|vendorPrivileged
     -->
     <permission android:name="android.permission.BIND_TELECOM_CONNECTION_SERVICE"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- @SystemApi Allows an application to control the in-call experience.
          @hide -->
@@ -2230,11 +2230,11 @@
 
     <!-- @SystemApi Allows an application to manage embedded subscriptions (those on a eUICC)
          through EuiccManager APIs.
-         <p>Protection level: signature|privileged|development
+         <p>Protection level: signature|privileged|vendorPrivileged|development
          @hide
     -->
     <permission android:name="android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS"
-                android:protectionLevel="signature|privileged|development" />
+                android:protectionLevel="signature|privileged|vendorPrivileged|development" />
 
     <!-- @SystemApi Must be required by an EuiccService to ensure that only the system can bind to
          it.
@@ -2341,14 +2341,14 @@
          user-targeted broadcasts.  This permission is not available to
          third party applications. -->
     <permission android:name="android.permission.INTERACT_ACROSS_USERS"
-        android:protectionLevel="signature|privileged|development" />
+        android:protectionLevel="signature|privileged|vendorPrivileged|development" />
 
     <!-- @SystemApi Fuller form of {@link android.Manifest.permission#INTERACT_ACROSS_USERS}
          that removes restrictions on where broadcasts can be sent and allows other
          types of interactions
          @hide -->
     <permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"
-        android:protectionLevel="signature|installer" />
+        android:protectionLevel="signature|installer|privileged|vendorPrivileged" />
 
     <!-- @SystemApi Allows an application to start its own activities, but on a different profile
          associated with the user. For example, an application running on the main profile of a user
@@ -2808,7 +2808,7 @@
          an existing apn settings like user and password.
     <p>Not for use by third-party applications. -->
     <permission android:name="android.permission.WRITE_APN_SETTINGS"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- Allows applications to change network connectivity state.
          <p>Protection level: normal
@@ -3872,7 +3872,7 @@
          @deprecated Use {@link android.Manifest.permission#REQUEST_NETWORK_SCORES} instead
     -->
     <permission android:name="android.permission.BROADCAST_NETWORK_PRIVILEGED"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- Not for use by third-party applications. -->
     <permission android:name="android.permission.MASTER_CLEAR"
@@ -3887,17 +3887,17 @@
 
     <!-- @SystemApi Allows an application to perform CDMA OTA provisioning @hide -->
     <permission android:name="android.permission.PERFORM_CDMA_PROVISIONING"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- @SystemApi Allows an application to perform SIM Activation @hide -->
     <permission android:name="android.permission.PERFORM_SIM_ACTIVATION"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- Allows enabling/disabling location update notifications from
          the radio.
          <p>Not for use by third-party applications. -->
     <permission android:name="android.permission.CONTROL_LOCATION_UPDATES"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- Allows read/write access to the "properties" table in the checkin
          database, to change values that get uploaded.
@@ -4333,12 +4333,12 @@
          carrier setup application to enforce that this permission is required
          @hide This is not a third-party API (intended for OEMs and system apps). -->
     <permission android:name="android.permission.INVOKE_CARRIER_SETUP"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- @SystemApi Allows an application to listen for network condition observations.
          @hide This is not a third-party API (intended for system apps). -->
     <permission android:name="android.permission.ACCESS_NETWORK_CONDITIONS"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- @SystemApi Allows an application to provision and access DRM certificates
          @hide This is not a third-party API (intended for system apps). -->
@@ -4375,12 +4375,12 @@
     <!-- The system process that is allowed to bind to services in carrier apps will
          have this permission. Carrier apps should use this permission to protect
          their services that only the system is allowed to bind to.
-         <p>Protection level: signature|privileged
+         <p>Protection level: signature|privileged|vendorPrivileged
     -->
     <permission android:name="android.permission.BIND_CARRIER_SERVICES"
         android:label="@string/permlab_bindCarrierServices"
         android:description="@string/permdesc_bindCarrierServices"
-        android:protectionLevel="signature|privileged" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!--
         Allows the holder to start the permission usage screen for an app.
@@ -4641,7 +4641,7 @@
     <!-- A subclass of {@link android.service.carrier.CarrierMessagingClientService} must be protected with this permission.
            <p>Protection level: signature -->
     <permission android:name="android.permission.BIND_CARRIER_MESSAGING_CLIENT_SERVICE"
-        android:protectionLevel="signature" />
+        android:protectionLevel="signature|privileged|vendorPrivileged" />
 
     <!-- Must be required by an {@link android.service.watchdog.ExplicitHealthCheckService} to
          ensure that only the system can bind to it.
