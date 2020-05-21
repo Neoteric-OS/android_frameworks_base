@@ -360,6 +360,7 @@ message Atom {
         BootTimeEventErrorCode boot_time_event_error_code_reported = 242;
         UserspaceRebootReported userspace_reboot_reported = 243 [(log_from_module) = "framework"];
         SnapshotMergeReported snapshot_merge_reported = 255;
+        KeystoreKeyEventReported keystore_key_event_reported = 256;
     }
 
     // Pulled events will start at field 10000.
@@ -7553,4 +7554,139 @@ message UserspaceRebootReported {
     }
     // State of primary user's encryption storage at the moment boot completed. Always set.
     optional UserEncryptionState user_encryption_state = 3;
+}
+
+/**
+ * Logs: i) creation of different types of cryptographic keys in the keystore,
+ * ii) operations performed using the keys,
+ * iii) attestation of the keys
+ * Logged from: system/security/keystore/key_event_log_handler.cpp
+ */
+message KeystoreKeyEventReported {
+
+    enum Algorithm {
+        /** Asymmetric algorithms. */
+        RSA = 1;
+        // 2 removed, do not reuse.
+        EC = 3;
+        /** Block cipher algorithms */
+        AES = 32;
+        TRIPLE_DES = 33;
+        /** MAC algorithms */
+        HMAC = 128;
+    };
+    /** Algorithm associated with the key */
+    optional Algorithm algorithm = 1;
+
+    /** Size of the key */
+    optional int32 key_size = 2;
+
+    enum KeyOrigin {
+        /** Generated in keymaster.  Should not exist outside the TEE. */
+        GENERATED = 0;
+        /** Derived inside keymaster.  Likely exists off-device. */
+        DERIVED = 1;
+        /** Imported into keymaster.  Existed as cleartext in Android. */
+        IMPORTED = 2;
+        /** Keymaster did not record origin. */
+        UNKNOWN = 3;
+        /** Securely imported into Keymaster. */
+        SECURELY_IMPORTED = 4;
+    };
+    /* Logs whether the key was generated, imported, securely imported, or derived.*/
+    optional KeyOrigin key_origin = 3;
+
+    enum HardwareAuthenticatorType {
+        NONE = 0;
+        PASSWORD = 1;
+        FINGERPRINT = 2;
+        // Additional entries must be powers of 2.
+    };
+    /**
+     * What auth types does this key require? If none,
+     * then no auth required.
+     */
+    optional HardwareAuthenticatorType user_auth_type = 4;
+
+    /**
+     * If user authentication is required, is the requirement time based? If it
+     * is not time based then this field will not be used and the key is per
+     * operation. Per operation keys must be user authenticated on each usage.
+     */
+    optional int32 user_auth_key_timeout = 5;
+
+    enum PaddingMode {
+        //None is already defined
+        RSA_OAEP = 2;
+        RSA_PSS = 3;
+        RSA_PKCS1_1_5_ENCRYPT = 4;
+        RSA_PKCS1_1_5_SIGN = 5;
+        PKCS7 = 64;
+    };
+    /** Track which padding mode is being used.*/
+    optional PaddingMode padding_mode = 6;
+
+    enum Digest {
+        //None is already defined
+        MD5 = 1;
+        SHA1 = 2;
+        SHA_2_224 = 3;
+        SHA_2_256 = 4;
+        SHA_2_384 = 5;
+        SHA_2_512 = 6;
+    };
+    /** Track which digests is being used */
+    optional Digest digest = 7;
+
+    enum BlockMode {
+        /** Unauthenticated modes */
+        ECB = 1;
+        CBC = 2;
+        CTR = 3;
+        /** Authenticated modes*/
+        GCM = 32;
+    };
+    /** Check what block mode is being used depending on the mode of encryption */
+    optional BlockMode block_mode = 8;
+
+    enum KeyPurpose {
+        ENCRYPT = 0; /* Usable with RSA, EC and AES keys. */
+        DECRYPT = 1; /* Usable with RSA, EC and AES keys. */
+        SIGN = 2;    /* Usable with RSA, EC and HMAC keys. */
+        VERIFY = 3;  /* Usable with RSA, EC and HMAC keys. */
+        /* 4 is reserved */
+        WRAP_KEY = 5; /* Usable with wrapping keys. */
+    };
+    /** What purpose is this key serving? */
+    optional KeyPurpose purpose = 9;
+
+    enum EcCurve {
+        P_224 = 0;
+        P_256 = 1;
+        P_384 = 2;
+        P_521 = 3;
+    };
+    /** Which ec curve was selected if elliptic curve cryptography is in use **/
+    optional EcCurve ec_curve = 10;
+
+    enum KeyBlobUsageRequirements {
+        STANDALONE = 0;
+        REQUIRES_FILE_SYSTEM = 1;
+    };
+    /** Standalone or is a file system required */
+    optional KeyBlobUsageRequirements key_blob_usage_reqs = 11;
+
+    enum Type {
+        key_operation = 0;
+        key_creation = 1;
+        key_attestation = 2;
+    }
+    /** Key creation event, operation event or attestation event? */
+    required Type type = 12;
+
+    /** Was the key creation, operation, or attestation successful? */
+    optional bool was_successful = 13;
+
+    /** Response code or error code */
+    required int32 error_code = 14;
 }
