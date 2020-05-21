@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f41fe13_e1ee839f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-05-21T06:51:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9fc08cd_6da260eb",
+      "range": {
+        "startLine": 15,
+        "startChar": 5,
+        "endLine": 15,
+        "endChar": 13
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03316a96_54c4bbd1",
         "filename": "cmds/statsd/src/atoms.proto",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836449a0_94682ab7",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 5914,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-05-21T06:51:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03316a96_54c4bbd1",
+      "range": {
+        "startLine": 5914,
+        "startChar": 18,
+        "endLine": 5914,
+        "endChar": 29
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3568f462_ac0862c5",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 5950,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-05-21T06:51:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4e1eb0c_7f7a9e24",
+      "range": {
+        "startLine": 5950,
+        "startChar": 32,
+        "endLine": 5950,
+        "endChar": 47
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4e0def5_f379cfb2",
         "filename": "cmds/statsd/src/atoms.proto",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2de9fca_dd475f28",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 5979,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-05-21T06:51:44Z",
+      "side": 1,
+      "message": "It will record the The time duration between provisioning start and end (success or failure).\nSo, we can know how long the ip provisioning keep alive and how long it goes fail.",
+      "parentUuid": "f4e0def5_f379cfb2",
+      "range": {
+        "startLine": 5979,
+        "startChar": 28,
+        "endLine": 5979,
+        "endChar": 40
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e45768aa_8c962c94",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 5980,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-05-21T06:51:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b843586_77126847",
+      "range": {
+        "startLine": 5980,
+        "startChar": 33,
+        "endLine": 5980,
+        "endChar": 66
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c91fdc2a_ba224d78",
         "filename": "cmds/statsd/src/atoms.proto",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd70eca_74acab2f",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 5999,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-05-21T06:51:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c91fdc2a_ba224d78",
+      "range": {
+        "startLine": 5999,
+        "startChar": 26,
+        "endLine": 5999,
+        "endChar": 36
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "1ac2f274_1d735050",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 6004,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-05-21T06:51:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c9be47c_748da291",
+      "range": {
+        "startLine": 6004,
+        "startChar": 19,
+        "endLine": 6004,
+        "endChar": 33
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34430e8b_b21ba3ce",
         "filename": "cmds/statsd/src/atoms.proto",
         "patchSetId": 8
@@ -183,6 +351,30 @@
       "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca14a0f7_b4c4175e",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 6022,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-05-21T06:51:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34430e8b_b21ba3ce",
+      "range": {
+        "startLine": 6022,
+        "startChar": 5,
+        "endLine": 6022,
+        "endChar": 7
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "b253c0b2_872850c6",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-05-21T06:51:44Z",
+      "side": 1,
+      "message": "Yes, it is.",
+      "parentUuid": "25997d5e_14b79861",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66213d5c_dd8a3fc0",
         "filename": "core/proto/android/stats/connectivity/network_stack.proto",
         "patchSetId": 8
@@ -229,6 +445,30 @@
       "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfc4200_b5740aa7",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-05-21T06:51:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66213d5c_dd8a3fc0",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "9fee2d2aa2e871b2eee2312abe387c7cf1ff5204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
