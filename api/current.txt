@@ -44865,6 +44865,7 @@ package android.telephony {
     field public static final String KEY_IMS_CONFERENCE_SIZE_LIMIT_INT = "ims_conference_size_limit_int";
     field public static final String KEY_IMS_DTMF_TONE_DELAY_INT = "ims_dtmf_tone_delay_int";
     field public static final String KEY_IS_IMS_CONFERENCE_SIZE_ENFORCED_BOOL = "is_ims_conference_size_enforced_bool";
+    field public static final String KEY_IS_OPPORTUNISTIC_SUBSCRIPTION_BOOL = "is_opportunistic_subscription_bool";
     field public static final String KEY_LTE_ENABLED_BOOL = "lte_enabled_bool";
     field public static final String KEY_LTE_RSRQ_THRESHOLDS_INT_ARRAY = "lte_rsrq_thresholds_int_array";
     field public static final String KEY_LTE_RSSNR_THRESHOLDS_INT_ARRAY = "lte_rssnr_thresholds_int_array";
@@ -44941,6 +44942,7 @@ package android.telephony {
     field public static final String KEY_SIMPLIFIED_NETWORK_SETTINGS_BOOL = "simplified_network_settings_bool";
     field public static final String KEY_SIM_NETWORK_UNLOCK_ALLOW_DISMISS_BOOL = "sim_network_unlock_allow_dismiss_bool";
     field public static final String KEY_SMS_REQUIRES_DESTINATION_NUMBER_CONVERSION_BOOL = "sms_requires_destination_number_conversion_bool";
+    field public static final String KEY_SUBSCRIPTION_GROUP_UUID_STRING = "subscription_group_uuid_string";
     field public static final String KEY_SUPPORT_3GPP_CALL_FORWARDING_WHILE_ROAMING_BOOL = "support_3gpp_call_forwarding_while_roaming_bool";
     field public static final String KEY_SUPPORT_CLIR_NETWORK_DEFAULT_BOOL = "support_clir_network_default_bool";
     field public static final String KEY_SUPPORT_CONFERENCE_CALL_BOOL = "support_conference_call_bool";
@@ -44975,6 +44977,7 @@ package android.telephony {
     field public static final String KEY_WFC_EMERGENCY_ADDRESS_CARRIER_APP_STRING = "wfc_emergency_address_carrier_app_string";
     field public static final String KEY_WORLD_MODE_ENABLED_BOOL = "world_mode_enabled_bool";
     field public static final String KEY_WORLD_PHONE_BOOL = "world_phone_bool";
+    field public static final String REMOVE_GROUP_UUID_STRING = "00000000-0000-0000-0000-000000000000";
   }
 
   public static final class CarrierConfigManager.Gps {
