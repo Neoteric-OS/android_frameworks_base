@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ca9ad264_81936b85",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-22T04:40:07Z",
+      "side": 1,
+      "message": "-",
+      "range": {
+        "startLine": 9,
+        "startChar": 60,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "17a3302827be60348d558eb94af9f884760e53fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58cd39ac_24212450",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 7
@@ -18,6 +41,75 @@
         "startChar": 12,
         "endLine": 874,
         "endChar": 61
+      },
+      "revId": "17a3302827be60348d558eb94af9f884760e53fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5fcd1f5_16be4ea3",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfTetheringCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-22T04:40:07Z",
+      "side": 1,
+      "message": "IIUC this function does not really addForwardingRule for now.\nWhile I cannot find follow-up patch doing this, this is strange to me.\n\nMaybe we should separate move Ipv6ForwardingRule to another CL, and\nanother CL for adding forward rule here, and\nonly update data limit in this CL?",
+      "range": {
+        "startLine": 208,
+        "startChar": 16,
+        "endLine": 208,
+        "endChar": 33
+      },
+      "revId": "17a3302827be60348d558eb94af9f884760e53fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39540c67_f4b7cbe4",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfTetheringCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-22T04:40:07Z",
+      "side": 1,
+      "message": "not sure I understand this.\nadd address to client\nadd client to address\n???",
+      "range": {
+        "startLine": 227,
+        "startChar": 8,
+        "endLine": 228,
+        "endChar": 55
+      },
+      "revId": "17a3302827be60348d558eb94af9f884760e53fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54284662_85e9fa98",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfTetheringCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-22T04:40:07Z",
+      "side": 1,
+      "message": "the control flow is strange to me, is it better if we just use if else?\nif (...) {\n} else {\n  mClientAddresses.put(upstreamIfindex, clients);\n}",
+      "range": {
+        "startLine": 265,
+        "startChar": 8,
+        "endLine": 265,
+        "endChar": 55
       },
       "revId": "17a3302827be60348d558eb94af9f884760e53fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
