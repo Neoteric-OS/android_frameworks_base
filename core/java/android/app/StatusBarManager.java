@@ -193,6 +193,10 @@ public class StatusBarManager {
     public static final int CAMERA_LAUNCH_SOURCE_POWER_DOUBLE_TAP = 1;
     /** @hide */
     public static final int CAMERA_LAUNCH_SOURCE_LIFT_TRIGGER = 2;
+    /** @hide */
+    public static final int CAMERA_LAUNCH_SOURCE_AFFORDANCE = 3;
+    /** @hide */
+    public static final int CAMERA_LAUNCH_SOURCE_CAMERA_BUTTON = 4;
 
     @UnsupportedAppUsage
     private Context mContext;
@@ -405,6 +409,25 @@ public class StatusBarManager {
             }
 
             return new DisableInfo(flags[0], flags[1]);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Handle camera launch gesture
+     *
+     * @param source launch source, e.g. {@link #CAMERA_LAUNCH_SOURCE_CAMERA_BUTTON}.
+     *
+     * @hide
+     */
+    @UnsupportedAppUsage
+    public void onCameraLaunchGestureDetected(int source) {
+        try {
+            final IStatusBarService svc = getService();
+            if (svc != null) {
+                svc.onCameraLaunchGestureDetected(source);
+            }
         } catch (RemoteException ex) {
             throw ex.rethrowFromSystemServer();
         }

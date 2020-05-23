@@ -95,10 +95,20 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
 
     final static String TAG = "StatusBar/KeyguardBottomAreaView";
 
-    public static final String CAMERA_LAUNCH_SOURCE_AFFORDANCE = "lockscreen_affordance";
     public static final String CAMERA_LAUNCH_SOURCE_WIGGLE = "wiggle_gesture";
     public static final String CAMERA_LAUNCH_SOURCE_POWER_DOUBLE_TAP = "power_double_tap";
     public static final String CAMERA_LAUNCH_SOURCE_LIFT_TRIGGER = "lift_to_launch_ml";
+    public static final String CAMERA_LAUNCH_SOURCE_AFFORDANCE = "lockscreen_affordance";
+    public static final String CAMERA_LAUNCH_SOURCE_CAMERA_BUTTON = "camera_button";
+
+    /* Keep aligned with ordering in {@link android.app.StatusBarManager.java} */
+    public static final String[] CAMERA_LAUNCH_SOURCES = {
+        CAMERA_LAUNCH_SOURCE_WIGGLE,
+        CAMERA_LAUNCH_SOURCE_POWER_DOUBLE_TAP,
+        CAMERA_LAUNCH_SOURCE_LIFT_TRIGGER,
+        CAMERA_LAUNCH_SOURCE_AFFORDANCE,
+        CAMERA_LAUNCH_SOURCE_CAMERA_BUTTON
+    };
 
     public static final String EXTRA_CAMERA_LAUNCH_SOURCE
             = "com.android.systemui.camera_launch_source";
@@ -108,7 +118,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     private static final String RIGHT_BUTTON_PLUGIN
             = "com.android.systemui.action.PLUGIN_LOCKSCREEN_RIGHT_BUTTON";
 
-    private static final Intent SECURE_CAMERA_INTENT =
+    public static final Intent SECURE_CAMERA_INTENT =
             new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA_SECURE)
                     .addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
     public static final Intent INSECURE_CAMERA_INTENT =

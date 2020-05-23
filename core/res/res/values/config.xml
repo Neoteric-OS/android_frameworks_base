@@ -3254,6 +3254,10 @@
          is non-interactive. -->
     <bool name="config_cameraDoubleTapPowerGestureEnabled">true</bool>
 
+    <!-- Allow the gesture of long-pressing the camera button to launch a camera application
+         from anywhere. Enable only if the device has a physical camera button. -->
+    <bool name="config_cameraButtonLaunchEnabled">false</bool>
+
     <!-- Allow the gesture power + volume up to change the ringer mode while the device
          is interactive. -->
     <bool name="config_volumeHushGestureEnabled">true</bool>

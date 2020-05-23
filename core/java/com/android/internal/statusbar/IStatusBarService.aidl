@@ -47,6 +47,8 @@ interface IStatusBarService
     @UnsupportedAppUsage
     void setIconVisibility(String slot, boolean visible);
     @UnsupportedAppUsage
+    void onCameraLaunchGestureDetected(int source);
+    @UnsupportedAppUsage
     void removeIcon(String slot);
     void setImeWindowStatus(int displayId, in IBinder token, int vis, int backDisposition,
             boolean showImeSwitcher);

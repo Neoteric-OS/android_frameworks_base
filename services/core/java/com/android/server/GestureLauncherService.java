@@ -30,7 +30,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.hardware.TriggerEvent;
 import android.hardware.TriggerEventListener;
+import android.os.Binder;
 import android.os.Handler;
+import android.os.IGestureLauncher;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.SystemClock;
@@ -50,8 +52,8 @@ import com.android.server.statusbar.StatusBarManagerInternal;
 import com.android.server.wm.WindowManagerInternal;
 
 /**
- * The service that listens for gestures detected in sensor firmware and starts the intent
- * accordingly.
+ * The service that listens for gestures detected in sensor firmware or on key
+ * events and starts an intent accordingly.
  * <p>For now, only camera launch gesture is supported, and in the future, more gestures can be
  * added.</p>
  * @hide
@@ -127,6 +129,7 @@ public class GestureLauncherService extends SystemService {
      * Whether camera double tap power button gesture is currently enabled;
      */
     private boolean mCameraDoubleTapPowerEnabled;
+    private boolean mCameraButtonLaunchEnabled;
     private long mLastPowerDown;
     private int mPowerButtonConsecutiveTaps;
 
@@ -141,7 +144,10 @@ public class GestureLauncherService extends SystemService {
         mMetricsLogger = metricsLogger;
     }
 
+    @Override
     public void onStart() {
+        GestureBinderService mService = new GestureBinderService(mContext);
+        publishBinderService(Context.GESTURE_LAUNCHER_SERVICE, mService);
         LocalServices.addService(GestureLauncherService.class, this);
     }
 
@@ -159,7 +165,7 @@ public class GestureLauncherService extends SystemService {
             mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
                     "GestureLauncherService");
             updateCameraRegistered();
-            updateCameraDoubleTapPowerEnabled();
+            updateCameraSettingEnabled();
 
             mUserId = ActivityManager.getCurrentUser();
             mContext.registerReceiver(mUserReceiver, new IntentFilter(Intent.ACTION_USER_SWITCHED));
@@ -167,16 +173,61 @@ public class GestureLauncherService extends SystemService {
         }
     }
 
+    private class GestureBinderService extends IGestureLauncher.Stub {
+
+        Context mServiceContext;
+
+        public GestureBinderService(Context context) {
+            super();
+            mServiceContext = context;
+        }
+
+        @Override // Binder call
+        public boolean handleCameraGesture(int source) {
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                boolean userSetupComplete = Settings.Secure.getIntForUser(
+                        mContext.getContentResolver(), Settings.Secure.USER_SETUP_COMPLETE,
+                        0, UserHandle.USER_CURRENT) != 0;
+                if (!userSetupComplete) {
+                    return false;
+                }
+                mWakeLock.acquire(500L);
+                StatusBarManagerInternal statusBarService = LocalServices.getService(
+                        StatusBarManagerInternal.class);
+                statusBarService.onCameraLaunchGestureDetected(source);
+                return true;
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+        }
+
+        @Override // Binder call
+        public boolean isCameraButtonLaunchSettingEnabled() {
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                return GestureLauncherService.isCameraButtonLaunchSettingEnabled(
+                            mServiceContext, mUserId);
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+        }
+
+    }
+
     private void registerContentObservers() {
         mContext.getContentResolver().registerContentObserver(
                 Settings.Secure.getUriFor(Settings.Secure.CAMERA_GESTURE_DISABLED),
-                false, mSettingObserver, mUserId);
+                /*notifyForDescendants*/ false, mSettingObserver, mUserId);
         mContext.getContentResolver().registerContentObserver(
                 Settings.Secure.getUriFor(Settings.Secure.CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED),
-                false, mSettingObserver, mUserId);
+                /*notifyForDescendants=*/ false, mSettingObserver, mUserId);
         mContext.getContentResolver().registerContentObserver(
                 Settings.Secure.getUriFor(Settings.Secure.CAMERA_LIFT_TRIGGER_ENABLED),
-                false, mSettingObserver, mUserId);
+                /*notifyForDescendants=*/ false, mSettingObserver, mUserId);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.Secure.getUriFor(Settings.Secure.CAMERA_LONG_PRESS_GESTURE_DISABLED),
+                /*notifyForDescendants=*/ false, mSettingObserver, mUserId);
     }
 
     private void updateCameraRegistered() {
@@ -195,10 +246,12 @@ public class GestureLauncherService extends SystemService {
     }
 
     @VisibleForTesting
-    void updateCameraDoubleTapPowerEnabled() {
-        boolean enabled = isCameraDoubleTapPowerSettingEnabled(mContext, mUserId);
+    void updateCameraSettingEnabled() {
+        boolean powerDoubleTapEnabled = isCameraDoubleTapPowerSettingEnabled(mContext, mUserId);
+        boolean cameraLongPressEnabled = isCameraButtonLaunchSettingEnabled(mContext, mUserId);
         synchronized (this) {
-            mCameraDoubleTapPowerEnabled = enabled;
+            mCameraDoubleTapPowerEnabled = powerDoubleTapEnabled;
+            mCameraButtonLaunchEnabled = cameraLongPressEnabled;
         }
     }
 
@@ -326,6 +379,13 @@ public class GestureLauncherService extends SystemService {
                         Settings.Secure.CAMERA_LIFT_TRIGGER_ENABLED_DEFAULT, userId) != 0);
     }
 
+    public static boolean isCameraButtonLaunchSettingEnabled(Context context, int userId) {
+        return isCameraButtonLaunchEnabled(context.getResources())
+                && (Settings.Secure.getIntForUser(context.getContentResolver(),
+                        Settings.Secure.CAMERA_LONG_PRESS_GESTURE_DISABLED, 0, userId) == 0);
+    }
+
+
     /**
      * Whether to enable the camera launch gesture.
      */
@@ -347,12 +407,17 @@ public class GestureLauncherService extends SystemService {
         return configSet;
     }
 
+    public static boolean isCameraButtonLaunchEnabled(Resources resources) {
+        return resources.getBoolean(
+                com.android.internal.R.bool.config_cameraButtonLaunchEnabled);
+    }
+
     /**
      * Whether GestureLauncherService should be enabled according to system properties.
      */
     public static boolean isGestureLauncherEnabled(Resources resources) {
         return isCameraLaunchEnabled(resources) || isCameraDoubleTapPowerEnabled(resources) ||
-                isCameraLiftTriggerEnabled(resources);
+                isCameraLiftTriggerEnabled(resources) || isCameraButtonLaunchEnabled(resources);
     }
 
     public boolean interceptPowerKeyDown(KeyEvent event, boolean interactive,
@@ -364,14 +429,12 @@ public class GestureLauncherService extends SystemService {
             return false;
         }
         boolean launched = false;
-        boolean intercept = false;
         long powerTapInterval;
         synchronized (this) {
             powerTapInterval = event.getEventTime() - mLastPowerDown;
             if (mCameraDoubleTapPowerEnabled
                     && powerTapInterval < CAMERA_POWER_DOUBLE_TAP_MAX_TIME_MS) {
                 launched = true;
-                intercept = interactive;
                 mPowerButtonConsecutiveTaps++;
             } else if (powerTapInterval < POWER_SHORT_TAP_SEQUENCE_MAX_INTERVAL_MS) {
                 mPowerButtonConsecutiveTaps++;
@@ -397,10 +460,14 @@ public class GestureLauncherService extends SystemService {
         mMetricsLogger.histogram("power_consecutive_short_tap_count", mPowerButtonConsecutiveTaps);
         mMetricsLogger.histogram("power_double_tap_interval", (int) powerTapInterval);
         outLaunched.value = launched;
-        return intercept && launched;
+        return interactive && launched;
     }
 
     /**
+     * @param useWakelock hold wakelock
+     * @param source launch source, see {@link android.app.StatusBarManager}
+     *        for possible CAMERA_LAUNCH_SOURCE_* values.
+     *
      * @return true if camera was launched, false otherwise.
      */
     @VisibleForTesting
@@ -412,15 +479,15 @@ public class GestureLauncherService extends SystemService {
             if (!userSetupComplete) {
                 if (DBG) {
                     Slog.d(TAG, String.format(
-                            "userSetupComplete = %s, ignoring camera gesture.",
-                            userSetupComplete));
+                            "userSetupComplete = %s, ignoring camera gesture for source %d.",
+                            userSetupComplete, source));
                 }
                 return false;
             }
             if (DBG) {
                 Slog.d(TAG, String.format(
-                        "userSetupComplete = %s, performing camera gesture.",
-                        userSetupComplete));
+                        "userSetupComplete = %s, performing camera gesture for source %d.",
+                        userSetupComplete, source));
             }
 
             if (useWakelock) {
@@ -444,7 +511,7 @@ public class GestureLauncherService extends SystemService {
                 mContext.getContentResolver().unregisterContentObserver(mSettingObserver);
                 registerContentObservers();
                 updateCameraRegistered();
-                updateCameraDoubleTapPowerEnabled();
+                updateCameraSettingEnabled();
             }
         }
     };
@@ -453,7 +520,7 @@ public class GestureLauncherService extends SystemService {
         public void onChange(boolean selfChange, android.net.Uri uri, int userId) {
             if (userId == mUserId) {
                 updateCameraRegistered();
-                updateCameraDoubleTapPowerEnabled();
+                updateCameraSettingEnabled();
             }
         }
     };
