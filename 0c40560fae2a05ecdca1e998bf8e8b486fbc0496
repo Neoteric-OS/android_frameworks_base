@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c090812_7d5914db",
+        "filename": "Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-05-25T04:13:48Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think it is strictly true.\n\nYes, you are right. Please amend the comment.\n\n\u003e it may be the case that the classes which this mocks are spread around various mainline modules\n\nIt could be, but not now. Practically, I don\u0027t think we would split these primitive classes into multiple modules though.",
+      "parentUuid": "a64fede7_3c29389e",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 81
+      },
+      "revId": "0c40560fae2a05ecdca1e998bf8e8b486fbc0496",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b068529_fe71ec6f",
         "filename": "Android.bp",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2020-05-21T16:30:40Z",
       "side": 1,
       "message": "use spaces",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 1
+      },
+      "revId": "0c40560fae2a05ecdca1e998bf8e8b486fbc0496",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b54f4c_616d8bc1",
+        "filename": "Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-05-25T04:13:48Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "7b068529_fe71ec6f",
       "range": {
         "startLine": 43,
         "startChar": 0,
