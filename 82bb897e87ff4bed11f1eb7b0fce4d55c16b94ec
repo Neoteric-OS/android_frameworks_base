@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc82c15a_ef6af32e",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-26T05:12:50Z",
+      "side": 1,
+      "message": "nit : I can\u0027t forge a scenario where this is not the same thing, but would it be clearer to say mNat64PrefixFromRa here ?",
+      "range": {
+        "startLine": 202,
+        "startChar": 24,
+        "endLine": 202,
+        "endChar": 41
+      },
+      "revId": "82bb897e87ff4bed11f1eb7b0fce4d55c16b94ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
