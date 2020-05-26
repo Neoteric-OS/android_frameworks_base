@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c91776b4_adea9329",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-26T15:38:22Z",
+      "side": 1,
+      "message": "In the case where this method is called from updateForwardedStatsFromNetd, an alert needs to be fired iff mRemainingAlertQuota \u003d\u003d 0. That\u0027s correct.\n\nBut in the case the this is called from onSetAlert - can it happen that newQuota is less than the number of bytes transferred since the last alert? In that case, should an alert fire?\n\nExample:\n\n1. Alert set to 2MB.\n2. 1.5MB transferred. Nothing happens.\n3. Alert set to 1MB.\n\nShould an alert fire at step #3, because 1.5MB have already been transferred? Or not?",
+      "range": {
+        "startLine": 254,
+        "startChar": 33,
+        "endLine": 254,
+        "endChar": 37
+      },
+      "revId": "822802ee5746812e02171cc0d86d8e3b2743dd3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
