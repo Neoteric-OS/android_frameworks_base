@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "ee87cc11_9a73b008",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfTetheringCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-05-26T13:59:27Z",
+      "side": 1,
+      "message": "rename \naddForwardingRule -\u003e notifyForwardingRuleAdded\nremoveForwardingRule -\u003e notifyForwardingRuleRemoved\n\nThen, leave the refactor for adding/removing rule to another CL. Thanks",
+      "parentUuid": "55d9479d_5abd26dd",
+      "range": {
+        "startLine": 208,
+        "startChar": 16,
+        "endLine": 208,
+        "endChar": 33
+      },
+      "revId": "17a3302827be60348d558eb94af9f884760e53fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39540c67_f4b7cbe4",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfTetheringCoordinator.java",
         "patchSetId": 7
