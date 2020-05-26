@@ -22,6 +22,30 @@
       "revId": "82bb897e87ff4bed11f1eb7b0fce4d55c16b94ec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bfd0ab9_ee041f1b",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-26T09:26:35Z",
+      "side": 1,
+      "message": "Actually I think this is a bit more robust. The intent here is that the prefix communicated to the DNS resolver must be the same prefix that clatd was started with. That way, even if there is a bug in the state machine, at least the information communicated to the resolver will be correct.",
+      "parentUuid": "bc82c15a_ef6af32e",
+      "range": {
+        "startLine": 202,
+        "startChar": 24,
+        "endLine": 202,
+        "endChar": 41
+      },
+      "revId": "82bb897e87ff4bed11f1eb7b0fce4d55c16b94ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
