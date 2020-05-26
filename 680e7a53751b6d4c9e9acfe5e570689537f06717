@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aea471c8_c8000d42",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 16
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-05-26T05:49:37Z",
+      "side": 1,
+      "message": "I think you will be requested to in internal gerrit?",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 366,
+        "endChar": 107
+      },
+      "revId": "680e7a53751b6d4c9e9acfe5e570689537f06717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa79bc14_d6066f7c",
+        "filename": "core/proto/android/stats/connectivity/Android.bp",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-05-26T05:49:37Z",
+      "side": 1,
+      "message": "Is this ok to run in a Q device? Suppose in Q device, there is only a nano, no lite proto",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "680e7a53751b6d4c9e9acfe5e570689537f06717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30414380_cffbbc22",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-05-26T05:49:37Z",
+      "side": 1,
+      "message": "Style: Prefix all enum values with the enum base name. e.g., enum Foo { FOO_UNKNOWN, FOO_BAR, FOO_CAR }\n\nlike what you have in other enum",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 29
+      },
+      "revId": "680e7a53751b6d4c9e9acfe5e570689537f06717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022c351a_2b84080c",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-05-26T05:49:37Z",
+      "side": 1,
+      "message": "Do you like to use definition in frameworks/base/core/proto/android/net/networkcapabilities.proto?\n\nor we would like to deprecate the old one?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 1
+      },
+      "revId": "680e7a53751b6d4c9e9acfe5e570689537f06717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f56b17_2757ba50",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-05-26T05:49:37Z",
+      "side": 1,
+      "message": "Also add comment like DF_DAD? likewise for other no comment ones",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 17
+      },
+      "revId": "680e7a53751b6d4c9e9acfe5e570689537f06717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d9974a_f4b22409",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-05-26T05:49:37Z",
+      "side": 1,
+      "message": "Nit: Not sure what the usage is but it looks to me a boolean to store this is enough at the first look",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 20
+      },
+      "revId": "680e7a53751b6d4c9e9acfe5e570689537f06717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24e75aa_34c07496",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 16
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-05-26T05:49:37Z",
+      "side": 1,
+      "message": "Do you mean error code? or error type? Usually, I will expect the comment above the enum is describe the enum and the enum is called error code, not type?",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 15
+      },
+      "revId": "680e7a53751b6d4c9e9acfe5e570689537f06717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de00acae_28f33d54",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 16
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-05-26T05:49:37Z",
+      "side": 1,
+      "message": "Nit: space",
+      "range": {
+        "startLine": 111,
+        "startChar": 1,
+        "endLine": 111,
+        "endChar": 3
+      },
+      "revId": "680e7a53751b6d4c9e9acfe5e570689537f06717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e17ad3_42d9f942",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 16
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-05-26T05:49:37Z",
+      "side": 1,
+      "message": "Q: Is this also a possible error code?",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "680e7a53751b6d4c9e9acfe5e570689537f06717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff2b3de_00f31cff",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 16
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-05-26T05:49:37Z",
+      "side": 1,
+      "message": "IPV6_PROVISIONING_LOSS?",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 27
+      },
+      "revId": "680e7a53751b6d4c9e9acfe5e570689537f06717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
