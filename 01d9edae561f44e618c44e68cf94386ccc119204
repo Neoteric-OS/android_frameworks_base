@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "274736e7_88889b19",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-26T11:28:23Z",
+      "side": 1,
+      "message": "1.nit: Maybe mTestSubList?\nIf so the functions update this also need to name with Test.\n\n2. maybe move to ~l.59.",
+      "range": {
+        "startLine": 96,
+        "startChar": 26,
+        "endLine": 96,
+        "endChar": 34
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e46cd8_60197e02",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-26T11:28:23Z",
+      "side": 1,
+      "message": "1.I think we should split this into 2 function.\n2. not sure why we update list and also return it.",
+      "range": {
+        "startLine": 100,
+        "startChar": 18,
+        "endLine": 100,
+        "endChar": 31
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd22939a_44b0f809",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-26T11:28:23Z",
+      "side": 1,
+      "message": "IIUC you can use CollectionUtil.removeIf",
+      "range": {
+        "startLine": 108,
+        "startChar": 16,
+        "endLine": 112,
+        "endChar": 17
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb224cf8_9d4fb8f3",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-26T11:28:23Z",
+      "side": 1,
+      "message": "Can we use toArray ?",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64142c86_67e82b54",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-26T11:28:23Z",
+      "side": 1,
+      "message": "style: local variables should not have m- prefix.\nnit: final",
+      "range": {
+        "startLine": 125,
+        "startChar": 21,
+        "endLine": 125,
+        "endChar": 34
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "308a26a1_ae2e3d82",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-26T11:28:23Z",
+      "side": 1,
+      "message": "I don\u0027t think it is good to add,remove and setSubscriberIdForSub at the same function.\nIt is too complex and hard to use.\nMaybe refactor to something like:\naddSub(monitor, subId, subscriberId)\nremoveSub(monitor, subId)\nany thought?",
+      "range": {
+        "startLine": 134,
+        "startChar": 17,
+        "endLine": 134,
+        "endChar": 38
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee790b9f_16079e28",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-26T11:28:23Z",
+      "side": 1,
+      "message": "why do we need this while we have mSubList?",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 29
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77df99ac_b74b3db3",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-26T11:28:23Z",
+      "side": 1,
+      "message": "Since every test and function use this, maybe make it a class-wide member?\nIf so you don\u0027t need to pass monitor into functions.",
+      "range": {
+        "startLine": 157,
+        "startChar": 8,
+        "endLine": 158,
+        "endChar": 85
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110e544f_3db12f4a",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-26T11:28:23Z",
+      "side": 1,
+      "message": "Can we verify with assertRatTypeChangeForSub?",
+      "range": {
+        "startLine": 169,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 59
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b8776f_f4600797",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-26T11:28:23Z",
+      "side": 1,
+      "message": "Can we verify with assertRatTypeChangeForSub?",
+      "range": {
+        "startLine": 173,
+        "startChar": 8,
+        "endLine": 173,
+        "endChar": 20
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "642c7e76_495d06f7",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-26T11:28:23Z",
+      "side": 1,
+      "message": "1. Can we verify these one by one?\nThus we could know if the callbacks are out-of-order.\nsetRatTypeForSub\nassertRatTypeChangeForSub\nsetRatTypeForSub\nassertRatTypeChangeForSub\n\n2. Can we verify listen 2 is not called when we update sim1?\nIf so , IIUC maybe we could pass VerificationMode or int wantedNumberOfInvocations into assertRatTypeChangeForSub\n\n3. Follow up from above.\nTo maximize test coverage,\nCan we verify all 3 subs when one sub is updated?\nSince they are all in 1 line, verify all of them should not be hard?",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 188,
+        "endChar": 51
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b043c169_900c49c4",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-26T11:28:23Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 202,
+        "startChar": 7,
+        "endLine": 205,
+        "endChar": 63
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
