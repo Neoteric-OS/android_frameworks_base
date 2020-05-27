@@ -1343,10 +1343,13 @@ public final class Telephony {
                 }
 
                 String format = intent.getStringExtra("format");
-                int subId = intent.getIntExtra(SubscriptionManager.EXTRA_SUBSCRIPTION_INDEX,
-                        SubscriptionManager.getDefaultSmsSubscriptionId());
-
-                Rlog.v(TAG, " getMessagesFromIntent sub_id : " + subId);
+                if (intent.hasExtra(SubscriptionManager.EXTRA_SUBSCRIPTION_INDEX)) {
+                    int subId = intent.getIntExtra(SubscriptionManager.EXTRA_SUBSCRIPTION_INDEX,
+                            SubscriptionManager.getDefaultSmsSubscriptionId());
+                    Rlog.v(TAG, "getMessagesFromIntent subId : " + subId);
+                } else {
+                    Rlog.v(TAG, "getMessagesFromIntent");
+                }
 
                 int pduCount = messages.length;
                 SmsMessage[] msgs = new SmsMessage[pduCount];
