@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed599eb2_ca241411",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 17
+      },
+      "lineNbr": 5972,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-27T02:02:37Z",
+      "side": 1,
+      "message": "nits: maybe NetworkType? not strong opinion. If other reviewers have no more feedback, let\u0027s just move forward and add westworld team for review. Or maybe you could modify this when cherry-picking to internal master.",
+      "range": {
+        "startLine": 5972,
+        "startChar": 40,
+        "endLine": 5972,
+        "endChar": 46
+      },
+      "revId": "8fc4fce35638d71ffbdf90769db3a7b71ad4f183",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19334820_47953ba3",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-27T02:02:37Z",
+      "side": 1,
+      "message": "per discussion offline, add DC_NORMAL_TERMINATION?  represent the normal stop without failure provisioning.",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "8fc4fce35638d71ffbdf90769db3a7b71ad4f183",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a94c669_4268068e",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 17
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-05-27T02:02:37Z",
+      "side": 1,
+      "message": "nits： FILS （Fast Initial Link Setup）.",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 11
+      },
+      "revId": "8fc4fce35638d71ffbdf90769db3a7b71ad4f183",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
