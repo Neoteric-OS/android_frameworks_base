@@ -1,0 +1,10 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+1: Hansong Zhang <hsz@google.com>
+Code-Review+2: Dianne Hackborn <hackbod@android.com>
+API-Review+1: Zach Johnson <zachoverflow@google.com>
+Submitted-by: Zach Johnson <zachoverflow@google.com>
+Submitted-at: Wed, 27 May 2020 03:39:39 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1312580
+Project: platform/frameworks/base
+Branch: refs/heads/master
