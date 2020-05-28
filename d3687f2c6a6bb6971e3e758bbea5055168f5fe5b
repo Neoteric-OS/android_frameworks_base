@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f28df92_13c3585e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-28T23:52:30Z",
+      "side": 1,
+      "message": "As I explained in the patch adding this arg I would really prefer we don\u0027t add it, but if we do this should read the test transport from the first arg to avoid developers introducing drift without noticing that would make it difficult to remove the hack.",
+      "range": {
+        "startLine": 1721,
+        "startChar": 61,
+        "endLine": 1721,
+        "endChar": 86
+      },
+      "revId": "d3687f2c6a6bb6971e3e758bbea5055168f5fe5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
