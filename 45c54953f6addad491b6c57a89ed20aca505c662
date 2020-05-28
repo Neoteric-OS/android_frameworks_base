@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aba3abfd_042a5329",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 7580,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2020-05-28T14:45:02Z",
+      "side": 1,
+      "message": "Nit: Indentation; this should all be indented one more space, to line the asterisks up with the first asterisk above.",
+      "range": {
+        "startLine": 7578,
+        "startChar": 2,
+        "endLine": 7580,
+        "endChar": 4
+      },
+      "revId": "45c54953f6addad491b6c57a89ed20aca505c662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
