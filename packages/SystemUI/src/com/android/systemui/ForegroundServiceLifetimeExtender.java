@@ -21,6 +21,7 @@ import android.app.Notification;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.ArraySet;
+import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.systemui.statusbar.NotificationLifetimeExtender;
@@ -69,7 +70,11 @@ public class ForegroundServiceLifetimeExtender implements NotificationLifetimeEx
     public void setShouldManageLifetime(
             @NonNull NotificationEntry entry, boolean shouldManage) {
         if (!shouldManage) {
-            mManagedEntries.remove(entry);
+            if (mManagedEntries.contains(entry)) {
+                Log.i(TAG, "reset entry's interruption: entry.key=" + entry.key);
+                mManagedEntries.remove(entry);
+                entry.resetInterruption();
+            }
             return;
         }
 

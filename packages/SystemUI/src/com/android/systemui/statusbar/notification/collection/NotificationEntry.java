@@ -213,6 +213,10 @@ public final class NotificationEntry {
         return interruption;
     }
 
+    public void resetInterruption() {
+        interruption = false;
+    }
+
     public boolean isHighPriority() {
         return mHighPriority;
     }
