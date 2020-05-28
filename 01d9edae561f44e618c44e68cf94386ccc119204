@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "3db01844_847db12a",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-28T08:42:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7252c076_bb0e8437",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64142c86_67e82b54",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 4
@@ -284,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "042fa066_a3f3c529",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-28T08:42:11Z",
+      "side": 1,
+      "message": "I think addSub should be atomic with setSubscriberId unless you want to test some subscriptions without subscriberId.\nHence addSub with passed subId and subscriberId making more sense to me.\nAlso when removeSub, you don\u0027t actually need subscriberId, right?",
+      "parentUuid": "373bc3f2_b1a35037",
+      "range": {
+        "startLine": 134,
+        "startChar": 17,
+        "endLine": 134,
+        "endChar": 38
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee790b9f_16079e28",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 4
@@ -319,6 +367,30 @@
       "side": 1,
       "message": "The type is difference, we need int[] type for getActiveAndHiddenSubscriptionIdList()\nI use List\u003cInteger\u003e mSubList since it is easier to add and remove, I think.",
       "parentUuid": "ee790b9f_16079e28",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 29
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25abe6c1_e1737eff",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-28T08:42:11Z",
+      "side": 1,
+      "message": "This would make a confusing semantic of your updateTestSubList function.\nMaybe move convertion code here or refactor as a function.\nSo you can use result from mSubList here.",
+      "parentUuid": "ec0a7a1e_37df70d6",
       "range": {
         "startLine": 136,
         "startChar": 8,
