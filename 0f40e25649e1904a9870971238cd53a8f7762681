@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c04e60a_fd3c2d74",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-29T07:52:09Z",
+      "side": 1,
+      "message": "nit: normally constants should be put in top.",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 11
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8480d3_482b1b48",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-29T07:52:09Z",
+      "side": 1,
+      "message": "@NonNull for both array and list?\nstatic?",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 11
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118c0df3_6e5d0453",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-29T07:52:09Z",
+      "side": 1,
+      "message": "nit: Sorry, on second thought, I think addTestSub would be more appropriate for this.\nBut not feel strongly.\nfeel free to ignore.",
+      "range": {
+        "startLine": 123,
+        "startChar": 17,
+        "endLine": 123,
+        "endChar": 23
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1873bd1b_0e08b08b",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-29T07:52:09Z",
+      "side": 1,
+      "message": "style: should fit in one line?",
+      "range": {
+        "startLine": 140,
+        "startChar": 16,
+        "endLine": 140,
+        "endChar": 37
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e9d390_cbbf30f2",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-29T07:52:09Z",
+      "side": 1,
+      "message": "onCollapsedRatTypeChanged?\nalso for other places.",
+      "range": {
+        "startLine": 167,
+        "startChar": 66,
+        "endLine": 167,
+        "endChar": 87
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b09efbd8_df011fcf",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-29T07:52:09Z",
+      "side": 1,
+      "message": "nit: IIUC this should be verify separately.\nBut no strong opinion.",
+      "range": {
+        "startLine": 175,
+        "startChar": 40,
+        "endLine": 175,
+        "endChar": 41
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc77b305_9a9d731d",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-29T07:52:09Z",
+      "side": 1,
+      "message": "IIUC this would be an implementation detail that we don\u0027t want to verify against.\nMaybe onCollapsedRatTypeChanged?",
+      "range": {
+        "startLine": 180,
+        "startChar": 57,
+        "endLine": 180,
+        "endChar": 78
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b569ea79_fea46281",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-29T07:52:09Z",
+      "side": 1,
+      "message": "nit: Changed?\nalso for below.",
+      "range": {
+        "startLine": 184,
+        "startChar": 21,
+        "endLine": 184,
+        "endChar": 27
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f6e1d6_95830650",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-29T07:52:09Z",
+      "side": 1,
+      "message": "We may need to verify another case which is :\n1. set rat type to unknown\n2. removeSub.\n\nThis for the special case where we send unknown unconditionally.\nTo ensure the callback is fired even if the rat type is not changed.\nIIUC you could add extra steps for SIM1 to minimize the effort .",
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
