@@ -24,8 +24,20 @@ import android.os.RemoteException;
 import com.android.internal.util.Preconditions;
 
 /**
- * Class that allows creation and management of per-app, test-only networks
+ * Class that allows creation and management of per-app, test-only networks.
  *
+ * There are several categories of networks that can be created as a result of this class:
+ *
+ *  - Simple test networks that only provide a test interface to send/receive packets, only have
+ *    TRANSPORT_TEST as transport, and are provided by a test-specific NetworkAgent. These can be
+ *    created using {@link #setupTestNetwork}.
+ *  - Test networks that are backed by a tun/tap interface, but are provided by a non-test
+ *    NetworkAgent, such as {@link EthernetManager} (for example through
+ *    {@link EthernetManager#setIncludeTestInterfaces(boolean)}). Such networks have
+ *    {@link NetworkCapabilities#TRANSPORT_TEST} and another transport specific to the NetworkAgent.
+ *    While they do not have the {@link NetworkCapabilities#NET_CAPABILITY_INTERNET} capability and
+ *    cannot become default networks, the system may manage them as non-test networks for test
+ *    purposes, for example by performing network validation.
  * @hide
  */
 @TestApi

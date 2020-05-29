@@ -203,6 +203,13 @@ public class EthernetManager {
      * Whether to treat interfaces created by {@link TestNetworkManager#createTapInterface}
      * as Ethernet interfaces. The effects of this method apply to any test interfaces that are
      * already present on the system.
+     *
+     * <p>This method allows creating networks that have both
+     * {@link NetworkCapabilities.TRANSPORT_ETHERNET} and
+     * {@link NetworkCapabilities.TRANSPORT_TEST} transports. Such networks are largely considered
+     * as normal ethernet networks by the system (network validation will be performed in
+     * particular), although they cannot have {@link NetworkCapabilities.NET_CAPABILITY_INTERNET}
+     * and cannot become default networks.
      * @hide
      */
     @TestApi

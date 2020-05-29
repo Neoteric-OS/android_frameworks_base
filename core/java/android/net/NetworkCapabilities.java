@@ -762,6 +762,7 @@ public final class NetworkCapabilities implements Parcelable {
      *
      * @hide
      */
+    @SystemApi
     @TestApi
     public static final int TRANSPORT_TEST = 7;
 
