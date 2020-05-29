@@ -22,6 +22,30 @@
       "revId": "d3687f2c6a6bb6971e3e758bbea5055168f5fe5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b26c080_a0952538",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-29T01:50:46Z",
+      "side": 1,
+      "message": "Resolved by having the constant inside NetworkMonitorUtils",
+      "parentUuid": "9f28df92_13c3585e",
+      "range": {
+        "startLine": 1721,
+        "startChar": 61,
+        "endLine": 1721,
+        "endChar": 86
+      },
+      "revId": "d3687f2c6a6bb6971e3e758bbea5055168f5fe5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
