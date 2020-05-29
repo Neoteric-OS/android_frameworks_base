@@ -41,6 +41,7 @@ java_sdk_library {
     ],
 
     compile_dex: true,
+    default_to_stubs: true,
 }
 
 // This lib is to provide all private APIs of android.test.runner
