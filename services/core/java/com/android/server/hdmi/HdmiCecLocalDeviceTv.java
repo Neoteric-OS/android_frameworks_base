@@ -1644,9 +1644,14 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     private void disableSystemAudioIfExist() {
         assertRunOnServiceThread();
-        if (getAvrDeviceInfo() == null) {
+        HdmiDeviceInfo avr = getAvrDeviceInfo();
+        if (avr == null) {
             return;
         }
+
+        HdmiLogger.debug("Send SystemAudioModeRequest to turn of SAM of AVR");
+        mService.sendCecCommand(HdmiCecMessageBuilder.buildSystemAudioModeRequest(
+                    mAddress, avr.getLogicalAddress(), Constants.PATH_INTERNAL, false));
 
         // Seq #31.
         removeAction(SystemAudioActionFromAvr.class);
