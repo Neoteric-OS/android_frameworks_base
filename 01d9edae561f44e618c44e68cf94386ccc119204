@@ -332,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "043339e2_600f44d3",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-29T07:07:59Z",
+      "side": 1,
+      "message": "Yes, we don\u0027t need subscriberId while removing subId from mTestSubList.\nSeparate to addSub(subId, subscriberId) and removeSub(subId).\nDelete updateSubList() method and merge the logic into addSub()/removeSub().",
+      "parentUuid": "042fa066_a3f3c529",
+      "range": {
+        "startLine": 134,
+        "startChar": 17,
+        "endLine": 134,
+        "endChar": 38
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee790b9f_16079e28",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 4
@@ -400,6 +424,30 @@
       "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa9945a_651627ea",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-05-29T07:07:59Z",
+      "side": 1,
+      "message": "Done, refactor the conversion as a function.",
+      "parentUuid": "25abe6c1_e1737eff",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 29
+      },
+      "revId": "01d9edae561f44e618c44e68cf94386ccc119204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
