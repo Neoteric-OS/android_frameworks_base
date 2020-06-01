@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "440417e6_e564878c",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfTetheringCoordinator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-01T03:14:07Z",
+      "side": 1,
+      "message": "1. How many items are expected to be printed here?\nIf we expected it will be long, maybe print them in multiple lines, or print most useful items first?\n\n2. Is it better if these 2 are not bound by upstream !\u003d null?\nIf so we might be able to debug for cases where these two are not correctly cleared.",
+      "range": {
+        "startLine": 306,
+        "startChar": 12,
+        "endLine": 307,
+        "endChar": 85
+      },
+      "revId": "8b434b40dbb21ac0113b5c0231fd3f7eabf434f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dbba074_210b0882",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfTetheringCoordinator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-01T03:14:07Z",
+      "side": 1,
+      "message": "Do we want to print summary of current stats, global alert and data limit?",
+      "revId": "8b434b40dbb21ac0113b5c0231fd3f7eabf434f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
