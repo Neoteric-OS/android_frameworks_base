@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f226dd11_4bd7d7ec",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-01T09:59:30Z",
+      "side": 1,
+      "message": "nit: IIUC these are not related to this CL and should be fixed in BOT.2.\nBut since we are almost done maybe leave it as is.",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 5
+      },
+      "revId": "3c1da231686074227cc48269e558abeabb346ed5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
