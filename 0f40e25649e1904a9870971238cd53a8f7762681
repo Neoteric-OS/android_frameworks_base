@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8c309ed_71f5f744",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-01T15:05:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c04e60a_fd3c2d74",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 11
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa8480d3_482b1b48",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa346a4_a9c60510",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-01T15:05:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa8480d3_482b1b48",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 11
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "eaadfb58_4d0df3bc",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-01T15:05:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "118c0df3_6e5d0453",
+      "range": {
+        "startLine": 123,
+        "startChar": 17,
+        "endLine": 123,
+        "endChar": 23
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1873bd1b_0e08b08b",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ca55d570_da562cdd",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-01T15:05:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1873bd1b_0e08b08b",
+      "range": {
+        "startLine": 140,
+        "startChar": 16,
+        "endLine": 140,
+        "endChar": 37
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0e9d390_cbbf30f2",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b02fea6_cfb3b675",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-01T15:05:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0e9d390_cbbf30f2",
+      "range": {
+        "startLine": 167,
+        "startChar": 66,
+        "endLine": 167,
+        "endChar": 87
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "91054523_0654757a",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-01T15:05:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc77b305_9a9d731d",
+      "range": {
+        "startLine": 180,
+        "startChar": 57,
+        "endLine": 180,
+        "endChar": 78
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b569ea79_fea46281",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 7
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "02a3aafa_fe67786e",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-01T15:05:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b569ea79_fea46281",
+      "range": {
+        "startLine": 184,
+        "startChar": 21,
+        "endLine": 184,
+        "endChar": 27
+      },
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0f6e1d6_95830650",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 7
@@ -200,6 +368,24 @@
       "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4429d62a_ceca4287",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-01T15:05:39Z",
+      "side": 1,
+      "message": "Done, per discussed tody.\nWe also want to verify that it removes all listener while stop monitoring so here just set the rat type of sim1 to unknown.",
+      "parentUuid": "b0f6e1d6_95830650",
+      "revId": "0f40e25649e1904a9870971238cd53a8f7762681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
