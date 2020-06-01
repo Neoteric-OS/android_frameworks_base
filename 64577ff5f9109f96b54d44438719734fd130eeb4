@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a15530de_02da0d8f",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-01T16:24:25Z",
+      "side": 1,
+      "message": "Thanks for adding this comment.",
+      "range": {
+        "startLine": 68,
+        "startChar": 61,
+        "endLine": 70,
+        "endChar": 74
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639cedd9_001b7c54",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-01T16:24:25Z",
+      "side": 1,
+      "message": "... and this one too.",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 56
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c40fdb_3488cc2c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-01T16:24:25Z",
+      "side": 1,
+      "message": "What about opportunistic mode? Does that not have IPs? If so, suggest saying that in this comment.\n\nDoes this CL test opportunistic mode?",
+      "range": {
+        "startLine": 228,
+        "startChar": 86,
+        "endLine": 228,
+        "endChar": 87
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb97d2e7_66cda529",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-01T16:24:25Z",
+      "side": 1,
+      "message": "What can be overwritten here? The UDP DNS measurements and the DoT measurements are in different hashtables, right?",
+      "range": {
+        "startLine": 283,
+        "startChar": 11,
+        "endLine": 283,
+        "endChar": 20
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45ab8c8_45443f9b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-01T16:24:25Z",
+      "side": 1,
+      "message": "This isn\u0027t great. It\u0027s confusing that the remote address is taken from the class, but the source address is passed in. Can we leave this as is, and ensure that the TLS probes set mSocketAddress as soon as the source address is determined (i.e., as soon as connect() succeeds)?",
+      "range": {
+        "startLine": 454,
+        "startChar": 48,
+        "endLine": 454,
+        "endChar": 79
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527f9c07_bda62d7f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-01T16:24:25Z",
+      "side": 1,
+      "message": "Maybe rename to measurementFailedDuringSetup?",
+      "range": {
+        "startLine": 463,
+        "startChar": 26,
+        "endLine": 463,
+        "endChar": 52
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c0aa2c_3a38a9bf",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-01T16:24:25Z",
+      "side": 1,
+      "message": "TBH I\u0027m not sure this should even inherit from SimpleSocketCheck... does it actually use any of the code in that class?\n\nAs for factoring out the DNS helpers - getDnsQueryPacket could very easily be made a static member of NetworkDiagnostics, like so:\n\n    private static byte[] getDnsQueryPacket(String sixRandomDigits, int queryType, Random random) {\n\n(or maybe package-private instead of private).",
+      "range": {
+        "startLine": 667,
+        "startChar": 30,
+        "endLine": 667,
+        "endChar": 49
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b10e0c_b99afa39",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-01T16:24:25Z",
+      "side": 1,
+      "message": "Pre-existing, but I\u0027m not sure this is correct. I think the tag must remain set until all traffic is sent/received and the socket is closed. (I agree this is not a very intuitive API - I think would be much more intuitive to tag the socket, since that\u0027s what the underlying code actually does.)\n\nThat said - each measurement is on its own a thread right? If so, then why not do it just once, after the thread is started?\n\n    \n        @Override\n        public void run() {\n            if (ensureMeasurementNecessary()) return;\n\n            // No need to restore the tag, since this thread is only used for this measurement.\n            TrafficStats.setThreadStatsTag(TrafficStatsConstants.TAG_SYSTEM_PROBE);\n\n            ...",
+      "range": {
+        "startLine": 693,
+        "startChar": 12,
+        "endLine": 693,
+        "endChar": 51
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c0dcef_e2756f7e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-01T16:24:25Z",
+      "side": 1,
+      "message": "Would this work?\n\n    final DataOutputStream output \u003d new DataOutputStream(sslSocket.getOutputStream());\n    output.writeShort(dnsPacket.length);",
+      "range": {
+        "startLine": 724,
+        "startChar": 0,
+        "endLine": 728,
+        "endChar": 40
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681c20ee_41470964",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-01T16:24:25Z",
+      "side": 1,
+      "message": "Similarly, could this be:\n\n    final DataInputStream input \u003d new DataInputStream(sslSocket.getInpuStream());\n    final short replyLength \u003d Short.toUnsignedInt(input.readShort());",
+      "range": {
+        "startLine": 729,
+        "startChar": 0,
+        "endLine": 733,
+        "endChar": 85
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56c9d51_7a3b5386",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-01T16:24:25Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this, you can just convert the short to unsigned. That said - more than 32k of response would indeed be unexpected :)",
+      "range": {
+        "startLine": 734,
+        "startChar": 35,
+        "endLine": 734,
+        "endChar": 39
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2edf839a_da480677",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-01T16:24:25Z",
+      "side": 1,
+      "message": "bytesRead?",
+      "range": {
+        "startLine": 739,
+        "startChar": 20,
+        "endLine": 739,
+        "endChar": 24
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03923196_2792d918",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-01T16:24:25Z",
+      "side": 1,
+      "message": "Long try-catch blocks are hard to read and error-prone. Can you move this code to a helper method that \"throws IOException\"? Then you can just do:\n\n    try (SSLSocket sslSocket \u003d setupSSLSocket()) {\n        sendSslProbe(sslSocket, sixRandomDigits, dnsPacket);\n    } catch(IOException e) {\n        mMeasurement.recordFailure(e.toString());\n    }",
+      "range": {
+        "startLine": 715,
+        "startChar": 0,
+        "endLine": 753,
+        "endChar": 17
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
