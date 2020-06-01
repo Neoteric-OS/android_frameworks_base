@@ -22,6 +22,30 @@
       "revId": "822802ee5746812e02171cc0d86d8e3b2743dd3f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc222ae8_717e3d75",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-01T09:38:32Z",
+      "side": 1,
+      "message": "Alert shouldn\u0027t be fired in your onSetAlert case\n\nPer synced with Junyu, newQuota of onSetAlert is a delta from now. Don\u0027t need to care the transferred bytes.\n\n@Junyu, \nif I am wrong, please correct me.",
+      "parentUuid": "c91776b4_adea9329",
+      "range": {
+        "startLine": 254,
+        "startChar": 33,
+        "endLine": 254,
+        "endChar": 37
+      },
+      "revId": "822802ee5746812e02171cc0d86d8e3b2743dd3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
