@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e64a10a1_54d3ebb8",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-02T06:58:56Z",
+      "side": 1,
+      "message": "It is strange to me you said before receive callback, and also say never get callback.\n\nMaybe:\n// Insert sim1, verify RAT type is NETWORK_TYPE_UNKNOWN, and never get any callback before changing RAT type.",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 62
+      },
+      "revId": "0112a1bbef8a4aaf11eead0fb8892510ad2c2aa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054c75d5_1419c224",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-02T06:58:56Z",
+      "side": 1,
+      "message": "subscription",
+      "range": {
+        "startLine": 181,
+        "startChar": 41,
+        "endLine": 181,
+        "endChar": 51
+      },
+      "revId": "0112a1bbef8a4aaf11eead0fb8892510ad2c2aa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef466b3a_60e93e6f",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-02T06:58:56Z",
+      "side": 1,
+      "message": "subscription",
+      "range": {
+        "startLine": 191,
+        "startChar": 41,
+        "endLine": 191,
+        "endChar": 51
+      },
+      "revId": "0112a1bbef8a4aaf11eead0fb8892510ad2c2aa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83044a8_a74db6c9",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-02T06:58:56Z",
+      "side": 1,
+      "message": "1. missing verify(mTelephonyManager).listen(any(), eq(PhoneStateListener.LISTEN_NONE)); ?\n\n2. since mTelephonyManager is not reset, IIUC it will always pass.",
+      "range": {
+        "startLine": 210,
+        "startChar": 15,
+        "endLine": 210,
+        "endChar": 60
+      },
+      "revId": "0112a1bbef8a4aaf11eead0fb8892510ad2c2aa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
