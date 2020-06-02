@@ -2744,6 +2744,7 @@ class ActivityStack extends ConfigurationContainer {
                 && !lastResumedCanPip;
 
         boolean pausing = display.pauseBackStacks(userLeaving, next, false);
+        boolean onlyTest = false;
         if (mResumedActivity != null) {
             if (DEBUG_STATES) Slog.d(TAG_STATES,
                     "resumeTopActivityLocked: Pausing " + mResumedActivity);
