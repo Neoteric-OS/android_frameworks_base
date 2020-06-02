@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "305a6466_6ad36982",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2020-06-02T09:02:01Z",
+      "side": 1,
+      "message": "This change will let NetworkDiagnostics send DoT probes to all the plaintext DNS servers and all DoT servers whatever the mode is, or do you think the DoT probes should be based on the  mode? like no DoT probe in private DNS off mode?",
+      "parentUuid": "54c40fdb_3488cc2c",
+      "range": {
+        "startLine": 228,
+        "startChar": 86,
+        "endLine": 228,
+        "endChar": 87
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb97d2e7_66cda529",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 11
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "ab07f58a_ae03cf65",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2020-06-02T09:02:01Z",
+      "side": 1,
+      "message": "If |target| is found in the both server lists, I think one probe is enough. For example: 8.8.8.8 can be a plaintext DNS server as well as a DoT server which is resolved by the name \"dns.google\". NetworkDiagnostics sends only one probe to it.\n\nNote that I don\u0027t follow the DnsResolver which doesn\u0027t verify the certificate in the opportunistic mode. All the DoT probes here requires valid certificates. If we want to support probes without certificate validation, it might be hard to implement it now and we can leave a TODO.",
+      "parentUuid": "bb97d2e7_66cda529",
+      "range": {
+        "startLine": 283,
+        "startChar": 11,
+        "endLine": 283,
+        "endChar": 20
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d45ab8c8_45443f9b",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 11
@@ -105,6 +153,30 @@
       "writtenOn": "2020-06-01T16:24:25Z",
       "side": 1,
       "message": "This isn\u0027t great. It\u0027s confusing that the remote address is taken from the class, but the source address is passed in. Can we leave this as is, and ensure that the TLS probes set mSocketAddress as soon as the source address is determined (i.e., as soon as connect() succeeds)?",
+      "range": {
+        "startLine": 454,
+        "startChar": 48,
+        "endLine": 454,
+        "endChar": 79
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c9167e_a73f99e2",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2020-06-02T09:02:01Z",
+      "side": 1,
+      "message": "Probably this function is more close to an utility now.",
+      "parentUuid": "d45ab8c8_45443f9b",
       "range": {
         "startLine": 454,
         "startChar": 48,
@@ -186,6 +258,30 @@
     },
     {
       "key": {
+        "uuid": "71e3f5af_bdb19cfc",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2020-06-02T09:02:01Z",
+      "side": 1,
+      "message": "Done for DNS-TLS measurements, and leave a TODO for DNS-UDP and ICMP measurements.",
+      "parentUuid": "50b10e0c_b99afa39",
+      "range": {
+        "startLine": 693,
+        "startChar": 12,
+        "endLine": 693,
+        "endChar": 51
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3c0dcef_e2756f7e",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 11
@@ -206,6 +302,30 @@
       "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10d53dc_185b8133",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2020-06-02T09:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c0dcef_e2756f7e",
+      "range": {
+        "startLine": 724,
+        "startChar": 0,
+        "endLine": 728,
+        "endChar": 40
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "22fd9971_2d7054d4",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2020-06-02T09:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "681c20ee_41470964",
+      "range": {
+        "startLine": 729,
+        "startChar": 0,
+        "endLine": 733,
+        "endChar": 85
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a56c9d51_7a3b5386",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 11
@@ -252,6 +396,30 @@
       "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859c3b8d_118c205f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2020-06-02T09:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a56c9d51_7a3b5386",
+      "range": {
+        "startLine": 734,
+        "startChar": 35,
+        "endLine": 734,
+        "endChar": 39
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "a1191160_1294209c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2020-06-02T09:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2edf839a_da480677",
+      "range": {
+        "startLine": 739,
+        "startChar": 20,
+        "endLine": 739,
+        "endChar": 24
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03923196_2792d918",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 11
@@ -298,6 +490,30 @@
       "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d1405c_0ac5d388",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2020-06-02T09:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03923196_2792d918",
+      "range": {
+        "startLine": 715,
+        "startChar": 0,
+        "endLine": 753,
+        "endChar": 17
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
