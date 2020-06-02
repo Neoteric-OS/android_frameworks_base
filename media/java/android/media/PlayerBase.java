@@ -219,8 +219,8 @@ public abstract class PlayerBase {
             finalLeftVol = mVolMultiplier * mLeftVolume * mPanMultiplierL;
             finalRightVol = mVolMultiplier * mRightVolume * mPanMultiplierR;
             isRestricted = isRestricted_sync();
+            playerSetVolume(isRestricted /*muting*/, finalLeftVol, finalRightVol);
         }
-        playerSetVolume(isRestricted /*muting*/, finalLeftVol, finalRightVol);
     }
 
     void setVolumeMultiplier(float vol) {
