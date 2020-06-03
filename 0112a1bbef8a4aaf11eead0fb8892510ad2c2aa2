@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2ad955dc_dd4d7a4a",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-03T17:09:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e64a10a1_54d3ebb8",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 62
+      },
+      "revId": "0112a1bbef8a4aaf11eead0fb8892510ad2c2aa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "054c75d5_1419c224",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "0112a1bbef8a4aaf11eead0fb8892510ad2c2aa2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1a9bf5_ba2d23fa",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-03T17:09:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "054c75d5_1419c224",
+      "range": {
+        "startLine": 181,
+        "startChar": 41,
+        "endLine": 181,
+        "endChar": 51
+      },
+      "revId": "0112a1bbef8a4aaf11eead0fb8892510ad2c2aa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "abdfcbbe_f84372f4",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-03T17:09:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef466b3a_60e93e6f",
+      "range": {
+        "startLine": 191,
+        "startChar": 41,
+        "endLine": 191,
+        "endChar": 51
+      },
+      "revId": "0112a1bbef8a4aaf11eead0fb8892510ad2c2aa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e83044a8_a74db6c9",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "0112a1bbef8a4aaf11eead0fb8892510ad2c2aa2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f653c70_55ae5f34",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-03T17:09:34Z",
+      "side": 1,
+      "message": "Done, actually not always pass. It will always failed because we verified it at l.203.\nSo, it will be counted twice.\nHowever, it looks like we could not reset mTelephonyManager or it will break test while mMonitor.stop()\n\njava.lang.NullPointerException: Attempt to invoke virtual method \u0027void android.telephony.TelephonyManager.listen(android.telephony.PhoneStateListener, int)\u0027 on a null object reference\n\nBut we can expect mTelephonyManager.listen() is called twice instead.",
+      "parentUuid": "e83044a8_a74db6c9",
+      "range": {
+        "startLine": 210,
+        "startChar": 15,
+        "endLine": 210,
+        "endChar": 60
+      },
+      "revId": "0112a1bbef8a4aaf11eead0fb8892510ad2c2aa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
