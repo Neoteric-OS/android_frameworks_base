@@ -22,6 +22,30 @@
       "revId": "6e89e2ba6ef4d6417f347fbd1fe0b01849ede889",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cff3f59_b3f22c20",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/BpfCoordinatorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-03T11:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67cf8c96_7fbfc677",
+      "range": {
+        "startLine": 220,
+        "startChar": 64,
+        "endLine": 220,
+        "endChar": 66
+      },
+      "revId": "6e89e2ba6ef4d6417f347fbd1fe0b01849ede889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
