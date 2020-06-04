@@ -1,0 +1,8 @@
+Code-Review+2: Brad Ebinger <breadley@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Allen Su <allenwtsu@google.com>
+Submitted-at: Thu, 04 Jun 2020 03:06:42 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1322498
+Project: platform/frameworks/base
+Branch: refs/heads/master
