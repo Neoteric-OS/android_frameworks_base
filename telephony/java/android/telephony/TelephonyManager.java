@@ -6317,7 +6317,7 @@ public class TelephonyManager {
      * @deprecated Use {@link android.se.omapi.SEService} APIs instead. See
      *             {@link android.se.omapi.SEService#getUiccReader(int)},
      *             {@link android.se.omapi.Reader#openSession()},
-     *             {@link android.se.omapi.Session#openBasicChannel(byte[], byte)},
+     *             {@link android.se.omapi.Session#openLogicalChannel(byte[], byte)} with null AID,
      *             {@link android.se.omapi.Channel#transmit(byte[])}.
      */
     @Deprecated
@@ -6359,7 +6359,7 @@ public class TelephonyManager {
      * @deprecated Use {@link android.se.omapi.SEService} APIs instead. See
      *             {@link android.se.omapi.SEService#getUiccReader(int)},
      *             {@link android.se.omapi.Reader#openSession()},
-     *             {@link android.se.omapi.Session#openBasicChannel(byte[], byte)},
+     *             {@link android.se.omapi.Session#openLogicalChannel(byte[], byte)} with null AID,
      *             {@link android.se.omapi.Channel#transmit(byte[])}.
      */
     @Deprecated
@@ -6392,7 +6392,7 @@ public class TelephonyManager {
      * @deprecated Use {@link android.se.omapi.SEService} APIs instead. See
      *             {@link android.se.omapi.SEService#getUiccReader(int)},
      *             {@link android.se.omapi.Reader#openSession()},
-     *             {@link android.se.omapi.Session#openBasicChannel(byte[], byte)},
+     *             {@link android.se.omapi.Session#openLogicalChannel(byte[], byte)} with null AID,
      *             {@link android.se.omapi.Channel#transmit(byte[])}.
      */
     @Deprecated
@@ -6426,7 +6426,7 @@ public class TelephonyManager {
      * @deprecated Use {@link android.se.omapi.SEService} APIs instead. See
      *             {@link android.se.omapi.SEService#getUiccReader(int)},
      *             {@link android.se.omapi.Reader#openSession()},
-     *             {@link android.se.omapi.Session#openBasicChannel(byte[], byte)},
+     *             {@link android.se.omapi.Session#openLogicalChannel(byte[], byte)} with null AID,
      *             {@link android.se.omapi.Channel#transmit(byte[])}.
      */
     @Deprecated
@@ -6454,7 +6454,7 @@ public class TelephonyManager {
      * @deprecated Use {@link android.se.omapi.SEService} APIs instead. See
      *             {@link android.se.omapi.SEService#getUiccReader(int)},
      *             {@link android.se.omapi.Reader#openSession()},
-     *             {@link android.se.omapi.Session#openBasicChannel(byte[], byte)},
+     *             {@link android.se.omapi.Session#openLogicalChannel(byte[], byte)} with null AID,
      *             {@link android.se.omapi.Channel#transmit(byte[])}.
      */
     @Deprecated
@@ -6486,7 +6486,7 @@ public class TelephonyManager {
      * @deprecated Use {@link android.se.omapi.SEService} APIs instead. See
      *             {@link android.se.omapi.SEService#getUiccReader(int)},
      *             {@link android.se.omapi.Reader#openSession()},
-     *             {@link android.se.omapi.Session#openBasicChannel(byte[], byte)},
+     *             {@link android.se.omapi.Session#openLogicalChannel(byte[], byte)} with null AID,
      *             {@link android.se.omapi.Channel#transmit(byte[])}.
      */
     @Deprecated
@@ -6512,7 +6512,7 @@ public class TelephonyManager {
      * @deprecated Use {@link android.se.omapi.SEService} APIs instead. See
      *             {@link android.se.omapi.SEService#getUiccReader(int)},
      *             {@link android.se.omapi.Reader#openSession()},
-     *             {@link android.se.omapi.Session#openBasicChannel(byte[], byte)},
+     *             {@link android.se.omapi.Session#openLogicalChannel(byte[], byte)} with null AID,
      *             {@link android.se.omapi.Channel#transmit(byte[])}.
      */
     @Deprecated
