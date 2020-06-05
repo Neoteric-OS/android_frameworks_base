@@ -1,0 +1,13 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Naga Venkata Durga Ashok Mutyala <quic_nmutya@quicinc.com>
+Code-Review+1: Jeff Sharkey <jsharkey@google.com>
+Code-Review+2: Jeff Sharkey <jsharkey@android.com>
+Code-Review+1: Avinash Jain <jaina@qualcomm.corp-partner.google.com>
+Qualcomm-Review+1: Phani Kumar P V <quic_pvphani@quicinc.com>
+Autosubmit+1: Alex Medina <medina@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 05 Jun 2020 01:32:15 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1200159
+Project: platform/frameworks/base
+Branch: refs/heads/master
