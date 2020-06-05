@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbee3ece_7e312af9",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-05T09:40:52Z",
+      "side": 1,
+      "message": "nit: this should be the test we want to perform.\nmaybe testSubChangedAndRatTypeChanged ?\nnot feel strongly.",
+      "range": {
+        "startLine": 162,
+        "startChar": 16,
+        "endLine": 162,
+        "endChar": 60
+      },
+      "revId": "d036875b17a15a41b9a5be67294ec0ecdd2f0fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
