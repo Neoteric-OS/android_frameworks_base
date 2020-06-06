@@ -1941,6 +1941,34 @@ public final class MediaCodecInfo {
             /** 2160p 240fps */
             @NonNull
             public static final PerformancePoint UHD_240 = new PerformancePoint(3840, 2160, 240);
+            /** 4320p 24fps */
+            @NonNull
+            public static final PerformancePoint UHD8K_24 = new PerformancePoint(8192, 4352, 24);
+            /** 4320p 25fps */
+            @NonNull
+            public static final PerformancePoint UHD8K_25 = new PerformancePoint(8192, 4352, 25);
+            /** 4320p 30fps */
+            @NonNull
+            public static final PerformancePoint UHD8K_30 = new PerformancePoint(8192, 4352, 30);
+            /** 4320p 50fps */
+            @NonNull
+            public static final PerformancePoint UHD8K_50 = new PerformancePoint(8192, 4352, 50);
+            /** 4320p 60fps */
+            @NonNull
+            public static final PerformancePoint UHD8K_60 = new PerformancePoint(8192, 4352, 60);
+            /** 4320p 100fps */
+            @NonNull
+            public static final PerformancePoint UHD8K_100 = new PerformancePoint(8192, 4352, 100);
+            /** 4320p 120fps */
+            @NonNull
+            public static final PerformancePoint UHD8K_120 = new PerformancePoint(8192, 4352, 120);
+            /** 4320p 200fps */
+            @NonNull
+            public static final PerformancePoint UHD8K_200 = new PerformancePoint(8192, 4352, 200);
+            /** 4320p 240fps */
+            @NonNull
+            public static final PerformancePoint UHD8K_240 = new PerformancePoint(8192, 4352, 240);
+
         }
 
         /**
