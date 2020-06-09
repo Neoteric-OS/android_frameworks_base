@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b330034c_93f53bd9",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2357,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2020-06-09T00:55:42Z",
+      "side": 1,
+      "message": "naming, should we have FCC8 and FCC12?",
+      "range": {
+        "startLine": 2357,
+        "startChar": 29,
+        "endLine": 2357,
+        "endChar": 44
+      },
+      "revId": "deaf04f49ab315e67127c423951ab20f75b590a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8463a38_82444580",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2020-06-09T00:55:42Z",
+      "side": 1,
+      "message": "Please keep to 8 channels for PCM formats, 12 channels would be for compressed streams.",
+      "range": {
+        "startLine": 101,
+        "startChar": 52,
+        "endLine": 101,
+        "endChar": 72
+      },
+      "revId": "deaf04f49ab315e67127c423951ab20f75b590a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4887026_1b65723b",
+        "filename": "media/java/android/media/AudioTrack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2020-06-09T00:55:42Z",
+      "side": 1,
+      "message": "traditionally we have checked L/R balance - see lines 1354-1368.",
+      "range": {
+        "startLine": 1339,
+        "startChar": 27,
+        "endLine": 1339,
+        "endChar": 56
+      },
+      "revId": "deaf04f49ab315e67127c423951ab20f75b590a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10323c77_f6530ca1",
+        "filename": "media/java/android/media/AudioTrack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2020-06-09T00:55:42Z",
+      "side": 1,
+      "message": "For now, can we limit the extended channels to non-PCM formats?  Our existing PCM code has been tested only to 7.1.",
+      "range": {
+        "startLine": 1341,
+        "startChar": 12,
+        "endLine": 1341,
+        "endChar": 72
+      },
+      "revId": "deaf04f49ab315e67127c423951ab20f75b590a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
