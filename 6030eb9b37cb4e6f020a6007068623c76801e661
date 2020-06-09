@@ -22,6 +22,30 @@
       "revId": "6030eb9b37cb4e6f020a6007068623c76801e661",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a12950_a3253968",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsDownloadServiceBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2020-06-09T00:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dd6c6a0_a763a127",
+      "range": {
+        "startLine": 237,
+        "startChar": 71,
+        "endLine": 237,
+        "endChar": 75
+      },
+      "revId": "6030eb9b37cb4e6f020a6007068623c76801e661",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
