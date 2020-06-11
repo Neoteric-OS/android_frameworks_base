@@ -109,6 +109,8 @@ public class IpServer extends StateMachine {
 
     // TODO: have PanService use some visible version of this constant
     private static final String BLUETOOTH_IFACE_ADDR = "192.168.44.1/24";
+    // TODO: b/158633529, remove this when p2p address is no longer hard code in wifi part.
+    private static final String WIFI_P2P_IFACE_ADDR = "192.168.49.1/24";
 
     // TODO: have this configurable
     private static final int DHCP_LEASE_TIME_SECS = 3600;
@@ -644,6 +646,8 @@ public class IpServer extends StateMachine {
 
         if (mInterfaceType == TetheringManager.TETHERING_BLUETOOTH) {
             return new LinkAddress(BLUETOOTH_IFACE_ADDR);
+        } else if (mInterfaceType == TetheringManager.TETHERING_WIFI_P2P) {
+            return new LinkAddress(WIFI_P2P_IFACE_ADDR);
         }
 
         return mPrivateAddressCoordinator.requestDownstreamAddress(this);

@@ -58,6 +58,7 @@ public class PrivateAddressCoordinator {
     private static final int BYTE_MASK = 0xff;
     // reserved for bluetooth tethering.
     private static final int BLUETOOTH_RESERVED = 44;
+    private static final int WIFI_P2P_RESERVED = 49;
     private static final byte DEFAULT_ID = (byte) 42;
 
     // Upstream monitor would be stopped when tethering is down. When tethering restart, downstream
@@ -154,7 +155,7 @@ public class PrivateAddressCoordinator {
         bytes[3] = getSanitizedAddressSuffix(subAddress, (byte) 0, (byte) 1, (byte) 0xff);
         for (int i = 0; i < MAX_UBYTE; i++) {
             final int newSubNet = (subNet + i) & BYTE_MASK;
-            if (newSubNet == BLUETOOTH_RESERVED) continue;
+            if (newSubNet == BLUETOOTH_RESERVED || newSubNet == WIFI_P2P_RESERVED) continue;
 
             bytes[2] = (byte) newSubNet;
             final InetAddress addr;
