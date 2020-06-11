@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "758aa416_9682e083",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2020-06-11T12:02:12Z",
+      "side": 1,
+      "message": "add (iface)\n\n\n(I\u0027d probably also do [wlan1(31)]",
+      "range": {
+        "startLine": 17,
+        "startChar": 24,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "f6015bc03eb1661a06d7b0789059fce4bf136bf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
