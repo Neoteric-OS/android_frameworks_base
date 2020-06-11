@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b473562_92c13e33",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1258293
+      },
+      "writtenOn": "2020-06-11T07:13:43Z",
+      "side": 1,
+      "message": "this value should equal to the value inside internal master",
+      "range": {
+        "startLine": 363,
+        "startChar": 63,
+        "endLine": 363,
+        "endChar": 66
+      },
+      "revId": "adfbfae4a405728e8060ccc8cc81255714fa2bb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
