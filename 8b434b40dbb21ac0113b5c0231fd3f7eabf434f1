@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a6234fd_ced59d9d",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfTetheringCoordinator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-11T13:10:48Z",
+      "side": 1,
+      "message": "1. rules depends how many clients. the lookup table is removed because it is only meaningful with a valid upstream index.\nI wrote two functions for dumping stats and rules. please take a look. Thank you\n2. Yes, valid upstream check is removed\n\nThanks for your advice",
+      "parentUuid": "440417e6_e564878c",
+      "range": {
+        "startLine": 306,
+        "startChar": 12,
+        "endLine": 307,
+        "endChar": 85
+      },
+      "revId": "8b434b40dbb21ac0113b5c0231fd3f7eabf434f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dbba074_210b0882",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfTetheringCoordinator.java",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "8b434b40dbb21ac0113b5c0231fd3f7eabf434f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fec48c_75052930",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfTetheringCoordinator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-11T13:10:48Z",
+      "side": 1,
+      "message": "1. Dump stats and data limit now. \n\nBPF offload:\n  Polling started\n  Stats provider registered\n  Upstream quota: {rmnet_data2\u003d9223372036854775807}\n  Forwarding stats:\n    12(rmnet_data2) - ForwardedStats(rxb: 867432, rxp: 1837, txb: 0, ..\n  Forwarding rules: \n    [wlan1]: iif(iface) oif addr srcmac dstmac\n      12(rmnet_data2), 31, /2401:e180:8851:b11c:ed10:4151:a8e9:b5d5, ..\n      12(rmnet_data2), 31, /2401:e180:8851:b11c:d577:ed86:4073:8f7b, ..\n\n2. the global alert may be reached and reset in every few seconds (search onAlertReached). That may be not useful to dump in dumpsys\n\n06-11 17:01:53.066  2198  2223 E Tethering: [BpfCoordinator] .. onSetAlert 131072\n06-11 17:02:04.999  2198  4018 E Tethering: [BpfCoordinator] .. onSetAlert 131072\n06-11 17:02:06.457  2198  2283 E Tethering: [BpfCoordinator] .. onAlertReached\n06-11 17:02:07.365  2198  4018 E Tethering: [BpfCoordinator] .. onSetAlert 131072\n06-11 17:02:36.476  2198  2283 E Tethering: [BpfCoordinator] .. onAlertReached\n06-11 17:02:37.365  2198  4018 E Tethering: [BpfCoordinator] .. onSetAlert 131072\n06-11 17:02:44.644  2198  2223 E Tethering: [BpfCoordinator] .. onSetAlert 131072\n06-11 17:02:45.687  2198  2222 E Tethering: [BpfCoordinator] .. onSetAlert 131072\n06-11 17:02:46.486  2198  2283 E Tethering: [BpfCoordinator] .. onAlertReached\n06-11 17:02:46.857  2198  2223 E Tethering: [BpfCoordinator] .. onSetAlert 131072\n06-11 17:02:47.951  2198  2222 E Tethering: [BpfCoordinator] .. onSetAlert 131072\n06-11 17:02:49.019  2198  2223 E Tethering: [BpfCoordinator] .. onSetAlert 131072\n06-11 17:02:50.120  2198  2223 E Tethering: [BpfCoordinator] .. onSetAlert 131072\n06-11 17:02:51.227  2198  2223 E Tethering: [BpfCoordinator] .. onSetAlert 131072\n06-11 17:02:51.490  2198  2283 E Tethering: [BpfCoordinator] .. onAlertReached\n\n\nIf I am wrong, please share with me",
+      "parentUuid": "7dbba074_210b0882",
+      "revId": "8b434b40dbb21ac0113b5c0231fd3f7eabf434f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

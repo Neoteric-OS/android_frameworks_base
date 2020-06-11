@@ -22,6 +22,30 @@
       "revId": "f6015bc03eb1661a06d7b0789059fce4bf136bf9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c181b7_2172dd10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-11T13:10:48Z",
+      "side": 1,
+      "message": "Add (iface) for oif\n\ndumpsys:\n  [wlan1]: iif(iface) oif(iface) addr srcmac dstmac\n      12(rmnet_data2), 31(wlan1), /2401:e180:8831:77ae:..\n\n\n\nBut keep [wlan1] to make code simpler because there is no downstream interface index at that moment. The downstream index needs to get from the existing rule.",
+      "parentUuid": "758aa416_9682e083",
+      "range": {
+        "startLine": 17,
+        "startChar": 24,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "f6015bc03eb1661a06d7b0789059fce4bf136bf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
