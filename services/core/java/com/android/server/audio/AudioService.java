@@ -4559,6 +4559,7 @@ public class AudioService extends IAudioService.Stub
             try {
                 // if no valid attributes, this volume group is not controllable, throw exception
                 ensureValidAttributes(avg);
+                sVolumeGroupStates.append(avg.getId(), new VolumeGroupState(avg));
             } catch (IllegalArgumentException e) {
                 // Volume Groups without attributes are not controllable through set/get volume
                 // using attributes. Do not append them.
@@ -4567,7 +4568,6 @@ public class AudioService extends IAudioService.Stub
                 }
                 continue;
             }
-            sVolumeGroupStates.append(avg.getId(), new VolumeGroupState(avg));
         }
         for (int i = 0; i < sVolumeGroupStates.size(); i++) {
             final VolumeGroupState vgs = sVolumeGroupStates.valueAt(i);
@@ -4636,10 +4636,10 @@ public class AudioService extends IAudioService.Stub
         private final SparseIntArray mIndexMap = new SparseIntArray(8);
         private int mIndexMin;
         private int mIndexMax;
-        private int mLegacyStreamType = AudioSystem.STREAM_DEFAULT;
         private int mPublicStreamType = AudioSystem.STREAM_MUSIC;
         private AudioAttributes mAudioAttributes = AudioProductStrategy.sDefaultAttributes;
         private boolean mIsMuted = false;
+        private final String mSettingName;
 
         // No API in AudioSystem to get a device from strategy or from attributes.
         // Need a valid public stream type to use current API getDeviceForStream
@@ -4661,7 +4661,6 @@ public class AudioService extends IAudioService.Stub
             final int[] streamTypes = mAudioVolumeGroup.getLegacyStreamTypes();
             if (streamTypes.length != 0) {
                 // Uses already initialized MIN / MAX if a stream type is attached to group
-                mLegacyStreamType = streamTypes[0];
                 for (final int streamType : streamTypes) {
                     if (streamType != AudioSystem.STREAM_DEFAULT
                             && streamType < AudioSystem.getNumStreamTypes()) {
@@ -4675,10 +4674,13 @@ public class AudioService extends IAudioService.Stub
                 mIndexMin = AudioSystem.getMinVolumeIndexForAttributes(mAudioAttributes);
                 mIndexMax = AudioSystem.getMaxVolumeIndexForAttributes(mAudioAttributes);
             } else {
-                Log.e(TAG, "volume group: " + mAudioVolumeGroup.name()
+                throw new IllegalArgumentException("volume group: " + mAudioVolumeGroup.name()
                         + " has neither valid attributes nor valid stream types assigned");
-                return;
             }
+            final String streamSettingName =
+                    System.VOLUME_SETTINGS_INT[mStreamVolumeAlias[mPublicStreamType]];
+            mSettingName = (streamSettingName != null && !streamSettingName.isEmpty())
+                    ? streamSettingName : ("volume" + name());
             // Load volume indexes from data base
             readSettings();
         }
@@ -4781,17 +4783,20 @@ public class AudioService extends IAudioService.Stub
 
         @GuardedBy("VolumeStreamState.class")
         public void updateVolumeIndex(int index, int device) {
-            // Update local cache
-            mIndexMap.put(device, index);
+            // Filter persistency if already exist and the index has not changed
+            if (mIndexMap.indexOfKey(device) < 0 || mIndexMap.get(device) != index) {
+                // Update local cache
+                mIndexMap.put(device, index);
 
-            // update data base - post a persist volume group msg
-            sendMsg(mAudioHandler,
-                    MSG_PERSIST_VOLUME_GROUP,
-                    SENDMSG_QUEUE,
-                    device,
-                    0,
-                    this,
-                    PERSIST_DELAY);
+                // update data base - post a persist volume group msg
+                sendMsg(mAudioHandler,
+                        MSG_PERSIST_VOLUME_GROUP,
+                        SENDMSG_QUEUE,
+                        device,
+                        0,
+                        this,
+                        PERSIST_DELAY);
+            }
         }
 
         @GuardedBy("VolumeStreamState.class")
@@ -4957,9 +4962,9 @@ public class AudioService extends IAudioService.Stub
         public @NonNull String getSettingNameForDevice(int device) {
             final String suffix = AudioSystem.getOutputDeviceName(device);
             if (suffix.isEmpty()) {
-                return mAudioVolumeGroup.name();
+                return mSettingName;
             }
-            return mAudioVolumeGroup.name() + "_" + AudioSystem.getOutputDeviceName(device);
+            return mSettingName + "_" + AudioSystem.getOutputDeviceName(device);
         }
 
         private void dump(PrintWriter pw) {
