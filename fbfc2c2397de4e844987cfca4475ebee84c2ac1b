@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fa714ca_0d057ef9",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-11T16:21:54Z",
+      "side": 1,
+      "message": "I don\u0027t know how efficient print() is. If it performs allocation and garbage collection, then we probably shouldn\u0027t call it this often and instead do something like:\n\n\n    pw.print(String.format(\"%s(%s) - %s\", key, mInterfaceNames.get(key), iface, stats.toString());",
+      "range": {
+        "startLine": 374,
+        "startChar": 0,
+        "endLine": 375,
+        "endChar": 26
+      },
+      "revId": "fbfc2c2397de4e844987cfca4475ebee84c2ac1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d1fb4c_c0af16c8",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-11T16:21:54Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to do this, if you print something that is null it\u0027s as if you had printed \"null\". So you can just do pw.print(iface).",
+      "range": {
+        "startLine": 377,
+        "startChar": 12,
+        "endLine": 377,
+        "endChar": 55
+      },
+      "revId": "fbfc2c2397de4e844987cfca4475ebee84c2ac1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1c60a0_780e8c4b",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-11T16:21:54Z",
+      "side": 1,
+      "message": "Ditto, this should probably be String.format().",
+      "range": {
+        "startLine": 395,
+        "startChar": 0,
+        "endLine": 407,
+        "endChar": 40
+      },
+      "revId": "fbfc2c2397de4e844987cfca4475ebee84c2ac1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
