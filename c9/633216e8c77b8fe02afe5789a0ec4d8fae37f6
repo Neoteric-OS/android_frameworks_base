@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Pinyao Ting <pinyaoting@google.com>
+Code-Review+2: Sunny Goyal <sunnygoyal@google.com>
+Autosubmit+1: Sunny Goyal <sunnygoyal@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 11 Jun 2020 17:49:50 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1331131
+Project: platform/frameworks/base
+Branch: refs/heads/pie-dev
