@@ -164,6 +164,8 @@ import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.MatchAllNetworkSpecifier;
 import android.net.Network;
+import android.net.NetworkAgent;
+import android.net.NetworkAgentConfig;
 import android.net.NetworkCapabilities;
 import android.net.NetworkFactory;
 import android.net.NetworkInfo;
@@ -6806,6 +6808,32 @@ public class ConnectivityServiceTest {
         // ConnectivityService should have changed the WakeOnLanSupported to true
         wifiLp.setWakeOnLanSupported(true);
         assertEquals(wifiLp, mService.getActiveLinkProperties());
+    }
+
+    @Test
+    public void testLegacyExtraInfoSentToNetworkMonitor() throws Exception {
+        class TestNetworkAgent extends NetworkAgent {
+            TestNetworkAgent(Context context, Looper looper, NetworkAgentConfig config) {
+                super(context, looper, "MockAgent", new NetworkCapabilities(),
+                        new LinkProperties(), 40 , config, null /* provider */);
+                register();
+            }
+        }
+        final NetworkAgent naNoExtraInfo = new TestNetworkAgent(
+                mServiceContext, mCsHandlerThread.getLooper(), new NetworkAgentConfig());
+        final ArgumentCaptor<String> nameCaptor = ArgumentCaptor.forClass(String.class);
+        verify(mNetworkStack).makeNetworkMonitor(any(), nameCaptor.capture(), any());
+        assertEquals(null, nameCaptor.getValue());
+        naNoExtraInfo.unregister();
+
+        reset(mNetworkStack);
+        final NetworkAgentConfig config =
+                new NetworkAgentConfig.Builder().setLegacyExtraInfo("legacyinfo").build();
+        final NetworkAgent naExtraInfo = new TestNetworkAgent(
+                mServiceContext, mCsHandlerThread.getLooper(), config);
+        verify(mNetworkStack).makeNetworkMonitor(any(), nameCaptor.capture(), any());
+        assertEquals("legacyinfo", nameCaptor.getValue());
+        naExtraInfo.unregister();
     }
 
     private void setupLocationPermissions(
