@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60cf7bfe_83f74b37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-12T14:40:41Z",
+      "side": 1,
+      "message": "After thinking, I still keep current raw content. Thanks for your advice.",
+      "parentUuid": "f4388713_f3189fee",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "194db1515909cfed0dca56c4956354f40e5e6ff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8830b438_e8f098e5",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2ffa7ab4_88e9a850",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-12T14:40:41Z",
+      "side": 1,
+      "message": "Use try-catch as the simplest way.\nIf any concern, please let me know.\n\n\nHere are some existing options.\n\"lock\" and \"thread-safe data type\" may have code change which only used for dump.\n\"Handler\" print may delay or each line is not printed together.\n\n  - try-catch\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/services/core/java/com/android/server/ConnectivityService.java#2547\ntry {\n..\n} catch (ArrayIndexOutOfBoundsException e) {\n    pw.println(\"  ArrayIndexOutOfBoundsException\");\n} catch (ConcurrentModificationException e) {\n    pw.println(\"  ConcurrentModificationException\");\n}\n\n  - lock: \nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/services/core/java/com/android/server/ConnectivityService.java#837\n        public void dump(IndentingPrintWriter pw) {\n            synchronized (mTypeLists) {\n\n  - Handler: \nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1305915/3/packages/Tethering/src/com/android/networkstack/tethering/EntitlementManager.java#40\npublic void dump(PrintWriter pw) {\n        mHandler.post(() -\u003e {\n\n  - Use thread-safe data type\n\n\nNote:\nDump has different thread id (dump: 2194, startPolling: 2396) from other function.\n\n- dump -\n06-12 20:04:00.611  2167  2194 E Tethering: [BpfCoordinator] ERROR dump::mUsingBpf \u003d true\n\n- startPolling -\n06-12 20:04:02.117  2167  2396 I Tethering: [BpfCoordinator] Polling started",
+      "parentUuid": "8830b438_e8f098e5",
+      "range": {
+        "startLine": 359,
+        "startChar": 8,
+        "endLine": 359,
+        "endChar": 22
+      },
+      "revId": "194db1515909cfed0dca56c4956354f40e5e6ff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb442578_2ee9e68f",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
         "patchSetId": 12
@@ -68,6 +116,30 @@
       "revId": "194db1515909cfed0dca56c4956354f40e5e6ff3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372713c9_2d7a565a",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-12T14:40:41Z",
+      "side": 1,
+      "message": "I use this way because I want \"\u003cno rule\u003e\" is printed in the same line as \"Forwarding rules:\".\n\n- EMPTY -\nForwarding rules: \u003cno rule\u003e\n\n- non-EMPTY -\nForwarding rules: \n  [wlan1]: iif(iface) oif(iface) addr srcmac dstmac\n\n\nPer talked, use your way for better code readability.",
+      "parentUuid": "eb442578_2ee9e68f",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 72
+      },
+      "revId": "194db1515909cfed0dca56c4956354f40e5e6ff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
