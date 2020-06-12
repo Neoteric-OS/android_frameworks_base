@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "477066a8_dfab4207",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-12T06:07:46Z",
+      "side": 1,
+      "message": "Use String.format. \nThanks for your advice.",
+      "parentUuid": "5fa714ca_0d057ef9",
+      "range": {
+        "startLine": 374,
+        "startChar": 0,
+        "endLine": 375,
+        "endChar": 26
+      },
+      "revId": "fbfc2c2397de4e844987cfca4475ebee84c2ac1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69d1fb4c_c0af16c8",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "43aa2333_fe86c63d",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-12T06:07:46Z",
+      "side": 1,
+      "message": "Yes. Thanks for your advice. pw.print(null) prints \"null\"",
+      "parentUuid": "69d1fb4c_c0af16c8",
+      "range": {
+        "startLine": 377,
+        "startChar": 12,
+        "endLine": 377,
+        "endChar": 55
+      },
+      "revId": "fbfc2c2397de4e844987cfca4475ebee84c2ac1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c1c60a0_780e8c4b",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
         "patchSetId": 11
@@ -68,6 +116,30 @@
       "revId": "fbfc2c2397de4e844987cfca4475ebee84c2ac1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e578603_e1ae094a",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-12T06:07:46Z",
+      "side": 1,
+      "message": "Done.\n\nYes, I just saw that NetworkStasts uses pw.print line by line for each element. So I copy from them.\nhttps://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/net/NetworkStats.java#1243\n    public void dump(String prefix, PrintWriter pw) {\n..\n            pw.print(\" rxBytes\u003d\"); pw.print(rxBytes[i]);\n            pw.print(\" rxPackets\u003d\"); pw.print(rxPackets[i]);\n            pw.print(\" txBytes\u003d\"); pw.print(txBytes[i]);\n            pw.print(\" txPackets\u003d\"); pw.print(txPackets[i]);",
+      "parentUuid": "5c1c60a0_780e8c4b",
+      "range": {
+        "startLine": 395,
+        "startChar": 0,
+        "endLine": 407,
+        "endChar": 40
+      },
+      "revId": "fbfc2c2397de4e844987cfca4475ebee84c2ac1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
