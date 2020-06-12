@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4388713_f3189fee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-12T08:00:24Z",
+      "side": 1,
+      "message": "iif(iface), oif(iface), addr, srcmac, dstmac ?\nThis comment also applies to the code print this.\n\nYou may also use \"-\u003e\" if you think it might be more clear.",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "194db1515909cfed0dca56c4956354f40e5e6ff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8830b438_e8f098e5",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-12T08:00:24Z",
+      "side": 1,
+      "message": "IIRC dumpsys would invoke this function on the thread of caller.\nGiven that mStats might be accessed frequently.\nIs this thread-safe?\nIf no, maybe do error handling?",
+      "range": {
+        "startLine": 359,
+        "startChar": 8,
+        "endLine": 359,
+        "endChar": 22
+      },
+      "revId": "194db1515909cfed0dca56c4956354f40e5e6ff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb442578_2ee9e68f",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-12T08:00:24Z",
+      "side": 1,
+      "message": "this would create redundant empty line if !\u003d0, right ?\nIIUC you may want to use if else",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 72
+      },
+      "revId": "194db1515909cfed0dca56c4956354f40e5e6ff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
