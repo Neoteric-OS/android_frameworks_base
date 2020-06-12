@@ -137,6 +137,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.location.LocationManager;
+import android.net.CaptivePortal;
 import android.net.CaptivePortalData;
 import android.net.ConnectionInfo;
 import android.net.ConnectivityManager;
@@ -233,6 +234,7 @@ import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.Nat464Xlat;
 import com.android.server.connectivity.NetworkAgentInfo;
+import com.android.server.connectivity.NetworkNotificationManager;
 import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
 import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Vpn;
@@ -346,6 +348,7 @@ public class ConnectivityServiceTest {
     @Mock NetworkStackClient mNetworkStack;
     @Mock PackageManager mPackageManager;
     @Mock UserManager mUserManager;
+    @Mock NetworkNotificationManager mNotifier;
     @Mock NotificationManager mNotificationManager;
     @Mock AlarmManager mAlarmManager;
     @Mock IConnectivityDiagnosticsCallback mConnectivityDiagnosticsCallback;
@@ -1262,6 +1265,7 @@ public class ConnectivityServiceTest {
         final ConnectivityService.Dependencies deps = mock(ConnectivityService.Dependencies.class);
         doReturn(mCsHandlerThread).when(deps).makeHandlerThread();
         doReturn(new TestNetIdManager()).when(deps).makeNetIdManager();
+        doReturn(mNotifier).when(deps).makeNetworkNotificationManager(any(), any());
         doReturn(mNetworkStack).when(deps).getNetworkStack();
         doReturn(systemProperties).when(deps).getSystemProperties();
         doReturn(mock(ProxyTracker.class)).when(deps).makeProxyTracker(any(), any());
@@ -7408,5 +7412,43 @@ public class ConnectivityServiceTest {
 
 
         mCm.unregisterNetworkCallback(networkCallback);
+    }
+
+    @Test
+    public void testIgnoreNetworkAndDuplicatedDisconnect() throws Exception {
+        // Bring up wifi.
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        final ConditionVariable cv = registerConnectivityBroadcast(1);
+        mWiFiNetworkAgent.connect(false);
+        waitFor(cv);
+        verifyActiveNetwork(TRANSPORT_WIFI);
+        // Start CaptivePortalLoginActivity.
+        final Network network = mWiFiNetworkAgent.getNetwork();
+        final Bundle bundle = new Bundle();
+        mService.startCaptivePortalAppInternal(network, bundle);
+        final int timeout = 5_000;
+        // Get the intent and verify the extra.
+        final Intent intent = mServiceContext.expectStartActivityIntent(timeout);
+        assertNotNull(intent.getParcelableExtra(ConnectivityManager.EXTRA_CAPTIVE_PORTAL));
+        assertTrue(intent.getParcelableExtra(
+                ConnectivityManager.EXTRA_CAPTIVE_PORTAL) instanceof CaptivePortal);
+        // Get the CaptivePortal and call CaptivePortal#ignoreNetwork() to disconnect the wifi.
+        final CaptivePortal captivePortal = intent.getParcelableExtra(
+                ConnectivityManager.EXTRA_CAPTIVE_PORTAL);
+        // Block the mCsHandlerThread and let the messages queue in the queue.
+        final ConditionVariable conditionVariable = new ConditionVariable();
+        mCsHandlerThread.getThreadHandler().post(() -> conditionVariable.block());
+        mWiFiNetworkAgent.disconnect();
+        captivePortal.ignoreNetwork();
+        conditionVariable.open();
+        waitForIdle();
+        // ConnectivityService#disconnectAndDestroyNetwork() will call
+        // NetworkNotificationManager#clearNotification(), so verify clearNotification can confirm
+        // that the disconnectAndDestroyNetwork() has been called or not.
+        // For duplicated disconnect, the disconnectAndDestroyNetwork() should be called once
+        // because if someone has called AsyncChannel.disconnect(), the mSrcHandler of AsyncChannel
+        // will be reset which makes the other one which calls AsyncChannel.disconnect() cannot
+        // send CMD_CHANNEL_DISCONNECTED back to ConnectivityService.
+        verify(mNotifier, timeout(TIMEOUT_MS).times(1)).clearNotification(network.netId);
     }
 }
