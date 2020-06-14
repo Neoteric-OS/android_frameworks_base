@@ -1341,6 +1341,7 @@ public class IpServer extends StateMachine {
     class UnavailableState extends State {
         @Override
         public void enter() {
+            mIpNeighborMonitor.stop();
             mLastError = TetheringManager.TETHER_ERROR_NO_ERROR;
             sendInterfaceState(STATE_UNAVAILABLE);
         }
