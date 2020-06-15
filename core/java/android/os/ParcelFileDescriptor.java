@@ -773,6 +773,7 @@ public class ParcelFileDescriptor implements Parcelable, Closeable {
         if (mGuard != null) {
             mGuard.close();
         }
+
         // Status MUST be sent before closing actual descriptor
         writeCommStatusAndClose(status, msg);
         IoUtils.closeQuietly(mFd);

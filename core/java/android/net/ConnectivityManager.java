@@ -4808,4 +4808,79 @@ public class ConnectivityManager {
             e.rethrowFromSystemServer();
         }
     }
+
+    @NonNull
+    private final Map<QosCallback, QosCallbackConnection> mQosCallbackConnectionMap =
+            new HashMap<>();
+
+    /**
+     * Registers a {@link QosFilter} with an associated {@link QosCallback}.  The callback will
+     * receive available QoS events that satisfy the given filter.
+     *
+     * The same {@link QosCallback} must be unregistered before being registered a second time,
+     * otherwise {@link QosCallback.QosCallbackRegistrationException} is thrown.
+     *
+     * All other exceptions, such as a {@link SecurityException}, will be passed through the
+     * callback to the onError method.  See {@link QosCallbackException}
+     *
+     * @param filter filters qos events
+     * @param callback receives qos events that satisfy the given filter     *
+     *
+     * @hide
+     */
+    @SystemApi
+    public void registerQosCallback(@NonNull final QosFilter filter,
+            @NonNull final QosCallback callback)
+            throws QosCallback.QosCallbackRegistrationException {
+        Objects.requireNonNull(filter, "The filter must be non-null");
+        Objects.requireNonNull(callback, "The callback must be non-null");
+        QosCallbackConnection connection = null;
+        try {
+            synchronized (mQosCallbackConnectionMap) {
+                if (!mQosCallbackConnectionMap.containsKey(callback)) {
+                    connection = new QosCallbackConnection(this, callback);
+                    mService.registerQosCallback((QosSocketFilter) filter, connection);
+                    mQosCallbackConnectionMap.put(callback, connection);
+                } else {
+                    Log.e(TAG, "registerQosCallback: Callback already registered");
+                    throw new QosCallback.QosCallbackRegistrationException();
+                }
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "registerQosCallback: Error while registering ", e);
+            connection.stop();
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Unregisters the given {@link QosCallback}.  The {@link QosCallback} will no longer receive
+     * events once unregistered and can be registered a second time.
+     *
+     * If the {@link QosCallback} does not have an active registration, it is a no-op.
+     *
+     * @param callback the callback being unregistered
+     *
+     * @hide
+     */
+    @SystemApi
+    public void unregisterQosCallback(@NonNull final QosCallback callback) {
+        Objects.requireNonNull(callback, "The callback must be non-null");
+        try {
+            synchronized (mQosCallbackConnectionMap) {
+                final QosCallbackConnection connection = mQosCallbackConnectionMap.get(callback);
+                if (connection != null) {
+                    //Make sure that the callback stops getting events even if unregister crashes.
+                    connection.stop();
+                    mService.unregisterQosCallback(connection);
+                    mQosCallbackConnectionMap.remove(callback);
+                } else {
+                    Log.d(TAG, "unregisterQosCallback: Callback not registered");
+                }
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "unregisterQosCallback: Error while unregistering ", e);
+            e.rethrowFromSystemServer();
+        }
+    }
 }

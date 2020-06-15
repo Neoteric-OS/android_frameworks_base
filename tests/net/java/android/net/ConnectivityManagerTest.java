@@ -32,10 +32,13 @@ import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_ETHERNET;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 
+import static junit.framework.Assert.assertEquals;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyBoolean;
@@ -49,15 +52,15 @@ import static org.mockito.Mockito.when;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
-import android.net.NetworkCapabilities;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
+import android.os.RemoteException;
+import android.telephony.EpsBearerQosSessionAttributes;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -67,7 +70,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import java.net.Socket;
+import java.util.ArrayList;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -330,6 +337,54 @@ public class ConnectivityManagerTest {
         mustFail(() -> { manager.unregisterNetworkCallback(nullCallback); });
         mustFail(() -> { manager.unregisterNetworkCallback(nullIntent); });
         mustFail(() -> { manager.releaseNetworkRequest(nullIntent); });
+    }
+
+    @Test
+    public void testQosCallbackConnectivityServiceCalled()
+            throws QosCallback.QosCallbackRegistrationException, RemoteException {
+        Network network = mock(Network.class);
+        QosSocketFilter filter = QosFilter.fromSocket(network, new Socket());
+        ConnectivityManager mgr = new ConnectivityManager(mCtx, mService);
+        QosCallback callback = mock(QosCallback.class);
+
+
+        //Test correct callback is used when registering with service
+        ArgumentCaptor<QosCallbackConnection> connectionCaptor =
+                ArgumentCaptor.forClass(QosCallbackConnection.class);
+        mgr.registerQosCallback(filter, callback);
+        verify(mService).registerQosCallback(eq(filter), connectionCaptor.capture());
+        QosCallbackConnection connection = connectionCaptor.getValue();
+        assertEquals(connection.getCallback(), callback);
+
+        //Test that exception is thrown when the same callback is registered twice
+        try {
+            mgr.registerQosCallback(mock(QosFilter.class), callback);
+            fail("expected QosCallback.QosCallbackRegistrationException");
+        } catch (QosCallback.QosCallbackRegistrationException ex) { }
+
+        //Test callback methods are called through the connection made
+        QosSession session = new QosSession(QosSession.TYPE_EPS_BEARER, 1);
+        EpsBearerQosSessionAttributes attributes = new EpsBearerQosSessionAttributes(
+                1, 2, 3, 4, 5,
+                new ArrayList<>());
+
+        connection.onQosEpsBearerSessionAvailable(session, attributes);
+        verify(callback).onQosSessionAvailable(session, attributes);
+
+        connection.onQosSessionLost(session);
+        verify(callback).onQosSessionLost(session);
+
+        connection.onError(1, "");
+        verify(callback).onError(any(QosCallbackException.class));
+
+        //Test unregister method does it's job and the callback is unwired
+        Mockito.reset(callback);
+        mgr.unregisterQosCallback(callback);
+        connection.onQosSessionLost(new QosSession(2, QosSession.TYPE_EPS_BEARER));
+        verify(callback, times(0)).onQosSessionLost(any());
+
+        //Verify that the callback can be registered again with no exception
+        mgr.registerQosCallback(filter, callback);
     }
 
     static void mustFail(Runnable fn) {
