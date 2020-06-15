@@ -1,0 +1,12 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Autosubmit+1: Jiyong Park <jiyong@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+API-Review+1: Michael Wright <michaelwr@google.com>
+Code-Review+2: Jiyong Park <jiyong@google.com>
+Code-Review+2: Paul Duffin <paulduffin@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Mon, 15 Jun 2020 14:56:37 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1321319
+Project: platform/frameworks/base
+Branch: refs/heads/master
