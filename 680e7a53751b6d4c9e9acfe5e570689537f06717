@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e8308af1_d99d5275",
+        "filename": "core/proto/android/stats/connectivity/Android.bp",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-06-15T06:26:46Z",
+      "side": 1,
+      "message": "The Nano Proto project is deprecated and no longer staffed. \ngo/android-protos#nano-proto-deprecated\ngo/android-protos#java-proto-lite-for-android",
+      "parentUuid": "aa79bc14_d6066f7c",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "680e7a53751b6d4c9e9acfe5e570689537f06717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30414380_cffbbc22",
         "filename": "core/proto/android/stats/connectivity/network_stack.proto",
         "patchSetId": 16
