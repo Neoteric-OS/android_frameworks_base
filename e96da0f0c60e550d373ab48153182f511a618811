@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba468977_c499323d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-15T06:26:14Z",
+      "side": 1,
+      "message": "Not sure, why they are different from I4ef3f1ab2e5ea1322133edd80db3ccd0022e9c91?\nIIUC this can be:\nChange-Id: I4ef3f1ab2e5ea1322133edd80db3ccd0022e9c91\nMerged-In: I4ef3f1ab2e5ea1322133edd80db3ccd0022e9c91",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "e96da0f0c60e550d373ab48153182f511a618811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41354c42_478160dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-15T06:26:14Z",
+      "side": 1,
+      "message": "maybe add (cherry-picked from xxxxx, but oooo) ?",
+      "revId": "e96da0f0c60e550d373ab48153182f511a618811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
