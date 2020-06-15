@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5206c2c3_186d9679",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-15T08:50:19Z",
+      "side": 1,
+      "message": "\u003e Use the same format as \"dumpsys netd\" for rules. That will be easier to compare data in text if any out-of-sync problem between java-land and netd\n\u003e \n\u003e By the way, there are 3 groups (upstream -\u003e downstream -\u003e client) for the 5 data members. In your advice, the data are printed as:\n\u003e 12(rmnet_data2) -\u003e 31(wlan1), 26:70:10:6d:8f:a2 -\u003e /2401:e180:8832:fedb:e5ed:3f98:bdc5:3a38, 54:99:63:d8:a1:ee\nIt would be :\n12(rmnet_data2) -\u003e 31(wlan1), /2401:e180:8832:fedb:e5ed:3f98:bdc5:3a38, 26:70:10:6d:8f:a2 -\u003e 54:99:63:d8:a1:ee\nAnyway keep it as is if you think current format is fine.\nBut it looks strange to me the data is sperated by comma, but the header is seperated by space.",
+      "parentUuid": "df5af1c4_92e9705f",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "194db1515909cfed0dca56c4956354f40e5e6ff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8830b438_e8f098e5",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
         "patchSetId": 12
