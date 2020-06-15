@@ -179,6 +179,19 @@ package android.telephony {
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.DataSpecificRegistrationInfo> CREATOR;
   }
 
+  public final class EpsBearerQosSessionAttributes implements android.os.Parcelable android.net.QosSessionAttributes {
+    ctor public EpsBearerQosSessionAttributes(int, long, long, long, long, @NonNull java.util.List<android.util.Pair<android.net.LinkAddress,java.lang.Integer>>);
+    method @NonNull public static android.telephony.EpsBearerQosSessionAttributes create(@NonNull android.os.Parcel);
+    method public int describeContents();
+    method public long getGuaranteedDownlinkBitRate();
+    method public long getGuaranteedUplinkBitRate();
+    method public int getQci();
+    method @NonNull public java.util.List<android.util.Pair<android.net.LinkAddress,java.lang.Integer>> getRemoteAddresses();
+    method public int getSessionType();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.EpsBearerQosSessionAttributes> CREATOR;
+  }
+
   public final class DisconnectCause {
     field public static final int ALREADY_DIALING = 72; // 0x48
     field public static final int ANSWERED_ELSEWHERE = 52; // 0x34
