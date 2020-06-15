@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2fbf0223_a97eb4d8",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 17
+      },
+      "lineNbr": 5972,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-06-15T06:23:12Z",
+      "side": 1,
+      "message": "We sometimes use NetworkType as the transporttype.\nTherefore, if you name \"NetworkType\" here it will confuse users.",
+      "parentUuid": "ed599eb2_ca241411",
+      "range": {
+        "startLine": 5972,
+        "startChar": 40,
+        "endLine": 5972,
+        "endChar": 46
+      },
+      "revId": "8fc4fce35638d71ffbdf90769db3a7b71ad4f183",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19334820_47953ba3",
         "filename": "core/proto/android/stats/connectivity/network_stack.proto",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "417a1827_83e5d9d5",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-06-15T06:23:12Z",
+      "side": 1,
+      "message": "I will use DC_NONE instead of DC_UNKNOWN...",
+      "parentUuid": "19334820_47953ba3",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "8fc4fce35638d71ffbdf90769db3a7b71ad4f183",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a94c669_4268068e",
         "filename": "core/proto/android/stats/connectivity/network_stack.proto",
         "patchSetId": 17
@@ -68,6 +116,30 @@
       "revId": "8fc4fce35638d71ffbdf90769db3a7b71ad4f183",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd648a38_86fe7e3b",
+        "filename": "core/proto/android/stats/connectivity/network_stack.proto",
+        "patchSetId": 17
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2020-06-15T06:23:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a94c669_4268068e",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 11
+      },
+      "revId": "8fc4fce35638d71ffbdf90769db3a7b71ad4f183",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
