@@ -31,6 +31,7 @@ import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import android.annotation.NonNull;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
@@ -41,6 +42,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkProvider;
 import android.net.NetworkSpecifier;
+import android.net.QosFilter;
 import android.net.SocketKeepalive;
 import android.net.UidRange;
 import android.os.ConditionVariable;
@@ -52,6 +54,8 @@ import com.android.server.connectivity.ConnectivityConstants;
 import com.android.testutils.HandlerUtilsKt;
 import com.android.testutils.TestableNetworkCallback;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
@@ -68,6 +72,7 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
     private int mStartKeepaliveError = SocketKeepalive.ERROR_UNSUPPORTED;
     private int mStopKeepaliveError = SocketKeepalive.NO_KEEPALIVE;
     private Integer mExpectedKeepaliveSlot = null;
+    private Map<Integer, Integer> mCallbackMap = new HashMap<>();
 
     public NetworkAgentWrapper(int transport, LinkProperties linkProperties, Context context)
             throws Exception {
@@ -140,6 +145,20 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
         @Override
         public void stopSocketKeepalive(Message msg) {
             onSocketKeepaliveEvent(msg.arg1, mWrapper.mStopKeepaliveError);
+        }
+
+        @Override
+        public void onQosCallbackRegistered(int qosCallbackId, @NonNull QosFilter filter) {
+            Log.i(mWrapper.mLogTag, "onQosCallbackRegistered");
+            mWrapper.mCallbackMap
+                    .compute(CMD_REGISTER_QOS_CALLBACK, (k, v) -> (v == null) ? 1 : v + 1);
+        }
+
+        @Override
+        public void onQosCallbackUnregistered(int qosCallbackId) {
+            Log.i(mWrapper.mLogTag, "onQosCallbackUnregistered");
+            mWrapper.mCallbackMap
+                    .compute(CMD_UNREGISTER_QOS_CALLBACK, (k, v) -> (v == null) ? 1 : v + 1);
         }
 
         @Override
@@ -262,6 +281,11 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
 
     public NetworkCapabilities getNetworkCapabilities() {
         return mNetworkCapabilities;
+    }
+
+    // Keeps track of the number of times a callback was called
+    public Map<Integer, Integer> getCallbackMap() {
+        return mCallbackMap;
     }
 
     public void waitForIdle(long timeoutMs) {
