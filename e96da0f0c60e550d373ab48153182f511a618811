@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b19b3e70_ca20087e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-15T07:06:53Z",
+      "side": 1,
+      "message": "Done, it\u0027s change id in git_rvc-d1-dev-plus-aosp branch but yes, it can also use change id I4ef3f1ab2e5ea1322133edd80db3ccd0022e9c91 as Merged-In.",
+      "parentUuid": "ba468977_c499323d",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "e96da0f0c60e550d373ab48153182f511a618811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41354c42_478160dc",
         "filename": "/COMMIT_MSG",
         "patchSetId": 12
@@ -39,6 +63,24 @@
       "revId": "e96da0f0c60e550d373ab48153182f511a618811",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31fc844_c28ba252",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-15T07:06:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41354c42_478160dc",
+      "revId": "e96da0f0c60e550d373ab48153182f511a618811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
