@@ -258,6 +258,19 @@ package android.telephony {
     field public static final int WIFI_LOST = 59; // 0x3b
   }
 
+  public final class EpsBearerQosSessionAttributes implements android.os.Parcelable android.net.QosSessionAttributes {
+    ctor public EpsBearerQosSessionAttributes(int, long, long, long, long, @NonNull java.util.List<android.util.Pair<android.net.LinkAddress,java.lang.Integer>>);
+    method @NonNull public static android.telephony.EpsBearerQosSessionAttributes create(@NonNull android.os.Parcel);
+    method public int describeContents();
+    method public long getGuaranteedDownlinkBitRate();
+    method public long getGuaranteedUplinkBitRate();
+    method public int getQci();
+    method @NonNull public java.util.List<android.util.Pair<android.net.LinkAddress,java.lang.Integer>> getRemoteAddresses();
+    method public int getSessionType();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.EpsBearerQosSessionAttributes> CREATOR;
+  }
+
   public final class ImsiEncryptionInfo implements android.os.Parcelable {
     method public int describeContents();
     method @Nullable public String getKeyIdentifier();
@@ -2135,6 +2148,5 @@ package android.telephony.mbms.vendor {
     field public static final String EXTRA_TEMP_FILE_ROOT = "android.telephony.mbms.extra.TEMP_FILE_ROOT";
     field public static final String EXTRA_TEMP_LIST = "android.telephony.mbms.extra.TEMP_LIST";
   }
-
 }
 
