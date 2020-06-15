@@ -95,6 +95,7 @@ import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.IQosCallback;
 import android.net.ISocketKeepaliveCallback;
 import android.net.InetAddresses;
 import android.net.IpMemoryStore;
@@ -123,6 +124,9 @@ import android.net.NetworkUtils;
 import android.net.NetworkWatchlistManager;
 import android.net.PrivateDnsConfigParcel;
 import android.net.ProxyInfo;
+import android.net.QosCallbackException;
+import android.net.QosFilter;
+import android.net.QosSocketFilter;
 import android.net.RouteInfo;
 import android.net.RouteInfoParcel;
 import android.net.SocketKeepalive;
@@ -211,6 +215,8 @@ import com.android.server.connectivity.NetworkNotificationManager.NotificationTy
 import com.android.server.connectivity.NetworkRanker;
 import com.android.server.connectivity.PermissionMonitor;
 import com.android.server.connectivity.ProxyTracker;
+import com.android.server.connectivity.QosCallbackTracker;
+import com.android.server.connectivity.QosFilterValidator;
 import com.android.server.connectivity.Vpn;
 import com.android.server.net.BaseNetdEventCallback;
 import com.android.server.net.BaseNetworkObserver;
@@ -626,6 +632,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private final LocationPermissionChecker mLocationPermissionChecker;
 
     private KeepaliveTracker mKeepaliveTracker;
+    private QosCallbackTracker mQosCallbackTracker;
     private NetworkNotificationManager mNotifier;
     private LingerMonitor mLingerMonitor;
 
@@ -954,6 +961,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public IBatteryStats getBatteryStatsService() {
             return BatteryStatsService.getService();
         }
+
+        public QosFilterValidator getQosFilterValidator() {
+            return new QosFilterValidator();
+        }
     }
 
     public ConnectivityService(Context context, INetworkManagementService netManager,
@@ -1147,6 +1158,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         dataConnectionStats.startMonitoring();
 
         mKeepaliveTracker = new KeepaliveTracker(mContext, mHandler);
+        mQosCallbackTracker = new QosCallbackTracker(mHandler, deps.getQosFilterValidator(),
+                this::enforceRequestCountLimit, this::decrementNetworkRequestPerUidCount);
         mNotifier = new NetworkNotificationManager(mContext, mTelephonyManager,
                 mContext.getSystemService(NotificationManager.class));
 
@@ -2780,6 +2793,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     mKeepaliveTracker.handleEventSocketKeepalive(nai, msg);
                     break;
                 }
+                case NetworkAgent.EVENT_QOS_SESSION_AVAILABLE: {
+                    mQosCallbackTracker.handleEventQosSessionAvailable(msg);
+                    break;
+                }
+                case NetworkAgent.EVENT_QOS_SESSION_LOST: {
+                    mQosCallbackTracker.handleEventQosSessionLost(msg);
+                    break;
+                }
+                case NetworkAgent.EVENT_QOS_SESSION_ERROR: {
+                    mQosCallbackTracker.handleEventQosSessionError(msg);
+                    break;
+                }
             }
         }
 
@@ -3334,6 +3359,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // of rematchAllNetworksAndRequests
         notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_LOST);
         mKeepaliveTracker.handleStopAllKeepalives(nai, SocketKeepalive.ERROR_INVALID_NETWORK);
+        mQosCallbackTracker.handleNetworkReleased(nai);
         for (String iface : nai.linkProperties.getAllInterfaceNames()) {
             // Disable wakeup packet monitoring for each interface.
             wakeupModifyInterface(iface, nai.networkCapabilities, false);
@@ -3573,7 +3599,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         nri.unlinkDeathRecipient();
         mNetworkRequests.remove(nri.request);
 
-        decrementNetworkRequestPerUidCount(nri);
+        decrementNetworkRequestPerUidCount(nri.mUid);
 
         mNetworkRequestInfoLogs.log("RELEASE " + nri);
         if (nri.request.isRequest()) {
@@ -3646,15 +3672,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void decrementNetworkRequestPerUidCount(final NetworkRequestInfo nri) {
+    private void enforceRequestCountLimit(int uid) {
         synchronized (mUidToNetworkRequestCount) {
-            final int requests = mUidToNetworkRequestCount.get(nri.mUid, 0);
+            int networkRequests = mUidToNetworkRequestCount.get(uid, 0) + 1;
+            if (networkRequests >= MAX_NETWORK_REQUESTS_PER_UID) {
+                throw new ServiceSpecificException(
+                        ConnectivityManager.Errors.TOO_MANY_REQUESTS);
+            }
+            mUidToNetworkRequestCount.put(uid, networkRequests);
+        }
+    }
+
+    private void decrementNetworkRequestPerUidCount(int uid) {
+        synchronized (mUidToNetworkRequestCount) {
+            final int requests = mUidToNetworkRequestCount.get(uid, 0);
             if (requests < 1) {
-                Slog.wtf(TAG, "BUG: too small request count " + requests + " for UID " + nri.mUid);
+                Slog.wtf(TAG, "BUG: too small request count " + requests + " for UID " + uid);
             } else if (requests == 1) {
-                mUidToNetworkRequestCount.removeAt(mUidToNetworkRequestCount.indexOfKey(nri.mUid));
+                mUidToNetworkRequestCount.removeAt(mUidToNetworkRequestCount.indexOfKey(uid));
             } else {
-                mUidToNetworkRequestCount.put(nri.mUid, requests - 1);
+                mUidToNetworkRequestCount.put(uid, requests - 1);
             }
         }
     }
@@ -5372,14 +5409,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         private void enforceRequestCountLimit() {
-            synchronized (mUidToNetworkRequestCount) {
-                int networkRequests = mUidToNetworkRequestCount.get(mUid, 0) + 1;
-                if (networkRequests >= MAX_NETWORK_REQUESTS_PER_UID) {
-                    throw new ServiceSpecificException(
-                            ConnectivityManager.Errors.TOO_MANY_REQUESTS);
-                }
-                mUidToNetworkRequestCount.put(mUid, networkRequests);
-            }
+            ConnectivityService.this.enforceRequestCountLimit(mUid);
         }
 
         void unlinkDeathRecipient() {
@@ -5546,10 +5576,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void enforceNetworkRequestPermissions(NetworkCapabilities networkCapabilities,
             String callingPackageName, String callingAttributionTag) {
-        if (networkCapabilities.hasCapability(NET_CAPABILITY_NOT_RESTRICTED) == false) {
-            enforceConnectivityRestrictedNetworksPermission();
-        } else {
+        if (!enforceRestrictedNetworkCapabilitiesPermissions(networkCapabilities)) {
             enforceChangePermission(callingPackageName, callingAttributionTag);
+        }
+    }
+
+    private boolean enforceRestrictedNetworkCapabilitiesPermissions(
+            NetworkCapabilities networkCapabilities) {
+        if (networkCapabilities.hasCapability(NET_CAPABILITY_NOT_RESTRICTED)) {
+            //Not a restricted network
+            return false;
+        } else {
+            enforceConnectivityRestrictedNetworksPermission();
+
+            //Passed restricted permissions check which throws an exception on failure
+            return true;
         }
     }
 
@@ -7954,7 +7995,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Decrement the reference count for this NetworkRequestInfo. The reference count is
             // incremented when the NetworkRequestInfo is created as part of
             // enforceRequestCountLimit().
-            decrementNetworkRequestPerUidCount(nri);
+            decrementNetworkRequestPerUidCount(nri.mUid);
             return;
         }
 
@@ -8017,7 +8058,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // Decrement the reference count for this NetworkRequestInfo. The reference count is
         // incremented when the NetworkRequestInfo is created as part of
         // enforceRequestCountLimit().
-        decrementNetworkRequestPerUidCount(nri);
+        decrementNetworkRequestPerUidCount(nri.mUid);
 
         iCb.unlinkToDeath(cbInfo, 0);
     }
@@ -8225,5 +8266,59 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         notifyDataStallSuspected(p, network.netId);
+    }
+
+    /**
+     * Registers {@link QosSocketFilter} with {@link IQosCallback}.
+     *
+     * @param filter the qos socket filter
+     * @param callback the callback to register
+     */
+    @Override
+    public void registerQosCallback(QosSocketFilter filter, IQosCallback callback) {
+        registerQosCallbackInternal(filter, callback);
+    }
+
+    /**
+     * Registers a {@IQosCallback} with base {@link QosFilter}.
+     *
+     * @param filter the filter to register
+     * @param callback the callback to register
+     */
+    @VisibleForTesting
+    public void registerQosCallbackInternal(QosFilter filter, IQosCallback callback) {
+        if (filter == null || callback == null) {
+            loge("registerQosCallbackInternal: filter or callback is null");
+            return;
+        }
+
+        NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(filter.getNetwork());
+        try {
+            if (nai != null) {
+                enforceRestrictedNetworkCapabilitiesPermissions(nai.networkCapabilities);
+                mQosCallbackTracker.registerCallback(nai, callback, filter);
+            } else {
+                loge("No network agent found for network: " + filter.getNetwork());
+            }
+        } catch (SecurityException e) {
+            try {
+                if (callback.asBinder().isBinderAlive()) {
+                    callback.onError(QosCallbackException.EX_TYPE_FILTER_NETWORK_SECURITY,
+                            e.getMessage());
+                }
+            } catch (RemoteException ex) {
+                loge("registerQosCallbackInternal: RemoteException", ex);
+            }
+        }
+    }
+
+    /**
+     * Unregisters the given callback.
+     *
+     * @param callback the callback to unregister
+     */
+    @Override
+    public void unregisterQosCallback(IQosCallback callback) {
+        mQosCallbackTracker.unregisterCallback(callback);
     }
 }
