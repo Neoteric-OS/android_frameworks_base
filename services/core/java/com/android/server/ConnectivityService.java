@@ -228,6 +228,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.ref.Reference;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -7477,21 +7478,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public void startNattKeepaliveWithFd(Network network, FileDescriptor fd, int resourceId,
+    public void startNattKeepaliveWithFd(Network network, ParcelFileDescriptor pfd, int resourceId,
             int intervalSeconds, ISocketKeepaliveCallback cb, String srcAddr,
             String dstAddr) {
+        // Why doesn't this enforceKeepalivePermission?
+        final FileDescriptor fd = pfd.getFileDescriptor();
         mKeepaliveTracker.startNattKeepalive(
                 getNetworkAgentInfoForNetwork(network), fd, resourceId,
                 intervalSeconds, cb,
                 srcAddr, dstAddr, NattSocketKeepalive.NATT_PORT);
+        Reference.reachabilityFence(pfd);
     }
 
     @Override
-    public void startTcpKeepalive(Network network, FileDescriptor fd, int intervalSeconds,
+    public void startTcpKeepalive(Network network, ParcelFileDescriptor pfd, int intervalSeconds,
             ISocketKeepaliveCallback cb) {
         enforceKeepalivePermission();
+        final FileDescriptor fd = pfd.getFileDescriptor();
         mKeepaliveTracker.startTcpKeepalive(
                 getNetworkAgentInfoForNetwork(network), fd, intervalSeconds, cb);
+        Reference.reachabilityFence(pfd);
     }
 
     @Override
