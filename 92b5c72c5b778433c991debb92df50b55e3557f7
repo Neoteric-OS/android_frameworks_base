@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6972aa7_5c3373c3",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-16T02:32:30Z",
+      "side": 1,
+      "message": "Delegate is a very generic term. This is the only usage of the type in this file, how about we remove this import and qualify it ?\n\n  NetworkStatsSubscriptionsMonitor.Delegate mDelegate",
+      "range": {
+        "startLine": 67,
+        "startChar": 18,
+        "endLine": 67,
+        "endChar": 26
+      },
+      "revId": "92b5c72c5b778433c991debb92df50b55e3557f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294e65ac_6f75ef62",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-16T02:32:30Z",
+      "side": 1,
+      "message": "This is a fairly dangerous thing to do in a test (it\u0027s difficult to predict how this will interact with tests run later). What is the specific reason you need to do this, and importantly why do you think this is the right solution (as opposed to e.g. use TestLooper) ?",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 9
+      },
+      "revId": "92b5c72c5b778433c991debb92df50b55e3557f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695eafdd_b9e22927",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-16T02:32:30Z",
+      "side": 1,
+      "message": "Does this happen in your test ? It looks like it should not because the test controls everything, and if it does then failing silently is not a great option.",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 28
+      },
+      "revId": "92b5c72c5b778433c991debb92df50b55e3557f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6ba59b_530384f9",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-16T02:32:30Z",
+      "side": 1,
+      "message": "Likewise : if this is a programming error in the test, it\u0027s better to fail.\n\n  if (mTestSubList.contains(subId)) fail(\"The subscriber list already contains this ID\");",
+      "range": {
+        "startLine": 128,
+        "startChar": 12,
+        "endLine": 128,
+        "endChar": 36
+      },
+      "revId": "92b5c72c5b778433c991debb92df50b55e3557f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8928ac0f_aa0a6e87",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-16T02:32:30Z",
+      "side": 1,
+      "message": "Why not simply eq(type) ?",
+      "range": {
+        "startLine": 149,
+        "startChar": 70,
+        "endLine": 149,
+        "endChar": 90
+      },
+      "revId": "92b5c72c5b778433c991debb92df50b55e3557f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
