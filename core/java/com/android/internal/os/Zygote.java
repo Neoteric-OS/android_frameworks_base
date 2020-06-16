@@ -24,6 +24,7 @@ import android.content.pm.ApplicationInfo;
 import android.net.Credentials;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
+import android.net.NetworkUtils;
 import android.os.FactoryTest;
 import android.os.IVold;
 import android.os.Process;
@@ -239,6 +240,13 @@ public final class Zygote {
 
     private Zygote() {}
 
+    private static boolean hasAIDNetwork(int[] gids) {
+        for (int gid : gids) {
+            if (gid == 3003) return true;
+        }
+        return false;
+    }
+
     /**
      * Forks a new VM instance.  The current VM must have been started
      * with the -Xzygote flag. <b>NOTE: new instance keeps all
@@ -286,6 +294,10 @@ public final class Zygote {
         if (pid == 0) {
             // Note that this event ends at the end of handleChildProc,
             Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "PostFork");
+
+            final boolean ne = hasAIDNetwork(gids);
+            Log.e("testInstallUsePackageSuccess_full", "forkAndSpecialize: "+ po);
+            NetworkUtils.setNetworkConnectivity(ne);
         }
 
         // Set the Java Language thread priority to the default value for new apps.

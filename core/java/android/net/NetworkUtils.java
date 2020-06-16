@@ -155,6 +155,12 @@ public class NetworkUtils {
     public static native Network getDnsNetwork() throws ErrnoException;
 
     /**
+     *
+     *
+     */
+    public static native void setNetworkConnectivity(boolean hasConnectivity);
+
+    /**
      * Get the tcp repair window associated with the {@code fd}.
      *
      * @param fd the tcp socket's {@link FileDescriptor}.

@@ -226,6 +226,10 @@ static jobject android_net_utils_getDnsNetwork(JNIEnv *env, jobject thiz) {
             class_Network, ctor, dnsNetId & ~NETID_USE_LOCAL_NAMESERVERS, privateDnsBypass);
 }
 
+static void android_net_utils_setNetworkConnectivity(JNIEnv *env, jboolean hasConnectivity) {
+    setNetworkConnectivity(hasConnectivity);
+}
+
 static jobject android_net_utils_getTcpRepairWindow(JNIEnv *env, jobject thiz, jobject javaFd) {
     if (javaFd == NULL) {
         jniThrowNullPointerException(env, NULL);
@@ -267,21 +271,30 @@ static jobject android_net_utils_getTcpRepairWindow(JNIEnv *env, jobject thiz, j
  * JNI registration.
  */
 static const JNINativeMethod gNetworkUtilMethods[] = {
-    /* name, signature, funcPtr */
-    { "bindProcessToNetwork", "(I)Z", (void*) android_net_utils_bindProcessToNetwork },
-    { "getBoundNetworkForProcess", "()I", (void*) android_net_utils_getBoundNetworkForProcess },
-    { "bindProcessToNetworkForHostResolution", "(I)Z", (void*) android_net_utils_bindProcessToNetworkForHostResolution },
-    { "bindSocketToNetwork", "(II)I", (void*) android_net_utils_bindSocketToNetwork },
-    { "protectFromVpn", "(I)Z", (void*)android_net_utils_protectFromVpn },
-    { "queryUserAccess", "(II)Z", (void*)android_net_utils_queryUserAccess },
-    { "attachDropAllBPFFilter", "(Ljava/io/FileDescriptor;)V", (void*) android_net_utils_attachDropAllBPFFilter },
-    { "detachBPFFilter", "(Ljava/io/FileDescriptor;)V", (void*) android_net_utils_detachBPFFilter },
-    { "getTcpRepairWindow", "(Ljava/io/FileDescriptor;)Landroid/net/TcpRepairWindow;", (void*) android_net_utils_getTcpRepairWindow },
-    { "resNetworkSend", "(I[BII)Ljava/io/FileDescriptor;", (void*) android_net_utils_resNetworkSend },
-    { "resNetworkQuery", "(ILjava/lang/String;III)Ljava/io/FileDescriptor;", (void*) android_net_utils_resNetworkQuery },
-    { "resNetworkResult", "(Ljava/io/FileDescriptor;)Landroid/net/DnsResolver$DnsResponse;", (void*) android_net_utils_resNetworkResult },
-    { "resNetworkCancel", "(Ljava/io/FileDescriptor;)V", (void*) android_net_utils_resNetworkCancel },
-    { "getDnsNetwork", "()Landroid/net/Network;", (void*) android_net_utils_getDnsNetwork },
+        /* name, signature, funcPtr */
+        {"bindProcessToNetwork", "(I)Z", (void *)android_net_utils_bindProcessToNetwork},
+        {"getBoundNetworkForProcess", "()I", (void *)android_net_utils_getBoundNetworkForProcess},
+        {"bindProcessToNetworkForHostResolution", "(I)Z",
+         (void *)android_net_utils_bindProcessToNetworkForHostResolution},
+        {"bindSocketToNetwork", "(II)I", (void *)android_net_utils_bindSocketToNetwork},
+        {"protectFromVpn", "(I)Z", (void *)android_net_utils_protectFromVpn},
+        {"queryUserAccess", "(II)Z", (void *)android_net_utils_queryUserAccess},
+        {"attachDropAllBPFFilter", "(Ljava/io/FileDescriptor;)V",
+         (void *)android_net_utils_attachDropAllBPFFilter},
+        {"detachBPFFilter", "(Ljava/io/FileDescriptor;)V",
+         (void *)android_net_utils_detachBPFFilter},
+        {"getTcpRepairWindow", "(Ljava/io/FileDescriptor;)Landroid/net/TcpRepairWindow;",
+         (void *)android_net_utils_getTcpRepairWindow},
+        {"resNetworkSend", "(I[BII)Ljava/io/FileDescriptor;",
+         (void *)android_net_utils_resNetworkSend},
+        {"resNetworkQuery", "(ILjava/lang/String;III)Ljava/io/FileDescriptor;",
+         (void *)android_net_utils_resNetworkQuery},
+        {"resNetworkResult", "(Ljava/io/FileDescriptor;)Landroid/net/DnsResolver$DnsResponse;",
+         (void *)android_net_utils_resNetworkResult},
+        {"resNetworkCancel", "(Ljava/io/FileDescriptor;)V",
+         (void *)android_net_utils_resNetworkCancel},
+        {"getDnsNetwork", "()Landroid/net/Network;", (void *)android_net_utils_getDnsNetwork},
+        {"setNetworkConnectivity", "(Z)V", (void *)android_net_utils_setNetworkConnectivity},
 };
 
 int register_android_net_NetworkUtils(JNIEnv* env)
