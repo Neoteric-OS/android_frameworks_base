@@ -2190,6 +2190,7 @@ public class LocationManagerService extends ILocationManager.Stub {
                 }
 
                 record.mRequest = locationRequest;
+                record.mReceiver.updateMonitoring(true);
                 providerRequest.locationRequests.add(locationRequest);
                 if (!locationRequest.isLowPowerMode()) {
                     providerRequest.lowPowerMode = false;
