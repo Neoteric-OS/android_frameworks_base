@@ -16,14 +16,15 @@
 
 package com.android.server;
 
-import android.app.ActivityThread;
-import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.ServiceManager;
 import android.util.Slog;
+
+import com.android.server.wallpaper.WallpaperManagerService;
+
 
 /**
  * Receiver responsible for updating the wallpaper when the device
@@ -46,17 +47,13 @@ public class WallpaperUpdateReceiver extends BroadcastReceiver {
     }
 
     private void updateWallpaper() {
-        try {
-            ActivityThread currentActivityThread = ActivityThread.currentActivityThread();
-            Context uiContext = currentActivityThread.getSystemUiContext();
-            WallpaperManager wallpaperManager = WallpaperManager.getInstance(uiContext);
-            if (DEBUG) Slog.d(TAG, "Set customized default_wallpaper.");
-            Bitmap blank = Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8);
-            // set a blank wallpaper to force a redraw of default_wallpaper
-            wallpaperManager.setBitmap(blank);
-            wallpaperManager.setResource(com.android.internal.R.drawable.default_wallpaper);
-        } catch (Exception e) {
-            Slog.w(TAG, "Failed to customize system wallpaper." + e);
+        if (DEBUG) Slog.d(TAG, "Set customized default_wallpaper.");
+        WallpaperManagerService service =
+                (WallpaperManagerService)ServiceManager.getService(Context.WALLPAPER_SERVICE);
+        if (service == null) {
+            Slog.w(TAG, "WallpaperManagerService is not started");
+            return;
         }
+        service.requestUpdateImageWallpaper();
     }
 }
