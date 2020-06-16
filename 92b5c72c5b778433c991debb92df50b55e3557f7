@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "c3a01828_02e031ec",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-16T07:56:59Z",
+      "side": 1,
+      "message": "I met this error without this, and ConnectivityServiceTest includes a similar usage.\nSTACKTRACE:\njava.lang.RuntimeException: Can\u0027t create handler inside thread Thread[Instr: androidx.test.runner.AndroidJUnitRunner,5,main] that has not called Looper.prepare()\n\n\tat android.os.Handler.\u003cinit\u003e(Handler.java:227)\n\tat android.os.Handler.\u003cinit\u003e(Handler.java:129)\n\tat android.telephony.SubscriptionManager$OnSubscriptionsChangedListener$OnSubscriptionsChangedListenerHandler.\u003cinit\u003e(SubscriptionManager.java:907)",
+      "parentUuid": "294e65ac_6f75ef62",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 9
+      },
+      "revId": "92b5c72c5b778433c991debb92df50b55e3557f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "695eafdd_b9e22927",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 13
@@ -105,6 +129,30 @@
       "writtenOn": "2020-06-16T02:32:30Z",
       "side": 1,
       "message": "Why not simply eq(type) ?",
+      "range": {
+        "startLine": 149,
+        "startChar": 70,
+        "endLine": 149,
+        "endChar": 90
+      },
+      "revId": "92b5c72c5b778433c991debb92df50b55e3557f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aecd48a8_8d3faa24",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-06-16T07:56:59Z",
+      "side": 1,
+      "message": "I discussed this part with junyu.The conclusion is we don\u0027t expect that it gets a callback with different type. If simply use eq(type) which means we only care about the callback with the specific type then the callback with unexpected type will be ignored.",
+      "parentUuid": "8928ac0f_aa0a6e87",
       "range": {
         "startLine": 149,
         "startChar": 70,
