@@ -22,6 +22,30 @@
       "revId": "60cd8991d0586663052ac8ab9b73d3b24ad489ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47688401_a07004e0",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-16T08:19:20Z",
+      "side": 1,
+      "message": "I didn\u0027t add Ipv6ForwardingRule#toString because class Ipv6ForwardingRule can\u0027t convert from interface index to interface name without a outer map |mInterfaceNames| of class BpfCooridnator.\n\n# converting interface name is a problem for class Ipv6ForwardingRule\n..12(rmnet_data2) 31(wlan1)",
+      "parentUuid": "9b406b47_50d30ff7",
+      "range": {
+        "startLine": 412,
+        "startChar": 0,
+        "endLine": 414,
+        "endChar": 82
+      },
+      "revId": "60cd8991d0586663052ac8ab9b73d3b24ad489ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
