@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7412e9f0_f396129a",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-17T06:22:47Z",
+      "side": 1,
+      "message": "So add an argument to the constructor NetworkStatsSubscriptionMonitor for the looper, and pass that to super(Looper).",
+      "parentUuid": "c3a01828_02e031ec",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 9
+      },
+      "revId": "92b5c72c5b778433c991debb92df50b55e3557f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "695eafdd_b9e22927",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
         "patchSetId": 13
@@ -153,6 +177,30 @@
       "side": 1,
       "message": "I discussed this part with junyu.The conclusion is we don\u0027t expect that it gets a callback with different type. If simply use eq(type) which means we only care about the callback with the specific type then the callback with unexpected type will be ignored.",
       "parentUuid": "8928ac0f_aa0a6e87",
+      "range": {
+        "startLine": 149,
+        "startChar": 70,
+        "endLine": 149,
+        "endChar": 90
+      },
+      "revId": "92b5c72c5b778433c991debb92df50b55e3557f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ccf4da_b973ac58",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-17T06:22:47Z",
+      "side": 1,
+      "message": "Okay then. Another way would be to also say\n\n  verify(mDelegate, never()).onCollapsedRatTypeChanged(anyInt(), not(eq(type)))\n\n(not() is in AdditionalMatchers)\n\nBut I guess what you have here is okay.",
+      "parentUuid": "aecd48a8_8d3faa24",
       "range": {
         "startLine": 149,
         "startChar": 70,
