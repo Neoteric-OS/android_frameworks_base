@@ -26,7 +26,7 @@ import android.os.SystemClock;
 import libcore.timezone.CountryTimeZones;
 import libcore.timezone.CountryTimeZones.TimeZoneMapping;
 import libcore.timezone.TimeZoneFinder;
-import libcore.timezone.ZoneInfoDb;
+import com.android.icu.timezone.ZoneInfoDb;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;

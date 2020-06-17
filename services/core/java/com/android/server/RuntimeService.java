@@ -23,9 +23,9 @@ import android.service.runtime.RuntimeServiceInfoProto;
 import android.util.Slog;
 import android.util.proto.ProtoOutputStream;
 
-import libcore.timezone.TimeZoneDataFiles;
-import libcore.util.CoreLibraryDebug;
-import libcore.util.DebugInfo;
+import com.android.icu.timezone.TimeZoneDataFiles;
+import com.android.icu.timezone.CoreLibraryDebug;
+import com.android.icu.timezone.DebugInfo;
 
 import com.android.internal.util.DumpUtils;
 import com.android.timezone.distro.DistroException;

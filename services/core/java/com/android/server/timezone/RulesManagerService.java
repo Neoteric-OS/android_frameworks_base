@@ -46,10 +46,10 @@ import com.android.timezone.distro.StagedDistroOperation;
 import com.android.timezone.distro.TimeZoneDistro;
 import com.android.timezone.distro.installer.TimeZoneDistroInstaller;
 
-import libcore.timezone.TimeZoneDataFiles;
+import com.android.icu.timezone.TimeZoneDataFiles;
 import libcore.timezone.TimeZoneFinder;
-import libcore.timezone.TzDataSetVersion;
-import libcore.timezone.ZoneInfoDb;
+import com.android.icu.timezone.TzDataSetVersion;
+import com.android.icu.timezone.ZoneInfoDb;
 
 import java.io.File;
 import java.io.FileDescriptor;
