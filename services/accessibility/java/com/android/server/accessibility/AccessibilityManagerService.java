@@ -4189,7 +4189,14 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
          */
         public void reconcileSoftKeyboardModeWithSettingsLocked() {
             final ContentResolver cr = mContext.getContentResolver();
-            final boolean showWithHardKeyboardSettings =
+            boolean showWithHardKeyboardSettings = false;
+            final boolean isCar = mPackageManager.hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE);
+
+            if(isCar)
+               showWithHardKeyboardSettings =
+                    Settings.Secure.getIntForUser(cr, Settings.Secure.SHOW_IME_WITH_HARD_KEYBOARD, 0,10) != 0;
+            else
+               showWithHardKeyboardSettings =
                     Settings.Secure.getInt(cr, Settings.Secure.SHOW_IME_WITH_HARD_KEYBOARD, 0) != 0;
             if (mSoftKeyboardShowMode == SHOW_MODE_IGNORE_HARD_KEYBOARD) {
                 if (!showWithHardKeyboardSettings) {
