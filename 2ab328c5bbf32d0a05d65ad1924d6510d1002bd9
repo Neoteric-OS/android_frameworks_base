@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd6117d8_9e03a346",
+        "filename": "packages/Tethering/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-18T03:16:44Z",
+      "side": 1,
+      "message": "Instead of listing all the owners one by one, can\u0027t we use some existing other owners file? For example, include the NetworkStack OWNERS?",
+      "revId": "2ab328c5bbf32d0a05d65ad1924d6510d1002bd9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
