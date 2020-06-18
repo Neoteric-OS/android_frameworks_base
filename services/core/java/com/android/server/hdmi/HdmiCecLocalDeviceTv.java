@@ -205,18 +205,18 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                 mAddress, mService.getPhysicalAddress(), mDeviceType));
         mService.sendCecCommand(HdmiCecMessageBuilder.buildDeviceVendorIdCommand(
                 mAddress, mService.getVendorId()));
+        if (!mDelayedMessageBuffer.isBuffered(Constants.MESSAGE_ACTIVE_SOURCE)) {
+            mService.sendCecCommand(HdmiCecMessageBuilder.buildRequestActiveSource(mAddress));
+        }
         mCecSwitches.add(mService.getPhysicalAddress());  // TV is a CEC switch too.
         mTvInputs.clear();
         mSkipRoutingControl = (reason == HdmiControlService.INITIATED_BY_WAKE_UP_MESSAGE);
-        launchRoutingControl(reason != HdmiControlService.INITIATED_BY_ENABLE_CEC &&
-                reason != HdmiControlService.INITIATED_BY_BOOT_UP);
         mLocalDeviceAddresses = initLocalDeviceAddresses();
         resetSelectRequestBuffer();
         launchDeviceDiscovery();
         startQueuedActions();
-        if (!mDelayedMessageBuffer.isBuffered(Constants.MESSAGE_ACTIVE_SOURCE)) {
-            mService.sendCecCommand(HdmiCecMessageBuilder.buildRequestActiveSource(mAddress));
-        }
+        launchRoutingControl(reason != HdmiControlService.INITIATED_BY_ENABLE_CEC &&
+                reason != HdmiControlService.INITIATED_BY_BOOT_UP);
     }
 
     @ServiceThreadOnly

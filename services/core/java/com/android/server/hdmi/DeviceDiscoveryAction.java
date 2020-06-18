@@ -342,6 +342,15 @@ final class DeviceDiscoveryAction extends HdmiCecFeatureAction {
             tv().updateCecSwitchInfo(current.mLogicalAddress, current.mDeviceType,
                     current.mPhysicalAddress);
         }
+
+        // Add default deviceInfo to handle <Active Source> properly
+        HdmiDeviceInfo deviceInfo = new HdmiDeviceInfo(current.mLogicalAddress,
+            current.mPhysicalAddress, current.mPortId, current.mDeviceType,
+            Constants.UNKNOWN_VENDOR_ID, HdmiUtils.getDefaultDeviceName(current.mLogicalAddress));
+        Slog.i(TAG, "Add default deviceInfo on receiving <Report Physical Address>. " +
+                deviceInfo.toString());
+        tv().addCecDevice(deviceInfo);
+
         increaseProcessedDeviceCount();
         checkAndProceedStage();
     }
