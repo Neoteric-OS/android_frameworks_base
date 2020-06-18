@@ -761,6 +761,7 @@ public class IpServerTest {
         mLooper.dispatchAll();
         verify(mNetd).tetherOffloadRuleRemove(matches(UPSTREAM_IFINDEX, neighA, macA));
         verify(mNetd).tetherOffloadRuleRemove(matches(UPSTREAM_IFINDEX, neighB, macB));
+        verify(mIpNeighborMonitor).stop();
         reset(mNetd);
     }
 
