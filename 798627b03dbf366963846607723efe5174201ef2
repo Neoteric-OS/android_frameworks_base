@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2ab43e3_f72fc2e2",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-19T03:14:21Z",
+      "side": 1,
+      "message": "maybe just pass the handler?\nand derive the executor and looper inside it?",
+      "range": {
+        "startLine": 445,
+        "startChar": 16,
+        "endLine": 445,
+        "endChar": 67
+      },
+      "revId": "798627b03dbf366963846607723efe5174201ef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e17333_9213eefc",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-19T03:14:21Z",
+      "side": 1,
+      "message": "Not sure if this is a good idea.\nWhat would happen if looper and executor is not on the same thread?",
+      "range": {
+        "startLine": 85,
+        "startChar": 66,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "798627b03dbf366963846607723efe5174201ef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
