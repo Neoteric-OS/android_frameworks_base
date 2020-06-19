@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5b0a362_1432d7db",
+        "filename": "core/jni/android_os_Parcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1018108
+      },
+      "writtenOn": "2020-06-19T17:12:55Z",
+      "side": 1,
+      "message": "I\u0027m just preserving the behavior here. If I was writing this from scratch I would want to use UNEXPECTED_NULL.",
+      "range": {
+        "startLine": 235,
+        "startChar": 56,
+        "endLine": 235,
+        "endChar": 58
+      },
+      "revId": "b1bc1a762335a0b2df7fa0bc4f9657de113d8bf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
