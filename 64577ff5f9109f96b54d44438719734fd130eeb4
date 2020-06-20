@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "80e702c4_47cac361",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2020-06-20T08:35:10Z",
+      "side": 1,
+      "message": "\u003eOut of curiosity, what cert validation is used in opportunistic mode?\nAll of the DoT probes in this change use the system certificates for validation.\n\nIf I recall correctly, NetworkDiagnostics uses the default TrustManager instance (line 691), which loads the system certs from /system/etc/security/cacerts/, from Conscrypt for certificate validation. I didn\u0027t dig into the very detailed code though.",
+      "parentUuid": "6f920ee8_100fdbd5",
+      "range": {
+        "startLine": 283,
+        "startChar": 11,
+        "endLine": 283,
+        "endChar": 20
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d45ab8c8_45443f9b",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 11
@@ -309,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "4d725274_12d6c2cb",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2020-06-20T08:35:10Z",
+      "side": 1,
+      "message": "Done. Just made it static and renamed to socketAddressToString.",
+      "parentUuid": "ba606648_1418369d",
+      "range": {
+        "startLine": 454,
+        "startChar": 48,
+        "endLine": 454,
+        "endChar": 79
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "527f9c07_bda62d7f",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 11
@@ -332,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "39d9c15d_4f59139e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2020-06-20T08:35:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "527f9c07_bda62d7f",
+      "range": {
+        "startLine": 463,
+        "startChar": 26,
+        "endLine": 463,
+        "endChar": 52
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1c0aa2c_3a38a9bf",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 11
@@ -352,6 +424,30 @@
       "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50498c4c_19eadfd7",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1349423
+      },
+      "writtenOn": "2020-06-20T08:35:10Z",
+      "side": 1,
+      "message": "Hope there will be someone who helps refactor this file.",
+      "parentUuid": "c1c0aa2c_3a38a9bf",
+      "range": {
+        "startLine": 667,
+        "startChar": 30,
+        "endLine": 667,
+        "endChar": 49
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
