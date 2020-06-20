@@ -41,19 +41,16 @@ public abstract class IdentityCredential {
     /**
      * Create an ephemeral key pair to use to establish a secure channel with a reader.
      *
-     * <p>Most applications will use only the public key, and only to send it to the reader,
-     * allowing the private key to be used internally for {@link #encryptMessageToReader(byte[])}
-     * and {@link #decryptMessageFromReader(byte[])}. The private key is also provided for
-     * applications that wish to use a cipher suite that is not supported by
-     * {@link IdentityCredentialStore}.
+     * <p>Applications should use this key-pair for the communications channel with the reader as
+     * specified in ISO 18013-5 section 9.2.1 "Session encryption".
      *
      * @return ephemeral key pair to use to establish a secure channel with a reader.
      */
     public @NonNull abstract KeyPair createEphemeralKeyPair();
 
     /**
-     * Set the ephemeral public key provided by the reader. This must be called before
-     * {@link #encryptMessageToReader} or {@link #decryptMessageFromReader} can be called.
+     * Set the ephemeral public key provided by the reader. If called, this must be called before
+     * {@link #getEntries(byte[], Map, byte[], byte[])} is called.
      *
      * @param readerEphemeralPublicKey The ephemeral public key provided by the reader to
      *                                 establish a secure session.
@@ -65,6 +62,11 @@ public abstract class IdentityCredential {
     /**
      * Encrypt a message for transmission to the reader.
      *
+     * <p>Do not use. In this version of the API, this method produces an incorrect
+     * result. Instead, applications should implement message encryption/decryption themselves as
+     * detailed in the {@link #createEphemeralKeyPair()} method. In a future API-level, this
+     * restriction is expected to be relaxed.
+     *
      * @param messagePlaintext unencrypted message to encrypt.
      * @return encrypted message.
      */
@@ -72,6 +74,11 @@ public abstract class IdentityCredential {
 
     /**
      * Decrypt a message received from the reader.
+     *
+     * <p>Do not use. In this version of the API, this method produces an incorrect
+     * result. Instead, applications should implement message encryption/decryption themselves as
+     * detailed in the {@link #createEphemeralKeyPair()} method. In a future API-level, this
+     * restriction is expected to be relaxed.
      *
      * @param messageCiphertext encrypted message to decrypt.
      * @return decrypted message.
