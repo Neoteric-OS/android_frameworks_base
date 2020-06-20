@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5bbd5973_c973d896",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-20T04:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a15530de_02da0d8f",
+      "range": {
+        "startLine": 68,
+        "startChar": 61,
+        "endLine": 70,
+        "endChar": 74
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "639cedd9_001b7c54",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f1a87a6_5284f749",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-20T04:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "639cedd9_001b7c54",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 56
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "42d38962_db370647",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-20T04:30:01Z",
+      "side": 1,
+      "message": "Ah, I see. I was thinking it would be good to avoid probing the servers if private DNS is disabled, because:\n1. That way we will not think that the probe failures indicate a problem:\n2. The diagnostics will complete more quickly when the servers do not reply to tcp/853 connections.\n\nThat said, disabled is likely rare (because the default is opportunistic) and we have the same problem in opportunistic anyway. This is good enough for now.",
+      "parentUuid": "305a6466_6ad36982",
+      "range": {
+        "startLine": 228,
+        "startChar": 86,
+        "endLine": 228,
+        "endChar": 87
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb97d2e7_66cda529",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 11
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "6f920ee8_100fdbd5",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-20T04:30:01Z",
+      "side": 1,
+      "message": "I was confused by the comment until I tested this code and saw that it did both UDP and TLS measurements. (This is good.) I thought it would only do either UDP or TLS to a given IP address. (That would not have been great.)\n\nI think \"|target| can be a Do53 server as well as a DoT server\" is confusing because in the case of Do53 and DoT we do probe both UDP and DoT\". What we don\u0027t do is probe DoT twice on the same IP address. So maybe reword the comment to  \"This might overwrite an existing entry in mDnsTlsChecks, because |target| can be an IP address configured by the network as well as an IP address learned by resolving the strict mode DNS hostname\".\n\nAlso, can you say what happens if the measurement is overwritten? Maybe something like: \"if the entry is overwritten, the overwritten measurement thread executes as usual, but its results are not reported.\"\n\nAlways validating the cert here seems fine for now. I don\u0027t think it\u0027s difficult to to though (we can just set a null hostname verifier or something like that).\n\nOut of curiosity, what cert validation is used in opportunistic mode? Does the code validate that the server has a valid cert for the IP address? Or does it only check that the cert is unexpired? Or...?",
+      "parentUuid": "ab07f58a_ae03cf65",
+      "range": {
+        "startLine": 283,
+        "startChar": 11,
+        "endLine": 283,
+        "endChar": 20
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d45ab8c8_45443f9b",
         "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
         "patchSetId": 11
@@ -177,6 +273,30 @@
       "side": 1,
       "message": "Probably this function is more close to an utility now.",
       "parentUuid": "d45ab8c8_45443f9b",
+      "range": {
+        "startLine": 454,
+        "startChar": 48,
+        "endLine": 454,
+        "endChar": 79
+      },
+      "revId": "64577ff5f9109f96b54d44438719734fd130eeb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba606648_1418369d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-20T04:30:01Z",
+      "side": 1,
+      "message": "If so, then can we make it static and pass in localAddr as well?",
+      "parentUuid": "96c9167e_a73f99e2",
       "range": {
         "startLine": 454,
         "startChar": 48,

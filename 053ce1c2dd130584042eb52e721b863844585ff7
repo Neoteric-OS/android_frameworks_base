@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "687229c1_0a1c217c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-20T04:30:01Z",
+      "side": 1,
+      "message": "If replyLength is negative, what happens? Will this crash the system because we\u0027re trying to create a negative-length array? Maybe instead do:\n\n    final int replyLength \u003d input.readShort().toUnsignedInt();\n\nof if that doesn\u0027t work:\n\n    final int replyLength \u003d Short.toUnsignedInt(input.readShort());",
+      "range": {
+        "startLine": 726,
+        "startChar": 33,
+        "endLine": 726,
+        "endChar": 55
+      },
+      "revId": "053ce1c2dd130584042eb52e721b863844585ff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
