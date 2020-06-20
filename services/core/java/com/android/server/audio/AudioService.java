@@ -539,6 +539,8 @@ public class AudioService extends IAudioService.Stub
         0.5f,    // Pre-scale for index 1
         0.7f,    // Pre-scale for index 2
         0.85f,   // Pre-scale for index 3
+        0.9f,    // Pre-scale for index 4
+        0.95f,   // Pre-scale for index 5
     };
 
     private NotificationManager mNm;
@@ -4956,8 +4958,12 @@ public class AudioService extends IAudioService.Stub
             if (index == 0) {
                 // 0% for volume 0
                 index = 0;
-            } else if (index > 0 && index <= 3) {
-                // Pre-scale for volume steps 1 2 and 3
+            } else if (index > 0 && index <= 5) {
+                /* (1) Pre-scale for volume steps 1 2 3 4 and 5
+                 * (2) Volume steps 4 5 are used to smooth the change from 3 to 5.
+                 * Optimized that some Abs BT headsets have a low volume at the
+                 * 3 and a large volume at the 4.
+                 */
                 index = (int) (mIndexMax * mPrescaleAbsoluteVolume[index - 1]) / 10;
             } else {
                 // otherwise, full gain
