@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3b36065_38ae20d8",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkDiagnostics.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-22T06:20:32Z",
+      "side": 1,
+      "message": "Why is this called \"localAddr\"? It\u0027s just the address of the passed-in sockAddr, right? Can this be renamed to just \"addr\"?",
+      "range": {
+        "startLine": 258,
+        "startChar": 20,
+        "endLine": 258,
+        "endChar": 29
+      },
+      "revId": "6a49d466d29529c0b15ae80fda6033130d0e65cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
