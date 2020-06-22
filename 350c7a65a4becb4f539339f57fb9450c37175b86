@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a07263d4_46888829",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-22T00:20:29Z",
+      "side": 1,
+      "message": "If you\u0027re going to move this code take the opportunity to make this local final",
+      "range": {
+        "startLine": 332,
+        "startChar": 8,
+        "endLine": 332,
+        "endChar": 14
+      },
+      "revId": "350c7a65a4becb4f539339f57fb9450c37175b86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2dc5bcb_394397f6",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-22T00:20:29Z",
+      "side": 1,
+      "message": "You\u0027ve annotated the first argument of onPackageRemove as @NonNull, so please don\u0027t pass null. In fact this should not even compile, and you probably have a warning.",
+      "range": {
+        "startLine": 559,
+        "startChar": 48,
+        "endLine": 559,
+        "endChar": 52
+      },
+      "revId": "350c7a65a4becb4f539339f57fb9450c37175b86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
