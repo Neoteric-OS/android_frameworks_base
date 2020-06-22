@@ -1,0 +1,10 @@
+Code-Review+2: Mark Chien <markchien@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Qualcomm-Review+1: Dheeresh Mathur <dmathur@quicinc.com>
+Submitted-by: Mark Chien <markchien@google.com>
+Submitted-at: Mon, 22 Jun 2020 23:22:45 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1177323
+Project: platform/frameworks/base
+Branch: refs/heads/master
