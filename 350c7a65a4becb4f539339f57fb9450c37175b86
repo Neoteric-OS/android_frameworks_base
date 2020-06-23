@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b630e5f5_d8c2f252",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-06-23T08:22:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a07263d4_46888829",
+      "range": {
+        "startLine": 332,
+        "startChar": 8,
+        "endLine": 332,
+        "endChar": 14
+      },
+      "revId": "350c7a65a4becb4f539339f57fb9450c37175b86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2dc5bcb_394397f6",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "350c7a65a4becb4f539339f57fb9450c37175b86",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb039d6b_1026ebcd",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-06-23T08:22:16Z",
+      "side": 1,
+      "message": "I have noticed the waring and correct this on later commit. Will pick up the change to this commit.",
+      "parentUuid": "f2dc5bcb_394397f6",
+      "range": {
+        "startLine": 559,
+        "startChar": 48,
+        "endLine": 559,
+        "endChar": 52
+      },
+      "revId": "350c7a65a4becb4f539339f57fb9450c37175b86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
