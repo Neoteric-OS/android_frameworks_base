@@ -2096,6 +2096,7 @@ public class UserManagerService extends IUserManager.Stub {
     @GuardedBy({"mRestrictionsLock", "mPackagesLock"})
     private void readUserListLP() {
         if (!mUserListFile.exists()) {
+            Slog.e(LOG_TAG, "User List isn't exits! fallback To Single User");
             fallbackToSingleUserLP();
             return;
         }
@@ -2181,6 +2182,7 @@ public class UserManagerService extends IUserManager.Stub {
             updateUserIds();
             upgradeIfNecessaryLP(oldDevicePolicyGlobalUserRestrictions);
         } catch (IOException | XmlPullParserException e) {
+            Slog.e(LOG_TAG, "Error reading user list! fallback To Single User", e);
             fallbackToSingleUserLP();
         } finally {
             IoUtils.closeQuietly(fis);
@@ -2505,21 +2507,19 @@ public class UserManagerService extends IUserManager.Stub {
         }
     }
 
-    private UserData readUserLP(int id) {
+    private UserData readUserLP(int id) throws IOException,
+           XmlPullParserException {
         FileInputStream fis = null;
+        UserData userdata = null;
         try {
             AtomicFile userFile =
                     new AtomicFile(new File(mUsersDir, Integer.toString(id) + XML_SUFFIX));
             fis = userFile.openRead();
-            return readUserLP(id, fis);
-        } catch (IOException ioe) {
-            Slog.e(LOG_TAG, "Error reading user list");
-        } catch (XmlPullParserException pe) {
-            Slog.e(LOG_TAG, "Error reading user list");
+            userdata = readUserLP(id, fis);
         } finally {
             IoUtils.closeQuietly(fis);
         }
-        return null;
+        return userdata;
     }
 
     @VisibleForTesting
