@@ -86,6 +86,10 @@ public:
     void setBufferHeight(int height) { mHeight = height; }
     int getBufferHeight() { return mHeight; }
 
+    void queueAttachedFlag(bool isAttached) {
+        Mutex::Autolock l(mAttachedFlagQueueLock);
+        mAttachedFlagQueue.push_back(isAttached);
+    }
 private:
     static JNIEnv* getJNIEnv(bool* needsDetach);
     static void detachJNI();
@@ -136,6 +140,11 @@ private:
     };
 
     static BufferDetacher sBufferDetacher;
+
+    // Buffer queue guarantees both producer and consumer side buffer flows are
+    // in order. See b/19977520. As a result, we can use a queue here.
+    Mutex mAttachedFlagQueueLock;
+    std::deque<bool> mAttachedFlagQueue;
 };
 
 JNIImageWriterContext::BufferDetacher JNIImageWriterContext::sBufferDetacher;
@@ -265,11 +274,23 @@ void JNIImageWriterContext::onBufferReleased() {
     ALOGV("%s: buffer released", __FUNCTION__);
     bool needsDetach = false;
     JNIEnv* env = getJNIEnv(&needsDetach);
+
+    bool bufferIsAttached = false;
+    {
+        Mutex::Autolock l(mAttachedFlagQueueLock);
+        if (!mAttachedFlagQueue.empty()) {
+            bufferIsAttached = mAttachedFlagQueue.front();
+            mAttachedFlagQueue.pop_front();
+        } else {
+            ALOGW("onBufferReleased called with no attached flag queued");
+        }
+    }
+
     if (env != NULL) {
         // Detach the buffer every time when a buffer consumption is done,
         // need let this callback give a BufferItem, then only detach if it was attached to this
-        // Writer. Do the detach unconditionally for opaque format now. see b/19977520
-        if (mFormat == HAL_PIXEL_FORMAT_IMPLEMENTATION_DEFINED) {
+        // Writer. see b/19977520
+        if (mFormat == HAL_PIXEL_FORMAT_IMPLEMENTATION_DEFINED || bufferIsAttached) {
             sBufferDetacher.detach(mProducer);
         }
 
@@ -638,6 +659,7 @@ static void ImageWriter_queueImage(JNIEnv* env, jobject thiz, jlong nativeCtx, j
         return;
     }
 
+    ctx->queueAttachedFlag(false);
     // Clear the image native context: end of this image's lifecycle in public API.
     Image_setNativeContext(env, image, NULL, -1);
 }
@@ -739,6 +761,7 @@ static jint ImageWriter_attachAndQueueImage(JNIEnv* env, jobject thiz, jlong nat
     // Do not set the image native context. Since it would overwrite the existing native context
     // of the image that is from ImageReader, the subsequent image close will run into issues.
 
+    ctx->queueAttachedFlag(true);
     return res;
 }
 
