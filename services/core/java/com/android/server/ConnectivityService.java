@@ -6245,7 +6245,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (oldPermission != newPermission && nai.created && !nai.isVPN()) {
             try {
                 mNMS.setNetworkPermission(nai.network.netId, newPermission);
-            } catch (RemoteException e) {
+            } catch (RemoteException e | ServiceSpecificException e) {
                 loge("Exception in setNetworkPermission: " + e);
             }
         }
