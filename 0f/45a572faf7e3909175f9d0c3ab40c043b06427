@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+1: Junyu Lai <junyulai@google.com>
+Code-Review+2: Lorenzo Colitti <lorenzo@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Qualcomm-Review+1: David Ng <dave@codeaurora.org>
+Submitted-by: Lorenzo Colitti <lorenzo@google.com>
+Submitted-at: Wed, 24 Jun 2020 03:11:25 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1290954
+Project: platform/frameworks/base
+Branch: refs/heads/master
