@@ -122,6 +122,13 @@ PointerController::~PointerController() {
             delete spots[i];
         }
     }
+
+    for (auto& it : mResources) {
+        PointerResources* resources = it.second;
+        delete resources;
+    }
+
+    mResources.clear();
     mLocked.spotsByDisplay.clear();
     mLocked.recycledSprites.clear();
 }
@@ -307,6 +314,17 @@ void PointerController::setSpots(const PointerCoords* spotCoords,
         newSpots = iter->second;
     }
 
+    PointerResources* spotResources;
+    std::map<int32_t, PointerResources*>::const_iterator resourceIter =
+            mResources.find(displayId);
+    if (resourceIter != mResources.end()) {
+        spotResources = resourceIter->second;
+    } else {
+        spotResources = new PointerResources();
+        mPolicy->loadPointerResources(spotResources, displayId);
+        mResources[displayId] = spotResources;
+    }
+
     mSpriteController->openTransaction();
 
     // Add or move spots for fingers that are down.
@@ -314,7 +332,7 @@ void PointerController::setSpots(const PointerCoords* spotCoords,
         uint32_t id = idBits.clearFirstMarkedBit();
         const PointerCoords& c = spotCoords[spotIdToIndex[id]];
         const SpriteIcon& icon = c.getAxisValue(AMOTION_EVENT_AXIS_PRESSURE) > 0
-                ? mResources.spotTouch : mResources.spotHover;
+                ? spotResources->spotTouch : spotResources->spotHover;
         float x = c.getAxisValue(AMOTION_EVENT_AXIS_X);
         float y = c.getAxisValue(AMOTION_EVENT_AXIS_Y);
 
@@ -391,6 +409,12 @@ void PointerController::setDisplayViewport(const DisplayViewport& viewport) {
     const DisplayViewport oldViewport = mLocked.viewport;
     mLocked.viewport = viewport;
 
+    std::map<int32_t, PointerResources*>::const_iterator resourceIter =
+                mResources.find(mLocked.viewport.displayId);
+    if (resourceIter == mResources.end()) {
+        mResources[mLocked.viewport.displayId] = new PointerResources();
+    }
+
     int32_t oldDisplayWidth, oldDisplayHeight;
     getNonRotatedSize(oldViewport, oldDisplayWidth, oldDisplayHeight);
     int32_t newDisplayWidth, newDisplayHeight;
@@ -400,7 +424,7 @@ void PointerController::setDisplayViewport(const DisplayViewport& viewport) {
     if (oldViewport.displayId != viewport.displayId
             || oldDisplayWidth != newDisplayWidth
             || oldDisplayHeight != newDisplayHeight) {
-
+                
         float minX, minY, maxX, maxY;
         if (getBoundsLocked(&minX, &minY, &maxX, &maxY)) {
             mLocked.pointerX = (minX + maxX) * 0.5f;
@@ -682,7 +706,10 @@ void PointerController::updatePointerLocked() REQUIRES(mLock) {
                 }
             }
         } else {
-            mLocked.pointerSprite->setIcon(mResources.spotAnchor);
+            std::map<int32_t, PointerResources*>::const_iterator resourceIter =
+                mResources.find(mLocked.viewport.displayId);
+            PointerResources* resources = resourceIter->second;
+            mLocked.pointerSprite->setIcon(resources->spotAnchor);
         }
         mLocked.pointerIconChanged = false;
         mLocked.presentationChanged = false;
@@ -773,7 +800,12 @@ void PointerController::loadResourcesLocked() REQUIRES(mLock) {
         return;
     }
 
-    mPolicy->loadPointerResources(&mResources, mLocked.viewport.displayId);
+    for (auto& it : mResources) {
+        int32_t displayId = it.first;
+        PointerResources* resources = it.second;
+        mPolicy->loadPointerResources(resources, displayId);
+    }
+
     mPolicy->loadPointerIcon(&mLocked.pointerIcon, mLocked.viewport.displayId);
 
     mLocked.additionalMouseResources.clear();

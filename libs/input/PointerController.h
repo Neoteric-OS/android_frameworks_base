@@ -149,7 +149,7 @@ private:
 
     DisplayEventReceiver mDisplayEventReceiver;
 
-    PointerResources mResources;
+    std::map<int32_t, PointerResources*> mResources;
 
     struct Locked {
         bool animationPending;
