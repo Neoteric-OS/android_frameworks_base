@@ -1,0 +1,8 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Makoto Onuki <omakoto@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Makoto Onuki <omakoto@google.com>
+Submitted-at: Wed, 24 Jun 2020 22:18:33 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1349284
+Project: platform/frameworks/base
+Branch: refs/heads/master
