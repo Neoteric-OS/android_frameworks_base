@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8671fd47_f232533e",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/BpfCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-24T03:21:31Z",
+      "side": 0,
+      "message": "Hi Junyu, \nI remove this TODO by a new wrapper \"pushAndExpectNotifyStatsUpdated\" because this TODO can\u0027t handle new test case \"testGetForwardedStats_UpstreamChanged\" in L.314. It accumulates many parcels into one stats.",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 222,
+        "endChar": 38
+      },
+      "revId": "64ffa1762f8711e6016000bddf2af784edd5adcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
