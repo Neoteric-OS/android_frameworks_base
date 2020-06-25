@@ -4764,7 +4764,7 @@ public class ConnectivityServiceTest {
 
         // Disconnect wifi aware network.
         wifiAware.disconnect();
-        callback.expectCallbackThat(TIMEOUT_MS, (info) -> info instanceof Lost);
+        callback.expectCallback(LOST, wifiAware);
         callback.unregister();
 
         verifyNoNetwork();
