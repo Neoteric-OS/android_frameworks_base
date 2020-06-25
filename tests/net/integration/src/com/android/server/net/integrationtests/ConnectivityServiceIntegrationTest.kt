@@ -53,6 +53,7 @@ import com.android.server.connectivity.MockableSystemProperties
 import com.android.server.connectivity.ProxyTracker
 import com.android.server.net.NetworkPolicyManagerInternal
 import com.android.testutils.TestableNetworkCallback
+import com.android.testutils.TestableNetworkCallback.CallbackEntry.CapabilitiesChanged
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
@@ -262,7 +263,9 @@ class ConnectivityServiceIntegrationTest {
         assertEquals(Uri.parse("https://login.capport.android.com"), capportData.userPortalUrl)
         assertEquals(Uri.parse("https://venueinfo.capport.android.com"), capportData.venueInfoUrl)
 
-        val nc = testCb.expectCapabilitiesWith(NET_CAPABILITY_CAPTIVE_PORTAL, na, TEST_TIMEOUT_MS)
-        assertFalse(nc.hasCapability(NET_CAPABILITY_VALIDATED))
+        testCb.expect<CapabilitiesChanged> {
+            it.network == na.network &&
+                    it.caps.hasCapability(NET_CAPABILITY_CAPTIVE_PORTAL) &&
+                    !it.caps.hasCapability(NET_CAPABILITY_VALIDATED) }
     }
 }
