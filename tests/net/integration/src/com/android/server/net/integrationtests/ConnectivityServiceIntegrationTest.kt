@@ -54,6 +54,7 @@ import com.android.server.connectivity.ProxyTracker
 import com.android.server.net.NetworkPolicyManagerInternal
 import com.android.testutils.TestableNetworkCallback
 import com.android.testutils.TestableNetworkCallback.CallbackEntry.CapabilitiesChanged
+import com.android.testutils.TestableNetworkCallback.CallbackEntry.LinkPropertiesChanged
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
@@ -255,14 +256,13 @@ class ConnectivityServiceIntegrationTest {
 
         testCb.expectAvailableCallbacks(na.network, validated = false, tmt = TEST_TIMEOUT_MS)
 
-        val capportData = testCb.expectLinkPropertiesThat(na, TEST_TIMEOUT_MS) {
-            it.captivePortalData != null
-        }.lp.captivePortalData
-        assertNotNull(capportData)
-        assertTrue(capportData.isCaptive)
-        assertEquals(Uri.parse("https://login.capport.android.com"), capportData.userPortalUrl)
-        assertEquals(Uri.parse("https://venueinfo.capport.android.com"), capportData.venueInfoUrl)
-
+        testCb.expect<LinkPropertiesChanged> { it.network == na.network &&
+                null != it.lp.captivePortalData && it.lp.captivePortalData.let { d ->
+            d.isCaptive &&
+                    d.userPortalUrl == Uri.parse("https://login.capport.android.com") &&
+                    d.venueInfoUrl == Uri.parse("https://venueinfo.capport.android.com")
+        }
+        }
         testCb.expect<CapabilitiesChanged> {
             it.network == na.network &&
                     it.caps.hasCapability(NET_CAPABILITY_CAPTIVE_PORTAL) &&

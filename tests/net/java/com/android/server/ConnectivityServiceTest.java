@@ -1787,6 +1787,10 @@ public class ConnectivityServiceTest {
                 final Function1<? super NetworkCapabilities, Boolean> valid) {
             expectCapabilities(agent.getNetwork(), valid);
         }
+        public void expectLinkProperties(final TestNetworkAgentWrapper agent,
+                final Function1<? super LinkProperties, Boolean> valid) {
+            expectLinkProperties(agent.getNetwork(), valid);
+        }
 
         public <T extends CallbackEntry> T expectCallback(final KClass<T> type,
                 final TestNetworkAgentWrapper agent) {
@@ -1930,16 +1934,16 @@ public class ConnectivityServiceTest {
         final Uri expectedCapportUrl = sanitized ? null : capportUrl;
         newLp.setCaptivePortalApiUrl(capportUrl);
         mWiFiNetworkAgent.sendLinkProperties(newLp);
-        callback.expectLinkPropertiesThat(mWiFiNetworkAgent, lp ->
+        callback.expectLinkProperties(mWiFiNetworkAgent, lp ->
                 Objects.equals(expectedCapportUrl, lp.getCaptivePortalApiUrl()));
-        defaultCallback.expectLinkPropertiesThat(mWiFiNetworkAgent, lp ->
+        defaultCallback.expectLinkProperties(mWiFiNetworkAgent, lp ->
                 Objects.equals(expectedCapportUrl, lp.getCaptivePortalApiUrl()));
 
         final CaptivePortalData expectedCapportData = sanitized ? null : capportData;
         mWiFiNetworkAgent.notifyCaptivePortalDataChanged(capportData);
-        callback.expectLinkPropertiesThat(mWiFiNetworkAgent, lp ->
+        callback.expectLinkProperties(mWiFiNetworkAgent, lp ->
                 Objects.equals(expectedCapportData, lp.getCaptivePortalData()));
-        defaultCallback.expectLinkPropertiesThat(mWiFiNetworkAgent, lp ->
+        defaultCallback.expectLinkProperties(mWiFiNetworkAgent, lp ->
                 Objects.equals(expectedCapportData, lp.getCaptivePortalData()));
 
         final LinkProperties lp = mCm.getLinkProperties(mWiFiNetworkAgent.getNetwork());
@@ -2959,14 +2963,14 @@ public class ConnectivityServiceTest {
 
         mWiFiNetworkAgent.notifyCaptivePortalDataChanged(testData);
 
-        captivePortalCallback.expectLinkPropertiesThat(mWiFiNetworkAgent,
+        captivePortalCallback.expectLinkProperties(mWiFiNetworkAgent,
                 lp -> testData.equals(lp.getCaptivePortalData()));
 
         final LinkProperties newLps = new LinkProperties();
         newLps.setMtu(1234);
         mWiFiNetworkAgent.sendLinkProperties(newLps);
         // CaptivePortalData is not lost and unchanged when LPs are received from the NetworkAgent
-        captivePortalCallback.expectLinkPropertiesThat(mWiFiNetworkAgent,
+        captivePortalCallback.expectLinkProperties(mWiFiNetworkAgent,
                 lp -> testData.equals(lp.getCaptivePortalData()) && lp.getMtu() == 1234);
     }
 
@@ -6283,17 +6287,17 @@ public class ConnectivityServiceTest {
         // Expect clatd to be stopped and started with the new prefix.
         mService.mNetdEventCallback.onNat64PrefixEvent(cellNetId, true /* added */,
                 kOtherNat64PrefixString, 96);
-        networkCallback.expectLinkPropertiesThat(mCellNetworkAgent,
-                (lp) -> lp.getStackedLinks().size() == 0);
+        networkCallback.expectLinkProperties(mCellNetworkAgent,
+                lp -> lp.getStackedLinks().size() == 0);
         verify(mMockNetd, times(1)).clatdStop(MOBILE_IFNAME);
         assertRoutesRemoved(cellNetId, stackedDefault);
 
         verify(mMockNetd, times(1)).clatdStart(MOBILE_IFNAME, kOtherNat64Prefix.toString());
-        networkCallback.expectLinkPropertiesThat(mCellNetworkAgent,
-                (lp) -> lp.getNat64Prefix().equals(kOtherNat64Prefix));
+        networkCallback.expectLinkProperties(mCellNetworkAgent,
+                lp -> lp.getNat64Prefix().equals(kOtherNat64Prefix));
         clat.interfaceLinkStateChanged(CLAT_PREFIX + MOBILE_IFNAME, true);
-        networkCallback.expectLinkPropertiesThat(mCellNetworkAgent,
-                (lp) -> lp.getStackedLinks().size() == 1);
+        networkCallback.expectLinkProperties(mCellNetworkAgent,
+                lp -> lp.getStackedLinks().size() == 1);
         assertRoutesAdded(cellNetId, stackedDefault);
         reset(mMockNetd);
 
@@ -6331,8 +6335,8 @@ public class ConnectivityServiceTest {
         // Stopping prefix discovery causes netd to tell us that the NAT64 prefix is gone.
         mService.mNetdEventCallback.onNat64PrefixEvent(cellNetId, false /* added */,
                 kOtherNat64PrefixString, 96);
-        networkCallback.expectLinkPropertiesThat(mCellNetworkAgent,
-                (lp) -> lp.getNat64Prefix() == null);
+        networkCallback.expectLinkProperties(mCellNetworkAgent,
+                lp -> lp.getNat64Prefix() == null);
 
         // Remove IPv4 address and expect prefix discovery and clatd to be started again.
         cellLp.removeLinkAddress(myIpv4);
@@ -6349,21 +6353,21 @@ public class ConnectivityServiceTest {
 
         // Clat iface comes up. Expect stacked link to be added.
         clat.interfaceLinkStateChanged(CLAT_PREFIX + MOBILE_IFNAME, true);
-        networkCallback.expectLinkPropertiesThat(mCellNetworkAgent,
-                (lp) -> lp.getStackedLinks().size() == 1 && lp.getNat64Prefix() != null);
+        networkCallback.expectLinkProperties(mCellNetworkAgent,
+                lp -> lp.getStackedLinks().size() == 1 && lp.getNat64Prefix() != null);
         assertRoutesAdded(cellNetId, stackedDefault);
 
         // NAT64 prefix is removed. Expect that clat is stopped.
         mService.mNetdEventCallback.onNat64PrefixEvent(cellNetId, false /* added */,
                 kNat64PrefixString, 96);
-        networkCallback.expectLinkPropertiesThat(mCellNetworkAgent,
-                (lp) -> lp.getStackedLinks().size() == 0 && lp.getNat64Prefix() == null);
+        networkCallback.expectLinkProperties(mCellNetworkAgent,
+                lp -> lp.getStackedLinks().size() == 0 && lp.getNat64Prefix() == null);
         assertRoutesRemoved(cellNetId, ipv4Subnet, stackedDefault);
 
         // Stop has no effect because clat is already stopped.
         verify(mMockNetd, times(1)).clatdStop(MOBILE_IFNAME);
-        networkCallback.expectLinkPropertiesThat(mCellNetworkAgent,
-                (lp) -> lp.getStackedLinks().size() == 0);
+        networkCallback.expectLinkProperties(mCellNetworkAgent,
+                lp -> lp.getStackedLinks().size() == 0);
         verifyNoMoreInteractions(mMockNetd);
 
         // Clean up.
@@ -6373,9 +6377,9 @@ public class ConnectivityServiceTest {
         networkCallback.unregister();
     }
 
-    private void expectNat64PrefixChange(TestableNetworkCallback callback,
-            TestNetworkAgentWrapper agent, IpPrefix prefix) {
-        callback.expectLinkPropertiesThat(agent, x -> Objects.equals(x.getNat64Prefix(), prefix));
+    private void expectNat64PrefixChange(final TestNetworkCallback callback,
+            final TestNetworkAgentWrapper agent, final IpPrefix prefix) {
+        callback.expectLinkProperties(agent, lp -> Objects.equals(lp.getNat64Prefix(), prefix));
     }
 
     @Test
@@ -7496,7 +7500,7 @@ public class ConnectivityServiceTest {
         lp.addRoute(rio1);
         lp.addRoute(defaultRoute);
         mCellNetworkAgent.sendLinkProperties(lp);
-        networkCallback.expectLinkPropertiesThat(mCellNetworkAgent, x -> x.getRoutes().size() == 3);
+        networkCallback.expectLinkProperties(mCellNetworkAgent, x -> x.getRoutes().size() == 3);
 
         assertRoutesAdded(netId, direct, rio1, defaultRoute);
         reset(mMockNetd);
@@ -7511,8 +7515,7 @@ public class ConnectivityServiceTest {
         assertTrue(lp.getRoutes().contains(defaultWithMtu));
 
         mCellNetworkAgent.sendLinkProperties(lp);
-        networkCallback.expectLinkPropertiesThat(mCellNetworkAgent,
-                x -> x.getRoutes().contains(rio2));
+        networkCallback.expectLinkProperties(mCellNetworkAgent, x -> x.getRoutes().contains(rio2));
 
         assertRoutesRemoved(netId, rio1);
         assertRoutesAdded(netId, rio2);
