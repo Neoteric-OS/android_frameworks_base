@@ -183,8 +183,16 @@ class ConnectivityServiceIntegrationTest {
         return deps
     }
 
+    private val registeredCallbacks = ArrayList<TestableNetworkCallback>();
+    private fun ConnectivityManager.registerNetworkCallback(request: NetworkRequest,
+            callback: TestableNetworkCallback) {
+        registeredCallbacks.add(callback);
+        cm.registerNetworkCallback(request, callback.cb);
+    }
+
     @After
     fun tearDown() {
+        registeredCallbacks.forEach { cm.unregisterNetworkCallback(it.cb) }
         nsInstrumentation.clearAllState()
     }
 
