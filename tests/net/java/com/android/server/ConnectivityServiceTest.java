@@ -79,15 +79,15 @@ import static android.os.Process.INVALID_UID;
 import static android.system.OsConstants.IPPROTO_TCP;
 
 import static com.android.server.ConnectivityServiceTestUtilsKt.transportToLegacyType;
-import static com.android.testutils.ConcurrentUtilsKt.await;
-import static com.android.testutils.ConcurrentUtilsKt.durationOf;
-import static com.android.testutils.ExceptionUtils.ignoreExceptions;
 import static com.android.testutils.HandlerUtilsKt.waitForIdleSerialExecutor;
 import static com.android.testutils.MiscAssertsKt.assertContainsExactly;
 import static com.android.testutils.MiscAssertsKt.assertEmpty;
 import static com.android.testutils.MiscAssertsKt.assertLength;
 import static com.android.testutils.MiscAssertsKt.assertRunsInAtMost;
 import static com.android.testutils.MiscAssertsKt.assertThrows;
+import static com.android.utils.ConcurrentUtilsKt.await;
+import static com.android.utils.ConcurrentUtilsKt.durationOf;
+import static com.android.utils.ExceptionUtils.ignoreExceptions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -241,10 +241,10 @@ import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Vpn;
 import com.android.server.net.NetworkPinner;
 import com.android.server.net.NetworkPolicyManagerInternal;
-import com.android.testutils.ExceptionUtils;
 import com.android.testutils.HandlerUtilsKt;
 import com.android.testutils.RecorderCallback.CallbackEntry;
 import com.android.testutils.TestableNetworkCallback;
+import com.android.utils.ExceptionUtils;
 
 import org.junit.After;
 import org.junit.Before;
