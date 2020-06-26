@@ -52,6 +52,7 @@ android_test {
     certificate: "platform",
     static_libs: [
         "androidx.test.rules",
+        "connectivity-service",
         "FrameworksNetCommonTests",
         "frameworks-base-testutils",
         "frameworks-net-integration-testutils",

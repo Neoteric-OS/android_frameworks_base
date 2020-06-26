@@ -118,7 +118,7 @@ public class DeviceIdleControllerTest {
     @Mock
     private AlarmManager mAlarmManager;
     @Mock
-    private ConnectivityService mConnectivityService;
+    private ConnectivityManager mConnectivityManager;
     @Mock
     private ContentResolver mContentResolver;
     @Mock
@@ -137,7 +137,7 @@ public class DeviceIdleControllerTest {
     private SensorManager mSensorManager;
 
     class InjectorForTest extends DeviceIdleController.Injector {
-        ConnectivityService connectivityService;
+        ConnectivityManager connectivityManager;
         LocationManager locationManager;
         ConstraintController constraintController;
         // Freeze time for testing.
@@ -164,8 +164,8 @@ public class DeviceIdleControllerTest {
         }
 
         @Override
-        ConnectivityService getConnectivityService() {
-            return connectivityService;
+        ConnectivityManager getConnectivityManager() {
+            return connectivityManager;
         }
 
         @Override
@@ -389,19 +389,19 @@ public class DeviceIdleControllerTest {
     public void testUpdateConnectivityState() {
         // No connectivity service
         final boolean isConnected = mDeviceIdleController.isNetworkConnected();
-        mInjector.connectivityService = null;
+        mInjector.connectivityManager = null;
         mDeviceIdleController.updateConnectivityState(null);
         assertEquals(isConnected, mDeviceIdleController.isNetworkConnected());
 
         // No active network info
-        mInjector.connectivityService = mConnectivityService;
-        doReturn(null).when(mConnectivityService).getActiveNetworkInfo();
+        mInjector.connectivityManager = mConnectivityManager;
+        doReturn(null).when(mConnectivityManager).getActiveNetworkInfo();
         mDeviceIdleController.updateConnectivityState(null);
         assertFalse(mDeviceIdleController.isNetworkConnected());
 
         // Active network info says connected.
         final NetworkInfo ani = mock(NetworkInfo.class);
-        doReturn(ani).when(mConnectivityService).getActiveNetworkInfo();
+        doReturn(ani).when(mConnectivityManager).getActiveNetworkInfo();
         doReturn(true).when(ani).isConnected();
         mDeviceIdleController.updateConnectivityState(null);
         assertTrue(mDeviceIdleController.isNetworkConnected());
@@ -1958,10 +1958,10 @@ public class DeviceIdleControllerTest {
     }
 
     private void setNetworkConnected(boolean connected) {
-        mInjector.connectivityService = mConnectivityService;
+        mInjector.connectivityManager = mConnectivityManager;
         final NetworkInfo ani = mock(NetworkInfo.class);
         doReturn(connected).when(ani).isConnected();
-        doReturn(ani).when(mConnectivityService).getActiveNetworkInfo();
+        doReturn(ani).when(mConnectivityManager).getActiveNetworkInfo();
         mDeviceIdleController.updateConnectivityState(null);
     }
 
