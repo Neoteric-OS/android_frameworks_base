@@ -28,6 +28,7 @@ android_test {
     static_libs: [
         "TestNetworkStackLib",
         "androidx.test.ext.junit",
+        "service-connectivity",
         "frameworks-net-integration-testutils",
         "kotlin-reflect",
         "mockito-target-extended-minus-junit4",
@@ -59,6 +60,7 @@ java_library {
         "net-tests-utils",
     ],
     libs: [
+        "service-connectivity",
         "services.core",
         "services.net",
     ],
