@@ -41,6 +41,7 @@ import android.database.sqlite.SQLiteCompatibilityWalFlags;
 import android.database.sqlite.SQLiteGlobal;
 import android.hardware.display.DisplayManagerInternal;
 import android.net.ConnectivityModuleConnector;
+import android.net.IConnectivityManager;
 import android.net.NetworkStackClient;
 import android.os.BaseBundle;
 import android.os.Binder;
@@ -94,7 +95,6 @@ import com.android.server.camera.CameraServiceProxy;
 import com.android.server.clipboard.ClipboardService;
 import com.android.server.compat.PlatformCompat;
 import com.android.server.compat.PlatformCompatNative;
-import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.contentcapture.ContentCaptureManagerInternal;
 import com.android.server.coverage.CoverageService;
 import com.android.server.devicepolicy.DevicePolicyManagerService;
@@ -165,9 +165,9 @@ import com.android.server.wm.ActivityTaskManagerService;
 import com.android.server.wm.WindowManagerGlobalLock;
 import com.android.server.wm.WindowManagerService;
 
-import libcore.timezone.ZoneInfoDb;
-
 import dalvik.system.VMRuntime;
+
+import libcore.timezone.ZoneInfoDb;
 
 import java.io.File;
 import java.io.IOException;
@@ -280,6 +280,10 @@ public final class SystemServer {
             "com.android.server.appprediction.AppPredictionManagerService";
     private static final String CONTENT_SUGGESTIONS_SERVICE_CLASS =
             "com.android.server.contentsuggestions.ContentSuggestionsManagerService";
+    private static final String CONNECTIVITY_SERVICE_CLASS =
+            "com.android.server.ConnectivitySystemService";
+    private static final String IP_CONNECTIVITY_METRICS_CLASS =
+            "com.android.server.connectivity.IpConnectivityMetrics";
 
     private static final String TETHERING_CONNECTOR_CLASS = "android.net.ITetheringConnector";
 
@@ -924,7 +928,7 @@ public final class SystemServer {
         IpSecService ipSecService = null;
         NetworkStatsService networkStats = null;
         NetworkPolicyManagerService networkPolicy = null;
-        ConnectivityService connectivity = null;
+        IConnectivityManager connectivity = null;
         NsdService serviceDiscovery = null;
         WindowManagerService wm = null;
         SerialService serial = null;
@@ -1116,7 +1120,7 @@ public final class SystemServer {
             }
 
             traceBeginAndSlog("IpConnectivityMetrics");
-            mSystemServiceManager.startService(IpConnectivityMetrics.class);
+            mSystemServiceManager.startService(IP_CONNECTIVITY_METRICS_CLASS);
             traceEnd();
 
             traceBeginAndSlog("NetworkWatchlistService");
@@ -1428,16 +1432,10 @@ public final class SystemServer {
             }
 
             traceBeginAndSlog("StartConnectivityService");
-            try {
-                connectivity = new ConnectivityService(
-                        context, networkManagement, networkStats, networkPolicy);
-                ServiceManager.addService(Context.CONNECTIVITY_SERVICE, connectivity,
-                        /* allowIsolated= */ false,
-                        DUMP_FLAG_PRIORITY_HIGH | DUMP_FLAG_PRIORITY_NORMAL);
-                networkPolicy.bindConnectivityManager(connectivity);
-            } catch (Throwable e) {
-                reportWtf("starting Connectivity Service", e);
-            }
+            mSystemServiceManager.startService(CONNECTIVITY_SERVICE_CLASS);
+            connectivity = IConnectivityManager.Stub.asInterface(
+                    ServiceManager.getService(Context.CONNECTIVITY_SERVICE));
+            networkPolicy.bindConnectivityManager(connectivity);
             traceEnd();
 
             traceBeginAndSlog("StartNsdService");
@@ -2076,7 +2074,7 @@ public final class SystemServer {
         final NetworkManagementService networkManagementF = networkManagement;
         final NetworkStatsService networkStatsF = networkStats;
         final NetworkPolicyManagerService networkPolicyF = networkPolicy;
-        final ConnectivityService connectivityF = connectivity;
+        final IConnectivityManager connectivityF = connectivity;
         final LocationManagerService locationF = location;
         final CountryDetectorService countryDetectorF = countryDetector;
         final NetworkTimeUpdateService networkTimeUpdaterF = networkTimeUpdater;
@@ -2180,15 +2178,6 @@ public final class SystemServer {
                 }
             } catch (Throwable e) {
                 reportWtf("making Network Stats Service ready", e);
-            }
-            traceEnd();
-            traceBeginAndSlog("MakeConnectivityServiceReady");
-            try {
-                if (connectivityF != null) {
-                    connectivityF.systemReady();
-                }
-            } catch (Throwable e) {
-                reportWtf("making Connectivity Service ready", e);
             }
             traceEnd();
             traceBeginAndSlog("MakeNetworkPolicyServiceReady");

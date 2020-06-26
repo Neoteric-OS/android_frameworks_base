@@ -1143,3 +1143,13 @@ build = [
     "StubLibraries.bp",
     "ApiDocs.bp",
 ]
+
+filegroup {
+    name: "connectivity-service-aidl-srcs",
+    srcs: [
+        "./core/java/android/os/INetworkManagementService.aidl",
+        "./core/java/android/net/INetworkStatsService.aidl",
+        "./core/java/android/net/INetworkPolicyManager.aidl",
+    ],
+    path: "core/java",
+}

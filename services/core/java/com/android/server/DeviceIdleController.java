@@ -1845,7 +1845,7 @@ public class DeviceIdleController extends SystemService
 
     static class Injector {
         private final Context mContext;
-        private ConnectivityService mConnectivityService;
+        private ConnectivityManager mConnectivityManager;
         private Constants mConstants;
         private LocationManager mLocationManager;
 
@@ -1866,12 +1866,11 @@ public class DeviceIdleController extends SystemService
             return new AppStateTracker(ctx, looper);
         }
 
-        ConnectivityService getConnectivityService() {
-            if (mConnectivityService == null) {
-                mConnectivityService = (ConnectivityService) ServiceManager.getService(
-                        Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager getConnectivityManager() {
+            if (mConnectivityManager == null) {
+                mConnectivityManager = mContext.getSystemService(ConnectivityManager.class);
             }
-            return mConnectivityService;
+            return mConnectivityManager;
         }
 
         Constants getConstants(DeviceIdleController controller, Handler handler,
@@ -2663,9 +2662,9 @@ public class DeviceIdleController extends SystemService
     }
 
     void updateConnectivityState(Intent connIntent) {
-        ConnectivityService cm;
+        ConnectivityManager cm;
         synchronized (this) {
-            cm = mInjector.getConnectivityService();
+            cm = mInjector.getConnectivityManager();
         }
         if (cm == null) {
             return;

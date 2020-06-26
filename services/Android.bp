@@ -145,3 +145,17 @@ java_library {
     installable: false,
     static_libs: ["android_module_lib_stubs_current"],
 }
+
+java_library {
+    name: "connectivity-service",
+    srcs: [
+        ":connectivity-service-srcs",
+        ":connectivity-service-aidl-srcs",
+    ],
+    installable: true,
+    libs: [
+        "android.net.ipsec.ike",
+        "services",
+        "unsupportedappusage",
+    ],
+}
