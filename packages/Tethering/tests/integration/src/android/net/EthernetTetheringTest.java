@@ -476,7 +476,7 @@ public class EthernetTetheringTest {
         ByteBuffer packet = DhcpPacket.buildDiscoverPacket(DhcpPacket.ENCAP_L2,
                 new Random().nextInt() /* transactionId */, (short) 0 /* secs */,
                 macAddress,  false /* unicast */, DHCP_REQUESTED_PARAMS,
-                false /* rapid commit */,  DHCP_HOSTNAME);
+                false /* rapid commit */,  DHCP_HOSTNAME, null /* ipv6OnlyWaitTime */);
         sendPacket(fd, packet);
     }
 
@@ -488,7 +488,8 @@ public class EthernetTetheringTest {
         ByteBuffer packet = DhcpPacket.buildRequestPacket(DhcpPacket.ENCAP_L2,
                 0 /* transactionId */, (short) 0 /* secs */, DhcpPacket.INADDR_ANY /* clientIp */,
                 false /* broadcast */, macAddress, clientIp /* requestedIpAddress */,
-                serverIdentifier, DHCP_REQUESTED_PARAMS, DHCP_HOSTNAME);
+                serverIdentifier, DHCP_REQUESTED_PARAMS, DHCP_HOSTNAME,
+                null /* ipv6OnlyWaitTime */);
         sendPacket(fd, packet);
     }
 
