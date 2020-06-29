@@ -541,6 +541,10 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
      */
     void notifyExtPolicyFocusGrant_syncAf(AudioFocusInfo afi, int requestResult) {
         for (IAudioPolicyCallback pcb : mFocusFollowers) {
+            if (pcb.asBinder().equals(mFocusPolicy.asBinder())) {
+                // Do not notify the focus policy itself, it shall be aware already...
+                continue;
+            }
             try {
                 // oneway
                 pcb.notifyAudioFocusGrant(afi, requestResult);
@@ -556,6 +560,10 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
      */
     void notifyExtPolicyFocusLoss_syncAf(AudioFocusInfo afi, boolean wasDispatched) {
         for (IAudioPolicyCallback pcb : mFocusFollowers) {
+            if (pcb.asBinder().equals(mFocusPolicy.asBinder())) {
+                // Do not notify the focus policy itself, it shall be aware already...
+                continue;
+            }
             try {
                 // oneway
                 pcb.notifyAudioFocusLoss(afi, wasDispatched);
@@ -634,6 +642,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
             }
             if (fr != null) {
                 fr.dispatchFocusResultFromExtPolicy(requestResult);
+                notifyExtPolicyFocusGrant_syncAf(fr.toAudioFocusInfo(), requestResult);
             }
         }
     }
@@ -654,6 +663,9 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
         try {
             //oneway
             mFocusPolicy.notifyAudioFocusAbandon(afi);
+            if (fr != null) {
+                notifyExtPolicyFocusLoss_syncAf(fr.toAudioFocusInfo(), false);
+            }
         } catch (RemoteException e) {
             Log.e(TAG, "Can't call notifyAudioFocusAbandon() on IAudioPolicyCallback "
                     + mFocusPolicy.asBinder(), e);
@@ -681,6 +693,17 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
             if (fr == null) {
                 if (DEBUG) { Log.v(TAG, "> failed: no such focus requester known" ); }
                 return AudioManager.AUDIOFOCUS_REQUEST_FAILED;
+            }
+            if (focusChange == AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
+                    || focusChange == AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE
+                    || focusChange == AudioManager.AUDIOFOCUS_GAIN_TRANSIENT
+                    || focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                notifyExtPolicyFocusGrant_syncAf(
+                        fr.toAudioFocusInfo(), AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
+            } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK
+                    || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT
+                    || focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                notifyExtPolicyFocusLoss_syncAf(fr.toAudioFocusInfo(), false);
             }
             return fr.dispatchFocusChange(focusChange);
         }
