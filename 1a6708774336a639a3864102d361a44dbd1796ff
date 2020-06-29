@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a34ba977_26419499",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-29T16:24:36Z",
+      "side": 1,
+      "message": "Is there a better way of doing this? If the reason why tethering is not supported is that there are no wifi or USB regexps, Ethernet tethering might still work. If it does, then it won\u0027t be tested. Ideally we would like to avoid that.",
+      "range": {
+        "startLine": 146,
+        "startChar": 8,
+        "endLine": 146,
+        "endChar": 47
+      },
+      "revId": "1a6708774336a639a3864102d361a44dbd1796ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
