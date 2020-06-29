@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04a2da0d_9d76b679",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2099,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2020-06-29T13:36:09Z",
+      "side": 1,
+      "message": "User list doesn\u0027t exist, falling back to single user",
+      "range": {
+        "startLine": 2099,
+        "startChar": 29,
+        "endLine": 2099,
+        "endChar": 84
+      },
+      "revId": "1cb8dd2bfe0b73ed2f390627fe6adbbbe672ce87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ca3344_57a4b8cd",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2185,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2020-06-29T13:36:09Z",
+      "side": 1,
+      "message": "Error reading user list, falling back to single user",
+      "range": {
+        "startLine": 2185,
+        "startChar": 29,
+        "endLine": 2185,
+        "endChar": 86
+      },
+      "revId": "1cb8dd2bfe0b73ed2f390627fe6adbbbe672ce87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b134b3e_d4bb5823",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2511,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2020-06-29T13:36:09Z",
+      "side": 1,
+      "message": "can fin into the same line",
+      "range": {
+        "startLine": 2511,
+        "startChar": 11,
+        "endLine": 2511,
+        "endChar": 33
+      },
+      "revId": "1cb8dd2bfe0b73ed2f390627fe6adbbbe672ce87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400d91db_29f31a6d",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2512,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2020-06-29T13:36:09Z",
+      "side": 1,
+      "message": "Not related, but can be inside try block and final.",
+      "range": {
+        "startLine": 2512,
+        "startChar": 24,
+        "endLine": 2512,
+        "endChar": 27
+      },
+      "revId": "1cb8dd2bfe0b73ed2f390627fe6adbbbe672ce87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9f4ed5_203ad7ca",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2513,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2020-06-29T13:36:09Z",
+      "side": 1,
+      "message": "make it final",
+      "range": {
+        "startLine": 2513,
+        "startChar": 8,
+        "endLine": 2513,
+        "endChar": 16
+      },
+      "revId": "1cb8dd2bfe0b73ed2f390627fe6adbbbe672ce87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
