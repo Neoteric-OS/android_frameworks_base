@@ -16,6 +16,7 @@
 
 package com.android.networkstack.tethering;
 
+import static android.content.pm.PackageManager.FEATURE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
@@ -34,6 +35,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.util.SharedLog;
 import android.provider.DeviceConfig;
@@ -67,6 +69,7 @@ public class TetheringConfigurationTest {
     @Mock private TelephonyManager mTelephonyManager;
     @Mock private Resources mResources;
     @Mock private Resources mResourcesForSubId;
+    @Mock private PackageManager mPackageManager;
     private Context mMockContext;
     private boolean mHasTelephonyManager;
     private boolean mEnableLegacyDhcpServer;
@@ -91,6 +94,11 @@ public class TetheringConfigurationTest {
         @Override
         public Resources getResources() {
             return mResources;
+        }
+
+        @Override
+        public PackageManager getPackageManager() {
+            return mPackageManager;
         }
 
         @Override
@@ -123,6 +131,7 @@ public class TetheringConfigurationTest {
                 .thenReturn(new String[]{ "test_wlan\\d" });
         when(mResources.getStringArray(R.array.config_tether_bluetooth_regexs)).thenReturn(
                 new String[0]);
+        when(mPackageManager.hasSystemFeature(FEATURE_ETHERNET)).thenReturn(false);
         when(mResources.getIntArray(R.array.config_tether_upstream_types)).thenReturn(new int[0]);
         when(mResources.getStringArray(R.array.config_mobile_hotspot_provision_app))
                 .thenReturn(new String[0]);
@@ -412,5 +421,19 @@ public class TetheringConfigurationTest {
         when(mResourcesForSubId.getString(
                 R.string.config_mobile_hotspot_provision_response)).thenReturn(
                 PROVISIONING_APP_RESPONSE);
+    }
+
+    @Test
+    public void testEthernetFeatureConfiguration() throws Exception {
+        when(mPackageManager.hasSystemFeature(FEATURE_ETHERNET)).thenReturn(false);
+        final TetheringConfiguration noEthernetCfg = new TetheringConfiguration(
+                mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
+        assertFalse(noEthernetCfg.hasEthernetFeature);
+
+        when(mPackageManager.hasSystemFeature(FEATURE_ETHERNET)).thenReturn(true);
+        final TetheringConfiguration hasEthernetCfg = new TetheringConfiguration(
+                mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
+        assertTrue(hasEthernetCfg.hasEthernetFeature);
+
     }
 }

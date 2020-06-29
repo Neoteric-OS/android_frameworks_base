@@ -16,6 +16,7 @@
 
 package com.android.networkstack.tethering;
 
+import static android.content.pm.PackageManager.FEATURE_ETHERNET;
 import static android.net.TetheringConstants.EXTRA_ADD_TETHER_TYPE;
 import static android.net.TetheringConstants.EXTRA_PROVISION_CALLBACK;
 import static android.net.TetheringConstants.EXTRA_RUN_PROVISION;
@@ -53,6 +54,7 @@ import static org.mockito.Mockito.when;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.util.SharedLog;
 import android.os.Bundle;
@@ -93,6 +95,7 @@ public final class EntitlementManagerTest {
     @Mock private Resources mResources;
     @Mock private SharedLog mLog;
     @Mock private EntitlementManager.OnUiEntitlementFailedListener mEntitlementFailedListener;
+    @Mock private PackageManager mPackageManager;
 
     // Like so many Android system APIs, these cannot be mocked because it is marked final.
     // We have to use the real versions.
@@ -108,6 +111,11 @@ public final class EntitlementManagerTest {
     private class MockContext extends BroadcastInterceptingContext {
         MockContext(Context base) {
             super(base);
+        }
+
+        @Override
+        public PackageManager getPackageManager() {
+            return mPackageManager;
         }
 
         @Override
@@ -205,6 +213,7 @@ public final class EntitlementManagerTest {
                 .thenReturn(new String[0]);
         when(mResources.getStringArray(R.array.config_tether_bluetooth_regexs))
                 .thenReturn(new String[0]);
+        when(mPackageManager.hasSystemFeature(FEATURE_ETHERNET)).thenReturn(true);
         when(mResources.getIntArray(R.array.config_tether_upstream_types))
                 .thenReturn(new int[0]);
         when(mResources.getBoolean(R.bool.config_tether_enable_legacy_dhcp_server)).thenReturn(

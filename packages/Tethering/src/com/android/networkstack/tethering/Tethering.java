@@ -1264,7 +1264,8 @@ public class Tethering {
         final boolean hasDownstreamConfiguration =
                 (cfg.tetherableUsbRegexs.length != 0)
                 || (cfg.tetherableWifiRegexs.length != 0)
-                || (cfg.tetherableBluetoothRegexs.length != 0);
+                || (cfg.tetherableBluetoothRegexs.length != 0)
+                || (cfg.hasEthernetFeature);
         final boolean hasUpstreamConfiguration = !cfg.preferredUpstreamIfaceTypes.isEmpty()
                 || cfg.chooseUpstreamAutomatically;
 

@@ -16,6 +16,7 @@
 
 package com.android.networkstack.tethering;
 
+import static android.content.pm.PackageManager.FEATURE_ETHERNET;
 import static android.content.pm.PackageManager.GET_ACTIVITIES;
 import static android.hardware.usb.UsbManager.USB_CONFIGURED;
 import static android.hardware.usb.UsbManager.USB_CONNECTED;
@@ -565,6 +566,8 @@ public class TetheringTest {
                 .thenReturn(new String[0]);
         when(mResources.getStringArray(R.array.config_tether_ncm_regexs))
                 .thenReturn(new String[] { "test_ncm\\d" });
+        when(mPackageManager.hasSystemFeature(FEATURE_ETHERNET)).thenReturn(true);
+
         when(mResources.getIntArray(R.array.config_tether_upstream_types)).thenReturn(new int[0]);
         when(mResources.getBoolean(R.bool.config_tether_upstream_automatic)).thenReturn(true);
     }

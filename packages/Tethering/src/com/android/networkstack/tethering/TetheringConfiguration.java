@@ -17,6 +17,7 @@
 package com.android.networkstack.tethering;
 
 import static android.content.Context.TELEPHONY_SERVICE;
+import static android.content.pm.PackageManager.FEATURE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
@@ -102,6 +103,7 @@ public class TetheringConfiguration {
     public final String[] legacyDhcpRanges;
     public final String[] defaultIPv4DNS;
     public final boolean enableLegacyDhcpServer;
+    public final boolean hasEthernetFeature;
 
     public final String[] provisioningApp;
     public final String provisioningAppNoUi;
@@ -131,6 +133,7 @@ public class TetheringConfiguration {
                 res, R.array.config_tether_wifi_p2p_regexs);
         tetherableBluetoothRegexs = getResourceStringArray(
                 res, R.array.config_tether_bluetooth_regexs);
+        hasEthernetFeature = ctx.getPackageManager().hasSystemFeature(FEATURE_ETHERNET);
 
         isDunRequired = checkDunRequired(ctx);
 
@@ -209,6 +212,8 @@ public class TetheringConfiguration {
         dumpStringArray(pw, "tetherableWifiP2pRegexs", tetherableWifiP2pRegexs);
         dumpStringArray(pw, "tetherableBluetoothRegexs", tetherableBluetoothRegexs);
         dumpStringArray(pw, "tetherableNcmRegexs", tetherableNcmRegexs);
+        pw.print("hasEthernetFeature: ");
+        pw.println(hasEthernetFeature);
 
         pw.print("isDunRequired: ");
         pw.println(isDunRequired);

@@ -143,6 +143,7 @@ public class EthernetTetheringTest {
 
     @Test
     public void testVirtualEthernetAlreadyExists() throws Exception {
+        assumeTrue(mTm.isTetheringSupported());
         // This test requires manipulating packets. Skip if there is a physical Ethernet connected.
         assumeFalse(mEm.isAvailable());
 
@@ -165,6 +166,7 @@ public class EthernetTetheringTest {
 
     @Test
     public void testVirtualEthernet() throws Exception {
+        assumeTrue(mTm.isTetheringSupported());
         // This test requires manipulating packets. Skip if there is a physical Ethernet connected.
         assumeFalse(mEm.isAvailable());
 
@@ -183,6 +185,7 @@ public class EthernetTetheringTest {
 
     @Test
     public void testStaticIpv4() throws Exception {
+        assumeTrue(mTm.isTetheringSupported());
         assumeFalse(mEm.isAvailable());
 
         mEm.setIncludeTestInterfaces(true);
@@ -226,6 +229,7 @@ public class EthernetTetheringTest {
 
     @Test
     public void testPhysicalEthernet() throws Exception {
+        assumeTrue(mTm.isTetheringSupported());
         assumeTrue(mEm.isAvailable());
 
         // Get an interface to use.
