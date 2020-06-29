@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe7520c1_2947011c",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/BpfCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-29T04:20:28Z",
+      "side": 1,
+      "message": "IIUC this function relies on an external invoking of mocking results of mNetd.tetherOffloadGetStats(), but it is not documented anywhere.\nAnd also it needs forwardAndWaitForIdle(DEFAULT_TETHER_OFFLOAD_POLL_INTERVAL_MS) after mocking to work correctly, but it might not be good to assume future developers know this truth without saying.\nTo me this function is hard to use and error-prone.\nMaybe we need to figure out a better way to refactor this?",
+      "range": {
+        "startLine": 202,
+        "startChar": 17,
+        "endLine": 202,
+        "endChar": 48
+      },
+      "revId": "83b354211ce413de850be8d695af4d5aad1b9efb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c801910_81377256",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/BpfCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-29T04:20:28Z",
+      "side": 1,
+      "message": "IIUC this is more likely the description of this function. maybe put this outside the function if you think it is better?",
+      "range": {
+        "startLine": 569,
+        "startChar": 8,
+        "endLine": 572,
+        "endChar": 44
+      },
+      "revId": "83b354211ce413de850be8d695af4d5aad1b9efb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbea775_c6983e5b",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/BpfCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-29T04:20:28Z",
+      "side": 1,
+      "message": "This would be hard-to-follow since it is in the loop but we rely on the fact it only run once with enable\u003d\u003dfalse.\nConsider a developer swap the order of testing it by new boolean[] {true, false},\nthe developer will fail the test by the side effect that he/she is not expecting.\nIt would be more clear if we init a final coordinator before the loop.",
+      "range": {
+        "startLine": 577,
+        "startChar": 0,
+        "endLine": 581,
+        "endChar": 13
+      },
+      "revId": "83b354211ce413de850be8d695af4d5aad1b9efb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
