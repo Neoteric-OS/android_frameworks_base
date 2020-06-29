@@ -22,6 +22,30 @@
       "revId": "070e7cf673745963cf1352ede68d2f3f06dbf2d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36abcedb_15bdad91",
+        "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-06-29T11:58:08Z",
+      "side": 1,
+      "message": "Yeah, will move it to l.114 in a follow-up cl.",
+      "parentUuid": "d8ca41f0_7991005a",
+      "range": {
+        "startLine": 117,
+        "startChar": 41,
+        "endLine": 117,
+        "endChar": 79
+      },
+      "revId": "070e7cf673745963cf1352ede68d2f3f06dbf2d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
