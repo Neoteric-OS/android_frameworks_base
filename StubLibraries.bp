@@ -50,6 +50,7 @@ stubs_defaults {
         ":art-module-public-api-stubs-source",
         ":android_icu4j_public_api_files",
         "**/package.html",
+        "core/java/overview.html",
     ],
     libs: ["framework-internal-utils"],
     installable: false,
@@ -58,6 +59,7 @@ stubs_defaults {
     merge_annotations_dirs: [
         "metalava-manual",
     ],
+    sandbox: true,
     api_levels_annotations_enabled: false,
     filter_packages: packages_to_document,
 }
@@ -75,6 +77,17 @@ stubs_defaults {
 stubs_defaults {
     name: "metalava-non-updatable-api-stubs-default",
     defaults: ["metalava-base-api-stubs-default"],
+    srcs: [
+        "wifi/java/android/net/wifi/WifiFrameworkInitializer.java",
+        "wifi/java/android/net/wifi/ScanResult.java",
+        "wifi/java/android/net/wifi/WifiManager.java",
+        "wifi/java/android/net/wifi/WifiInfo.java",
+        "wifi/java/android/net/wifi/WifiConfiguration.java",
+        "wifi/java/android/net/wifi/SoftApConfiguration.java",
+        "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "wifi/java/android/net/wifi/SoftApInfo.java",
+        "wifi/java/android/net/wifi/WifiScanner.java",
+    ],
     sdk_version: "core_platform",
     // There are a few classes from modules used as type arguments that
     // need to be resolved by metalava. For now, we can use a previously
