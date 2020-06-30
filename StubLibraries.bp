@@ -49,7 +49,14 @@ stubs_defaults {
         ":opt-net-voip-srcs",
         ":art-module-public-api-stubs-source",
         ":android_icu4j_public_api_files",
+	"services/core/java/com/android/server/infra/AbstractMasterSystemService.java",
+	"services/core/java/com/android/server/am/ContentProviderRecord.java",
+	"test-mock/src/android/test/mock/MockCursor.java",
+	"test-runner/src/android/test/suitebuilder/AssignableFrom.java",
+	"test-base/src/android/test/suitebuilder/annotation/SmallTest.java",
+	"test-base/src/android/test/UiThreadTest.java",
         "**/package.html",
+        "core/java/overview.html",
     ],
     libs: ["framework-internal-utils"],
     installable: false,
@@ -58,6 +65,7 @@ stubs_defaults {
     merge_annotations_dirs: [
         "metalava-manual",
     ],
+    sandbox: true,
     api_levels_annotations_enabled: false,
     filter_packages: packages_to_document,
 }
