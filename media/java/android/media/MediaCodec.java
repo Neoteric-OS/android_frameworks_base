@@ -2533,20 +2533,20 @@ final public class MediaCodec {
          * The number of leading unencrypted bytes in each subSample. If null, all bytes are treated
          * as encrypted and {@link #numBytesOfEncryptedData} must be specified.
          */
-        public int[] numBytesOfClearData;
+        @Nullable public int[] numBytesOfClearData;
         /**
          * The number of trailing encrypted bytes in each subSample. If null, all bytes are treated
          * as clear and {@link #numBytesOfClearData} must be specified.
          */
-        public int[] numBytesOfEncryptedData;
+        @Nullable public int[] numBytesOfEncryptedData;
         /**
          * A 16-byte key id
          */
-        public byte[] key;
+        @NonNull public byte[] key;
         /**
          * A 16-byte initialization vector
          */
-        public byte[] iv;
+        @NonNull public byte[] iv;
         /**
          * The type of encryption that has been applied,
          * see {@link #CRYPTO_MODE_UNENCRYPTED}, {@link #CRYPTO_MODE_AES_CTR}
