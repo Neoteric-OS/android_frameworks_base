@@ -12022,7 +12022,8 @@ public class TelephonyManager {
         String pkgForDebug = mContext != null ? mContext.getOpPackageName() : "<unknown>";
         try {
             IOns iOpportunisticNetworkService = getIOns();
-            if (iOpportunisticNetworkService == null || availableNetworks == null) {
+            if (iOpportunisticNetworkService == null || availableNetworks == null
+                    || availableNetworks.isEmpty()) {
                 if (executor == null || callback == null) {
                     return;
                 }
