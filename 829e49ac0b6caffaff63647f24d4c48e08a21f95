@@ -22,6 +22,30 @@
       "revId": "829e49ac0b6caffaff63647f24d4c48e08a21f95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9763cb_450e67ae",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1585075
+      },
+      "writtenOn": "2020-06-30T11:15:19Z",
+      "side": 1,
+      "message": "Ack. We will update all usages of mLocalDevices from Integer to cec_device_types_values and upload the patch.",
+      "parentUuid": "0d2baf18_f28746e4",
+      "range": {
+        "startLine": 442,
+        "startChar": 8,
+        "endLine": 442,
+        "endChar": 21
+      },
+      "revId": "829e49ac0b6caffaff63647f24d4c48e08a21f95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
