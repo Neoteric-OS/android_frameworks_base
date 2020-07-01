@@ -1,0 +1,10 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Aurimas Liutikas <aurimas@google.com>
+Code-Review+2: Ian Lake <ilake@google.com>
+Code-Review+2: Jeremy Woods <jbwoods@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 01 Jul 2020 19:57:51 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1331883
+Project: platform/frameworks/base
+Branch: refs/heads/master
