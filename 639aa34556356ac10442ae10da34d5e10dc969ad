@@ -22,6 +22,30 @@
       "revId": "639aa34556356ac10442ae10da34d5e10dc969ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b202ad_168b3b69",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-01T08:43:05Z",
+      "side": 1,
+      "message": "We can\u0027t check EthernetManager#isAvailable here because #isAvailable check whether ethernet iface is available for client mode. It may be false when ethernet is in server mode. In other word, if ethernet is the only supported downstream type then TetheringManager#isTetheringSupported may return false if ethernet tethering is ON...\n\nMaybe we need a new API in EthernetManager to know whether server mode is supported. But maybe it is enough that just check whether EthernetManager is non-null because tethering rely on ethernet stack to know ethernet interface name. If EthernetManager is non-null, tethering can say ethernet is supported from tethering side.\n\nThe second option is just check FEATURE_ETHERNET(See patchSet 2, https://android-review.googlesource.com/c/platform/frameworks/base/+/1352244/2/packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java). WDYT ?",
+      "parentUuid": "d6ed4a3a_f942b913",
+      "range": {
+        "startLine": 1268,
+        "startChar": 24,
+        "endLine": 1268,
+        "endChar": 43
+      },
+      "revId": "639aa34556356ac10442ae10da34d5e10dc969ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
