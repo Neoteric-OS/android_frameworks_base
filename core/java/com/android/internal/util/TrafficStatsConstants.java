@@ -29,6 +29,7 @@ public class TrafficStatsConstants {
     public static final int TAG_SYSTEM_DHCP = 0xFFFFFE01;
     public static final int TAG_SYSTEM_NEIGHBOR = 0xFFFFFE02;
     public static final int TAG_SYSTEM_DHCP_SERVER = 0xFFFFFE03;
+    public static final int TAG_SYSTEM_DNSPROXY_SERVER = 0xFFFFFE04;
 
     public static final int TAG_SYSTEM_NTP = 0xFFFFFF41;
     public static final int TAG_SYSTEM_GPS = 0xFFFFFF44;

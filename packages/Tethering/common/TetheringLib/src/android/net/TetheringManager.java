@@ -201,6 +201,7 @@ public class TetheringManager {
             TETHER_ERROR_DISABLE_FORWARDING_ERROR,
             TETHER_ERROR_IFACE_CFG_ERROR,
             TETHER_ERROR_DHCPSERVER_ERROR,
+            TETHER_ERROR_DNSPROXYSERVER_ERROR,
     })
     public @interface TetheringIfaceError {
     }
@@ -233,6 +234,7 @@ public class TetheringManager {
     public static final int TETHER_ERROR_NO_CHANGE_TETHERING_PERMISSION = 14;
     public static final int TETHER_ERROR_NO_ACCESS_TETHERING_PERMISSION = 15;
     public static final int TETHER_ERROR_UNKNOWN_TYPE = 16;
+    public static final int TETHER_ERROR_DNSPROXYSERVER_ERROR = 17;
 
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
