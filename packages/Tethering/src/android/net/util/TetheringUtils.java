@@ -21,6 +21,7 @@ import android.net.TetheringRequestParcel;
 import androidx.annotation.NonNull;
 
 import java.io.FileDescriptor;
+import java.io.IOException;
 import java.net.SocketException;
 import java.util.Objects;
 
@@ -128,5 +129,15 @@ public class TetheringUtils {
                 && Objects.equals(request.staticClientAddress, otherRequest.staticClientAddress)
                 && request.exemptFromEntitlementCheck == otherRequest.exemptFromEntitlementCheck
                 && request.showProvisioningUi == otherRequest.showProvisioningUi;
+    }
+
+    /**
+     * Close a socket, ignoring any exception while closing.
+     */
+    public static void closeSocketQuietly(FileDescriptor fd) {
+        try {
+            SocketUtils.closeSocket(fd);
+        } catch (IOException ignored) {
+        }
     }
 }
