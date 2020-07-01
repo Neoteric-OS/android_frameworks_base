@@ -18,7 +18,6 @@ package com.android.tests.rollback.host;
 
 import static com.android.tests.rollback.host.WatchdogEventLogger.watchdogEventOccurred;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.android.tradefed.testtype.DeviceJUnit4ClassRunner;
@@ -26,6 +25,7 @@ import com.android.tradefed.testtype.junit4.BaseHostJUnit4Test;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -56,6 +56,9 @@ public class NetworkStagedRollbackTest extends BaseHostJUnit4Test {
     private static final String ROLLBACK_SUCCESS = "ROLLBACK_SUCCESS";
 
     private WatchdogEventLogger mLogger = new WatchdogEventLogger();
+
+    @Rule
+    public AbandonSessionsRule mHostTestRule = new AbandonSessionsRule(this);
 
     @Before
     public void setUp() throws Exception {
