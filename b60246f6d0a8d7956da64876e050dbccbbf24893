@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ce1bee1_2da2c398",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3281,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-01T07:16:30Z",
+      "side": 1,
+      "message": "i think it can be merged separately.",
+      "parentUuid": "37bafcb4_fe53074c",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71d711e3_589b81de",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "20b8a8a9_de45c025",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3300,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-01T07:16:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71d711e3_589b81de",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee01729d_4519a5bd",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2020-07-01T01:31:10Z",
       "side": 1,
       "message": "Andrew Lewis\n\nI\u0027m not sure if it follows API guidelines to have a callback receive an unstructured Parcel like this. From the commit message it sounds like there are a bunch of different types of data stored in here but maybe then a byte[] would be better (built out of the parcel). Related to that I have a couple of concerns with how this works at the moment:\n\nIf the callback implementation hangs onto the Parcel instance is it still valid after recycle is called below?\nIf the callback implementation throws, we won\u0027t recycle the parcel.",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f01fc0_5ba28c8d",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3569,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-01T07:16:30Z",
+      "side": 1,
+      "message": "\u003e Andrew Lewis\n\u003e \n\u003e I\u0027m not sure if it follows API guidelines to have a callback receive an unstructured Parcel like this. From the commit message it sounds like there are a bunch of different types of data stored in here but maybe then a byte[] would be better (built out of the parcel). Related to that I have a couple of concerns with how this works at the moment:\n\u003e \n\u003e If the callback implementation hangs onto the Parcel instance is it still valid after recycle is called below?\n\u003e If the callback implementation throws, we won\u0027t recycle the parcel.\n\nAbout the parcel problem, I think there will be about 3 kind of solutions.\nI feel the solution 1) is best, but not sure which solution is suitable to be contributed.\nWould you please suggest which solution i should implement?\n\nSubject. Handling Parcel.\n\n Solution 1) Make a new class like TimedText.class\n    - https://cs.android.com/android/platform/superproject/+/master:frameworks/base/media/java/android/media/TimedText.java;l\u003d360?q\u003dTimedText\u0026ss\u003dandroid%2Fplatform%2Fsuperproject\n\n Solution 2) Deliver byte[] instead Parcel.\n    - A MediaPlayer has only one callback type like {int, int, int, @Nullable Parcel}.\n\t- need add a new type of callback that delivers byte[] , it will lead quite lots of code changes in frameworks/av, and frameworks/base.\n\n Solution 3) add try{}-catch{}\n    - a callback should be called in try{}-catch{} context.\n\t- But hard to define which type of Exception can be occurred.\n\t- We may add block \u0027Exception\u0027 only.. not a specified type like NullPointerException.",
+      "parentUuid": "ee01729d_4519a5bd",
       "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a81bcb0f_eaad0e5d",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4069,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-01T07:16:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2857c1ee_313ac083",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26139dbf_aa25d8c6",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58da18a_10724ed1",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4071,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-01T07:16:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26139dbf_aa25d8c6",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "0bbfdf7e_a3de499b",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4079,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-01T07:16:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78bcec19_ee06a85d",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11a0f1b0_aeafe7c8",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a301432a_68f17062",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4080,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-01T07:16:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a0f1b0_aeafe7c8",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

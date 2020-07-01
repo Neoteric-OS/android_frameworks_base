@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "072e8b83_ee426790",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-01T07:16:30Z",
+      "side": 1,
+      "message": "Thanks for all the reviews.\n\nI have updated commit as per each comments except about Parcel.\n\n - changes added in system-current.txt because AOSP build system required to update this txt file if @Nullable annotation is there.\n\nAbout the parcel problem, I think there will be about 3 kind of solutions.\nI feel the solution 1) is best, but not sure which solution is sutable to be contributed.\nWould you please suggest which solution i should implement?\n\nSubject. Handling Parcel.\n\n Solution 1) Make a new class like TimedText.class\n    - https://cs.android.com/android/platform/superproject/+/master:frameworks/base/media/java/android/media/TimedText.java;l\u003d360?q\u003dTimedText\u0026ss\u003dandroid%2Fplatform%2Fsuperproject\n Solution 2) Deliver byte[] instead Parcel.\n    - A MediaPlayer has only one callback type like {int, int, int, @Nullable Parcel}.\n\t- need add a new type of callback that delivers byte[] , it will lead quite lots of code changes in frameworks/av, and frameworks/base.\n Solution 3) add try{}-catch{}\n    - a callback should be called in try{}-catch{} context.\n\t- But hard to define which type of Exception can be occurred.\n\t- We may add block \u0027Exception\u0027 only.. not a specified type like NullPointerException.",
+      "revId": "7a234c11ce66eb62716f7956deee55422bae9f06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
