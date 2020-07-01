@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6ed4a3a_f942b913",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-01T07:43:06Z",
+      "side": 1,
+      "message": "This will always be true on any phone that supports USB accessories. Is that what we want? Should we also check EthernetManager#isAvailable?",
+      "range": {
+        "startLine": 1268,
+        "startChar": 24,
+        "endLine": 1268,
+        "endChar": 43
+      },
+      "revId": "639aa34556356ac10442ae10da34d5e10dc969ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
