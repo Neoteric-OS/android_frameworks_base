@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e8927a1c_804525e3",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3569,
+      "author": {
+        "id": 1647935
+      },
+      "writtenOn": "2020-07-01T09:01:19Z",
+      "side": 1,
+      "message": "Dear Andrew Lewis\n\nIn first, thanks for your kind review.\n\nPlease let me add my opinion onto Byeongjo Park\u0027s.\n\nYes. I agree your concern.\nThe Parcel should be parsed in here and terminate its life before leaving this place.\nSo we also would like to purge the concern.\n\n1) As Park suggested this is the most clear solution.\n\n   We will define a new structure. And its contents are derived from the parcel.\n   The parcel wouldn\u0027t be passed to out of this file so it can be recycled safely.\n2) In here Mr.Park misunderstood something.\n\n   You didn\u0027t mean to make a new interface between native \u0026 java MediaPlayer. Right?\n   I think he suggested pull out a byte stream from the parcel in this java level, and passing the stream to setter of IMSRxNoticeListener.\n   For this suggestion, the real structure of the parcel isn\u0027t revealed explicitly but we can leave comments in this code.\n3) Whatever we choice 1) or 2), we can secure Parcel instance so this will not be required.\n\nIf you think we are not tuned in, or my comments miss something, please feel free to correct.",
+      "parentUuid": "a3f01fc0_5ba28c8d",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2857c1ee_313ac083",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 3
