@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37bafcb4_fe53074c",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3281,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-07-01T01:31:10Z",
+      "side": 1,
+      "message": "Andrew Lewis\n\nShould this happen as part of this change or is it going to be done separately?",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d711e3_589b81de",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3300,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-07-01T01:31:10Z",
+      "side": 1,
+      "message": "Andrew Lewis\n\nNit: does this need to go here rather than below MEDIA_TIME_DISCONTINUITY? It would be nice to keep them in order.",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee01729d_4519a5bd",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3569,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-07-01T01:31:10Z",
+      "side": 1,
+      "message": "Andrew Lewis\n\nI\u0027m not sure if it follows API guidelines to have a callback receive an unstructured Parcel like this. From the commit message it sounds like there are a bunch of different types of data stored in here but maybe then a byte[] would be better (built out of the parcel). Related to that I have a couple of concerns with how this works at the moment:\n\nIf the callback implementation hangs onto the Parcel instance is it still valid after recycle is called below?\nIf the callback implementation throws, we won\u0027t recycle the parcel.",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2857c1ee_313ac083",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4069,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-07-01T01:31:10Z",
+      "side": 1,
+      "message": "Andrew Lewis\n\nNit: \"OnImsRxNoticeListener\", per https://source.android.com/setup/contribute/code-style#treat-acronyms-as-words. Please also update the field and callback names similarly.",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26139dbf_aa25d8c6",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4071,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-07-01T01:31:10Z",
+      "side": 1,
+      "message": "Lajos Molnar\n\nis this API accessible from the VT app? At least this should be @SystemAPI",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bcec19_ee06a85d",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4079,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-07-01T01:31:10Z",
+      "side": 1,
+      "message": "Andrew Lewis\n\n@Nullable",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a0f1b0_aeafe7c8",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4080,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-07-01T01:31:10Z",
+      "side": 1,
+      "message": "Andrew Lewis\n\nSuper-nit: move to end of previous line.",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
