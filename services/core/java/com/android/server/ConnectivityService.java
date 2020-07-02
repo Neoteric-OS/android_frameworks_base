@@ -6206,10 +6206,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         final Set<UidRange> ranges = nai.networkCapabilities.getUids();
         final int vpnAppUid = nai.networkCapabilities.getOwnerUid();
-        // TODO: this create a window of opportunity for apps to receive traffic between the time
+        // TODO: this creates a window of opportunity for apps to receive traffic between the time
         // when the old rules are removed and the time when new rules are added. To fix this,
         // make eBPF support two whitelisted interfaces so here new rules can be added before the
         // old rules are being removed.
+        // The above reasoning is kind of bogus... unless you actually need 2 vpn interfaces to
+        // work at the same time, you can simply write the new index to the bpf map without ever
+        // doing the delete.  The real problem here is the lack of an appropriate function
+        // in PermissionMonitor.java that will take both old and new iface and do the needful.
         if (wasFiltering) {
             mPermissionMonitor.onVpnUidRangesRemoved(oldIface, ranges, vpnAppUid);
         }
