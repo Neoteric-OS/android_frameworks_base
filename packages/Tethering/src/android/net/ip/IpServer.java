@@ -33,6 +33,7 @@ import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.MacAddress;
+import android.net.Network;
 import android.net.RouteInfo;
 import android.net.TetheredClient;
 import android.net.TetheringManager;
@@ -43,6 +44,7 @@ import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.DhcpServingParamsParcelExt;
 import android.net.dhcp.IDhcpEventCallbacks;
 import android.net.dhcp.IDhcpServer;
+import android.net.dnsproxy.DnsProxyServer;
 import android.net.ip.IpNeighborMonitor.NeighborEvent;
 import android.net.ip.RouterAdvertisementDaemon.RaParams;
 import android.net.shared.NetdUtils;
@@ -56,7 +58,9 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
+import android.system.ErrnoException;
 import android.util.Log;
+import android.util.Pair;
 import android.util.SparseArray;
 
 import androidx.annotation.NonNull;
@@ -186,6 +190,14 @@ public class IpServer extends StateMachine {
             }
         }
 
+        /**
+         * Create a DnsProxyServer instance to be used by IpServer.
+         */
+        public DnsProxyServer makeDnsProxyServer(
+                String ifName, SharedLog log) throws ErrnoException {
+            return new DnsProxyServer(ifName, log);
+        };
+
         /** Create a DhcpServer instance to be used by IpServer. */
         public abstract void makeDhcpServer(String ifName, DhcpServingParamsParcel params,
                 DhcpServerCallbacks cb);
@@ -236,6 +248,7 @@ public class IpServer extends StateMachine {
     private final int mInterfaceType;
     private final LinkProperties mLinkProperties;
     private final boolean mUsingLegacyDhcp;
+    private final boolean mUsingLegacyDnsProxy;
     private final boolean mUsingBpfOffload;
 
     private final Dependencies mDeps;
@@ -243,6 +256,7 @@ public class IpServer extends StateMachine {
     private int mLastError;
     private int mServingMode;
     private InterfaceSet mUpstreamIfaceSet;  // may change over time
+    private Network mUpstreamNetwork;  // may change over time
     private InterfaceParams mInterfaceParams;
     // TODO: De-duplicate this with mLinkProperties above. Currently, these link
     // properties are those selected by the IPv6TetheringCoordinator and relayed
@@ -256,6 +270,7 @@ public class IpServer extends StateMachine {
     // To be accessed only on the handler thread
     private int mDhcpServerStartIndex = 0;
     private IDhcpServer mDhcpServer;
+    private DnsProxyServer mDnsProxyServer;
     private RaParams mLastRaParams;
 
     private LinkAddress mStaticIpv4ServerAddr;
@@ -281,7 +296,7 @@ public class IpServer extends StateMachine {
     public IpServer(
             String ifaceName, Looper looper, int interfaceType, SharedLog log,
             INetd netd, @NonNull BpfCoordinator coordinator, Callback callback,
-            boolean usingLegacyDhcp, boolean usingBpfOffload,
+            boolean usingLegacyDhcp, boolean usingLegacyDnsProxy, boolean usingBpfOffload,
             PrivateAddressCoordinator addressCoordinator, Dependencies deps) {
         super(ifaceName, looper);
         mLog = log.forSubComponent(ifaceName);
@@ -293,6 +308,7 @@ public class IpServer extends StateMachine {
         mInterfaceType = interfaceType;
         mLinkProperties = new LinkProperties();
         mUsingLegacyDhcp = usingLegacyDhcp;
+        mUsingLegacyDnsProxy = usingLegacyDnsProxy;
         mUsingBpfOffload = usingBpfOffload;
         mPrivateAddressCoordinator = addressCoordinator;
         mDeps = deps;
@@ -579,6 +595,35 @@ public class IpServer extends StateMachine {
         } else {
             stopDhcp();
             return true;
+        }
+    }
+
+    private void startDnsProxyOrUpdateUpStream() {
+        if (mUsingLegacyDnsProxy) {
+            return;
+        }
+
+        if (mDnsProxyServer == null) {
+            try {
+                mDnsProxyServer = mDeps.makeDnsProxyServer(mIfaceName, mLog);
+                mDnsProxyServer.start(mUpstreamNetwork);
+            } catch (ErrnoException | IOException e) {
+                mLog.e("Error starting DnsProxyServer:", e);
+                mLastError = TetheringManager.TETHER_ERROR_DNSPROXYSERVER_ERROR;
+                transitionTo(mInitialState);
+            }
+            return;
+        }
+        mDnsProxyServer.updateUpstream(mUpstreamNetwork);
+    }
+
+    private void stopDnsProxy() {
+        if (mUsingLegacyDnsProxy) {
+            return;
+        }
+        if (mDnsProxyServer != null) {
+            mDnsProxyServer.stop();
+            mDnsProxyServer = null;
         }
     }
 
@@ -1210,6 +1255,7 @@ public class IpServer extends StateMachine {
 
         @Override
         public void exit() {
+            stopDnsProxy();
             cleanupUpstream();
             super.exit();
         }
@@ -1219,6 +1265,7 @@ public class IpServer extends StateMachine {
 
             for (String ifname : mUpstreamIfaceSet.ifnames) cleanupUpstreamInterface(ifname);
             mUpstreamIfaceSet = null;
+            mUpstreamNetwork = null;
             clearIpv6ForwardingRules();
         }
 
@@ -1249,7 +1296,9 @@ public class IpServer extends StateMachine {
                     mLog.e("CMD_TETHER_REQUESTED while already tethering.");
                     break;
                 case CMD_TETHER_CONNECTION_CHANGED:
-                    final InterfaceSet newUpstreamIfaceSet = (InterfaceSet) message.obj;
+                    final Pair<InterfaceSet, Network> pair =
+                            (Pair<InterfaceSet, Network>) message.obj;
+                    final InterfaceSet newUpstreamIfaceSet = pair.first;
                     if (noChangeInUpstreamIfaceSet(newUpstreamIfaceSet)) {
                         if (VDBG) Log.d(TAG, "Connection changed noop - dropping");
                         break;
@@ -1257,6 +1306,7 @@ public class IpServer extends StateMachine {
 
                     if (newUpstreamIfaceSet == null) {
                         cleanupUpstream();
+                        startDnsProxyOrUpdateUpStream();
                         break;
                     }
 
@@ -1268,6 +1318,7 @@ public class IpServer extends StateMachine {
                     // This makes the call to cleanupUpstream() in the error
                     // path for any interface neatly cleanup all the interfaces.
                     mUpstreamIfaceSet = newUpstreamIfaceSet;
+                    mUpstreamNetwork = pair.second;
 
                     for (String ifname : added) {
                         try {
@@ -1281,6 +1332,7 @@ public class IpServer extends StateMachine {
                             return true;
                         }
                     }
+                    startDnsProxyOrUpdateUpStream();
                     break;
                 case CMD_NEIGHBOR_EVENT:
                     handleNeighborEvent((NeighborEvent) message.obj);
