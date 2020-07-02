@@ -88,6 +88,7 @@ import android.os.Handler;
 import android.os.RemoteException;
 import android.os.test.TestLooper;
 import android.text.TextUtils;
+import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -158,11 +159,12 @@ public class IpServerTest {
     private BpfCoordinator mBpfCoordinator;
 
     private void initStateMachine(int interfaceType) throws Exception {
-        initStateMachine(interfaceType, false /* usingLegacyDhcp */, DEFAULT_USING_BPF_OFFLOAD);
+        initStateMachine(interfaceType, false /* usingLegacyDhcp */, true /* usingLegacyDnsProxy */,
+                DEFAULT_USING_BPF_OFFLOAD);
     }
 
     private void initStateMachine(int interfaceType, boolean usingLegacyDhcp,
-            boolean usingBpfOffload) throws Exception {
+            boolean usingLegacyDnsProxy, boolean usingBpfOffload) throws Exception {
         doAnswer(inv -> {
             final IDhcpServerCallbacks cb = inv.getArgument(2);
             new Thread(() -> {
@@ -194,7 +196,8 @@ public class IpServerTest {
 
         mIpServer = new IpServer(
                 IFACE_NAME, mLooper.getLooper(), interfaceType, mSharedLog, mNetd, mBpfCoordinator,
-                mCallback, usingLegacyDhcp, usingBpfOffload, mAddressCoordinator, mDependencies);
+                mCallback, usingLegacyDhcp, usingLegacyDnsProxy, usingBpfOffload,
+                mAddressCoordinator, mDependencies);
         mIpServer.start();
         mNeighborEventConsumer = neighborCaptor.getValue();
 
@@ -208,13 +211,15 @@ public class IpServerTest {
 
     private void initTetheredStateMachine(int interfaceType, String upstreamIface)
             throws Exception {
-        initTetheredStateMachine(interfaceType, upstreamIface, false,
+        initTetheredStateMachine(interfaceType, upstreamIface, false /* usingLegacyDhcp */,
+                true /* usingLegacyDnsProxy */,
                 DEFAULT_USING_BPF_OFFLOAD);
     }
 
     private void initTetheredStateMachine(int interfaceType, String upstreamIface,
-            boolean usingLegacyDhcp, boolean usingBpfOffload) throws Exception {
-        initStateMachine(interfaceType, usingLegacyDhcp, usingBpfOffload);
+            boolean usingLegacyDhcp, boolean usingLegacyDnsProxy, boolean usingBpfOffload)
+            throws Exception {
+        initStateMachine(interfaceType, usingLegacyDhcp, usingLegacyDnsProxy, usingBpfOffload);
         dispatchCommand(IpServer.CMD_TETHER_REQUESTED, STATE_TETHERED);
         if (upstreamIface != null) {
             LinkProperties lp = new LinkProperties();
@@ -266,6 +271,7 @@ public class IpServerTest {
                 .thenReturn(mIpNeighborMonitor);
         mIpServer = new IpServer(IFACE_NAME, mLooper.getLooper(), TETHERING_BLUETOOTH, mSharedLog,
                 mNetd, mBpfCoordinator, mCallback, false /* usingLegacyDhcp */,
+                true /* usingLegacyDnsProxy */,
                 DEFAULT_USING_BPF_OFFLOAD, mAddressCoordinator, mDependencies);
         mIpServer.start();
         mLooper.dispatchAll();
@@ -620,7 +626,7 @@ public class IpServerTest {
     @Test
     public void doesNotStartDhcpServerIfDisabled() throws Exception {
         initTetheredStateMachine(TETHERING_WIFI, UPSTREAM_IFACE, true /* usingLegacyDhcp */,
-                DEFAULT_USING_BPF_OFFLOAD);
+                true /* usingLegacyDnsProxy */, DEFAULT_USING_BPF_OFFLOAD);
         dispatchTetherConnectionChanged(UPSTREAM_IFACE);
 
         verify(mDependencies, never()).makeDhcpServer(any(), any(), any());
@@ -732,7 +738,7 @@ public class IpServerTest {
     @Test
     public void addRemoveipv6ForwardingRules() throws Exception {
         initTetheredStateMachine(TETHERING_WIFI, UPSTREAM_IFACE, false /* usingLegacyDhcp */,
-                DEFAULT_USING_BPF_OFFLOAD);
+                true /* usingLegacyDnsProxy */, DEFAULT_USING_BPF_OFFLOAD);
 
         final int myIfindex = TEST_IFACE_PARAMS.index;
         final int notMyIfindex = myIfindex - 1;
@@ -881,7 +887,7 @@ public class IpServerTest {
         // [1] Enable BPF offload.
         // A neighbor that is added or deleted causes the rule to be added or removed.
         initTetheredStateMachine(TETHERING_WIFI, UPSTREAM_IFACE, false /* usingLegacyDhcp */,
-                true /* usingBpfOffload */);
+                true /* usingLegacyDnsProxy */, true /* usingBpfOffload */);
         resetNetdAndBpfCoordinator();
 
         recvNewNeigh(myIfindex, neigh, NUD_REACHABLE, macA);
@@ -899,7 +905,7 @@ public class IpServerTest {
         // [2] Disable BPF offload.
         // A neighbor that is added or deleted doesn’t cause the rule to be added or removed.
         initTetheredStateMachine(TETHERING_WIFI, UPSTREAM_IFACE, false /* usingLegacyDhcp */,
-                false /* usingBpfOffload */);
+                true /* usingLegacyDnsProxy */, false /* usingBpfOffload */);
         resetNetdAndBpfCoordinator();
 
         recvNewNeigh(myIfindex, neigh, NUD_REACHABLE, macA);
@@ -916,7 +922,7 @@ public class IpServerTest {
     @Test
     public void doesNotStartIpNeighborMonitorIfBpfOffloadDisabled() throws Exception {
         initTetheredStateMachine(TETHERING_WIFI, UPSTREAM_IFACE, false /* usingLegacyDhcp */,
-                false /* usingBpfOffload */);
+                true /* usingLegacyDnsProxy */, false /* usingBpfOffload */);
 
         // IP neighbor monitor doesn't start if BPF offload is disabled.
         verify(mIpNeighborMonitor, never()).start();
@@ -1024,7 +1030,8 @@ public class IpServerTest {
 
     private void dispatchTetherConnectionChanged(String upstreamIface) {
         final InterfaceSet ifs = (upstreamIface != null) ? new InterfaceSet(upstreamIface) : null;
-        mIpServer.sendMessage(IpServer.CMD_TETHER_CONNECTION_CHANGED, ifs);
+        // TODO: Verify the passed in upstream Network after disabling legacy DnsProxyServer.
+        mIpServer.sendMessage(IpServer.CMD_TETHER_CONNECTION_CHANGED, new Pair<>(ifs, null));
         mLooper.dispatchAll();
     }
 

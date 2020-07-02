@@ -121,6 +121,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.util.Pair;
 import android.util.SparseArray;
 
 import androidx.annotation.NonNull;
@@ -1494,12 +1495,12 @@ public class Tethering {
             final String[] dhcpRanges = cfg.enableLegacyDhcpServer
                     ? cfg.legacyDhcpRanges : new String[0];
             try {
-                NetdUtils.tetherStart(mNetd, true /** usingLegacyDnsProxy */, dhcpRanges);
+                NetdUtils.tetherStart(mNetd, cfg.enableLegacyDnsProxyServer, dhcpRanges);
             } catch (RemoteException | ServiceSpecificException e) {
                 try {
                     // Stop and retry.
                     mNetd.tetherStop();
-                    NetdUtils.tetherStart(mNetd, true /** usingLegacyDnsProxy */, dhcpRanges);
+                    NetdUtils.tetherStart(mNetd, cfg.enableLegacyDnsProxyServer, dhcpRanges);
                 } catch (RemoteException | ServiceSpecificException ee) {
                     mLog.e(ee);
                     transitionTo(mStartTetheringErrorState);
@@ -1548,8 +1549,8 @@ public class Tethering {
                     sendMessageDelayed(CMD_RETRY_UPSTREAM, UPSTREAM_SETTLE_TIME_MS);
                 }
             }
-            setUpstreamNetwork(ns);
             final Network newUpstream = (ns != null) ? ns.network : null;
+            setUpstreamNetwork(ns, newUpstream);
             if (mTetherUpstream != newUpstream) {
                 mTetherUpstream = newUpstream;
                 mUpstreamNetworkMonitor.setCurrentUpstream(mTetherUpstream);
@@ -1557,7 +1558,7 @@ public class Tethering {
             }
         }
 
-        protected void setUpstreamNetwork(UpstreamNetworkState ns) {
+        protected void setUpstreamNetwork(UpstreamNetworkState ns, @Nullable Network newUpstream) {
             InterfaceSet ifaces = null;
             if (ns != null) {
                 // Find the interface with the default IPv4 route. It may be the
@@ -1568,10 +1569,10 @@ public class Tethering {
                 mLog.i("Found upstream interface(s): " + ifaces);
             }
 
-            if (ifaces != null) {
+            if (ifaces != null && mConfig.enableLegacyDnsProxyServer) {
                 setDnsForwarders(ns.network, ns.linkProperties);
             }
-            notifyDownstreamsOfNewUpstreamIface(ifaces);
+            notifyDownstreamsOfNewUpstreamIface(ifaces, newUpstream);
             if (ns != null && pertainsToCurrentUpstream(ns)) {
                 // If we already have UpstreamNetworkState for this network update it immediately.
                 handleNewUpstreamNetworkState(ns);
@@ -1609,10 +1610,12 @@ public class Tethering {
             }
         }
 
-        protected void notifyDownstreamsOfNewUpstreamIface(InterfaceSet ifaces) {
+        protected void notifyDownstreamsOfNewUpstreamIface(
+                @Nullable InterfaceSet ifaces, @Nullable Network newUpstream) {
             mCurrentUpstreamIfaceSet = ifaces;
             for (IpServer ipServer : mNotifyList) {
-                ipServer.sendMessage(IpServer.CMD_TETHER_CONNECTION_CHANGED, ifaces);
+                ipServer.sendMessage(
+                        IpServer.CMD_TETHER_CONNECTION_CHANGED, new Pair<>(ifaces, newUpstream));
             }
         }
 
@@ -1770,7 +1773,7 @@ public class Tethering {
             public void exit() {
                 mOffload.stop();
                 mUpstreamNetworkMonitor.stop();
-                notifyDownstreamsOfNewUpstreamIface(null);
+                notifyDownstreamsOfNewUpstreamIface(null, null);
                 handleNewUpstreamNetworkState(null);
                 if (mTetherUpstream != null) {
                     mTetherUpstream = null;
@@ -1802,7 +1805,7 @@ public class Tethering {
                         if (VDBG) Log.d(TAG, "Tether Mode requested by " + who);
                         handleInterfaceServingStateActive(message.arg1, who);
                         who.sendMessage(IpServer.CMD_TETHER_CONNECTION_CHANGED,
-                                mCurrentUpstreamIfaceSet);
+                                new Pair<>(mCurrentUpstreamIfaceSet, mTetherUpstream));
                         // If there has been a change and an upstream is now
                         // desired, kick off the selection process.
                         final boolean previousUpstreamWanted = updateUpstreamWanted();
@@ -2409,6 +2412,7 @@ public class Tethering {
         final TetherState tetherState = new TetherState(
                 new IpServer(iface, mLooper, interfaceType, mLog, mNetd, mBpfCoordinator,
                              makeControlCallback(), mConfig.enableLegacyDhcpServer,
+                             mConfig.enableLegacyDnsProxyServer,
                              mConfig.isBpfOffloadEnabled(), mPrivateAddressCoordinator,
                              mDeps.getIpServerDependencies()));
         mTetherStates.put(iface, tetherState);
