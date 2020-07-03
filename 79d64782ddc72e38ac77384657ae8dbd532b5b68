@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93f6278c_00748dae",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-07-03T16:09:57Z",
+      "side": 1,
+      "message": "We can\u0027t add these, we should clean up the deps instead",
+      "range": {
+        "startLine": 51,
+        "startChar": 42,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
