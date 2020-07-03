@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Pete Bentley <prb@google.com>
+Code-Review+2: Eran Messeri <eranm@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Daulet Zhanguzin <dauletz@google.com>
+Submitted-at: Fri, 03 Jul 2020 11:42:48 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1305793
+Project: platform/frameworks/base
+Branch: refs/heads/master
