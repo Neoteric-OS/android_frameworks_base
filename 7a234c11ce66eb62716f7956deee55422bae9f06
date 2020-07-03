@@ -16,6 +16,75 @@
       "revId": "7a234c11ce66eb62716f7956deee55422bae9f06",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e59e3e97_f7d1dde2",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4068,
+      "author": {
+        "id": 1060104
+      },
+      "writtenOn": "2020-07-03T10:28:49Z",
+      "side": 1,
+      "message": "Now these are marked @SystemApi should @hide be removed? Ditto below.\n\nI\u0027m not certain, so if there\u0027s any doubt Lajos can confirm the right way to do this.",
+      "range": {
+        "startLine": 4067,
+        "startChar": 0,
+        "endLine": 4068,
+        "endChar": 12
+      },
+      "revId": "7a234c11ce66eb62716f7956deee55422bae9f06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1db305a_2143b0b2",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4073,
+      "author": {
+        "id": 1060104
+      },
+      "writtenOn": "2020-07-03T10:28:49Z",
+      "side": 1,
+      "message": "Please add javadoc to describe what is contained in the data structure passed out, for example, a reference to a specification describing the binary data format.",
+      "range": {
+        "startLine": 4073,
+        "startChar": 0,
+        "endLine": 4073,
+        "endChar": 58
+      },
+      "revId": "7a234c11ce66eb62716f7956deee55422bae9f06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411e91a6_88e86981",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4073,
+      "author": {
+        "id": 1060104
+      },
+      "writtenOn": "2020-07-03T10:28:49Z",
+      "side": 1,
+      "message": "Nit: remove \u0027public\u0027 as it\u0027s implicit on an interface (not all the other interfaces in the class have this redundant visibility modifier, so we don\u0027t need to keep it for consistency).",
+      "range": {
+        "startLine": 4073,
+        "startChar": 8,
+        "endLine": 4073,
+        "endChar": 15
+      },
+      "revId": "7a234c11ce66eb62716f7956deee55422bae9f06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

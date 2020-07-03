@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "94478fcb_e74ac9be",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3569,
+      "author": {
+        "id": 1060104
+      },
+      "writtenOn": "2020-07-03T10:28:49Z",
+      "side": 1,
+      "message": "Regarding (2), yes, I meant to produce the byte[] out of the parcel at the Java level. If it\u0027s possible for the code that makes the byte[] to throw, I think we should do try { /* code to make the byte[] ... */ } finally {parcel.recycle();}.\n\nI feel that defining a structured data type as in (1) may be too much work, but perhaps Lajos has a different view on that.",
+      "parentUuid": "e8927a1c_804525e3",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2857c1ee_313ac083",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 3
