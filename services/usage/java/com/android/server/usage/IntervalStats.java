@@ -125,6 +125,8 @@ public class IntervalStats {
             usageStats.mPackageName = getCachedStringRef(packageName);
             usageStats.mBeginTimeStamp = beginTime;
             usageStats.mEndTimeStamp = endTime;
+            // use beginTime as initial mLastTimeUsed;
+            usageStats.mLastTimeUsed = beginTime;
             packageStats.put(usageStats.mPackageName, usageStats);
         }
         return usageStats;
