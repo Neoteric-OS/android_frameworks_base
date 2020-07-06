@@ -87,6 +87,30 @@
       "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648f18b6_a173a2c9",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2020-07-06T23:24:40Z",
+      "side": 1,
+      "message": "Should we just drop support for package.html files and convert all of these to `package-info.java` which does specify a package?",
+      "parentUuid": "e40ca0cf_3e9f6091",
+      "range": {
+        "startLine": 51,
+        "startChar": 42,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
