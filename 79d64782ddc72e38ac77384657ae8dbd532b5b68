@@ -111,6 +111,30 @@
       "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc910e1_209a196c",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-07-06T23:49:31Z",
+      "side": 1,
+      "message": "Metalava also keeps the content of these HTMLs for later uses, so we can\u0027t just convert to package-info.java.\n\nBut presumably we don\u0027t need any HTML contents for a package with no source files in the same directory or any of the subdirectories.\n\nSo maybe that\u0027s simpler -- don\u0027t load {package,overview}.html from a directory with no source files.",
+      "parentUuid": "648f18b6_a173a2c9",
+      "range": {
+        "startLine": 51,
+        "startChar": 42,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
