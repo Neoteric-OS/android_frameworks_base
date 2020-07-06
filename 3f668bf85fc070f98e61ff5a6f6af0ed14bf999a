@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5441eb3b_df20599b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-07-06T08:02:30Z",
+      "side": 1,
+      "message": "\u003e Patch Set 3:\n\u003e \n\u003e Is this still current ? Do we want to rebase ?\n\nYes, will clean up all related CLs include aosp/1146585 and aosp/1146586.\nThe files of Wifi part(aosp/1146586) seems to have been moved to frameworks/opt/net/wifi so I\u0027ll prepare a new CL for it.\nAlso, aosp/1146585 got a merging conflict error, will provide a CL in master and use Merged-In to avoid the error.\n",
+      "revId": "3f668bf85fc070f98e61ff5a6f6af0ed14bf999a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
