@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7bef7ebb_1263e685",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-07-06T17:53:36Z",
+      "side": 1,
+      "message": "\u003e Patch Set 3:\n\u003e \n\u003e Is this still current ?\n\nYes, and no. I dropped this down the priority list based on the comment request that said \"please do more work\".\n\nI\u0027ll try again in S, I suppose.",
+      "revId": "045de3d1795f1f67f271398aa717d91796664696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "420e9314_5e4762c1",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 3
