@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a8bbdaf3_a189e251",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-07-06T23:19:33Z",
+      "side": 1,
+      "message": "@Aurimas, it looks like we need to teach one more thing to metalava so it can get the correct package name for {package,overview}.html files.\n\nI wrote up my analysis of the problem and a possible solution in the inline comment.\n\nWDYT?",
+      "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93f6278c_00748dae",
         "filename": "StubLibraries.bp",
         "patchSetId": 2
@@ -37,6 +54,30 @@
       "side": 1,
       "message": "I assumed so. Interestingly, the action succeeds on RBE without these files and prints the same output. Only when running locally does metalava touch these files and causes the sandbox to fail the action. Metalava reads these files when looking through siblings of package html files (https://cs.android.com/android/platform/superproject/+/master:tools/metalava/src/main/java/com/android/tools/metalava/Driver.kt;l\u003d1167?q\u003dDriver.kt).\n\nAny ideas how to clean up this dependency? aurimas@ omakoto@.\nIs this code block necessary? What happens when we have the wrong package name? Would metalava fail down the line?",
       "parentUuid": "93f6278c_00748dae",
+      "range": {
+        "startLine": 51,
+        "startChar": 42,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40ca0cf_3e9f6091",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-07-06T23:19:33Z",
+      "side": 1,
+      "message": "Okay so the code basically looks for a {package,overview}.html file to see if it contains @hide, and if it does, hide the entire package. The problem is these files don\u0027t contain java package names, so metalava tries to infer it from *.java files in the same directory.\n\nFor example, for http://cs/android/frameworks/base/services/core/java/com/android/server/am/package.html, which contains @hide, metalava first assumes the package name is `services.core.java.com.android.server.am`, which is the relative path from the base path (which happens to be wrong) so it looks at ContentProviderRecord.java and get the right package from it. If there are no java files in the directory, metalava goes with the wrong guess and hide `services.core.java.com.android.server.am` instead of the correct package `com.android.server.am`... Which happens to not matter because this directory is hidden by other means too (not sure how exactly, but it must be working this way).\n\nThe javadoc says File.listFiles()\u0027s resulting order has no guarantees (https://docs.oracle.com/javase/7/docs/api/java/io/File.html#listFiles()), so whitelisting these don\u0027t even work...\n\n\nThere\u0027s actually another way to hide a package using `package-info.java` (e.g. http://cs/android/frameworks/base/services/core/java/com/android/server/package-info.java), but looks like metalava also keeps the content of {package,overview}.html files for later use, so we can\u0027t just migrate to package-info.java...\n\n\nSo I think we need to give another way for metalava to get the package name from these html files.\n\n\nI think we could use a new @ tag, like this?  `@javapackage com.android.server.am`\n\nIf adding a new @tag is problematic, we could put it in a comment: `\u003c!-- @java-package com.android.server.am --\u003e`",
+      "parentUuid": "f1305f65_c4ca459b",
       "range": {
         "startLine": 51,
         "startChar": 42,
