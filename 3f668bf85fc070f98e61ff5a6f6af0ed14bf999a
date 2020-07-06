@@ -16,6 +16,24 @@
       "revId": "3f668bf85fc070f98e61ff5a6f6af0ed14bf999a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "513797f6_e79155bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-07-06T10:12:23Z",
+      "side": 1,
+      "message": "Looks I cherry-picked aosp/1146586 to wrong git. I cherry-picked it to frameworks/base/.\nSo, wifi part needs to change to use public API and find the corresponding CL in master and add Merged-In tag.",
+      "parentUuid": "5441eb3b_df20599b",
+      "revId": "3f668bf85fc070f98e61ff5a6f6af0ed14bf999a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
