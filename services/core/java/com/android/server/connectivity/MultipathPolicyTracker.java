@@ -189,7 +189,7 @@ public class MultipathPolicyTracker {
 
         private long mQuota;
         /** Current multipath budget. Nonzero iff we have budget and a UsageCallback is armed. */
-        private long mMultipathBudget;
+        private volatile long mMultipathBudget;
         private final NetworkTemplate mNetworkTemplate;
         private final UsageCallback mUsageCallback;
         private NetworkCapabilities mNetworkCapabilities;
@@ -389,7 +389,10 @@ public class MultipathPolicyTracker {
         }
 
         private void registerUsageCallback(long budget) {
-            maybeUnregisterUsageCallback();
+            // Unregister usage callback then register call back with new budget.
+            if (haveMultipathBudget()) {
+                mStatsManager.unregisterUsageCallback(mUsageCallback);
+            }
             mStatsManager.registerUsageCallback(mNetworkTemplate, TYPE_MOBILE, budget,
                     mUsageCallback, mHandler);
             mMultipathBudget = budget;
