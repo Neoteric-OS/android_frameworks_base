@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b2e5e0a_97f6ec15",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2785,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-07T07:04:07Z",
+      "side": 1,
+      "message": "I don\u0027t think we can do this in S (sorry we missed the boat on this) because we may have users of this API targetting R that expect it to work. So we probably want to say VERSION_CODES.R here.\n\nFurther, do we want to make it a no-op for recent callers ?",
+      "range": {
+        "startLine": 2785,
+        "startChar": 60,
+        "endLine": 2785,
+        "endChar": 61
+      },
+      "revId": "e332d7cde69d9022417ae8f66554a549e95de4fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
