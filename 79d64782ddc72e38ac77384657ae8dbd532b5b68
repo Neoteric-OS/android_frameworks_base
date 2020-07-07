@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "43963d7f_b6b481f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-07-07T17:14:04Z",
+      "side": 1,
+      "message": "... Or, actually, a simpler fix would be to let addHiddenPackages() read only the source files that are allowed to access -- so we could add \"isFileAccessible\" to FileReadSandbox and use it in addHiddenPackages(). I think that blends better with our current approach.",
+      "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93f6278c_00748dae",
         "filename": "StubLibraries.bp",
         "patchSetId": 2
