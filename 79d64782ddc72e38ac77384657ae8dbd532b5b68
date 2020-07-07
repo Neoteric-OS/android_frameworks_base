@@ -183,6 +183,30 @@
       "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d45ef02_64640754",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-07-07T16:54:45Z",
+      "side": 1,
+      "message": "Metalava does store the content of package.html in `PsiPackageItem.documentation`, so not reading them would technically break it.\n\nI\u0027m not sure if anything uses it in practice though.\n\nSo I think a safe fix would be, let metalava ignore *.html in directories with no explicit source files. (Because if there\u0027s no source files, we can\u0027t \"guess\" the correct package name either anyway.)\n\n\nOr, the offending HTMLs are the following, and I don\u0027t think any of them are important. We *could* just remove them I guess.\nhttps://cs.corp.google.com/android/frameworks/base/services/core/java/com/android/server/infra/package.html\nhttps://cs.corp.google.com/android/frameworks/base/services/core/java/com/android/server/am/package.html\nhttps://cs.corp.google.com/android/frameworks/base/test-mock/src/android/test/mock/package.html\nhttps://cs.corp.google.com/android/frameworks/base/test-runner/src/android/test/suitebuilder/package.html\nhttps://cs.corp.google.com/android/frameworks/base/test-base/src/android/test/suitebuilder/annotation/package.html\nhttps://cs.corp.google.com/android/frameworks/base/test-base/src/android/test/package.html",
+      "parentUuid": "ec343b35_305b8785",
+      "range": {
+        "startLine": 51,
+        "startChar": 42,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
