@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "943dbdd9_131180ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-07-07T22:00:19Z",
+      "side": 1,
+      "message": "Yes, I merged a similar solution but then reverted because on automotive / headless system user it would destroy all users (and the \"real\" user data is not stored on user 0)\n\nI still think we should handle this posibility (of having the system user data corrupted), but we would need to re-create just the system user, not fallback to single user mode.",
+      "revId": "6afecc1cfca3fe4c8d6e0f287de2ec37c4bcdefe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
