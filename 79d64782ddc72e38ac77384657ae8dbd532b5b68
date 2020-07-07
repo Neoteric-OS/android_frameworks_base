@@ -135,6 +135,30 @@
       "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccfe0bc0_0ff5d87e",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2020-07-07T00:02:03Z",
+      "side": 1,
+      "message": "\u003e Metalava also keeps the content of these HTMLs for later uses, so we can\u0027t just convert to package-info.java.\n\nWhat later uses?\n\nI\u0027d rather just not support @hide in package/overview.html files.",
+      "parentUuid": "6bc910e1_209a196c",
+      "range": {
+        "startLine": 51,
+        "startChar": 42,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
