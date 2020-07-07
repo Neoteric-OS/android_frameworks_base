@@ -159,6 +159,30 @@
       "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec343b35_305b8785",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-07-07T02:06:46Z",
+      "side": 1,
+      "message": "The contents of package.html and overview.html are stored in PackageDocs in PsiCodebase. It seems like we try copy overview.html into stub, but it doesn\u0027t actually look like we use package.html. And I\u0027m not sure if we actually need overview.html in the stubs anyway.\n\nAnyway, to resolve the immediate problem which is what this CL is trying to fix, maybe we can:\n- Let metalava ignore package.html and only read overview.html\n- This means, if there\u0027s a package.html with `@hide`, metalava would start ignoring it. So for those cases, we add `package-info.java` like this http://cs/android/frameworks/base/services/core/java/com/android/server/package-info.java\n\n(i.e. set the correct package name, and add both `@hide` and `@android.annotation.Hide`)",
+      "parentUuid": "ccfe0bc0_0ff5d87e",
+      "range": {
+        "startLine": 51,
+        "startChar": 42,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "79d64782ddc72e38ac77384657ae8dbd532b5b68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
