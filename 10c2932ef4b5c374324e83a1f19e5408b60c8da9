@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2543ae5_f928bed0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1465028
+      },
+      "writtenOn": "2020-07-08T19:48:29Z",
+      "side": 1,
+      "message": "Can someone reapprove this so I can run presubmits again?",
+      "revId": "10c2932ef4b5c374324e83a1f19e5408b60c8da9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
