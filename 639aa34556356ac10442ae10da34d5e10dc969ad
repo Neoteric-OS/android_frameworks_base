@@ -63,6 +63,30 @@
       "revId": "639aa34556356ac10442ae10da34d5e10dc969ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272fb814_b2859575",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-08T06:31:21Z",
+      "side": 1,
+      "message": "For Pixel series device, they support ethernet but they never has FEATURE_ETHERNET that they always have FEATURE_USB_HOST instead. I think this is because most of android devices do not directly support ethernet, they relied on ethernet-to-usb otg. According to below code from SystemServer.java, it seems fine to say if we support connecting to USB devices as USB host(EthernetManager is non-null), isTetheringSupported should return true because ethernet tethering is potentially supported once device is plugged in ethernet cable via ethernet otg. TetheringManager do not provide API for caller to know whether ethernet tethering is supported, caller can use EthernetManager#isAvailable to know whether ethernet interface is available and fine to call #startTethering(TYPE_ETHERNET). Settings already do so. If caller just call #startTethering API before plug-in ethernet cable, it \n also fine for tethering that tethering just request and register callback from ethernet tracker and waiting ethernet interface to be available(ethernet cable plug) to start.\n\nif (mPackageManager.hasSystemFeature(PackageManager.FEATURE_ETHERNET) ||                 \n        mPackageManager.hasSystemFeature(PackageManager.FEATURE_USB_HOST)) {\n    t.traceBegin(\"StartEthernet\");\n    mSystemServiceManager.startService(ETHERNET_SERVICE_CLASS);\n    t.traceEnd();\n}",
+      "parentUuid": "a7b202ad_168b3b69",
+      "range": {
+        "startLine": 1268,
+        "startChar": 24,
+        "endLine": 1268,
+        "endChar": 43
+      },
+      "revId": "639aa34556356ac10442ae10da34d5e10dc969ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
