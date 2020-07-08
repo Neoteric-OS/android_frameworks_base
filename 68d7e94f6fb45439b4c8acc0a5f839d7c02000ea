@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61b8d98b_198dc894",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2020-07-08T19:36:34Z",
+      "side": 1,
+      "message": "Hi Howard,\n\nCan you please approve this CL, in order to merge it with AOSP?\n\nThank you.\nBest regards,\nHasini.",
+      "revId": "68d7e94f6fb45439b4c8acc0a5f839d7c02000ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
