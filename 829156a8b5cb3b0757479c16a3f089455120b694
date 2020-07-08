@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c79213e5_24d8ff3c",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-08T10:12:41Z",
+      "side": 1,
+      "message": "This seems would only use in Tethered State. Do you think if we will need these in other state ? If no, I think move these two functions into Tethered State class or BaseServingState would be better that we could stop the potential mistake that miss start DnsProxy when tethering do not started.\n\nBesides, how about separate #startDnsProxyOrUpdateUpStream() to two functions: #startDnsProxy() and #updateUpStream().\nThen always call #startDnsProxy() at TetheredState#enter() and call #stopDnsProxy() at TetheredState#exit(). Then, you won\u0027t need to check whether mDnsProxyServer is null at #startDnsProxy(). Call #updateUpStream() when receiving CMD_TETHER_CONNECTION_CHANGED.\nDoing one thing in one function would be more clear instead of mixing two things into one functions.",
+      "range": {
+        "startLine": 600,
+        "startChar": 0,
+        "endLine": 627,
+        "endChar": 5
+      },
+      "revId": "829156a8b5cb3b0757479c16a3f089455120b694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06547a8c_91405f05",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-08T10:12:41Z",
+      "side": 1,
+      "message": "Separate #startDnsProxyOrUpdateUpStream function into #startDnsProxy and #updateUpStream would be more readable here. If you do so, you can just call mDnsProxyServer.updateUpstream(null) or even add mDnsProxyServer.updateUpstream(null) into #cleanupUpstream()(note: you may need to protect if mDnsProxyServer is null).",
+      "range": {
+        "startLine": 1308,
+        "startChar": 24,
+        "endLine": 1308,
+        "endChar": 53
+      },
+      "revId": "829156a8b5cb3b0757479c16a3f089455120b694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e196f136_67f8c372",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1569,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-08T10:12:41Z",
+      "side": 1,
+      "message": "Maybe log the newUpstream here: mLog.i(\"Found upstream interface(s): \" + ifaces + \" on network \" + newUpstream); Not sure if possible, this can help us catch the weird case that null interface in non-null network or non-null interfaces in null network.",
+      "range": {
+        "startLine": 1569,
+        "startChar": 16,
+        "endLine": 1569,
+        "endChar": 65
+      },
+      "revId": "829156a8b5cb3b0757479c16a3f089455120b694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
