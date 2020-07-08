@@ -16,6 +16,23 @@
       "revId": "22048a64759bfe17b6273e936beb0bdfd29c579c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce91870c_767e6673",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2020-07-08T14:20:24Z",
+      "side": 1,
+      "message": "Thanks very much for the patch. However, this has been fixed internally with some additional changes so we cannot accept this patch.",
+      "revId": "22048a64759bfe17b6273e936beb0bdfd29c579c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
