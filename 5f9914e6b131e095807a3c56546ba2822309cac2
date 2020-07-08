@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51b8e821_89df3887",
+        "filename": "core/java/android/os/HwBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2020-07-08T21:01:55Z",
+      "side": 1,
+      "message": "nit: no effect",
+      "range": {
+        "startLine": 101,
+        "startChar": 7,
+        "endLine": 101,
+        "endChar": 15
+      },
+      "revId": "5f9914e6b131e095807a3c56546ba2822309cac2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
