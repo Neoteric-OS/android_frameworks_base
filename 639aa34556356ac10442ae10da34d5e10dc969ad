@@ -87,6 +87,30 @@
       "revId": "639aa34556356ac10442ae10da34d5e10dc969ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07430476_1fdece84",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-09T16:18:10Z",
+      "side": 1,
+      "message": "Is it feasible to check EthernetManager#isAvailable (and listen to the EthernetManager callbacks) to determine whether Ethernet tethering is supported? Or does that not work?\n\nIt does not seem great to say that Ethernet tethering is supported on a phone that supports USB accessory mode, even if the user does not own an USB Ethernet adapter. But perhaps all those devices support wifi tethering anyway, so in practice it doesn\u0027t matter...",
+      "parentUuid": "272fb814_b2859575",
+      "range": {
+        "startLine": 1268,
+        "startChar": 24,
+        "endLine": 1268,
+        "endChar": 43
+      },
+      "revId": "639aa34556356ac10442ae10da34d5e10dc969ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
