@@ -1,0 +1,10 @@
+Code-Review+2: Jack Yu <jackyu@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Nathan Harold <nharold@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Nathan Harold <nharold@google.com>
+Submitted-at: Thu, 09 Jul 2020 17:15:05 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1355808
+Project: platform/frameworks/base
+Branch: refs/heads/master
