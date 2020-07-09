@@ -1,0 +1,31 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000003801333",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1345361?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "52df4527_9c7cdeba",
+        "filename": "packages/Tethering/tests/privilege/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-09T07:55:48Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 23,
+        "startChar": 54,
+        "endLine": 23,
+        "endChar": 63
+      },
+      "revId": "4b71c146b561fae617a0545b7bafd885841a14a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
