@@ -16,6 +16,23 @@
       "revId": "10c2932ef4b5c374324e83a1f19e5408b60c8da9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adf0776e_07f0f386",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1465028
+      },
+      "writtenOn": "2020-07-09T13:34:19Z",
+      "side": 1,
+      "message": "This is failing downstream in api-stubs-docs-non-updatable (among others) due to violations when accessing:\nframeworks/base/wifi/java/android/net/wifi/WifiFrameworkInitializer.java\nframeworks/base/wifi/java/android/net/wifi/ScanResult.java\nframeworks/base/wifi/java/android/net/wifi/WifiManager.java\nframeworks/base/wifi/java/android/net/wifi/WifiInfo.java\nframeworks/base/wifi/java/android/net/wifi/WifiConfiguration.java\nframeworks/base/wifi/java/android/net/wifi/SoftApConfiguration.java\nframeworks/base/wifi/java/android/net/wifi/p2p/WifiP2pManager.java\nframeworks/base/wifi/java/android/net/wifi/SoftApInfo.java\nframeworks/base/wifi/java/android/net/wifi/WifiScanner.java\n[Note: That is the first failure I ran into, there could be others in other targets]\n\nAfaict, this is because framework-wifi-non-updatable-sources (which doesn\u0027t have the above files) is used downstream instead of framework-wifi-sources (which has all sources). The stack trace shows this violation happening in https://cs.android.com/android/platform/superproject/+/master:tools/metalava/src/main/java/com/android/tools/metalava/Driver.kt;l\u003d877\n\nI can\u0027t think of a solution other than resurrecting blueprint implicits (https://android-review.googlesource.com/c/platform/frameworks/base/+/1305139/1) and passing these files there. It is ugly but it can allow us to make progress on turning on the sandbox while we fix these metalava issues, and it is no worse than the current situation since metalava is opening these files anyway. Any other suggestions?",
+      "revId": "10c2932ef4b5c374324e83a1f19e5408b60c8da9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
