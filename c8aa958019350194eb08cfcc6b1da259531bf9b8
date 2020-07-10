@@ -175,6 +175,30 @@
       "revId": "c8aa958019350194eb08cfcc6b1da259531bf9b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5120be0_1e82e135",
+        "filename": "services/core/jni/com_android_server_power_PowerManagerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-07-10T22:35:33Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s definitely not clear why it is giving DEAD_OBJECT. Either there is a crash missing in the logs from way earlier, there is a problem with tombstone, the service is exiting successfully, there is a refcounting issue, a memory corruption issue, a binder driver issue, a permissions issue, or other combination of issues.",
+      "parentUuid": "68896af6_5196f1b3",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 39
+      },
+      "revId": "c8aa958019350194eb08cfcc6b1da259531bf9b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

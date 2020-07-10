@@ -46,6 +46,30 @@
       "revId": "dc52bd51d8549dd22ac2bb7d3b8ba40f4184183a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562d6fb4_1db86f5b",
+        "filename": "core/java/com/android/internal/os/KernelWakelockReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-07-10T22:35:33Z",
+      "side": 0,
+      "message": "Ack, missed this. It could be another indication the service exited. You might also add a log there with the AIDL Status description or type of error, so we know if it is DeadObjectException/DEAD_OBJECT or something else",
+      "parentUuid": "61b07e25_2d48ec28",
+      "range": {
+        "startLine": 163,
+        "startChar": 41,
+        "endLine": 163,
+        "endChar": 63
+      },
+      "revId": "dc52bd51d8549dd22ac2bb7d3b8ba40f4184183a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
