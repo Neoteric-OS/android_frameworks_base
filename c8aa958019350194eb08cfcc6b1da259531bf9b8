@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4924cd1f_f1b39403",
+        "filename": "core/java/com/android/internal/os/KernelWakelockReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-07-10T18:52:18Z",
+      "side": 1,
+      "message": "for this kind of thing, consider logging in this loop, so if it deadlocks, the issue is easier to track down",
+      "revId": "c8aa958019350194eb08cfcc6b1da259531bf9b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ce77f7_06c43cbd",
+        "filename": "core/java/com/android/internal/os/KernelWakelockReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-07-10T18:52:18Z",
+      "side": 1,
+      "message": "this will also wait for 5 seconds internally, right? You could just depend on that and add a loop",
+      "range": {
+        "startLine": 163,
+        "startChar": 55,
+        "endLine": 163,
+        "endChar": 65
+      },
+      "revId": "c8aa958019350194eb08cfcc6b1da259531bf9b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e5dc39_048d95bf",
+        "filename": "services/core/jni/com_android_server_power_PowerManagerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-07-10T18:52:18Z",
+      "side": 1,
+      "message": "notice that the actual crash comes from the HIDL return_status (Return\u003c\u003e) deconstructor here.",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 26
+      },
+      "revId": "c8aa958019350194eb08cfcc6b1da259531bf9b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2375f20_22268e63",
+        "filename": "services/core/jni/com_android_server_power_PowerManagerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-07-10T18:52:18Z",
+      "side": 1,
+      "message": "so this line is returning a Return\u003c\u003e object, and you could add \u0027.isDeadObject()\u0027 here to check the error (and therefore ignore it). However, it\u0027s scary because it could block shutdown.\n\nThe weird thing though is, why is the gSuspendBlocker dead at all? The bugreports don\u0027t show another service dying. Is the system suspend service simply exiting cleanly? Were you able to reproduce locally?",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 39
+      },
+      "revId": "c8aa958019350194eb08cfcc6b1da259531bf9b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
