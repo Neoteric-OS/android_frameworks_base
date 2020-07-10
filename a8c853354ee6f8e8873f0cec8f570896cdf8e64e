@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "491b9662_88cb4106",
+        "filename": "telephony/java/android/telephony/NetworkRegistrationInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-07-10T03:41:39Z",
+      "side": 1,
+      "message": "This was missing from the previous patch set, and because the NRI is defensively copied when added to ServiceState, it was failing a unit test. That\u0027s right, a test actually caught something (accidentally, but still..).",
+      "range": {
+        "startLine": 336,
+        "startChar": 8,
+        "endLine": 336,
+        "endChar": 68
+      },
+      "revId": "a8c853354ee6f8e8873f0cec8f570896cdf8e64e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
