@@ -111,6 +111,30 @@
       "revId": "639aa34556356ac10442ae10da34d5e10dc969ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf646f4_5da370d0",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-10T07:09:41Z",
+      "side": 1,
+      "message": "No, determine whether Ethernet tethering is supported by ethernet interface available violate existing isTetheringSupported usage by Settings.\n\nHere is a example(although this is corner case because we usually support wifi tethering):\nUser enter the settings page and ethernet cable is not plug-in, other tethering types are all not supported. User would not see Tethering settings entry because isTetheringSupported is false. If user plug-in ethernet cable without leaving settings, it would keeps no tethering entry till user leave and enter Settings again.\n\nCurrent all other tethering downstreams use prefine configuration to determine whether they are supported.",
+      "parentUuid": "07430476_1fdece84",
+      "range": {
+        "startLine": 1268,
+        "startChar": 24,
+        "endLine": 1268,
+        "endChar": 43
+      },
+      "revId": "639aa34556356ac10442ae10da34d5e10dc969ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
