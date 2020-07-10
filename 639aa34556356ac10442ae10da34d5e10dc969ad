@@ -135,6 +135,30 @@
       "revId": "639aa34556356ac10442ae10da34d5e10dc969ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf15a60_eeab6384",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-10T09:18:06Z",
+      "side": 1,
+      "message": "Per offload talk with Lorenzo, lets focus on fixing EthernetTetheringTests failure first for R. And we should have better API for client to know whether downstream is supported, e.g. isTetheringSupport(int TetheringType) or other better surface.",
+      "parentUuid": "fbf646f4_5da370d0",
+      "range": {
+        "startLine": 1268,
+        "startChar": 24,
+        "endLine": 1268,
+        "endChar": 43
+      },
+      "revId": "639aa34556356ac10442ae10da34d5e10dc969ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
