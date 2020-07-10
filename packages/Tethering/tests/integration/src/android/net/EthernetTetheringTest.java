@@ -27,6 +27,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeFalse;
+import static org.junit.Assume.assumeNotNull;
 import static org.junit.Assume.assumeTrue;
 
 import android.app.UiAutomation;
@@ -104,6 +105,8 @@ public class EthernetTetheringTest {
 
     @Before
     public void setUp() throws Exception {
+        assumeNotNull(mEm);
+
         mHandlerThread = new HandlerThread(getClass().getSimpleName());
         mHandlerThread.start();
         mHandler = new Handler(mHandlerThread.getLooper());
@@ -134,6 +137,8 @@ public class EthernetTetheringTest {
 
     @After
     public void tearDown() throws Exception {
+        if (mEm == null) return;
+
         try {
             cleanUp();
         } finally {
@@ -143,6 +148,7 @@ public class EthernetTetheringTest {
 
     @Test
     public void testVirtualEthernetAlreadyExists() throws Exception {
+        assumeTrue(mTm.isTetheringSupported());
         // This test requires manipulating packets. Skip if there is a physical Ethernet connected.
         assumeFalse(mEm.isAvailable());
 
@@ -165,6 +171,7 @@ public class EthernetTetheringTest {
 
     @Test
     public void testVirtualEthernet() throws Exception {
+        assumeTrue(mTm.isTetheringSupported());
         // This test requires manipulating packets. Skip if there is a physical Ethernet connected.
         assumeFalse(mEm.isAvailable());
 
@@ -183,6 +190,7 @@ public class EthernetTetheringTest {
 
     @Test
     public void testStaticIpv4() throws Exception {
+        assumeTrue(mTm.isTetheringSupported());
         assumeFalse(mEm.isAvailable());
 
         mEm.setIncludeTestInterfaces(true);
@@ -226,6 +234,7 @@ public class EthernetTetheringTest {
 
     @Test
     public void testPhysicalEthernet() throws Exception {
+        assumeTrue(mTm.isTetheringSupported());
         assumeTrue(mEm.isAvailable());
 
         // Get an interface to use.
