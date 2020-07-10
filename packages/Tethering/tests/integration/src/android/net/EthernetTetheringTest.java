@@ -27,6 +27,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeFalse;
+import static org.junit.Assume.assumeNotNull;
 import static org.junit.Assume.assumeTrue;
 
 import android.app.UiAutomation;
@@ -104,6 +105,8 @@ public class EthernetTetheringTest {
 
     @Before
     public void setUp() throws Exception {
+        assumeNotNull(mEm);
+
         mHandlerThread = new HandlerThread(getClass().getSimpleName());
         mHandlerThread.start();
         mHandler = new Handler(mHandlerThread.getLooper());
@@ -112,6 +115,7 @@ public class EthernetTetheringTest {
         // tethered client callbacks.
         mUiAutomation.adoptShellPermissionIdentity(
                 MANAGE_TEST_NETWORKS, NETWORK_SETTINGS, TETHER_PRIVILEGED);
+        assumeTrue(mTm.isTetheringSupported());
     }
 
     private void cleanUp() throws Exception {
@@ -134,6 +138,8 @@ public class EthernetTetheringTest {
 
     @After
     public void tearDown() throws Exception {
+        if (mEm == null) return;
+
         try {
             cleanUp();
         } finally {
