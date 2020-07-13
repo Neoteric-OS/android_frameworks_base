@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7b11f99_e4b00d4e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-13T02:58:53Z",
+      "side": 1,
+      "message": "LGTM but I think it might be possible to simplify this.",
+      "revId": "c299dcc0d2274063a4b1ebd6d08ec5cc3cacccd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60011d66_af3e9889",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-13T02:58:53Z",
+      "side": 1,
+      "message": "Can you just:\n\n    assumeNotNull(mEm);\n\nhere and remove all the other assumptions and checks for mEm in the test cases? I think you\u0027ll still need to check for mEm !\u003d null in tearDown unfortunately.",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 32
+      },
+      "revId": "c299dcc0d2274063a4b1ebd6d08ec5cc3cacccd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
