@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8388848_535f3a8f",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-07-13T23:53:04Z",
+      "side": 1,
+      "message": "Can you use some invalid value here, and then log whether the subId is from the EXTRA or getDefaultSmsSubscriptionId()? Since you\u0027re updating this logging I think that would be good to add too. What do you think?",
+      "range": {
+        "startLine": 1348,
+        "startChar": 28,
+        "endLine": 1348,
+        "endChar": 77
+      },
+      "revId": "be376ff8fc4025be514bc5b66cb1fdcd401f9d6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
