@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4100baa9_3cac5f0d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-13T03:55:31Z",
+      "side": 1,
+      "message": "fail",
+      "range": {
+        "startLine": 10,
+        "startChar": 29,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "ce2bd313ba3a21f9ce8e02de10c6fe76ca02dc07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd7a04f_ec107795",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-13T03:55:31Z",
+      "side": 1,
+      "message": "skip",
+      "range": {
+        "startLine": 10,
+        "startChar": 43,
+        "endLine": 10,
+        "endChar": 47
+      },
+      "revId": "ce2bd313ba3a21f9ce8e02de10c6fe76ca02dc07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f189fedd_fde380de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-13T03:55:31Z",
+      "side": 1,
+      "message": "Typo, available",
+      "range": {
+        "startLine": 11,
+        "startChar": 23,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "ce2bd313ba3a21f9ce8e02de10c6fe76ca02dc07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc43f095_eaa336f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-13T03:55:31Z",
+      "side": 1,
+      "message": "Typo, feature.",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "ce2bd313ba3a21f9ce8e02de10c6fe76ca02dc07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680ad69b_90fce4b4",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-13T03:55:31Z",
+      "side": 1,
+      "message": "Do all the tests in this class call assumeTrue(mTm.isTetheringSupported())? If so, put it in setUp?",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "ce2bd313ba3a21f9ce8e02de10c6fe76ca02dc07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
