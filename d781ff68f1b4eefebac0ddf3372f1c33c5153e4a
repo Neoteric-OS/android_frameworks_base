@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfbef889_ab6098af",
+        "filename": "core/java/com/android/internal/os/KernelWakelockReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-07-13T16:34:18Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "range": {
+        "startLine": 160,
+        "startChar": 14,
+        "endLine": 160,
+        "endChar": 17
+      },
+      "revId": "d781ff68f1b4eefebac0ddf3372f1c33c5153e4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
