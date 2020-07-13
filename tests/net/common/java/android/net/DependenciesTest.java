@@ -19,8 +19,19 @@ package android.net;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeTrue;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.Build;
+
+import androidx.test.filters.SdkSuppress;
 import androidx.test.filters.SmallTest;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
@@ -31,7 +42,7 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
- * A simple class that tests dependencies to java standard tools from the
+ * A simple class that tests dependencies to APIs used from the
  * Network stack. These tests are not meant to be comprehensive tests of
  * the relevant APIs : such tests belong in the relevant test suite for
  * these dependencies. Instead, this just makes sure coverage is present
@@ -109,5 +120,35 @@ public class DependenciesTest {
             expected.add(o);
         }
         assertEquals(expected, Arrays.asList(src));
+    }
+
+    @Test
+    @SdkSuppress(maxSdkVersion = Build.VERSION_CODES.Q)
+    public void testGetFrequency() {
+        // WifiInfo#getFrequency was missing a CTS test in Q: this test is run as part of MTS on Q
+        // devices to ensure it behaves correctly.
+        final Context context = InstrumentationRegistry.getInstrumentation().getContext();
+        assumeTrue("This test only applies to devices that support wifi",
+                context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI));
+
+        final WifiManager wifiManager = InstrumentationRegistry.getInstrumentation().getContext()
+                .getSystemService(WifiManager.class);
+        assertNotNull("Device supports wifi but there is no WifiManager", wifiManager);
+        final WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+
+        // Skip the test if wifi is not connected. This test may be run in unit test suites, but
+        // failures are only important in MTS on Q devices, where CTS coverage is missing for
+        // getFrequency. Other MTS tests will verify that wifi is connected when run in that
+        // configuration.
+        assumeTrue(wifiInfo != null && wifiInfo.getNetworkId() != -1);
+        final int frequency = wifiInfo.getFrequency();
+        assertTrue("Frequency must be > 0", frequency > 0);
+        if (wifiInfo.is24GHz()) {
+            assertTrue("2.4GHz frequency must be between 2400 and 2500",
+                    frequency > 2400 && frequency < 2500);
+        } else if (wifiInfo.is5GHz()) {
+            assertTrue("5GHz frequency must be between 4900 and 5900",
+                    frequency > 4900 && frequency < 5900);
+        }
     }
 }
