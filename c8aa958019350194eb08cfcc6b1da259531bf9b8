@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "f32a5041_ce1335c5",
+        "filename": "core/java/com/android/internal/os/KernelWakelockReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2020-07-13T15:07:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e5fddf5_7b416ed6",
+      "range": {
+        "startLine": 163,
+        "startChar": 55,
+        "endLine": 163,
+        "endChar": 65
+      },
+      "revId": "c8aa958019350194eb08cfcc6b1da259531bf9b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63e5dc39_048d95bf",
         "filename": "services/core/jni/com_android_server_power_PowerManagerService.cpp",
         "patchSetId": 1
@@ -190,6 +214,30 @@
       "side": 1,
       "message": "Yeah, it\u0027s definitely not clear why it is giving DEAD_OBJECT. Either there is a crash missing in the logs from way earlier, there is a problem with tombstone, the service is exiting successfully, there is a refcounting issue, a memory corruption issue, a binder driver issue, a permissions issue, or other combination of issues.",
       "parentUuid": "68896af6_5196f1b3",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 39
+      },
+      "revId": "c8aa958019350194eb08cfcc6b1da259531bf9b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9aea97_854f343d",
+        "filename": "services/core/jni/com_android_server_power_PowerManagerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2020-07-13T15:07:02Z",
+      "side": 1,
+      "message": "I detailed the cause in the other change in this topic :)",
+      "parentUuid": "a5120be0_1e82e135",
       "range": {
         "startLine": 220,
         "startChar": 0,

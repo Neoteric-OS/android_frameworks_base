@@ -70,6 +70,30 @@
       "revId": "dc52bd51d8549dd22ac2bb7d3b8ba40f4184183a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f455600_fc83a093",
+        "filename": "core/java/com/android/internal/os/KernelWakelockReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2020-07-13T15:07:02Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "562d6fb4_1db86f5b",
+      "range": {
+        "startLine": 163,
+        "startChar": 41,
+        "endLine": 163,
+        "endChar": 63
+      },
+      "revId": "dc52bd51d8549dd22ac2bb7d3b8ba40f4184183a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
