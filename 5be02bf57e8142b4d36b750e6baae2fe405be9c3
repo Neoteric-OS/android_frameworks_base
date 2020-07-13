@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eecfd48_6bedbc70",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/CellularTile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2020-07-13T13:23:49Z",
+      "side": 1,
+      "message": "This will make an IPC call in order to obtain the current user, and that could happen in the main thread, please, use any of the internal systemui caches for this information (for example, the NetworkController tracks this state).",
+      "revId": "5be02bf57e8142b4d36b750e6baae2fe405be9c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
