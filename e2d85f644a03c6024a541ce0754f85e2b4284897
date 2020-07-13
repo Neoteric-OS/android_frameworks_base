@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af3bc7d_8452a7dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-13T07:29:00Z",
+      "side": 1,
+      "message": "Carry Lorenzo\u0027s +2",
+      "revId": "e2d85f644a03c6024a541ce0754f85e2b4284897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

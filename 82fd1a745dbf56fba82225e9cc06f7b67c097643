@@ -39,6 +39,30 @@
       "revId": "82fd1a745dbf56fba82225e9cc06f7b67c097643",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce986dea_9c7a0f9c",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-13T07:29:00Z",
+      "side": 1,
+      "message": "Done. Yes, assumeXyz() doesn\u0027t work in tearDown() that it just simply throw AssumptionViolatedException. Follow the suggestion to move the check method in top of setup(note: also move adoptShellPermissionIdentity because calling isTetheringSupported need permission).",
+      "parentUuid": "ace1f5a8_220092f8",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 47
+      },
+      "revId": "82fd1a745dbf56fba82225e9cc06f7b67c097643",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
