@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe47178f_8133506d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-13T06:51:31Z",
+      "side": 1,
+      "message": "LGTM if you want to submit this immediately, but if you have time to respin, see inline comment.",
+      "revId": "82fd1a745dbf56fba82225e9cc06f7b67c097643",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ace1f5a8_220092f8",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-13T06:51:31Z",
+      "side": 1,
+      "message": "Having this at the end of the method makes the code difficult to understand and maintain. I can see why it is necessary - tearDown always calls cleanUp() if mEm is not null, and cleanUp() will only behave correctly if setUp has succeeded - but it would be better if the assumptions were all at the beginning.\n\nNot sure how to do better though. AFAIK assumeXyz() doesn\u0027t work in tearDown() - did you try this? If it doesn\u0027t work, then the simplest thing seems to be a \"mSkipTeardown\", \"mSkipTests\", or \"mRunTests\" boolean. Something like:\n\n\n    @Before\n    public void setUp() throws Exception {\n        mRunTests \u003d mTm.isTetheringSupported() \u0026\u0026 mEm !\u003d null;\n        assumeTrue(mRunTest);\n        ...\n\n    @After\n    public void tearDown() throws Exception {\n        if (!mRunTest) return;",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 47
+      },
+      "revId": "82fd1a745dbf56fba82225e9cc06f7b67c097643",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
