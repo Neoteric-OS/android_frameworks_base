@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#ifndef _UI_POINTER_CONTROLLER_H
-#define _UI_POINTER_CONTROLLER_H
+#ifndef _UI_CURSOR_CONTROLLER_H
+#define _UI_CURSOR_CONTROLLER_H
 
-#include <PointerControllerInterface.h>
+#include <CursorControllerInterface.h>
 #include <gui/DisplayEventReceiver.h>
 #include <input/DisplayViewport.h>
 #include <input/Input.h>
@@ -49,18 +49,18 @@ struct PointerAnimation {
 };
 
 /*
- * Pointer controller policy interface.
+ * Cursor controller policy interface.
  *
- * The pointer controller policy is used by the pointer controller to interact with
+ * The cursor controller policy is used by the cursor controller to interact with
  * the Window Manager and other system components.
  *
  * The actual implementation is partially supported by callbacks into the DVM
  * via JNI.  This interface is also mocked in the unit tests.
  */
-class PointerControllerPolicyInterface : public virtual RefBase {
+class CursorControllerPolicyInterface : public virtual RefBase {
 protected:
-    PointerControllerPolicyInterface() { }
-    virtual ~PointerControllerPolicyInterface() { }
+    CursorControllerPolicyInterface() { }
+    virtual ~CursorControllerPolicyInterface() { }
 
 public:
     virtual void loadPointerIcon(SpriteIcon* icon, int32_t displayId) = 0;
@@ -76,17 +76,17 @@ public:
  *
  * Handles pointer acceleration and animation.
  */
-class PointerController : public PointerControllerInterface {
+class CursorController : public CursorControllerInterface {
 public:
-    static std::shared_ptr<PointerController> create(
-            const sp<PointerControllerPolicyInterface>& policy, const sp<Looper>& looper,
+    static std::shared_ptr<CursorController> create(
+            const sp<CursorControllerPolicyInterface>& policy, const sp<Looper>& looper,
             const sp<SpriteController>& spriteController);
     enum class InactivityTimeout {
         NORMAL = 0,
         SHORT = 1,
     };
 
-    virtual ~PointerController();
+    virtual ~CursorController();
 
     virtual bool getBounds(float* outMinX, float* outMinY,
             float* outMaxX, float* outMaxY) const;
@@ -145,18 +145,18 @@ private:
     class MessageHandler : public virtual android::MessageHandler {
     public:
         void handleMessage(const Message& message) override;
-        std::weak_ptr<PointerController> pointerController;
+        std::weak_ptr<CursorController> cursorController;
     };
 
     class LooperCallback : public virtual android::LooperCallback {
     public:
         int handleEvent(int fd, int events, void* data) override;
-        std::weak_ptr<PointerController> pointerController;
+        std::weak_ptr<CursorController> cursorController;
     };
 
     mutable Mutex mLock;
 
-    sp<PointerControllerPolicyInterface> mPolicy;
+    sp<CursorControllerPolicyInterface> mPolicy;
     sp<Looper> mLooper;
     sp<SpriteController> mSpriteController;
     sp<MessageHandler> mHandler;
@@ -199,7 +199,7 @@ private:
         std::vector<sp<Sprite>> recycledSprites;
     } mLocked GUARDED_BY(mLock);
 
-    PointerController(const sp<PointerControllerPolicyInterface>& policy, const sp<Looper>& looper,
+    CursorController(const sp<CursorControllerPolicyInterface>& policy, const sp<Looper>& looper,
                       const sp<SpriteController>& spriteController);
 
     bool getBoundsLocked(float* outMinX, float* outMinY, float* outMaxX, float* outMaxY) const;
@@ -228,4 +228,4 @@ private:
 
 } // namespace android
 
-#endif // _UI_POINTER_CONTROLLER_H
+#endif // _UI_CURSOR_CONTROLLER_H

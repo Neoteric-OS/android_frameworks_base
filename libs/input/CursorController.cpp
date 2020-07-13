@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "PointerController"
+#define LOG_TAG "CursorController"
 //#define LOG_NDEBUG 0
 
 // Log debug messages about pointer updates
 #define DEBUG_POINTER_UPDATES 0
 
-#include "PointerController.h"
+#include "CursorController.h"
 
 #include <log/log.h>
 
@@ -28,7 +28,7 @@
 
 namespace android {
 
-// --- PointerController ---
+// --- CursorController ---
 
 // Time to wait before starting the fade when the pointer is inactive.
 static const nsecs_t INACTIVITY_TIMEOUT_DELAY_TIME_NORMAL = 15 * 1000 * 1000000LL; // 15 seconds
@@ -43,25 +43,25 @@ static const nsecs_t POINTER_FADE_DURATION = 500 * 1000000LL; // 500 ms
 // The number of events to be read at once for DisplayEventReceiver.
 static const int EVENT_BUFFER_SIZE = 100;
 
-std::shared_ptr<PointerController> PointerController::create(
-        const sp<PointerControllerPolicyInterface>& policy, const sp<Looper>& looper,
+std::shared_ptr<CursorController> CursorController::create(
+        const sp<CursorControllerPolicyInterface>& policy, const sp<Looper>& looper,
         const sp<SpriteController>& spriteController) {
-    std::shared_ptr<PointerController> controller = std::shared_ptr<PointerController>(
-            new PointerController(policy, looper, spriteController));
+    std::shared_ptr<CursorController> controller = std::shared_ptr<CursorController>(
+            new CursorController(policy, looper, spriteController));
 
     /*
-     * Now we need to hook up the constructed PointerController object to its callbacks.
+     * Now we need to hook up the constructed CursorController object to its callbacks.
      *
-     * This must be executed after the constructor but before any other methods on PointerController
+     * This must be executed after the constructor but before any other methods on CursorController
      * in order to ensure that the fully constructed object is visible on the Looper thread, since
-     * that may be a different thread than where the PointerController is initially constructed.
+     * that may be a different thread than where the CursorController is initially constructed.
      *
      * Unfortunately, this cannot be done as part of the constructor since we need to hand out
      * weak_ptr's which themselves cannot be constructed until there's at least one shared_ptr.
      */
 
-    controller->mHandler->pointerController = controller;
-    controller->mCallback->pointerController = controller;
+    controller->mHandler->cursorController = controller;
+    controller->mCallback->cursorController = controller;
     if (controller->mDisplayEventReceiver.initCheck() == NO_ERROR) {
         controller->mLooper->addFd(controller->mDisplayEventReceiver.getFd(), Looper::POLL_CALLBACK,
                                    Looper::EVENT_INPUT, controller->mCallback, nullptr);
@@ -71,7 +71,7 @@ std::shared_ptr<PointerController> PointerController::create(
     return controller;
 }
 
-PointerController::PointerController(const sp<PointerControllerPolicyInterface>& policy,
+CursorController::CursorController(const sp<CursorControllerPolicyInterface>& policy,
                                      const sp<Looper>& looper,
                                      const sp<SpriteController>& spriteController)
       : mPolicy(policy),
@@ -102,7 +102,7 @@ PointerController::PointerController(const sp<PointerControllerPolicyInterface>&
     mLocked.buttonState = 0;
 }
 
-PointerController::~PointerController() {
+CursorController::~CursorController() {
     mLooper->removeMessages(mHandler);
 
     AutoMutex _l(mLock);
@@ -120,14 +120,14 @@ PointerController::~PointerController() {
     mLocked.recycledSprites.clear();
 }
 
-bool PointerController::getBounds(float* outMinX, float* outMinY,
+bool CursorController::getBounds(float* outMinX, float* outMinY,
         float* outMaxX, float* outMaxY) const {
     AutoMutex _l(mLock);
 
     return getBoundsLocked(outMinX, outMinY, outMaxX, outMaxY);
 }
 
-bool PointerController::getBoundsLocked(float* outMinX, float* outMinY,
+bool CursorController::getBoundsLocked(float* outMinX, float* outMinY,
         float* outMaxX, float* outMaxY) const {
 
     if (!mLocked.viewport.isValid()) {
@@ -141,7 +141,7 @@ bool PointerController::getBoundsLocked(float* outMinX, float* outMinY,
     return true;
 }
 
-void PointerController::move(float deltaX, float deltaY) {
+void CursorController::move(float deltaX, float deltaY) {
 #if DEBUG_POINTER_UPDATES
     ALOGD("Move pointer by deltaX=%0.3f, deltaY=%0.3f", deltaX, deltaY);
 #endif
@@ -154,7 +154,7 @@ void PointerController::move(float deltaX, float deltaY) {
     setPositionLocked(mLocked.pointerX + deltaX, mLocked.pointerY + deltaY);
 }
 
-void PointerController::setButtonState(int32_t buttonState) {
+void CursorController::setButtonState(int32_t buttonState) {
 #if DEBUG_POINTER_UPDATES
     ALOGD("Set button state 0x%08x", buttonState);
 #endif
@@ -165,13 +165,13 @@ void PointerController::setButtonState(int32_t buttonState) {
     }
 }
 
-int32_t PointerController::getButtonState() const {
+int32_t CursorController::getButtonState() const {
     AutoMutex _l(mLock);
 
     return mLocked.buttonState;
 }
 
-void PointerController::setPosition(float x, float y) {
+void CursorController::setPosition(float x, float y) {
 #if DEBUG_POINTER_UPDATES
     ALOGD("Set pointer position to x=%0.3f, y=%0.3f", x, y);
 #endif
@@ -180,7 +180,7 @@ void PointerController::setPosition(float x, float y) {
     setPositionLocked(x, y);
 }
 
-void PointerController::setPositionLocked(float x, float y) {
+void CursorController::setPositionLocked(float x, float y) {
     float minX, minY, maxX, maxY;
     if (getBoundsLocked(&minX, &minY, &maxX, &maxY)) {
         if (x <= minX) {
@@ -201,20 +201,20 @@ void PointerController::setPositionLocked(float x, float y) {
     }
 }
 
-void PointerController::getPosition(float* outX, float* outY) const {
+void CursorController::getPosition(float* outX, float* outY) const {
     AutoMutex _l(mLock);
 
     *outX = mLocked.pointerX;
     *outY = mLocked.pointerY;
 }
 
-int32_t PointerController::getDisplayId() const {
+int32_t CursorController::getDisplayId() const {
     AutoMutex _l(mLock);
 
     return mLocked.viewport.displayId;
 }
 
-void PointerController::fade(Transition transition) {
+void CursorController::fade(Transition transition) {
     AutoMutex _l(mLock);
 
     // Remove the inactivity timeout, since we are fading now.
@@ -231,7 +231,7 @@ void PointerController::fade(Transition transition) {
     }
 }
 
-void PointerController::unfade(Transition transition) {
+void CursorController::unfade(Transition transition) {
     AutoMutex _l(mLock);
 
     // Always reset the inactivity timer.
@@ -248,7 +248,7 @@ void PointerController::unfade(Transition transition) {
     }
 }
 
-void PointerController::setPresentation(Presentation presentation) {
+void CursorController::setPresentation(Presentation presentation) {
     AutoMutex _l(mLock);
 
     if (mLocked.presentation == presentation) {
@@ -273,7 +273,7 @@ void PointerController::setPresentation(Presentation presentation) {
     }
 }
 
-void PointerController::setSpots(const PointerCoords* spotCoords,
+void CursorController::setSpots(const PointerCoords* spotCoords,
         const uint32_t* spotIdToIndex, BitSet32 spotIdBits, int32_t displayId) {
 #if DEBUG_POINTER_UPDATES
     ALOGD("setSpots: idBits=%08x", spotIdBits.value);
@@ -333,7 +333,7 @@ void PointerController::setSpots(const PointerCoords* spotCoords,
     mLocked.spotsByDisplay[displayId] = newSpots;
 }
 
-void PointerController::clearSpots() {
+void CursorController::clearSpots() {
 #if DEBUG_POINTER_UPDATES
     ALOGD("clearSpots");
 #endif
@@ -346,7 +346,7 @@ void PointerController::clearSpots() {
     fadeOutAndReleaseAllSpotsLocked();
 }
 
-void PointerController::setInactivityTimeout(InactivityTimeout inactivityTimeout) {
+void CursorController::setInactivityTimeout(InactivityTimeout inactivityTimeout) {
     AutoMutex _l(mLock);
 
     if (mLocked.inactivityTimeout != inactivityTimeout) {
@@ -355,7 +355,7 @@ void PointerController::setInactivityTimeout(InactivityTimeout inactivityTimeout
     }
 }
 
-void PointerController::reloadPointerResources() {
+void CursorController::reloadPointerResources() {
     AutoMutex _l(mLock);
 
     loadResourcesLocked();
@@ -376,7 +376,7 @@ static void getNonRotatedSize(const DisplayViewport& viewport, int32_t& width, i
     }
 }
 
-void PointerController::setDisplayViewport(const DisplayViewport& viewport) {
+void CursorController::setDisplayViewport(const DisplayViewport& viewport) {
     AutoMutex _l(mLock);
     if (viewport == mLocked.viewport) {
         return;
@@ -460,7 +460,7 @@ void PointerController::setDisplayViewport(const DisplayViewport& viewport) {
     updatePointerLocked();
 }
 
-void PointerController::updatePointerIcon(int32_t iconId) {
+void CursorController::updatePointerIcon(int32_t iconId) {
     AutoMutex _l(mLock);
     if (mLocked.requestedPointerType != iconId) {
         mLocked.requestedPointerType = iconId;
@@ -469,7 +469,7 @@ void PointerController::updatePointerIcon(int32_t iconId) {
     }
 }
 
-void PointerController::setCustomPointerIcon(const SpriteIcon& icon) {
+void CursorController::setCustomPointerIcon(const SpriteIcon& icon) {
     AutoMutex _l(mLock);
 
     const int32_t iconId = mPolicy->getCustomPointerIconId();
@@ -480,11 +480,11 @@ void PointerController::setCustomPointerIcon(const SpriteIcon& icon) {
     updatePointerLocked();
 }
 
-void PointerController::MessageHandler::handleMessage(const Message& message) {
-    std::shared_ptr<PointerController> controller = pointerController.lock();
+void CursorController::MessageHandler::handleMessage(const Message& message) {
+    std::shared_ptr<CursorController> controller = cursorController.lock();
 
     if (controller == nullptr) {
-        ALOGE("PointerController instance was released before processing message: what=%d",
+        ALOGE("CursorController instance was released before processing message: what=%d",
               message.what);
         return;
     }
@@ -495,12 +495,12 @@ void PointerController::MessageHandler::handleMessage(const Message& message) {
     }
 }
 
-int PointerController::LooperCallback::handleEvent(int /* fd */, int events, void* /* data */) {
-    std::shared_ptr<PointerController> controller = pointerController.lock();
+int CursorController::LooperCallback::handleEvent(int /* fd */, int events, void* /* data */) {
+    std::shared_ptr<CursorController> controller = cursorController.lock();
     if (controller == nullptr) {
-        ALOGW("PointerController instance was released with pending callbacks.  events=0x%x",
+        ALOGW("CursorController instance was released with pending callbacks.  events=0x%x",
               events);
-        return 0; // Remove the callback, the PointerController is gone anyways
+        return 0; // Remove the callback, the CursorController is gone anyways
     }
     if (events & (Looper::EVENT_ERROR | Looper::EVENT_HANGUP)) {
         ALOGE("Display event receiver pipe was closed or an error occurred.  events=0x%x", events);
@@ -530,7 +530,7 @@ int PointerController::LooperCallback::handleEvent(int /* fd */, int events, voi
     return 1;  // keep the callback
 }
 
-void PointerController::doAnimate(nsecs_t timestamp) {
+void CursorController::doAnimate(nsecs_t timestamp) {
     AutoMutex _l(mLock);
 
     mLocked.animationPending = false;
@@ -542,7 +542,7 @@ void PointerController::doAnimate(nsecs_t timestamp) {
     }
 }
 
-bool PointerController::doFadingAnimationLocked(nsecs_t timestamp) {
+bool CursorController::doFadingAnimationLocked(nsecs_t timestamp) {
     bool keepAnimating = false;
     nsecs_t frameDelay = timestamp - mLocked.animationTime;
 
@@ -598,7 +598,7 @@ bool PointerController::doFadingAnimationLocked(nsecs_t timestamp) {
     return keepAnimating;
 }
 
-bool PointerController::doBitmapAnimationLocked(nsecs_t timestamp) {
+bool CursorController::doBitmapAnimationLocked(nsecs_t timestamp) {
     std::map<int32_t, PointerAnimation>::const_iterator iter = mLocked.animationResources.find(
             mLocked.requestedPointerType);
     if (iter == mLocked.animationResources.end()) {
@@ -623,11 +623,11 @@ bool PointerController::doBitmapAnimationLocked(nsecs_t timestamp) {
     return true;
 }
 
-void PointerController::doInactivityTimeout() {
+void CursorController::doInactivityTimeout() {
     fade(Transition::GRADUAL);
 }
 
-void PointerController::startAnimationLocked() {
+void CursorController::startAnimationLocked() {
     if (!mLocked.animationPending) {
         mLocked.animationPending = true;
         mLocked.animationTime = systemTime(SYSTEM_TIME_MONOTONIC);
@@ -635,7 +635,7 @@ void PointerController::startAnimationLocked() {
     }
 }
 
-void PointerController::resetInactivityTimeoutLocked() {
+void CursorController::resetInactivityTimeoutLocked() {
     mLooper->removeMessages(mHandler, MSG_INACTIVITY_TIMEOUT);
 
     nsecs_t timeout = mLocked.inactivityTimeout == InactivityTimeout::SHORT
@@ -644,11 +644,11 @@ void PointerController::resetInactivityTimeoutLocked() {
     mLooper->sendMessageDelayed(timeout, mHandler, MSG_INACTIVITY_TIMEOUT);
 }
 
-void PointerController::removeInactivityTimeoutLocked() {
+void CursorController::removeInactivityTimeoutLocked() {
     mLooper->removeMessages(mHandler, MSG_INACTIVITY_TIMEOUT);
 }
 
-void PointerController::updatePointerLocked() REQUIRES(mLock) {
+void CursorController::updatePointerLocked() REQUIRES(mLock) {
     if (!mLocked.viewport.isValid()) {
         return;
     }
@@ -697,7 +697,7 @@ void PointerController::updatePointerLocked() REQUIRES(mLock) {
     mSpriteController->closeTransaction();
 }
 
-PointerController::Spot* PointerController::getSpot(uint32_t id, const std::vector<Spot*>& spots) {
+CursorController::Spot* CursorController::getSpot(uint32_t id, const std::vector<Spot*>& spots) {
     for (size_t i = 0; i < spots.size(); i++) {
         Spot* spot = spots[i];
         if (spot->id == id) {
@@ -708,7 +708,7 @@ PointerController::Spot* PointerController::getSpot(uint32_t id, const std::vect
     return nullptr;
 }
 
-PointerController::Spot* PointerController::createAndAddSpotLocked(uint32_t id,
+CursorController::Spot* CursorController::createAndAddSpotLocked(uint32_t id,
         std::vector<Spot*>& spots) {
     // Remove spots until we have fewer than MAX_SPOTS remaining.
     while (spots.size() >= MAX_SPOTS) {
@@ -735,7 +735,7 @@ PointerController::Spot* PointerController::createAndAddSpotLocked(uint32_t id,
     return spot;
 }
 
-PointerController::Spot* PointerController::removeFirstFadingSpotLocked(std::vector<Spot*>& spots) {
+CursorController::Spot* CursorController::removeFirstFadingSpotLocked(std::vector<Spot*>& spots) {
     for (size_t i = 0; i < spots.size(); i++) {
         Spot* spot = spots[i];
         if (spot->id == Spot::INVALID_ID) {
@@ -746,7 +746,7 @@ PointerController::Spot* PointerController::removeFirstFadingSpotLocked(std::vec
     return nullptr;
 }
 
-void PointerController::releaseSpotLocked(Spot* spot) {
+void CursorController::releaseSpotLocked(Spot* spot) {
     spot->sprite->clearIcon();
 
     if (mLocked.recycledSprites.size() < MAX_RECYCLED_SPRITES) {
@@ -756,14 +756,14 @@ void PointerController::releaseSpotLocked(Spot* spot) {
     delete spot;
 }
 
-void PointerController::fadeOutAndReleaseSpotLocked(Spot* spot) {
+void CursorController::fadeOutAndReleaseSpotLocked(Spot* spot) {
     if (spot->id != Spot::INVALID_ID) {
         spot->id = Spot::INVALID_ID;
         startAnimationLocked();
     }
 }
 
-void PointerController::fadeOutAndReleaseAllSpotsLocked() {
+void CursorController::fadeOutAndReleaseAllSpotsLocked() {
     for (auto& it : mLocked.spotsByDisplay) {
         const std::vector<Spot*>& spots = it.second;
         size_t numSpots = spots.size();
@@ -774,7 +774,7 @@ void PointerController::fadeOutAndReleaseAllSpotsLocked() {
     }
 }
 
-void PointerController::loadResourcesLocked() REQUIRES(mLock) {
+void CursorController::loadResourcesLocked() REQUIRES(mLock) {
     if (!mLocked.viewport.isValid()) {
         return;
     }
@@ -793,9 +793,9 @@ void PointerController::loadResourcesLocked() REQUIRES(mLock) {
 }
 
 
-// --- PointerController::Spot ---
+// --- CursorController::Spot ---
 
-void PointerController::Spot::updateSprite(const SpriteIcon* icon, float x, float y,
+void CursorController::Spot::updateSprite(const SpriteIcon* icon, float x, float y,
         int32_t displayId) {
     sprite->setLayer(Sprite::BASE_LAYER_SPOT + id);
     sprite->setAlpha(alpha);

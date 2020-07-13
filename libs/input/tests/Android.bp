@@ -15,7 +15,7 @@
 cc_test {
     name: "libinputservice_test",
     srcs: [
-        "PointerController_test.cpp",
+        "CursorController_test.cpp",
     ],
     shared_libs: [
         "libinputservice",
