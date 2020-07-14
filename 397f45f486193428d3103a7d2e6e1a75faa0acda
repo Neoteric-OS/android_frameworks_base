@@ -16,6 +16,23 @@
       "revId": "397f45f486193428d3103a7d2e6e1a75faa0acda",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8bfa6ae8_7687eead",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-14T20:33:33Z",
+      "side": 1,
+      "message": "This renaming looks OK to me. The real refactor will come later.",
+      "revId": "397f45f486193428d3103a7d2e6e1a75faa0acda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
