@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aaeae32_768105a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-14T20:21:51Z",
+      "side": 1,
+      "message": "Here is the first renaming CL for frameworks/base",
+      "revId": "397f45f486193428d3103a7d2e6e1a75faa0acda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
