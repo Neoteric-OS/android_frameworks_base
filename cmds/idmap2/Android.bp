@@ -21,6 +21,7 @@ cc_defaults {
         "-modernize-use-trailing-return-type",
         "android-*",
         "misc-*",
+        "-misc-no-recursion",
         "readability-*",
     ],
     tidy_checks_as_errors: [
@@ -29,6 +30,7 @@ cc_defaults {
         "-modernize-use-trailing-return-type",
         "android-*",
         "misc-*",
+        "-misc-no-recursion",
         "readability-*",
     ],
     tidy_flags: [
