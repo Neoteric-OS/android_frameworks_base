@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96570ed2_617008a3",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/CellularTile.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2020-07-14T13:33:51Z",
+      "side": 1,
+      "message": "Thanks for the change but I fear this could lead to more issues than the previous one, if this call comes while the user is switching but before QSHost has managed to switch to the new user\u0027s tiles (therefore removing the tile for the old user).\n\nI\u0027ve made it possible to request the user from QSHost in the internal code, after the tiles have been switched, so it can be called from `isAvailable`. Once the internal code is pushed to AOSP, we can accept a patch similar to the original one.",
+      "revId": "596f12ece067d9bc43e0184243d96bab9dd68fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
