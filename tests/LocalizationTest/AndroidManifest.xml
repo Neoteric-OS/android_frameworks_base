@@ -1,0 +1,18 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.android.internal.app">
+
+<!--    <instrumentation-->
+<!--    	android:name="androidx.test.runner.AndroidJUnitRunner"-->
+<!--    	android:targetPackage="com.android.android.internal.app"-->
+<!--    	android:label="Lorem ipsum" />-->
+	<instrumentation
+		android:name="androidx.test.runner.AndroidJUnitRunner"
+		android:targetPackage="com.android.android.internal.app"
+		android:label="Frameworks Mocking Services Tests" />
+
+	<application android:testOnly="true" android:debuggable="true">
+		<uses-library android:name="android.test.runner" />
+	</application>
+
+</manifest>

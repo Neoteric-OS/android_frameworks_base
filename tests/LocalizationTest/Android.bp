@@ -1,0 +1,27 @@
+android_test {
+    name: "LocalizationTest",
+    srcs: ["java/**/*.kt"],
+    libs: [
+        "android.test.runner",
+        "android.test.base",
+        "android.test.mock",
+    ],
+    static_libs: [
+        "androidx.test.core",
+        "androidx.test.ext.junit",
+        "androidx.test.rules",
+        "mockito-target-extended-minus-junit4",
+        "truth-prebuilt",
+    ],
+    jni_libs: [
+        // For mockito extended
+        "libdexmakerjvmtiagent",
+        "libstaticjvmtiagent",
+    ],
+    certificate: "platform",
+    platform_apis: true,
+    test_suites: ["device-tests"],
+    optimize: {
+        enabled: false,
+    },
+}

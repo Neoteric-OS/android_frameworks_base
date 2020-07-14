@@ -1,0 +1,8 @@
+sysprop_library {
+    name: "com.android.sysprop.localization",
+    srcs: ["LocalizationProperties.sysprop"],
+    property_owner: "Platform",
+    api_packages: ["android.sysprop"],
+    vendor_available: false,
+}
+
