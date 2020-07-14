@@ -16,6 +16,7 @@
 
 package com.android.internal.app;
 
+import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.app.IActivityManager;
 import android.app.ListFragment;
@@ -28,6 +29,7 @@ import android.os.Bundle;
 import android.os.LocaleList;
 import android.os.RemoteException;
 import android.provider.Settings;
+import android.sysprop.LocalizationProperties;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,13 +42,20 @@ import com.android.internal.R;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class LocalePicker extends ListFragment {
     private static final String TAG = "LocalePicker";
     private static final boolean DEBUG = false;
+
+    private static final Predicate<String> NO_LOCALE_FILTER = unused -> true;
+
     private static final String[] pseudoLocales = { "en-XA", "ar-XB" };
 
     public static interface LocaleSelectionListener {
@@ -92,7 +101,25 @@ public class LocalePicker extends ListFragment {
     }
 
     public static String[] getSupportedLocales(Context context) {
-        return context.getResources().getStringArray(R.array.supported_locales);
+        String[] allLocales = context.getResources().getStringArray(R.array.supported_locales);
+
+        Predicate<String> localeFilter = getLocaleFilter();
+        return (localeFilter == NO_LOCALE_FILTER) ? allLocales
+                : Arrays.stream(allLocales).filter(localeFilter).toArray(String[]::new);
+    }
+
+    private static Predicate<String> getLocaleFilter() {
+        try {
+            return LocalizationProperties.locale_filter()
+                    .map(filter -> Pattern.compile(filter).asPredicate())
+                    .orElse(NO_LOCALE_FILTER);
+        } catch (SecurityException e) {
+            Log.w(TAG, "Failed to read locale filter (" + e + ").");
+        } catch (PatternSyntaxException e) {
+            Log.w(TAG, "Bad locale filter format (\"" + e.getPattern() + "\"), skipping.");
+        }
+
+        return NO_LOCALE_FILTER;
     }
 
     public static List<LocaleInfo> getAllAssetLocales(Context context, boolean isInDeveloperMode) {
@@ -265,6 +292,9 @@ public class LocalePicker extends ListFragment {
      */
     @UnsupportedAppUsage
     public static void updateLocales(LocaleList locales) {
+        locales = removeExcludedLocales(locales);
+        // Note: the empty list case is covered by Configuration.setLocales().
+
         try {
             final IActivityManager am = ActivityManager.getService();
             final Configuration config = am.getConfiguration();
@@ -278,6 +308,25 @@ public class LocalePicker extends ListFragment {
         } catch (RemoteException e) {
             // Intentionally left blank
         }
+    }
+
+    private static LocaleList removeExcludedLocales(@Nullable LocaleList locales) {
+        Predicate<String> localeFilter = getLocaleFilter();
+        if ((locales == null) || (localeFilter == NO_LOCALE_FILTER)) {
+            return locales;
+        }
+
+        int localeCount = locales.size();
+        ArrayList<Locale> filteredLocales = new ArrayList<>(localeCount);
+        for (int i = 0; i < localeCount; ++i) {
+            Locale locale = locales.get(i);
+            if (localeFilter.test(locale.toString())) {
+                filteredLocales.add(locale);
+            }
+        }
+
+        return (locales.size() == filteredLocales.size()) ? locales
+                : new LocaleList(filteredLocales.toArray(new Locale[0]));
     }
 
     /**
