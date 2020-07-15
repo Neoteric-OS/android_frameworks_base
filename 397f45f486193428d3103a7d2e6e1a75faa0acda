@@ -50,6 +50,24 @@
       "revId": "397f45f486193428d3103a7d2e6e1a75faa0acda",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20cc6d62_5630b319",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2020-07-15T16:39:41Z",
+      "side": 1,
+      "message": "+1 to svv@\u0027s perspective.\n\nI would add that \"CursorController\" can also be ambiguous. I would take another step and suggest \"MouseCursorController\" and \"TouchSpotController\" for taking away more ambiguity. \n\nThis also makes it clear that Spots are tied to Touch devices like Touch{pad,screen}.",
+      "parentUuid": "b16ed30f_486d2f35",
+      "revId": "397f45f486193428d3103a7d2e6e1a75faa0acda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
