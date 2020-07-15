@@ -33,6 +33,23 @@
       "revId": "397f45f486193428d3103a7d2e6e1a75faa0acda",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b16ed30f_486d2f35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-07-15T16:10:03Z",
+      "side": 1,
+      "message": "Hi Michael,\n\nWhat are your thoughts here?\nOn the first consideration, I would think that \"cursor\" is mostly used for \"mouse\" and \"pointer\" could be used for both mouse and touchscreen.\n\nSo, my vote would be to have this structure:\n\nbase class: PointerController\nderived: CursorController extends PointerController (mouse - specific)\nderived: SpotController extends PointerController (touchscreen circles enabled by \"show taps\")\n\nHowever, approving this change to unblock. We can rename / swap the names later",
+      "revId": "397f45f486193428d3103a7d2e6e1a75faa0acda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
