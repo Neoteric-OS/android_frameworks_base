@@ -68,6 +68,24 @@
       "revId": "397f45f486193428d3103a7d2e6e1a75faa0acda",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4822d769_da50b34c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-15T17:02:49Z",
+      "side": 1,
+      "message": "We checked the definition of pointer and cursor. Pointer is pretty much the same as mouse cursor, so it\u0027s really the same to use pointer vs. cursor here.\n\nSince pointer is already the one that controls everything, I\u0027d say let\u0027s continue to use it since there isn\u0027t significant improvement by renaming it, and due to merge conflict it needs additional work to land this one CL.\n\nTherefore I\u0027d also suggest abandoning this CL and use PointerController as the overarching one, and CursorController/MouseCursorController as the inner one.\n\nSorry for the back and forth.",
+      "parentUuid": "20cc6d62_5630b319",
+      "revId": "397f45f486193428d3103a7d2e6e1a75faa0acda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
