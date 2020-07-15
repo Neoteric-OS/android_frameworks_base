@@ -317,6 +317,11 @@ java_library_static {
     name: "android_stubs_current",
     srcs: [ ":api-stubs-docs" ],
     defaults: ["android_defaults_stubs_current"],
+    dist: {
+        targets: ["sdk"],
+        tag: ".jar",
+        dest: "test.jar",
+    }
 }
 
 java_library_static {
