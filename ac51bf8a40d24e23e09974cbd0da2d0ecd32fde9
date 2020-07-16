@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cd20e73_338d2a42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-07-16T17:15:49Z",
+      "side": 1,
+      "message": "Hi Howard / Tsung-Mao, could you please owner +1 this change to settings_enums.proto,  which ports some internal RVC changes over to AOSP? We need to update the AOSP code so our intern (who has no access to internal branches due to remote working from COVID-19) can work on the codebase. ",
+      "revId": "ac51bf8a40d24e23e09974cbd0da2d0ecd32fde9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
