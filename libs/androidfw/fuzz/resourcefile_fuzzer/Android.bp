@@ -1,0 +1,33 @@
+cc_fuzz {
+    name: "resourcefile_fuzzer",
+    srcs: [
+        "resourcefile_fuzzer.cpp",
+    ],
+    host_supported: true,
+
+    static_libs: ["libgmock"],
+    target: {
+        android: {
+            shared_libs:[
+                "libandroidfw",
+                "libbase",
+                "libcutils",
+                "libutils",
+                "libziparchive",
+                "libui",
+                ],
+        },
+        host: {
+            static_libs: [
+                "libandroidfw",
+                "libbase",
+                "libcutils",
+                "libutils",
+                "libziparchive",
+                "liblog", 
+                "libz",
+                ],
+        },
+    },
+
+}
