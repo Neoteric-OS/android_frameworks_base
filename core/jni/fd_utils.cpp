@@ -160,6 +160,12 @@ bool FileDescriptorWhitelist::IsAllowed(const std::string& path) const {
     return true;
   }
 
+  // Coverage files are whitelisted.
+  if (android::base::StartsWith(path, "/data/misc/trace")
+      && android::base::EndsWith(path, ".mmec")) {
+    return true;
+  }
+
   return false;
 }
 
