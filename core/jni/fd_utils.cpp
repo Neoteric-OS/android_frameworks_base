@@ -160,6 +160,12 @@ bool FileDescriptorWhitelist::IsAllowed(const std::string& path) const {
     return true;
   }
 
+  // Allow memory-mapped Java coverage files.
+  if (android::base::StartsWith(path, "/data/misc/trace") &&
+      android::base::EndsWith(path, ".mm.ec")) {
+      return true;
+  }
+
   return false;
 }
 
