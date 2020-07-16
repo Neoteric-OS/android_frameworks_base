@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9ec5717e_6c8dea02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-16T10:40:56Z",
+      "side": 1,
+      "message": "Do you meet any bug so you want to release the mobile upstream request when default upstream is not cellular ? Currently, the request only be released when tethering is OFF. The concept is android multiple networks that the behavior is similar with default internet network between wifi and mobile data. When wifi connected, default network switch the wifi but the request for TelephonyFactory is still there that mobile data call would keep connected(but the internet path is switch to wifi). If wifi is unstable or disconnected, the path can quickly switch back to cellular.",
+      "revId": "64336d293b75fc15e5756b948e4938952ad2b539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0938ed42_e52a7178",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 2
