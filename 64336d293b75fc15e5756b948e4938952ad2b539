@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0938ed42_e52a7178",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-16T09:38:53Z",
+      "side": 1,
+      "message": "I don\u0027t think we should be doing such a large side effect in a getter. getCurrentPreferredUpstream just computes the current upstream, it should not affect the state of the monitor.",
+      "range": {
+        "startLine": 309,
+        "startChar": 12,
+        "endLine": 309,
+        "endChar": 39
+      },
+      "revId": "64336d293b75fc15e5756b948e4938952ad2b539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
