@@ -305,7 +305,10 @@ public class UpstreamNetworkMonitor {
         final UpstreamNetworkState dfltState = (mDefaultInternetNetwork != null)
                 ? mNetworkMap.get(mDefaultInternetNetwork)
                 : null;
-        if (isNetworkUsableAndNotCellular(dfltState)) return dfltState;
+        if (isNetworkUsableAndNotCellular(dfltState)) {
+            releaseMobileNetworkRequest();
+            return dfltState;
+        }
 
         if (!isCellularUpstreamPermitted()) return null;
 
