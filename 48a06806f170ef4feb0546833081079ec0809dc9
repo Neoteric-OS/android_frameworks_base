@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eaffc58_7e33fd66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1731018
+      },
+      "writtenOn": "2020-07-17T01:38:09Z",
+      "side": 1,
+      "message": "Hi, this is my first CL to Android. Appreciate any feedback and review!\n\nI\u0027m adding some missing mappings to the generic key layout which will enable devices like the FLIRC to send standard USB HID usage codes in order to trigger android-specific media functionality.",
+      "revId": "48a06806f170ef4feb0546833081079ec0809dc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
