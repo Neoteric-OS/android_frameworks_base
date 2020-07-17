@@ -16,6 +16,126 @@
       "revId": "e54b133d4bc7ecadeb1c9244b4833b2cfadea17f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9769bddc_54169f21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-17T20:23:11Z",
+      "side": 1,
+      "message": "Did you skip clang format? If not we need to set it up first and you should run it.\n\nJust some stylish stuff for now. Didn\u0027t really get to the structure yet.",
+      "revId": "e54b133d4bc7ecadeb1c9244b4833b2cfadea17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03247ec2_629d248f",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-17T20:23:11Z",
+      "side": 1,
+      "message": "This is suggested by upload hook?\n\nIIRC Google C++ style suggests the original way. Is it because AOSP didn\u0027t have the hook set up?",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 71
+      },
+      "revId": "e54b133d4bc7ecadeb1c9244b4833b2cfadea17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eeec513_15a15ed3",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-17T20:23:11Z",
+      "side": 1,
+      "message": "You should move it to the expression list (i.e. move it before the left brace).",
+      "revId": "e54b133d4bc7ecadeb1c9244b4833b2cfadea17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d2d19dd_631c0e64",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-17T20:23:11Z",
+      "side": 1,
+      "message": "Can we use smart pointers please? std::shared_ptr or std::unique_ptr.",
+      "revId": "e54b133d4bc7ecadeb1c9244b4833b2cfadea17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f6fcff_390885aa",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-17T20:23:11Z",
+      "side": 1,
+      "message": "These trailing spaces are certainly a signal that either the hook isn\u0027t set up or explicitly skipped.",
+      "range": {
+        "startLine": 178,
+        "startChar": 1,
+        "endLine": 178,
+        "endChar": 4
+      },
+      "revId": "e54b133d4bc7ecadeb1c9244b4833b2cfadea17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e124fcf2_b2d77415",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-17T20:23:11Z",
+      "side": 1,
+      "message": "for (auto entry : mLocked.spotControllers) {\n...\n}\n\nLeave a space after \"if\" and \"for\" before the left parenthesis.",
+      "range": {
+        "startLine": 206,
+        "startChar": 4,
+        "endLine": 206,
+        "endChar": 93
+      },
+      "revId": "e54b133d4bc7ecadeb1c9244b4833b2cfadea17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
