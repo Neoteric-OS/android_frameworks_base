@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b584299_c0757ac1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1223473
+      },
+      "writtenOn": "2020-07-17T01:31:19Z",
+      "side": 1,
+      "message": "Like your comments, I think it is not issue that if using default type as upstream type.\nBut if device use DUN type for tethering, device has 2 mobile connections(default and DUN).\nSo, even if upstream type is wifi, DUN type connection is still connected.\n\nDefault type mobile connection is for quickly switch back to cellular, but DUN type mobile connection is not related with it.\nIn this situation, DUN type mobile connection is useless mobile connection.\n\nIn addition, there are requirements about this behavior at some operators.\n(When DUN type mobile connection(tethering PDN) is no more used, it should be released.)\n\nFinally, if config_tether_upstream_automatic config value is set to false, mobile connection is released by below codes.(when upstream type is changed to wifi)\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1364496/2/packages/Tethering/src/com/android/networkstack/tethering/UpstreamNetworkMonitor.java#292",
+      "parentUuid": "9ec5717e_6c8dea02",
+      "revId": "64336d293b75fc15e5756b948e4938952ad2b539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0938ed42_e52a7178",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 2
