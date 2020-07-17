@@ -5136,6 +5136,10 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         @Override
         public void onTempPowerSaveWhitelistChange(int appId, boolean added) {
             synchronized (mUidRulesFirstLock) {
+                if (!mSystemReady) {
+                    Slog.w(TAG, "onTempPowerSaveWhitelistChange(): system is not ready");
+                    return;
+                }
                 mLogger.tempPowerSaveWlChanged(appId, added);
                 if (added) {
                     mPowerSaveTempWhitelistAppIds.put(appId, true);
