@@ -34,6 +34,9 @@
 
 namespace android {
 
+class MouseCursorController;
+class TouchSpotController;
+
 /*
  * Pointer resources.
  */
@@ -107,39 +110,15 @@ public:
 
     void updatePointerIcon(int32_t iconId);
     void setCustomPointerIcon(const SpriteIcon& icon);
-    void setInactivityTimeout(InactivityTimeout inactivityTimeout);
+    void setInactivityTimeout(PointerController::InactivityTimeout inactivityTimeout);
     void reloadPointerResources();
 
 private:
-    static constexpr size_t MAX_RECYCLED_SPRITES = 12;
-    static constexpr size_t MAX_SPOTS = 12;
+    friend class MouseCursorController;
+    friend class TouchSpotController;
 
     enum {
         MSG_INACTIVITY_TIMEOUT,
-    };
-
-    struct Spot {
-        static const uint32_t INVALID_ID = 0xffffffff;
-
-        uint32_t id;
-        sp<Sprite> sprite;
-        float alpha;
-        float scale;
-        float x, y;
-
-        inline Spot(uint32_t id, const sp<Sprite>& sprite)
-              : id(id),
-                sprite(sprite),
-                alpha(1.0f),
-                scale(1.0f),
-                x(0.0f),
-                y(0.0f),
-                lastIcon(nullptr) {}
-
-        void updateSprite(const SpriteIcon* icon, float x, float y, int32_t displayId);
-
-    private:
-        const SpriteIcon* lastIcon;
     };
 
     class MessageHandler : public virtual android::MessageHandler {
@@ -164,66 +143,32 @@ private:
 
     DisplayEventReceiver mDisplayEventReceiver;
 
-    PointerResources mResources;
+    MouseCursorController* mCursorController;
 
     struct Locked {
         bool animationPending;
         nsecs_t animationTime;
 
-        size_t animationFrameIndex;
-        nsecs_t lastFrameUpdatedTime;
-
-        DisplayViewport viewport;
-
-        InactivityTimeout inactivityTimeout;
+        PointerController::InactivityTimeout inactivityTimeout;
 
         Presentation presentation;
         bool presentationChanged;
 
-        int32_t pointerFadeDirection;
-        float pointerX;
-        float pointerY;
-        float pointerAlpha;
-        sp<Sprite> pointerSprite;
-        SpriteIcon pointerIcon;
-        bool pointerIconChanged;
-
-        std::map<int32_t, SpriteIcon> additionalMouseResources;
-        std::map<int32_t, PointerAnimation> animationResources;
-
-        int32_t requestedPointerType;
-
-        int32_t buttonState;
-
-        std::map<int32_t /* displayId */, std::vector<Spot*>> spotsByDisplay;
-        std::vector<sp<Sprite>> recycledSprites;
+        std::map<int32_t /* displayId */, TouchSpotController*> spotControllers;
     } mLocked GUARDED_BY(mLock);
 
     PointerController(const sp<PointerControllerPolicyInterface>& policy, const sp<Looper>& looper,
                       const sp<SpriteController>& spriteController);
 
-    bool getBoundsLocked(float* outMinX, float* outMinY, float* outMaxX, float* outMaxY) const;
-    void setPositionLocked(float x, float y);
+    void clearSpotsLocked();
 
     void doAnimate(nsecs_t timestamp);
-    bool doFadingAnimationLocked(nsecs_t timestamp);
-    bool doBitmapAnimationLocked(nsecs_t timestamp);
-    void doInactivityTimeout();
-
     void startAnimationLocked();
+
+    void doInactivityTimeout();
 
     void resetInactivityTimeoutLocked();
     void removeInactivityTimeoutLocked();
-    void updatePointerLocked();
-
-    Spot* getSpot(uint32_t id, const std::vector<Spot*>& spots);
-    Spot* createAndAddSpotLocked(uint32_t id, std::vector<Spot*>& spots);
-    Spot* removeFirstFadingSpotLocked(std::vector<Spot*>& spots);
-    void releaseSpotLocked(Spot* spot);
-    void fadeOutAndReleaseSpotLocked(Spot* spot);
-    void fadeOutAndReleaseAllSpotsLocked();
-
-    void loadResourcesLocked();
 };
 
 } // namespace android
