@@ -1,0 +1,10 @@
+Autosubmit+1: Garfield Tan <xutan@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Alex Buynytskyy <alexbuy@google.com>
+Code-Review+2: Siarhei Vishniakou <svv@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Sat, 18 Jul 2020 02:24:00 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1366076
+Project: platform/frameworks/base
+Branch: refs/heads/master
