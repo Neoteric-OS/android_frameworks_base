@@ -596,9 +596,17 @@ java_library {
     apex_available: ["//apex_available:platform"],
     visibility: [
         // DO NOT ADD ANY MORE ENTRIES TO THIS LIST
-        "//external/robolectric-shadows:__subpackages__",
         "//frameworks/base",
         "//frameworks/layoutlib:__subpackages__",
+    ],
+}
+
+java_device_for_host {
+    name: "framework-all-host",
+    libs: ["framework-all"],
+    visibility: [
+        // DO NOT ADD ANY MORE ENTRIES TO THIS LIST
+        "//external/robolectric-shadows:__subpackages__",
     ],
 }
 
