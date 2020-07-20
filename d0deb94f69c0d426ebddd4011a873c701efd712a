@@ -234,6 +234,23 @@
       "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7929c83_09ec2a5a",
+        "filename": "libs/input/TouchSpotController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-20T22:43:08Z",
+      "side": 1,
+      "message": "I can\u0027t believe we were using raw pointers for Spot. If this part of code is basically kept as is we could refactor this later as this CL is already pretty big.\n\nHowever this is something we definitely need to get rid of sometime. I can even argue that we don\u0027t need pointers for Spots at all, but at least it can be unique_ptr\u003c\u003e as this isn\u0027t public API (hence no unit test needs to use it directly, or we may have some reasons to use shared_ptr).",
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
