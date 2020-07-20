@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30936110_c1c5b022",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2020-07-20T15:40:17Z",
+      "side": 1,
+      "message": "Hi googler, is there any update? Thanks.",
+      "revId": "b034b1338419b807bf39d7d9e8eb12a689641e50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
