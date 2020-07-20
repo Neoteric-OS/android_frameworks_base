@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd5ab45e_10f43a0f",
+        "filename": "core/java/android/text/format/DateIntervalFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2020-07-20T19:18:47Z",
+      "side": 1,
+      "message": "nit: reformat comments?",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 18
+      },
+      "revId": "cec3d1a5ce50ed581f78bb3ba7581ec6a1d102fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23bc392b_96409d6d",
+        "filename": "core/java/android/text/format/DateIntervalFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2020-07-20T19:18:47Z",
+      "side": 1,
+      "message": "nit: reformat comments",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 50
+      },
+      "revId": "cec3d1a5ce50ed581f78bb3ba7581ec6a1d102fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
