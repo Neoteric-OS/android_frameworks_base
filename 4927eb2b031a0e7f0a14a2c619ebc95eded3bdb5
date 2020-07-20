@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a1b6d9fe_72fd2074",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1245797
+      },
+      "writtenOn": "2020-07-20T16:46:10Z",
+      "side": 1,
+      "message": "The values written to the proto for mLastTimeUsed are relative to the Interval.beginTime (ie. if mLastTimeUsed is 1234, and the beginTime is 1000, the value written to the proto is 234). The reason we need to explicitly assign mLastTimeUsed when it\u0027s relative value is 0 is because proto\u0027s skip writing default values to save space (the default value for ints is 0).",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 28
+      },
+      "revId": "4927eb2b031a0e7f0a14a2c619ebc95eded3bdb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8b2c49a_87d74cfe",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -33,6 +56,29 @@
       "revId": "4927eb2b031a0e7f0a14a2c619ebc95eded3bdb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fec8a854_0d152ecb",
+        "filename": "services/usage/java/com/android/server/usage/IntervalStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1245797
+      },
+      "writtenOn": "2020-07-20T16:46:10Z",
+      "side": 1,
+      "message": "This will give give inaccurate data. System and some apps make decisions based on the last time an app was used (an activity was started). It is possible for an app to have UsageStats without having its activity started. We don\u0027t want to report that an app was \"used\" just because its UsageStats exists.",
+      "range": {
+        "startLine": 128,
+        "startChar": 12,
+        "endLine": 129,
+        "endChar": 49
+      },
+      "revId": "4927eb2b031a0e7f0a14a2c619ebc95eded3bdb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
