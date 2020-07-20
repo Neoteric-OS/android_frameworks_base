@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a60b06fc_58969c75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-20T19:49:58Z",
+      "side": 1,
+      "message": "This is going to be a great cleanup. Though a few points need to be resolved first.\n\nI still didn\u0027t quite follow all processes so I might still have follow up comments.\n\nWe should find a good place to clean up TouchSpotController when display disconnects. Otherwise it\u0027s a resource leak. We can change the PointerControllerInterface if necessary.\n\nAs for resource loading I think current arrangement is already good enough. TouchSpotController is only created when someone is setting some spots on that display.",
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d0c1d90_4bedb5e0",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-20T19:49:58Z",
+      "side": 1,
+      "message": "Don\u0027t pass PointerController, or PointerControllerContext in functions. Do it in c\u0027tors of MouseCursorController and TouchSpotController and save a reference.",
+      "range": {
+        "startLine": 383,
+        "startChar": 48,
+        "endLine": 383,
+        "endChar": 65
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690d5c3d_c2605103",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-20T19:49:58Z",
+      "side": 1,
+      "message": "This is a bad place to slice the interface between MouseCursorController and PointerController, even with PointerControllerContext.\n\nPresentation is something that spans across MouseCursorController and TouchSpotController, so this should be an internal state of PointerController. PointerController should use show/hide API to manage the state, rather than letting MouseCursorController and TouchSpotController handle it.",
+      "range": {
+        "startLine": 428,
+        "startChar": 8,
+        "endLine": 428,
+        "endChar": 55
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a9f019_4aaeb489",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-20T19:49:58Z",
+      "side": 1,
+      "message": "This is a good candidate to move to PointerControllerContext.",
+      "range": {
+        "startLine": 431,
+        "startChar": 24,
+        "endLine": 431,
+        "endChar": 41
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685d2046_d4131c04",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-20T19:49:58Z",
+      "side": 1,
+      "message": "Any reason why it uses policy from mPointerController instead of through itself?",
+      "range": {
+        "startLine": 464,
+        "startChar": 8,
+        "endLine": 464,
+        "endChar": 35
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1571df87_cb05f801",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-20T19:49:58Z",
+      "side": 1,
+      "message": "Usually variables starting with m are member variables. Therefore this should just be |spotController|.\n\nC++ code style in Android wasn\u0027t well defined for a long time, and the naming convention largely followed Java style guidelines. Therefore we would still follow that convention to avoid any confusion.\n\nSee: go/droidcppstyle \u0026 https://source.android.com/setup/contribute/code-style#follow-field-naming-conventions",
+      "range": {
+        "startLine": 163,
+        "startChar": 41,
+        "endLine": 163,
+        "endChar": 43
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6dc54a8_03e8a4c2",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-20T19:49:58Z",
+      "side": 1,
+      "message": "nit: use make_shared\u003c\u003e()",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 170,
+        "endChar": 76
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5674ae0_96be9afa",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-20T19:49:58Z",
+      "side": 1,
+      "message": "Why do we need friend classes?\n\nA more canonical way of handling the need of calling from classes of low levels is to create a PointerControllerContext class to host common logic. MouseCursorController \u0026 TouchSpotController are complicated enough to live in standalone files so they shouldn\u0027t friend classes to anyone.\n\nhttps://google.github.io/styleguide/cppguide.html#Friends",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
