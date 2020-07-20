@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3934a2bd_766dc196",
+        "filename": "core/java/android/text/format/DateIntervalFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2020-07-20T20:10:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd5ab45e_10f43a0f",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 18
+      },
+      "revId": "cec3d1a5ce50ed581f78bb3ba7581ec6a1d102fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23bc392b_96409d6d",
         "filename": "core/java/android/text/format/DateIntervalFormat.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "cec3d1a5ce50ed581f78bb3ba7581ec6a1d102fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13deb89b_a5ba63d2",
+        "filename": "core/java/android/text/format/DateIntervalFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2020-07-20T20:10:44Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "23bc392b_96409d6d",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 50
+      },
+      "revId": "cec3d1a5ce50ed581f78bb3ba7581ec6a1d102fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
