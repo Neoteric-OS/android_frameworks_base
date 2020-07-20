@@ -198,7 +198,7 @@ public class DateUtils
      * @deprecated Use {@link java.text.SimpleDateFormat} instead.
      */
     @Deprecated
-    public static String getDayOfWeekString(int dayOfWeek, int abbrev) {
+    public static String getDayOfWeekString(int dayOfWeek, int abbrev) { 
         DateFormatSymbols dfs = DateFormatSymbols.getInstance();
         final int width;
         switch (abbrev) {
