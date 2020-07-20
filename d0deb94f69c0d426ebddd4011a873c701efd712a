@@ -180,6 +180,40 @@
     },
     {
       "key": {
+        "uuid": "7de45872_d3c230d2",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-20T21:36:18Z",
+      "side": 1,
+      "message": "I suggest changing animation to callback mechanism and moving animation infra to PointerControllerContext, or maybe a standalone class. It doesn\u0027t seem to be necessary for a standalone file, so it can either be an embedded class in PointerControllerContext, or a different class living side by side to PointerControllerContext. Let\u0027s say the class is PointerAnimator.\n\nThis is how the event flow works (use MouseCursorController as an example):\n\n1) MouseCursorController decides that it needs to run animation, and register a callback (use std::function and std::bind) to PointerAnimator;\n2) PointerAnimator tracks the number of callbacks -- if this is the first callback then it requests vsync through mDisplayEventReceiver;\n3) Upon vsync, PointerAnimator iterates through all callbacks and use their return values to determine if the callback needs to be retained for next frame;\n4) If at least one callback is retained PointerAnimator requests next vsync; otherwise it just exits.\n\nIt\u0027s then the responsibility of MouseCursorController and TouchSpotController to track if it finishes animation or not in each frame.",
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4150d6c1_9a01349d",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-20T21:36:18Z",
+      "side": 1,
+      "message": "Is it the right place to remove TouchSpotController? Are we sure it won\u0027t be used later at this time?",
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5674ae0_96be9afa",
         "filename": "libs/input/PointerController.h",
         "patchSetId": 3
