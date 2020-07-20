@@ -16,6 +16,23 @@
       "revId": "4927eb2b031a0e7f0a14a2c619ebc95eded3bdb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa40fb4b_dd02d9e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2020-07-20T15:40:36Z",
+      "side": 1,
+      "message": "Hi googler, is there any update? Thanks.",
+      "revId": "4927eb2b031a0e7f0a14a2c619ebc95eded3bdb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
