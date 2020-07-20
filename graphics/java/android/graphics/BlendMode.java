@@ -26,7 +26,7 @@ public enum BlendMode {
      *
      * <p>
      *  <img src="{@docRoot}reference/android/images/graphics/blendmode_CLEAR.png" />
-     *  <figcaption>Destination pixels covered by the source are cleared to 0.</figcaption>
+     *  <figcaption>Testing 123. Testing. Destination pixels covered by the source are cleared to 0.</figcaption>
      * </p>
      * <p>\(\alpha_{out} = 0\)</p>
      * <p>\(C_{out} = 0\)</p>
