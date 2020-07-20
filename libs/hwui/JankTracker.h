@@ -84,6 +84,7 @@ private:
     // This is only used if we are in pipelined mode and are using HWC2,
     // otherwise it's 0.
     nsecs_t mDequeueTimeForgiveness = 0;
+    nsecs_t mOffsetDelta = 0;
     ProfileDataContainer mData;
     ProfileDataContainer* mGlobalData;
     ProfileDataDescription mDescription;
