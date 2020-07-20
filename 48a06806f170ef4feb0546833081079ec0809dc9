@@ -16,6 +16,29 @@
       "revId": "48a06806f170ef4feb0546833081079ec0809dc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c62f918c_5359be0c",
+        "filename": "data/keyboards/Generic.kl",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-07-20T22:52:03Z",
+      "side": 1,
+      "message": "in linux:\n\n#define KEY_CHANNELUP\t\t0x192\t/* Channel Increment */\n#define KEY_CHANNELDOWN\t\t0x193\t/* Channel Decrement */\n#define KEY_FIRST\t\t0x194\n#define KEY_LAST\t\t0x195\t/* Recall Last */\n\n\nSo the keycode KEY_LAST is related to TV, because it\u0027s in the vicinity of other TV-related keys. Therefore, I think mapping this to LAST_CHANNEL is OK.\n\nIt would be nice if we could specify \"KEY_LAST\" instead of having to use a decimal number, and then having to convert to hex before being able to find it on https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h",
+      "range": {
+        "startLine": 355,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 22
+      },
+      "revId": "48a06806f170ef4feb0546833081079ec0809dc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
