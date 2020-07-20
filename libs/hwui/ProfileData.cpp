@@ -106,6 +106,9 @@ void ProfileData::dump(int fd) const {
     dprintf(fd, "\nJanky frames: %u (%.2f%%)", mJankFrameCount,
             mTotalFrameCount == 0 ? 0.0f
                                   : (float)mJankFrameCount / (float)mTotalFrameCount * 100.0f);
+    dprintf(fd, "\nJanky frames(offset, render_ahead): %u (%.2f%%)", mRealJankFrameCount,
+            mTotalFrameCount == 0 ? 0.0f
+                                  : (float)mRealJankFrameCount / (float)mTotalFrameCount * 100.0f);
     dprintf(fd, "\n50th percentile: %ums", findPercentile(50));
     dprintf(fd, "\n90th percentile: %ums", findPercentile(90));
     dprintf(fd, "\n95th percentile: %ums", findPercentile(95));
@@ -143,6 +146,7 @@ void ProfileData::reset() {
     mSlowFrameCounts.fill(0);
     mTotalFrameCount = 0;
     mJankFrameCount = 0;
+    mRealJankFrameCount = 0;
     mStatStartTime = systemTime(CLOCK_MONOTONIC);
 }
 

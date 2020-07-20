@@ -57,10 +57,12 @@ public:
 
     void reportFrame(int64_t duration);
     void reportJank() { mJankFrameCount++; }
+    void reportRealJank() { mRealJankFrameCount++; }
     void reportJankType(JankType type) { mJankTypeCounts[static_cast<int>(type)]++; }
 
     uint32_t totalFrameCount() const { return mTotalFrameCount; }
     uint32_t jankFrameCount() const { return mJankFrameCount; }
+    uint32_t realJankFrameCount() const { return mRealJankFrameCount; }
     nsecs_t statsStartTime() const { return mStatStartTime; }
     uint32_t jankTypeCount(JankType type) const { return mJankTypeCounts[static_cast<int>(type)]; }
 
@@ -91,6 +93,8 @@ private:
 
     uint32_t mTotalFrameCount;
     uint32_t mJankFrameCount;
+    // mRealJankFrameCount consider vsync offset and render_ahead
+    uint32_t mRealJankFrameCount;
     nsecs_t mStatStartTime;
 };
 

@@ -96,6 +96,8 @@ JankTracker::JankTracker(ProfileDataContainer* globalData, const DisplayInfo& di
         mDequeueTimeForgiveness = offsetDelta + 4_ms;
     }
     setFrameInterval(frameIntervalNanos);
+
+    mOffsetDelta = offsetDelta;
 }
 
 void JankTracker::setFrameInterval(nsecs_t frameInterval) {
@@ -137,6 +139,13 @@ void JankTracker::finishFrame(const FrameInfo& frame) {
     if (totalDuration > mFrameInterval) {
         mData->reportJank();
         (*mGlobalData)->reportJank();
+    }
+
+    int renderAhead = mFrameInterval < 15_ms ? 1 : 0;
+
+    if (totalDuration > (mFrameInterval * (1 + renderAhead) + mOffsetDelta)) {
+        mData->reportRealJank();
+        (*mGlobalData)->reportRealJank();
     }
 
     bool isTripleBuffered = (mSwapDeadline - frame[FrameInfoIndex::IntendedVsync]) > (mFrameInterval * 0.1);
