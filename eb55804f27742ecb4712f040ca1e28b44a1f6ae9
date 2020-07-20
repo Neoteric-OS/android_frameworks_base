@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f59ae05_754087d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2020-07-20T20:05:32Z",
+      "side": 1,
+      "message": "Lucas, could you review for the systemUI change in Clock.java?\nnona@ for changes in android.text.format.",
+      "revId": "eb55804f27742ecb4712f040ca1e28b44a1f6ae9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
