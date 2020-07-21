@@ -28733,7 +28733,7 @@ package android.net {
     field public static final int NETWORK_PROBE_PRIVATE_DNS = 64; // 0x40
     field public static final int NETWORK_VALIDATION_RESULT_INVALID = 0; // 0x0
     field public static final int NETWORK_VALIDATION_RESULT_PARTIALLY_VALID = 2; // 0x2
-    field public static final int NETWORK_VALIDATION_RESULT_SKIPPED = 3; // 0x3
+    field @Deprecated public static final int NETWORK_VALIDATION_RESULT_SKIPPED = 3; // 0x3
     field public static final int NETWORK_VALIDATION_RESULT_VALID = 1; // 0x1
   }
 
