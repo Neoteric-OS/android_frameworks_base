@@ -65,6 +65,7 @@ cc_binary {
     static_libs: [
         "libincidentcompanion",
         "libplatformprotos",
+        "liblog_internal",
     ],
 
     product_variables: {
@@ -72,7 +73,6 @@ cc_binary {
             cflags: ["-DALLOW_RESTRICTED_SECTIONS=1"],
         },
     },
-
 
     init_rc: ["incidentd.rc"],
 }

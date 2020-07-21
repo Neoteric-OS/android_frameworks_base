@@ -33,7 +33,7 @@
 #include <debuggerd/client.h>
 #include <dumputils/dump_utils.h>
 #include <log/log_event_list.h>
-#include <log/logprint.h>
+#include <log_internal/logprint.h>
 #include <private/android_logger.h>
 
 #include "FdBuffer.h"
