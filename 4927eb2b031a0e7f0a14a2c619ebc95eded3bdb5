@@ -59,6 +59,23 @@
     },
     {
       "key": {
+        "uuid": "5f2bba85_a822519c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2020-07-21T00:24:18Z",
+      "side": 1,
+      "message": "Hi michael, thanks your reviewing. I misunderstand the real content, and I will try new method to fix UsageStatsDatabaseTest. Thanks.",
+      "revId": "4927eb2b031a0e7f0a14a2c619ebc95eded3bdb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fec8a854_0d152ecb",
         "filename": "services/usage/java/com/android/server/usage/IntervalStats.java",
         "patchSetId": 1
