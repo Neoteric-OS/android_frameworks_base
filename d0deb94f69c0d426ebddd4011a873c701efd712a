@@ -289,6 +289,30 @@
     },
     {
       "key": {
+        "uuid": "942bc1a6_8931d0ba",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2020-07-21T15:41:42Z",
+      "side": 1,
+      "message": "I\u0027m not sure if AOSP is using c++17 by default. If not, you may have to add  \n\n  cpp_std: \"c++17\"\n\nto the build target in the Android.bp file if you want to optionally do this.",
+      "parentUuid": "cfe0f3aa_4b8a0bf3",
+      "range": {
+        "startLine": 183,
+        "startChar": 14,
+        "endLine": 183,
+        "endChar": 16
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d56a2699_71e1ffe7",
         "filename": "libs/input/PointerController.cpp",
         "patchSetId": 3
