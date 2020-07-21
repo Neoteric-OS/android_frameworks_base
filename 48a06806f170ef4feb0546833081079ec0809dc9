@@ -80,6 +80,30 @@
       "revId": "48a06806f170ef4feb0546833081079ec0809dc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c126c4c_87fd12a9",
+        "filename": "data/keyboards/Generic.kl",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-07-21T15:32:00Z",
+      "side": 1,
+      "message": "It looks like it needs to be edited manually as well. Could you please provide the corresponding table entry and I will make that change internally?",
+      "parentUuid": "78d00753_928375fd",
+      "range": {
+        "startLine": 355,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 22
+      },
+      "revId": "48a06806f170ef4feb0546833081079ec0809dc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
