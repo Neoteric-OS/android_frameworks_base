@@ -20,6 +20,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.StringDef;
+import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Binder;
 import android.os.Parcel;
@@ -113,6 +114,7 @@ public class ConnectivityDiagnosticsManager {
         /**
          * Due to the properties of the network, validation was not performed.
          */
+        @UnsupportedAppUsage
         public static final int NETWORK_VALIDATION_RESULT_SKIPPED = 3;
 
         /** @hide */
@@ -128,13 +130,12 @@ public class ConnectivityDiagnosticsManager {
         public @interface NetworkValidationResult {}
 
         /**
-         * The overall validation result for the Network being reported on.
+         * A bitmask of validation results for the Network being reported on.
          *
-         * <p>The possible values for this key are:
+         * <p>The possible bit values for this key are:
          * {@link #NETWORK_VALIDATION_RESULT_INVALID},
          * {@link #NETWORK_VALIDATION_RESULT_VALID},
-         * {@link #NETWORK_VALIDATION_RESULT_PARTIALLY_VALID},
-         * {@link #NETWORK_VALIDATION_RESULT_SKIPPED}.
+         * {@link #NETWORK_VALIDATION_RESULT_PARTIALLY_VALID}.
          *
          * @see android.net.NetworkCapabilities#NET_CAPABILITY_VALIDATED
          */
