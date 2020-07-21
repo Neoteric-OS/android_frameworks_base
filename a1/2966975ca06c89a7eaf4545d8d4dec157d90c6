@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Jeongik Cha <jeongik@google.com>
+Code-Review+2: Bob Badour <bbadour@google.com>
+Code-Review+2: Tsung-Mao Fang <tmfang@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified-Together+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Yifan Hong <elsk@google.com>
+Submitted-at: Tue, 21 Jul 2020 19:26:41 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1365958
+Project: platform/frameworks/base
+Branch: refs/heads/master
