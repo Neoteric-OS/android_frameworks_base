@@ -16,6 +16,10 @@
 
 package android.bluetooth.le;
 
+import android.annotation.NonNull;
+import android.annotation.RequiresPermission;
+import android.annotation.SystemApi;
+import android.bluetooth.le.AdvertisingSetParameters.AddressTypeStatus;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -70,17 +74,21 @@ public final class AdvertiseSettings implements Parcelable {
      */
     private static final int LIMITED_ADVERTISING_MAX_MILLIS = 180 * 1000;
 
+
     private final int mAdvertiseMode;
     private final int mAdvertiseTxPowerLevel;
     private final int mAdvertiseTimeoutMillis;
     private final boolean mAdvertiseConnectable;
+    private final int mOwnAddressType;
 
     private AdvertiseSettings(int advertiseMode, int advertiseTxPowerLevel,
-            boolean advertiseConnectable, int advertiseTimeout) {
+            boolean advertiseConnectable, int advertiseTimeout,
+            @AddressTypeStatus int ownAddressType) {
         mAdvertiseMode = advertiseMode;
         mAdvertiseTxPowerLevel = advertiseTxPowerLevel;
         mAdvertiseConnectable = advertiseConnectable;
         mAdvertiseTimeoutMillis = advertiseTimeout;
+        mOwnAddressType = ownAddressType;
     }
 
     private AdvertiseSettings(Parcel in) {
@@ -88,6 +96,7 @@ public final class AdvertiseSettings implements Parcelable {
         mAdvertiseTxPowerLevel = in.readInt();
         mAdvertiseConnectable = in.readInt() != 0;
         mAdvertiseTimeoutMillis = in.readInt();
+        mOwnAddressType = in.readInt();
     }
 
     /**
@@ -118,12 +127,24 @@ public final class AdvertiseSettings implements Parcelable {
         return mAdvertiseTimeoutMillis;
     }
 
+    /**
+     * @return the own address type for advertising
+     *
+     * @hide
+     */
+
+    @SystemApi
+    public @AddressTypeStatus int getOwnAddressType() {
+        return mOwnAddressType;
+    }
+
     @Override
     public String toString() {
         return "Settings [mAdvertiseMode=" + mAdvertiseMode
                 + ", mAdvertiseTxPowerLevel=" + mAdvertiseTxPowerLevel
                 + ", mAdvertiseConnectable=" + mAdvertiseConnectable
-                + ", mAdvertiseTimeoutMillis=" + mAdvertiseTimeoutMillis + "]";
+                + ", mAdvertiseTimeoutMillis=" + mAdvertiseTimeoutMillis
+                + ", mOwnAddressType=" + mOwnAddressType + "]";
     }
 
     @Override
@@ -137,6 +158,7 @@ public final class AdvertiseSettings implements Parcelable {
         dest.writeInt(mAdvertiseTxPowerLevel);
         dest.writeInt(mAdvertiseConnectable ? 1 : 0);
         dest.writeInt(mAdvertiseTimeoutMillis);
+        dest.writeInt(mOwnAddressType);
     }
 
     public static final @android.annotation.NonNull Parcelable.Creator<AdvertiseSettings> CREATOR =
@@ -160,6 +182,7 @@ public final class AdvertiseSettings implements Parcelable {
         private int mTxPowerLevel = ADVERTISE_TX_POWER_MEDIUM;
         private int mTimeoutMillis = 0;
         private boolean mConnectable = true;
+        private int mOwnAddressType = AdvertisingSetParameters.ADDRESS_TYPE_DEFAULT;
 
         /**
          * Set advertise mode to control the advertising power and latency.
@@ -226,10 +249,34 @@ public final class AdvertiseSettings implements Parcelable {
         }
 
         /**
+         * Set own address type for advertising to control public or privacy mode.
+         * If used to set address type, then permission will be checked at the
+         * time of starting advertising.
+         *
+         * @throws IllegalArgumentException If the {@code ownAddressType} is invalid
+         *
+         * @hide
+         */
+        @SystemApi
+        @RequiresPermission(allOf = {
+                android.Manifest.permission.BLUETOOTH_ADVERTISE,
+                android.Manifest.permission.BLUETOOTH_PRIVILEGED,
+        })
+        public @NonNull Builder setOwnAddressType(@AddressTypeStatus int ownAddressType) {
+            if (ownAddressType < AdvertisingSetParameters.ADDRESS_TYPE_DEFAULT
+                    ||  ownAddressType > AdvertisingSetParameters.ADDRESS_TYPE_RANDOM) {
+                throw new IllegalArgumentException("unknown address type " + ownAddressType);
+            }
+            mOwnAddressType = ownAddressType;
+            return this;
+        }
+
+        /**
          * Build the {@link AdvertiseSettings} object.
          */
         public AdvertiseSettings build() {
-            return new AdvertiseSettings(mMode, mTxPowerLevel, mConnectable, mTimeoutMillis);
+            return new AdvertiseSettings(mMode, mTxPowerLevel, mConnectable, mTimeoutMillis,
+                mOwnAddressType);
         }
     }
 }
