@@ -188,7 +188,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             getContext().registerReceiverAsUser(mIntentReceiver, UserHandle.ALL, filter,
                     null, Dependency.get(Dependency.TIME_TICK_HANDLER));
             Dependency.get(TunerService.class).addTunable(this, CLOCK_SECONDS,
-                    StatusBarIconController.ICON_BLACKLIST);
+                    StatusBarIconController.ICON_HIDE_LIST);
             SysUiServiceProvider.getComponent(getContext(), CommandQueue.class).addCallback(this);
             if (mShowDark) {
                 Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
@@ -300,8 +300,8 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
         if (CLOCK_SECONDS.equals(key)) {
             mShowSeconds = TunerService.parseIntegerSwitch(newValue, false);
             updateShowSeconds();
-        } else {
-            setClockVisibleByUser(!StatusBarIconController.getIconBlacklist(newValue)
+        } else if (StatusBarIconController.ICON_HIDE_LIST.equals(key)) {
+            setClockVisibleByUser(!StatusBarIconController.getIconHideList(newValue)
                     .contains("clock"));
             updateClockVisibility();
         }
