@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65a98a3a_c479a3aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-07-22T10:44:38Z",
+      "side": 1,
+      "message": "The fetchUsapPoolEnabledPropWithMinInterval function is now unused and can be removed",
+      "revId": "8a2aff0b323f40e166c4ef29be99962c87a8c13d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
