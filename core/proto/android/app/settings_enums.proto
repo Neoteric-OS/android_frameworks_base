@@ -2460,4 +2460,10 @@ enum PageId {
     // CATEGORY: SETTINGS
     // OS: S
     TRUSTED_CREDENTIALS_DETAILS = 1837;
+
+    // OPEN: Settings > Security > Manage certificates
+    // CATEGORY: SETTINGS
+    // OS: S
+    MANAGE_CERTIFICATES = 1838;
+
 }
