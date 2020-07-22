@@ -579,7 +579,7 @@ public class EventBus {
             }
 
             // If we are parsing this type from scratch, ensure we add it to the subscriber type
-            // map, and pull out he handler methods below
+            // map, and pull out the handler methods below
             subscriberMethods = new ArrayList<>();
             mSubscriberTypeMap.put(subscriberType, subscriberMethods);
             mSubscribers.add(sub);

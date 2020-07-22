@@ -5656,7 +5656,7 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
      * Set how far the wake up is when waking up from pulsing. This is a height and will adjust the
      * notification positions accordingly.
      * @param height the new wake up height
-     * @return the overflow how much the height is further than he lowest notification
+     * @return the overflow: how much the height is further than the lowest notification
      */
     public float setPulseHeight(float height) {
         mAmbientState.setPulseHeight(height);

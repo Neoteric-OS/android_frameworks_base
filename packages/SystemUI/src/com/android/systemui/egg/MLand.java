@@ -126,7 +126,6 @@ public class MLand extends FrameLayout {
             PLAYER_Z_BOOST = res.getDimensionPixelSize(R.dimen.player_z_boost);
             HUD_Z = res.getDimensionPixelSize(R.dimen.hud_z);
 
-            // Sanity checking
             if (OBSTACLE_MIN <= OBSTACLE_WIDTH / 2) {
                 L("error: obstacles might be too short, adjusting");
                 OBSTACLE_MIN = OBSTACLE_WIDTH / 2 + 1;
@@ -1031,7 +1030,7 @@ public class MLand extends FrameLayout {
                 0.3f,  0f,    // left antenna
                 0.7f,  0f,    // right antenna
                 0.92f, 0.33f, // off the right shoulder of Orion
-                0.92f, 0.75f, // right hand (our right, not his right)
+                0.92f, 0.75f, // right hand (our right, not its right)
                 0.6f,  1f,    // right foot
                 0.4f,  1f,    // left foot BLUE!
                 0.08f, 0.75f, // sinistram

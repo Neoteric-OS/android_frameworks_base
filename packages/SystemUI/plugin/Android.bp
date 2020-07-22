@@ -26,8 +26,8 @@ java_library {
 
 android_app {
 
-    // Dummy to generate .toc files.
-    name: "PluginDummyLib",
+    // Fake to generate .toc files.
+    name: "PluginFakeLib",
     platform_apis: true,
     srcs: ["src/**/*.java"],
 

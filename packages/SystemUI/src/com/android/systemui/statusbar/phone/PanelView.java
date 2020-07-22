@@ -498,7 +498,7 @@ public abstract class PanelView extends FrameLayout {
                 && !mStatusBar.isBouncerShowing() && !mKeyguardMonitor.isKeyguardFadingAway()) {
             long timePassed = SystemClock.uptimeMillis() - mDownTime;
             if (timePassed < ViewConfiguration.getLongPressTimeout()) {
-                // Lets show the user that he can actually expand the panel
+                // Let's show the user that they can actually expand the panel
                 runPeekAnimation(PEEK_ANIMATION_DURATION, getPeekHeight(), true /* collapseWhenFinished */);
             } else {
                 // We need to collapse the panel since we peeked to the small height.

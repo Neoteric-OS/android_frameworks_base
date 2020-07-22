@@ -70,7 +70,7 @@ public class BatteryControllerImpl extends BroadcastReceiver implements BatteryC
     protected boolean mCharged;
     protected boolean mPowerSave;
     protected boolean mAodPowerSave;
-    private boolean mTestmode = false;
+    private boolean mTestMode = false;
     private boolean mHasReceivedBattery = false;
     private Estimate mEstimate;
     private boolean mFetchingEstimate = false;
@@ -138,7 +138,7 @@ public class BatteryControllerImpl extends BroadcastReceiver implements BatteryC
     public void onReceive(final Context context, Intent intent) {
         final String action = intent.getAction();
         if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
-            if (mTestmode && !intent.getBooleanExtra("testmode", false)) return;
+            if (mTestMode && !intent.getBooleanExtra("testmode", false)) return;
             mHasReceivedBattery = true;
             mLevel = (int)(100f
                     * intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
@@ -156,29 +156,29 @@ public class BatteryControllerImpl extends BroadcastReceiver implements BatteryC
         } else if (action.equals(PowerManager.ACTION_POWER_SAVE_MODE_CHANGING)) {
             setPowerSave(intent.getBooleanExtra(PowerManager.EXTRA_POWER_SAVE_MODE, false));
         } else if (action.equals(ACTION_LEVEL_TEST)) {
-            mTestmode = true;
+            mTestMode = true;
             mHandler.post(new Runnable() {
                 int curLevel = 0;
                 int incr = 1;
                 int saveLevel = mLevel;
                 boolean savePlugged = mPluggedIn;
-                Intent dummy = new Intent(Intent.ACTION_BATTERY_CHANGED);
+                Intent mTestIntent = new Intent(Intent.ACTION_BATTERY_CHANGED);
                 @Override
                 public void run() {
                     if (curLevel < 0) {
-                        mTestmode = false;
-                        dummy.putExtra("level", saveLevel);
-                        dummy.putExtra("plugged", savePlugged);
-                        dummy.putExtra("testmode", false);
+                        mTestMode = false;
+                        mTestIntent.putExtra("level", saveLevel);
+                        mTestIntent.putExtra("plugged", savePlugged);
+                        mTestIntent.putExtra("testmode", false);
                     } else {
-                        dummy.putExtra("level", curLevel);
-                        dummy.putExtra("plugged", incr > 0 ? BatteryManager.BATTERY_PLUGGED_AC
+                        mTestIntent.putExtra("level", curLevel);
+                        mTestIntent.putExtra("plugged", incr > 0 ? BatteryManager.BATTERY_PLUGGED_AC
                                 : 0);
-                        dummy.putExtra("testmode", true);
+                        mTestIntent.putExtra("testmode", true);
                     }
-                    context.sendBroadcast(dummy);
+                    context.sendBroadcast(mTestIntent);
 
-                    if (!mTestmode) return;
+                    if (!mTestMode) return;
 
                     curLevel += incr;
                     if (curLevel == 100) {

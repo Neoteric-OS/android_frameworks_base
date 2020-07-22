@@ -108,8 +108,6 @@ public class SystemServicesProxy {
 
     boolean mIsSafeMode;
 
-    int mDummyThumbnailWidth;
-    int mDummyThumbnailHeight;
     Paint mBgProtectionPaint;
     Canvas mBgProtectionCanvas;
 
@@ -146,13 +144,6 @@ public class SystemServicesProxy {
         mRecentsPackage = context.getPackageName();
         mIsSafeMode = mPm.isSafeMode();
         mCurrentUserId = mAm.getCurrentUser();
-
-        // Get the dummy thumbnail width/heights
-        Resources res = context.getResources();
-        int wId = com.android.internal.R.dimen.thumbnail_width;
-        int hId = com.android.internal.R.dimen.thumbnail_height;
-        mDummyThumbnailWidth = res.getDimensionPixelSize(wId);
-        mDummyThumbnailHeight = res.getDimensionPixelSize(hId);
 
         // Create the protection paints
         mBgProtectionPaint = new Paint();

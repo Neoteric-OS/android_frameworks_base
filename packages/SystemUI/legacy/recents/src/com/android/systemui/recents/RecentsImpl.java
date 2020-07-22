@@ -43,17 +43,14 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
-
 import android.widget.Toast;
-
-import com.android.systemui.Dependency;
-import com.android.systemui.SysUiServiceProvider;
-import com.android.systemui.pip.phone.ForegroundThread;
-import com.google.android.collect.Lists;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.policy.DockedDividerUtils;
+import com.android.systemui.Dependency;
 import com.android.systemui.R;
+import com.android.systemui.SysUiServiceProvider;
+import com.android.systemui.pip.phone.ForegroundThread;
 import com.android.systemui.recents.events.EventBus;
 import com.android.systemui.recents.events.activity.DockedTopTaskEvent;
 import com.android.systemui.recents.events.activity.EnterRecentsWindowLastAnimationFrameEvent;
@@ -71,26 +68,28 @@ import com.android.systemui.recents.events.ui.DraggingInRecentsEndedEvent;
 import com.android.systemui.recents.events.ui.DraggingInRecentsEvent;
 import com.android.systemui.recents.events.ui.TaskSnapshotChangedEvent;
 import com.android.systemui.recents.misc.DozeTrigger;
-import com.android.systemui.recents.misc.SystemServicesProxy;
 import com.android.systemui.recents.misc.SysUiTaskStackChangeListener;
+import com.android.systemui.recents.misc.SystemServicesProxy;
 import com.android.systemui.recents.model.RecentsTaskLoadPlan;
 import com.android.systemui.recents.model.RecentsTaskLoader;
-import com.android.systemui.shared.recents.model.Task;
-import com.android.systemui.shared.recents.model.Task.TaskKey;
 import com.android.systemui.recents.model.TaskStack;
-import com.android.systemui.shared.recents.model.ThumbnailData;
 import com.android.systemui.recents.views.TaskStackLayoutAlgorithm;
 import com.android.systemui.recents.views.TaskStackLayoutAlgorithm.VisibilityReport;
 import com.android.systemui.recents.views.TaskStackView;
 import com.android.systemui.recents.views.TaskViewHeader;
 import com.android.systemui.recents.views.TaskViewTransform;
 import com.android.systemui.recents.views.grid.TaskGridLayoutAlgorithm;
+import com.android.systemui.shared.recents.model.Task;
+import com.android.systemui.shared.recents.model.Task.TaskKey;
+import com.android.systemui.shared.recents.model.ThumbnailData;
 import com.android.systemui.shared.recents.view.AppTransitionAnimationSpecCompat;
 import com.android.systemui.shared.recents.view.AppTransitionAnimationSpecsFuture;
 import com.android.systemui.shared.recents.view.RecentsTransition;
 import com.android.systemui.shared.system.ActivityManagerWrapper;
 import com.android.systemui.stackdivider.DividerView;
 import com.android.systemui.statusbar.phone.StatusBar;
+
+import com.google.android.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,7 +161,7 @@ public class RecentsImpl implements ActivityOptions.OnAnimationFinishedListener 
                     // This callback is made when a new activity is launched and the old one is
                     // paused so ignore the current activity and try and preload the thumbnail for
                     // the previous one.
-                    updateDummyStackViewLayout(mBackgroundLayoutAlgorithm, stack, windowRect);
+                    updatePlaceholderStackViewLayout(mBackgroundLayoutAlgorithm, stack, windowRect);
 
                     // Launched from app is always the worst case (in terms of how many
                     // thumbnails/tasks visible)
@@ -254,7 +253,7 @@ public class RecentsImpl implements ActivityOptions.OnAnimationFinishedListener 
     // Header (for transition)
     TaskViewHeader mHeaderBar;
     final Object mHeaderBarLock = new Object();
-    private TaskStackView mDummyStackView;
+    private TaskStackView mPlaceholderStackView;
     private TaskStackLayoutAlgorithm mBackgroundLayoutAlgorithm;
 
     // Variables to keep track of if we need to start recents after binding
@@ -281,7 +280,7 @@ public class RecentsImpl implements ActivityOptions.OnAnimationFinishedListener 
         }
     };
 
-    // Used to reset the dummy stack view
+    // Used to reset the placeholder stack view
     private final TaskStack mEmptyTaskStack = new TaskStack();
 
     public RecentsImpl(Context context) {
@@ -297,7 +296,7 @@ public class RecentsImpl implements ActivityOptions.OnAnimationFinishedListener 
         ActivityManagerWrapper.getInstance().registerTaskStackListener(mTaskStackListener);
 
         // Initialize the static configuration resources
-        mDummyStackView = new TaskStackView(mContext);
+        mPlaceholderStackView = new TaskStackView(mContext);
         reloadResources();
 
         mTrustManager = (TrustManager) mContext.getSystemService(Context.TRUST_SERVICE);
@@ -323,7 +322,7 @@ public class RecentsImpl implements ActivityOptions.OnAnimationFinishedListener 
 
     public void onConfigurationChanged() {
         reloadResources();
-        mDummyStackView.reloadOnConfigurationChange();
+        mPlaceholderStackView.reloadOnConfigurationChange();
         synchronized (mBackgroundLayoutAlgorithm) {
             mBackgroundLayoutAlgorithm.reloadOnConfigurationChange(mContext);
         }
@@ -742,7 +741,7 @@ public class RecentsImpl implements ActivityOptions.OnAnimationFinishedListener 
         mHeaderBar.setLayoutDirection(res.getConfiguration().getLayoutDirection());
     }
 
-    private void updateDummyStackViewLayout(TaskStackLayoutAlgorithm stackLayout,
+    private void updatePlaceholderStackViewLayout(TaskStackLayoutAlgorithm stackLayout,
             TaskStack stack, Rect windowRect) {
         SystemServicesProxy ssp = LegacyRecentsImpl.getSystemServices();
         Rect displayRect = ssp.getDisplayRect();
@@ -790,15 +789,16 @@ public class RecentsImpl implements ActivityOptions.OnAnimationFinishedListener 
     private void updateHeaderBarLayout(TaskStack stack, Rect windowRectOverride) {
         Rect windowRect = getWindowRect(windowRectOverride);
         int taskViewWidth = 0;
-        boolean useGridLayout = mDummyStackView.useGridLayout();
-        updateDummyStackViewLayout(mDummyStackView.getStackAlgorithm(), stack, windowRect);
+        boolean useGridLayout = mPlaceholderStackView.useGridLayout();
+        updatePlaceholderStackViewLayout(mPlaceholderStackView.getStackAlgorithm(), stack,
+                windowRect);
         if (stack != null) {
-            TaskStackLayoutAlgorithm stackLayout = mDummyStackView.getStackAlgorithm();
-            mDummyStackView.getStack().removeAllTasks(false /* notifyStackChanges */);
-            mDummyStackView.setTasks(stack, false /* allowNotifyStackChanges */);
+            TaskStackLayoutAlgorithm stackLayout = mPlaceholderStackView.getStackAlgorithm();
+            mPlaceholderStackView.getStack().removeAllTasks(false /* notifyStackChanges */);
+            mPlaceholderStackView.setTasks(stack, false /* allowNotifyStackChanges */);
             // Get the width of a task view so that we know how wide to draw the header bar.
             if (useGridLayout) {
-                TaskGridLayoutAlgorithm gridLayout = mDummyStackView.getGridAlgorithm();
+                TaskGridLayoutAlgorithm gridLayout = mPlaceholderStackView.getGridAlgorithm();
                 gridLayout.initialize(windowRect);
                 taskViewWidth = (int) gridLayout.getTransform(0 /* taskIndex */,
                         stack.getTaskCount(), new TaskViewTransform(),
@@ -890,8 +890,8 @@ public class RecentsImpl implements ActivityOptions.OnAnimationFinishedListener 
 
         // Update the destination rect
         Task toTask = new Task();
-        TaskViewTransform toTransform = getThumbnailTransitionTransform(mDummyStackView, toTask,
-                windowOverrideRect);
+        TaskViewTransform toTransform = getThumbnailTransitionTransform(mPlaceholderStackView,
+                toTask, windowOverrideRect);
 
         RectF toTaskRect = toTransform.rect;
         AppTransitionAnimationSpecsFuture future = new AppTransitionAnimationSpecsFuture(mHandler) {
@@ -1039,9 +1039,9 @@ public class RecentsImpl implements ActivityOptions.OnAnimationFinishedListener 
         Rect windowOverrideRect = getWindowRectOverride(growTarget);
         updateHeaderBarLayout(stack, windowOverrideRect);
 
-        // Prepare the dummy stack for the transition
+        // Prepare the placeholder stack for the transition
         TaskStackLayoutAlgorithm.VisibilityReport stackVr =
-                mDummyStackView.computeStackVisibilityReport();
+                mPlaceholderStackView.computeStackVisibilityReport();
 
         // Update the remaining launch state
         launchState.launchedNumVisibleTasks = stackVr.numVisibleTasks;
@@ -1104,9 +1104,9 @@ public class RecentsImpl implements ActivityOptions.OnAnimationFinishedListener 
         });
         EventBus.getDefault().send(hideMenuEvent);
 
-        // Once we have launched the activity, reset the dummy stack view tasks so we don't hold
-        // onto references to the same tasks consumed by the activity
-        mDummyStackView.setTasks(mEmptyTaskStack, false /* notifyStackChanges */);
+        // Once we have launched the activity, reset the placeholder stack view tasks so we don't
+        // hold onto references to the same tasks consumed by the activity
+        mPlaceholderStackView.setTasks(mEmptyTaskStack, false /* notifyStackChanges */);
     }
 
     /**** OnAnimationFinishedListener Implementation ****/

@@ -88,7 +88,7 @@ public interface ViewMediatorCallback {
 
     /**
      * @return one of the reasons why the bouncer needs to be shown right now and the user can't use
-     *         his normal unlock method like fingerprint or trust agents. See
+     *         their normal unlock method like fingerprint or trust agents. See
      *         {@link KeyguardSecurityView#PROMPT_REASON_NONE},
      *         {@link KeyguardSecurityView#PROMPT_REASON_RESTART} and
      *         {@link KeyguardSecurityView#PROMPT_REASON_TIMEOUT}.

@@ -255,7 +255,7 @@ public class DragDownHelper implements Gefingerpoken {
 
         /**
          * The user has dragged either above or below the threshold
-         * @param above whether he dragged above it
+         * @param above whether they dragged above it
          */
         void onCrossedThreshold(boolean above);
         void onTouchSlopExceeded();

@@ -137,9 +137,9 @@ public class PluginManagerImpl extends BroadcastReceiver implements PluginManage
             throw new RuntimeException("Must be called from UI thread");
         }
         // Passing null causes compiler to complain about incompatible (generic) types.
-        PluginListener<Plugin> dummy = null;
-        PluginInstanceManager<T> p = mFactory.createPluginInstanceManager(mContext, action, dummy,
-                false, mLooper, cls, this);
+        PluginListener<Plugin> nullWorkaround = null;
+        PluginInstanceManager<T> p = mFactory.createPluginInstanceManager(mContext, action,
+                nullWorkaround, false, mLooper, cls, this);
         mPluginPrefs.addAction(action);
         PluginInfo<T> info = p.getPlugin();
         if (info != null) {
