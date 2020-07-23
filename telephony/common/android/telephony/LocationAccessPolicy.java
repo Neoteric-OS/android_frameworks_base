@@ -255,7 +255,12 @@ public final class LocationAccessPolicy {
         // it doesn't create an info leak risk because the cell location is stored in the phone
         // process anyway, and the system server already has location access.
         if (query.callingUid == Process.PHONE_UID || query.callingUid == Process.SYSTEM_UID
-                || query.callingUid == Process.ROOT_UID) {
+                || query.callingUid == Process.ROOT_UID
+                // As a system app, NetworkStack has declared ACCESS_FINE_LOCATION and it needs to
+                // get the cell info to load the resource which is matching the location so that it
+                // can get the proper probing URL for testing the network. It shouldn't be blocked
+                // by location setting.
+                || query.callingUid == Process.NETWORK_STACK_UID) {
             return LocationPermissionResult.ALLOWED;
         }
 
