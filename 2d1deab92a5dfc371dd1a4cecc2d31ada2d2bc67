@@ -1,0 +1,504 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d03b635e_e52d48b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "Demonstrating nice mastery of the language. Mostly small nits.",
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "781dfd66_9c388189",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "Nit : kotlin would let you say\n\n  import android.os.Build.VERSION_CODES.P as VERSION_P\n\n...and that would let you remove this val and the associated memory.\n\nIt doesn\u0027t really matter.",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 49
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30928241_16bcd232",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "They are all just mocks and they are initialized in one fell swoop with MockitoAnnotations.initMocks(this).\n\nPersonally I prefer the style where you say\n\n  private val context \u003d mock(Context::class.java)\n\nIt\u0027s not longer, it\u0027s every bit as clear, and it\u0027s less error prone.",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 62
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9db65a2_aabab3df",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "Suggest for terseness and avoid the mutable :\n\n  @Test\n  fun testIsVendorApp() {\n    fun test(partition: String, result: Boolean) {\n      val app \u003d packageInfoWithPartition(partition)\n      assertEquals(result, PermissionMonitor.isVendorApp(app.applicationInfo)\n    }\n    test(PARTITION_SYSTEM, false)\n    test(PARTITION_OEM, true)\n    test(PARTITION_PRODUCT, true)\n    test(PARTITION_VENDOR, true)\n  }\n\nYou can apply the same technique in functions below if you want.",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 60
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f988900_0e85ab45",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "You don\u0027t need this in Kotlin.\n• Java requires declaring checked exceptions but Kotlin does not\n• @Throws can still be useful for documentation, but all methods can always throw Exception so this tells you nothing",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 29
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "757d63b3_e6047da0",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "Maybe now is the right time to rename this as noted in [RFPM04]",
+      "range": {
+        "startLine": 273,
+        "startChar": 8,
+        "endLine": 273,
+        "endChar": 26
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e92ec01_27f9f790",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "Do you need to specify this or will the compiler deduce it for you ? If you don\u0027t I think the var name is enough to understand",
+      "range": {
+        "startLine": 302,
+        "startChar": 35,
+        "endLine": 302,
+        "endChar": 51
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d435f23_dedf10df",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "grammar nit, while you\u0027re here : s/below test/the test below/",
+      "range": {
+        "startLine": 307,
+        "startChar": 82,
+        "endLine": 307,
+        "endChar": 93
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6c71f2_7a63a040",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "mApps[uid] \u003d\u003d isSystem",
+      "range": {
+        "startLine": 308,
+        "startChar": 58,
+        "endLine": 308,
+        "endChar": 67
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc922b8_40895863",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "Given that you are always calling this with intArrayOf(), suggest making this a vararg Int instead. That will let you remove all the calls to intArrayOf().",
+      "range": {
+        "startLine": 331,
+        "startChar": 67,
+        "endLine": 331,
+        "endChar": 81
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea12f84_b57c6790",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "This was pre-existing in the java code but this error message is not very helpful because it only shows the expected value and not the actual one. How about improving the error message :\n\n  \"uid $uid has wrong permission: ${mApps.get(uid)} (expected $permission)\")",
+      "range": {
+        "startLine": 339,
+        "startChar": 29,
+        "endLine": 339,
+        "endChar": 73
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2084e23d_0cbd9a52",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "As above",
+      "range": {
+        "startLine": 417,
+        "startChar": 0,
+        "endLine": 417,
+        "endChar": 29
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d7eb13_f05cbb8b",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "You probably don\u0027t need to specify this, unless you feel it improves readability",
+      "range": {
+        "startLine": 431,
+        "startChar": 21,
+        "endLine": 431,
+        "endChar": 36
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef2a892_870d9ae0",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "just setOf()",
+      "range": {
+        "startLine": 434,
+        "startChar": 39,
+        "endLine": 434,
+        "endChar": 59
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c30016_8cc85a11",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "Same comments",
+      "range": {
+        "startLine": 472,
+        "startChar": 21,
+        "endLine": 472,
+        "endChar": 59
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5099140_82013818",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "Is this expected ? We used to pass null here. How will permissionMonitor interpret an empty string ?",
+      "range": {
+        "startLine": 496,
+        "startChar": 47,
+        "endLine": 496,
+        "endChar": 49
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "233642c2_9a87de2b",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "Same comment",
+      "range": {
+        "startLine": 505,
+        "startChar": 35,
+        "endLine": 505,
+        "endChar": 51
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f9ea9bd_ea603255",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "Usual style is just mPermissions[app]",
+      "range": {
+        "startLine": 520,
+        "startChar": 32,
+        "endLine": 520,
+        "endChar": 41
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf18d60_861830e6",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "Same, and same for all the same annotations below",
+      "range": {
+        "startLine": 528,
+        "startChar": 2,
+        "endLine": 528,
+        "endChar": 29
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec022e79_e9aa2d26",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "You could say for terseness :\n\n  val uidNetdPerms \u003d HashMap\u003cInt, UidNetdPermissionInfo\u003e()",
+      "range": {
+        "startLine": 535,
+        "startChar": 8,
+        "endLine": 535,
+        "endChar": 73
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d54661_2038a5d7",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "Very optional : because this is long and much used, you could have a shorthand like :\n\n  fun unpi(p : Int) \u003d UidNetdPermissionInfo(p)\n  ...\n  uidNetdPerms[MOCK_UID1] \u003d unpi(PERMISSION_INTERNET)\n\nor :\n\n  fun Int.toUnpi() \u003d UidNetdPermissionInfo(this)\n  ...\n  uidNetdPerms[MOCK_UID1] \u003d PERMISSION_INTERNET.toUnpi()\n\nOnly do this if you think it\u0027s more readable",
+      "range": {
+        "startLine": 536,
+        "startChar": 34,
+        "endLine": 536,
+        "endChar": 55
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9c1e533_369ac5c4",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:51:55Z",
+      "side": 1,
+      "message": "You could, like you\u0027ve done in other places, say\n\n  \u003d setPackagePermissions(...).also {\n    permissionMonitor.onPackageAdded(packageName, uid)\n  }\n\n(only if you find it more readable)",
+      "range": {
+        "startLine": 580,
+        "startChar": 87,
+        "endLine": 580,
+        "endChar": 98
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
