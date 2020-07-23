@@ -945,6 +945,20 @@ public abstract class BiometricServiceBase extends SystemService
             if (!client.onError(getHalDeviceId(), errorCode, 0 /* vendorCode */)) {
                 Slog.w(getTag(), "Cannot send permanent lockout message to client");
             }
+
+            //issue:
+            //After the call of client A started in the lockout state returns,
+            //after client B calls the fp service, A is dead,
+            //a death notification will be sent to the service, and the service will stop clent B.
+            //wechat pay and AlipayGphone pay 100% recurrence.
+            // solution:
+            //The client has been locked out,
+            //disconnect the client's death notification, before return.
+            if (!isKeyguard(client.getOwnerString())) {
+                Slog.w(getTag(), "(" + opPackageName + ") has been lockedout,disconnect service");
+                client.destroy();
+            }
+
             return;
         }
         startClient(client, true /* initiatedByClient */);
