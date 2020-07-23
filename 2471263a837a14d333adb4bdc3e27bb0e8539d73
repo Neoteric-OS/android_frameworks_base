@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76fd727d_1dbe22aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-07-23T13:17:10Z",
+      "side": 1,
+      "message": "It looks to me that the mcc customization will not work w/o this? If so, do this need to also merge into rvc? \n\nOn the other hand, if the location is disabled, should all system apps able to use location only if they define permission? It seems that other system apps are controlled by the setting, instead of bypassing it. As a user, I will like to know there is such an application that will bypass the setting and still able to get my location information. The application bypassing setting will be something I will not like to have. Maybe the bypass non-system processes should inform user with a privilege permission design. In short term, I think it may be WAI to me since the location is disabled? It sounds reasonable to me that we could not get the location customization because of it. If device is no SIM and location disabled, is it reasonable to not able to have location information? But what I can have in mind is to provide a notification to inform user to enable location setting in order to have function working in networkstack. But it\u0027s a little annoying and the notification design may require some prior knowledge to know how the design may work.",
+      "revId": "2471263a837a14d333adb4bdc3e27bb0e8539d73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
