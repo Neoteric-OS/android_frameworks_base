@@ -1,0 +1,9 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Sarah Chin <sarahchin@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Sarah Chin <sarahchin@google.com>
+Submitted-at: Thu, 23 Jul 2020 19:08:48 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1371137
+Project: platform/frameworks/base
+Branch: refs/heads/master
