@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "bb8d3146_4420963c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Thank you for the feedback. I\u0027m about to upload a new revision that addresses all of these. The only thing that isn\u0027t complete is it doesn\u0027t yet actually change the animation logic, it just moves it to PointerControllerContext. Also because of the decision to begin in Spot mode instead of Pointer mode tests are failing. If we decide to stick with this those tests will need to be altered.",
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43e866a2_b5c92f4c",
         "filename": "libs/input/MouseCursorController.cpp",
         "patchSetId": 3
@@ -59,6 +76,30 @@
     },
     {
       "key": {
+        "uuid": "79780826_37daf012",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43e866a2_b5c92f4c",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 71
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc4e0f57_46f09b49",
         "filename": "libs/input/MouseCursorController.cpp",
         "patchSetId": 3
@@ -70,6 +111,30 @@
       "writtenOn": "2020-07-20T20:59:12Z",
       "side": 1,
       "message": "Is this necessary?",
+      "range": {
+        "startLine": 248,
+        "startChar": 8,
+        "endLine": 248,
+        "endChar": 47
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dd9a9ac_de08f9d6",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "In this case the display resources have changed, so all current touch spots are obsolete and need to be removed.",
+      "parentUuid": "bc4e0f57_46f09b49",
       "range": {
         "startLine": 248,
         "startChar": 8,
@@ -105,6 +170,30 @@
     },
     {
       "key": {
+        "uuid": "6726d4b3_b8192222",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d0c1d90_4bedb5e0",
+      "range": {
+        "startLine": 383,
+        "startChar": 48,
+        "endLine": 383,
+        "endChar": 65
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c208d86b_9f3fbf0c",
         "filename": "libs/input/MouseCursorController.cpp",
         "patchSetId": 3
@@ -125,6 +214,30 @@
       "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc24e570_736dde9c",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c208d86b_9f3fbf0c",
+      "range": {
+        "startLine": 384,
+        "startChar": 8,
+        "endLine": 384,
+        "endChar": 23
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +264,30 @@
     },
     {
       "key": {
+        "uuid": "540a9e92_86393728",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "690d5c3d_c2605103",
+      "range": {
+        "startLine": 428,
+        "startChar": 8,
+        "endLine": 428,
+        "endChar": 55
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9a9f019_4aaeb489",
         "filename": "libs/input/MouseCursorController.cpp",
         "patchSetId": 3
@@ -171,6 +308,30 @@
       "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db60692_bf6c761a",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9a9f019_4aaeb489",
+      "range": {
+        "startLine": 431,
+        "startChar": 24,
+        "endLine": 431,
+        "endChar": 41
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +358,30 @@
     },
     {
       "key": {
+        "uuid": "f95eca0e_7097ae3f",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "685d2046_d4131c04",
+      "range": {
+        "startLine": 464,
+        "startChar": 8,
+        "endLine": 464,
+        "endChar": 35
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb8eae57_d17bab83",
         "filename": "libs/input/MouseCursorController.h",
         "patchSetId": 3
@@ -217,6 +402,30 @@
       "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67d7b45_4002593c",
+        "filename": "libs/input/MouseCursorController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb8eae57_d17bab83",
+      "range": {
+        "startLine": 2,
+        "startChar": 19,
+        "endLine": 2,
+        "endChar": 20
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +452,30 @@
     },
     {
       "key": {
+        "uuid": "18c850ea_7350568d",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1571df87_cb05f801",
+      "range": {
+        "startLine": 163,
+        "startChar": 41,
+        "endLine": 163,
+        "endChar": 43
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6dc54a8_03e8a4c2",
         "filename": "libs/input/PointerController.cpp",
         "patchSetId": 3
@@ -263,6 +496,30 @@
       "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7155dcba_dd343107",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6dc54a8_03e8a4c2",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 170,
+        "endChar": 76
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -313,6 +570,30 @@
     },
     {
       "key": {
+        "uuid": "7b57a319_e344692d",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "942bc1a6_8931d0ba",
+      "range": {
+        "startLine": 183,
+        "startChar": 14,
+        "endLine": 183,
+        "endChar": 16
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d56a2699_71e1ffe7",
         "filename": "libs/input/PointerController.cpp",
         "patchSetId": 3
@@ -333,6 +614,30 @@
       "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2124363f_fd66ae16",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d56a2699_71e1ffe7",
+      "range": {
+        "startLine": 184,
+        "startChar": 45,
+        "endLine": 184,
+        "endChar": 60
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +664,30 @@
     },
     {
       "key": {
+        "uuid": "45b9c43d_423f9d08",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb086c76_e4609e81",
+      "range": {
+        "startLine": 202,
+        "startChar": 4,
+        "endLine": 202,
+        "endChar": 94
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7de45872_d3c230d2",
         "filename": "libs/input/PointerController.cpp",
         "patchSetId": 3
@@ -370,6 +699,24 @@
       "writtenOn": "2020-07-20T21:36:18Z",
       "side": 1,
       "message": "I suggest changing animation to callback mechanism and moving animation infra to PointerControllerContext, or maybe a standalone class. It doesn\u0027t seem to be necessary for a standalone file, so it can either be an embedded class in PointerControllerContext, or a different class living side by side to PointerControllerContext. Let\u0027s say the class is PointerAnimator.\n\nThis is how the event flow works (use MouseCursorController as an example):\n\n1) MouseCursorController decides that it needs to run animation, and register a callback (use std::function and std::bind) to PointerAnimator;\n2) PointerAnimator tracks the number of callbacks -- if this is the first callback then it requests vsync through mDisplayEventReceiver;\n3) Upon vsync, PointerAnimator iterates through all callbacks and use their return values to determine if the callback needs to be retained for next frame;\n4) If at least one callback is retained PointerAnimator requests next vsync; otherwise it just exits.\n\nIt\u0027s then the responsibility of MouseCursorController and TouchSpotController to track if it finishes animation or not in each frame.",
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621db4f9_341b393a",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "In the next revision it moves the animation logic to PointerControllerContext but doesn\u0027t actually change the mechanism at all. I want to get this revision out and then I can start looking into actually changing out the animation works.",
+      "parentUuid": "7de45872_d3c230d2",
       "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -393,6 +740,24 @@
     },
     {
       "key": {
+        "uuid": "a902e7aa_0bcdd385",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "No, you\u0027re right. We should only remove a TouchSpotController when a display is disconnected.",
+      "parentUuid": "4150d6c1_9a01349d",
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d587dde7_bf401d23",
         "filename": "libs/input/PointerController.cpp",
         "patchSetId": 3
@@ -407,6 +772,24 @@
       "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba5557b_cb1e0342",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d587dde7_bf401d23",
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -433,6 +816,30 @@
     },
     {
       "key": {
+        "uuid": "565dd8ac_10e239c6",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5674ae0_96be9afa",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24096b4d_79b541d2",
         "filename": "libs/input/PointerController.h",
         "patchSetId": 3
@@ -447,6 +854,24 @@
       "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a30870e_8be09f20",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24096b4d_79b541d2",
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -470,6 +895,30 @@
       "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16408542_810c4e13",
+        "filename": "libs/input/TouchSpotController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-23T20:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db5f84be_f5d51336",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 68
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
