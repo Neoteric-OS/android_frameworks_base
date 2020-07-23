@@ -16,6 +16,24 @@
       "revId": "2471263a837a14d333adb4bdc3e27bb0e8539d73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "faa4ff74_46c80d5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-07-23T14:31:11Z",
+      "side": 1,
+      "message": "\u003e It looks to me that the mcc customization will not work w/o this?\n\nYes, it not works if location is disabled.\n\n\u003e If so, do this need to also merge into rvc?\n\nRight, it\u0027s a good question. If we agree this change, then it\u0027s better to merge this solution into rvc-dev. But I\u0027m afraid it\u0027s too late and the reason is not strong to convince the Dr.No reviewer.\nAnother alternative is asking OEM to modify their own file in R.\n\n\u003e On the other hand, if the location is disabled, should all system apps able to use location only if they define permission? It seems that other system apps are controlled by the setting, instead of bypassing it. As a user, I will like to know there is such an application that will bypass the setting and still able to get my location information. The application bypassing setting will be something I will not like to have. Maybe the bypass non-system processes should inform user with a privilege permission design. In short term, I think it may be WAI to me since the location is disabled? It sounds reasonable to me that we could not get the location customization because of it. If device is no SIM and location disabled, is it reasonable to not able to have location information? But what I can have in mind is to provide a notification to inform user to enable location setting in order to have function working in networkstack. But it\u0027s a little annoying and the notification design may require some prior knowledge to know how the design may work.\n\nYes, what you say is reasonable, and it\u0027s WAI for current design.\n\nLeave some thoughts of my mind:\n- According to the comment, it seems like the system server can pass the permission check just because it has location permission, if so, why system app which has declared location permission can\u0027t?\n- Before mainline project, NetworkMonitor should be a part of system service, so it should pass the check before.\n- ACCESS_FINE_LOCATION is a runtime permission, if the app declared this permission, it will need user to approve it, but mainline module doesn\u0027t. For mainline module, it will be granted silently. So we can\u0027t compare the mainline module with other normal apps, they\u0027re different by nature.",
+      "parentUuid": "76fd727d_1dbe22aa",
+      "revId": "2471263a837a14d333adb4bdc3e27bb0e8539d73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
