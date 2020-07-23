@@ -947,6 +947,13 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
                         ? mActivityRecord.getInputApplicationHandle(false /* update */) : null,
                     getDisplayId());
 
+        //  Check private trusted overlay flag and window type to set trustedOverlay variable of
+        //  input window handle.
+        mInputWindowHandle.trustedOverlay =
+                (mAttrs.privateFlags & PRIVATE_FLAG_TRUSTED_OVERLAY) != 0
+                && mOwnerCanAddInternalSystemWindow;
+        mInputWindowHandle.trustedOverlay |= InputMonitor.isTrustedOverlay(mAttrs.type);
+
         // Make sure we initial all fields before adding to parentWindow, to prevent exception
         // during onDisplayChanged.
         if (mIsChildWindow) {
