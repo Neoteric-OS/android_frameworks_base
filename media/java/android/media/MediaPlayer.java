@@ -4080,53 +4080,101 @@ public class MediaPlayer extends PlayerBase
     public interface OnImsRxNoticeListener
     {
         /**
-         * Called to indicate an event noticed from IMS.
+         * Called to indicate an IMS event noticed from native media frameworks
          *
          * @param mp the {@code MediaPlayer} associated with this callback.
          * @param event an ims media event serialized as byte[] array.
          *
-         * byte[] event = {type, arg1, arg2, ...};
-         *
-         * int TYPE_RTP_FIRST_PACKET = 100;    // A first rtp packet received.
-         *  - {type = 100}
-         *
-         * int TYPE_RTCP_FIRST_PACKET = 101;   // A first rtcp packet received.
-         *  - {type = 101}
-         *
-         * int TYPE_RTP_QUALITY = 102;         // A periodic report of a RTP stastics.
-         * int TYPE_RTP_QUALITY_EMC = 103;     // An emergency report when serious packet loss
-         *                                        detected in between TYPE_RTP_QUALITY.
-         *  - {type = 102 or 103, arg1, arg2, arg3, arg4, arg5, arg6, arg7}
-         *    - int feedbacktype - always comes 0.
-         *    - int bitrate - amount of data received in this period.
-         *    - int higestSeqNum - highest rtp.seqnum received in this period.
-         *    - int baseSeqNum - the first rtp.seqnum received of the media stream.
-         *    - int prevExpectedNumPackets - expected count of receiving packets in previous report.
-         *    - int numPacketsReceived - count of actual receiving packets in this report.
-         *    - int prevNumPacketsReceived - count of actual receiving packets in previous report.
+         * Basic format. All TYPE and ARG are 4 bytes integer each.
+         * 0                4               8                12
+         * +----------------+---------------+----------------+----------------+
+         * |      TYPE      |      ARG1     |      ARG2      |      ARG3      |
+         * +----------------+---------------+----------------+----------------+
+         * |      ARG4      |      ARG5     |      ...
+         * +----------------+---------------+-------------
+         * 16               20              24
          *
          *
-         * int TYPE_RTCP_TSFB = 205;           // Transport layer Feedback message.
-         *  - {type = 205, arg1, arg2, arg3}
-         *    - int opponentId - SSRC value of RTP header (5.1 of RFC-3550)
-         *    - int feedbackType - RTCP_TSFB_NACK(1) - received NACK request from remote side.
-         *                       - RTCP_TSFB_TMMBR(3) - received TMMBR request from remote side.
-         *    - int value - Generic NACK(6.2.1 of RFC-4585)
-         *                - TMMBR(last 4bytes of 4.2.1.1 in RFC-5104)
+         * TYPE 100 - A notice of first rtp packet received. No ARGs.
+         * 0
+         * +----------------+
+         * |      100       |
+         * +----------------+
          *
-         * int TYPE_RTCP_PSFB = 206;           // Payload-specific Feedback message.
-         *  - {type = 205, arg1, arg2}
-         *    - int opponentId - SSRC value of RTP header (5.1 of RFC-3550)
-         *    - int feedbackType - RTCP_PSFB_PLI(1) - received PLI request from remote side.
-         *                       - RTCP_PSFB_FIR(4) - received FIR request from remote side.
          *
-         * int TYPE_RTP_CVO = 300;             // CVO (RTP Extension) message.
-         *  - {type = 300, arg1}
-         *    - int cvoValue - rotation degrees of a received video(6.2.3 of 3GPP R12 TS 26.114).
+         * TYPE 101 - A notice of first rtcp packet received. No ARGs.
+         * 0
+         * +----------------+
+         * |      101       |
+         * +----------------+
          *
-         * int TYPE_RTP_SOCKET_LOST = 400;     // A socket returns error while receive().
-         *  - {type = 400}
          *
+         * TYPE 102 - A periodic report of a RTP statistics.
+         * TYPE 103 - An emergency report when serious packet loss detected
+         *            in between TYPE_RTP_QUALITY.
+         * 0                4               8                12
+         * +----------------+---------------+----------------+----------------+
+         * |   102 or 103   |   FB type=0   |    Bitrate     |   Top #.Seq    |
+         * +----------------+---------------+----------------+----------------+
+         * |   Base #.Seq   |Prev Expt #.Pkt|   Recv #.Pkt   |Prev Recv #.Pkt |
+         * +----------------+---------------+----------------+----------------+
+         * FeedBack type
+         *      - always comes 0.
+         * Bitrate
+         *      - amount of data received in this period.
+         * Top number of sequence
+         *      - highest RTP sequence number received in this period.
+         * Base number of sequence
+         *      - the first RTP sequence number of the media stream.
+         * Previous Expected number of Packets
+         *      - expected count of receiving packets in previous report.
+         * Received number of packet
+         *      - count of actual received packets in this report.
+         * Previous Received number of packet
+         *      - count of actual received packets in previous report.
+         *
+         *
+         * TYPE 205 - Transport layer Feedback message. (RFC-5104 Sec.4.2)
+         * 0                4               8                12
+         * +----------------+---------------+----------------+----------------+
+         * |      205       |      SSRC     | FB type(1 or 3)|     value      |
+         * +----------------+---------------+----------------+----------------+
+         * SSRC
+         *      - Remote side's SSRC value in which RTP header (RFC-3550 Sec.5.1)
+         * FeedBack type : One of the below
+         *      - '1' means received NACK request from remote side.
+         *      - '3' means received TMMBR request from remote side.
+         * Value : One of the below
+         *      - Generic NACK(RFC-4585 Sec.6.2.1)
+         *      - TMMBR(RFC-5104 Sec.4.2.1.1)
+         *
+         *
+         * TYPE 206 - Payload-specific Feedback message. (RFC-5104 Sec.4.3)
+         * 0                4               8
+         * +----------------+---------------+----------------+
+         * |      206       |      SSRC     | FB type(1 or 4)|
+         * +----------------+---------------+----------------+
+         * SSRC
+         *      - Remote side's SSRC value in which RTP header (RFC-3550 Sec.5.1)
+         * FeedBack type : One of the below
+         *      - '1' means received PLI request from remote side.
+         *      - '4' means received FIR request from remote side.
+         *
+         *
+         * TYPE 300 - CVO (RTP Extension) message.
+         * 0                4
+         * +----------------+---------------+
+         * |      300       |     value     |
+         * +----------------+---------------+
+         * value
+         *      - rotation degrees of a received video(6.2.3 of 3GPP R12 TS 26.114).
+         *
+         *
+         * TYPE 400 - A socket returns error while receive().
+         * 0
+         * +----------------+
+         * |      400       |
+         * +----------------+
          */
         void onImsRxNotice(@NonNull MediaPlayer mp, @NonNull byte[] event);
     }
