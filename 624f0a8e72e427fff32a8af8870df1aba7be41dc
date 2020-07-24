@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4046150a_9daf379e",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-24T19:06:01Z",
+      "side": 1,
+      "message": "Why are we still passing PointerController? We should only pass PointerControllerContext.",
+      "range": {
+        "startLine": 43,
+        "startChar": 45,
+        "endLine": 43,
+        "endChar": 62
+      },
+      "revId": "624f0a8e72e427fff32a8af8870df1aba7be41dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee1c999_e0c15683",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-24T19:06:01Z",
+      "side": 1,
+      "message": "Use member initialization list like:\n\n```\nMouseCursorController::MouseCursorController(std::shared_ptr\u003cPointerControllerContext\u003e context,\n                                             PointerController* pointerController) :\n        mContext(context),\n        mPointerController(pointerController) {...}\n```",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 79
+      },
+      "revId": "624f0a8e72e427fff32a8af8870df1aba7be41dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac9e6ee_60ca42f7",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-24T19:06:01Z",
+      "side": 1,
+      "message": "Why can\u0027t this be a concrete type?\n\nBTW we should avoid raw pointers at almost all cost regardless.",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "624f0a8e72e427fff32a8af8870df1aba7be41dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2008d4f4_25c9d7cf",
+        "filename": "libs/input/MouseCursorController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-24T19:06:01Z",
+      "side": 1,
+      "message": "I suggest saving weak_ptr\u003c\u003e instead. This has something to do with \"ownership\" of an object. Only owner needs strong reference/pointer to the object.\n\nPointerControllerContext should be owned by PointerController only so we should only save weak pointer to it here.\n\nIn Chrome sometimes we don\u0027t even use pointers. We just use the value type in the owner and let other classes hold reference types. However since Handler and Callback use weak_ptr, I\u0027ll defer to the original design and use weak_ptr here instead.",
+      "range": {
+        "startLine": 76,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "624f0a8e72e427fff32a8af8870df1aba7be41dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b2b57b_ca8641fc",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-24T19:06:01Z",
+      "side": 1,
+      "message": "This is unnecessary. You can pass a raw pointer to unique_ptr() to construct one, or better use std::make_shared\u003c\u003e().\n\nHowever I have other suggestions made for PointerControllerContext and that takes priority.",
+      "range": {
+        "startLine": 146,
+        "startChar": 17,
+        "endLine": 146,
+        "endChar": 59
+      },
+      "revId": "624f0a8e72e427fff32a8af8870df1aba7be41dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829624c8_265ddbe3",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-24T19:06:01Z",
+      "side": 1,
+      "message": "nit: isViewportValid()\n\nCanonically getters for boolean starts with is.",
+      "range": {
+        "startLine": 208,
+        "startChar": 28,
+        "endLine": 208,
+        "endChar": 43
+      },
+      "revId": "624f0a8e72e427fff32a8af8870df1aba7be41dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60bdaf63_32139403",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-24T19:06:01Z",
+      "side": 1,
+      "message": "nit: instead of 2-layer of for loops, create a hash set of display ID.",
+      "revId": "624f0a8e72e427fff32a8af8870df1aba7be41dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58b8202_3c907ba7",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-24T19:06:01Z",
+      "side": 1,
+      "message": "This seems to be only used by PointerControllerContext. Why don\u0027t we move it to that?",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 4
+      },
+      "revId": "624f0a8e72e427fff32a8af8870df1aba7be41dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f04bfe_1a81429d",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-24T19:06:01Z",
+      "side": 1,
+      "message": "I so hope we can move these 2 to PointerControllerContext, but each one of them has one call back to PointerController so we can just do that yet.\n\nWith animation refactor I proposed maybe we can move LooperCallback there, but per offline discussion let\u0027s focus on having this in.",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 6
+      },
+      "revId": "624f0a8e72e427fff32a8af8870df1aba7be41dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab54725_ef34d21b",
+        "filename": "libs/input/TouchSpotController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-24T19:06:01Z",
+      "side": 1,
+      "message": "We don\u0027t need to change context instance, so I suggest changing it to reference.",
+      "range": {
+        "startLine": 65,
+        "startChar": 41,
+        "endLine": 65,
+        "endChar": 82
+      },
+      "revId": "624f0a8e72e427fff32a8af8870df1aba7be41dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c632cc44_f85cdec2",
+        "filename": "libs/input/TouchSpotController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-24T19:06:01Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 40
+      },
+      "revId": "624f0a8e72e427fff32a8af8870df1aba7be41dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57c3c5e_e555d1f3",
+        "filename": "services/core/jni/com_android_server_input_InputManagerService.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-24T19:06:01Z",
+      "side": 1,
+      "message": "Change it to onDisplayViewportsUpdated().\n\nInputManagerService doesn\u0027t need to know PointerController needs that to clean up spot controllers.\n\nBTW, we usually don\u0027t use one-line if clause for real logic, so I suggest changing it to\n\n```\nif (controller !\u003d nullptr) {\n    controller-\u003eonDisplayViewportsUpdated();\n}\n```",
+      "range": {
+        "startLine": 428,
+        "startChar": 47,
+        "endLine": 428,
+        "endChar": 67
+      },
+      "revId": "624f0a8e72e427fff32a8af8870df1aba7be41dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
