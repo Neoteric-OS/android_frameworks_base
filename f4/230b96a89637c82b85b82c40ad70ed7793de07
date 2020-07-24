@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Kyunglyul Hyun <klhyun@google.com>
+Code-Review+2: Hyundo Moon <hdmoon@google.com>
+Autosubmit+1: Jin Seok Park <jinpark@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 24 Jul 2020 08:23:03 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1372061
+Project: platform/frameworks/base
+Branch: refs/heads/master
