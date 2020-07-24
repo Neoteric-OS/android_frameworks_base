@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c240b068_b174efef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-24T06:25:45Z",
+      "side": 1,
+      "message": "Thanks for review.\n\nme and my colleague (sy85.kim) updated commit details as per code review",
+      "revId": "5b31319f79b11a175c9be5b1219b6dd095d0dd10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

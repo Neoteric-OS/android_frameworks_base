@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "49c29cbc_a95f080b",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4068,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-24T06:25:45Z",
+      "side": 1,
+      "message": "Faced a build error if i remove @hide of @SystemApi.\n\n\nframeworks/base/media/java/android/media/MediaPlayer.java:4130: error: @SystemApi APIs must also be marked @hide: method android.media.MediaPlayer.setOnImsRxNoticeListener(android.media.MediaPlayer.OnImsRxNoticeListener) [UnhiddenSystemApi]",
+      "parentUuid": "e59e3e97_f7d1dde2",
+      "range": {
+        "startLine": 4067,
+        "startChar": 0,
+        "endLine": 4068,
+        "endChar": 12
+      },
+      "revId": "7a234c11ce66eb62716f7956deee55422bae9f06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1db305a_2143b0b2",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 4
@@ -85,6 +109,54 @@
       "revId": "7a234c11ce66eb62716f7956deee55422bae9f06",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807d7563_a55669f8",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4073,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-24T06:25:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "411e91a6_88e86981",
+      "range": {
+        "startLine": 4073,
+        "startChar": 8,
+        "endLine": 4073,
+        "endChar": 15
+      },
+      "revId": "7a234c11ce66eb62716f7956deee55422bae9f06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65f05f4d_3cad3fb3",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4073,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-24T06:25:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1db305a_2143b0b2",
+      "range": {
+        "startLine": 4073,
+        "startChar": 0,
+        "endLine": 4073,
+        "endChar": 58
+      },
+      "revId": "7a234c11ce66eb62716f7956deee55422bae9f06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
