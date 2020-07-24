@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc59c8d0_e0c0468c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2020-07-24T21:52:43Z",
+      "side": 1,
+      "message": "Can you help clarify the steps to reproduce? I don\u0027t understand the exact steps to reproduce.\n\nSomething like the following.\n\n1) Start client A (test app or keyguard?). Is this during keyguard locked, or when the device is unlocked?\n2) Touch sensor until lockout\n3) Start client B (test app or keyguard?). If this is an app, is this when keyguard is locked or when the device is unlocked?\n4) kill client X, e.g. adb shell killall -9 ______",
+      "revId": "2171117c6c181ea6e07a28b89b6037e9bc1c18b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
