@@ -16,6 +16,69 @@
       "revId": "5b31319f79b11a175c9be5b1219b6dd095d0dd10",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "496c179d_077a6b69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060104
+      },
+      "writtenOn": "2020-07-24T09:19:57Z",
+      "side": 1,
+      "message": "Lajos, please could you take a quick look as well?",
+      "revId": "5b31319f79b11a175c9be5b1219b6dd095d0dd10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e944b71f_70b9ccfb",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4088,
+      "author": {
+        "id": 1060104
+      },
+      "writtenOn": "2020-07-24T09:19:57Z",
+      "side": 1,
+      "message": "This is really useful, thank you! Please could you shift the description of the syntax above the first @param and put it between lines with \"\u003cpre\u003e{@code\" and \"}\u003c/pre\u003e\" so it get formatted in monospace for readability?",
+      "range": {
+        "startLine": 4088,
+        "startChar": 0,
+        "endLine": 4088,
+        "endChar": 67
+      },
+      "revId": "5b31319f79b11a175c9be5b1219b6dd095d0dd10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1421848_f4c1bba3",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4186,
+      "author": {
+        "id": 1060104
+      },
+      "writtenOn": "2020-07-24T09:19:57Z",
+      "side": 1,
+      "message": "I think that generated javadoc for this might have a broken link, as it\u0027s not a reference to a symbol in Java code, so I suggest moving this information up into the summary fragment (and removing @see).",
+      "range": {
+        "startLine": 4186,
+        "startChar": 0,
+        "endLine": 4186,
+        "endChar": 73
+      },
+      "revId": "5b31319f79b11a175c9be5b1219b6dd095d0dd10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
