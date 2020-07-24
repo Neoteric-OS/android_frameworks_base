@@ -560,6 +560,15 @@ public class CarrierConfigManager {
     public static final String KEY_CARRIER_VT_AVAILABLE_BOOL = "carrier_vt_available_bool";
 
     /**
+     * USSD over IMS: true USSD over IMS is enabled
+     *                false USSD over IMS is disabled
+     *
+     * @hide
+     */
+    public static final String KEY_CARRIER_USSI_ENABLED_BOOL =
+            "carrier_ussi_enabled_bool";
+
+    /**
      * Flag specifying whether to show an alert dialog for 5G disable when the user disables VoLTE.
      * By default this value is {@code false}.
      *
@@ -3809,6 +3818,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_CARRIER_SETTINGS_ENABLE_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_VOLTE_AVAILABLE_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_VT_AVAILABLE_BOOL, false);
+        sDefaults.putBoolean(KEY_CARRIER_USSI_ENABLED_BOOL, false);
         sDefaults.putBoolean(KEY_VOLTE_5G_LIMITED_ALERT_DIALOG_BOOL, false);
         sDefaults.putBoolean(KEY_NOTIFY_HANDOVER_VIDEO_FROM_WIFI_TO_LTE_BOOL, false);
         sDefaults.putBoolean(KEY_ALLOW_MERGING_RTT_CALLS_BOOL, false);
