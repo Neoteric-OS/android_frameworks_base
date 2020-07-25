@@ -1,0 +1,10 @@
+Code-Review+2: Siarhei Vishniakou <svv@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Siarhei Vishniakou <svv@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Sat, 25 Jul 2020 01:07:58 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1365553
+Project: platform/frameworks/base
+Branch: refs/heads/master
