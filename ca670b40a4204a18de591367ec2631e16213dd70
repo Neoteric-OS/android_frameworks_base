@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de027e5f_ea3d74f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-26T02:19:23Z",
+      "side": 1,
+      "message": "Ping, now that the difficult period has passed, can we get a review of this ?",
+      "revId": "ca670b40a4204a18de591367ec2631e16213dd70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
