@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9a7850a_6f319c50",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-27T19:00:55Z",
+      "side": 1,
+      "message": "Alright, this is adding a non-namespaced constant to android namespace so we still need to do something for it.\n\nThis enum is usually tied to handler so we should try to move it there. The worst case we should at least convert it to an enum class.",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "2f07e39eca4846dc8f6da0b0c7f89850c8cdd200",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
