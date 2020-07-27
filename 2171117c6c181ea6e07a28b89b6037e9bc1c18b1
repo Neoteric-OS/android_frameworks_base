@@ -16,6 +16,24 @@
       "revId": "2171117c6c181ea6e07a28b89b6037e9bc1c18b1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9bfd2b55_263051e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1733240
+      },
+      "writtenOn": "2020-07-27T08:31:08Z",
+      "side": 1,
+      "message": "1) Start client A (test app,For example, WeChat),\nEnter fingerprint payment,when the device is unlocked.\n2) Touch sensor with the wrong fingerprint until lockout.\n3) Exit the last fingerprint payment authentication(don\u0027t exit WeChat), start another fingerprint payment authentication, click the fingerprint authentication button, do not press the sensor.\n4) SCreen off ,Start client B (keyguard),when the device is locked.\n5) kill client A, e.g. adb shell killall -9 com.tencent.mm\n6) Keep the screen off, no response when pressing the fingerprint\nnote:In the same way, Alipay can also reproduce 100%",
+      "parentUuid": "dc59c8d0_e0c0468c",
+      "revId": "2171117c6c181ea6e07a28b89b6037e9bc1c18b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
