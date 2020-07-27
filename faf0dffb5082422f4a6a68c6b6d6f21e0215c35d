@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce9e0628_eb2204f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2020-07-27T13:04:37Z",
+      "side": 1,
+      "message": "In what situations are apis passing mismatched packages/uids? I\u0027d prefer if the source problems were fixed rather than trying to patch the side effects",
+      "revId": "faf0dffb5082422f4a6a68c6b6d6f21e0215c35d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
