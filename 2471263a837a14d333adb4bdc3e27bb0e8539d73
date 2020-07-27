@@ -34,6 +34,24 @@
       "revId": "2471263a837a14d333adb4bdc3e27bb0e8539d73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef34afe4_5b095e75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-07-27T13:48:25Z",
+      "side": 1,
+      "message": "\u003e According to the comment, it seems like the system server can pass the permission check just because it has location permission, if so, why system app which has declared location permission can\u0027t?\n\nYes, so my point is that all the other system app should get the permission equally then. However, it seems that it does not work like this. Only phone process had this privileged permission. It is not a general rule to me so I think we may not able to claim the ability of networkstack with this statement.\n\n\u003e Before mainline project, NetworkMonitor should be a part of system service, so it should pass the check before.\n\nThe use case is waht we added recently. Mainline happened much earlier than this. W/o this, do we have such use case?\n\n\u003e ACCESS_FINE_LOCATION is a runtime permission, if the app declared this permission, it will need user to approve it, but mainline module doesn\u0027t. For mainline module, it will be granted silently. So we can\u0027t compare the mainline module with other normal apps, they\u0027re different by nature.\n\nThis is what I think that we may need an extra permission or a notification like message to proclaim the permission usage.",
+      "parentUuid": "faa4ff74_46c80d5c",
+      "revId": "2471263a837a14d333adb4bdc3e27bb0e8539d73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
