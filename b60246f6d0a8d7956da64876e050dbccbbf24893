@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "1d88bc76_c2d0e1d3",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4071,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-27T08:07:20Z",
+      "side": 1,
+      "message": "\u003e Done\n\nYes it is accessible from the VT app.(exact name is IMSService defined by telephony framework.)",
+      "parentUuid": "c58da18a_10724ed1",
+      "revId": "b60246f6d0a8d7956da64876e050dbccbbf24893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78bcec19_ee06a85d",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 3

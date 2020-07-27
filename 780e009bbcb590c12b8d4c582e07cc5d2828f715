@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afe154cb_3aee8475",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1488927
+      },
+      "writtenOn": "2020-07-27T08:07:20Z",
+      "side": 1,
+      "message": "Thanks for continue the code review.\nWe have updated patchset#8 as per the last comment.",
+      "revId": "780e009bbcb590c12b8d4c582e07cc5d2828f715",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
