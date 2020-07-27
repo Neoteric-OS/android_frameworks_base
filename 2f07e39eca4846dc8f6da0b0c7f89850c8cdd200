@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "89a59a92_cc43de1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-27T22:43:48Z",
+      "side": 1,
+      "message": "Prabir: I think we can share this CL with svv@, michaelwr@ and lzye@ in the next round if you don\u0027t have any concern. WDYT?",
+      "revId": "2f07e39eca4846dc8f6da0b0c7f89850c8cdd200",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27e4130f_cf50eaf0",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-27T22:43:48Z",
+      "side": 1,
+      "message": "Don\u0027t call lock() every time you need mContext. You should capture a shared_ptr of PointerControllerContext at the beginning of every function in a local variable and use that instead.\n\nlock() of a weak ptr needs a CAS operation in a while loop (more or less like a spin lock) so it can be expensive. More importantly (though not possible in this particular case), locking a weak ptr comes with pointer validity check so it could be possible that only a part of a function is executed. It\u0027s not necessary to check the validity after we lock it in this file (or if we really want we can use LOG_ALWAYS_FATAL_IF), but I still would like to see PointerControllerContext captured in a local variable before using it.",
+      "range": {
+        "startLine": 179,
+        "startChar": 12,
+        "endLine": 179,
+        "endChar": 19
+      },
+      "revId": "2f07e39eca4846dc8f6da0b0c7f89850c8cdd200",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1174a7fb_a78b85e5",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-07-27T22:43:48Z",
+      "side": 1,
+      "message": "I was hoping you could have noticed this when I was asking you not to pass PointerController.\n\nI have 2 layers of questions here.\n\nFirst layer (code layer):\nThis should just be mContext.lock()-\u003eclearSpotsLocked(). The delegating to PointerController should be detail in PointerControllerContext.\n\nSecond layer (product layer):\nWhy do we clear spots when viewport changed on earth? Isn\u0027t the viewport only for mouse cursor?\n\nThis is an example in real world that we need to answer a more abstract question before we can even think about the code. I\u0027d say we should just remove this statement, which just makes the question on the first layer invalid.",
+      "range": {
+        "startLine": 243,
+        "startChar": 8,
+        "endLine": 243,
+        "endChar": 57
+      },
+      "revId": "2f07e39eca4846dc8f6da0b0c7f89850c8cdd200",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9a7850a_6f319c50",
         "filename": "libs/input/PointerController.h",
         "patchSetId": 5
