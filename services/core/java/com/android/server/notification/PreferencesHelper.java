@@ -323,6 +323,14 @@ public class PreferencesHelper implements RankingConfig {
                 Slog.e(TAG, "createDefaultChannelIfNeededLocked - Exception: " + e);
             }
 
+            try {
+                if (uid != mPm.getPackageUidAsUser(pkg, userId)) r.uid = UNKNOWN_UID;
+            } catch (PackageManager.NameNotFoundException e) {
+                Slog.w(TAG, "getOrCreatePackagePreferencesLocked pkg:" + pkg
+                        + "uid:" + uid + "userId:" + userId, e);
+                r.uid = UNKNOWN_UID;
+            }
+
             if (r.uid == UNKNOWN_UID) {
                 mRestoredWithoutUids.put(pkg, r);
             } else {
