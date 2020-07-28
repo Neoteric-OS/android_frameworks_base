@@ -73,15 +73,15 @@ public interface StatusBarIconController {
     public void removeIcon(String slot, int tag);
     public void removeAllIconsForSlot(String slot);
 
-    public static final String ICON_BLACKLIST = "icon_blacklist";
+    String ICON_BLOCKLIST = "icon_blocklist";
 
-    public static ArraySet<String> getIconBlacklist(String blackListStr) {
+    static ArraySet<String> getIconBlocklist(String blocklistStr) {
         ArraySet<String> ret = new ArraySet<>();
-        if (blackListStr == null) {
-            blackListStr = "rotate,headset";
+        if (blocklistStr == null) {
+            blocklistStr = "rotate,headset";
         }
-        String[] blacklist = blackListStr.split(",");
-        for (String slot : blacklist) {
+        String[] blocklist = blocklistStr.split(",");
+        for (String slot : blocklist) {
             if (!TextUtils.isEmpty(slot)) {
                 ret.add(slot);
             }

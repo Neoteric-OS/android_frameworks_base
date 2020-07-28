@@ -34,7 +34,7 @@ import java.util.Set;
 
 public class StatusBarSwitch extends SwitchPreference implements Tunable {
 
-    private Set<String> mBlacklist;
+    private Set<String> mBlocklist;
 
     public StatusBarSwitch(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -43,7 +43,7 @@ public class StatusBarSwitch extends SwitchPreference implements Tunable {
     @Override
     public void onAttached() {
         super.onAttached();
-        Dependency.get(TunerService.class).addTunable(this, StatusBarIconController.ICON_BLACKLIST);
+        Dependency.get(TunerService.class).addTunable(this, StatusBarIconController.ICON_BLOCKLIST);
     }
 
     @Override
@@ -54,35 +54,35 @@ public class StatusBarSwitch extends SwitchPreference implements Tunable {
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (!StatusBarIconController.ICON_BLACKLIST.equals(key)) {
+        if (!StatusBarIconController.ICON_BLOCKLIST.equals(key)) {
             return;
         }
-        mBlacklist = StatusBarIconController.getIconBlacklist(newValue);
-        setChecked(!mBlacklist.contains(getKey()));
+        mBlocklist = StatusBarIconController.getIconBlocklist(newValue);
+        setChecked(!mBlocklist.contains(getKey()));
     }
 
     @Override
     protected boolean persistBoolean(boolean value) {
         if (!value) {
-            // If not enabled add to blacklist.
-            if (!mBlacklist.contains(getKey())) {
+            // If not enabled add to blocklist.
+            if (!mBlocklist.contains(getKey())) {
                 MetricsLogger.action(getContext(), MetricsEvent.TUNER_STATUS_BAR_DISABLE,
                         getKey());
-                mBlacklist.add(getKey());
-                setList(mBlacklist);
+                mBlocklist.add(getKey());
+                setList(mBlocklist);
             }
         } else {
-            if (mBlacklist.remove(getKey())) {
+            if (mBlocklist.remove(getKey())) {
                 MetricsLogger.action(getContext(), MetricsEvent.TUNER_STATUS_BAR_ENABLE, getKey());
-                setList(mBlacklist);
+                setList(mBlocklist);
             }
         }
         return true;
     }
 
-    private void setList(Set<String> blacklist) {
+    private void setList(Set<String> blocklist) {
         ContentResolver contentResolver = getContext().getContentResolver();
-        Settings.Secure.putStringForUser(contentResolver, StatusBarIconController.ICON_BLACKLIST,
-                TextUtils.join(",", blacklist), ActivityManager.getCurrentUser());
+        Settings.Secure.putStringForUser(contentResolver, StatusBarIconController.ICON_BLOCKLIST,
+                TextUtils.join(",", blocklist), ActivityManager.getCurrentUser());
     }
 }

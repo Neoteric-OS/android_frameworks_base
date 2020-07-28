@@ -60,7 +60,7 @@ public class StatusBarIconControllerImpl extends StatusBarIconList implements Tu
     private static final String TAG = "StatusBarIconController";
 
     private final ArrayList<IconManager> mIconGroups = new ArrayList<>();
-    private final ArraySet<String> mIconBlacklist = new ArraySet<>();
+    private final ArraySet<String> mIconBlocklist = new ArraySet<>();
 
     // Points to light or dark context depending on the... context?
     private Context mContext;
@@ -81,7 +81,7 @@ public class StatusBarIconControllerImpl extends StatusBarIconList implements Tu
 
         SysUiServiceProvider.getComponent(context, CommandQueue.class)
                 .addCallback(this);
-        Dependency.get(TunerService.class).addTunable(this, ICON_BLACKLIST);
+        Dependency.get(TunerService.class).addTunable(this, ICON_BLOCKLIST);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class StatusBarIconControllerImpl extends StatusBarIconList implements Tu
         for (int i = 0; i < allSlots.size(); i++) {
             Slot slot = allSlots.get(i);
             List<StatusBarIconHolder> holders = slot.getHolderListInViewOrder();
-            boolean blocked = mIconBlacklist.contains(slot.getName());
+            boolean blocked = mIconBlocklist.contains(slot.getName());
 
             for (StatusBarIconHolder holder : holders) {
                 int tag = holder.getTag();
@@ -109,11 +109,11 @@ public class StatusBarIconControllerImpl extends StatusBarIconList implements Tu
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (!ICON_BLACKLIST.equals(key)) {
+        if (!ICON_BLOCKLIST.equals(key)) {
             return;
         }
-        mIconBlacklist.clear();
-        mIconBlacklist.addAll(StatusBarIconController.getIconBlacklist(newValue));
+        mIconBlocklist.clear();
+        mIconBlocklist.addAll(StatusBarIconController.getIconBlocklist(newValue));
         ArrayList<Slot> currentSlots = getSlots();
         ArrayMap<Slot, List<StatusBarIconHolder>> slotsToReAdd = new ArrayMap<>();
 
@@ -144,7 +144,7 @@ public class StatusBarIconControllerImpl extends StatusBarIconList implements Tu
     private void addSystemIcon(int index, StatusBarIconHolder holder) {
         String slot = getSlotName(index);
         int viewIndex = getViewIndex(index, holder.getTag());
-        boolean blocked = mIconBlacklist.contains(slot);
+        boolean blocked = mIconBlocklist.contains(slot);
 
         mIconGroups.forEach(l -> l.onIconAdded(viewIndex, slot, blocked, holder));
     }

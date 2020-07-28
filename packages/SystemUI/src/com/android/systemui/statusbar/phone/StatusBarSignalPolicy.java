@@ -80,7 +80,7 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
         mNetworkController = Dependency.get(NetworkController.class);
         mSecurityController = Dependency.get(SecurityController.class);
 
-        Dependency.get(TunerService.class).addTunable(this, StatusBarIconController.ICON_BLACKLIST);
+        Dependency.get(TunerService.class).addTunable(this, StatusBarIconController.ICON_BLOCKLIST);
         mNetworkController.addCallback(this);
         mSecurityController.addCallback(this);
     }
@@ -114,10 +114,10 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (!StatusBarIconController.ICON_BLACKLIST.equals(key)) {
+        if (!StatusBarIconController.ICON_BLOCKLIST.equals(key)) {
             return;
         }
-        ArraySet<String> blockList = StatusBarIconController.getIconBlacklist(newValue);
+        ArraySet<String> blockList = StatusBarIconController.getIconBlocklist(newValue);
         boolean blockAirplane = blockList.contains(mSlotAirplane);
         boolean blockMobile = blockList.contains(mSlotMobile);
         boolean blockWifi = blockList.contains(mSlotWifi);
