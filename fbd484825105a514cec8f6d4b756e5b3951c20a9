@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ea8db34_321b6b44",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-28T06:27:22Z",
+      "side": 1,
+      "message": "maybe just last-ditch check",
+      "range": {
+        "startLine": 230,
+        "startChar": 31,
+        "endLine": 230,
+        "endChar": 40
+      },
+      "revId": "fbd484825105a514cec8f6d4b756e5b3951c20a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9154880_f94e2668",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4229,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-28T06:27:22Z",
+      "side": 1,
+      "message": "Maybe \"basic\"",
+      "range": {
+        "startLine": 4229,
+        "startChar": 11,
+        "endLine": 4229,
+        "endChar": 20
+      },
+      "revId": "fbd484825105a514cec8f6d4b756e5b3951c20a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
