@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "e3247598_70d8cdb0",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2020-07-28T21:37:51Z",
+      "side": 1,
+      "message": "I think no pointer and reference better reflects the usage of the context. Let\u0027s do that!",
+      "parentUuid": "cc91709c_141cc4f1",
+      "range": {
+        "startLine": 53,
+        "startChar": 28,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "2f07e39eca4846dc8f6da0b0c7f89850c8cdd200",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27e4130f_cf50eaf0",
         "filename": "libs/input/MouseCursorController.cpp",
         "patchSetId": 5
@@ -211,6 +235,30 @@
       "side": 1,
       "message": "I will actually suggest using weak_ptr\u003c\u003e rather than a raw pointer here for the symmetry to MessageHandler and LooperCallback. I am not sure if this can be removed though.\n\nAndroid team is more or less in a panicky mode toward raw pointers, though in some cases Chrome does have them. Let\u0027s not step into the mine field.",
       "parentUuid": "c6f16824_57c6ff05",
+      "range": {
+        "startLine": 182,
+        "startChar": 9,
+        "endLine": 182,
+        "endChar": 19
+      },
+      "revId": "2f07e39eca4846dc8f6da0b0c7f89850c8cdd200",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9add0b2_ac2ee1fb",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2020-07-28T21:37:51Z",
+      "side": 1,
+      "message": "Sure, weak_ptr sounds good then. Make sure to pass it in as the same type of pointer in the constructor!",
+      "parentUuid": "1e9e5f0d_24fa7754",
       "range": {
         "startLine": 182,
         "startChar": 9,
