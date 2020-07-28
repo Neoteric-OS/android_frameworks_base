@@ -17,88 +17,91 @@
 import unittest
 from generate_hiddenapi_lists import *
 
+
 class TestHiddenapiListGeneration(unittest.TestCase):
 
-    def test_filter_apis(self):
-        # Initialize flags so that A and B are put on the whitelist and
-        # C, D, E are left unassigned. Try filtering for the unassigned ones.
-        flags = FlagsDict()
-        flags.parse_and_merge_csv(['A,' + FLAG_WHITELIST, 'B,' + FLAG_WHITELIST,
-                        'C', 'D', 'E'])
-        filter_set = flags.filter_apis(lambda api, flags: not flags)
-        self.assertTrue(isinstance(filter_set, set))
-        self.assertEqual(filter_set, set([ 'C', 'D', 'E' ]))
+  def test_filter_apis(self):
+    # Initialize flags so that A and B are put on the whitelist and
+    # C, D, E are left unassigned. Try filtering for the unassigned ones.
+    flags = FlagsDict()
+    flags.parse_and_merge_csv(['A,' + FLAG_SDK, 'B,' + FLAG_SDK, 'C', 'D', 'E'])
+    filter_set = flags.filter_apis(lambda api, flags: not flags)
+    self.assertTrue(isinstance(filter_set, set))
+    self.assertEqual(filter_set, set(['C', 'D', 'E']))
 
-    def test_get_valid_subset_of_unassigned_keys(self):
-        # Create flags where only A is unassigned.
-        flags = FlagsDict()
-        flags.parse_and_merge_csv(['A,' + FLAG_WHITELIST, 'B', 'C'])
-        flags.assign_flag(FLAG_GREYLIST, set(['C']))
-        self.assertEqual(flags.generate_csv(),
-            [ 'A,' + FLAG_WHITELIST, 'B', 'C,' + FLAG_GREYLIST ])
+  def test_get_valid_subset_of_unassigned_keys(self):
+    # Create flags where only A is unassigned.
+    flags = FlagsDict()
+    flags.parse_and_merge_csv(['A,' + FLAG_SDK, 'B', 'C'])
+    flags.assign_flag(FLAG_DISCOURAGED, set(['C']))
+    self.assertEqual(flags.generate_csv(),
+                     ['A,' + FLAG_SDK, 'B', 'C,' + FLAG_DISCOURAGED])
 
-        # Check three things:
-        # (1) B is selected as valid unassigned
-        # (2) A is not selected because it is assigned 'whitelist'
-        # (3) D is not selected because it is not a valid key
-        self.assertEqual(
-            flags.get_valid_subset_of_unassigned_apis(set(['A', 'B', 'D'])), set([ 'B' ]))
+    # Check three things:
+    # (1) B is selected as valid unassigned
+    # (2) A is not selected because it is assigned 'whitelist'
+    # (3) D is not selected because it is not a valid key
+    self.assertEqual(
+        flags.get_valid_subset_of_unassigned_apis(set(['A', 'B', 'D'])),
+        set(['B']))
 
-    def test_parse_and_merge_csv(self):
-        flags = FlagsDict()
+  def test_parse_and_merge_csv(self):
+    flags = FlagsDict()
 
-        # Test empty CSV entry.
-        self.assertEqual(flags.generate_csv(), [])
+    # Test empty CSV entry.
+    self.assertEqual(flags.generate_csv(), [])
 
-        # Test new additions.
-        flags.parse_and_merge_csv([
-            'A,' + FLAG_GREYLIST,
-            'B,' + FLAG_BLACKLIST + ',' + FLAG_GREYLIST_MAX_O,
-            'C,' + FLAG_SYSTEM_API + ',' + FLAG_WHITELIST,
-            'D,' + FLAG_GREYLIST+ ',' + FLAG_TEST_API,
-            'E,' + FLAG_BLACKLIST+ ',' + FLAG_TEST_API,
-        ])
-        self.assertEqual(flags.generate_csv(), [
-            'A,' + FLAG_GREYLIST,
-            'B,' + FLAG_BLACKLIST + "," + FLAG_GREYLIST_MAX_O,
-            'C,' + FLAG_SYSTEM_API + ',' + FLAG_WHITELIST,
-            'D,' + FLAG_GREYLIST+ ',' + FLAG_TEST_API,
-            'E,' + FLAG_BLACKLIST+ ',' + FLAG_TEST_API,
-        ])
+    # Test new additions.
+    flags.parse_and_merge_csv([
+        'A,' + FLAG_DISCOURAGED,
+        'B,' + FLAG_BLOCKED + ',' + FLAG_MAX_TARGET_O,
+        'C,' + FLAG_SDK + ',' + FLAG_SYSTEM_API,
+        'D,' + FLAG_DISCOURAGED + ',' + FLAG_TEST_API,
+        'E,' + FLAG_BLOCKED + ',' + FLAG_TEST_API,
+    ])
+    self.assertEqual(flags.generate_csv(), [
+        'A,' + FLAG_DISCOURAGED,
+        'B,' + FLAG_BLOCKED + ',' + FLAG_MAX_TARGET_O,
+        'C,' + FLAG_SDK + ',' + FLAG_SYSTEM_API,
+        'D,' + FLAG_DISCOURAGED + ',' + FLAG_TEST_API,
+        'E,' + FLAG_BLOCKED + ',' + FLAG_TEST_API,
+    ])
 
-        # Test unknown flag.
-        with self.assertRaises(AssertionError):
-            flags.parse_and_merge_csv([ 'Z,foo' ])
+    # Test unknown flag.
+    with self.assertRaises(AssertionError):
+      flags.parse_and_merge_csv(['Z,foo'])
 
-    def test_assign_flag(self):
-        flags = FlagsDict()
-        flags.parse_and_merge_csv(['A,' + FLAG_WHITELIST, 'B'])
+  def test_assign_flag(self):
+    flags = FlagsDict()
+    flags.parse_and_merge_csv(['A,' + FLAG_SDK, 'B'])
 
-        # Test new additions.
-        flags.assign_flag(FLAG_GREYLIST, set([ 'A', 'B' ]))
-        self.assertEqual(flags.generate_csv(),
-            [ 'A,' + FLAG_GREYLIST + "," + FLAG_WHITELIST, 'B,' + FLAG_GREYLIST ])
+    # Test new additions.
+    flags.assign_flag(FLAG_DISCOURAGED, set(['A', 'B']))
+    self.assertEqual(
+        flags.generate_csv(),
+        ['A,' + FLAG_DISCOURAGED + ',' + FLAG_SDK, 'B,' + FLAG_DISCOURAGED])
 
-        # Test invalid API signature.
-        with self.assertRaises(AssertionError):
-            flags.assign_flag(FLAG_WHITELIST, set([ 'C' ]))
+    # Test invalid API signature.
+    with self.assertRaises(AssertionError):
+      flags.assign_flag(FLAG_SDK, set(['C']))
 
-        # Test invalid flag.
-        with self.assertRaises(AssertionError):
-            flags.assign_flag('foo', set([ 'A' ]))
+    # Test invalid flag.
+    with self.assertRaises(AssertionError):
+      flags.assign_flag('foo', set(['A']))
 
-    def test_extract_package(self):
-        signature = 'Lcom/foo/bar/Baz;->method1()Lcom/bar/Baz;'
-        expected_package = 'com.foo.bar'
-        self.assertEqual(extract_package(signature), expected_package)
+  def test_extract_package(self):
+    signature = 'Lcom/foo/bar/Baz;->method1()Lcom/bar/Baz;'
+    expected_package = 'com.foo.bar'
+    self.assertEqual(extract_package(signature), expected_package)
 
-        signature = 'Lcom/foo1/bar/MyClass;->method2()V'
-        expected_package = 'com.foo1.bar'
-        self.assertEqual(extract_package(signature), expected_package)
+    signature = 'Lcom/foo1/bar/MyClass;->method2()V'
+    expected_package = 'com.foo1.bar'
+    self.assertEqual(extract_package(signature), expected_package)
 
-        signature = 'Lcom/foo_bar/baz/MyClass;->method3()V'
-        expected_package = 'com.foo_bar.baz'
-        self.assertEqual(extract_package(signature), expected_package)
+    signature = 'Lcom/foo_bar/baz/MyClass;->method3()V'
+    expected_package = 'com.foo_bar.baz'
+    self.assertEqual(extract_package(signature), expected_package)
+
 
 if __name__ == '__main__':
-    unittest.main()
+  unittest.main()
