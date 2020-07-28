@@ -16,6 +16,24 @@
       "revId": "faf0dffb5082422f4a6a68c6b6d6f21e0215c35d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd841b37_cc6e1cbe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1390168
+      },
+      "writtenOn": "2020-07-28T06:50:32Z",
+      "side": 1,
+      "message": "The source of the problem is the following code written by our SystemUI team：\n\n49    public static boolean isNotificationsBanned(Context context, String pkg) {\n50        return isNotificationsBanned(pkg, getPackageUid(context, pkg));\n51    }\n52\n53    public static boolean isNotificationsBanned(String pkg, int uid) {\n54        try {\n55            return !sINM.areNotificationsEnabledForPackage(pkg, uid);\n56        } catch (Exception e) {\n57            Slog.e(TAG, \"Error areNotificationsEnabledForPackage \" + e);\n58        }\n59        return false;\n60    }\n\n276    public static int getPackageUid(Context context, String pkg) {\n277        try {\n278            return context.getPackageManager().getPackageUid(pkg, 0);\n279        } catch (PackageManager.NameNotFoundException e) {\n280            Slog.e(TAG, \"Error getPackageUid \" + e);\n281        }\n282        return 0;\n283    }\n\nThey may not realize that passing an invalid uid into this interface will create a meaningless item in PreferencesHelper#mPackagePreferences, because this invalid uid has not been verified or output exception information after being passed in.\n\nWhen running the CTS UidAtomTests#testNotificationPackagePreferenceExtraction test case, an error occurred when asserting that the uid of mPackagePreferences is greater than 0.\n\nWe synchronized the cause of the problem to our SystemUI team, but we also hope that the API of NotificationManagerService can handle invalid parameters. We submit this patch to AOSP and hope to get your comments and suggestions. Thank you！",
+      "parentUuid": "ce9e0628_eb2204f3",
+      "revId": "faf0dffb5082422f4a6a68c6b6d6f21e0215c35d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
