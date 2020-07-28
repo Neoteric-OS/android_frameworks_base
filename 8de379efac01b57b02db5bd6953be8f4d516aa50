@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e111f114_1a06eb74",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-28T06:58:30Z",
+      "side": 1,
+      "message": "Oh, yes, we should. I had searched only in another file :/ Thanks for catching this.",
+      "parentUuid": "d58ffed7_660f92bd",
+      "range": {
+        "startLine": 1097,
+        "startChar": 68,
+        "endLine": 1097,
+        "endChar": 73
+      },
+      "revId": "8de379efac01b57b02db5bd6953be8f4d516aa50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb94f64e_1c68bf25",
         "filename": "core/java/android/net/SntpClient.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "8de379efac01b57b02db5bd6953be8f4d516aa50",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33dce9c2_9d41004a",
+        "filename": "core/java/android/net/SntpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-28T06:58:30Z",
+      "side": 1,
+      "message": "Maybe let\u0027s make this optional – Chiachang hasn\u0027t set out to fix the entire codebase in one fell swoop. I feel this would still be an improvement along the guidelines even if the patch doesn\u0027t include the additional changes you suggest (though of course they are also good)",
+      "parentUuid": "eb94f64e_1c68bf25",
+      "range": {
+        "startLine": 143,
+        "startChar": 18,
+        "endLine": 143,
+        "endChar": 28
+      },
+      "revId": "8de379efac01b57b02db5bd6953be8f4d516aa50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
