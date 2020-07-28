@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004064126",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1374279?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "bc4861e7_008dc9b1",
+          "description": "Change to \"tools/hiddenapi/generate_hiddenapi_lists.py\"",
+          "replacements": [
+            {
+              "path": "tools/hiddenapi/generate_hiddenapi_lists.py",
+              "range": {
+                "startLine": 154,
+                "startChar": 60,
+                "endLine": 154,
+                "endChar": 65
+              },
+              "replacement": "it"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "0394eaaf_b1b6b87a",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T11:48:37Z",
+      "side": 1,
+      "message": "Common typo found: \"it it\" -- should it be \"it\"?\nIf this is intentional you can comma separate to \u0027it, it\u0027 for better clarity.\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 154,
+        "startChar": 60,
+        "endLine": 154,
+        "endChar": 65
+      },
+      "revId": "ddd3dee262e8b0b9ab0ca81cab1e3f7f7ad6fa72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
