@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "959f5a6e_07bdd7f6",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-07-28T07:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e111f114_1a06eb74",
+      "range": {
+        "startLine": 1097,
+        "startChar": 68,
+        "endLine": 1097,
+        "endChar": 73
+      },
+      "revId": "8de379efac01b57b02db5bd6953be8f4d516aa50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb94f64e_1c68bf25",
         "filename": "core/java/android/net/SntpClient.java",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Maybe let\u0027s make this optional – Chiachang hasn\u0027t set out to fix the entire codebase in one fell swoop. I feel this would still be an improvement along the guidelines even if the patch doesn\u0027t include the additional changes you suggest (though of course they are also good)",
       "parentUuid": "eb94f64e_1c68bf25",
+      "range": {
+        "startLine": 143,
+        "startChar": 18,
+        "endLine": 143,
+        "endChar": 28
+      },
+      "revId": "8de379efac01b57b02db5bd6953be8f4d516aa50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df773eea_baca2c6d",
+        "filename": "core/java/android/net/SntpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-07-28T07:37:18Z",
+      "side": 1,
+      "message": "Done. Yes, I did not fix the entire codebase. E.g. There are lots of target wording in VPN.java but it may also need to update Settings.java. So I leave that later in other possible commit.\n\nWhat I refer to is the list in the activity. These two file looks missing in the list so I did not take these two. Thanks for finding it.",
+      "parentUuid": "33dce9c2_9d41004a",
       "range": {
         "startLine": 143,
         "startChar": 18,
