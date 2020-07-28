@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "34318172_cd18818d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2020-07-28T20:14:31Z",
+      "side": 1,
+      "message": "After the current outstanding comments have been addressed, I think we\u0027re good to send it to upstream folks for review.",
+      "parentUuid": "89a59a92_cc43de1b",
+      "revId": "2f07e39eca4846dc8f6da0b0c7f89850c8cdd200",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de45ccfa_d61fef3a",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2020-07-28T20:14:31Z",
+      "side": 1,
+      "message": "Why are we using a weak_ptr for mContext?\n\nI don\u0027t think we ever do expiration checks on this weak_ptr and always call lock() directly. In that case we should just use a shared_ptr? We\u0027re not getting any benefit from weak_ptr if we\u0027re using it this way.",
+      "range": {
+        "startLine": 53,
+        "startChar": 28,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "2f07e39eca4846dc8f6da0b0c7f89850c8cdd200",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27e4130f_cf50eaf0",
         "filename": "libs/input/MouseCursorController.cpp",
         "patchSetId": 5
@@ -81,6 +122,52 @@
         "startChar": 4,
         "endLine": 84,
         "endChar": 26
+      },
+      "revId": "2f07e39eca4846dc8f6da0b0c7f89850c8cdd200",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd08ed7_dfe53991",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2020-07-28T20:14:31Z",
+      "side": 1,
+      "message": "Garfield also mentioned this, and if you address his concern, we probably shouldn\u0027t need this.\n\nIf we do, then it should be a private member, and we expose the methods that we need as methods of the context.",
+      "range": {
+        "startLine": 182,
+        "startChar": 39,
+        "endLine": 182,
+        "endChar": 50
+      },
+      "revId": "2f07e39eca4846dc8f6da0b0c7f89850c8cdd200",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f16824_57c6ff05",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2020-07-28T20:14:31Z",
+      "side": 1,
+      "message": "This should probably just be a raw pointer. \n\nYou\u0027re passing it as a raw pointer ATM to the constructor, so I don\u0027t think this shared_ptr will include the same ref counting as other shared_ptr\u003cPointerController\u003es.",
+      "range": {
+        "startLine": 182,
+        "startChar": 9,
+        "endLine": 182,
+        "endChar": 19
       },
       "revId": "2f07e39eca4846dc8f6da0b0c7f89850c8cdd200",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
