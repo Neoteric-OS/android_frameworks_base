@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d12e590f_8f62a7ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2020-07-28T03:29:48Z",
+      "side": 1,
+      "message": "PTAL. This is a cherry-pick of internal CL http://ag/12219765",
+      "revId": "17c077cac6417daa610a3a98303eed5b97d465c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
