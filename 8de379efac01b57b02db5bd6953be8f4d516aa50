@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d58ffed7_660f92bd",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-28T06:54:08Z",
+      "side": 1,
+      "message": "do we want to change this? (and all related places)",
+      "range": {
+        "startLine": 1097,
+        "startChar": 68,
+        "endLine": 1097,
+        "endChar": 73
+      },
+      "revId": "8de379efac01b57b02db5bd6953be8f4d516aa50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb94f64e_1c68bf25",
+        "filename": "core/java/android/net/SntpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-28T06:54:08Z",
+      "side": 1,
+      "message": "maybe also this?\nhttps://source.corp.google.com/aosp-master/frameworks/base/core/java/android/net/NetworkState.java;l\u003d31?q\u003dNetworkState.java\u0026sq\u003dpackage:aosp-master\n\nAlso this?\nhttps://source.corp.google.com/aosp-master/frameworks/base/services/core/java/com/android/server/net/NetworkStatsFactory.java;l\u003d62?q\u003dNetworkStatsFactory\u0026sq\u003dpackage:aosp-master",
+      "range": {
+        "startLine": 143,
+        "startChar": 18,
+        "endLine": 143,
+        "endChar": 28
+      },
+      "revId": "8de379efac01b57b02db5bd6953be8f4d516aa50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
