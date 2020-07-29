@@ -160,6 +160,29 @@
     },
     {
       "key": {
+        "uuid": "7520b141_d7b067f5",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-29T05:46:21Z",
+      "side": 1,
+      "message": "Why did you remove this check from patchset 3 ?",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 81
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f988900_0e85ab45",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
         "patchSetId": 2

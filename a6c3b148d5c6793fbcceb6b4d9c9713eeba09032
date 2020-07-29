@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfc0e417_beaf5091",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-29T05:46:21Z",
+      "side": 1,
+      "message": "This is a no-op now, you\u0027re adding nothing to this UID. Did you mean to call removeAllPermissions(MOCK_UID1) instead ?",
+      "range": {
+        "startLine": 164,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 33
+      },
+      "revId": "a6c3b148d5c6793fbcceb6b4d9c9713eeba09032",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473ca781_a0ad8e76",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-29T05:46:21Z",
+      "side": 1,
+      "message": "Optional : this argument is always MOCK_UID1, so you may remove it and just use its value as is",
+      "range": {
+        "startLine": 207,
+        "startChar": 34,
+        "endLine": 207,
+        "endChar": 37
+      },
+      "revId": "a6c3b148d5c6793fbcceb6b4d9c9713eeba09032",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
