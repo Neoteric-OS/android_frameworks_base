@@ -1,0 +1,281 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004088464",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1374279?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "155661b5_227a8911",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-29T10:14:08Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "635de49c35cc908c121650dfe34e58742f0b928f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004088464",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1374279?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8e7a04c1_e9e60928",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-29T10:14:08Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 38,
+        "startChar": 24,
+        "endLine": 38,
+        "endChar": 32
+      },
+      "revId": "635de49c35cc908c121650dfe34e58742f0b928f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004088464",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1374279?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "003a9828_de2cd720",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-29T10:14:08Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 39,
+        "startChar": 20,
+        "endLine": 39,
+        "endChar": 29
+      },
+      "revId": "635de49c35cc908c121650dfe34e58742f0b928f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004088464",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1374279?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6cae8d93_508f65c5",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-29T10:14:08Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 40,
+        "startChar": 25,
+        "endLine": 40,
+        "endChar": 33
+      },
+      "revId": "635de49c35cc908c121650dfe34e58742f0b928f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004088464",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1374279?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d30e4fcf_4f98d74a",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-29T10:14:08Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 41,
+        "startChar": 25,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "635de49c35cc908c121650dfe34e58742f0b928f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004088464",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1374279?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "fd35d7f8_21f38e40",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-29T10:14:08Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 42,
+        "startChar": 25,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "635de49c35cc908c121650dfe34e58742f0b928f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004088464",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1374279?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c6e71b27_e53e8815",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-29T10:14:08Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "635de49c35cc908c121650dfe34e58742f0b928f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004088463",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1374279?revision\u003d4",
+      "fixSuggestions": [
+        {
+          "fixId": "8260c04a_a84a7ab6",
+          "description": "Change to \"tools/hiddenapi/generate_hiddenapi_lists.py\"",
+          "replacements": [
+            {
+              "path": "tools/hiddenapi/generate_hiddenapi_lists.py",
+              "range": {
+                "startLine": 227,
+                "startChar": 37,
+                "endLine": 227,
+                "endChar": 50
+              },
+              "replacement": "compatibility"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "6b8beefb_71485e46",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-29T10:14:08Z",
+      "side": 1,
+      "message": "Common typo found: \"compatability\" -- should it be \"compatibility\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 227,
+        "startChar": 37,
+        "endLine": 227,
+        "endChar": 50
+      },
+      "revId": "635de49c35cc908c121650dfe34e58742f0b928f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004088463",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1374279?revision\u003d4",
+      "fixSuggestions": [
+        {
+          "fixId": "8ef75ce8_f2b2556c",
+          "description": "Change to \"tools/hiddenapi/generate_hiddenapi_lists_test.py\"",
+          "replacements": [
+            {
+              "path": "tools/hiddenapi/generate_hiddenapi_lists_test.py",
+              "range": {
+                "startLine": 54,
+                "startChar": 26,
+                "endLine": 54,
+                "endChar": 36
+              },
+              "replacement": "compatible"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "18e5d4ef_ac681298",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-29T10:14:08Z",
+      "side": 1,
+      "message": "Common typo found: \"compatable\" -- should it be \"compatible\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 54,
+        "startChar": 26,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "635de49c35cc908c121650dfe34e58742f0b928f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
