@@ -1,0 +1,12 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Kyeongkab Nam <Kyeongkab.Nam@sony.com>
+Code-Review+1: Kyeongkab Nam <Kyeongkab.Nam@sony.com>
+Code-Review+2: Remi NGUYEN VAN <reminv@google.com>
+Code-Review+2: Chalard Jean <jchalard@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Dan Zhang <danielzhang@google.com>
+Submitted-at: Wed, 29 Jul 2020 04:29:09 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1108155
+Project: platform/frameworks/base
+Branch: refs/heads/master
