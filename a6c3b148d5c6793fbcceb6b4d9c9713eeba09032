@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c8c3676_6aac3c69",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T08:29:11Z",
+      "side": 1,
+      "message": "Not actually, it mean no permission for MOCK_UID1. Since we don\u0027t add any permission before, we can\u0027t just remove this line.",
+      "parentUuid": "dfc0e417_beaf5091",
+      "range": {
+        "startLine": 164,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 33
+      },
+      "revId": "a6c3b148d5c6793fbcceb6b4d9c9713eeba09032",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "473ca781_a0ad8e76",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "a6c3b148d5c6793fbcceb6b4d9c9713eeba09032",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d379fda_427ee3fe",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T08:29:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "473ca781_a0ad8e76",
+      "range": {
+        "startLine": 207,
+        "startChar": 34,
+        "endLine": 207,
+        "endChar": 37
+      },
+      "revId": "a6c3b148d5c6793fbcceb6b4d9c9713eeba09032",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

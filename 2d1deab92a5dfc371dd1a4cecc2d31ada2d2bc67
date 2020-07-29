@@ -183,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "c686fc52_1ccc0d19",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T08:29:11Z",
+      "side": 1,
+      "message": "I think checking restricted network permission for MOCK_UID2 and SYSTEM_UID should be same, So I remove the SYSTEM_UID one. I\u0027m OK to add the check back.",
+      "parentUuid": "7520b141_d7b067f5",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 81
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f988900_0e85ab45",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
         "patchSetId": 2
