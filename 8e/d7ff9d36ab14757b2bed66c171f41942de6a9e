@@ -1,0 +1,12 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Orion Hodson <oth@google.com>
+Code-Review+2: Calin Juravle <calin@google.com>
+Code-Review+2: Igor Murashkin <iam@google.com>
+Code-Review+2: Yan Wang <yawanng@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Orion Hodson <oth@google.com>
+Submitted-at: Wed, 29 Jul 2020 20:48:12 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1378296
+Project: platform/frameworks/base
+Branch: refs/heads/master
