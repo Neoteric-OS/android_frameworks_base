@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca369066_e0ab43e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-07-29T16:25:25Z",
+      "side": 1,
+      "message": "Please wrap the commit message at 80 characters (you can do it from the UI).",
+      "revId": "2c5c0100d3d621a8a208f2309256be9a19f7529b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
