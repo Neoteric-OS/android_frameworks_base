@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "f612712b_65f1eaf6",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Thanks for your suggestion, I don\u0027t know this.",
+      "parentUuid": "781dfd66_9c388189",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 49
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30928241_16bcd232",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
         "patchSetId": 2
@@ -62,6 +86,30 @@
       "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0d2c24_ef2c4121",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30928241_16bcd232",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 62
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "b93e7d22_9867e9dc",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a9db65a2_aabab3df",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 60
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f988900_0e85ab45",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
         "patchSetId": 2
@@ -108,6 +180,30 @@
       "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d6431f_81372410",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8f988900_0e85ab45",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 29
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "9b884376_8ab50cb8",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Rename to addPermissions",
+      "parentUuid": "757d63b3_e6047da0",
+      "range": {
+        "startLine": 273,
+        "startChar": 8,
+        "endLine": 273,
+        "endChar": 26
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e92ec01_27f9f790",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
         "patchSetId": 2
@@ -154,6 +274,30 @@
       "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96d0b9a_df85bcef",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "This is added by kotlin autotranslation, we don\u0027t need this. Just remove it.",
+      "parentUuid": "6e92ec01_27f9f790",
+      "range": {
+        "startLine": 302,
+        "startChar": 35,
+        "endLine": 302,
+        "endChar": 51
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +324,30 @@
     },
     {
       "key": {
+        "uuid": "4af0e36e_ceee0f43",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8d435f23_dedf10df",
+      "range": {
+        "startLine": 307,
+        "startChar": 82,
+        "endLine": 307,
+        "endChar": 93
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d6c71f2_7a63a040",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
         "patchSetId": 2
@@ -200,6 +368,30 @@
       "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451311fc_bf372fdd",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d6c71f2_7a63a040",
+      "range": {
+        "startLine": 308,
+        "startChar": 58,
+        "endLine": 308,
+        "endChar": 67
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +418,30 @@
     },
     {
       "key": {
+        "uuid": "9b07c533_6067a25b",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "acc922b8_40895863",
+      "range": {
+        "startLine": 331,
+        "startChar": 67,
+        "endLine": 331,
+        "endChar": 81
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dea12f84_b57c6790",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
         "patchSetId": 2
@@ -246,6 +462,30 @@
       "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91904cc3_feca7605",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dea12f84_b57c6790",
+      "range": {
+        "startLine": 339,
+        "startChar": 29,
+        "endLine": 339,
+        "endChar": 73
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +512,30 @@
     },
     {
       "key": {
+        "uuid": "9f2c0207_26895806",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2084e23d_0cbd9a52",
+      "range": {
+        "startLine": 417,
+        "startChar": 0,
+        "endLine": 417,
+        "endChar": 29
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76d7eb13_f05cbb8b",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
         "patchSetId": 2
@@ -292,6 +556,30 @@
       "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a864d2_553fd407",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "76d7eb13_f05cbb8b",
+      "range": {
+        "startLine": 431,
+        "startChar": 21,
+        "endLine": 431,
+        "endChar": 36
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +606,30 @@
     },
     {
       "key": {
+        "uuid": "5b102331_4af37092",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7ef2a892_870d9ae0",
+      "range": {
+        "startLine": 434,
+        "startChar": 39,
+        "endLine": 434,
+        "endChar": 59
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61c30016_8cc85a11",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
         "patchSetId": 2
@@ -338,6 +650,30 @@
       "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b5ed77_3d132f7e",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "61c30016_8cc85a11",
+      "range": {
+        "startLine": 472,
+        "startChar": 21,
+        "endLine": 472,
+        "endChar": 59
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -364,6 +700,30 @@
     },
     {
       "key": {
+        "uuid": "8a6c9fd1_bc6b9d15",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Update the design that pass package name.",
+      "parentUuid": "e5099140_82013818",
+      "range": {
+        "startLine": 496,
+        "startChar": 47,
+        "endLine": 496,
+        "endChar": 49
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "233642c2_9a87de2b",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
         "patchSetId": 2
@@ -384,6 +744,30 @@
       "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c99f99_17b6233f",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "233642c2_9a87de2b",
+      "range": {
+        "startLine": 505,
+        "startChar": 35,
+        "endLine": 505,
+        "endChar": 51
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -410,6 +794,30 @@
     },
     {
       "key": {
+        "uuid": "c60e2236_9bbf9dd7",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f9ea9bd_ea603255",
+      "range": {
+        "startLine": 520,
+        "startChar": 32,
+        "endLine": 520,
+        "endChar": 41
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caf18d60_861830e6",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
         "patchSetId": 2
@@ -433,6 +841,30 @@
     },
     {
       "key": {
+        "uuid": "15720c24_c8f9ccd2",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caf18d60_861830e6",
+      "range": {
+        "startLine": 528,
+        "startChar": 2,
+        "endLine": 528,
+        "endChar": 29
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec022e79_e9aa2d26",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
         "patchSetId": 2
@@ -453,6 +885,30 @@
       "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ebf91b_05d711cf",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-29T03:41:16Z",
+      "side": 1,
+      "message": "Change to SparseArray.",
+      "parentUuid": "ec022e79_e9aa2d26",
+      "range": {
+        "startLine": 535,
+        "startChar": 8,
+        "endLine": 535,
+        "endChar": 73
+      },
+      "revId": "2d1deab92a5dfc371dd1a4cecc2d31ada2d2bc67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
