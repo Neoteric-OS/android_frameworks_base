@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004120237",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1381040?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "b7b4f0f0_0d3304b1",
+          "description": "Change to \"core/java/android/net/NetworkAgent.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/net/NetworkAgent.java",
+              "range": {
+                "startLine": 1062,
+                "startChar": 47,
+                "endLine": 1062,
+                "endChar": 55
+              },
+              "replacement": "session"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "3d77e4a8_a363c193",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-30T18:42:10Z",
+      "side": 1,
+      "message": "Common typo found: \"sesssion\" -- should it be \"session\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 1062,
+        "startChar": 47,
+        "endLine": 1062,
+        "endChar": 55
+      },
+      "revId": "883b03c9b025d6021b49cee4a0238bfb8ef0c154",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
