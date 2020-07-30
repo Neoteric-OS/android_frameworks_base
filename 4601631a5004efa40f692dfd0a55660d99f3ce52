@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8712f0f9_92006f9b",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-07-30T08:02:32Z",
+      "side": 1,
+      "message": "Yes, I found there are still something pending there but it\u0027s located in packages/modules/NetworkStack. It will be in another commit.",
+      "parentUuid": "43f71cec_f856f6b3",
+      "revId": "4601631a5004efa40f692dfd0a55660d99f3ce52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9bdaeb7_2167af8c",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 2
@@ -77,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "5b252844_21ba8ed9",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-07-30T08:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9bdaeb7_2167af8c",
+      "range": {
+        "startLine": 1083,
+        "startChar": 64,
+        "endLine": 1083,
+        "endChar": 87
+      },
+      "revId": "4601631a5004efa40f692dfd0a55660d99f3ce52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29b2dae6_d8b5c826",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 2
@@ -97,6 +139,30 @@
       "revId": "4601631a5004efa40f692dfd0a55660d99f3ce52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8f2b6c_7cc36ba8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-07-30T08:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29b2dae6_d8b5c826",
+      "range": {
+        "startLine": 1479,
+        "startChar": 30,
+        "endLine": 1479,
+        "endChar": 41
+      },
+      "revId": "4601631a5004efa40f692dfd0a55660d99f3ce52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
