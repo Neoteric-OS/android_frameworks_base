@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8605793_bdac317a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-07-30T07:53:48Z",
+      "side": 1,
+      "message": "ok, according to the https://source.android.com/setup/contribute/respectful-code, it seems like \"allowlist\" is a noun, denylist is a noun too.",
+      "parentUuid": "fd59e63f_1c456263",
+      "revId": "4601631a5004efa40f692dfd0a55660d99f3ce52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43f71cec_f856f6b3",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 2
