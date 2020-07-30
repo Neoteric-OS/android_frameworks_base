@@ -16,6 +16,24 @@
       "revId": "a27c5c2dac596d9ba11eeebf844fb797c2ade8e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6289233_683887b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-07-30T09:08:48Z",
+      "side": 1,
+      "message": "Thanks for review. Yes, I think Jean will also need to take a look to provide owner vote for Vpn.java",
+      "parentUuid": "0b99e796_a0f91b36",
+      "revId": "a27c5c2dac596d9ba11eeebf844fb797c2ade8e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
