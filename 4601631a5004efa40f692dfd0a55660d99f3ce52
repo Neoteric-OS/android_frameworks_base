@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd59e63f_1c456263",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-07-30T07:12:30Z",
+      "side": 1,
+      "message": "Just a naming question: Should we put an adjective or a verb before \"list\"?\nPreviously, both of white and black are an adjective, right?\nShould we also follow them?",
+      "revId": "4601631a5004efa40f692dfd0a55660d99f3ce52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
