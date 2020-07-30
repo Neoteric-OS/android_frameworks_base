@@ -1,0 +1,31 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004117485",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1379678?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f8b76bc2_702f6267",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-30T16:44:13Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 1191,
+        "startChar": 29,
+        "endLine": 1191,
+        "endChar": 38
+      },
+      "revId": "22d5710f02789e7c1d1dc6edfc6dde717195e8a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
