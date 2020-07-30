@@ -2981,7 +2981,7 @@ public class PermissionManagerService {
         mSystemReady = true;
         if (mPrivappPermissionsViolations != null) {
             throw new IllegalStateException("Signature|privileged permissions not in "
-                    + "privapp-permissions whitelist: " + mPrivappPermissionsViolations);
+                    + "privapp-permissions allowlist: " + mPrivappPermissionsViolations);
         }
 
         mPermissionControllerManager = mContext.getSystemService(PermissionControllerManager.class);
