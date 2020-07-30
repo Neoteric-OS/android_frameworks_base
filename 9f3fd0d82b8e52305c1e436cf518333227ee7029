@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38198298_2cccc96d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-07-30T15:27:25Z",
+      "side": 1,
+      "message": "I\u0027m looking into moving the Inactivity Timeout logic and MessageHandler inner class completely to MouseCursorController. If we decide this is a worthy addition to this clean-up it would likely be in a separate CL, but I thought I\u0027d mention it here in case people have comments or suggestions regarding it.",
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
