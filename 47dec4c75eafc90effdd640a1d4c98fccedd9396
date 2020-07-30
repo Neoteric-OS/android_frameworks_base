@@ -33,6 +33,23 @@
       "revId": "47dec4c75eafc90effdd640a1d4c98fccedd9396",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e3c9eb4_aaac7df8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2020-07-30T16:53:42Z",
+      "side": 1,
+      "message": "The 19dp height/width change for the vibrate icon (packages/SystemUI/res/drawable/ic_volume_ringer_vibrate.xml) was intentional when icons were updated in Q. Perhaps for the overlay icons we may not actually want it to be 19dp x 19dp though. Evan, wdyt?",
+      "revId": "47dec4c75eafc90effdd640a1d4c98fccedd9396",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
