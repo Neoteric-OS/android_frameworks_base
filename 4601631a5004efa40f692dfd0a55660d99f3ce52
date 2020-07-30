@@ -16,6 +16,69 @@
       "revId": "4601631a5004efa40f692dfd0a55660d99f3ce52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43f71cec_f856f6b3",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-30T07:32:29Z",
+      "side": 1,
+      "message": "not for this CL, do we also want to change assertParcelSane?\nhttps://source.corp.google.com/aosp-master/packages/modules/NetworkStack/tests/lib/src/com/android/testutils/ParcelUtils.kt;l\u003d61?q\u003dassertParcelSane\u0026sq\u003dpackage:aosp-master\u0026start\u003d11",
+      "revId": "4601631a5004efa40f692dfd0a55660d99f3ce52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9bdaeb7_2167af8c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-30T07:32:29Z",
+      "side": 1,
+      "message": "is it better if we just use allowed/denied ?\nalso applies to other places that uses allowlisted/denylisted?",
+      "range": {
+        "startLine": 1083,
+        "startChar": 64,
+        "endLine": 1083,
+        "endChar": 87
+      },
+      "revId": "4601631a5004efa40f692dfd0a55660d99f3ce52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b2dae6_d8b5c826",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-30T07:32:29Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1479,
+        "startChar": 30,
+        "endLine": 1479,
+        "endChar": 41
+      },
+      "revId": "4601631a5004efa40f692dfd0a55660d99f3ce52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
