@@ -453,7 +453,7 @@ public class ViewDebug {
     static void dispatchCommand(View view, String command, String parameters,
             OutputStream clientStream) throws IOException {
 
-        // Paranoid but safe...
+        // Just being cautious...
         view = view.getRootView();
 
         if (REMOTE_COMMAND_DUMP.equalsIgnoreCase(command)) {
