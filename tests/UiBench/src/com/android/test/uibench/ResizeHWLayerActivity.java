@@ -19,11 +19,12 @@ import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Tests resizing of a View backed by a hardware layer.
@@ -36,7 +37,7 @@ public class ResizeHWLayerActivity extends AppCompatActivity {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
-        View child = new View(this);
+        final View child = new View(this);
         child.setBackgroundColor(Color.BLUE);
         child.setLayoutParams(new FrameLayout.LayoutParams(width, height));
         child.setLayerType(View.LAYER_TYPE_HARDWARE, null);

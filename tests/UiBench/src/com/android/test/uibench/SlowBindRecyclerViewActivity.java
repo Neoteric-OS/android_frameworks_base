@@ -17,11 +17,16 @@ package com.android.test.uibench;
 
 import android.content.Context;
 import android.os.Trace;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.adpfloader.AdpfLoader;
 import com.android.test.uibench.recyclerview.RvBoxAdapter;
 import com.android.test.uibench.recyclerview.RvCompatListActivity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SlowBindRecyclerViewActivity extends RvCompatListActivity {
@@ -41,12 +46,29 @@ public class SlowBindRecyclerViewActivity extends RvCompatListActivity {
 
     @Override
     protected RecyclerView.Adapter createAdapter() {
+        AdpfLoader loader = new AdpfLoader();
+        List<Integer> threadIds = new ArrayList<>();
+        threadIds.add(1);
+        threadIds.add(2);
+        threadIds.add(3);
+        long stageId = loader.createStage(threadIds, 33000);
+        loader.reportCpuCompletionTime(stageId, 30000);
+        loader.destroyStage(stageId);
+        threadIds.add(4);
+        loader.hintLowLatency(threadIds);
+        loader.hintLoadChange(AdpfLoader.UNIT_CPU, AdpfLoader.DIRECTION_HIGHER);
+        loader.hintMode(AdpfLoader.MODE_RUNNING, 40, 2);
+        loader.allowAppSpecificOptimizations(true);
+        loader.allowFidelityDegradation(false);
         return new RvBoxAdapter(this, TextUtils.buildSimpleStringList()) {
             @Override
             public void onBindViewHolder(ViewHolder holder, int position) {
                 Trace.beginSection("bind item " + position);
-
-                spinWaitMs(3);
+                if (position % 20 == 0) {
+                    spinWaitMs(20);
+                } else {
+                    spinWaitMs(2);
+                }
                 super.onBindViewHolder(holder, position);
                 Trace.endSection();
             }
