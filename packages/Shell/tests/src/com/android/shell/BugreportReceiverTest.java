@@ -369,7 +369,7 @@ public class BugreportReceiverTest {
         waitForScreenshotButtonEnabled(true);
 
         DetailsUi detailsUi = new DetailsUi(mUiBot, ID, NAME);
-        detailsUi.assertName(NAME);  // Sanity check
+        detailsUi.assertName(NAME);  // Validation check
 
         cancelFromNotification();
         mUiBot.collapseStatusBar();
@@ -559,7 +559,7 @@ public class BugreportReceiverTest {
             // Clear properties
             mContext.getSharedPreferences(PREFS_BUGREPORT, Context.MODE_PRIVATE)
                     .edit().clear().commit();
-            // Sanity check...
+            // Validation check...
             assertEquals("Did not reset properties", STATE_UNKNOWN,
                     getWarningState(mContext, STATE_UNKNOWN));
         } else {
