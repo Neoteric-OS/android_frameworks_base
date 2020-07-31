@@ -1,0 +1,9 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Jeff Sharkey <jsharkey@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Lais Andrade <lsandrade@google.com>
+Submitted-at: Fri, 31 Jul 2020 14:06:35 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1382537
+Project: platform/frameworks/base
+Branch: refs/heads/master
