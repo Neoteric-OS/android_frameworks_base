@@ -17,8 +17,11 @@ package com.android.test.uibench;
 
 import android.content.Context;
 import android.os.Trace;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.adpfloader.AdpfLoader;
 import com.android.test.uibench.recyclerview.RvBoxAdapter;
 import com.android.test.uibench.recyclerview.RvCompatListActivity;
 
@@ -41,12 +44,17 @@ public class SlowBindRecyclerViewActivity extends RvCompatListActivity {
 
     @Override
     protected RecyclerView.Adapter createAdapter() {
+        AdpfLoader loader = new AdpfLoader();
+        loader.permitFidelityDegradation(false);
         return new RvBoxAdapter(this, TextUtils.buildSimpleStringList()) {
             @Override
             public void onBindViewHolder(ViewHolder holder, int position) {
                 Trace.beginSection("bind item " + position);
-
-                spinWaitMs(3);
+                if (position % 20 == 0) {
+                    spinWaitMs(20);
+                } else {
+                    spinWaitMs(2);
+                }
                 super.onBindViewHolder(holder, position);
                 Trace.endSection();
             }
