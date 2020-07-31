@@ -13937,6 +13937,11 @@ public class PackageManagerService extends IPackageManager.Stub
 
     @Override
     public boolean setDefaultBrowserPackageName(String packageName, int userId) {
+        return setDefaultBrowserPackageNameInternal(packageName, false, userId);
+    }
+
+    private boolean setDefaultBrowserPackageNameInternal(String packageName, boolean async,
+            int userId) {
         mContext.enforceCallingOrSelfPermission(
                 android.Manifest.permission.SET_PREFERRED_APPLICATIONS, null);
         if (UserHandle.getCallingUserId() != userId) {
@@ -13954,9 +13959,12 @@ public class PackageManagerService extends IPackageManager.Stub
             Slog.e(TAG, "mDefaultBrowserProvider is null");
             return false;
         }
-        boolean successful = provider.setDefaultBrowser(packageName, userId);
-        if (!successful) {
-            return false;
+        if (async) {
+            provider.setDefaultBrowserAsync(packageName, userId);
+        } else {
+            if (!provider.setDefaultBrowser(packageName, userId)) {
+                return false;
+            }
         }
         if (packageName != null) {
             synchronized (mPackages) {
@@ -19866,7 +19874,7 @@ public class PackageManagerService extends IPackageManager.Stub
         final String defaultBrowserPackageName = getDefaultBrowserPackageName(userId);
         if (!TextUtils.isEmpty(defaultBrowserPackageName)) {
             if (packageName.equals(defaultBrowserPackageName)) {
-                setDefaultBrowserPackageName(null, userId);
+                setDefaultBrowserPackageNameInternal(null, true, userId);
             }
         }
     }
