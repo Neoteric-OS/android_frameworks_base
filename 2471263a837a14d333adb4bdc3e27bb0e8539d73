@@ -52,6 +52,23 @@
       "revId": "2471263a837a14d333adb4bdc3e27bb0e8539d73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "741cbe36_f2aafaff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-02T23:52:43Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a very good idea in terms of privacy. If the user says location off, that means location off, it doesn\u0027t mean location off except for pieces where the OEM still would like to use it.",
+      "revId": "2471263a837a14d333adb4bdc3e27bb0e8539d73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
