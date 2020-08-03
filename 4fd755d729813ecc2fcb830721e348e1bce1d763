@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "591d3127_0a6d7bc8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-08-03T14:00:38Z",
+      "side": 1,
+      "message": "Hmm, is the commit message correct?  This CL appears to only be adjusting \"ending\" which isn\u0027t related to inclusive words.",
+      "revId": "4fd755d729813ecc2fcb830721e348e1bce1d763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
