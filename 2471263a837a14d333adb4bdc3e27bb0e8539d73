@@ -69,6 +69,24 @@
       "revId": "2471263a837a14d333adb4bdc3e27bb0e8539d73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13c14be6_a99b4521",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-08-03T00:53:25Z",
+      "side": 1,
+      "message": "Yes, so before we provide a solution to OEM, they may fix the issue by below options:\n1. Overlay the URL directly.\n2. Use parallel probe.\n\nMaybe provide a new option for OEM to configure which country should use which mcc is also a solution, so that we can use getNetworkCountryIso() instead.",
+      "parentUuid": "741cbe36_f2aafaff",
+      "revId": "2471263a837a14d333adb4bdc3e27bb0e8539d73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
