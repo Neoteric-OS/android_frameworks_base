@@ -2834,7 +2834,7 @@ final public class MediaCodec {
                 info = mDequeuedOutputInfos.remove(index);
             }
         }
-        releaseOutputBuffer(index, render, false /* updatePTS */, 0 /* dummy */);
+        releaseOutputBuffer(index, render, false /* updatePTS */, 0 /* placeholder */);
     }
 
     /**
