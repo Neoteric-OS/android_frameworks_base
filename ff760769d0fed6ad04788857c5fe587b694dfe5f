@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dd11c67_a1aae88e",
+        "filename": "packages/Shell/tests/src/com/android/shell/BugreportReceiverTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-08-03T15:18:11Z",
+      "side": 1,
+      "message": "I think confidence check makes more sense here...",
+      "range": {
+        "startLine": 562,
+        "startChar": 15,
+        "endLine": 562,
+        "endChar": 25
+      },
+      "revId": "ff760769d0fed6ad04788857c5fe587b694dfe5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
