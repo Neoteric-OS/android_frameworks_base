@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06810d20_f1157179",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-03T14:44:16Z",
+      "side": 1,
+      "message": "Mostly LGTM, see inline.",
+      "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29d4d9df_567d3cc9",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-03T14:44:16Z",
+      "side": 1,
+      "message": "Nit: \"subnet\" is one word. Change N to lowercase?",
+      "range": {
+        "startLine": 150,
+        "startChar": 47,
+        "endLine": 150,
+        "endChar": 53
+      },
+      "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae5bb5c_138091b4",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-03T14:44:16Z",
+      "side": 1,
+      "message": "Nit: remove extra *.",
+      "range": {
+        "startLine": 165,
+        "startChar": 24,
+        "endLine": 165,
+        "endChar": 25
+      },
+      "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1536a03a_dafd174a",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-03T14:44:16Z",
+      "side": 1,
+      "message": "Nit: \"enable\" is a verb. Change to shouldEnable?",
+      "range": {
+        "startLine": 211,
+        "startChar": 19,
+        "endLine": 211,
+        "endChar": 27
+      },
+      "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e850688_36bf6c63",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-03T14:44:16Z",
+      "side": 1,
+      "message": "Using \"int\" to represent IPv4 addresses is strongly discouraged. Also, the output of this method never changes.",
+      "range": {
+        "startLine": 277,
+        "startChar": 12,
+        "endLine": 277,
+        "endChar": 15
+      },
+      "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7859f157_be864dea",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-03T14:44:16Z",
+      "side": 1,
+      "message": "For safety, should we always reserve the legacy P2P prefix, even if the setting is off?\n\nWhat if:\n\n1. The config option is disabled, and shouldEnableWifiP2pDedicatedIp() returns false.\n2. USB or wifi tethering is enabled and we pick 192.168.49.xxx.\n3. The configuration changes (e.g., due to MCC/MNC change, RRO app update, ...) and shouldEnableWifiP2pDedicatedIp starts returning true.\n4. The user enables wifi p2p.",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 288,
+        "endChar": 20
+      },
+      "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa10eba3_1d809f08",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-03T14:44:16Z",
+      "side": 1,
+      "message": "I think we need more tests here. For example, we should at least test that when the configuration is enabled, wifi P2P gets the configured address.",
+      "range": {
+        "startLine": 306,
+        "startChar": 4,
+        "endLine": 306,
+        "endChar": 5
+      },
+      "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
