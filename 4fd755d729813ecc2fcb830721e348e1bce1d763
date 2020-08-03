@@ -16,6 +16,24 @@
       "revId": "4fd755d729813ecc2fcb830721e348e1bce1d763",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04fa6ba6_b57284ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2020-08-03T14:05:18Z",
+      "side": 1,
+      "message": "Sorry! I\u0027ve changed the description.",
+      "parentUuid": "591d3127_0a6d7bc8",
+      "revId": "4fd755d729813ecc2fcb830721e348e1bce1d763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
