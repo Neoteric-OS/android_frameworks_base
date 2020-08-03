@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "091c66c5_73b700ea",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:41Z",
+      "side": 1,
+      "message": "Ack, let\u0027s keep it as is for now.",
+      "parentUuid": "828a8cbd_0ab66670",
+      "range": {
+        "startLine": 864,
+        "startChar": 17,
+        "endLine": 864,
+        "endChar": 26
+      },
+      "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f932b13_cd63f05b",
         "filename": "core/java/android/net/NetworkIdentity.java",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3fb0e6b7_764207ba",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:41Z",
+      "side": 1,
+      "message": "Add a todo.\nTestNetworkSpecifier will not be big but it will need 3~4 CL across gits, and that involves cts/gts. So I\u0027ll do that saperately in later CLs.\n\nI\u0027m wondering if it is good to have a TestNetworkFactory inside TestNetworkService, where we can specify the requirement as NetworkRequest that contains TestNetworkSpecifer and NetworkCapabilities, and pass it to ConnectivityManager. \nIf so, once this whole CL stack is finished,\nPeople doesn\u0027t need to manually configure lp, interface, dns, etc.\nNeed to think more thoroughly though.\nany idea?",
+      "parentUuid": "3f932b13_cd63f05b",
+      "range": {
+        "startLine": 231,
+        "startChar": 44,
+        "endLine": 231,
+        "endChar": 66
+      },
+      "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921aa90e_bbef61a2",
         "filename": "core/java/android/net/NetworkTemplate.java",
         "patchSetId": 1
@@ -92,6 +140,30 @@
       "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3c8ef3_c5045110",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "921aa90e_bbef61a2",
+      "range": {
+        "startLine": 474,
+        "startChar": 29,
+        "endLine": 474,
+        "endChar": 36
+      },
+      "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
