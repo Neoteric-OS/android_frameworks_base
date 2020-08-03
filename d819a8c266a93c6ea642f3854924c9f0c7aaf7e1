@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad82d951_fe7eabae",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:15Z",
+      "side": 1,
+      "message": "Hmmm, it won\u0027t compile.\nThis function is supposed to be used by TestDnsServer in \nandroid.networkstack.util.server",
+      "parentUuid": "332107e2_959a1bc2",
+      "range": {
+        "startLine": 67,
+        "startChar": 9,
+        "endLine": 67,
+        "endChar": 26
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a3cf478_e3c68aae",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "51a4a269_bd3d6eaa",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3cf478_e3c68aae",
+      "range": {
+        "startLine": 79,
+        "startChar": 81,
+        "endLine": 79,
+        "endChar": 83
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1712742_0af62983",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2020-01-30T07:34:03Z",
       "side": 1,
       "message": "ISTM this can be protected. Also probably @VisibleForTesting.",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 14
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859d90da_9c47d1f1",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:15Z",
+      "side": 1,
+      "message": "Hmm this won\u0027t compile too, see comments above.",
+      "parentUuid": "e1712742_0af62983",
       "range": {
         "startLine": 82,
         "startChar": 8,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5ab40fc7_c752b3fd",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ced8dd2_a60d08f2",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 48
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59458c0a_561aab97",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18bdea3_9c26b4cb",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59458c0a_561aab97",
+      "range": {
+        "startLine": 254,
+        "startChar": 12,
+        "endLine": 254,
+        "endChar": 18
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9c52c327_cee2b6cb",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b5f519e_97e61eb5",
+      "range": {
+        "startLine": 255,
+        "startChar": 21,
+        "endLine": 255,
+        "endChar": 23
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e7916a8_cc8f59f8",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fd3d73_612042d6",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:15Z",
+      "side": 1,
+      "message": "Yes you are right.\nDone by checking input string with regular expression.\nSo such case should not happen?\nSee if it works for you.",
+      "parentUuid": "6e7916a8_cc8f59f8",
+      "range": {
+        "startLine": 260,
+        "startChar": 32,
+        "endLine": 260,
+        "endChar": 40
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,54 @@
     },
     {
       "key": {
+        "uuid": "77b004c8_810edc9b",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff5b2b78_36c7b2dc",
+      "range": {
+        "startLine": 322,
+        "startChar": 12,
+        "endLine": 322,
+        "endChar": 21
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1ea948_4cc974aa",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4878036e_168a7687",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 322,
+        "endChar": 48
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd0996b9_627c297b",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 2
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "50281a7f_96acae80",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd0996b9_627c297b",
+      "range": {
+        "startLine": 396,
+        "startChar": 12,
+        "endLine": 396,
+        "endChar": 28
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffcd2683_bec9c7c8",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 2
@@ -252,6 +492,30 @@
       "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5423c3_cfc65eea",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-03T08:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffcd2683_bec9c7c8",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 44
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
