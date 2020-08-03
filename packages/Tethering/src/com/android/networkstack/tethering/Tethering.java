@@ -320,10 +320,10 @@ public class Tethering {
         mExecutor = new TetheringThreadExecutor(mHandler);
         mActiveDataSubIdListener = new ActiveDataSubIdListener(mExecutor);
         mNetdCallback = new NetdCallback();
-        mPrivateAddressCoordinator = new PrivateAddressCoordinator(mContext);
 
         // Load tethering configuration.
         updateConfiguration();
+        mPrivateAddressCoordinator = new PrivateAddressCoordinator(mContext, mConfig);
 
         // Must be initialized after tethering configuration is loaded because BpfCoordinator
         // constructor needs to use the configuration.
