@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "5703d95f_b6c0fe56",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-04T05:53:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29d4d9df_567d3cc9",
+      "range": {
+        "startLine": 150,
+        "startChar": 47,
+        "endLine": 150,
+        "endChar": 53
+      },
+      "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ae5bb5c_138091b4",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
         "patchSetId": 1
@@ -62,6 +86,30 @@
       "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ac3cca_15f9c509",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-04T05:53:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ae5bb5c_138091b4",
+      "range": {
+        "startLine": 165,
+        "startChar": 24,
+        "endLine": 165,
+        "endChar": 25
+      },
+      "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "7d7b0077_13a8763c",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-04T05:53:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1536a03a_dafd174a",
+      "range": {
+        "startLine": 211,
+        "startChar": 19,
+        "endLine": 211,
+        "endChar": 27
+      },
+      "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e850688_36bf6c63",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
         "patchSetId": 1
@@ -108,6 +180,30 @@
       "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e99cc8_efd95e06",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-04T05:53:39Z",
+      "side": 1,
+      "message": "Ohh, refine the function. The \"int\" is because there is \"int\" random number used for prefix selection. And this function is used to provide the expected \"int\" to hook function(PrivateAddressCoordinator#getRandomSubAddr()).",
+      "parentUuid": "1e850688_36bf6c63",
+      "range": {
+        "startLine": 277,
+        "startChar": 12,
+        "endLine": 277,
+        "endChar": 15
+      },
+      "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "6d56e979_a4eefb9c",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-04T05:53:39Z",
+      "side": 1,
+      "message": "Indeed, done.",
+      "parentUuid": "7859f157_be864dea",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 288,
+        "endChar": 20
+      },
+      "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa10eba3_1d809f08",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
         "patchSetId": 1
@@ -154,6 +274,30 @@
       "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8df639f_69bacd97",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-04T05:53:39Z",
+      "side": 1,
+      "message": "l.303 ~ l.305 already test that wifi P2P should get configured address if configuration is enabled.",
+      "parentUuid": "fa10eba3_1d809f08",
+      "range": {
+        "startLine": 306,
+        "startChar": 4,
+        "endLine": 306,
+        "endChar": 5
+      },
+      "revId": "3bba8cf348b5e519b851986f8b13c59bbaa1ece4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
