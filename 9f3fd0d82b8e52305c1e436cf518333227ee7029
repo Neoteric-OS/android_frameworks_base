@@ -181,6 +181,30 @@
     },
     {
       "key": {
+        "uuid": "a1de51f3_69a5be15",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-08-04T22:09:57Z",
+      "side": 1,
+      "message": "So currently PointerControllerContext::LooperCallback and PointerControllerContext::MessageHandler need access to mContext. How about making them friend classes to PointerController since they\u0027re small and closely related?",
+      "parentUuid": "2e62ddcd_91ee4b43",
+      "range": {
+        "startLine": 193,
+        "startChar": 29,
+        "endLine": 193,
+        "endChar": 37
+      },
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f91e31c_d7e0bb44",
         "filename": "libs/input/TouchSpotController.cpp",
         "patchSetId": 6
