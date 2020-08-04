@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "4bcfb784_2cb7c936",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-08-04T19:43:47Z",
+      "side": 1,
+      "message": "Oh this is where it is used. Sorry I should\u0027ve caught it before.\n\nIs there any reason why you can\u0027t just assign it in the create() like what it does to HandlerController \u0026 CallbackController? You should also move those 2 assignments to pointer in HandlerController \u0026 CallbackController into Context as well.\n\nGet rid of mSelf. That is bound to mem leak.",
+      "range": {
+        "startLine": 222,
+        "startChar": 8,
+        "endLine": 223,
+        "endChar": 57
+      },
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c106643_73d72213",
         "filename": "libs/input/PointerController.h",
         "patchSetId": 6
