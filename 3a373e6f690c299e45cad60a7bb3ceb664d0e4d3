@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "394b4a88_b2f0254d",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4195,
+      "author": {
+        "id": 1647935
+      },
+      "writtenOn": "2020-08-04T09:41:08Z",
+      "side": 1,
+      "message": "Dear Jean-Michel Trivi\n\nHi.\nI have checked another codes but many other @SystemApi functions don\u0027t indicating some privileged permission.\nActually we gave just @hide annotation for this function but modified to @SystemApi according to comment #4071 .\nWe know this function is still able to access regardless of @SystemApi annotation.\nWhat we intended is just hiding this function not to be disclosed SDK.\nSo is it fine to undo the modification as @hide by your comment ?\n\nRegards,\nSungyeon Kim",
+      "parentUuid": "1a63e36f_bb44aefe",
+      "range": {
+        "startLine": 4195,
+        "startChar": 4,
+        "endLine": 4195,
+        "endChar": 14
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acfeb9cf_7b2062c9",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 9
