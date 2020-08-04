@@ -88,6 +88,30 @@
     },
     {
       "key": {
+        "uuid": "7a4321a9_3cf54bec",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-08-04T21:42:02Z",
+      "side": 1,
+      "message": "We did this for symmetry to MessageHandler \u0026 LooperCallback, but they seem to be in a different thread so we need weak_ptr to be thread-safe.\n\nI\u0027m OK to change it to reference as what we do in MouseCursorController \u0026 TouchSpotController.",
+      "parentUuid": "8e9e52b5_fc6ffe29",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 48
+      },
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ff1f722_3f4e15c1",
         "filename": "libs/input/PointerController.h",
         "patchSetId": 6
@@ -168,6 +192,30 @@
       "writtenOn": "2020-08-04T20:09:34Z",
       "side": 1,
       "message": "can these be unique_ptr?",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 9
+      },
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc01cc9f_5daa306c",
+        "filename": "libs/input/TouchSpotController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-08-04T21:42:02Z",
+      "side": 1,
+      "message": "This was copied and pasted from old PointerController so I would suggest considering doing it in a separate CL. This CL is already too big.",
+      "parentUuid": "0f91e31c_d7e0bb44",
       "range": {
         "startLine": 166,
         "startChar": 4,
