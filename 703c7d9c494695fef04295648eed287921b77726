@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "163f6177_5b00c333",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-04T15:51:40Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca42de52_c3594620",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-04T15:51:40Z",
+      "side": 1,
+      "message": "Per discussion, we should consider changing this to true. Not for this CL.",
+      "range": {
+        "startLine": 75,
+        "startChar": 88,
+        "endLine": 75,
+        "endChar": 93
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06d11f0_9b6d0273",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-04T15:51:40Z",
+      "side": 1,
+      "message": "It\u0027s a bit strange to have the PrivateAddressCoordinator, which is final, be created from a configuration that can change.\n\nMaybe add a comment explaining that it\u0027s OK for the configuration to be passed to the PrivateAddressCoordinator at construction time because the only part of the configuration it uses is shouldEnableWifiP2pDedicatedIp(), and we do not currently support changing that?\n\n(Note: it *can* change if the RRO package is updated, if the MCC/MNC changes, etc. But we can choose not to support it changing.)",
+      "range": {
+        "startLine": 326,
+        "startChar": 77,
+        "endLine": 326,
+        "endChar": 84
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b874d6_da96d5de",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-04T15:51:40Z",
+      "side": 1,
+      "message": "Call this setupIpServers (plural) because it sets up 4, not just one?",
+      "range": {
+        "startLine": 74,
+        "startChar": 17,
+        "endLine": 74,
+        "endChar": 30
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56100412_7ae828e3",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-04T15:51:40Z",
+      "side": 1,
+      "message": "Suggest Byte.toUnsignedInt(ipv4Address[2]) instead. It does the same thing, but it makes it clear that it\u0027s just converting to an unsigned integer instead of performing bitwise operations.",
+      "range": {
+        "startLine": 280,
+        "startChar": 21,
+        "endLine": 280,
+        "endChar": 42
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35c534f_bed5a718",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-04T15:51:40Z",
+      "side": 1,
+      "message": "Typo, reserved. Also elsewhere. Also, maybe rename to assertWifiP2pPrefixNotUsedForHotspot?",
+      "range": {
+        "startLine": 284,
+        "startChar": 23,
+        "endLine": 284,
+        "endChar": 27
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc19e3c_00582392",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-04T15:51:40Z",
+      "side": 1,
+      "message": "is",
+      "range": {
+        "startLine": 298,
+        "startChar": 11,
+        "endLine": 298,
+        "endChar": 16
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f021ff_3c1cc849",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-04T15:51:40Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 298,
+        "startChar": 20,
+        "endLine": 298,
+        "endChar": 28
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
