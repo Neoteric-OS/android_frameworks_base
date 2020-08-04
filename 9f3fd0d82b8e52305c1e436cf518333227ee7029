@@ -228,6 +228,30 @@
     },
     {
       "key": {
+        "uuid": "c4a99521_e5fd9082",
+        "filename": "libs/input/TouchSpotController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-08-04T21:51:13Z",
+      "side": 1,
+      "message": "Yes, I didn\u0027t sort through which code was copied vs new code. Separate CL sgtm",
+      "parentUuid": "dc01cc9f_5daa306c",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 9
+      },
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51c6ccf1_78bb423e",
         "filename": "libs/input/TouchSpotController.h",
         "patchSetId": 6
