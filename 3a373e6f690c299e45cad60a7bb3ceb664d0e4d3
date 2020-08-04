@@ -45,6 +45,30 @@
       "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ce0f14_cffaceb8",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4196,
+      "author": {
+        "id": 1647935
+      },
+      "writtenOn": "2020-08-04T04:44:24Z",
+      "side": 1,
+      "message": "Hi Mr.Trivi\n\nWhat thread are the callbacks going to be called from?\n    ㄴThese will be called by EventHandler thread in this MediaPlayer.\n      As you see in line 3328, the Handler processes callbacks from Native media framework side.\nNormally this would require an Executor, but this class gets a pass as legacy, and would require an optional Handler.\n    ㄴThe executor is the EventHandler I mentioned above.\n      As you said, some optional, detailed handler is needed.\n      For the needs, vendor side(or anyone who wants to do something according to MEDIA_IMS_RX_NOTICE) must provide logic that is formed OnImsRxNoticeListener.\n      This is just register the handler to this MediaPlayer.\n\nIf you feel my answer is not enough or not tuned in you, please feel free to make a reply.\n\nThanks",
+      "parentUuid": "acfeb9cf_7b2062c9",
+      "range": {
+        "startLine": 4196,
+        "startChar": 73,
+        "endLine": 4196,
+        "endChar": 81
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
