@@ -16,6 +16,29 @@
       "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c106643_73d72213",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-08-04T19:37:22Z",
+      "side": 1,
+      "message": "can you explain a bit more what you are trying to do here?\n\nit looks like this is keeping a strong pointer to itself, which means it will never die?",
+      "range": {
+        "startLine": 190,
+        "startChar": 4,
+        "endLine": 191,
+        "endChar": 45
+      },
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
