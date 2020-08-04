@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "951321e1_87a761b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004304
+      },
+      "writtenOn": "2020-08-04T18:21:56Z",
+      "side": 1,
+      "message": "PTAL, mankoff!",
+      "revId": "657dd7718cb53fb6c96508bd1db23966d3cff1b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
