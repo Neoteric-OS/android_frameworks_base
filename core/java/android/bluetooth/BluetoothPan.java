@@ -65,6 +65,7 @@ public final class BluetoothPan implements BluetoothProfile {
      * <li> {@link BluetoothDevice#EXTRA_DEVICE} - The remote device. </li>
      * <li> {@link #EXTRA_LOCAL_ROLE} - Which local role the remote device is
      * bound to. </li>
+     * <li> {@link #EXTRA_TETHERING_STATUS} - Expected tethering status. </li>
      * </ul>
      *
      * <p>{@link #EXTRA_STATE} or {@link #EXTRA_PREVIOUS_STATE} can be any of
@@ -131,6 +132,30 @@ public final class BluetoothPan implements BluetoothProfile {
      * The local device is acting as a PAN User.
      */
     public static final int LOCAL_PANU_ROLE = 2;
+
+    /**
+     * Extra for {@link #ACTION_CONNECTION_STATE_CHANGED} intent
+     * Indicate expected tethering state
+     * Tethering module should listen this to determin tethering state
+     * It can be one of {@link #TETHERING_STATUS_ON} or {@link #TETHERING_STATUS_OFF}.
+     */
+    public static final String EXTRA_TETHERING_STATUS =
+            "android.bluetooth.pan.extra.TETHERING_STATUS";
+
+    /** @hide **/
+    @IntDef({TETHERING_STATUS_NONE, TETHERING_STATUS_ON, TETHERING_STATUS_OFF})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface TetheringStatus{}
+    public static final int TETHERING_STATUS_NONE = 0;
+    /**
+     * Switch tethering status to ON
+     */
+    public static final int TETHERING_STATUS_ON = 1;
+
+    /**
+     * Switch tethering status to OFF
+     */
+    public static final int TETHERING_STATUS_OFF = 2;
 
     /** @hide */
     @IntDef({PAN_ROLE_NONE, REMOTE_NAP_ROLE, REMOTE_PANU_ROLE})
