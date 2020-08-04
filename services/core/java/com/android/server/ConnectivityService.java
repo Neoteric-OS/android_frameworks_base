@@ -56,6 +56,7 @@ import static android.net.ConnectivityManager.getNetworkTypeName;
 import static android.net.ConnectivityManager.isNetworkTypeValid;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_PRIVDNS;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_PARTIAL;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_SKIPPED;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_ENTERPRISE;
@@ -3390,8 +3391,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
             final NetworkAgentInfo nai = getNetworkAgentInfoForNetId(mNetId);
             if (nai == null) return;
 
+            // NetworkMonitor reports the network validation result as a bitmask while
+            // ConnectivityDiagnostics treats this value as an int. Convert the result to a single
+            // logical value for ConnectivityDiagnostics.
+            final int validationResult = networkMonitorValidationResultToConnDiagsValidationResult(
+                    p.result);
+
             final PersistableBundle extras = new PersistableBundle();
-            extras.putInt(KEY_NETWORK_VALIDATION_RESULT, p.result);
+            extras.putInt(KEY_NETWORK_VALIDATION_RESULT, validationResult);
             extras.putInt(KEY_NETWORK_PROBES_SUCCEEDED_BITMASK, p.probesSucceeded);
             extras.putInt(KEY_NETWORK_PROBES_ATTEMPTED_BITMASK, p.probesAttempted);
 
@@ -3464,6 +3471,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
         @Override
         public String getInterfaceHash() {
             return this.HASH;
+        }
+    }
+
+    /**
+     * Converts the given NetworkMonitor-specific validation result bitmask to a
+     * ConnectivityDiagnostics-specific validation result int.
+     */
+    private int networkMonitorValidationResultToConnDiagsValidationResult(int validationResult) {
+        if ((validationResult & NETWORK_VALIDATION_RESULT_SKIPPED) != 0) {
+            return ConnectivityReport.NETWORK_VALIDATION_RESULT_SKIPPED;
+        } else if ((validationResult & NETWORK_VALIDATION_RESULT_VALID) != 0) {
+            if ((validationResult & NETWORK_VALIDATION_RESULT_PARTIAL) != 0) {
+                return ConnectivityReport.NETWORK_VALIDATION_RESULT_PARTIALLY_VALID;
+            } else {
+                return ConnectivityReport.NETWORK_VALIDATION_RESULT_VALID;
+            }
+        } else {
+            return ConnectivityReport.NETWORK_VALIDATION_RESULT_INVALID;
         }
     }
 
@@ -4686,7 +4711,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case EVENT_REVALIDATE_NETWORK: {
-                    handleReportNetworkConnectivity((Network) msg.obj, msg.arg1, toBool(msg.arg2));
+                    handleReportNetworkConnectivity((NetworkAgentInfo) msg.obj, msg.arg1,
+                            toBool(msg.arg2));
                     break;
                 }
                 case EVENT_PRIVATE_DNS_SETTINGS_CHANGED:
@@ -4859,23 +4885,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         mHandler.sendMessage(
-                mHandler.obtainMessage(EVENT_REVALIDATE_NETWORK, uid, connectivityInfo, network));
+                mHandler.obtainMessage(EVENT_REVALIDATE_NETWORK, uid, connectivityInfo, nai));
     }
 
     private void handleReportNetworkConnectivity(
-            Network network, int uid, boolean hasConnectivity) {
-        final NetworkAgentInfo nai;
-        if (network == null) {
-            nai = getDefaultNetwork();
-        } else {
-            nai = getNetworkAgentInfoForNetwork(network);
-        }
+            NetworkAgentInfo nai, int uid, boolean hasConnectivity) {
         if (nai == null || nai.networkInfo.getState() == NetworkInfo.State.DISCONNECTING ||
             nai.networkInfo.getState() == NetworkInfo.State.DISCONNECTED) {
             return;
         }
         // Revalidate if the app report does not match our current validated state.
         if (hasConnectivity == nai.lastValidated) {
+            // The Network will not be revalidated so a new ConnectivityReport will not be
+            // generated. Notify ConnDiags to send the cached report instead. Note that there may
+            // not be a cached report available at the time this message is sent to the ConnDiags
+            // Handler - this will be handled in the ConnDiags Handler.
+            mConnectivityDiagnosticsHandler.sendMessage(
+                    mConnectivityDiagnosticsHandler.obtainMessage(
+                            ConnectivityDiagnosticsHandler.EVENT_SEND_CACHED_CONNECTIVITY_REPORT,
+                            nai));
             return;
         }
         if (DBG) {
@@ -8704,6 +8732,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
          */
         private static final int EVENT_NETWORK_CONNECTIVITY_REPORTED = 5;
 
+        /**
+         * Event for ConnectivityDiagnosticsHandler to send a previously created ConnectivityReport.
+         * obj = {@link NetworkAgentInfo} that contains the cached {@link ConnectivityReport} to be
+         * sent. If the NetworkAgentInfo does not have a cached report, this event is a no-op.
+         */
+        private static final int EVENT_SEND_CACHED_CONNECTIVITY_REPORT = 6;
+
         private ConnectivityDiagnosticsHandler(Looper looper) {
             super(looper);
         }
@@ -8739,6 +8774,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
                 case EVENT_NETWORK_CONNECTIVITY_REPORTED: {
                     handleNetworkConnectivityReported((NetworkAgentInfo) msg.obj, toBool(msg.arg1));
+                    break;
+                }
+                case EVENT_SEND_CACHED_CONNECTIVITY_REPORT: {
+                    handleSendCachedConnectivityReport((NetworkAgentInfo) msg.obj);
                     break;
                 }
                 default: {
@@ -8915,6 +8954,27 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         networkCapabilities,
                         extras);
         nai.setConnectivityReport(report);
+
+        handleSendCachedConnectivityReport(nai);
+    }
+
+    private void handleSendCachedConnectivityReport(@NonNull NetworkAgentInfo nai) {
+        // Remove all subsequently queued SEND_CACHED messages for this NetworkAgent to prevent
+        // races where a SEND_CACHED message is enqueued after a NETWORK_TESTED message. Without
+        // this, a duplicate report will be sent.
+        mConnectivityDiagnosticsHandler.removeMessages(
+                ConnectivityDiagnosticsHandler.EVENT_SEND_CACHED_CONNECTIVITY_REPORT, nai);
+
+        // #reportNetworkConnectivity sends the cached report for a Network if the reported
+        // connectivity matches the known connectivity. Because #reportNetworkConnectivity may be
+        // called for a Network before it has completed validation (and has a cached report
+        // available), check for null before notifying registrants.
+        //
+        // Note that it is possible for the Network's cached report to be updated between when
+        // #reportNetworkConnectivity enqueues the SEND_CACHED message and when it is handled here.
+        final ConnectivityReport report = nai.getConnectivityReport();
+        if (report == null) return;
+
         final List<IConnectivityDiagnosticsCallback> results =
                 getMatchingPermissionedCallbacks(nai);
         for (final IConnectivityDiagnosticsCallback cb : results) {
