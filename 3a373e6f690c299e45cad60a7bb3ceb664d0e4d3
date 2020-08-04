@@ -69,6 +69,30 @@
       "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2de9e3_3755e137",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4196,
+      "author": {
+        "id": 1647935
+      },
+      "writtenOn": "2020-08-04T06:02:16Z",
+      "side": 1,
+      "message": "I checked legacy MediaPlayer code \u0026 your comment again.\nWe have written this codes like setting listeners for such as MEDIA_PREPARED \u0026 MEDIA_PLAYBACK_COMPLETE.\nBut it seems you want to make us following a style such as MEDIA_TIME_DISCONTINUITY that gets its listener \u0026 handler from outside(App side) to separate main event Handler and the optional Handler.\nIs it right ?",
+      "parentUuid": "53ce0f14_cffaceb8",
+      "range": {
+        "startLine": 4196,
+        "startChar": 73,
+        "endLine": 4196,
+        "endChar": 81
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
