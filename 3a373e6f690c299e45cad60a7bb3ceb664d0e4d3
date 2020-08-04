@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3d0d18ce_6f77c0a6",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4195,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2020-08-04T15:11:07Z",
+      "side": 1,
+      "message": "Sorry I should have been more clear: it is now API approval policy to only make @SystemApi the APIs that are in any way sensitive, and should be behind a system permission. Correct, you will find existing @SystemApi that are not guarded, but those are older, and all Android R @SystemApi are guarded.\nIF this doesn\u0027t apply, then the API is candidate for entering the SDK and be made public. The thing I don\u0027t understand here is that typically MediaPlayer users do not manage the buffering, it is handled internally by MediaPlayer. So what is the use case here? Who would be using this API and for what purpose?",
+      "parentUuid": "70370e2e_ee8bdb80",
+      "range": {
+        "startLine": 4195,
+        "startChar": 4,
+        "endLine": 4195,
+        "endChar": 14
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acfeb9cf_7b2062c9",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 9
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "I checked legacy MediaPlayer code \u0026 your comment again.\nWe have written this codes like setting listeners for such as MEDIA_PREPARED \u0026 MEDIA_PLAYBACK_COMPLETE.\nBut it seems you want to make us following a style such as MEDIA_TIME_DISCONTINUITY that gets its listener \u0026 handler from outside(App side) to separate main event Handler and the optional Handler.\nIs it right ?",
       "parentUuid": "53ce0f14_cffaceb8",
+      "range": {
+        "startLine": 4196,
+        "startChar": 73,
+        "endLine": 4196,
+        "endChar": 81
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d4284d_9235640f",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4196,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2020-08-04T15:11:07Z",
+      "side": 1,
+      "message": "The answer to my question is help the developer understand what they need to do to properly handle these events. Yes, a dedicated Handler supplied by the user is appropriate here, and following the model for DISCONTINUITY is the right thing to do.",
+      "parentUuid": "4a2de9e3_3755e137",
       "range": {
         "startLine": 4196,
         "startChar": 73,
