@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "4c13dd53_717b19f1",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-04T08:44:19Z",
+      "side": 1,
+      "message": "\u003e  then any difference in any of the network\u0027s attributes (e.g., IP address, ...) will be a new NetworkIdentity.\nNo because we only take what we care to buildNetworkIdentity.\nTake WifiNetworkSpecifier for example,\nthey have \n           mSsidPatternMatcher\n            mBssidPatternMatcher\n            mIsEnhancedOpen\n            mWpa2PskPassphrase\n            mWpa3SaePassphrase\n            mWpa2EnterpriseConfig\n            mWpa3EnterpriseConfig\n            mIsHiddenSSID\n in the structure, but we only take ssid from WifiInfo to build a new NetworkIdentity. So any wifi with the same ssid will be aggregated together.\n\n\u003e More in general - why should it be a NetworkFactory instead of methods on TestNetworkManager?\nBecause if doing this, when we add a new parameter, we don\u0027t have to create a new API.\nOf course we can use a builder for this new request API in TestNetworkManager.\nBut consider WifiNetworkSpecifier is how apps request wifi with their preferences today, I\u0027m thinking of doing something similar: use TestNetworkSpecifier to request with our preferences, instead of creating a new set of API.\nIs that a bad idea?",
+      "parentUuid": "a3824fd7_1e22153c",
+      "range": {
+        "startLine": 231,
+        "startChar": 44,
+        "endLine": 231,
+        "endChar": 66
+      },
+      "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "921aa90e_bbef61a2",
         "filename": "core/java/android/net/NetworkTemplate.java",
         "patchSetId": 1
