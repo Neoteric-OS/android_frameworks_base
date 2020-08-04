@@ -36,6 +36,7 @@ import static android.net.ConnectivityManager.getNetworkTypeName;
 import static android.net.ConnectivityManager.isNetworkTypeValid;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_PRIVDNS;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_PARTIAL;
+import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_SKIPPED;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_FOREGROUND;
@@ -3029,17 +3030,30 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Invoke ConnectivityReport generation for this Network test event.
             final NetworkAgentInfo nai = getNetworkAgentInfoForNetId(mNetId);
             if (nai == null) return;
-            final Message m = mConnectivityDiagnosticsHandler.obtainMessage(
-                    ConnectivityDiagnosticsHandler.EVENT_NETWORK_TESTED,
-                    new ConnectivityReportEvent(p.timestampMillis, nai));
+
+            // NetworkMonitor reports the network validation result as a bitmask while
+            // ConnectivityDiagnostics treats this value as an int. Convert the result to a single
+            // logical value for ConnectivityDiagnostics.
+            final int validationResult;
+            if ((p.result & NETWORK_VALIDATION_RESULT_SKIPPED) != 0) {
+                validationResult = ConnectivityReport.NETWORK_VALIDATION_RESULT_SKIPPED;
+            } else if ((p.result & NETWORK_VALIDATION_RESULT_VALID) != 0) {
+                if ((p.result & NETWORK_VALIDATION_RESULT_PARTIAL) != 0) {
+                    validationResult = ConnectivityReport.NETWORK_VALIDATION_RESULT_PARTIALLY_VALID;
+                } else {
+                    validationResult = ConnectivityReport.NETWORK_VALIDATION_RESULT_VALID;
+                }
+            } else {
+                validationResult = ConnectivityReport.NETWORK_VALIDATION_RESULT_INVALID;
+            }
 
             final PersistableBundle extras = new PersistableBundle();
-            extras.putInt(KEY_NETWORK_VALIDATION_RESULT, p.result);
+            extras.putInt(KEY_NETWORK_VALIDATION_RESULT, validationResult);
             extras.putInt(KEY_NETWORK_PROBES_SUCCEEDED_BITMASK, p.probesSucceeded);
             extras.putInt(KEY_NETWORK_PROBES_ATTEMPTED_BITMASK, p.probesAttempted);
 
-            m.setData(new Bundle(extras));
-            mConnectivityDiagnosticsHandler.sendMessage(m);
+            createAndSendEventNetworkTestedMessage(true /* cacheReport */, p.timestampMillis, nai,
+                    extras);
         }
 
         @Override
@@ -4353,6 +4367,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         // Revalidate if the app report does not match our current validated state.
         if (hasConnectivity == nai.lastValidated) {
+            // NetworkMonitor will not revalidate this Network. Report this through
+            // ConnectivityDiagnostics as a ConnectivityReport with VALIDATION_RESULT_SKIPPED.
+            final ConnectivityReport connectivityReport = nai.getConnectivityReport();
+            if (connectivityReport == null) {
+                // No cached ConnectivityReport available yet. The Network is still being validated
+                // and a ConnectivityReport will be shared after validation completes.
+                return;
+            }
+
+            final PersistableBundle extras =
+                    connectivityReport.getAdditionalInfoWithValidationResult(
+                            ConnectivityReport.NETWORK_VALIDATION_RESULT_SKIPPED);
+
+            createAndSendEventNetworkTestedMessage(false /* cacheReport */,
+                    SystemClock.elapsedRealtime(), nai, extras);
             return;
         }
         if (DBG) {
@@ -4369,6 +4398,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return;
         }
         nai.networkMonitor().forceReevaluation(uid);
+    }
+
+    private void createAndSendEventNetworkTestedMessage(boolean cacheReport, long timestamp,
+            NetworkAgentInfo nai, PersistableBundle extras) {
+        final Message m = mConnectivityDiagnosticsHandler.obtainMessage(
+                ConnectivityDiagnosticsHandler.EVENT_NETWORK_TESTED,
+                encodeBool(cacheReport), 0, new ConnectivityReportEvent(timestamp, nai));
+        m.setData(new Bundle(extras));
+        mConnectivityDiagnosticsHandler.sendMessage(m);
     }
 
     /**
@@ -7821,6 +7859,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
          * after processing {@link #EVENT_NETWORK_TESTED} events.
          * obj = {@link ConnectivityReportEvent} representing ConnectivityReport info reported from
          * NetworkMonitor.
+         * arg1 = boolean Whether to cache the ConnectivityReport to the NetworkAgentInfo in the
+         * {@link ConnectivityReportEvent}.
          * data = PersistableBundle of extras passed from NetworkMonitor.
          *
          * <p>See {@link ConnectivityService#EVENT_NETWORK_TESTED}.
@@ -7874,7 +7914,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     // {@link NetworkMonitorCallbacks#notifyNetworkTested} is called, msg.data will
                     // not be set. This is also safe, as msg.getData() will return an empty Bundle.
                     final PersistableBundle extras = new PersistableBundle(msg.getData());
-                    handleNetworkTestedWithExtras(reportEvent, extras);
+
+                    boolean cacheReport = toBool(msg.arg1);
+                    handleNetworkTestedWithExtras(reportEvent, cacheReport, extras);
                     break;
                 }
                 case EVENT_DATA_STALL_SUSPECTED: {
@@ -8040,8 +8082,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         iCb.unlinkToDeath(cbInfo, 0);
     }
 
-    private void handleNetworkTestedWithExtras(
-            @NonNull ConnectivityReportEvent reportEvent, @NonNull PersistableBundle extras) {
+    private void handleNetworkTestedWithExtras(@NonNull ConnectivityReportEvent reportEvent,
+            boolean cacheReport, @NonNull PersistableBundle extras) {
         final NetworkAgentInfo nai = reportEvent.mNai;
         final NetworkCapabilities networkCapabilities =
                 getNetworkCapabilitiesWithoutUids(nai.networkCapabilities);
@@ -8052,7 +8094,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         nai.linkProperties,
                         networkCapabilities,
                         extras);
-        nai.setConnectivityReport(report);
+        if (cacheReport) nai.setConnectivityReport(report);
         final List<IConnectivityDiagnosticsCallback> results =
                 getMatchingPermissionedCallbacks(nai);
         for (final IConnectivityDiagnosticsCallback cb : results) {
