@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "254bbe89_20d674cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-08-04T06:22:01Z",
+      "side": 1,
+      "message": "LGTM if this is the easiest way. I just want to mention that ConnectivityManager.TYPE_* are deprecated and use this may make it more hard(or more work) for us to remove the usage.",
+      "revId": "acf6bec7e270cb9ccff9739330cec704e2242d5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
