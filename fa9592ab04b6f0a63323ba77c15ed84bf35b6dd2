@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "a3824fd7_1e22153c",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-04T07:21:37Z",
+      "side": 1,
+      "message": "I agree that it would be useful to have code that can set up a test network the way we want it, but I don\u0027t think all that information should be in the NetworkSpecifier, because if it is, then any difference in any of the network\u0027s attributes (e.g., IP address, ...) will be a new NetworkIdentity.\n\nMore in general - why should it be a NetworkFactory instead of methods on TestNetworkManager?",
+      "parentUuid": "3fb0e6b7_764207ba",
+      "range": {
+        "startLine": 231,
+        "startChar": 44,
+        "endLine": 231,
+        "endChar": 66
+      },
+      "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921aa90e_bbef61a2",
         "filename": "core/java/android/net/NetworkTemplate.java",
         "patchSetId": 1
