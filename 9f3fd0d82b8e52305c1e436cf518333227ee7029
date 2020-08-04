@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "2c09a274_1eb09c91",
+        "filename": "libs/input/MouseCursorController.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-08-04T20:09:34Z",
+      "side": 1,
+      "message": "why not std::mutex?",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 17
+      },
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bcfb784_2cb7c936",
         "filename": "libs/input/PointerController.cpp",
         "patchSetId": 6
@@ -42,6 +65,52 @@
     },
     {
       "key": {
+        "uuid": "8e9e52b5_fc6ffe29",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-08-04T20:09:34Z",
+      "side": 1,
+      "message": "we have:\n\nclass PointerController {\n    PointerControllerContext mContext;\n}\n\ncan we just store a reference to parent inside PointerControllerContext?\nIt will always be valid because it will always be destroyed before parent is destroyed?",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 48
+      },
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff1f722_3f4e15c1",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-08-04T20:09:34Z",
+      "side": 1,
+      "message": "use std::mutex?",
+      "range": {
+        "startLine": 141,
+        "startChar": 4,
+        "endLine": 141,
+        "endChar": 24
+      },
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c106643_73d72213",
         "filename": "libs/input/PointerController.h",
         "patchSetId": 6
@@ -58,6 +127,75 @@
         "startChar": 4,
         "endLine": 191,
         "endChar": 45
+      },
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e62ddcd_91ee4b43",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-08-04T20:09:34Z",
+      "side": 1,
+      "message": "should this be private?",
+      "range": {
+        "startLine": 193,
+        "startChar": 29,
+        "endLine": 193,
+        "endChar": 37
+      },
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f91e31c_d7e0bb44",
+        "filename": "libs/input/TouchSpotController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-08-04T20:09:34Z",
+      "side": 1,
+      "message": "can these be unique_ptr?",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 9
+      },
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c6ccf1_78bb423e",
+        "filename": "libs/input/TouchSpotController.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-08-04T20:09:34Z",
+      "side": 1,
+      "message": "mLastIcon? since it\u0027s private?",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 34
       },
       "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
