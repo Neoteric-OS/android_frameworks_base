@@ -20,6 +20,8 @@ import static java.util.Objects.requireNonNull;
 import android.annotation.NonNull;
 import android.annotation.SystemService;
 import android.content.Context;
+import android.os.ParcelUuid;
+import android.os.RemoteException;
 
 /**
  * VcnManager publishes APIs for applications to configure and manage Virtual Carrier Networks
@@ -44,5 +46,41 @@ public final class VcnManager {
     public VcnManager(@NonNull Context ctx, @NonNull IVcnManagementService service) {
         mContext = requireNonNull(ctx, "missing context");
         mService = requireNonNull(service, "missing service");
+    }
+
+    // TODO: Make setVcnConfig(), clearVcnConfig() Public API
+    /**
+     * Sets the VCN configuration for a given subscription group
+     *
+     * @param subscriptionGroup the subscription group that the configuration should be applied to
+     * @param config the configuration parameters for the VCN
+     * @hide
+     */
+    public void setVcnConfig(@NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config) {
+        requireNonNull(subscriptionGroup, "subscriptionGroup was null");
+        requireNonNull(config, "config was null");
+
+        try {
+            mService.setVcnConfig(subscriptionGroup, config);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    // TODO: Make setVcnConfig(), clearVcnConfig() Public API
+    /**
+     * Clears the VCN configuration for a given subscription group
+     *
+     * @param subscriptionGroup the subscription group that the configuration should be applied to
+     * @hide
+     */
+    public void clearVcnConfig(@NonNull ParcelUuid subscriptionGroup) {
+        requireNonNull(subscriptionGroup, "subscriptionGroup was null");
+
+        try {
+            mService.clearVcnConfig(subscriptionGroup);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 }
