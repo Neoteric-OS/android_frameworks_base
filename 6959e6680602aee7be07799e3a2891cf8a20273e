@@ -1,0 +1,31 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004205467",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1388937?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c73d1228_5892a4a6",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBarIconController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-08-04T18:19:51Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 76,
+        "startChar": 34,
+        "endLine": 76,
+        "endChar": 43
+      },
+      "revId": "6959e6680602aee7be07799e3a2891cf8a20273e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
