@@ -19,6 +19,7 @@ package android.net;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import android.os.Build;
 import android.os.Parcel;
 
 import androidx.test.filters.SmallTest;
@@ -36,6 +37,8 @@ import java.util.Random;
 @SmallTest
 @RunWith(AndroidJUnit4.class)
 public class IpSecAlgorithmTest {
+    private static final int ALGO_MANDATORY_FOR_ALL_COUNT = 7;
+    private static final int ALGO_MANDATORY_SINCE_S_COUNT = 3;
 
     private static final byte[] KEY_MATERIAL;
 
@@ -43,6 +46,10 @@ public class IpSecAlgorithmTest {
         KEY_MATERIAL = new byte[128];
         new Random().nextBytes(KEY_MATERIAL);
     };
+
+    private static byte[] generateKey(int keyLenInBits) {
+        return Arrays.copyOf(KEY_MATERIAL, keyLenInBits / 8);
+    }
 
     @Test
     public void testNoTruncLen() throws Exception {
@@ -53,7 +60,7 @@ public class IpSecAlgorithmTest {
                     new SimpleEntry<>(IpSecAlgorithm.AUTH_HMAC_SHA256, 256),
                     new SimpleEntry<>(IpSecAlgorithm.AUTH_HMAC_SHA384, 384),
                     new SimpleEntry<>(IpSecAlgorithm.AUTH_HMAC_SHA512, 512),
-                    new SimpleEntry<>(IpSecAlgorithm.AUTH_CRYPT_AES_GCM, 224)
+                    new SimpleEntry<>(IpSecAlgorithm.AUTH_CRYPT_AES_GCM, 224),
                 };
 
         // Expect auth and aead algorithms to throw errors if trunclen is omitted.
@@ -68,6 +75,52 @@ public class IpSecAlgorithmTest {
 
         // Ensure crypt works with no truncation length supplied.
         new IpSecAlgorithm(IpSecAlgorithm.CRYPT_AES_CBC, Arrays.copyOf(KEY_MATERIAL, 256 / 8));
+    }
+
+    private void checkAuthKeyAndTruncLenValidation(String algoName, int keyLen, int truncLen)
+            throws Exception {
+        new IpSecAlgorithm(algoName, generateKey(keyLen), truncLen);
+
+        try {
+            new IpSecAlgorithm(algoName, generateKey(keyLen));
+            fail("Expected exception on unprovided auth trunclen");
+        } catch (IllegalArgumentException pass) {
+        }
+
+        try {
+            new IpSecAlgorithm(algoName, generateKey(keyLen + 8), truncLen);
+            fail("Invalid key length not validated");
+        } catch (IllegalArgumentException pass) {
+        }
+
+        try {
+            new IpSecAlgorithm(algoName, generateKey(keyLen), truncLen + 1);
+            fail("Invalid truncation length not validated");
+        } catch (IllegalArgumentException pass) {
+        }
+    }
+
+    private void checkCryptKeyLenValidation(String algoName, int keyLen) throws Exception {
+        new IpSecAlgorithm(algoName, generateKey(keyLen));
+
+        try {
+            new IpSecAlgorithm(algoName, generateKey(keyLen + 8));
+            fail("Invalid key length not validated");
+        } catch (IllegalArgumentException pass) {
+        }
+    }
+
+    @Test
+    public void testValidationForAlgosAddedInS() throws Exception {
+        if (Build.VERSION.FIRST_SDK_INT <= Build.VERSION_CODES.R) {
+            return;
+        }
+
+        for (int len : new int[] {160, 224, 288}) {
+            checkCryptKeyLenValidation(IpSecAlgorithm.CRYPT_AES_CTR, len);
+        }
+        checkAuthKeyAndTruncLenValidation(IpSecAlgorithm.AUTH_AES_XCBC, 128, 96);
+        checkAuthKeyAndTruncLenValidation(IpSecAlgorithm.AUTH_CRYPT_CHACHA20_POLY1305, 288, 128);
     }
 
     @Test
@@ -126,5 +179,18 @@ public class IpSecAlgorithmTest {
         IpSecAlgorithm fin = IpSecAlgorithm.CREATOR.createFromParcel(p);
         assertTrue("Parcel/Unparcel failed!", IpSecAlgorithm.equals(init, fin));
         p.recycle();
+    }
+
+    @Test
+    public void testGetSupportedAlgorithms() throws Exception {
+        int mandatoryAlgoCount = ALGO_MANDATORY_FOR_ALL_COUNT;
+
+        if (Build.VERSION.FIRST_SDK_INT > Build.VERSION_CODES.R) {
+            mandatoryAlgoCount += ALGO_MANDATORY_SINCE_S_COUNT;
+        }
+
+        assertTrue(
+                "Missing mandatory algorithm(s) in supported algorithm list",
+                IpSecAlgorithm.getSupportedAlgorithms().size() >= mandatoryAlgoCount);
     }
 }
