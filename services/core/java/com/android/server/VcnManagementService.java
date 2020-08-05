@@ -20,9 +20,18 @@ import static java.util.Objects.requireNonNull;
 
 import android.annotation.NonNull;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkProvider;
+import android.net.NetworkRequest;
 import android.net.vcn.IVcnManagementService;
 import android.net.vcn.VcnConfig;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.os.ParcelUuid;
+
+import com.android.internal.annotations.GuardedBy;
+import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.annotations.VisibleForTesting.Visibility;
 
 /**
  * VcnManagementService manages Virtual Carrier Network profiles and lifecycles.
@@ -88,9 +97,16 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @NonNull private final Context mContext;
     @NonNull private final Dependencies mDeps;
 
-    private VcnManagementService(@NonNull Context context, @NonNull Dependencies deps) {
+    @NonNull private final Looper mLooper;
+    @NonNull private final VcnNetworkProvider mNetworkProvider;
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    VcnManagementService(@NonNull Context context, @NonNull Dependencies deps) {
         mContext = requireNonNull(context, "Missing context");
         mDeps = requireNonNull(deps, "Missing dependencies");
+
+        mLooper = mDeps.getLooper();
+        mNetworkProvider = new VcnNetworkProvider(mContext, mLooper);
     }
 
     // Package-visibility for SystemServer to create instances.
@@ -98,11 +114,34 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         return new VcnManagementService(context, new Dependencies());
     }
 
-    private static class Dependencies {}
+    /** External dependencies used by VcnManagementService, for injection in tests */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public static class Dependencies {
+        @GuardedBy("mHandlerThreadLock")
+        private HandlerThread mHandlerThread;
+
+        private final Object mHandlerThreadLock = new Object();
+
+        /** Retrieves a looper for the VcnManagementService */
+        public Looper getLooper() {
+            if (mHandlerThread == null) {
+                synchronized (mHandlerThreadLock) {
+                    if (mHandlerThread == null) {
+                        mHandlerThread = new HandlerThread(TAG);
+                        mHandlerThread.start();
+                    }
+                }
+            }
+            return mHandlerThread.getLooper();
+        }
+    }
 
     /** Notifies the VcnManagementService that external dependencies can be set up */
     public void systemReady() {
         // TODO: Retrieve existing profiles from KeyStore
+
+        mContext.getSystemService(ConnectivityManager.class)
+                .registerNetworkProvider(mNetworkProvider);
     }
 
     /**
@@ -128,5 +167,16 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         requireNonNull(subscriptionGroup, "subscriptionGroup was null");
 
         // TODO: Clear VCN configuration, trigger teardown as necessary
+    }
+
+    private class VcnNetworkProvider extends NetworkProvider {
+        VcnNetworkProvider(Context context, Looper looper) {
+            super(context, looper, VcnNetworkProvider.class.getSimpleName());
+        }
+
+        @Override
+        public void onNetworkRequested(@NonNull NetworkRequest request, int score, int providerId) {
+            // TODO: Handle network requests - Ensure VCN started, and start appropriate tunnels.
+        }
     }
 }
