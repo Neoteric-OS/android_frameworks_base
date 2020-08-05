@@ -88,8 +88,9 @@ public class FileBridge extends Thread {
         mTarget = target;
     }
 
+    // Note, it's the caller's job to close the returned fd !!!
     public FileDescriptor getClientSocket() {
-        return mClient;
+        return mClient.release$();
     }
 
     @Override
@@ -153,7 +154,7 @@ public class FileBridge extends Thread {
             try {
                 writeCommandAndBlock(CMD_CLOSE, "close()");
             } finally {
-                IoBridge.closeAndSignalBlockedThreads(mClient);
+                IoUtils.closeQuietly(mClient);
                 IoUtils.closeQuietly(mClientPfd);
             }
         }
