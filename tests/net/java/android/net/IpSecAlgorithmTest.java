@@ -127,4 +127,9 @@ public class IpSecAlgorithmTest {
         assertTrue("Parcel/Unparcel failed!", IpSecAlgorithm.equals(init, fin));
         p.recycle();
     }
+
+    @Test
+    public void testGetSupportedAlgorithms() throws Exception {
+        IpSecAlgorithm.getSupportedAlgorithms();
+    }
 }

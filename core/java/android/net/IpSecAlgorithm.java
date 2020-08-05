@@ -17,6 +17,7 @@ package android.net;
 
 import android.annotation.NonNull;
 import android.annotation.StringDef;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -26,7 +27,12 @@ import com.android.internal.util.HexDump;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * This class represents a single algorithm that can be used by an {@link IpSecTransform}.
@@ -124,6 +130,27 @@ public final class IpSecAlgorithm implements Parcelable {
     @Retention(RetentionPolicy.SOURCE)
     public @interface AlgorithmName {}
 
+    private static final List<String> MANDATORY_FOR_ALL = new ArrayList<>();
+    private static final List<String> MANDATORY_SINCE_S = new ArrayList<>();
+
+    static {
+        MANDATORY_FOR_ALL.add(CRYPT_AES_CBC);
+        MANDATORY_FOR_ALL.add(AUTH_HMAC_MD5);
+        MANDATORY_FOR_ALL.add(AUTH_HMAC_SHA1);
+        MANDATORY_FOR_ALL.add(AUTH_HMAC_SHA256);
+        MANDATORY_FOR_ALL.add(AUTH_HMAC_SHA384);
+        MANDATORY_FOR_ALL.add(AUTH_HMAC_SHA512);
+        MANDATORY_FOR_ALL.add(AUTH_CRYPT_AES_GCM);
+        MANDATORY_FOR_ALL.add(CRYPT_AES_CTR);
+        MANDATORY_FOR_ALL.add(AUTH_AES_CMAC);
+        MANDATORY_FOR_ALL.add(AUTH_AES_XCBC);
+
+        // MANDATORY_SINCE_S.add(CRYPT_AES_CTR);
+        // MANDATORY_SINCE_S.add(AUTH_AES_XCBC);
+        // MANDATORY_SINCE_S.add(AUTH_AES_CMAC);
+        MANDATORY_SINCE_S.add(AUTH_CRYPT_CHACHA20_POLY1305);
+    }
+
     private final String mName;
     private final byte[] mKey;
     private final int mTruncLenBits;
@@ -206,13 +233,59 @@ public final class IpSecAlgorithm implements Parcelable {
                 }
             };
 
+    /** Returns supported IPsec algorithms */
+    public static @NonNull List<String> getSupportedAlgorithms() {
+        List<String> algoList = new ArrayList<>();
+        algoList.addAll(MANDATORY_FOR_ALL);
+
+        // TODO: Change it to VERSION_CODES.S
+        if (Build.VERSION.FIRST_SDK_INT > Build.VERSION_CODES.R) {
+            algoList.addAll(MANDATORY_SINCE_S);
+        }
+
+        algoList.addAll(loadOptionalAlgo());
+        return Collections.unmodifiableList(algoList);
+    }
+
+    private static Set<String> loadOptionalAlgo() {
+        String[] algos =
+                Resources.getSystem()
+                        .getStringArray(
+                                com.android.internal.R.array.config_optionalIPsecAlgorithms);
+
+        Set<String> optionalAlgoAllowSet = new HashSet<>();
+
+        // TODO: Change it to VERSION_CODES.S
+        if (Build.VERSION.FIRST_SDK_INT <= Build.VERSION_CODES.R) {
+            optionalAlgoAllowSet.addAll(MANDATORY_SINCE_S);
+        }
+
+        // Validate resource.
+        Set<String> enabledOptionalAlgoSet = new HashSet<>();
+        for (String str : algos) {
+            if (!optionalAlgoAllowSet.contains(str) || enabledOptionalAlgoSet.contains(str)) {
+                // This error should be caught by CTS and never be thrown to API callers
+                throw new IllegalArgumentException("Invalid or repeated optional algorithm found");
+            }
+            enabledOptionalAlgoSet.add(str);
+        }
+
+        android.util.Log.e("IPSEC", "algos size " + algos.length);
+        android.util.Log.e("IPSEC", "algo " + algos[0]);
+        return enabledOptionalAlgoSet;
+    }
+
     private static void checkValidOrThrow(String name, int keyLen, int truncLen) {
         boolean isValidLen = true;
         boolean isValidTruncLen = true;
 
-        switch(name) {
+        // TODO: is algo supported
+        switch (name) {
             case CRYPT_AES_CBC:
                 isValidLen = keyLen == 128 || keyLen == 192 || keyLen == 256;
+                break;
+            case CRYPT_AES_CTR:
+                isValidLen = keyLen == 128 + 32 || keyLen == 192 + 32 || keyLen == 256 + 32;
                 break;
             case AUTH_HMAC_MD5:
                 isValidLen = keyLen == 128;
@@ -234,10 +307,18 @@ public final class IpSecAlgorithm implements Parcelable {
                 isValidLen = keyLen == 512;
                 isValidTruncLen = truncLen >= 256 && truncLen <= 512;
                 break;
+            case AUTH_AES_XCBC:
+                isValidLen = keyLen == 128;
+                isValidTruncLen = truncLen == 96;
+                break;
             case AUTH_CRYPT_AES_GCM:
                 // The keying material for GCM is a key plus a 32-bit salt
                 isValidLen = keyLen == 128 + 32 || keyLen == 192 + 32 || keyLen == 256 + 32;
                 isValidTruncLen = truncLen == 64 || truncLen == 96 || truncLen == 128;
+                break;
+            case AUTH_CRYPT_CHACHA20_POLY1305:
+                isValidLen = keyLen == 256 + 32;
+                isValidTruncLen = truncLen == 128;
                 break;
             default:
                 throw new IllegalArgumentException("Couldn't find an algorithm: " + name);
@@ -260,6 +341,7 @@ public final class IpSecAlgorithm implements Parcelable {
             case AUTH_HMAC_SHA256:
             case AUTH_HMAC_SHA384:
             case AUTH_HMAC_SHA512:
+            case AUTH_AES_XCBC:
                 return true;
             default:
                 return false;
@@ -268,12 +350,26 @@ public final class IpSecAlgorithm implements Parcelable {
 
     /** @hide */
     public boolean isEncryption() {
-        return getName().equals(CRYPT_AES_CBC);
+        switch (getName()) {
+                // Fallthrough
+            case CRYPT_AES_CBC:
+            case CRYPT_AES_CTR:
+                return true;
+            default:
+                return false;
+        }
     }
 
     /** @hide */
     public boolean isAead() {
-        return getName().equals(AUTH_CRYPT_AES_GCM);
+        switch (getName()) {
+                // Fallthrough
+            case AUTH_CRYPT_AES_GCM:
+            case AUTH_CRYPT_CHACHA20_POLY1305:
+                return true;
+            default:
+                return false;
+        }
     }
 
     // Because encryption keys are sensitive and userdebug builds are used by large user pools
