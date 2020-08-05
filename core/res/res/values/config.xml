@@ -1913,6 +1913,19 @@
         -->
     </string-array>
 
+    <!-- Optional IPsec algorithms enabled by this device. Defaults to empty. OEMs can override
+         it by providing a list of algorithm names in an overlay config.xml file.
+
+         OEM must only provide allowed optional algorithms and must not provide repeated algorithms
+         in this resource. The allowed optional algorithms are listed as followed:
+             * For device first launched before SDK S: "rfc3686(ctr(aes))", "xcbc(aes)",
+               "rfc7539esp(chacha20,poly1305)"
+             * For device first launched in SDK S and after: no optional algorithms allowed
+     -->
+    <string-array name="config_optionalIpSecAlgorithms" translatable="false">
+        <!-- Add algorithm here -->
+    </string-array>
+
     <!-- Boolean indicating if current platform supports bluetooth SCO for off call
     use cases -->
     <bool name="config_bluetooth_sco_off_call">true</bool>
