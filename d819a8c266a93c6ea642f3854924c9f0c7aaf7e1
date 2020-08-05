@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "a2486fcb_0d471274",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-05T03:15:16Z",
+      "side": 1,
+      "message": "It looks like this is the necessary case.\nWhere the DnsPacket constructor at l.366 takes a byte buffer.\nAnd recreate the packet by allocating new DnsHeader.\nBut in the test, the passed Header is TestDnsHeader, which causes the type mismatch.\nI think in this case we want to say equal even if their type is different.",
+      "parentUuid": "5ab40fc7_c752b3fd",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 48
+      },
+      "revId": "d819a8c266a93c6ea642f3854924c9f0c7aaf7e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59458c0a_561aab97",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 2

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd19de76_39473dd9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-05T03:15:16Z",
+      "side": 1,
+      "message": "DnsPacket moved to framworks/lib.\nNeed to relocate this change.",
+      "revId": "c8a6de3910c3315d7ab50e47ef60197557e271a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
