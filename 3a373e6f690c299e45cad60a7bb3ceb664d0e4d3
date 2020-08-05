@@ -237,6 +237,30 @@
       "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34aed0f4_5b90f150",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4196,
+      "author": {
+        "id": 1647935
+      },
+      "writtenOn": "2020-08-05T12:50:06Z",
+      "side": 1,
+      "message": "Thanks for your kind guidance again.\nI\u0027ll prepare the next patch set.\n\nBest regards,\nSungyeon Kim",
+      "parentUuid": "15d4284d_9235640f",
+      "range": {
+        "startLine": 4196,
+        "startChar": 73,
+        "endLine": 4196,
+        "endChar": 81
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
