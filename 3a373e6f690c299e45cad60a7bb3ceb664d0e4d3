@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "771b8ef8_983c933d",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4195,
+      "author": {
+        "id": 1647935
+      },
+      "writtenOn": "2020-08-05T12:37:59Z",
+      "side": 1,
+      "message": "Dear Jean-Michel Trivi\n\nThanks for your guiding our contribution.\n\nFirst let me show why we want to submit chagnes.\nAs you can see \"Topic\" in this commit, this is a part of ViLTE(Video over LTE) feature. Our IMS service app uses AOSP\u0027s media engine for running video. So it has this MediaPlayer \u0026 MediaRecorder instance as an interface. Like the other applications, the IMS service also needs some feedback from the native side. We know this MediaPlayer opens good SDK for registering callbacks and getting the feedback messages. But we need our own callbacks \u0026 feedbacks. Because media engine was not ready for ViLTE. As we know, ViLTE is now very common one following after VoLTE and it doesn\u0027t something a small chunk. This means, it is hard to match ViLTE concepts with legacy callbacks \u0026 feedbacks. ViLTE needs its own channel as we have implemented like this channel. And expects some other vendors may build their own service through this changes.\n\nSo here is a description of use cases.\nIMS service would need various type of feedbacks. But we have chosen 9 types of messages as the feedbacks. It came from a number of commercialization experience. (Please see comments in this changes) Some of types such as TYPE 100, 101 are created by ourselves but some of them especially TYPE 205 \u0026 206 matches perfectly with standard RTP feedback messages. We also wrote related standard RFC documents with the comments. TYPE 102 \u0026 103 is our creation but also important to stabilizing quality of video. Basically RTP protocol is based on UDP protocol. Nothing can assure packet\u0027s safety so IMS service must sense \u0026 manage harsh cases. Feedback with TYPE 102 \u0026 103 is for that.",
+      "parentUuid": "3d0d18ce_6f77c0a6",
+      "range": {
+        "startLine": 4195,
+        "startChar": 4,
+        "endLine": 4195,
+        "endChar": 14
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acfeb9cf_7b2062c9",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 9
