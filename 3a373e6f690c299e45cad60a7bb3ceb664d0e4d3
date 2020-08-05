@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "f4e87296_ee205049",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4195,
+      "author": {
+        "id": 1647935
+      },
+      "writtenOn": "2020-08-05T12:46:21Z",
+      "side": 1,
+      "message": "And I get your words so will add requirements of permission. But there is no permission that can delegate ViLTE yet cause it is a fresh feature.(And this is why we are contributing) So the addition would be some composition of legacy permissions.\n\nBest regards,\nSungyeon Kim",
+      "parentUuid": "771b8ef8_983c933d",
+      "range": {
+        "startLine": 4195,
+        "startChar": 4,
+        "endLine": 4195,
+        "endChar": 14
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acfeb9cf_7b2062c9",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 9
