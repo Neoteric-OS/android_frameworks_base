@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "3d0ed682_5aae08ed",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-05T03:06:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ca42de52_c3594620",
+      "range": {
+        "startLine": 75,
+        "startChar": 88,
+        "endLine": 75,
+        "endChar": 93
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a06d11f0_9b6d0273",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
         "patchSetId": 2
@@ -62,6 +86,30 @@
       "revId": "703c7d9c494695fef04295648eed287921b77726",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591172d6_2435852d",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-05T03:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a06d11f0_9b6d0273",
+      "range": {
+        "startLine": 326,
+        "startChar": 77,
+        "endLine": 326,
+        "endChar": 84
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "3d752f1a_e4e30f69",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-05T03:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59b874d6_da96d5de",
+      "range": {
+        "startLine": 74,
+        "startChar": 17,
+        "endLine": 74,
+        "endChar": 30
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56100412_7ae828e3",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
         "patchSetId": 2
@@ -111,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "51e23d49_7ce53470",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-05T03:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56100412_7ae828e3",
+      "range": {
+        "startLine": 280,
+        "startChar": 21,
+        "endLine": 280,
+        "endChar": 42
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c35c534f_bed5a718",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
         "patchSetId": 2
@@ -131,6 +227,30 @@
       "revId": "703c7d9c494695fef04295648eed287921b77726",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fede74ed_fa4515b9",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-05T03:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c35c534f_bed5a718",
+      "range": {
+        "startLine": 284,
+        "startChar": 23,
+        "endLine": 284,
+        "endChar": 27
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -177,6 +297,54 @@
       "revId": "703c7d9c494695fef04295648eed287921b77726",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b108d3_4b11aa27",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-05T03:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fc19e3c_00582392",
+      "range": {
+        "startLine": 298,
+        "startChar": 11,
+        "endLine": 298,
+        "endChar": 16
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38716a79_7ac65c2e",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-05T03:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97f021ff_3c1cc849",
+      "range": {
+        "startLine": 298,
+        "startChar": 20,
+        "endLine": 298,
+        "endChar": 28
+      },
+      "revId": "703c7d9c494695fef04295648eed287921b77726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

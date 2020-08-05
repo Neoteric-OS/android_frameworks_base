@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fdea4d6_8a84fb92",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-08-05T03:06:28Z",
+      "side": 1,
+      "message": "Thanks for code review, fixing the comment and carry Lorenzo\u0027s +2",
+      "revId": "c09b057fb6f153708fc7e7d4d3da432731ba5880",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
