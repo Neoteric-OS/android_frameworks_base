@@ -16,6 +16,46 @@
       "revId": "c09b057fb6f153708fc7e7d4d3da432731ba5880",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b71e62b_8177f052",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-05T06:18:33Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "c09b057fb6f153708fc7e7d4d3da432731ba5880",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "964770e3_c169d782",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-05T06:18:33Z",
+      "side": 1,
+      "message": "You changed the typo to a different typo. :-)",
+      "range": {
+        "startLine": 284,
+        "startChar": 23,
+        "endLine": 284,
+        "endChar": 32
+      },
+      "revId": "c09b057fb6f153708fc7e7d4d3da432731ba5880",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
