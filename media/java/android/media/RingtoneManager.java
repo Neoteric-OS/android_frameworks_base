@@ -1129,12 +1129,27 @@ public class RingtoneManager {
             }
 
             // Try finding the scanned ringtone
+            String whichAudio = "";
+            switch (type) {
+                case TYPE_RINGTONE:
+                case TYPE_RINGTONE1:
+                    whichAudio = MediaStore.Audio.AudioColumns.IS_RINGTONE;
+                    break;
+                case TYPE_NOTIFICATION:
+                    whichAudio = MediaStore.Audio.AudioColumns.IS_NOTIFICATION;
+                    break;
+                case TYPE_ALARM:
+                    whichAudio = MediaStore.Audio.AudioColumns.IS_ALARM;
+                    break;
+            }
+
             final String filename = getDefaultRingtoneFilename(type);
+            final String where = MediaColumns.DISPLAY_NAME + "=?," + whichAudio + "=?";
             final Uri baseUri = MediaStore.Audio.Media.INTERNAL_CONTENT_URI;
             try (Cursor cursor = context.getContentResolver().query(baseUri,
                     new String[] { MediaColumns._ID },
-                    MediaColumns.DISPLAY_NAME + "=?",
-                    new String[] { filename }, null)) {
+                    where,
+                    new String[] { filename , "1"}, null)) {
                 if (cursor.moveToFirst()) {
                     final Uri ringtoneUri = context.getContentResolver().canonicalizeOrElse(
                             ContentUris.withAppendedId(baseUri, cursor.getLong(0)));
