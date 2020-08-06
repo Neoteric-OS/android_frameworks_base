@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdf1327e_6c3e7493",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-08-06T20:33:24Z",
+      "side": 1,
+      "message": "defer to Garfield for +2",
+      "revId": "c782be6e6fb5ccfd5905376e43720f4c89e49d3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
