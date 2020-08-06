@@ -1,0 +1,11 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Fabian Kozynski <kozynski@google.com>
+Code-Review+1: James Wei <jameswei@google.com>
+Code-Review+2: Albert Wang <albertccwang@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: James Wei <jameswei@google.com>
+Submitted-at: Thu, 06 Aug 2020 01:12:01 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1382397
+Project: platform/frameworks/base
+Branch: refs/heads/master
