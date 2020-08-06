@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d72046b2_62d46dd0",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-08-06T02:15:02Z",
+      "side": 1,
+      "message": "maybe just\n\n    mLocked.spotControllers[displayId].setSpots(..);",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 14
+      },
+      "revId": "adb6f982f34a19157a4a6d435090af0b3e64cb47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff79a68_79bc00c7",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-08-06T02:15:02Z",
+      "side": 1,
+      "message": "surround with { }",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 167,
+        "endChar": 47
+      },
+      "revId": "adb6f982f34a19157a4a6d435090af0b3e64cb47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be65ced_d63ec791",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-08-06T02:15:02Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 177,
+        "startChar": 8,
+        "endLine": 177,
+        "endChar": 43
+      },
+      "revId": "adb6f982f34a19157a4a6d435090af0b3e64cb47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
