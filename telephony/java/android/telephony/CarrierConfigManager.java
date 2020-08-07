@@ -213,6 +213,25 @@ public class CarrierConfigManager {
             "call_barring_supports_deactivate_all_bool";
 
     /**
+     * Specifies the service class for call barring service.
+     * Default value is
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_VOICE}.
+     * The value set as below:
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_NONE}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_VOICE}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_DATA}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_FAX}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_SMS}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_DATA_SYNC}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_DATA_ASYNC}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_PACKET}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_PAD}
+     * {@link com.android.internal.telephony.CommandsInterface#SERVICE_CLASS_MAX}
+     */
+    public static final String KEY_CALL_BARRING_SERVICE_CLASS_INT =
+            "call_barring_service_class_int";
+
+    /**
      * Flag indicating whether the Phone app should ignore EVENT_SIM_NETWORK_LOCKED
      * events from the Sim.
      * If true, this will prevent the IccNetworkDepersonalizationPanel from being shown, and
@@ -3879,6 +3898,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_CALL_BARRING_VISIBILITY_BOOL, false);
         sDefaults.putBoolean(KEY_CALL_BARRING_SUPPORTS_PASSWORD_CHANGE_BOOL, true);
         sDefaults.putBoolean(KEY_CALL_BARRING_SUPPORTS_DEACTIVATE_ALL_BOOL, true);
+        sDefaults.putInt(KEY_CALL_BARRING_SERVICE_CLASS_INT, 1 /* SERVICE_CLASS_VOICE */);
         sDefaults.putBoolean(KEY_CALL_FORWARDING_VISIBILITY_BOOL, true);
         sDefaults.putBoolean(KEY_CALL_FORWARDING_WHEN_UNREACHABLE_SUPPORTED_BOOL, true);
         sDefaults.putBoolean(KEY_CALL_FORWARDING_WHEN_UNANSWERED_SUPPORTED_BOOL, true);
