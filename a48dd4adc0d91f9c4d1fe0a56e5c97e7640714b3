@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0a2ae18_ed35a4b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-08-07T00:29:58Z",
+      "side": 1,
+      "message": "CC Roshan and David: removing this target in AOSP as it\u0027s unused there, and although it was useful to avoid merge conflicts, it\u0027s proving hard to maintain due to other differences between AOSP and other branches.",
+      "revId": "a48dd4adc0d91f9c4d1fe0a56e5c97e7640714b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
