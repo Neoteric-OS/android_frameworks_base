@@ -21,7 +21,8 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
-import com.android.cts.install.lib.host.InstallUtilsHost;
+import android.cts.install.lib.host.InstallUtilsHost;
+
 import com.android.ddmlib.Log;
 import com.android.tests.util.ModuleTestUtils;
 import com.android.tradefed.testtype.DeviceJUnit4ClassRunner;
