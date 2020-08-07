@@ -16,6 +16,24 @@
       "revId": "a48dd4adc0d91f9c4d1fe0a56e5c97e7640714b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e87baa22_45aacbbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-08-07T00:52:20Z",
+      "side": 1,
+      "message": "Thanks for the explanation Remi. It sounds fine to me as long as it doesn\u0027t automerge to internal master, which it shouldn\u0027t looking at the Merged-In tags.",
+      "parentUuid": "f0a2ae18_ed35a4b9",
+      "revId": "a48dd4adc0d91f9c4d1fe0a56e5c97e7640714b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
