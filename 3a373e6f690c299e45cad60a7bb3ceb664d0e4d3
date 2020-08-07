@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "98f46101_984c2082",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4195,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2020-08-07T23:30:14Z",
+      "side": 1,
+      "message": "Thank you very much for your efforts to help me understand all this, very appreciated.\n\n\u003e So it has this MediaPlayer \u0026 MediaRecorder instance as an interface\n  A/ Are you saying that IMS service is not actually using android.media.MediaPlayer as an instance of that object and the existing implementation underneath, but as a general interface that not only has your new OnImsRxNoticeListener interface, but also all the MediaPlayer interface (for instance pause(), setDisplay())?\n  B/ Or do you mean IMS service needs \"some\" interface to get the callback information through any means, and any MediaPlayer instance will be fine to surface it?\n  C/ Or last, your Video-over-LTE player will create a MediaPlayer, and will relay the Rx information to the IMS service?\n\nSorry for the different questions, I want to minimize our back and forth ;-)",
+      "parentUuid": "f4e87296_ee205049",
+      "range": {
+        "startLine": 4195,
+        "startChar": 4,
+        "endLine": 4195,
+        "endChar": 14
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acfeb9cf_7b2062c9",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 9
@@ -276,6 +300,30 @@
       "side": 1,
       "message": "Dear Jean-Michel Trivi\n\nHi.\nI am ready to update a new patchset according to our discussion.\nBut I can\u0027t update this patch because it have been owned by Byeongjo Park.\nCould you bind us in a group so we can overwrite the each other commit ?\nByeongjo \u0026 I do the exactly same job and be together very tight.\nIt is very helpful to unlock us for the each other patchs.\n\nBest Regards,\nSungyeon Kim",
       "parentUuid": "34aed0f4_5b90f150",
+      "range": {
+        "startLine": 4196,
+        "startChar": 73,
+        "endLine": 4196,
+        "endChar": 81
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef33f04_d67b0719",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4196,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2020-08-07T23:30:14Z",
+      "side": 1,
+      "message": "Sorry I am not familiar with the concept of group binding here. But if you download the existing patch and upload with the same SHA1 the history will be preserved and we can continue interacting on any new patch. Would this work for you, or did I misunderstand?",
+      "parentUuid": "2f475b4b_9e475fbd",
       "range": {
         "startLine": 4196,
         "startChar": 73,
