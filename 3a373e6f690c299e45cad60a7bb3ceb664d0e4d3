@@ -261,6 +261,30 @@
       "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f475b4b_9e475fbd",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4196,
+      "author": {
+        "id": 1647935
+      },
+      "writtenOn": "2020-08-07T08:50:37Z",
+      "side": 1,
+      "message": "Dear Jean-Michel Trivi\n\nHi.\nI am ready to update a new patchset according to our discussion.\nBut I can\u0027t update this patch because it have been owned by Byeongjo Park.\nCould you bind us in a group so we can overwrite the each other commit ?\nByeongjo \u0026 I do the exactly same job and be together very tight.\nIt is very helpful to unlock us for the each other patchs.\n\nBest Regards,\nSungyeon Kim",
+      "parentUuid": "34aed0f4_5b90f150",
+      "range": {
+        "startLine": 4196,
+        "startChar": 73,
+        "endLine": 4196,
+        "endChar": 81
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
