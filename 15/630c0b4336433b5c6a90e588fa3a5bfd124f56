@@ -1,0 +1,13 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Fabian Kozynski <kozynski@google.com>
+Code-Review+1: Puma Hsu <pumahsu@google.com>
+Code-Review+1: Sherry Huang <huangsherry@google.com>
+Code-Review+2: Jeff Sharkey <jsharkey@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Puma Hsu <pumahsu@google.com>
+Submitted-by: Puma Hsu <pumahsu@google.com>
+Submitted-at: Fri, 07 Aug 2020 02:39:23 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1382480
+Project: platform/frameworks/base
+Branch: refs/heads/master
