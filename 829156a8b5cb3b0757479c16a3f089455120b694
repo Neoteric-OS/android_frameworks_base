@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "c5fc22cc_b6dc8c96",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1300,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-07T08:14:54Z",
+      "side": 1,
+      "message": "Does this ever happen ? I don\u0027t think it does, and if it does maybe we should make sure it doesn\u0027t.",
+      "range": {
+        "startLine": 1300,
+        "startChar": 61,
+        "endLine": 1300,
+        "endChar": 75
+      },
+      "revId": "829156a8b5cb3b0757479c16a3f089455120b694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06547a8c_91405f05",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 5
@@ -41,6 +64,76 @@
         "startChar": 24,
         "endLine": 1308,
         "endChar": 53
+      },
+      "revId": "829156a8b5cb3b0757479c16a3f089455120b694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d1bba4_58a84b6e",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-07T08:14:54Z",
+      "side": 1,
+      "message": "I don\u0027t like at all the hidden assumption here that the function calling startDnsProxyOrUpdateUpStream has to know exactly how that function works, in particular around the use of the mUpstreamNetwork member.\n\nAs Mark says, splitting the functions would help, but also I think you should pass the upstream network as an argument instead of reading from the member for readability.",
+      "range": {
+        "startLine": 1308,
+        "startChar": 53,
+        "endLine": 1308,
+        "endChar": 55
+      },
+      "revId": "829156a8b5cb3b0757479c16a3f089455120b694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d1f875_c52164ec",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-07T08:14:54Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "06547a8c_91405f05",
+      "range": {
+        "startLine": 1308,
+        "startChar": 24,
+        "endLine": 1308,
+        "endChar": 53
+      },
+      "revId": "829156a8b5cb3b0757479c16a3f089455120b694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4464d67_3e828f9f",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-07T08:14:54Z",
+      "side": 1,
+      "message": "Why pass this as a separate argument when it\u0027s already contained as a public member of ns ?",
+      "range": {
+        "startLine": 1553,
+        "startChar": 35,
+        "endLine": 1553,
+        "endChar": 46
       },
       "revId": "829156a8b5cb3b0757479c16a3f089455120b694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -68,6 +161,52 @@
       "revId": "829156a8b5cb3b0757479c16a3f089455120b694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ac3449_4fe2aa97",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-07T08:14:54Z",
+      "side": 1,
+      "message": "Suggest passing the full UpstreamNetworkState here. It is likely to come in handy later.",
+      "range": {
+        "startLine": 1618,
+        "startChar": 83,
+        "endLine": 1618,
+        "endChar": 94
+      },
+      "revId": "829156a8b5cb3b0757479c16a3f089455120b694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6ec92d_29959477",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-07T08:14:54Z",
+      "side": 1,
+      "message": "Maybe this is a bit under specified ; not feeling strongly but you may want to make a class to hold these two members just to have something a little more rigid.",
+      "range": {
+        "startLine": 1618,
+        "startChar": 68,
+        "endLine": 1618,
+        "endChar": 72
+      },
+      "revId": "829156a8b5cb3b0757479c16a3f089455120b694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
