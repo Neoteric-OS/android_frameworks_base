@@ -16,6 +16,23 @@
       "revId": "c782be6e6fb5ccfd5905376e43720f4c89e49d3b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fd4096d_b1584164",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-08-07T16:11:17Z",
+      "side": 1,
+      "message": "Liam said he doesn\u0027t have permission to submit (the submit button is greyed out), and no vote besides autosubmit. Therefore I\u0027m checking in this change on his behalf.",
+      "revId": "c782be6e6fb5ccfd5905376e43720f4c89e49d3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
