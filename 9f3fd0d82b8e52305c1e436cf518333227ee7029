@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6886171_37d9eb67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-08-07T16:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38198298_2cccc96d",
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c09a274_1eb09c91",
         "filename": "libs/input/MouseCursorController.h",
         "patchSetId": 6
@@ -322,6 +340,30 @@
       "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532ca048_4ae8de24",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-08-07T16:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1de51f3_69a5be15",
+      "range": {
+        "startLine": 193,
+        "startChar": 29,
+        "endLine": 193,
+        "endChar": 37
+      },
+      "revId": "9f3fd0d82b8e52305c1e436cf518333227ee7029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {

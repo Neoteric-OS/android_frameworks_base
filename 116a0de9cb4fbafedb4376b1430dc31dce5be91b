@@ -16,6 +16,24 @@
       "revId": "116a0de9cb4fbafedb4376b1430dc31dce5be91b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0553dc17_7a69bf1e",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-08-07T16:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "331adb71_c3b0fae5",
+      "revId": "116a0de9cb4fbafedb4376b1430dc31dce5be91b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

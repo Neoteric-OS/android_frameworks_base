@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "24596fbf_6fc8256d",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-08-07T16:14:05Z",
+      "side": 1,
+      "message": "Not possible due to private constructor. I\u0027ll add a comment in the code.",
+      "parentUuid": "c3a91730_1ae539fd",
+      "range": {
+        "startLine": 199,
+        "startChar": 57,
+        "endLine": 199,
+        "endChar": 67
+      },
+      "revId": "27353782dcb36d3be2935a03dc3c7befa3d1ffeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72bb32e1_f613646d",
         "filename": "libs/input/PointerController.cpp",
         "patchSetId": 7
@@ -69,6 +93,30 @@
       "revId": "27353782dcb36d3be2935a03dc3c7befa3d1ffeb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9d151e_711524cf",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-08-07T16:14:05Z",
+      "side": 1,
+      "message": "This is a remnant from the old code. You\u0027re right, I don\u0027t think this is necessary anymore.",
+      "parentUuid": "72bb32e1_f613646d",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 1
+      },
+      "revId": "27353782dcb36d3be2935a03dc3c7befa3d1ffeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "158aa76e_79df0daa",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-08-07T16:14:05Z",
+      "side": 1,
+      "message": "I think we can just make it an object. It\u0027s created when PointerController is created and never destroyed until PointerController is destroyed.",
+      "parentUuid": "e5e59ae4_c6fd6f88",
+      "range": {
+        "startLine": 198,
+        "startChar": 4,
+        "endLine": 198,
+        "endChar": 60
+      },
+      "revId": "27353782dcb36d3be2935a03dc3c7befa3d1ffeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f96abaa8_559a389b",
         "filename": "libs/input/PointerController.h",
         "patchSetId": 7
@@ -115,6 +187,30 @@
       "revId": "27353782dcb36d3be2935a03dc3c7befa3d1ffeb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b69de5a5_e2643884",
+        "filename": "libs/input/PointerController.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-08-07T16:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f96abaa8_559a389b",
+      "range": {
+        "startLine": 203,
+        "startChar": 57,
+        "endLine": 203,
+        "endChar": 67
+      },
+      "revId": "27353782dcb36d3be2935a03dc3c7befa3d1ffeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
