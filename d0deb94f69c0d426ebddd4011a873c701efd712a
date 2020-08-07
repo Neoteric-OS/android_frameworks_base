@@ -147,6 +147,30 @@
     },
     {
       "key": {
+        "uuid": "31c95270_caf2c70a",
+        "filename": "libs/input/MouseCursorController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-08-07T16:16:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dd9a9ac_de08f9d6",
+      "range": {
+        "startLine": 248,
+        "startChar": 8,
+        "endLine": 248,
+        "endChar": 47
+      },
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d0c1d90_4bedb5e0",
         "filename": "libs/input/MouseCursorController.cpp",
         "patchSetId": 3
@@ -773,6 +797,24 @@
       "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7a9859_074057c1",
+        "filename": "libs/input/PointerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1718830
+      },
+      "writtenOn": "2020-08-07T16:16:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a902e7aa_0bcdd385",
+      "revId": "d0deb94f69c0d426ebddd4011a873c701efd712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
