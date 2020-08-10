@@ -20,8 +20,6 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.StringDef;
-import android.compat.annotation.ChangeId;
-import android.compat.annotation.Disabled;
 import android.content.Context;
 import android.os.Binder;
 import android.os.Parcel;
@@ -116,15 +114,6 @@ public class ConnectivityDiagnosticsManager {
          * Due to the properties of the network, validation was not performed.
          */
         public static final int NETWORK_VALIDATION_RESULT_SKIPPED = 3;
-
-        /**
-         * This change updates {@link ConnectivityDiagnosticsCallback#onConnectivityReportAvailable}
-         * to return {@link #NETWORK_VALIDATION_RESULT_SKIPPED} for cases where the reported Network
-         * was not actually validated in generating this ConnectivityReport.
-         */
-        @ChangeId
-        @Disabled
-        private static final long USE_RESULT_SKIPPED_WHEN_VALIDATION_SKIPPED = 162407730L;
 
         /** @hide */
         @IntDef(
