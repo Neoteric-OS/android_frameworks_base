@@ -80,6 +80,8 @@ public final class DataCallResponse implements Parcelable {
     private final int mMtu;
     private final int mMtuV4;
     private final int mMtuV6;
+    private final Qos mDefaultQos;
+    private final List<QosSession> mQosSessions;
 
     /**
      * @param cause Data call fail cause. {@link DataFailCause#NONE} indicates no error.
@@ -126,6 +128,8 @@ public final class DataCallResponse implements Parcelable {
         mPcscfAddresses = (pcscfAddresses == null)
                 ? new ArrayList<>() : new ArrayList<>(pcscfAddresses);
         mMtu = mMtuV4 = mMtuV6 = mtu;
+        mDefaultQos = null;
+        mQosSessions = new ArrayList<>();
     }
 
     /** @hide */
@@ -151,6 +155,36 @@ public final class DataCallResponse implements Parcelable {
         mMtu = mtu;
         mMtuV4 = mtuV4;
         mMtuV6 = mtuV6;
+        mDefaultQos = null;
+        mQosSessions = new ArrayList<>();
+    }
+
+    /** @hide */
+    private DataCallResponse(@DataFailureCause int cause, int suggestedRetryTime, int id,
+            @LinkStatus int linkStatus, @ProtocolType int protocolType,
+            @Nullable String interfaceName, @Nullable List<LinkAddress> addresses,
+            @Nullable List<InetAddress> dnsAddresses, @Nullable List<InetAddress> gatewayAddresses,
+            @Nullable List<InetAddress> pcscfAddresses, int mtu, int mtuV4, int mtuV6,
+            @Nullable Qos defaultQos, @Nullable List<QosSession> qosSessions) {
+        mCause = cause;
+        mSuggestedRetryTime = suggestedRetryTime;
+        mId = id;
+        mLinkStatus = linkStatus;
+        mProtocolType = protocolType;
+        mInterfaceName = (interfaceName == null) ? "" : interfaceName;
+        mAddresses = (addresses == null)
+                ? new ArrayList<>() : new ArrayList<>(addresses);
+        mDnsAddresses = (dnsAddresses == null)
+                ? new ArrayList<>() : new ArrayList<>(dnsAddresses);
+        mGatewayAddresses = (gatewayAddresses == null)
+                ? new ArrayList<>() : new ArrayList<>(gatewayAddresses);
+        mPcscfAddresses = (pcscfAddresses == null)
+                ? new ArrayList<>() : new ArrayList<>(pcscfAddresses);
+        mMtu = mtu;
+        mMtuV4 = mtuV4;
+        mMtuV6 = mtuV6;
+        mDefaultQos = defaultQos;
+        mQosSessions = qosSessions;
     }
 
     /** @hide */
@@ -173,6 +207,9 @@ public final class DataCallResponse implements Parcelable {
         mMtu = source.readInt();
         mMtuV4 = source.readInt();
         mMtuV6 = source.readInt();
+        mDefaultQos = source.readParcelable(Qos.class.getClassLoader());
+        mQosSessions = new ArrayList<>();
+        source.readList(mQosSessions, QosSession.class.getClassLoader());
     }
 
     /**
@@ -260,6 +297,24 @@ public final class DataCallResponse implements Parcelable {
      */
     public int getMtuV6() {
         return mMtuV6;
+    }
+
+    /**
+     * @return default QOS of the data call received from the network
+     * @hide
+     */
+    @Nullable
+    public Qos getDefaultQos() {
+        return mDefaultQos;
+    }
+
+    /**
+     * @return All the dedicated bearer QOS sessions of the data call received from the network
+     * @hide
+     */
+    @Nullable
+    public List<QosSession> getQosSessions() {
+        return mQosSessions;
     }
 
     @NonNull
@@ -394,6 +449,10 @@ public final class DataCallResponse implements Parcelable {
         private int mMtuV4;
 
         private int mMtuV6;
+
+        private Qos mDefaultQos;
+
+        private List<QosSession> mQosSessions;
 
         /**
          * Default constructor for Builder.
@@ -549,6 +608,35 @@ public final class DataCallResponse implements Parcelable {
          */
         public @NonNull Builder setMtuV6(int mtu) {
             mMtuV6 = mtu;
+            return this;
+        }
+
+        /**
+         * Set the default QOS for this data connection.
+         *
+         * @param defaultQos QOS (Quality Of Service) received from network.
+         *
+         * @return The same instance of the builder.
+         *
+         * @hide
+         */
+        public @NonNull Builder setDefaultQos(@Nullable Qos defaultQos) {
+            mDefaultQos = defaultQos;
+            return this;
+        }
+
+        /**
+         * Set the dedicated bearer QOS sessions for this data connection.
+         *
+         * @param qosSessions Dedicated bearer QOS (Quality Of Service) sessions received
+         * from network.
+         *
+         * @return The same instance of the builder.
+         *
+         * @hide
+         */
+        public @NonNull Builder setQosSessions(@NonNull List<QosSession> qosSessions) {
+            mQosSessions = qosSessions;
             return this;
         }
 
