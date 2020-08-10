@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "b0d28d8b_a634d603",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4195,
+      "author": {
+        "id": 1647935
+      },
+      "writtenOn": "2020-08-10T08:09:33Z",
+      "side": 1,
+      "message": "Sorry for the different questions, I want to minimize our back and forth ;-)\n    ㄴNo worry about this. We already expected there would be lots of exchanging of review \u0026 synchronizing to contribute AOSP master.\n\nA/ The second one. The service actually uses instance of android.media.MediaPlayer and its existing implementation as a general interface as all the other apps does. The service can call all interfaces that include pause() \u0026 setDisplay() also. But it  calls some of the parts it actually needs for ViLTE. Here is list of functions in calling time order.\n\nsetOnImsRxNoticeListener()        \u003c--- What we want to add in now\nsetOnVideoSizeChangedListener()\nsetDataSource()\nsetSurface()\nprepare()\nstart()\nsetRTPBitrate()           \u003c--- Will be added in the next patchset\nstop()\nrelease()\n\nB/ The IMS service needs any means to get feedbacks from MediaPlayer. We found MediaPlayer already have some interfaces to register(setOnBlahBlahListener()) callback and get information through the callback. So we also would like to do same thing for supporting MediaPlayer as an ViLTE player.\nYes, any MediaPlayer instance can do the same thing by adding this interface but it is limited to instances in system level app/service. It is SystemApi and will be limited to app/service who has some previleged permission as you guided.\n\nC/ Our IMS service creates MediaPlayer to use the player as a video player of ViLTE. And the modified MediaPlayer by this code will relay ViLTE Rx(player) information to the IMS service. Absolutely the relay code is ready for native MediaPlayer. Please refer https://android-review.googlesource.com/c/platform/frameworks/av/+/952489 .\n\n\n   APP             JAVA             JNI              NATIVE  \n\nIMSService ---\u003e RegisterCallback\n\n\nIMSService \u003c--- RegisteredCallback    \u003c-------------    MediaPlayer.notify()\n\n\nThank you for reading!",
+      "parentUuid": "98f46101_984c2082",
+      "range": {
+        "startLine": 4195,
+        "startChar": 4,
+        "endLine": 4195,
+        "endChar": 14
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acfeb9cf_7b2062c9",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 9
@@ -324,6 +348,30 @@
       "side": 1,
       "message": "Sorry I am not familiar with the concept of group binding here. But if you download the existing patch and upload with the same SHA1 the history will be preserved and we can continue interacting on any new patch. Would this work for you, or did I misunderstand?",
       "parentUuid": "2f475b4b_9e475fbd",
+      "range": {
+        "startLine": 4196,
+        "startChar": 73,
+        "endLine": 4196,
+        "endChar": 81
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579f59e0_2295d83f",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4196,
+      "author": {
+        "id": 1647935
+      },
+      "writtenOn": "2020-08-10T08:09:33Z",
+      "side": 1,
+      "message": "I have used \"checkout\" for downloading this commit before I modify. As you said, this is the way to preserve SHA1 code when I download a commit. I check my current local commit\u0027s Change-Id SHA1 value again but it is same as \"I7216fdd08eb050c238e30ade574f54321c566516\"\nAn error message I confront is as the below.\n\nremote: Resolving deltas: 100% (141/141)\nremote: Processing changes: refs: 1, done\nTo https://android.googlesource.com/platform/frameworks/base\n ! [remote rejected]         HEAD -\u003e refs/for/master (cannot add patch set to 1125395.)\nerror: failed to push some refs to \u0027https://android.googlesource.com/platform/frameworks/base\u0027\n\n\nThis doesn\u0027t happen when I update some patches which owned by me. So I suspect the gerrit is set not to permit overwriting another one\u0027s patch basically. I wish get a permission for adding patch to ByeongJo\u0027s one and vice versa.",
+      "parentUuid": "aef33f04_d67b0719",
       "range": {
         "startLine": 4196,
         "startChar": 73,
