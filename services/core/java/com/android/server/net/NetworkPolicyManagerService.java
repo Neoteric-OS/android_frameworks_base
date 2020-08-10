@@ -262,6 +262,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -405,6 +406,10 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private final Clock mClock;
     private final UserManager mUserManager;
     private final CarrierConfigManager mCarrierConfigManager;
+    //M: fix system/phone/Application binder exhaust SWT
+    private HashMap<Integer, PersistableBundle> mCarrierConfigCache =
+            new HashMap<Integer, PersistableBundle>();
+    //M: end
 
     private IConnectivityManager mConnManager;
     private PowerManagerInternal mPowerManagerInternal;
@@ -1171,7 +1176,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             final long totalBytes = getTotalBytes(policy.template, cycleStart, cycleEnd);
 
             // Carrier might want to manage notifications themselves
-            final PersistableBundle config = mCarrierConfigManager.getConfigForSubId(subId);
+            final PersistableBundle config = mCarrierConfigCache.get(subId);
             if (!CarrierConfigManager.isConfigForIdentifiedCarrier(config)) {
                 if (LOGV) Slog.v(TAG, "isConfigForIdentifiedCarrier returned false");
                 // Don't show notifications until we confirm that the loaded config is from an
@@ -1657,6 +1662,11 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 return;
             }
             final int subId = intent.getIntExtra(CarrierConfigManager.EXTRA_SUBSCRIPTION_INDEX, -1);
+
+            //M: fix system/phone/Application binder exhaust SWT
+            final PersistableBundle config = mCarrierConfigManager.getConfigForSubId(subId);
+            mCarrierConfigCache.put(subId, config);
+            //M: end
 
             // Get all of our cross-process communication with telephony out of
             // the way before we acquire internal locks.
@@ -2151,7 +2161,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 }
             }
         } else {
-            final PersistableBundle config = mCarrierConfigManager.getConfigForSubId(subId);
+            final PersistableBundle config = mCarrierConfigCache.get(subId);
             final int currentCycleDay;
             if (policy.cycleRule.isMonthly()) {
                 currentCycleDay = policy.cycleRule.start.getDayOfMonth();
