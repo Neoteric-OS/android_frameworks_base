@@ -407,6 +407,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private final Clock mClock;
     private final UserManager mUserManager;
     private final CarrierConfigManager mCarrierConfigManager;
+    private SparseArray<PersistableBundle> mSubIdToCarrierConfig =
+            new SparseArray<PersistableBundle>();
 
     private IConnectivityManager mConnManager;
     private PowerManagerInternal mPowerManagerInternal;
@@ -1177,7 +1179,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             final long totalBytes = getTotalBytes(policy.template, cycleStart, cycleEnd);
 
             // Carrier might want to manage notifications themselves
-            final PersistableBundle config = mCarrierConfigManager.getConfigForSubId(subId);
+            final PersistableBundle config = mSubIdToCarrierConfig.get(subId);
             if (!CarrierConfigManager.isConfigForIdentifiedCarrier(config)) {
                 if (LOGV) Slog.v(TAG, "isConfigForIdentifiedCarrier returned false");
                 // Don't show notifications until we confirm that the loaded config is from an
@@ -1822,6 +1824,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
         final List<String[]> mergedSubscriberIdsList = new ArrayList();
         final SparseArray<String> subIdToSubscriberId = new SparseArray<>(subList.size());
+        final SparseArray<PersistableBundle> subIdToCarrierConfig =
+                new SparseArray<PersistableBundle>();
         for (final SubscriptionInfo sub : subList) {
             final TelephonyManager tmSub = tm.createForSubscriptionId(sub.getSubscriptionId());
             final String subscriberId = tmSub.getSubscriberId();
@@ -1834,6 +1838,10 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             final String[] mergedSubscriberId = ArrayUtils.defeatNullable(
                     tmSub.getMergedImsisFromGroup());
             mergedSubscriberIdsList.add(mergedSubscriberId);
+
+            final int subId = sub.getSubscriptionId();
+            final PersistableBundle config = mCarrierConfigManager.getConfigForSubId(subId);
+            subIdToCarrierConfig.put(subId, config);
         }
 
         synchronized (mNetworkPoliciesSecondLock) {
@@ -1844,6 +1852,12 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             }
 
             mMergedSubscriberIds = mergedSubscriberIdsList;
+
+            mSubIdToCarrierConfig.clear();
+            for (int i = 0; i < subIdToCarrierConfig.size(); i++) {
+                mSubIdToCarrierConfig.put(subIdToCarrierConfig.keyAt(i),
+                        subIdToCarrierConfig.valueAt(i));
+            }
         }
 
         Trace.traceEnd(TRACE_TAG_NETWORK);
@@ -2158,7 +2172,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 }
             }
         } else {
-            final PersistableBundle config = mCarrierConfigManager.getConfigForSubId(subId);
+            final PersistableBundle config = mSubIdToCarrierConfig.get(subId);
             final int currentCycleDay;
             if (policy.cycleRule.isMonthly()) {
                 currentCycleDay = policy.cycleRule.start.getDayOfMonth();
