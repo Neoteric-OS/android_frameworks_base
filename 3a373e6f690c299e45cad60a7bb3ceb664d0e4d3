@@ -381,6 +381,30 @@
       "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f810645d_bbdce756",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4196,
+      "author": {
+        "id": 1647935
+      },
+      "writtenOn": "2020-08-11T07:35:51Z",
+      "side": 1,
+      "message": "Dear Jean-Michel Trivi\n\nHi.\nWe have updated patch set 10 as we discussed.\nWe look forward to your the next review. 😊\n\nBest Regards,\nSungyeon Kim",
+      "parentUuid": "579f59e0_2295d83f",
+      "range": {
+        "startLine": 4196,
+        "startChar": 73,
+        "endLine": 4196,
+        "endChar": 81
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
