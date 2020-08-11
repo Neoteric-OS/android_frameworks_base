@@ -1,0 +1,487 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7135e3d1_236fb8e0",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "valid",
+      "range": {
+        "startLine": 1480,
+        "startChar": 68,
+        "endLine": 1480,
+        "endChar": 78
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ba011a_83e47b79",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "disallowed from using",
+      "range": {
+        "startLine": 188,
+        "startChar": 20,
+        "endLine": 188,
+        "endChar": 34
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfcc097_0cea0e7a",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "allowed",
+      "range": {
+        "startLine": 191,
+        "startChar": 20,
+        "endLine": 191,
+        "endChar": 31
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94983162_0f8033e7",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "Disallowing + size + UIDs from using metered networks\n\n(respectively \"allowing\"/\"to\" below)",
+      "range": {
+        "startLine": 564,
+        "startChar": 42,
+        "endLine": 564,
+        "endChar": 93
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2006e02_59f41840",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "Deny",
+      "range": {
+        "startLine": 1831,
+        "startChar": 20,
+        "endLine": 1831,
+        "endChar": 28
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7155ec7_d516b4b3",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1916,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "mayde \"denied UIDs\" (respectively \"allowed UIDs\")",
+      "range": {
+        "startLine": 1916,
+        "startChar": 46,
+        "endLine": 1916,
+        "endChar": 54
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3534c5_fecdf102",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2182,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "\"allow\" and reverse the meaning",
+      "range": {
+        "startLine": 2182,
+        "startChar": 48,
+        "endLine": 2182,
+        "endChar": 56
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fa14af_d5a3ae29",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "\"the safer defaults\" is what was meant here I think",
+      "range": {
+        "startLine": 391,
+        "startChar": 64,
+        "endLine": 391,
+        "endChar": 71
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adbd6ae9_c560e6e8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "allowed to bypass lockdown",
+      "range": {
+        "startLine": 550,
+        "startChar": 47,
+        "endLine": 550,
+        "endChar": 68
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38938447_a21bf53b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "to bypass",
+      "range": {
+        "startLine": 625,
+        "startChar": 53,
+        "endLine": 625,
+        "endChar": 57
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4203250d_c3621174",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "Did you want to also fix this one ? It should not be called extensively and it\u0027s not a public name.",
+      "range": {
+        "startLine": 627,
+        "startChar": 48,
+        "endLine": 627,
+        "endChar": 53
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e06b567d_70b0bc90",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "Suggestion : you could have a constant at the top of this file with a better name and use it throughout.\n\n  final String LOCKDOWN_ALLOWLIST_SETTING_NAME \u003d Settings.Secure.ALWAYS_ON_VPN_LOCKDOWN_WHITELIST;",
+      "range": {
+        "startLine": 643,
+        "startChar": 59,
+        "endLine": 643,
+        "endChar": 68
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73574ba6_b189dc51",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "Just replace all of this with \"list\"",
+      "range": {
+        "startLine": 1311,
+        "startChar": 41,
+        "endLine": 1311,
+        "endChar": 63
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54f0986_46a1087d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "List of applications to allow (respectively \"deny\" below)",
+      "range": {
+        "startLine": 1316,
+        "startChar": 45,
+        "endLine": 1316,
+        "endChar": 82
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753e3d2e_deddb5d3",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "You\u0027ll have to rebase",
+      "range": {
+        "startLine": 136,
+        "startChar": 44,
+        "endLine": 136,
+        "endChar": 48
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3515186c_7bdc7003",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "Allowed list (respectively denied list)",
+      "range": {
+        "startLine": 266,
+        "startChar": 11,
+        "endLine": 266,
+        "endChar": 20
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e137b3ed_cf641d68",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "allow",
+      "range": {
+        "startLine": 349,
+        "startChar": 43,
+        "endLine": 349,
+        "endChar": 52
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc60eb78_a0ffc6a4",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "allowed app list",
+      "range": {
+        "startLine": 359,
+        "startChar": 18,
+        "endLine": 359,
+        "endChar": 29
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80425f8_1b0a5385",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "list of allowed packages",
+      "range": {
+        "startLine": 386,
+        "startChar": 22,
+        "endLine": 386,
+        "endChar": 31
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75296c36_ac16e54f",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "list of allowed packages",
+      "range": {
+        "startLine": 399,
+        "startChar": 19,
+        "endLine": 399,
+        "endChar": 28
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab13976_c75962bc",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:41:22Z",
+      "side": 1,
+      "message": "Allowed",
+      "range": {
+        "startLine": 417,
+        "startChar": 11,
+        "endLine": 417,
+        "endChar": 22
+      },
+      "revId": "295288d6aaa6ac4b7ec57d6421a3a94e40bd5231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
