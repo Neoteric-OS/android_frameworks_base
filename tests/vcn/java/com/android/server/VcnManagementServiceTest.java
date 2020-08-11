@@ -25,7 +25,7 @@ import static org.mockito.Mockito.verify;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.vcn.VcnConfig;
+import android.net.vcn.VcnConfigTest;
 import android.os.ParcelUuid;
 import android.os.UserHandle;
 import android.os.test.TestLooper;
@@ -119,7 +119,7 @@ public class VcnManagementServiceTest {
                 .getBinderCallingUserHandle();
 
         try {
-            mVcnMgmtSvc.setVcnConfig(TEST_UUID_1, new VcnConfig.Builder().build());
+            mVcnMgmtSvc.setVcnConfig(TEST_UUID_1, VcnConfigTest.buildTestConfig());
             fail("Expected security exception for non system user");
         } catch (SecurityException expected) {
         }
@@ -130,7 +130,7 @@ public class VcnManagementServiceTest {
         setupMockedCarrierPrivilege(false);
 
         try {
-            mVcnMgmtSvc.setVcnConfig(TEST_UUID_1, new VcnConfig.Builder().build());
+            mVcnMgmtSvc.setVcnConfig(TEST_UUID_1, VcnConfigTest.buildTestConfig());
             fail("Expected security exception for missing carrier privileges");
         } catch (SecurityException expected) {
         }
