@@ -385,8 +385,7 @@ public class IorapForwardingService extends SystemService {
             // In development modes, we just want to crash.
             throw new AssertionError("unexpected remote error", t);
         } else {
-            // Log to wtf which gets sent to dropbox, and in system_server this does not crash.
-            Log.wtf(TAG, t);
+            Log.w(TAG, t.getMessage());
         }
     }
 }
