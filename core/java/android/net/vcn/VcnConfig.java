@@ -15,30 +15,152 @@
  */
 package android.net.vcn;
 
+import static com.android.internal.annotations.VisibleForTesting.Visibility;
+
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
+
+import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.Preconditions;
+import com.android.server.vcn.util.PersistableBundleUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class represents a configuration for a Virtual Carrier Network.
+ *
+ * <p>Each {@link VcnGatewayConnectionConfig} instance added represents a connection that will be
+ * brought up on demand based on app-requested {@link Network}s.
  *
  * @hide
  */
 public final class VcnConfig implements Parcelable {
     @NonNull private static final String TAG = VcnConfig.class.getSimpleName();
 
-    private VcnConfig() {
+    private static final int MAX_RETRY_INTERVAL_COUNT = 10;
+    private static final long MINIMUM_REPEATING_RETRY_INTERVAL_MS = TimeUnit.MINUTES.toMillis(15);
+
+    private static final long[] DEFAULT_RETRY_INTERVALS_MS =
+            new long[] {
+                TimeUnit.SECONDS.toMillis(5),
+                TimeUnit.SECONDS.toMillis(30),
+                TimeUnit.MINUTES.toMillis(1),
+                TimeUnit.MINUTES.toMillis(5),
+                TimeUnit.MINUTES.toMillis(15)
+            };
+
+    private static final String RETRY_INTERVAL_MS_KEY = "mRetryIntervalsMs";
+    @NonNull private final long[] mRetryIntervalsMs;
+
+    private static final String TUNNEL_CONFIGS_KEY = "mTunnelConfigs";
+    @NonNull private final List<VcnGatewayConnectionConfig> mTunnelConfigs;
+
+    private VcnConfig(
+            @NonNull long[] retryIntervalsMs,
+            @NonNull List<VcnGatewayConnectionConfig> tunnelConfigs) {
+        mRetryIntervalsMs = Objects.requireNonNull(retryIntervalsMs, "retryIntervalsMs was null");
+        mTunnelConfigs = Collections.unmodifiableList(tunnelConfigs);
+
         validate();
     }
-    // TODO: Implement getters, validators, etc
 
     /**
-     * Validates this configuration.
+     * Deserializes a VcnConfig from a PersistableBundle.
      *
      * @hide
      */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public VcnConfig(@NonNull PersistableBundle in) {
+        mRetryIntervalsMs = in.getLongArray(RETRY_INTERVAL_MS_KEY);
+
+        final PersistableBundle tunnelConfigsBundle = in.getPersistableBundle(TUNNEL_CONFIGS_KEY);
+        mTunnelConfigs =
+                PersistableBundleUtils.toList(tunnelConfigsBundle, VcnGatewayConnectionConfig::new);
+
+        validate();
+    }
+
     private void validate() {
-        // TODO: implement validation logic
+        validateRetryInterval(mRetryIntervalsMs);
+        Preconditions.checkCollectionNotEmpty(mTunnelConfigs, "tunnelConfigs");
+    }
+
+    private static void validateRetryInterval(@Nullable long[] retryIntervalsMs) {
+        Preconditions.checkArgument(
+                retryIntervalsMs != null
+                        && retryIntervalsMs.length > 0
+                        && retryIntervalsMs.length <= MAX_RETRY_INTERVAL_COUNT,
+                "retryIntervalsMs was null, empty or exceed max interval count");
+
+        final long repeatingInterval = retryIntervalsMs[retryIntervalsMs.length - 1];
+        if (repeatingInterval < MINIMUM_REPEATING_RETRY_INTERVAL_MS) {
+            throw new IllegalArgumentException(
+                    "Repeating retry interval was too short, must be a minimum of 15 minutes: "
+                            + repeatingInterval);
+        }
+    }
+
+    /**
+     * Retrieves the configured retry intervals.
+     *
+     * @hide
+     */
+    @NonNull
+    public long[] getRetryIntervalsMs() {
+        return Arrays.copyOf(mRetryIntervalsMs, mRetryIntervalsMs.length);
+    }
+
+    /**
+     * Retrieves the list of configured tunnels.
+     *
+     * @hide
+     */
+    @NonNull
+    public List<VcnGatewayConnectionConfig> getTunnelConfigs() {
+        return Collections.unmodifiableList(mTunnelConfigs);
+    }
+
+    /**
+     * Serializes this object to a PersistableBundle.
+     *
+     * @hide
+     */
+    @NonNull
+    public PersistableBundle toPersistableBundle() {
+        final PersistableBundle result = new PersistableBundle();
+
+        result.putLongArray(RETRY_INTERVAL_MS_KEY, mRetryIntervalsMs);
+
+        final PersistableBundle tunnelConfigsBundle =
+                PersistableBundleUtils.fromList(
+                        mTunnelConfigs, VcnGatewayConnectionConfig::toPersistableBundle);
+        result.putPersistableBundle(TUNNEL_CONFIGS_KEY, tunnelConfigsBundle);
+
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Arrays.hashCode(mRetryIntervalsMs), mTunnelConfigs);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object other) {
+        if (!(other instanceof VcnConfig)) {
+            return false;
+        }
+
+        final VcnConfig rhs = (VcnConfig) other;
+        return Arrays.equals(mRetryIntervalsMs, rhs.mRetryIntervalsMs)
+                && mTunnelConfigs.equals(rhs.mTunnelConfigs);
     }
 
     // Parcelable methods
@@ -49,15 +171,16 @@ public final class VcnConfig implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel out, int flags) {}
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeParcelable(toPersistableBundle(), flags);
+    }
 
     @NonNull
     public static final Parcelable.Creator<VcnConfig> CREATOR =
             new Parcelable.Creator<VcnConfig>() {
                 @NonNull
                 public VcnConfig createFromParcel(Parcel in) {
-                    // TODO: Ensure all methods are pulled from the parcels
-                    return new VcnConfig();
+                    return new VcnConfig((PersistableBundle) in.readParcelable(null));
                 }
 
                 @NonNull
@@ -68,16 +191,61 @@ public final class VcnConfig implements Parcelable {
 
     /** This class is used to incrementally build {@link VcnConfig} objects. */
     public static class Builder {
-        // TODO: Implement this builder
+        @NonNull private final List<VcnGatewayConnectionConfig> mTunnelConfigs = new ArrayList<>();
+        @NonNull private long[] mRetryIntervalsMs = DEFAULT_RETRY_INTERVALS_MS;
+
+        /**
+         * Sets the intervals for which each VCN tunnel will try to retry in.
+         *
+         * <p>The last retry interval will be repeated until safe mode is entered, or a connection
+         * is successfully established, at which point the retry timers will be reset. For power
+         * reasons, the last (repeated) retry interval MUST be at least 15 minutes.
+         *
+         * <p>Retry intervals MAY be subject to system power saving modes. That is to say that if
+         * the system enters a power saving mode, the retry may not occur until the device leaves
+         * the specified power saving mode.
+         *
+         * <p>Each tunnel as defined by {@link VcnGatewayConnectionConfig} will retry separately,
+         * but if safe mode is enabled, all tunnels will be disabled.
+         *
+         * @param retryIntervalsMs the millisecond intervals after which the VCN will attempt to
+         *     retry a session initiation, killing pre-existing sessions if necessary. This array
+         *     must contain at least one, but no more than 10 retry intervals, with the last
+         *     (repeating) retry interval at least 15 minutes between retries.
+         * @return this {@link Builder} instance, for chaining.
+         * @see VcnManager
+         */
+        @NonNull
+        public Builder setRetryInterval(@NonNull long[] retryIntervalsMs) {
+            validateRetryInterval(retryIntervalsMs);
+
+            mRetryIntervalsMs = retryIntervalsMs;
+            return this;
+        }
+
+        /**
+         * Adds a {@link VcnGatewayConnectionConfig} with the configuration for an individual
+         * tunnel.
+         *
+         * @param tunnelConfig the configuration for an individual tunnel.
+         * @return this {@link Builder} instance, for chaining.
+         */
+        @NonNull
+        public Builder addTunnelConfig(@NonNull VcnGatewayConnectionConfig tunnelConfig) {
+            Objects.requireNonNull(tunnelConfig, "tunnelConfig was null");
+
+            mTunnelConfigs.add(tunnelConfig);
+            return this;
+        }
 
         /**
          * Builds and validates the VcnConfig.
          *
-         * @return an immutable VcnConfig instance
+         * @return an immutable VcnConfig instance.
          */
         @NonNull
         public VcnConfig build() {
-            return new VcnConfig();
+            return new VcnConfig(mRetryIntervalsMs, mTunnelConfigs);
         }
     }
 }
