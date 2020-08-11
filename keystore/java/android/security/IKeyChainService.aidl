@@ -18,6 +18,8 @@ package android.security;
 import android.content.pm.StringParceledListSlice;
 import android.security.keymaster.KeymasterCertificateChain;
 import android.security.keystore.ParcelableKeyGenParameterSpec;
+import android.security.keymaster.KeyCharacteristics;
+
 
 /**
  * Caller is required to ensure that {@link KeyStore#unlock
@@ -55,6 +57,8 @@ interface IKeyChainService {
     boolean containsCaAlias(String alias);
     byte[] getEncodedCaCertificate(String alias, boolean includeDeletedSystem);
     List<String> getCaCertificateChainAliases(String rootAlias, boolean includeDeletedSystem);
+    List<String> getUserCertificateAliases(String prefix, int uid);
+    int getKeyCharacteristics(String alias, int uid, out KeyCharacteristics outCharacteristics);
 
     // APIs used by KeyChainActivity
     void setGrant(int uid, String alias, boolean value);
