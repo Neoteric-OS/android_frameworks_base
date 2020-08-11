@@ -25,6 +25,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 /**
  * Represents a record in an {@link AccessibilityEvent} and contains information
@@ -109,7 +110,7 @@ public class AccessibilityRecord {
     CharSequence mBeforeText;
     Parcelable mParcelableData;
 
-    final List<CharSequence> mText = new ArrayList<CharSequence>();
+    final List<CharSequence> mText = Collections.synchronizedList(new ArrayList<CharSequence>());
 
     int mConnectionId = UNDEFINED;
 
