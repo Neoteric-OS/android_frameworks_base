@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c897fea_c4abfd3c",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-11T06:44:29Z",
+      "side": 1,
+      "message": "Don\u0027t you still need to remove the permissions before asserting ? Some previous test may have left some.",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 19
+      },
+      "revId": "db915b265c693a79c3ed0e8b74d03165abb2aee7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
