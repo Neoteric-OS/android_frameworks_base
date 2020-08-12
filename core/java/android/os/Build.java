@@ -1227,7 +1227,8 @@ public class Build {
      * Returns true if we are running a debug build such as "user-debug" or "eng".
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
+    @TestApi
     public static final boolean IS_DEBUGGABLE =
             SystemProperties.getInt("ro.debuggable", 0) == 1;
 
