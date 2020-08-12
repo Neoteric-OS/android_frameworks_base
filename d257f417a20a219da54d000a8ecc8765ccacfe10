@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e45a80ed_57679446",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-12T07:03:46Z",
+      "side": 1,
+      "message": "Still LGTM but please take a look at the comment on PS4",
+      "revId": "d257f417a20a219da54d000a8ecc8765ccacfe10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
