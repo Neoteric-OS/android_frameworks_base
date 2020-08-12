@@ -655,7 +655,7 @@ public class LockSettingsService extends ILockSettings.Stub {
                                 getGateKeeperService(), handle, noCredential, userId, null);
                 if (result.authToken != null) {
                     Slog.i(TAG, "Retrieved auth token for user " + userId);
-                    onAuthTokenKnownForUser(userId, result.authToken);
+                    onAuthTokenKnownForUser(userId, result.authToken, false);
                 } else {
                     Slog.e(TAG, "Auth token not available for user " + userId);
                 }
@@ -2394,7 +2394,8 @@ public class LockSettingsService extends ILockSettings.Stub {
     @GuardedBy("mSpManager")
     private SparseArray<AuthenticationToken> mSpCache = new SparseArray();
 
-    private void onAuthTokenKnownForUser(@UserIdInt int userId, AuthenticationToken auth) {
+    private void onAuthTokenKnownForUser(@UserIdInt int userId, AuthenticationToken auth,
+                                         boolean installSecret) {
         // Preemptively cache the SP and then try to remove it in a handler.
         Slog.i(TAG, "Caching SP for user " + userId);
         synchronized (mSpManager) {
@@ -2415,7 +2416,7 @@ public class LockSettingsService extends ILockSettings.Stub {
                 for (int i = 0; i < rawSecret.length; ++i) {
                     secret.add(rawSecret[i]);
                 }
-                mAuthSecretService.primaryUserCredential(secret);
+                mAuthSecretService.primaryUserCredential(secret, installSecret);
             } catch (RemoteException e) {
                 Slog.w(TAG, "Failed to pass primary user secret to AuthSecret HAL", e);
             }
@@ -2502,7 +2503,7 @@ public class LockSettingsService extends ILockSettings.Stub {
         Slog.i(TAG, "Initialize SyntheticPassword for user: " + userId);
         final AuthenticationToken auth = mSpManager.newSyntheticPasswordAndSid(
                 getGateKeeperService(), credentialHash, credential, userId);
-        onAuthTokenKnownForUser(userId, auth);
+        onAuthTokenKnownForUser(userId, auth, true);
         if (auth == null) {
             Slog.wtf(TAG, "initializeSyntheticPasswordLocked returns null auth token");
             return null;
@@ -2630,7 +2631,7 @@ public class LockSettingsService extends ILockSettings.Stub {
             }
             mStrongAuth.reportSuccessfulStrongAuthUnlock(userId);
 
-            onAuthTokenKnownForUser(userId, authResult.authToken);
+            onAuthTokenKnownForUser(userId, authResult.authToken, false);
         } else if (response.getResponseCode() == VerifyCredentialResponse.RESPONSE_RETRY) {
             if (response.getTimeout() > 0) {
                 requireStrongAuth(STRONG_AUTH_REQUIRED_AFTER_LOCKOUT, userId);
@@ -2745,7 +2746,7 @@ public class LockSettingsService extends ILockSettings.Stub {
         }
         boolean untrustedReset = false;
         if (auth != null) {
-            onAuthTokenKnownForUser(userId, auth);
+            onAuthTokenKnownForUser(userId, auth, false);
         } else if (response == null) {
             throw new IllegalStateException("Password change failed.");
         } else if (response.getResponseCode() == VerifyCredentialResponse.RESPONSE_ERROR) {
@@ -2947,7 +2948,7 @@ public class LockSettingsService extends ILockSettings.Stub {
                 requestedQuality, userId);
         mSpManager.destroyPasswordBasedSyntheticPassword(oldHandle, userId);
 
-        onAuthTokenKnownForUser(userId, result.authToken);
+        onAuthTokenKnownForUser(userId, result.authToken, false);
         return true;
     }
 
@@ -2966,7 +2967,7 @@ public class LockSettingsService extends ILockSettings.Stub {
             }
         }
         unlockUser(userId, null, authResult.authToken.deriveDiskEncryptionKey());
-        onAuthTokenKnownForUser(userId, authResult.authToken);
+        onAuthTokenKnownForUser(userId, authResult.authToken, false);
         return true;
     }
 
