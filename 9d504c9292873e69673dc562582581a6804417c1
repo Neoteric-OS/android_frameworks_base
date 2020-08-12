@@ -22,6 +22,30 @@
       "revId": "9d504c9292873e69673dc562582581a6804417c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56713aea_321ef366",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1312,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-12T04:28:08Z",
+      "side": 1,
+      "message": "Thanks for the information. I will move the change of NetworkManagementService related item in other commit since I see there may be another expecting follow up commit after ag/12281437. Leave the related items later.",
+      "parentUuid": "893d918a_aa2969da",
+      "range": {
+        "startLine": 1312,
+        "startChar": 4,
+        "endLine": 1312,
+        "endChar": 88
+      },
+      "revId": "9d504c9292873e69673dc562582581a6804417c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
