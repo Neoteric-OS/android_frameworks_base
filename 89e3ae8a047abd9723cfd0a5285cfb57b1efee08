@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a4aa65a_b07ae041",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-12T04:11:46Z",
+      "side": 1,
+      "message": "Let\u0027s be more inclusive in wording",
+      "range": {
+        "startLine": 12,
+        "startChar": 42,
+        "endLine": 12,
+        "endChar": 48
+      },
+      "revId": "89e3ae8a047abd9723cfd0a5285cfb57b1efee08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ce5da7_d6caa66a",
+        "filename": "tests/net/common/java/android/net/DependenciesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-12T04:11:46Z",
+      "side": 1,
+      "message": "Question : what\u0027s the plan if we find out that some existing device already won\u0027t pass this test ?",
+      "range": {
+        "startLine": 128,
+        "startChar": 62,
+        "endLine": 129,
+        "endChar": 50
+      },
+      "revId": "89e3ae8a047abd9723cfd0a5285cfb57b1efee08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c6f507_617103e5",
+        "filename": "tests/net/common/java/android/net/DependenciesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-12T04:11:46Z",
+      "side": 1,
+      "message": "Sorry I can\u0027t say I understand the rationale. The typical state of a device on a workbench is not to be connected to wifi. For example, some CTS will disconnect as they exit. Doing this voids the value of this test for a nondescript proportion of devices it runs on ; for all we know the proportion may be 100%.\n\nCan we get the device to actually connect ?",
+      "range": {
+        "startLine": 139,
+        "startChar": 11,
+        "endLine": 139,
+        "endChar": 51
+      },
+      "revId": "89e3ae8a047abd9723cfd0a5285cfb57b1efee08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6a45ad_8ab1b0fe",
+        "filename": "tests/net/common/java/android/net/DependenciesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-12T04:11:46Z",
+      "side": 1,
+      "message": "...but the code below rejects anything equal to or below 0. I guess a negative value with unit MHz indeed makes no sense, so maybe you should simply update the comment.",
+      "range": {
+        "startLine": 144,
+        "startChar": 39,
+        "endLine": 144,
+        "endChar": 42
+      },
+      "revId": "89e3ae8a047abd9723cfd0a5285cfb57b1efee08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
