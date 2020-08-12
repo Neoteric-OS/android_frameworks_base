@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "893d918a_aa2969da",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1312,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-08-12T04:20:29Z",
+      "side": 1,
+      "message": "ag/12281437 has updated blacklist to denylist. You should get conflict here.\nBTW, do you want to update denylist to allow to align the design like Injector#setUidOnMeteredNetworkList() as well.",
+      "range": {
+        "startLine": 1312,
+        "startChar": 4,
+        "endLine": 1312,
+        "endChar": 88
+      },
+      "revId": "9d504c9292873e69673dc562582581a6804417c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
