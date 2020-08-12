@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f125ede8_cdbf206a",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1320071
+      },
+      "writtenOn": "2020-08-12T08:45:50Z",
+      "side": 0,
+      "message": "could we should the device name in this log? otherwise we would not know which device is change their profile",
+      "range": {
+        "startLine": 125,
+        "startChar": 72,
+        "endLine": 125,
+        "endChar": 90
+      },
+      "revId": "06697e0c43e7cbdb361e95b46a4538c71a94ce96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
