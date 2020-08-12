@@ -1287,10 +1287,8 @@ public class Build {
     public static final String HOST = getString("ro.build.host");
 
     /**
-     * Returns true if we are running a debug build such as "user-debug" or "eng".
-     * @hide
+     * Returns true if the device is running a debuggable build such as "userdebug" or "eng".
      */
-    @UnsupportedAppUsage
     public static final boolean IS_DEBUGGABLE =
             SystemProperties.getInt("ro.debuggable", 0) == 1;
 
