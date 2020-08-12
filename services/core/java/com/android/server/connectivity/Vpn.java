@@ -2300,7 +2300,7 @@ public class Vpn {
         void onChildTransformCreated(
                 @NonNull Network network, @NonNull IpSecTransform transform, int direction);
 
-        void onSessionLost(@NonNull Network network);
+        void onSessionLost(@NonNull Network network, @Nullable Exception exception);
     }
 
     /**
@@ -2455,9 +2455,10 @@ public class Vpn {
                 }
 
                 networkAgent.sendLinkProperties(lp);
+                updateState(DetailedState.CONNECTED, "onChildOpened");
             } catch (Exception e) {
                 Log.d(TAG, "Error in ChildOpened for network " + network, e);
-                onSessionLost(network);
+                onSessionLost(network, e);
             }
         }
 
@@ -2487,7 +2488,7 @@ public class Vpn {
                 mIpSecManager.applyTunnelModeTransform(mTunnelIface, direction, transform);
             } catch (IOException e) {
                 Log.d(TAG, "Transform application failed for network " + network, e);
-                onSessionLost(network);
+                onSessionLost(network, e);
             }
         }
 
@@ -2543,9 +2544,15 @@ public class Vpn {
                             new VpnIkev2Utils.ChildSessionCallbackImpl(
                                     TAG, IkeV2VpnRunner.this, network));
                     Log.d(TAG, "Ike Session started for network " + network);
+
+                    updateState(DetailedState.CONNECTING, "onDefaultNetworkChanged");
+                } catch (IllegalArgumentException e) {
+                    // Failed to build configurations; fatal profile configuration error.
+                    updateState(DetailedState.FAILED, e.getMessage());
+                    shutdownVpnRunner();
                 } catch (Exception e) {
                     Log.i(TAG, "Setup failed for network " + network + ". Aborting", e);
-                    onSessionLost(network);
+                    onSessionLost(network, e);
                 }
             });
         }
@@ -2559,7 +2566,7 @@ public class Vpn {
          * <p>This method MUST always be called on the mExecutor thread in order to ensure
          * consistency of the Ikev2VpnRunner fields.
          */
-        public void onSessionLost(@NonNull Network network) {
+        public void onSessionLost(@NonNull Network network, @Nullable Exception exception) {
             if (!isActiveNetwork(network)) {
                 Log.d(TAG, "onSessionLost() called for obsolete network " + network);
 
@@ -2599,6 +2606,7 @@ public class Vpn {
             }
 
             resetIkeState();
+            updateState(DetailedState.FAILED, "Session lost. Exception: " + exception);
         }
 
         /**
