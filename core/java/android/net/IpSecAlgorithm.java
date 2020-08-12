@@ -75,8 +75,6 @@ public final class IpSecAlgorithm implements Parcelable {
      * will be thrown if this algorithm is requested on an unsupported device.
      *
      * <p>@see {@link #getSupportedAlgorithms()}
-     *
-     * @hide
      */
     public static final String CRYPT_AES_CTR = "rfc3686(ctr(aes))";
 
@@ -142,8 +140,6 @@ public final class IpSecAlgorithm implements Parcelable {
      * will be thrown if this algorithm is requested on an unsupported device.
      *
      * <p>@see {@link #getSupportedAlgorithms()}
-     *
-     * @hide
      */
     public static final String AUTH_AES_XCBC = "xcbc(aes)";
 
@@ -179,8 +175,6 @@ public final class IpSecAlgorithm implements Parcelable {
      * will be thrown if this algorithm is requested on an unsupported device.
      *
      * <p>@see {@link #getSupportedAlgorithms()}
-     *
-     * @hide
      */
     public static final String AUTH_CRYPT_CHACHA20_POLY1305 = "rfc7539esp(chacha20,poly1305)";
 
@@ -311,8 +305,6 @@ public final class IpSecAlgorithm implements Parcelable {
      *
      * <p>Some algorithms may not be supported on old devices. Callers MUST check if an algorithm is
      * supported before using it.
-     *
-     * @hide
      */
     @NonNull
     public static Set<String> getSupportedAlgorithms() {
