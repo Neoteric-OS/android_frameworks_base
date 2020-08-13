@@ -391,6 +391,7 @@ public final class BluetoothCodecConfig implements Parcelable {
      *
      * @return the codec type
      */
+    @UnsupportedAppUsage
     public @SourceCodecType int getCodecType() {
         return mCodecType;
     }
