@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c894f596_7d50004f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-08-13T05:27:21Z",
+      "side": 1,
+      "message": "I think the comment needs to explain why this is not enough: why not just use the permission that was requested, instead of having an exception for NetworkStack ?",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 63
+      },
+      "revId": "2471263a837a14d333adb4bdc3e27bb0e8539d73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76fd727d_1dbe22aa",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -87,6 +110,29 @@
       "revId": "2471263a837a14d333adb4bdc3e27bb0e8539d73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e7674cf_5732f41c",
+        "filename": "telephony/common/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-08-13T05:27:21Z",
+      "side": 1,
+      "message": "This is unclear and is likely to become out-of-date: NetworkStack may have other uses for location. I think the comment needs to be more generic: maybe explain that NetworkStack manages wifi and mobile networks, and therefore needs access to location permissions.",
+      "range": {
+        "startLine": 259,
+        "startChar": 87,
+        "endLine": 261,
+        "endChar": 73
+      },
+      "revId": "2471263a837a14d333adb4bdc3e27bb0e8539d73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
