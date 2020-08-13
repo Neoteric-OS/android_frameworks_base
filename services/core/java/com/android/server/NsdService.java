@@ -249,6 +249,8 @@ public class NsdService extends INsdManager.Stub {
                 ClientInfo clientInfo;
                 NsdServiceInfo servInfo;
                 int id;
+                // MIUI ADD:
+                int clientId;
                 switch (msg.what) {
                     case AsyncChannel.CMD_CHANNEL_HALF_CONNECTED:
                         //First client
@@ -361,11 +363,57 @@ public class NsdService extends INsdManager.Stub {
                         if (resolveService(id, servInfo)) {
                             clientInfo.mResolvedService = new NsdServiceInfo();
                             storeRequestMap(msg.arg2, id, clientInfo, msg.what);
+                            // MIUI ADD:
+                            mNsdStateMachine.sendMessageDelayed(NsdManager.RESOLVE_SERVICE_TIMEOUT, id, 5000);
                         } else {
                             replyToMessage(msg, NsdManager.RESOLVE_SERVICE_FAILED,
                                     NsdManager.FAILURE_INTERNAL_ERROR);
                         }
                         break;
+                    // MIUI ADD: START
+                    case NsdManager.RESOLVE_SERVICE_TIMEOUT:
+                        if (DBG) Slog.d(TAG, "Resolve service timeout");
+                        id = msg.arg1;
+                        clientInfo = mIdToClientInfoMap.get(id);
+                        if (clientInfo == null) {
+                            Slog.e(TAG, String.format("id %d has no client mapping", id));
+                            break;
+                        }
+                        clientId = clientInfo.getClientId(id);
+                        if (clientId < 0) {
+                            Slog.d(TAG, String.format(
+                                    "Notification for listener id %d that is no longer active", id));
+                            break;
+                        }
+
+                        stopResolveService(id);
+                        removeRequestMap(clientId, id, clientInfo);
+                        clientInfo.mResolvedService = null;
+                        clientInfo.mChannel.sendMessage(NsdManager.RESOLVE_SERVICE_FAILED,
+                                NsdManager.FAILURE_RESOLVE_SERVICE_TIMEOUT, clientId);
+                        break;
+                    case NsdManager.GET_ADDR_INFO_TIMEOUT:
+                        if (DBG) Slog.d(TAG, "Get addr info timeout");
+                        id = msg.arg1;
+                        clientInfo = mIdToClientInfoMap.get(id);
+                        if (clientInfo == null) {
+                            Slog.e(TAG, String.format("id %d has no client mapping", id));
+                            break;
+                        }
+                        clientId = clientInfo.getClientId(id);
+                        if (clientId < 0) {
+                            Slog.d(TAG, String.format(
+                                    "Notification for listener id %d that is no longer active", id));
+                            break;
+                        }
+
+                        stopGetAddrInfo(id);
+                        removeRequestMap(clientId, id, clientInfo);
+                        clientInfo.mResolvedService = null;
+                        clientInfo.mChannel.sendMessage(NsdManager.RESOLVE_SERVICE_FAILED,
+                                NsdManager.FAILURE_GET_ADDR_TIMEOUT, clientId);
+                        break;
+                    // END
                     case NsdManager.NATIVE_DAEMON_EVENT:
                         NativeEvent event = (NativeEvent) msg.obj;
                         if (!handleNativeEvent(event.code, event.raw, event.cooked)) {
@@ -440,6 +488,8 @@ public class NsdService extends INsdManager.Stub {
                         /* NNN regId errorCode */
                         break;
                     case NativeResponseCode.SERVICE_RESOLVED:
+                        // MIUI ADD:
+                        removeMessages(NsdManager.RESOLVE_SERVICE_TIMEOUT);
                         /* NNN resolveId fullName hostName port txtlen txtdata */
                         int index = 0;
                         while (index < cooked[2].length() && cooked[2].charAt(index) != '.') {
@@ -469,6 +519,8 @@ public class NsdService extends INsdManager.Stub {
                         int id2 = getUniqueId();
                         if (getAddrInfo(id2, cooked[3])) {
                             storeRequestMap(clientId, id2, clientInfo, NsdManager.RESOLVE_SERVICE);
+                            // MIUI ADD:
+                            mNsdStateMachine.sendMessageDelayed(NsdManager.GET_ADDR_INFO_TIMEOUT, id, 5000);
                         } else {
                             clientInfo.mChannel.sendMessage(NsdManager.RESOLVE_SERVICE_FAILED,
                                     NsdManager.FAILURE_INTERNAL_ERROR, clientId);
@@ -476,6 +528,8 @@ public class NsdService extends INsdManager.Stub {
                         }
                         break;
                     case NativeResponseCode.SERVICE_RESOLUTION_FAILED:
+                        // MIUI ADD:
+                        removeMessages(NsdManager.RESOLVE_SERVICE_TIMEOUT);
                         /* NNN resolveId errorCode */
                         stopResolveService(id);
                         removeRequestMap(clientId, id, clientInfo);
@@ -484,6 +538,8 @@ public class NsdService extends INsdManager.Stub {
                                 NsdManager.FAILURE_INTERNAL_ERROR, clientId);
                         break;
                     case NativeResponseCode.SERVICE_GET_ADDR_FAILED:
+                        // MIUI ADD:
+                        removeMessages(NsdManager.GET_ADDR_INFO_TIMEOUT);
                         /* NNN resolveId errorCode */
                         stopGetAddrInfo(id);
                         removeRequestMap(clientId, id, clientInfo);
@@ -492,6 +548,8 @@ public class NsdService extends INsdManager.Stub {
                                 NsdManager.FAILURE_INTERNAL_ERROR, clientId);
                         break;
                     case NativeResponseCode.SERVICE_GET_ADDR_SUCCESS:
+                        // MIUI ADD:
+                        removeMessages(NsdManager.GET_ADDR_INFO_TIMEOUT);
                         /* NNN resolveId hostname ttl addr */
                         try {
                             clientInfo.mResolvedService.setHost(InetAddress.getByName(cooked[4]));

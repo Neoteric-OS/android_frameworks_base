@@ -207,6 +207,20 @@ public final class NsdManager {
     /** @hide */
     public static final int NATIVE_DAEMON_EVENT                     = BASE + 26;
 
+    /**
+     * MIUI ADD:
+     *
+     * @hide
+     */
+    public static final int RESOLVE_SERVICE_TIMEOUT                 = BASE + 1001;
+
+    /**
+     * MIUI ADD:
+     *
+     * @hide
+     */
+    public static final int GET_ADDR_INFO_TIMEOUT                   = BASE + 1002;
+
     /** Dns based service discovery protocol */
     public static final int PROTOCOL_DNS_SD = 0x0001;
 
@@ -300,6 +314,19 @@ public final class NsdManager {
      * requests from the applications have reached.
      */
     public static final int FAILURE_MAX_LIMIT                   = 4;
+
+    /**
+     * MIUI ADD:
+     * Indicate resolve service timeout
+     */
+    public static final int FAILURE_RESOLVE_SERVICE_TIMEOUT     = 101;
+
+    /**
+     * MIUI ADD:
+     * Indicate resolve service timeout - get addr
+     */
+    public static final int FAILURE_GET_ADDR_TIMEOUT            = 102;
+
 
     /** Interface for callback invocation for service discovery */
     public interface DiscoveryListener {
