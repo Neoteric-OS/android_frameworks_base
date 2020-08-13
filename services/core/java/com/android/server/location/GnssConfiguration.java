@@ -21,6 +21,7 @@ import android.os.PersistableBundle;
 import android.os.SystemProperties;
 import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.StatsLog;
@@ -236,7 +237,14 @@ class GnssConfiguration {
         logConfigurations();
 
         final HalInterfaceVersion gnssConfigurationIfaceVersion = getHalInterfaceVersion();
-        if (gnssConfigurationIfaceVersion != null) {
+
+        TelephonyManager phone = (TelephonyManager)
+                                     mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        int ddSubId = SubscriptionManager.getDefaultDataSubscriptionId();
+        String simOperator = SubscriptionManager.isValidSubscriptionId(ddSubId)
+                        ? phone.getSimOperator(ddSubId) : phone.getSimOperator();
+
+        if (gnssConfigurationIfaceVersion != null && !TextUtils.isEmpty(simOperator)) {
             // Set to a range checked value.
             if (isConfigEsExtensionSecSupported(gnssConfigurationIfaceVersion)
                     && !native_set_es_extension_sec(mEsExtensionSec)) {
