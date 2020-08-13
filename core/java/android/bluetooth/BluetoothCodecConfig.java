@@ -18,6 +18,7 @@ package android.bluetooth;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -33,6 +34,7 @@ import java.util.Objects;
  *
  * {@hide}
  */
+@SystemApi
 public final class BluetoothCodecConfig implements Parcelable {
     // Add an entry for each source codec here.
     // NOTE: The values should be same as those listed in the following file:
@@ -390,7 +392,9 @@ public final class BluetoothCodecConfig implements Parcelable {
      * See {@link android.bluetooth.BluetoothCodecConfig#SOURCE_CODEC_TYPE_SBC}.
      *
      * @return the codec type
+     * @hide
      */
+    @SystemApi
     public @SourceCodecType int getCodecType() {
         return mCodecType;
     }

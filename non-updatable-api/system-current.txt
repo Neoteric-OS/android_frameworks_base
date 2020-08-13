@@ -1431,11 +1431,14 @@ package android.bluetooth {
     method public boolean enableBLE();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN) public boolean enableNoAutoConnect();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public long getDiscoveryEndMillis();
+    method @Nullable @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public android.bluetooth.BluetoothDynamicAudioBuffer getDynamicAudioBuffer();
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public int getDynamicAudioBufferSupportedType();
     method public boolean isBleScanAlwaysAvailable();
     method public boolean isLeEnabled();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public boolean removeActiveDevice(int);
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public boolean removeOnMetadataChangedListener(@NonNull android.bluetooth.BluetoothDevice, @NonNull android.bluetooth.BluetoothAdapter.OnMetadataChangedListener);
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public boolean setActiveDevice(@NonNull android.bluetooth.BluetoothDevice, int);
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public boolean setDynamicAudioBufferSize(int, int);
     field public static final String ACTION_BLE_STATE_CHANGED = "android.bluetooth.adapter.action.BLE_STATE_CHANGED";
     field public static final String ACTION_REQUEST_BLE_SCAN_ALWAYS_AVAILABLE = "android.bluetooth.adapter.action.REQUEST_BLE_SCAN_ALWAYS_AVAILABLE";
     field public static final int ACTIVE_DEVICE_ALL = 2; // 0x2
@@ -1445,6 +1448,43 @@ package android.bluetooth {
 
   public static interface BluetoothAdapter.OnMetadataChangedListener {
     method public void onMetadataChanged(@NonNull android.bluetooth.BluetoothDevice, int, @Nullable byte[]);
+  }
+
+  public final class BluetoothCodecConfig implements android.os.Parcelable {
+    ctor public BluetoothCodecConfig(int, int, int, int, int, long, long, long, long);
+    ctor public BluetoothCodecConfig(int);
+    method public int getBitsPerSample();
+    method @NonNull public String getCodecName();
+    method public int getCodecPriority();
+    method public long getCodecSpecific1();
+    method public int getCodecType();
+    method public int getSampleRate();
+    method public boolean isMandatoryCodec();
+    field public static final int BITS_PER_SAMPLE_16 = 1; // 0x1
+    field public static final int BITS_PER_SAMPLE_24 = 2; // 0x2
+    field public static final int BITS_PER_SAMPLE_32 = 4; // 0x4
+    field public static final int BITS_PER_SAMPLE_NONE = 0; // 0x0
+    field public static final int CHANNEL_MODE_MONO = 1; // 0x1
+    field public static final int CHANNEL_MODE_NONE = 0; // 0x0
+    field public static final int CHANNEL_MODE_STEREO = 2; // 0x2
+    field public static final int CODEC_PRIORITY_DEFAULT = 0; // 0x0
+    field public static final int CODEC_PRIORITY_DISABLED = -1; // 0xffffffff
+    field public static final int CODEC_PRIORITY_HIGHEST = 1000000; // 0xf4240
+    field @NonNull public static final android.os.Parcelable.Creator<android.bluetooth.BluetoothCodecConfig> CREATOR;
+    field public static final int SAMPLE_RATE_176400 = 16; // 0x10
+    field public static final int SAMPLE_RATE_192000 = 32; // 0x20
+    field public static final int SAMPLE_RATE_44100 = 1; // 0x1
+    field public static final int SAMPLE_RATE_48000 = 2; // 0x2
+    field public static final int SAMPLE_RATE_88200 = 4; // 0x4
+    field public static final int SAMPLE_RATE_96000 = 8; // 0x8
+    field public static final int SAMPLE_RATE_NONE = 0; // 0x0
+    field public static final int SOURCE_CODEC_TYPE_AAC = 1; // 0x1
+    field public static final int SOURCE_CODEC_TYPE_APTX = 2; // 0x2
+    field public static final int SOURCE_CODEC_TYPE_APTX_HD = 3; // 0x3
+    field public static final int SOURCE_CODEC_TYPE_INVALID = 1000000; // 0xf4240
+    field public static final int SOURCE_CODEC_TYPE_LDAC = 4; // 0x4
+    field public static final int SOURCE_CODEC_TYPE_MAX = 5; // 0x5
+    field public static final int SOURCE_CODEC_TYPE_SBC = 0; // 0x0
   }
 
   public final class BluetoothDevice implements android.os.Parcelable {
@@ -1482,6 +1522,25 @@ package android.bluetooth {
     field public static final int METADATA_UNTETHERED_RIGHT_BATTERY = 11; // 0xb
     field public static final int METADATA_UNTETHERED_RIGHT_CHARGING = 14; // 0xe
     field public static final int METADATA_UNTETHERED_RIGHT_ICON = 8; // 0x8
+  }
+
+  public final class BluetoothDynamicAudioBuffer implements android.os.Parcelable {
+    ctor public BluetoothDynamicAudioBuffer(@NonNull java.util.List<java.util.List<java.lang.Integer>>);
+    method public int describeContents();
+    method public int getDynamicAudioBufferCodecNumber();
+    method public int getDynamicAudioDefaultBufferTime(int);
+    method public int getDynamicAudioMaximumBufferTime(int);
+    method public int getDynamicAudioMinimumBufferTime(int);
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int BUFFER_CODEC_MAX_NUM = 32; // 0x20
+    field public static final int BUFFER_TYPE_DEFAULT_VALUE = 0; // 0x0
+    field public static final int BUFFER_TYPE_MAX = 3; // 0x3
+    field public static final int BUFFER_TYPE_MAXIMUM_VALUE = 1; // 0x1
+    field public static final int BUFFER_TYPE_MINIMUM_VALUE = 2; // 0x2
+    field @NonNull public static final android.os.Parcelable.Creator<android.bluetooth.BluetoothDynamicAudioBuffer> CREATOR;
+    field public static final int DYNAMIC_AUDIO_BUFFER_TYPE_A2DP_OFFLOAD = 1; // 0x1
+    field public static final int DYNAMIC_AUDIO_BUFFER_TYPE_A2DP_SOFTWARE_ENCODING = 2; // 0x2
+    field public static final int DYNAMIC_AUDIO_BUFFER_TYPE_NONE = 0; // 0x0
   }
 
   public final class BluetoothHeadset implements android.bluetooth.BluetoothProfile {

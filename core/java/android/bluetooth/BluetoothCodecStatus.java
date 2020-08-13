@@ -17,6 +17,7 @@
 package android.bluetooth;
 
 import android.annotation.Nullable;
+import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -196,6 +197,7 @@ public final class BluetoothCodecStatus implements Parcelable {
      *
      * @return the current codec configuration
      */
+    @UnsupportedAppUsage
     public @Nullable BluetoothCodecConfig getCodecConfig() {
         return mCodecConfig;
     }

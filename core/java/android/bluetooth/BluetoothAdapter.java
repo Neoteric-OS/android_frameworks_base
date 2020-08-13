@@ -3581,4 +3581,93 @@ public final class BluetoothAdapter {
         }
         return BluetoothProfile.PRIORITY_UNDEFINED;
     }
+    /**
+     * Get the supported type of the Dynamic Audio Buffer.
+     * <p>Possible return values are
+     * {@link #BluetoothDynamicAudioBuffer.DYNAMIC_AUDIO_BUFFER_TYPE_NONE},
+     * {@link #BluetoothDynamicAudioBuffer.DYNAMIC_AUDIO_BUFFER_TYPE_A2DP_OFFLOAD},
+     * {@link #BluetoothDynamicAudioBuffer.DYNAMIC_AUDIO_BUFFER_TYPE_A2DP_SOFTWARE_ENCODING}.
+     *
+     * @return supported type of Dynamic Audio Buffer feature
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public @BluetoothDynamicAudioBuffer.DynamicBufferType int getDynamicAudioBufferSupportedType() {
+        Log.d(TAG, "getDynamicAudioBufferSupportedType()");
+        if (!getLeAccess()) {
+            return BluetoothDynamicAudioBuffer.DYNAMIC_AUDIO_BUFFER_TYPE_NONE;
+        }
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null) {
+                return mService.getDynamicAudioBufferSupportedType();
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "failed to get getDynamicAudioBufferSupportedType, error: ", e);
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+        return BluetoothDynamicAudioBuffer.DYNAMIC_AUDIO_BUFFER_TYPE_NONE;
+    }
+
+    /**
+     * Return the record of {@link BluetoothDynamicAudioBuffer} object that
+     * has the default/maximum/minimum audio buffer. This can be used to inform what the controller
+     * has support for the audio buffer.
+     *
+     * @return a record with {@link BluetoothDynamicAudioBuffer} or null if report is unavailable
+     * or unsupported
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public @Nullable BluetoothDynamicAudioBuffer getDynamicAudioBuffer() {
+        Log.d(TAG, "getDynamicAudioBuffer()");
+        if (getState() != STATE_ON) {
+            return null;
+        }
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null) {
+                return mService.getDynamicAudioBuffer();
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+        return null;
+    }
+
+    /**
+     * Set Dynamic Audio Buffer Size.
+     *
+     * @param codec audio codec
+     * @param size size of the dynamic audio buffer
+     * @return true to indicate success, or false on immediate error
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public boolean setDynamicAudioBufferSize(int codec, int size) {
+        Log.d(TAG, "setDynamicAudioBufferSize(): codec = " + codec + " size = " + size);
+        if (getState() != STATE_ON) {
+            return false;
+        }
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null) {
+                return mService.setDynamicAudioBufferSize(codec, size);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+        return false;
+    }
 }
