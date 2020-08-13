@@ -1,0 +1,58 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004388710",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1398274?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "95619f4d_0b788356",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-08-13T06:36:16Z",
+      "side": 1,
+      "message": "Change must include a \"Tag:\" stanza. Valid tags are #compatibility #stability #security #feature #gd-refactor #refactor",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "5372c619a60d70750ebdc98f44a44ba89b6b1803",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004388710",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1398274?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2651927c_13f39630",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-08-13T06:36:16Z",
+      "side": 1,
+      "message": "\"Run dynamic audio buffer test\" is not a valid test stanza. Expected one of: atest (--host) \u003ctest\u003e OR gd/cert/run (--host) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "5372c619a60d70750ebdc98f44a44ba89b6b1803",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
