@@ -26,6 +26,7 @@
 #include <utils/Looper.h>
 #include <utils/RefBase.h>
 
+#include <functional>
 #include <map>
 #include <memory>
 #include <vector>
@@ -35,6 +36,8 @@
 namespace android {
 
 class PointerController;
+class MouseCursorController;
+class TouchSpotController;
 
 /*
  * Pointer resources.
@@ -96,7 +99,6 @@ public:
     void startAnimation();
     void setInactivityTimeout(InactivityTimeout inactivityTimeout);
 
-    void setAnimationPending(bool animationPending);
     nsecs_t getAnimationTime();
 
     void clearSpotsByDisplay(int32_t displayId);
@@ -107,8 +109,9 @@ public:
     sp<PointerControllerPolicyInterface> getPolicy();
     sp<SpriteController> getSpriteController();
 
-    void initializeDisplayEventReceiver();
     void handleDisplayEvents();
+
+    void registerCallback(std::function<bool(nsecs_t)> callback);
 
     class MessageHandler : public virtual android::MessageHandler {
     public:
@@ -127,22 +130,46 @@ public:
     };
 
 private:
+    class PointerAnimator {
+    public:
+        PointerAnimator(PointerControllerContext& context);
+
+        void addCallback(std::function<bool(nsecs_t)> callback);
+        void handleVsyncEvents();
+        nsecs_t getAnimationTimeLocked();
+
+        mutable std::mutex mLock;
+
+    private:
+        struct Locked {
+            bool animationPending = false;
+            nsecs_t animationTime = systemTime(SYSTEM_TIME_MONOTONIC);
+
+            std::vector<std::function<bool(nsecs_t)>> callbacks;
+        } mLocked GUARDED_BY(mLock);
+
+        DisplayEventReceiver mDisplayEventReceiver;
+
+        PointerControllerContext& mContext;
+
+        void initializeDisplayEventReceiver();
+        void startAnimationLocked();
+        void handleCallbacksLocked(nsecs_t timestamp);
+    };
+
     sp<PointerControllerPolicyInterface> mPolicy;
     sp<Looper> mLooper;
     sp<SpriteController> mSpriteController;
     sp<MessageHandler> mHandler;
     sp<LooperCallback> mCallback;
 
-    DisplayEventReceiver mDisplayEventReceiver;
-
     PointerController& mController;
+
+    PointerAnimator mAnimator;
 
     mutable std::mutex mLock;
 
     struct Locked {
-        bool animationPending;
-        nsecs_t animationTime;
-
         InactivityTimeout inactivityTimeout;
     } mLocked GUARDED_BY(mLock);
 

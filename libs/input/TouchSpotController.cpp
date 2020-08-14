@@ -64,6 +64,8 @@ void TouchSpotController::Spot::updateSprite(const SpriteIcon* icon, float x, fl
 TouchSpotController::TouchSpotController(int32_t displayId, PointerControllerContext& context)
       : mDisplayId(displayId), mContext(context) {
     mContext.getPolicy()->loadPointerResources(&mResources, mDisplayId);
+    std::scoped_lock lock(mLock);
+    mLocked.animating = false;
 }
 
 TouchSpotController::~TouchSpotController() {
@@ -142,7 +144,8 @@ TouchSpotController::Spot* TouchSpotController::getSpot(uint32_t id,
 }
 
 TouchSpotController::Spot* TouchSpotController::createAndAddSpotLocked(uint32_t id,
-                                                                       std::vector<Spot*>& spots) {
+                                                                       std::vector<Spot*>& spots)
+        REQUIRES(mLock) {
     // Remove spots until we have fewer than MAX_SPOTS remaining.
     while (spots.size() >= MAX_SPOTS) {
         Spot* spot = removeFirstFadingSpotLocked(spots);
@@ -186,14 +189,13 @@ void TouchSpotController::releaseSpotLocked(Spot* spot) REQUIRES(mLock) {
     if (mLocked.recycledSprites.size() < MAX_RECYCLED_SPRITES) {
         mLocked.recycledSprites.push_back(spot->sprite);
     }
-
     delete spot;
 }
 
 void TouchSpotController::fadeOutAndReleaseSpotLocked(Spot* spot) REQUIRES(mLock) {
     if (spot->id != Spot::INVALID_ID) {
         spot->id = Spot::INVALID_ID;
-        mContext.startAnimation();
+        startAnimationLocked();
     }
 }
 
@@ -209,8 +211,23 @@ void TouchSpotController::reloadSpotResources() {
     mContext.getPolicy()->loadPointerResources(&mResources, mDisplayId);
 }
 
-bool TouchSpotController::doFadingAnimation(nsecs_t timestamp, bool keepAnimating) {
+bool TouchSpotController::doAnimations(nsecs_t timestamp) {
     std::scoped_lock lock(mLock);
+    bool keepAnimating = doFadingAnimationLocked(timestamp);
+    if (!keepAnimating) {
+        /*
+         * We know that this callback will be removed before another
+         * is added due to mLock in PointerAnimator not being released
+         * until after removal. Thus it's safe to set mLocked.animating
+         * here.
+         */
+        mLocked.animating = false;
+    }
+    return keepAnimating;
+}
+
+bool TouchSpotController::doFadingAnimationLocked(nsecs_t timestamp) REQUIRES(mLock) {
+    bool keepAnimating = false;
     nsecs_t animationTime = mContext.getAnimationTime();
     nsecs_t frameDelay = timestamp - animationTime;
     size_t numSpots = mLocked.displaySpots.size();
@@ -231,6 +248,18 @@ bool TouchSpotController::doFadingAnimation(nsecs_t timestamp, bool keepAnimatin
         ++i;
     }
     return keepAnimating;
+}
+
+void TouchSpotController::startAnimationLocked() REQUIRES(mLock) {
+    using namespace std::placeholders;
+
+    if (mLocked.animating) {
+        return;
+    }
+    mLocked.animating = true;
+
+    std::function<bool(nsecs_t)> func = std::bind(&TouchSpotController::doAnimations, this, _1);
+    mContext.registerCallback(func);
 }
 
 } // namespace android
