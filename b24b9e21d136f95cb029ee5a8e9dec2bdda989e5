@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b788967c_525a5a36",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-14T02:59:27Z",
+      "side": 1,
+      "message": "Did you want to address the comment on this line from Patchset 4 ?",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 19
+      },
+      "revId": "b24b9e21d136f95cb029ee5a8e9dec2bdda989e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
