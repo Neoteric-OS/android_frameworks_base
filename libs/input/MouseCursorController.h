@@ -25,6 +25,7 @@
 #include <utils/Looper.h>
 #include <utils/RefBase.h>
 
+#include <functional>
 #include <map>
 #include <memory>
 #include <vector>
@@ -61,8 +62,7 @@ public:
     void getAdditionalMouseResources();
     bool isViewportValid();
 
-    bool doBitmapAnimation(nsecs_t timestamp);
-    bool doFadingAnimation(nsecs_t timestamp, bool keepAnimating);
+    bool doAnimations(nsecs_t timestamp);
 
     bool resourcesLoaded();
 
@@ -104,6 +104,11 @@ private:
     void updatePointerLocked();
 
     void loadResourcesLocked(bool getAdditionalMouseResources);
+
+    bool doBitmapAnimation(nsecs_t timestamp);
+    bool doFadingAnimation(nsecs_t timestamp);
+
+    void startAnimation();
 };
 
 } // namespace android

@@ -17,6 +17,8 @@
 #ifndef _UI_TOUCH_SPOT_CONTROLLER_H
 #define _UI_TOUCH_SPOT_CONTROLLER_H
 
+#include <functional>
+
 #include "PointerControllerContext.h"
 
 namespace android {
@@ -34,7 +36,7 @@ public:
     void clearSpots();
 
     void reloadSpotResources();
-    bool doFadingAnimation(nsecs_t timestamp, bool keepAnimating);
+    bool doAnimations(nsecs_t timestamp);
 
 private:
     struct Spot {
@@ -84,6 +86,8 @@ private:
     void releaseSpotLocked(Spot* spot);
     void fadeOutAndReleaseSpotLocked(Spot* spot);
     void fadeOutAndReleaseAllSpotsLocked();
+    bool doFadingAnimation(nsecs_t timestamp);
+    void startAnimation();
 };
 
 } // namespace android

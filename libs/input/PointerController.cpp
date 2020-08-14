@@ -57,7 +57,6 @@ std::shared_ptr<PointerController> PointerController::create(
 
     controller->mContext.setHandlerController(controller);
     controller->mContext.setCallbackController(controller);
-    controller->mContext.initializeDisplayEventReceiver();
     return controller;
 }
 
@@ -187,24 +186,6 @@ void PointerController::updatePointerIcon(int32_t iconId) {
 void PointerController::setCustomPointerIcon(const SpriteIcon& icon) {
     std::scoped_lock lock(mLock);
     mCursorController.setCustomPointerIcon(icon);
-}
-
-void PointerController::doAnimate(nsecs_t timestamp) {
-    std::scoped_lock lock(mLock);
-
-    mContext.setAnimationPending(false);
-
-    bool keepFading = false;
-    keepFading = mCursorController.doFadingAnimation(timestamp, keepFading);
-
-    for (auto& [displayID, spotController] : mLocked.spotControllers) {
-        keepFading = spotController.doFadingAnimation(timestamp, keepFading);
-    }
-
-    bool keepBitmapFlipping = mCursorController.doBitmapAnimation(timestamp);
-    if (keepFading || keepBitmapFlipping) {
-        mContext.startAnimation();
-    }
 }
 
 void PointerController::doInactivityTimeout() {

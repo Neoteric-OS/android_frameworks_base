@@ -142,7 +142,8 @@ TouchSpotController::Spot* TouchSpotController::getSpot(uint32_t id,
 }
 
 TouchSpotController::Spot* TouchSpotController::createAndAddSpotLocked(uint32_t id,
-                                                                       std::vector<Spot*>& spots) {
+                                                                       std::vector<Spot*>& spots)
+        REQUIRES(mLock) {
     // Remove spots until we have fewer than MAX_SPOTS remaining.
     while (spots.size() >= MAX_SPOTS) {
         Spot* spot = removeFirstFadingSpotLocked(spots);
@@ -186,14 +187,13 @@ void TouchSpotController::releaseSpotLocked(Spot* spot) REQUIRES(mLock) {
     if (mLocked.recycledSprites.size() < MAX_RECYCLED_SPRITES) {
         mLocked.recycledSprites.push_back(spot->sprite);
     }
-
     delete spot;
 }
 
 void TouchSpotController::fadeOutAndReleaseSpotLocked(Spot* spot) REQUIRES(mLock) {
     if (spot->id != Spot::INVALID_ID) {
         spot->id = Spot::INVALID_ID;
-        mContext.startAnimation();
+        startAnimation();
     }
 }
 
@@ -209,7 +209,12 @@ void TouchSpotController::reloadSpotResources() {
     mContext.getPolicy()->loadPointerResources(&mResources, mDisplayId);
 }
 
-bool TouchSpotController::doFadingAnimation(nsecs_t timestamp, bool keepAnimating) {
+bool TouchSpotController::doAnimations(nsecs_t timestamp) {
+    return doFadingAnimation(timestamp);
+}
+
+bool TouchSpotController::doFadingAnimation(nsecs_t timestamp) {
+    bool keepAnimating = false;
     std::scoped_lock lock(mLock);
     nsecs_t animationTime = mContext.getAnimationTime();
     nsecs_t frameDelay = timestamp - animationTime;
@@ -231,6 +236,13 @@ bool TouchSpotController::doFadingAnimation(nsecs_t timestamp, bool keepAnimatin
         ++i;
     }
     return keepAnimating;
+}
+
+void TouchSpotController::startAnimation() {
+    using namespace std::placeholders;
+
+    std::function<bool(nsecs_t)> func = std::bind(&TouchSpotController::doAnimations, this, _1);
+    mContext.registerCallback(func);
 }
 
 } // namespace android
