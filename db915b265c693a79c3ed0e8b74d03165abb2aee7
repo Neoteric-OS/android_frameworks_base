@@ -22,6 +22,30 @@
       "revId": "db915b265c693a79c3ed0e8b74d03165abb2aee7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b20751b_ac361b84",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-08-14T03:35:48Z",
+      "side": 1,
+      "message": "No, we don\u0027t need because the permission will be reset before running test. See line.119.",
+      "parentUuid": "4c897fea_c4abfd3c",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 19
+      },
+      "revId": "db915b265c693a79c3ed0e8b74d03165abb2aee7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
