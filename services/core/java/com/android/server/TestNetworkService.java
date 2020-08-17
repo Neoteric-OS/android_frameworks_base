@@ -29,9 +29,12 @@ import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkAgent;
+import android.net.NetworkAgentConfig;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
+import android.net.NetworkProvider;
+import android.net.NetworkScore;
 import android.net.RouteInfo;
 import android.net.StringNetworkSpecifier;
 import android.net.TestNetworkInterface;
@@ -147,8 +150,6 @@ class TestNetworkService extends ITestNetworkManager.Stub {
     private final SparseArray<TestNetworkAgent> mTestNetworkTracker = new SparseArray<>();
 
     public class TestNetworkAgent extends NetworkAgent implements IBinder.DeathRecipient {
-        private static final int NETWORK_SCORE = 1; // Use a low, non-zero score.
-
         private final int mUid;
         @NonNull private final NetworkInfo mNi;
         @NonNull private final NetworkCapabilities mNc;
@@ -169,7 +170,10 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                 int uid,
                 @NonNull IBinder binder)
                 throws RemoteException {
-            super(looper, context, TEST_NETWORK_TYPE, ni, nc, lp, NETWORK_SCORE);
+            // Use a low, non-zero score.
+            super(context, looper, "vpn", nc, lp, new NetworkScore(1),
+                    new NetworkAgentConfig.Builder().build(),
+                    new NetworkProvider(context, looper, "TestNetworkAgent"));
 
             mUid = uid;
             mNi = ni;

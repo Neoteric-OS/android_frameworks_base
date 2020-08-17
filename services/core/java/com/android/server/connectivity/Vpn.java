@@ -67,6 +67,7 @@ import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkProvider;
 import android.net.NetworkRequest;
+import android.net.NetworkScore;
 import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.VpnManager;
@@ -1253,10 +1254,10 @@ public class Vpn {
                 mConfig.allowedApplications, mConfig.disallowedApplications));
         long token = Binder.clearCallingIdentity();
         try {
-            mNetworkAgent = new NetworkAgent(mLooper, mContext, NETWORKTYPE /* logtag */,
-                    mNetworkInfo, mNetworkCapabilities, lp,
-                    ConnectivityConstants.VPN_DEFAULT_SCORE, networkAgentConfig,
-                    NetworkProvider.ID_VPN) {
+            mNetworkAgent = new NetworkAgent(mContext, mLooper, NETWORKTYPE /* logtag */,
+                    mNetworkCapabilities, lp,
+                    new NetworkScore(ConnectivityConstants.VPN_DEFAULT_SCORE), networkAgentConfig,
+                    new NetworkProvider(mContext, mLooper, "VpnNetworkAgent")) {
                             @Override
                             public void unwanted() {
                                 // We are user controlled, not driven by NetworkRequest.

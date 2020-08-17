@@ -33,6 +33,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkMonitorManager;
 import android.net.NetworkRequest;
+import android.net.NetworkScore;
 import android.net.NetworkState;
 import android.os.Handler;
 import android.os.INetworkManagementService;
@@ -235,8 +236,8 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // validated).
     private boolean mLingering;
 
-    // This represents the quality of the network with no clear scale.
-    private int mScore;
+    // This represents the quality of the network.
+    public NetworkScore mScore;
 
     // The list of NetworkRequests being satisfied by this Network.
     private final SparseArray<NetworkRequest> mNetworkRequests = new SparseArray<>();
@@ -269,7 +270,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     private final Handler mHandler;
 
     public NetworkAgentInfo(Messenger messenger, AsyncChannel ac, Network net, NetworkInfo info,
-            LinkProperties lp, NetworkCapabilities nc, int score, Context context,
+            LinkProperties lp, NetworkCapabilities nc, NetworkScore score, Context context,
             Handler handler, NetworkAgentConfig config, ConnectivityService connService, INetd netd,
             IDnsResolver dnsResolver, INetworkManagementService nms, int factorySerialNumber,
             int creatorUid) {
@@ -494,7 +495,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
             return ConnectivityConstants.EXPLICITLY_SELECTED_NETWORK_SCORE;
         }
 
-        int score = mScore;
+        int score = mScore.legacyInt;
         if (!lastValidated && !pretendValidated && !ignoreWifiUnvalidationPenalty() && !isVPN()) {
             score -= ConnectivityConstants.UNVALIDATED_SCORE_PENALTY;
         }
@@ -523,7 +524,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         return getCurrentScore(true);
     }
 
-    public void setScore(final int score) {
+    public void setScore(final NetworkScore score) {
         mScore = score;
     }
 

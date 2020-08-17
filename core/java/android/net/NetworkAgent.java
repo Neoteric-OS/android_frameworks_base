@@ -322,35 +322,6 @@ public abstract class NetworkAgent {
      */
     public static final int CMD_REMOVE_KEEPALIVE_PACKET_FILTER = BASE + 17;
 
-    /** @hide TODO: remove and replace usage with the public constructor. */
-    public NetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,
-            NetworkCapabilities nc, LinkProperties lp, int score) {
-        this(looper, context, logTag, ni, nc, lp, score, null, NetworkProvider.ID_NONE);
-        // Register done by the constructor called in the previous line
-    }
-
-    /** @hide TODO: remove and replace usage with the public constructor. */
-    public NetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,
-            NetworkCapabilities nc, LinkProperties lp, int score, NetworkAgentConfig config) {
-        this(looper, context, logTag, ni, nc, lp, score, config, NetworkProvider.ID_NONE);
-        // Register done by the constructor called in the previous line
-    }
-
-    /** @hide TODO: remove and replace usage with the public constructor. */
-    public NetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,
-            NetworkCapabilities nc, LinkProperties lp, int score, int providerId) {
-        this(looper, context, logTag, ni, nc, lp, score, null, providerId);
-        // Register done by the constructor called in the previous line
-    }
-
-    /** @hide TODO: remove and replace usage with the public constructor. */
-    public NetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,
-            NetworkCapabilities nc, LinkProperties lp, int score, NetworkAgentConfig config,
-            int providerId) {
-        this(looper, context, logTag, nc, lp, score, config, providerId, ni, true /* legacy */);
-        register();
-    }
-
     private static NetworkInfo getLegacyNetworkInfo(final NetworkAgentConfig config) {
         // The subtype can be changed with (TODO) setLegacySubtype, but it starts
         // with the type and an empty description.
@@ -373,23 +344,31 @@ public abstract class NetworkAgent {
      * @param provider the {@link NetworkProvider} managing this agent.
      */
     public NetworkAgent(@NonNull Context context, @NonNull Looper looper, @NonNull String logTag,
-            @NonNull NetworkCapabilities nc, @NonNull LinkProperties lp, int score,
-            @NonNull NetworkAgentConfig config, @Nullable NetworkProvider provider) {
+            @NonNull NetworkCapabilities nc, @NonNull LinkProperties lp,
+            @NonNull NetworkScore score, @NonNull NetworkAgentConfig config,
+            @Nullable NetworkProvider provider) {
         this(looper, context, logTag, nc, lp, score, config,
                 provider == null ? NetworkProvider.ID_NONE : provider.getProviderId(),
                 getLegacyNetworkInfo(config), false /* legacy */);
+    }
+
+    public NetworkAgent(@NonNull Context context, @NonNull Looper looper, @NonNull String logTag,
+            @NonNull NetworkCapabilities nc, @NonNull LinkProperties lp,
+            int score, @NonNull NetworkAgentConfig config,
+            @Nullable NetworkProvider provider) {
+        throw new RuntimeException("Not supported any more");
     }
 
     private static class InitialConfiguration {
         public final Context context;
         public final NetworkCapabilities capabilities;
         public final LinkProperties properties;
-        public final int score;
+        public final NetworkScore score;
         public final NetworkAgentConfig config;
         public final NetworkInfo info;
         InitialConfiguration(@NonNull Context context, @NonNull NetworkCapabilities capabilities,
-                @NonNull LinkProperties properties, int score, @NonNull NetworkAgentConfig config,
-                @NonNull NetworkInfo info) {
+                @NonNull LinkProperties properties, @NonNull NetworkScore score,
+                @NonNull NetworkAgentConfig config, @NonNull NetworkInfo info) {
             this.context = context;
             this.capabilities = capabilities;
             this.properties = properties;
@@ -401,9 +380,9 @@ public abstract class NetworkAgent {
     private volatile InitialConfiguration mInitialConfiguration;
 
     private NetworkAgent(@NonNull Looper looper, @NonNull Context context, @NonNull String logTag,
-            @NonNull NetworkCapabilities nc, @NonNull LinkProperties lp, int score,
-            @NonNull NetworkAgentConfig config, int providerId, @NonNull NetworkInfo ni,
-            boolean legacy) {
+            @NonNull NetworkCapabilities nc, @NonNull LinkProperties lp,
+            @NonNull NetworkScore score, @NonNull NetworkAgentConfig config, int providerId,
+            @NonNull NetworkInfo ni, boolean legacy) {
         mHandler = new NetworkAgentHandler(looper);
         LOG_TAG = logTag;
         mIsLegacy = legacy;
@@ -748,16 +727,18 @@ public abstract class NetworkAgent {
                 new NetworkCapabilities(networkCapabilities));
     }
 
+    public final void sendNetworkScore(final int score) {
+        // TODO : replace with : throw new IllegalArgumentException("Method is deprecated");
+        sendNetworkScore(new NetworkScore(score));
+    }
+
     /**
      * Must be called by the agent to update the score of this network.
      *
-     * @param score the new score, between 0 and 99.
+     * @param score the new score
      */
-    public final void sendNetworkScore(@IntRange(from = 0, to = 99) int score) {
-        if (score < 0) {
-            throw new IllegalArgumentException("Score must be >= 0");
-        }
-        queueOrSendMessage(EVENT_NETWORK_SCORE_CHANGED, score, 0);
+    public final void sendNetworkScore(@NonNull final NetworkScore score) {
+        queueOrSendMessage(EVENT_NETWORK_SCORE_CHANGED, score);
     }
 
     /**

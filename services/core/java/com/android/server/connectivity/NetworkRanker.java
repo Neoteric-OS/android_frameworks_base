@@ -20,6 +20,8 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.NetworkRequest;
 
+import com.android.server.ConnectivityService;
+
 import java.util.Collection;
 
 /**
@@ -46,5 +48,12 @@ public class NetworkRanker {
             }
         }
         return bestNetwork;
+    }
+
+    public boolean canBeat(@NonNull final NetworkRequest request,
+            @Nullable final NetworkAgentInfo champion,
+            @NonNull final NetworkOffer offer) {
+        return request.canBeSatisfiedBy(offer.caps)
+                && (champion == null || champion.getCurrentScore() <= offer.score.legacyInt);
     }
 }
