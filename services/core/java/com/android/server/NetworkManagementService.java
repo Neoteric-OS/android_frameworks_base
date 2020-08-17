@@ -185,10 +185,10 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     /** Set of interfaces with active alerts. */
     @GuardedBy("mQuotaLock")
     private HashMap<String, Long> mActiveAlerts = Maps.newHashMap();
-    /** Set of UIDs denylisted on metered networks. */
+    /** Set of UIDs denied on metered networks. */
     @GuardedBy("mRulesLock")
     private SparseBooleanArray mUidRejectOnMetered = new SparseBooleanArray();
-    /** Set of UIDs allowlisted on metered networks. */
+    /** Set of UIDs allowed on metered networks. */
     @GuardedBy("mRulesLock")
     private SparseBooleanArray mUidAllowOnMetered = new SparseBooleanArray();
     /** Set of UIDs with cleartext penalties. */
@@ -575,13 +575,13 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
             }
             if (uidRejectOnQuota != null) {
                 for (int i = 0; i < uidRejectOnQuota.size(); i++) {
-                    setUidMeteredNetworkDenylist(uidRejectOnQuota.keyAt(i),
+                    setUidOnMeteredNetworkDenylist(uidRejectOnQuota.keyAt(i),
                             uidRejectOnQuota.valueAt(i));
                 }
             }
             if (uidAcceptOnQuota != null) {
                 for (int i = 0; i < uidAcceptOnQuota.size(); i++) {
-                    setUidMeteredNetworkAllowlist(uidAcceptOnQuota.keyAt(i),
+                    setUidOnMeteredNetworkAllowlist(uidAcceptOnQuota.keyAt(i),
                             uidAcceptOnQuota.valueAt(i));
                 }
             }
@@ -1307,14 +1307,14 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
         }
     }
 
-    private void setUidOnMeteredNetworkList(int uid, boolean denylist, boolean enable) {
+    private void setUidOnMeteredNetworkList(int uid, boolean allowlist, boolean enable) {
         NetworkStack.checkNetworkStackPermission(mContext);
 
         synchronized (mQuotaLock) {
             boolean oldEnable;
             SparseBooleanArray quotaList;
             synchronized (mRulesLock) {
-                quotaList = denylist ? mUidRejectOnMetered : mUidAllowOnMetered;
+                quotaList = allowlist ?  mUidAllowOnMetered : mUidRejectOnMetered;
                 oldEnable = quotaList.get(uid, false);
             }
             if (oldEnable == enable) {
@@ -1324,17 +1324,17 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
 
             Trace.traceBegin(Trace.TRACE_TAG_NETWORK, "inetd bandwidth");
             try {
-                if (denylist) {
-                    if (enable) {
-                        mNetdService.bandwidthAddNaughtyApp(uid);
-                    } else {
-                        mNetdService.bandwidthRemoveNaughtyApp(uid);
-                    }
-                } else {
+                if (allowlist) {
                     if (enable) {
                         mNetdService.bandwidthAddNiceApp(uid);
                     } else {
                         mNetdService.bandwidthRemoveNiceApp(uid);
+                    }
+                } else {
+                    if (enable) {
+                        mNetdService.bandwidthAddNaughtyApp(uid);
+                    } else {
+                        mNetdService.bandwidthRemoveNaughtyApp(uid);
                     }
                 }
                 synchronized (mRulesLock) {
@@ -1352,14 +1352,13 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
         }
     }
 
-    @Override
-    public void setUidMeteredNetworkDenylist(int uid, boolean enable) {
-        setUidOnMeteredNetworkList(uid, true, enable);
+    public void setUidOnMeteredNetworkDenylist(int uid, boolean enable) {
+        setUidOnMeteredNetworkList(uid, false, enable);
     }
 
     @Override
-    public void setUidMeteredNetworkAllowlist(int uid, boolean enable) {
-        setUidOnMeteredNetworkList(uid, false, enable);
+    public void setUidOnMeteredNetworkAllowlist(int uid, boolean enable) {
+        setUidOnMeteredNetworkList(uid, true, enable);
     }
 
     @Override
@@ -1828,7 +1827,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
             } else {
                 ruleName = "deny";
             }
-        } else { // Denylist mode
+        } else { // Deny mode
             if (rule == FIREWALL_RULE_DENY) {
                 ruleName = "deny";
             } else {
@@ -1913,8 +1912,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
             pw.print("Active alert ifaces: "); pw.println(mActiveAlerts.toString());
             pw.print("Data saver mode: "); pw.println(mDataSaverMode);
             synchronized (mRulesLock) {
-                dumpUidRuleOnQuotaLocked(pw, "denylist", mUidRejectOnMetered);
-                dumpUidRuleOnQuotaLocked(pw, "allowlist", mUidAllowOnMetered);
+                dumpUidRuleOnQuotaLocked(pw, "denied UIDs", mUidRejectOnMetered);
+                dumpUidRuleOnQuotaLocked(pw, "allowed UIDs", mUidAllowOnMetered);
             }
         }
 
@@ -1962,7 +1961,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     private void dumpUidRuleOnQuotaLocked(PrintWriter pw, String name, SparseBooleanArray list) {
         pw.print("UID bandwith control ");
         pw.print(name);
-        pw.print(" rule: [");
+        pw.print(": [");
         final int size = list.size();
         for (int i = 0; i < size; i++) {
             pw.print(list.keyAt(i));
@@ -2179,12 +2178,12 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
             }
         }
 
-        void setUidOnMeteredNetworkList(boolean denylist, int uid, boolean enable) {
+        void setUidOnMeteredNetworkList(boolean allowlist, int uid, boolean enable) {
             synchronized (mRulesLock) {
-                if (denylist) {
-                    mUidRejectOnMetered.put(uid, enable);
-                } else {
+                if (allowlist) {
                     mUidAllowOnMetered.put(uid, enable);
+                } else {
+                    mUidRejectOnMetered.put(uid, enable);
                 }
             }
         }

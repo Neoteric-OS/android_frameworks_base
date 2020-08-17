@@ -76,21 +76,21 @@ public class NetworkManagementInternalTest {
         assertFalse(mNmi.isNetworkRestrictedForUid(TEST_UID));
 
         // Restrict usage of mobile data in background
-        mInjector.setUidOnMeteredNetworkList(true, TEST_UID, true);
+        mInjector.setUidOnMeteredNetworkList(false, TEST_UID, true);
         assertTrue("Should be true since mobile data usage is restricted",
                 mNmi.isNetworkRestrictedForUid(TEST_UID));
         mInjector.reset();
 
         // Data saver is on and uid is not whitelisted
         mInjector.setDataSaverMode(true);
-        mInjector.setUidOnMeteredNetworkList(false, TEST_UID, false);
+        mInjector.setUidOnMeteredNetworkList(true, TEST_UID, false);
         assertTrue("Should be true since data saver is on and the uid is not whitelisted",
                 mNmi.isNetworkRestrictedForUid(TEST_UID));
         mInjector.reset();
 
         // Data saver is on and uid is whitelisted
         mInjector.setDataSaverMode(true);
-        mInjector.setUidOnMeteredNetworkList(false, TEST_UID, true);
+        mInjector.setUidOnMeteredNetworkList(true, TEST_UID, true);
         assertFalse("Should be false since data saver is on and the uid is whitelisted",
                 mNmi.isNetworkRestrictedForUid(TEST_UID));
         mInjector.reset();
