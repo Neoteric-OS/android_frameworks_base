@@ -31,6 +31,10 @@ import android.net.NetworkAgent;
 import android.net.NetworkAgentConfig;
 import android.net.NetworkCapabilities;
 import android.net.NetworkProvider;
+import android.net.NetworkInfo;
+import android.net.NetworkInfo.DetailedState;
+import android.net.NetworkProvider;
+import android.net.NetworkScore;
 import android.net.RouteInfo;
 import android.net.StringNetworkSpecifier;
 import android.net.TestNetworkInterface;
@@ -147,8 +151,6 @@ class TestNetworkService extends ITestNetworkManager.Stub {
     private final SparseArray<TestNetworkAgent> mTestNetworkTracker = new SparseArray<>();
 
     public class TestNetworkAgent extends NetworkAgent implements IBinder.DeathRecipient {
-        private static final int NETWORK_SCORE = 1; // Use a low, non-zero score.
-
         private final int mUid;
         @NonNull private final NetworkCapabilities mNc;
         @NonNull private final LinkProperties mLp;
@@ -168,7 +170,8 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                 int uid,
                 @NonNull IBinder binder)
                 throws RemoteException {
-            super(context, looper, TEST_NETWORK_TYPE, nc, lp, NETWORK_SCORE, config,
+            super(context, looper, TEST_NETWORK_TYPE, nc, lp,
+                    new NetworkScore.Builder().setLegacyInt(1).build(), config,
                     new NetworkProvider(context, looper, TEST_NETWORK_PROVIDER_NAME));
 
             mUid = uid;

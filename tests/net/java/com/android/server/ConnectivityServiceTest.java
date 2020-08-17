@@ -172,6 +172,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkFactory;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
+import android.net.NetworkScore;
 import android.net.NetworkSpecifier;
 import android.net.NetworkStack;
 import android.net.NetworkStackClient;
@@ -6858,7 +6859,7 @@ public class ConnectivityServiceTest {
         class TestNetworkAgent extends NetworkAgent {
             TestNetworkAgent(Context context, Looper looper, NetworkAgentConfig config) {
                 super(context, looper, "MockAgent", new NetworkCapabilities(),
-                        new LinkProperties(), 40 , config, null /* provider */);
+                        new LinkProperties(), new NetworkScore(40), config, null /* provider */);
             }
         }
         final NetworkAgent naNoExtraInfo = new TestNetworkAgent(

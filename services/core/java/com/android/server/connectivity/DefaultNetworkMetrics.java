@@ -134,7 +134,7 @@ public class DefaultNetworkMetrics {
         if (oldNai != null) {
             // The system acquired a new default network.
             fillLinkInfo(ev, oldNai);
-            ev.finalScore = oldNai.getCurrentScore();
+            ev.finalScore = 0; // oldNai.getCurrentScore();
         }
         // Only change transport of the previous default network if the event currently logged
         // corresponds to an existing default network, and not to the absence of a default network.
@@ -153,7 +153,7 @@ public class DefaultNetworkMetrics {
         // newNai is null if the system has no default network after the transition.
         if (newNai != null) {
             fillLinkInfo(ev, newNai);
-            ev.initialScore = newNai.getCurrentScore();
+            ev.initialScore = 0; // newNai.getCurrentScore();
             if (newNai.lastValidated) {
                 mIsCurrentlyValid = true;
                 mLastValidationTimeMs = timeMs;

@@ -28,6 +28,11 @@ import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
 
+import com.android.internal.annotations.GuardedBy;
+
+import java.util.ArrayList;
+import java.util.concurrent.Executor;
+
 /**
  * Base class for network providers such as telephony or Wi-Fi. NetworkProviders connect the device
  * to networks and makes them available to the core network stack by creating
@@ -56,12 +61,7 @@ public class NetworkProvider {
      */
     public static final int FIRST_PROVIDER_ID = 1;
 
-    /** @hide only used by ConnectivityService */
-    public static final int CMD_REQUEST_NETWORK = 1;
-    /** @hide only used by ConnectivityService */
-    public static final int CMD_CANCEL_REQUEST = 2;
-
-    private final Messenger mMessenger;
+    private final Messenger mMessenger; // TODO : this is now unused. Remove.
     private final String mName;
     private final ConnectivityManager mCm;
 
@@ -80,21 +80,7 @@ public class NetworkProvider {
     public NetworkProvider(@NonNull Context context, @NonNull Looper looper, @NonNull String name) {
         mCm = ConnectivityManager.from(context);
 
-        Handler handler = new Handler(looper) {
-            @Override
-            public void handleMessage(Message m) {
-                switch (m.what) {
-                    case CMD_REQUEST_NETWORK:
-                        onNetworkRequested((NetworkRequest) m.obj, m.arg1, m.arg2);
-                        break;
-                    case CMD_CANCEL_REQUEST:
-                        onNetworkRequestWithdrawn((NetworkRequest) m.obj);
-                        break;
-                    default:
-                        Log.e(mName, "Unhandled message: " + m.what);
-                }
-            }
-        };
+        Handler handler = new Handler(looper);
         mMessenger = new Messenger(handler);
         mName = name;
     }
@@ -159,5 +145,68 @@ public class NetworkProvider {
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public void declareNetworkRequestUnfulfillable(@NonNull NetworkRequest request) {
         mCm.declareNetworkRequestUnfulfillable(request);
+    }
+
+    /** @hide */
+    @SystemApi
+    public interface NeedNetwork {
+        void onOfferNeeded(final @NonNull NetworkRequest request, final int factorySerialNumber);
+        void onOfferUnneeded(final @NonNull NetworkRequest request);
+    }
+
+    private class NeedNetworkProxy extends INeedNetwork.Stub {
+        @NonNull public final NeedNetwork callback;
+        @NonNull private final Executor mExecutor;
+
+        public NeedNetworkProxy(@NonNull final NeedNetwork callback,
+                @NonNull final Executor executor) {
+            this.callback = callback;
+            this.mExecutor = executor;
+        }
+
+        @Override
+        public void onOfferNeeded(final @NonNull NetworkRequest request,
+                final int factorySerialNumber) {
+            mExecutor.execute(() -> callback.onOfferNeeded(request, factorySerialNumber));
+        }
+
+        @Override
+        public void onOfferUnneeded(final @NonNull NetworkRequest request) {
+            mExecutor.execute(() -> callback.onOfferUnneeded(request));
+        }
+    }
+
+    @GuardedBy("mProxies")
+    @NonNull private final ArrayList<NeedNetworkProxy> mProxies = new ArrayList<>();
+
+    /** @hide */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
+    public void offerNetwork(@NonNull final NetworkScore score,
+            @NonNull final NetworkCapabilities caps, @NonNull final Executor executor,
+            @NonNull final NeedNetwork callback) {
+        final NeedNetworkProxy proxy = new NeedNetworkProxy(callback, executor);
+        synchronized (mProxies) {
+            mProxies.add(proxy);
+        }
+        mCm.offerNetwork(this, score, caps, proxy);
+    }
+
+    /** @hide */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
+    public void unofferNetwork(final @NonNull NeedNetwork callback) {
+        NeedNetworkProxy proxy = null;
+        synchronized (mProxies) {
+            for (final NeedNetworkProxy p : mProxies) {
+                if (p.callback == callback) {
+                    proxy = p;
+                    break;
+                }
+            }
+            if (null == proxy) return;
+            mProxies.remove(proxy);
+        }
+        mCm.unofferNetwork(proxy);
     }
 }

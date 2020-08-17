@@ -68,6 +68,7 @@ import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkProvider;
 import android.net.NetworkRequest;
+import android.net.NetworkScore;
 import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.VpnManager;
@@ -1292,7 +1293,10 @@ public class Vpn {
         try {
             mNetworkAgent = new NetworkAgent(mContext, mLooper, NETWORKTYPE /* logtag */,
                     mNetworkCapabilities, lp,
-                    ConnectivityConstants.VPN_DEFAULT_SCORE, networkAgentConfig,
+                    new NetworkScore.Builder()
+                            .setLegacyInt(ConnectivityConstants.VPN_DEFAULT_SCORE)
+                            .build(),
+                    networkAgentConfig,
                     new NetworkProvider(mContext, mLooper, VPN_AGENT_NAME)) {
                             @Override
                             public void unwanted() {

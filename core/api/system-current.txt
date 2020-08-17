@@ -6157,6 +6157,7 @@ package android.net {
   }
 
   public abstract class NetworkAgent {
+    ctor public NetworkAgent(@NonNull android.content.Context, @NonNull android.os.Looper, @NonNull String, @NonNull android.net.NetworkCapabilities, @NonNull android.net.LinkProperties, @NonNull android.net.NetworkScore, @NonNull android.net.NetworkAgentConfig, @Nullable android.net.NetworkProvider);
     ctor public NetworkAgent(@NonNull android.content.Context, @NonNull android.os.Looper, @NonNull String, @NonNull android.net.NetworkCapabilities, @NonNull android.net.LinkProperties, int, @NonNull android.net.NetworkAgentConfig, @Nullable android.net.NetworkProvider);
     method @Nullable public android.net.Network getNetwork();
     method public void markConnected();
@@ -6172,7 +6173,8 @@ package android.net {
     method @NonNull public android.net.Network register();
     method public final void sendLinkProperties(@NonNull android.net.LinkProperties);
     method public final void sendNetworkCapabilities(@NonNull android.net.NetworkCapabilities);
-    method public final void sendNetworkScore(@IntRange(from=0, to=99) int);
+    method public final void sendNetworkScore(int);
+    method public final void sendNetworkScore(@NonNull android.net.NetworkScore);
     method public final void sendSocketKeepaliveEvent(int, int);
     method public void unregister();
     field public static final int VALIDATION_STATUS_NOT_VALID = 2; // 0x2
@@ -6245,9 +6247,16 @@ package android.net {
     ctor public NetworkProvider(@NonNull android.content.Context, @NonNull android.os.Looper, @NonNull String);
     method @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public void declareNetworkRequestUnfulfillable(@NonNull android.net.NetworkRequest);
     method public int getProviderId();
+    method @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public void offerNetwork(@NonNull android.net.NetworkScore, @NonNull android.net.NetworkCapabilities, @NonNull java.util.concurrent.Executor, @NonNull android.net.NetworkProvider.NeedNetwork);
     method public void onNetworkRequestWithdrawn(@NonNull android.net.NetworkRequest);
     method public void onNetworkRequested(@NonNull android.net.NetworkRequest, @IntRange(from=0, to=99) int, int);
+    method @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public void unofferNetwork(@NonNull android.net.NetworkProvider.NeedNetwork);
     field public static final int ID_NONE = -1; // 0xffffffff
+  }
+
+  public static interface NetworkProvider.NeedNetwork {
+    method public void onOfferNeeded(@NonNull android.net.NetworkRequest, int);
+    method public void onOfferUnneeded(@NonNull android.net.NetworkRequest);
   }
 
   public abstract class NetworkRecommendationProvider {
@@ -6263,6 +6272,22 @@ package android.net {
 
   public static class NetworkRequest.Builder {
     method @NonNull @RequiresPermission(android.Manifest.permission.NETWORK_SIGNAL_STRENGTH_WAKEUP) public android.net.NetworkRequest.Builder setSignalStrength(int);
+  }
+
+  public final class NetworkScore implements android.os.Parcelable {
+    ctor public NetworkScore(int);
+    method public int describeContents();
+    method public int getLegacyInt();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkScore> CREATOR;
+    field @NonNull public static final android.net.NetworkScore INVINCIBLE_SCORE;
+    field public final int legacyInt;
+  }
+
+  public static final class NetworkScore.Builder {
+    ctor public NetworkScore.Builder();
+    method @NonNull public android.net.NetworkScore build();
+    method @NonNull public android.net.NetworkScore.Builder setLegacyInt(int);
   }
 
   public class NetworkScoreManager {

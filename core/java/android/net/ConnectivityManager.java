@@ -3254,6 +3254,29 @@ public class ConnectivityManager {
         return provider.getProviderId();
     }
 
+    /** @hide */
+    @RequiresPermission(anyOf = {
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
+            android.Manifest.permission.NETWORK_FACTORY})
+    public void offerNetwork(@NonNull final NetworkProvider provider,
+            @NonNull final NetworkScore score, @NonNull final NetworkCapabilities caps,
+            @NonNull final INeedNetwork callback) {
+        try {
+            mService.offerNetwork(provider.getMessenger(), score, caps, callback);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /** @hide */
+    public void unofferNetwork(@NonNull final INeedNetwork callback) {
+        try {
+            mService.unofferNetwork(callback);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     /**
      * Unregisters the specified NetworkProvider.
      *
@@ -3299,7 +3322,7 @@ public class ConnectivityManager {
             NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
             android.Manifest.permission.NETWORK_FACTORY})
     public Network registerNetworkAgent(Messenger messenger, NetworkInfo ni, LinkProperties lp,
-            NetworkCapabilities nc, int score, NetworkAgentConfig config) {
+            NetworkCapabilities nc, NetworkScore score, NetworkAgentConfig config) {
         return registerNetworkAgent(messenger, ni, lp, nc, score, config, NetworkProvider.ID_NONE);
     }
 
@@ -3312,7 +3335,7 @@ public class ConnectivityManager {
             NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
             android.Manifest.permission.NETWORK_FACTORY})
     public Network registerNetworkAgent(Messenger messenger, NetworkInfo ni, LinkProperties lp,
-            NetworkCapabilities nc, int score, NetworkAgentConfig config, int providerId) {
+            NetworkCapabilities nc, NetworkScore score, NetworkAgentConfig config, int providerId) {
         try {
             return mService.registerNetworkAgent(messenger, ni, lp, nc, score, config, providerId);
         } catch (RemoteException e) {
