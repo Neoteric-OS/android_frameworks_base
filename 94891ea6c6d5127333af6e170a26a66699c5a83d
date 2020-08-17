@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e4df32_ff5df23a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064128
+      },
+      "writtenOn": "2020-08-17T19:58:13Z",
+      "side": 1,
+      "message": "Cherry-pick from internal to solve the merge conflicts of aosp/1400533.",
+      "revId": "94891ea6c6d5127333af6e170a26a66699c5a83d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
