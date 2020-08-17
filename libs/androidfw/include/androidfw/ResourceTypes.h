@@ -23,6 +23,7 @@
 #include <androidfw/Asset.h>
 #include <androidfw/LocaleData.h>
 #include <androidfw/StringPiece.h>
+#include <androidfw/Util.h>
 #include <utils/Errors.h>
 #include <utils/String16.h>
 #include <utils/Vector.h>
@@ -42,6 +43,8 @@ namespace android {
 
 constexpr const static uint32_t kIdmapMagic = 0x504D4449u;
 constexpr const static uint32_t kIdmapCurrentVersion = 0x00000005u;
+
+constexpr const static char* kResourcesTableIncomplete = "required resources.arsc data is missing";
 
 /**
  * In C++11, char16_t is defined as *at least* 16 bits. We do a lot of
@@ -497,7 +500,7 @@ public:
     virtual ~ResStringPool();
 
     void setToEmpty();
-    status_t setTo(const void* data, size_t size, bool copyData=false);
+    status_t setTo(incfs::map_ptr<void> data, size_t size, bool copyData=false);
 
     status_t getError() const;
 
@@ -505,48 +508,49 @@ public:
 
     // Return string entry as UTF16; if the pool is UTF8, the string will
     // be converted before returning.
-    inline const char16_t* stringAt(const ResStringPool_ref& ref, size_t* outLen) const {
-        return stringAt(ref.index, outLen);
+    inline util::OptionalResult<StringPiece16> stringAt(const ResStringPool_ref& ref) const {
+        return stringAt(ref.index);
     }
-    virtual const char16_t* stringAt(size_t idx, size_t* outLen) const;
+    virtual util::OptionalResult<StringPiece16> stringAt(size_t idx) const;
 
     // Note: returns null if the string pool is not UTF8.
-    virtual const char* string8At(size_t idx, size_t* outLen) const;
+    virtual util::OptionalResult<StringPiece> string8At(size_t idx) const;
 
     // Return string whether the pool is UTF8 or UTF16.  Does not allow you
     // to distinguish null.
-    const String8 string8ObjectAt(size_t idx) const;
+    util::OptionalResult<String8> string8ObjectAt(size_t idx) const;
 
-    const ResStringPool_span* styleAt(const ResStringPool_ref& ref) const;
-    const ResStringPool_span* styleAt(size_t idx) const;
+    util::OptionalResult<incfs::map_ptr<ResStringPool_span>> styleAt(
+        const ResStringPool_ref& ref) const;
+    util::OptionalResult<incfs::map_ptr<ResStringPool_span>> styleAt(size_t idx) const;
 
-    ssize_t indexOfString(const char16_t* str, size_t strLen) const;
+    util::OptionalResult<size_t> indexOfString(const char16_t* str, size_t strLen) const;
 
     virtual size_t size() const;
     size_t styleCount() const;
     size_t bytes() const;
-    const void* data() const;
+    incfs::map_ptr<void> data() const;
 
 
     bool isSorted() const;
     bool isUTF8() const;
 
 private:
-    status_t                    mError;
-    void*                       mOwnedData;
-    const ResStringPool_header* mHeader;
-    size_t                      mSize;
-    mutable Mutex               mDecodeLock;
-    const uint32_t*             mEntries;
-    const uint32_t*             mEntryStyles;
-    const void*                 mStrings;
-    char16_t mutable**          mCache;
-    uint32_t                    mStringPoolSize;    // number of uint16_t
-    const uint32_t*             mStyles;
-    uint32_t                    mStylePoolSize;    // number of uint32_t
+    status_t                                      mError;
+    void*                                         mOwnedData;
+    incfs::verified_map_ptr<ResStringPool_header> mHeader;
+    size_t                                        mSize;
+    mutable Mutex                                 mDecodeLock;
+    incfs::map_ptr<uint32_t>                      mEntries;
+    incfs::map_ptr<uint32_t>                      mEntryStyles;
+    incfs::map_ptr<void>                          mStrings;
+    char16_t mutable**                            mCache;
+    uint32_t                                      mStringPoolSize;    // number of uint16_t
+    incfs::map_ptr<uint32_t>                      mStyles;
+    uint32_t                                      mStylePoolSize;    // number of uint32_t
 
-    const char* stringDecodeAt(size_t idx, const uint8_t* str, const size_t encLen,
-                               size_t* outLen) const;
+    util::OptionalResult<StringPiece> stringDecodeAt(size_t idx, incfs::map_ptr<uint8_t> str,
+                                                     size_t encLen) const;
 };
 
 /**
@@ -558,8 +562,8 @@ public:
  StringPoolRef() = default;
  StringPoolRef(const ResStringPool* pool, uint32_t index);
 
- const char* string8(size_t* outLen) const;
- const char16_t* string16(size_t* outLen) const;
+ util::OptionalResult<StringPiece> string8() const;
+ util::OptionalResult<StringPiece16> string16() const;
 
 private:
  const ResStringPool* mPool = nullptr;
@@ -1796,6 +1800,16 @@ private:
 };
 
 bool U16StringToInt(const char16_t* s, size_t len, Res_value* outValue);
+
+template<typename TChar>
+static const TChar* UnpackOptionalString(util::OptionalResult<BasicStringPiece<TChar>>&& result,
+                                         size_t* outLen) {
+  if (result.has_value()) {
+    *outLen = result->size();
+    return result->data();
+  }
+  return NULL;
+}
 
 /**
  * Convenience class for accessing data in a ResTable resource.

@@ -932,7 +932,7 @@ Asset* AssetManager::openAssetFromZipLocked(const ZipFileRO* pZipFile,
         return NULL;
     }
 
-    FileMap* dataMap = pZipFile->createEntryFileMap(entry);
+    incfs::IncFsFileMap* dataMap = pZipFile->createEntryIncFsFileMap(entry);
     if (dataMap == NULL) {
         ALOGW("create map from entry failed\n");
         return NULL;
@@ -941,12 +941,12 @@ Asset* AssetManager::openAssetFromZipLocked(const ZipFileRO* pZipFile,
     if (method == ZipFileRO::kCompressStored) {
         pAsset = Asset::createFromUncompressedMap(dataMap, mode);
         ALOGV("Opened uncompressed entry %s in zip %s mode %d: %p", entryName.string(),
-                dataMap->getFileName(), mode, pAsset);
+                dataMap->file_name(), mode, pAsset);
     } else {
         pAsset = Asset::createFromCompressedMap(dataMap,
             static_cast<size_t>(uncompressedLen), mode);
         ALOGV("Opened compressed entry %s in zip %s mode %d: %p", entryName.string(),
-                dataMap->getFileName(), mode, pAsset);
+                dataMap->file_name(), mode, pAsset);
     }
     if (pAsset == NULL) {
         /* unexpected */

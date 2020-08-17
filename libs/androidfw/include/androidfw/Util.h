@@ -19,9 +19,11 @@
 
 #include <cstdlib>
 #include <memory>
+#include <optional>
 #include <sstream>
 #include <vector>
 
+#include "android-base/result.h"
 #include "android-base/macros.h"
 
 #include "androidfw/StringPiece.h"
@@ -114,6 +116,61 @@ class unique_cptr {
   DISALLOW_COPY_AND_ASSIGN(unique_cptr);
 
   pointer ptr_;
+};
+
+template <typename T>
+using Result = base::expected<T, const char*>;
+
+// A tri-state result class that can represent a value, null, or an error.
+template <typename T>
+class OptionalResult {
+ public:
+  constexpr OptionalResult() = default;
+  constexpr OptionalResult(const T& value) : result(value) {};
+  constexpr OptionalResult(T&& value) : result(std::forward<T>(value)) {};
+  template <typename U> constexpr OptionalResult(base::unexpected<U>&& error) :
+      result(std::forward<base::unexpected<U>>(error)) {};
+
+  // Retrieves the value. This function should only be used after checking that the result
+  // represents an error using `has_value`.
+  constexpr T* operator->() { return result.operator->(); }
+  constexpr const T* operator->() const { return result.operator->(); }
+  constexpr const T& operator*() const& { return result.value(); }
+  constexpr T& operator*() & { return result.value(); }
+  constexpr const T&& operator*() const&& { return result.value(); }
+  constexpr T&& operator*() && { return result.value(); }
+
+  constexpr const T& value() const& { return result.value(); }
+  constexpr T& value() & { return result.value(); }
+  constexpr const T&& value() const&& { return result.value(); }
+  constexpr T&& value() && { return result.value(); }
+
+  // Retrieves the value if the result represents a value; otherwise, returns the value of `other`.
+  template <typename U>
+  constexpr T value_or(U&& other) const { return result.value_or(std::forward<U>(other)); }
+
+  // Retrieves the error message. This function should only be used after checking that the result
+  // represents an error using `has_error`.
+  constexpr const char* error() const { return *result.error(); }
+
+  // Retrieves an object that can represent a null value or an error.
+  constexpr std::optional<const char*> null_or_error() const { return result.error(); }
+
+  // Checks whether the result represents a value.
+  constexpr bool has_value() const { return result.has_value(); }
+
+  // Checks whether the result represents a null value.
+  constexpr bool has_nothing() const {
+    return !result.has_value() && !result.error().has_value();
+  }
+
+  // Checks whether the result represents an error.
+  constexpr bool has_error() const {
+    return !result.has_value() && result.error().has_value();
+  }
+
+ private:
+  base::expected<T, std::optional<const char*>> result;
 };
 
 void ReadUtf16StringFromDevice(const uint16_t* src, size_t len, std::string* out);

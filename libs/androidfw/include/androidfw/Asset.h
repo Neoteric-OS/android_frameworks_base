@@ -23,17 +23,16 @@
 
 #include <stdio.h>
 #include <sys/types.h>
-
 #include <memory>
 
 #include <android-base/unique_fd.h>
+#include <util/map_ptr.h>
+
 #include <utils/Compat.h>
 #include <utils/Errors.h>
 #include <utils/String8.h>
 
 namespace android {
-
-class FileMap;
 
 /*
  * Instances of this class provide read-only operations on a byte stream.
@@ -87,8 +86,15 @@ public:
 
     /*
      * Get a pointer to a buffer with the entire contents of the file.
+     * Use this function if the asset can never reside on IncFs.
      */
     virtual const void* getBuffer(bool wordAligned) = 0;
+
+    /*
+     * Get a incfs::map_ptr<void> to a buffer with the entire contents of the file.
+     * Use this function if the asset can potentially reside on IncFs.
+     */
+    virtual incfs::map_ptr<void> getIncFsBuffer(bool wordAligned) = 0;
 
     /*
      * Get the total amount of data that can be read.
@@ -200,31 +206,30 @@ private:
     /*
      * Create the asset from a memory-mapped file segment.
      *
-     * The asset takes ownership of the FileMap.
+     * The asset takes ownership of the incfs::IncFsFileMap.
      */
-    static Asset* createFromUncompressedMap(FileMap* dataMap, AccessMode mode);
+    static Asset* createFromUncompressedMap(incfs::IncFsFileMap* dataMap, AccessMode mode);
 
     /*
      * Create the asset from a memory-mapped file segment.
      *
-     * The asset takes ownership of the FileMap and the file descriptor "fd". The file descriptor is
-     * used to request new file descriptors using "openFileDescriptor".
+     * The asset takes ownership of the incfs::IncFsFileMap and the file descriptor "fd". The
+     * file descriptor is used to request new file descriptors using "openFileDescriptor".
      */
-    static std::unique_ptr<Asset> createFromUncompressedMap(std::unique_ptr<FileMap> dataMap,
-        base::unique_fd fd, AccessMode mode);
+    static std::unique_ptr<Asset> createFromUncompressedMap(
+        std::unique_ptr<incfs::IncFsFileMap> dataMap, base::unique_fd fd, AccessMode mode);
 
     /*
      * Create the asset from a memory-mapped file segment with compressed
      * data.
      *
-     * The asset takes ownership of the FileMap.
+     * The asset takes ownership of the incfs::IncFsFileMap.
      */
-    static Asset* createFromCompressedMap(FileMap* dataMap,
-        size_t uncompressedLen, AccessMode mode);
+    static Asset* createFromCompressedMap(incfs::IncFsFileMap* dataMap, size_t uncompressedLen,
+                                          AccessMode mode);
 
-    static std::unique_ptr<Asset> createFromCompressedMap(std::unique_ptr<FileMap> dataMap,
-        size_t uncompressedLen, AccessMode mode);
-
+    static std::unique_ptr<Asset> createFromCompressedMap(
+        std::unique_ptr<incfs::IncFsFileMap> dataMap, size_t uncompressedLen, AccessMode mode);
 
     /*
      * Create from a reference-counted chunk of shared memory.
@@ -266,7 +271,7 @@ public:
      *
      * On success, the object takes ownership of "dataMap" and "fd".
      */
-    status_t openChunk(FileMap* dataMap, base::unique_fd fd);
+    status_t openChunk(incfs::IncFsFileMap* dataMap, base::unique_fd fd);
 
     /*
      * Standard Asset interfaces.
@@ -275,6 +280,7 @@ public:
     virtual off64_t seek(off64_t offset, int whence);
     virtual void close(void);
     virtual const void* getBuffer(bool wordAligned);
+    virtual incfs::map_ptr<void> getIncFsBuffer(bool wordAligned);
     virtual off64_t getLength(void) const { return mLength; }
     virtual off64_t getRemainingLength(void) const { return mLength-mOffset; }
     virtual int openFileDescriptor(off64_t* outStart, off64_t* outLength) const;
@@ -295,10 +301,10 @@ private:
      */
     enum { kReadVsMapThreshold = 4096 };
 
-    FileMap*    mMap;           // for memory map
-    unsigned char* mBuf;        // for read
+    incfs::IncFsFileMap*  mMap;     // for memory map
+    unsigned char*        mBuf;     // for read
 
-    const void* ensureAlignment(FileMap* map);
+    incfs::map_ptr<void> ensureAlignment(incfs::IncFsFileMap* map);
 };
 
 
@@ -323,7 +329,7 @@ public:
      *
      * On success, the object takes ownership of "fd".
      */
-    status_t openChunk(FileMap* dataMap, size_t uncompressedLen);
+    status_t openChunk(incfs::IncFsFileMap* dataMap, size_t uncompressedLen);
 
     /*
      * Standard Asset interfaces.
@@ -332,23 +338,24 @@ public:
     virtual off64_t seek(off64_t offset, int whence);
     virtual void close(void);
     virtual const void* getBuffer(bool wordAligned);
+    virtual incfs::map_ptr<void> getIncFsBuffer(bool wordAligned);
     virtual off64_t getLength(void) const { return mUncompressedLen; }
     virtual off64_t getRemainingLength(void) const { return mUncompressedLen-mOffset; }
     virtual int openFileDescriptor(off64_t* /* outStart */, off64_t* /* outLength */) const { return -1; }
     virtual bool isAllocated(void) const { return mBuf != NULL; }
 
 private:
-    off64_t     mStart;         // offset to start of compressed data
-    off64_t     mCompressedLen; // length of the compressed data
-    off64_t     mUncompressedLen; // length of the uncompressed data
-    off64_t     mOffset;        // current offset, 0 == start of uncomp data
+    off64_t                     mStart;           // offset to start of compressed data
+    off64_t                     mCompressedLen;   // length of the compressed data
+    off64_t                     mUncompressedLen; // length of the uncompressed data
+    off64_t                     mOffset;          // current offset, 0 == start of uncomp data
 
-    FileMap*    mMap;           // for memory-mapped input
-    int         mFd;            // for file input
+    incfs::IncFsFileMap*        mMap;             // for memory-mapped input
+    int                         mFd;              // for file input
 
-    class StreamingZipInflater* mZipInflater;  // for streaming large compressed assets
+    class StreamingZipInflater* mZipInflater;     // for streaming large compressed assets
 
-    unsigned char*  mBuf;       // for getBuffer()
+    unsigned char*              mBuf;            // for getBuffer()
 };
 
 // need: shared mmap version?

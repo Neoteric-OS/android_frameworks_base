@@ -32,8 +32,8 @@ namespace android {
 // ----------------------------------------------------------------------------
 
 static jlong android_content_StringBlock_nativeCreate(JNIEnv* env, jobject clazz,
-                                                  jbyteArray bArray,
-                                                  jint off, jint len)
+                                                      jbyteArray bArray,
+                                                      jint off, jint len)
 {
     if (bArray == NULL) {
         jniThrowNullPointerException(env, NULL);
@@ -60,7 +60,7 @@ static jlong android_content_StringBlock_nativeCreate(JNIEnv* env, jobject clazz
 }
 
 static jint android_content_StringBlock_nativeGetSize(JNIEnv* env, jobject clazz,
-                                                   jlong token)
+                                                      jlong token)
 {
     ResStringPool* osb = reinterpret_cast<ResStringPool*>(token);
     if (osb == NULL) {
@@ -72,7 +72,7 @@ static jint android_content_StringBlock_nativeGetSize(JNIEnv* env, jobject clazz
 }
 
 static jstring android_content_StringBlock_nativeGetString(JNIEnv* env, jobject clazz,
-                                                        jlong token, jint idx)
+                                                           jlong token, jint idx)
 {
     ResStringPool* osb = reinterpret_cast<ResStringPool*>(token);
     if (osb == NULL) {
@@ -80,23 +80,30 @@ static jstring android_content_StringBlock_nativeGetString(JNIEnv* env, jobject 
         return 0;
     }
 
-    size_t len;
-    const char* str8 = osb->string8At(idx, &len);
-    if (str8 != NULL) {
-        return env->NewStringUTF(str8);
+    util::OptionalResult<StringPiece> str8 = osb->string8At(idx);
+    if (UNLIKELY(str8.has_error())) {
+        jniThrowException(env, "android/content/res/Resources/NotFoundException", str8.error());
+        return 0;
+    }
+    if (str8.has_value()) {
+        return env->NewStringUTF(str8->data());
     }
 
-    const char16_t* str = osb->stringAt(idx, &len);
-    if (str == NULL) {
+    util::OptionalResult<StringPiece16> str = osb->stringAt(idx);
+    if (UNLIKELY(!str.has_value())) {
+        if (UNLIKELY(str.has_error())) {
+            jniThrowException(env, "android/content/res/Resources/NotFoundException", str.error());
+            return 0;
+        }
         jniThrowException(env, "java/lang/IndexOutOfBoundsException", NULL);
         return 0;
     }
 
-    return env->NewString((const jchar*)str, len);
+    return env->NewString((const jchar*)str->data(), str->size());
 }
 
 static jintArray android_content_StringBlock_nativeGetStyle(JNIEnv* env, jobject clazz,
-                                                         jlong token, jint idx)
+                                                            jlong token, jint idx)
 {
     ResStringPool* osb = reinterpret_cast<ResStringPool*>(token);
     if (osb == NULL) {
@@ -104,16 +111,34 @@ static jintArray android_content_StringBlock_nativeGetStyle(JNIEnv* env, jobject
         return NULL;
     }
 
-    const ResStringPool_span* spans = osb->styleAt(idx);
-    if (spans == NULL) {
+    util::OptionalResult<incfs::map_ptr<ResStringPool_span>> spans = osb->styleAt(idx);
+    if (UNLIKELY(spans.has_error())) {
+        jniThrowException(env, "android/content/res/Resources/NotFoundException", NULL);
         return NULL;
     }
 
-    const ResStringPool_span* pos = spans;
+    if (spans.has_nothing()) {
+        return NULL;
+    }
+
+    if (UNLIKELY(spans.has_error())) {
+        jniThrowException(env, "android/content/res/Resources/NotFoundException", spans.error());
+        return NULL;
+    }
+
     int num = 0;
-    while (pos->name.index != ResStringPool_span::END) {
-        num++;
-        pos++;
+    incfs::map_ptr<ResStringPool_span> pos = *spans;
+    while (true) {
+      if (UNLIKELY(!pos)) {
+        jniThrowException(env, "android/content/res/Resources/NotFoundException",
+                          kResourcesTableIncomplete);
+        return NULL;
+      }
+      if (pos->name.index == ResStringPool_span::END) {
+        break;
+      }
+      num++;
+      pos++;
     }
 
     if (num == 0) {
@@ -127,11 +152,9 @@ static jintArray android_content_StringBlock_nativeGetStyle(JNIEnv* env, jobject
 
     num = 0;
     static const int numInts = sizeof(ResStringPool_span)/sizeof(jint);
-    while (spans->name.index != ResStringPool_span::END) {
-        env->SetIntArrayRegion(array,
-                                  num*numInts, numInts,
-                                  (jint*)spans);
-        spans++;
+    while ((*spans)->name.index != ResStringPool_span::END) {
+        env->SetIntArrayRegion(array, num*numInts, numInts, (jint*)spans->unsafe());
+        (*spans)++;
         num++;
     }
 
@@ -139,7 +162,7 @@ static jintArray android_content_StringBlock_nativeGetStyle(JNIEnv* env, jobject
 }
 
 static void android_content_StringBlock_nativeDestroy(JNIEnv* env, jobject clazz,
-                                                   jlong token)
+                                                      jlong token)
 {
     ResStringPool* osb = reinterpret_cast<ResStringPool*>(token);
     if (osb == NULL) {

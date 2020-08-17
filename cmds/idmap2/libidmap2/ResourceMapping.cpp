@@ -119,32 +119,25 @@ const LoadedPackage* GetPackageAtIndex0(const LoadedArsc& loaded_arsc) {
 
 Result<std::unique_ptr<Asset>> OpenNonAssetFromResource(const ResourceId& resource_id,
                                                         const AssetManager2& asset_manager) {
-  Res_value value{};
-  ResTable_config selected_config{};
-  uint32_t flags;
-  auto cookie =
-      asset_manager.GetResource(resource_id, /* may_be_bag */ false,
-                                /* density_override */ 0U, &value, &selected_config, &flags);
-  if (cookie == kInvalidCookie) {
+  auto value = asset_manager.GetResource(resource_id);
+  if (!value.has_value()) {
     return Error("failed to find resource for id 0x%08x", resource_id);
   }
 
-  if (value.dataType != Res_value::TYPE_STRING) {
+  if (value->type != Res_value::TYPE_STRING) {
     return Error("resource for is 0x%08x is not a file", resource_id);
   }
 
-  auto string_pool = asset_manager.GetStringPoolForCookie(cookie);
-  size_t len;
-  auto file_path16 = string_pool->stringAt(value.data, &len);
-  if (file_path16 == nullptr) {
-    return Error("failed to find string for index %d", value.data);
+  auto string_pool = asset_manager.GetStringPoolForCookie(value->cookie);
+  auto file = string_pool->string8ObjectAt(value->data);
+  if (!file.has_value()) {
+    return Error("failed to find string for index %d", value->data);
   }
 
   // Load the overlay resource mappings from the file specified using android:resourcesMap.
-  auto file_path = String8(String16(file_path16));
-  auto asset = asset_manager.OpenNonAsset(file_path.c_str(), Asset::AccessMode::ACCESS_BUFFER);
+  auto asset = asset_manager.OpenNonAsset(file->c_str(), Asset::AccessMode::ACCESS_BUFFER);
   if (asset == nullptr) {
-    return Error("file \"%s\" not found", file_path.c_str());
+    return Error("file \"%s\" not found", file->c_str());
   }
 
   return asset;
@@ -190,16 +183,20 @@ Result<ResourceMapping> ResourceMapping::CreateResourceMapping(const AssetManage
       return Error(R"(<item> tag missing expected attribute "value")");
     }
 
-    ResourceId target_id =
-        target_am->GetResourceId(*target_resource, "", target_package->GetPackageName());
-    if (target_id == 0U) {
+    auto target_id_result = target_am->GetResourceId(*target_resource, "",
+                                                     target_package->GetPackageName());
+    if (UNLIKELY(!target_id_result.has_error())) {
+       return Error("failed to find target resource id: %s", target_id_result.error());
+    }
+
+    if (!target_id_result.has_nothing()) {
       log_info.Warning(LogMessage() << "failed to find resource \"" << *target_resource
                                     << "\" in target resources");
       continue;
     }
 
     // Retrieve the compile-time resource id of the target resource.
-    target_id = REWRITE_PACKAGE(target_id, target_package_id);
+    uint32_t target_id = REWRITE_PACKAGE(*target_id_result, target_package_id);
 
     if (overlay_resource->dataType == Res_value::TYPE_STRING) {
       overlay_resource->data += string_pool_offset;
@@ -234,13 +231,17 @@ Result<ResourceMapping> ResourceMapping::CreateResourceMappingLegacy(
     // Find the resource with the same type and entry name within the target package.
     const std::string full_name =
         base::StringPrintf("%s:%s", target_package->GetPackageName().c_str(), name->c_str());
-    ResourceId target_resource = target_am->GetResourceId(full_name);
-    if (target_resource == 0U) {
+    auto target_resource_result = target_am->GetResourceId(full_name);
+    if (target_resource_result.has_error()) {
+      return Error("failed to find target resource id: %s", target_resource_result.error());
+    }
+
+    if (target_resource_result.has_nothing()) {
       continue;
     }
 
     // Retrieve the compile-time resource id of the target resource.
-    target_resource = REWRITE_PACKAGE(target_resource, target_package_id);
+    ResourceId target_resource = REWRITE_PACKAGE(*target_resource_result, target_package_id);
     resource_mapping.AddMapping(target_resource, overlay_resid,
                                 false /* rewrite_overlay_reference */);
   }
@@ -347,7 +348,9 @@ Result<ResourceMapping> ResourceMapping::FromApkAssets(const ApkAssets& target_a
     auto& string_pool = (*parser)->get_strings();
     string_pool_data_length = string_pool.bytes();
     string_pool_data.reset(new uint8_t[string_pool_data_length]);
-    memcpy(string_pool_data.get(), string_pool.data(), string_pool_data_length);
+
+    // Overlays should not be incrementally installed, so calling unsafe is fine here.
+    memcpy(string_pool_data.get(), string_pool.data().unsafe(), string_pool_data_length);
 
     // Offset string indices by the size of the overlay resource table string pool.
     string_pool_offset = overlay_arsc->GetStringPool()->size();

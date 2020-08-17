@@ -298,7 +298,7 @@ Asset::Asset(void)
 /*
  * Create a new Asset from a memory mapping.
  */
-/*static*/ Asset* Asset::createFromUncompressedMap(FileMap* dataMap, AccessMode mode)
+/*static*/ Asset* Asset::createFromUncompressedMap(incfs::IncFsFileMap* dataMap, AccessMode mode)
 {
     _FileAsset* pAsset;
     status_t result;
@@ -314,8 +314,8 @@ Asset::Asset(void)
     return pAsset;
 }
 
-/*static*/ std::unique_ptr<Asset> Asset::createFromUncompressedMap(std::unique_ptr<FileMap> dataMap,
-    base::unique_fd fd, AccessMode mode)
+/*static*/ std::unique_ptr<Asset> Asset::createFromUncompressedMap(
+    std::unique_ptr<incfs::IncFsFileMap> dataMap, base::unique_fd fd, AccessMode mode)
 {
     std::unique_ptr<_FileAsset> pAsset = util::make_unique<_FileAsset>();
 
@@ -333,8 +333,9 @@ Asset::Asset(void)
 /*
  * Create a new Asset from compressed data in a memory mapping.
  */
-/*static*/ Asset* Asset::createFromCompressedMap(FileMap* dataMap,
-    size_t uncompressedLen, AccessMode mode)
+/*static*/ Asset* Asset::createFromCompressedMap(incfs::IncFsFileMap* dataMap,
+                                                 size_t uncompressedLen,
+                                                 AccessMode mode)
 {
     _CompressedAsset* pAsset;
     status_t result;
@@ -350,8 +351,8 @@ Asset::Asset(void)
     return pAsset;
 }
 
-/*static*/ std::unique_ptr<Asset> Asset::createFromCompressedMap(std::unique_ptr<FileMap> dataMap,
-    size_t uncompressedLen, AccessMode mode)
+/*static*/ std::unique_ptr<Asset> Asset::createFromCompressedMap(
+    std::unique_ptr<incfs::IncFsFileMap> dataMap, size_t uncompressedLen, AccessMode mode)
 {
   std::unique_ptr<_CompressedAsset> pAsset = util::make_unique<_CompressedAsset>();
 
@@ -484,7 +485,7 @@ status_t _FileAsset::openChunk(const char* fileName, int fd, off64_t offset, siz
 /*
  * Create the chunk from the map.
  */
-status_t _FileAsset::openChunk(FileMap* dataMap, base::unique_fd fd)
+status_t _FileAsset::openChunk(incfs::IncFsFileMap* dataMap, base::unique_fd fd)
 {
     assert(mFp == NULL);    // no reopen
     assert(mMap == NULL);
@@ -492,7 +493,7 @@ status_t _FileAsset::openChunk(FileMap* dataMap, base::unique_fd fd)
 
     mMap = dataMap;
     mStart = -1;            // not used
-    mLength = dataMap->getDataLength();
+    mLength = dataMap->length();
     mFd = std::move(fd);
     assert(mOffset == 0);
 
@@ -531,7 +532,12 @@ ssize_t _FileAsset::read(void* buf, size_t count)
     if (mMap != NULL) {
         /* copy from mapped area */
         //printf("map read\n");
-        memcpy(buf, (char*)mMap->getDataPtr() + mOffset, count);
+        const auto readPos = mMap->data().offset<char>(mOffset);
+        if (!readPos.verify(count)) {
+            return -1;
+        }
+
+        memcpy(buf, readPos.unsafe(), count);
         actual = count;
     } else if (mBuf != NULL) {
         /* copy from buffer */
@@ -626,12 +632,17 @@ void _FileAsset::close(void)
  */
 const void* _FileAsset::getBuffer(bool wordAligned)
 {
+    return getIncFsBuffer(wordAligned).unsafe();
+}
+
+incfs::map_ptr<void> _FileAsset::getIncFsBuffer(bool wordAligned)
+{
     /* subsequent requests just use what we did previously */
     if (mBuf != NULL)
         return mBuf;
     if (mMap != NULL) {
         if (!wordAligned) {
-            return  mMap->getDataPtr();
+            return mMap->data();
         }
         return ensureAlignment(mMap);
     }
@@ -671,10 +682,10 @@ const void* _FileAsset::getBuffer(bool wordAligned)
         mBuf = buf;
         return mBuf;
     } else {
-        FileMap* map;
+        incfs::IncFsFileMap* map;
 
-        map = new FileMap;
-        if (!map->create(NULL, fileno(mFp), mStart, mLength, true)) {
+        map = new incfs::IncFsFileMap;
+        if (!map->Create(fileno(mFp), mStart, mLength, NULL /* file_name */ )) {
             delete map;
             return NULL;
         }
@@ -683,7 +694,7 @@ const void* _FileAsset::getBuffer(bool wordAligned)
 
         mMap = map;
         if (!wordAligned) {
-            return  mMap->getDataPtr();
+            return mMap->data();
         }
         return ensureAlignment(mMap);
     }
@@ -693,25 +704,25 @@ int _FileAsset::openFileDescriptor(off64_t* outStart, off64_t* outLength) const
 {
     if (mMap != NULL) {
         if (mFd.ok()) {
-          *outStart = mMap->getDataOffset();
-          *outLength = mMap->getDataLength();
-          const int fd = dup(mFd);
-          if (fd < 0) {
-            ALOGE("Unable to dup fd (%d).", mFd.get());
-            return -1;
-          }
-          lseek64(fd, 0, SEEK_SET);
-          return fd;
+            *outStart = mMap->offset();
+            *outLength = mMap->length();
+            const int fd = dup(mFd);
+            if (fd < 0) {
+                ALOGE("Unable to dup fd (%d).", mFd.get());
+                return -1;
+            }
+            lseek64(fd, 0, SEEK_SET);
+            return fd;
         }
-        const char* fname = mMap->getFileName();
+        const char* fname = mMap->file_name();
         if (fname == NULL) {
             fname = mFileName;
         }
         if (fname == NULL) {
             return -1;
         }
-        *outStart = mMap->getDataOffset();
-        *outLength = mMap->getDataLength();
+        *outStart = mMap->offset();
+        *outLength = mMap->length();
         return open(fname, O_RDONLY | O_BINARY);
     }
     if (mFileName == NULL) {
@@ -722,16 +733,21 @@ int _FileAsset::openFileDescriptor(off64_t* outStart, off64_t* outLength) const
     return open(mFileName, O_RDONLY | O_BINARY);
 }
 
-const void* _FileAsset::ensureAlignment(FileMap* map)
+incfs::map_ptr<void> _FileAsset::ensureAlignment(incfs::IncFsFileMap* map)
 {
-    void* data = map->getDataPtr();
-    if ((((size_t)data)&0x3) == 0) {
+    const auto data = map->data<char>();
+    if ((((size_t)data.unsafe())&0x3U) == 0) {
         // We can return this directly if it is aligned on a word
         // boundary.
         ALOGV("Returning aligned FileAsset %p (%s).", this,
                 getAssetSource());
         return data;
     }
+
+     if (!data.verify(mLength)) {
+        return NULL;
+    }
+
     // If not aligned on a word boundary, then we need to copy it into
     // our own buffer.
     ALOGV("Copying FileAsset %p (%s) to buffer size %d to make it aligned.", this,
@@ -741,7 +757,8 @@ const void* _FileAsset::ensureAlignment(FileMap* map)
         ALOGE("alloc of %ld bytes failed\n", (long) mLength);
         return NULL;
     }
-    memcpy(buf, data, mLength);
+
+    memcpy(buf, data.unsafe(), mLength);
     mBuf = buf;
     return buf;
 }
@@ -815,7 +832,7 @@ status_t _CompressedAsset::openChunk(int fd, off64_t offset,
  *
  * Nothing is expanded until the first read call.
  */
-status_t _CompressedAsset::openChunk(FileMap* dataMap, size_t uncompressedLen)
+status_t _CompressedAsset::openChunk(incfs::IncFsFileMap* dataMap, size_t uncompressedLen)
 {
     assert(mFd < 0);        // no re-open
     assert(mMap == NULL);
@@ -823,7 +840,7 @@ status_t _CompressedAsset::openChunk(FileMap* dataMap, size_t uncompressedLen)
 
     mMap = dataMap;
     mStart = -1;        // not used
-    mCompressedLen = dataMap->getDataLength();
+    mCompressedLen = dataMap->length();
     mUncompressedLen = uncompressedLen;
     assert(mOffset == 0);
 
@@ -941,7 +958,7 @@ const void* _CompressedAsset::getBuffer(bool)
     }
 
     if (mMap != NULL) {
-        if (!ZipUtils::inflateToBuffer(mMap->getDataPtr(), buf,
+        if (!ZipUtils::inflateToBuffer(mMap->data(), buf,
                 mUncompressedLen, mCompressedLen))
             goto bail;
     } else {
@@ -976,3 +993,6 @@ bail:
     return mBuf;
 }
 
+incfs::map_ptr<void> _CompressedAsset::getIncFsBuffer(bool wordAligned) {
+    return incfs::map_ptr<void>(getBuffer(wordAligned));
+}

@@ -114,101 +114,27 @@ constexpr inline static ApkAssetsCookie JavaCookieToApkAssetsCookie(jint cookie)
   return cookie > 0 ? static_cast<ApkAssetsCookie>(cookie - 1) : kInvalidCookie;
 }
 
-static jobjectArray NativeCreateIdmapsForStaticOverlaysTargetingAndroid(JNIEnv* env,
-                                                                        jclass /*clazz*/) {
-  // --input-directory can be given multiple times, but idmap2 expects the directory to exist
-  std::vector<std::string> input_dirs;
-  struct stat st;
-  if (stat(AssetManager::VENDOR_OVERLAY_DIR, &st) == 0) {
-    input_dirs.push_back(AssetManager::VENDOR_OVERLAY_DIR);
-  }
+constexpr const char* kResourcesNotFound = "android/content/res/Resources/NotFoundException";
 
-  if (stat(AssetManager::PRODUCT_OVERLAY_DIR, &st) == 0) {
-    input_dirs.push_back(AssetManager::PRODUCT_OVERLAY_DIR);
-  }
-
-  if (stat(AssetManager::SYSTEM_EXT_OVERLAY_DIR, &st) == 0) {
-    input_dirs.push_back(AssetManager::SYSTEM_EXT_OVERLAY_DIR);
-  }
-
-  if (stat(AssetManager::ODM_OVERLAY_DIR, &st) == 0) {
-    input_dirs.push_back(AssetManager::ODM_OVERLAY_DIR);
-  }
-
-  if (stat(AssetManager::OEM_OVERLAY_DIR, &st) == 0) {
-    input_dirs.push_back(AssetManager::OEM_OVERLAY_DIR);
-  }
-
-  if (input_dirs.empty()) {
-    LOG(WARNING) << "no directories for idmap2 to scan";
-    return env->NewObjectArray(0, g_stringClass, nullptr);
-  }
-
-  if (access("/system/bin/idmap2", X_OK) == -1) {
-    PLOG(WARNING) << "unable to execute idmap2";
-    return nullptr;
-  }
-
-  std::vector<std::string> argv{"/system/bin/idmap2",
-    "scan",
-    "--recursive",
-    "--target-package-name", "android",
-    "--target-apk-path", "/system/framework/framework-res.apk",
-    "--output-directory", "/data/resource-cache"};
-
-  for (const auto& dir : input_dirs) {
-    argv.push_back("--input-directory");
-    argv.push_back(dir);
-  }
-
-  const auto result = ExecuteBinary(argv);
-
-  if (!result) {
-      LOG(ERROR) << "failed to execute idmap2";
-      return nullptr;
-  }
-
-  if (result->status != 0) {
-    LOG(ERROR) << "idmap2: " << result->stderr;
-    return nullptr;
-  }
-
-  std::vector<std::string> idmap_paths;
-  std::istringstream input(result->stdout);
-  std::string path;
-  while (std::getline(input, path)) {
-    idmap_paths.push_back(path);
-  }
-
-  jobjectArray array = env->NewObjectArray(idmap_paths.size(), g_stringClass, nullptr);
-  if (array == nullptr) {
-    return nullptr;
-  }
-  for (size_t i = 0; i < idmap_paths.size(); i++) {
-    const std::string path = idmap_paths[i];
-    jstring java_string = env->NewStringUTF(path.c_str());
-    if (env->ExceptionCheck()) {
-      return nullptr;
-    }
-    env->SetObjectArrayElement(array, i, java_string);
-    env->DeleteLocalRef(java_string);
-  }
-  return array;
-}
-
-static jint CopyValue(JNIEnv* env, ApkAssetsCookie cookie, const Res_value& value, uint32_t ref,
-                      uint32_t type_spec_flags, ResTable_config* config, jobject out_typed_value) {
-  env->SetIntField(out_typed_value, gTypedValueOffsets.mType, value.dataType);
+static jint CopyValue(JNIEnv* env, const AssetManager2::SelectedValue& value,
+                      jobject out_typed_value) {
+  env->SetIntField(out_typed_value, gTypedValueOffsets.mType, value.type);
   env->SetIntField(out_typed_value, gTypedValueOffsets.mAssetCookie,
-                   ApkAssetsCookieToJavaCookie(cookie));
+                   ApkAssetsCookieToJavaCookie(value.cookie));
   env->SetIntField(out_typed_value, gTypedValueOffsets.mData, value.data);
   env->SetObjectField(out_typed_value, gTypedValueOffsets.mString, nullptr);
-  env->SetIntField(out_typed_value, gTypedValueOffsets.mResourceId, ref);
-  env->SetIntField(out_typed_value, gTypedValueOffsets.mChangingConfigurations, type_spec_flags);
-  if (config != nullptr) {
-    env->SetIntField(out_typed_value, gTypedValueOffsets.mDensity, config->density);
+  env->SetIntField(out_typed_value, gTypedValueOffsets.mResourceId, value.resid);
+  env->SetIntField(out_typed_value, gTypedValueOffsets.mChangingConfigurations, value.flags);
+  env->SetIntField(out_typed_value, gTypedValueOffsets.mDensity, value.config.density);
+  return static_cast<jint>(ApkAssetsCookieToJavaCookie(value.cookie));
+}
+
+template <typename T>
+static void ThrowIfHasError(JNIEnv* env, const util::OptionalResult<T>& error,
+                            const char* class_name) {
+  if (UNLIKELY(error.has_error())) {
+    jniThrowException(env, class_name, error.error());
   }
-  return static_cast<jint>(ApkAssetsCookieToJavaCookie(cookie));
 }
 
 // ----------------------------------------------------------------------------
@@ -653,16 +579,20 @@ static jlong NativeOpenXmlAsset(JNIEnv* env, jobject /*clazz*/, jlong ptr, jint 
     return 0;
   }
 
-  // May be nullptr.
-  std::shared_ptr<const DynamicRefTable> dynamic_ref_table =
-      assetmanager->GetDynamicRefTableForCookie(cookie);
+  const incfs::map_ptr<void> buffer = asset->getIncFsBuffer(true /* wordAligned */);
+  const size_t length = asset->getLength();
+  if (!buffer.verify<uint8_t>(length)) {
+    asset.reset();
+    jniThrowException(env, kResourcesNotFound, kResourcesTableIncomplete);
+    return 0;
+  }
 
-  std::unique_ptr<ResXMLTree> xml_tree = util::make_unique<ResXMLTree>(
-      std::move(dynamic_ref_table));
-  status_t err = xml_tree->setTo(asset->getBuffer(true), asset->getLength(), true);
+  auto xml_tree = util::make_unique<ResXMLTree>(assetmanager->GetDynamicRefTableForCookie(cookie));
+  status_t err = xml_tree->setTo(buffer.unsafe(), length, true);
   asset.reset();
 
   if (err != NO_ERROR) {
+    xml_tree.reset();
     jniThrowException(env, "java/io/FileNotFoundException", "Corrupt XML binary file");
     return 0;
   }
@@ -690,16 +620,20 @@ static jlong NativeOpenXmlAssetFd(JNIEnv* env, jobject /*clazz*/, jlong ptr, int
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
   ApkAssetsCookie cookie = JavaCookieToApkAssetsCookie(jcookie);
 
-  // May be nullptr.
-   std::shared_ptr<const DynamicRefTable> dynamic_ref_table =
-       assetmanager->GetDynamicRefTableForCookie(cookie);
+  const incfs::map_ptr<void> buffer = asset->getIncFsBuffer(true /* wordAligned */);
+  const size_t length = asset->getLength();
+  if (!buffer.verify<uint8_t>(length)) {
+    asset.reset();
+    jniThrowException(env, kResourcesNotFound, kResourcesTableIncomplete);
+    return 0;
+  }
 
-  std::unique_ptr<ResXMLTree> xml_tree = util::make_unique<ResXMLTree>(
-      std::move(dynamic_ref_table));
-  status_t err = xml_tree->setTo(asset->getBuffer(true), asset->getLength(), true);
+  auto xml_tree = util::make_unique<ResXMLTree>(assetmanager->GetDynamicRefTableForCookie(cookie));
+  status_t err = xml_tree->setTo(buffer.unsafe(), length, true);
   asset.reset();
 
   if (err != NO_ERROR) {
+    xml_tree.reset();
     jniThrowException(env, "java/io/FileNotFoundException", "Corrupt XML binary file");
     return 0;
   }
@@ -710,74 +644,70 @@ static jint NativeGetResourceValue(JNIEnv* env, jclass /*clazz*/, jlong ptr, jin
                                    jshort density, jobject typed_value,
                                    jboolean resolve_references) {
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  Res_value value;
-  ResTable_config selected_config;
-  uint32_t flags;
-  ApkAssetsCookie cookie =
-      assetmanager->GetResource(static_cast<uint32_t>(resid), false /*may_be_bag*/,
-                                static_cast<uint16_t>(density), &value, &selected_config, &flags);
-  if (cookie == kInvalidCookie) {
+  auto value = assetmanager->GetResource(static_cast<uint32_t>(resid), false /*may_be_bag*/,
+                                         static_cast<uint16_t>(density));
+  if (!value.has_value()) {
+    ThrowIfHasError(env, value, kResourcesNotFound);
     return ApkAssetsCookieToJavaCookie(kInvalidCookie);
   }
 
-  uint32_t ref = static_cast<uint32_t>(resid);
   if (resolve_references) {
-    cookie = assetmanager->ResolveReference(cookie, &value, &selected_config, &flags, &ref);
-    if (cookie == kInvalidCookie) {
+    auto result = assetmanager->ResolveReference(value.value());
+    if (!result.has_value()) {
+      ThrowIfHasError(env, result, kResourcesNotFound);
       return ApkAssetsCookieToJavaCookie(kInvalidCookie);
     }
   }
-  return CopyValue(env, cookie, value, ref, flags, &selected_config, typed_value);
+  return CopyValue(env, *value, typed_value);
 }
 
 static jint NativeGetResourceBagValue(JNIEnv* env, jclass /*clazz*/, jlong ptr, jint resid,
                                       jint bag_entry_id, jobject typed_value) {
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  const ResolvedBag* bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
-  if (bag == nullptr) {
+  auto bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
+  if (!bag.has_value()) {
+    ThrowIfHasError(env, bag, kResourcesNotFound);
     return ApkAssetsCookieToJavaCookie(kInvalidCookie);
   }
 
-  uint32_t type_spec_flags = bag->type_spec_flags;
-  ApkAssetsCookie cookie = kInvalidCookie;
-  const Res_value* bag_value = nullptr;
-  for (const ResolvedBag::Entry& entry : bag) {
-    if (entry.key == static_cast<uint32_t>(bag_entry_id)) {
-      cookie = entry.cookie;
-      bag_value = &entry.value;
+  // The legacy would find the last entry with the target bag entry id
+  using reverse_bag_iterator = std::reverse_iterator<const ResolvedBag::Entry*>;
+  const auto bag_iter_begin = reverse_bag_iterator(end(*bag));
+  const auto bag_iter_end = reverse_bag_iterator(begin(*bag));
+  auto entry = std::find_if(bag_iter_begin, bag_iter_end,
+                            [&bag_entry_id](const ResolvedBag::Entry& e) {
+    return e.key == static_cast<uint32_t>(bag_entry_id);
+  });
 
-      // Keep searching (the old implementation did that).
-    }
-  }
-
-  if (cookie == kInvalidCookie) {
+  if (entry == bag_iter_end) {
     return ApkAssetsCookieToJavaCookie(kInvalidCookie);
   }
 
-  Res_value value = *bag_value;
-  uint32_t ref = static_cast<uint32_t>(resid);
-  ResTable_config selected_config;
-  cookie = assetmanager->ResolveReference(cookie, &value, &selected_config, &type_spec_flags, &ref);
-  if (cookie == kInvalidCookie) {
+  AssetManager2::SelectedValue attr_value(*bag, *entry);
+  auto result = assetmanager->ResolveReference(attr_value);
+  if (!result.has_value()) {
+    ThrowIfHasError(env, result, kResourcesNotFound);
     return ApkAssetsCookieToJavaCookie(kInvalidCookie);
   }
-  return CopyValue(env, cookie, value, ref, type_spec_flags, nullptr, typed_value);
+
+  return CopyValue(env, attr_value, typed_value);
 }
 
 static jintArray NativeGetStyleAttributes(JNIEnv* env, jclass /*clazz*/, jlong ptr, jint resid) {
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  const ResolvedBag* bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
-  if (bag == nullptr) {
+  auto bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
+  if (!bag.has_value()) {
+    ThrowIfHasError(env, bag, kResourcesNotFound);
     return nullptr;
   }
 
-  jintArray array = env->NewIntArray(bag->entry_count);
+  jintArray array = env->NewIntArray((*bag)->entry_count);
   if (env->ExceptionCheck()) {
     return nullptr;
   }
 
-  for (uint32_t i = 0; i < bag->entry_count; i++) {
-    jint attr_resid = bag->entries[i].key;
+  for (uint32_t i = 0; i < (*bag)->entry_count; i++) {
+    jint attr_resid = (*bag)->entries[i].key;
     env->SetIntArrayRegion(array, i, 1, &attr_resid);
   }
   return array;
@@ -786,42 +716,48 @@ static jintArray NativeGetStyleAttributes(JNIEnv* env, jclass /*clazz*/, jlong p
 static jobjectArray NativeGetResourceStringArray(JNIEnv* env, jclass /*clazz*/, jlong ptr,
                                                  jint resid) {
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  const ResolvedBag* bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
-  if (bag == nullptr) {
+  auto bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
+  if (!bag.has_value()) {
+    ThrowIfHasError(env, bag, kResourcesNotFound);
     return nullptr;
   }
 
-  jobjectArray array = env->NewObjectArray(bag->entry_count, g_stringClass, nullptr);
+  jobjectArray array = env->NewObjectArray((*bag)->entry_count, g_stringClass, nullptr);
   if (array == nullptr) {
     return nullptr;
   }
 
-  for (uint32_t i = 0; i < bag->entry_count; i++) {
-    const ResolvedBag::Entry& entry = bag->entries[i];
-
+  for (uint32_t i = 0; i < (*bag)->entry_count; i++) {
     // Resolve any references to their final value.
-    Res_value value = entry.value;
-    ResTable_config selected_config;
-    uint32_t flags;
-    uint32_t ref;
-    ApkAssetsCookie cookie =
-        assetmanager->ResolveReference(entry.cookie, &value, &selected_config, &flags, &ref);
-    if (cookie == kInvalidCookie) {
+    AssetManager2::SelectedValue attr_value(*bag, (*bag)->entries[i]);
+    auto result = assetmanager->ResolveReference(attr_value);
+    if (!result.has_value()) {
+      ThrowIfHasError(env, result, kResourcesNotFound);
       return nullptr;
     }
 
-    if (value.dataType == Res_value::TYPE_STRING) {
-      const ApkAssets* apk_assets = assetmanager->GetApkAssets()[cookie];
+    if (attr_value.type == Res_value::TYPE_STRING) {
+      const ApkAssets* apk_assets = assetmanager->GetApkAssets()[attr_value.cookie];
       const ResStringPool* pool = apk_assets->GetLoadedArsc()->GetStringPool();
 
       jstring java_string = nullptr;
-      size_t str_len;
-      const char* str_utf8 = pool->string8At(value.data, &str_len);
-      if (str_utf8 != nullptr) {
-        java_string = env->NewStringUTF(str_utf8);
+      util::OptionalResult<StringPiece> str_utf8 = pool->string8At(attr_value.data);
+      if (UNLIKELY(str_utf8.has_error())) {
+         jniThrowException(env, kResourcesNotFound, str_utf8.error());
+         return nullptr;
+      }
+
+      if (str_utf8.has_value()) {
+        java_string = env->NewStringUTF(str_utf8->data());
       } else {
-        const char16_t* str_utf16 = pool->stringAt(value.data, &str_len);
-        java_string = env->NewString(reinterpret_cast<const jchar*>(str_utf16), str_len);
+        util::OptionalResult<StringPiece16> str_utf16 = pool->stringAt(attr_value.data);
+        if (UNLIKELY(!str_utf16.has_value())) {
+          ThrowIfHasError(env, str_utf16, kResourcesNotFound);
+          return nullptr;
+        }
+
+        java_string = env->NewString(reinterpret_cast<const jchar*>(str_utf16->data()),
+                                     str_utf16->size());
       }
 
       // Check for errors creating the strings (if malformed or no memory).
@@ -842,12 +778,13 @@ static jobjectArray NativeGetResourceStringArray(JNIEnv* env, jclass /*clazz*/, 
 static jintArray NativeGetResourceStringArrayInfo(JNIEnv* env, jclass /*clazz*/, jlong ptr,
                                                   jint resid) {
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  const ResolvedBag* bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
-  if (bag == nullptr) {
+  auto bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
+  if (!bag.has_value()) {
+    ThrowIfHasError(env, bag, kResourcesNotFound);
     return nullptr;
   }
 
-  jintArray array = env->NewIntArray(bag->entry_count * 2);
+  jintArray array = env->NewIntArray((*bag)->entry_count * 2);
   if (array == nullptr) {
     return nullptr;
   }
@@ -857,25 +794,21 @@ static jintArray NativeGetResourceStringArrayInfo(JNIEnv* env, jclass /*clazz*/,
     return nullptr;
   }
 
-  for (size_t i = 0; i < bag->entry_count; i++) {
-    const ResolvedBag::Entry& entry = bag->entries[i];
-    Res_value value = entry.value;
-    ResTable_config selected_config;
-    uint32_t flags;
-    uint32_t ref;
-    ApkAssetsCookie cookie =
-        assetmanager->ResolveReference(entry.cookie, &value, &selected_config, &flags, &ref);
-    if (cookie == kInvalidCookie) {
+  for (size_t i = 0; i < (*bag)->entry_count; i++) {
+    AssetManager2::SelectedValue attr_value(*bag, (*bag)->entries[i]);
+    auto result = assetmanager->ResolveReference(attr_value);
+    if (!result.has_value()) {
       env->ReleasePrimitiveArrayCritical(array, buffer, JNI_ABORT);
+      ThrowIfHasError(env, result, kResourcesNotFound);
       return nullptr;
     }
 
     jint string_index = -1;
-    if (value.dataType == Res_value::TYPE_STRING) {
-      string_index = static_cast<jint>(value.data);
+    if (attr_value.type == Res_value::TYPE_STRING) {
+      string_index = static_cast<jint>(attr_value.data);
     }
 
-    buffer[i * 2] = ApkAssetsCookieToJavaCookie(cookie);
+    buffer[i * 2] = ApkAssetsCookieToJavaCookie(attr_value.cookie);
     buffer[(i * 2) + 1] = string_index;
   }
   env->ReleasePrimitiveArrayCritical(array, buffer, 0);
@@ -884,12 +817,13 @@ static jintArray NativeGetResourceStringArrayInfo(JNIEnv* env, jclass /*clazz*/,
 
 static jintArray NativeGetResourceIntArray(JNIEnv* env, jclass /*clazz*/, jlong ptr, jint resid) {
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  const ResolvedBag* bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
-  if (bag == nullptr) {
+  auto bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
+  if (!bag.has_value()) {
+    ThrowIfHasError(env, bag, "java/io/FileNotFoundException");
     return nullptr;
   }
 
-  jintArray array = env->NewIntArray(bag->entry_count);
+  jintArray array = env->NewIntArray((*bag)->entry_count);
   if (array == nullptr) {
     return nullptr;
   }
@@ -899,41 +833,41 @@ static jintArray NativeGetResourceIntArray(JNIEnv* env, jclass /*clazz*/, jlong 
     return nullptr;
   }
 
-  for (size_t i = 0; i < bag->entry_count; i++) {
-    const ResolvedBag::Entry& entry = bag->entries[i];
-    Res_value value = entry.value;
-    ResTable_config selected_config;
-    uint32_t flags;
-    uint32_t ref;
-    ApkAssetsCookie cookie =
-        assetmanager->ResolveReference(entry.cookie, &value, &selected_config, &flags, &ref);
-    if (cookie == kInvalidCookie) {
-      env->ReleasePrimitiveArrayCritical(array, buffer, JNI_ABORT);
+  for (size_t i = 0; i < (*bag)->entry_count; i++) {
+    AssetManager2::SelectedValue attr_value(*bag, (*bag)->entries[i]);
+    auto result = assetmanager->ResolveReference(attr_value);
+    if (!result.has_value()) {
+      env->ReleasePrimitiveArrayCritical(array, buffer, 0);
+      ThrowIfHasError(env, result, kResourcesNotFound);
       return nullptr;
     }
 
-    if (value.dataType >= Res_value::TYPE_FIRST_INT && value.dataType <= Res_value::TYPE_LAST_INT) {
-      buffer[i] = static_cast<jint>(value.data);
+    if (attr_value.type >= Res_value::TYPE_FIRST_INT &&
+        attr_value.type <= Res_value::TYPE_LAST_INT) {
+      buffer[i] = static_cast<jint>(attr_value.data);
     }
   }
   env->ReleasePrimitiveArrayCritical(array, buffer, 0);
   return array;
 }
 
-static jint NativeGetResourceArraySize(JNIEnv* /*env*/, jclass /*clazz*/, jlong ptr, jint resid) {
+static jint NativeGetResourceArraySize(JNIEnv* env, jclass /*clazz*/, jlong ptr, jint resid) {
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  const ResolvedBag* bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
-  if (bag == nullptr) {
+  auto bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
+  if (!bag.has_value()) {
+    ThrowIfHasError(env, bag, kResourcesNotFound);
     return -1;
   }
-  return static_cast<jint>(bag->entry_count);
+
+  return static_cast<jint>((*bag)->entry_count);
 }
 
 static jint NativeGetResourceArray(JNIEnv* env, jclass /*clazz*/, jlong ptr, jint resid,
                                    jintArray out_data) {
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  const ResolvedBag* bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
-  if (bag == nullptr) {
+  auto bag = assetmanager->GetBag(static_cast<uint32_t>(resid));
+  if (!bag.has_value()) {
+    ThrowIfHasError(env, bag, kResourcesNotFound);
     return -1;
   }
 
@@ -942,7 +876,7 @@ static jint NativeGetResourceArray(JNIEnv* env, jclass /*clazz*/, jlong ptr, jin
     return -1;
   }
 
-  if (static_cast<jsize>(bag->entry_count) > out_data_length * STYLE_NUM_ENTRIES) {
+  if (static_cast<jsize>((*bag)->entry_count) > out_data_length * STYLE_NUM_ENTRIES) {
     jniThrowException(env, "java/lang/IllegalArgumentException", "Input array is not large enough");
     return -1;
   }
@@ -953,36 +887,31 @@ static jint NativeGetResourceArray(JNIEnv* env, jclass /*clazz*/, jlong ptr, jin
   }
 
   jint* cursor = buffer;
-  for (size_t i = 0; i < bag->entry_count; i++) {
-    const ResolvedBag::Entry& entry = bag->entries[i];
-    Res_value value = entry.value;
-    ResTable_config selected_config;
-    selected_config.density = 0;
-    uint32_t flags = bag->type_spec_flags;
-    uint32_t ref = 0;
-    ApkAssetsCookie cookie =
-        assetmanager->ResolveReference(entry.cookie, &value, &selected_config, &flags, &ref);
-    if (cookie == kInvalidCookie) {
+  for (size_t i = 0; i < (*bag)->entry_count; i++) {
+    AssetManager2::SelectedValue attr_value(*bag, (*bag)->entries[i]);
+    auto result = assetmanager->ResolveReference(attr_value);
+    if (!result.has_value()) {
       env->ReleasePrimitiveArrayCritical(out_data, buffer, JNI_ABORT);
+      ThrowIfHasError(env, result, kResourcesNotFound);
       return -1;
     }
 
     // Deal with the special @null value -- it turns back to TYPE_NULL.
-    if (value.dataType == Res_value::TYPE_REFERENCE && value.data == 0) {
-      value.dataType = Res_value::TYPE_NULL;
-      value.data = Res_value::DATA_NULL_UNDEFINED;
+    if (attr_value.type == Res_value::TYPE_REFERENCE && attr_value.data == 0) {
+      attr_value.type = Res_value::TYPE_NULL;
+      attr_value.data = Res_value::DATA_NULL_UNDEFINED;
     }
 
-    cursor[STYLE_TYPE] = static_cast<jint>(value.dataType);
-    cursor[STYLE_DATA] = static_cast<jint>(value.data);
-    cursor[STYLE_ASSET_COOKIE] = ApkAssetsCookieToJavaCookie(cookie);
-    cursor[STYLE_RESOURCE_ID] = static_cast<jint>(ref);
-    cursor[STYLE_CHANGING_CONFIGURATIONS] = static_cast<jint>(flags);
-    cursor[STYLE_DENSITY] = static_cast<jint>(selected_config.density);
+    cursor[STYLE_TYPE] = static_cast<jint>(attr_value.type);
+    cursor[STYLE_DATA] = static_cast<jint>(attr_value.data);
+    cursor[STYLE_ASSET_COOKIE] = ApkAssetsCookieToJavaCookie(attr_value.cookie);
+    cursor[STYLE_RESOURCE_ID] = static_cast<jint>(attr_value.resid);
+    cursor[STYLE_CHANGING_CONFIGURATIONS] = static_cast<jint>(attr_value.flags);
+    cursor[STYLE_DENSITY] = static_cast<jint>(attr_value.config.density);
     cursor += STYLE_NUM_ENTRIES;
   }
   env->ReleasePrimitiveArrayCritical(out_data, buffer, 0);
-  return static_cast<jint>(bag->entry_count);
+  return static_cast<jint>((*bag)->entry_count);
 }
 
 static jint NativeGetResourceIdentifier(JNIEnv* env, jclass /*clazz*/, jlong ptr, jstring name,
@@ -1006,60 +935,71 @@ static jint NativeGetResourceIdentifier(JNIEnv* env, jclass /*clazz*/, jlong ptr
     CHECK(package_utf8.c_str() != nullptr);
     package = package_utf8.c_str();
   }
+
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  return static_cast<jint>(assetmanager->GetResourceId(name_utf8.c_str(), type, package));
+  auto resid = assetmanager->GetResourceId(name_utf8.c_str(), type, package);
+  if (!resid.has_value()) {
+    ThrowIfHasError(env, resid, kResourcesNotFound);
+    return 0;
+  }
+
+  return static_cast<jint>(*resid);
 }
 
 static jstring NativeGetResourceName(JNIEnv* env, jclass /*clazz*/, jlong ptr, jint resid) {
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  AssetManager2::ResourceName name;
-  if (!assetmanager->GetResourceName(static_cast<uint32_t>(resid), &name)) {
+  auto name = assetmanager->GetResourceName(static_cast<uint32_t>(resid));
+  if (!name.has_value()) {
+    ThrowIfHasError(env, name, kResourcesNotFound);
     return nullptr;
   }
 
-  std::string result = ToFormattedResourceString(&name);
+  const std::string result = ToFormattedResourceString(name.value());
   return env->NewStringUTF(result.c_str());
 }
 
 static jstring NativeGetResourcePackageName(JNIEnv* env, jclass /*clazz*/, jlong ptr, jint resid) {
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  AssetManager2::ResourceName name;
-  if (!assetmanager->GetResourceName(static_cast<uint32_t>(resid), &name)) {
+  auto name = assetmanager->GetResourceName(static_cast<uint32_t>(resid));
+  if (!name.has_value()) {
+    ThrowIfHasError(env, name, kResourcesNotFound);
     return nullptr;
   }
 
-  if (name.package != nullptr) {
-    return env->NewStringUTF(name.package);
+  if (name->package != nullptr) {
+    return env->NewStringUTF(name->package);
   }
   return nullptr;
 }
 
 static jstring NativeGetResourceTypeName(JNIEnv* env, jclass /*clazz*/, jlong ptr, jint resid) {
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  AssetManager2::ResourceName name;
-  if (!assetmanager->GetResourceName(static_cast<uint32_t>(resid), &name)) {
+  auto name = assetmanager->GetResourceName(static_cast<uint32_t>(resid));
+  if (!name.has_value()) {
+    ThrowIfHasError(env, name, kResourcesNotFound);
     return nullptr;
   }
 
-  if (name.type != nullptr) {
-    return env->NewStringUTF(name.type);
-  } else if (name.type16 != nullptr) {
-    return env->NewString(reinterpret_cast<const jchar*>(name.type16), name.type_len);
+  if (name->type != nullptr) {
+    return env->NewStringUTF(name->type);
+  } else if (name->type16 != nullptr) {
+    return env->NewString(reinterpret_cast<const jchar*>(name->type16), name->type_len);
   }
   return nullptr;
 }
 
 static jstring NativeGetResourceEntryName(JNIEnv* env, jclass /*clazz*/, jlong ptr, jint resid) {
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  AssetManager2::ResourceName name;
-  if (!assetmanager->GetResourceName(static_cast<uint32_t>(resid), &name)) {
+  auto name = assetmanager->GetResourceName(static_cast<uint32_t>(resid));
+  if (!name.has_value()) {
+    ThrowIfHasError(env, name, kResourcesNotFound);
     return nullptr;
   }
 
-  if (name.entry != nullptr) {
-    return env->NewStringUTF(name.entry);
-  } else if (name.entry16 != nullptr) {
-    return env->NewString(reinterpret_cast<const jchar*>(name.entry16), name.entry_len);
+  if (name->entry != nullptr) {
+    return env->NewStringUTF(name->entry);
+  } else if (name->entry16 != nullptr) {
+    return env->NewString(reinterpret_cast<const jchar*>(name->entry16), name->entry_len);
   }
   return nullptr;
 }
@@ -1123,17 +1063,21 @@ static jobject ConstructConfigurationObject(JNIEnv* env, const ResTable_config& 
 
 static jobjectArray NativeGetSizeConfigurations(JNIEnv* env, jclass /*clazz*/, jlong ptr) {
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
-  std::set<ResTable_config> configurations =
-      assetmanager->GetResourceConfigurations(true /*exclude_system*/, false /*exclude_mipmap*/);
+  auto configurations = assetmanager->GetResourceConfigurations(true /*exclude_system*/,
+                                                                false /*exclude_mipmap*/);
+  if (!configurations) {
+    jniThrowException(env, "java/lang/IllegalArgumentException", configurations.error());
+    return nullptr;
+  }
 
   jobjectArray array =
-      env->NewObjectArray(configurations.size(), gConfigurationOffsets.classObject, nullptr);
+      env->NewObjectArray(configurations->size(), gConfigurationOffsets.classObject, nullptr);
   if (array == nullptr) {
     return nullptr;
   }
 
   size_t idx = 0;
-  for (const ResTable_config& configuration : configurations) {
+  for (const ResTable_config& configuration : *configurations) {
     jobject java_configuration = ConstructConfigurationObject(env, configuration);
     if (java_configuration == nullptr) {
       return nullptr;
@@ -1156,13 +1100,10 @@ static jintArray NativeAttributeResolutionStack(
   (void) assetmanager;
 
   // Load default style from attribute, if specified...
-  uint32_t def_style_flags = 0u;
   if (def_style_attr != 0) {
-    Res_value value;
-    if (theme->GetAttribute(def_style_attr, &value, &def_style_flags) != kInvalidCookie) {
-      if (value.dataType == Res_value::TYPE_REFERENCE) {
-        def_style_resid = value.data;
-      }
+    auto value = theme->GetAttribute(def_style_attr);
+    if (value && value->type == Res_value::TYPE_REFERENCE) {
+      def_style_resid = value->data;
     }
   }
 
@@ -1203,10 +1144,13 @@ static void NativeApplyStyle(JNIEnv* env, jclass /*clazz*/, jlong ptr, jlong the
     return;
   }
 
-  ApplyStyle(theme, xml_parser, static_cast<uint32_t>(def_style_attr),
+  auto result = ApplyStyle(theme, xml_parser, static_cast<uint32_t>(def_style_attr),
              static_cast<uint32_t>(def_style_resid), reinterpret_cast<uint32_t*>(attrs), attrs_len,
              out_values, out_indices);
   env->ReleasePrimitiveArrayCritical(java_attrs, attrs, JNI_ABORT);
+  if (!result) {
+     jniThrowException(env, kResourcesNotFound, result.error());
+  }
 }
 
 static jboolean NativeResolveAttrs(JNIEnv* env, jclass /*clazz*/, jlong ptr, jlong theme_ptr,
@@ -1268,7 +1212,7 @@ static jboolean NativeResolveAttrs(JNIEnv* env, jclass /*clazz*/, jlong ptr, jlo
   CHECK(theme->GetAssetManager() == &(*assetmanager));
   (void) assetmanager;
 
-  bool result = ResolveAttrs(
+  auto result = ResolveAttrs(
       theme, static_cast<uint32_t>(def_style_attr), static_cast<uint32_t>(def_style_resid),
       reinterpret_cast<uint32_t*>(values), values_len, reinterpret_cast<uint32_t*>(attrs),
       attrs_len, reinterpret_cast<uint32_t*>(out_values), reinterpret_cast<uint32_t*>(out_indices));
@@ -1281,7 +1225,13 @@ static jboolean NativeResolveAttrs(JNIEnv* env, jclass /*clazz*/, jlong ptr, jlo
     env->ReleasePrimitiveArrayCritical(java_values, values, JNI_ABORT);
   }
   env->ReleasePrimitiveArrayCritical(java_attrs, attrs, JNI_ABORT);
-  return result ? JNI_TRUE : JNI_FALSE;
+
+  if (!result) {
+    jniThrowException(env, kResourcesNotFound, result.error());
+    return JNI_FALSE;
+  }
+
+  return JNI_TRUE;
 }
 
 static jboolean NativeRetrieveAttributes(JNIEnv* env, jclass /*clazz*/, jlong ptr,
@@ -1323,7 +1273,7 @@ static jboolean NativeRetrieveAttributes(JNIEnv* env, jclass /*clazz*/, jlong pt
   ScopedLock<AssetManager2> assetmanager(AssetManagerFromLong(ptr));
   ResXMLParser* xml_parser = reinterpret_cast<ResXMLParser*>(xml_parser_ptr);
 
-  bool result = RetrieveAttributes(assetmanager.get(), xml_parser,
+  auto result = RetrieveAttributes(assetmanager.get(), xml_parser,
                                    reinterpret_cast<uint32_t*>(attrs), attrs_len,
                                    reinterpret_cast<uint32_t*>(out_values),
                                    reinterpret_cast<uint32_t*>(out_indices));
@@ -1333,7 +1283,13 @@ static jboolean NativeRetrieveAttributes(JNIEnv* env, jclass /*clazz*/, jlong pt
   }
   env->ReleasePrimitiveArrayCritical(out_java_values, out_values, 0);
   env->ReleasePrimitiveArrayCritical(java_attrs, attrs, JNI_ABORT);
-  return result ? JNI_TRUE : JNI_FALSE;
+
+  if (!result) {
+    jniThrowException(env, kResourcesNotFound, result.error());
+    return JNI_FALSE;
+  }
+
+  return JNI_TRUE;
 }
 
 static jlong NativeThemeCreate(JNIEnv* /*env*/, jclass /*clazz*/, jlong ptr) {
@@ -1352,7 +1308,9 @@ static void NativeThemeApplyStyle(JNIEnv* env, jclass /*clazz*/, jlong ptr, jlon
   Theme* theme = reinterpret_cast<Theme*>(theme_ptr);
   CHECK(theme->GetAssetManager() == &(*assetmanager));
   (void) assetmanager;
-  theme->ApplyStyle(static_cast<uint32_t>(resid), force);
+
+  auto result = theme->ApplyStyle(static_cast<uint32_t>(resid), force);
+  ThrowIfHasError(env, result, kResourcesNotFound);
 
   // TODO(adamlesinski): Consider surfacing exception when result is failure.
   // CTS currently expects no exceptions from this method.
@@ -1365,6 +1323,7 @@ static void NativeThemeCopy(JNIEnv* env, jclass /*clazz*/, jlong dst_asset_manag
   Theme* dst_theme = reinterpret_cast<Theme*>(dst_theme_ptr);
   Theme* src_theme = reinterpret_cast<Theme*>(src_theme_ptr);
 
+  util::Result<std::monostate> result;
   if (dst_asset_manager_ptr != src_asset_manager_ptr) {
     ScopedLock<AssetManager2> dst_assetmanager(AssetManagerFromLong(dst_asset_manager_ptr));
     CHECK(dst_theme->GetAssetManager() == &(*dst_assetmanager));
@@ -1374,9 +1333,13 @@ static void NativeThemeCopy(JNIEnv* env, jclass /*clazz*/, jlong dst_asset_manag
     CHECK(src_theme->GetAssetManager() == &(*src_assetmanager));
     (void) src_assetmanager;
 
-    dst_theme->SetTo(*src_theme);
+    result = dst_theme->SetTo(*src_theme);
   } else {
-    dst_theme->SetTo(*src_theme);
+    result = dst_theme->SetTo(*src_theme);
+  }
+
+  if (!result) {
+    jniThrowException(env, kResourcesNotFound, result.error());
   }
 }
 
@@ -1392,23 +1355,21 @@ static jint NativeThemeGetAttributeValue(JNIEnv* env, jclass /*clazz*/, jlong pt
   CHECK(theme->GetAssetManager() == &(*assetmanager));
   (void) assetmanager;
 
-  Res_value value;
-  uint32_t flags;
-  ApkAssetsCookie cookie = theme->GetAttribute(static_cast<uint32_t>(resid), &value, &flags);
-  if (cookie == kInvalidCookie) {
+  auto value = theme->GetAttribute(static_cast<uint32_t>(resid));
+  if (!value) {
     return ApkAssetsCookieToJavaCookie(kInvalidCookie);
   }
 
-  uint32_t ref = 0u;
-  if (resolve_references) {
-    ResTable_config selected_config;
-    cookie =
-        theme->GetAssetManager()->ResolveReference(cookie, &value, &selected_config, &flags, &ref);
-    if (cookie == kInvalidCookie) {
-      return ApkAssetsCookieToJavaCookie(kInvalidCookie);
-    }
+  if (!resolve_references) {
+    return CopyValue(env, *value, typed_value);
   }
-  return CopyValue(env, cookie, value, ref, flags, nullptr, typed_value);
+
+  auto result = theme->GetAssetManager()->ResolveReference(*value);
+  if (!result.has_value()) {
+    ThrowIfHasError(env, result, kResourcesNotFound);
+    return ApkAssetsCookieToJavaCookie(kInvalidCookie);
+  }
+  return CopyValue(env, *value, typed_value);
 }
 
 static void NativeThemeDump(JNIEnv* /*env*/, jclass /*clazz*/, jlong ptr, jlong theme_ptr,

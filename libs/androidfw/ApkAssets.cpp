@@ -25,13 +25,11 @@
 #include "android-base/unique_fd.h"
 #include "android-base/utf8.h"
 #include "utils/Compat.h"
-#include "utils/FileMap.h"
 #include "ziparchive/zip_archive.h"
 
 #include "androidfw/Asset.h"
 #include "androidfw/Idmap.h"
 #include "androidfw/misc.h"
-#include "androidfw/ResourceTypes.h"
 #include "androidfw/Util.h"
 
 namespace android {
@@ -161,11 +159,10 @@ class ZipAssetsProvider : public AssetsProvider {
     }
 
     const int fd = ::GetFileDescriptor(zip_handle_.get());
-     const off64_t fd_offset = ::GetFileDescriptorOffset(zip_handle_.get());
+    const off64_t fd_offset = ::GetFileDescriptorOffset(zip_handle_.get());
     if (entry.method == kCompressDeflated) {
-      std::unique_ptr<FileMap> map = util::make_unique<FileMap>();
-      if (!map->create(GetPath(), fd, entry.offset + fd_offset, entry.compressed_length,
-                       true /*readOnly*/)) {
+      auto map = util::make_unique<incfs::IncFsFileMap>();
+      if (!map->Create(fd, entry.offset + fd_offset, entry.compressed_length, GetPath())) {
         LOG(ERROR) << "Failed to mmap file '" << path << "' in APK '" << friendly_name_ << "'";
         return {};
       }
@@ -178,9 +175,8 @@ class ZipAssetsProvider : public AssetsProvider {
       }
       return asset;
     } else {
-      std::unique_ptr<FileMap> map = util::make_unique<FileMap>();
-      if (!map->create(GetPath(), fd, entry.offset + fd_offset, entry.uncompressed_length,
-                       true /*readOnly*/)) {
+      auto map = util::make_unique<incfs::IncFsFileMap>();
+      if (!map->Create(fd, entry.offset + fd_offset, entry.uncompressed_length, GetPath())) {
         LOG(ERROR) << "Failed to mmap file '" << path << "' in APK '" << friendly_name_ << "'";
         return {};
       }
@@ -446,8 +442,8 @@ std::unique_ptr<Asset> ApkAssets::CreateAssetFromFd(base::unique_fd fd,
     }
   }
 
-  std::unique_ptr<FileMap> file_map = util::make_unique<FileMap>();
-  if (!file_map->create(path, fd, offset, static_cast<size_t>(length), true /*readOnly*/)) {
+  auto file_map = util::make_unique<incfs::IncFsFileMap>();
+  if (!file_map->Create(fd, offset, static_cast<size_t>(length), path)) {
     LOG(ERROR) << "Failed to mmap file '" << ((path) ? path : "anon") << "': "
                << SystemErrorCodeToString(errno);
     return {};
@@ -493,15 +489,14 @@ std::unique_ptr<const ApkAssets> ApkAssets::LoadImpl(
   loaded_apk->idmap_asset_ = std::move(idmap_asset);
   loaded_apk->loaded_idmap_ = std::move(idmap);
 
-  const StringPiece data(
-      reinterpret_cast<const char*>(loaded_apk->resources_asset_->getBuffer(true /*wordAligned*/)),
-      loaded_apk->resources_asset_->getLength());
-  if (data.data() == nullptr || data.empty()) {
+  const auto data = loaded_apk->resources_asset_->getIncFsBuffer(true /*wordAligned*/);
+  const size_t length = loaded_apk->resources_asset_->getLength();
+  if (data.is_null() || length == 0) {
     LOG(ERROR) << "Failed to read '" << kResourcesArsc << "' data in APK '" << path << "'.";
     return {};
   }
 
-  loaded_apk->loaded_arsc_ = LoadedArsc::Load(data, loaded_apk->loaded_idmap_.get(),
+  loaded_apk->loaded_arsc_ = LoadedArsc::Load(data, length, loaded_apk->loaded_idmap_.get(),
                                               property_flags);
   if (!loaded_apk->loaded_arsc_) {
     LOG(ERROR) << "Failed to load '" << kResourcesArsc << "' in APK '" << path << "'.";
@@ -525,15 +520,15 @@ std::unique_ptr<const ApkAssets> ApkAssets::LoadTableImpl(
       new ApkAssets(std::move(assets), path, last_mod_time, property_flags));
   loaded_apk->resources_asset_ = std::move(resources_asset);
 
-  const StringPiece data(
-      reinterpret_cast<const char*>(loaded_apk->resources_asset_->getBuffer(true /*wordAligned*/)),
-      loaded_apk->resources_asset_->getLength());
-  if (data.data() == nullptr || data.empty()) {
+  const auto data = loaded_apk->resources_asset_->getIncFsBuffer(true /*wordAligned*/);
+  const size_t length = loaded_apk->resources_asset_->getLength();
+  if (data.is_null() || length == 0) {
     LOG(ERROR) << "Failed to read resources table data in '" << path << "'.";
     return {};
   }
 
-  loaded_apk->loaded_arsc_ = LoadedArsc::Load(data, nullptr, property_flags);
+  loaded_apk->loaded_arsc_ = LoadedArsc::Load(data, length, nullptr /* loaded_idmap */,
+                                              property_flags);
   if (loaded_apk->loaded_arsc_ == nullptr) {
     LOG(ERROR) << "Failed to read resources table in '" << path << "'.";
     return {};

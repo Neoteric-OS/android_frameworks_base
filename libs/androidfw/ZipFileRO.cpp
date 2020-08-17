@@ -233,6 +233,31 @@ FileMap* ZipFileRO::createEntryFileMap(ZipEntryRO entry) const
 }
 
 /*
+ * Create a new incfs::IncFsFileMap object that spans the data in "entry".
+ */
+incfs::IncFsFileMap* ZipFileRO::createEntryIncFsFileMap(ZipEntryRO entry) const
+{
+    const _ZipEntryRO *zipEntry = reinterpret_cast<_ZipEntryRO*>(entry);
+    const ZipEntry& ze = zipEntry->entry;
+    int fd = GetFileDescriptor(mHandle);
+    size_t actualLen = 0;
+
+    if (ze.method == kCompressStored) {
+        actualLen = ze.uncompressed_length;
+    } else {
+        actualLen = ze.compressed_length;
+    }
+
+    incfs::IncFsFileMap* newMap = new incfs::IncFsFileMap();
+    if (!newMap->Create(fd, ze.offset, actualLen, mFileName)) {
+        delete newMap;
+        return NULL;
+    }
+
+    return newMap;
+}
+
+/*
  * Uncompress an entry, in its entirety, into the provided output buffer.
  *
  * This doesn't verify the data's CRC, which might be useful for
