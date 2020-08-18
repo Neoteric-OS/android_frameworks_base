@@ -469,12 +469,22 @@ public class NetworkStatsRecorder {
         }
     }
 
-    public void dumpDebugLocked(ProtoOutputStream proto, long tag) {
+    /**
+     * Write to a protocol buffer output stream.
+     */
+    public void dumpDebugLocked(ProtoOutputStream proto, long tag, boolean completeHistory) {
         final long start = proto.start(tag);
         if (mPending != null) {
             proto.write(NetworkStatsRecorderProto.PENDING_TOTAL_BYTES, mPending.getTotalBytes());
         }
-        getOrLoadCompleteLocked().dumpDebug(proto, NetworkStatsRecorderProto.COMPLETE_HISTORY);
+
+        if (completeHistory) {
+            getOrLoadCompleteLocked().dumpDebug(proto,
+                        NetworkStatsRecorderProto.COMPLETE_HISTORY);
+        } else {
+            mSinceBoot.dumpDebug(proto, NetworkStatsRecorderProto.SINCE_BOOT);
+        }
+
         proto.end(start);
     }
 
