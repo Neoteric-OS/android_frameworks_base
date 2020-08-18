@@ -1356,7 +1356,8 @@ public final class SystemServer {
             traceBeginAndSlog("StartNetworkStatsService");
             try {
                 networkStats = NetworkStatsService.create(context, networkManagement);
-                ServiceManager.addService(Context.NETWORK_STATS_SERVICE, networkStats);
+                ServiceManager.addService(Context.NETWORK_STATS_SERVICE, networkStats,
+                        /* allowIsolated= */ false, DUMP_FLAG_PRIORITY_NORMAL | DUMP_FLAG_PROTO);
             } catch (Throwable e) {
                 reportWtf("starting NetworkStats Service", e);
             }
