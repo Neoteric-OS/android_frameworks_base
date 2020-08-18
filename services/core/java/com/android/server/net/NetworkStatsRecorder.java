@@ -474,7 +474,7 @@ public class NetworkStatsRecorder {
         if (mPending != null) {
             proto.write(NetworkStatsRecorderProto.PENDING_TOTAL_BYTES, mPending.getTotalBytes());
         }
-        getOrLoadCompleteLocked().writeToProto(proto, NetworkStatsRecorderProto.COMPLETE_HISTORY);
+        mSinceBoot.writeToProto(proto, NetworkStatsRecorderProto.COMPLETE_HISTORY);
         proto.end(start);
     }
 
