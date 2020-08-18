@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e746263_9937e338",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2020-08-18T02:23:36Z",
+      "side": 1,
+      "message": "Hi Brad could you +2 again? I copied the new API signature to telephony/api/system-current.txt to resolve internal build failure.",
+      "revId": "f3c71997ee85846ab1a334cccd3750c8a8c1b417",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
