@@ -597,9 +597,9 @@ public final class Display {
     @UnsupportedAppUsage
     public DisplayAdjustments getDisplayAdjustments() {
         if (mResources != null) {
-            final DisplayAdjustments currentAdjustements = mResources.getDisplayAdjustments();
-            if (!mDisplayAdjustments.equals(currentAdjustements)) {
-                mDisplayAdjustments = new DisplayAdjustments(currentAdjustements);
+            final DisplayAdjustments currentAdjustments = mResources.getDisplayAdjustments();
+            if (!mDisplayAdjustments.equals(currentAdjustments)) {
+                mDisplayAdjustments = new DisplayAdjustments(currentAdjustments);
             }
         }
 
