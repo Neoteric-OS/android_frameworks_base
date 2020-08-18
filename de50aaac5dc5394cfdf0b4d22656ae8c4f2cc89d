@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "648366ae_2a0a1102",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-18T13:58:05Z",
+      "side": 1,
+      "message": "Question: why do we need to add SYSTEM_UID check if Only InProcessNetworkStack(SYSTEM_UID) can hold NETWORK_STACK? which case you would like to prevent?",
+      "range": {
+        "startLine": 290,
+        "startChar": 18,
+        "endLine": 290,
+        "endChar": 81
+      },
+      "revId": "de50aaac5dc5394cfdf0b4d22656ae8c4f2cc89d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2d63a6_5f49a49d",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-18T13:58:05Z",
+      "side": 1,
+      "message": "The logic is actually differnet. In base patch, those UIDs hold NETWORK_STACK permission will have restricted network permission. However, it\u0027s not allowed now. NetworkStack permission is a signature permission. Though tt\u0027s documented that only connectivity and wifi service should use the permission, modules which have the permission should able to use it. Is the change intended?",
+      "range": {
+        "startLine": 291,
+        "startChar": 20,
+        "endLine": 291,
+        "endChar": 39
+      },
+      "revId": "de50aaac5dc5394cfdf0b4d22656ae8c4f2cc89d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ed1feb_cbd29836",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-18T13:58:05Z",
+      "side": 1,
+      "message": "This may be the case you verify in PermissionMonitor but do we have such case? SYSTEM_UID w/o NETWORK_STACK permisson?",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 31
+      },
+      "revId": "de50aaac5dc5394cfdf0b4d22656ae8c4f2cc89d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7354a52_c177fff9",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-18T13:58:05Z",
+      "side": 1,
+      "message": "Why this test case is also touched? it seems irrelevant to the change in PermissionMonitor and in commit message?",
+      "range": {
+        "startLine": 269,
+        "startChar": 8,
+        "endLine": 269,
+        "endChar": 46
+      },
+      "revId": "de50aaac5dc5394cfdf0b4d22656ae8c4f2cc89d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

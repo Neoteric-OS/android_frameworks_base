@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbb4edea_34396afe",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-18T13:58:05Z",
+      "side": 0,
+      "message": "should it be done in RFPM07?",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 27
+      },
+      "revId": "c83ab02f35b7a5b6d721c415087289575b5a53a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f39a965_c89ad7c2",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-18T13:58:05Z",
+      "side": 0,
+      "message": "The expected result changed actually shows that the behavior is changed.",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 33
+      },
+      "revId": "c83ab02f35b7a5b6d721c415087289575b5a53a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
