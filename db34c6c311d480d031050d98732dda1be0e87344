@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25511144_ba8b324d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2020-08-18T22:56:29Z",
+      "side": 1,
+      "message": "Is there a reason this isn\u0027t public API?",
+      "revId": "db34c6c311d480d031050d98732dda1be0e87344",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
