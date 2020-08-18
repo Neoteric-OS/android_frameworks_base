@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "227cfc65_75b01130",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1092253
+      },
+      "writtenOn": "2020-08-18T20:29:51Z",
+      "side": 1,
+      "message": "Accessibility fields are generally populated on the UI thread. None of them are thread-safe. When do you see it being accessed from multiple threads?",
+      "revId": "bf6cb9315c50095e358f6ed241d713eec4188686",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
