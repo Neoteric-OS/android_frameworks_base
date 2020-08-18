@@ -197,7 +197,7 @@ message IncidentProto {
 
     optional android.service.NetworkStatsServiceDumpProto netstats = 3001 [
         (section).type = SECTION_DUMPSYS,
-        (section).args = "netstats --proto"
+        (section).args = "netstats --proto --incident"
     ];
 
     optional android.providers.settings.SettingsServiceDumpProto settings = 3002 [
