@@ -89,6 +89,8 @@ message NetworkStatsRecorderProto {
     optional int64 pending_total_bytes = 1;
 
     optional NetworkStatsCollectionProto complete_history = 2;
+
+    optional NetworkStatsCollectionProto since_boot = 3;
 }
 
 // Corresponds to NetworkStatsCollection.

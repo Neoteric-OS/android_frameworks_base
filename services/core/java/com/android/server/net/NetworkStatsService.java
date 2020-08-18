@@ -150,6 +150,7 @@ import com.android.internal.util.FileRotator;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.EventLogTags;
 import com.android.server.LocalServices;
+import com.android.server.utils.PriorityDump;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -1692,15 +1693,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
     }
 
-    @Override
-    protected void dump(FileDescriptor fd, PrintWriter rawWriter, String[] args) {
+    private void dumpNormal(FileDescriptor fd, PrintWriter rawWriter, String[] args,
+            boolean asProto) {
         if (!DumpUtils.checkDumpPermission(mContext, TAG, rawWriter)) return;
-
         long duration = DateUtils.DAY_IN_MILLIS;
         final HashSet<String> argSet = new HashSet<String>();
         for (String arg : args) {
             argSet.add(arg);
-
             if (arg.startsWith("--duration=")) {
                 try {
                     duration = Long.parseLong(arg.substring(11));
@@ -1715,13 +1714,17 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final boolean fullHistory = argSet.contains("--full") || argSet.contains("full");
         final boolean includeUid = argSet.contains("--uid") || argSet.contains("detail");
         final boolean includeTag = argSet.contains("--tag") || argSet.contains("detail");
+        final boolean isIncidentReport = argSet.contains("--incident");
 
         final IndentingPrintWriter pw = new IndentingPrintWriter(rawWriter, "  ");
 
         synchronized (mStatsLock) {
-            if (args.length > 0 && "--proto".equals(args[0])) {
-                // In this case ignore all other arguments.
-                dumpProtoLocked(fd);
+            // If args contains both --proto and --incident then dump complete history.
+            // If args only contains --proto then dump since-boot history.
+            // Note: 1) --proto will be parsed by PriorityDump.
+            //       2) --incident will be passed by incident_report tool.
+            if (asProto) {
+                dumpProtoLocked(fd, isIncidentReport);
                 return;
             }
 
@@ -1843,18 +1846,33 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
     }
 
-    @GuardedBy("mStatsLock")
-    private void dumpProtoLocked(FileDescriptor fd) {
-        final ProtoOutputStream proto = new ProtoOutputStream(fd);
+    private final PriorityDump.PriorityDumper mPriorityDumper = new PriorityDump.PriorityDumper() {
+            @Override
+            public void dumpNormal(@NonNull FileDescriptor fd, @NonNull PrintWriter pw,
+                    @Nullable String[] args, boolean asProto) {
+                NetworkStatsService.this.dumpNormal(fd, pw, args, asProto);
+            }
+    };
 
-        // TODO Right now it writes all history.  Should it limit to the "since-boot" log?
+    @Override
+    protected void dump(FileDescriptor fd, PrintWriter rawWriter, String[] args) {
+        PriorityDump.dump(mPriorityDumper, fd, rawWriter, args);
+    }
+
+    @GuardedBy("mStatsLock")
+    private void dumpProtoLocked(FileDescriptor fd, boolean isIncidentReport) {
+        final ProtoOutputStream proto = new ProtoOutputStream(fd);
 
         dumpInterfaces(proto, NetworkStatsServiceDumpProto.ACTIVE_INTERFACES, mActiveIfaces);
         dumpInterfaces(proto, NetworkStatsServiceDumpProto.ACTIVE_UID_INTERFACES, mActiveUidIfaces);
-        mDevRecorder.writeToProtoLocked(proto, NetworkStatsServiceDumpProto.DEV_STATS);
-        mXtRecorder.writeToProtoLocked(proto, NetworkStatsServiceDumpProto.XT_STATS);
-        mUidRecorder.writeToProtoLocked(proto, NetworkStatsServiceDumpProto.UID_STATS);
-        mUidTagRecorder.writeToProtoLocked(proto, NetworkStatsServiceDumpProto.UID_TAG_STATS);
+        mDevRecorder.writeToProtoLocked(proto, NetworkStatsServiceDumpProto.DEV_STATS,
+                isIncidentReport);
+        mXtRecorder.writeToProtoLocked(proto, NetworkStatsServiceDumpProto.XT_STATS,
+                isIncidentReport);
+        mUidRecorder.writeToProtoLocked(proto, NetworkStatsServiceDumpProto.UID_STATS,
+                isIncidentReport);
+        mUidTagRecorder.writeToProtoLocked(proto, NetworkStatsServiceDumpProto.UID_TAG_STATS,
+                isIncidentReport);
 
         proto.flush();
     }

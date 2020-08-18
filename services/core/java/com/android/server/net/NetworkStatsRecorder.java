@@ -72,6 +72,9 @@ public class NetworkStatsRecorder {
     /** Dump before deleting in {@link #recoverFromWtf()}. */
     private static final boolean DUMP_BEFORE_DELETE = true;
 
+    public static final int COMPLETE_HISTORY = 1;
+    public static final int SINCE_BOOT = 2;
+
     private final FileRotator mRotator;
     private final NonMonotonicObserver<String> mObserver;
     private final DropBoxManager mDropBox;
@@ -469,12 +472,22 @@ public class NetworkStatsRecorder {
         }
     }
 
-    public void writeToProtoLocked(ProtoOutputStream proto, long tag) {
+    /**
+     * Write to a protocol buffer output stream.
+     */
+    public void writeToProtoLocked(ProtoOutputStream proto, long tag, boolean incident) {
         final long start = proto.start(tag);
         if (mPending != null) {
             proto.write(NetworkStatsRecorderProto.PENDING_TOTAL_BYTES, mPending.getTotalBytes());
         }
-        getOrLoadCompleteLocked().writeToProto(proto, NetworkStatsRecorderProto.COMPLETE_HISTORY);
+
+        if (incident) {
+            getOrLoadCompleteLocked().writeToProto(proto,
+                        NetworkStatsRecorderProto.COMPLETE_HISTORY);
+        } else {
+            mSinceBoot.writeToProto(proto, NetworkStatsRecorderProto.SINCE_BOOT);
+        }
+
         proto.end(start);
     }
 
