@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "110f4c00_0f48c055",
+        "filename": "services/core/java/com/android/server/location/GnssConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1358281
+      },
+      "writtenOn": "2020-08-18T22:21:12Z",
+      "side": 1,
+      "message": "As discussed in the bug, please move the check to where the error log is printed.",
+      "range": {
+        "startLine": 247,
+        "startChar": 49,
+        "endLine": 247,
+        "endChar": 84
+      },
+      "revId": "6c99574956fe28d1be9b65a136688f27fcb41ebd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
