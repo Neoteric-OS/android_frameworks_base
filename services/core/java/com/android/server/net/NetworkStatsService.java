@@ -150,6 +150,7 @@ import com.android.internal.util.FileRotator;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.EventLogTags;
 import com.android.server.LocalServices;
+import com.android.server.utils.PriorityDump;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -1692,15 +1693,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
     }
 
-    @Override
-    protected void dump(FileDescriptor fd, PrintWriter rawWriter, String[] args) {
+    private void doNormalDump(FileDescriptor fd, PrintWriter rawWriter, String[] args,
+            boolean asProto) {
         if (!DumpUtils.checkDumpPermission(mContext, TAG, rawWriter)) return;
-
         long duration = DateUtils.DAY_IN_MILLIS;
         final HashSet<String> argSet = new HashSet<String>();
         for (String arg : args) {
             argSet.add(arg);
-
             if (arg.startsWith("--duration=")) {
                 try {
                     duration = Long.parseLong(arg.substring(11));
@@ -1719,8 +1718,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final IndentingPrintWriter pw = new IndentingPrintWriter(rawWriter, "  ");
 
         synchronized (mStatsLock) {
-            if (args.length > 0 && "--proto".equals(args[0])) {
-                // In this case ignore all other arguments.
+            // If args contains --proto then ignore all other arguments.
+            if (asProto) {
                 dumpProtoLocked(fd);
                 return;
             }
@@ -1843,11 +1842,22 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
     }
 
+    private final PriorityDump.PriorityDumper mPriorityDumper = new PriorityDump.PriorityDumper() {
+            @Override
+            public void dumpNormal(@NonNull FileDescriptor fd, @NonNull PrintWriter pw,
+                    @Nullable String[] args, boolean asProto) {
+                doNormalDump(fd, pw, args, asProto);
+            }
+    };
+
+    @Override
+    protected void dump(FileDescriptor fd, PrintWriter rawWriter, String[] args) {
+        PriorityDump.dump(mPriorityDumper, fd, rawWriter, args);
+    }
+
     @GuardedBy("mStatsLock")
     private void dumpProtoLocked(FileDescriptor fd) {
         final ProtoOutputStream proto = new ProtoOutputStream(fd);
-
-        // TODO Right now it writes all history.  Should it limit to the "since-boot" log?
 
         dumpInterfaces(proto, NetworkStatsServiceDumpProto.ACTIVE_INTERFACES, mActiveIfaces);
         dumpInterfaces(proto, NetworkStatsServiceDumpProto.ACTIVE_UID_INTERFACES, mActiveUidIfaces);
