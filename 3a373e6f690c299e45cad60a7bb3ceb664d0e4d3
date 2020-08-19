@@ -2,6 +2,420 @@
   "comments": [
     {
       "key": {
+        "uuid": "af152171_031450b0",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4085,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "can you please specify the byte order and signedness? assuming native byte order and signed (all integers are signed in Java), but want to make sure.",
+      "range": {
+        "startLine": 4085,
+        "startChar": 54,
+        "endLine": 4085,
+        "endChar": 61
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7f6e79_71377e97",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4111,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "nit: has been detected",
+      "range": {
+        "startLine": 4111,
+        "startChar": 67,
+        "endLine": 4111,
+        "endChar": 75
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fcbdd79_4b7faf63",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4112,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "nit: add \u0027events\u0027, as in \u0027in between TYPE 102 events\u0027.",
+      "range": {
+        "startLine": 4112,
+        "startChar": 38,
+        "endLine": 4112,
+        "endChar": 41
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac65c67_7842bdfc",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4119,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "nit: Feedback (FB)",
+      "range": {
+        "startLine": 4119,
+        "startChar": 11,
+        "endLine": 4119,
+        "endChar": 19
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5359b07_098a9ae0",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4120,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "nit: remove",
+      "range": {
+        "startLine": 4120,
+        "startChar": 25,
+        "endLine": 4120,
+        "endChar": 30
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1a19cb_4a50ac3a",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4124,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "Are these increasing? Should applications expect these to wrap around?",
+      "range": {
+        "startLine": 4124,
+        "startChar": 18,
+        "endLine": 4124,
+        "endChar": 69
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afa326f_05833dc0",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4128,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "nit: received, or even ...count of packets received in...",
+      "range": {
+        "startLine": 4128,
+        "startChar": 36,
+        "endLine": 4128,
+        "endChar": 45
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47aecdaf_e3432088",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4128,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "nit: the previous",
+      "range": {
+        "startLine": 4128,
+        "startChar": 57,
+        "endLine": 4128,
+        "endChar": 65
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb0fd7a_87aba31f",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4130,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "nit: actual count of packets received",
+      "range": {
+        "startLine": 4130,
+        "startChar": 18,
+        "endLine": 4130,
+        "endChar": 50
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "129f0a0c_6d0e0570",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4132,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "nit: the previous",
+      "range": {
+        "startLine": 4132,
+        "startChar": 55,
+        "endLine": 4132,
+        "endChar": 63
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b47b133_be918e0c",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4132,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "nit: received, or even \u0027actual count of packets received\u0027...",
+      "range": {
+        "startLine": 4132,
+        "startChar": 34,
+        "endLine": 4132,
+        "endChar": 43
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c243df8b_d6e2a9d9",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4141,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "unclear here. perhaps \u0027from the\u0027 RTP header? (or of the media sender?)",
+      "range": {
+        "startLine": 4141,
+        "startChar": 43,
+        "endLine": 4141,
+        "endChar": 51
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f3b119_46930303",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4142,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "this is unclear. Perhaps:\n\nFeedback (FB) type: determines the type of the event.\n    - if 1, we received a NACK request from the remote side\n    - if 3, we received a TMMBR (Temporary Maximum Media Stream Bit Rate Request) from the remote side.\n\nValue: the FCI (Feedback Control Information) depending on the value of FB type:\n    - if FB type is 1, the Generic NACK as specified in RFC-4585 Sec.6.2.1\n    - if FB type is 3, the TMMBR without the SSRC as specified in RFC-5104 Sec.4.2.1.1",
+      "range": {
+        "startLine": 4142,
+        "startChar": 27,
+        "endLine": 4142,
+        "endChar": 43
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71381606_28ac5055",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4142,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "nit: Feedback (FB)",
+      "range": {
+        "startLine": 4142,
+        "startChar": 11,
+        "endLine": 4142,
+        "endChar": 19
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf26e500_c325765e",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4158,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "similarly here",
+      "range": {
+        "startLine": 4156,
+        "startChar": 43,
+        "endLine": 4158,
+        "endChar": 0
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2016b150_c887e460",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4168,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "nit: space before (\n\nAlso add possible values: are these one of 0, 90, 180, 270? Can these be arbitrary degrees? Can these be \u003e\u003d 360 or \u003c 0?",
+      "range": {
+        "startLine": 4168,
+        "startChar": 54,
+        "endLine": 4168,
+        "endChar": 60
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb20974_a30920d7",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4171,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "perhaps \u0027Socket failed during receive\u0027.",
+      "range": {
+        "startLine": 4171,
+        "startChar": 22,
+        "endLine": 4171,
+        "endChar": 60
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eedb1fb8_f0259b9b",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4179,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-08-19T05:09:41Z",
+      "side": 1,
+      "message": "nit: IMS",
+      "range": {
+        "startLine": 4179,
+        "startChar": 27,
+        "endLine": 4179,
+        "endChar": 30
+      },
+      "revId": "3a373e6f690c299e45cad60a7bb3ceb664d0e4d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a63e36f_bb44aefe",
         "filename": "media/java/android/media/MediaPlayer.java",
         "patchSetId": 9
