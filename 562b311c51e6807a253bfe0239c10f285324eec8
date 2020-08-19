@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9bf2b15_ffc4b70a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1358281
+      },
+      "writtenOn": "2020-08-19T17:44:12Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "562b311c51e6807a253bfe0239c10f285324eec8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "627cb039_7ba0cafb",
+        "filename": "services/core/java/com/android/server/location/GnssConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1358281
+      },
+      "writtenOn": "2020-08-19T17:44:12Z",
+      "side": 1,
+      "message": "nit: indent seems off. (should be 8 spaces?)",
+      "range": {
+        "startLine": 242,
+        "startChar": 8,
+        "endLine": 242,
+        "endChar": 37
+      },
+      "revId": "562b311c51e6807a253bfe0239c10f285324eec8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304b08ce_fd3fb78d",
+        "filename": "services/core/java/com/android/server/location/GnssConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1358281
+      },
+      "writtenOn": "2020-08-19T17:44:12Z",
+      "side": 1,
+      "message": "nit: indent seems off. (should be 8 spaces?)",
+      "range": {
+        "startLine": 245,
+        "startChar": 8,
+        "endLine": 245,
+        "endChar": 24
+      },
+      "revId": "562b311c51e6807a253bfe0239c10f285324eec8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
