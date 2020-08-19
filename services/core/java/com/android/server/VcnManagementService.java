@@ -25,12 +25,20 @@ import android.net.NetworkProvider;
 import android.net.NetworkRequest;
 import android.net.vcn.IVcnManagementService;
 import android.net.vcn.VcnConfig;
+import android.os.Binder;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.ParcelUuid;
+import android.os.UserHandle;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * VcnManagementService manages Virtual Carrier Network profiles and lifecycles.
@@ -130,6 +138,10 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             }
             return mHandlerThread.getLooper();
         }
+
+        public UserHandle getBinderCallingUserHandle() {
+            return Binder.getCallingUserHandle();
+        }
     }
 
     /** Notifies the VcnManagementService that external dependencies can be set up. */
@@ -138,6 +150,34 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         mContext.getSystemService(ConnectivityManager.class)
                 .registerNetworkProvider(mNetworkProvider);
+    }
+
+    private void enforceCallingUserAndCarrierPrivilege(ParcelUuid subscriptionGroup) {
+        // Only apps running in the primary (system) user are allowed to configure the VCN. This is
+        // in line with Telephony's behavior with regards to binding to a Carrier App provided
+        // CarrierConfigService.
+        if (!mDeps.getBinderCallingUserHandle().isSystem()) {
+            throw new SecurityException(
+                    "VcnManagementService can only be used by callers running as the primary user");
+        }
+
+        // TODO (b/172619301): Check based on events propagated from CarrierPrivilegesTracker
+        final SubscriptionManager subMgr = mContext.getSystemService(SubscriptionManager.class);
+        final List<SubscriptionInfo> subscriptionInfos = new ArrayList<>();
+        Binder.withCleanCallingIdentity(
+                () -> {
+                    subscriptionInfos.addAll(subMgr.getSubscriptionsInGroup(subscriptionGroup));
+                });
+
+        final TelephonyManager telMgr = mContext.getSystemService(TelephonyManager.class);
+        for (SubscriptionInfo info : subscriptionInfos) {
+            if (telMgr.hasCarrierPrivileges(info.getSubscriptionId())) {
+                return;
+            }
+        }
+
+        throw new SecurityException(
+                "Carrier privilege required for subscription group to set VCN Config");
     }
 
     /**
@@ -150,6 +190,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         requireNonNull(subscriptionGroup, "subscriptionGroup was null");
         requireNonNull(config, "config was null");
 
+        enforceCallingUserAndCarrierPrivilege(subscriptionGroup);
+
         // TODO: Store VCN configuration, trigger startup as necessary
     }
 
@@ -161,6 +203,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @Override
     public void clearVcnConfig(@NonNull ParcelUuid subscriptionGroup) {
         requireNonNull(subscriptionGroup, "subscriptionGroup was null");
+
+        enforceCallingUserAndCarrierPrivilege(subscriptionGroup);
 
         // TODO: Clear VCN configuration, trigger teardown as necessary
     }
