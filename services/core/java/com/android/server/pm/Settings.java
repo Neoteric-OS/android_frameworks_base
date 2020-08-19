@@ -650,11 +650,13 @@ public final class Settings {
                     + pkgName + " is adopting original package " + originalPkg.name);
             pkgSetting = new PackageSetting(originalPkg, pkgName /*realPkgName*/);
             pkgSetting.codePath = codePath;
+            pkgSetting.codePathString = codePath.toString();
             pkgSetting.legacyNativeLibraryPathString = legacyNativeLibraryPath;
             pkgSetting.pkgFlags = pkgFlags;
             pkgSetting.pkgPrivateFlags = pkgPrivateFlags;
             pkgSetting.primaryCpuAbiString = primaryCpuAbi;
             pkgSetting.resourcePath = resourcePath;
+            pkgSetting.resourcePathString = resourcePath.toString();
             pkgSetting.secondaryCpuAbiString = secondaryCpuAbi;
             // NOTE: Create a deeper copy of the package signatures so we don't
             // overwrite the signatures in the original package setting.
