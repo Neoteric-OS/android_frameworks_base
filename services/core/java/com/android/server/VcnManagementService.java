@@ -25,13 +25,20 @@ import android.net.NetworkProvider;
 import android.net.NetworkRequest;
 import android.net.vcn.IVcnManagementService;
 import android.net.vcn.VcnConfig;
+import android.os.Binder;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.ParcelUuid;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * VcnManagementService manages Virtual Carrier Network profiles and lifecycles.
@@ -144,6 +151,25 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 .registerNetworkProvider(mNetworkProvider);
     }
 
+    private void enforceCarrierPrivilege(ParcelUuid subscriptionGroup) {
+        SubscriptionManager subMgr = mContext.getSystemService(SubscriptionManager.class);
+        final List<SubscriptionInfo> subscriptionInfos = new ArrayList<>();
+        Binder.withCleanCallingIdentity(
+                () -> {
+                    subscriptionInfos.addAll(subMgr.getSubscriptionsInGroup(subscriptionGroup));
+                });
+
+        TelephonyManager telMgr = mContext.getSystemService(TelephonyManager.class);
+        for (SubscriptionInfo info : subscriptionInfos) {
+            if (telMgr.hasCarrierPrivileges(info.getSubscriptionId())) {
+                return;
+            }
+        }
+
+        throw new SecurityException(
+                "Carrier privilege required for subscription group to set VCN Config");
+    }
+
     /**
      * Sets a VCN config for a given subscription group
      *
@@ -153,6 +179,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     public void setVcnConfig(@NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config) {
         requireNonNull(subscriptionGroup, "subscriptionGroup was null");
         requireNonNull(config, "config was null");
+
+        enforceCarrierPrivilege(subscriptionGroup);
 
         // TODO: Store VCN configuration, trigger startup as necessary
     }
@@ -165,6 +193,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @Override
     public void clearVcnConfig(@NonNull ParcelUuid subscriptionGroup) {
         requireNonNull(subscriptionGroup, "subscriptionGroup was null");
+
+        enforceCarrierPrivilege(subscriptionGroup);
 
         // TODO: Clear VCN configuration, trigger teardown as necessary
     }
