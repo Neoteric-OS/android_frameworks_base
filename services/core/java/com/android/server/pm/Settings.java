@@ -607,12 +607,14 @@ public final class Settings {
             pkgSetting.childPackageNames =
                     (childPkgNames != null) ? new ArrayList<>(childPkgNames) : null;
             pkgSetting.codePath = codePath;
+            pkgSetting.codePathString = codePath.toString();
             pkgSetting.legacyNativeLibraryPathString = legacyNativeLibraryPath;
             pkgSetting.parentPackageName = parentPkgName;
             pkgSetting.pkgFlags = pkgFlags;
             pkgSetting.pkgPrivateFlags = pkgPrivateFlags;
             pkgSetting.primaryCpuAbiString = primaryCpuAbi;
             pkgSetting.resourcePath = resourcePath;
+            pkgSetting.resourcePathString = resourcePath.toString();
             pkgSetting.secondaryCpuAbiString = secondaryCpuAbi;
             // NOTE: Create a deeper copy of the package signatures so we don't
             // overwrite the signatures in the original package setting.
