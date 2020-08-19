@@ -26,19 +26,31 @@ import android.net.NetworkRequest;
 import android.net.vcn.IVcnManagementService;
 import android.net.vcn.VcnConfig;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.ParcelUuid;
+import android.os.PersistableBundle;
+import android.os.ServiceSpecificException;
 import android.os.UserHandle;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+import android.util.Slog;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
+import com.android.server.vcn.util.PersistableBundleUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * VcnManagementService manages Virtual Carrier Network profiles and lifecycles.
@@ -100,12 +112,24 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
     public static final boolean VDBG = false; // STOPSHIP: if true
 
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    static final String VCN_CONFIG_FILE = "/data/system/vcn/configs.xml";
+
     /* Binder context for this service */
     @NonNull private final Context mContext;
     @NonNull private final Dependencies mDeps;
 
     @NonNull private final Looper mLooper;
+    @NonNull private final Handler mHandler;
     @NonNull private final VcnNetworkProvider mNetworkProvider;
+
+    @GuardedBy("mConfigsRwLock")
+    @NonNull
+    private final Map<ParcelUuid, VcnConfig> mConfigs = new HashMap<>();
+
+    @NonNull private final ReadWriteLock mConfigsRwLock = new ReentrantReadWriteLock();
+
+    @NonNull private final PersistableBundleUtils.LockingReadWriteHelper mConfigDiskRwHelper;
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     VcnManagementService(@NonNull Context context, @NonNull Dependencies deps) {
@@ -113,7 +137,36 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         mDeps = requireNonNull(deps, "Missing dependencies");
 
         mLooper = mDeps.getLooper();
+        mHandler = new Handler(mLooper);
         mNetworkProvider = new VcnNetworkProvider(mContext, mLooper);
+
+        mConfigDiskRwHelper = mDeps.newPersistableBundleLockingReadWriteHelper(VCN_CONFIG_FILE);
+
+        // Run on handler to ensure I/O does not block system server startup
+        mHandler.post(() -> {
+            try {
+                final PersistableBundle configBundle = mConfigDiskRwHelper.readFromDisk();
+
+                if (configBundle != null) {
+                    final Map<ParcelUuid, VcnConfig> configs =
+                            PersistableBundleUtils.toMap(
+                                    configBundle,
+                                    PersistableBundleUtils::toParcelUuid,
+                                    VcnConfig::new);
+
+                    mConfigsRwLock.writeLock().lock();
+                    try {
+                        for (Entry<ParcelUuid, VcnConfig> entry : configs.entrySet()) {
+                            mConfigs.put(entry.getKey(), entry.getValue());
+                        }
+                    } finally {
+                        mConfigsRwLock.writeLock().unlock();
+                    }
+                }
+            } catch (IOException e) {
+                Slog.wtf(TAG, "Failed to read configs from disk", e);
+            }
+        });
     }
 
     // Package-visibility for SystemServer to create instances.
@@ -141,6 +194,17 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         public UserHandle getBinderCallingUserHandle() {
             return Binder.getCallingUserHandle();
+        }
+
+        /**
+         * Creates and returns a new {@link PersistableBundle.LockingReadWriteHelper}
+         *
+         * @param path the file path to read/write from/to.
+         * @return the {@link PersistableBundleUtils.LockingReadWriteHelper} instance
+         */
+        public PersistableBundleUtils.LockingReadWriteHelper
+                newPersistableBundleLockingReadWriteHelper(@NonNull String path) {
+            return new PersistableBundleUtils.LockingReadWriteHelper(path);
         }
     }
 
@@ -192,7 +256,24 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         enforceCallingUserAndCarrierPrivilege(subscriptionGroup);
 
-        // TODO: Store VCN configuration, trigger startup as necessary
+        mConfigsRwLock.writeLock().lock();
+        try {
+            mConfigs.put(subscriptionGroup, config);
+
+            // Downgrade lock to reduce critical section to non-IO-bound calls, while ensuring
+            // race-free persistence to disk.
+            mConfigsRwLock.readLock().lock();
+        } finally {
+            mConfigsRwLock.writeLock().unlock();
+        }
+
+        try {
+            writeConfigsToDiskLocked();
+        } finally {
+            mConfigsRwLock.readLock().unlock();
+        }
+
+        // TODO: Trigger startup as necessary
     }
 
     /**
@@ -206,7 +287,50 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         enforceCallingUserAndCarrierPrivilege(subscriptionGroup);
 
-        // TODO: Clear VCN configuration, trigger teardown as necessary
+        mConfigsRwLock.writeLock().lock();
+        try {
+            mConfigs.remove(subscriptionGroup);
+
+            // Downgrade lock to reduce critical section to non-IO-bound calls, while ensuring
+            // race-free persistence to disk.
+            mConfigsRwLock.readLock().lock();
+        } finally {
+            mConfigsRwLock.writeLock().unlock();
+        }
+
+        try {
+            writeConfigsToDiskLocked();
+        } finally {
+            mConfigsRwLock.readLock().unlock();
+        }
+
+        // TODO: Trigger teardown as necessary
+    }
+
+    @GuardedBy("mConfigsRwLock")
+    private void writeConfigsToDiskLocked() {
+        try {
+            PersistableBundle bundle =
+                    PersistableBundleUtils.fromMap(
+                            mConfigs,
+                            PersistableBundleUtils::fromParcelUuid,
+                            VcnConfig::toPersistableBundle);
+            mConfigDiskRwHelper.writeToDisk(bundle);
+        } catch (IOException e) {
+            Slog.e(TAG, "Failed to save configs to disk", e);
+            throw new ServiceSpecificException(0, "Failed to save configs");
+        }
+    }
+
+    /** Get current configuration list for testing purposes */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public Map<ParcelUuid, VcnConfig> getConfigs() {
+        mConfigsRwLock.readLock().lock();
+        try {
+            return new HashMap<>(mConfigs);
+        } finally {
+            mConfigsRwLock.readLock().unlock();
+        }
     }
 
     /**
