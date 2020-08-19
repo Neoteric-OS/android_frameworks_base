@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "a262d6e4_f7c59a4b",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-19T23:20:03Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s really a bad idea but it does feel maybe a little bit overkill.\n\nThe big advantage of what you suggest is that it does not introduce any new workings in the way we create test networks ; we simply would use the same mechanism that\u0027s used for all networks, which means all tests will be more realistic in that they\u0027ll use a code path that\u0027s closer to normal. Hopefully those code paths are covered anyway.\n\nBut it also has a number of drawbacks.\n• The real API is fully-fledged and as such typically requires all factories to make sure everything is working. In real code this is an advantage but the drawback of this in tests is that you find yourself having to set up everything, which means your test infrastructure is more complex especially with those test networks that can\u0027t actually do everything that a real network can.\n• For the same kind of reason, the real API does not let you easily do some stuff that is convenient for tests. You find yourself having to either add test-only code paths to the production code, or to have the tests use very implementation-dependent hacks buried deep. For example, I fear we\u0027d have to have the test network factory play games with the specific sequence in which ConnectivityService calls the messages in NetworkAgent.\n• The tests have to be architectured in such a way that it can send commands to the factory before it\u0027s called by CS. You can do this (we do this in TestNetworkAgent for example), but it\u0027s more complex.\n\nBy comparison, methods on TestNetworkManager are of direct style and easy to use, and they are not as intrusive. It\u0027s easy and non-controversial to add new methods there when implementing something new that we\u0027d need for a new test, and the necessary hacks are mostly circumscribed. Some aspects of it are a little bit less flexible, but others are more flexible.\n\nIf there are things that we can\u0027t really do without horrible hacks in direct methods of TestNetworkManager, then maybe we\u0027ll need something like you describe, but until we have a clear use case I\u0027d think YAGNI.\n\n\nThe other thing that comes to mind here is that the NetworkSpecifier API is a little bit iffy. We\u0027ve used it in the past in a way that what you write in the specifier in the request ends up in the specifier in the network, which is questionable. The preferred way to have this work now is to have the specifier be only a query object, while TransportInfo is a descriptor object mostly mapping to it (not necessarily 1:1 but). But NetworkIdentity still works with specifiers on both sides, which means you\u0027d still have to have those difficult semantics in the test factory to have it work.",
+      "parentUuid": "4c13dd53_717b19f1",
+      "range": {
+        "startLine": 231,
+        "startChar": 44,
+        "endLine": 231,
+        "endChar": 66
+      },
+      "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "921aa90e_bbef61a2",
         "filename": "core/java/android/net/NetworkTemplate.java",
         "patchSetId": 1

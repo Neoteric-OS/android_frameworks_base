@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "349dc5e3_d75bd303",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-08-19T23:20:03Z",
+      "side": 1,
+      "message": "Will it do this ? From my reading, if you pass null, then l.570 only matches if the network also doesn\u0027t have a specifier. What that means is, if you write a test with the intent of matching any test network (so it passes null here, in accord with the documentation) and later this network gains a specifier, the test stops working.",
+      "range": {
+        "startLine": 217,
+        "startChar": 27,
+        "endLine": 217,
+        "endChar": 38
+      },
+      "revId": "8e014e0729ccb559538e4b072cd9d2dc7b828acd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
