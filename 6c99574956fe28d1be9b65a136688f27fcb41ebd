@@ -22,6 +22,30 @@
       "revId": "6c99574956fe28d1be9b65a136688f27fcb41ebd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cb95b0_f149d0a7",
+        "filename": "services/core/java/com/android/server/location/GnssConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1745626
+      },
+      "writtenOn": "2020-08-20T08:09:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "110f4c00_0f48c055",
+      "range": {
+        "startLine": 247,
+        "startChar": 49,
+        "endLine": 247,
+        "endChar": 84
+      },
+      "revId": "6c99574956fe28d1be9b65a136688f27fcb41ebd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
