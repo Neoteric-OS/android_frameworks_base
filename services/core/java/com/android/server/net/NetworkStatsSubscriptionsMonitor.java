@@ -30,6 +30,7 @@ import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.CollectionUtils;
@@ -93,26 +94,31 @@ public class NetworkStatsSubscriptionsMonitor extends
         // Collect active subId list, hidden subId such as opportunistic subscriptions are
         // also needed to track CBRS.
         final List<Integer> newSubs = getActiveSubIdList(mSubscriptionManager);
-
+        final SparseArray<String> subIdToSubscriberId = new SparseArray();
         for (final int subId : newSubs) {
-            final RatTypeListener match = CollectionUtils.find(mRatListeners,
-                    it -> it.mSubId == subId);
-            if (match != null) continue;
-
-            // Create listener for every newly added sub. Also store subscriberId into it to
-            // prevent binder call to telephony when querying RAT. If the subscriberId is empty
-            // for any reason, such as SIM PIN locked, skip registration.
-            // SubscriberId will be unavailable again if 1. modem crashed 2. reboot
-            // 3. re-insert SIM. If that happens, the listeners will be eventually synchronized
-            // with active sub list once all subscriberIds are ready.
             final String subscriberId = mTeleManager.getSubscriberId(subId);
-            if (TextUtils.isEmpty(subscriberId)) {
-                Log.d(NetworkStatsService.TAG, "Empty subscriberId for newly added sub "
-                        + subId + ", skip listener registration");
+            if (!TextUtils.isEmpty(subscriberId)) {
+                subIdToSubscriberId.append(subId, subscriberId);
+            }
+        }
+        // IMSI is needed for every newly added sub. Listener stores subscriberId into it to
+        // prevent binder call to telephony when querying RAT. Keep listener registration with empty
+        // IMSI is meaningless since the RAT type changed is ambiguous for multi-SIM if reported
+        // with empty IMSI. So filter the subs w/o a valid IMSI to prevent such registration.
+        final List<Integer> filteredNewSubs = CollectionUtils.filter(
+                newSubs, subId -> subIdToSubscriberId.indexOfKey(subId) >= 0);
+
+        for (final int subId : filteredNewSubs) {
+            // Fully match listener with subId and IMSI, since in some rare cases, IMSI might be
+            // suddenly change regardless of subId, such as switch IMSI feature in modem side.
+            // If that happens, register new listener with new IMSI and remove old one later.
+            if (CollectionUtils.find(mRatListeners,
+                    it -> it.match(subId, subIdToSubscriberId.get(subId))) != null) {
                 continue;
             }
+
             final RatTypeListener listener =
-                    new RatTypeListener(mExecutor, this, subId, subscriberId);
+                    new RatTypeListener(mExecutor, this, subId, subIdToSubscriberId.get(subId));
             mRatListeners.add(listener);
 
             // Register listener to the telephony manager that associated with specific sub.
@@ -122,11 +128,11 @@ public class NetworkStatsSubscriptionsMonitor extends
         }
 
         for (final RatTypeListener listener : new ArrayList<>(mRatListeners)) {
-            // If the new list contains the subId of the listener, keeps it.
-            final Integer match = CollectionUtils.find(newSubs, it -> it == listener.mSubId);
-            if (match != null) continue;
-
-            handleRemoveRatTypeListener(listener);
+            // If there is no subId and IMSI matched the listener, removes it.
+            if (CollectionUtils.find(filteredNewSubs,
+                    it -> listener.match(it, subIdToSubscriberId.get(it))) == null) {
+                handleRemoveRatTypeListener(listener);
+            }
         }
     }
 
@@ -231,6 +237,10 @@ public class NetworkStatsSubscriptionsMonitor extends
         @VisibleForTesting
         public int getSubId() {
             return mSubId;
+        }
+
+        boolean match(int subId, @NonNull String subscriberId) {
+            return mSubId == subId && TextUtils.equals(mSubscriberId, subscriberId);
         }
     }
 }
