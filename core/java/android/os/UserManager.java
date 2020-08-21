@@ -2399,9 +2399,35 @@ public class UserManager {
         return users != null ? users.size() : 1;
     }
 
+   /**
+     * Returns information for all "usable" users on this device (i.e, it excludes users that are
+     * marked for deletion, pre-created users, etc...).
+     *
+     * <p>To retrieve all fully-created users, use {@link #getUsers()}.
+     *
+     * <p>To retrieve a more specific list of users, use
+     * {@link #getUsers(boolean, boolean, boolean)}.
+     *
+     * @return the list of users that were created.
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.MANAGE_USERS)
+    public @NonNull List<UserInfo> getAliveUsers() {
+        return getUsers(/*excludePartial= */ true, /* excludeDying= */ true,
+                /* excludePreCreated= */ true);
+    }
+
     /**
-     * Returns information for all users on this device, including ones marked for deletion.
-     * To retrieve only users that are alive, use {@link #getUsers(boolean)}.
+     * Returns information for all fully-created users on this device, including ones marked for
+     * deletion.
+     *
+     * <p>To retrieve only users that are not marked for deletion, use {@link #getAliveUsers()}.
+     *
+     * <p>To retrieve a more specific list of users, use
+     * {@link #getUsers(boolean, boolean, boolean)}.
+     *
+     * <p>To retrieve *all* users (including partial and pre-created users), use
+     * {@link #getUsers(boolean, boolean, boolean)) getUsers(false, false, false)}.
      *
      * @return the list of users that exist on the device.
      * @hide
@@ -2409,7 +2435,22 @@ public class UserManager {
     @UnsupportedAppUsage
     @RequiresPermission(android.Manifest.permission.MANAGE_USERS)
     public List<UserInfo> getUsers() {
-        return getUsers(/* excludeDying= */ false);
+        return getUsers(/*excludePartial= */ true, /* excludeDying= */ false,
+                /* excludePreCreated= */ true);
+    }
+
+    /**
+     * @deprecated use {@link #getAliveUsers()} for {@code getUsers(true)}, or
+     * {@link #getUsers()} for @code getUsers(false)}.
+     *
+     * @hide
+     */
+    @Deprecated
+    @UnsupportedAppUsage
+    @RequiresPermission(android.Manifest.permission.MANAGE_USERS)
+    public @NonNull List<UserInfo> getUsers(boolean excludeDying) {
+        return getUsers(/*excludePartial= */ true, excludeDying,
+                /* excludePreCreated= */ true);
     }
 
     /**
