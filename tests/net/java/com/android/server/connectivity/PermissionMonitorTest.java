@@ -121,7 +121,7 @@ public class PermissionMonitorTest {
         MockitoAnnotations.initMocks(this);
         when(mContext.getPackageManager()).thenReturn(mPackageManager);
         when(mContext.getSystemService(eq(Context.USER_SERVICE))).thenReturn(mUserManager);
-        when(mUserManager.getUsers(eq(true))).thenReturn(
+        when(mUserManager.getAlveUsers()).thenReturn(
                 Arrays.asList(new UserInfo[] {
                         new UserInfo(MOCK_USER1, "", 0),
                         new UserInfo(MOCK_USER2, "", 0),

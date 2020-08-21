@@ -1246,7 +1246,7 @@ public class VpnTest {
                 }
             }
             return result;
-        }).when(mUserManager).getUsers(anyBoolean());
+        }).when(mUserManager).getAliveUsers();
 
         doAnswer(invocation -> {
             final int id = (int) invocation.getArguments()[0];
