@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "675bdec7_7a9bb1d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1315793
+      },
+      "writtenOn": "2020-08-21T17:33:30Z",
+      "side": 1,
+      "message": "I think the merged-in ID should be \"If5d53061cfbb87da402e491589593a9342911449\"",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 52
+      },
+      "revId": "1f55817da76661c1b31f066a2164fb42ab4f37fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
