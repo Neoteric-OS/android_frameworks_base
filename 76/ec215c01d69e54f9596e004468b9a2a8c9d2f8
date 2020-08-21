@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Louis Pullen-Freilich <lpf@google.com>
+Bypass-Presubmit+1: Louis Pullen-Freilich <lpf@google.com>
+Code-Review+2: Clara Bayarri <clarabayarri@google.com>
+Submitted-by: Louis Pullen-Freilich <lpf@google.com>
+Submitted-at: Fri, 21 Aug 2020 17:08:05 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1406973
+Project: platform/frameworks/base
+Branch: refs/heads/master
