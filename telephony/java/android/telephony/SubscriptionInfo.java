@@ -788,7 +788,7 @@ public class SubscriptionInfo implements Parcelable {
                 + " iconTint=" + mIconTint
                 + " mNumber=" + Rlog.pii(TelephonyUtils.IS_DEBUGGABLE, mNumber)
                 + " dataRoaming=" + mDataRoaming + " iconBitmap=" + mIconBitmap + " mcc " + mMcc
-                + " mnc " + mMnc + "mCountryIso=" + mCountryIso + " isEmbedded " + mIsEmbedded
+                + " mnc " + mMnc + " mCountryIso=" + mCountryIso + " isEmbedded " + mIsEmbedded
                 + " nativeAccessRules " + Arrays.toString(mNativeAccessRules)
                 + " cardString=" + cardStringToPrint + " cardId=" + mCardId
                 + " isOpportunistic=" + mIsOpportunistic + " mGroupUUID=" + mGroupUUID
