@@ -471,6 +471,19 @@ public class VpnService extends Service {
         }
     }
 
+    private static void checkRouteBytes(@NonNull InetAddress address,
+            int prefixLength) {
+        int offset = prefixLength / 8;
+        byte[] bytes = address.getAddress();
+        if (offset < bytes.length) {
+            for (bytes[offset] <<= prefixLength % 8; offset < bytes.length; ++offset) {
+                if (bytes[offset] != 0) {
+                    throw new IllegalArgumentException("Bad address");
+                }
+            }
+        }
+    }
+
     /**
      * Helper class to create a VPN interface. This class should be always
      * used within the scope of the outer {@link VpnService}.
@@ -479,7 +492,8 @@ public class VpnService extends Service {
      */
     public class Builder {
 
-        private final VpnConfig mConfig = new VpnConfig();
+        /** @hide **/
+        public final VpnConfig mConfig = new VpnConfig();
         @UnsupportedAppUsage
         private final List<LinkAddress> mAddresses = new ArrayList<LinkAddress>();
         @UnsupportedAppUsage
@@ -579,6 +593,32 @@ public class VpnService extends Service {
          * Add a network route to the VPN interface. Both IPv4 and IPv6
          * routes are supported.
          *
+         * If a route with the same destination is already present, its type will be updated.
+         *
+         * @throws IllegalArgumentException if the route is invalid.
+         */
+        @NonNull
+        private void addRoute(@NonNull InetAddress address, int prefixLength,
+                @RouteInfo.RouteType int type) {
+            check(address, prefixLength);
+            checkRouteBytes(address, prefixLength);
+
+            RouteInfo newRoute = new RouteInfo(new IpPrefix(address, prefixLength), /* gateway */
+                    null, /* interface */ null, type);
+
+            int index = findRouteIndexByDestination(newRoute);
+
+            if (index == -1) {
+                mRoutes.add(newRoute);
+            } else {
+                mRoutes.set(index, newRoute);
+            }
+        }
+
+        /**
+         * Add a network route to the VPN interface. Both IPv4 and IPv6
+         * routes are supported.
+         *
          * Adding a route implicitly allows traffic from that address family
          * (i.e., IPv4 or IPv6) to be routed over the VPN. @see #allowFamily
          *
@@ -586,18 +626,7 @@ public class VpnService extends Service {
          */
         @NonNull
         public Builder addRoute(@NonNull InetAddress address, int prefixLength) {
-            check(address, prefixLength);
-
-            int offset = prefixLength / 8;
-            byte[] bytes = address.getAddress();
-            if (offset < bytes.length) {
-                for (bytes[offset] <<= prefixLength % 8; offset < bytes.length; ++offset) {
-                    if (bytes[offset] != 0) {
-                        throw new IllegalArgumentException("Bad address");
-                    }
-                }
-            }
-            mRoutes.add(new RouteInfo(new IpPrefix(address, prefixLength), null));
+            addRoute(address, prefixLength, RouteInfo.RTN_UNICAST);
             mConfig.updateAllowedFamilies(address);
             return this;
         }
@@ -616,6 +645,31 @@ public class VpnService extends Service {
         @NonNull
         public Builder addRoute(@NonNull String address, int prefixLength) {
             return addRoute(InetAddress.parseNumericAddress(address), prefixLength);
+        }
+
+        /**
+         * Convenience method exclude a network route from the VPN interface
+         * using a numeric address string. See {@link InetAddress} for the
+         * definitions of numeric address formats.
+         *
+         * @throws IllegalArgumentException if the route is invalid.
+         * @see #excludeRoute(InetAddress, int)
+         */
+        @NonNull
+        public Builder excludeRoute(@NonNull String address, int prefixLength) {
+            return excludeRoute(InetAddress.parseNumericAddress(address), prefixLength);
+        }
+
+        /**
+         * Exclude a network route from the VPN interface. Both IPv4 and IPv6
+         * routes are supported.
+         *
+         * @throws IllegalArgumentException if the route is invalid.
+         */
+        @NonNull
+        public Builder excludeRoute(@NonNull InetAddress address, int prefixLength) {
+            addRoute(address, prefixLength, RouteInfo.RTN_THROW);
+            return this;
         }
 
         /**
@@ -898,6 +952,20 @@ public class VpnService extends Service {
             } catch (RemoteException e) {
                 throw new IllegalStateException(e);
             }
+        }
+
+        private int findRouteIndexByDestination(RouteInfo route) {
+            for (int i = 0; i < mRoutes.size(); i++) {
+                if (mRoutes.get(i).getDestination().equals(route.getDestination())) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        /** @hide **/
+        public List<RouteInfo> getRoutes() {
+            return mRoutes;
         }
     }
 }
