@@ -85,16 +85,13 @@ public final class RouteInfo implements Parcelable {
     private final String mInterface;
 
 
-    /** Unicast route. @hide */
-    @SystemApi
+    /** Unicast route. */
     public static final int RTN_UNICAST = 1;
 
-    /** Unreachable route. @hide */
-    @SystemApi
+    /** Unreachable route. */
     public static final int RTN_UNREACHABLE = 7;
 
-    /** Throw route. @hide */
-    @SystemApi
+    /** Throw route. */
     public static final int RTN_THROW = 9;
 
     /**
@@ -390,10 +387,7 @@ public final class RouteInfo implements Parcelable {
      * Retrieves the type of this route.
      *
      * @return The type of this route; one of the {@code RTN_xxx} constants defined in this class.
-     *
-     * @hide
      */
-    @SystemApi
     @RouteType
     public int getType() {
         return mType;
