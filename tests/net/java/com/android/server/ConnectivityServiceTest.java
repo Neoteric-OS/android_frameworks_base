@@ -1338,8 +1338,8 @@ public class ConnectivityServiceTest {
         when(mPackageManager.getPackageInfoAsUser(eq(testPackageName), anyInt(),
                 eq(UserHandle.getCallingUserId()))).thenReturn(testPackageInfo);
 
-        when(mPackageManager.getInstalledPackages(eq(GET_PERMISSIONS | MATCH_ANY_USER))).thenReturn(
-                Arrays.asList(new PackageInfo[] {
+        when(mPackageManager.getInstalledPackagesAsUser(eq(GET_PERMISSIONS), eq(VPN_USER)))
+                .thenReturn(Arrays.asList(new PackageInfo[] {
                         buildPackageInfo(/* SYSTEM */ false, APP1_UID),
                         buildPackageInfo(/* SYSTEM */ false, APP2_UID),
                         buildPackageInfo(/* SYSTEM */ false, VPN_UID)

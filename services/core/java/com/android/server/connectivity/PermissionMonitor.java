@@ -21,7 +21,6 @@ import static android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS;
 import static android.Manifest.permission.INTERNET;
 import static android.Manifest.permission.NETWORK_STACK;
 import static android.Manifest.permission.UPDATE_DEVICE_STATS;
-import static android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ANY_USER;
 import static android.net.INetd.PERMISSION_INTERNET;
@@ -37,6 +36,8 @@ import static android.os.Process.SYSTEM_UID;
 import static com.android.internal.util.ArrayUtils.convertToIntArray;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -59,7 +60,6 @@ import android.util.SparseIntArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.LocalServices;
 import com.android.server.SystemConfig;
@@ -72,7 +72,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
 
 /**
  * A utility class to inform Netd of UID permisisons.
@@ -122,6 +121,13 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         public int getDeviceFirstSdkInt() {
             return Build.VERSION.FIRST_SDK_INT;
         }
+
+        /**
+         * Check whether given uid has specific permission.
+         */
+        public int uidPermission(@NonNull final String permission, final int uid) {
+            return ActivityManager.checkUidPermission(permission, uid);
+        }
     }
 
     public PermissionMonitor(@NonNull final Context context, @NonNull final INetd netd) {
@@ -148,44 +154,49 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         } else {
             loge("failed to get the PackageManagerInternal service");
         }
-        List<PackageInfo> apps = mPackageManager.getInstalledPackages(GET_PERMISSIONS
-                | MATCH_ANY_USER);
-        if (apps == null) {
-            loge("No apps");
-            return;
-        }
 
-        SparseIntArray netdPermsUids = new SparseIntArray();
-
-        for (PackageInfo app : apps) {
-            int uid = app.applicationInfo != null ? app.applicationInfo.uid : INVALID_UID;
-            if (uid < 0) {
-                continue;
-            }
-            mAllApps.add(UserHandle.getAppId(uid));
-
-            boolean isNetwork = hasNetworkPermission(app);
-            boolean hasRestrictedPermission = hasRestrictedNetworkPermission(app);
-
-            if (isNetwork || hasRestrictedPermission) {
-                Boolean permission = mApps.get(uid);
-                // If multiple packages share a UID (cf: android:sharedUserId) and ask for different
-                // permissions, don't downgrade (i.e., if it's already SYSTEM, leave it as is).
-                if (permission == null || permission == NETWORK) {
-                    mApps.put(uid, hasRestrictedPermission);
-                }
-            }
-
-            //TODO: unify the management of the permissions into one codepath.
-            int otherNetdPerms = getNetdPermissionMask(app.requestedPermissions,
-                    app.requestedPermissionsFlags);
-            netdPermsUids.put(uid, netdPermsUids.get(uid) | otherNetdPerms);
-        }
-
-        List<UserInfo> users = mUserManager.getUsers(true);  // exclude dying users
+        final List<UserInfo> users = mUserManager.getUsers(true);  // exclude dying users
         if (users != null) {
             for (UserInfo user : users) {
                 mUsers.add(user.id);
+            }
+        }
+
+        final SparseIntArray netdPermsAppIds = new SparseIntArray();
+
+        for (int userId : mUsers) {
+            final List<PackageInfo> apps =
+                    mPackageManager.getInstalledPackagesAsUser(GET_PERMISSIONS, userId);
+            if (apps == null) {
+                loge("No apps for userId=" + userId);
+                continue;
+            }
+
+            for (PackageInfo app : apps) {
+                final int uid = app.applicationInfo != null ? app.applicationInfo.uid : INVALID_UID;
+                if (uid < 0) {
+                    continue;
+                }
+                final int appId = UserHandle.getAppId(uid);
+                mAllApps.add(appId);
+
+                final boolean isNetwork = hasPermission(CHANGE_NETWORK_STATE, uid);
+                final boolean hasRestrictedPermission =
+                        hasRestrictedNetworkPermission(app.applicationInfo, uid);
+
+                if (isNetwork || hasRestrictedPermission) {
+                    Boolean permission = mApps.get(appId);
+                    // If multiple packages share an app id (cf: android:sharedUserId) and ask for
+                    // different permissions, don't downgrade (i.e., if it's already SYSTEM, leave
+                    // it as is).
+                    if (permission == null || permission == NETWORK) {
+                        mApps.put(appId, hasRestrictedPermission);
+                    }
+                }
+
+                //TODO: unify the management of the permissions into one codepath.
+                final int otherNetdPerms = getNetdPermissionMask(uid);
+                netdPermsAppIds.put(appId, netdPermsAppIds.get(appId) | otherNetdPerms);
             }
         }
 
@@ -199,14 +210,13 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
             if (perms != null) {
                 netdPermission |= perms.contains(UPDATE_DEVICE_STATS)
                         ? PERMISSION_UPDATE_DEVICE_STATS : 0;
-                netdPermission |= perms.contains(INTERNET)
-                        ? PERMISSION_INTERNET : 0;
+                netdPermission |= perms.contains(INTERNET) ? PERMISSION_INTERNET : 0;
             }
-            netdPermsUids.put(uid, netdPermsUids.get(uid) | netdPermission);
+            netdPermsAppIds.put(uid, netdPermsAppIds.get(uid) | netdPermission);
         }
         log("Users: " + mUsers.size() + ", Apps: " + mApps.size());
         update(mUsers, mApps, true);
-        sendPackagePermissionsToNetd(netdPermsUids);
+        sendPackagePermissionsToNetd(netdPermsAppIds);
     }
 
     @VisibleForTesting
@@ -215,49 +225,35 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
     }
 
     @VisibleForTesting
-    boolean hasPermission(@NonNull final PackageInfo app, @NonNull final String permission) {
-        if (app.requestedPermissions == null || app.requestedPermissionsFlags == null) {
-            return false;
-        }
-        final int index = ArrayUtils.indexOf(app.requestedPermissions, permission);
-        if (index < 0 || index >= app.requestedPermissionsFlags.length) return false;
-        return (app.requestedPermissionsFlags[index] & REQUESTED_PERMISSION_GRANTED) != 0;
+    boolean hasPermission(@NonNull final String permission, final int uid) {
+        return mDeps.uidPermission(permission, uid) == PackageManager.PERMISSION_GRANTED;
     }
 
     @VisibleForTesting
-    boolean hasNetworkPermission(@NonNull final PackageInfo app) {
-        return hasPermission(app, CHANGE_NETWORK_STATE);
-    }
-
-    @VisibleForTesting
-    boolean hasRestrictedNetworkPermission(@NonNull final PackageInfo app) {
-        // TODO : remove this check in the future(b/31479477). All apps should just
+    boolean hasRestrictedNetworkPermission(@Nullable final ApplicationInfo appInfo, final int uid) {
+        if (appInfo == null) return false;
+        // TODO : remove this check in the future(b/162295056). All apps should just
         // request the appropriate permission for their use case since android Q.
-        if (app.applicationInfo != null) {
-            // Backward compatibility for b/114245686, on devices that launched before Q daemons
-            // and apps running as the system UID are exempted from this check.
-            if (app.applicationInfo.uid == SYSTEM_UID && mDeps.getDeviceFirstSdkInt() < VERSION_Q) {
-                return true;
-            }
-
-            if (app.applicationInfo.targetSdkVersion < VERSION_Q
-                    && isVendorApp(app.applicationInfo)) {
-                return true;
-            }
+        if ((appInfo.targetSdkVersion < VERSION_Q && isVendorApp(appInfo))
+                // Backward compatibility for b/114245686, on devices that launched before Q daemons
+                // and apps running as the system UID are exempted from this check.
+                || (UserHandle.getAppId(appInfo.uid) == SYSTEM_UID
+                        && mDeps.getDeviceFirstSdkInt() < VERSION_Q)) {
+            return true;
         }
 
-        return hasPermission(app, PERMISSION_MAINLINE_NETWORK_STACK)
-                || hasPermission(app, NETWORK_STACK)
-                || hasPermission(app, CONNECTIVITY_USE_RESTRICTED_NETWORKS);
+        return hasPermission(PERMISSION_MAINLINE_NETWORK_STACK, uid)
+                || hasPermission(NETWORK_STACK, uid)
+                || hasPermission(CONNECTIVITY_USE_RESTRICTED_NETWORKS, uid);
     }
 
     /** Returns whether the given uid has using background network permission. */
     public synchronized boolean hasUseBackgroundNetworksPermission(final int uid) {
         // Apps with any of the CHANGE_NETWORK_STATE, NETWORK_STACK, CONNECTIVITY_INTERNAL or
         // CONNECTIVITY_USE_RESTRICTED_NETWORKS permission has the permission to use background
-        // networks. mApps contains the result of checks for both hasNetworkPermission and
-        // hasRestrictedNetworkPermission. If app id is in the mApps list that means uid has one of
-        // permissions at least.
+        // networks. mApps contains the result of checks for both CHANGE_NETWORK_STATE permission
+        // and hasRestrictedNetworkPermission. If app id is in the mApps list that means uid has one
+        // of permissions at least.
         return mApps.containsKey(UserHandle.getAppId(uid));
     }
 
@@ -331,15 +327,16 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
     }
 
     @VisibleForTesting
-    protected Boolean highestPermissionForUid(Boolean currentPermission, String name) {
+    protected Boolean highestPermissionForUid(Boolean currentPermission, String name, int uid) {
         if (currentPermission == SYSTEM) {
             return currentPermission;
         }
         try {
             final PackageInfo app =
                     mPackageManager.getPackageInfo(name, GET_PERMISSIONS | MATCH_ANY_USER);
-            final boolean isNetwork = hasNetworkPermission(app);
-            final boolean hasRestrictedPermission = hasRestrictedNetworkPermission(app);
+            final boolean isNetwork = hasPermission(CHANGE_NETWORK_STATE, uid);
+            final boolean hasRestrictedPermission =
+                    hasRestrictedNetworkPermission(app.applicationInfo, uid);
             if (isNetwork || hasRestrictedPermission) {
                 currentPermission = hasRestrictedPermission;
             }
@@ -350,24 +347,28 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         return currentPermission;
     }
 
-    private int getPermissionForUid(final int uid) {
+    private int getPermissionForUids(final int[] uids) {
         int permission = PERMISSION_NONE;
-        // Check all the packages for this UID. The UID has the permission if any of the
-        // packages in it has the permission.
-        final String[] packages = mPackageManager.getPackagesForUid(uid);
-        if (packages != null && packages.length > 0) {
-            for (String name : packages) {
-                final PackageInfo app = getPackageInfo(name);
-                if (app != null && app.requestedPermissions != null) {
-                    permission |= getNetdPermissionMask(app.requestedPermissions,
-                            app.requestedPermissionsFlags);
-                }
+        int noPackgeCount = 0;
+        for (int uid : uids) {
+            final String[] packages = mPackageManager.getPackagesForUid(uid);
+            if (packages == null || packages.length <= 0) {
+                noPackgeCount++;
+                continue;
             }
-        } else {
-            // The last package of this uid is removed from device. Clean the package up.
-            permission = PERMISSION_UNINSTALLED;
+            permission |= getNetdPermissionMask(uid);
         }
-        return permission;
+        // Returns PERMISSION_UNINSTALLED if all uids are no package. Otherwise, returns permission
+        // that checks from any of uid.
+        return noPackgeCount == uids.length ? PERMISSION_UNINSTALLED : permission;
+    }
+
+    private int[] getUids(final int appId) {
+        final List<Integer> uids = new ArrayList<>();
+        for (int userId : mUsers) {
+            uids.add(UserHandle.getUid(userId, appId));
+        }
+        return convertToIntArray(uids);
     }
 
     /**
@@ -380,16 +381,21 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
      */
     @Override
     public synchronized void onPackageAdded(@NonNull final String packageName, final int appId) {
-        sendPackagePermissionsForAppId(appId, getPermissionForUid(appId));
+        final int[] uids = getUids(appId);
+        sendPackagePermissionsForAppId(appId, getPermissionForUids(uids));
 
-        // If multiple packages share a UID (cf: android:sharedUserId) and ask for different
-        // permissions, don't downgrade (i.e., if it's already SYSTEM, leave it as is).
-        final Boolean permission = highestPermissionForUid(mApps.get(appId), packageName);
-        if (permission != mApps.get(appId)) {
-            mApps.put(appId, permission);
+        final Boolean currentPermission = mApps.get(appId);
+        Boolean newPermission = currentPermission;
+        for (int uid : uids) {
+            // If multiple packages share an app id (cf: android:sharedUserId) and ask for different
+            // permissions, don't downgrade (i.e., if it's already SYSTEM, leave it as is).
+            newPermission = highestPermissionForUid(newPermission, packageName, uid);
+        }
+        if (newPermission != currentPermission) {
+            mApps.put(appId, newPermission);
 
             Map<Integer, Boolean> apps = new HashMap<>();
-            apps.put(appId, permission);
+            apps.put(appId, newPermission);
             update(mUsers, apps, true);
         }
 
@@ -397,11 +403,13 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         // This needs to happen after the mApps update above, since removeBypassingUids() depends
         // on mApps to check if the package can bypass VPN.
         for (Map.Entry<String, Set<UidRange>> vpn : mVpnUidRanges.entrySet()) {
-            if (UidRange.containsUid(vpn.getValue(), appId)) {
-                final Set<Integer> changedUids = new HashSet<>();
-                changedUids.add(appId);
-                removeBypassingUids(changedUids, /* vpnAppUid */ -1);
-                updateVpnUids(vpn.getKey(), changedUids, true);
+            for (int uid : uids) {
+                if (UidRange.containsUid(vpn.getValue(), uid)) {
+                    final Set<Integer> changedUids = new HashSet<>();
+                    changedUids.add(uid);
+                    removeBypassingUids(changedUids, /* vpnAppUid */ -1);
+                    updateVpnUids(vpn.getKey(), changedUids, true);
+                }
             }
         }
         mAllApps.add(appId);
@@ -417,35 +425,40 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
      */
     @Override
     public synchronized void onPackageRemoved(@NonNull final String packageName, final int appId) {
-        sendPackagePermissionsForAppId(appId, getPermissionForUid(appId));
+        final int[] uids = getUids(appId);
+        sendPackagePermissionsForAppId(appId, getPermissionForUids(uids));
 
         // If the newly-removed package falls within some VPN's uid range, update Netd with it.
         // This needs to happen before the mApps update below, since removeBypassingUids() depends
         // on mApps to check if the package can bypass VPN.
         for (Map.Entry<String, Set<UidRange>> vpn : mVpnUidRanges.entrySet()) {
-            if (UidRange.containsUid(vpn.getValue(), appId)) {
-                final Set<Integer> changedUids = new HashSet<>();
-                changedUids.add(appId);
-                removeBypassingUids(changedUids, /* vpnAppUid */ -1);
-                updateVpnUids(vpn.getKey(), changedUids, false);
+            for (int uid : uids) {
+                if (UidRange.containsUid(vpn.getValue(), uid)) {
+                    final Set<Integer> changedUids = new HashSet<>();
+                    changedUids.add(uid);
+                    removeBypassingUids(changedUids, /* vpnAppUid */ -1);
+                    updateVpnUids(vpn.getKey(), changedUids, false);
+                }
             }
         }
         // If the package has been removed from all users on the device, clear it form mAllApps.
         if (mPackageManager.getNameForUid(appId) == null) {
-            mAllApps.remove(UserHandle.getAppId(appId));
+            mAllApps.remove(appId);
         }
 
         Map<Integer, Boolean> apps = new HashMap<>();
         Boolean permission = null;
-        final String[] packages = mPackageManager.getPackagesForUid(appId);
-        if (packages != null && packages.length > 0) {
-            for (String name : packages) {
-                permission = highestPermissionForUid(permission, name);
-                if (permission == SYSTEM) {
-                    // An app with this UID still has the SYSTEM permission.
-                    // Therefore, this UID must already have the SYSTEM permission.
-                    // Nothing to do.
-                    return;
+        for (int uid : uids) {
+            String[] packages = mPackageManager.getPackagesForUid(uid);
+            if (packages != null && packages.length > 0) {
+                for (String name : packages) {
+                    permission = highestPermissionForUid(permission, name, uid);
+                    if (permission == SYSTEM) {
+                        // An app with this UID still has the SYSTEM permission.
+                        // Therefore, this UID must already have the SYSTEM permission.
+                        // Nothing to do.
+                        return;
+                    }
                 }
             }
         }
@@ -473,22 +486,16 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
      */
     @Override
     public synchronized void onPackageChanged(@NonNull final String packageName, final int appId) {
-        sendPackagePermissionsForAppId(appId, getPermissionForUid(appId));
+        sendPackagePermissionsForAppId(appId, getPermissionForUids(getUids(appId)));
     }
 
-    private static int getNetdPermissionMask(String[] requestedPermissions,
-                                             int[] requestedPermissionsFlags) {
+    private int getNetdPermissionMask(final int uid) {
         int permissions = PERMISSION_NONE;
-        if (requestedPermissions == null || requestedPermissionsFlags == null) return permissions;
-        for (int i = 0; i < requestedPermissions.length; i++) {
-            if (requestedPermissions[i].equals(INTERNET)
-                    && ((requestedPermissionsFlags[i] & REQUESTED_PERMISSION_GRANTED) != 0)) {
-                permissions |= PERMISSION_INTERNET;
-            }
-            if (requestedPermissions[i].equals(UPDATE_DEVICE_STATS)
-                    && ((requestedPermissionsFlags[i] & REQUESTED_PERMISSION_GRANTED) != 0)) {
-                permissions |= PERMISSION_UPDATE_DEVICE_STATS;
-            }
+        if (hasPermission(INTERNET, uid)) {
+            permissions |= PERMISSION_INTERNET;
+        }
+        if (hasPermission(UPDATE_DEVICE_STATS, uid)) {
+            permissions |= PERMISSION_UPDATE_DEVICE_STATS;
         }
         return permissions;
     }
@@ -637,10 +644,11 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
 
     /**
      * Called by packageManagerService to send IPC to netd. Grant or revoke the INTERNET
-     * and/or UPDATE_DEVICE_STATS permission of the uids in array.
+     * and/or UPDATE_DEVICE_STATS permission of the app ids in array.
      *
-     * @param netdPermissionsAppIds integer pairs of uids and the permission granted to it. If the
-     * permission is 0, revoke all permissions of that uid.
+     * @param netdPermissionsAppIds integer pairs of app ids and the permission granted to them. If
+     *                              the permission is PERMISSION_UNINSTALLED, revoke all permissions
+     *                              of that app id.
      *
      * @hide
      */
@@ -683,23 +691,23 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
             if (allPermissionAppIds.size() != 0) {
                 mNetd.trafficSetNetPermForUids(
                         PERMISSION_INTERNET | PERMISSION_UPDATE_DEVICE_STATS,
-                        ArrayUtils.convertToIntArray(allPermissionAppIds));
+                        convertToIntArray(allPermissionAppIds));
             }
             if (internetPermissionAppIds.size() != 0) {
                 mNetd.trafficSetNetPermForUids(PERMISSION_INTERNET,
-                        ArrayUtils.convertToIntArray(internetPermissionAppIds));
+                        convertToIntArray(internetPermissionAppIds));
             }
             if (updateStatsPermissionAppIds.size() != 0) {
                 mNetd.trafficSetNetPermForUids(PERMISSION_UPDATE_DEVICE_STATS,
-                        ArrayUtils.convertToIntArray(updateStatsPermissionAppIds));
+                        convertToIntArray(updateStatsPermissionAppIds));
             }
             if (noPermissionAppIds.size() != 0) {
                 mNetd.trafficSetNetPermForUids(PERMISSION_NONE,
-                        ArrayUtils.convertToIntArray(noPermissionAppIds));
+                        convertToIntArray(noPermissionAppIds));
             }
             if (uninstalledAppIds.size() != 0) {
                 mNetd.trafficSetNetPermForUids(PERMISSION_UNINSTALLED,
-                        ArrayUtils.convertToIntArray(uninstalledAppIds));
+                        convertToIntArray(uninstalledAppIds));
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Pass appId list of special permission failed." + e);
