@@ -1175,11 +1175,36 @@ public class AudioSystem
     public static native int getForceUse(int usage);
     /** @hide */
     @UnsupportedAppUsage
-    public static native int initStreamVolume(int stream, int indexMin, int indexMax);
+    public static int initStreamVolume(int stream, int indexMin, int indexMax) {
+        return initVolumeForAttributes(
+                new AudioAttributes.Builder().setInternalLegacyStreamType(stream).build(),
+                indexMin, indexMax);
+    }
+
     @UnsupportedAppUsage
-    private static native int setStreamVolumeIndex(int stream, int index, int device);
+    private static int setStreamVolumeIndex(int stream, int index, int device) {
+        return setVolumeIndexForAttributes(
+                new AudioAttributes.Builder().setInternalLegacyStreamType(stream).build(),
+                index,
+                device);
+    }
     /** @hide */
-    public static native int getStreamVolumeIndex(int stream, int device);
+    public static int getStreamVolumeIndex(int stream, int device) {
+        return getVolumeIndexForAttributes(
+                new AudioAttributes.Builder().setInternalLegacyStreamType(stream).build(), device);
+    }
+
+    /**
+     * @hide
+     * @param attributes the {@link AudioAttributes} to be considered
+     * @param indexMin to be applied
+     * @param indexMax to be applied
+     * @return command completion status.
+     */
+    @UnsupportedAppUsage
+    public static native int initVolumeForAttributes(
+            @NonNull AudioAttributes attributes, int indexMin, int indexMax);
+
     /**
      * @hide
      * set a volume for the given {@link AudioAttributes} and for all other stream that belong to
