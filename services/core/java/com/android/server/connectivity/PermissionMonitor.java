@@ -56,7 +56,6 @@ import android.system.OsConstants;
 import android.util.ArraySet;
 import android.util.Log;
 import android.util.SparseArray;
-import android.util.SparseIntArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
@@ -130,6 +129,41 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         }
     }
 
+    /**
+     * A data class to store each app id Netd permission information. Netd permissions includes
+     * PERMISSION_NETWORK, PERMISSION_SYSTEM, PERMISSION_INTERNET, PERMISSION_UPDATE_DEVICE_STATS
+     * and OR'd with the others. Default permission is PERMISSION_NONE and PERMISSION_UNINSTALLED
+     * will be set if all packages are removed from all users and app id.
+     */
+    public static class AppIdNetdPermissionInfo {
+        private final int mNetdPermissions;
+
+        AppIdNetdPermissionInfo() {
+            this(PERMISSION_NONE);
+        }
+
+        AppIdNetdPermissionInfo(int permissions) {
+            mNetdPermissions = permissions;
+        }
+
+        /** Plus given permissions and return new AppIdNetdPermissionInfo instance. */
+        public AppIdNetdPermissionInfo plusNetdPermissions(int permissions) {
+            return new AppIdNetdPermissionInfo(mNetdPermissions | permissions);
+        }
+
+        /** Return whether package is uninstalled. */
+        public boolean isPackageUninstalled() {
+            return mNetdPermissions == PERMISSION_UNINSTALLED;
+        }
+
+        /** Check that app id has given permissions */
+        public boolean hasNetdPermissions(final int permissions) {
+            if (isPackageUninstalled()) return false;
+            if (permissions == PERMISSION_NONE) return true;
+            return (mNetdPermissions & permissions) == permissions;
+        }
+    }
+
     public PermissionMonitor(@NonNull final Context context, @NonNull final INetd netd) {
         this(context, netd, new Dependencies());
     }
@@ -162,7 +196,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
             }
         }
 
-        final SparseIntArray netdPermsAppIds = new SparseIntArray();
+        final SparseArray<AppIdNetdPermissionInfo> netdPermsAppIds = new SparseArray<>();
 
         for (int userId : mUsers) {
             final List<PackageInfo> apps =
@@ -194,9 +228,13 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
                     }
                 }
 
+                // Skip already checked app id.
+                if (netdPermsAppIds.get(appId) != null) continue;
+
                 //TODO: unify the management of the permissions into one codepath.
-                final int otherNetdPerms = getNetdPermissionMask(uid);
-                netdPermsAppIds.put(appId, netdPermsAppIds.get(appId) | otherNetdPerms);
+                final AppIdNetdPermissionInfo permInfo =
+                        new AppIdNetdPermissionInfo(getNetdPermissionMask(uid));
+                netdPermsAppIds.put(appId, permInfo);
             }
         }
 
@@ -204,7 +242,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
                 SystemConfig.getInstance().getSystemPermissions();
         for (int i = 0; i < systemPermission.size(); i++) {
             ArraySet<String> perms = systemPermission.valueAt(i);
-            int uid = systemPermission.keyAt(i);
+            int appId = systemPermission.keyAt(i);
             int netdPermission = PERMISSION_NONE;
             // Get the uids of native services that have UPDATE_DEVICE_STATS or INTERNET permission.
             if (perms != null) {
@@ -212,7 +250,10 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
                         ? PERMISSION_UPDATE_DEVICE_STATS : 0;
                 netdPermission |= perms.contains(INTERNET) ? PERMISSION_INTERNET : 0;
             }
-            netdPermsAppIds.put(uid, netdPermsAppIds.get(uid) | netdPermission);
+            final AppIdNetdPermissionInfo permInfo = netdPermsAppIds.get(appId);
+            netdPermsAppIds.put(appId, permInfo != null
+                    ? permInfo.plusNetdPermissions(netdPermission)
+                    : new AppIdNetdPermissionInfo(netdPermission));
         }
         log("Users: " + mUsers.size() + ", Apps: " + mApps.size());
         update(mUsers, mApps, true);
@@ -348,7 +389,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         return currentPermission;
     }
 
-    private int getPermissionForUids(final int[] uids) {
+    private AppIdNetdPermissionInfo getPermissionForUids(final int[] uids) {
         int permission = PERMISSION_NONE;
         int noPackgeCount = 0;
         for (int uid : uids) {
@@ -361,7 +402,8 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         }
         // Returns PERMISSION_UNINSTALLED if all uids are no package. Otherwise, returns permission
         // that checks from any of uid.
-        return noPackgeCount == uids.length ? PERMISSION_UNINSTALLED : permission;
+        return new AppIdNetdPermissionInfo(noPackgeCount == uids.length
+                ? PERMISSION_UNINSTALLED : permission);
     }
 
     private int[] getUids(final int appId) {
@@ -632,29 +674,29 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
      * updated permission information to netd.
      *
      * @param appId the app id (base uid) of the package installed/uninstalled/changed.
-     * @param permissions the permissions of the app id and netd cares about.
+     * @param permissionInfo the permission info of given app id.
      *
      * @hide
      */
     @VisibleForTesting
-    void sendPackagePermissionsForAppId(int appId, int permissions) {
-        SparseIntArray netdPermissionsAppIds = new SparseIntArray();
-        netdPermissionsAppIds.put(appId, permissions);
-        sendPackagePermissionsToNetd(netdPermissionsAppIds);
+    void sendPackagePermissionsForAppId(int appId, AppIdNetdPermissionInfo permissionInfo) {
+        final SparseArray<AppIdNetdPermissionInfo> appIdsPermInfo = new SparseArray<>();
+        appIdsPermInfo.put(appId, permissionInfo);
+        sendPackagePermissionsToNetd(appIdsPermInfo);
     }
 
     /**
      * Called by packageManagerService to send IPC to netd. Grant or revoke the INTERNET
      * and/or UPDATE_DEVICE_STATS permission of the app ids in array.
      *
-     * @param netdPermissionsAppIds integer pairs of app ids and the permission granted to them. If
-     *                              the permission is PERMISSION_UNINSTALLED, revoke all permissions
-     *                              of that app id.
+     * @param appIdsPermInfo permission info array generated from each app id. If the app id
+     *                       permission is PERMISSION_NONE or PERMISSION_UNINSTALLED, revoke all
+     *                       permissions of that app id.
      *
      * @hide
      */
     @VisibleForTesting
-    void sendPackagePermissionsToNetd(SparseIntArray netdPermissionsAppIds) {
+    void sendPackagePermissionsToNetd(final SparseArray<AppIdNetdPermissionInfo> appIdsPermInfo) {
         if (mNetd == null) {
             Log.e(TAG, "Failed to get the netd service");
             return;
@@ -664,27 +706,20 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         ArrayList<Integer> updateStatsPermissionAppIds = new ArrayList<>();
         ArrayList<Integer> noPermissionAppIds = new ArrayList<>();
         ArrayList<Integer> uninstalledAppIds = new ArrayList<>();
-        for (int i = 0; i < netdPermissionsAppIds.size(); i++) {
-            final int permissions = netdPermissionsAppIds.valueAt(i);
-            final int appId = UserHandle.getAppId(netdPermissionsAppIds.keyAt(i));
-            switch(permissions) {
-                case (PERMISSION_INTERNET | PERMISSION_UPDATE_DEVICE_STATS):
-                    allPermissionAppIds.add(appId);
-                    break;
-                case PERMISSION_INTERNET:
-                    internetPermissionAppIds.add(appId);
-                    break;
-                case PERMISSION_UPDATE_DEVICE_STATS:
-                    updateStatsPermissionAppIds.add(appId);
-                    break;
-                case PERMISSION_NONE:
-                    noPermissionAppIds.add(appId);
-                    break;
-                case PERMISSION_UNINSTALLED:
-                    uninstalledAppIds.add(appId);
-                    break;
-                default:
-                    Log.e(TAG, "unknown permission type: " + permissions + "for appId: " + appId);
+        for (int i = 0; i < appIdsPermInfo.size(); i++) {
+            final int uid = appIdsPermInfo.keyAt(i);
+            final AppIdNetdPermissionInfo permInfo = appIdsPermInfo.valueAt(i);
+            if (permInfo.hasNetdPermissions(
+                    PERMISSION_INTERNET | PERMISSION_UPDATE_DEVICE_STATS)) {
+                allPermissionAppIds.add(uid);
+            } else if (permInfo.hasNetdPermissions(PERMISSION_INTERNET)) {
+                internetPermissionAppIds.add(uid);
+            } else if (permInfo.hasNetdPermissions(PERMISSION_UPDATE_DEVICE_STATS)) {
+                updateStatsPermissionAppIds.add(uid);
+            } else if (permInfo.isPackageUninstalled()) {
+                uninstalledAppIds.add(uid);
+            } else {
+                noPermissionAppIds.add(uid);
             }
         }
         try {
