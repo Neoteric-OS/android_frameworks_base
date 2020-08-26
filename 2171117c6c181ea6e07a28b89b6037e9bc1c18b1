@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "30d0bd45_f5744e7d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2020-08-26T19:04:48Z",
+      "side": 1,
+      "message": "please remove, app-specific details. the above is enough.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "2171117c6c181ea6e07a28b89b6037e9bc1c18b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc59c8d0_e0c0468c",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -99,6 +122,24 @@
       "writtenOn": "2020-08-24T03:41:25Z",
       "side": 1,
       "message": "@Kevibn Chyn Help me take a look, what else is wrong with this change ?",
+      "revId": "2171117c6c181ea6e07a28b89b6037e9bc1c18b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "712cf90b_73626d9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2020-08-26T19:04:48Z",
+      "side": 1,
+      "message": "It would be better if we did:\n\nClientMonitor.java:\n    @Override\n    public void binderDied() {\n        if (isAlreadyDone) {\n            Slog.w(getLogTag(), \"Binder died but client is finished, ignoring\");\n            return;\n        }\n        // If the current client dies we should cancel the current operation.\n        Slog.e(getLogTag(), \"Binder died, cancelling client\");\n        stop(false /* initiatedByClient */);\n        mToken \u003d null;\n        mListener \u003d null;\n    }\n\nAuthenticationClient.java, simplest place seems to be after line 219:\n  result \u003d lockoutMode !\u003d LOCKOUT_NONE; // in a lockout mode\n  if (result) { // locked out\n    mAlreadyDone \u003d true; \n  }",
+      "parentUuid": "42947151_805e501d",
       "revId": "2171117c6c181ea6e07a28b89b6037e9bc1c18b1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
