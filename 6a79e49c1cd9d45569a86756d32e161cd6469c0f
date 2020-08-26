@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a258e4e_b88741a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1403772
+      },
+      "writtenOn": "2020-08-26T22:20:33Z",
+      "side": 1,
+      "message": "Google merged the change @ https://android-review.googlesource.com/c/platform/frameworks/base/+/1210668",
+      "revId": "6a79e49c1cd9d45569a86756d32e161cd6469c0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
