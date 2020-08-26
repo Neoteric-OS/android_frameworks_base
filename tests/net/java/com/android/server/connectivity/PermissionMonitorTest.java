@@ -34,7 +34,7 @@ import static android.net.INetd.PERMISSION_NONE;
 import static android.net.INetd.PERMISSION_SYSTEM;
 import static android.net.INetd.PERMISSION_UNINSTALLED;
 import static android.net.INetd.PERMISSION_UPDATE_DEVICE_STATS;
-import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
+import static android.os.Process.NETWORK_STACK_UID;
 import static android.os.Process.SYSTEM_UID;
 
 import static com.android.server.connectivity.PermissionMonitor.AppIdNetdPermissionInfo;
@@ -239,14 +239,15 @@ public class PermissionMonitorTest {
     public void testHasRestrictedNetworkPermission() {
         assertRestrictedNetworkPermission(false, MOCK_UID1);
         assertRestrictedNetworkPermission(false, MOCK_UID1, CHANGE_NETWORK_STATE);
-        assertRestrictedNetworkPermission(true, MOCK_UID1, NETWORK_STACK);
+        assertRestrictedNetworkPermission(false, MOCK_UID1, NETWORK_STACK);
         assertRestrictedNetworkPermission(false, MOCK_UID1, CONNECTIVITY_INTERNAL);
         assertRestrictedNetworkPermission(true, MOCK_UID1, CONNECTIVITY_USE_RESTRICTED_NETWORKS);
         assertRestrictedNetworkPermission(false, MOCK_UID1, CHANGE_WIFI_STATE);
-        assertRestrictedNetworkPermission(true, MOCK_UID1, PERMISSION_MAINLINE_NETWORK_STACK);
 
-        assertFalse(mPermissionMonitor.hasRestrictedNetworkPermission(MOCK_UID2));
-        assertFalse(mPermissionMonitor.hasRestrictedNetworkPermission(SYSTEM_UID));
+        assertRestrictedNetworkPermission(false, MOCK_UID2);
+        assertRestrictedNetworkPermission(false, SYSTEM_UID);
+        assertRestrictedNetworkPermission(true, SYSTEM_UID, NETWORK_STACK);
+        assertRestrictedNetworkPermission(true, NETWORK_STACK_UID);
     }
 
     private boolean wouldBeCarryoverPackage(String partition, int targetSdkVersion, int uid) {
@@ -294,16 +295,23 @@ public class PermissionMonitorTest {
 
     @Test
     public void testHasUseBackgroundNetworksPermission() throws Exception {
+        // MOCK_UID1
         assertFalse(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID1));
         assertBackgroundPermission(false, "mock1", MOCK_UID1);
         assertBackgroundPermission(false, "mock2", MOCK_UID1, CONNECTIVITY_INTERNAL);
-        assertBackgroundPermission(true, "mock3", MOCK_UID1, NETWORK_STACK);
+        assertBackgroundPermission(true, "mock3", MOCK_UID1, CHANGE_NETWORK_STATE);
 
+        // MOCK_UID2
         assertFalse(mPermissionMonitor.hasUseBackgroundNetworksPermission(MOCK_UID2));
         assertBackgroundPermission(false, "mock4", MOCK_UID2);
         assertBackgroundPermission(true, "mock5", MOCK_UID2,
                 CONNECTIVITY_USE_RESTRICTED_NETWORKS);
 
+        // NETWORK_STACK_UID
+        assertFalse(mPermissionMonitor.hasUseBackgroundNetworksPermission(NETWORK_STACK_UID));
+        assertBackgroundPermission(true, "networkStack", NETWORK_STACK_UID);
+
+        // SYSTEM_UID
         assertFalse(mPermissionMonitor.hasUseBackgroundNetworksPermission(SYSTEM_UID));
 
         doReturn(VERSION_P).when(mDeps).getDeviceFirstSdkInt();
@@ -315,7 +323,7 @@ public class PermissionMonitorTest {
 
         doReturn(VERSION_Q).when(mDeps).getDeviceFirstSdkInt();
         assertBackgroundPermission(false, "system2", SYSTEM_UID);
-        assertBackgroundPermission(true, "system2", SYSTEM_UID, CHANGE_NETWORK_STATE);
+        assertBackgroundPermission(true, "system3", SYSTEM_UID, NETWORK_STACK);
     }
 
     @Test

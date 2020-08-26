@@ -29,8 +29,8 @@ import static android.net.INetd.PERMISSION_NONE;
 import static android.net.INetd.PERMISSION_SYSTEM;
 import static android.net.INetd.PERMISSION_UNINSTALLED;
 import static android.net.INetd.PERMISSION_UPDATE_DEVICE_STATS;
-import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
 import static android.os.Process.INVALID_UID;
+import static android.os.Process.NETWORK_STACK_UID;
 import static android.os.Process.SYSTEM_UID;
 
 import static com.android.internal.util.ArrayUtils.convertToIntArray;
@@ -69,7 +69,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -293,8 +292,10 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
 
     @VisibleForTesting
     boolean hasRestrictedNetworkPermission(final int uid) {
-        return hasPermission(PERMISSION_MAINLINE_NETWORK_STACK, uid)
-                || hasPermission(NETWORK_STACK, uid)
+        // Only NETWORK_STACK_UID can hold MAINLINE_NETWORK_STACK, so it's enough to check uid only.
+        return (uid == NETWORK_STACK_UID)
+                // Only InProcessNetworkStack(SYSTEM_UID) or system service can hold NETWORK_STACK.
+                || ((uid == SYSTEM_UID) && hasPermission(NETWORK_STACK, uid))
                 || hasPermission(CONNECTIVITY_USE_RESTRICTED_NETWORKS, uid);
     }
 
