@@ -273,8 +273,11 @@ public final class ComponentName implements Parcelable, Cloneable, Comparable<Co
      */
     public static @Nullable ComponentName unflattenFromString(@NonNull String str) {
         int sep = str.indexOf('/');
-        if (sep < 0 || (sep+1) >= str.length()) {
+        if (sep < 0) {
             return null;
+        }
+        if (sep + 1 == str.length()) {
+            return new ComponentName(str.substring(0, str.length() - 1), "");
         }
         String pkg = str.substring(0, sep);
         String cls = str.substring(sep+1);
