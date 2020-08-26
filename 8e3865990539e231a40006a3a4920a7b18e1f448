@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "735efd4a_9921aaf8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1358097
+      },
+      "writtenOn": "2020-08-26T11:07:05Z",
+      "side": 1,
+      "message": "Hi, Yu-Han! \n\nPlease assist us to merge this patch.\n\nBest regards, Dmytro Gamazin",
+      "revId": "8e3865990539e231a40006a3a4920a7b18e1f448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
