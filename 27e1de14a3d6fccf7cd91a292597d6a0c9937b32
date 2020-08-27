@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69d0ee5b_b5b6a791",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-08-27T16:02:50Z",
+      "side": 1,
+      "message": "Actually, I mean to abandon the master CL :-(",
+      "revId": "27e1de14a3d6fccf7cd91a292597d6a0c9937b32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
