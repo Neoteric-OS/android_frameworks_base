@@ -16,6 +16,23 @@
       "revId": "27e1de14a3d6fccf7cd91a292597d6a0c9937b32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9aa1fed_424b2107",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-08-27T21:44:15Z",
+      "side": 1,
+      "message": "I don\u0027t tink we can merge in this branch, so let\u0027s just keep this CL open...",
+      "revId": "27e1de14a3d6fccf7cd91a292597d6a0c9937b32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
