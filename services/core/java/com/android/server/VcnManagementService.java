@@ -16,9 +16,13 @@
 
 package com.android.server;
 
+import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
+import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionTrackerCallback;
+
 import static java.util.Objects.requireNonNull;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkProvider;
@@ -43,6 +47,7 @@ import android.util.Slog;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
+import com.android.server.vcn.TelephonySubscriptionTracker;
 import com.android.server.vcn.Vcn;
 import com.android.server.vcn.VcnContext;
 import com.android.server.vcn.util.PersistableBundleUtils;
@@ -52,6 +57,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 
 /**
  * VcnManagementService manages Virtual Carrier Network profiles and lifecycles.
@@ -108,13 +115,17 @@ import java.util.Map;
  *
  * @hide
  */
-public class VcnManagementService extends IVcnManagementService.Stub {
+public class VcnManagementService extends IVcnManagementService.Stub
+        implements TelephonySubscriptionTrackerCallback {
     @NonNull private static final String TAG = VcnManagementService.class.getSimpleName();
 
     public static final boolean VDBG = false; // STOPSHIP: if true
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static final String VCN_CONFIG_FILE = "/data/system/vcn/configs.xml";
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    static final long CARRIER_PRIVILEGES_LOST_TEARDOWN_DELAY_MS = TimeUnit.SECONDS.toMillis(30);
 
     /* Binder context for this service */
     @NonNull private final Context mContext;
@@ -123,6 +134,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @NonNull private final Looper mLooper;
     @NonNull private final Handler mHandler;
     @NonNull private final VcnNetworkProvider mNetworkProvider;
+    @NonNull private final TelephonySubscriptionTracker mTelephonySubscriptionTracker;
     @NonNull private final VcnContext mVcnContext;
 
     @GuardedBy("mLock")
@@ -132,6 +144,10 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @GuardedBy("mLock")
     @NonNull
     private final Map<ParcelUuid, Vcn> mVcns = new ArrayMap<>();
+
+    @GuardedBy("mLock")
+    @Nullable
+    private TelephonySubscriptionSnapshot mLastSnapshot = null;
 
     @NonNull private final Object mLock = new Object();
 
@@ -145,6 +161,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         mLooper = mDeps.getLooper();
         mHandler = new Handler(mLooper);
         mNetworkProvider = new VcnNetworkProvider(mContext, mLooper);
+        mTelephonySubscriptionTracker =
+                mDeps.newTelephonySubscriptionTracker(mContext, mLooper, this);
 
         mConfigDiskRwHelper = mDeps.newPersistableBundleLockingReadWriteHelper(VCN_CONFIG_FILE);
         mVcnContext = mDeps.newVcnContext(mContext, mLooper, mNetworkProvider);
@@ -181,7 +199,11 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                             mConfigs.put(entry.getKey(), entry.getValue());
                         }
                     }
-                    // TODO: Trigger re-evaluation of active VCNs; start/stop VCNs as needed.
+
+                    // If subscriptions have been loaded, re-evaluate, and start/stop VCNs.
+                    if (mLastSnapshot != null) {
+                        onNewSnapshot(mLastSnapshot);
+                    }
                 }
             }
         });
@@ -208,6 +230,14 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 }
             }
             return mHandlerThread.getLooper();
+        }
+
+        /** Creates a new VcnInstance using the provided configuration */
+        public TelephonySubscriptionTracker newTelephonySubscriptionTracker(
+                @NonNull Context context,
+                @NonNull Looper looper,
+                @NonNull TelephonySubscriptionTrackerCallback callback) {
+            return new TelephonySubscriptionTracker(context, new Handler(looper), callback);
         }
 
         /**
@@ -256,6 +286,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         mContext.getSystemService(ConnectivityManager.class)
                 .registerNetworkProvider(mNetworkProvider);
+        mTelephonySubscriptionTracker.register();
     }
 
     private void enforcePrimaryUser() {
@@ -302,14 +333,73 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 "Carrier privilege required for subscription group to set VCN Config");
     }
 
+    /**
+     * Handles subscription group changes, as notified by {@link TelephonySubscriptionTracker}
+     *
+     * <p>Start any unstarted VCN instances
+     *
+     * @hide
+     */
+    public void onNewSnapshot(@NonNull TelephonySubscriptionSnapshot snapshot) {
+        // Startup VCN instances
+        synchronized (mLock) {
+            mLastSnapshot = snapshot;
+
+            // Start any VCN instances as necessary
+            for (Entry<ParcelUuid, VcnConfig> entry : mConfigs.entrySet()) {
+                if (snapshot.getActiveSubscriptionGroups().contains(entry.getKey())) {
+                    // TODO: Add checks to ensure provisioning app is currently carrier privileged
+                    //       on this subscription
+                    maybeStartVcnLocked(entry.getKey(), entry.getValue());
+
+                    // Cancel any scheduled teardowns for active subscriptions
+                    mHandler.removeCallbacksAndMessages(mVcns.get(entry.getKey()));
+                }
+            }
+
+            // Schedule teardown of any VCN instances that have lost carrier privileges (after a
+            // delay)
+            for (Entry<ParcelUuid, Vcn> entry : mVcns.entrySet()) {
+                if (!snapshot.getActiveSubscriptionGroups().contains(entry.getKey())) {
+                    final ParcelUuid uuidToTeardown = entry.getKey();
+                    final Vcn instanceToTeardown = entry.getValue();
+
+                    mHandler.postDelayed(() -> {
+                        synchronized (mLock) {
+                            // Guard against case where this is run after a old instance was torn
+                            // down, and a new instance was started. Verify to ensure correct
+                            // instance is torn down. This could happen as a result of a Carrier App
+                            // manually removing/adding a VcnConfig.
+                            if (mVcns.get(uuidToTeardown) == instanceToTeardown) {
+                                mVcns.remove(uuidToTeardown).teardownAsynchronously();
+                            }
+                        }
+                    }, instanceToTeardown, CARRIER_PRIVILEGES_LOST_TEARDOWN_DELAY_MS);
+                }
+            }
+        }
+    }
+
+    @GuardedBy("mLock")
+    private void maybeStartVcnLocked(
+            @NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config) {
+        if (!mVcns.containsKey(subscriptionGroup)) {
+            Slog.v(TAG, "Starting VCN config for subGrp: " + subscriptionGroup);
+
+            final Vcn newInstance = mDeps.newVcn(mVcnContext, subscriptionGroup, config);
+            mVcns.put(subscriptionGroup, newInstance);
+        }
+    }
+
     @GuardedBy("mLock")
     private void startOrUpdateVcnLocked(
             @NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config) {
+        Slog.v(TAG, "Starting or updating VCN config for subGrp: " + subscriptionGroup);
+
         if (mVcns.containsKey(subscriptionGroup)) {
             mVcns.get(subscriptionGroup).updateConfig(config);
         } else {
-            final Vcn newInstance = mDeps.newVcn(mVcnContext, subscriptionGroup, config);
-            mVcns.put(subscriptionGroup, newInstance);
+            maybeStartVcnLocked(subscriptionGroup, config);
         }
     }
 
@@ -322,6 +412,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     public void setVcnConfig(@NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config) {
         requireNonNull(subscriptionGroup, "subscriptionGroup was null");
         requireNonNull(config, "config was null");
+        Slog.v(TAG, "VCN config updated for subGrp: " + subscriptionGroup);
 
         enforceCallingUserAndCarrierPrivilege(subscriptionGroup);
 
@@ -346,6 +437,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @Override
     public void clearVcnConfig(@NonNull ParcelUuid subscriptionGroup) {
         requireNonNull(subscriptionGroup, "subscriptionGroup was null");
+        Slog.v(TAG, "VCN config cleared for subGrp: " + subscriptionGroup);
 
         enforceCallingUserAndCarrierPrivilege(subscriptionGroup);
 
