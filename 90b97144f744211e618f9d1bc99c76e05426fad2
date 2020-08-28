@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81c5d102_2191b9c2",
+        "filename": "services/core/java/com/android/server/biometrics/AuthenticationClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2020-08-28T17:28:44Z",
+      "side": 1,
+      "message": "nit: \"locked\"",
+      "range": {
+        "startLine": 220,
+        "startChar": 32,
+        "endLine": 220,
+        "endChar": 38
+      },
+      "revId": "90b97144f744211e618f9d1bc99c76e05426fad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc37e4f_cf87f92d",
+        "filename": "services/core/java/com/android/server/biometrics/BiometricServiceBase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2020-08-28T17:28:44Z",
+      "side": 1,
+      "message": "nit: can remove empty line change",
+      "revId": "90b97144f744211e618f9d1bc99c76e05426fad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
