@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3364dfaa_413a7bdf",
+        "filename": "services/core/java/com/android/server/biometrics/AuthenticationClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2020-08-29T01:05:10Z",
+      "side": 1,
+      "message": "Fixed in internal branch",
+      "parentUuid": "81c5d102_2191b9c2",
+      "range": {
+        "startLine": 220,
+        "startChar": 32,
+        "endLine": 220,
+        "endChar": 38
+      },
+      "revId": "90b97144f744211e618f9d1bc99c76e05426fad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dc37e4f_cf87f92d",
         "filename": "services/core/java/com/android/server/biometrics/BiometricServiceBase.java",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "90b97144f744211e618f9d1bc99c76e05426fad2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220c4aae_25b21eb6",
+        "filename": "services/core/java/com/android/server/biometrics/BiometricServiceBase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2020-08-29T01:05:10Z",
+      "side": 1,
+      "message": "Fixed in internal branch",
+      "parentUuid": "4dc37e4f_cf87f92d",
+      "revId": "90b97144f744211e618f9d1bc99c76e05426fad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
