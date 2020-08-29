@@ -620,7 +620,7 @@ class TaskLaunchParamsModifier implements LaunchParamsModifier {
         // Default size, which is letterboxing/pillarboxing in display. That's to say the large
         // dimension of default size is the small dimension of display size, and the small dimension
         // of default size is calculated to keep the same aspect ratio as the display's.
-        Rect displayBounds = display.getBounds();
+        Rect displayBounds = display.getAppBounds();
         final int portraitHeight = Math.min(displayBounds.width(), displayBounds.height());
         final int otherDimension = Math.max(displayBounds.width(), displayBounds.height());
         final int portraitWidth = (portraitHeight * portraitHeight) / otherDimension;
@@ -657,7 +657,7 @@ class TaskLaunchParamsModifier implements LaunchParamsModifier {
     private void centerBounds(@NonNull ActivityDisplay display, int width, int height,
             @NonNull Rect inOutBounds) {
         if (inOutBounds.isEmpty()) {
-            display.getBounds(inOutBounds);
+            display.getAppBounds(inOutBounds);
         }
         final int left = inOutBounds.centerX() - width / 2;
         final int top = inOutBounds.centerY() - height / 2;
@@ -666,7 +666,7 @@ class TaskLaunchParamsModifier implements LaunchParamsModifier {
 
     private void adjustBoundsToFitInDisplay(@NonNull ActivityDisplay display,
             @NonNull Rect inOutBounds) {
-        final Rect displayBounds = display.getBounds();
+        final Rect displayBounds = display.getAppBounds();
 
         if (displayBounds.width() < inOutBounds.width()
                 || displayBounds.height() < inOutBounds.height()) {
@@ -732,7 +732,7 @@ class TaskLaunchParamsModifier implements LaunchParamsModifier {
                 taskBoundsToCheck.add(stack.getChildAt(j).getBounds());
             }
         }
-        adjustBoundsToAvoidConflict(display.getBounds(), taskBoundsToCheck, inOutBounds);
+        adjustBoundsToAvoidConflict(display.getAppBounds(), taskBoundsToCheck, inOutBounds);
     }
 
     /**

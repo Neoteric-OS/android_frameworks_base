@@ -59,6 +59,7 @@ import android.app.ActivityOptions;
 import android.app.WindowConfiguration;
 import android.content.res.Configuration;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.IBinder;
 import android.os.UserHandle;
 import android.util.IntArray;
@@ -66,6 +67,7 @@ import android.util.Slog;
 import android.util.proto.ProtoOutputStream;
 import android.view.Display;
 
+import android.view.DisplayInfo;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.server.am.EventLogTags;
 
@@ -199,6 +201,18 @@ class ActivityDisplay extends ConfigurationContainer<ActivityStack>
     @Override
     public void onInitializeOverrideConfiguration(Configuration config) {
         getRequestedOverrideConfiguration().updateFrom(config);
+    }
+
+    Rect getAppBounds() {
+        if (mDisplayContent != null && mDisplayContent.getDisplayInfo() != null) {
+            DisplayInfo displayInfo = mDisplayContent.getDisplayInfo();
+            return new Rect(0, 0, displayInfo.appWidth, displayInfo.appHeight);
+        }
+        return getBounds();
+    }
+
+    void getAppBounds(Rect bounds) {
+        bounds.set(getAppBounds());
     }
 
     void addChild(ActivityStack stack, int position) {
