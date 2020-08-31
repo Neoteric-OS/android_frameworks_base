@@ -1,0 +1,11 @@
+Code-Review+2: Eugene Susla <eugenesusla@google.com>
+Autosubmit+1: Eugene Susla <eugenesusla@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Bypass-Presubmit+1: Eugene Susla <eugenesusla@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Eugene Susla <eugenesusla@google.com>
+Submitted-at: Mon, 31 Aug 2020 19:31:17 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1415449
+Project: platform/frameworks/base
+Branch: refs/heads/master
