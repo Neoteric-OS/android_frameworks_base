@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6318f864_053a9bd1",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-09-01T19:48:00Z",
+      "side": 1,
+      "message": "This should probably be called KEY_CALL_BARRING_DEFAULT_SERVICE_CLASS_INT. Also, we can not link private APIs for public APIs. We do not have any fully public definitions for this, so can you please just list SERVICE_CLASS_NONE and SERVICE_CLASS_VOICE definitions (as I do not think there is any practical reason that the default service class would be any of the others).",
+      "range": {
+        "startLine": 231,
+        "startChar": 31,
+        "endLine": 231,
+        "endChar": 65
+      },
+      "revId": "c0aeda4a9180bbf14ecbb831107476a941f17933",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
