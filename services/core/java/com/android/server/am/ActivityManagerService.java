@@ -15130,7 +15130,10 @@ public class ActivityManagerService extends IActivityManager.Stub
                                         intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
                                 final boolean killProcess =
                                         !intent.getBooleanExtra(Intent.EXTRA_DONT_KILL_APP, false);
-                                final boolean fullUninstall = removed && !replacing;
+                                final boolean dataRemoved =
+                                        intent.getBooleanExtra(Intent.EXTRA_DATA_REMOVED, false);
+                                final boolean unavailable = removed && !replacing;
+                                final boolean fullUninstall = unavailable && dataRemoved;
                                 if (removed) {
                                     if (killProcess) {
                                         forceStopPackageLocked(ssp, UserHandle.getAppId(
@@ -15150,12 +15153,12 @@ public class ActivityManagerService extends IActivityManager.Stub
                                         // Remove all permissions granted from/to this package
                                         mUgmInternal.removeUriPermissionsForPackage(ssp, userId,
                                                 true, false);
-
-                                        mAtmInternal.removeRecentTasksByPackageName(ssp, userId);
-
-                                        mServices.forceStopPackageLocked(ssp, userId);
                                         mAtmInternal.onPackageUninstalled(ssp);
                                         mBatteryStatsService.notePackageUninstalled(ssp);
+                                    }
+                                    if (unavailable) {
+                                        mAtmInternal.removeRecentTasksByPackageName(ssp, userId);
+                                        mServices.forceStopPackageLocked(ssp, userId);
                                     }
                                 } else {
                                     if (killProcess) {
