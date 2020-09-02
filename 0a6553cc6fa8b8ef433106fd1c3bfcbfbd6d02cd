@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c99cf101_c1f138c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-09-02T11:17:25Z",
+      "side": 1,
+      "message": "rvc-dev will be pushed to AOSP pretty soon. Is there any urgent need to have these in AOSP?",
+      "revId": "0a6553cc6fa8b8ef433106fd1c3bfcbfbd6d02cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
