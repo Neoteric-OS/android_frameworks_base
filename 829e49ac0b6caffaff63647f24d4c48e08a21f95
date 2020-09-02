@@ -46,6 +46,30 @@
       "revId": "829e49ac0b6caffaff63647f24d4c48e08a21f95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af68e43e_4140a992",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2020-09-02T09:42:02Z",
+      "side": 1,
+      "message": "HdmiControlService using the enum values sounds good (or mapping to an IntDef). But I\u0027d keep that local to the Service side. HdmiControlManager should continue operating on the constants defined in HdmiDeviceInfo.",
+      "parentUuid": "8e9763cb_450e67ae",
+      "range": {
+        "startLine": 442,
+        "startChar": 8,
+        "endLine": 442,
+        "endChar": 21
+      },
+      "revId": "829e49ac0b6caffaff63647f24d4c48e08a21f95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
