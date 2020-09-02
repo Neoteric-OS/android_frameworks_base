@@ -1,0 +1,9 @@
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Bypass-Presubmit+1: Anton Hansson <hansson@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Jiyong Park <jiyong@google.com>
+Submitted-by: Anton Hansson <hansson@google.com>
+Submitted-at: Wed, 02 Sep 2020 14:21:43 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1346491
+Project: platform/frameworks/base
+Branch: refs/heads/master
