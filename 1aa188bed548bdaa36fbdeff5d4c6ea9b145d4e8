@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3c70db1_0d8c408c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-09-03T19:54:44Z",
+      "side": 1,
+      "message": "this is for an initial look at power, since I don\u0027t have any devices w/ more sophisticated measurement. Please TAL. Would appreciate any feedback, or if you think these could be made into something more useful.",
+      "revId": "1aa188bed548bdaa36fbdeff5d4c6ea9b145d4e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
