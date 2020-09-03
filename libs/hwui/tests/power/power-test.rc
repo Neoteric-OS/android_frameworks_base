@@ -1,0 +1,6 @@
+service hwuimacro.power-test /system/bin/sh /system/bin/power-test.sh
+    user root
+    group root
+    seclabel u:r:su:s0
+    disabled
+    oneshot
