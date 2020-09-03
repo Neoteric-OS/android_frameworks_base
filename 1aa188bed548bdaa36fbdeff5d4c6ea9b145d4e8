@@ -50,6 +50,24 @@
       "revId": "1aa188bed548bdaa36fbdeff5d4c6ea9b145d4e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "726140bf_68a120e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-09-03T21:10:56Z",
+      "side": 1,
+      "message": "We could try \u0027adb setprop ctl.class_stop hal\u0027 as well (and then start hwc and a few others), but I would have to see how tricky that is these days.\n\nAnyway, seems this script has bigger problems. I need to add a wakelock or change scheduling so that the script will still run.",
+      "parentUuid": "ea403684_3c675acc",
+      "revId": "1aa188bed548bdaa36fbdeff5d4c6ea9b145d4e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
