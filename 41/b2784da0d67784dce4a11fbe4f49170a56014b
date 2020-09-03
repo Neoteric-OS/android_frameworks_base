@@ -1,0 +1,14 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Ned Burns <pixel@google.com>
+Code-Review+2: Jay Aliomer <aaliomer@google.com>
+Code-Review+1: Jia Jia <jia.jia@zte.com.cn>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+1: Jia Jia <jia.jia@zte.com.cn>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Lint+2: Jia Jia <jia.jia@zte.com.cn>
+Verified+1: Jia Jia <jia.jia@zte.com.cn>
+Submitted-by: Ned Burns <pixel@google.com>
+Submitted-at: Thu, 03 Sep 2020 01:02:18 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1372978
+Project: platform/frameworks/base
+Branch: refs/heads/master
