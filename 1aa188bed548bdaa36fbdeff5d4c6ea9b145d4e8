@@ -16,6 +16,23 @@
       "revId": "1aa188bed548bdaa36fbdeff5d4c6ea9b145d4e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea403684_3c675acc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2020-09-03T20:27:11Z",
+      "side": 1,
+      "message": "once upon a time the tests/scripts/stop_runtime.sh worked for this. It kinda broke from all the treble services that spin \u0026 don\u0027t shut up, it could be nice to get that working again if we can. It seems to be in a similar spirit of this test which is \"stop the world except the bare dependencies the test needs which is just surfaceflinger\"\n\nI don\u0027t know if it\u0027s easier to do that via this approach or if there\u0027s an equivalent to \u0027adb shell stop\u0027 for HAL services, and then we can just re-launch the HWC service since I think that\u0027s all SF needs.",
+      "revId": "1aa188bed548bdaa36fbdeff5d4c6ea9b145d4e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
