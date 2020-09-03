@@ -1,0 +1,13 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: Koji Fukui <Koji.Fukui@sony.com>
+Autosubmit+1: Koji Fukui <Koji.Fukui@sony.com>
+Code-Review+2: Howard Ro <yro@google.com>
+Code-Review+2: Hung-ying Tyan <tyanh@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+DrNo-Review+1: Hung-ying Tyan <tyanh@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 03 Sep 2020 17:57:09 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1407048
+Project: platform/frameworks/base
+Branch: refs/heads/android10-gsi
