@@ -33,6 +33,23 @@
       "revId": "1aa188bed548bdaa36fbdeff5d4c6ea9b145d4e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d18a2879_249cb0ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2020-09-03T20:28:37Z",
+      "side": 1,
+      "message": "It was also really useful in creating some absolutely rock solid numbers, so more use for this idea than just power measurements.",
+      "revId": "1aa188bed548bdaa36fbdeff5d4c6ea9b145d4e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
