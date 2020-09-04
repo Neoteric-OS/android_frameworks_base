@@ -5360,8 +5360,7 @@ public class TelephonyManager {
     private static final long LISTEN_CODE_CHANGE = 147600208L;
 
     /**
-     * Registers a listener object to receive notification of changes
-     * in specified telephony states.
+     * Registers a listener object to receive notification of changes in specified telephony states.
      * <p>
      * To register a listener, pass a {@link PhoneStateListener} and specify at least one telephony
      * state of interest in the events argument.
@@ -5371,13 +5370,15 @@ public class TelephonyManager {
      * values.
      * <p>
      * To un-register a listener, pass the listener object and set the events argument to
-     * {@link PhoneStateListener#LISTEN_NONE LISTEN_NONE} (0).
+     * {@link PhoneStateListener#LISTEN_NONE} (0).
      *
      * If this TelephonyManager object has been created with {@link #createForSubscriptionId},
      * applies to the given subId. Otherwise, applies to
-     * {@link SubscriptionManager#getDefaultSubscriptionId()}. To listen events for multiple subIds,
+     * {@link SubscriptionManager#DEFAULT_SUBSCRIPTION_ID}. To listen events for multiple subIds,
      * pass a separate listener object to each TelephonyManager object created with
-     * {@link #createForSubscriptionId}.
+     * {@link #createForSubscriptionId}. Only {@link PhoneStateListener#LISTEN_CALL_STATE} event can
+     * be used to receive changes for all subIds through
+     * {@link SubscriptionManager#DEFAULT_SUBSCRIPTION_ID}.
      *
      * Note: if you call this method while in the middle of a binder transaction, you <b>must</b>
      * call {@link android.os.Binder#clearCallingIdentity()} before calling this method. A
@@ -5387,11 +5388,9 @@ public class TelephonyManager {
      * instability. If a process has registered too many listeners without unregistering them, it
      * may encounter an {@link IllegalStateException} when trying to register more listeners.
      *
-     * @param listener The {@link PhoneStateListener} object to register
-     *                 (or unregister)
-     * @param events The telephony state(s) of interest to the listener,
-     *               as a bitwise-OR combination of {@link PhoneStateListener}
-     *               LISTEN_ flags.
+     * @param listener The {@link PhoneStateListener} object to register (or unregister)
+     * @param events The telephony state(s) of interest to the listener, as a bitwise-OR combination
+     *               of {@link PhoneStateListener} LISTEN_ flags.
      */
     public void listen(PhoneStateListener listener, int events) {
         if (mContext == null) return;

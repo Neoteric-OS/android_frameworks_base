@@ -642,8 +642,7 @@ public class PhoneStateListener {
      * PhoneStateListener by {@link TelephonyManager#listen(PhoneStateListener, int)}.
      * If this TelephonyManager object was created with
      * {@link TelephonyManager#createForSubscriptionId(int)}, then the callback applies to the
-     * subId. Otherwise, this callback applies to
-     * {@link SubscriptionManager#getDefaultSubscriptionId()}.
+     * subId. Otherwise, this callback applies to all subIds.
      * <p>
      * Note: The state returned here may differ from that returned by
      * {@link TelephonyManager#getCallState()}. Receivers of this callback should be aware that

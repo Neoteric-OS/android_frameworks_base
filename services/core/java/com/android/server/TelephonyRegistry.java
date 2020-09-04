@@ -839,8 +839,8 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 r.callingFeatureId = callingFeatureId;
                 r.callerUid = Binder.getCallingUid();
                 r.callerPid = Binder.getCallingPid();
-                // Legacy applications pass SubscriptionManager.DEFAULT_SUB_ID,
-                // force all illegal subId to SubscriptionManager.DEFAULT_SUB_ID
+                // Legacy applications pass SubscriptionManager.DEFAULT_SUBSCRIPTION_ID,
+                // force all illegal subId to SubscriptionManager.DEFAULT_SUBSCRIPTION_ID
                 if (!SubscriptionManager.isValidSubscriptionId(subId)) {
                     r.subId = SubscriptionManager.DEFAULT_SUBSCRIPTION_ID;
                  } else {//APP specify subID
