@@ -996,8 +996,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mConnectivityDiagnosticsHandler =
                 new ConnectivityDiagnosticsHandler(mHandlerThread.getLooper());
 
-        mReleasePendingIntentDelayMs = Settings.Secure.getInt(context.getContentResolver(),
-                Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS, 5_000);
+        final ContentResolver cr = context.getContentResolver();
+        mReleasePendingIntentDelayMs = Settings.Secure.getIntForUser(cr,
+                Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS, 5_000,
+                cr.getUserId());
 
         mLingerDelayMs = mSystemProperties.getInt(LINGER_DELAY_PROPERTY, DEFAULT_LINGER_DELAY_MS);
 
