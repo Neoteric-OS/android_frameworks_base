@@ -4582,6 +4582,7 @@ public final class Settings {
                 pw.println("]");
             }
             pw.print(prefix); pw.print("  versionName="); pw.println(ps.pkg.mVersionName);
+            pw.print(prefix); pw.print("  usesNonSdkApi="); pw.println(pkg.isUsesNonSdkApi());
             pw.print(prefix); pw.print("  splits="); dumpSplitNames(pw, ps.pkg); pw.println();
             final int apkSigningVersion = ps.pkg.mSigningDetails.signatureSchemeVersion;
             pw.print(prefix); pw.print("  apkSigningVersion="); pw.println(apkSigningVersion);
