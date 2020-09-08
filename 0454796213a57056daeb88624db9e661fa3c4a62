@@ -36,6 +36,47 @@
     },
     {
       "key": {
+        "uuid": "d813f94c_e44cef83",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3566,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-09-08T18:44:22Z",
+      "side": 1,
+      "message": "Can we also drop \"Size\" from the method name?",
+      "parentUuid": "4c29bcdd_f41a88da",
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffdcfd4e_bb22069a",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3596,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-09-08T18:44:22Z",
+      "side": 1,
+      "message": "Can we just name this getDynamicAudioBuffer? It seems to create an instance of the BluetoothDynamicAudioBuffer class instead of just returning the size of the buffer.",
+      "range": {
+        "startLine": 3596,
+        "startChar": 49,
+        "endLine": 3596,
+        "endChar": 74
+      },
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef1f0641_6e91f19f",
         "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
         "patchSetId": 2
