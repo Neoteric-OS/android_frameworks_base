@@ -22,6 +22,30 @@
       "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4001033b_ab2d32bc",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-09-08T09:55:56Z",
+      "side": 1,
+      "message": "GMS needs to call this getCodecType() to know the codec type. According to the codec type, GMS will send the corresponding dynamic buffer size. So @UnsupportedAppUsage needs to be added here.",
+      "parentUuid": "ef1f0641_6e91f19f",
+      "range": {
+        "startLine": 394,
+        "startChar": 2,
+        "endLine": 394,
+        "endChar": 24
+      },
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
