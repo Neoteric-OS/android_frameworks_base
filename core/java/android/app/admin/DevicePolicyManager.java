@@ -6057,7 +6057,7 @@ public class DevicePolicyManager {
      */
     @SystemApi
     @TestApi
-    @SuppressLint("Doclava125")
+    @SuppressLint("RequiresPermission")
     public boolean isDeviceManaged() {
         try {
             return mService.hasDeviceOwner();
@@ -6093,7 +6093,7 @@ public class DevicePolicyManager {
      */
     @Deprecated
     @SystemApi
-    @SuppressLint("Doclava125")
+    @SuppressLint("RequiresPermission")
     public @Nullable String getDeviceInitializerApp() {
         return null;
     }
@@ -6105,7 +6105,7 @@ public class DevicePolicyManager {
      */
     @Deprecated
     @SystemApi
-    @SuppressLint("Doclava125")
+    @SuppressLint("RequiresPermission")
     public @Nullable ComponentName getDeviceInitializerComponent() {
         return null;
     }
@@ -9548,7 +9548,7 @@ public class DevicePolicyManager {
      */
     @SystemApi
     @TestApi
-    @SuppressLint("Doclava125")
+    @SuppressLint("RequiresPermission")
     public @Nullable CharSequence getDeviceOwnerOrganizationName() {
         try {
             return mService.getDeviceOwnerOrganizationName();

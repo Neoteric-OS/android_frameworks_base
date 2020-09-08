@@ -339,7 +339,7 @@ public final class HdmiControlManager {
      * See {@link HdmiDeviceInfo#DEVICE_AUDIO_SYSTEM}
      */
     @Nullable
-    @SuppressLint("Doclava125")
+    @SuppressLint("RequiresPermission")
     public HdmiClient getClient(int type) {
         if (mService == null) {
             return null;
@@ -369,7 +369,7 @@ public final class HdmiControlManager {
      * @return {@link HdmiPlaybackClient} instance. {@code null} on failure.
      */
     @Nullable
-    @SuppressLint("Doclava125")
+    @SuppressLint("RequiresPermission")
     public HdmiPlaybackClient getPlaybackClient() {
         return (HdmiPlaybackClient) getClient(HdmiDeviceInfo.DEVICE_PLAYBACK);
     }
@@ -384,7 +384,7 @@ public final class HdmiControlManager {
      * @return {@link HdmiTvClient} instance. {@code null} on failure.
      */
     @Nullable
-    @SuppressLint("Doclava125")
+    @SuppressLint("RequiresPermission")
     public HdmiTvClient getTvClient() {
         return (HdmiTvClient) getClient(HdmiDeviceInfo.DEVICE_TV);
     }
@@ -402,7 +402,7 @@ public final class HdmiControlManager {
      * @hide
      */
     @Nullable
-    @SuppressLint("Doclava125")
+    @SuppressLint("RequiresPermission")
     public HdmiAudioSystemClient getAudioSystemClient() {
         return (HdmiAudioSystemClient) getClient(HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
     }
@@ -419,7 +419,7 @@ public final class HdmiControlManager {
      */
     @Nullable
     @SystemApi
-    @SuppressLint("Doclava125")
+    @SuppressLint("RequiresPermission")
     public HdmiSwitchClient getSwitchClient() {
         return (HdmiSwitchClient) getClient(HdmiDeviceInfo.DEVICE_PURE_CEC_SWITCH);
     }
