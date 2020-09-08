@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "bf37e5e5_332bec9a",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3564,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-09-08T18:37:49Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need the @UnsupportedAppUsage annotation on any of these because they are new APIs. This annotation would allow the method to be called by 3P apps via reflection. They also require the BLUETOOTH_PRIVILEGED permission, so even if 3P apps call them, they would fail the permission check. We should instead make these @SystemApi which would allow them to be accessed by GMS, but not by 3P apps.",
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c29bcdd_f41a88da",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3566,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-09-08T18:37:49Z",
+      "side": 1,
+      "message": "Include the IntDef annotation created in BluetoothDynamicAudioBuffer.java for the return value",
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef1f0641_6e91f19f",
         "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
         "patchSetId": 2
@@ -43,6 +77,104 @@
         "endLine": 394,
         "endChar": 24
       },
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3fc98f7_0faa1d4c",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-09-08T18:37:49Z",
+      "side": 1,
+      "message": "We can make this @SystemApi instead. The class is annotated as hidden, so we will need to make the class @SystemApi as well and make sure all other methods in this class are annotated as @hide.",
+      "parentUuid": "4001033b_ab2d32bc",
+      "range": {
+        "startLine": 394,
+        "startChar": 2,
+        "endLine": 394,
+        "endChar": 24
+      },
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f646638_8ce9e9f7",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-09-08T18:37:49Z",
+      "side": 1,
+      "message": "We should make an IntDef for this grouping of constants and annotate methods to ensure we know what the possible values are!",
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2077aef_9612242e",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-09-08T18:37:49Z",
+      "side": 1,
+      "message": "IntDef for these as well!",
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc150443_447349a3",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-09-08T18:37:49Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need to call intValue() explicitly on these because they should be autoboxed.",
+      "range": {
+        "startLine": 72,
+        "startChar": 73,
+        "endLine": 72,
+        "endChar": 84
+      },
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a3dcad_ec3486c9",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-09-08T18:37:49Z",
+      "side": 1,
+      "message": "@SystemApi for all of these as well",
       "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
