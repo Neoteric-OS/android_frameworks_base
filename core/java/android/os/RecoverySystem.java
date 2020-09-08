@@ -417,7 +417,7 @@ public class RecoverySystem {
      * {@hide}
      */
     @SystemApi
-    @SuppressLint("Doclava125")
+    @SuppressLint("RequiresPermission")
     public static boolean verifyPackageCompatibility(File compatibilityFile) throws IOException {
         try (InputStream inputStream = new FileInputStream(compatibilityFile)) {
             return verifyPackageCompatibility(inputStream);

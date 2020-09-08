@@ -611,7 +611,7 @@ public final class ContextHubManager {
      *             register a {@link android.hardware.location.ContextHubClientCallback}.
      */
     @Deprecated
-    @SuppressLint("Doclava125")
+    @SuppressLint("RequiresPermission")
     public int registerCallback(@NonNull Callback callback) {
         return registerCallback(callback, null);
     }
@@ -645,7 +645,7 @@ public final class ContextHubManager {
      *             register a {@link android.hardware.location.ContextHubClientCallback}.
      */
     @Deprecated
-    @SuppressLint("Doclava125")
+    @SuppressLint("RequiresPermission")
     public int registerCallback(Callback callback, Handler handler) {
         synchronized(this) {
             if (mCallback != null) {
@@ -837,7 +837,7 @@ public final class ContextHubManager {
      * @deprecated Use {@link android.hardware.location.ContextHubClient#close()} to unregister
      *             a {@link android.hardware.location.ContextHubClientCallback}.
      */
-    @SuppressLint("Doclava125")
+    @SuppressLint("RequiresPermission")
     @Deprecated
     public int unregisterCallback(@NonNull Callback callback) {
       synchronized(this) {
