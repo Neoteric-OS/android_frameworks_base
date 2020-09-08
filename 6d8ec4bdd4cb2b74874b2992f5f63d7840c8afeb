@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9f0913c_fdef3a15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "If some items could be separated to other small commits, it will be easy for review.",
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "220ba61e_f4bc21f6",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "Is it true?\nAccording to the PackageManagerService#getInstalledPackages(), it seems like it will return a ParceledListSlice object at least but not null.",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 170,
+        "endChar": 28
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c021900_5362497a",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "If the initial value of netdPermission is PERMISSION_NONE(i.e. 0), it seems like this \"OR\" operator is unnecessary.",
+      "range": {
+        "startLine": 211,
+        "startChar": 31,
+        "endLine": 211,
+        "endChar": 32
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78813e77_1740c050",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "How about using PERMISSION_NONE instead?\n- Sync the format as line#208\n- Improve readibility.",
+      "range": {
+        "startLine": 212,
+        "startChar": 59,
+        "endLine": 212,
+        "endChar": 60
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980d52ea_be082ad3",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 213,
+        "startChar": 83,
+        "endLine": 213,
+        "endChar": 84
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528bcded_bfcfc08e",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "This is no longer true since we have removed CONNECTIVITY_INTERNAL.",
+      "range": {
+        "startLine": 252,
+        "startChar": 69,
+        "endLine": 252,
+        "endChar": 90
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f497a4ff_4406c8c3",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "If I understand correctly, this function tries to use appId to find all uids on all users and get all of the permissions from all of the uids.\n\nSince the design has a little change from the old one, I think it\u0027s better to have a comment to describe what\u0027s this function doing and why.",
+      "range": {
+        "startLine": 350,
+        "startChar": 16,
+        "endLine": 350,
+        "endChar": 36
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f7860c_f3d9fa45",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "optional: Maybe we could do something like:\nint permission \u003d hasPermission(INTERNET, uid) ? PERMISSION_INTERNET : PERMISSION_NONE;\n\nSo that we could reduce one time OR operation.\nIf you think the current design looks better, it\u0027s fine.",
+      "range": {
+        "startLine": 493,
+        "startChar": 8,
+        "endLine": 496,
+        "endChar": 9
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0ce8b5_d9cfb46a",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "Good catch!\nAccording to the TrafficController#setPermissionForUids(), PERMISSION_UNINSTALLED(i.e. -1) is the correct one but not 0(i.e. PERMISSION_NONE).",
+      "range": {
+        "startLine": 650,
+        "startChar": 54,
+        "endLine": 650,
+        "endChar": 76
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1c21225_a1f85e75",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "To be precise, the user id of second user should be 10, right?\nI\u0027m not sure if you will add some tests which rely on the correct user id in the future, so maybe it\u0027s better to correct it?",
+      "range": {
+        "startLine": 92,
+        "startChar": 29,
+        "endLine": 92,
+        "endChar": 44
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2bf633b_b0dfa58b",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "How about rename it to - getPackageInfoWithPartition()?",
+      "range": {
+        "startLine": 155,
+        "startChar": 31,
+        "endLine": 155,
+        "endChar": 55
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adbfc813_97d9ab40",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "Since we have removed CONNECTIVITY_INTERNAL from PermissionMonitor, maybe we don\u0027t need to test it?",
+      "range": {
+        "startLine": 200,
+        "startChar": 53,
+        "endLine": 200,
+        "endChar": 74
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00dfd3a_5469160e",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "It\u0027s different from the previous design, could you have a brief explanation for this?\nFor example, why change the permission?",
+      "range": {
+        "startLine": 441,
+        "startChar": 24,
+        "endLine": 444,
+        "endChar": 79
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "226aa865_759d7b43",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "May I know who will use SYSTEM_UID in this test?",
+      "range": {
+        "startLine": 449,
+        "startChar": 8,
+        "endLine": 450,
+        "endChar": 91
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b544a29e_f118c43c",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 1,
+      "message": "nit: Why the var name is packageInfo2 but not packageInfo or packageInfo1?",
+      "range": {
+        "startLine": 700,
+        "startChar": 26,
+        "endLine": 700,
+        "endChar": 38
+      },
+      "revId": "6d8ec4bdd4cb2b74874b2992f5f63d7840c8afeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

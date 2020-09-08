@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cea5c78_361b23d1",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 0,
+      "message": "Not sure if you have confirmed this or not.\n\nMy question: Does the appId is really an appId? Or just an uid?\nIf it\u0027s really an appId, then why the old design need to call UserHandle#getAppId()?\n\nThe interface definition doesn\u0027t give much information about uid:\n/** Observer called whenever the list of packages changes */\npublic interface PackageListObserver {\n    /** A package was added to the system. */\n    void onPackageAdded(@NonNull String packageName, int uid);\n    /** A package was changed - either installed for a specific user or updated. */\n    default void onPackageChanged(@NonNull String packageName, int uid) {}\n    /** A package was removed from the system. */\n    void onPackageRemoved(@NonNull String packageName, int uid);\n}",
+      "range": {
+        "startLine": 435,
+        "startChar": 28,
+        "endLine": 435,
+        "endChar": 54
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c718c7af_a5cad764",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-08T06:08:00Z",
+      "side": 0,
+      "message": "Why remove this one?",
+      "range": {
+        "startLine": 338,
+        "startChar": 8,
+        "endLine": 338,
+        "endChar": 85
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
