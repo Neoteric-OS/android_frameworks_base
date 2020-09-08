@@ -16,8 +16,11 @@
 
 package android.media;
 
+import static com.android.internal.annotations.VisibleForTesting.Visibility.PACKAGE;
+
 import android.compat.annotation.UnsupportedAppUsage;
 
+import com.android.internal.annotations.VisibleForTesting;
 
 /**
  * An AudioPatch describes a connection between audio sources and audio sinks.
@@ -36,8 +39,9 @@ public class AudioPatch {
     private final AudioPortConfig[] mSources;
     private final AudioPortConfig[] mSinks;
 
+    @VisibleForTesting(visibility = PACKAGE)
     @UnsupportedAppUsage
-    AudioPatch(AudioHandle patchHandle, AudioPortConfig[] sources, AudioPortConfig[] sinks) {
+    public AudioPatch(AudioHandle patchHandle, AudioPortConfig[] sources, AudioPortConfig[] sinks) {
         mHandle = patchHandle;
         mSources = sources;
         mSinks = sinks;

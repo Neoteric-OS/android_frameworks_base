@@ -16,20 +16,30 @@
 
 package android.media;
 
+import static com.android.internal.annotations.VisibleForTesting.Visibility.PACKAGE;
+
 import android.compat.annotation.UnsupportedAppUsage;
 
+import com.android.internal.annotations.VisibleForTesting;
+
 /**
+ * @hide
  * The AudioHandle is used by the audio framework implementation to
  * uniquely identify a particular component of the routing topology
  * (AudioPort or AudioPatch)
  * It is not visible or used at the API.
  */
-class AudioHandle {
+@VisibleForTesting(visibility = PACKAGE)
+public class AudioHandle {
     @UnsupportedAppUsage
     private final int mId;
 
+    /**
+     * @hide
+     */
+    @VisibleForTesting(visibility = PACKAGE)
     @UnsupportedAppUsage
-    AudioHandle(int id) {
+    public AudioHandle(int id) {
         mId = id;
     }
 
