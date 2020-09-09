@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c419282b_000f6552",
+        "filename": "services/incremental/ServiceWrappers.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1166043
+      },
+      "writtenOn": "2020-09-09T19:55:05Z",
+      "side": 1,
+      "message": "How does this work: storing and using a reference to the deleted item?",
+      "revId": "2c88d31afdf2f4916cf70681cb176427441b99ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
