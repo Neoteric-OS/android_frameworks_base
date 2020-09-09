@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "217ed338_b59923e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-09T08:15:51Z",
+      "side": 1,
+      "message": "Uneasy about l.2548 ; if this was for S I\u0027d be happy.\n\nAlso please have unit tests, there is no way this stays working without tests.\n",
+      "revId": "7fd46224d3e1951b78377a5760c53c9dcfd5fb11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3f8ad67_3a3f8cad",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2548,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-09T08:15:51Z",
+      "side": 1,
+      "message": "Did you test this particular code path ? I don\u0027t think we have any existing network going from CONNECTED to CONNECTING. I tried to take a quick look at the code and find issues and couldn\u0027t find any, but I feel a bit uneasy about putting this in a QPR.",
+      "range": {
+        "startLine": 2548,
+        "startChar": 46,
+        "endLine": 2548,
+        "endChar": 56
+      },
+      "revId": "7fd46224d3e1951b78377a5760c53c9dcfd5fb11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c753ad6_3f31370a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2636,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-09T08:15:51Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be calling updateState(DISCONNECTED) ?",
+      "range": {
+        "startLine": 2636,
+        "startChar": 8,
+        "endLine": 2636,
+        "endChar": 15
+      },
+      "revId": "7fd46224d3e1951b78377a5760c53c9dcfd5fb11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e370ec4_1774a593",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-09T08:15:51Z",
+      "side": 1,
+      "message": "Do you want to distinguish losing the network from the session being closed remotely ? Maybe the log is enough ; AFAICT the reason is only really used for debugging.",
+      "range": {
+        "startLine": 352,
+        "startChar": 45,
+        "endLine": 352,
+        "endChar": 49
+      },
+      "revId": "7fd46224d3e1951b78377a5760c53c9dcfd5fb11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
