@@ -34,6 +34,24 @@
       "revId": "2c88d31afdf2f4916cf70681cb176427441b99ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f74bd4_b948d3e4",
+        "filename": "services/incremental/ServiceWrappers.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-09-09T20:15:04Z",
+      "side": 1,
+      "message": "/home/luca/android/aosp/frameworks/base/services/incremental/ServiceWrappers.cpp:242:22: warning: the variable \u0027job\u0027 is copy-constructed from a const reference but is only used as const reference; consider making it a const reference [performance-unnecessary-copy-initialization]\n                auto job \u003d std::move(it-\u003ewhat);\n                     ^\n                const  \u0026\n/home/luca/android/aosp/frameworks/base/services/incremental/ServiceWrappers.cpp:242:28: warning: std::move of the const expression has no effect; remove std::move() [performance-move-const-arg]\n                auto job \u003d std::move(it-\u003ewhat);\n\n\nRemoving std::move alone fixes it\n\n-                auto job \u003d std::move(it-\u003ewhat);\n+                auto job \u003d it-\u003ewhat;",
+      "parentUuid": "a5b1b481_0b7dc6fb",
+      "revId": "2c88d31afdf2f4916cf70681cb176427441b99ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
