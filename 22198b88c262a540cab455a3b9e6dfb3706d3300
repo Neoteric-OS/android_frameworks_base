@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fde6d9f_623fd8ff",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-09T09:33:31Z",
+      "side": 1,
+      "message": "I don\u0027t think this is true.\nFor example: The CaptivePortalLoginActivity has MAINLINE_NETWORK_STACK but its uid is not NETWORK_STACK_UID.",
+      "range": {
+        "startLine": 295,
+        "startChar": 8,
+        "endLine": 295,
+        "endChar": 100
+      },
+      "revId": "22198b88c262a540cab455a3b9e6dfb3706d3300",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc31a81_be757088",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-09T09:33:31Z",
+      "side": 1,
+      "message": "For the permission check, it just checks if the given uid has the given permission but not checks the package name.\nSo if we make sure that the SYSTEM_UID has NETWORK_STACK or CONNECTIVITY_USE_RESTRICTED_NETWORKS, the \"uid \u003d\u003d SYSTEM_UID\" can be an independent condition check.",
+      "range": {
+        "startLine": 297,
+        "startChar": 16,
+        "endLine": 298,
+        "endChar": 77
+      },
+      "revId": "22198b88c262a540cab455a3b9e6dfb3706d3300",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1cc322_7c40aa88",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-09T09:33:31Z",
+      "side": 1,
+      "message": "In practice, SYSTEM_UID should have NETWORK_STACK or CONNECTIVITY_USE_RESTRICTED_NETWORKS.",
+      "range": {
+        "startLine": 248,
+        "startChar": 8,
+        "endLine": 248,
+        "endChar": 61
+      },
+      "revId": "22198b88c262a540cab455a3b9e6dfb3706d3300",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e2dfdd_2a1fb011",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-09T09:33:31Z",
+      "side": 1,
+      "message": "Looks fine but please see my comment on PermissionMonitor.java.",
+      "range": {
+        "startLine": 250,
+        "startChar": 8,
+        "endLine": 250,
+        "endChar": 67
+      },
+      "revId": "22198b88c262a540cab455a3b9e6dfb3706d3300",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee84f1b_152befb7",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-09T09:33:31Z",
+      "side": 1,
+      "message": "I don\u0027t get it.\nNETWORK_STACK_UID should have background network permission, right?",
+      "range": {
+        "startLine": 311,
+        "startChar": 74,
+        "endLine": 311,
+        "endChar": 91
+      },
+      "revId": "22198b88c262a540cab455a3b9e6dfb3706d3300",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
