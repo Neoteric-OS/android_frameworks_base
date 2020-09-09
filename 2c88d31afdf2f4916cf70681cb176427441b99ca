@@ -16,6 +16,24 @@
       "revId": "2c88d31afdf2f4916cf70681cb176427441b99ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b1b481_0b7dc6fb",
+        "filename": "services/incremental/ServiceWrappers.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-09-09T20:03:30Z",
+      "side": 1,
+      "message": "This indeed looks wrong, I\u0027ll see why clang-tidy bothers in a bit",
+      "parentUuid": "c419282b_000f6552",
+      "revId": "2c88d31afdf2f4916cf70681cb176427441b99ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
