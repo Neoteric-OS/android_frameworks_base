@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52e8e40d_e2b16df3",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-09T06:01:36Z",
+      "side": 1,
+      "message": "See my comments on this on the companion CTS. If this is only ever used for CTS do we need to burden all phones with it ?",
+      "range": {
+        "startLine": 127,
+        "startChar": 34,
+        "endLine": 127,
+        "endChar": 76
+      },
+      "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275ea13a_06bde5e9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4386,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-09T06:01:36Z",
+      "side": 1,
+      "message": "This code means you can\u0027t distinguish between a network that won\u0027t perform validation (e.g. a network that doesn\u0027t offer INTERNET connectivity) from a network that did but the validation was skipped this time. Is this okay with your intended use ? For the API in general I\u0027m not sure this is a great implication.\n\nNote that importantly this will mean the latest connectivity report stored in the NAI will now have this bit. Therefore :\n• Some network comes up and validates\n• GMSCore or somebody else calls reportNetworkConnectivity(true)\n• This code skips validation, because it\u0027s already what we knew\n• An administrator apps registers for a connectivity report\n• The administrator apps gets told that validation was skipped\n\nIs this what you intend ?",
+      "range": {
+        "startLine": 4386,
+        "startChar": 39,
+        "endLine": 4386,
+        "endChar": 72
+      },
+      "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244cd3db_cff39c00",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4386,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-09T06:01:36Z",
+      "side": 1,
+      "message": "In terms of code organization I would like to see two changes :\n• Please factorize the code that can be with notifyNetworkTestedWithExtras ; you can move the code that makes the bundle above and then obtaining the message and setting the data and sending the message can be common code.\n• Please have a method that returns the modified bundle from the report. This can be a hidden method in ConnectivityReport or it could be a static method somewhere – I tend to prefer the former.",
+      "range": {
+        "startLine": 4379,
+        "startChar": 12,
+        "endLine": 4386,
+        "endChar": 74
+      },
+      "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
