@@ -456,7 +456,7 @@ public class NotificationManagerService extends SystemService {
 
     private static final int MY_UID = Process.myUid();
     private static final int MY_PID = Process.myPid();
-    private static final IBinder WHITELIST_TOKEN = new Binder();
+    private static final IBinder ALLOWLIST_TOKEN = new Binder();
     private RankingHandler mRankingHandler;
     private long mLastOverRateLogTime;
     private float mMaxPackageEnqueueRate = DEFAULT_MAX_NOTIFICATION_ENQUEUE_RATE;
@@ -525,11 +525,11 @@ public class NotificationManagerService extends SystemService {
         String defaultListenerAccess = getContext().getResources().getString(
                 com.android.internal.R.string.config_defaultListenerAccessPackages);
         if (defaultListenerAccess != null) {
-            for (String whitelisted :
+            for (String preapproved :
                     defaultListenerAccess.split(ManagedServices.ENABLED_SERVICES_SEPARATOR)) {
                 // Gather all notification listener components for candidate pkgs.
                 Set<ComponentName> approvedListeners =
-                        mListeners.queryPackageForServices(whitelisted,
+                        mListeners.queryPackageForServices(preapproved,
                                 MATCH_DIRECT_BOOT_AWARE
                                         | MATCH_DIRECT_BOOT_UNAWARE, userId);
                 for (ComponentName cn : approvedListeners) {
@@ -546,10 +546,10 @@ public class NotificationManagerService extends SystemService {
         String defaultDndAccess = getContext().getResources().getString(
                 com.android.internal.R.string.config_defaultDndAccessPackages);
         if (defaultDndAccess != null) {
-            for (String whitelisted :
+            for (String preapproved :
                     defaultDndAccess.split(ManagedServices.ENABLED_SERVICES_SEPARATOR)) {
                 try {
-                    getBinderService().setNotificationPolicyAccessGranted(whitelisted, true);
+                    getBinderService().setNotificationPolicyAccessGranted(preapproved, true);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -1491,7 +1491,7 @@ public class NotificationManagerService extends SystemService {
 
     public NotificationManagerService(Context context) {
         super(context);
-        Notification.processWhitelistToken = WHITELIST_TOKEN;
+        Notification.processAllowlistToken = ALLOWLIST_TOKEN;
     }
 
     // TODO - replace these methods with a single VisibleForTesting constructor
@@ -4888,21 +4888,21 @@ public class NotificationManagerService extends SystemService {
             return;
         }
 
-        // Whitelist pending intents.
+        // temporarily allow apps to perform extra work when their pending intents are launched
         if (notification.allPendingIntents != null) {
             final int intentCount = notification.allPendingIntents.size();
             if (intentCount > 0) {
                 final ActivityManagerInternal am = LocalServices
                         .getService(ActivityManagerInternal.class);
                 final long duration = LocalServices.getService(
-                        DeviceIdleController.LocalService.class).getNotificationWhitelistDuration();
+                        DeviceIdleController.LocalService.class).getNotificationAllowlistDuration();
                 for (int i = 0; i < intentCount; i++) {
                     PendingIntent pendingIntent = notification.allPendingIntents.valueAt(i);
                     if (pendingIntent != null) {
-                        am.setPendingIntentWhitelistDuration(pendingIntent.getTarget(),
-                                WHITELIST_TOKEN, duration);
+                        am.setPendingIntentAllowlistDuration(pendingIntent.getTarget(),
+                                ALLOWLIST_TOKEN, duration);
                         am.setPendingIntentAllowBgActivityStarts(pendingIntent.getTarget(),
-                                WHITELIST_TOKEN, (FLAG_ACTIVITY_SENDER | FLAG_BROADCAST_SENDER
+                                ALLOWLIST_TOKEN, (FLAG_ACTIVITY_SENDER | FLAG_BROADCAST_SENDER
                                         | FLAG_SERVICE_SENDER));
                     }
                 }
@@ -6699,7 +6699,7 @@ public class NotificationManagerService extends SystemService {
                     // make sure deleteIntent cannot be used to start activities from background
                     LocalServices.getService(ActivityManagerInternal.class)
                             .clearPendingIntentAllowBgActivityStarts(deleteIntent.getTarget(),
-                            WHITELIST_TOKEN);
+                            ALLOWLIST_TOKEN);
                     deleteIntent.send();
                 } catch (PendingIntent.CanceledException ex) {
                     // do nothing - there's no relevant way to recover, and
@@ -7586,9 +7586,9 @@ public class NotificationManagerService extends SystemService {
         boolean canUseManagedServices = !mActivityManager.isLowRamDevice()
                 || mPackageManagerClient.hasSystemFeature(PackageManager.FEATURE_WATCH);
 
-        for (String whitelisted : getContext().getResources().getStringArray(
+        for (String allowed : getContext().getResources().getStringArray(
                 R.array.config_allowedManagedServicesOnLowRamDevices)) {
-            if (whitelisted.equals(pkg)) {
+            if (allowed.equals(pkg)) {
                 canUseManagedServices = true;
             }
         }
