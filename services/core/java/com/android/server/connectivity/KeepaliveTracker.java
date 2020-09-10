@@ -367,6 +367,10 @@ public class KeepaliveTracker {
                     Log.e(TAG, "Cannot stop unowned keepalive " + mSlot + " on " + mNai.network);
                 }
             }
+            // Keepalive is already in stopping state, ignore. This typically happens when network
+            // disconnect while someone is called stop and waiting for the response from modem.
+            if (mStartedState == STOPPING) return;
+
             // Store the reason of stopping, and report it after the keepalive is fully stopped.
             if (mStopReason != ERROR_STOP_REASON_UNINITIALIZED) {
                 throw new IllegalStateException("Unexpected stop reason: " + mStopReason);
@@ -380,9 +384,6 @@ public class KeepaliveTracker {
                     // e.g. invalid parameter.
                     cleanupStoppedKeepalive(mNai, mSlot);
                     break;
-                case STOPPING:
-                    // Keepalive is already in stopping state, ignore.
-                    return;
                 default:
                     mStartedState = STOPPING;
                     switch (mType) {
