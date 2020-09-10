@@ -3700,10 +3700,10 @@ public class AudioService extends IAudioService.Stub
                 } else {
                     newModeOwnerPid = setModeInt(AudioSystem.MODE_NORMAL, mCb, mPid, mUid, TAG);
                 }
+                // when entering RINGTONE, IN_CALL or IN_COMMUNICATION mode, clear all
+                // SCO connections not started by the application changing the mode when pid changes
+                mDeviceBroker.postSetModeOwnerPid(newModeOwnerPid);
             }
-            // when entering RINGTONE, IN_CALL or IN_COMMUNICATION mode, clear all
-            // SCO connections not started by the application changing the mode when pid changes
-            mDeviceBroker.postSetModeOwnerPid(newModeOwnerPid);
         }
 
         public int getPid() {
@@ -3782,10 +3782,10 @@ public class AudioService extends IAudioService.Stub
             }
             newModeOwnerPid = setModeInt(
                 mode, cb, callingPid, Binder.getCallingUid(), callingPackage);
+            // when entering RINGTONE, IN_CALL or IN_COMMUNICATION mode, clear all
+            // SCO connections not started by the application changing the mode when pid changes
+            mDeviceBroker.postSetModeOwnerPid(newModeOwnerPid);
         }
-        // when entering RINGTONE, IN_CALL or IN_COMMUNICATION mode, clear all
-        // SCO connections not started by the application changing the mode when pid changes
-        mDeviceBroker.postSetModeOwnerPid(newModeOwnerPid);
     }
 
     // setModeInt() returns a valid PID if the audio mode was successfully set to
