@@ -67,6 +67,7 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
     private NetworkAgent mNetworkAgent;
     private int mStartKeepaliveError = SocketKeepalive.ERROR_UNSUPPORTED;
     private int mStopKeepaliveError = SocketKeepalive.NO_KEEPALIVE;
+    private boolean mKeepaliveEventResponse = true;
     private Integer mExpectedKeepaliveSlot = null;
 
     public NetworkAgentWrapper(int transport, LinkProperties linkProperties, Context context)
@@ -130,6 +131,8 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
 
         @Override
         public void startSocketKeepalive(Message msg) {
+            if (!mWrapper.mKeepaliveEventResponse) return;
+
             int slot = msg.arg1;
             if (mWrapper.mExpectedKeepaliveSlot != null) {
                 assertEquals((int) mWrapper.mExpectedKeepaliveSlot, slot);
@@ -139,7 +142,9 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
 
         @Override
         public void stopSocketKeepalive(Message msg) {
-            onSocketKeepaliveEvent(msg.arg1, mWrapper.mStopKeepaliveError);
+            if (mWrapper.mKeepaliveEventResponse) {
+                onSocketKeepaliveEvent(msg.arg1, mWrapper.mStopKeepaliveError);
+            }
         }
 
         @Override
@@ -246,6 +251,10 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
 
     public void setStopKeepaliveEvent(int reason) {
         mStopKeepaliveError = reason;
+    }
+
+    public void setKeepaliveEventResponse(boolean enabled) {
+        mKeepaliveEventResponse = enabled;
     }
 
     public void setExpectedKeepaliveSlot(Integer slot) {
