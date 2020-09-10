@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ad344e7_fbf554e6",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-09-10T23:40:45Z",
+      "side": 1,
+      "message": "I believe yes. This is needed to ensure that all devices continue passing CTS, given that not all OEMs will take the QPR.\n\nThe subsequent CL removes the ChangeId flag for S+.",
+      "parentUuid": "52e8e40d_e2b16df3",
+      "range": {
+        "startLine": 127,
+        "startChar": 34,
+        "endLine": 127,
+        "endChar": 76
+      },
+      "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "275ea13a_06bde5e9",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -68,6 +92,54 @@
       "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c224e0a_c585dbfa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4386,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-09-10T23:40:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "244cd3db_cff39c00",
+      "range": {
+        "startLine": 4379,
+        "startChar": 12,
+        "endLine": 4386,
+        "endChar": 74
+      },
+      "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17fec18d_ade83955",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4386,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-09-10T23:40:45Z",
+      "side": 1,
+      "message": "Added a boolean \u0027cacheReport\u0027 to the EVENT_NETWORK_TESTED to differentiate between actual Network validations results (that should be cached) and notifications of skipped validation (that should not be cached). Done.",
+      "parentUuid": "275ea13a_06bde5e9",
+      "range": {
+        "startLine": 4386,
+        "startChar": 39,
+        "endLine": 4386,
+        "endChar": 72
+      },
+      "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
