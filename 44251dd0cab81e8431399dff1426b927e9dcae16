@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2997cd1c_78a1b073",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-09-10T14:51:37Z",
+      "side": 1,
+      "message": "Do you want to also test MixedManagedProfileOwnerTest to prevent breaking existing test?",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 11
+      },
+      "revId": "44251dd0cab81e8431399dff1426b927e9dcae16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5118f819_b5ec361c",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-09-10T14:51:37Z",
+      "side": 1,
+      "message": "I am a little confused about the defintion. The doc here says that the permission includes 4 types of permissions. However, Logic in l.712-l.714 will put the app with PERMISSION_INTERNET | PERMISSION_UPDATE_DEVICE_STATS into allPermissionAppIds. It does not looks like \"all\"?",
+      "range": {
+        "startLine": 134,
+        "startChar": 7,
+        "endLine": 134,
+        "endChar": 97
+      },
+      "revId": "44251dd0cab81e8431399dff1426b927e9dcae16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf45f6ab_904ad907",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-09-10T14:51:37Z",
+      "side": 1,
+      "message": "maybe \n\"Default permission is PERMISSION_NONE. PERMISSION_UNINSTALLED will be set if all packages are removed from all users and app id.\"\n\nWhat is default permission and what permission will be set in certain condition looks not equal. Maybe better to break into two sentences.?",
+      "range": {
+        "startLine": 135,
+        "startChar": 33,
+        "endLine": 136,
+        "endChar": 73
+      },
+      "revId": "44251dd0cab81e8431399dff1426b927e9dcae16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80facc5d_1101f9d7",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-09-10T14:51:37Z",
+      "side": 1,
+      "message": "Does it need to be public? maybe package private is enough. If you would like to use it in the test, add @VisibleForTesting to restrict the usage. or do we need it to be public?",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 10
+      },
+      "revId": "44251dd0cab81e8431399dff1426b927e9dcae16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa23b1a7_436e0700",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-09-10T14:51:37Z",
+      "side": 1,
+      "message": "\"all packages are removed from all users and app id.\"?\n\nmap to your doc of the class",
+      "range": {
+        "startLine": 154,
+        "startChar": 27,
+        "endLine": 154,
+        "endChar": 50
+      },
+      "revId": "44251dd0cab81e8431399dff1426b927e9dcae16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe1ba17_bc5ef9bb",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-09-10T14:51:37Z",
+      "side": 1,
+      "message": "Is this true? let\u0027s says app have PERMISSION_INTERNET then hasNetdPermission(PERMISSION_NONE) will return true?",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 60
+      },
+      "revId": "44251dd0cab81e8431399dff1426b927e9dcae16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9969f6_cf6bc371",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-09-10T14:51:37Z",
+      "side": 1,
+      "message": "For those unknow type one, you will put it into no permission app Ids. It\u0027s different from previous logic. Is that intended?\n\nIf it is not, it may be better to test it to prevent such unexpected result.",
+      "range": {
+        "startLine": 722,
+        "startChar": 15,
+        "endLine": 722,
+        "endChar": 44
+      },
+      "revId": "44251dd0cab81e8431399dff1426b927e9dcae16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
