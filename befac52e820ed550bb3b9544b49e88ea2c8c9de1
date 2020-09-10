@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fabee94_99e131ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-09-10T20:55:05Z",
+      "side": 1,
+      "message": "Please give more details on the exact problematic scenario and how adding a lock around sending the message fixes it.\n\nIs the scenario a double call situation?\nIs it a double cell call, double VoIP call (which app?) or mixed Cell VoIP?\nIs the scenario:\n1) be in a call (1) with BT HFP audio connected\n2) receive an incoming call (2) \n3) accept call 2 \u003d\u003e call 1 is on hold\n4) Call 1 dropped by remote\n\nAt which point is the problem noticed? Is the problem that call audio is routed to earpiece instead of BT HFP?\n\n",
+      "revId": "befac52e820ed550bb3b9544b49e88ea2c8c9de1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
