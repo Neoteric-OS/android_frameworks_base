@@ -30,6 +30,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.android.compatibility.common.util.CpuFeatures;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -56,8 +58,19 @@ public class TestLooperTest {
     @Rule
     public ErrorCollector collector = new ErrorCollector();
 
+    private static boolean skipTest() {
+        /**
+         * Native bridge doesn't support JVMTI required by the mocks in this test.
+         * Also we are not testing any NDK API in this test, so testing native bridged
+         * execution isn't interesting anyway.
+         */
+        return CpuFeatures.isNativeBridgedCpu();
+    }
+
     @Before
     public void setUp() throws Exception {
+        if (skipTest()) return;
+
         MockitoAnnotations.initMocks(this);
 
         mTestLooper = new TestLooper();
@@ -72,6 +85,8 @@ public class TestLooperTest {
      */
     @Test
     public void testNoTimeMovement() {
+        if (skipTest()) return;
+
         final int messageA = 1;
         final int messageB = 2;
         final int messageC = 3;
@@ -103,6 +118,8 @@ public class TestLooperTest {
      */
     @Test
     public void testNoTimeMovementExecutor() {
+        if (skipTest()) return;
+
         final Runnable runnableA = mock(Runnable.class);
         final Runnable runnableB = mock(Runnable.class);
         final Runnable runnableC = mock(Runnable.class);
@@ -130,6 +147,8 @@ public class TestLooperTest {
      */
     @Test
     public void testDelayedDispatchNoTimeMove() {
+        if (skipTest()) return;
+
         final int messageA = 1;
         final int messageB = 2;
         final int messageC = 3;
@@ -158,6 +177,8 @@ public class TestLooperTest {
      */
     @Test
     public void testDelayedDispatchAdvanceTimeOnce() {
+        if (skipTest()) return;
+
         final int messageA = 1;
         final int messageB = 2;
         final int messageC = 3;
@@ -190,6 +211,8 @@ public class TestLooperTest {
      */
     @Test
     public void testDelayedDispatchAdvanceTimeTwice() {
+        if (skipTest()) return;
+
         final int messageA = 1;
         final int messageB = 2;
         final int messageC = 3;
@@ -226,6 +249,8 @@ public class TestLooperTest {
      */
     @Test
     public void testDelayedDispatchReverseOrder() {
+        if (skipTest()) return;
+
         final int messageA = 1;
         final int messageB = 2;
         final int messageC = 3;
@@ -262,6 +287,8 @@ public class TestLooperTest {
      */
     @Test
     public void testDelayedDispatchAllMultipleTimes() {
+        if (skipTest()) return;
+
         final int messageA = 1;
         final int messageB = 2;
         final int messageC = 3;
@@ -307,6 +334,8 @@ public class TestLooperTest {
      */
     @Test
     public void testAutoDispatchWithSingleMessage() {
+        if (skipTest()) return;
+
         final int mLoopSleepTimeMs = 5;
 
         final int messageA = 1;
@@ -349,6 +378,8 @@ public class TestLooperTest {
      */
     @Test(expected = IllegalStateException.class)
     public void testRepeatedStartAutoDispatchThrowsException() {
+        if (skipTest()) throw new IllegalStateException();
+
         mTestLooper.startAutoDispatch();
         mTestLooper.startAutoDispatch();
     }
@@ -361,6 +392,8 @@ public class TestLooperTest {
      */
     @Test(expected = IllegalStateException.class)
     public void testStopAutoDispatchWithoutStartThrowsException() {
+        if (skipTest()) throw new IllegalStateException();
+
         mTestLooper.stopAutoDispatch();
     }
 
@@ -372,6 +405,8 @@ public class TestLooperTest {
      */
     @Test
     public void testAutoDispatchStopsCleanlyWithoutDispatchingAMessage() {
+        if (skipTest()) return;
+
         final int messageA = 1;
 
         InOrder inOrder = inOrder(mHandlerSpy);
@@ -396,6 +431,8 @@ public class TestLooperTest {
      */
     @Test(expected = IllegalStateException.class)
     public void testAutoDispatchThrowsExceptionWhenNoMessagesDispatched() {
+        if (skipTest()) throw new IllegalStateException();
+
         mTestLooper.startAutoDispatch();
         mTestLooper.stopAutoDispatch();
     }

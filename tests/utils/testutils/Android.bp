@@ -23,6 +23,7 @@ java_library {
         "junit",
         "hamcrest-library",
         "androidx.test.runner",
+        "compatibility-device-util-axt",
     ],
 
     libs: [
