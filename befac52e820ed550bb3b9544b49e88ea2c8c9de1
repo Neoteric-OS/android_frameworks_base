@@ -34,6 +34,23 @@
       "revId": "befac52e820ed550bb3b9544b49e88ea2c8c9de1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f781c172_d85cc389",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-09-11T16:15:03Z",
+      "side": 1,
+      "message": "Thanks for the explanation of the scenario.\nAre you confirming that this CL fixes the problem 100%?\nBecause I am surprised that adding a lock around just sending the message would prevent the audio mode update to happen at the wrong time in all cases.\n\n",
+      "revId": "befac52e820ed550bb3b9544b49e88ea2c8c9de1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
