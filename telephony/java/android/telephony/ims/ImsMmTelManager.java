@@ -21,6 +21,7 @@ import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SuppressAutoDoc;
 import android.annotation.SuppressLint;
@@ -28,23 +29,31 @@ import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.content.Context;
 import android.os.Binder;
+import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
 import android.telephony.AccessNetworkConstants;
+import android.telephony.BinderDeathListener;
 import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionManager;
 import android.telephony.ims.aidl.IImsCapabilityCallback;
+import android.telephony.ims.aidl.IImsMmTelFeature;
 import android.telephony.ims.feature.ImsFeature;
 import android.telephony.ims.feature.MmTelFeature;
 import android.telephony.ims.stub.ImsRegistrationImplBase;
 
+import com.android.ims.FeatureConnector;
+import com.android.ims.internal.IImsServiceFeatureCallback;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.telephony.IIntegerConsumer;
 import com.android.internal.telephony.ITelephony;
+import com.android.telephony.Rlog;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 
@@ -60,6 +69,7 @@ import java.util.function.Consumer;
  * manager.
  */
 public class ImsMmTelManager implements RegistrationManager {
+    private static final String TAG = "ImsMmTelManager";
 
     /**
      * @hide
@@ -214,6 +224,8 @@ public class ImsMmTelManager implements RegistrationManager {
     }
 
     private final int mSubId;
+    // Should only be accessed via getITelephonyListener() to ensure the cache is fresh.
+    private BinderDeathListener<ITelephony> mTelephonyListener;
 
     /**
      * Create an instance of {@link ImsMmTelManager} for the subscription id specified.
@@ -292,7 +304,7 @@ public class ImsMmTelManager implements RegistrationManager {
         }
         c.setExecutor(executor);
 
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new ImsException("Could not find Telephony Service.",
                     ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
@@ -336,7 +348,7 @@ public class ImsMmTelManager implements RegistrationManager {
         }
         c.setExecutor(executor);
 
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new ImsException("Could not find Telephony Service.",
                     ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
@@ -373,7 +385,7 @@ public class ImsMmTelManager implements RegistrationManager {
             throw new IllegalArgumentException("Must include a non-null RegistrationCallback.");
         }
 
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -405,7 +417,7 @@ public class ImsMmTelManager implements RegistrationManager {
             throw new IllegalArgumentException("Must include a non-null RegistrationCallback.");
         }
 
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -433,7 +445,7 @@ public class ImsMmTelManager implements RegistrationManager {
             throw new IllegalArgumentException("Must include a non-null Executor.");
         }
 
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -473,7 +485,7 @@ public class ImsMmTelManager implements RegistrationManager {
             throw new IllegalArgumentException("Must include a non-null Executor.");
         }
 
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -538,7 +550,7 @@ public class ImsMmTelManager implements RegistrationManager {
         }
         c.setExecutor(executor);
 
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new ImsException("Could not find Telephony Service.",
                     ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
@@ -587,7 +599,7 @@ public class ImsMmTelManager implements RegistrationManager {
             throw new IllegalArgumentException("Must include a non-null RegistrationCallback.");
         }
 
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -637,7 +649,7 @@ public class ImsMmTelManager implements RegistrationManager {
             android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE,
             android.Manifest.permission.READ_PRECISE_PHONE_STATE})
     public boolean isAdvancedCallingSettingEnabled() {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -683,7 +695,7 @@ public class ImsMmTelManager implements RegistrationManager {
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     @SystemApi @TestApi
     public void setAdvancedCallingSettingEnabled(boolean isEnabled) {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -728,7 +740,7 @@ public class ImsMmTelManager implements RegistrationManager {
     @SystemApi @TestApi
     public boolean isCapable(@MmTelFeature.MmTelCapabilities.MmTelCapability int capability,
             @ImsRegistrationImplBase.ImsRegistrationTech int imsRegTech) {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -762,7 +774,7 @@ public class ImsMmTelManager implements RegistrationManager {
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isAvailable(@MmTelFeature.MmTelCapabilities.MmTelCapability int capability,
             @ImsRegistrationImplBase.ImsRegistrationTech int imsRegTech) {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -803,14 +815,14 @@ public class ImsMmTelManager implements RegistrationManager {
             throw new IllegalArgumentException("Must include a non-null Executor.");
         }
 
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new ImsException("Could not find Telephony Service.",
                     ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
         }
 
         try {
-            getITelephony().isMmTelCapabilitySupported(mSubId, new IIntegerConsumer.Stub() {
+            iTelephony.isMmTelCapabilitySupported(mSubId, new IIntegerConsumer.Stub() {
                 @Override
                 public void accept(int result) {
                     executor.execute(() -> callback.accept(result == 1));
@@ -852,7 +864,7 @@ public class ImsMmTelManager implements RegistrationManager {
             android.Manifest.permission.READ_PRECISE_PHONE_STATE})
     @SuppressAutoDoc // No support for device / profile owner or carrier privileges (b/72967236).
     public boolean isVtSettingEnabled() {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -882,7 +894,7 @@ public class ImsMmTelManager implements RegistrationManager {
     @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVtSettingEnabled(boolean isEnabled) {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -926,7 +938,7 @@ public class ImsMmTelManager implements RegistrationManager {
             android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE,
             android.Manifest.permission.READ_PRECISE_PHONE_STATE})
     public boolean isVoWiFiSettingEnabled() {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -957,7 +969,7 @@ public class ImsMmTelManager implements RegistrationManager {
     @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiSettingEnabled(boolean isEnabled) {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -1003,7 +1015,7 @@ public class ImsMmTelManager implements RegistrationManager {
             android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE,
             android.Manifest.permission.READ_PRECISE_PHONE_STATE})
     public boolean isVoWiFiRoamingSettingEnabled() {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -1035,7 +1047,7 @@ public class ImsMmTelManager implements RegistrationManager {
     @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiRoamingSettingEnabled(boolean isEnabled) {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -1072,7 +1084,7 @@ public class ImsMmTelManager implements RegistrationManager {
     @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiNonPersistent(boolean isCapable, int mode) {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -1121,7 +1133,7 @@ public class ImsMmTelManager implements RegistrationManager {
             android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE,
             android.Manifest.permission.READ_PRECISE_PHONE_STATE})
     public @WiFiCallingMode int getVoWiFiModeSetting() {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -1155,7 +1167,7 @@ public class ImsMmTelManager implements RegistrationManager {
     @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiModeSetting(@WiFiCallingMode int mode) {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -1191,7 +1203,7 @@ public class ImsMmTelManager implements RegistrationManager {
     @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public @WiFiCallingMode int getVoWiFiRoamingModeSetting() {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -1227,7 +1239,7 @@ public class ImsMmTelManager implements RegistrationManager {
     @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setVoWiFiRoamingModeSetting(@WiFiCallingMode int mode) {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -1261,7 +1273,7 @@ public class ImsMmTelManager implements RegistrationManager {
     @SystemApi @TestApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void setRttCapabilitySetting(boolean isEnabled) {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -1306,7 +1318,7 @@ public class ImsMmTelManager implements RegistrationManager {
             android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE,
             android.Manifest.permission.READ_PRECISE_PHONE_STATE})
     public boolean isTtyOverVolteEnabled() {
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
         }
@@ -1349,7 +1361,7 @@ public class ImsMmTelManager implements RegistrationManager {
             throw new IllegalArgumentException("Must include a non-null Consumer.");
         }
 
-        ITelephony iTelephony = getITelephony();
+        ITelephony iTelephony = getITelephonyListener().getConnection();
         if (iTelephony == null) {
             throw new ImsException("Could not find Telephony Service.",
                     ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
@@ -1369,9 +1381,80 @@ public class ImsMmTelManager implements RegistrationManager {
         }
     }
 
-    private static ITelephony getITelephony() {
-        ITelephony binder = ITelephony.Stub.asInterface(
-                ServiceManager.getService(Context.TELEPHONY_SERVICE));
-        return binder;
+
+    /**
+     * Listen for events regarding the IImsMmTelFeature that is associated with the requested slot.
+     * @param slotIndex The SIM slot that we are requesting the {@link IImsMmTelFeature} for.
+     * @param callback Listener that will send updates to ImsManager when there are updates to
+     * ImsServiceController.
+     * @hide
+     */
+    public void registerMmTelFeatureListener(int slotIndex, IImsServiceFeatureCallback callback) {
+        try {
+            BinderDeathListener<ITelephony> telephonyListener = getITelephonyListener();
+            ITelephony telephony = telephonyListener.getConnection();
+            if (telephony != null) {
+                telephony.registerMmTelFeatureListener(slotIndex, callback);
+                boolean isAlive = telephonyListener.addDeathListener(() -> {
+                    try {
+                        callback.imsFeatureRemoved(
+                                FeatureConnector.UNAVAILABLE_REASON_SERVER_UNAVAILABLE);
+                    } catch (RemoteException e) {} // remote is dead anyway
+                });
+                if (!isAlive) {
+                    callback.imsFeatureRemoved(
+                            FeatureConnector.UNAVAILABLE_REASON_SERVER_UNAVAILABLE);
+                }
+            } else {
+                callback.imsFeatureRemoved(FeatureConnector.UNAVAILABLE_REASON_SERVER_UNAVAILABLE);
+            }
+        } catch (ServiceSpecificException e) {
+            try {
+                switch (e.errorCode) {
+                    case ImsException.CODE_ERROR_UNSUPPORTED_OPERATION:
+                        callback.imsFeatureRemoved(
+                                FeatureConnector.UNAVAILABLE_REASON_IMS_UNSUPPORTED);
+                        break;
+                    default: {
+                        callback.imsFeatureRemoved(
+                                FeatureConnector.UNAVAILABLE_REASON_SERVER_UNAVAILABLE);
+                    }
+                }
+            } catch (RemoteException ignore) {} // Already dead anyway if this happens.
+        } catch (RemoteException e) {
+            try {
+                callback.imsFeatureRemoved(FeatureConnector.UNAVAILABLE_REASON_SERVER_UNAVAILABLE);
+            } catch (RemoteException ignore) {} // Already dead if this happens.
+        }
+    }
+
+    /**
+     * Unregister a IImsServiceFeatureCallback previously associated with an ImsFeature through
+     * {@link #getImsMmTelFeatureAndListen(int, IImsServiceFeatureCallback)} or
+     * {@link #getImsRcsFeatureAndListen(int, IImsServiceFeatureCallback)}.
+     * @param callback The callback to be unregistered.
+     * @hide
+     */
+    public void unregisterImsFeatureCallback(IImsServiceFeatureCallback callback) {
+        try {
+            ITelephony telephony = getITelephonyListener().getConnection();
+            if (telephony != null) {
+                telephony.unregisterImsFeatureCallback(callback);
+            }
+        } catch (RemoteException e) {
+            // This means that telephony died, so do not worry about it.
+            Rlog.e(TAG, "unregisterImsFeatureCallback (MMTEL), RemoteException: "
+                    + e.getMessage());
+        }
+    }
+
+    private synchronized BinderDeathListener<ITelephony> getITelephonyListener() {
+        if (mTelephonyListener == null || mTelephonyListener.getConnection() == null) {
+            ITelephony telephony = ITelephony.Stub.asInterface(
+                    ServiceManager.getService(Context.TELEPHONY_SERVICE));
+            mTelephonyListener = new BinderDeathListener<>(telephony);
+        }
+
+        return mTelephonyListener;
     }
 }

@@ -16,6 +16,8 @@
 
 package android.telephony.ims;
 
+import android.annotation.IntDef;
+import android.annotation.LongDef;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.app.Service;
@@ -40,6 +42,9 @@ import android.util.SparseArray;
 
 import com.android.ims.internal.IImsFeatureStatusCallback;
 import com.android.internal.annotations.VisibleForTesting;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Main ImsService implementation, which binds via the Telephony ImsResolver. Services that extend
@@ -96,6 +101,24 @@ import com.android.internal.annotations.VisibleForTesting;
 public class ImsService extends Service {
 
     private static final String LOG_TAG = "ImsService";
+
+    /**
+     * This ImsService supports the capability to place emergency calls over MMTEL.
+     * @hide This is encoded into the {@link ImsFeature#FEATURE_EMERGENCY_MMTEL}, but we will be
+     * adding other capabilities in a central location, so track this capability here as well.
+     */
+    public static final long CAPABILITY_EMERGENCY_OVER_MMTEL = 1 << 0;
+
+    /**
+     * @hide
+     */
+    @LongDef(flag = true,
+            prefix = "CAPABILITY_",
+            value = {
+                    CAPABILITY_EMERGENCY_OVER_MMTEL
+            })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ImsServiceCapability {}
 
     /**
      * The intent that must be defined as an intent-filter in the AndroidManifest of the ImsService.

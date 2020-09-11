@@ -19,6 +19,7 @@ package android.telephony.ims;
 import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.content.Context;
@@ -27,18 +28,24 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.ServiceSpecificException;
 import android.provider.Settings;
 import android.telephony.AccessNetworkConstants;
+import android.telephony.BinderDeathListener;
 import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionManager;
 import android.telephony.ims.aidl.IImsCapabilityCallback;
 import android.telephony.ims.aidl.IImsRcsController;
+import android.telephony.ims.aidl.IImsRcsFeature;
 import android.telephony.ims.feature.ImsFeature;
 import android.telephony.ims.feature.RcsFeature;
 import android.telephony.ims.stub.ImsRegistrationImplBase;
 import android.util.Log;
 
+import com.android.ims.FeatureConnector;
+import com.android.ims.internal.IImsServiceFeatureCallback;
 import com.android.internal.telephony.IIntegerConsumer;
+import com.android.telephony.Rlog;
 
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
@@ -152,6 +159,7 @@ public class ImsRcsManager {
 
     private final int mSubId;
     private final Context mContext;
+    private BinderDeathListener<IImsRcsController> mControllerListener;
 
     /**
      * Use {@link ImsManager#getImsRcsManager(int)} to create an instance of this class.
@@ -187,7 +195,7 @@ public class ImsRcsManager {
             throw new IllegalArgumentException("Must include a non-null Executor.");
         }
 
-        IImsRcsController imsRcsController = getIImsRcsController();
+        IImsRcsController imsRcsController = getIImsRcsControllerListener().getConnection();
         if (imsRcsController == null) {
             Log.e(TAG, "Register registration callback: IImsRcsController is null");
             throw new ImsException("Cannot find remote IMS service",
@@ -213,7 +221,7 @@ public class ImsRcsManager {
             throw new IllegalArgumentException("Must include a non-null RegistrationCallback.");
         }
 
-        IImsRcsController imsRcsController = getIImsRcsController();
+        IImsRcsController imsRcsController = getIImsRcsControllerListener().getConnection();
         if (imsRcsController == null) {
             Log.e(TAG, "Unregister registration callback: IImsRcsController is null");
             throw new IllegalStateException("Cannot find remote IMS service");
@@ -240,7 +248,7 @@ public class ImsRcsManager {
             throw new IllegalArgumentException("Must include a non-null Executor.");
         }
 
-        IImsRcsController imsRcsController = getIImsRcsController();
+        IImsRcsController imsRcsController = getIImsRcsControllerListener().getConnection();
         if (imsRcsController == null) {
             Log.e(TAG, "Get registration state error: IImsRcsController is null");
             throw new IllegalStateException("Cannot find remote IMS service");
@@ -272,7 +280,7 @@ public class ImsRcsManager {
             throw new IllegalArgumentException("Must include a non-null Executor.");
         }
 
-        IImsRcsController imsRcsController = getIImsRcsController();
+        IImsRcsController imsRcsController = getIImsRcsControllerListener().getConnection();
         if (imsRcsController == null) {
             Log.e(TAG, "Get registration transport type error: IImsRcsController is null");
             throw new IllegalStateException("Cannot find remote IMS service");
@@ -322,7 +330,7 @@ public class ImsRcsManager {
             throw new IllegalArgumentException("Must include a non-null Executor.");
         }
 
-        IImsRcsController imsRcsController = getIImsRcsController();
+        IImsRcsController imsRcsController = getIImsRcsControllerListener().getConnection();
         if (imsRcsController == null) {
             Log.e(TAG, "Register availability callback: IImsRcsController is null");
             throw new ImsException("Cannot find remote IMS service",
@@ -358,7 +366,7 @@ public class ImsRcsManager {
             throw new IllegalArgumentException("Must include a non-null AvailabilityCallback.");
         }
 
-        IImsRcsController imsRcsController = getIImsRcsController();
+        IImsRcsController imsRcsController = getIImsRcsControllerListener().getConnection();
         if (imsRcsController == null) {
             Log.e(TAG, "Unregister availability callback: IImsRcsController is null");
             throw new ImsException("Cannot find remote IMS service",
@@ -396,7 +404,7 @@ public class ImsRcsManager {
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isCapable(@RcsFeature.RcsImsCapabilities.RcsImsCapabilityFlag int capability,
             @ImsRegistrationImplBase.ImsRegistrationTech int radioTech) throws ImsException {
-        IImsRcsController imsRcsController = getIImsRcsController();
+        IImsRcsController imsRcsController = getIImsRcsControllerListener().getConnection();
         if (imsRcsController == null) {
             Log.e(TAG, "isCapable: IImsRcsController is null");
             throw new ImsException("Cannot find remote IMS service",
@@ -430,7 +438,7 @@ public class ImsRcsManager {
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isAvailable(@RcsFeature.RcsImsCapabilities.RcsImsCapabilityFlag int capability)
             throws ImsException {
-        IImsRcsController imsRcsController = getIImsRcsController();
+        IImsRcsController imsRcsController = getIImsRcsControllerListener().getConnection();
         if (imsRcsController == null) {
             Log.e(TAG, "isAvailable: IImsRcsController is null");
             throw new ImsException("Cannot find remote IMS service",
@@ -446,8 +454,77 @@ public class ImsRcsManager {
         }
     }
 
-    private IImsRcsController getIImsRcsController() {
-        IBinder binder = ServiceManager.getService(Context.TELEPHONY_IMS_SERVICE);
-        return IImsRcsController.Stub.asInterface(binder);
+    /**
+     * Registers a listener to provide updates to the listener when the associated IImsRcsFeature
+     * connection becomes available.
+     * @param slotIndex The SIM slot that we are requesting the {@link IImsRcsFeature} for.
+     * @param callback Listener that will send updates to RcsFeatureManager when there are updates
+     *                 to ImsServiceController.
+     * @hide
+     */
+    public void registerRcsFeatureListener(int slotIndex, IImsServiceFeatureCallback callback) {
+        BinderDeathListener<IImsRcsController> listener = getIImsRcsControllerListener();
+        IImsRcsController controller = listener.getConnection();
+        try {
+            if (controller == null) {
+                Log.e(TAG, "registerRcsFeatureListener: IImsRcsController is null");
+                callback.imsFeatureRemoved(FeatureConnector.UNAVAILABLE_REASON_SERVER_UNAVAILABLE);
+            }
+            controller.registerRcsFeatureListener(slotIndex, callback);
+            boolean isAlive = listener.addDeathListener(() -> {
+                try {
+                    callback.imsFeatureRemoved(
+                            FeatureConnector.UNAVAILABLE_REASON_SERVER_UNAVAILABLE);
+                } catch (RemoteException ignore) {}; // Remote is dead anyway
+            });
+            if (!isAlive) {
+                callback.imsFeatureRemoved(FeatureConnector.UNAVAILABLE_REASON_SERVER_UNAVAILABLE);
+            }
+        } catch (ServiceSpecificException e) {
+            try {
+                switch (e.errorCode) {
+                    case ImsException.CODE_ERROR_UNSUPPORTED_OPERATION:
+                        callback.imsFeatureRemoved(
+                                FeatureConnector.UNAVAILABLE_REASON_IMS_UNSUPPORTED);
+                        break;
+                    default: {
+                        callback.imsFeatureRemoved(
+                                FeatureConnector.UNAVAILABLE_REASON_SERVER_UNAVAILABLE);
+                    }
+                }
+            } catch (RemoteException ignore) {} // Already dead anyway if this happens.
+        } catch (RemoteException e) {
+            try {
+                callback.imsFeatureRemoved(FeatureConnector.UNAVAILABLE_REASON_SERVER_UNAVAILABLE);
+            } catch (RemoteException ignore) {} // Already dead if this happens.
+        }
+    }
+
+    /**
+     * Unregister a IImsServiceFeatureCallback previously associated with an ImsFeature through
+     * {@link #registerRcsFeatureListener(int, IImsServiceFeatureCallback)}.
+     * @param callback The callback to be unregistered.
+     * @hide
+     */
+    public void unregisterImsFeatureCallback(IImsServiceFeatureCallback callback) {
+        try {
+            IImsRcsController imsRcsController = getIImsRcsControllerListener().getConnection();
+            if (imsRcsController != null) {
+                imsRcsController.unregisterImsFeatureCallback(callback);
+            }
+        } catch (RemoteException e) {
+            // This means that telephony died, so do not worry about it.
+            Rlog.e(TAG, "unregisterImsFeatureCallback (RCS), RemoteException: "
+                    + e.getMessage());
+        }
+    }
+
+    private synchronized BinderDeathListener<IImsRcsController> getIImsRcsControllerListener() {
+        if (mControllerListener == null || mControllerListener.getConnection() == null) {
+            IBinder binder = ServiceManager.getService(Context.TELEPHONY_IMS_SERVICE);
+            IImsRcsController c = IImsRcsController.Stub.asInterface(binder);
+            mControllerListener = new BinderDeathListener<>(c);
+        }
+        return mControllerListener;
     }
 }

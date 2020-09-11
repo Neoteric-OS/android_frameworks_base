@@ -16,13 +16,18 @@
 
 package com.android.ims.internal;
 
+import android.os.IBinder;
+import android.telephony.ims.aidl.IImsConfig;
+import android.telephony.ims.aidl.IImsRegistration;
 /**
- *  Interface from ImsResolver to ImsServiceProxy in ImsManager.
- * Callback to ImsManager when a feature changes in the ImsServiceController.
+ *  Interface from ImsResolver to FeatureConnections.
+ * Callback to FeatureConnections when a feature's status changes.
  * {@hide}
  */
 oneway interface IImsServiceFeatureCallback {
-    void imsFeatureCreated(int slotId, int feature);
-    void imsFeatureRemoved(int slotId, int feature);
-    void imsStatusChanged(int slotId, int feature, int status);
+    void imsFeatureCreated(IBinder feature, IImsConfig c, IImsRegistration r, long initialCaps);
+    // Reason defined in FeatureConnector.UnavailableReason
+    void imsFeatureRemoved(int reason);
+    void imsStatusChanged(int status);
+    void updateCapabilities(long capabilities);
 }
