@@ -51,6 +51,23 @@
       "revId": "befac52e820ed550bb3b9544b49e88ea2c8c9de1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "436fb639_3cea2dcf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-09-11T16:20:10Z",
+      "side": 1,
+      "message": "Also in this case, given the start SCO request fails and the app is notified, it is the app responsibility to retry.\n There could be other causes for failures and it is expected for apps to retry in this case.",
+      "revId": "befac52e820ed550bb3b9544b49e88ea2c8c9de1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
