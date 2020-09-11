@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a24295c0_111f2e16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-09-11T22:55:28Z",
+      "side": 1,
+      "message": "It looks like it is good to have \"Test: n/a\" (may be)  line to fix the lint error.",
+      "revId": "efccd2b016dcad987c36f3b748bd26896843824d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
