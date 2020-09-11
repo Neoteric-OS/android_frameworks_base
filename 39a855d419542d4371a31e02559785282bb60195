@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61087f73_566b8f31",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsSubscriptionsMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-09-11T09:27:49Z",
+      "side": 1,
+      "message": "Question: This is the implementation of contains(), why you change to use this instead of just using contains()?",
+      "range": {
+        "startLine": 109,
+        "startChar": 54,
+        "endLine": 109,
+        "endChar": 77
+      },
+      "revId": "39a855d419542d4371a31e02559785282bb60195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
