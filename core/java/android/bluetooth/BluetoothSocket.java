@@ -129,7 +129,7 @@ public final class BluetoothSocket implements Closeable {
     private final BluetoothOutputStream mOutputStream;
     private final ParcelUuid mUuid;
     private boolean mExcludeSdp = false; /* when true no SPP SDP record will be created */
-    private boolean mAuthMitm = false;   /* when true Man-in-the-middle protection will be enabled*/
+    private boolean mAuthMitm = false;   /* when true Person-in-the-middle protection will be enabled*/
     private boolean mMin16DigitPin = false; /* Minimum 16 digit pin for sec mode 2 connections */
     @UnsupportedAppUsage(publicAlternatives = "Use {@link BluetoothSocket} public API instead.")
     private ParcelFileDescriptor mPfd;
@@ -190,7 +190,7 @@ public final class BluetoothSocket implements Closeable {
      * @param device remote device that this socket can connect to
      * @param port remote port
      * @param uuid SDP uuid
-     * @param mitm enforce man-in-the-middle protection.
+     * @param mitm enforce person-in-the-middle protection.
      * @param min16DigitPin enforce a minimum length of 16 digits for a sec mode 2 connection
      * @throws IOException On error, for example Bluetooth not available, or insufficient
      * privileges
