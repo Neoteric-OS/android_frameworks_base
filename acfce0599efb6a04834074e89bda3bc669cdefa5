@@ -46,6 +46,30 @@
       "revId": "acfce0599efb6a04834074e89bda3bc669cdefa5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5fdbec_ffb040d6",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-09-11T18:53:10Z",
+      "side": 1,
+      "message": "I believe Tyler means separately defining the constants in CarrierConfigManager again so that users will be able to us the well defined values. See CarrierConfigManager#KEY_ES_SUPL_CONTROL_PLANE_SUPPORT_INT for an example. ImsSsData is in frameworks/base, so you should be able to do something like:\n\npublic static final int SERVICE_CLASS_NONE \u003d ImsSsData.SERVICE_CLASS_NONE;",
+      "parentUuid": "867eed9d_29a4cbd9",
+      "range": {
+        "startLine": 219,
+        "startChar": 9,
+        "endLine": 220,
+        "endChar": 40
+      },
+      "revId": "acfce0599efb6a04834074e89bda3bc669cdefa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
