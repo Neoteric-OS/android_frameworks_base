@@ -20,7 +20,7 @@ import android.database.Cursor;
 import android.net.Uri;
 
 /**
- * A dummy content provider for tests.  This provider runs in a different process from the test and
+ * A placeholder content provider for tests.  This provider runs in a different process from the test and
  * is intentionally slow.
  */
 public class SlowProvider extends ContentProvider {
