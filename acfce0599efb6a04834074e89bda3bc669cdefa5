@@ -22,6 +22,30 @@
       "revId": "acfce0599efb6a04834074e89bda3bc669cdefa5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867eed9d_29a4cbd9",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2020-09-11T12:51:46Z",
+      "side": 1,
+      "message": "We can\u0027t refer to com.android.internal.telephony.CommandsInterface which defines service class from here.\n\nThere are definitions of service class in 3GPP doc like this. So, I added the name of doc as the reference.\n\n\u003cclassx\u003e is a sum of integers each representing a class of information (default 7 - voice, data and fax):\n1\tvoice (telephony)\n2\tdata (refers to all bearer services; with \u003cmode\u003e\u003d2 this may refer only to some bearer service if TA does not support values 16, 32, 64 and 128)\n4\tfax (facsimile services)\n8\tshort message service\n16\tdata circuit sync\n32\tdata circuit async\n64\tdedicated packet access\n128\tdedicated PAD access",
+      "parentUuid": "3b271b42_34648fea",
+      "range": {
+        "startLine": 219,
+        "startChar": 9,
+        "endLine": 220,
+        "endChar": 40
+      },
+      "revId": "acfce0599efb6a04834074e89bda3bc669cdefa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
