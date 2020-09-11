@@ -16,6 +16,24 @@
       "revId": "befac52e820ed550bb3b9544b49e88ea2c8c9de1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1c00688_153ad40b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1422811
+      },
+      "writtenOn": "2020-09-11T06:00:49Z",
+      "side": 1,
+      "message": "Is the scenario:\n1:connect bluetooth\n2：receive a voice call ,such as wechat voip,accept it\n3:receive an incoming call ,hung up directly\n4: in this time ,audio is routed to earpiece\nReason:\nwhen phone call hung up,should restore conmunication mode and newModeOwnerPid,\nBut restore  newModeOwnerPid is an asynchronous，at the same Time，app  startBtSco to restore sco，get the modeownerpid is telcom ，not 3rd app （wechat）\n\nlog:\nmode event:\n09-10 15:59:27:924 setMode(MODE_IN_COMMUNICATION) from package\u003dcom.tencent.mm pid\u003d19985 selected mode\u003dMODE_IN_COMMUNICATION by pid\u003d19985\n09-10 15:59:43:566 setMode(MODE_RINGTONE) from package\u003dcom.android.server.telecom pid\u003d1723 selected mode\u003dMODE_RINGTONE by pid\u003d1723\n09-10 15:59:57:820 setMode(MODE_NORMAL) from package\u003dcom.android.server.telecom pid\u003d1723 selected mode\u003dMODE_IN_COMMUNICATION by pid\u003d19985\n\nsco event:\n09-10 15:59:57:962 startBluetoothSco()) from u/pid:10253/19985\n09-10 15:59:57:996 stopBluetoothSco()) from u/pid:10253/19985\n\nforce use log:\n09-10 15:59:57:968 setForceUse(FOR_COMMUNICATION, FORCE_NONE) due to setNewModeOwner\n09-10 15:59:58:005 setForceUse(FOR_COMMUNICATION, FORCE_NONE) due to setSpeakerphoneOn(false) from u/pid:10253/19985\n09-10 15:59:58:005 setForceUse(FOR_COMMUNICATION, FORCE_NONE) due to setSpeakerphoneOn(false) from u/pid:10253/19985\n\nsco start log:\n09-10 15:59:57.962  1723  4431 I AS.BtHelper: In requestScoState(), state: 12, scoAudioMode: -1\n09-10 15:59:57.963  1723  4431 W AS.BtHelper: requestScoState: audio mode is not NORMAL and modeOwnerPid 1723 !\u003d creatorPid 19985\n09-10 15:59:57.996  1723  4431 I AS.BtHelper: In requestScoState(), state: 10, scoAudioMode: 0\n09-10 15:59:57.996  1723  4431 W AS.BtHelper: requestScoState: failed to disconnect in state 0, scoAudioMode\u003d0",
+      "parentUuid": "4fabee94_99e131ce",
+      "revId": "befac52e820ed550bb3b9544b49e88ea2c8c9de1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
