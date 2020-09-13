@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40240ac3_523d6600",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1840,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2020-09-13T21:39:25Z",
+      "side": 0,
+      "message": "This is duplicated with log above. Removed.",
+      "range": {
+        "startLine": 1837,
+        "startChar": 8,
+        "endLine": 1840,
+        "endChar": 9
+      },
+      "revId": "4fb19f1550e9c78bd16b77737e108e30184c6d71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c840f433_00b2c971",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1840,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2020-09-13T21:39:25Z",
+      "side": 1,
+      "message": "Renamed parameter cellLocation to cellIdentity. Follow up CLs will further cleanup out-dated \"cellLocation\" usages in method names.",
+      "range": {
+        "startLine": 1840,
+        "startChar": 41,
+        "endLine": 1840,
+        "endChar": 53
+      },
+      "revId": "0535a20c2cb5fa43915e0922c1819047588e0ff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
