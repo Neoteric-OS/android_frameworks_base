@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a17f061_d8ccee94",
+        "filename": "core/java/android/app/AppOpsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-09-13T22:31:13Z",
+      "side": 1,
+      "message": "overly nit: more than 100 characters.",
+      "revId": "a2668394930ea42ddffd87a47b8bc90be836405b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94d4467_b8d0f58a",
+        "filename": "core/java/android/inputmethodservice/InputMethodService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-09-13T22:31:13Z",
+      "side": 1,
+      "message": "overly nit: 100 characters at line#457 and 467",
+      "revId": "a2668394930ea42ddffd87a47b8bc90be836405b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72572126_22c7a703",
+        "filename": "core/java/com/android/internal/accessibility/AccessibilityShortcutController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-09-13T22:31:13Z",
+      "side": 1,
+      "message": "overly nit: more than 100 characters.",
+      "revId": "a2668394930ea42ddffd87a47b8bc90be836405b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2368bb2c_8bf02c30",
+        "filename": "core/tests/coretests/src/android/content/SlowProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-09-13T22:31:13Z",
+      "side": 1,
+      "message": "overly nit: more than 100 characters.",
+      "revId": "a2668394930ea42ddffd87a47b8bc90be836405b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
