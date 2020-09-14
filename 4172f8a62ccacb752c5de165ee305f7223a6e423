@@ -1,0 +1,139 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004922536",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1426192?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "66eb6db2_0ca6bf22",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3778,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-09-14T16:02:06Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 3778,
+        "startChar": 22,
+        "endLine": 3778,
+        "endChar": 31
+      },
+      "revId": "4172f8a62ccacb752c5de165ee305f7223a6e423",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004922536",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1426192?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e46ce67a_c47c8ffd",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3839,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-09-14T16:02:06Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 3839,
+        "startChar": 22,
+        "endLine": 3839,
+        "endChar": 31
+      },
+      "revId": "4172f8a62ccacb752c5de165ee305f7223a6e423",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004922536",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1426192?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9f93909e_f112be19",
+        "filename": "services/core/java/com/android/server/pm/UserSystemPackageInstaller.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-09-14T16:02:06Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 74,
+        "startChar": 32,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "4172f8a62ccacb752c5de165ee305f7223a6e423",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004922536",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1426192?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "86090926_b26c77fb",
+        "filename": "services/core/java/com/android/server/pm/UserSystemPackageInstaller.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-09-14T16:02:06Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 271,
+        "startChar": 51,
+        "endLine": 271,
+        "endChar": 60
+      },
+      "revId": "4172f8a62ccacb752c5de165ee305f7223a6e423",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004922536",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1426192?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "66acd4b9_4022a6cf",
+        "filename": "services/core/java/com/android/server/pm/UserSystemPackageInstaller.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-09-14T16:02:06Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details.",
+      "range": {
+        "startLine": 538,
+        "startChar": 24,
+        "endLine": 538,
+        "endChar": 33
+      },
+      "revId": "4172f8a62ccacb752c5de165ee305f7223a6e423",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
