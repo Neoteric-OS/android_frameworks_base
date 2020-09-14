@@ -22,6 +22,30 @@
       "revId": "39a855d419542d4371a31e02559785282bb60195",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070d6737_9b3c1e5a",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsSubscriptionsMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-14T01:45:16Z",
+      "side": 1,
+      "message": "Not sure why, but per TH result above, it seems aosp cannot get build pass if I call contains. I\u0027ll double check.",
+      "parentUuid": "61087f73_566b8f31",
+      "range": {
+        "startLine": 109,
+        "startChar": 54,
+        "endLine": 109,
+        "endChar": 77
+      },
+      "revId": "39a855d419542d4371a31e02559785282bb60195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
