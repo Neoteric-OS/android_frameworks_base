@@ -22,6 +22,30 @@
       "revId": "34c443238500068e7bf350bbc231f0534a544d17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dad984f_d7bdba08",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1320788
+      },
+      "writtenOn": "2020-09-14T02:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c3d7de9_80738e67",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 32
+      },
+      "revId": "34c443238500068e7bf350bbc231f0534a544d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
