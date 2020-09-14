@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f37329de_b8e8dcb0",
+        "filename": "core/java/android/app/AppOpsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2020-09-14T16:01:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a17f061_d8ccee94",
+      "revId": "a2668394930ea42ddffd87a47b8bc90be836405b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d94d4467_b8d0f58a",
         "filename": "core/java/android/inputmethodservice/InputMethodService.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "a2668394930ea42ddffd87a47b8bc90be836405b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e754e9_8c268c12",
+        "filename": "core/java/android/inputmethodservice/InputMethodService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2020-09-14T16:01:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d94d4467_b8d0f58a",
+      "revId": "a2668394930ea42ddffd87a47b8bc90be836405b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "04931646_b95efc58",
+        "filename": "core/java/com/android/internal/accessibility/AccessibilityShortcutController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2020-09-14T16:01:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72572126_22c7a703",
+      "revId": "a2668394930ea42ddffd87a47b8bc90be836405b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2368bb2c_8bf02c30",
         "filename": "core/tests/coretests/src/android/content/SlowProvider.java",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "a2668394930ea42ddffd87a47b8bc90be836405b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc646164_66de78f2",
+        "filename": "core/tests/coretests/src/android/content/SlowProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2020-09-14T16:01:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2368bb2c_8bf02c30",
+      "revId": "a2668394930ea42ddffd87a47b8bc90be836405b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
