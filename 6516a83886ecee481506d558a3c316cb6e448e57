@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efa7a83d_3ddd0174",
+        "filename": "core/tests/coretests/src/android/content/FakeProviderRemote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-09-14T16:42:38Z",
+      "side": 1,
+      "message": "overly nitty: more than 100 characters",
+      "revId": "6516a83886ecee481506d558a3c316cb6e448e57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
