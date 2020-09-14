@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Raman Tenneti <rtenneti@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Bypass-Presubmit+1: Jeff Sharkey <jsharkey@google.com>
+Submitted-by: Jeff Sharkey <jsharkey@google.com>
+Submitted-at: Mon, 14 Sep 2020 21:52:11 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1426194
+Project: platform/frameworks/base
+Branch: refs/heads/master
