@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "6d64a3e0_c12678ad",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-14T13:07:02Z",
+      "side": 1,
+      "message": "+1, I was also confused by the \"and\" at first glance.\nI think you can separate them to two sentences or add a comma in the front of the and. e.g. Default permission is PERMISSION_NONE, and PERMISSION_UNINSTALLED will be set ....",
+      "parentUuid": "bf45f6ab_904ad907",
+      "range": {
+        "startLine": 135,
+        "startChar": 33,
+        "endLine": 136,
+        "endChar": 73
+      },
+      "revId": "44251dd0cab81e8431399dff1426b927e9dcae16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80facc5d_1101f9d7",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 1
@@ -87,6 +111,29 @@
         "startChar": 4,
         "endLine": 138,
         "endChar": 10
+      },
+      "revId": "44251dd0cab81e8431399dff1426b927e9dcae16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2551a38a_5a731ac3",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-14T13:07:02Z",
+      "side": 1,
+      "message": "nit: add looks better.\nhttps://wikidiff.com/add/plus",
+      "range": {
+        "startLine": 150,
+        "startChar": 39,
+        "endLine": 150,
+        "endChar": 43
       },
       "revId": "44251dd0cab81e8431399dff1426b927e9dcae16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -133,6 +180,53 @@
         "startChar": 12,
         "endLine": 162,
         "endChar": 60
+      },
+      "revId": "44251dd0cab81e8431399dff1426b927e9dcae16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8a54ed_4e49c8ae",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-14T13:07:02Z",
+      "side": 1,
+      "message": "According to the java doc at line#133, line#134, the netd permissions only include PERMISSION_NETWORK, PERMISSION_SYSTEM, PERMISSION_INTERNET, PERMISSION_UPDATE_DEVICE_STATS.\nSo return true for PERMISSION_NONE looks wrong.",
+      "parentUuid": "efe1ba17_bc5ef9bb",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 60
+      },
+      "revId": "44251dd0cab81e8431399dff1426b927e9dcae16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1211238b_29397015",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-09-14T13:07:02Z",
+      "side": 1,
+      "message": "Question:\nSuppose uid of App1_user1 is 10100 for primary user, and uid of App1_user2 is 1010100 for secondary user.\nAre both of 10100 and 1010100 getting the same permissions?\n\nAnother case, suppose App2_user1 and App3_user1 are sharing the same uid as App1_user1.\nAre three of them getting the same permissions?\n\nIf all of them are getting the same permissions, I think we can simply get the permissions by appid instead of uid.\nAnd it looks to me that the mApps can be replaced by netdPermsAppIds.(Of course we should make netdPermsAppIds to be a global variable.)",
+      "range": {
+        "startLine": 217,
+        "startChar": 78,
+        "endLine": 217,
+        "endChar": 81
       },
       "revId": "44251dd0cab81e8431399dff1426b927e9dcae16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
