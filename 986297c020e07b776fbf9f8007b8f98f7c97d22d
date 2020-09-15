@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "17e136ff_7799dde1",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1732633
+      },
+      "writtenOn": "2020-09-15T10:21:25Z",
+      "side": 1,
+      "message": "I\u0027m so Sorry for this mistake，this type is set by us for dual sim card ringtones. I cherry pick to AOSP, but forget to delete it.",
+      "parentUuid": "2fb29b9c_4ce68867",
+      "range": {
+        "startLine": 1135,
+        "startChar": 0,
+        "endLine": 1135,
+        "endChar": 36
+      },
+      "revId": "986297c020e07b776fbf9f8007b8f98f7c97d22d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72c6a416_c68df805",
         "filename": "media/java/android/media/RingtoneManager.java",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2020-09-15T10:07:16Z",
       "side": 1,
       "message": "Could we extract them to a method? You can refer getDefaultRingtoneSetting and getDefaultRingtoneFilename. Thanks.",
+      "range": {
+        "startLine": 1133,
+        "startChar": 0,
+        "endLine": 1144,
+        "endChar": 13
+      },
+      "revId": "986297c020e07b776fbf9f8007b8f98f7c97d22d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273970fd_0cced2c9",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1732633
+      },
+      "writtenOn": "2020-09-15T10:21:25Z",
+      "side": 1,
+      "message": "This suggestion is good, I will extract them to a method.",
+      "parentUuid": "72c6a416_c68df805",
       "range": {
         "startLine": 1133,
         "startChar": 0,
