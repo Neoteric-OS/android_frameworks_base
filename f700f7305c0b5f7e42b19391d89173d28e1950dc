@@ -16,6 +16,46 @@
       "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b737a837_47e5d6ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-15T00:56:19Z",
+      "side": 1,
+      "message": "How were these numbers determined? I\u0027m skeptical that just allowing 12 extra bytes will fix this problem everywhere. But even if it doesn\u0027t, we should at least how we got to 1388 and what it fixes.",
+      "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8b0ffdc_76c7330a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2154,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-15T00:56:19Z",
+      "side": 1,
+      "message": "Is 12 extra bytes really sufficient?",
+      "range": {
+        "startLine": 2154,
+        "startChar": 58,
+        "endLine": 2154,
+        "endChar": 62
+      },
+      "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
