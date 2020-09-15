@@ -16,6 +16,23 @@
       "revId": "8c91526ec4413f48648e4ce2d59f303d31a4a656",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2e3aac6_b9e9e2de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2020-09-15T09:57:12Z",
+      "side": 1,
+      "message": "Thanks for the patch.\n\nIn S, we already plan to make some improvements to the performance, mostly by using Context#unbindServiceAsUser with a worker executor so our callbacks don\u0027t happen on the busy system_server main thread. Something like: \n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/storage/StorageUserConnection.java;l\u003d434?q\u003dstorageuserconne\n\nWhen we get around instrumenting and refactoring that code, we\u0027ll take another look at this. \n\nThanks",
+      "revId": "8c91526ec4413f48648e4ce2d59f303d31a4a656",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
