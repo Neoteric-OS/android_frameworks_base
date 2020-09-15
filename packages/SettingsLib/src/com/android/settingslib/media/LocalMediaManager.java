@@ -117,6 +117,11 @@ public class LocalMediaManager implements BluetoothCallback {
     public LocalMediaManager(Context context, String packageName, Notification notification) {
         mContext = context;
         mPackageName = packageName;
+        if(context == null)
+        {
+            Log.e(TAG, "if context is null, avoid to start bluetooth interface");
+            return;
+        }
         mLocalBluetoothManager =
                 LocalBluetoothManager.getInstance(context, /* onInitCallback= */ null);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
