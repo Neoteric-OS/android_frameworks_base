@@ -68,6 +68,24 @@
       "revId": "befac52e820ed550bb3b9544b49e88ea2c8c9de1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bef126b8_acc76d21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1422811
+      },
+      "writtenOn": "2020-09-15T01:24:48Z",
+      "side": 1,
+      "message": "i think when audio mode changed，should update newModeOwnerPid and clear sco  clients first.then,the third party application will connect successfully .\n\nAdding a lock to prevent the modeOwnerPid and will get right modeOwnerPid Using mDeviceBroker.getModeOwnerPid() interface when requestScoState in BtHelper.\n\nBthelper code:\n        @GuardedBy(\"BtHelper.this\")\n        private boolean requestScoState(int state, int scoAudioMode) {\n            if (AudioService.DEBUG_SCO) {\n                Log.i(TAG, \"In requestScoState(), state: \" + state + \", scoAudioMode: \"\n                            + scoAudioMode);\n            }\n            checkScoAudioState();\n            if (mScoClients.size() !\u003d 1) {\n                Log.i(TAG, \"requestScoState: state\u003d\" + state + \", scoAudioMode\u003d\" + scoAudioMode\n                        + \", num SCO clients\u003d\" + mScoClients.size());\n                return true;\n            }\n            if (state \u003d\u003d BluetoothHeadset.STATE_AUDIO_CONNECTED) {\n                // Make sure that the state transitions to CONNECTING even if we cannot initiate\n                // the connection.\n                broadcastScoConnectionState(AudioManager.SCO_AUDIO_STATE_CONNECTING);\n                // Accept SCO audio activation only in NORMAL audio mode or if the mode is\n                // currently controlled by the same client process.\n                final int modeOwnerPid \u003d  mDeviceBroker.getModeOwnerPid();\n                if (modeOwnerPid !\u003d 0 \u0026\u0026 (modeOwnerPid !\u003d mCreatorPid)) {\n                    Log.w(TAG, \"requestScoState: audio mode is not NORMAL and modeOwnerPid \"\n                            + modeOwnerPid + \" !\u003d creatorPid \" + mCreatorPid);\n                    broadcastScoConnectionState(AudioManager.SCO_AUDIO_STATE_DISCONNECTED);\n                    return false;\n                }\n\n------------------------------------------\n\nAnd，How was the app notified that the SCO connection failed？Using ACTION_SCO_AUDIO_STATE_UPDATED broadcast？",
+      "parentUuid": "436fb639_3cea2dcf",
+      "revId": "befac52e820ed550bb3b9544b49e88ea2c8c9de1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
