@@ -39,6 +39,30 @@
       "revId": "6f421a5cbf3ccbf9c33b2cf5e48b010732555bf7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d4024a3_98848363",
+        "filename": "packages/SoundPicker/src/com/android/soundpicker/RingtonePickerActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1732633
+      },
+      "writtenOn": "2020-09-15T10:26:52Z",
+      "side": 1,
+      "message": "This comment is a description of a situation that caused the problem. It may be too targeted, and I will revise the content of the comment.\nThe purpose of the modification here is to always return null when getCheckedItem is POS_UNKNOW, no matter what the values of mSilentPos and mDefaultRingtonePos are. Therefore, I think it is sufficient to just judge (getCheckedItem() \u003d\u003d POS_UNKNOW).",
+      "parentUuid": "ae54a03d_398d3c74",
+      "range": {
+        "startLine": 587,
+        "startChar": 0,
+        "endLine": 587,
+        "endChar": 44
+      },
+      "revId": "6f421a5cbf3ccbf9c33b2cf5e48b010732555bf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
