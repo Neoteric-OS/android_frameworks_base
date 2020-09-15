@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c48607e6_d01809d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463043
+      },
+      "writtenOn": "2020-09-15T04:08:40Z",
+      "side": 1,
+      "message": "Hi,\n\nWe face this issue at CTS case: com.android.cts.devicepolicy.QuietModeHostsideTest#testBroadcastManagedProfileAvailable_withCrossProfileAppsOp\n\nAnd we have below log:\n// storage manager service notify first\n09-08 03:00:34.340  1775  2401 I StorageSessionController: Notifying volume state changed for session with id: emulated;15\n// then remote died\n09-08 03:00:34.342  1775  1775 I StorageUserConnection: Service: [ComponentInfo{com.google.android.providers.media.module/com.android.providers.media.fuse.ExternalStorageServiceImpl}] disconnected. User[15]\n// wait on latch until timeout, block 20s\n09-08 03:00:54.341  1775  2401 E StorageManagerService: Failed to notify volume state changed to the Storage Service\n\nPlease help review this fix. Thanks!",
+      "revId": "8c91526ec4413f48648e4ce2d59f303d31a4a656",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
