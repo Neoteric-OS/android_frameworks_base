@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b60bf720_52e0c209",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-15T03:31:01Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "55bf28b8836c0a354ee2d4114e6a6469d683a6e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "370a14d3_62bcab0f",
+        "filename": "packages/Tethering/bpf_progs/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-15T03:31:01Z",
+      "side": 1,
+      "message": "Ideally the mainline module should not depend on anything in system/netd. Can we add a TODO to stop depending on this?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 43
+      },
+      "revId": "55bf28b8836c0a354ee2d4114e6a6469d683a6e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
