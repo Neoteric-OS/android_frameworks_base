@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5067a36e_5c3cedb3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2020-09-15T10:07:16Z",
+      "side": 1,
+      "message": "Please shorter the title. Please don\u0027t exceed 60 characters. Wrap the descriptions to about 76 characters. Thanks.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 102
+      },
+      "revId": "986297c020e07b776fbf9f8007b8f98f7c97d22d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb29b9c_4ce68867",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2020-09-15T10:07:16Z",
+      "side": 1,
+      "message": "What is the TYPE_RINGTONE1? typo?",
+      "range": {
+        "startLine": 1135,
+        "startChar": 0,
+        "endLine": 1135,
+        "endChar": 36
+      },
+      "revId": "986297c020e07b776fbf9f8007b8f98f7c97d22d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c6a416_c68df805",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2020-09-15T10:07:16Z",
+      "side": 1,
+      "message": "Could we extract them to a method? You can refer getDefaultRingtoneSetting and getDefaultRingtoneFilename. Thanks.",
+      "range": {
+        "startLine": 1133,
+        "startChar": 0,
+        "endLine": 1144,
+        "endChar": 13
+      },
+      "revId": "986297c020e07b776fbf9f8007b8f98f7c97d22d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
