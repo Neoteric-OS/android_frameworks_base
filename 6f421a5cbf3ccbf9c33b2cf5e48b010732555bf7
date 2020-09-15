@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11b5da43_64efd70f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2020-09-15T06:49:29Z",
+      "side": 1,
+      "message": "Leave the comment inline. Thanks.",
+      "revId": "6f421a5cbf3ccbf9c33b2cf5e48b010732555bf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae54a03d_398d3c74",
+        "filename": "packages/SoundPicker/src/com/android/soundpicker/RingtonePickerActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2020-09-15T06:49:29Z",
+      "side": 1,
+      "message": "If the user doesn\u0027t set the RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT \"false\", we should return the default uri.\nCould you also add a check for mHasDefaultItem? Thanks.\nE.g. if (getCheckedItem() \u003d\u003d POS_UNKNOWN \u0026\u0026 !mHasDefulatItem) {\n     }",
+      "range": {
+        "startLine": 587,
+        "startChar": 0,
+        "endLine": 587,
+        "endChar": 44
+      },
+      "revId": "6f421a5cbf3ccbf9c33b2cf5e48b010732555bf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
