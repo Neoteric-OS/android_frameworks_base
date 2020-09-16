@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5efb311_c678ff47",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2020-09-16T02:32:17Z",
+      "side": 1,
+      "message": "nit: add a whitespace here\nE.g. Bug: 168431815",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 13
+      },
+      "revId": "3878cde94c3092440dbc2f1038d712c4c60e726a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26868947_0e1cdb25",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2020-09-16T02:32:17Z",
+      "side": 1,
+      "message": "Could you remove the redundant comment? Thanks",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "3878cde94c3092440dbc2f1038d712c4c60e726a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcbe30ee_241aa8ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2020-09-16T02:32:17Z",
+      "side": 1,
+      "message": "Thanks for the change.",
+      "revId": "3878cde94c3092440dbc2f1038d712c4c60e726a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
