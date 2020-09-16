@@ -1,0 +1,31 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004962517",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1422889?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "da8c971b_4a4bc756",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-09-16T02:32:23Z",
+      "side": 1,
+      "message": "\"Manual\" is not a valid test stanza. Expected one of: atest (--host) \u003ctest\u003e OR gd/cert/run (--host) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "47558ca2b2c1b553265331cfb0d96d3bbd151ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
