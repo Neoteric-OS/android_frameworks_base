@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13e1938b_90f943e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2020-09-16T06:12:15Z",
+      "side": 1,
+      "message": "\"When getCheckedItem and mDefaultRingtonePos are both POS_UNKNOWN,\nWe should return a null uri instead of the default uri.\"\n\nThis case seems only happen on set RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT to \"false\".\n\nCould you update the descriptions?\n\nMaybe we can say when the getCheckItem is POS_UNKNOWN, it is not the case we expected. We return null for this case.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 36
+      },
+      "revId": "61ce8957fce68c70a757fd466c50872b1f25264d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
