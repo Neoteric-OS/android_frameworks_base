@@ -70,6 +70,30 @@
       "revId": "acfce0599efb6a04834074e89bda3bc669cdefa5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4889629_d82e5866",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2020-09-16T04:22:46Z",
+      "side": 1,
+      "message": "Thank you for your comments. I updated the commit based on your advice.",
+      "parentUuid": "8b5fdbec_ffb040d6",
+      "range": {
+        "startLine": 219,
+        "startChar": 9,
+        "endLine": 220,
+        "endChar": 40
+      },
+      "revId": "acfce0599efb6a04834074e89bda3bc669cdefa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
