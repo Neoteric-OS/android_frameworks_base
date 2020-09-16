@@ -23,6 +23,30 @@
       "revId": "4fd2e17867520c29c6b001108f90e4ce01f0f206",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2870006f_448f71b6",
+        "filename": "packages/SoundPicker/src/com/android/soundpicker/RingtonePickerActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1732633
+      },
+      "writtenOn": "2020-09-16T02:02:17Z",
+      "side": 1,
+      "message": "DONE",
+      "parentUuid": "4151ae02_dd46cfed",
+      "range": {
+        "startLine": 589,
+        "startChar": 71,
+        "endLine": 589,
+        "endChar": 72
+      },
+      "revId": "4fd2e17867520c29c6b001108f90e4ce01f0f206",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
