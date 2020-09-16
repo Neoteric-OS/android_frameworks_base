@@ -123,6 +123,30 @@
       "revId": "6f421a5cbf3ccbf9c33b2cf5e48b010732555bf7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52747839_fbae8378",
+        "filename": "packages/SoundPicker/src/com/android/soundpicker/RingtonePickerActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1732633
+      },
+      "writtenOn": "2020-09-16T04:06:44Z",
+      "side": 1,
+      "message": "chiang,\n\nI think if the user does not set RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT to \"false\", the value of mHasDefaultItem must be true.\n\nBut whether we should return the default uri is based on getCheckedItem instead of mHasDefaultItem. If getCheckedItem points to the default item, it is possible to return the default uri. If getCheckedItem points to POS_UNKNOWN, I think we should return null because the UI shown to the user will not mark the default item as selected.\n\nThe item that the user really wants to display is based on EXTRA_RINGTONE_EXISTING_URI. Therefore, if the uri passed by EXTRA_RINGTONE_EXISTING_URI cannot be parsed, we should return null to prompt the user that the parameter passed in is wrong.",
+      "parentUuid": "408cc741_4b416d3a",
+      "range": {
+        "startLine": 587,
+        "startChar": 0,
+        "endLine": 587,
+        "endChar": 44
+      },
+      "revId": "6f421a5cbf3ccbf9c33b2cf5e48b010732555bf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
