@@ -22,6 +22,30 @@
       "revId": "6ad9f092e132193347404e85fb338639187d5ecd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ae2c9c_ec2de890",
+        "filename": "packages/SoundPicker/src/com/android/soundpicker/RingtonePickerActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1232885
+      },
+      "writtenOn": "2020-09-16T07:01:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b6a7b22_07103e4f",
+      "range": {
+        "startLine": 587,
+        "startChar": 0,
+        "endLine": 600,
+        "endChar": 7
+      },
+      "revId": "6ad9f092e132193347404e85fb338639187d5ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
