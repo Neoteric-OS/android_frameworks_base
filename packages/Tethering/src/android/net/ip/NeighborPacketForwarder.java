@@ -41,7 +41,6 @@ import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Basic IPv6 Neighbor Advertisement Forwarder.

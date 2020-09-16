@@ -68,7 +68,7 @@ public class DadProxyTest {
     // TODO: make NetworkStackConstants accessible to this test and use the constant from there.
     private static final int ETHER_SRC_ADDR_OFFSET = 6;
 
-    private DadProxy mProxy ;
+    private DadProxy mProxy;
     TestNetworkInterface mUpstreamTestIface, mTetheredTestIface;
     private InterfaceParams mUpstreamParams, mTetheredParams;
     private HandlerThread mHandlerThread;
