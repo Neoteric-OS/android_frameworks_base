@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ff062d5_f7116dc0",
+        "filename": "packages/StatementService/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-09-16T18:40:52Z",
+      "side": 1,
+      "message": "This should not be necessary because the library is already in libs and it is a java_sdk_library so should be tracked automatically.",
+      "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
