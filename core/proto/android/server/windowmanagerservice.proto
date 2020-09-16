@@ -164,7 +164,8 @@ message AppTransitionProto {
 message DisplayContentProto {
     option (.android.msg_privacy).dest = DEST_AUTOMATIC;
 
-    optional WindowContainerProto window_container = 1;
+    // Use root_display_area instead
+    optional WindowContainerProto window_container = 1 [deprecated=true];
     optional int32 id = 2;
     reserved 3; // stacks
     optional DockedStackDividerControllerProto docked_stack_divider_controller = 4 [deprecated=true];
@@ -185,9 +186,8 @@ message DisplayContentProto {
     repeated IdentifierProto opening_apps = 17;
     repeated IdentifierProto closing_apps = 18;
     repeated IdentifierProto changing_apps = 19;
-    repeated WindowTokenProto overlay_windows = 20;
+    repeated WindowTokenProto overlay_windows = 20 [deprecated=true];
     optional DisplayAreaProto root_display_area = 21;
-
 
     optional bool single_task_instance = 22;
     optional int32 focused_root_task_id = 23;
@@ -203,6 +203,7 @@ message DisplayAreaProto {
     optional WindowContainerProto window_container = 1;
     optional string name = 2 [ (.android.privacy).dest = DEST_EXPLICIT ];
     repeated DisplayAreaChildProto children = 3 [deprecated=true];
+    optional bool is_task_display_area = 4;
 }
 
 /* represents a generic child of a DisplayArea */
@@ -274,7 +275,7 @@ message TaskProto {
     optional bool adjusted_for_ime = 23;
     optional float adjust_ime_amount = 24;
     optional float adjust_divider_amount = 25;
-    optional bool animating_bounds = 26;
+    optional bool animating_bounds = 26 [deprecated = true];
     optional float minimize_amount = 27;
     optional bool created_by_organizer = 28;
 }
@@ -309,11 +310,12 @@ message ActivityRecordProto {
     repeated .android.graphics.RectProto frozen_bounds = 23;
     optional bool visible = 24;
     reserved 25; // configuration_container
-    optional IdentifierProto identifier = 26;
+    optional IdentifierProto identifier = 26 [deprecated=true];
     optional string state = 27 [(.android.privacy).dest = DEST_EXPLICIT];
     optional bool front_of_task = 28;
     optional int32 proc_id = 29;
     optional bool translucent = 30;
+    optional bool pip_auto_enter_allowed = 31;
 }
 
 /* represents WindowToken */
@@ -332,7 +334,7 @@ message WindowStateProto {
     option (.android.msg_privacy).dest = DEST_AUTOMATIC;
 
     optional WindowContainerProto window_container = 1;
-    optional IdentifierProto identifier = 2;
+    optional IdentifierProto identifier = 2 [deprecated=true];
     // Unique identifier of a DisplayContent stack.
     optional int32 display_id = 3;
     // Unique identifier for the task stack.
@@ -428,6 +430,7 @@ message WindowContainerProto {
     optional bool visible = 3;
     optional SurfaceAnimatorProto surface_animator = 4;
     repeated WindowContainerChildProto children = 5;
+    optional IdentifierProto identifier = 6;
 }
 
 /* represents a generic child of a WindowContainer */

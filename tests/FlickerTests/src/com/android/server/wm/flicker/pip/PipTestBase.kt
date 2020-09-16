@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The Android Open Source Project
+ * Copyright (C) 2020 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.android.server.wm.flicker.helpers;
+package com.android.server.wm.flicker.pip
 
-import android.app.Instrumentation;
+import com.android.server.wm.flicker.NonRotationTestBase
+import com.android.server.wm.flicker.helpers.PipAppHelper
 
-import com.android.server.wm.flicker.StandardAppHelper;
+abstract class PipTestBase(
+    rotationName: String,
+    rotation: Int
+) : NonRotationTestBase(rotationName, rotation) {
+    protected val testApp = PipAppHelper(instrumentation)
 
-public abstract class FlickerAppHelper extends StandardAppHelper {
-
-    static int sFindTimeout = 10000;
-    static String sFlickerPackage = "com.android.server.wm.flicker.testapp";
-
-    public FlickerAppHelper(Instrumentation instr, String launcherName) {
-        super(instr, sFlickerPackage, launcherName);
+    companion object {
+        const val sPipWindowTitle = "PipMenuActivity"
     }
 }
