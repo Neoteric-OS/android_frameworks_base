@@ -86,6 +86,24 @@
       "revId": "befac52e820ed550bb3b9544b49e88ea2c8c9de1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50897851_e4cb78a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-09-16T00:50:29Z",
+      "side": 1,
+      "message": "yes the app must monitor ACTION_SCO_AUDIO_STATE_UPDATED intents to know if SCO activation was successful or not. See doc here: https://developer.android.com/reference/android/media/AudioManager#startBluetoothSco()",
+      "parentUuid": "bef126b8_acc76d21",
+      "revId": "befac52e820ed550bb3b9544b49e88ea2c8c9de1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
