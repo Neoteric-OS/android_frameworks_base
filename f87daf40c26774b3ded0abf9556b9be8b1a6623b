@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0efdf2b5_b1c78b4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2020-09-17T14:06:13Z",
+      "side": 1,
+      "message": "Jack is the only owner on our team for this code.",
+      "revId": "f87daf40c26774b3ded0abf9556b9be8b1a6623b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
