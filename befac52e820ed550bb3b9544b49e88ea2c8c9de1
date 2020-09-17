@@ -121,6 +121,24 @@
       "revId": "befac52e820ed550bb3b9544b49e88ea2c8c9de1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f343113_ac9b280e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1422811
+      },
+      "writtenOn": "2020-09-17T02:56:01Z",
+      "side": 1,
+      "message": "I could not find this commit，Whether this commit is merged into the master branch or dev branch?",
+      "parentUuid": "b0d03c39_11018712",
+      "revId": "befac52e820ed550bb3b9544b49e88ea2c8c9de1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
