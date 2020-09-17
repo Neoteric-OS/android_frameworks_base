@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da54d696_b0c05764",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2020-09-17T16:02:44Z",
+      "side": 1,
+      "message": "Sorry, I missed it. It should use AND between these two conditions.\n\"\u003d?,\" \u003d\u003e \"\u003d? AND \"\nE.g. WHERE DISPLAY_NAME \u003d \"test\" AND \"is_ringtone \u003d 1\".",
+      "range": {
+        "startLine": 1134,
+        "startChar": 64,
+        "endLine": 1134,
+        "endChar": 66
+      },
+      "revId": "3b25df9ad3f44f30ebdbfd84143ddb78c90f8db1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
