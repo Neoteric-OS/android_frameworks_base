@@ -1,0 +1,8 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Build-Cop-Override+1: Lev Proleev <levp@google.com>
+Presubmit-Ready+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Ivan Chiang <chiangi@google.com>
+Submitted-at: Thu, 17 Sep 2020 16:28:09 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1429968
+Project: platform/frameworks/base
+Branch: refs/heads/master
