@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b990fad0_8e761c49",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1352498
+      },
+      "writtenOn": "2020-09-17T03:54:34Z",
+      "side": 1,
+      "message": "I\u0027m seeing tool related failure from presubmit test result.\n\n```\ncom.android.tradefed.targetprep.TargetSetupError: Test app FrameworksNetTests.apk was not found. [8BTY12XSM crosshatch:crosshatch MASTER]\n\tat com.android.tradefed.targetprep.TestAppInstallSetup.resolveApkFiles(TestAppInstallSetup.java:479)\n\tat com.android.tradefed.targetprep.TestAppInstallSetup.setUp(TestAppInstallSetup.java:324)\n\tat com.android.tradefed.invoker.InvocationExecution.runPreparationOnDevice(InvocationExecution.java:328)\n\tat com.android.tradefed.invoker.InvocationExecution.doSetup(InvocationExecution.java:278)\n\tat com.android.tradefed.invoker.TestInvocation.prepareAndRun(TestInvocation.java:433)\n\tat com.android.tradefed.invoker.TestInvocation.performInvocation(TestInvocation.java:238)\n\tat com.android.tradefed.invoker.TestInvocation.invoke(TestInvocation.java:933)\n\tat com.android.tradefed.command.CommandScheduler$InvocationThread.run(CommandScheduler.java:610)\n```\n\nWhich doesn\u0027t look like related to the patch. So checking the presubmit-ready again.\n\n",
+      "revId": "3101841277271f08bc3e5a5a1fe8a1d755add372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
