@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eae359cd_b688ce8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-09-17T20:41:15Z",
+      "side": 1,
+      "message": "Presubmit blocked by b/FrameworksNetTests, telephony tests passing.",
+      "revId": "03a1471e1ef8d45eec6673d6a5238225ce0d00a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
