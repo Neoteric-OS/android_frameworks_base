@@ -56,6 +56,30 @@
       "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2fba54_33d8dc3c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2154,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-17T17:08:19Z",
+      "side": 1,
+      "message": "Unclear; this was a speculative change as per your suggestion on https://b.corp.google.com/issues/119076193#comment29.\n\nThoughts? I don\u0027t have a strong opinion here.",
+      "parentUuid": "a8b0ffdc_76c7330a",
+      "range": {
+        "startLine": 2154,
+        "startChar": 58,
+        "endLine": 2154,
+        "endChar": 62
+      },
+      "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
