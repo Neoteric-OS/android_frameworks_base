@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "504ac8a6_b33b916d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2020-09-17T16:31:22Z",
+      "side": 1,
+      "message": "Sorry for this. I missed a catch for it before. I replied it on the original CL. Thanks for the help.",
+      "revId": "689ff54e86509875618d1c194114a560c327434e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
