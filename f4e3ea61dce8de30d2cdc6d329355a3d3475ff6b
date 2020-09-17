@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f584f479_59d05f93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1267775
+      },
+      "writtenOn": "2020-09-17T18:04:19Z",
+      "side": 1,
+      "message": "LGTM but I will wait until the presubmit passes",
+      "revId": "f4e3ea61dce8de30d2cdc6d329355a3d3475ff6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
