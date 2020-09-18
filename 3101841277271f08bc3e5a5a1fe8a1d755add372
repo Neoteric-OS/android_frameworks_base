@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "b888544c_f4373e83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1232885
+      },
+      "writtenOn": "2020-09-18T09:33:15Z",
+      "side": 1,
+      "message": "Is the commit message like this ok?",
+      "parentUuid": "98c29e95_f3121102",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "3101841277271f08bc3e5a5a1fe8a1d755add372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b990fad0_8e761c49",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 8
