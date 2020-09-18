@@ -53,6 +53,42 @@
     },
     {
       "key": {
+        "uuid": "5341a152_5411dbcb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-09-18T03:34:26Z",
+      "side": 1,
+      "message": "I have added a TODO for getting rid of netd in Android.bp. We need to discuss the further implementation.\n\nKeep this as unresolved.",
+      "parentUuid": "6dd50bc9_d504caf4",
+      "revId": "55bf28b8836c0a354ee2d4114e6a6469d683a6e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdd27c1_9ccc104c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-09-18T03:34:26Z",
+      "side": 1,
+      "message": "Include from netd temporarily. \nWe have a TODO for breaking the dependence from netd\n\nI have tried to copy \u0027bpf_net_helpers.h\u0027 in patchset#1. But maybe no duplicated file is better. So I use the header in netd. \n\nnote that if we move the bpf_net_helpers.h, VTS test needs to modify as well.\nhttps://source.corp.google.com/aosp-master/test/vts-testcase/kernel/api/bpf_native_test/Android.bp;l\u003d49\nbpf {\n    name: \"kern.o\",\n    // header_libs: [\"netd_bpf_progs_headers\"],\n    include_dirs: [\"system/netd/bpf_progs\"],",
+      "parentUuid": "40488fae_341392aa",
+      "revId": "55bf28b8836c0a354ee2d4114e6a6469d683a6e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1e4d374_ac21e1af",
         "filename": "packages/Tethering/bpf_progs/Android.bp",
         "patchSetId": 4
@@ -73,6 +109,30 @@
       "revId": "55bf28b8836c0a354ee2d4114e6a6469d683a6e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c36bcb2_7249bd27",
+        "filename": "packages/Tethering/bpf_progs/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-09-18T03:34:26Z",
+      "side": 1,
+      "message": "for bpf_net_helpers.h. \n\nI have added the description as well.",
+      "parentUuid": "b1e4d374_ac21e1af",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 32
+      },
+      "revId": "55bf28b8836c0a354ee2d4114e6a6469d683a6e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +179,54 @@
       "revId": "55bf28b8836c0a354ee2d4114e6a6469d683a6e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66028f34_c7d56076",
+        "filename": "packages/Tethering/bpf_progs/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-09-18T03:34:26Z",
+      "side": 1,
+      "message": "Done. TODO is added",
+      "parentUuid": "370a14d3_62bcab0f",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 43
+      },
+      "revId": "55bf28b8836c0a354ee2d4114e6a6469d683a6e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4852b73_8e5cf325",
+        "filename": "packages/Tethering/bpf_progs/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-09-18T03:34:26Z",
+      "side": 1,
+      "message": "for UidConstants.h which is used by bpf_shared.h\n\nI have added the description as well.",
+      "parentUuid": "c9d1ebc8_d3a4aa53",
+      "range": {
+        "startLine": 30,
+        "startChar": 9,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "55bf28b8836c0a354ee2d4114e6a6469d683a6e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
