@@ -23,6 +23,7 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -43,6 +44,8 @@ public final class UsageEvents implements Parcelable {
 
     /** @hide */
     public static final String OBFUSCATED_NOTIFICATION_CHANNEL_ID = "unknown_channel_id";
+
+    private static final String TAG = "UsageEvents";
 
     /**
      * Flag: indicates to not obfuscate or hide any usage event data when being queried.
@@ -1029,7 +1032,15 @@ public final class UsageEvents implements Parcelable {
         }
         // Data can be too large for a transact. Write the data as a Blob, which will be written to
         // ashmem if too large.
-        dest.writeBlob(data.marshall());
+        try {
+            dest.writeBlob(data.marshall());
+        } catch (OutOfMemoryError e) {
+            Log.e(TAG, "unalbe write usage event to parcel, mEventCount=" + mEventCount + ", e=" + e);
+            data.recycle();
+            data.writeInt(0);  // write mEventCount = 0
+            data.writeInt(0);  // write mIndex = 0
+        }
+        
     }
 
     public static final @android.annotation.NonNull Creator<UsageEvents> CREATOR = new Creator<UsageEvents>() {
