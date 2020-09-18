@@ -20,6 +20,7 @@ apex {
     min_sdk_version: "current",
     java_libs: ["framework-tethering"],
     apps: ["Tethering"],
+    jni_libs: ["libtetherutilsjni"],
     manifest: "manifest.json",
     key: "com.android.tethering.key",
 

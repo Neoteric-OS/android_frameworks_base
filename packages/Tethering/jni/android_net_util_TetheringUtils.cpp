@@ -27,7 +27,92 @@
 #define LOG_TAG "TetheringUtils"
 #include <android/log.h>
 
+#include "OffloadUtils.h"
+#include "bpf/BpfMap.h"
+
+using android::base::unique_fd;
+
 namespace android {
+static bpf::BpfMap<TetherIngressKey, TetherIngressValue> mBpfIngressMap;
+static bpf::BpfMap<uint32_t, TetherStatsValue> mBpfStatsMap;
+static bpf::BpfMap<uint32_t, uint64_t> mBpfLimitMap;
+
+void startBpf(const char* extIface) {
+    // TODO: perhaps ignore IPv4-only interface because IPv4 traffic downstream is not supported.
+    int ifIndex = if_nametoindex(extIface);
+    if (!ifIndex) {
+        __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "Fail to get index for interface %s",
+                extIface);
+        return;
+    }
+
+    auto isEthernet = net::isEthernet(extIface);
+    if (!isEthernet.ok()) {
+        __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "isEthernet(%s[%d]) failure: %s", extIface,
+              ifIndex, isEthernet.error().message().c_str());
+        return;
+    }
+
+    int rv = net::getTetherIngressProgFd(isEthernet.value());
+    if (rv < 0) {
+        __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "getTetherIngressProgFd(%d) failure: %s",
+                isEthernet.value(), strerror(-rv));
+        return;
+    }
+    unique_fd tetherProgFd(rv);
+
+    rv = net::tcFilterAddDevIngressTether(ifIndex, tetherProgFd, isEthernet.value());
+    if (rv) {
+        __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
+              "tcFilterAddDevIngressTether(%d[%s], %d) failure: %s",
+              ifIndex, extIface, isEthernet.value(), strerror(-rv));
+        return;
+    }
+}
+
+void stopBpf(const char* extIface) {
+    // TODO: perhaps ignore IPv4-only interface because IPv4 traffic downstream is not supported.
+    int ifIndex = if_nametoindex(extIface);
+    if (!ifIndex) {
+        __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "Fail to get index for interface %s",
+                extIface);
+        return;
+    }
+
+    int rv = net::tcFilterDelDevIngressTether(ifIndex);
+    if (rv < 0) {
+        __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
+                "tcFilterDelDevIngressTether(%d[%s]) failure: %s", ifIndex, extIface,
+                strerror(-rv));
+    }
+}
+
+static void android_net_util_enableBpf(JNIEnv *env, jobject, jboolean enable, jstring extIface) {
+    const char* iface = env->GetStringUTFChars(extIface, NULL);
+    if (enable) {
+        startBpf(iface);
+    } else {
+        stopBpf(iface);
+    }
+}
+
+static void android_net_util_initBpfMaps(JNIEnv *env, jobject clazz) {
+    int fd = net::getTetherIngressMapFd();
+    if (fd >= 0) {
+        mBpfIngressMap.reset(fd);
+        mBpfIngressMap.clear();
+    }
+    fd = net::getTetherStatsMapFd();
+    if (fd >= 0) {
+        mBpfStatsMap.reset(fd);
+        mBpfStatsMap.clear();
+    }
+    fd = net::getTetherLimitMapFd();
+    if (fd >= 0) {
+        mBpfLimitMap.reset(fd);
+        mBpfLimitMap.clear();
+    }
+}
 
 static void android_net_util_setupRaSocket(JNIEnv *env, jobject clazz, jobject javaFd,
         jint ifIndex)
@@ -126,6 +211,8 @@ static void android_net_util_setupRaSocket(JNIEnv *env, jobject clazz, jobject j
 static const JNINativeMethod gMethods[] = {
     /* name, signature, funcPtr */
     { "setupRaSocket", "(Ljava/io/FileDescriptor;I)V", (void*) android_net_util_setupRaSocket },
+    { "initBpfMaps", "()", (void*) android_net_util_initBpfMaps },
+    { "enableBpf", "(ZLjava/lang/String)", (void*) android_net_util_enableBpf },
 };
 
 int register_android_net_util_TetheringUtils(JNIEnv* env) {

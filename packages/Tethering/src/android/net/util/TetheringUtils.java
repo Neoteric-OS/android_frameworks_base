@@ -129,4 +129,8 @@ public class TetheringUtils {
                 && request.exemptFromEntitlementCheck == otherRequest.exemptFromEntitlementCheck
                 && request.showProvisioningUi == otherRequest.showProvisioningUi;
     }
+
+    public static native void initBpfMaps();
+
+    public static native void enableBpf(boolean enable, String upstreamIface);
 }
