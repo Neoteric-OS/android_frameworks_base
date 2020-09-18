@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "79159fe5_7b8c6d7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1732633
+      },
+      "writtenOn": "2020-09-18T08:01:48Z",
+      "side": 1,
+      "message": "Hi robert,\n\nI knew put atestXXX in the commit msg.\n\nHowever, it is necessary to update the test results to the bug. I mean, can I provide a test video as a test result or I need to provider a new test case for this case.",
+      "parentUuid": "b020e781_3b55af84",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "3101841277271f08bc3e5a5a1fe8a1d755add372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b990fad0_8e761c49",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 8
