@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bef6de60_7cd4175d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2020-09-18T05:31:14Z",
+      "side": 1,
+      "message": "Please also add test line.\n\nE.g.\nTest: atest XXXTest or manual\n\nIf it is manual, please update your test result on the bug 165892509. Thanks.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "3101841277271f08bc3e5a5a1fe8a1d755add372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b990fad0_8e761c49",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 8
