@@ -30,12 +30,22 @@
 #include "OffloadUtils.h"
 #include "bpf/BpfMap.h"
 
+using android::base::Result;
 using android::base::unique_fd;
 
 namespace android {
 static bpf::BpfMap<TetherIngressKey, TetherIngressValue> mBpfIngressMap;
 static bpf::BpfMap<uint32_t, TetherStatsValue> mBpfStatsMap;
 static bpf::BpfMap<uint32_t, uint64_t> mBpfLimitMap;
+
+static struct {
+    jfieldID inputInterfaceIndex;
+    jfieldID outputInterfaceIndex;
+    jfieldID destination;
+    jfieldID srcL2Address;
+    jfieldID dstL2Address;
+    jfieldID pmtu;
+} gTetherOffloadRuleClassInfo;
 
 void startBpf(const char* extIface) {
     // TODO: perhaps ignore IPv4-only interface because IPv4 traffic downstream is not supported.
@@ -112,6 +122,77 @@ static void android_net_util_initBpfMaps(JNIEnv *env, jobject clazz) {
         mBpfLimitMap.reset(fd);
         mBpfLimitMap.clear();
     }
+}
+
+static jboolean android_net_util_updateOffloadRule(JNIEnv *env, jobject, jboolean add, jobject javaRule) {
+    struct ethhdr hdr;
+
+    jint inputInterfaceIndex = env->GetIntField(javaRule,
+            gTetherOffloadRuleClassInfo.inputInterfaceIndex);
+    if (inputInterfaceIndex <= 0) {
+        return false;
+    }
+
+    jint outputInterfaceIndex = env->GetIntField(javaRule,
+            gTetherOffloadRuleClassInfo.outputInterfaceIndex);
+    if (outputInterfaceIndex <= 0) {
+        return false;
+    }
+
+    jbyteArray destination = (jbyteArray)env->GetObjectField(javaRule,
+            gTetherOffloadRuleClassInfo.destination);
+    if (env->GetArrayLength(destination) != sizeof(in6_addr)) {
+        return false;
+    }
+
+    jbyteArray srcL2Address = (jbyteArray)env->GetObjectField(javaRule,
+            gTetherOffloadRuleClassInfo.srcL2Address);
+    if (env->GetArrayLength(srcL2Address) != sizeof(hdr.h_source)) {
+        return false;
+    }
+
+    jbyteArray dstL2Address = (jbyteArray)env->GetObjectField(javaRule,
+            gTetherOffloadRuleClassInfo.dstL2Address);
+    if (env->GetArrayLength(dstL2Address) != sizeof(hdr.h_dest)) {
+        return false;
+    }
+
+    jint pmtu = env->GetIntField(javaRule, gTetherOffloadRuleClassInfo.pmtu);
+    if (pmtu < IPV6_MIN_MTU || pmtu > 0xFFFF) {
+        return false;
+    }
+
+    // Only downstream supported for now.
+    jbyte* dst = (jbyte*)env->GetByteArrayElements(destination, 0);
+    TetherIngressKey key = {
+            .iif = static_cast<uint32_t>(inputInterfaceIndex),
+            .neigh6 = *(const in6_addr*)dst,
+    };
+
+    Result<void> ret;
+    if (add) {
+        ethhdr hdr = {
+                .h_proto = htons(ETH_P_IPV6),
+        };
+        jbyte* dst_l2_addr = (jbyte*)env->GetByteArrayElements(dstL2Address, 0);
+        memcpy(&hdr.h_dest, dst_l2_addr, sizeof(hdr.h_dest));
+        jbyte* src_l2_addr = (jbyte*)env->GetByteArrayElements(srcL2Address, 0);
+        memcpy(&hdr.h_source, src_l2_addr, sizeof(hdr.h_source));
+        TetherIngressValue value = {
+                .oif = static_cast<uint32_t>(outputInterfaceIndex),
+                .macHeader = hdr,
+                .pmtu = static_cast<uint16_t>(pmtu),
+        };
+
+        ret = mBpfIngressMap.writeValue(key, value, BPF_ANY);
+    } else {
+        ret = mBpfIngressMap.deleteValue(key);
+
+        // Silently return success if the rule did not exist.
+        if (!ret.ok() && ret.error().code() == ENOENT) return true;
+    }
+
+    return ret.ok();
 }
 
 static void android_net_util_setupRaSocket(JNIEnv *env, jobject clazz, jobject javaFd,
@@ -213,9 +294,21 @@ static const JNINativeMethod gMethods[] = {
     { "setupRaSocket", "(Ljava/io/FileDescriptor;I)V", (void*) android_net_util_setupRaSocket },
     { "initBpfMaps", "()", (void*) android_net_util_initBpfMaps },
     { "enableBpf", "(ZLjava/lang/String)", (void*) android_net_util_enableBpf },
+    { "updateOffloadRule", "(ZLandroid/net/util/TetheringUtils)Z",
+            (void*) android_net_util_updateOffloadRule },
 };
 
 int register_android_net_util_TetheringUtils(JNIEnv* env) {
+    jclass clazz = env->FindClass("android/net/TetherOffloadRuleParcel");
+    gTetherOffloadRuleClassInfo.inputInterfaceIndex =
+            env->GetFieldID(clazz, "inputInterfaceIndex", "I");
+    gTetherOffloadRuleClassInfo.outputInterfaceIndex =
+            env->GetFieldID(clazz, "outputInterfaceIndex", "I");
+    gTetherOffloadRuleClassInfo.destination = env->GetFieldID(clazz, "destination", "[B");
+    gTetherOffloadRuleClassInfo.srcL2Address = env->GetFieldID(clazz, "srcL2Address", "[B");
+    gTetherOffloadRuleClassInfo.dstL2Address = env->GetFieldID(clazz, "dstL2Address", "[B");
+    gTetherOffloadRuleClassInfo.pmtu = env->GetFieldID(clazz, "pmtu", "I");
+
     return jniRegisterNativeMethods(env,
             "android/net/util/TetheringUtils",
             gMethods, NELEM(gMethods));

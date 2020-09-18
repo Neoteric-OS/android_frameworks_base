@@ -15,6 +15,7 @@
  */
 package android.net.util;
 
+import android.net.TetherOffloadRuleParcel;
 import android.net.TetherStatsParcel;
 import android.net.TetheringRequestParcel;
 
@@ -133,4 +134,6 @@ public class TetheringUtils {
     public static native void initBpfMaps();
 
     public static native void enableBpf(boolean enable, String upstreamIface);
+
+    public static native boolean updateOffloadRule(boolean add, TetherOffloadRuleParcel rule);
 }
