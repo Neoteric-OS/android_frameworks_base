@@ -34,6 +34,24 @@
       "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bc3a8e_9d8849a2",
+        "filename": "packages/StatementService/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-09-21T17:54:15Z",
+      "side": 1,
+      "message": "Ah. I think there has been a misunderstanding. The rules for handling org.apache.http.legacy (and android.test.base) should be:\n\n1) If the App has a targetSdkVersion \u003c X (where X is the version in which org.apache.http.legacy was introduced) then it must be optional as setting required\u003dtrue would break the App on ver\n\n2) If the App has a targetSdkVersion \u003e\u003d X the required flag should honour what the developer has specified.\n\nIt is probably an error if an App has a minSdkVersion \u003c X and \"org.apache.http.legacy\" is required as it would break on any version from minSdkVersion (inclusive) to X (exclusive).\n\nSimilar rules apply to android.test.base but where X is different.",
+      "parentUuid": "479a33ef_293c375a",
+      "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

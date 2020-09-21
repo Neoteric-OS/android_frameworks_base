@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9f888b5_7beb0fe4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-09-21T17:54:15Z",
+      "side": 1,
+      "message": "Ideally, the org.apache.http.legacy should be automatically treated as required if it is an explicit dependency and the targetSdkVersion \u003e\u003d 28 and minSdkVersion \u003e\u003d 28. Presumably, Soong does not have the information available to make that decision so it defers to optional in order to be safe and so this has to override that. If that is the case then it should be explained here.",
+      "revId": "029b0e321d1458b21b59d1d8a73b796d308449da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256e2be6_6068e540",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-09-21T17:54:15Z",
+      "side": 1,
+      "message": "No mention is made of why android.test.runner is added.",
+      "revId": "029b0e321d1458b21b59d1d8a73b796d308449da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
