@@ -22,6 +22,30 @@
       "revId": "7fc3eab71065b7022547da4bd5f6045634f42ed2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bda89af_e65b04f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1732633
+      },
+      "writtenOn": "2020-09-21T04:33:22Z",
+      "side": 1,
+      "message": "I also tried this situation, the test is ok. But in fact, if we do not make this modification, the situation you mentioned will also return null. It will use the following branch to return.\n\n        } else {\n            return mRingtoneManager.getRingtoneUri(getRingtoneManagerPosition(getCheckedItem()));\n        }\n\nHowever, if this modification is included, the null returned by this test case is returned by the following branch.\nif (getCheckedItem() \u003d\u003d POS_UNKNOWN) {\n            // When the getCheckItem is POS_UNKNOWN, it is not the case we expected.\n            // We return null for this case.\n            return null;\n        }\n\nThat is why I only wrote one test in commit message.",
+      "parentUuid": "f91f1c8b_840a1051",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 64
+      },
+      "revId": "7fc3eab71065b7022547da4bd5f6045634f42ed2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
