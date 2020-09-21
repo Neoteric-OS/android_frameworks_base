@@ -692,6 +692,11 @@ public class Tethering {
     }
 
     private int setEthernetTethering(final boolean enable) {
+        final PackageManager pm = mContext.getPackageManager();
+        if (!pm.hasSystemFeature(PackageManager.FEATURE_ETHERNET) &&
+                !pm.hasSystemFeature(PackageManager.FEATURE_USB_HOST)) {
+            return TETHER_ERROR_SERVICE_UNAVAIL;
+        }
         final EthernetManager em = (EthernetManager) mContext.getSystemService(
                 Context.ETHERNET_SERVICE);
         synchronized (mPublicSync) {
