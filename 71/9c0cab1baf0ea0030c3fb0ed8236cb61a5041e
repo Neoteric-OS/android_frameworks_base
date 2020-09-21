@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Xin Li <delphij@google.com>
+Lint+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Build-Cop-Override+1: Xin Li <delphij@google.com>
+Submitted-by: Xin Li <delphij@google.com>
+Submitted-at: Mon, 21 Sep 2020 18:25:42 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1427572
+Project: platform/frameworks/base
+Branch: refs/heads/master
