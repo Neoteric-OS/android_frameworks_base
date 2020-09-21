@@ -5127,7 +5127,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 return;
             }
             userVpn.onUserStopped();
-            mVpns.delete(userId);
         }
     }
 
@@ -5156,6 +5155,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 NetworkCapabilities nc = vpn.updateCapabilities(defaultNetwork);
                 updateVpnCapabilities(vpn, nc);
             }
+            mVpns.delete(userId);
         }
     }
 
