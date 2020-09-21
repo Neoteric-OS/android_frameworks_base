@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "321e0705_f0a46c59",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-09-21T17:37:45Z",
+      "side": 1,
+      "message": "None of that is fully synchronized regarding parallel installs/uninstall and updates of the same packet. Hence this does not make it fundamentally worse.",
+      "revId": "8f527b3e99eedfb04b14f6ad5313be82d4cd65aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
