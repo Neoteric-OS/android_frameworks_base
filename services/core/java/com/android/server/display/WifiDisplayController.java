@@ -195,7 +195,7 @@ final class WifiDisplayController implements DumpUtils.Dump {
         if (mWifiP2pManager == null) {
             mWifiP2pManager = (WifiP2pManager)mContext.getSystemService(Context.WIFI_P2P_SERVICE);
         }
-        if (mWifiP2pChannel == null && mWifiP2pManager != null) {
+        if (mWifiP2pManager != null) {
             mWifiP2pChannel = mWifiP2pManager.initialize(mContext, mHandler.getLooper(), null);
         }
     }
