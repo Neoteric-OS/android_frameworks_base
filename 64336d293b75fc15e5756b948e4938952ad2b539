@@ -57,6 +57,30 @@
       "revId": "64336d293b75fc15e5756b948e4938952ad2b539",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad65f1a8_073c6e2c",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-22T07:24:53Z",
+      "side": 1,
+      "message": "+1 with Jean, please don\u0027t release the request in getter. Currently this getter only call from Tethering#chooseUpstreamType(this is why it work now). But if we call this function in other place in the future we will have side effect(may unintended release the network request).\n\nSuggest just move it to Tethering#chooseUpstreamType.\nWe can have this logic:\n1. have a flag(refer TetheringConfiguration) decide whether enable this feature(Feature: release cellular network request if upstream is not cellular).\n2. In Tethering#chooseUpstreamType: when we know the tethering upstream\u0027s transport type is not cellular(after calling this getter), then release the mobile network request",
+      "parentUuid": "0938ed42_e52a7178",
+      "range": {
+        "startLine": 309,
+        "startChar": 12,
+        "endLine": 309,
+        "endChar": 39
+      },
+      "revId": "64336d293b75fc15e5756b948e4938952ad2b539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
