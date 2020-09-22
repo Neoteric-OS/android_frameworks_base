@@ -52,6 +52,24 @@
       "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b952fc0_aadb84ca",
+        "filename": "packages/StatementService/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2020-09-22T11:00:42Z",
+      "side": 1,
+      "message": "In the case of StatementService there is no mention of the target SDK version in the manifest, so I assume that it targets the current SDK version (higher than 28). Then the only way to honour what the developer has specified is to add that information to .bp file via `uses_libs`, otherwise Soong has no way to know what was in the original manifest (as you noted in the comment at line #9).\n\nI don\u0027t recall seeing violations of 1), assuming that no target SDK version in the manifest means the current version.",
+      "parentUuid": "77bc3a8e_9d8849a2",
+      "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4abe5ab6_51135d78",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2020-09-22T11:00:42Z",
+      "side": 1,
+      "message": "That\u0027s correct. I added the explanation.",
+      "parentUuid": "a9f888b5_7beb0fe4",
+      "revId": "029b0e321d1458b21b59d1d8a73b796d308449da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "256e2be6_6068e540",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "029b0e321d1458b21b59d1d8a73b796d308449da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55179aa3_50498d8e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2020-09-22T11:00:42Z",
+      "side": 1,
+      "message": "Added.",
+      "parentUuid": "256e2be6_6068e540",
+      "revId": "029b0e321d1458b21b59d1d8a73b796d308449da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
