@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3724ec5a_8ce4f0b5",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2020-09-22T00:55:54Z",
+      "side": 1,
+      "message": "include the time unit?",
+      "range": {
+        "startLine": 390,
+        "startChar": 31,
+        "endLine": 390,
+        "endChar": 47
+      },
+      "revId": "0c722c42acb78a158e195649e9f19193042bdd54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daaaac21_d604f7f5",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2020-09-22T00:55:54Z",
+      "side": 1,
+      "message": "why bother naming these? just inline them since they\u0027re single-use only?",
+      "revId": "0c722c42acb78a158e195649e9f19193042bdd54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62ceb30_dc9292d7",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2020-09-22T00:55:54Z",
+      "side": 1,
+      "message": "why ParcelFileDescriptor? just use\n```\nimport android.system.Os;\nimport android.system.OsConstants;\n```\nand `Os.open` directly?",
+      "range": {
+        "startLine": 396,
+        "startChar": 13,
+        "endLine": 396,
+        "endChar": 33
+      },
+      "revId": "0c722c42acb78a158e195649e9f19193042bdd54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
