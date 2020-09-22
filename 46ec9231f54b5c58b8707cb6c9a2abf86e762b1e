@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54622f56_59addfe7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-22T22:04:26Z",
+      "side": 1,
+      "message": "Ack. I\u0027ll move this to a separate CL, since it feels like it\u0027s going to be more intricate, and that part is less fixing a regression.",
+      "parentUuid": "bf65bbda_07ce602c",
+      "range": {
+        "startLine": 450,
+        "startChar": 0,
+        "endLine": 450,
+        "endChar": 100
+      },
+      "revId": "46ec9231f54b5c58b8707cb6c9a2abf86e762b1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acf692cd_0b0f1930",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "46ec9231f54b5c58b8707cb6c9a2abf86e762b1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66c0fbd_a0eacf5d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-22T22:04:26Z",
+      "side": 1,
+      "message": "Ack. mNetworkAgent can be null if we get an onLost() before we ever have the ike session fully set up (so network failure while we are trying to negotiate, or invalid auth details, etc)",
+      "parentUuid": "acf692cd_0b0f1930",
+      "range": {
+        "startLine": 458,
+        "startChar": 26,
+        "endLine": 458,
+        "endChar": 49
+      },
+      "revId": "46ec9231f54b5c58b8707cb6c9a2abf86e762b1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "91278bd5_31bc2db0",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-22T22:04:26Z",
+      "side": 1,
+      "message": "Ack, moving to separate change. If I have a few moments, I\u0027ll explore making mNetworkCapabilities into a buildNetworkCapabilities().",
+      "parentUuid": "935b4288_6b771e26",
+      "range": {
+        "startLine": 1252,
+        "startChar": 8,
+        "endLine": 1252,
+        "endChar": 54
+      },
+      "revId": "46ec9231f54b5c58b8707cb6c9a2abf86e762b1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d7de488_e471a7f2",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f6cde0d6_40f51048",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2479,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-22T22:04:26Z",
+      "side": 1,
+      "message": "Ahh, apologies, this was from when we were setting this CONNECTING in the onLost()",
+      "parentUuid": "0d7de488_e471a7f2",
+      "range": {
+        "startLine": 2479,
+        "startChar": 0,
+        "endLine": 2479,
+        "endChar": 70
+      },
+      "revId": "46ec9231f54b5c58b8707cb6c9a2abf86e762b1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94dc0ec0_12d2360c",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2020-09-18T09:59:21Z",
       "side": 1,
       "message": "Is this related to b/162289824 ? It doesn\u0027t look related, and if it\u0027s not please don\u0027t put it in the same patch.",
+      "range": {
+        "startLine": 2699,
+        "startChar": 12,
+        "endLine": 2701,
+        "endChar": 33
+      },
+      "revId": "46ec9231f54b5c58b8707cb6c9a2abf86e762b1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754636fc_35641a6a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2701,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-22T22:04:26Z",
+      "side": 1,
+      "message": "Unrelated; this is because we call shutdownVpnRunner() from the executor thread now in cases of configuration failures (eg Authetication failures), and if the executor is already shut down, the next VPN will fail to start because exitVpnRunner() throws (submit called on shutdown executor).\n\nThis is a new use case for calling shutdownVpnRunner, since it\u0027s now being used on the internal thread as well.",
+      "parentUuid": "94dc0ec0_12d2360c",
       "range": {
         "startLine": 2699,
         "startChar": 12,
