@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f4726d41_912947b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-22T10:04:03Z",
+      "side": 1,
+      "message": "Could you add below string to commit message ? Then bug system would link this CL to https://buganizer.corp.google.com/issues/161471759\n\nBug: 161471759",
+      "revId": "9474940b57579ec1e1958ff2927bf3262499cfd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0728eccb_f867f1dc",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
