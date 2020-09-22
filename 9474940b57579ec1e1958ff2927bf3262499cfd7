@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0728eccb_f867f1dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-22T09:52:22Z",
+      "side": 1,
+      "message": "Could you add a unit test for this change ?\nYou can reference the test in frameworks/base/packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java\nAfter you add the test, you can run \"atest TetheringTests\" or \"atest ClassName#testFunctionName\"(e.g. atest TetheringTest#testReleaseMobileNetworkRequest)\n\nHere is the tip for test:\n1. start tethering with mobile upstream or no upstream. You can use(or build similar function) TetheringTest#buildMobileUpstreamState to build mobile upstream.\n2. verify tethering register mobile request.\n3. build wifi upstream, refer TetheringTest#buildV4WifiUpstreamState\n4. verify tethering release mobile request.\n\nIf you don\u0027t have experience for writing the unit test, you may need to spend some time to understand how unit test work. Feel free to reach me if you meet any problem.\n",
+      "revId": "9474940b57579ec1e1958ff2927bf3262499cfd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef1f9ac2_2851c8c8",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-22T09:52:22Z",
+      "side": 1,
+      "message": "You need add this overlayable. Add this into frameworks/base/packages/Tethering/res/values/overlayable.xml",
+      "range": {
+        "startLine": 129,
+        "startChar": 37,
+        "endLine": 129,
+        "endChar": 85
+      },
+      "revId": "9474940b57579ec1e1958ff2927bf3262499cfd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e7dd1a_fa7cd6d7",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-22T09:52:22Z",
+      "side": 1,
+      "message": "Could you default make this false or empty and enable it in your project ?",
+      "range": {
+        "startLine": 129,
+        "startChar": 87,
+        "endLine": 129,
+        "endChar": 91
+      },
+      "revId": "9474940b57579ec1e1958ff2927bf3262499cfd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5833e2cb_ec1e59ff",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-22T09:52:22Z",
+      "side": 1,
+      "message": "Nested if is not friendly for reading, could you change this to\nif (config.releaseCellularUpstream \u0026\u0026 !mUpstreamNetworkMonitor.isCellular(ns)) {",
+      "range": {
+        "startLine": 1552,
+        "startChar": 12,
+        "endLine": 1553,
+        "endChar": 62
+      },
+      "revId": "9474940b57579ec1e1958ff2927bf3262499cfd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
