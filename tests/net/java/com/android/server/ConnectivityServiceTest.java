@@ -207,6 +207,7 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.os.test.TestLooper;
 import android.provider.Settings;
 import android.security.KeyStore;
 import android.system.Os;
@@ -324,7 +325,7 @@ public class ConnectivityServiceTest {
     private static final String INTERFACE_NAME = "interface";
 
     private MockContext mServiceContext;
-    private HandlerThread mCsHandlerThread;
+    private TestLooper mCsLooper;
     private ConnectivityService mService;
     private WrappedConnectivityManager mCm;
     private TestNetworkAgentWrapper mWiFiNetworkAgent;
@@ -517,11 +518,11 @@ public class ConnectivityServiceTest {
     }
 
     private void waitForIdle() {
-        HandlerUtils.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+        HandlerUtils.waitForIdle(mCsLooper.getLooper(), TIMEOUT_MS);
         waitForIdle(mCellNetworkAgent, TIMEOUT_MS);
         waitForIdle(mWiFiNetworkAgent, TIMEOUT_MS);
         waitForIdle(mEthernetNetworkAgent, TIMEOUT_MS);
-        HandlerUtils.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+        HandlerUtils.waitForIdle(mCsLooper.getLooper(), TIMEOUT_MS);
         HandlerUtils.waitForIdle(ConnectivityThread.get(), TIMEOUT_MS);
     }
 
@@ -613,7 +614,7 @@ public class ConnectivityServiceTest {
             // Waits for the NetworkAgent to be registered, which includes the creation of the
             // NetworkMonitor.
             waitForIdle(TIMEOUT_MS);
-            HandlerUtils.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+            HandlerUtils.waitForIdle(mCsLooper.getLooper(), TIMEOUT_MS);
             HandlerUtils.waitForIdle(ConnectivityThread.get(), TIMEOUT_MS);
         }
 
@@ -1191,6 +1192,30 @@ public class ConnectivityServiceTest {
     private static final int APP2_UID = UserHandle.getUid(VPN_USER, 10101);
     private static final int VPN_UID = UserHandle.getUid(VPN_USER, 10043);
 
+    private static class TestLooperThread extends Thread {
+        private final CountDownLatch mLooperLatch = new CountDownLatch(1);
+        TestLooper mTestLooper;
+
+        TestLooperThread(String tag) {
+            super(tag);
+        }
+
+        @Override
+        public void run() {
+            // Create and install a test looper into the thread. It will be retrieved
+            // whenever Looper.loop() is called.
+            mTestLooper = new TestLooper(/*quitAllowed*/ true);
+            mLooperLatch.countDown();
+            Looper.loop();
+        }
+
+        @NonNull
+        public TestLooper getTestLooper() throws InterruptedException {
+            mLooperLatch.await(TIMEOUT_MS, TimeUnit.MILLISECONDS);
+            assertNotNull(mTestLooper);
+            return mTestLooper;
+        }
+    }
     @Before
     public void setUp() throws Exception {
         mContext = InstrumentationRegistry.getContext();
@@ -1225,7 +1250,9 @@ public class ConnectivityServiceTest {
         mAlarmManagerThread.start();
         initAlarmManager(mAlarmManager, mAlarmManagerThread.getThreadHandler());
 
-        mCsHandlerThread = new HandlerThread("TestConnectivityService");
+        final TestLooperThread thread = new TestLooperThread("TestConnectivityService");
+        thread.start();
+        mCsLooper = thread.getTestLooper();
         final ConnectivityService.Dependencies deps = makeDependencies();
         mService = new ConnectivityService(mServiceContext,
                 mNetworkManagementService,
@@ -1262,7 +1289,7 @@ public class ConnectivityServiceTest {
         when(systemProperties.getBoolean("ro.radio.noril", false)).thenReturn(false);
 
         final ConnectivityService.Dependencies deps = mock(ConnectivityService.Dependencies.class);
-        doReturn(mCsHandlerThread).when(deps).makeHandlerThread();
+        doReturn(mCsLooper.getLooper()).when(deps).makeLooper();
         doReturn(new TestNetIdManager()).when(deps).makeNetIdManager();
         doReturn(mNetworkStack).when(deps).getNetworkStack();
         doReturn(systemProperties).when(deps).getSystemProperties();
@@ -1324,7 +1351,7 @@ public class ConnectivityServiceTest {
         }
         FakeSettingsProvider.clearSettingsProvider();
 
-        mCsHandlerThread.quitSafely();
+        mCsLooper.getLooper().quitSafely();
         mAlarmManagerThread.quitSafely();
     }
 
@@ -6844,7 +6871,7 @@ public class ConnectivityServiceTest {
             }
         }
         final NetworkAgent naNoExtraInfo = new TestNetworkAgent(
-                mServiceContext, mCsHandlerThread.getLooper(), new NetworkAgentConfig());
+                mServiceContext, mCsLooper.getLooper(), new NetworkAgentConfig());
         naNoExtraInfo.register();
         verify(mNetworkStack).makeNetworkMonitor(any(), isNull(String.class), any());
         naNoExtraInfo.unregister();
@@ -6853,7 +6880,7 @@ public class ConnectivityServiceTest {
         final NetworkAgentConfig config =
                 new NetworkAgentConfig.Builder().setLegacyExtraInfo("legacyinfo").build();
         final NetworkAgent naExtraInfo = new TestNetworkAgent(
-                mServiceContext, mCsHandlerThread.getLooper(), config);
+                mServiceContext, mCsLooper.getLooper(), config);
         naExtraInfo.register();
         verify(mNetworkStack).makeNetworkMonitor(any(), eq("legacyinfo"), any());
         naExtraInfo.unregister();
@@ -7123,7 +7150,7 @@ public class ConnectivityServiceTest {
                 mConnectivityDiagnosticsCallback, wifiRequest, mContext.getPackageName());
 
         // Block until all other events are done processing.
-        HandlerUtils.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+        HandlerUtils.waitForIdle(mCsLooper.getLooper(), TIMEOUT_MS);
 
         verify(mIBinder).linkToDeath(any(ConnectivityDiagnosticsCallbackInfo.class), anyInt());
         verify(mConnectivityDiagnosticsCallback).asBinder();
@@ -7146,7 +7173,7 @@ public class ConnectivityServiceTest {
                 mConnectivityDiagnosticsCallback, wifiRequest, mContext.getPackageName());
 
         // Block until all other events are done processing.
-        HandlerUtils.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+        HandlerUtils.waitForIdle(mCsLooper.getLooper(), TIMEOUT_MS);
 
         verify(mIBinder).linkToDeath(any(ConnectivityDiagnosticsCallbackInfo.class), anyInt());
         verify(mConnectivityDiagnosticsCallback).asBinder();
@@ -7157,7 +7184,7 @@ public class ConnectivityServiceTest {
                 mConnectivityDiagnosticsCallback, wifiRequest, mContext.getPackageName());
 
         // Block until all other events are done processing.
-        HandlerUtils.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+        HandlerUtils.waitForIdle(mCsLooper.getLooper(), TIMEOUT_MS);
 
         assertTrue(mService.mConnectivityDiagnosticsCallbacks.containsKey(mIBinder));
     }
@@ -7309,7 +7336,7 @@ public class ConnectivityServiceTest {
                 mConnectivityDiagnosticsCallback, request, mContext.getPackageName());
 
         // Block until all other events are done processing.
-        HandlerUtils.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+        HandlerUtils.waitForIdle(mCsLooper.getLooper(), TIMEOUT_MS);
 
         verify(mConnectivityDiagnosticsCallback)
                 .onConnectivityReportAvailable(argThat(report -> {
@@ -7329,7 +7356,7 @@ public class ConnectivityServiceTest {
                 mConnectivityDiagnosticsCallback, request, mContext.getPackageName());
 
         // Block until all other events are done processing.
-        HandlerUtils.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+        HandlerUtils.waitForIdle(mCsLooper.getLooper(), TIMEOUT_MS);
 
         // Connect the cell agent verify that it notifies TestNetworkCallback that it is available
         final TestNetworkCallback callback = new TestNetworkCallback();
@@ -7346,7 +7373,7 @@ public class ConnectivityServiceTest {
         setUpConnectivityDiagnosticsCallback();
 
         // Block until all other events are done processing.
-        HandlerUtils.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+        HandlerUtils.waitForIdle(mCsLooper.getLooper(), TIMEOUT_MS);
 
         // Verify onConnectivityReport fired
         verify(mConnectivityDiagnosticsCallback).onConnectivityReportAvailable(
@@ -7367,7 +7394,7 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.notifyDataStallSuspected();
 
         // Block until all other events are done processing.
-        HandlerUtils.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+        HandlerUtils.waitForIdle(mCsLooper.getLooper(), TIMEOUT_MS);
 
         // Verify onDataStallSuspected fired
         verify(mConnectivityDiagnosticsCallback).onDataStallSuspected(
@@ -7388,7 +7415,7 @@ public class ConnectivityServiceTest {
         mService.reportNetworkConnectivity(n, hasConnectivity);
 
         // Block until all other events are done processing.
-        HandlerUtils.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+        HandlerUtils.waitForIdle(mCsLooper.getLooper(), TIMEOUT_MS);
 
         // Verify onNetworkConnectivityReported fired
         verify(mConnectivityDiagnosticsCallback)
@@ -7398,7 +7425,7 @@ public class ConnectivityServiceTest {
         mService.reportNetworkConnectivity(n, noConnectivity);
 
         // Block until all other events are done processing.
-        HandlerUtils.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+        HandlerUtils.waitForIdle(mCsLooper.getLooper(), TIMEOUT_MS);
 
         // Wait for onNetworkConnectivityReported to fire
         verify(mConnectivityDiagnosticsCallback)
