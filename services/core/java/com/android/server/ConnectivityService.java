@@ -585,9 +585,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 .asInterface(ServiceManager.getService("dnsresolver"));
     }
 
-    /** Handler thread used for all of the handlers below. */
+    /** Looper used for all of the handlers below. */
     @VisibleForTesting
-    protected final HandlerThread mHandlerThread;
+    protected final Looper mLooper;
     /** Handler used for internal events. */
     final private InternalHandler mHandler;
     /** Handler used for incoming {@link NetworkStateTracker} events. */
@@ -888,10 +888,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         /**
-         * Create a HandlerThread to use in ConnectivityService.
+         * Create a Looper to use in ConnectivityService.
          */
-        public HandlerThread makeHandlerThread() {
-            return new HandlerThread("ConnectivityServiceThread");
+        public Looper makeLooper() {
+            final HandlerThread handlerThread = new HandlerThread("ConnectivityServiceThread");
+            handlerThread.start();
+            return handlerThread.getLooper();
         }
 
         /**
@@ -992,12 +994,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mDefaultWifiRequest = createDefaultInternetRequestForTransport(
                 NetworkCapabilities.TRANSPORT_WIFI, NetworkRequest.Type.BACKGROUND_REQUEST);
 
-        mHandlerThread = mDeps.makeHandlerThread();
-        mHandlerThread.start();
-        mHandler = new InternalHandler(mHandlerThread.getLooper());
-        mTrackerHandler = new NetworkStateTrackerHandler(mHandlerThread.getLooper());
+        mLooper = mDeps.makeLooper();
+        mHandler = new InternalHandler(mLooper);
+        mTrackerHandler = new NetworkStateTrackerHandler(mLooper);
         mConnectivityDiagnosticsHandler =
-                new ConnectivityDiagnosticsHandler(mHandlerThread.getLooper());
+                new ConnectivityDiagnosticsHandler(mLooper);
 
         mReleasePendingIntentDelayMs = Settings.Secure.getInt(context.getContentResolver(),
                 Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS, 5_000);
