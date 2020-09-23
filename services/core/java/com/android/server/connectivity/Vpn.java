@@ -18,6 +18,7 @@ package com.android.server.connectivity;
 
 import static android.Manifest.permission.BIND_VPN_SERVICE;
 import static android.net.ConnectivityManager.NETID_UNSET;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_CONGESTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
@@ -36,11 +37,9 @@ import android.app.AppOpsManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -2660,33 +2659,26 @@ public class Vpn {
         private final String[][] mArguments;
         private final LocalSocket[] mSockets;
         private final String mOuterInterface;
-        private final AtomicInteger mOuterConnection =
-                new AtomicInteger(ConnectivityManager.TYPE_NONE);
+        private final AtomicInteger mOuterConnection = new AtomicInteger(NETID_UNSET);
         private final VpnProfile mProfile;
-
         private long mBringupStartTime = -1;
+        private final ConnectivityManager mCm;
 
         /**
          * Watch for the outer connection (passing in the constructor) going away.
          */
-        private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (!mEnableTeardown) return;
+        private final ConnectivityManager.NetworkCallback
+                mNetworkCallback = new ConnectivityManager.NetworkCallback() {
+                    @Override
+                    public void onLost(Network network) {
+                        if (!mEnableTeardown) return;
 
-                if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-                    if (intent.getIntExtra(ConnectivityManager.EXTRA_NETWORK_TYPE,
-                            ConnectivityManager.TYPE_NONE) == mOuterConnection.get()) {
-                        NetworkInfo info = (NetworkInfo)intent.getExtra(
-                                ConnectivityManager.EXTRA_NETWORK_INFO);
-                        if (info != null && !info.isConnectedOrConnecting()) {
-                            try {
-                                mObserver.interfaceStatusChanged(mOuterInterface, false);
-                            } catch (RemoteException e) {}
-                        }
+                        if (network.getNetId() != mOuterConnection.get()) return;
+
+                        try {
+                            mObserver.interfaceStatusChanged(mOuterInterface, false);
+                        } catch (RemoteException e) { }
                     }
-                }
-            }
         };
 
         LegacyVpnRunner(VpnConfig config, String[] racoon, String[] mtpd, VpnProfile profile) {
@@ -2706,24 +2698,21 @@ public class Vpn {
             mOuterInterface = mConfig.interfaze;
 
             mProfile = profile;
-
+            mCm = ConnectivityManager.from(mContext);
             if (!TextUtils.isEmpty(mOuterInterface)) {
-                final ConnectivityManager cm = ConnectivityManager.from(mContext);
-                for (Network network : cm.getAllNetworks()) {
-                    final LinkProperties lp = cm.getLinkProperties(network);
+                final Network[] networks = mCm.getAllNetworks();
+                for (final Network network : networks) {
+                    final LinkProperties lp = mCm.getLinkProperties(network);
                     if (lp != null && lp.getAllInterfaceNames().contains(mOuterInterface)) {
-                        final NetworkInfo networkInfo = cm.getNetworkInfo(network);
-                        if (networkInfo != null) {
-                            mOuterConnection.set(networkInfo.getType());
-                            break;
-                        }
+                        mOuterConnection.set(network.getNetId());
+                        break;
                     }
                 }
             }
 
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-            mContext.registerReceiver(mBroadcastReceiver, filter);
+            final NetworkRequest request =
+                    new NetworkRequest.Builder().addCapability(NET_CAPABILITY_INTERNET).build();
+            mCm.registerNetworkCallback(request, mNetworkCallback);
         }
 
         /**
@@ -2748,9 +2737,7 @@ public class Vpn {
             // Always disconnect. This may be called again in cleanupVpnStateLocked() if
             // exitVpnRunner() was called from exit(), but it will be a no-op.
             agentDisconnect();
-            try {
-                mContext.unregisterReceiver(mBroadcastReceiver);
-            } catch (IllegalArgumentException e) {}
+            mCm.unregisterNetworkCallback(mNetworkCallback);
         }
 
         @Override
