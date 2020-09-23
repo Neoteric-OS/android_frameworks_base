@@ -1,0 +1,11 @@
+Autosubmit+1: Seigo Nonaka <nona@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Haoyu Zhang <haoyuchang@google.com>
+Code-Review+2: Siyamed Sinir <siyamed@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 23 Sep 2020 09:57:15 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1378632
+Project: platform/frameworks/base
+Branch: refs/heads/master
