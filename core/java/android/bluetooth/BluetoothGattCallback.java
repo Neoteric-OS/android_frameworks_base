@@ -194,4 +194,13 @@ public abstract class BluetoothGattCallback {
     public void onConnectionUpdated(BluetoothGatt gatt, int interval, int latency, int timeout,
             int status) {
     }
+
+    /**
+     * Callback indicating service changed event is received
+     *
+     * @param gatt GATT client involved
+     * @hide
+     */
+    public void onServiceChanged(BluetoothGatt gatt) {
+    }
 }
