@@ -92,7 +92,6 @@ import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
 import android.os.UserHandle;
-import android.os.storage.StorageManager;
 import android.os.storage.StorageManagerInternal;
 import android.system.Os;
 import android.text.TextUtils;
@@ -110,7 +109,6 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.app.ProcessMap;
 import com.android.internal.app.procstats.ProcessStats;
-import com.android.internal.os.RuntimeInit;
 import com.android.internal.os.Zygote;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.FrameworkStatsLog;
@@ -1801,14 +1799,10 @@ public final class ProcessList {
                     final IPackageManager pm = AppGlobals.getPackageManager();
                     permGids = pm.getPackageGids(app.info.packageName,
                             MATCH_DIRECT_BOOT_AUTO, app.userId);
-                    if (StorageManager.hasIsolatedStorage() && mountExtStorageFull) {
-                        mountExternal = Zygote.MOUNT_EXTERNAL_FULL;
-                    } else {
-                        StorageManagerInternal storageManagerInternal = LocalServices.getService(
-                                StorageManagerInternal.class);
-                        mountExternal = storageManagerInternal.getExternalStorageMountMode(uid,
-                                app.info.packageName);
-                    }
+                    StorageManagerInternal storageManagerInternal = LocalServices.getService(
+                            StorageManagerInternal.class);
+                    mountExternal = storageManagerInternal.getExternalStorageMountMode(uid,
+                            app.info.packageName);
                 } catch (RemoteException e) {
                     throw e.rethrowAsRuntimeException();
                 }
