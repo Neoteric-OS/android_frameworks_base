@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dc4cf43_6945fb7c",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2020-09-23T10:11:40Z",
+      "side": 1,
+      "message": "if (DBG) {\n...\n}",
+      "revId": "4a9e25c3c057a671d1970873a94be70cac45f61d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1809b08_19bd30bc",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2020-09-23T10:11:40Z",
+      "side": 1,
+      "message": "In all other cases you also have this check:\n\n\nif (!address.equals(mDevice.getAddress())) {\n    return;\n}\n\nI think it was needed for just bonded devices that used RPA.  You will have to pass the address with conn id then.",
+      "revId": "4a9e25c3c057a671d1970873a94be70cac45f61d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
