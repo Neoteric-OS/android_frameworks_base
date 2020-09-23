@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53b790b0_83c20caa",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-09-23T08:32:43Z",
+      "side": 1,
+      "message": "These should come from the \"sdk_system_29_android\" dependency in `libs`, not srcs.",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 6
+      },
+      "revId": "4ea28a3d0e7a812e5a3e26abaa9e3845d4d8546c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
