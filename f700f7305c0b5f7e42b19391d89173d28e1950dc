@@ -71,6 +71,42 @@
     },
     {
       "key": {
+        "uuid": "5fb50031_739d62c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-23T21:14:42Z",
+      "side": 1,
+      "message": "(Copy from line comment)\n\nUnclear; this was a speculative change as per your suggestion on https://b.corp.google.com/issues/119076193#comment29.\n\nThoughts? I don\u0027t have a strong opinion here.",
+      "parentUuid": "b737a837_47e5d6ef",
+      "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c6122b0_8fecc80d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-23T21:14:42Z",
+      "side": 1,
+      "message": "Ahh, sorry, this was answered on the CL line comment, but not the top level comment, copying the response here:\n\n-----------------------\nUnclear; this was a speculative change as per your suggestion on https://b.corp.google.com/issues/119076193#comment29.\n\nThoughts? I don\u0027t have a strong opinion here.",
+      "parentUuid": "e480833f_aa08af90",
+      "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8b0ffdc_76c7330a",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 3
