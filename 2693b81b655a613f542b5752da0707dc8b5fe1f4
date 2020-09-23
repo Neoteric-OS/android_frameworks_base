@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005106102",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1432957?revision\u003d4",
+      "fixSuggestions": [
+        {
+          "fixId": "77450511_5eb84f49",
+          "description": "Change to \"telephony/java/android/telephony/DisconnectCause.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/DisconnectCause.java",
+              "range": {
+                "startLine": 492,
+                "startChar": 33,
+                "endLine": 492,
+                "endChar": 41
+              },
+              "replacement": "available"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "27304d9a_6733b467",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-09-23T06:31:31Z",
+      "side": 1,
+      "message": "Common typo found: \"availble\" -- should it be \"available\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 492,
+        "startChar": 33,
+        "endLine": 492,
+        "endChar": 41
+      },
+      "revId": "2693b81b655a613f542b5752da0707dc8b5fe1f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
