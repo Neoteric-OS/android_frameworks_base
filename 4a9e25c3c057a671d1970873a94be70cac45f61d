@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25a63e43_f492c4e0",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1650409
+      },
+      "writtenOn": "2020-09-23T14:39:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dc4cf43_6945fb7c",
+      "revId": "4a9e25c3c057a671d1970873a94be70cac45f61d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1809b08_19bd30bc",
         "filename": "core/java/android/bluetooth/BluetoothGatt.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4a9e25c3c057a671d1970873a94be70cac45f61d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a3b4c1_4952ae6c",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1650409
+      },
+      "writtenOn": "2020-09-23T14:39:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1809b08_19bd30bc",
+      "revId": "4a9e25c3c057a671d1970873a94be70cac45f61d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
