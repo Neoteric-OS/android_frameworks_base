@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "e480833f_aa08af90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-23T00:26:59Z",
+      "side": 1,
+      "message": "We should address this previous comment:\n\n\u003d\u003d\u003d\u003d\u003d\u003d\nHow were these numbers determined? I\u0027m skeptical that just allowing 12 extra bytes will fix this problem everywhere. But even if it doesn\u0027t, we should at least how we got to 1388 and what it fixes.\n\u003d\u003d\u003d\u003d\u003d\u003d\n\nIt sounds like the number was not determined based on any tests. If we can\u0027t do any tests, then maybe this is fine. But can we at least do some simple arithmetic based on the expected IPsec overheads and the expected MTU of IPv6-only networks like T-Mobile?",
+      "parentUuid": "1e10e677_51f9b445",
+      "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8b0ffdc_76c7330a",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 3
