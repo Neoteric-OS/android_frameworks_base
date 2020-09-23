@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e930ae3d_30d30c77",
+        "filename": "core/java/android/bluetooth/BluetoothGattCallback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2020-09-23T21:03:48Z",
+      "side": 1,
+      "message": "We should add some more explanation here. i.e.\n\n\"Receiving this event means that the GATT database is out of sync with the remote device. BluetoothGatt#discoverServices() should be called to re-discover the services. \"",
+      "revId": "8d208e30c03579d60aba0180060567860329f44f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
