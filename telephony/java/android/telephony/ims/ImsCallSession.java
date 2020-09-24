@@ -468,9 +468,24 @@ public class ImsCallSession {
         }
 
         /**
+         * Received a DTMF digit from the network.
+         * @param digit the DTMF digit
+         */
+        public void callSessionDtmfReceived(char digit) {
+            // no-op
+        }
+
+        /**
          * Called when the IMS service reports a change to the call quality.
          */
         public void callQualityChanged(CallQuality callQuality) {
+            // no-op
+        }
+
+        /**
+         * Called when the IMS service reports incoming RTP header extension data.
+         */
+        public void callSessionRtpHeaderExtensionReceived(@NonNull byte[] extensionBytes) {
             // no-op
         }
     }
@@ -1119,6 +1134,30 @@ public class ImsCallSession {
     }
 
     /**
+     * Requests that {@code extensionBytes} are sent as a header extension with the next RTP packet
+     * sent by the IMS stack.
+     * <a href="https://tools.ietf.org/html/rfc3550#section-5.3.1">RFC3550 Section 5.3.1</a> defines
+     * an RTP header extension as a variable length header consisting of 32 bit words.  Although by
+     * specification up to 65,535 32 bit words can be supported, RTP header extension traffic should
+     * be kept to an absolute minimum as it rides alongside audio information.
+     * <p>
+     * By specification, the RTP header extension is an unacknowledged transmission and there is no
+     * guarantee that the header extension will be delivered by the network to the other end of the
+     * call.
+     * @param extensionBytes The data to be included in the next RTP header extension.
+     */
+    public void sendRtpHeaderExtension(@NonNull byte[] extensionBytes) {
+        if (mClosed) {
+            return;
+        }
+
+        try {
+            miSession.sendRtpHeaderExtension(extensionBytes);
+        } catch (RemoteException e) {
+        }
+    }
+
+    /**
      * A listener type for receiving notification on IMS call session events.
      * When an event is generated for an {@link IImsCallSession},
      * the application is notified by having one of the methods called on
@@ -1477,12 +1516,34 @@ public class ImsCallSession {
         }
 
         /**
+         * DTMF digit received.
+         * @param dtmf The DTMF digit.
+         */
+        @Override
+        public void callSessionDtmfReceived(char dtmf) {
+            if (mListener != null) {
+                mListener.callSessionDtmfReceived(dtmf);
+            }
+        }
+
+        /**
          * Call quality updated
          */
         @Override
         public void callQualityChanged(CallQuality callQuality) {
             if (mListener != null) {
                 mListener.callQualityChanged(callQuality);
+            }
+        }
+
+        /**
+         * RTP header extension data received.
+         * @param extensionBytes The header extension data.
+         */
+        @Override
+        public void callSessionRtpHeaderExtensionReceived(@NonNull byte[] extensionBytes) {
+            if (mListener != null) {
+                mListener.callSessionRtpHeaderExtensionReceived(extensionBytes);
             }
         }
     }
