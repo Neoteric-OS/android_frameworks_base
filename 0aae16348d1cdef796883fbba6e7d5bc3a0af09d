@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f9047a2_e93f0d23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-24T08:22:20Z",
+      "side": 1,
+      "message": "Why is this in a relation chain with the unrelated aosp/1399646 ? They look completely independent.\n\nPlease also address the comment I left on PS 1 :\n\n\u003c\u003c\u003c\nAlso please have unit tests, there is no way this stays working without tests.\n\u003e\u003e\u003e\n",
+      "revId": "0aae16348d1cdef796883fbba6e7d5bc3a0af09d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87a06290_4f16e748",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2553,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-24T08:22:20Z",
+      "side": 1,
+      "message": "It looks like we should simply let the catch block below catch this case and handle the illegal argument exception in l.2581, rather than duplicating the logic.",
+      "range": {
+        "startLine": 2547,
+        "startChar": 16,
+        "endLine": 2553,
+        "endChar": 40
+      },
+      "revId": "0aae16348d1cdef796883fbba6e7d5bc3a0af09d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fba4f60_5c5b51af",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2675,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-24T08:22:20Z",
+      "side": 1,
+      "message": "So in what sense does shutdownVpnRunner shut down the VPN runner now that it doesn\u0027t call shutdown ?\n\nAlso, who will stop the thread created by the executor service ?",
+      "range": {
+        "startLine": 2675,
+        "startChar": 22,
+        "endLine": 2675,
+        "endChar": 30
+      },
+      "revId": "0aae16348d1cdef796883fbba6e7d5bc3a0af09d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

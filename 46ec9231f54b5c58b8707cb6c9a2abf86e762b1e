@@ -234,6 +234,30 @@
       "revId": "46ec9231f54b5c58b8707cb6c9a2abf86e762b1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79296e7f_23de9d82",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2701,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-24T08:22:20Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t follow.\n\n① If it\u0027s unrelated please don\u0027t have it in the same patch. But your explanation makes it sound to me like it\u0027s related to the fix.\n\n② shutdownVpnRunner should only ever be called on the executor thread already (see your own comments in l.2680). The new call is indeed on that thread, so we\u0027re not newly calling it on that thread. Do you mean you now have sequences where shutdownVpnRunner is called twice ? If so, why ? The IKE state is supposed to be reset, it would be pretty strange that we don\u0027t test for that anywhere.\n\n③ see my comments on the new patchset.",
+      "parentUuid": "754636fc_35641a6a",
+      "range": {
+        "startLine": 2699,
+        "startChar": 12,
+        "endLine": 2701,
+        "endChar": 33
+      },
+      "revId": "46ec9231f54b5c58b8707cb6c9a2abf86e762b1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
