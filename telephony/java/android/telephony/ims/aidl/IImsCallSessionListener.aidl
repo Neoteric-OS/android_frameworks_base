@@ -153,9 +153,13 @@ oneway interface IImsCallSessionListener {
     void callSessionTransferred();
     void callSessionTransferFailed(in ImsReasonInfo reasonInfo);
 
+    void callSessionDtmfReceived(char dtmf);
+
     /**
      * Notifies of a change to the call quality.
      * @param callQuality then updated call quality
      */
     void callQualityChanged(in CallQuality callQuality);
+
+    void callSessionRtpHeaderExtensionReceived(in byte[] extensionBytes);
 }

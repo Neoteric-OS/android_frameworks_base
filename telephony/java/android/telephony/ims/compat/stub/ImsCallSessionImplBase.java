@@ -404,6 +404,15 @@ public class ImsCallSessionImplBase extends IImsCallSession.Stub {
     }
 
     /**
+     * Device sends an RTP header extension.
+     * @param extensionBytes The header extension bytes to send.
+     */
+    @Override
+    public void sendRtpHeaderExtension(@NonNull byte[] extensionBytes) {
+        // no-op; not supported in compat layer.
+    }
+
+    /**
      * There are two different ImsCallSessionListeners that need to reconciled here, we need to
      * convert the "old" version of the com.android.ims.internal.IImsCallSessionListener to the
      * "new" version of the Listener android.telephony.ims.ImsCallSessionListener when calling
