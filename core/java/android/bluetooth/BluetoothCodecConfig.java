@@ -611,7 +611,7 @@ public final class BluetoothCodecConfig implements Parcelable {
      * @hide
      */
     public boolean sameCodecSpecificParameters(BluetoothCodecConfig other) {
-        if (other == null && mCodecType != other.mCodecType) {
+        if (other == null || mCodecType != other.mCodecType) {
             return false;
         }
         // Currently we only care about the AAC VBR and LDAC Playback Quality at CodecSpecific1
