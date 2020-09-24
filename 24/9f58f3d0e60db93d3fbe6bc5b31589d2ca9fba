@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Jeremy Goldman <goldmanj@google.com>
+Code-Review+1: Weng Su <wengsu@google.com>
+Code-Review+1: Tsung-Mao Fang <tmfang@google.com>
+Lint+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Arc Wang <arcwang@google.com>
+Submitted-at: Thu, 24 Sep 2020 04:07:59 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1432794
+Project: platform/frameworks/base
+Branch: refs/heads/master
