@@ -104,6 +104,12 @@ static inline std::string getStringField(JNIEnv* env, jobject obj, jfieldID fiel
     return std::string(defaultValue);
 }
 
+static inline jobject jniGetReferent(JNIEnv* env, jobject ref) {
+    jclass cls = FindClassOrDie(env, "java/lang/ref/Reference");
+    jmethodID get = GetMethodIDOrDie(env, cls, "get", "()Ljava/lang/Object;");
+    return env->CallObjectMethod(ref, get);
+}
+
 }  // namespace android
 
 #endif  // CORE_JNI_HELPERS
