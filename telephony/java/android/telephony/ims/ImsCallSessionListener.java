@@ -29,6 +29,8 @@ import android.telephony.ims.stub.ImsCallSessionImplBase;
 
 import com.android.ims.internal.IImsCallSession;
 
+import java.util.Objects;
+
 /**
  * Listener interface for notifying the Framework's {@link ImsCallSession} for updates to an ongoing
  * IMS call.
@@ -679,6 +681,52 @@ public class ImsCallSessionListener {
     public void callQualityChanged(@NonNull CallQuality callQuality) {
         try {
             mListener.callQualityChanged(callQuality);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * The {@link ImsService} calls this method to inform the framework of a DTMF digit which was
+     * received from the network.
+     * <p>
+     * <em>Note:</em> Alpha DTMF digits are converted from lower-case to upper-case.
+     *
+     * @param dtmf The DTMF digit received, '0'-'9', A, B, C, or D.
+     * @throws IllegalArgumentException If an invalid DTMF character is provided.
+     */
+    public void callSessionDtmfReceived(char dtmf) {
+        if (!(dtmf >= '0' && dtmf <= '9'
+                || dtmf >= 'A' && dtmf <= 'D'
+                || dtmf >= 'a' && dtmf <= 'd')) {
+            throw new IllegalArgumentException("DTMF digit must be 0-9, A, B, C, D");
+        }
+        try {
+            mListener.callSessionDtmfReceived(Character.toUpperCase(dtmf));
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * The {@link ImsService} calls this method to inform the framework of RTP header extension data
+     * which was received from the network.
+     * <p>
+     * <a href="https://tools.ietf.org/html/rfc3550#section-5.3.1">RFC3550 Section 5.3.1</a> defines
+     * an RTP header extension as a variable length header consisting of 32 bit words.  Although by
+     * specification up to 65,535 32 bit words can be supported, RTP header extension traffic should
+     * be kept to an absolute minimum as it rides alongside audio information.
+     * <p>
+     * By specification, the RTP header extension is an unacknowledged transmission and there is no
+     * guarantee that the header extension will be delivered by the network to the other end of the
+     * call.
+     *
+     * @param extensionBytes The RTP header extension data received.
+     */
+    public void callSessionRtpHeaderExtensionReceived(@NonNull byte[] extensionBytes) {
+        Objects.requireNonNull(extensionBytes, "extensionBytes is required.");
+        try {
+            mListener.callSessionRtpHeaderExtensionReceived(extensionBytes);
         } catch (RemoteException e) {
             e.rethrowFromSystemServer();
         }

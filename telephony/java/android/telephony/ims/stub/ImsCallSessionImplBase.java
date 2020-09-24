@@ -279,6 +279,11 @@ public class ImsCallSessionImplBase implements AutoCloseable {
         public void sendRttMessage(String rttMessage) {
             ImsCallSessionImplBase.this.sendRttMessage(rttMessage);
         }
+
+        @Override
+        public void sendRtpHeaderExtension(@NonNull byte[] extensionBytes) {
+            ImsCallSessionImplBase.this.sendRtpHeaderExtension(extensionBytes);
+        }
     };
 
     /**
@@ -636,6 +641,22 @@ public class ImsCallSessionImplBase implements AutoCloseable {
      * @param rttMessage RTT message to be sent
      */
     public void sendRttMessage(String rttMessage) {
+    }
+
+    /**
+     * Device requests that {@code extensionBytes} are sent as a header extension with the next RTP
+     * packet sent by the IMS stack.
+     * <a href="https://tools.ietf.org/html/rfc3550#section-5.3.1">RFC3550 Section 5.3.1</a> defines
+     * an RTP header extension as a variable length header consisting of 32 bit words.  Although by
+     * specification up to 65,535 32 bit words can be supported, RTP header extension traffic should
+     * be kept to an absolute minimum as it rides alongside audio information.
+     * <p>
+     * By specification, the RTP header extension is an unacknowledged transmission and there is no
+     * guarantee that the header extension will be delivered by the network to the other end of the
+     * call.
+     * @param extensionBytes The data to be included in the next RTP header extension.
+     */
+    public void sendRtpHeaderExtension(@NonNull byte[] extensionBytes) {
     }
 
     /** @hide */
