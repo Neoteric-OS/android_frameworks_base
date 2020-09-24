@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b08a6dfa_0f28d1f6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-24T21:54:55Z",
+      "side": 1,
+      "message": "Update: After further investigation, the full DetailedState does need to be updated in order for settings to see any changes, so I think this will have to be scoped out of the QPR, given that this suddenly becomes more complicated.",
+      "parentUuid": "54622f56_59addfe7",
+      "range": {
+        "startLine": 450,
+        "startChar": 0,
+        "endLine": 450,
+        "endChar": 100
+      },
+      "revId": "46ec9231f54b5c58b8707cb6c9a2abf86e762b1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acf692cd_0b0f1930",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 6
@@ -258,6 +282,30 @@
       "revId": "46ec9231f54b5c58b8707cb6c9a2abf86e762b1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13c9273e_4710f4bf",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2701,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-24T21:54:55Z",
+      "side": 1,
+      "message": "Answered on new patchset comments",
+      "parentUuid": "79296e7f_23de9d82",
+      "range": {
+        "startLine": 2699,
+        "startChar": 12,
+        "endLine": 2701,
+        "endChar": 33
+      },
+      "revId": "46ec9231f54b5c58b8707cb6c9a2abf86e762b1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

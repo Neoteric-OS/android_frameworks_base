@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8dad33ae_9a9af5c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-24T21:54:55Z",
+      "side": 1,
+      "message": "\u003e Why is this in a relation chain with the unrelated aosp/1399646 ? They look completely independent.\n\u003e \n\u003e Please also address the comment I left on PS 1 :\n\u003e \n\u003e \u003c\u003c\u003c\n\u003e Also please have unit tests, there is no way this stays working without tests.\n\u003e \u003e\u003e\u003e\n\u003e \n\nDone, tests added.",
+      "parentUuid": "8f9047a2_e93f0d23",
+      "revId": "0aae16348d1cdef796883fbba6e7d5bc3a0af09d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87a06290_4f16e748",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "f803c045_0f3cead1",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2553,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-24T21:54:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87a06290_4f16e748",
+      "range": {
+        "startLine": 2547,
+        "startChar": 16,
+        "endLine": 2553,
+        "endChar": 40
+      },
+      "revId": "0aae16348d1cdef796883fbba6e7d5bc3a0af09d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fba4f60_5c5b51af",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 9
@@ -53,6 +95,30 @@
       "writtenOn": "2020-09-24T08:22:20Z",
       "side": 1,
       "message": "So in what sense does shutdownVpnRunner shut down the VPN runner now that it doesn\u0027t call shutdown ?\n\nAlso, who will stop the thread created by the executor service ?",
+      "range": {
+        "startLine": 2675,
+        "startChar": 22,
+        "endLine": 2675,
+        "endChar": 30
+      },
+      "revId": "0aae16348d1cdef796883fbba6e7d5bc3a0af09d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7316583c_b3aee5ed",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2675,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-24T21:54:55Z",
+      "side": 1,
+      "message": "Overall, there are a few constraints that I had to work with (of course, none documented anywhere except in code in 3 different places).\n(1) The VPN state cannot be completely cleared; if it is, the Settings UI will not be able to identify an active profile, and will therefore not show the status\n\n(2) In order for the Settings to show the VPN failure, the state must be marked as failed, and since these failures are unrecoverable, we can \"effectively\" quit.\n\n(3) Because of (1) and (2), we have a half-closed VPN runner state (same case with Ikev2VpnRunner, i\u0027m not happy about this but it\u0027s too big to change in QPRs), and so shutdownVpnRunner() (now renamed disconnectVpnRunner as per below) can be called twice, once from the onSessionLost() due to the authentication failure, and another time when the Vpn exits/tears down the IkeV2VpnRunner entirely.\n\nAs such, I opted to make the lifecycle of the mExecutor consistent with the overall object, where it is shut down with the clearing of the mVpnRunner field in the outer class.\n\nThe full shutdown always comes from a signal from the Vpn outer class itself, via one of two paths:\n\n(3.a) A new VPN is prepared, calling VpnRunner.exit(), which calls exitVpnRunner() and clears mVpnRunner\n(3.b) The VpnRunner is explicitly stopped (again via VpnRunner.exit()) due to a user or app shutting it down explicitly.\n\n\nTo try to clarify, I\u0027ve renamed it disconnectVpnRunner to try to disambiguate, and added more comments discussing this; the disconnectVpnRunner simply clears internal state, sets everything as failed. On the other hand, the exitVpnRunner() is called by the superclass to clear all internal state, and shutdown the executor.",
+      "parentUuid": "5fba4f60_5c5b51af",
       "range": {
         "startLine": 2675,
         "startChar": 22,
