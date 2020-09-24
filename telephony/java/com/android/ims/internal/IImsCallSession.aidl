@@ -297,4 +297,10 @@ interface IImsCallSession {
      * @param rttMessage RTT message to be sent
      */
     void sendRttMessage(in String rttMessage);
+
+    /*
+     * Device sends an RTP header extension.
+     * @param extensionBytes the header extension bytes..
+     */
+    void sendRtpHeaderExtension(in byte[] extensionBytes);
 }
