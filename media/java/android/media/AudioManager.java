@@ -2226,6 +2226,9 @@ public class AudioManager {
      * In particular, the {@link #MODE_IN_CALL} mode should only be used by the telephony
      * application when it places a phone call, as it will cause signals from the radio layer
      * to feed the platform mixer.
+     * Changing the audio mode has some consequences on the audio route for media playback.
+     * Depending on the state of the audio path when the mode change occurs,
+     * more or less mute time can be applied depending on how the media playback is rerouted.
      *
      * @param mode  the requested audio mode.
      *              Informs the HAL about the current audio state so that
