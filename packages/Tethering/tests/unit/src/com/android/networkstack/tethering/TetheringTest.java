@@ -24,6 +24,9 @@ import static android.hardware.usb.UsbManager.USB_FUNCTION_RNDIS;
 import static android.net.ConnectivityManager.ACTION_RESTRICT_BACKGROUND_CHANGED;
 import static android.net.ConnectivityManager.RESTRICT_BACKGROUND_STATUS_DISABLED;
 import static android.net.ConnectivityManager.RESTRICT_BACKGROUND_STATUS_ENABLED;
+import static android.net.NetworkCapabilities.TRANSPORT_BLUETOOTH;
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.RouteInfo.RTN_UNICAST;
 import static android.net.TetheringManager.ACTION_TETHER_STATE_CHANGED;
 import static android.net.TetheringManager.EXTRA_ACTIVE_LOCAL_ONLY;
@@ -179,6 +182,7 @@ public class TetheringTest {
     private static final String TEST_P2P_IFNAME = "test_p2p-p2p0-0";
     private static final String TEST_NCM_IFNAME = "test_ncm0";
     private static final String TEST_ETH_IFNAME = "test_eth0";
+    private static final String TEST_BT_IFNAME = "test_pan0";
     private static final String TETHERING_NAME = "Tethering";
     private static final String[] PROVISIONING_APP_NAME = {"some", "app"};
     private static final String PROVISIONING_NO_UI_APP_NAME = "no_ui_app";
@@ -1875,18 +1879,31 @@ public class TetheringTest {
         sendConfigurationChanged();
     }
 
-    private static UpstreamNetworkState buildV4WifiUpstreamState(final String ipv4Address,
-            final int prefixLength, final Network network) {
+    private static UpstreamNetworkState buildV4UpstreamState(final String ipv4Address,
+            final int prefixLength, final Network network, final String iface,
+            final int transportType) {
         final LinkProperties prop = new LinkProperties();
-        prop.setInterfaceName(TEST_WIFI_IFNAME);
+        prop.setInterfaceName(iface);
 
         prop.addLinkAddress(
                 new LinkAddress(InetAddresses.parseNumericAddress(ipv4Address),
                         prefixLength));
 
         final NetworkCapabilities capabilities = new NetworkCapabilities()
-                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
+                .addTransportType(transportType);
         return new UpstreamNetworkState(prop, capabilities, network);
+    }
+
+    private void updateV4Upstream(final String ipv4Address, final int prefixLength,
+            final Network network, final String iface, final int transportType) {
+        final UpstreamNetworkState upstream = buildV4UpstreamState(ipv4Address, prefixLength,
+                network, iface, transportType);
+        mTetheringDependencies.mUpstreamNetworkMonitorSM.sendMessage(
+                Tethering.TetherMainSM.EVENT_UPSTREAM_CALLBACK,
+                UpstreamNetworkMonitor.EVENT_ON_LINKPROPERTIES,
+                0,
+                upstream);
+        mLooper.dispatchAll();
     }
 
     @Test
@@ -1894,8 +1911,7 @@ public class TetheringTest {
         final Network wifiNetwork = new Network(200);
         final Network[] allNetworks = { wifiNetwork };
         when(mCm.getAllNetworks()).thenReturn(allNetworks);
-        UpstreamNetworkState upstreamNetwork = null;
-        runUsbTethering(upstreamNetwork);
+        runUsbTethering(null);
         final ArgumentCaptor<InterfaceConfigurationParcel> ifaceConfigCaptor =
                 ArgumentCaptor.forClass(InterfaceConfigurationParcel.class);
         verify(mNetd).interfaceSetCfg(ifaceConfigCaptor.capture());
@@ -1903,13 +1919,8 @@ public class TetheringTest {
         verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).startWithCallbacks(
                 any(), any());
         reset(mNetd, mUsbManager);
-        upstreamNetwork = buildV4WifiUpstreamState(ipv4Address, 30, wifiNetwork);
-        mTetheringDependencies.mUpstreamNetworkMonitorSM.sendMessage(
-                Tethering.TetherMainSM.EVENT_UPSTREAM_CALLBACK,
-                UpstreamNetworkMonitor.EVENT_ON_LINKPROPERTIES,
-                0,
-                upstreamNetwork);
-        mLooper.dispatchAll();
+
+        updateV4Upstream(ipv4Address, 30, wifiNetwork, TEST_WIFI_IFNAME, TRANSPORT_WIFI);
         // verify turn off usb tethering
         verify(mUsbManager).setCurrentFunctions(UsbManager.FUNCTION_NONE);
         mTethering.interfaceRemoved(TEST_USB_IFNAME);
@@ -1921,9 +1932,10 @@ public class TetheringTest {
     @Test
     public void testNoAddressAvailable() throws Exception {
         final Network wifiNetwork = new Network(200);
-        final Network[] allNetworks = { wifiNetwork };
+        final Network btNetwork = new Network(201);
+        final Network mobileNetwork = new Network(202);
+        final Network[] allNetworks = { wifiNetwork, btNetwork, mobileNetwork };
         when(mCm.getAllNetworks()).thenReturn(allNetworks);
-        final String upstreamAddress = "192.168.0.100";
         runUsbTethering(null);
         verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).startWithCallbacks(
                 any(), any());
@@ -1940,13 +1952,10 @@ public class TetheringTest {
         mLooper.dispatchAll();
         reset(mUsbManager, mEm);
 
-        final UpstreamNetworkState upstreamNetwork = buildV4WifiUpstreamState(
-                upstreamAddress, 16, wifiNetwork);
-        mTetheringDependencies.mUpstreamNetworkMonitorSM.sendMessage(
-                Tethering.TetherMainSM.EVENT_UPSTREAM_CALLBACK,
-                UpstreamNetworkMonitor.EVENT_ON_LINKPROPERTIES,
-                0,
-                upstreamNetwork);
+        updateV4Upstream("192.168.0.100", 16, wifiNetwork, TEST_WIFI_IFNAME, TRANSPORT_WIFI);
+        updateV4Upstream("172.16.0.0", 12, btNetwork, TEST_BT_IFNAME, TRANSPORT_BLUETOOTH);
+        updateV4Upstream("10.0.0.0", 8, mobileNetwork, TEST_MOBILE_IFNAME, TRANSPORT_CELLULAR);
+
         mLooper.dispatchAll();
         // verify turn off usb tethering
         verify(mUsbManager).setCurrentFunctions(UsbManager.FUNCTION_NONE);
