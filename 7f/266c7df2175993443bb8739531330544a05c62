@@ -1,0 +1,8 @@
+Code-Review+2: Colin Cross <ccross@android.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Alexander Dorokhine <adorokhine@google.com>
+Submitted-at: Thu, 24 Sep 2020 18:58:52 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1436523
+Project: platform/frameworks/base
+Branch: refs/heads/master
