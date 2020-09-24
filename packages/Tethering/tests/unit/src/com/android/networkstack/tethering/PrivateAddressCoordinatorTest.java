@@ -117,28 +117,28 @@ public final class PrivateAddressCoordinatorTest {
     @Test
     public void testSanitizedAddress() throws Exception {
         int fakeSubAddr = 0x2b00; // 43.0.
-        when(mPrivateAddressCoordinator.getRandomSubAddr()).thenReturn(fakeSubAddr);
+        when(mPrivateAddressCoordinator.getRandomInt()).thenReturn(fakeSubAddr);
         LinkAddress actualAddress = mPrivateAddressCoordinator.requestDownstreamAddress(
                 mHotspotIpServer, false /* useLastAddress */);
-        assertEquals(new LinkAddress("192.168.43.42/24"), actualAddress);
+        assertEquals(new LinkAddress("192.168.43.2/24"), actualAddress);
         mPrivateAddressCoordinator.releaseDownstream(mHotspotIpServer);
 
         fakeSubAddr = 0x2d01; // 45.1.
-        when(mPrivateAddressCoordinator.getRandomSubAddr()).thenReturn(fakeSubAddr);
+        when(mPrivateAddressCoordinator.getRandomInt()).thenReturn(fakeSubAddr);
         actualAddress = mPrivateAddressCoordinator.requestDownstreamAddress(
                 mHotspotIpServer, false /* useLastAddress */);
-        assertEquals(new LinkAddress("192.168.45.42/24"), actualAddress);
+        assertEquals(new LinkAddress("192.168.45.2/24"), actualAddress);
         mPrivateAddressCoordinator.releaseDownstream(mHotspotIpServer);
 
         fakeSubAddr = 0x2eff; // 46.255.
-        when(mPrivateAddressCoordinator.getRandomSubAddr()).thenReturn(fakeSubAddr);
+        when(mPrivateAddressCoordinator.getRandomInt()).thenReturn(fakeSubAddr);
         actualAddress = mPrivateAddressCoordinator.requestDownstreamAddress(
                 mHotspotIpServer, false /* useLastAddress */);
-        assertEquals(new LinkAddress("192.168.46.42/24"), actualAddress);
+        assertEquals(new LinkAddress("192.168.46.254/24"), actualAddress);
         mPrivateAddressCoordinator.releaseDownstream(mHotspotIpServer);
 
         fakeSubAddr = 0x2f05; // 47.5.
-        when(mPrivateAddressCoordinator.getRandomSubAddr()).thenReturn(fakeSubAddr);
+        when(mPrivateAddressCoordinator.getRandomInt()).thenReturn(fakeSubAddr);
         actualAddress = mPrivateAddressCoordinator.requestDownstreamAddress(
                 mHotspotIpServer, false /* useLastAddress */);
         assertEquals(new LinkAddress("192.168.47.5/24"), actualAddress);
@@ -148,7 +148,7 @@ public final class PrivateAddressCoordinatorTest {
     @Test
     public void testReservedPrefix() throws Exception {
         // - Test bluetooth prefix is reserved.
-        when(mPrivateAddressCoordinator.getRandomSubAddr()).thenReturn(
+        when(mPrivateAddressCoordinator.getRandomInt()).thenReturn(
                 getSubAddress(mBluetoothAddress.getAddress().getAddress()));
         final LinkAddress hotspotAddress = mPrivateAddressCoordinator.requestDownstreamAddress(
                 mHotspotIpServer, false /* useLastAddress */);
@@ -157,7 +157,7 @@ public final class PrivateAddressCoordinatorTest {
         mPrivateAddressCoordinator.releaseDownstream(mHotspotIpServer);
 
         // - Test previous enabled hotspot prefix(cached prefix) is reserved.
-        when(mPrivateAddressCoordinator.getRandomSubAddr()).thenReturn(
+        when(mPrivateAddressCoordinator.getRandomInt()).thenReturn(
                 getSubAddress(hotspotAddress.getAddress().getAddress()));
         final LinkAddress usbAddress = mPrivateAddressCoordinator.requestDownstreamAddress(
                 mUsbIpServer, false /* useLastAddress */);
@@ -167,7 +167,7 @@ public final class PrivateAddressCoordinatorTest {
         mPrivateAddressCoordinator.releaseDownstream(mUsbIpServer);
 
         // - Test wifi p2p prefix is reserved.
-        when(mPrivateAddressCoordinator.getRandomSubAddr()).thenReturn(
+        when(mPrivateAddressCoordinator.getRandomInt()).thenReturn(
                 getSubAddress(mLegacyWifiP2pAddress.getAddress().getAddress()));
         final LinkAddress etherAddress = mPrivateAddressCoordinator.requestDownstreamAddress(
                 mEthernetIpServer, false /* useLastAddress */);
@@ -182,7 +182,7 @@ public final class PrivateAddressCoordinatorTest {
     public void testRequestLastDownstreamAddress() throws Exception {
         final int fakeHotspotSubAddr = 0x2b05;
         final IpPrefix predefinedPrefix = new IpPrefix("192.168.43.0/24");
-        when(mPrivateAddressCoordinator.getRandomSubAddr()).thenReturn(fakeHotspotSubAddr);
+        when(mPrivateAddressCoordinator.getRandomInt()).thenReturn(fakeHotspotSubAddr);
         final LinkAddress hotspotAddress = mPrivateAddressCoordinator.requestDownstreamAddress(
                 mHotspotIpServer, true /* useLastAddress */);
         assertEquals("Wrong wifi prefix: ", predefinedPrefix, asIpPrefix(hotspotAddress));
@@ -196,7 +196,7 @@ public final class PrivateAddressCoordinatorTest {
         mPrivateAddressCoordinator.releaseDownstream(mUsbIpServer);
 
         final int newFakeSubAddr = 0x3c05;
-        when(mPrivateAddressCoordinator.getRandomSubAddr()).thenReturn(fakeHotspotSubAddr);
+        when(mPrivateAddressCoordinator.getRandomInt()).thenReturn(fakeHotspotSubAddr);
 
         final LinkAddress newHotspotAddress = mPrivateAddressCoordinator.requestDownstreamAddress(
                 mHotspotIpServer, true /* useLastAddress */);
@@ -229,11 +229,10 @@ public final class PrivateAddressCoordinatorTest {
 
     @Test
     public void testNoConflictUpstreamPrefix() throws Exception {
-        final int fakeHotspotSubId = 43;
-        final int fakeHotspotSubAddr = 0x2b05;
+        final int fakeHotspotSubAddr = 0x2b05; // 43.5
         final IpPrefix predefinedPrefix = new IpPrefix("192.168.43.0/24");
         // Force always get subAddress "43.5" for conflict testing.
-        when(mPrivateAddressCoordinator.getRandomSubAddr()).thenReturn(fakeHotspotSubAddr);
+        when(mPrivateAddressCoordinator.getRandomInt()).thenReturn(fakeHotspotSubAddr);
         // - Enable hotspot with prefix 192.168.43.0/24
         final LinkAddress hotspotAddr = mPrivateAddressCoordinator.requestDownstreamAddress(
                 mHotspotIpServer, true /* useLastAddress */);
@@ -312,6 +311,83 @@ public final class PrivateAddressCoordinatorTest {
         assertEquals(predefinedPrefix, ethPrefix);
     }
 
+    @Test
+    public void testChoosePrefixFromDifferentRanges() throws Exception {
+        final int randomAddress = 0x1f2b05; // 31.43.5
+        when(mPrivateAddressCoordinator.getRandomInt()).thenReturn(randomAddress);
+        final LinkAddress classC1 = mPrivateAddressCoordinator.requestDownstreamAddress(
+                mHotspotIpServer, true/* useLastAddress */);
+        // Check whether return address is prefix 192.168.0.0/16 + subAddress 0.0.43.5.
+        assertEquals("Wrong prefix: ", new LinkAddress("192.168.43.5/24"), classC1);
+        when(mHotspotIpServer.getAddress()).thenReturn(classC1);
+        final UpstreamNetworkState wifiUpstream = buildUpstreamNetworkState(mWifiNetwork,
+                new LinkAddress("192.168.43.5/17"), null,
+                makeNetworkCapabilities(TRANSPORT_WIFI));
+        mPrivateAddressCoordinator.updateUpstreamPrefix(wifiUpstream);
+        verifyNotifyConflictAndRelease(mHotspotIpServer);
+
+        // Check whether return address is next address of prefix 192.168.128.0/17.
+        final LinkAddress classC2 = mPrivateAddressCoordinator.requestDownstreamAddress(
+                mHotspotIpServer, true/* useLastAddress */);
+        assertEquals("Wrong prefix: ", new LinkAddress("192.168.128.5/24"), classC2);
+        when(mHotspotIpServer.getAddress()).thenReturn(classC2);
+        final UpstreamNetworkState mobileUpstream = buildUpstreamNetworkState(mMobileNetwork,
+                new LinkAddress("192.168.128.5/17"), null,
+                makeNetworkCapabilities(TRANSPORT_CELLULAR));
+        mPrivateAddressCoordinator.updateUpstreamPrefix(mobileUpstream);
+        verifyNotifyConflictAndRelease(mHotspotIpServer);
+
+        // Check whether return address is prefix 172.16.0.0/12 + subAddress 0.0.43.5.
+        final LinkAddress classB1 = mPrivateAddressCoordinator.requestDownstreamAddress(
+                mHotspotIpServer, true/* useLastAddress */);
+        assertEquals("Wrong prefix: ", new LinkAddress("172.31.43.5/24"), classB1);
+        when(mHotspotIpServer.getAddress()).thenReturn(classB1);
+        final UpstreamNetworkState wifiUpstream2 = buildUpstreamNetworkState(mWifiNetwork,
+                new LinkAddress("192.168.0.0/16"), null,
+                makeNetworkCapabilities(TRANSPORT_WIFI));
+        mPrivateAddressCoordinator.updateUpstreamPrefix(wifiUpstream2);
+        final UpstreamNetworkState mobileUpstream2 = buildUpstreamNetworkState(mMobileNetwork,
+                new LinkAddress("172.28.123.100/14"), null,
+                makeNetworkCapabilities(TRANSPORT_CELLULAR));
+        mPrivateAddressCoordinator.updateUpstreamPrefix(mobileUpstream2);
+        verifyNotifyConflictAndRelease(mHotspotIpServer);
+
+        // Check whether return address is next address of prefix 172.16.0.0/14.
+        final LinkAddress classB2 = mPrivateAddressCoordinator.requestDownstreamAddress(
+                mHotspotIpServer, true/* useLastAddress */);
+        assertEquals("Wrong prefix: ", new LinkAddress("172.16.0.5/24"), classB2);
+        when(mHotspotIpServer.getAddress()).thenReturn(classB2);
+
+        // Check whether new downstream is next address of address 172.16.0.5/24.
+        final LinkAddress classB3 = mPrivateAddressCoordinator.requestDownstreamAddress(
+                mUsbIpServer, true/* useLastAddress */);
+        assertEquals("Wrong prefix: ", new LinkAddress("172.16.1.5/24"), classB3);
+        when(mUsbIpServer.getAddress()).thenReturn(classB3);
+        final UpstreamNetworkState mobileUpstream3 = buildUpstreamNetworkState(mMobileNetwork,
+                new LinkAddress("172.28.123.100/12"), null,
+                makeNetworkCapabilities(TRANSPORT_CELLULAR));
+        mPrivateAddressCoordinator.updateUpstreamPrefix(mobileUpstream3);
+        verifyNotifyConflictAndRelease(mHotspotIpServer);
+        verifyNotifyConflictAndRelease(mUsbIpServer);
+
+        // Check whether return address is prefix 10.0.0.0/8 + subAddress 0.31.43.5.
+        final LinkAddress classA1 = mPrivateAddressCoordinator.requestDownstreamAddress(
+                mHotspotIpServer, true/* useLastAddress */);
+        assertEquals("Wrong prefix: ", new LinkAddress("10.31.43.5/24"), classA1);
+        when(mHotspotIpServer.getAddress()).thenReturn(classA1);
+        // Check whether new downstream is next address of address 10.31.43.5/24.
+        final LinkAddress classA2 = mPrivateAddressCoordinator.requestDownstreamAddress(
+                mUsbIpServer, true/* useLastAddress */);
+        assertEquals("Wrong prefix: ", new LinkAddress("10.31.44.5/24"), classA2);
+    }
+
+    private void verifyNotifyConflictAndRelease(final IpServer ipServer) throws Exception {
+        verify(ipServer).sendMessage(IpServer.CMD_NOTIFY_PREFIX_CONFLICT);
+        mPrivateAddressCoordinator.releaseDownstream(ipServer);
+        reset(ipServer);
+        setUpIpServers();
+    }
+
     private int getSubAddress(final byte... ipv4Address) {
         assertEquals(4, ipv4Address.length);
 
@@ -330,7 +406,7 @@ public final class PrivateAddressCoordinatorTest {
 
     @Test
     public void testEnableLegacyWifiP2PAddress() throws Exception {
-        when(mPrivateAddressCoordinator.getRandomSubAddr()).thenReturn(
+        when(mPrivateAddressCoordinator.getRandomInt()).thenReturn(
                 getSubAddress(mLegacyWifiP2pAddress.getAddress().getAddress()));
         // No matter #shouldEnableWifiP2pDedicatedIp() is enabled or not, legacy wifi p2p prefix
         // is resevered.
