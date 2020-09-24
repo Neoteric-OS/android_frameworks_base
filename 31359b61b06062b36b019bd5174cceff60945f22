@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e77a4b6f_755ff955",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-24T08:39:43Z",
+      "side": 1,
+      "message": "The code looks fine but this is lacking unit tests",
+      "revId": "31359b61b06062b36b019bd5174cceff60945f22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "173d30e9_59adc483",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2676,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-24T08:39:43Z",
+      "side": 1,
+      "message": "Can you please have some comments explaining how you\u0027re using onLost here ?\nIn particular it will be useful to note that it\u0027s registered with registerNetworkCallback with an INTERNET capability, so this will be called any time an internet-providing network is lost.",
+      "range": {
+        "startLine": 2676,
+        "startChar": 28,
+        "endLine": 2676,
+        "endChar": 72
+      },
+      "revId": "31359b61b06062b36b019bd5174cceff60945f22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
