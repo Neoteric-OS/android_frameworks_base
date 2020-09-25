@@ -75,7 +75,15 @@ public class TestLooper {
      * Creates a TestLooper and installs it as the looper for the current thread.
      */
     public TestLooper() {
-        this(SystemClock::uptimeMillis);
+        this(SystemClock::uptimeMillis, false);
+    }
+
+    /**
+     * Creates a TestLooper with a custom clock and installs it as the looper for the current
+     * thread. See {@link #TestLooper(android.os.test.TestLooper.Clock, boolean)}.
+     */
+    public TestLooper(Clock clock) {
+        this(clock, false);
     }
 
     /**
@@ -88,10 +96,15 @@ public class TestLooper {
      * com.android.server.testutils.OffsettableClock} be sure not to double offset messages by
      * offsetting the clock and calling {@link #moveTimeForward(long)}. Instead, offset the clock
      * and call {@link #dispatchAll()}.
+     *
+     * @param clock The custom clock.
+     * @param quitAllowed A boolean indicates whether the looper is allowed to be quitted. Useful
+     *                    when creating TestLooper on a custom thread instead of main thread of
+     *                    testing.
      */
-    public TestLooper(Clock clock) {
+    public TestLooper(Clock clock, boolean quitAllowed) {
         try {
-            mLooper = LOOPER_CONSTRUCTOR.newInstance(false);
+            mLooper = LOOPER_CONSTRUCTOR.newInstance(quitAllowed);
 
             ThreadLocal<Looper> threadLocalLooper = (ThreadLocal<Looper>) THREAD_LOCAL_LOOPER_FIELD
                     .get(null);
