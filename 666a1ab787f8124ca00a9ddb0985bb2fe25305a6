@@ -16,6 +16,24 @@
       "revId": "666a1ab787f8124ca00a9ddb0985bb2fe25305a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0084939_4374d690",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2020-09-25T08:15:59Z",
+      "side": 1,
+      "message": "Right, this CL isn\u0027t about fixing the caching issue - rather just move to a more logical place the jniGetReferent method, which is only used in frameworks.\n\nAlso, frameworks doesn\u0027t \"suffer\" from the re-creating VMs issue, so it gives more options on how we want to cache it.",
+      "parentUuid": "f22e8d5f_a680b64a",
+      "revId": "666a1ab787f8124ca00a9ddb0985bb2fe25305a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
