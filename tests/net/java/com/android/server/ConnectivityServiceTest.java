@@ -4346,6 +4346,10 @@ public class ConnectivityServiceTest {
             mWiFiNetworkAgent.disconnect();
             mWiFiNetworkAgent.expectDisconnected();
             callback.expectStopped();
+            // Move time forward and verify no unexpected callback generated when delayed event
+            // comes back.
+            mCsThread.moveTimeForward(3 * TIMEOUT_MS);
+            waitForIdle();
             callback.assertNoCallback();
         }
 
