@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "469e279e_9ddbc88b",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2020-09-25T23:39:51Z",
+      "side": 1,
+      "message": "inline these ones too?",
+      "range": {
+        "startLine": 388,
+        "startChar": 32,
+        "endLine": 388,
+        "endChar": 64
+      },
+      "revId": "4707b71474c071638e783feaeaf60900a8f50e1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
