@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9da6690_bf59f227",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-25T09:03:25Z",
+      "side": 1,
+      "message": "Okay I think this is fine. Maybe you\u0027ll want to have a followup where you catch RejectedExecutionException for the calls to .execute.",
+      "revId": "1d0275d98b0564ee9f9f8f245b9606e5208e17cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
