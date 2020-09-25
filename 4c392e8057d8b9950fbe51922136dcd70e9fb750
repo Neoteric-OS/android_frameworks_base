@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44f025c4_9f9a02f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2020-09-25T19:56:28Z",
+      "side": 1,
+      "message": "(this is what I had in mind instead of https://android-review.googlesource.com/c/platform/frameworks/base/+/1391096)",
+      "revId": "4c392e8057d8b9950fbe51922136dcd70e9fb750",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
