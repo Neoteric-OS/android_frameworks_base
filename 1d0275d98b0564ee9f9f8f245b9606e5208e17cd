@@ -16,6 +16,23 @@
       "revId": "1d0275d98b0564ee9f9f8f245b9606e5208e17cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44dd9235_e9ab8afc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-09-25T17:09:15Z",
+      "side": 1,
+      "message": "Closing open discussions based on chat conversation",
+      "revId": "1d0275d98b0564ee9f9f8f245b9606e5208e17cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
