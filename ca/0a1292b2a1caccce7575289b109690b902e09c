@@ -1,0 +1,11 @@
+Code-Review+1: Blake Kragten <kragtenb@google.com>
+Code-Review+1: Lucas Lin <lucaslin@google.com>
+Code-Review+2: Chalard Jean <jchalard@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Submitted-by: Chiachang Wang <chiachangwang@google.com>
+Submitted-at: Fri, 25 Sep 2020 00:57:23 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1432493
+Project: platform/frameworks/base
+Branch: refs/heads/master
