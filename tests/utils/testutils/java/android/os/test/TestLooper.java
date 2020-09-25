@@ -75,7 +75,16 @@ public class TestLooper {
      * Creates a TestLooper and installs it as the looper for the current thread.
      */
     public TestLooper() {
-        this(SystemClock::uptimeMillis);
+        this(SystemClock::uptimeMillis, false);
+    }
+
+    /**
+     * Creates a TestLooper and installs it as the looper for the current thread with
+     * specified {@code quitAllowed}. Useful when creating TestLooper on a custom thread instead
+     * of main thread of testing.
+     */
+    public TestLooper(boolean quitAllowed) {
+        this(SystemClock::uptimeMillis, quitAllowed);
     }
 
     /**
@@ -90,8 +99,12 @@ public class TestLooper {
      * and call {@link #dispatchAll()}.
      */
     public TestLooper(Clock clock) {
+        this(clock, false);
+    }
+
+    private TestLooper(Clock clock, boolean quitAllowed) {
         try {
-            mLooper = LOOPER_CONSTRUCTOR.newInstance(false);
+            mLooper = LOOPER_CONSTRUCTOR.newInstance(quitAllowed);
 
             ThreadLocal<Looper> threadLocalLooper = (ThreadLocal<Looper>) THREAD_LOCAL_LOOPER_FIELD
                     .get(null);
