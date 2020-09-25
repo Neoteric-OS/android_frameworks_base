@@ -52,6 +52,24 @@
       "revId": "666a1ab787f8124ca00a9ddb0985bb2fe25305a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3afb41c_681ff660",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2020-09-25T08:43:17Z",
+      "side": 1,
+      "message": "Thanks for the pointer! Done here:\nhttps://android-review.googlesource.com/c/platform/frameworks/libs/native_bridge_support/+/1438692",
+      "parentUuid": "01ef8e5b_2ada2198",
+      "revId": "666a1ab787f8124ca00a9ddb0985bb2fe25305a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
