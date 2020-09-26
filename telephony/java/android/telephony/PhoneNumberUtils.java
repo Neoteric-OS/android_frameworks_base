@@ -3218,7 +3218,7 @@ public class PhoneNumberUtils {
         }
 
         // The conversion map is not defined (this is default). Skip conversion.
-        if (sConvertToEmergencyMap == null || sConvertToEmergencyMap.length == 0 ) {
+        if (sConvertToEmergencyMap == null || sConvertToEmergencyMap.length == 0) {
             return number;
         }
 
@@ -3253,5 +3253,38 @@ public class PhoneNumberUtils {
             }
         }
         return number;
+    }
+
+    /**
+     * Parse given phone number and perform matching in an improved way based on libphonenumber
+     * library
+     *
+     * @param number1
+     * @param number2
+     * @param defaultCountryIso
+     * @return True if the two given phone number are same.
+     */
+    public static boolean areSamePhoneNumber(@NonNull String number1,
+            @NonNull String number2, @NonNull String defaultCountryIso) {
+        PhoneNumberUtil util = PhoneNumberUtil.getInstance();
+        PhoneNumber n1;
+        PhoneNumber n2;
+        try {
+            n1 = util.parseAndKeepRawInput(number1, defaultCountryIso);
+            n2 = util.parseAndKeepRawInput(number2, defaultCountryIso);
+        } catch (NumberParseException e) {
+            return false;
+        }
+
+        PhoneNumberUtil.MatchType matchType = util.isNumberMatch(n1, n2);
+        if (matchType == PhoneNumberUtil.MatchType.EXACT_MATCH
+                || matchType == PhoneNumberUtil.MatchType.NSN_MATCH) {
+            return true;
+        } else if (matchType == PhoneNumberUtil.MatchType.SHORT_NSN_MATCH) {
+            return (n1.getNationalNumber() == n2.getNationalNumber()
+                    && n1.getCountryCode() == n2.getCountryCode());
+        } else {
+            return false;
+        }
     }
 }
