@@ -45935,6 +45935,7 @@ package android.telephony {
   public class PhoneNumberUtils {
     ctor public PhoneNumberUtils();
     method public static void addTtsSpan(android.text.Spannable, int, int);
+    method public static boolean areSamePhoneNumber(@NonNull String, @NonNull String, @NonNull String);
     method @Deprecated public static String calledPartyBCDFragmentToString(byte[], int, int);
     method public static String calledPartyBCDFragmentToString(byte[], int, int, int);
     method @Deprecated public static String calledPartyBCDToString(byte[], int, int);
