@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92f818d6_20f4f27c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2020-09-27T21:43:01Z",
+      "side": 1,
+      "message": "Thanks - this is fixed in internal master. We can merge this for AOSP",
+      "revId": "3615be74c1a499c558e09a45dd7409e9f1027be2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
