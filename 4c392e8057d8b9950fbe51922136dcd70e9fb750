@@ -16,6 +16,24 @@
       "revId": "4c392e8057d8b9950fbe51922136dcd70e9fb750",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4532e4cb_20f4a1b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2020-09-27T02:45:17Z",
+      "side": 1,
+      "message": "Actually I don\u0027t see the difference between this patch and 1391096.\n\nBut I get that ParcelFileDescriptor ensures the underlying fd inside it will get releasd when the object got finalized (ONLY WHEN THE FD ISN\u0027T **DETACHED** ALREADY ) if the caller forgot to call close() on the object manually.\n\n\nBecause this is JAVA code, so you get object finalization mechanism, what if when you have to coding in C, there is no such thing at all!\nOverride Object.finalize() is not suggested by many people, as well as google\u0027s own java coding style if I remembered it correctly.\n\n\nWhen designing a public API, just remember the clean code and and make clear responsibilities principles, that\u0027s enough in my opinion.\nResource auto-releasing here is a plus to the design, but not a requirement if you did make the responsibility very clear to the caller.",
+      "parentUuid": "44f025c4_9f9a02f4",
+      "revId": "4c392e8057d8b9950fbe51922136dcd70e9fb750",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
