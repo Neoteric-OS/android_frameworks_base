@@ -57,6 +57,7 @@ import android.annotation.NonNull;
 import android.annotation.UserIdInt;
 import android.app.AppOpsManager;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -75,6 +76,7 @@ import android.net.LocalSocket;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo.DetailedState;
+import android.net.NetworkProvider;
 import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.VpnManager;
@@ -1093,16 +1095,49 @@ public class VpnTest {
         final Vpn vpn = createVpn(primaryUser.id);
         setMockedUsers(primaryUser);
 
-        // Dummy egress interface
-        final LinkProperties lp = new LinkProperties();
-        lp.setInterfaceName(EGRESS_IFACE);
-
-        final RouteInfo defaultRoute = new RouteInfo(new IpPrefix(Inet4Address.ANY, 0),
-                        InetAddresses.parseNumericAddress("192.0.2.0"), EGRESS_IFACE);
-        lp.addRoute(defaultRoute);
+        final LinkProperties lp = makeMockLinkProperties();
 
         vpn.startLegacyVpn(vpnProfile, mKeyStore, lp);
         return vpn;
+    }
+
+    private LinkProperties makeMockLinkProperties() {
+        // Mock egress interface
+        final LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName(EGRESS_IFACE);
+        final RouteInfo defaultRoute = new RouteInfo(new IpPrefix(Inet4Address.ANY, 0),
+                InetAddresses.parseNumericAddress("192.0.2.0"), EGRESS_IFACE);
+        lp.addRoute(defaultRoute);
+        return lp;
+    }
+
+    @Test
+    public void testOuterNetworkLostOnPlatformVpn() throws Exception {
+        when(mConnectivityManager.getAllNetworks()).thenReturn(new Network[] { TEST_NETWORK });
+        when(mConnectivityManager.getLinkProperties(eq(TEST_NETWORK)))
+                .thenReturn(makeMockLinkProperties());
+        // Prepare looper to prevent NPE happened during handler initialization to ensure
+        // LegacyVpnRunner can bring up VPN successfully.
+        Looper.prepare();
+        final Vpn vpn = startLegacyVpn(buildNonIKEV2VpnProfile("1.2.3.4" /* serverAddr */));
+        // Wait for agent connected to ensure outer interface lost later will not fall into FAILED
+        // state but DISCONNECTED state.
+        verify(mConnectivityManager, timeout(TEST_TIMEOUT_MS)).registerNetworkAgent(
+                any() /* messenger */, any() /* networkInfo */, any() /* linkProperties */,
+                any() /* networkCapabilities */, anyInt() /* score */,
+                any() /* networkAgentConfig */, eq(NetworkProvider.ID_VPN));
+        final ArgumentCaptor<NetworkCallback> networkCallbackCaptor =
+                ArgumentCaptor.forClass(NetworkCallback.class);
+        verify(mConnectivityManager, timeout(TEST_TIMEOUT_MS))
+                .registerNetworkCallback(any(), networkCallbackCaptor.capture());
+        final NetworkCallback cb = networkCallbackCaptor.getValue();
+        // Get a undesired outer network lost. Expect no impact to vpn.
+        cb.onLost(new Network(102));
+        assertEquals(DetailedState.CONNECTED, vpn.getNetworkInfo().getDetailedState());
+        cb.onLost(TEST_NETWORK);
+        // Outer interface down will interrupt the vpn runner
+        verify(mConnectivityManager, timeout(TEST_TIMEOUT_MS)).unregisterNetworkCallback(eq(cb));
+        assertEquals(DetailedState.DISCONNECTED, vpn.getNetworkInfo().getDetailedState());
     }
 
     @Test
@@ -1122,9 +1157,7 @@ public class VpnTest {
         startRacoon("hostname", "5.6.7.8"); // address returned by deps.resolve
     }
 
-    public void startRacoon(final String serverAddr, final String expectedAddr)
-            throws Exception {
-        final ConditionVariable legacyRunnerReady = new ConditionVariable();
+    private VpnProfile buildNonIKEV2VpnProfile(final String serverAddr) {
         final VpnProfile profile = new VpnProfile("testProfile" /* key */);
         profile.type = VpnProfile.TYPE_L2TP_IPSEC_PSK;
         profile.name = "testProfileName";
@@ -1134,6 +1167,13 @@ public class VpnTest {
         profile.ipsecIdentifier = "id";
         profile.ipsecSecret = "secret";
         profile.l2tpSecret = "l2tpsecret";
+        return profile;
+    }
+
+    public void startRacoon(final String serverAddr, final String expectedAddr)
+            throws Exception {
+        final ConditionVariable legacyRunnerReady = new ConditionVariable();
+        final VpnProfile profile = buildNonIKEV2VpnProfile(serverAddr);
         when(mConnectivityManager.getAllNetworks())
             .thenReturn(new Network[] { new Network(101) });
         when(mConnectivityManager.registerNetworkAgent(any(), any(), any(), any(),
@@ -1265,6 +1305,12 @@ public class VpnTest {
         @Override
         public boolean checkInterfacePresent(final Vpn vpn, final String iface) {
             return true;
+        }
+
+        @Override
+        public PendingIntent prepareStatusIntent(final Context context) {
+            // Skip the real preparing step by returning null to prevent permission denial.
+            return null;
         }
     }
 
