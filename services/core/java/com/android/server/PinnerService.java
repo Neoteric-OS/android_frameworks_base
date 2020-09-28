@@ -125,6 +125,7 @@ public final class PinnerService extends SystemService {
     private final IActivityManager mAm;
     private final UserManager mUserManager;
     private SearchManager mSearchManager;
+    private boolean mShouldPinHome = false;
 
     /** The list of the statically pinned files. */
     @GuardedBy("this")
@@ -173,7 +174,7 @@ public final class PinnerService extends SystemService {
         mContext = context;
         boolean shouldPinCamera = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_pinnerCameraApp);
-        boolean shouldPinHome = context.getResources().getBoolean(
+        mShouldPinHome = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_pinnerHomeApp);
         boolean shouldPinAssistant = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_pinnerAssistantApp);
@@ -184,7 +185,7 @@ public final class PinnerService extends SystemService {
                 Slog.i(TAG, "Pinner - skip pinning camera app");
             }
         }
-        if (shouldPinHome) {
+        if (mShouldPinHome) {
             mPinKeys.add(KEY_HOME);
         }
         if (shouldPinAssistant) {
@@ -310,7 +311,7 @@ public final class PinnerService extends SystemService {
                 false, new ContentObserver(null) {
                     @Override
                     public void onChange(boolean selfChange, Uri uri) {
-                        if (userSetupCompleteUri.equals(uri)) {
+                        if (userSetupCompleteUri.equals(uri) && mShouldPinHome) {
                             sendPinAppMessage(KEY_HOME, ActivityManager.getCurrentUser(),
                                     true /* force */);
                         }
