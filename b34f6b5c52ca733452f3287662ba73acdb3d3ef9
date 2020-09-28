@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06ded4f3_c0093e98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2020-09-28T15:59:57Z",
+      "side": 1,
+      "message": "Still looks good. Are you going to also CP the command line simplification changes? [eg. ag/12403769]",
+      "revId": "b34f6b5c52ca733452f3287662ba73acdb3d3ef9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
