@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb335e05_c8a91b8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-28T01:17:14Z",
+      "side": 1,
+      "message": "Are there tests for the permissions being granted / denied ? Otherwise maybe you can add something in CTS that checks that by default it can\u0027t register callbacks, but once it gets NETWORK_SETTINGS via shell identity it can (this change won\u0027t change anything around that though)",
+      "revId": "de20bb0e3934351507bc1060a9d31c0edf87bc1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
