@@ -16,6 +16,24 @@
       "revId": "de20bb0e3934351507bc1060a9d31c0edf87bc1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e731b25_e1fdf35c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-28T03:58:51Z",
+      "side": 1,
+      "message": "Hmm, we do have the CTS test, but this bug is for specific client who running in the same process as tethering can\u0027t receive client callback...",
+      "parentUuid": "eb335e05_c8a91b8d",
+      "revId": "de20bb0e3934351507bc1060a9d31c0edf87bc1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
