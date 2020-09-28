@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fe9d805_ca1495d2",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2020-09-28T09:06:40Z",
+      "side": 1,
+      "message": "make this final",
+      "revId": "9e069119b37de39ea944a16d0625c4368a75462d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
