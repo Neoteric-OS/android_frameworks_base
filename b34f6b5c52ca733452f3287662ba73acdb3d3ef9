@@ -16,6 +16,24 @@
       "revId": "b34f6b5c52ca733452f3287662ba73acdb3d3ef9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79ddccf5_59e5fb77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1439319
+      },
+      "writtenOn": "2020-09-28T16:41:07Z",
+      "side": 1,
+      "message": "Yes. I intend to cherry pick those too. Will send them towards you when they are ready.",
+      "parentUuid": "06ded4f3_c0093e98",
+      "revId": "b34f6b5c52ca733452f3287662ba73acdb3d3ef9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
