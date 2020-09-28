@@ -1,0 +1,10 @@
+Lint+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Presubmit-Verified-Together+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Nikita Ioffe <ioffe@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Submitted-by: Gavin Corkery <gavincorkery@google.com>
+Submitted-at: Mon, 28 Sep 2020 16:33:14 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1432831
+Project: platform/frameworks/base
+Branch: refs/heads/master
