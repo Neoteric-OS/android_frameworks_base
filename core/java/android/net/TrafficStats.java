@@ -601,6 +601,11 @@ public class TrafficStats {
      * device boot. Statistics are measured at the network layer, so both TCP and
      * UDP usage are included.
      *
+     * Note that the returned values are raw statistics before
+     * IPv4-in-IPv6/VPN traffic adjustment. Hence, the returned values cannot
+     * be expected to match with results get from {@link NetworkStatsManager}
+     * APIs.
+     *
      * @param iface The name of the interface.
      * @return The number of transmitted packets.
      */
@@ -617,6 +622,11 @@ public class TrafficStats {
      * device boot. Statistics are measured at the network layer, so both TCP
      * and UDP usage are included.
      *
+     * Note that the returned values are raw statistics before
+     * IPv4-in-IPv6/VPN traffic adjustment. Hence, the returned values cannot
+     * be expected to match with results get from {@link NetworkStatsManager}
+     * APIs.
+     *
      * @param iface The name of the interface.
      * @return The number of received packets.
      */
@@ -628,9 +638,20 @@ public class TrafficStats {
         }
     }
 
-    /** {@hide} */
-    @UnsupportedAppUsage
-    public static long getTxBytes(String iface) {
+    /**
+     * Return the number of bytes transmitted on the specified interface since
+     * device boot. Statistics are measured at the network layer, so both TCP and
+     * UDP usage are included.
+     *
+     * Note that the returned values are raw statistics before
+     * IPv4-in-IPv6/VPN traffic adjustment. Hence, the returned values cannot
+     * be expected to match with results get from {@link NetworkStatsManager}
+     * APIs.
+     *
+     * @param iface The name of the interface.
+     * @return The number of transmitted bytes.
+     */
+    public static long getTxBytes(@NonNull String iface) {
         try {
             return getStatsService().getIfaceStats(iface, TYPE_TX_BYTES);
         } catch (RemoteException e) {
@@ -638,9 +659,20 @@ public class TrafficStats {
         }
     }
 
-    /** {@hide} */
-    @UnsupportedAppUsage
-    public static long getRxBytes(String iface) {
+    /**
+     * Return the number of bytes received on the specified interface since
+     * device boot. Statistics are measured at the network layer, so both TCP
+     * and UDP usage are included.
+     *
+     * Note that the returned values are raw statistics before
+     * IPv4-in-IPv6/VPN traffic adjustment. Hence, the returned values cannot
+     * be expected to match with results get from {@link NetworkStatsManager}
+     * APIs.
+     *
+     * @param iface The name of the interface.
+     * @return The number of received bytes.
+     */
+    public static long getRxBytes(@NonNull String iface) {
         try {
             return getStatsService().getIfaceStats(iface, TYPE_RX_BYTES);
         } catch (RemoteException e) {
