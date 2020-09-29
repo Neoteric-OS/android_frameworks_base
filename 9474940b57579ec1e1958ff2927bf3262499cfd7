@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "6504c49c_70c21ea7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1223473
+      },
+      "writtenOn": "2020-09-29T01:56:09Z",
+      "side": 1,
+      "message": "Pending this job.\n",
+      "revId": "9474940b57579ec1e1958ff2927bf3262499cfd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef1f9ac2_2851c8c8",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 3
