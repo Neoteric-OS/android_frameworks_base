@@ -485,13 +485,25 @@ message Atom {
         NetworkTetheringReported  network_tethering_reported =
             303 [(module) = "network_tethering"];
         ImeTouchReported ime_touch_reported = 304 [(module) = "sysui"];
+        UIInteractionFrameInfoReported ui_interaction_frame_info_reported =
+            305 [(module) = "framework"];
+        UIActionLatencyReported ui_action_latency_reported = 306 [(module) = "framework"];
+        WifiDisconnectReported wifi_disconnect_reported = 307 [(module) = "wifi"];
+        WifiConnectionStateChanged wifi_connection_state_changed = 308 [(module) = "wifi"];
+        HdmiCecActiveSourceChanged hdmi_cec_active_source_changed = 309 [(module) = "framework"];
+        HdmiCecMessageReported hdmi_cec_message_reported = 310 [(module) = "framework"];
+        AirplaneMode airplane_mode = 311 [(module) = "telephony"];
+        ModemRestart modem_restart = 312 [(module) = "telephony"];
+        CarrierIdMismatchEvent carrier_id_mismatch_event = 313 [(module) = "telephony"];
+        CarrierIdMatchingTable carrier_id_table_update = 314 [(module) = "telephony"];
+        DataStallRecoveryReported data_stall_recovery_reported = 315 [(module) = "telephony"];
 
         // StatsdStats tracks platform atoms with ids upto 500.
         // Update StatsdStats::kMaxPushedAtomId when atom ids here approach that value.
     }
 
     // Pulled events will start at field 10000.
-    // Next: 10087
+    // Next: 10090
     oneof pulled {
         WifiBytesTransfer wifi_bytes_transfer = 10000 [(module) = "framework"];
         WifiBytesTransferByFgBg wifi_bytes_transfer_by_fg_bg = 10001 [(module) = "framework"];
@@ -590,6 +602,9 @@ message Atom {
         GeneralExternalStorageAccessStats general_external_storage_access_stats =
             10085 [(module) = "mediaprovider"];
         IncomingSms incoming_sms = 10086 [(module) = "telephony"];
+        OutgoingSms outgoing_sms = 10087 [(module) = "telephony"];
+        CarrierIdMatchingTable carrier_id_table_version = 10088 [(module) = "telephony"];
+        DataCallSession data_call_session = 10089 [(module) = "telephony"];
     }
 
     // DO NOT USE field numbers above 100,000 in AOSP.
@@ -10271,6 +10286,233 @@ message IncomingSms {
 
     // Random message ID.
     optional int64 message_id = 14;
+}
+
+/**
+ * Pulls information for a single outgoing SMS.
+ *
+ * Each pull creates multiple atoms, one for each SMS. The sequence is randomized when pulled.
+ *
+ * Pulled from:
+ *   frameworks/opt/telephony/src/java/com/android/internal/telephony/metrics/MetricsCollector.java
+ */
+message OutgoingSms {
+    // Format of the SMS (3GPP or 3GPP2).
+    optional android.telephony.SmsFormatEnum sms_format = 1;
+
+    // Technology of the SMS (CS or IMS).
+    optional android.telephony.SmsTechEnum sms_tech = 2;
+
+    // Radio access technology (RAT) used for the SMS. It can be IWLAN in case of IMS.
+    optional android.telephony.NetworkTypeEnum rat = 3;
+
+    // Result of the SMS sending.
+    optional android.telephony.SmsSendResultEnum send_result = 4;
+
+    // Error code
+    // For IMS technology, see @SmsManager.Result in
+    // http://cs/android/frameworks/base/telephony/java/android/telephony/SmsManager.java
+    // For CS technology:
+    //  - GSM format: see GsmSmsErrorCode (3GPP 27.005 clause 3.2.5)
+    //  - CDMA format: see CdmaSmsErrorCode (3GPP2 N.S0005 (IS-41-C) Table 171)
+    optional int32 error_code = 5;
+
+    // Whether the SMS was sent while roaming.
+    optional bool is_roaming = 6;
+
+    // Whether the default SMS application generated the SMS (regardless of which application).
+    optional bool is_from_default_app = 7;
+
+    // Index of the SIM is used, 0 for single-SIM devices.
+    optional int32 sim_slot_index = 8;
+
+    // Whether the device was in multi-SIM mode (with multiple active SIM profiles).
+    optional bool is_multi_sim = 9;
+
+    // Whether the message was sent with an eSIM profile.
+    optional bool is_esim = 10;
+
+    // Carrier ID of the SIM card used for the SMS.
+    // See https://source.android.com/devices/tech/config/carrierid.
+    optional int32 carrier_id = 11;
+
+    // Random message ID.
+    optional int64 message_id = 12;
+
+    // Retry count: 0 for the first attempt and then increasing for each attempt.
+    optional int32 retry_id = 13;
+}
+
+/**
+ * Push information about usage of airplane mode.
+ *
+ * Logged from:
+ *   frameworks/opt/telephony/src/java/com/android/internal/telephony/metrics/AirplaneModeStats.java
+ */
+message AirplaneMode {
+    // Status of airplane mode
+    optional bool is_enabled = 1;
+
+    // When is_enabled is false, indicates if this was a very short airplane mode toggle
+    // (i.e. airplane mode was disabled after less than 10 seconds from enablement).
+    optional bool short_toggle = 2;
+
+    // Carrier ID of the SIM card.
+    // See https://source.android.com/devices/tech/config/carrierid.
+    optional int32 carrier_id = 3;
+}
+
+/**
+ * Push information about modem restarts.
+ *
+ * Logged from:
+ *   frameworks/opt/telephony/src/java/com/android/internal/telephony/metrics/ModemRestartStats.java
+ */
+message ModemRestart {
+    // Software version of the modem, as provided by android.os.Build.getRadioVersion().
+    optional string baseband_version = 1;
+
+    // Reason of the modem restart, as provided in the modemReset indication of IRadio HAL.
+    optional string reason = 2;
+
+    // Carrier ID of the first SIM card.
+    // See https://source.android.com/devices/tech/config/carrierid.
+    optional int32 carrier_id = 3;
+}
+
+/**
+ * Push the SIM card details when the carrier ID match is not complete.
+ *
+ * The atom is pushed when a SIM card is initialized and the MCC/MNC is not present in the
+ * carrier ID table, or the SIM card contains a GID1 value that is not present in the carrier ID
+ * table. This atom is pushed only once for each type of SIM card.
+ *
+ * Logged from:
+ *   frameworks/opt/telephony/src/java/com/android/internal/telephony/metrics/CarrierIdMatchStats.java
+ */
+message CarrierIdMismatchEvent {
+    // Matched carrier ID. The value -1 is used if no match is found.
+    optional int32 carrier_id = 1;
+
+    // MCC/MNC of the SIM card.
+    optional string mcc_mnc = 2;
+
+    // Group identifier (level 1) of the SIM card.
+    optional string gid1 = 3;
+
+    // SPN value of the SIM card.
+    optional string spn = 4;
+}
+
+/**
+ * Pulls/pushes the version of the carrier ID matching table.
+ *
+ * The atom is pushed when a new version is detected.
+ *
+ * Logged from:
+ *   frameworks/opt/telephony/src/java/com/android/internal/telephony/metrics/CarrierIdMatchStats.java
+ */
+message CarrierIdMatchingTable {
+    // Version of the CarrierId matching table.
+    optional int32 table_version = 1;
+}
+
+/**
+ * Pulls information for a single data call session
+ *
+ * Each pull creates multiple atoms, one for each data call session.
+ * The sequence is randomized when pulled.
+ *
+ * Pulled from:
+ *   frameworks/opt/telephony/src/java/com/android/internal/telephony/metrics/MetricsCollector.java
+ */
+message DataCallSession {
+    // A random number to be used as dimension to capture multiple atoms
+    optional int32 dimension = 1;
+
+    // Whether the device was in multi-SIM mode (with multiple active SIM profiles).
+    optional bool is_multi_sim = 2;
+
+    // Whether the call was made with an eSIM profile.
+    optional bool is_esim = 3;
+
+    // Data profile of this call (for what purpose this call was made)
+    optional android.telephony.DataProfileEnum profile = 4;
+
+    // APN type bitmask of the APN used:
+    // @ApnType in frameworks/base/telephony/java/android/telephony/Annotation.java.
+    optional int32 apn_type_bitmask = 5;
+
+    // Carrier ID of the SIM
+    // See https://source.android.com/devices/tech/config/carrierid.
+    optional int32 carrier_id = 6;
+
+    // Whether the subscription is roaming
+    optional bool is_roaming = 7;
+
+    // Data RAT when the call ended, can be IWLAN for IMS/MMS, otherwise should be WWAN PS RAT.
+    // In the case that the connection hasn't ended yet, this field holds the current RAT.
+    // In the case the call ended due to Out Of Service (OOS),
+    // this field should be the last known RAT.
+    optional android.telephony.NetworkTypeEnum rat_at_end = 8;
+
+    // Was the data call ended due to OOS
+    optional bool oos_at_end = 9;
+
+    // Number of RAT switches during the data call
+    optional int64 rat_switch_count = 10;
+
+    // Whether the call is on an opportunistic subscription
+    optional bool is_opportunistic = 11;
+
+    // Packet data protocol used
+    optional android.telephony.ApnProtocolEnum ip_type = 12;
+
+    // Whether the data call terminated before being established
+    optional bool setup_failed = 13;
+
+    // Reason why the data call terminated, as in RIL_DataCallFailCause from ril.h
+    optional int32 failure_cause = 14;
+
+    // Suggested retry back-off timer value from RIL
+    optional int32 suggested_retry_millis = 15;
+
+    // Why the data call was deactivated
+    // Set by telephony for MO deactivations (unrelated to failure_cause)
+    optional android.telephony.DataDeactivateReasonEnum deactivate_reason = 16;
+
+    // Duration of the data call, rounded into the closest 5 minutes.
+    optional int64 duration_minutes = 17;
+
+    // Whether the data call is still connected when the atom is collected.
+    optional bool ongoing = 18;
+}
+
+/**
+ * Logs data stall recovery event
+ *
+ * Logged from:
+ *   frameworks/opt/telephony/src/java/com/android/internal/telephony/dataconnection/DcTracker.java
+ */
+message DataStallRecoveryReported {
+    // Carrier ID of the SIM
+    // See https://source.android.com/devices/tech/config/carrierid.
+    optional int32 carrier_id = 1;
+
+    // Data RAT when the stall happened
+    optional android.telephony.NetworkTypeEnum rat = 2;
+
+    // Signal strength when stall happened
+    optional android.telephony.SignalStrengthEnum signal_strength = 3;
+
+    // Action taken to recover
+    optional android.telephony.DataStallRecoveryActionEnum action = 4;
+
+    // Whether the subscription is opportunistic
+    optional bool is_opportunistic = 5;
+
+    // Whether the device is in multi-SIM mode
+    optional bool is_multi_sim = 6;
 }
 
 /**
