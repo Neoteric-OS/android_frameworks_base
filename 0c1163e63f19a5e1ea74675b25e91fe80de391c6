@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "698efc7e_7bfaef7d",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8029,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2020-09-29T19:46:45Z",
+      "side": 1,
+      "message": "Don\u0027t we usually override this in ApplicationPackageManager to get access to mPm? Rather than retrieving it here?",
+      "revId": "0c1163e63f19a5e1ea74675b25e91fe80de391c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
