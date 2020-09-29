@@ -930,8 +930,10 @@ class ActivityStack extends Task {
         super.switchUser(userId);
         forAllLeafTasks((t) -> {
             if (t.showToCurrentUser() && t != this) {
-                mChildren.remove(t);
-                mChildren.add(t);
+                if(this.equals(t.getParent())){
+                    mChildren.remove(t);
+                    mChildren.add(t);
+                }
             }
         }, true /* traverseTopToBottom */);
     }
