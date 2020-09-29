@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2846d7df_b2d800be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-29T14:56:57Z",
+      "side": 1,
+      "message": "API LGTM but see inline comment.",
+      "revId": "6a6e37b73ac0e486256bdf3a743faab9dcded136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db8678db_a27958a2",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-29T14:56:57Z",
+      "side": 1,
+      "message": "Shall we give a bit more information on the limitations of these methods, such as the fact that on certain devices it does not see traffic forwarded by tethering offload, may count IPv4-in-IPv6 traffic incorrectly, etc.?",
+      "range": {
+        "startLine": 648,
+        "startChar": 0,
+        "endLine": 650,
+        "endChar": 34
+      },
+      "revId": "6a6e37b73ac0e486256bdf3a743faab9dcded136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
