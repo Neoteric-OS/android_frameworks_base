@@ -16,6 +16,24 @@
       "revId": "0c1163e63f19a5e1ea74675b25e91fe80de391c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f02661_6ab7758e",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8029,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2020-09-29T19:59:25Z",
+      "side": 1,
+      "message": "The only caller of this was getting a PackageManager instance, and not ApplicationPackageManager, so we went with this. FWIW, this is intended to be temporary while the longer term solution is worked on.",
+      "parentUuid": "698efc7e_7bfaef7d",
+      "revId": "0c1163e63f19a5e1ea74675b25e91fe80de391c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
