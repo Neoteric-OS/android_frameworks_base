@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39208c4d_b4effc13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1099348
+      },
+      "writtenOn": "2020-09-29T23:21:26Z",
+      "side": 1,
+      "message": "bypassing presubmit due to an internal bug. b/168637424.",
+      "revId": "d37b9bff1e93f7c9bc60de4079fce3c4429547ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
