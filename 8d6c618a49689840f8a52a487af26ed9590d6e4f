@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f085784f_39ed3360",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-29T10:55:22Z",
+      "side": 1,
+      "message": "Should this also check whether the random address conflicts with an existing cached address ?\nOtherwise if wifi hotspot is unlucky, its last address can be assigned to USB tethering, so when turning wifi hotspot back on it is forced to use another address.\n\nThere should be at most one cached address per tethering type right ? In which case doing that should not reduce the address pool too much.",
+      "range": {
+        "startLine": 199,
+        "startChar": 16,
+        "endLine": 199,
+        "endChar": 26
+      },
+      "revId": "8d6c618a49689840f8a52a487af26ed9590d6e4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
