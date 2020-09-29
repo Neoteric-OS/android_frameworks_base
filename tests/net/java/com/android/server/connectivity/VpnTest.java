@@ -1053,6 +1053,19 @@ public class VpnTest {
         assertEquals(DetailedState.FAILED, vpn.getNetworkInfo().getDetailedState());
     }
 
+    @Test
+    public void testPlatformVpnNetworkCallbackFiredAfterShutdown() throws Exception {
+        final Vpn vpn = startLegacyVpn(mVpnProfile);
+        final NetworkCallback cb = triggerOnAvailableAndGetCallback();
+
+        vpn.stopVpnRunnerPrivileged();
+        verify(mConnectivityManager, timeout(TEST_TIMEOUT_MS)).unregisterNetworkCallback(eq(cb));
+
+        // Attempt to call the callback; should silently discard without throwing a
+        // RejectedExecutionException
+        cb.onAvailable(TEST_NETWORK);
+    }
+
     private void setAndVerifyAlwaysOnPackage(Vpn vpn, int uid, boolean lockdownEnabled) {
         assertTrue(vpn.setAlwaysOnPackage(TEST_VPN_PKG, lockdownEnabled, null, mKeyStore));
 

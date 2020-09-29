@@ -2508,48 +2508,53 @@ public class Vpn {
 
             // Proxy to the Ikev2VpnRunner (single-thread) executor to ensure consistency in lieu
             // of locking.
-            mExecutor.execute(() -> {
-                try {
-                    if (!mIsRunning) {
-                        Log.d(TAG, "onDefaultNetworkChanged after exit");
-                        return; // VPN has been shut down.
+            try {
+                mExecutor.execute(() -> {
+                    try {
+                        if (!mIsRunning) {
+                            Log.d(TAG, "onDefaultNetworkChanged after exit");
+                            return; // VPN has been shut down.
+                        }
+
+                        // Without MOBIKE, we have no way to seamlessly migrate. Close on old
+                        // (non-default) network, and start the new one.
+                        resetIkeState();
+                        mActiveNetwork = network;
+
+                        final IkeSessionParams ikeSessionParams =
+                                VpnIkev2Utils.buildIkeSessionParams(mContext, mProfile, network);
+                        final ChildSessionParams childSessionParams =
+                                VpnIkev2Utils.buildChildSessionParams(
+                                        mProfile.getAllowedAlgorithms());
+
+                        // TODO: Remove the need for adding two unused addresses with
+                        // IPsec tunnels.
+                        final InetAddress address = InetAddress.getLocalHost();
+                        mTunnelIface =
+                                mIpSecManager.createIpSecTunnelInterface(
+                                        address /* unused */,
+                                        address /* unused */,
+                                        network);
+                        mNetd.setInterfaceUp(mTunnelIface.getInterfaceName());
+
+                        mSession = mIkev2SessionCreator.createIkeSession(
+                                mContext,
+                                ikeSessionParams,
+                                childSessionParams,
+                                mExecutor,
+                                new VpnIkev2Utils.IkeSessionCallbackImpl(
+                                        TAG, IkeV2VpnRunner.this, network),
+                                new VpnIkev2Utils.ChildSessionCallbackImpl(
+                                        TAG, IkeV2VpnRunner.this, network));
+                        Log.d(TAG, "Ike Session started for network " + network);
+                    } catch (Exception e) {
+                        Log.i(TAG, "Setup failed for network " + network + ". Aborting", e);
+                        onSessionLost(network, e);
                     }
-
-                    // Without MOBIKE, we have no way to seamlessly migrate. Close on old
-                    // (non-default) network, and start the new one.
-                    resetIkeState();
-                    mActiveNetwork = network;
-
-                    final IkeSessionParams ikeSessionParams =
-                            VpnIkev2Utils.buildIkeSessionParams(mContext, mProfile, network);
-                    final ChildSessionParams childSessionParams =
-                            VpnIkev2Utils.buildChildSessionParams(mProfile.getAllowedAlgorithms());
-
-                    // TODO: Remove the need for adding two unused addresses with
-                    // IPsec tunnels.
-                    final InetAddress address = InetAddress.getLocalHost();
-                    mTunnelIface =
-                            mIpSecManager.createIpSecTunnelInterface(
-                                    address /* unused */,
-                                    address /* unused */,
-                                    network);
-                    mNetd.setInterfaceUp(mTunnelIface.getInterfaceName());
-
-                    mSession = mIkev2SessionCreator.createIkeSession(
-                            mContext,
-                            ikeSessionParams,
-                            childSessionParams,
-                            mExecutor,
-                            new VpnIkev2Utils.IkeSessionCallbackImpl(
-                                    TAG, IkeV2VpnRunner.this, network),
-                            new VpnIkev2Utils.ChildSessionCallbackImpl(
-                                    TAG, IkeV2VpnRunner.this, network));
-                    Log.d(TAG, "Ike Session started for network " + network);
-                } catch (Exception e) {
-                    Log.i(TAG, "Setup failed for network " + network + ". Aborting", e);
-                    onSessionLost(network, e);
-                }
-            });
+                });
+            } catch (RejectedExecutionException ignore) {
+                // Executor (and therefore Ikev2VpnRunner already torn down), ignore.
+            }
         }
 
         /** Marks the state as FAILED, and disconnects. */
