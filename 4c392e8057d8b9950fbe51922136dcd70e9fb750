@@ -34,6 +34,24 @@
       "revId": "4c392e8057d8b9950fbe51922136dcd70e9fb750",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c81df3b1_226e6943",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2020-09-29T00:17:33Z",
+      "side": 1,
+      "message": "\u003e But I get that ParcelFileDescriptor ensures the underlying fd inside it will get releasd when the object got finalized (ONLY WHEN THE FD ISN\u0027T **DETACHED** ALREADY ) if the caller forgot to call close() on the object manually.\n\nDetaching the fd means that\n  a. calling the function twice gives you a different result on the second call\n  b. it\u0027s a bare fd, so fdsan can\u0027t catch errors being made on it\n\n\u003e Because this is JAVA code, so you get object finalization mechanism, what if when you have to coding in C, there is no such thing at all!\n\nC is terrible! No one gets this right 100% of the time, even in C, where you\u0027re expected to manually manage fds. Relying on people to read comments and not make mistakes is always going to fail, especially when the error is usually not detectable. I spent an entire year chasing down bugs that were caused mostly by passing around file descriptors without clear ownership [1].\n\nMove semantics in C++ make it so that it\u0027s possible to have a close to optimal API (returning/accepting unique_fd to make it clear whether you\u0027re taking ownership). This is the closest we\u0027re going to get in Java.\n\n1: random selection of aosp-visible fixes:\nhttps://android-review.googlesource.com/515139\nhttps://android-review.googlesource.com/686546\nhttps://android-review.googlesource.com/742967\nhttps://android-review.googlesource.com/772521\nhttps://android-review.googlesource.com/810581\nhttps://android-review.googlesource.com/828841\nhttps://android-review.googlesource.com/981168\nhttps://android-review.googlesource.com/1092254\nhttps://android-review.googlesource.com/1100192\nhttps://android-review.googlesource.com/1344037",
+      "parentUuid": "4532e4cb_20f4a1b3",
+      "revId": "4c392e8057d8b9950fbe51922136dcd70e9fb750",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
