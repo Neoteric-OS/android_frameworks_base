@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa896c0f_b4717824",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-09-30T15:46:23Z",
+      "side": 1,
+      "message": "Huh, weird that it disappeared; still LGTM  😊",
+      "revId": "770f5ab2db3e9161a9d67184a5d91021e0bde4ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
