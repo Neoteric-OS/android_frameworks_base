@@ -798,8 +798,10 @@ public class IpSecService extends IIpSecService.Stub {
     }
 
     private final class TunnelInterfaceRecord extends OwnedResourceRecord {
+        // Underlying network might be updated
+        private Network mUnderlyingNetwork;
+
         private final String mInterfaceName;
-        private final Network mUnderlyingNetwork;
 
         // outer addresses
         private final String mLocalAddress;
@@ -868,6 +870,10 @@ public class IpSecService extends IIpSecService.Stub {
             getResourceTracker().give();
             releaseNetId(mIkey);
             releaseNetId(mOkey);
+        }
+
+        public void setUnderlyingNetwork(Network underlyingNetwork) {
+            mUnderlyingNetwork = underlyingNetwork;
         }
 
         public String getInterfaceName() {
@@ -1427,6 +1433,21 @@ public class IpSecService extends IIpSecService.Stub {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    /** Set TunnelInterface to use a specific underlying network. */
+    @Override
+    public synchronized void setNetworkOfTunnelInterface(
+            int tunnelResourceId, Network underlyingNetwork, String callingPackage) {
+        enforceTunnelFeatureAndPermissions(callingPackage);
+
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+        // Get tunnelInterface record; if no such interface is found, will throw
+        // IllegalArgumentException
+        TunnelInterfaceRecord tunnelInterfaceInfo =
+                userRecord.mTunnelInterfaceRecords.getResourceOrThrow(tunnelResourceId);
+
+        tunnelInterfaceInfo.setUnderlyingNetwork(underlyingNetwork);
     }
 
     /**

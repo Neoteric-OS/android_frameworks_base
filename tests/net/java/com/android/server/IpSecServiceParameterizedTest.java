@@ -679,6 +679,21 @@ public class IpSecServiceParameterizedTest {
     }
 
     @Test
+    public void testSetNetworkOfTunnelInterface() throws Exception {
+        final String callingPackage = "blessedPackage";
+        final IpSecTunnelInterfaceResponse createTunnelResp =
+                createAndValidateTunnel(mSourceAddr, mDestinationAddr, callingPackage);
+
+        final Network newFakeNetwork = new Network(0);
+        mIpSecService.setNetworkOfTunnelInterface(
+                createTunnelResp.resourceId, newFakeNetwork, callingPackage);
+
+        final IpSecService.UserRecord userRecord =
+                mIpSecService.mUserResourceTracker.getUserRecord(mUid);
+        assertEquals(1, userRecord.mTunnelQuotaTracker.mCurrent);
+    }
+
+    @Test
     public void testTunnelInterfaceBinderDeath() throws Exception {
         IpSecTunnelInterfaceResponse createTunnelResp =
                 createAndValidateTunnel(mSourceAddr, mDestinationAddr, "blessedPackage");
