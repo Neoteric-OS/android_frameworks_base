@@ -1315,7 +1315,7 @@ static jobject android_media_AudioTrack_get_volume_shaper_state(JNIEnv *env, job
     return VolumeShaperHelper::convertStateToJobject(env, gVolumeShaperFields, state);
 }
 
-static int android_media_AudioTrack_setPresentation(
+static jint android_media_AudioTrack_setPresentation(
                                 JNIEnv *env,  jobject thiz, jint presentationId, jint programId) {
     sp<AudioTrack> lpTrack = getAudioTrack(env, thiz);
     if (lpTrack == NULL) {
@@ -1324,7 +1324,7 @@ static int android_media_AudioTrack_setPresentation(
         return (jint)AUDIO_JAVA_ERROR;
     }
 
-    return (jint)lpTrack->selectPresentation((int)presentationId, (int)programId);
+    return nativeToJavaStatus(lpTrack->selectPresentation((int)presentationId, (int)programId));
 }
 
 // ----------------------------------------------------------------------------
