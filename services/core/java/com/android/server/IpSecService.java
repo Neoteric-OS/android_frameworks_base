@@ -797,9 +797,9 @@ public class IpSecService extends IIpSecService.Stub {
         }
     }
 
-    private final class TunnelInterfaceRecord extends OwnedResourceRecord {
+    @VisibleForTesting
+    final class TunnelInterfaceRecord extends OwnedResourceRecord {
         private final String mInterfaceName;
-        private final Network mUnderlyingNetwork;
 
         // outer addresses
         private final String mLocalAddress;
@@ -809,6 +809,8 @@ public class IpSecService extends IIpSecService.Stub {
         private final int mOkey;
 
         private final int mIfId;
+
+        private Network mUnderlyingNetwork;
 
         TunnelInterfaceRecord(
                 int resourceId,
@@ -870,12 +872,16 @@ public class IpSecService extends IIpSecService.Stub {
             releaseNetId(mOkey);
         }
 
-        public String getInterfaceName() {
-            return mInterfaceName;
+        public void setUnderlyingNetwork(Network underlyingNetwork) {
+            mUnderlyingNetwork = underlyingNetwork;
         }
 
         public Network getUnderlyingNetwork() {
             return mUnderlyingNetwork;
+        }
+
+        public String getInterfaceName() {
+            return mInterfaceName;
         }
 
         /** Returns the local, outer address for the tunnelInterface */
@@ -1427,6 +1433,22 @@ public class IpSecService extends IIpSecService.Stub {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    /** Set TunnelInterface to use a specific underlying network. */
+    @Override
+    public synchronized void setNetworkForTunnelInterface(
+            int tunnelResourceId, Network underlyingNetwork, String callingPackage) {
+        enforceTunnelFeatureAndPermissions(callingPackage);
+
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+
+        // Get tunnelInterface record; if no such interface is found, will throw
+        // IllegalArgumentException. userRecord.mTunnelInterfaceRecords is never null
+        TunnelInterfaceRecord tunnelInterfaceInfo =
+                userRecord.mTunnelInterfaceRecords.getResourceOrThrow(tunnelResourceId);
+
+        tunnelInterfaceInfo.setUnderlyingNetwork(underlyingNetwork);
     }
 
     /**
