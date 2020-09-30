@@ -780,6 +780,35 @@ public final class IpSecManager {
             }
         }
 
+        /**
+         * Update the underlying network for this IpSecTunnelInterface.
+         *
+         * <p>This new underlying network will be used for all transforms applied AFTER this call is
+         * complete. If IpSecTransforms have been migrated, they MUST be reapplied, or traffic may
+         * fail to route due to mismatched underlying networks and source/destination addresses.
+         *
+         * <p>To migrate IPsec tunnel mode traffic, the caller should:
+         *
+         * <ol>
+         *   <li>Update the IpSecTunnelInterface’s underlying network
+         *   <li>Reapply IpSecTransforms with matching addresses to this IpSecTunnelInterface
+         * </ol>
+         *
+         * @param underlyingNetwork the {@link Network} that will carry traffic for this tunnel.
+         *     This network should almost certainly be a network such as WiFi with an L2 address.
+         * @hide
+         */
+        @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
+        @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
+        public void setUnderlyingNetwork(@NonNull Network underlyingNetwork) throws IOException {
+            try {
+                mService.setNetworkForTunnelInterface(
+                        mResourceId, underlyingNetwork, mOpPackageName);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+
         private IpSecTunnelInterface(@NonNull Context ctx, @NonNull IIpSecService service,
                 @NonNull InetAddress localAddress, @NonNull InetAddress remoteAddress,
                 @NonNull Network underlyingNetwork)
