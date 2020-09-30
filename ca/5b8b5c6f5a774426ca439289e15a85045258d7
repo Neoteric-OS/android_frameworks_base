@@ -1,0 +1,8 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Anton Hansson <hansson@google.com>
+Bypass-Presubmit+1: Anton Hansson <hansson@google.com>
+Submitted-by: Anton Hansson <hansson@google.com>
+Submitted-at: Wed, 30 Sep 2020 13:51:19 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1442896
+Project: platform/frameworks/base
+Branch: refs/heads/master
