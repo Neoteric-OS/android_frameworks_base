@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a8320129_e635cdc0",
+        "filename": "wifi/aidl-export/android/net/wifi/p2p/servicediscovery/WifiP2pServiceInfo.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-10-01T21:31:13Z",
+      "side": 0,
+      "message": "Thanks! Let\u0027s just keep them as-is, I see no reason to remove them.",
+      "parentUuid": "d3ce705e_4dee607c",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "1fa847ad642bd91ffe1d1e443b73976f776a7356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc8fd281_d0348519",
         "filename": "wifi/aidl-export/android/net/wifi/p2p/servicediscovery/WifiP2pServiceRequest.aidl",
         "patchSetId": 1
