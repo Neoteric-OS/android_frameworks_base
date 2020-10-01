@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3ce705e_4dee607c",
+        "filename": "wifi/aidl-export/android/net/wifi/p2p/servicediscovery/WifiP2pServiceInfo.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-10-01T21:18:42Z",
+      "side": 0,
+      "message": "Done - btw, I think this means no one was using these files. Could they be deleted instead?",
+      "parentUuid": "a3bc1c12_ef9caf9c",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "1fa847ad642bd91ffe1d1e443b73976f776a7356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc8fd281_d0348519",
         "filename": "wifi/aidl-export/android/net/wifi/p2p/servicediscovery/WifiP2pServiceRequest.aidl",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "1fa847ad642bd91ffe1d1e443b73976f776a7356",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4375c7_7130e799",
+        "filename": "wifi/aidl-export/android/net/wifi/p2p/servicediscovery/WifiP2pServiceRequest.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-10-01T21:18:42Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "cc8fd281_d0348519",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "1fa847ad642bd91ffe1d1e443b73976f776a7356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
