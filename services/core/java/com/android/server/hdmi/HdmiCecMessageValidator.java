@@ -123,6 +123,10 @@ public class HdmiCecMessageValidator {
                 new RecordStatusInfoValidator(), DEST_DIRECT);
 
         // TODO: Handle messages for the Timer Programming.
+        addValidationInfo(Constants.MESSAGE_CLEAR_ANALOG_TIMER,
+                new AnalogueTimerValidator(), DEST_DIRECT);
+        addValidationInfo(Constants.MESSAGE_SET_ANALOG_TIMER,
+                new AnalogueTimerValidator(), DEST_DIRECT);
 
         // Messages for the System Information.
         FixedLengthValidator oneByteValidator = new FixedLengthValidator(1);
@@ -371,6 +375,40 @@ public class HdmiCecMessageValidator {
         return (Integer.bitCount(value) <= 1);
     }
 
+    /**
+     * Check if the given value is a valid analogue broadcast type. A valid value is one which falls
+     * within the range description defined in CEC 1.4 Specification : Operand Descriptions (Sec 17)
+     *
+     * @param value analogue broadcast type
+     * @return true if the analogue broadcast type is valid
+     */
+    private boolean isValidAnalogueBroadcastType(int value) {
+        return isWithinRange(value, 0x00, 0x02);
+    }
+
+    /**
+     * Check if the given value is a valid analogue frequency. A valid value is one which falls
+     * within the range description defined in CEC 1.4 Specification : Operand Descriptions (Sec 17)
+     *
+     * @param value analogue frequency
+     * @return true if the analogue frequency is valid
+     */
+    private boolean isValidAnalogueFrequency(int value) {
+        value = value & 0xFFFF;
+        return (value != 0x000 && value != 0xFFFF);
+    }
+
+    /**
+     * Check if the given value is a valid broadcast system. A valid value is one which falls within
+     * the range description defined in CEC 1.4 Specification : Operand Descriptions (Section 17)
+     *
+     * @param value broadcast system
+     * @return true if the broadcast system is valid
+     */
+    private boolean isValidBroadcastSystem(int value) {
+        return isWithinRange(value, 0, 31);
+    }
+
     private class PhysicalAddressValidator implements ParameterValidator {
         @Override
         public int isValid(byte[] params) {
@@ -429,6 +467,41 @@ public class HdmiCecMessageValidator {
                             || isWithinRange(params[0], 0x10, 0x17)
                             || isWithinRange(params[0], 0x1A, 0x1B)
                             || params[0] == 0x1F);
+        }
+    }
+
+    /**
+     * Check if the given Analogue Timer message parameters are valid.
+     * Valid parameters should adhere to message description of Analogue Timer defined in
+     * CEC 1.4 Specification : Message Descriptions for Timer Programming Feature (CEC Table 12)
+     */
+    private class AnalogueTimerValidator implements ParameterValidator {
+        @Override
+        public int isValid(byte[] params) {
+            if (params.length < 11) {
+                return ERROR_PARAMETER_SHORT;
+            }
+            return toErrorCode(
+                    // Day of Month
+                    isValidDayOfMonth(params[0])
+                    // Month of Year
+                    && isValidMonthOfYear(params[1])
+                    // Start Time - Hour
+                    && isValidHour(params[2])
+                    // Start Time - Minute
+                    && isValidMinute(params[3])
+                    // Duration - Duration Hours
+                    && isValidDurationHours(params[4])
+                    // Duration - Minute
+                    && isValidMinute(params[5])
+                    // Recording Sequence
+                    && isValidRecordingSequence(params[6])
+                    // Analogue Broadcast Type
+                    && isValidAnalogueBroadcastType(params[7])
+                    // Analogue Frequency
+                    && isValidAnalogueFrequency(HdmiUtils.twoBytesToInt(params, 8))
+                    // Broadcast System
+                    && isValidBroadcastSystem(params[10]));
         }
     }
 }
