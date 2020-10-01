@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3bc1c12_ef9caf9c",
+        "filename": "wifi/aidl-export/android/net/wifi/p2p/servicediscovery/WifiP2pServiceInfo.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-10-01T20:48:14Z",
+      "side": 0,
+      "message": "Interesting, looking at the corresponding Java class [1], the correct package name should be p2p.nsd. So the file path is correct, the package name is wrong. But somehow the AIDL compiler could still resolve it?\n\n\n[1] https://source.corp.google.com/android/frameworks/base/wifi/java/android/net/wifi/p2p/nsd/WifiP2pServiceInfo.java;l\u003d17?q\u003dwifip2pserviceinfo\u0026ct\u003dos\u0026sq\u003dpackage:%5Eandroid$",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "1fa847ad642bd91ffe1d1e443b73976f776a7356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8fd281_d0348519",
+        "filename": "wifi/aidl-export/android/net/wifi/p2p/servicediscovery/WifiP2pServiceRequest.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-10-01T20:48:14Z",
+      "side": 0,
+      "message": "Same here, the Java package name is nsd: https://source.corp.google.com/android/frameworks/base/wifi/java/android/net/wifi/p2p/nsd/WifiP2pServiceRequest.java;l\u003d17",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "1fa847ad642bd91ffe1d1e443b73976f776a7356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
