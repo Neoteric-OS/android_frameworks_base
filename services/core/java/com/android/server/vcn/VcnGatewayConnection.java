@@ -241,12 +241,29 @@ public class VcnGatewayConnection extends StateMachine implements UnderlyingNetw
      */
     private static final int EVENT_DISCONNECT_REQUESTED = 7;
 
-    @NonNull private final DisconnectedState mDisconnectedState = new DisconnectedState();
-    @NonNull private final DnsResolutionState mDnsResolutionState = new DnsResolutionState();
-    @NonNull private final ConnectingState mConnectingState = new ConnectingState();
-    @NonNull private final ConnectedState mConnectedState = new ConnectedState();
-    @NonNull private final MigratingState mMigratingState = new MigratingState();
-    @NonNull private final RetryTimeoutState mRetryTimeoutState = new RetryTimeoutState();
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    @NonNull
+    final DisconnectedState mDisconnectedState = new DisconnectedState();
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    @NonNull
+    final DnsResolutionState mDnsResolutionState = new DnsResolutionState();
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    @NonNull
+    final ConnectingState mConnectingState = new ConnectingState();
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    @NonNull
+    final ConnectedState mConnectedState = new ConnectedState();
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    @NonNull
+    final MigratingState mMigratingState = new MigratingState();
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    @NonNull
+    final RetryTimeoutState mRetryTimeoutState = new RetryTimeoutState();
 
     @NonNull private final VcnContext mVcnContext;
     @NonNull private final ParcelUuid mSubscriptionGroup;
@@ -346,7 +363,8 @@ public class VcnGatewayConnection extends StateMachine implements UnderlyingNetw
         this(vcnContext, subscriptionGroup, connectionConfig, new Dependencies());
     }
 
-    private VcnGatewayConnection(
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    VcnGatewayConnection(
             @NonNull VcnContext vcnContext,
             @NonNull ParcelUuid subscriptionGroup,
             @NonNull VcnGatewayConnectionConfig connectionConfig,
@@ -547,7 +565,21 @@ public class VcnGatewayConnection extends StateMachine implements UnderlyingNetw
      */
     private class DisconnectedState extends BaseState {
         @Override
-        protected void processStateMsg(Message msg) {}
+        protected void processStateMsg(Message msg) {
+            switch (msg.what) {
+                case EVENT_UNDERLYING_NETWORK_CHANGED:
+                    // First network found; start tunnel
+                    mUnderlying = (UnderlyingNetworkRecord) msg.obj;
+                    transitionTo(mDnsResolutionState);
+                    break;
+                case EVENT_DISCONNECT_REQUESTED:
+                    // Ignored; all state already torn down.
+                    break;
+                default:
+                    logUnhandledMessage(msg);
+                    break;
+            }
+        }
     }
 
     private abstract class ActiveBaseState extends BaseState {
