@@ -903,7 +903,49 @@ public class VcnGatewayConnection extends StateMachine implements UnderlyingNetw
      */
     class RetryTimeoutState extends ActiveBaseState {
         @Override
-        protected void processStateMsg(Message msg) {}
+        protected void enterState() throws Exception {
+            mFailedAttempts++;
+            sendMessageDelayed(EVENT_RETRY_TIMEOUT_EXPIRED, mCurrentToken, nextRetryTimeoutMs());
+        }
+
+        @Override
+        protected void processStateMsg(Message msg) {
+            switch (msg.what) {
+                case EVENT_UNDERLYING_NETWORK_CHANGED: // Fallthrough
+                    final UnderlyingNetworkRecord newUnderlying =
+                            ((EventUnderlyingNetworkChangedData) msg.obj).newUnderlying;
+                    if (mUnderlying != null && mUnderlying.network.equals(newUnderlying.network)) {
+                        // If the selected underlying network has not changed, do not retry
+                        // immediately
+                        return;
+                    }
+
+                    // Fallthrough
+                case EVENT_RETRY_TIMEOUT_EXPIRED:
+                    removeMessages(EVENT_RETRY_TIMEOUT_EXPIRED);
+
+                    transitionTo(mDnsResolutionState);
+                    break;
+                case EVENT_DISCONNECT_REQUESTED:
+                    handleDisconnectRequested(((EventDisconnectRequestedData) msg.obj).reason);
+                    break;
+                default:
+                    logUnhandledMessage(msg);
+                    break;
+            }
+        }
+
+        private long nextRetryTimeoutMs() {
+            final int retryDelayIndex = mFailedAttempts - 1;
+            final long[] retryIntervalsMs = mConnectionConfig.getRetryIntervalsMs();
+
+            // Repeatedly use last item in retry timeout list.
+            if (retryDelayIndex >= retryIntervalsMs.length) {
+                return retryIntervalsMs[retryIntervalsMs.length - 1];
+            }
+
+            return retryIntervalsMs[retryDelayIndex];
+        }
     }
 
     // TODO: Remove this when migrating to new NetworkAgent API
