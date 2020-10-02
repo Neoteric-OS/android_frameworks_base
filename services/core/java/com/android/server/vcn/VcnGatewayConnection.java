@@ -50,6 +50,7 @@ import android.net.ipsec.ike.IkeSessionParams;
 import android.net.ipsec.ike.exceptions.IkeException;
 import android.net.ipsec.ike.exceptions.IkeProtocolException;
 import android.net.vcn.VcnGatewayConnectionConfig;
+import android.os.CancellationSignal;
 import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.Message;
@@ -68,6 +69,7 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -136,7 +138,15 @@ import java.util.concurrent.TimeUnit;
 public class VcnGatewayConnection extends StateMachine implements UnderlyingNetworkTrackerCallback {
     private static final String TAG = VcnGatewayConnection.class.getSimpleName();
 
-    private static final InetAddress DUMMY_ADDR = InetAddresses.parseNumericAddress("192.0.2.0");
+    // STOPSHIP: Use server address from VcnGatewayConnectionConfig
+    private static final String DUMMY_SERVER_ADDR = "DUMMY_SERVER_ADDR";
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    static final InetAddress DUMMY_ADDR = InetAddresses.parseNumericAddress("192.0.2.0");
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    static final int DNS_NOERROR = 0;
+
     private static final int ARG_NOT_PRESENT = Integer.MIN_VALUE;
 
     private static final String DISCONNECT_REASON_INTERNAL_ERROR = "Uncaught exception: ";
@@ -417,7 +427,7 @@ public class VcnGatewayConnection extends StateMachine implements UnderlyingNetw
         }
 
         sendMessage(EVENT_DISCONNECT_REQUESTED, TOKEN_ANY, DISCONNECT_REASON_TEARDOWN);
-        quit();
+        quit(); // Quits after messages have been processed
 
         // TODO: Notify VcnInstance (via callbacks) of permanent teardown of this tunnel, since this
         // is also called asynchronously when a NetworkAgent becomes unwanted
@@ -453,7 +463,8 @@ public class VcnGatewayConnection extends StateMachine implements UnderlyingNetw
         super.sendMessageDelayed(what, token, ARG_NOT_PRESENT, obj, timeout);
     }
 
-    private void sessionLost(int token, @Nullable Exception exception) {
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    void sessionLost(int token, @Nullable Exception exception) {
         sendMessage(EVENT_SESSION_LOST, token, exception);
     }
 
@@ -604,6 +615,7 @@ public class VcnGatewayConnection extends StateMachine implements UnderlyingNetw
         }
     }
 
+    // TODO: Move DNS up to a level that manages multi-homing VCN Tunnels for the same exposed caps
     /**
      * Transitive state for handling DNS resolution
      *
@@ -611,8 +623,74 @@ public class VcnGatewayConnection extends StateMachine implements UnderlyingNetw
      * state is re-entered.
      */
     private class DnsResolutionState extends ActiveBaseState {
+        private CancellationSignal mCancellationSignal;
+
         @Override
-        protected void processStateMsg(Message msg) {}
+        protected void enterState() {
+            mCancellationSignal = new CancellationSignal();
+
+            final int token = mNextToken++;
+            mCurrentToken = token;
+            mDeps.queryDns(
+                    mVcnContext,
+                    token,
+                    mUnderlying.network,
+                    DUMMY_SERVER_ADDR, // STOPSHIP: Use server address from
+                                       // VcnGatewayConnectionConfig
+                    mCancellationSignal,
+                    new DnsResolver.Callback<List<InetAddress>>() {
+                        @Override
+                        public void onAnswer(List<InetAddress> list, int rcode) {
+                            // TODO: Make this a constant in DnsResolver
+                            if (rcode != DNS_NOERROR || list.isEmpty()) {
+                                sessionLost(
+                                        token,
+                                        new IllegalStateException(
+                                                "No DNS results received for rcode OK"));
+                            } else {
+                                sendMessage(EVENT_DNS_RESOLVED, TOKEN_ANY, list);
+                            }
+                        }
+
+                        @Override
+                        public void onError(DnsResolver.DnsException exception) {
+                            sessionLost(token, exception);
+                        }
+                    });
+        }
+
+        @Override
+        protected void processStateMsg(Message msg) {
+            switch (msg.what) {
+                case EVENT_UNDERLYING_NETWORK_CHANGED:
+                    mUnderlying = (UnderlyingNetworkRecord) msg.obj;
+
+                    mCancellationSignal.cancel();
+                    transitionTo(mDnsResolutionState);
+                    break;
+                case EVENT_DNS_RESOLVED:
+                    // TODO: Make this use the actual configured hostname
+                    final List<InetAddress> list = (List<InetAddress>) msg.obj;
+
+                    // List prioritized per RFC 8305 (Happy Eyeballs 2.0)
+                    mResolvedAddr = list.get(0);
+                    transitionTo(mConnectingState);
+                    break;
+                case EVENT_DISCONNECT_REQUESTED:
+                    mCancellationSignal.cancel();
+
+                    handleDisconnectRequested((String) msg.obj);
+                    break;
+                case EVENT_SESSION_LOST:
+                    mCancellationSignal.cancel();
+
+                    transitionTo(mRetryTimeoutState);
+                    break;
+                default:
+                    logUnhandledMessage(msg);
+                    break;
+            }
+        }
     }
 
     /**
@@ -785,6 +863,16 @@ public class VcnGatewayConnection extends StateMachine implements UnderlyingNetw
         }
     }
 
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    UnderlyingNetworkRecord getUnderlyingNetwork() {
+        return mUnderlying;
+    }
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    void setUnderlyingNetwork(@Nullable UnderlyingNetworkRecord record) {
+        mUnderlying = record;
+    }
+
     /** External dependencies used by VcnGatewayConnection, for injection in tests */
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     public static class Dependencies {
@@ -812,9 +900,21 @@ public class VcnGatewayConnection extends StateMachine implements UnderlyingNetw
                     childSessionCallback);
         }
 
-        /** Builds a new DnsResolver */
-        public DnsResolver getDnsResolver() {
-            return DnsResolver.getInstance();
+        /** Starts an asynchronous DNS query */
+        public void queryDns(
+                VcnContext vcnContext,
+                int token,
+                Network network,
+                String hostname,
+                CancellationSignal cancellationSignal,
+                DnsResolver.Callback<List<InetAddress>> callback) {
+            DnsResolver.getInstance().query(
+                    network,
+                    hostname,
+                    DnsResolver.FLAG_EMPTY,
+                    new HandlerExecutor(new Handler(vcnContext.getLooper())),
+                    cancellationSignal,
+                    callback);
         }
     }
 }
