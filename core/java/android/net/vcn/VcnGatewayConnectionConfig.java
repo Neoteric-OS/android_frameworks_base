@@ -212,6 +212,11 @@ public final class VcnGatewayConnectionConfig {
         }
     }
 
+    /**
+     * Returns all tunnel capabilities as a list.
+     *
+     * @hide
+     */
     @NonNull
     public List<Integer> getAllTunnelCapabilities() {
         List<Integer> tunnelCapsList = new ArrayList<>();
