@@ -585,10 +585,106 @@ public class VcnGatewayConnection extends StateMachine implements UnderlyingNetw
     }
 
     private abstract class BaseState extends State {
+        @Override
+        public void enter() {
+            try {
+                enterState();
+            } catch (Exception e) {
+                Slog.wtf(TAG, "Uncaught exception", e);
+                sendMessage(
+                        EVENT_DISCONNECT_REQUESTED,
+                        TOKEN_ANY,
+                        new EventDisconnectRequestedInfo(
+                                DISCONNECT_REASON_INTERNAL_ERROR + e.toString()));
+            }
+        }
+
         protected void enterState() throws Exception {}
 
+        /**
+         * Top-level processMessage with safeguards to prevent crashing the System Server on non-eng
+         * builds.
+         */
+        @Override
+        public boolean processMessage(Message msg) {
+            try {
+                processStateMsg(msg);
+            } catch (Exception e) {
+                Slog.wtf(TAG, "Uncaught exception", e);
+                sendMessage(
+                        EVENT_DISCONNECT_REQUESTED,
+                        TOKEN_ANY,
+                        new EventDisconnectRequestedInfo(
+                                DISCONNECT_REASON_INTERNAL_ERROR + e.toString()));
+            }
+
+            return HANDLED;
+        }
+
         protected abstract void processStateMsg(Message msg) throws Exception;
+
+        protected void logUnhandledMessage(Message msg) {
+            // Log as unexpected all known messages, and log all else as unknown.
+            switch (msg.what) {
+                case EVENT_UNDERLYING_NETWORK_CHANGED: // Fallthrough
+                case EVENT_RETRY_TIMEOUT_EXPIRED: // Fallthrough
+                case EVENT_SESSION_LOST: // Fallthrough
+                case EVENT_SESSION_CLOSED: // Fallthrough
+                case EVENT_TRANSFORM_CREATED: // Fallthrough
+                case EVENT_SETUP_COMPLETED: // Fallthrough
+                case EVENT_DISCONNECT_REQUESTED: // Fallthrough
+                case EVENT_TEARDOWN_TIMEOUT_EXPIRED:
+                    logUnexpectedEvent(msg.what);
+                    break;
+                default:
+                    logWtfUnknownEvent(msg.what);
+                    break;
+            }
+        }
+
+        protected void teardownNetwork() {
+            if (mNetworkAgent != null) {
+                mNetworkAgent.sendNetworkInfo(buildNetworkInfo(false /* isConnected */));
+                mNetworkAgent = null;
+            }
+
+            teardownIke();
+        }
+
+        protected void teardownIke() {
+            if (mIkeSession != null) {
+                mIkeSession.close();
+            }
+        }
+
+        protected void handleDisconnectRequested(String msg) {
+            Slog.v(TAG, "Tearing down. Cause: " + msg);
+            teardownNetwork();
+
+            if (mIkeSession == null) {
+                // Already disconnected, go straight to DisconnectedState
+                transitionTo(mDisconnectedState);
+            } else {
+                // Still need to wait for full closure
+                transitionTo(mDisconnectingState);
+            }
+
+            if (msg.equals(DISCONNECT_REASON_UNDERLYING_NETWORK_LOST)) {
+                mUnderlying = null;
+            }
+        }
+
+        protected void logUnexpectedEvent(int what) {
+            Slog.d(TAG, String.format(
+                    "Unexpected event code %d in state %s", what, this.getClass().getSimpleName()));
+        }
+
+        protected void logWtfUnknownEvent(int what) {
+            Slog.wtf(TAG, String.format(
+                    "Unknown event code %d in state %s", what, this.getClass().getSimpleName()));
+        }
     }
+
     /**
      * State representing the a disconnected VCN tunnel.
      *
@@ -599,7 +695,29 @@ public class VcnGatewayConnection extends StateMachine implements UnderlyingNetw
         protected void processStateMsg(Message msg) {}
     }
 
-    private abstract class ActiveBaseState extends BaseState {}
+    private abstract class ActiveBaseState extends BaseState {
+        /**
+         * Handles all incoming messages, discarding messages for previous networks.
+         *
+         * <p>States that handle mobility events may need to override this method to receive
+         * messages for all underlying networks.
+         */
+        @Override
+        public boolean processMessage(Message msg) {
+            final int token = msg.arg1;
+            // Only process if a valid token is presented.
+            if (isValidToken(token)) {
+                return super.processMessage(msg);
+            }
+
+            Slog.v(TAG, "Message called with obsolete token: " + token + "; what: " + msg.what);
+            return HANDLED;
+        }
+
+        protected boolean isValidToken(int token) {
+            return (token == TOKEN_ANY || token == mCurrentToken);
+        }
+    }
 
     /**
      * Transitive state representing a VCN that is tearing down an IKE session.
