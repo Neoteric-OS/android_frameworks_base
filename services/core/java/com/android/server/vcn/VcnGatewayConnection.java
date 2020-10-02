@@ -808,7 +808,58 @@ public class VcnGatewayConnection extends StateMachine {
      */
     class RetryTimeoutState extends ActiveBaseState {
         @Override
-        protected void processStateMsg(Message msg) {}
+        protected void enterState() throws Exception {
+            mFailedAttempts++;
+            sendMessageDelayed(EVENT_RETRY_TIMEOUT_EXPIRED, mCurrentToken, nextRetryTimeoutMs());
+        }
+
+        @Override
+        protected void processStateMsg(Message msg) {
+            switch (msg.what) {
+                case EVENT_UNDERLYING_NETWORK_CHANGED: // Fallthrough
+                    final UnderlyingNetworkRecord oldUnderlying = mUnderlying;
+                    mUnderlying = ((EventUnderlyingNetworkChangedInfo) msg.obj).newUnderlying;
+
+                    // If new underlying is null, we've lost all networks; go back to disconnected.
+                    if (mUnderlying == null) {
+                        handleDisconnectRequested(DISCONNECT_REASON_UNDERLYING_NETWORK_LOST);
+                        return;
+                    } else if (oldUnderlying != null
+                            && mUnderlying.network.equals(oldUnderlying.network)) {
+                        // If the network has not changed, do nothing.
+                        return;
+                    }
+
+                    // Fallthrough
+                case EVENT_RETRY_TIMEOUT_EXPIRED:
+                    removeMessages(EVENT_RETRY_TIMEOUT_EXPIRED);
+
+                    transitionTo(mConnectingState);
+                    break;
+                case EVENT_DISCONNECT_REQUESTED:
+                    handleDisconnectRequested(((EventDisconnectRequestedInfo) msg.obj).reason);
+                    break;
+                case EVENT_SESSION_LOST: // Fallthrough
+                case EVENT_SESSION_CLOSED:
+                    // Expected; nothing to be done here.
+                    break;
+                default:
+                    logUnhandledMessage(msg);
+                    break;
+            }
+        }
+
+        private long nextRetryTimeoutMs() {
+            final int retryDelayIndex = mFailedAttempts - 1;
+            final long[] retryIntervalsMs = mConnectionConfig.getRetryIntervalsMs();
+
+            // Repeatedly use last item in retry timeout list.
+            if (retryDelayIndex >= retryIntervalsMs.length) {
+                return retryIntervalsMs[retryIntervalsMs.length - 1];
+            }
+
+            return retryIntervalsMs[retryDelayIndex];
+        }
     }
 
     // TODO: Remove this when migrating to new NetworkAgent API
