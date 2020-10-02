@@ -214,6 +214,11 @@ public final class VcnGatewayConnectionConfig {
         }
     }
 
+    /**
+     * Returns all exposed capabilities as a list.
+     *
+     * @hide
+     */
     @NonNull
     private List<Integer> getAllExposedCapabilities() {
         List<Integer> exposedCapsList = new ArrayList<>();
