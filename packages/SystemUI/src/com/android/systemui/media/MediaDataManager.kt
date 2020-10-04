@@ -342,14 +342,16 @@ class MediaDataManager(
                         artWorkIcon.type == Icon.TYPE_ADAPTIVE_BITMAP) {
                     artworkBitmap = artWorkIcon.bitmap
                 } else {
-                    val drawable: Drawable = artWorkIcon.loadDrawable(context)
-                    artworkBitmap = Bitmap.createBitmap(
-                            drawable.intrinsicWidth,
-                            drawable.intrinsicHeight,
-                            Bitmap.Config.ARGB_8888)
-                    val canvas = Canvas(artworkBitmap)
-                    drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-                    drawable.draw(canvas)
+                    val drawable: Drawable? = artWorkIcon.loadDrawable(context)
+                    if (drawable != null) {
+                        artworkBitmap = Bitmap.createBitmap(
+                                drawable.intrinsicWidth,
+                                drawable.intrinsicHeight,
+                                Bitmap.Config.ARGB_8888)
+                        val canvas = Canvas(artworkBitmap)
+                        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+                        drawable.draw(canvas)
+                    }
                 }
             }
         }
@@ -360,7 +362,7 @@ class MediaDataManager(
         val app = builder.loadHeaderAppName()
 
         // App Icon
-        val smallIconDrawable: Drawable = sbn.notification.smallIcon.loadDrawable(context)
+        val smallIconDrawable: Drawable? = sbn.notification.smallIcon.loadDrawable(context)
 
         // Song name
         var song: CharSequence? = metadata.getString(MediaMetadata.METADATA_KEY_DISPLAY_TITLE)
