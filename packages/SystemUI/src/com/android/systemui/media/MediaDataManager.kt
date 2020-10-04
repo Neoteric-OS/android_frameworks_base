@@ -27,7 +27,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.ImageDecoder
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.Icon
 import android.media.MediaDescription
 import android.media.MediaMetadata
@@ -342,14 +341,16 @@ class MediaDataManager(
                         artWorkIcon.type == Icon.TYPE_ADAPTIVE_BITMAP) {
                     artworkBitmap = artWorkIcon.bitmap
                 } else {
-                    val drawable: Drawable = artWorkIcon.loadDrawable(context)
-                    artworkBitmap = Bitmap.createBitmap(
-                            drawable.intrinsicWidth,
-                            drawable.intrinsicHeight,
-                            Bitmap.Config.ARGB_8888)
-                    val canvas = Canvas(artworkBitmap)
-                    drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-                    drawable.draw(canvas)
+                    val drawable = artWorkIcon.loadDrawable(context)
+                    drawable?.let {
+                        artworkBitmap = Bitmap.createBitmap(
+                                it.intrinsicWidth,
+                                it.intrinsicHeight,
+                                Bitmap.Config.ARGB_8888)
+                        val canvas = Canvas(artworkBitmap)
+                        it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
+                        it.draw(canvas)
+                    }
                 }
             }
         }
@@ -360,7 +361,7 @@ class MediaDataManager(
         val app = builder.loadHeaderAppName()
 
         // App Icon
-        val smallIconDrawable: Drawable = sbn.notification.smallIcon.loadDrawable(context)
+        val smallIconDrawable = sbn.notification.smallIcon.loadDrawable(context)
 
         // Song name
         var song: CharSequence? = metadata.getString(MediaMetadata.METADATA_KEY_DISPLAY_TITLE)
