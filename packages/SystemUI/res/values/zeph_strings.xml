@@ -30,4 +30,7 @@
     <!-- Refresh rate QS tile -->
     <string name="refresh_rate_tile_label">Refresh rate</string>
     <string name="refresh_rate_unknown">Unknown</string>
+
+    <!-- Statusbar Icons -->
+    <string name="status_bar_nfc">NFC</string>
 </resources>
