@@ -22,6 +22,30 @@
       "revId": "8d6c618a49689840f8a52a487af26ed9590d6e4f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e52df2_ab69d46d",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-05T07:34:44Z",
+      "side": 1,
+      "message": "Good point, thanks for catching this.",
+      "parentUuid": "f085784f_39ed3360",
+      "range": {
+        "startLine": 199,
+        "startChar": 16,
+        "endLine": 199,
+        "endChar": 26
+      },
+      "revId": "8d6c618a49689840f8a52a487af26ed9590d6e4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
