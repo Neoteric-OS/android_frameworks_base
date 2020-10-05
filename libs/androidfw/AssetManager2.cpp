@@ -942,10 +942,18 @@ util::OptionalResult<AssetManager2::SelectedValue> AssetManager2::GetResource(
 }
 
 util::OptionalResult<std::monostate> AssetManager2::ResolveReference(
-    AssetManager2::SelectedValue& value) const {
+    AssetManager2::SelectedValue& value, bool cache_value) const {
   if (value.type != Res_value::TYPE_REFERENCE || value.data == 0U) {
     // Not a reference. Nothing to do.
     return {};
+  }
+
+  if (cache_value) {
+    auto cached_value = cached_resolved_values_.find(value.data);
+    if (cached_value != cached_resolved_values_.end()) {
+      value = cached_value->second;
+      return {};
+    }
   }
 
   uint32_t combined_flags = 0U;
@@ -960,9 +968,11 @@ util::OptionalResult<std::monostate> AssetManager2::ResolveReference(
     if (result->type != Res_value::TYPE_REFERENCE ||
         result->data == Res_value::DATA_NULL_UNDEFINED ||
         result->data == resolve_resid || i == kMaxIterations) {
-      // This reference can't be resolved, so exit now and let the caller deal with it.
+      result->flags |= combined_flags;
+      if (cache_value) {
+        cached_resolved_values_[value.data] = *result;
+      }
       value = *result;
-      value.flags |= combined_flags;
       return {};
     }
 
@@ -1334,6 +1344,8 @@ void AssetManager2::InvalidateCaches(uint32_t diff) {
       ++iter;
     }
   }
+
+  cached_bags_.clear();
 }
 
 uint8_t AssetManager2::GetAssignedPackageId(const LoadedPackage* package) const {
@@ -1514,7 +1526,7 @@ util::OptionalResult<std::monostate> Theme::ResolveAttributeReference(
     return base::unexpected(std::nullopt);
   }
 
-  auto resolve_result = asset_manager_->ResolveReference(*result);
+  auto resolve_result = asset_manager_->ResolveReference(*result, true /* cache_value */);
   if (resolve_result.has_value()) {
     result->flags |= value.flags;
     value = *result;
