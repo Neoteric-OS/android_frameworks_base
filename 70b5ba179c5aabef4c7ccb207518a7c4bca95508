@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8146f3f2_8c32cfd5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-10-05T18:26:25Z",
+      "side": 1,
+      "message": "this will go good with all the connectoins and prams we have in BT :p",
+      "revId": "70b5ba179c5aabef4c7ccb207518a7c4bca95508",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
