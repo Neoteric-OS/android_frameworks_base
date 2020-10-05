@@ -34,6 +34,12 @@ import android.os.Message;
 import android.os.PersistableBundle;
 import android.view.Surface;
 
+import android.util.Log; //for log
+import android.content.Intent; //for intent
+import android.app.ActivityThread;
+import android.content.Context;
+import android.app.Application;
+
 import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -1949,6 +1955,22 @@ final public class MediaCodec {
         freeAllTrackedBuffers(); // free buffers first
         native_release();
         mCrypto = null;
+        //[S][] broadcast to Detector
+         try {
+          Application app = ActivityThread.currentApplication();
+          Context context = app.getApplicationContext();
+          String curAppPackageName = "";
+          if (app != null) {
+            curAppPackageName = app.getPackageName();
+          }
+          Intent intent = new Intent();
+          intent.setAction("com.android.intent.action.STOP_VIDEO_ASPECT_RATIO_VALUE");
+          intent.putExtra("pkgname",curAppPackageName);
+          if (context != null){
+            context.sendBroadcast(intent);
+          }
+         } catch (Exception ex) {}
+        //[E][] broadcast to Detector
     }
 
     private native final void native_release();
@@ -2233,6 +2255,30 @@ final public class MediaCodec {
      */
     public final void start() {
         native_start();
+        //[S][] broadcast Video Width, Height
+        PersistableBundle metrics = getMetrics();
+        int theWidth = metrics.getInt(MediaCodec.MetricsConstants.WIDTH);
+        int theheight = metrics.getInt(MediaCodec.MetricsConstants.HEIGHT);
+        String theMode = metrics.getString(MediaCodec.MetricsConstants.MODE, null);
+        if(theMode.equals("video")) {
+          try {
+                Application app = ActivityThread.currentApplication();
+                Context context = app.getApplicationContext();
+                String curAppPackageName = "";
+                if (app != null) {
+                     curAppPackageName = app.getPackageName();
+                }
+                Intent intent = new Intent();
+                intent.setAction("com.android.intent.action.GET_VIDEO_ASPECT_RATIO_VALUE");
+                intent.putExtra("pkgname",curAppPackageName);
+                intent.putExtra("width",theWidth);
+                intent.putExtra("height",theheight);
+                if (context != null) {
+                    context.sendBroadcast(intent);
+                }
+           } catch (Exception ex) {}
+        }
+        //[E][] broadcast Video Width, Height
         synchronized(mBufferLock) {
             cacheBuffers(true /* input */);
             cacheBuffers(false /* input */);
