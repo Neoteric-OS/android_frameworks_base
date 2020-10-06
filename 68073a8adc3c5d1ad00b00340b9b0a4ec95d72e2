@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": false,
       "key": {
         "uuid": "fd1ac550_134f7a21",
         "filename": "/PATCHSET_LEVEL",
@@ -14,8 +15,24 @@
       "side": 1,
       "message": "I don\u0027t know much about this behavior, so I\u0027d like Lorenzo or Remi to also review.",
       "revId": "68073a8adc3c5d1ad00b00340b9b0a4ec95d72e2",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85466e94_47f62103",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-06T14:46:38Z",
+      "side": 1,
+      "message": "Thanks for owner-vote. Move Lorenzo/Remi from cc to reviewer.",
+      "revId": "68073a8adc3c5d1ad00b00340b9b0a4ec95d72e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
