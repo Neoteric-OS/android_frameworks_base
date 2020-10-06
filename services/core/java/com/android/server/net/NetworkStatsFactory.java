@@ -469,6 +469,13 @@ public class NetworkStatsFactory {
         }
     }
 
+    public void removeUids(int[] uids) {
+        synchronized(mPersistentDataLock){
+            mPersistSnapshot.removeUids(uids);
+            mTunAnd464xlatAdjustedStats.removeUids(uids);
+        }
+    }
+
     /**
      * Parse statistics from file into given {@link NetworkStats} object. Values
      * are expected to monotonically increase since device boot.

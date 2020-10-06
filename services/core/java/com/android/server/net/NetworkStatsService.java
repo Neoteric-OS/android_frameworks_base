@@ -1628,6 +1628,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mUidRecorder.removeUidsLocked(uids);
         mUidTagRecorder.removeUidsLocked(uids);
 
+        if(checkBpfStatsEnable()){
+            mStatsFactory.removeUids(uids);
+        }
+
         // Clear kernel stats associated with UID
         for (int uid : uids) {
             resetKernelUidStats(uid);
