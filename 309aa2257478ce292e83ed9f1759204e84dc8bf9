@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f76e8f6a_ccf01390",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-06T08:54:31Z",
+      "side": 1,
+      "message": "You\u0027re already doing it though :)",
+      "range": {
+        "startLine": 104,
+        "startChar": 39,
+        "endLine": 104,
+        "endChar": 60
+      },
+      "revId": "309aa2257478ce292e83ed9f1759204e84dc8bf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "727c30ed_f7d77121",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-06T08:54:31Z",
+      "side": 1,
+      "message": "Looks like this will not include the IP address of an IP server that uses a manually-defined address (mStaticIpv4ServerAddr) ?\n\nThere\u0027s very few cached addresses and ipservers so iterating on both the IpServers and cached addresses would be fine by me, even if they mostly overlap",
+      "range": {
+        "startLine": 263,
+        "startChar": 28,
+        "endLine": 263,
+        "endChar": 44
+      },
+      "revId": "309aa2257478ce292e83ed9f1759204e84dc8bf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50bd1cb5_2d68a695",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-06T08:54:31Z",
+      "side": 1,
+      "message": "typo: bluetooth",
+      "range": {
+        "startLine": 151,
+        "startChar": 18,
+        "endLine": 151,
+        "endChar": 29
+      },
+      "revId": "309aa2257478ce292e83ed9f1759204e84dc8bf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93afe1fc_21c5d887",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-06T08:54:31Z",
+      "side": 1,
+      "message": "So you\u0027re testing that hotspotAddress doesn\u0027t get handed out again, after being released ?\nAnd this assumes that it would normally be handed out, because requestDownstreamAddress would always hand out the same \"next\" address that\u0027s available after mBluetoothAddress ?\n\nI think it would be slightly clearer if you had:\nwhen(mPrivateAddressCoordinator.getRandomSubAddr()).thenReturn(\n                getSubAddress(hotspotAddress.getAddress().getAddress()));\n\nTo show that \"the random addr would have been hotspot, but was not used because it\u0027s reserved\"",
+      "range": {
+        "startLine": 158,
+        "startChar": 17,
+        "endLine": 158,
+        "endChar": 76
+      },
+      "revId": "309aa2257478ce292e83ed9f1759204e84dc8bf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
