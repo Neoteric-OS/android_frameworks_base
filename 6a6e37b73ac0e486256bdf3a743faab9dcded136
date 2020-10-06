@@ -39,6 +39,30 @@
       "revId": "6a6e37b73ac0e486256bdf3a743faab9dcded136",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37579de3_014bec2b",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-06T04:04:42Z",
+      "side": 1,
+      "message": "If we fixed b/162292214 then we\u0027ll see traffic forwarded by tethering offload, right?\nAdd comments for other cases.\nSee if it works for you.",
+      "parentUuid": "db8678db_a27958a2",
+      "range": {
+        "startLine": 648,
+        "startChar": 0,
+        "endLine": 650,
+        "endChar": 34
+      },
+      "revId": "6a6e37b73ac0e486256bdf3a743faab9dcded136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
