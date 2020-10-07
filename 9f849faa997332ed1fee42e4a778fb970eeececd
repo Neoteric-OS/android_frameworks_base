@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5842f97b_bcc1e8b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-07T03:40:10Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 12,
+        "startChar": 41,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "9f849faa997332ed1fee42e4a778fb970eeececd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0e7743b_fb21d111",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-07T03:40:10Z",
+      "side": 1,
+      "message": "down?",
+      "range": {
+        "startLine": 13,
+        "startChar": 36,
+        "endLine": 13,
+        "endChar": 40
+      },
+      "revId": "9f849faa997332ed1fee42e4a778fb970eeececd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9c00e308_a06f8a0b",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 4
@@ -14,6 +60,30 @@
       "writtenOn": "2020-10-07T03:36:54Z",
       "side": 1,
       "message": "nit: Is it better if we rename this function? e.g. isInterfacePresent\ncheck is more ambiguous for me to know what is going on in this function.\nFeel free to ignore.",
+      "range": {
+        "startLine": 383,
+        "startChar": 23,
+        "endLine": 383,
+        "endChar": 44
+      },
+      "revId": "9f849faa997332ed1fee42e4a778fb970eeececd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bc6a22e_b6d45c03",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-07T03:40:10Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "9c00e308_a06f8a0b",
       "range": {
         "startLine": 383,
         "startChar": 23,
