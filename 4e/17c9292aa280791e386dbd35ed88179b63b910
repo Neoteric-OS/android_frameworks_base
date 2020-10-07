@@ -1,0 +1,9 @@
+Code-Review+2: Philip P. Moltmann <moltmann@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Submitted-by: Hai Zhang <zhanghai@google.com>
+Submitted-at: Wed, 07 Oct 2020 05:31:07 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1450996
+Project: platform/frameworks/base
+Branch: refs/heads/master
