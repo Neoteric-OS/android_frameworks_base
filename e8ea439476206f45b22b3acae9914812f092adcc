@@ -1,0 +1,394 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d3df6db8_7c823618",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1958,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1958,
+        "startChar": 37,
+        "endLine": 1958,
+        "endChar": 38
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "dc69f98b_6def3368",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1960,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1960,
+        "startChar": 9,
+        "endLine": 1960,
+        "endChar": 17
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5274426a_2732ba33",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1961,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1961,
+        "startChar": 58,
+        "endLine": 1961,
+        "endChar": 62
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "74fa16e3_a2385602",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1966,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1966,
+        "startChar": 0,
+        "endLine": 1966,
+        "endChar": 10
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "58a398ba_0fb4ed82",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1970,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1970,
+        "startChar": 39,
+        "endLine": 1970,
+        "endChar": 51
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "4eee7ccc_05d285f7",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1973,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1973,
+        "startChar": 0,
+        "endLine": 1973,
+        "endChar": 10
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0b648420_3892fd59",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1974,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1974,
+        "startChar": 32,
+        "endLine": 1974,
+        "endChar": 37
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8db46552_75643607",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1976,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1976,
+        "startChar": 42,
+        "endLine": 1976,
+        "endChar": 44
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "070e08f0_ee023e4b",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1979,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1979,
+        "startChar": 9,
+        "endLine": 1979,
+        "endChar": 11
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "cd2060eb_5571ce41",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2271,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 2271,
+        "startChar": 0,
+        "endLine": 2271,
+        "endChar": 17
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8273c612_c5541457",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2276,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 2276,
+        "startChar": 0,
+        "endLine": 2276,
+        "endChar": 1
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d48196f8_87d8f782",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2280,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 2280,
+        "startChar": 42,
+        "endLine": 2280,
+        "endChar": 46
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "eb2a6aff_ef1a3ad2",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2286,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 2286,
+        "startChar": 0,
+        "endLine": 2286,
+        "endChar": 1
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c9d2c906_f66459ab",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2291,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 2291,
+        "startChar": 0,
+        "endLine": 2291,
+        "endChar": 10
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005388049",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1450456?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6f146b39_e7c2bae2",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2294,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-07T07:35:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 2294,
+        "startChar": 0,
+        "endLine": 2294,
+        "endChar": 8
+      },
+      "revId": "e8ea439476206f45b22b3acae9914812f092adcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
