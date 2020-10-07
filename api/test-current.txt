@@ -4637,7 +4637,7 @@ package android.telephony.ims {
   }
 
   public class SipDelegateManager {
-    method @RequiresPermission("android.permission.READ_PRIVILEGED_PHONE_STATE") public boolean isSupported() throws android.telephony.ims.ImsException;
+    method @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public boolean isSupported() throws android.telephony.ims.ImsException;
   }
 
 }

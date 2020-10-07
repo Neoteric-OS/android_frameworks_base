@@ -128,6 +128,42 @@ public class ImsRegistrationImplBase {
     }
 
     /**
+     * Perform the network registration of all SIP delegates associated with this ImsService.
+     * <p>
+     * If the SIP delegate feature configuration has changed, then this method will be
+     * called in order to let the ImsService know that it can pick up these changes in the IMS
+     * registration.
+     * @hide
+     */
+    public void updateSipDelegateRegistration() {
+        // Stub implementation, ImsService should implement this
+    }
+
+
+    /**
+     * Perform the network deregistration of all SIP delegates associated with this ImsService.
+     * <p>
+     * This should not affect the registration of features managed by the ImsService itself, such
+     * as feature tags related to MMTEL registration.
+     * @hide
+     */
+    public void triggerSipDelegateDeregistration() {
+        // Stub implementation, ImsService should implement this
+    }
+
+    /**
+     * A SIP delegate connection has received a SIP message containing a permanent failure
+     * response (such as a 403) or an indication that a SIP response timer has timed out in
+     * response to an outgoing SIP message. This method will be called when this condition occurs to
+     * trigger the ImsService to tear down the full IMS registration and re-register again.
+     * @hide
+     */
+    public void triggerNetworkReregistration(int sipCode) {
+        // Stub implementation, ImsService should implement this
+    }
+
+
+    /**
      * Notify the framework that the device is connected to the IMS network.
      *
      * @param imsRadioTech the radio access technology. Valid values are defined as
