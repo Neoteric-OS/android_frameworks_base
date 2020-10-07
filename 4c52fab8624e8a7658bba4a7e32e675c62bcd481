@@ -1,0 +1,75 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c99b1e67_bce6921e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-10-07T18:00:41Z",
+      "side": 1,
+      "message": "\u003e Change must include a \"Tag:\" stanza. Valid tags are #compatibility #stability #security #feature #gd-refactor #refactor\n\nPlease fix.",
+      "parentUuid": "43c36174_d2befe19",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "4c52fab8624e8a7658bba4a7e32e675c62bcd481",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90b9d9e9_c82d0655",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-10-07T18:00:41Z",
+      "side": 1,
+      "message": "\u003e \"none\" is not a valid test stanza. Expected one of: atest (--host) \u003ctest\u003e OR gd/cert/run (--host) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e\n\nPlease fix.",
+      "parentUuid": "4b68aff0_e83014ea",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 10
+      },
+      "revId": "4c52fab8624e8a7658bba4a7e32e675c62bcd481",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f29d5e85_e1988070",
+        "filename": "core/java/android/bluetooth/le/AdvertiseData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-10-07T18:00:41Z",
+      "side": 1,
+      "message": "nit: is",
+      "range": {
+        "startLine": 249,
+        "startChar": 83,
+        "endLine": 249,
+        "endChar": 86
+      },
+      "revId": "4c52fab8624e8a7658bba4a7e32e675c62bcd481",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
