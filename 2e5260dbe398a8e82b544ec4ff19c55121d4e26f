@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0126884_404fd862",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2708,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-07T10:59:55Z",
+      "side": 1,
+      "message": "How about rename it to mNetIdOfOuterConnection or mOuterConnectionNetId or mOuterNetworkId?",
+      "range": {
+        "startLine": 2708,
+        "startChar": 36,
+        "endLine": 2708,
+        "endChar": 52
+      },
+      "revId": "2e5260dbe398a8e82b544ec4ff19c55121d4e26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74cf6daf_6c7c88c6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2719,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-07T10:59:55Z",
+      "side": 1,
+      "message": "time when an?",
+      "range": {
+        "startLine": 2719,
+        "startChar": 62,
+        "endLine": 2719,
+        "endChar": 69
+      },
+      "revId": "2e5260dbe398a8e82b544ec4ff19c55121d4e26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35a106a4_d486706d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2752,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-07T10:59:55Z",
+      "side": 1,
+      "message": "Just out of curiosity: Is there any particular reason that makes you move this out of for-each loop?\nI don\u0027t see \"networks\" will be used in other places except for for-each loop.",
+      "range": {
+        "startLine": 2752,
+        "startChar": 16,
+        "endLine": 2752,
+        "endChar": 64
+      },
+      "revId": "2e5260dbe398a8e82b544ec4ff19c55121d4e26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f2e353e_44d9b071",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-07T10:59:55Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure what\u0027s going on, can you describe more detail?\nAlso, don\u0027t other tests encounter this problem?",
+      "range": {
+        "startLine": 1119,
+        "startChar": 8,
+        "endLine": 1121,
+        "endChar": 25
+      },
+      "revId": "2e5260dbe398a8e82b544ec4ff19c55121d4e26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c65061fc_950a8e89",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-07T10:59:55Z",
+      "side": 1,
+      "message": "I think it\u0027s better to (1) have one more parameter name - vpnType for callers to fill in any non-IKEv2 types they want instead of always using TYPE_L2TP_IPSEC_PSK.(It makes the behavior of this function more matches to its name.) Or (2) rename the function name to buildL2tpVpnProfile() since we are always using L2TP as VPN type.",
+      "range": {
+        "startLine": 1160,
+        "startChar": 70,
+        "endLine": 1160,
+        "endChar": 71
+      },
+      "revId": "2e5260dbe398a8e82b544ec4ff19c55121d4e26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
