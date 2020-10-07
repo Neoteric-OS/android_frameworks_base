@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8df0b62c_9d770166",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-07T07:09:59Z",
+      "side": 1,
+      "message": "Nit: Maybe rename to prepareStatusPendingIntent because this method returns PendingIntent not Intent.",
+      "range": {
+        "startLine": 386,
+        "startChar": 29,
+        "endLine": 386,
+        "endChar": 48
+      },
+      "revId": "97a1a022e66e7951391d78e55f73793ad1f16cd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
