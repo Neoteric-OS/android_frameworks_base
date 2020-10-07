@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e171c2fd_5b530d5d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-07T06:46:10Z",
+      "side": 1,
+      "message": "The patchset6 overwrote the correct one.",
+      "parentUuid": "da658bbb_17c55265",
+      "range": {
+        "startLine": 12,
+        "startChar": 41,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "9f849faa997332ed1fee42e4a778fb970eeececd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0e7743b_fb21d111",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "f0e7743b_fb21d111",
+      "range": {
+        "startLine": 13,
+        "startChar": 36,
+        "endLine": 13,
+        "endChar": 40
+      },
+      "revId": "9f849faa997332ed1fee42e4a778fb970eeececd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43df131c_1ee641d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-07T06:46:10Z",
+      "side": 1,
+      "message": "The patchset6 overwrote the correct one.",
+      "parentUuid": "2c56d500_bd95f9be",
       "range": {
         "startLine": 13,
         "startChar": 36,
