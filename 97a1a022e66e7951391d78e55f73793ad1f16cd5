@@ -22,6 +22,30 @@
       },
       "revId": "97a1a022e66e7951391d78e55f73793ad1f16cd5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "795c8e6e_79559a3e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-07T07:25:58Z",
+      "side": 1,
+      "message": "It looks to me that this method prepare a status intent. It seems that it does not necessarily named with pendingIntent. I keep it first. See if other reviewers also have such concern.",
+      "parentUuid": "8df0b62c_9d770166",
+      "range": {
+        "startLine": 386,
+        "startChar": 29,
+        "endLine": 386,
+        "endChar": 48
+      },
+      "revId": "97a1a022e66e7951391d78e55f73793ad1f16cd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
