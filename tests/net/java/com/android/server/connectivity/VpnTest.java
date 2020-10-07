@@ -215,6 +215,9 @@ public class VpnTest {
         when(mContext.getOpPackageName()).thenReturn(TEST_VPN_PKG);
         when(mContext.getSystemService(eq(Context.USER_SERVICE))).thenReturn(mUserManager);
         when(mContext.getSystemService(eq(Context.APP_OPS_SERVICE))).thenReturn(mAppOps);
+        when(mContext.createContextAsUser(any(), anyInt())).thenReturn(mContext);
+        when(mContext.getSystemServiceName(NotificationManager.class))
+                .thenReturn(Context.NOTIFICATION_SERVICE);
         when(mContext.getSystemService(eq(Context.NOTIFICATION_SERVICE)))
                 .thenReturn(mNotificationManager);
         when(mContext.getSystemService(eq(Context.CONNECTIVITY_SERVICE)))
@@ -594,26 +597,23 @@ public class VpnTest {
 
         // Don't show a notification for regular disconnected states.
         vpn.updateState(DetailedState.DISCONNECTED, TAG);
-        order.verify(mNotificationManager, atLeastOnce())
-                .cancelAsUser(anyString(), anyInt(), eq(userHandle));
+        order.verify(mNotificationManager, atLeastOnce()).cancel(anyString(), anyInt());
 
         // Start showing a notification for disconnected once always-on.
         vpn.setAlwaysOnPackage(PKGS[0], false, null, mKeyStore);
-        order.verify(mNotificationManager)
-                .notifyAsUser(anyString(), anyInt(), any(), eq(userHandle));
+        order.verify(mNotificationManager).notify(anyString(), anyInt(), any());
 
         // Stop showing the notification once connected.
         vpn.updateState(DetailedState.CONNECTED, TAG);
-        order.verify(mNotificationManager).cancelAsUser(anyString(), anyInt(), eq(userHandle));
+        order.verify(mNotificationManager).cancel(anyString(), anyInt());
 
         // Show the notification if we disconnect again.
         vpn.updateState(DetailedState.DISCONNECTED, TAG);
-        order.verify(mNotificationManager)
-                .notifyAsUser(anyString(), anyInt(), any(), eq(userHandle));
+        order.verify(mNotificationManager).notify(anyString(), anyInt(), any());
 
         // Notification should be cleared after unsetting always-on package.
         vpn.setAlwaysOnPackage(null, false, null, mKeyStore);
-        order.verify(mNotificationManager).cancelAsUser(anyString(), anyInt(), eq(userHandle));
+        order.verify(mNotificationManager).cancel(anyString(), anyInt());
     }
 
     @Test

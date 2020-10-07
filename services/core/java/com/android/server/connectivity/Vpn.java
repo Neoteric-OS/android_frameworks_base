@@ -1920,9 +1920,11 @@ public class Vpn {
         final UserHandle user = UserHandle.of(mUserId);
         final long token = Binder.clearCallingIdentity();
         try {
-            final NotificationManager notificationManager = NotificationManager.from(mContext);
+            final NotificationManager notificationManager =
+                    mContext.createContextAsUser(user, 0 /* flags */)
+                            .getSystemService(NotificationManager.class);
             if (!visible) {
-                notificationManager.cancelAsUser(TAG, SystemMessage.NOTE_VPN_DISCONNECTED, user);
+                notificationManager.cancel(TAG, SystemMessage.NOTE_VPN_DISCONNECTED);
                 return;
             }
             final Intent intent = new Intent();
@@ -1942,8 +1944,7 @@ public class Vpn {
                             .setVisibility(Notification.VISIBILITY_PUBLIC)
                             .setOngoing(true)
                             .setColor(mContext.getColor(R.color.system_notification_accent_color));
-            notificationManager.notifyAsUser(TAG, SystemMessage.NOTE_VPN_DISCONNECTED,
-                    builder.build(), user);
+            notificationManager.notify(TAG, SystemMessage.NOTE_VPN_DISCONNECTED, builder.build());
         } finally {
             Binder.restoreCallingIdentity(token);
         }
