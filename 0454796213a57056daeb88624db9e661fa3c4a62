@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "bf37e5e5_332bec9a",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
@@ -14,10 +15,28 @@
       "side": 1,
       "message": "We shouldn\u0027t need the @UnsupportedAppUsage annotation on any of these because they are new APIs. This annotation would allow the method to be called by 3P apps via reflection. They also require the BLUETOOTH_PRIVILEGED permission, so even if 3P apps call them, they would fail the permission check. We should instead make these @SystemApi which would allow them to be accessed by GMS, but not by 3P apps.",
       "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "0592bf46_53d7d1e9",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3564,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-10-07T08:43:49Z",
+      "side": 1,
+      "message": "Uploaded patch set 3 to change to @SystemApi",
+      "parentUuid": "bf37e5e5_332bec9a",
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "4c29bcdd_f41a88da",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
@@ -31,10 +50,10 @@
       "side": 1,
       "message": "Include the IntDef annotation created in BluetoothDynamicAudioBuffer.java for the return value",
       "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "d813f94c_e44cef83",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
@@ -49,10 +68,28 @@
       "message": "Can we also drop \"Size\" from the method name?",
       "parentUuid": "4c29bcdd_f41a88da",
       "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c53a3fd_c91d102a",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3566,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-10-07T08:43:49Z",
+      "side": 1,
+      "message": "Uploaded patch set 3 to drop \"Size\" from the method name.",
+      "parentUuid": "d813f94c_e44cef83",
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "ffdcfd4e_bb22069a",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
@@ -72,10 +109,34 @@
         "endChar": 74
       },
       "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f025fb6a_59a25c78",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3596,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-10-07T08:43:49Z",
+      "side": 1,
+      "message": "Uploaded patch set 3 to change the name to \"getDynamicAudioBuffer\"",
+      "parentUuid": "ffdcfd4e_bb22069a",
+      "range": {
+        "startLine": 3596,
+        "startChar": 49,
+        "endLine": 3596,
+        "endChar": 74
+      },
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "ef1f0641_6e91f19f",
         "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
@@ -95,10 +156,10 @@
         "endChar": 24
       },
       "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "4001033b_ab2d32bc",
         "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
@@ -119,10 +180,10 @@
         "endChar": 24
       },
       "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "c3fc98f7_0faa1d4c",
         "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
@@ -143,10 +204,34 @@
         "endChar": 24
       },
       "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "58cdafef_ceb6c17c",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-10-07T08:43:49Z",
+      "side": 1,
+      "message": "Uploaded patch set 3 to use @SystemApi",
+      "parentUuid": "c3fc98f7_0faa1d4c",
+      "range": {
+        "startLine": 394,
+        "startChar": 2,
+        "endLine": 394,
+        "endChar": 24
+      },
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "6f646638_8ce9e9f7",
         "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
@@ -160,10 +245,28 @@
       "side": 1,
       "message": "We should make an IntDef for this grouping of constants and annotate methods to ensure we know what the possible values are!",
       "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "07887746_8d09eae2",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-10-07T08:43:49Z",
+      "side": 1,
+      "message": "Uploaded patch set 3 to add IntDef.",
+      "parentUuid": "6f646638_8ce9e9f7",
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "f2077aef_9612242e",
         "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
@@ -177,10 +280,28 @@
       "side": 1,
       "message": "IntDef for these as well!",
       "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "b64568ef_185265d8",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-10-07T08:43:49Z",
+      "side": 1,
+      "message": "Uploaded patch set 3 to add IntDef.",
+      "parentUuid": "f2077aef_9612242e",
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "bc150443_447349a3",
         "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
@@ -200,10 +321,10 @@
         "endChar": 84
       },
       "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "53a3dcad_ec3486c9",
         "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
@@ -217,8 +338,25 @@
       "side": 1,
       "message": "@SystemApi for all of these as well",
       "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4eef3a23_913d848b",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-10-07T08:43:49Z",
+      "side": 1,
+      "message": "Uploaded patch set 3 to add @SystemApi",
+      "parentUuid": "53a3dcad_ec3486c9",
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
