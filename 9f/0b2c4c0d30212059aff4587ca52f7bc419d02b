@@ -1,0 +1,12 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Code-Review+1: Nate Jiang <qiangjiang@google.com>
+Code-Review+2: Chalard Jean <jchalard@google.com>
+Lint+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Nate Jiang <qiangjiang@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Bypass-Presubmit+1: Nate Jiang <qiangjiang@google.com>
+Submitted-by: Nate Jiang <qiangjiang@google.com>
+Submitted-at: Wed, 07 Oct 2020 22:16:56 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1424828
+Project: platform/frameworks/base
+Branch: refs/heads/master
