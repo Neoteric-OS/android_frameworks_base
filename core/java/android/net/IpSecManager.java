@@ -793,8 +793,6 @@ public final class IpSecManager {
          * <p>This new underlying network will be used for all transforms applied AFTER this call is
          * complete. If IpSecTransforms have been migrated, they MUST be reapplied, or traffic may
          * fail to route due to mismatched underlying networks and source/destination addresses.
-         *
-         * @hide
          */
         @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
         @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
