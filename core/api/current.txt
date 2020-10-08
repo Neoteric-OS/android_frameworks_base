@@ -25081,6 +25081,7 @@ package android.net {
     method @RequiresPermission("android.permission.MANAGE_IPSEC_TUNNELS") public void addAddress(@NonNull java.net.InetAddress, int) throws java.io.IOException;
     method public void close();
     method @RequiresPermission("android.permission.MANAGE_IPSEC_TUNNELS") public void removeAddress(@NonNull java.net.InetAddress, int) throws java.io.IOException;
+    method @RequiresPermission("android.permission.MANAGE_IPSEC_TUNNELS") public void setUnderlyingNetwork(@NonNull android.net.Network) throws java.io.IOException;
   }
 
   public static final class IpSecManager.ResourceUnavailableException extends android.util.AndroidException {

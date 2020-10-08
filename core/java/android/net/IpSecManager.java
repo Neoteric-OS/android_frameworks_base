@@ -797,7 +797,6 @@ public final class IpSecManager {
          *
          * @param underlyingNetwork the new {@link Network} that will carry traffic for this tunnel.
          *     This network MUST never be the network exposing this IpSecTunnelInterface.
-         * @hide
          */
         // TODO: b/169171001 Update the documentation when transform migration is supported.
         @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
