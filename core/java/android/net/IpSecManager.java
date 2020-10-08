@@ -799,6 +799,7 @@ public final class IpSecManager {
          *     This network MUST never be the network exposing this IpSecTunnelInterface.
          * @hide
          */
+        @SystemApi
         @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
         @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
         public void setUnderlyingNetwork(@NonNull Network underlyingNetwork) throws IOException {
