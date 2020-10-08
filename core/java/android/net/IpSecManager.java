@@ -801,6 +801,7 @@ public final class IpSecManager {
          * @hide
          */
         // TODO: b/169171001 Update the documentation when transform migration is supported.
+        @SystemApi
         @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
         @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
         public void setUnderlyingNetwork(@NonNull Network underlyingNetwork) throws IOException {
