@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efaee2bf_16e33f72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-10-08T13:12:45Z",
+      "side": 1,
+      "message": "LGTM but developer might miss the note in getRxBytes() while looking at getTxBytes() or the other two methods.",
+      "revId": "71ad2d8b920817f3a3028235aacb5fdbc4e50988",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cff71d5c_6a3a0a30",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-10-08T13:12:45Z",
+      "side": 1,
+      "message": "Is this a good writing in java doc?",
+      "range": {
+        "startLine": 655,
+        "startChar": 13,
+        "endLine": 655,
+        "endChar": 69
+      },
+      "revId": "71ad2d8b920817f3a3028235aacb5fdbc4e50988",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
