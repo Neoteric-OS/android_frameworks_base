@@ -16,6 +16,115 @@
       "message": "This a cherrypick of what was merged internally.",
       "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e04ffd6_15adae82",
+        "filename": "cmds/idmap2/libidmap2/ResourceMapping.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-10-08T09:32:31Z",
+      "side": 1,
+      "message": "I think this error message should be updated. Have we discussed this before?",
+      "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "743cab71_6f2551ba",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-10-08T09:32:31Z",
+      "side": 1,
+      "message": "s/config-signature/overlay-config-signature/",
+      "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a240ce48_64b14ade",
+        "filename": "services/core/java/com/android/server/om/IdmapManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-10-08T09:32:31Z",
+      "side": 1,
+      "message": "s/config-signature/overlay-config-signature/",
+      "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba6672fb_5f36a8b7",
+        "filename": "services/core/java/com/android/server/om/IdmapManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-10-08T09:32:31Z",
+      "side": 1,
+      "message": "s/config-signature/overlay-config-signature/",
+      "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a51a6211_abe04e4c",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 12164,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-10-08T09:32:31Z",
+      "side": 1,
+      "message": "s/config-signature/overlay-config-signature/ in both lines 12164 and 12165 here.",
+      "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d21df7bc_b39ccb68",
+        "filename": "services/tests/servicestests/src/com/android/server/om/OverlayManagerServiceImplTests.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-10-08T09:32:31Z",
+      "side": 1,
+      "message": "\u003e Prefer to use inclusive terms like \u0027complex\u0027, \u0027unexpected\u0027, or \u0027placeholder\u0027; see https://developers.google.com/style/inclusive-documentation#ableist-language for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.\n\nIn my original commit I\u0027ve used the existing style in the file, but it\u0027s no excuse. We should do better. In other projects I use \"stub\", or \"test\" where appropriate. Should we have a separate issue to fix the whole OMS in one go?",
+      "parentUuid": "8dc68c10_e17062e1",
+      "range": {
+        "startLine": 53,
+        "startChar": 70,
+        "endLine": 53,
+        "endChar": 75
+      },
+      "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
