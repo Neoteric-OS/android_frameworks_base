@@ -88,7 +88,7 @@ abstract class AndroidKeyStoreSignatureSpiBase extends SignatureSpi
                 throw new InvalidKeyException("Unsupported key: null");
             }
             AndroidKeyStoreKey keystoreKey;
-            if (privateKey instanceof AndroidKeyStorePrivateKey) {
+            if (privateKey instanceof AndroidKeyStoreKeyPair) {
                 keystoreKey = (AndroidKeyStoreKey) privateKey;
             } else {
                 throw new InvalidKeyException("Unsupported private key type: " + privateKey);
@@ -115,8 +115,8 @@ abstract class AndroidKeyStoreSignatureSpiBase extends SignatureSpi
                 throw new InvalidKeyException("Unsupported key: null");
             }
             AndroidKeyStoreKey keystoreKey;
-            if (publicKey instanceof AndroidKeyStorePublicKey) {
-                keystoreKey = (AndroidKeyStorePublicKey) publicKey;
+            if (publicKey instanceof AndroidKeyStoreKeyPair) {
+                keystoreKey = (AndroidKeyStoreKeyPair) publicKey;
             } else {
                 throw new InvalidKeyException("Unsupported public key type: " + publicKey);
             }

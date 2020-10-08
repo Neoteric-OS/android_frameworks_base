@@ -16,6 +16,7 @@
 
 package android.security.keystore;
 
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Arrays;
 
@@ -24,11 +25,11 @@ import java.util.Arrays;
  *
  * @hide
  */
-public class AndroidKeyStorePublicKey extends AndroidKeyStoreKey implements PublicKey {
+public class AndroidKeyStoreKeyPair extends AndroidKeyStoreKey implements PublicKey, PrivateKey {
 
     private final byte[] mEncoded;
 
-    public AndroidKeyStorePublicKey(String alias, int uid, String algorithm, byte[] x509EncodedForm) {
+    public AndroidKeyStoreKeyPair(String alias, int uid, String algorithm, byte[] x509EncodedForm) {
         super(alias, uid, algorithm);
         mEncoded = ArrayUtils.cloneIfNotEmpty(x509EncodedForm);
     }
@@ -62,7 +63,7 @@ public class AndroidKeyStorePublicKey extends AndroidKeyStoreKey implements Publ
         if (getClass() != obj.getClass()) {
             return false;
         }
-        AndroidKeyStorePublicKey other = (AndroidKeyStorePublicKey) obj;
+        AndroidKeyStoreKeyPair other = (AndroidKeyStoreKeyPair) obj;
         if (!Arrays.equals(mEncoded, other.mEncoded)) {
             return false;
         }

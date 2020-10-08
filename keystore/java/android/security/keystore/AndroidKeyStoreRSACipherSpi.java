@@ -363,9 +363,7 @@ abstract class AndroidKeyStoreRSACipherSpi extends AndroidKeyStoreCipherSpiBase 
                     + ". Only " + KeyProperties.KEY_ALGORITHM_RSA + " supported");
         }
         AndroidKeyStoreKey keystoreKey;
-        if (key instanceof AndroidKeyStorePrivateKey) {
-            keystoreKey = (AndroidKeyStoreKey) key;
-        } else if (key instanceof AndroidKeyStorePublicKey) {
+        if (key instanceof AndroidKeyStoreKeyPair) {
             keystoreKey = (AndroidKeyStoreKey) key;
         } else {
             throw new InvalidKeyException("Unsupported key type: " + key);

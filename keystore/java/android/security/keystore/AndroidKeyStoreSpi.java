@@ -23,11 +23,6 @@ import android.security.KeyStoreParameter;
 import android.security.keymaster.KeyCharacteristics;
 import android.security.keymaster.KeymasterArguments;
 import android.security.keymaster.KeymasterDefs;
-import android.security.keystore.KeyPermanentlyInvalidatedException;
-import android.security.keystore.KeyProperties;
-import android.security.keystore.KeyProtection;
-import android.security.keystore.SecureKeyImportUnavailableException;
-import android.security.keystore.WrappedKeyEntry;
 import android.util.Log;
 
 import libcore.util.EmptyArray;
@@ -447,7 +442,7 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
         }
 
         final String pkeyAlias;
-        if (key instanceof AndroidKeyStorePrivateKey) {
+        if (key instanceof AndroidKeyStoreKeyPair) {
             pkeyAlias = ((AndroidKeyStoreKey) key).getAlias();
         } else {
             pkeyAlias = null;
@@ -1085,7 +1080,7 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
     }
 
     /**
-     * {@link X509Certificate} which returns {@link AndroidKeyStorePublicKey} from
+     * {@link X509Certificate} which returns {@link AndroidKeyStoreKeyPair} from
      * {@link #getPublicKey()}. This is so that crypto operations on these public keys contain
      * can find out which keystore private key entry to use. This is needed so that Android Keystore
      * crypto operations using public keys can find out which key alias to use. These operations
