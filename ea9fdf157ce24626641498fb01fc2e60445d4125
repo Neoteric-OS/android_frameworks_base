@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc6782a0_629e6f9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-10-09T15:40:22Z",
+      "side": 1,
+      "message": "This is a resurrection of an old series of CLs by atrost@ that allow opting out of globally enforced SELinux changes; for now, as defined in go/selinux-app-compat-framework",
+      "revId": "ea9fdf157ce24626641498fb01fc2e60445d4125",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
