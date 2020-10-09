@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3521473a_e6ff9829",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsSubscriptionsMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-09T07:37:11Z",
+      "side": 1,
+      "message": "I think the simplest way to write something like this is to have a list of pairs instead.\n\nfinal List\u003cPair\u003cInteger, String\u003e\u003e subscriptions \u003d CollectionUtils.mapNotNull(newSubs, subId -\u003e {\n  final String subscriberId \u003d mTeleManager.getSubscriberId(subId);\n  return TextUtils.isEmpty(subscriberId) ? null : new Pair(subId, subscriberId);\n});\n\nfor (final Pair\u003cInteger, String\u003e sub : subscriptions) {\n  if (!listeners.contains()) add\n}\nfor (final listener : mRatListeners) {\n  if (!subscriptions.contains()) remove\n}",
+      "range": {
+        "startLine": 97,
+        "startChar": 34,
+        "endLine": 97,
+        "endChar": 53
+      },
+      "revId": "c4720e49b1be2e1a4abc6f9873425d49a9121969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31f58e20_09e98347",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsSubscriptionsMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-09T07:37:11Z",
+      "side": 1,
+      "message": "Maybe equalsKey or equalsSubIdAndSubscriberId",
+      "range": {
+        "startLine": 242,
+        "startChar": 16,
+        "endLine": 242,
+        "endChar": 21
+      },
+      "revId": "c4720e49b1be2e1a4abc6f9873425d49a9121969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
