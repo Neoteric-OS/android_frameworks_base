@@ -16,12 +16,23 @@
 
 package android.uwb;
 
+import android.annotation.NonNull;
+
 /**
  * Represents an angle of arrival measurement between two devices using Ultra Wideband
  *
  * @hide
  */
 public final class AngleOfArrivalMeasurement {
+    private final AngleMeasurement mAzimuthAngleMeasurement;
+    private final AngleMeasurement mAltitudeAngleMeasurement;
+
+    private AngleOfArrivalMeasurement(@NonNull AngleMeasurement azimuthAngleMeasurement,
+            AngleMeasurement altitudeAngleMeasurement) {
+        mAzimuthAngleMeasurement = azimuthAngleMeasurement;
+        mAltitudeAngleMeasurement = altitudeAngleMeasurement;
+    }
+
     /**
      * Azimuth angle measurement
      * <p>Azimuth {@link AngleMeasurement} of remote device in horizontal coordinate system, this is
@@ -37,7 +48,7 @@ public final class AngleOfArrivalMeasurement {
      * @return the azimuth {@link AngleMeasurement}
      */
     public AngleMeasurement getAzimuth() {
-        throw new UnsupportedOperationException();
+        return mAzimuthAngleMeasurement;
     }
 
     /**
@@ -53,6 +64,48 @@ public final class AngleOfArrivalMeasurement {
      * @return altitude {@link AngleMeasurement} or null when this is not available
      */
     public AngleMeasurement getAltitude() {
-        throw new UnsupportedOperationException();
+        return mAltitudeAngleMeasurement;
+    }
+
+    /**
+     * Builder class for {@link AngleOfArrivalMeasurement}.
+     */
+    public static final class Builder {
+        private AngleMeasurement mAzimuthAngleMeasurement = null;
+        private AngleMeasurement mAltitudeAngleMeasurement = null;
+
+        /**
+         * Set the azimuth angle
+         *
+         * @param azimuthAngle azimuth angle
+         */
+        public Builder setAzimuthAngleMeasurement(@NonNull AngleMeasurement azimuthAngle) {
+            mAzimuthAngleMeasurement = azimuthAngle;
+            return this;
+        }
+
+        /**
+         * Set the altitude angle
+         *
+         * @param altitudeAngle altitude angle
+         */
+        public Builder setAltitudeAngleMeasurement(@NonNull AngleMeasurement altitudeAngle) {
+            mAltitudeAngleMeasurement = altitudeAngle;
+            return this;
+        }
+
+        /**
+         * Build the {@link AngleOfArrivalMeasurement} object
+         *
+         * @throws IllegalStateException if the required azimuth angle is not provided
+         */
+        public AngleOfArrivalMeasurement build() {
+            if (mAzimuthAngleMeasurement == null) {
+                throw new IllegalStateException("Azimuth angle measurement is not set");
+            }
+
+            return new AngleOfArrivalMeasurement(mAzimuthAngleMeasurement,
+                    mAltitudeAngleMeasurement);
+        }
     }
 }
