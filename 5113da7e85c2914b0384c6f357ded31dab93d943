@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4c9a7a3_2e83b409",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-09T08:10:22Z",
+      "side": 1,
+      "message": "No longer true, please update.",
+      "range": {
+        "startLine": 9,
+        "startChar": 64,
+        "endLine": 9,
+        "endChar": 68
+      },
+      "revId": "5113da7e85c2914b0384c6f357ded31dab93d943",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "275098f5_7b0dd9c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-09T08:10:22Z",
+      "side": 1,
+      "message": "LGTM assumint commit message fixed.",
+      "revId": "5113da7e85c2914b0384c6f357ded31dab93d943",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8fa0d54_f6d26861",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2158,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-09T08:10:22Z",
+      "side": 1,
+      "message": "Ouch, this is really low. Still, if that\u0027s what the numbers say...",
+      "range": {
+        "startLine": 2158,
+        "startChar": 58,
+        "endLine": 2158,
+        "endChar": 62
+      },
+      "revId": "5113da7e85c2914b0384c6f357ded31dab93d943",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
