@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "48911b5d_c1b6da4f",
+        "filename": "core/java/android/uwb/RangingParams.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-10-09T18:35:53Z",
+      "side": 1,
+      "message": "Going with `isController` and `isInitiator` aligns with the interface to the lower layers.\n\nJack, any concerns replacing getRole()? I think we had left this open and said we\u0027d see how it goes once we start implementation.",
+      "parentUuid": "76315ff7_5103364a",
+      "revId": "e9a9ed58bd0bbff3d8345b631e755081b8306cf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ec951d9d_a73603a3",
         "filename": "core/java/android/uwb/RangingParams.java",
         "patchSetId": 4
@@ -31,6 +49,30 @@
       "writtenOn": "2020-10-09T02:20:17Z",
       "side": 1,
       "message": "Add \"STS\" to the type name since this is specifically for STS packets, not all packets.",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 0
+      },
+      "revId": "e9a9ed58bd0bbff3d8345b631e755081b8306cf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3192f934_349b76ff",
+        "filename": "core/java/android/uwb/RangingParams.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-10-09T18:35:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec951d9d_a73603a3",
       "range": {
         "startLine": 133,
         "startChar": 0,
