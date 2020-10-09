@@ -62,6 +62,30 @@
       },
       "revId": "5113da7e85c2914b0384c6f357ded31dab93d943",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f4b59e8_e5a84250",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2158,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-10-09T19:24:13Z",
+      "side": 1,
+      "message": "The answer is technically as little as half this because of PPP escape sequences, but we\u0027re ignoring those.",
+      "parentUuid": "f8fa0d54_f6d26861",
+      "range": {
+        "startLine": 2158,
+        "startChar": 58,
+        "endLine": 2158,
+        "endChar": 62
+      },
+      "revId": "5113da7e85c2914b0384c6f357ded31dab93d943",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
