@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": false,
       "key": {
         "uuid": "2568e377_695e44a2",
         "filename": "/PATCHSET_LEVEL",
@@ -14,10 +15,10 @@
       "side": 1,
       "message": "Bad rebase; didn\u0027t have tests updated. Should pass change-detector tests now.",
       "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "b737a837_47e5d6ef",
         "filename": "/PATCHSET_LEVEL",
@@ -31,10 +32,10 @@
       "side": 1,
       "message": "How were these numbers determined? I\u0027m skeptical that just allowing 12 extra bytes will fix this problem everywhere. But even if it doesn\u0027t, we should at least how we got to 1388 and what it fixes.",
       "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "1e10e677_51f9b445",
         "filename": "/PATCHSET_LEVEL",
@@ -48,10 +49,10 @@
       "side": 1,
       "message": "Friendly ping for review - IIRC, the QPR deadline is EOW",
       "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "e480833f_aa08af90",
         "filename": "/PATCHSET_LEVEL",
@@ -66,10 +67,10 @@
       "message": "We should address this previous comment:\n\n\u003d\u003d\u003d\u003d\u003d\u003d\nHow were these numbers determined? I\u0027m skeptical that just allowing 12 extra bytes will fix this problem everywhere. But even if it doesn\u0027t, we should at least how we got to 1388 and what it fixes.\n\u003d\u003d\u003d\u003d\u003d\u003d\n\nIt sounds like the number was not determined based on any tests. If we can\u0027t do any tests, then maybe this is fine. But can we at least do some simple arithmetic based on the expected IPsec overheads and the expected MTU of IPv6-only networks like T-Mobile?",
       "parentUuid": "1e10e677_51f9b445",
       "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "5fb50031_739d62c5",
         "filename": "/PATCHSET_LEVEL",
@@ -84,10 +85,10 @@
       "message": "(Copy from line comment)\n\nUnclear; this was a speculative change as per your suggestion on https://b.corp.google.com/issues/119076193#comment29.\n\nThoughts? I don\u0027t have a strong opinion here.",
       "parentUuid": "b737a837_47e5d6ef",
       "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "5c6122b0_8fecc80d",
         "filename": "/PATCHSET_LEVEL",
@@ -102,10 +103,28 @@
       "message": "Ahh, sorry, this was answered on the CL line comment, but not the top level comment, copying the response here:\n\n-----------------------\nUnclear; this was a speculative change as per your suggestion on https://b.corp.google.com/issues/119076193#comment29.\n\nThoughts? I don\u0027t have a strong opinion here.",
       "parentUuid": "e480833f_aa08af90",
       "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b2309bc_8f151e54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-10-09T01:44:07Z",
+      "side": 1,
+      "message": "Updated per calculations here: https://docs.google.com/spreadsheets/d/10W_SIUKEf3caLC6joLfpFAA9o50N0daHuCPBW-X3Ok4/edit",
+      "parentUuid": "5c6122b0_8fecc80d",
+      "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "a8b0ffdc_76c7330a",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
@@ -125,10 +144,10 @@
         "endChar": 62
       },
       "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "2a2fba54_33d8dc3c",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
@@ -149,8 +168,7 @@
         "endChar": 62
       },
       "revId": "f700f7305c0b5f7e42b19391d89173d28e1950dc",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
