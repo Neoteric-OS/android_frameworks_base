@@ -31,10 +31,8 @@ import android.provider.Settings;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.internal.logging.MetricsLogger;
@@ -44,6 +42,7 @@ import com.android.internal.util.neoteric.NeotericUtils;
 import com.android.systemui.EventLogTags;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.res.R;
+import com.android.systemui.SysUIToast;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.notification.row.NotificationRowContentBinder.InflationFlag;
 import com.android.systemui.statusbar.notification.shared.NotificationThrottleHun;
@@ -526,17 +525,13 @@ public abstract class BaseHeadsUpManager implements HeadsUpManager {
                 }
                 Toast toast;
                 if (mSnoozeLengthMs == 60000) {
-                    toast = Toast.makeText(mContext, mContext.getString(
+                    toast = SysUIToast.makeText(mContext, mContext.getString(
                             R.string.heads_up_snooze_message_one_minute, appName),
                             Toast.LENGTH_LONG);
                 } else {
-                    toast = Toast.makeText(mContext, mContext.getString(
+                    toast = SysUIToast.makeText(mContext, mContext.getString(
                             R.string.heads_up_snooze_message, appName,
                             mSnoozeLengthMs / 60 / 1000), Toast.LENGTH_LONG);
-                }
-                TextView tv = (TextView) toast.getView().findViewById(android.R.id.message);
-                if (tv != null) {
-                    tv.setGravity(Gravity.CENTER);
                 }
                 toast.show();
             }
