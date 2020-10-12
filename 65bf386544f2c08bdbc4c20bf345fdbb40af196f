@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": false,
       "key": {
         "uuid": "b6205751_8145cd17",
         "filename": "/PATCHSET_LEVEL",
@@ -14,8 +15,70 @@
       "side": 1,
       "message": "Per our conversation offline, the @ChangeId flag is removed from this patch.",
       "revId": "65bf386544f2c08bdbc4c20bf345fdbb40af196f",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c52b0b38_198c66bd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4392,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-12T10:51:37Z",
+      "side": 1,
+      "message": "Okay I think there is a race. The invariant in any case is very difficult to grasp. Here is what I understand.\n\n• If no report has been generated before, then one must be in progress. It may or may not be enqueued yet, and in either case, this works.\n• If a report has been generated before and none is in progress, no issue\n• If a report has been generated before and one is in progress, then maybe the message for that report has been enqueued already. If that\u0027s the case, then the handler will first process the message for the new report (and cache it), *then* send another copy of the same report (because it will have been cached by the first message). So you run into an issue where you\u0027re going to send two identical reports back-to-back.\n\nWhat makes this difficult to understand is the fact that you\u0027re trying to exploit the total ordering of all messages by calling getConnectivityReport() here and assuming this synchronizes correctly with the setter and the getter in the CD handler. I think this is in fact unavoidably racy, but maybe you can just simply send the message unconditionally and just skip if the cached report is null. That will need careful comments in the handleSendCachedConnectivityReport to explain the null case.\n\nThoughts ?",
+      "range": {
+        "startLine": 4392,
+        "startChar": 20,
+        "endLine": 4392,
+        "endChar": 41
+      },
+      "revId": "65bf386544f2c08bdbc4c20bf345fdbb40af196f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e654a80c_7477ffde",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7879,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-12T10:51:37Z",
+      "side": 1,
+      "message": "This looks like a remnant of a previous patchset",
+      "range": {
+        "startLine": 7878,
+        "startChar": 0,
+        "endLine": 7879,
+        "endChar": 43
+      },
+      "revId": "65bf386544f2c08bdbc4c20bf345fdbb40af196f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc6dd4fe_2a099a69",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7940,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-12T10:51:37Z",
+      "side": 1,
+      "message": "Why add this line ?",
+      "revId": "65bf386544f2c08bdbc4c20bf345fdbb40af196f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

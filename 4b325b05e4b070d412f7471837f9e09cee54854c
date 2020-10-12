@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dfec8e1_90bca6f7",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-12T10:51:37Z",
+      "side": 1,
+      "message": "By the way is this actually enough information, practically speaking ?\n\nCase 1 :\n• This is a local network without the INTERNET capability.\n• The network connects. Validation is skipped.\n• A conndiags client registers. We tell them the validation was skipped. They have to deduce the network validated, because validation was skipped.\n\nCase 2 :\n• This is a network with a captive portal.\n• The network connects. Validation fails with PORTAL.\n• A conndiag client registers. We tell them validation happened with PORTAL.\n• Some app call reportNetworkConnectivity.\n• We tell the client that validation was skipped.\n\nOkay so technically they can know that it\u0027s still a PORTAL because they were told about that. But it does rely on ConnectivityService caching just the right events, and it relies on the clients knowing about this specific strategy, so we can never change it.\n\nMaybe we have to think about this a little bit more, maybe a different event makes sense in fact. Also all of this makes me wonder again about the use case. Say we have a validated network, some app reports that connectivity is fine, why does the conndiags client care ? The same applies to the converse case : we have an unvalidated network, some app reports that connectivity is still broken, why does the conndiags client care ?",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 83
+      },
+      "revId": "4b325b05e4b070d412f7471837f9e09cee54854c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
