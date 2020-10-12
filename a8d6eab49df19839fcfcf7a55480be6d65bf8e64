@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa35cba8_4787c8e3",
+        "filename": "cmds/idmap2/libidmap2/ResourceMapping.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-10-12T22:17:55Z",
+      "side": 1,
+      "message": "Not sure, but SGTM.",
+      "parentUuid": "9e04ffd6_15adae82",
+      "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "743cab71_6f2551ba",
@@ -48,6 +66,24 @@
       "writtenOn": "2020-10-08T09:32:31Z",
       "side": 1,
       "message": "s/config-signature/overlay-config-signature/",
+      "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7f97ed7_d7f99643",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-10-12T22:17:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "743cab71_6f2551ba",
       "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -69,6 +105,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae3baf56_0e32a3e8",
+        "filename": "services/core/java/com/android/server/om/IdmapManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-10-12T22:17:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a240ce48_64b14ade",
+      "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba6672fb_5f36a8b7",
@@ -82,6 +136,24 @@
       "writtenOn": "2020-10-08T09:32:31Z",
       "side": 1,
       "message": "s/config-signature/overlay-config-signature/",
+      "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea96410b_bedc5dea",
+        "filename": "services/core/java/com/android/server/om/IdmapManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-10-12T22:17:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba6672fb_5f36a8b7",
       "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -103,6 +175,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20c1f49b_b7f80443",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 12164,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-10-12T22:17:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a51a6211_abe04e4c",
+      "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d21df7bc_b39ccb68",
@@ -117,6 +207,30 @@
       "side": 1,
       "message": "\u003e Prefer to use inclusive terms like \u0027complex\u0027, \u0027unexpected\u0027, or \u0027placeholder\u0027; see https://developers.google.com/style/inclusive-documentation#ableist-language for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.\n\nIn my original commit I\u0027ve used the existing style in the file, but it\u0027s no excuse. We should do better. In other projects I use \"stub\", or \"test\" where appropriate. Should we have a separate issue to fix the whole OMS in one go?",
       "parentUuid": "8dc68c10_e17062e1",
+      "range": {
+        "startLine": 53,
+        "startChar": 70,
+        "endLine": 53,
+        "endChar": 75
+      },
+      "revId": "a8d6eab49df19839fcfcf7a55480be6d65bf8e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5ea5fed_59d3a314",
+        "filename": "services/tests/servicestests/src/com/android/server/om/OverlayManagerServiceImplTests.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-10-12T22:17:55Z",
+      "side": 1,
+      "message": "I uploaded https://android-review.googlesource.com/c/platform/frameworks/base/+/1457565 to fix the OMS tests. Will need to do a pass over the OMS itself.",
+      "parentUuid": "d21df7bc_b39ccb68",
       "range": {
         "startLine": 53,
         "startChar": 70,
