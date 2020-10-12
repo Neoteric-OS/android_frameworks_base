@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1222445d_dc89596e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-12T09:51:48Z",
+      "side": 1,
+      "message": "I\u0027m a bit in a bind there – this is clearly better than the existing code but I also think it is unnecessary (I think the old code can actually be removed wholesale). Please take a look at the inline comments.",
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ac94592_8e20d059",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1731,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-12T09:51:48Z",
+      "side": 1,
+      "message": "Is this still even used ? Vpn is not a public class and I can\u0027t find any usage of this method.",
+      "range": {
+        "startLine": 1731,
+        "startChar": 29,
+        "endLine": 1731,
+        "endChar": 51
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e4a29ad_89f3d694",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1807,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-12T09:51:48Z",
+      "side": 1,
+      "message": "Do we still need this ? It looks like this is better inlined now.",
+      "range": {
+        "startLine": 1807,
+        "startChar": 17,
+        "endLine": 1807,
+        "endChar": 36
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b729d486_eab86e43",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2734,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-12T09:51:48Z",
+      "side": 1,
+      "message": "Why do we even need this at all ?\n\nIIUC the point of doing this is to tear down the VPN when the interface goes down. mObserver is an instance of BaseNetworkObserver and it is registered with netd in line 420. I\u0027m not very familiar with the netd network observers, but ISTM this should be enough to receive all events about the interface ; if you look at the implementation of mObserver you\u0027ll see that it does nothing if there is no legacy runner, and it will actually call exitIfOuterInterfaceIs() with the name of the interface.\n\nSo I think this callback (and the older broadcast receiver) is not even needed any more. If you find that for some reason netd doesn\u0027t call this when the interface goes down, then it\u0027s the other way around : you should remove the observer and only call exitVpnRunner directly here.",
+      "range": {
+        "startLine": 2734,
+        "startChar": 38,
+        "endLine": 2734,
+        "endChar": 60
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "843bf7c6_a272bd6c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2735,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-12T09:51:48Z",
+      "side": 1,
+      "message": "Do you want to at least log something ?",
+      "range": {
+        "startLine": 2735,
+        "startChar": 52,
+        "endLine": 2735,
+        "endChar": 55
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d9c6c5a_c1d5b87b",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-12T09:51:48Z",
+      "side": 1,
+      "message": "This is strongly discouraged in tests :\n• Looper expects loop() to be called afterwards but you can\u0027t do this or the test will spin forever, so you have a half initialized object.\n• It will look like you have a looper prepared but it\u0027s not actually sending events, which can easily break some production code.\n• You can never quit this looper.\n\nCan you use an instance of TestLooper instead ?",
+      "range": {
+        "startLine": 1095,
+        "startChar": 7,
+        "endLine": 1095,
+        "endChar": 36
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5de3473_b4275668",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-12T09:51:48Z",
+      "side": 1,
+      "message": "Can you please use anyInt() here ? This will conflict with aosp/1456115.",
+      "range": {
+        "startLine": 1133,
+        "startChar": 48,
+        "endLine": 1133,
+        "endChar": 74
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41608473_5623b290",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-12T09:51:48Z",
+      "side": 1,
+      "message": "I think this is overspecified and dangerously approaches the change-detector category. Why do you care that getLinkProperties was called with an irrelevant network ? What matters is that the correct network is detected. So when you call onLost(undesiredNetwork1) in l.1145, you get the assurance that it has no impact – this is the correct way to do it. I don\u0027t think you should check that getLinkProperties is called here.\n\nMy point is : it would probably be more correct if the implementation waited for onLinkPropertiesChanged to get the LP. But if someone makes that change in the future, your test will refuse that implementation, even if it\u0027s correct.\n(you don\u0027t need to go and make that change)",
+      "range": {
+        "startLine": 1135,
+        "startChar": 8,
+        "endLine": 1136,
+        "endChar": 58
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e4ec413_68fca75a",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-12T09:51:48Z",
+      "side": 1,
+      "message": "This should also die (aosp/1456115 doesn\u0027t actually remove it, but it could). Can you instead use one of the following approaches :\n• Use a network callback to find out about the VPN being lost (ideally, but I\u0027m not sure how easy it is)\n• Call getLegacyVpnInfoPrivileged here and read from \"state\", which is going to be supported longer than getNetworkInfo (if the above is difficult)",
+      "range": {
+        "startLine": 1150,
+        "startChar": 53,
+        "endLine": 1150,
+        "endChar": 67
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
