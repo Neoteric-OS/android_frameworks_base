@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8318b4c_32065b6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-10-12T22:18:40Z",
+      "side": 1,
+      "message": "I addressed all the comments in https://android-review.googlesource.com/c/platform/frameworks/base/+/1457565 so that they will be auto-merged into the internal branch.",
+      "revId": "a246a6404a52604932512b44fc1eca69b9941cb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
