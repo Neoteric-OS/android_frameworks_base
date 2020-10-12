@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1743ff1_09d9870c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-10-12T08:11:09Z",
+      "side": 1,
+      "message": "Code LGTM, just some minor comments related to comments.",
+      "revId": "7cb8804dbe6bb3d715adfceb820d65bdde2641d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6d5ab6a_156251db",
+        "filename": "cmds/idmap2/include/idmap2/Idmap.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-10-12T08:11:09Z",
+      "side": 1,
+      "message": "This can now be expressed as\n\n  padding(n)",
+      "range": {
+        "startLine": 45,
+        "startChar": 55,
+        "endLine": 45,
+        "endChar": 60
+      },
+      "revId": "7cb8804dbe6bb3d715adfceb820d65bdde2641d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f0cee1d_a23dfaca",
+        "filename": "cmds/idmap2/include/idmap2/Idmap.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-10-12T08:11:09Z",
+      "side": 1,
+      "message": "ResourceTypes.h sets kIdmapCurrentVersion to 5. Looks like Idmap.h wasn\u0027t updated when version 4 was introduced. Please add entries for both v4 and v5.\n\nAlternatively, I wouldn\u0027t object if you removed all \u0027## v\\d+ entires\u0027 from this comment: the important part is the grammar; I added v1 to highlight that the first version was identical to what idmap1 produced.\n\nIt\u0027s nice to have the version diffs listed (example: going back to an old branch to debug something: what features did idmap2 support), but not critical because there\u0027s no backwards/forwards compatibility between formats. Your call if you think it\u0027s worth the effort to maintain the list.",
+      "range": {
+        "startLine": 80,
+        "startChar": 1,
+        "endLine": 80,
+        "endChar": 8
+      },
+      "revId": "7cb8804dbe6bb3d715adfceb820d65bdde2641d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc5ba92a_ce7211d2",
+        "filename": "cmds/idmap2/tests/PrettyPrintVisitorTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-10-12T08:11:09Z",
+      "side": 1,
+      "message": "Why \\?\\?\\? instead of ??? in the latter part?",
+      "range": {
+        "startLine": 79,
+        "startChar": 57,
+        "endLine": 79,
+        "endChar": 70
+      },
+      "revId": "7cb8804dbe6bb3d715adfceb820d65bdde2641d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
