@@ -143,11 +143,11 @@ public class SharedPreferencesLogger implements SharedPreferences {
             try {
                 intVal = Integer.parseInt((String) value);
             } catch (NumberFormatException e) {
-                Log.w(LOG_TAG, "Tried to log unloggable object=" + value);
+                Log.w(LOG_TAG, "Tried to log unloggable object");
                 return;
             }
         } else {
-            Log.w(LOG_TAG, "Tried to log unloggable object=" + value);
+            Log.w(LOG_TAG, "Tried to log unloggable object");
             return;
         }
         // Pref key exists in set, log its change in metrics.
