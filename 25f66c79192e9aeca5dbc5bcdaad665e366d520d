@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e76f8e57_4dc6e142",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-12T03:30:33Z",
+      "side": 1,
+      "message": "LGTM as long as TH is happy.",
+      "revId": "25f66c79192e9aeca5dbc5bcdaad665e366d520d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
