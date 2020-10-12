@@ -745,6 +745,13 @@ filegroup {
 }
 
 filegroup {
+    name: "framework-connectivityservice-shared-srcs",
+    srcs: [
+        "core/java/android/os/BasicShellCommandHandler.java",
+    ],
+}
+
+filegroup {
     name: "framework-networkstack-shared-srcs",
     srcs: [
         // TODO: remove these annotations as soon as we can use andoid.support.annotations.*
