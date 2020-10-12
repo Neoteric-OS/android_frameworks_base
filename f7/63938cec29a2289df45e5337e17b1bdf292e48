@@ -1,0 +1,13 @@
+Verified+1: Artem Radchenko <artem.radchenko@globallogic.com>
+Code-Review+1: Artem Radchenko <artem.radchenko@globallogic.com>
+Code-Review+1: Felipe Leme <felipeal@google.com>
+Code-Review+2: Heemin Seog <hseog@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Felipe Leme <felipeal@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Mon, 12 Oct 2020 16:14:55 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1452495
+Project: platform/frameworks/base
+Branch: refs/heads/master
