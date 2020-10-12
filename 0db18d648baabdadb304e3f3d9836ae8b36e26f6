@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "408b9d47_9e3dc468",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1104994
+      },
+      "writtenOn": "2020-10-12T21:37:41Z",
+      "side": 1,
+      "message": "Abandoning the master branch change and using android11-dev branch instead.\nThis change supercedes the old critique cl/318172931",
+      "revId": "0db18d648baabdadb304e3f3d9836ae8b36e26f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
