@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "15d2ce0a_6b5a86c6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4372,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-10-12T21:01:49Z",
+      "side": 1,
+      "message": "can we resolve the default network before posting REVALIDATE? That will reduce the race window of \"default\" in case it\u0027s changing.",
+      "range": {
+        "startLine": 4372,
+        "startChar": 88,
+        "endLine": 4372,
+        "endChar": 95
+      },
+      "revId": "65bf386544f2c08bdbc4c20bf345fdbb40af196f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c52b0b38_198c66bd",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4
@@ -36,6 +59,29 @@
         "startChar": 20,
         "endLine": 4392,
         "endChar": 41
+      },
+      "revId": "65bf386544f2c08bdbc4c20bf345fdbb40af196f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5089bb0_d2713e4b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4399,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-10-12T21:01:49Z",
+      "side": 1,
+      "message": "suggest to check nonNull and then grab an instance of the report, and send that. Thus not re-resolving the CR after the post.",
+      "range": {
+        "startLine": 4399,
+        "startChar": 28,
+        "endLine": 4399,
+        "endChar": 31
       },
       "revId": "65bf386544f2c08bdbc4c20bf345fdbb40af196f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
