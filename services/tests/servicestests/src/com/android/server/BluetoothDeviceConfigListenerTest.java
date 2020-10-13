@@ -35,11 +35,12 @@ public class BluetoothDeviceConfigListenerTest {
     private BluetoothDeviceConfigListener mBluetoothDeviceConfigListener;
 
     @Mock BluetoothManagerService mBluetoothManagerService;
+    @Mock BluetoothModeChangeHelper mBluetoothModeChangeHelper;
 
     @Before
     public void setUp() throws Exception {
         mBluetoothDeviceConfigListener = new BluetoothDeviceConfigListener(
-                    mBluetoothManagerService);
+                    mBluetoothManagerService, mBluetoothModeChangeHelper);
     }
 
     @Test

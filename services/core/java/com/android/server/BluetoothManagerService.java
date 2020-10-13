@@ -174,6 +174,8 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     private int mWaitForEnableRetry;
     private int mWaitForDisableRetry;
 
+    private BluetoothModeChangeHelper mBluetoothModeChangeHelper;
+
     private BluetoothAirplaneModeListener mBluetoothAirplaneModeListener;
 
     private BluetoothDeviceConfigListener mBluetoothDeviceConfigListener;
@@ -444,6 +446,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         mHandler = new BluetoothHandler(IoThread.get().getLooper());
 
         mContext = context;
+        mBluetoothModeChangeHelper = new BluetoothModeChangeHelper(mContext);
 
         mWirelessConsentRequired = context.getResources()
                 .getBoolean(com.android.internal.R.bool.config_wirelessConsentRequired);
@@ -520,7 +523,8 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
             Slog.w(TAG, "Unable to resolve SystemUI's UID.");
         }
         mSystemUiUid = systemUiUid;
-        mBluetoothDeviceConfigListener = new BluetoothDeviceConfigListener(this);
+        mBluetoothDeviceConfigListener = new BluetoothDeviceConfigListener(this,
+                mBluetoothModeChangeHelper);
     }
 
     /**
@@ -1350,11 +1354,9 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
             Message getMsg = mHandler.obtainMessage(MESSAGE_GET_NAME_AND_ADDRESS);
             mHandler.sendMessage(getMsg);
         }
-        BluetoothModeChangeHelper bluetoothModeChangeHelper =
-                new BluetoothModeChangeHelper(mContext);
 
         if (mBluetoothAirplaneModeListener != null) {
-            mBluetoothAirplaneModeListener.start(bluetoothModeChangeHelper);
+            mBluetoothAirplaneModeListener.start(mBluetoothModeChangeHelper);
         }
     }
 

@@ -31,9 +31,12 @@ class BluetoothDeviceConfigListener {
     private static final String TAG = "BluetoothDeviceConfigListener";
 
     BluetoothManagerService mService;
+    BluetoothModeChangeHelper mHelper;
 
-    BluetoothDeviceConfigListener(BluetoothManagerService service) {
+    BluetoothDeviceConfigListener(BluetoothManagerService service,
+            BluetoothModeChangeHelper helper) {
         mService = service;
+        mHelper = helper;
         DeviceConfig.addOnPropertiesChangedListener(
                 DeviceConfig.NAMESPACE_BLUETOOTH,
                 (Runnable r) -> r.run(),
@@ -57,7 +60,9 @@ class BluetoothDeviceConfigListener {
                     if (!foundInit) {
                         return;
                     }
-                    mService.onInitFlagsChanged();
+                    if (!mHelper.isA2dpOrHearingAidConnected()) {
+                        mService.onInitFlagsChanged();
+                    }
                 }
             };
 
