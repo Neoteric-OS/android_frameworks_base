@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c690e1c6_8d1300d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2020-10-13T21:13:05Z",
+      "side": 1,
+      "message": "Hello @Philip, Thank you for your support! Could you set \"Autosubmit +1\" to proceed with merge?",
+      "revId": "302822b2dd5b39c7765ebabec64943b2278fd006",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
