@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "815d9806_ccfb2c10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-10-13T07:01:44Z",
+      "side": 1,
+      "message": "This should be a separate commit. It\u0027s unrelated to the subject of the commit.",
+      "revId": "4ef7a5f965cd3d267d10727c61f4422148e29848",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "839e2362_cbb8e40e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-10-13T07:01:44Z",
+      "side": 1,
+      "message": "Split into comment fix and inclusive language fix to make the history cleaner and easier to investigate later. In principle, unrelated commits should not go together.",
+      "revId": "4ef7a5f965cd3d267d10727c61f4422148e29848",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
