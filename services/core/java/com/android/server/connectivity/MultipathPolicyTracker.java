@@ -155,8 +155,8 @@ public class MultipathPolicyTracker {
 
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
-        mContext.registerReceiverAsUser(
-                mConfigChangeReceiver, UserHandle.ALL, intentFilter, null, mHandler);
+        mContext.createContextAsUser(UserHandle.ALL, 0 /* flags */).registerReceiver(
+                mConfigChangeReceiver, intentFilter, null /* broadcastPermission */, mHandler);
     }
 
     public void shutdown() {

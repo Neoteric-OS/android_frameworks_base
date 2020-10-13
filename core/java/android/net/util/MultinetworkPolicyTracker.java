@@ -114,8 +114,8 @@ public class MultinetworkPolicyTracker {
 
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
-        mContext.registerReceiverAsUser(
-                mBroadcastReceiver, UserHandle.ALL, intentFilter, null, mHandler);
+        mContext.createContextAsUser(UserHandle.ALL, 0 /* flags */).registerReceiver(
+                mBroadcastReceiver, intentFilter, null /* broadcastPermission */, mHandler);
 
         reevaluate();
     }

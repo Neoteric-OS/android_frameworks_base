@@ -127,8 +127,9 @@ public class MultipathPolicyTrackerTest {
 
         when(mContext.getResources()).thenReturn(mResources);
         when(mContext.getApplicationInfo()).thenReturn(new ApplicationInfo());
-        when(mContext.registerReceiverAsUser(mConfigChangeReceiverCaptor.capture(),
-                any(), argThat(f -> f.hasAction(ACTION_CONFIGURATION_CHANGED)), any(), any()))
+        when(mContext.createContextAsUser(any(), anyInt())).thenReturn(mContext);
+        when(mContext.registerReceiver(mConfigChangeReceiverCaptor.capture(),
+                argThat(f -> f.hasAction(ACTION_CONFIGURATION_CHANGED)), any(), any()))
                 .thenReturn(null);
 
         when(mDeps.getClock()).thenReturn(mClock);

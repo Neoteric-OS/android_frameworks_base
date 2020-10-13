@@ -1115,14 +1115,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
         intentFilter.addAction(Intent.ACTION_USER_ADDED);
         intentFilter.addAction(Intent.ACTION_USER_REMOVED);
         intentFilter.addAction(Intent.ACTION_USER_UNLOCKED);
-        mContext.registerReceiverAsUser(
+        mContext.createContextAsUser(UserHandle.ALL, 0 /* flags */).registerReceiver(
                 mIntentReceiver,
-                UserHandle.ALL,
                 intentFilter,
                 null /* broadcastPermission */,
                 mHandler);
-        mContext.registerReceiverAsUser(mUserPresentReceiver, UserHandle.SYSTEM,
-                new IntentFilter(Intent.ACTION_USER_PRESENT), null, null);
+        mContext.createContextAsUser(UserHandle.SYSTEM, 0 /* flags */).registerReceiver(
+                mUserPresentReceiver,
+                new IntentFilter(Intent.ACTION_USER_PRESENT),
+                null /* broadcastPermission */,
+                null /* scheduler */);
 
         // Listen to package add and removal events for all users.
         intentFilter = new IntentFilter();
@@ -1130,9 +1132,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         intentFilter.addAction(Intent.ACTION_PACKAGE_REPLACED);
         intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         intentFilter.addDataScheme("package");
-        mContext.registerReceiverAsUser(
+        mContext.createContextAsUser(UserHandle.ALL, 0 /* flags */).registerReceiver(
                 mIntentReceiver,
-                UserHandle.ALL,
                 intentFilter,
                 null /* broadcastPermission */,
                 mHandler);
@@ -1140,8 +1141,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // Listen to lockdown VPN reset.
         intentFilter = new IntentFilter();
         intentFilter.addAction(LockdownVpnTracker.ACTION_LOCKDOWN_RESET);
-        mContext.registerReceiverAsUser(
-                mIntentReceiver, UserHandle.ALL, intentFilter, NETWORK_STACK, mHandler);
+        mContext.createContextAsUser(UserHandle.ALL, 0 /* flags */).registerReceiver(
+                mIntentReceiver, intentFilter, NETWORK_STACK, mHandler);
 
         try {
             mNMS.registerObserver(mDataActivityObserver);
