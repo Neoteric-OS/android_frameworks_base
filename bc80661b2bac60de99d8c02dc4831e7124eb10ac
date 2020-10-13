@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1d2c6a4_3d790825",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-13T09:35:20Z",
+      "side": 1,
+      "message": "I feel that calling this \"NON_GATED\" is confusing, since it allows opt-out?\n\nMaybe SELINUX_LATEST_CHANGES_OPT_OUT?\n\nAlso, LATEST-\u003eS?",
+      "range": {
+        "startLine": 118,
+        "startChar": 37,
+        "endLine": 118,
+        "endChar": 46
+      },
+      "revId": "bc80661b2bac60de99d8c02dc4831e7124eb10ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8b95f81_5036eaeb",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-13T09:35:20Z",
+      "side": 1,
+      "message": "Since S doesn\u0027t exist in AOSP, we should probably just use R here? When you CP to internal you can use S, and then AOSP will do the right thing with no extra effort when S is later merged to AOSP.\n\nAOSP auto-merges into R QPR branches too, so doing it for S here is probably not right.\n\nhttps://android-build.googleplex.com/builds/automerger/branches says:\nmirror-aosp-master \u003d\u003e rvc-dev-plus-aosp",
+      "range": {
+        "startLine": 382,
+        "startChar": 12,
+        "endLine": 382,
+        "endChar": 80
+      },
+      "revId": "bc80661b2bac60de99d8c02dc4831e7124eb10ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
