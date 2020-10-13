@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c76fedd_2f78e762",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2020-10-13T22:08:24Z",
+      "side": 1,
+      "message": "Perceptually dropped frames should already be covered by \"Number Frames missed deadline\", which I believe already covers what this CL is trying to add.\n\nThe \"janky\" line should really at this point just be deleted.",
+      "revId": "3e80306c5a1987d458cc55e2b9adc081f0271fcd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
