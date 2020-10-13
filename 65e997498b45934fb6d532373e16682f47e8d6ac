@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "974966e8_f12d30ef",
+        "filename": "core/java/android/uwb/RangingSession.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-10-13T16:57:55Z",
+      "side": 1,
+      "message": "In AutoCloseable, \"this close method is not required to be idempotent\".\n\nIn Closeable, \"If the stream is already closed then invoking this method has no effect.\"\n\nDo we want close() to be idempotent or fail on repeated calls? \n\nMentioning here just want to make sure that the behavior meets our expectation.\n\nThere may be race conditions where the session is closed by the system and the client application tries to close it at the same time. There has to be some locking mechanism to ensure that when close() is being executed, no pending onClosed() callback can be called. However, since onClosed() runs on the client Executor, we may not have control over when it runs.",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 58
+      },
+      "revId": "65e997498b45934fb6d532373e16682f47e8d6ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
