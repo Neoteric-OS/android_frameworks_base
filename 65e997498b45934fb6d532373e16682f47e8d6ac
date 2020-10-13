@@ -22,6 +22,30 @@
       },
       "revId": "65e997498b45934fb6d532373e16682f47e8d6ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60a0c7da_afae5d61",
+        "filename": "core/java/android/uwb/RangingSession.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-10-13T17:21:56Z",
+      "side": 1,
+      "message": "Also from AutoCloseable: \"However, implementers of this interface are strongly encouraged to make their close methods idempotent.\"\n\nI think we want it to idempotent. Throwing an error if it is already closed isn\u0027t really helpful -- what action would a client take in such a case?",
+      "parentUuid": "974966e8_f12d30ef",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 58
+      },
+      "revId": "65e997498b45934fb6d532373e16682f47e8d6ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
