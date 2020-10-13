@@ -17,6 +17,7 @@
 package com.android.server.hdmi;
 
 import static com.android.server.hdmi.HdmiCecMessageValidator.ERROR_DESTINATION;
+import static com.android.server.hdmi.HdmiCecMessageValidator.ERROR_PARAMETER;
 import static com.android.server.hdmi.HdmiCecMessageValidator.ERROR_PARAMETER_SHORT;
 import static com.android.server.hdmi.HdmiCecMessageValidator.ERROR_SOURCE;
 import static com.android.server.hdmi.HdmiCecMessageValidator.OK;
@@ -69,6 +70,21 @@ public class HdmiCecMessageValidatorTest {
         assertMessageValidity("0F:90:00").isEqualTo(ERROR_DESTINATION);
         assertMessageValidity("F0:90").isEqualTo(ERROR_SOURCE);
         assertMessageValidity("04:90").isEqualTo(ERROR_PARAMETER_SHORT);
+    }
+
+    @Test
+    public void isValid_recordStatus() {
+        assertMessageValidity("40:0A:01").isEqualTo(OK);
+        assertMessageValidity("40:0A:13").isEqualTo(OK);
+        assertMessageValidity("40:0A:1F:04:01").isEqualTo(OK);
+
+        assertMessageValidity("0F:0A:01").isEqualTo(ERROR_DESTINATION);
+        assertMessageValidity("F0:0A:01").isEqualTo(ERROR_SOURCE);
+        assertMessageValidity("40:0A").isEqualTo(ERROR_PARAMETER_SHORT);
+        assertMessageValidity("40:0A:00").isEqualTo(ERROR_PARAMETER);
+        assertMessageValidity("40:0A:0F").isEqualTo(ERROR_PARAMETER);
+        assertMessageValidity("40:0A:1D").isEqualTo(ERROR_PARAMETER);
+        assertMessageValidity("40:0A:30").isEqualTo(ERROR_PARAMETER);
     }
 
     private IntegerSubject assertMessageValidity(String message) {
