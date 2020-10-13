@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b03d12af_fad190f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1580202
+      },
+      "writtenOn": "2020-10-13T19:59:06Z",
+      "side": 1,
+      "message": "Thank you Lajos. could you add a +2 after checking the change i just made? downgraded to level 1",
+      "revId": "5fa87bb45ee67d6e0b775cad18058b85f3cfdb81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
