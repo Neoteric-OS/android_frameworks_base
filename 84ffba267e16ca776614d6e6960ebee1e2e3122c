@@ -1,0 +1,108 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005493481",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1457759?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "91f39404_4446f9f5",
+        "filename": "api/test-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2794,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-13T07:36:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 2794,
+        "startChar": 90,
+        "endLine": 2794,
+        "endChar": 99
+      },
+      "revId": "84ffba267e16ca776614d6e6960ebee1e2e3122c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005493481",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1457759?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "719f2f0f_26bd0283",
+        "filename": "api/test-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2795,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-13T07:36:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 2795,
+        "startChar": 90,
+        "endLine": 2795,
+        "endChar": 99
+      },
+      "revId": "84ffba267e16ca776614d6e6960ebee1e2e3122c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005493481",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1457759?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ffefac05_b1b282da",
+        "filename": "api/test-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2796,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-13T07:36:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 2796,
+        "startChar": 83,
+        "endLine": 2796,
+        "endChar": 92
+      },
+      "revId": "84ffba267e16ca776614d6e6960ebee1e2e3122c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005493481",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1457759?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e4eed08a_5283a362",
+        "filename": "api/test-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2797,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-13T07:36:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 2797,
+        "startChar": 83,
+        "endLine": 2797,
+        "endChar": 92
+      },
+      "revId": "84ffba267e16ca776614d6e6960ebee1e2e3122c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
