@@ -16,6 +16,7 @@
 
 package com.android.server;
 
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
 import android.provider.DeviceConfig;
@@ -35,17 +36,18 @@ public class BluetoothDeviceConfigListenerTest {
     private BluetoothDeviceConfigListener mBluetoothDeviceConfigListener;
 
     @Mock BluetoothManagerService mBluetoothManagerService;
+    @Mock BluetoothModeChangeHelper mBluetoothModeChangeHelper;
 
     @Before
     public void setUp() throws Exception {
         mBluetoothDeviceConfigListener = new BluetoothDeviceConfigListener(
-                    mBluetoothManagerService);
+                    mBluetoothManagerService, mBluetoothModeChangeHelper);
     }
 
     @Test
     public void testTriggerInitFlagChange() {
         DeviceConfig.setProperty("bluetooth", "INIT_gd_core", "true", false);
-        verify(mBluetoothManagerService.timeout(
+        verify(mBluetoothManagerService, timeout(
                     FLAG_CHANGED_TIMEOUT_MS).times(1)).onInitFlagsChanged();
     }
 }
