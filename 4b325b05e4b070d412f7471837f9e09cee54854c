@@ -22,6 +22,30 @@
       },
       "revId": "4b325b05e4b070d412f7471837f9e09cee54854c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1e1da51_ba18e988",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-10-13T20:37:12Z",
+      "side": 1,
+      "message": "This comment is for an older patchset where a ConnectivityReport with RESULT_SKIPPED would be sent when ConnectivityManager#reportNetworkConnectivity did not lead to the network being re-validated.\n\nInstead, current behavior is to send the cached connectivity report for this case.\n\nMarking it resolved as it no longer applies.",
+      "parentUuid": "8dfec8e1_90bca6f7",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 83
+      },
+      "revId": "4b325b05e4b070d412f7471837f9e09cee54854c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

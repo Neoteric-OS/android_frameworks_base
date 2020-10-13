@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "52e8e40d_e2b16df3",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
@@ -20,10 +21,10 @@
         "endChar": 76
       },
       "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "1ad344e7_fbf554e6",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
@@ -44,10 +45,34 @@
         "endChar": 76
       },
       "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "adea647d_b0ddd556",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-10-13T20:37:12Z",
+      "side": 1,
+      "message": "Resolving as @CompatChange is not being used anymore.",
+      "parentUuid": "1ad344e7_fbf554e6",
+      "range": {
+        "startLine": 127,
+        "startChar": 34,
+        "endLine": 127,
+        "endChar": 76
+      },
+      "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "275ea13a_06bde5e9",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
@@ -67,10 +92,10 @@
         "endChar": 72
       },
       "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "244cd3db_cff39c00",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
@@ -90,10 +115,10 @@
         "endChar": 74
       },
       "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "0c224e0a_c585dbfa",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
@@ -114,10 +139,10 @@
         "endChar": 74
       },
       "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "17fec18d_ade83955",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
@@ -138,8 +163,7 @@
         "endChar": 72
       },
       "revId": "ca543bf11dfb15655ceaceb90e7a06cd31d3f51c",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
