@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "995d2780_e48397bd",
+        "filename": "core/java/android/uwb/RangingParams.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-10-13T18:27:47Z",
+      "side": 1,
+      "message": "Actually going to add get to samplingPeriod and keep get here.",
+      "parentUuid": "0bd4026e_e607bd0d",
+      "range": {
+        "startLine": 80,
+        "startChar": 22,
+        "endLine": 80,
+        "endChar": 30
+      },
+      "revId": "01130cc1912fbd20b9c2fb5743213e17afa4eb13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87c96dc2_8c038542",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-13T16:49:32Z",
       "side": 1,
       "message": "same as above, also applies to the rest of this CL",
+      "range": {
+        "startLine": 90,
+        "startChar": 28,
+        "endLine": 90,
+        "endChar": 31
+      },
+      "revId": "01130cc1912fbd20b9c2fb5743213e17afa4eb13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d166bb78_48e7169d",
+        "filename": "core/java/android/uwb/RangingParams.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-10-13T18:27:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "87c96dc2_8c038542",
       "range": {
         "startLine": 90,
         "startChar": 28,
