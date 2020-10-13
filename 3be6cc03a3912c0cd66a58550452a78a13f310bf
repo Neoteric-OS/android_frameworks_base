@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "709b98f7_225bcae8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2020-10-13T21:21:13Z",
+      "side": 1,
+      "message": "Hello @Michael, I\u0027ve put the CL over the last changes, so I suspect that it shouldn\u0027t be merge conflicts anymore. Could you help with proceed with this CL?",
+      "revId": "3be6cc03a3912c0cd66a58550452a78a13f310bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
