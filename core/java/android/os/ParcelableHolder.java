@@ -18,12 +18,22 @@ package android.os;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.util.MathUtils;
 
 /**
- * Parcelable containing the other Parcelable object.
+ * ParcelableHolder is the parcelable which can contain ohter parcelable.
+ * It helps a parcelable to be extended by other without modifying the origianl parcelable directly.
+ *
+ * <code>parcelable ExtendableParcelable {
+ *   Data d;
+ *   ParcelableHolder ext;
+ * }</code>
+ * <code>ExtendableParcelable.ext.setParcelable(new MyExtension());</code>
+ *
  * @hide
  */
+@SystemApi
 public final class ParcelableHolder implements Parcelable {
     /**
      * This is set by {@link #setParcelable}.
@@ -38,6 +48,8 @@ public final class ParcelableHolder implements Parcelable {
      */
     private Parcel mParcel;
     private @Parcelable.Stability int mStability = Parcelable.PARCELABLE_STABILITY_LOCAL;
+
+    private final Object mLock = new Object();
 
     public ParcelableHolder(@Parcelable.Stability int stability) {
         mStability = stability;
@@ -80,17 +92,19 @@ public final class ParcelableHolder implements Parcelable {
      * Write a parcelable into ParcelableHolder, the previous parcelable will be removed.
      * @return {@code false} if the parcelable's stability is more unstable ParcelableHolder.
      */
-    public synchronized boolean setParcelable(@Nullable Parcelable p) {
-        // a ParcelableHolder can only hold things at its stability or higher
-        if (p != null && this.getStability() > p.getStability()) {
-            return false;
+    public boolean setParcelable(@Nullable Parcelable p) {
+        synchronized (mLock) {
+            // a ParcelableHolder can only hold things at its stability or higher
+            if (p != null && this.getStability() > p.getStability()) {
+                return false;
+            }
+            mParcelable = p;
+            if (mParcel != null) {
+                mParcel.recycle();
+                mParcel = null;
+            }
+            return true;
         }
-        mParcelable = p;
-        if (mParcel != null) {
-            mParcel.recycle();
-            mParcel = null;
-        }
-        return true;
     }
 
     /**
@@ -99,80 +113,88 @@ public final class ParcelableHolder implements Parcelable {
      *         the type written by (@link #setParcelable}.
      */
     @Nullable
-    public synchronized <T extends Parcelable> T getParcelable(@NonNull Class<T> clazz) {
-        if (mParcel == null) {
-            if (!clazz.isInstance(mParcelable)) {
+    public <T extends Parcelable> T getParcelable(@NonNull Class<T> clazz) {
+        synchronized (mLock) {
+            if (mParcel == null) {
+                if (!clazz.isInstance(mParcelable)) {
+                    return null;
+                }
+                return (T) mParcelable;
+            }
+
+            mParcel.setDataPosition(0);
+
+            T parcelable = mParcel.readParcelable(clazz.getClassLoader());
+            if (!clazz.isInstance(parcelable)) {
                 return null;
             }
-            return (T) mParcelable;
+            mParcelable = parcelable;
+
+            mParcel.recycle();
+            mParcel = null;
+            return parcelable;
         }
-
-        mParcel.setDataPosition(0);
-
-        T parcelable = mParcel.readParcelable(clazz.getClassLoader());
-        if (!clazz.isInstance(parcelable)) {
-            return null;
-        }
-        mParcelable = parcelable;
-
-        mParcel.recycle();
-        mParcel = null;
-        return parcelable;
     }
 
     /**
      * Read ParcelableHolder from a parcel.
      */
-    public synchronized void readFromParcel(@NonNull Parcel parcel) {
-        this.mStability = parcel.readInt();
+    public void readFromParcel(@NonNull Parcel parcel) {
+        synchronized (mLock) {
+            this.mStability = parcel.readInt();
 
-        mParcelable = null;
+            mParcelable = null;
 
-        if (mParcel == null) {
-            mParcel = Parcel.obtain();
+            if (mParcel == null) {
+                mParcel = Parcel.obtain();
+            }
+            mParcel.setDataPosition(0);
+            mParcel.setDataSize(0);
+
+            int dataSize = parcel.readInt();
+            if (dataSize < 0) {
+                throw new IllegalArgumentException("dataSize from parcel is negative");
+            }
+            int dataStartPos = parcel.dataPosition();
+
+            mParcel.appendFrom(parcel, dataStartPos, dataSize);
+            parcel.setDataPosition(MathUtils.addOrThrow(dataStartPos, dataSize));
         }
-        mParcel.setDataPosition(0);
-        mParcel.setDataSize(0);
-
-        int dataSize = parcel.readInt();
-        if (dataSize < 0) {
-            throw new IllegalArgumentException("dataSize from parcel is negative");
-        }
-        int dataStartPos = parcel.dataPosition();
-
-        mParcel.appendFrom(parcel, dataStartPos, dataSize);
-        parcel.setDataPosition(MathUtils.addOrThrow(dataStartPos, dataSize));
     }
 
     @Override
-    public synchronized void writeToParcel(@NonNull Parcel parcel, int flags) {
-        parcel.writeInt(this.mStability);
+    public void writeToParcel(@NonNull Parcel parcel, int flags) {
+        synchronized (mLock) {
+            parcel.writeInt(this.mStability);
 
-        if (mParcel != null) {
-            parcel.writeInt(mParcel.dataSize());
-            parcel.appendFrom(mParcel, 0, mParcel.dataSize());
-            return;
+            if (mParcel != null) {
+                parcel.writeInt(mParcel.dataSize());
+                parcel.appendFrom(mParcel, 0, mParcel.dataSize());
+                return;
+            }
+
+            int sizePos = parcel.dataPosition();
+            parcel.writeInt(0);
+            int dataStartPos = parcel.dataPosition();
+            parcel.writeParcelable(mParcelable, 0);
+            int dataSize = parcel.dataPosition() - dataStartPos;
+
+            parcel.setDataPosition(sizePos);
+            parcel.writeInt(dataSize);
+            parcel.setDataPosition(MathUtils.addOrThrow(parcel.dataPosition(), dataSize));
         }
-
-        int sizePos = parcel.dataPosition();
-        parcel.writeInt(0);
-        int dataStartPos = parcel.dataPosition();
-        parcel.writeParcelable(mParcelable, 0);
-        int dataSize = parcel.dataPosition() - dataStartPos;
-
-        parcel.setDataPosition(sizePos);
-        parcel.writeInt(dataSize);
-        parcel.setDataPosition(MathUtils.addOrThrow(parcel.dataPosition(), dataSize));
     }
 
     @Override
-    public synchronized int describeContents() {
-        if (mParcel != null) {
-            return mParcel.hasFileDescriptors() ? Parcelable.CONTENTS_FILE_DESCRIPTOR : 0;
+    public int describeContents() {
+        synchronized (mLock) {
+            if (mParcel != null) {
+                return mParcel.hasFileDescriptors() ? Parcelable.CONTENTS_FILE_DESCRIPTOR : 0;
+            }
+            if (mParcelable != null) {
+                return mParcelable.describeContents();
+            }
+            return 0;
         }
-        if (mParcelable != null) {
-            return mParcelable.describeContents();
-        }
-        return 0;
     }
 }
