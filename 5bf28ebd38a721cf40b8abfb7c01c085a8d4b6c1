@@ -33,6 +33,29 @@
       "message": "To the media team. can you provide some feedback here? Thanks",
       "revId": "5bf28ebd38a721cf40b8abfb7c01c085a8d4b6c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d01c201_f548ebfa",
+        "filename": "packages/SystemUI/src/com/android/systemui/screenrecord/ScreenMediaRecorder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2020-10-13T19:33:47Z",
+      "side": 1,
+      "message": "note that this level is generally ignored by the media framework, because of the in-depth knowledge required to set the correct level by an application. This in effect depends on the exact resolution and frame rate.\n\nBest practice is to set the lowest desired level (even AVCLevel1, or AVCLevel3 as that\u0027s what\u0027s required by CDD). The framework will increase it if the resolution/frame rate requires a higher level automatically.",
+      "range": {
+        "startLine": 135,
+        "startChar": 16,
+        "endLine": 135,
+        "endChar": 58
+      },
+      "revId": "5bf28ebd38a721cf40b8abfb7c01c085a8d4b6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
