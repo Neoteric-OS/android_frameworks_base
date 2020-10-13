@@ -16,6 +16,24 @@
       "message": "Do you want to add a TODO item on b/170598012 to remember including this filegroup in the library of Android.bp in the future?",
       "revId": "36506ac19ece0180c389204d25feb148c7e90f4c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cc87f57_1042c13f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-13T03:23:32Z",
+      "side": 1,
+      "message": "Yes, I will if we would like to merge this first.",
+      "parentUuid": "71aca602_4762e3cc",
+      "revId": "36506ac19ece0180c389204d25feb148c7e90f4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
