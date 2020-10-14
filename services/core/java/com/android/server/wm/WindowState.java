@@ -1431,7 +1431,7 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
             // then we need to hold off on unfreezing the display until this window has been
             // redrawn; to do that, we need to go through the process of getting informed by the
             // application when it has finished drawing.
-            if (getOrientationChanging() || dragResizingChanged) {
+            if (getOrientationChanging() || dragResizingChanged || winAnimator.mSurfaceResized) {
                 if (getOrientationChanging()) {
                     Slog.v(TAG_WM, "Orientation start waiting for draw"
                             + ", mDrawState=DRAW_PENDING in " + this
