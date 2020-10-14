@@ -171,8 +171,11 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                 @NonNull IBinder binder)
                 throws RemoteException {
             super(context, looper, TEST_NETWORK_TYPE, nc, lp,
-                    new NetworkScore.Builder().setLegacyInt(1).build(), config,
-                    new NetworkProvider(context, looper, TEST_NETWORK_PROVIDER_NAME));
+                    new NetworkScore.Builder()
+                            .setLegacyInt(1)
+                            .setExplicitlySelected(true)
+                            .build(),
+                    config, new NetworkProvider(context, looper, TEST_NETWORK_PROVIDER_NAME));
 
             mUid = uid;
             mNc = nc;

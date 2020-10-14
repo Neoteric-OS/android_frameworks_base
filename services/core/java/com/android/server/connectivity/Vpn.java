@@ -1295,6 +1295,8 @@ public class Vpn {
                     mNetworkCapabilities, lp,
                     new NetworkScore.Builder()
                             .setLegacyInt(ConnectivityConstants.VPN_DEFAULT_SCORE)
+                            .setVpn(true)
+                            .setVpnLockdown(mLockdown)
                             .build(),
                     networkAgentConfig,
                     new NetworkProvider(mContext, mLooper, VPN_AGENT_NAME)) {

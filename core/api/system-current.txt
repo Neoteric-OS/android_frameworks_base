@@ -6275,22 +6275,41 @@ package android.net {
   }
 
   public final class NetworkScore implements android.os.Parcelable {
-    ctor public NetworkScore(int, int);
     method public int describeContents();
     method public int getForceKeepupReason();
     method public int getLegacyInt();
+    method public boolean hasBadWifiAvoidance();
+    method public boolean isDefaultSubscription();
+    method public boolean isExiting();
+    method public boolean isExplicitlySelected();
+    method public boolean isUnmetered();
+    method public boolean isValidated();
+    method public boolean isVpn();
+    method public boolean isVpnLockdown();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkScore> CREATOR;
     field public static final int DONT_FORCE_KEEPUP = 0; // 0x0
     field public static final int FORCE_KEEPUP_FOR_HANDOVER = 1; // 0x1
     field @NonNull public static final android.net.NetworkScore INVINCIBLE_SCORE;
+    field public static final int POLICY_BAD_WIFI_AVOIDANCE = 1; // 0x1
+    field public static final int POLICY_DEFAULT_SUBSCRIPTION = 2; // 0x2
+    field public static final int POLICY_EXITING = 3; // 0x3
+    field public static final int POLICY_EXPLICITLY_SELECTED = 63; // 0x3f
+    field public static final int POLICY_IS_UNMETERED = 60; // 0x3c
+    field public static final int POLICY_IS_VALIDATED = 60; // 0x3c
+    field public static final int POLICY_IS_VPN = 62; // 0x3e
+    field public static final int POLICY_IS_VPN_LOCKDOWN = 61; // 0x3d
     field public final int legacyInt;
   }
 
   public static final class NetworkScore.Builder {
     ctor public NetworkScore.Builder();
     method @NonNull public android.net.NetworkScore build();
+    method @NonNull public android.net.NetworkScore.Builder setDefaultSubscription(boolean);
+    method @NonNull public android.net.NetworkScore.Builder setExiting(boolean);
+    method @NonNull public android.net.NetworkScore.Builder setExplicitlySelected(boolean);
     method @NonNull public android.net.NetworkScore.Builder setForceKeepupReason(int);
+    method @NonNull public android.net.NetworkScore.Builder setHasBadWifiAvoidance(boolean);
     method @NonNull public android.net.NetworkScore.Builder setLegacyInt(int);
   }
 

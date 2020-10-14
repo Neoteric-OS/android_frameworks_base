@@ -30,6 +30,7 @@ import java.lang.annotation.RetentionPolicy;
  *
  * A NetworkScore object represents the characteristics of a network that affects how good the
  * network is considered for a particular use.
+ *
  * @hide
  */
 @SystemApi
@@ -40,29 +41,100 @@ public final class NetworkScore implements Parcelable {
             DONT_FORCE_KEEPUP,
             FORCE_KEEPUP_FOR_HANDOVER
     })
-    public @interface ForceKeepupReason { }
+    public @interface ForceKeepupReason {
+    }
 
     public static final int DONT_FORCE_KEEPUP = 0;
     public static final int FORCE_KEEPUP_FOR_HANDOVER = 1;
 
+    // This network should never be preferred to a wifi that has ever been validated
+    public static final int POLICY_BAD_WIFI_AVOIDANCE = 1;
+    // This network is part of the default subscription.
+    public static final int POLICY_DEFAULT_SUBSCRIPTION = 2;
+    // This network is exiting : it will likely disconnect in a few seconds
+    public static final int POLICY_EXITING = 3;
+    // CS-managed policies
+    // This network is explicitly selected by the user. CS-managed because the source of truth
+    // is in NetworkAgentConfig.
+    public static final int POLICY_EXPLICITLY_SELECTED = 63;
+    // This network is a VPN. CS-managed because the source of truth is in NetworkCapabilities.
+    public static final int POLICY_IS_VPN = 62;
+    // This network is a VPN in lockdown mode. CS-managed because the source of truth is in
+    // Settings.
+    public static final int POLICY_IS_VPN_LOCKDOWN = 61;
+    // This network is validated. CS-managed because the source of truth is in NetworkCapabilities.
+    public static final int POLICY_IS_VALIDATED = 60;
+    // This network is unmetered. CS-managed because the source of truth is in NetworkCapabilities.
+    public static final int POLICY_IS_UNMETERED = 60;
+
     // TODO : remove this, it's not necessary with an API to listen to all requests
     @NonNull
-    public static final NetworkScore INVINCIBLE_SCORE = new NetworkScore(1000, DONT_FORCE_KEEPUP);
+    public static final NetworkScore INVINCIBLE_SCORE = new NetworkScore(1000,
+            DONT_FORCE_KEEPUP,
+            POLICY_DEFAULT_SUBSCRIPTION | POLICY_IS_VALIDATED);
 
     // This will be removed soon. Do *NOT* depend on it for any new code that is not part of
     // a migration.
     public final int legacyInt;
-
     private final int forceKeepupReason;
+    private final int mPolicy;
 
-    public NetworkScore(final int legacyInt, @ForceKeepupReason int forceKeepupReason) {
+    /** @hide */
+    public NetworkScore(final int legacyInt, @ForceKeepupReason final int forceKeepupReason,
+            final int policy) {
         this.legacyInt = legacyInt;
         this.forceKeepupReason = forceKeepupReason;
+        this.mPolicy = policy;
+    }
+
+    private boolean hasPolicy(final int policy) {
+        return (mPolicy & policy) != 0;
+    }
+
+    // Policies from transport
+    public boolean hasBadWifiAvoidance() {
+        return hasPolicy(POLICY_BAD_WIFI_AVOIDANCE);
+    }
+
+    public boolean isDefaultSubscription() {
+        return hasPolicy(POLICY_DEFAULT_SUBSCRIPTION);
+    }
+
+    public boolean isExiting() {
+        return hasPolicy(POLICY_EXITING);
+    }
+
+    // CS-managed policies
+    public boolean isVpn() {
+        return hasPolicy(POLICY_IS_VPN);
+    }
+
+    public boolean isVpnLockdown() {
+        return hasPolicy(POLICY_IS_VPN_LOCKDOWN);
+    }
+
+    public boolean isValidated() {
+        return hasPolicy(POLICY_IS_VALIDATED);
+    }
+
+    public boolean isUnmetered() {
+        return hasPolicy(POLICY_IS_UNMETERED);
+    }
+
+    public boolean isExplicitlySelected() {
+        return hasPolicy(POLICY_EXPLICITLY_SELECTED);
+    }
+
+    /** @hide */
+    public static NetworkScore validatedScore(final NetworkScore score) {
+        return new NetworkScore(score.legacyInt, score.forceKeepupReason,
+                score.mPolicy | POLICY_IS_VALIDATED);
     }
 
     private NetworkScore(@NonNull final Parcel in) {
         legacyInt = in.readInt();
         forceKeepupReason = in.readInt();
+        mPolicy = in.readInt();
     }
 
     public int getForceKeepupReason() {
@@ -82,6 +154,7 @@ public final class NetworkScore implements Parcelable {
     public void writeToParcel(@NonNull final Parcel dest, final int flags) {
         dest.writeInt(legacyInt);
         dest.writeInt(forceKeepupReason);
+        dest.writeInt(mPolicy);
     }
 
     @Override
@@ -89,7 +162,8 @@ public final class NetworkScore implements Parcelable {
         return 0;
     }
 
-    @NonNull public static final Creator<NetworkScore> CREATOR = new Creator<>() {
+    @NonNull
+    public static final Creator<NetworkScore> CREATOR = new Creator<>() {
         @Override
         @NonNull
         public NetworkScore createFromParcel(@NonNull final Parcel in) {
@@ -107,6 +181,12 @@ public final class NetworkScore implements Parcelable {
         private static final int INVALID_LEGACY_INT = Integer.MIN_VALUE;
         private int mLegacyInt = INVALID_LEGACY_INT;
         private int mForceKeepupReason = DONT_FORCE_KEEPUP;
+        private int mPolicy = 0;
+
+        @NonNull
+        public NetworkScore build() {
+            return new NetworkScore(mLegacyInt, mForceKeepupReason, mPolicy);
+        }
 
         @NonNull
         public Builder setForceKeepupReason(@ForceKeepupReason final int reason) {
@@ -120,9 +200,128 @@ public final class NetworkScore implements Parcelable {
             return this;
         }
 
+        /**
+         * Set for a network that should never be preferred to a wifi that has ever been validated
+         *
+         * @return this builder
+         */
         @NonNull
-        public NetworkScore build() {
-            return new NetworkScore(mLegacyInt, mForceKeepupReason);
+        public Builder setHasBadWifiAvoidance(final boolean val) {
+            if (val) {
+                mPolicy |= POLICY_BAD_WIFI_AVOIDANCE;
+            } else {
+                mPolicy &= ~POLICY_BAD_WIFI_AVOIDANCE;
+            }
+            return this;
+        }
+
+        /**
+         * Set for a network that is part of the default subscription.
+         *
+         * @return this builder
+         */
+        @NonNull
+        public Builder setDefaultSubscription(final boolean val) {
+            if (val) {
+                mPolicy |= POLICY_DEFAULT_SUBSCRIPTION;
+            } else {
+                mPolicy &= ~POLICY_DEFAULT_SUBSCRIPTION;
+            }
+            return this;
+        }
+
+        /**
+         * Set for a network that will likely disconnect in a few seconds
+         *
+         * @return this builder
+         */
+        @NonNull
+        public Builder setExiting(final boolean val) {
+            if (val) {
+                mPolicy |= POLICY_EXITING;
+            } else {
+                mPolicy &= ~POLICY_EXITING;
+            }
+            return this;
+        }
+
+        /**
+         *
+         */
+        @NonNull
+        public Builder setExplicitlySelected(final boolean val) {
+            if (val) {
+                mPolicy |= POLICY_EXPLICITLY_SELECTED;
+            } else {
+                mPolicy &= ~POLICY_EXPLICITLY_SELECTED;
+            }
+            return this;
+        }
+
+        // CS-managed policies
+
+        /**
+         * Set for a VPN network.
+         *
+         * @return this builder
+         * @hide
+         */
+        @NonNull
+        public Builder setVpn(final boolean val) {
+            if (val) {
+                mPolicy |= POLICY_IS_VPN;
+            } else {
+                mPolicy &= ~POLICY_IS_VPN;
+            }
+            return this;
+        }
+
+        /**
+         * Set for a VPN in lockdown mode.
+         *
+         * @return this builder
+         * @hide
+         */
+        @NonNull
+        public Builder setVpnLockdown(final boolean val) {
+            if (val) {
+                mPolicy |= POLICY_IS_VPN_LOCKDOWN;
+            } else {
+                mPolicy &= ~POLICY_IS_VPN_LOCKDOWN;
+            }
+            return this;
+        }
+
+        /**
+         * Set for a validated network.
+         *
+         * @return this builder
+         * @hide
+         */
+        @NonNull
+        public Builder setValidated(final boolean val) {
+            if (val) {
+                mPolicy |= POLICY_IS_VALIDATED;
+            } else {
+                mPolicy &= ~POLICY_IS_VALIDATED;
+            }
+            return this;
+        }
+
+        /**
+         * Set for an unmetered network.
+         *
+         * @return this builder
+         * @hide
+         */
+        @NonNull
+        public Builder setUnmetered(final boolean val) {
+            if (val) {
+                mPolicy |= POLICY_IS_UNMETERED;
+            } else {
+                mPolicy &= ~POLICY_IS_UNMETERED;
+            }
+            return this;
         }
     }
 }
