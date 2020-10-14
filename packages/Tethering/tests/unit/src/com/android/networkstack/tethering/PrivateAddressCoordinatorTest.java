@@ -194,7 +194,7 @@ public final class PrivateAddressCoordinatorTest {
 
     @Test
     public void testRequestLastDownstreamAddress() throws Exception {
-        final int fakeHotspotSubAddr = 0x2b05;
+        final int fakeHotspotSubAddr = 0x2b05; // 43.5
         final IpPrefix predefinedPrefix = new IpPrefix("192.168.43.0/24");
         when(mPrivateAddressCoordinator.getRandomInt()).thenReturn(fakeHotspotSubAddr);
         final LinkAddress hotspotAddress = mPrivateAddressCoordinator.requestDownstreamAddress(
@@ -218,6 +218,18 @@ public final class PrivateAddressCoordinatorTest {
         final LinkAddress newUsbAddress = mPrivateAddressCoordinator.requestDownstreamAddress(
                 mUsbIpServer, true /* useLastAddress */);
         assertEquals(usbAddress, newUsbAddress);
+
+        // BUG: the code should detect a conflict, but it doesn't.
+        // Regression introduced in r.android.com/168169687.
+        // Ensure conflict notification is worked when using cached address;
+        when(mHotspotIpServer.getAddress()).thenReturn(newHotspotAddress);
+        when(mUsbIpServer.getAddress()).thenReturn(usbAddress);
+        final UpstreamNetworkState wifiUpstream = buildUpstreamNetworkState(mWifiNetwork,
+                new LinkAddress("192.168.88.23/16"), null,
+                makeNetworkCapabilities(TRANSPORT_WIFI));
+        mPrivateAddressCoordinator.updateUpstreamPrefix(wifiUpstream);
+        //verifyNotifyConflictAndRelease(mHotspotIpServer);
+        //verifyNotifyConflictAndRelease(mUsbIpServer);
     }
 
     private UpstreamNetworkState buildUpstreamNetworkState(final Network network,
