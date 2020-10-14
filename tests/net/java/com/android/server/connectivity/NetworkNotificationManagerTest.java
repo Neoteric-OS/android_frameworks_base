@@ -104,10 +104,12 @@ public class NetworkNotificationManagerTest {
         when(mCtx.getResources()).thenReturn(mResources);
         when(mCtx.getPackageManager()).thenReturn(mPm);
         when(mCtx.getApplicationInfo()).thenReturn(new ApplicationInfo());
+        when(mCtx.createContextAsUser(any(), anyInt())).thenReturn(mCtx);
+        when(mCtx.getSystemService(Context.NOTIFICATION_SERVICE)).thenReturn(mNotificationManager);
         when(mNetworkInfo.getExtraInfo()).thenReturn("extra");
         when(mResources.getColor(anyInt(), any())).thenReturn(0xFF607D8B);
 
-        mManager = new NetworkNotificationManager(mCtx, mTelephonyManager, mNotificationManager);
+        mManager = new NetworkNotificationManager(mCtx, mTelephonyManager);
     }
 
     private void verifyTitleByNetwork(final int id, final NetworkAgentInfo nai, final int title) {

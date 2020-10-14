@@ -30,6 +30,7 @@ import android.content.res.Resources;
 import android.net.NetworkSpecifier;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.wifi.WifiInfo;
+import android.os.UserHandle;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -80,10 +81,11 @@ public class NetworkNotificationManager {
     // Tracks the types of notifications managed by this instance, from creation to cancellation.
     private final SparseIntArray mNotificationTypeMap;
 
-    public NetworkNotificationManager(Context c, TelephonyManager t, NotificationManager n) {
+    public NetworkNotificationManager(Context c, TelephonyManager t) {
         mContext = c;
         mTelephonyManager = t;
-        mNotificationManager = n;
+        mNotificationManager = (NotificationManager) c.createContextAsUser(UserHandle.ALL, 0)
+                .getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationTypeMap = new SparseIntArray();
     }
 
