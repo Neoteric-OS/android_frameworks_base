@@ -1529,6 +1529,7 @@ package android.bluetooth {
     field public static final String ACTION_TETHERING_STATE_CHANGED = "android.bluetooth.action.TETHERING_STATE_CHANGED";
     field public static final String EXTRA_LOCAL_ROLE = "android.bluetooth.pan.extra.LOCAL_ROLE";
     field public static final String EXTRA_TETHERING_STATE = "android.bluetooth.extra.TETHERING_STATE";
+    field public static final String EXTRA_TETHERING_STATUS = "android.bluetooth.pan.extra.TETHERING_STATUS";
     field public static final int LOCAL_NAP_ROLE = 1; // 0x1
     field public static final int LOCAL_PANU_ROLE = 2; // 0x2
     field public static final int PAN_ROLE_NONE = 0; // 0x0
@@ -1536,6 +1537,9 @@ package android.bluetooth {
     field public static final int REMOTE_PANU_ROLE = 2; // 0x2
     field public static final int TETHERING_STATE_OFF = 1; // 0x1
     field public static final int TETHERING_STATE_ON = 2; // 0x2
+    field public static final int TETHERING_STATUS_NONE = 0; // 0x0
+    field public static final int TETHERING_STATUS_START = 1; // 0x1
+    field public static final int TETHERING_STATUS_STOP = 2; // 0x2
   }
 
   public class BluetoothPbap implements android.bluetooth.BluetoothProfile {
