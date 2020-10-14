@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "533d345e_63cc7e06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-10-14T15:12:05Z",
+      "side": 1,
+      "message": "Thanks so much Xiaobo for root causing this! I believe this is the same bug that I just spent several days trying to figure out.\nI will work on adding tests, and maybe breaking up NativeInputEventReceiver to follow up.\nThis patch lgtm.",
+      "revId": "af48e4d9b2d4083b47481c945c02d3ce051db92f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
