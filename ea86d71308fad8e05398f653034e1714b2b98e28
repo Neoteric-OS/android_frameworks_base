@@ -16,6 +16,23 @@
       "message": "\nPlease have a look\n\nThanks\n\n",
       "revId": "ea86d71308fad8e05398f653034e1714b2b98e28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1b1bc18_bcd97620",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132658
+      },
+      "writtenOn": "2020-10-14T02:01:40Z",
+      "side": 1,
+      "message": "hi,Santos, Can we merge the change now?",
+      "revId": "ea86d71308fad8e05398f653034e1714b2b98e28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
