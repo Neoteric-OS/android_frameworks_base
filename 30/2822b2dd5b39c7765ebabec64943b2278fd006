@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Verified+1: Sergii Piatakov <sergii.piatakov@globallogic.com>
+Code-Review+1: Sergii Piatakov <sergii.piatakov@globallogic.com>
+Code-Review+2: Philip P. Moltmann <moltmann@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Submitted-by: Philip P. Moltmann <moltmann@google.com>
+Submitted-at: Wed, 14 Oct 2020 20:55:12 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1339995
+Project: platform/frameworks/base
+Branch: refs/heads/master
