@@ -444,6 +444,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecdc9fd5_11ec7ee2",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-10-14T02:37:04Z",
+      "side": 1,
+      "message": "Uploaded patch set 4 to modify it.",
+      "parentUuid": "bc150443_447349a3",
+      "range": {
+        "startLine": 72,
+        "startChar": 73,
+        "endLine": 72,
+        "endChar": 84
+      },
+      "revId": "0454796213a57056daeb88624db9e661fa3c4a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "53a3dcad_ec3486c9",
