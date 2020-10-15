@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f306340f_33433455",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-10-15T22:43:34Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "bc80661b2bac60de99d8c02dc4831e7124eb10ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a1d2c6a4_3d790825",
@@ -14,6 +31,30 @@
       "writtenOn": "2020-10-13T09:35:20Z",
       "side": 1,
       "message": "I feel that calling this \"NON_GATED\" is confusing, since it allows opt-out?\n\nMaybe SELINUX_LATEST_CHANGES_OPT_OUT?\n\nAlso, LATEST-\u003eS?",
+      "range": {
+        "startLine": 118,
+        "startChar": 37,
+        "endLine": 118,
+        "endChar": 46
+      },
+      "revId": "bc80661b2bac60de99d8c02dc4831e7124eb10ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c74f8ba3_ef95917e",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-10-15T22:43:34Z",
+      "side": 1,
+      "message": "This is meant to always refer to latest, not just the current latest; I\u0027ll leave the discussion for further clarification offline if that\u0027s unsatisfactory.\n\n\u0027NON_GATED\u0027 is indeed a bit confusing, but I don\u0027t have a better name choice; it refers to opting out of all the changes that are enforced globally, regardless of targetsdk, in the newest version of the platform.\n\nIdeally, there would only be *one* change id for this type of behavior, not one per platform release.",
+      "parentUuid": "a1d2c6a4_3d790825",
       "range": {
         "startLine": 118,
         "startChar": 37,
@@ -61,6 +102,30 @@
       "side": 1,
       "message": "CUR_DEVELOPMENT?",
       "parentUuid": "a8b95f81_5036eaeb",
+      "range": {
+        "startLine": 382,
+        "startChar": 12,
+        "endLine": 382,
+        "endChar": 80
+      },
+      "revId": "bc80661b2bac60de99d8c02dc4831e7124eb10ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2153d332_4d3a3e47",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-10-15T22:43:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7b74feb_a4464c8e",
       "range": {
         "startLine": 382,
         "startChar": 12,
