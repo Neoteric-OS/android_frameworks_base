@@ -22,6 +22,30 @@
       },
       "revId": "2c195b76e9210deeff622d1ba0a99a5f70c435a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfd9123e_dccc6b91",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1585075
+      },
+      "writtenOn": "2020-10-15T20:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2d80ebf_79323af1",
+      "range": {
+        "startLine": 486,
+        "startChar": 45,
+        "endLine": 486,
+        "endChar": 68
+      },
+      "revId": "2c195b76e9210deeff622d1ba0a99a5f70c435a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
