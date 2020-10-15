@@ -33,6 +33,23 @@
       "message": "Nice!",
       "revId": "cd0ccb29d78d5fc3270dbccc4dbb88d74274a556",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2a53550_8656297f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-10-15T16:59:00Z",
+      "side": 1,
+      "message": "I think this breaks because the stubs for the test API surface (which now extends system api and so its stubs includes all the system API classes/methods too) will not compile without the modules which do contribute to the system api stubs.",
+      "revId": "cd0ccb29d78d5fc3270dbccc4dbb88d74274a556",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
