@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e131cc83_d34c29b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-15T09:16:41Z",
+      "side": 1,
+      "message": "Still \u003e 60 :)\n\nDoesn\u0027t matter",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 85
+      },
+      "revId": "53b9af2d2cdc2f12a8ad1b5974431a75a5a0596f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
