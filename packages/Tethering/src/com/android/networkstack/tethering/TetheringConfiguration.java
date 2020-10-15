@@ -21,12 +21,14 @@ import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
 import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
+import static android.net.util.TetheringUtils.getReleaseOrDevelopmentApiVersion;
 import static android.provider.DeviceConfig.NAMESPACE_CONNECTIVITY;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.TetheringConfigurationParcel;
 import android.net.util.SharedLog;
+import android.os.Build;
 import android.provider.DeviceConfig;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -88,6 +90,12 @@ public class TetheringConfiguration {
             "use_legacy_wifi_p2p_dedicated_ip";
 
     /**
+     * Flag use to get the version number that start support select all prefix ranges feature.
+     */
+    public static final String TETHER_ENABLE_SELECT_ALL_PREFIX_RANGES =
+            "tether_enable_select_all_prefix_ranges";
+
+    /**
      * Default value that used to periodic polls tether offload stats from tethering offload HAL
      * to make the data warnings work.
      */
@@ -117,6 +125,8 @@ public class TetheringConfiguration {
     // TODO: Add to TetheringConfigurationParcel if required.
     private final boolean mEnableBpfOffload;
     private final boolean mEnableWifiP2pDedicatedIp;
+
+    private final int mSelectAllPrefixRangeFlag;
 
     public TetheringConfiguration(Context ctx, SharedLog log, int id) {
         final SharedLog configLog = log.forSubComponent("config");
@@ -163,6 +173,9 @@ public class TetheringConfiguration {
         mEnableWifiP2pDedicatedIp = getResourceBoolean(res,
                 R.bool.config_tether_enable_legacy_wifi_p2p_dedicated_ip,
                 false /* defaultValue */);
+
+        mSelectAllPrefixRangeFlag = getDeviceConfigInt(TETHER_ENABLE_SELECT_ALL_PREFIX_RANGES,
+                 Build.VERSION_CODES.R /* defaultValue */);
 
         configLog.log(toString());
     }
@@ -249,6 +262,9 @@ public class TetheringConfiguration {
 
         pw.print("enableWifiP2pDedicatedIp: ");
         pw.println(mEnableWifiP2pDedicatedIp);
+
+        pw.print("mSelectAllPrefixRangeFlag: ");
+        pw.println(mSelectAllPrefixRangeFlag);
     }
 
     /** Returns the string representation of this object.*/
@@ -308,6 +324,10 @@ public class TetheringConfiguration {
 
     public boolean isBpfOffloadEnabled() {
         return mEnableBpfOffload;
+    }
+
+    public boolean isSelectAllPrefixRangeEnabled() {
+        return getReleaseOrDevelopmentApiVersion() >= mSelectAllPrefixRangeFlag;
     }
 
     private static Collection<Integer> getUpstreamIfaceTypes(Resources res, boolean dunRequired) {
@@ -426,6 +446,11 @@ public class TetheringConfiguration {
         // property string). See the test case testBpfOffload{*} in TetheringConfigurationTest.java.
         final String value = getDeviceConfigProperty(name);
         return value != null ? Boolean.parseBoolean(value) : defaultValue;
+    }
+
+    private int getDeviceConfigInt(final String name, final int defaultValue) {
+        final String value = getDeviceConfigProperty(name);
+        return value != null ? Integer.parseInt(value) : defaultValue;
     }
 
     @VisibleForTesting
