@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Seigo Nonaka <nona@google.com>
+Submitted-by: vichang <vichang@google.com>
+Submitted-at: Thu, 15 Oct 2020 18:28:09 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1460403
+Project: platform/frameworks/base
+Branch: refs/heads/master
