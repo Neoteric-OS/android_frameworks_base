@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fac60bf7_fe70a4f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1319385
+      },
+      "writtenOn": "2020-10-15T01:43:36Z",
+      "side": 1,
+      "message": "Jay/Lajos, can you re-run CR and pre submit?",
+      "revId": "a5c1ab0cf5d1db0e905cc38c12e78795d037a14c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
