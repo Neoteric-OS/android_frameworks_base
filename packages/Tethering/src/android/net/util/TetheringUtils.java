@@ -17,6 +17,7 @@ package android.net.util;
 
 import android.net.TetherStatsParcel;
 import android.net.TetheringRequestParcel;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -161,5 +162,15 @@ public class TetheringUtils {
                     + Arrays.toString(ALL_NODES) + " and scopedId " + scopeId);
             return null;
         }
+    }
+
+    // TODO: remove this and use apishim in NetworkStack after make it as module common library,
+    // or use other generic way for all mainline module if it is exist.
+    /**
+     * Get the device release or development API leve. In-development API n+1 will have
+     * SDK_INT == n and CODENAME != REL. Stable API n has SDK_INT == n and CODENAME == REL.
+     */
+    public static int getReleaseOrDevelopmentApiVersion() {
+        return Build.VERSION.SDK_INT + ("REL".equals(Build.VERSION.CODENAME) ? 0 : 1);
     }
 }
