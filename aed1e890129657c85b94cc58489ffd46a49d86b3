@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fc959e1_d46df1d2",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2020-10-15T20:13:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7ec82b14_e316abc7",
+      "range": {
+        "startLine": 1356,
+        "startChar": 8,
+        "endLine": 1360,
+        "endChar": 81
+      },
+      "revId": "aed1e890129657c85b94cc58489ffd46a49d86b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81a9e539_c448208a",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "I\u0027m waiting for cloud atest to pass.  Failed without this.",
       "parentUuid": "81a9e539_c448208a",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 42
+      },
+      "revId": "aed1e890129657c85b94cc58489ffd46a49d86b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31074e82_78d09572",
+        "filename": "services/tests/servicestests/src/com/android/server/BluetoothDeviceConfigListenerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2020-10-15T20:13:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9570fb48_57676257",
       "range": {
         "startLine": 19,
         "startChar": 0,
