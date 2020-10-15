@@ -246,6 +246,10 @@ public class ImsConfigImplBase {
      * Setting the configuration value failed.
      */
     public static final int CONFIG_RESULT_FAILED =  1;
+    /**
+     * Setting the configuration value failed as it is not supported.
+     */
+    public static final int CONFIG_RESULT_NOT_SUPPORTED = 2;
 
     /**
      * @hide

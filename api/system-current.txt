@@ -12324,6 +12324,7 @@ package android.telephony.ims.stub {
     method public int setConfig(int, int);
     method public int setConfig(int, String);
     field public static final int CONFIG_RESULT_FAILED = 1; // 0x1
+    field public static final int CONFIG_RESULT_NOT_SUPPORTED = 2; // 0x2
     field public static final int CONFIG_RESULT_SUCCESS = 0; // 0x0
     field public static final int CONFIG_RESULT_UNKNOWN = -1; // 0xffffffff
   }
