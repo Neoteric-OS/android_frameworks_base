@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b6cf75f_62084c4c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-15T07:36:36Z",
+      "side": 1,
+      "message": "\u003e 60 cols",
+      "range": {
+        "startLine": 9,
+        "startChar": 71,
+        "endLine": 9,
+        "endChar": 114
+      },
+      "revId": "f46b267f6e3c9411007b05f7b405eb513cfcb847",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2af04c14_8411437e",
+        "filename": "core/java/android/net/TEST_MAPPING",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-15T07:36:36Z",
+      "side": 1,
+      "message": "Maybe add frameworks/opt/{telephony,net/wifi} if those tests are not flaky ?",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 6
+      },
+      "revId": "f46b267f6e3c9411007b05f7b405eb513cfcb847",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
