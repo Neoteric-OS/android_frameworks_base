@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8874955_d8e00792",
+        "filename": "services/core/java/com/android/server/BluetoothDeviceConfigListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-10-15T18:09:50Z",
+      "side": 1,
+      "message": "can remove changes since not used locally?",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "d9b8304be04fafaa7dc8c9d21e7b5c135f3eb640",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
