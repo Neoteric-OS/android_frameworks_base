@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f010e453_45336b42",
+        "filename": "services/core/java/com/android/server/BluetoothDeviceConfigListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-10-15T17:54:46Z",
+      "side": 1,
+      "message": "we should set a timeout on this of 24 hours?\n\ncan we also listen for A2DP or hearing aid disconnect and then reevaluate? (so we maybe get restarted before 24 hours is up?)",
+      "range": {
+        "startLine": 63,
+        "startChar": 20,
+        "endLine": 65,
+        "endChar": 21
+      },
+      "revId": "96f6d2022f8dc374cfac82fbb601bd51f91b6b4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
