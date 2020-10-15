@@ -16,6 +16,23 @@
       "message": "...it will also make the build faster \\o/",
       "revId": "cd0ccb29d78d5fc3270dbccc4dbb88d74274a556",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1610c988_400c012e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-10-15T16:42:43Z",
+      "side": 1,
+      "message": "Nice!",
+      "revId": "cd0ccb29d78d5fc3270dbccc4dbb88d74274a556",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
