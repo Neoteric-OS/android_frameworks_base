@@ -21,6 +21,7 @@ import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
 import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
 import static android.net.ConnectivityManager.TYPE_WIFI;
+import static android.net.util.TetheringUtils.getReleaseOrDevelopmentApiVersion;
 import static android.provider.DeviceConfig.NAMESPACE_CONNECTIVITY;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
@@ -30,12 +31,14 @@ import static com.android.dx.mockito.inline.extended.ExtendedMockito.mockitoSess
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeTrue;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.util.SharedLog;
+import android.os.Build;
 import android.provider.DeviceConfig;
 import android.telephony.TelephonyManager;
 
@@ -131,6 +134,7 @@ public class TetheringConfigurationTest {
         when(mResources.getBoolean(R.bool.config_tether_enable_legacy_wifi_p2p_dedicated_ip))
                 .thenReturn(false);
         initializeBpfOffloadConfiguration(true, null /* unset */);
+        initSelectAllPrefixRangeFlag(null /* unset */);
 
         mHasTelephonyManager = true;
         mMockContext = new MockContext(mContext);
@@ -427,5 +431,33 @@ public class TetheringConfigurationTest {
         final TetheringConfiguration testCfg = new TetheringConfiguration(
                 mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
         assertTrue(testCfg.shouldEnableWifiP2pDedicatedIp());
+    }
+
+    private void initSelectAllPrefixRangeFlag(final String value) {
+        doReturn(value).when(
+                () -> DeviceConfig.getProperty(eq(NAMESPACE_CONNECTIVITY),
+                eq(TetheringConfiguration.TETHER_ENABLE_SELECT_ALL_PREFIX_RANGES)));
+    }
+
+    @Test
+    public void testSelectAllPrefixRangeFlag() throws Exception {
+        assumeTrue(getReleaseOrDevelopmentApiVersion() >= Build.VERSION_CODES.R);
+
+        // Test default value.
+        final TetheringConfiguration defaultCfg = new TetheringConfiguration(
+                mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
+        assertTrue(defaultCfg.isSelectAllPrefixRangeEnabled());
+
+        // Test disable flag.
+        initSelectAllPrefixRangeFlag("999"); // Set up a large supported version.
+        final TetheringConfiguration testDisable = new TetheringConfiguration(
+                mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
+        assertFalse(testDisable.isSelectAllPrefixRangeEnabled());
+
+        // Test enable flag.
+        initSelectAllPrefixRangeFlag(Integer.toString(Build.VERSION_CODES.R));
+        final TetheringConfiguration testEnable = new TetheringConfiguration(
+                mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
+        assertTrue(testEnable.isSelectAllPrefixRangeEnabled());
     }
 }
