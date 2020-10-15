@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7ec82b14_e316abc7",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2020-10-15T18:43:41Z",
+      "side": 1,
+      "message": "mBluetoothDeviceConfigListener is used in line 2203 below.  I\u0027m worrying that we have too many profile service proxies if we construct a new BluetoothDeviceConfigListener each time we have MESSAGE_INIT_FLAGS_CHANGED.\n\nBluetoothModeChangeHelper has to be constructed here, not BluetoothManagerService ctor, due to dependency.",
+      "parentUuid": "3107ec54_d3da7b27",
+      "range": {
+        "startLine": 1356,
+        "startChar": 8,
+        "endLine": 1360,
+        "endChar": 81
+      },
+      "revId": "aed1e890129657c85b94cc58489ffd46a49d86b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "81a9e539_c448208a",
         "filename": "services/tests/servicestests/src/com/android/server/BluetoothDeviceConfigListenerTest.java",
         "patchSetId": 6
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-15T18:17:54Z",
       "side": 1,
       "message": "can remove too?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 42
+      },
+      "revId": "aed1e890129657c85b94cc58489ffd46a49d86b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9570fb48_57676257",
+        "filename": "services/tests/servicestests/src/com/android/server/BluetoothDeviceConfigListenerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2020-10-15T18:43:41Z",
+      "side": 1,
+      "message": "I\u0027m waiting for cloud atest to pass.  Failed without this.",
+      "parentUuid": "81a9e539_c448208a",
       "range": {
         "startLine": 19,
         "startChar": 0,
