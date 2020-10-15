@@ -27,6 +27,379 @@ import android.compat.annotation.UnsupportedAppUsage;
  */
 public final class DisconnectCause {
 
+    /**
+     * Disconnect codes from UNOBTAINABLE_NUMBER(1) to INTERWORKING_UNSPECIFIED(127)
+     * for mapping of cause values defined in table 10.5.123/3GPP TS 24.008.
+     */
+    public static final class DisconnectCause3gpp {
+
+        private DisconnectCause3gpp() {
+        }
+
+        /**
+         * Unassigned number
+         */
+        public static final int UNOBTAINABLE_NUMBER = 1;
+
+        /**
+         * The user cannot be reached because the network through which the call has been routed
+         * does not serve the destination desired.
+         */
+        public static final int NO_ROUTE_TO_DEST = 3;
+
+        /**
+         * The channel most recently identified is not acceptable to the sending entity for use in
+         * this call.
+         */
+        public static final int CHANNEL_UNACCEPTABLE = 6;
+
+        /**
+         * The mobile station (MS) has tried to access a service that the MS's network operator or
+         * service provider is not prepared to allow.
+         */
+        public static final int OPERATOR_DETERMINED_BARRING = 8;
+
+        /**
+         * Normal; Remote hangup
+         */
+        public static final int NORMAL = 16;
+
+        /**
+         * Outgoing call to busy line
+         */
+        public static final int BUSY = 17;
+
+        /**
+         * The user does not respond to a call establishment message with either an alerting or
+         * connect indication within the prescribed period of time allocated.
+         */
+        public static final int NO_USER_RESPONDING = 18;
+
+        /**
+         * Client timed out : USER_ALERTING_NO_ANSWER
+         */
+        public static final int TIMED_OUT = 19;
+
+        /**
+         * The equipment sending this cause does not wish to accept this call.
+         */
+        public static final int CALL_REJECTED = 21;
+
+        /**
+         * The called number is no longer assigned.
+         */
+        public static final int NUMBER_CHANGED = 22;
+
+        /**
+         * This cause is returned to the network when a mobile station clears an active call which
+         * is being pre-empted by another call with higher precedence.
+         */
+        public static final int PRE_EMPTION = 25;
+
+        /**
+         * The user has not been awarded the incoming call.
+         */
+        public static final int NON_SELECTED_USER_CLEARING = 26;
+
+        /**
+         * The destination indicated by the mobile station cannot be reached because the interface
+         * to the destination is not functioning correctly.
+         */
+        public static final int DESTINATION_OUT_OF_ORDER = 27;
+
+        /**
+         * Invalid dial string
+         */
+        public static final int INVALID_NUMBER = 28;
+
+        /**
+         * The facility requested by user can not be provided by the network.
+         */
+        public static final int FACILITY_REJECTED = 29;
+
+        /**
+         * Provided in response to a STATUS ENQUIRY message.
+         */
+        public static final int RESPONSE_TO_STATUS_ENQUIRY = 30;
+
+        /**
+         * This cause is used to report a normal event only when no other cause in the normal class
+         * applies.
+         */
+        public static final int NORMAL_UNSPECIFIED = 31;
+
+        /**
+         * There is no channel presently available to handle the call.
+         */
+        public static final int NO_CIRCUIT_AVAIL = 34;
+
+        /**
+         * The network is not functioning correctly and that the condition is likely to last a
+         * relatively long period of time.
+         */
+        public static final int NETWORK_OUT_OF_ORDER = 38;
+
+        /**
+         * The network is not functioning correctly and the condition is not likely to last a long
+         * period of time.
+         */
+        public static final int TEMPORARY_FAILURE = 41;
+
+        /**
+         * The switching equipment is experiencing a period of high traffic.
+         */
+        public static final int SWITCHING_CONGESTION = 42;
+
+        /**
+         * The network could not deliver access information to the remote user as requested.
+         */
+        public static final int ACCESS_INFORMATION_DISCARDED = 43;
+
+        /**
+         * The channel cannot be provided.
+         */
+        public static final int REQUESTED_CIRCUIT_OR_CHANNEL_NOT_AVAILABLE = 44;
+
+        /**
+         * This cause is used to report a resource unavailable event only when no other cause in the
+         * resource unavailable class applies.
+         */
+        public static final int RESOURCES_UNAVAILABLE_UNSPECIFIED = 47;
+
+        /**
+         * The requested quality of service (ITU-T X.213) cannot be provided.
+         */
+        public static final int QOS_NOT_AVAIL = 49;
+
+        /**
+         * The facility could not be provided by the network because the user has no complete
+         * subscription.
+         */
+        public static final int REQUESTED_FACILITY_NOT_SUBSCRIBED = 50;
+
+        /**
+         * Incoming calls are not allowed within this calling user group (CUG).
+         */
+        public static final int INCOMING_CALL_BARRED_WITHIN_CUG = 55;
+
+        /**
+         * The mobile station is not authorized to use bearer capability requested.
+         */
+        public static final int BEARER_CAPABILITY_NOT_AUTHORIZED = 57;
+
+        /**
+         * The requested bearer capability is not available at this time.
+         */
+        public static final int BEARER_CAPABILITY_NOT_PRESENTLY_AVAILABLE = 58;
+
+        /**
+         * The service option is not available at this time.
+         */
+        public static final int SERVICE_OR_OPTION_NOT_AVAILABLE = 63;
+
+        /**
+         * The equipment sending this cause does not support the bearer capability requested.
+         */
+        public static final int BEARER_SERVICE_NOT_IMPLEMENTED = 65;
+
+        /*
+         ** GSM or CDMA ACM limit exceeded
+         */
+        public static final int LIMIT_EXCEEDED = 68;
+
+        /**
+         * The equipment sending this cause does not support the requested facility.
+         */
+        public static final int REQUESTED_FACILITY_NOT_IMPLEMENTED = 69;
+
+        /**
+         * The equipment sending this cause only supports the restricted version of the requested
+         * bearer capability.
+         */
+        public static final int ONLY_RESTRICTED_DIGITAL_INFO_BC_AVAILABLE = 70;
+
+        /**
+         * The service requested is not implemented at network.
+         */
+        public static final int SERVICE_OR_OPTION_NOT_IMPLEMENTED = 79;
+
+        /**
+         * The equipment sending this cause has received a message with a transaction identifier
+         * which is not currently in use on the mobile station network interface.
+         */
+        public static final int INVALID_TRANSACTION_ID_VALUE = 81;
+
+        /**
+         * The called user for the incoming CUG call is not a member of the specified calling user
+         * group (CUG).
+         */
+        public static final int USER_NOT_MEMBER_OF_CUG = 87;
+
+        /**
+         * The equipment sending this cause has received a request which can't be accomodated.
+         */
+        public static final int INCOMPATIBLE_DESTINATION = 88;
+
+        /**
+         * Invalid transit network selection
+         */
+        public static final int INVALID_TRANSIT_NETWORK_SELECTION = 91;
+
+        /**
+         * This cause is used to report receipt of a message with semantically incorrect contents.
+         */
+        public static final int SEMANTICALLY_INCORRECT_MESSAGE = 95;
+
+        /**
+         * The equipment sending this cause has received a message with a non-semantical mandatory
+         * information element (IE) error.
+         */
+        public static final int INVALID_MANDATORY_INFORMATION = 96;
+
+        /**
+         * This is sent in response to a message which is not defined, or defined but not
+         * implemented by the equipment sending this cause.
+         */
+        public static final int MESSAGE_TYPE_NON_EXISTENT = 97;
+
+        /**
+         * The equipment sending this cause has received a message not compatible with the protocol
+         * state.
+         */
+        public static final int MESSAGE_TYPE_NOT_COMPATIBLE_WITH_PROT_STATE  = 98;
+
+        /**
+         * The equipment sending this cause has received a message which includes information
+         * elements not recognized because its identifier is not defined or it is defined but not
+         * implemented by the equipment sending the cause.
+         */
+        public static final int IE_NON_EXISTENT_OR_NOT_IMPLEMENTED = 99;
+
+        /**
+         * The equipment sending this cause has received a message with conditional IE errors.
+         */
+        public static final int CONDITIONAL_IE_ERROR = 100;
+
+        /**
+         * The message has been received which is incompatible with the protocol state.
+         */
+        public static final int MESSAGE_NOT_COMPATIBLE_WITH_PROTOCOL_STATE = 101;
+
+        /**
+         * The procedure has been initiated by the expiry of a timer in association with
+         * 3GPP TS 24.008 error handling procedures.
+         */
+        public static final int RECOVER_ON_TIMER_EXPIRY = 102;
+
+        /**
+         * This protocol error event is reported only when no other cause in the protocol error
+         * class applies.
+         */
+        public static final int PROTOCOL_ERROR_UNSPECIFIED = 111;
+
+        /**
+         * Interworking with a network which does not provide causes for actions it takes thus, the
+         * precise cause for a message which is being sent cannot be ascertained.
+         */
+        public static final int INTERWORKING_UNSPECIFIED = 127;
+
+        /**
+         * @return a string representation of a 3gpp cause code.
+         */
+        public static @NonNull String toString(int cause) {
+            switch (cause) {
+                case UNOBTAINABLE_NUMBER:
+                    return "UNOBTAINABLE_NUMBER";
+                case NO_ROUTE_TO_DEST:
+                    return "NO_ROUTE_TO_DEST";
+                case CHANNEL_UNACCEPTABLE:
+                    return "CHANNEL_UNACCEPTABLE";
+                case OPERATOR_DETERMINED_BARRING:
+                    return "OPERATOR_DETERMINED_BARRING";
+                case NO_USER_RESPONDING:
+                    return "NO_USER_RESPONDING";
+                case CALL_REJECTED:
+                    return "CALL_REJECTED";
+                case NUMBER_CHANGED:
+                    return "NUMBER_CHANGED";
+                case PRE_EMPTION:
+                    return "PRE_EMPTION";
+                case NON_SELECTED_USER_CLEARING:
+                    return "NON_SELECTED_USER_CLEARING";
+                case DESTINATION_OUT_OF_ORDER:
+                    return "DESTINATION_OUT_OF_ORDER";
+                case FACILITY_REJECTED:
+                    return "FACILITY_REJECTED";
+                case RESPONSE_TO_STATUS_ENQUIRY:
+                    return "RESPONSE_TO_STATUS_ENQUIRY";
+                case NO_CIRCUIT_AVAIL:
+                    return "NO_CIRCUIT_AVAIL";
+                case NETWORK_OUT_OF_ORDER:
+                    return "NETWORK_OUT_OF_ORDER";
+                case TEMPORARY_FAILURE:
+                    return "TEMPORARY_FAILURE";
+                case SWITCHING_CONGESTION:
+                    return "SWITCHING_CONGESTION";
+                case ACCESS_INFORMATION_DISCARDED:
+                    return "ACCESS_INFORMATION_DISCARDED";
+                case REQUESTED_CIRCUIT_OR_CHANNEL_NOT_AVAILABLE:
+                    return "REQUESTED_CIRCUIT_OR_CHANNEL_NOT_AVAILABLE";
+                case RESOURCES_UNAVAILABLE_UNSPECIFIED:
+                    return "RESOURCES_UNAVAILABLE_UNSPECIFIED";
+                case QOS_NOT_AVAIL:
+                    return "QOS_NOT_AVAIL";
+                case REQUESTED_FACILITY_NOT_SUBSCRIBED:
+                    return "REQUESTED_FACILITY_NOT_SUBSCRIBED";
+                case INCOMING_CALL_BARRED_WITHIN_CUG:
+                    return "INCOMING_CALL_BARRED_WITHIN_CUG";
+                case BEARER_CAPABILITY_NOT_AUTHORIZED:
+                    return "BEARER_CAPABILITY_NOT_AUTHORIZED";
+                case BEARER_CAPABILITY_NOT_PRESENTLY_AVAILABLE:
+                    return "BEARER_CAPABILITY_NOT_PRESENTLY_AVAILABLE";
+                case SERVICE_OR_OPTION_NOT_AVAILABLE:
+                    return "SERVICE_OR_OPTION_NOT_AVAILABLE";
+                case BEARER_SERVICE_NOT_IMPLEMENTED:
+                    return "BEARER_SERVICE_NOT_IMPLEMENTED";
+                case REQUESTED_FACILITY_NOT_IMPLEMENTED:
+                    return "REQUESTED_FACILITY_NOT_IMPLEMENTED";
+                case ONLY_RESTRICTED_DIGITAL_INFO_BC_AVAILABLE:
+                    return "ONLY_RESTRICTED_DIGITAL_INFO_BC_AVAILABLE";
+                case SERVICE_OR_OPTION_NOT_IMPLEMENTED:
+                    return "SERVICE_OR_OPTION_NOT_IMPLEMENTED";
+                case INVALID_TRANSACTION_ID_VALUE:
+                    return "INVALID_TRANSACTION_ID_VALUE";
+                case USER_NOT_MEMBER_OF_CUG:
+                    return "USER_NOT_MEMBER_OF_CUG";
+                case INCOMPATIBLE_DESTINATION:
+                    return "INCOMPATIBLE_DESTINATION";
+                case INVALID_TRANSIT_NETWORK_SELECTION:
+                    return "INVALID_TRANSIT_NETWORK_SELECTION";
+                case SEMANTICALLY_INCORRECT_MESSAGE:
+                    return "SEMANTICALLY_INCORRECT_MESSAGE";
+                case INVALID_MANDATORY_INFORMATION:
+                    return "INVALID_MANDATORY_INFORMATION";
+                case MESSAGE_TYPE_NON_EXISTENT:
+                    return "MESSAGE_TYPE_NON_EXISTENT";
+                case MESSAGE_TYPE_NOT_COMPATIBLE_WITH_PROT_STATE:
+                    return "MESSAGE_TYPE_NOT_COMPATIBLE_WITH_PROT_STATE";
+                case IE_NON_EXISTENT_OR_NOT_IMPLEMENTED:
+                    return "IE_NON_EXISTENT_OR_NOT_IMPLEMENTED";
+                case CONDITIONAL_IE_ERROR:
+                    return "CONDITIONAL_IE_ERROR";
+                case MESSAGE_NOT_COMPATIBLE_WITH_PROTOCOL_STATE:
+                    return "MESSAGE_NOT_COMPATIBLE_WITH_PROTOCOL_STATE";
+                case RECOVER_ON_TIMER_EXPIRY:
+                    return "RECOVER_ON_TIMER_EXPIRY";
+                case PROTOCOL_ERROR_UNSPECIFIED:
+                    return "PROTOCOL_ERROR_UNSPECIFIED";
+                case INTERWORKING_UNSPECIFIED:
+                    return "INTERWORKING_UNSPECIFIED";
+                default:
+                    return "INVALID: " + cause;
+            }
+        }
+    };
+
     /** The disconnect cause is not valid (Not received a disconnect cause) */
     public static final int NOT_VALID                      = -1;
     /** Has not yet disconnected */
