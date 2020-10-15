@@ -2133,7 +2133,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             appInfo = null;
         }
 
-        if (appInfo == null || (type != TYPE_APPLICATION_OVERLAY && appInfo.targetSdkVersion >= O)) {
+        if (appInfo == null || ((type != TYPE_APPLICATION_OVERLAY && type != TYPE_PRESENTATION) 
+                                && appInfo.targetSdkVersion >= O)) {
             /**
              * Apps targeting >= {@link Build.VERSION_CODES#O} are required to hold
              * {@link android.Manifest.permission#INTERNAL_SYSTEM_WINDOW} (system signature apps)
