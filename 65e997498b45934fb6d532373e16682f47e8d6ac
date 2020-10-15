@@ -46,6 +46,30 @@
       },
       "revId": "65e997498b45934fb6d532373e16682f47e8d6ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ad2f812_e4334c22",
+        "filename": "core/java/android/uwb/RangingSession.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-10-15T19:59:10Z",
+      "side": 1,
+      "message": "In standard Java streams, close() does not trigger any callbacks. The caller assumes the stream is dead after calling close(). In our case, close() is an async and the caller should wait for the onClosed() callback. \n\nIf we want to make it idempotent. How about triggering an onClosed() callback every time close() is called? with reason code CLOSE_REASON_LOCAL_CLOSE_API perhaps?",
+      "parentUuid": "60a0c7da_afae5d61",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 58
+      },
+      "revId": "65e997498b45934fb6d532373e16682f47e8d6ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
