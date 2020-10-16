@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97b2a050_81c61363",
+        "filename": "services/voiceinteraction/java/com/android/server/soundtrigger/SoundTriggerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1574221
+      },
+      "writtenOn": "2020-10-16T16:17:45Z",
+      "side": 1,
+      "message": "nit: Objects.toString(properties) is a little cleaner / more idiomatic.\nAlso, when would this be null?",
+      "range": {
+        "startLine": 700,
+        "startChar": 52,
+        "endLine": 701,
+        "endChar": 57
+      },
+      "revId": "6331d7f2c3ac89d1fad319b9130283eb621755e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
