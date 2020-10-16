@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbf07a1d_4fd2daa1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137703
+      },
+      "writtenOn": "2020-10-16T01:41:34Z",
+      "side": 1,
+      "message": "Are we still investigating/considering something like an opt-in for apps?",
+      "revId": "8baf2c2b50883f3af497ca872fe6b435f3902444",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
