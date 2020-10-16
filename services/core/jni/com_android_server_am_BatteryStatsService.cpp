@@ -62,11 +62,13 @@ using IPowerV1_0 = android::hardware::power::V1_0::IPower;
 namespace android
 {
 
-#define LAST_RESUME_REASON "/sys/kernel/wakeup_reasons/last_resume_reason"
-#define MAX_REASON_SIZE 512
+#define WAKEUP_REASONS_BUFFER_SIZE 3
 
 static bool wakeup_init = false;
 static sem_t wakeup_sem;
+static std::vector<std::string> wakeup_reasons_buffer[WAKEUP_REASONS_BUFFER_SIZE];
+static unsigned wakeup_reasons_write_index = 0;
+static unsigned wakeup_reasons_read_index = 0;
 extern sp<IPowerV1_0> getPowerHalHidlV1_0();
 extern sp<IPowerV1_1> getPowerHalHidlV1_1();
 extern bool processPowerHalReturn(bool isOk, const char* functionName);
@@ -115,9 +117,17 @@ struct PowerHalDeathRecipient : virtual public hardware::hidl_death_recipient {
 sp<PowerHalDeathRecipient> gDeathRecipient = new PowerHalDeathRecipient();
 
 class WakeupCallback : public BnSuspendCallback {
-   public:
-    binder::Status notifyWakeup(bool success) override {
+public:
+    binder::Status notifyWakeup(bool success,
+                                const std::vector<std::string>& wakeupReasons) override {
         ALOGI("In wakeup_callback: %s", success ? "resumed from suspend" : "suspend aborted");
+        // device can suspend and wakeup after sem_wait() finishes and before/during wakeup
+        // reason is recorded. i.e. the new coming wakeup reasons may (partially) overwrite the
+        // previous ones. Using a mutex is not preferred here as it may block the callback. To
+        // prevent this, a small ring buffer is utilized here to store wakeup reasons.
+        wakeup_reasons_buffer[wakeup_reasons_write_index++ % WAKEUP_REASONS_BUFFER_SIZE] =
+                wakeupReasons;
+
         int ret = sem_post(&wakeup_sem);
         if (ret < 0) {
             char buf[80];
@@ -157,8 +167,6 @@ static jint nativeWaitWakeup(JNIEnv *env, jobject clazz, jobject outBuf)
 
     // Wait for wakeup.
     ALOGV("Waiting for wakeup...");
-    // TODO(b/116747600): device can suspend and wakeup after sem_wait() finishes and before wakeup
-    // reason is recorded, i.e. BatteryStats might occasionally miss wakeup events.
     int ret = sem_wait(&wakeup_sem);
     if (ret < 0) {
         char buf[80];
@@ -168,20 +176,15 @@ static jint nativeWaitWakeup(JNIEnv *env, jobject clazz, jobject outBuf)
         return 0;
     }
 
-    FILE *fp = fopen(LAST_RESUME_REASON, "r");
-    if (fp == NULL) {
-        ALOGE("Failed to open %s", LAST_RESUME_REASON);
-        return -1;
-    }
-
     char* mergedreason = (char*)env->GetDirectBufferAddress(outBuf);
     int remainreasonlen = (int)env->GetDirectBufferCapacity(outBuf);
 
     ALOGV("Reading wakeup reasons");
     char* mergedreasonpos = mergedreason;
-    char reasonline[128];
     int i = 0;
-    while (fgets(reasonline, sizeof(reasonline), fp) != NULL) {
+    for (auto wakeup_reason :
+         wakeup_reasons_buffer[wakeup_reasons_read_index % WAKEUP_REASONS_BUFFER_SIZE]) {
+        auto reasonline = const_cast<char*>(wakeup_reason.c_str());
         char* pos = reasonline;
         char* endPos;
         int len;
@@ -233,15 +236,22 @@ static jint nativeWaitWakeup(JNIEnv *env, jobject clazz, jobject outBuf)
         i++;
     }
 
+    wakeup_reasons_read_index++;
+    if (wakeup_reasons_read_index % WAKEUP_REASONS_BUFFER_SIZE <
+        wakeup_reasons_write_index % WAKEUP_REASONS_BUFFER_SIZE) {
+        ALOGV("System suspended before wakeup reason recorded, self post semephore to catchup\n");
+        if (sem_post(&wakeup_sem) < 0) {
+            char buf[80];
+            strerror_r(errno, buf, sizeof(buf));
+            ALOGE("Error posting wakeup sem: %s\n", buf);
+        }
+    }
+
     ALOGV("Got %d reasons", i);
     if (i > 0) {
         *mergedreasonpos = 0;
     }
 
-    if (fclose(fp) != 0) {
-        ALOGE("Failed to close %s", LAST_RESUME_REASON);
-        return -1;
-    }
     return mergedreasonpos - mergedreason;
 }
 
