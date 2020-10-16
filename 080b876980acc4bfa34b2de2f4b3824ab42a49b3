@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60f8fc17_ee0d71e6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 8116,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-16T06:26:13Z",
+      "side": 1,
+      "message": "So we still actually have a race where the message to send a cached report is enqueued after a message to handle network tested. How about simply removing EVENT_SEND_CACHED_CONNECTIVITY_REPORT messages when entering this function ? I think that solves the issue.",
+      "range": {
+        "startLine": 8116,
+        "startChar": 17,
+        "endLine": 8116,
+        "endChar": 51
+      },
+      "revId": "080b876980acc4bfa34b2de2f4b3824ab42a49b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
