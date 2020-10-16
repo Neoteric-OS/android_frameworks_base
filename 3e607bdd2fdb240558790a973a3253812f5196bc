@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0a304be_77b6b2cb",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-16T15:45:05Z",
+      "side": 1,
+      "message": "Add a TODO to delete this if there are no problems after M-2020-12 rolls out?",
+      "range": {
+        "startLine": 90,
+        "startChar": 59,
+        "endLine": 90,
+        "endChar": 60
+      },
+      "revId": "3e607bdd2fdb240558790a973a3253812f5196bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3db69463_7e2f45e3",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-16T15:45:05Z",
+      "side": 1,
+      "message": "Generally, negative statements are harder to read and reason about than positive statements. Suggest calling this \"TETHER_ENABLE_ALL_PREFIX_RANGES\" or the like.\n\nIf you do that, don\u0027t forget to update the other parts of the CL.",
+      "range": {
+        "startLine": 175,
+        "startChar": 23,
+        "endLine": 175,
+        "endChar": 30
+      },
+      "revId": "3e607bdd2fdb240558790a973a3253812f5196bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdf88799_e4fa8b12",
+        "filename": "packages/Tethering/tests/mts/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-16T15:45:05Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 31
+      },
+      "revId": "3e607bdd2fdb240558790a973a3253812f5196bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7462b78e_00634df8",
+        "filename": "packages/Tethering/tests/mts/AndroidTest.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-16T15:45:05Z",
+      "side": 1,
+      "message": "Should this be mts instead?",
+      "range": {
+        "startLine": 17,
+        "startChar": 41,
+        "endLine": 17,
+        "endChar": 44
+      },
+      "revId": "3e607bdd2fdb240558790a973a3253812f5196bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51f6baa9_34c17ca6",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-16T15:45:05Z",
+      "side": 1,
+      "message": "This is a triple negative which is super confusing. You can at least get rid of two of the negatives by making this:\n\n    assumeTrue(isFeatureEnabled(...));\n\nAlso: what happens if the feature is disabled? Do none of the tests in this file run? That seems bad.\n\nWould suggest factoring out most of this test to a helper method that sets up wifi tethering and arranges for a prefix conflict. Then you can have two tests, one for devices where the flag is true and one for devices where the flag is false.",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 37
+      },
+      "revId": "3e607bdd2fdb240558790a973a3253812f5196bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
