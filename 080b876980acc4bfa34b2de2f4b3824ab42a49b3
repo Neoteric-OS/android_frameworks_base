@@ -22,6 +22,30 @@
       },
       "revId": "080b876980acc4bfa34b2de2f4b3824ab42a49b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f643b69_e0d69ffe",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 8116,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-10-16T17:38:39Z",
+      "side": 1,
+      "message": "I think this works if using Handler#removeMessages(EVENT_SEND_CACHED_CONNECTIVITY_REPORT, nai) so only the relevant Network\u0027s SEND_CACHED events are removed.\n\nHowever, it seems to me that this approach may unintentionally remove events that are sequenced correctly and should be actually be processed (at least after the initial validation is complete).\n\nAlternatively, we can pass a tuple of NetworkAgentInfo and cached report in handleReportNetworkConnectivity (which may be null). Because this is run on the same Thread via the CS Handler, it should avoid this race. We can additionally compare the cached report\u0027s timestamp with the current cached report in the NetworkAgentInfo to avoid sending an old report.\n\nThoughts?\n\n(I\u0027ve also grabbed some time Sunday evening / Monday morning to discuss this offline)",
+      "parentUuid": "60f8fc17_ee0d71e6",
+      "range": {
+        "startLine": 8116,
+        "startChar": 17,
+        "endLine": 8116,
+        "endChar": 51
+      },
+      "revId": "080b876980acc4bfa34b2de2f4b3824ab42a49b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
