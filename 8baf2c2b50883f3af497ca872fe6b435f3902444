@@ -34,6 +34,24 @@
       "parentUuid": "cbf07a1d_4fd2daa1",
       "revId": "8baf2c2b50883f3af497ca872fe6b435f3902444",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d11ee05_cc208535",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1067098
+      },
+      "writtenOn": "2020-10-16T17:08:38Z",
+      "side": 1,
+      "message": "Please include the folks working on MTE (me, eugenis, mitchp, kcc) as this may impact how the opt-in works for MTE.",
+      "parentUuid": "7d68eae5_e047141a",
+      "revId": "8baf2c2b50883f3af497ca872fe6b435f3902444",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
