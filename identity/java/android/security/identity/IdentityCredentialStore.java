@@ -98,6 +98,29 @@ public abstract class IdentityCredentialStore {
      */
     public static final int CIPHERSUITE_ECDHE_HKDF_ECDSA_WITH_AES_256_GCM_SHA256 = 1;
 
+
+    /**
+     * This is the feature level that was shipped with the Android 11 Identity Credential API and
+     * it's the default feature level.
+     *
+     * <p>This feature level selects crypto algorithms from an interim draft of ISO 18013-5, in
+     * particular the way the DeviceSignedBytes is MACed.</p>
+     *
+     * <p>If an application intends to be compatible with the published version of ISO 18013-5 they
+     * should not use this feature level.</p>
+     */
+    public static final int FEATURE_LEVEL_11 = 11;
+
+    /**
+     * This is the feature level shipped with the Android 12 Identity Crededential API. It is not
+     * selected by default, applications need to manually select it with selectFeautureLevel().
+     *
+     * <p>This feature level selects crypto algorithms from the published version ISO 18013-5. If
+     * an application intends to be compatible with the published version of ISO 18013-5 they
+     * should use this (or a later) feature level.</p>
+     */
+    public static final int FEATURE_LEVEL_12 = 12;
+
     /**
      * Gets the default {@link IdentityCredentialStore}.
      *
@@ -193,7 +216,9 @@ public abstract class IdentityCredentialStore {
      * @param credentialName the name of the credential to delete.
      * @return {@code null} if the credential was not found, the COSE_Sign1 data structure above
      *     if the credential was found and deleted.
+     * @deprecated Use {@link IdentityCredential#deleteCredential(byte[])} instead.
      */
+    @Deprecated
     public abstract @Nullable byte[] deleteCredentialByName(@NonNull String credentialName);
 
     /** @hide */
@@ -202,4 +227,18 @@ public abstract class IdentityCredentialStore {
     public @interface Ciphersuite {
     }
 
+    /** @hide */
+    @IntDef(value = {FEATURE_LEVEL_11, FEATURE_LEVEL_12})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface FeatureLevel {
+    }
+
+    /**
+     * Returns the maximum feature level supported by the device.
+     *
+     * @return the maximum feature level supported by the device.
+     */
+    public @FeatureLevel int getMaxSupportedFeatureLevel() {
+        throw new UnsupportedOperationException();
+    }
 }
