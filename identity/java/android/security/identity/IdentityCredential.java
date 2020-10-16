@@ -18,6 +18,7 @@ package android.security.identity;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.icu.util.Calendar;
 
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
@@ -112,6 +113,20 @@ public abstract class IdentityCredential {
      *                                has been exceeded if no other key is available.
      */
     public abstract void setAllowUsingExhaustedKeys(boolean allowUsingExhaustedKeys);
+
+    /**
+     * Sets whether to allow using an authentication key which has been expired if no
+     * other key is available. This must be called prior to calling
+     * {@link #getEntries(byte[], Map, byte[], byte[])}.
+     *
+     * By default this is set to false.
+     *
+     * @param allowUsingExpiredKeys whether to allow using an authentication key which use count
+     *                              has been exceeded if no other key is available.
+     */
+    public void setAllowUsingExpiredKeys(boolean allowUsingExpiredKeys) {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * Called by android.hardware.biometrics.CryptoObject#getOpId() to get an
@@ -308,11 +323,37 @@ public abstract class IdentityCredential {
      *                          the authenticity
      *                          and integrity of the credential data fields.
      * @throws UnknownAuthenticationKeyException If the given authentication key is not recognized.
+     * @deprecated Use {@link #storeStaticAuthenticationData(X509Certificate, Calendar, byte[]).}
+     *     instead.
      */
+    @Deprecated
     public abstract void storeStaticAuthenticationData(
             @NonNull X509Certificate authenticationKey,
             @NonNull byte[] staticAuthData)
             throws UnknownAuthenticationKeyException;
+
+    /**
+     * Store authentication data associated with a dynamic authentication key.
+     *
+     * This should only be called for an authenticated key returned by
+     * {@link #getAuthKeysNeedingCertification()}.
+     *
+     * @param authenticationKey The dynamic authentication key for which certification and
+     *                          associated static
+     *                          authentication data is being provided.
+     * @param expirationDate    The expiration date of the static authentication data.
+     * @param staticAuthData    Static authentication data provided by the issuer that validates
+     *                          the authenticity
+     *                          and integrity of the credential data fields.
+     * @throws UnknownAuthenticationKeyException If the given authentication key is not recognized.
+     */
+    public void storeStaticAuthenticationData(
+            @NonNull X509Certificate authenticationKey,
+            @NonNull Calendar expirationDate,
+            @NonNull byte[] staticAuthData)
+            throws UnknownAuthenticationKeyException {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * Get the number of times the dynamic authentication keys have been used.
@@ -320,4 +361,54 @@ public abstract class IdentityCredential {
      * @return int array of dynamic authentication key usage counts.
      */
     public @NonNull abstract int[] getAuthenticationDataUsageCount();
+
+    /**
+     * Deletes a credential.
+     *
+     * <p>This method returns a COSE_Sign1 data structure signed by the CredentialKey
+     * with payload set to {@code ProofOfDeletion} as defined below.</p>
+     *
+     * <p>For <code>FEATURE_LEVEL_ANDROID_11</code> the returned CBOR is the following:</p>
+     * <pre>
+     *     ProofOfDeletion = [
+     *          "ProofOfDeletion",            ; tstr
+     *          tstr,                         ; DocType
+     *          bool                          ; true if this is a test credential, should
+     *                                        ; always be false.
+     *      ]
+     * </pre>
+     *
+     * <p>For <code>FEATURE_LEVEL_ANDROID_12</code> and later the returned CBOR is the
+     * following:</p>
+     * <pre>
+     *     ProofOfDeletion = [
+     *          "ProofOfDeletion",            ; tstr
+     *          tstr,                         ; DocType
+     *          bstr,                         ; Challenge
+     *          bool                          ; true if this is a test credential, should
+     *                                        ; always be false.
+     *      ]
+     * </pre>
+     *
+     * @param challenge is a non-empty byte array whose contents should be unique, fresh and
+     *                  provided by the issuing authority. The value provided is embedded in the
+     *                  generated CBOR and enables the issuing authority to verify that the
+     *                  returned proof is fresh.
+     * @return the COSE_Sign1 data structure above
+     */
+    public @NonNull byte[] deleteCredential(@NonNull byte[] challenge)  {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Sets the feature level to use.
+     *
+     * <p>This changes how some of the APIs work. See each API for details on how they're impacted
+     * by different feature levels.</p>
+     *
+     * <p>By default {@code FEATURE_LEVEL_11} is used.</p>
+     */
+    public boolean setFeatureLevel(@IdentityCredentialStore.FeatureLevel int featureLevel) {
+        throw new UnsupportedOperationException();
+    }
 }

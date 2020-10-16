@@ -153,7 +153,8 @@ class CredstoreIdentityCredentialStore extends IdentityCredentialStore {
                     return null;
                 }
             }
-            byte[] proofOfDeletion = credstoreCredential.deleteCredential();
+            byte[] challenge = new byte[0];
+            byte[] proofOfDeletion = credstoreCredential.deleteCredential(challenge);
             return proofOfDeletion;
         } catch (android.os.RemoteException e) {
             throw new RuntimeException("Unexpected RemoteException ", e);
@@ -163,4 +164,18 @@ class CredstoreIdentityCredentialStore extends IdentityCredentialStore {
         }
     }
 
+
+    @Override
+    public @FeatureLevel int getMaxSupportedFeatureLevel() {
+        try {
+            SecurityHardwareInfoParcel info;
+            info = mStore.getSecurityHardwareInfo();
+            return info.maxFeatureLevel;
+        } catch (android.os.RemoteException e) {
+            throw new RuntimeException("Unexpected RemoteException ", e);
+        } catch (android.os.ServiceSpecificException e) {
+            throw new RuntimeException("Unexpected ServiceSpecificException with code "
+                    + e.errorCode, e);
+        }
+    }
 }
