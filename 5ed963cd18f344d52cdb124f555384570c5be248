@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "20106c1c_8c3153bf",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
@@ -20,8 +21,31 @@
         "endChar": 26
       },
       "revId": "5ed963cd18f344d52cdb124f555384570c5be248",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9aa6af9a_ac54ed70",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-16T10:22:17Z",
+      "side": 1,
+      "message": "It will trigger ActvitityManagerService.clearAllDnsCacheLocked to go through the process list and clear all dns cache. It does not look like to default network only. I think it should be fine as it is. or do I miss anything that it\u0027s actually for default only somewhere?",
+      "parentUuid": "20106c1c_8c3153bf",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 26
+      },
+      "revId": "5ed963cd18f344d52cdb124f555384570c5be248",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
