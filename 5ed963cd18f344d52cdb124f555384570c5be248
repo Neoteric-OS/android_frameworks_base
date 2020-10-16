@@ -70,6 +70,30 @@
       },
       "revId": "5ed963cd18f344d52cdb124f555384570c5be248",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8b8aa20_506d3af2",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-16T13:02:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92dbe651_c7ec40a1",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 26
+      },
+      "revId": "5ed963cd18f344d52cdb124f555384570c5be248",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
