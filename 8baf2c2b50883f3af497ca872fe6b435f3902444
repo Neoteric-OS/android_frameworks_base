@@ -52,6 +52,24 @@
       "parentUuid": "7d68eae5_e047141a",
       "revId": "8baf2c2b50883f3af497ca872fe6b435f3902444",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "141e1835_3b15f689",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1005967
+      },
+      "writtenOn": "2020-10-16T17:09:48Z",
+      "side": 1,
+      "message": "Yes, please.\nThe opt-in can be tied in with the MTE opt-in.",
+      "parentUuid": "4d11ee05_cc208535",
+      "revId": "8baf2c2b50883f3af497ca872fe6b435f3902444",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
