@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e6254af_73c314a9",
+        "filename": "packages/Tethering/src/android/net/util/TetheringUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-16T06:12:33Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this in this change, see below.\n\nIf you were to use such a method, the current idea is to use androix BuildCompat.isAtLeastX() (which has its quirks but should be usable)",
+      "range": {
+        "startLine": 173,
+        "startChar": 22,
+        "endLine": 173,
+        "endChar": 55
+      },
+      "revId": "e3636ebbfa9a06f64fd409f244a73c6ee433a291",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "708b4b65_cb691c89",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-16T06:12:33Z",
+      "side": 1,
+      "message": "The flag should test against the module version, not the API version.\nThe concern is with rollbacks of a module after the flag is ramped up.\nSee NetworkStackUtils.isFeatureEnabled.\n\nI guess you can\u0027t use that since the version is on the APEX and not the APK. I see 2 options:\n - Query PackageManager to find the APEX version using the APEX package name (which is different on AOSP and non-AOSP, so you might need to try both or use some trick)\n - Since it\u0027s a \"kill switch\" flag we\u0027re trying to add, having it as a boolean may be OK; but then it should be called differently (TETHER_DISABLE_SELECT_ALL_PREFIX_RANGES ?)",
+      "range": {
+        "startLine": 330,
+        "startChar": 15,
+        "endLine": 330,
+        "endChar": 79
+      },
+      "revId": "e3636ebbfa9a06f64fd409f244a73c6ee433a291",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8605743_607fd14b",
+        "filename": "packages/Tethering/tests/mts/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-16T06:12:33Z",
+      "side": 1,
+      "message": "Do you mean there\u0027s no requirement to implement the conflict detection feature if the module is not used, so this should not be in CTS ?\nBut why not use TetheringIntegrationTests ? It should go into MTS too",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 43
+      },
+      "revId": "e3636ebbfa9a06f64fd409f244a73c6ee433a291",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "704274e5_43de6532",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-16T06:12:33Z",
+      "side": 1,
+      "message": "Why is this necessary ?",
+      "range": {
+        "startLine": 459,
+        "startChar": 41,
+        "endLine": 459,
+        "endChar": 44
+      },
+      "revId": "e3636ebbfa9a06f64fd409f244a73c6ee433a291",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
