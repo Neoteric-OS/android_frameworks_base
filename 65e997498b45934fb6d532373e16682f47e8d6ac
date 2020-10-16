@@ -70,6 +70,30 @@
       },
       "revId": "65e997498b45934fb6d532373e16682f47e8d6ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "721a4982_4a2191a7",
+        "filename": "core/java/android/uwb/RangingSession.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-10-16T00:05:49Z",
+      "side": 1,
+      "message": "Sure, updated to say that the callback is still invoked.",
+      "parentUuid": "5ad2f812_e4334c22",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 58
+      },
+      "revId": "65e997498b45934fb6d532373e16682f47e8d6ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
