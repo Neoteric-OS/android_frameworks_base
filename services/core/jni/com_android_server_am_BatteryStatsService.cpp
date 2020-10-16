@@ -62,11 +62,11 @@ using IPowerV1_0 = android::hardware::power::V1_0::IPower;
 namespace android
 {
 
-#define LAST_RESUME_REASON "/sys/kernel/wakeup_reasons/last_resume_reason"
 #define MAX_REASON_SIZE 512
 
 static bool wakeup_init = false;
 static sem_t wakeup_sem;
+static std::vector<std::string> wakeup_reasons;
 extern sp<IPowerV1_0> getPowerHalHidlV1_0();
 extern sp<IPowerV1_1> getPowerHalHidlV1_1();
 extern bool processPowerHalReturn(bool isOk, const char* functionName);
@@ -115,9 +115,12 @@ struct PowerHalDeathRecipient : virtual public hardware::hidl_death_recipient {
 sp<PowerHalDeathRecipient> gDeathRecipient = new PowerHalDeathRecipient();
 
 class WakeupCallback : public BnSuspendCallback {
-   public:
-    binder::Status notifyWakeup(bool success) override {
+public:
+    binder::Status notifyWakeup(bool success,
+                                const std::vector<std::string>& wakeupReasons) override {
         ALOGI("In wakeup_callback: %s", success ? "resumed from suspend" : "suspend aborted");
+        wakeup_reasons = wakeupReasons;
+
         int ret = sem_post(&wakeup_sem);
         if (ret < 0) {
             char buf[80];
@@ -168,20 +171,14 @@ static jint nativeWaitWakeup(JNIEnv *env, jobject clazz, jobject outBuf)
         return 0;
     }
 
-    FILE *fp = fopen(LAST_RESUME_REASON, "r");
-    if (fp == NULL) {
-        ALOGE("Failed to open %s", LAST_RESUME_REASON);
-        return -1;
-    }
-
     char* mergedreason = (char*)env->GetDirectBufferAddress(outBuf);
     int remainreasonlen = (int)env->GetDirectBufferCapacity(outBuf);
 
     ALOGV("Reading wakeup reasons");
     char* mergedreasonpos = mergedreason;
-    char reasonline[128];
     int i = 0;
-    while (fgets(reasonline, sizeof(reasonline), fp) != NULL) {
+    for (auto wakeup_reason : wakeup_reasons) {
+        auto reasonline = const_cast<char*>(wakeup_reason.c_str());
         char* pos = reasonline;
         char* endPos;
         int len;
@@ -238,10 +235,6 @@ static jint nativeWaitWakeup(JNIEnv *env, jobject clazz, jobject outBuf)
         *mergedreasonpos = 0;
     }
 
-    if (fclose(fp) != 0) {
-        ALOGE("Failed to close %s", LAST_RESUME_REASON);
-        return -1;
-    }
     return mergedreasonpos - mergedreason;
 }
 
