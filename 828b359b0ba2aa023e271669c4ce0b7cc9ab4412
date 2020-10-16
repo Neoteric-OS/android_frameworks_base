@@ -34,6 +34,24 @@
       "parentUuid": "2fa4aef6_2c6f3bcc",
       "revId": "828b359b0ba2aa023e271669c4ce0b7cc9ab4412",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7030e0f7_242ffc92",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-10-16T16:12:55Z",
+      "side": 1,
+      "message": "Yes, that\u0027s exactly what we\u0027re looking for. Thanks, and sorry for the surprise. Whether to expose SystemProperties#set is a long, on-going discussion from R and the current recommendation to use sysprops was agreed upon on Monday. We\u0027re still working on the docs and guidelines for it and will hopefully have them out within the next week or two so future work isn\u0027t caught by surprise by this.",
+      "parentUuid": "4d4bbef8_1aec785b",
+      "revId": "828b359b0ba2aa023e271669c4ce0b7cc9ab4412",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
