@@ -46,6 +46,30 @@
       },
       "revId": "5ed963cd18f344d52cdb124f555384570c5be248",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92dbe651_c7ec40a1",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-16T13:02:22Z",
+      "side": 1,
+      "message": "You\u0027re right. I thought that the VM DNS cache was for the default network only, but actually it\u0027s multinetwork-aware (and has always been). Ideally there would be a way to flush the cache only for this netId, but that\u0027s definitely out of scope for this CL.",
+      "parentUuid": "9aa6af9a_ac54ed70",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 26
+      },
+      "revId": "5ed963cd18f344d52cdb124f555384570c5be248",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
