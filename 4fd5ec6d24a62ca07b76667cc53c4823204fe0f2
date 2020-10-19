@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e91e1646_44be7b5a",
+        "filename": "telephony/java/android/telephony/data/DataCallResponse.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2020-10-19T13:36:48Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 358,
+        "startChar": 7,
+        "endLine": 358,
+        "endChar": 12
+      },
+      "revId": "4fd5ec6d24a62ca07b76667cc53c4823204fe0f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
