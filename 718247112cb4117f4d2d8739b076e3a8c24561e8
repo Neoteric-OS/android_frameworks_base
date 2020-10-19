@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9636023_0ab4d27d",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:52:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "db72937c_79f275b8",
+      "range": {
+        "startLine": 91,
+        "startChar": 13,
+        "endLine": 91,
+        "endChar": 80
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f39adaef_8dded1ab",
@@ -54,6 +78,30 @@
       "writtenOn": "2020-10-19T05:07:55Z",
       "side": 1,
       "message": "Nit: add comment saying that flags should normally not be booleans, but this is a kill-switch flag that is only used to turn off the feature, so binary rollback problems do not apply",
+      "range": {
+        "startLine": 175,
+        "startChar": 38,
+        "endLine": 175,
+        "endChar": 60
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06db2157_dd287b28",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:52:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f39adaef_8dded1ab",
       "range": {
         "startLine": 175,
         "startChar": 38,
