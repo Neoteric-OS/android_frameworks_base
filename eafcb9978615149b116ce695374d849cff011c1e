@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5079b06e_e392c392",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-10-19T22:33:48Z",
+      "side": 1,
+      "message": "I\u0027m assuming this is just a cherry-pick with no additional changes",
+      "revId": "eafcb9978615149b116ce695374d849cff011c1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
