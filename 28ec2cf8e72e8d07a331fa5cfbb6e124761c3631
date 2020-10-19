@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2190cbe6_e8326d82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T09:16:46Z",
+      "side": 1,
+      "message": "Code looks fine; some minor comments on the tests but can be addressed in a followup.",
+      "revId": "28ec2cf8e72e8d07a331fa5cfbb6e124761c3631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a824172e_8a7dc6c4",
+        "filename": "packages/Tethering/tests/mts/Android.bp",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T09:16:46Z",
+      "side": 1,
+      "message": "I think \"androidx.test.rules\" would work",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "28ec2cf8e72e8d07a331fa5cfbb6e124761c3631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bf95b54_77b72d37",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T09:16:46Z",
+      "side": 1,
+      "message": "Typo: suitable",
+      "range": {
+        "startLine": 169,
+        "startChar": 29,
+        "endLine": 169,
+        "endChar": 37
+      },
+      "revId": "28ec2cf8e72e8d07a331fa5cfbb6e124761c3631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "586de9f4_ed6424db",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T09:16:46Z",
+      "side": 1,
+      "message": "Define TEST_TIMEOUT_MS, instead of the comment",
+      "range": {
+        "startLine": 176,
+        "startChar": 50,
+        "endLine": 176,
+        "endChar": 78
+      },
+      "revId": "28ec2cf8e72e8d07a331fa5cfbb6e124761c3631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
