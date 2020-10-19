@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff467769_363df8a9",
+        "filename": "core/java/android/uwb/RangingSession.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-10-19T23:56:53Z",
+      "side": 1,
+      "message": "After making this method idempotent, we should not need to throw any exception since close() will always trigger an onClosed callback.",
+      "range": {
+        "startLine": 150,
+        "startChar": 24,
+        "endLine": 150,
+        "endChar": 42
+      },
+      "revId": "9cf7392b8e77be5fa4a48bb2fbd059af1a10c01b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
