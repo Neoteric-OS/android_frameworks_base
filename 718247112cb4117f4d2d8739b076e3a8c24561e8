@@ -89,6 +89,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "798bbef4_d7c38227",
+        "filename": "packages/Tethering/tests/mts/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2582aa95_c8181b11",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 75
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "3d25a4e0_4e4c7dce",
         "filename": "packages/Tethering/tests/mts/Android.bp",
         "patchSetId": 8
@@ -100,6 +124,30 @@
       "writtenOn": "2020-10-19T05:07:55Z",
       "side": 1,
       "message": "No .kt :(",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad2822ad_bd26daf4",
+        "filename": "packages/Tethering/tests/mts/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Sorry, just choose more familiar language for time pressure...",
+      "parentUuid": "3d25a4e0_4e4c7dce",
       "range": {
         "startLine": 26,
         "startChar": 8,
@@ -133,6 +181,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17b2ab35_89ae91b4",
+        "filename": "packages/Tethering/tests/mts/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Done\n\nAck for move CtsTetheringUtils to frameworks/libs/net/ net-test-utils",
+      "parentUuid": "4ba43422_a007bd3d",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "130356af_da765563",
@@ -146,6 +218,30 @@
       "writtenOn": "2020-10-19T05:07:55Z",
       "side": 1,
       "message": "Which is pulled in from cts-net-utils -\u003e net-tests-utils (mockito-target-extended-minus-junit4)\nIt would be better to add it explicitly in static_libs too, otherwise it\u0027s hard to understand why the jni_libs are necessary, and if the dependency is removed from net-tests-utils, this would break.",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b312aff_5629e7e7",
+        "filename": "packages/Tethering/tests/mts/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "130356af_da765563",
       "range": {
         "startLine": 38,
         "startChar": 8,
@@ -179,6 +275,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9b44157_9010640c",
+        "filename": "packages/Tethering/tests/mts/AndroidTest.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "436b74ce_88da6f6d",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 77
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea12a1c8_13d3f338",
@@ -192,6 +312,30 @@
       "writtenOn": "2020-10-19T05:07:55Z",
       "side": 1,
       "message": "This should be either justified with comments or removed",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 48
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a3449f2_9ae1ceb8",
+        "filename": "packages/Tethering/tests/mts/AndroidTest.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea12a1c8_13d3f338",
       "range": {
         "startLine": 20,
         "startChar": 0,
@@ -225,6 +369,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cedb62f_c7f858ee",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aa1c22a_b270cd62",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 36
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52125f79_932eb621",
@@ -238,6 +406,30 @@
       "writtenOn": "2020-10-19T05:07:55Z",
       "side": 1,
       "message": "This means there\u0027s no coverage for the case where the disable flag is pushed, so we would be pushing an untested configuration.\nAs per http://go/aml-net-safe-releases#bookmark\u003did.5gswv3weygoh, try to set the flag explicitly instead, and have a test for both configurations:\n\n  @Nullable\n  private String setFlag(@Nullable String value) {\n      return runAsShell(READ_DEVICE_CONFIG, WRITE_DEVICE_CONFIG, () -\u003e {\n          final String original \u003d DeviceConfig.getProperty(...)\n          DeviceConfig.setProperty(..., enable);\n          return original;\n      });\n  }\n\n  // Test for enabled\n  final String originalValue \u003d setFeatureEnabled(\"true\");\n  try {\n      // Test\n  } finally {\n      setFeatureEnabled(original);\n  }\n\n  // Also test when disabled...",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 18
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d3fba0f_d879efe5",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Hmm, in current design. The we need reboot the device to apply the flag because PrivateAddressCoordinator don\u0027t know when the flag is updated and need to rebuilt itself.\n\nAs talk, keep the current code is more safe although it means that there\u0027s no good test for the flagged off behavior. And add it in follow up change. If we merge it for the January train, we may see MTS failures before December goes out",
+      "parentUuid": "52125f79_932eb621",
       "range": {
         "startLine": 89,
         "startChar": 8,
@@ -271,6 +463,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "883256c0_5b6d352d",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2de44c76_d5e0070b",
+      "range": {
+        "startLine": 99,
+        "startChar": 51,
+        "endLine": 99,
+        "endChar": 66
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e25d8fa1_2e2b2ce1",
@@ -284,6 +500,30 @@
       "writtenOn": "2020-10-19T05:07:55Z",
       "side": 1,
       "message": "Nit: also add some assume() so the test ends with ASSUMPTION_FAILED, not SUCCESS",
+      "range": {
+        "startLine": 106,
+        "startChar": 12,
+        "endLine": 106,
+        "endChar": 18
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cc4f85b_085f281f",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e25d8fa1_2e2b2ce1",
       "range": {
         "startLine": 106,
         "startChar": 12,
@@ -317,6 +557,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "921e0b41_2a563018",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Oops, indeed. Remove it that expectTetheredInterfacesChanged(null) already make sure hotspot is disabled.",
+      "parentUuid": "1d92d5ce_0b4a1bc6",
+      "range": {
+        "startLine": 128,
+        "startChar": 31,
+        "endLine": 128,
+        "endChar": 51
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc53e102_a9e3f187",
@@ -330,6 +594,30 @@
       "writtenOn": "2020-10-19T05:07:55Z",
       "side": 1,
       "message": "What does this test exactly ?\nI think what we want to test here is:\n!testPrefix.contains(newHotspotAddr)",
+      "range": {
+        "startLine": 138,
+        "startChar": 12,
+        "endLine": 139,
+        "endChar": 55
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b423c7ef_5f442c5d",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc53e102_a9e3f187",
       "range": {
         "startLine": 138,
         "startChar": 12,
@@ -363,6 +651,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "52c10411_7e453e04",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43d931f3_403a0839",
+      "range": {
+        "startLine": 158,
+        "startChar": 21,
+        "endLine": 158,
+        "endChar": 87
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c9473b5a_ac7303e0",
@@ -386,6 +698,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47f5ae96_966449ed",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9473b5a_ac7303e0",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 14
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe397741_56ede76e",
@@ -399,6 +735,30 @@
       "writtenOn": "2020-10-19T05:07:55Z",
       "side": 1,
       "message": "Use TestNetworkTrackerKt.initTestNetwork and remove dependency on CtsNetUtils",
+      "range": {
+        "startLine": 173,
+        "startChar": 33,
+        "endLine": 173,
+        "endChar": 49
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f267ced_c8348272",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe397741_56ede76e",
       "range": {
         "startLine": 173,
         "startChar": 33,
