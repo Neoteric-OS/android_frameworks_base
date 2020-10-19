@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7233f5c9_d2eb6a5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-19T12:26:45Z",
+      "side": 1,
+      "message": "Thanks for code review, would address remaining comments in follow up CL",
+      "revId": "28ec2cf8e72e8d07a331fa5cfbb6e124761c3631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a824172e_8a7dc6c4",
