@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81267978_aca39f98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "Code basically LGTM, but I think the test needs more work, although we should get a first version into MTS together with the module change if possible.\nIt\u0027s probably better to split the tests to another change though.",
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db72937c_79f275b8",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "As per http://go/aml-net-safe-releases#bookmark\u003did.7n1196wyzaqz, I\u0027d advise filing a bug, and putting in the hotlist for M2021-04 or M2021-05 (and possibly have bugjuggler reassign to you in January)",
+      "range": {
+        "startLine": 91,
+        "startChar": 13,
+        "endLine": 91,
+        "endChar": 80
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f39adaef_8dded1ab",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "Nit: add comment saying that flags should normally not be booleans, but this is a kill-switch flag that is only used to turn off the feature, so binary rollback problems do not apply",
+      "range": {
+        "startLine": 175,
+        "startChar": 38,
+        "endLine": 175,
+        "endChar": 60
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2582aa95_c8181b11",
+        "filename": "packages/Tethering/tests/mts/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "Is there any logic enforcing that ?\nI don\u0027t think there needs to be though, because a device manufacturer who breaks whatever this test verifies and does not use the mainline module can just fix the test themselves (or unfortunately more likely, not run it)",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 75
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d25a4e0_4e4c7dce",
+        "filename": "packages/Tethering/tests/mts/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "No .kt :(",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ba43422_a007bd3d",
+        "filename": "packages/Tethering/tests/mts/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "Is this and ctstestrunner-axt necessary ? If yes add comment on why\nIt\u0027s pretty ugly to include CTS utils in a test suite that\u0027s explicitly not CTS. CtsTetheringUtils should move to frameworks/libs/net/ net-test-utils (not in this change though)",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "130356af_da765563",
+        "filename": "packages/Tethering/tests/mts/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "Which is pulled in from cts-net-utils -\u003e net-tests-utils (mockito-target-extended-minus-junit4)\nIt would be better to add it explicitly in static_libs too, otherwise it\u0027s hard to understand why the jni_libs are necessary, and if the dependency is removed from net-tests-utils, this would break.",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "436b74ce_88da6f6d",
+        "filename": "packages/Tethering/tests/mts/AndroidTest.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "Do you really need one for this test ?",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 77
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea12a1c8_13d3f338",
+        "filename": "packages/Tethering/tests/mts/AndroidTest.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "This should be either justified with comments or removed",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 48
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9aa1c22a_b270cd62",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "Instead of adopting shell for the whole test, especially without specifying which permissions, could you do it just for the parts that need it ?\nUsing TestPermissionUtil.runAsShell",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 36
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52125f79_932eb621",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "This means there\u0027s no coverage for the case where the disable flag is pushed, so we would be pushing an untested configuration.\nAs per http://go/aml-net-safe-releases#bookmark\u003did.5gswv3weygoh, try to set the flag explicitly instead, and have a test for both configurations:\n\n  @Nullable\n  private String setFlag(@Nullable String value) {\n      return runAsShell(READ_DEVICE_CONFIG, WRITE_DEVICE_CONFIG, () -\u003e {\n          final String original \u003d DeviceConfig.getProperty(...)\n          DeviceConfig.setProperty(..., enable);\n          return original;\n      });\n  }\n\n  // Test for enabled\n  final String originalValue \u003d setFeatureEnabled(\"true\");\n  try {\n      // Test\n  } finally {\n      setFeatureEnabled(original);\n  }\n\n  // Also test when disabled...",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 18
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2de44c76_d5e0070b",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "Nit: I would have found \"wholeRangeConflict\" easier to understand; partly because it refers to the conditions of the test rather than its result.",
+      "range": {
+        "startLine": 99,
+        "startChar": 51,
+        "endLine": 99,
+        "endChar": 66
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e25d8fa1_2e2b2ce1",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "Nit: also add some assume() so the test ends with ASSUMPTION_FAILED, not SUCCESS",
+      "range": {
+        "startLine": 106,
+        "startChar": 12,
+        "endLine": 106,
+        "endChar": 18
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d92d5ce_0b4a1bc6",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "This seems racy: what if the AP was re-enabled just before this is called ? The disabled callback would not be seen I think",
+      "range": {
+        "startLine": 128,
+        "startChar": 31,
+        "endLine": 128,
+        "endChar": 51
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc53e102_a9e3f187",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "What does this test exactly ?\nI think what we want to test here is:\n!testPrefix.contains(newHotspotAddr)",
+      "range": {
+        "startLine": 138,
+        "startChar": 12,
+        "endLine": 139,
+        "endChar": 55
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43d931f3_403a0839",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "I had trouble understanding this with the current naming. Suggest:\n\ngetConflictingPrefix(final LinkAddress address, final boolean wholeRangeConflict)",
+      "range": {
+        "startLine": 158,
+        "startChar": 21,
+        "endLine": 158,
+        "endChar": 87
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9473b5a_ac7303e0",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "Or fail() before this and mark the method as @NonNull ?",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 14
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe397741_56ede76e",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T05:07:55Z",
+      "side": 1,
+      "message": "Use TestNetworkTrackerKt.initTestNetwork and remove dependency on CtsNetUtils",
+      "range": {
+        "startLine": 173,
+        "startChar": 33,
+        "endLine": 173,
+        "endChar": 49
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
