@@ -1437,6 +1437,7 @@ public class ServiceState implements Parcelable {
      * @return the NR 5G state.
      * @hide
      */
+    @SystemApi
     public @NRState int getNrState() {
         final NetworkRegistrationInfo regInfo = getNetworkRegistrationInfo(
                 NetworkRegistrationInfo.DOMAIN_PS, AccessNetworkConstants.TRANSPORT_TYPE_WWAN);
