@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afe8b323_0ce83269",
+        "filename": "core/java/android/uwb/RangingReport.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-10-20T00:20:13Z",
+      "side": 1,
+      "message": "Could we print more information that includes indices of prev and current ranging measurement and their timestamps? \n\nSo that it is easier to debug when seeing crashes.",
+      "range": {
+        "startLine": 90,
+        "startChar": 28,
+        "endLine": 90,
+        "endChar": 94
+      },
+      "revId": "9a3d7966f420313780ac1036048a27a9f7d8b625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
