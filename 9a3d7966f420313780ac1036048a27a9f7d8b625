@@ -46,6 +46,30 @@
       },
       "revId": "9a3d7966f420313780ac1036048a27a9f7d8b625",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "086aa10f_73ec44bb",
+        "filename": "core/java/android/uwb/RangingReport.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-10-20T22:50:12Z",
+      "side": 1,
+      "message": "ACK. Thank you!",
+      "parentUuid": "02a54f0a_30143f58",
+      "range": {
+        "startLine": 90,
+        "startChar": 28,
+        "endLine": 90,
+        "endChar": 94
+      },
+      "revId": "9a3d7966f420313780ac1036048a27a9f7d8b625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
