@@ -9373,8 +9373,13 @@ package android.security.keystore {
     ctor public DeviceIdAttestationException(@Nullable String, @Nullable Throwable);
   }
 
+  public final class KeyGenParameterSpec implements java.security.spec.AlgorithmParameterSpec {
+    method public int getNamespace();
+  }
+
   public static final class KeyGenParameterSpec.Builder {
-    method @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setUid(int);
+    method @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setNamespace(int);
+    method @Deprecated @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setUid(int);
   }
 
 }
@@ -9495,6 +9500,14 @@ package android.security.keystore.recovery {
     method @NonNull public android.security.keystore.recovery.WrappedApplicationKey.Builder setAlias(@NonNull String);
     method @NonNull public android.security.keystore.recovery.WrappedApplicationKey.Builder setEncryptedKeyMaterial(@NonNull byte[]);
     method @NonNull public android.security.keystore.recovery.WrappedApplicationKey.Builder setMetadata(@Nullable byte[]);
+  }
+
+}
+
+package android.security.keystore2 {
+
+  public class AndroidKeyStoreProvider extends java.security.Provider {
+    method @NonNull public static java.security.KeyStore getKeyStoreForNamespace(int) throws java.security.KeyStoreException, java.security.NoSuchProviderException;
   }
 
 }
