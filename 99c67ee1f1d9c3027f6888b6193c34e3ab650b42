@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a8535e0_f1fab475",
+        "filename": "services/core/java/com/android/server/connectivity/MockableSystemProperties.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-20T09:32:52Z",
+      "side": 1,
+      "message": "Looks like that bug was fixed 4 days ago ?\nIf not in this change, can you now remove the method in a followup ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "99c67ee1f1d9c3027f6888b6193c34e3ab650b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3309d92_fe3bd618",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6572,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-20T09:32:52Z",
+      "side": 1,
+      "message": "Nit: fits on one line ?",
+      "range": {
+        "startLine": 6572,
+        "startChar": 17,
+        "endLine": 6572,
+        "endChar": 31
+      },
+      "revId": "99c67ee1f1d9c3027f6888b6193c34e3ab650b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f90ca6e_853c6207",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6574,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-20T09:32:52Z",
+      "side": 1,
+      "message": "This also clears stubbing, and reset is generally discouraged. As noted below it\u0027s not clear that a verify() method would change behavior of the mock.\n\nConsidering that the verify() call in this method is independent from other code in it, maybe just have callers of the method call both (verifyTcpBufferSizeChange then verify setTcpInitRwnd) ? This allows specifying times(1) or times(2) depending on whether it is expected that setTcpInitRwnd was called again.",
+      "range": {
+        "startLine": 6574,
+        "startChar": 8,
+        "endLine": 6574,
+        "endChar": 13
+      },
+      "revId": "99c67ee1f1d9c3027f6888b6193c34e3ab650b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5265c696_b5a1b160",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6576,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-20T09:32:52Z",
+      "side": 1,
+      "message": "It\u0027s not great to have tocall verifyTcpBufferSizeChange for this to be set; it\u0027s also not clear that a verify... method would change the behavior of the mock.\n\nCould you instead do this when mocking the method (L.1266) ? For example:\n\n  doAnswer(inv -\u003e {\n      doReturn(inv.getArgument(0)).when(mSystemProperties).getInt(...);\n  }).when(mSystemProperties).setTcpINitRwnd(anyInt());\n\nIdeally this should also use doReturn() instead of when().thenReturn, as it\u0027s less prone to races (when().thenReturn will fail if the mock is used by the code between when() and thenReturn()).",
+      "range": {
+        "startLine": 6576,
+        "startChar": 17,
+        "endLine": 6576,
+        "endChar": 27
+      },
+      "revId": "99c67ee1f1d9c3027f6888b6193c34e3ab650b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
