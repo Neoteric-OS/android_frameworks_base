@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": false,
       "key": {
         "uuid": "942addf1_55643203",
         "filename": "/PATCHSET_LEVEL",
@@ -14,10 +15,10 @@
       "side": 1,
       "message": "Hi everyone,\n\ncould you please help me to review this change? \n\nThanks very much.",
       "revId": "84c2780582018dc865186858f7a115daf2adb493",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "c1ab79c6_e03f7ea7",
         "filename": "/PATCHSET_LEVEL",
@@ -31,10 +32,10 @@
       "side": 1,
       "message": "Any update?",
       "revId": "84c2780582018dc865186858f7a115daf2adb493",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "ed2a1d77_dff02259",
         "filename": "/PATCHSET_LEVEL",
@@ -48,8 +49,24 @@
       "side": 1,
       "message": "Hi everyone,\n\n  Any update?",
       "revId": "84c2780582018dc865186858f7a115daf2adb493",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4f5c4a3_d4d7a52c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-10-20T21:09:28Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "84c2780582018dc865186858f7a115daf2adb493",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
