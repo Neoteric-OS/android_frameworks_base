@@ -46,6 +46,30 @@
       },
       "revId": "22f6b8f58beadd1dae81d2523a063cd87920ff25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2abcfe1f_82c2d427",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1241955
+      },
+      "writtenOn": "2020-10-20T23:32:02Z",
+      "side": 1,
+      "message": "I\u0027m not worried about the duration of the operation; if the contents of the vector are std::move() assigned to the internal copy, even the strings shouldn\u0027t need to be copied.\n\nMy concern was about possible (but not necessarily _actual_) deadlock risks - if a locking mechanism is used between the callback thread and the wake reason processing thread - _if_ the SCS write to /sys/power/state returns before all userspace tasks are unfrozen.  (I don\u0027t know if it does, so it might not even be a real risk.)\n\nBut the idea of using a wakelock hadn\u0027t occurred to me at all.  If that seems like an acceptable solution, I do think it would address the issue without having to introduce synchronization between those two threads.  But I think it would lead to one thread (executing the callback) acquiring the wake lock and trusting another thread (processing the wakeup reasons) to release it, which seems less than ideal.",
+      "parentUuid": "15908e66_cfe0dccd",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 64
+      },
+      "revId": "22f6b8f58beadd1dae81d2523a063cd87920ff25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
