@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "638500cc_16e8a72c",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1241955
+      },
+      "writtenOn": "2020-10-20T21:30:10Z",
+      "side": 1,
+      "message": "I think there may be a handful of corner cases with this ring buffer that will need more explicit handling.\n\nIf you think about a scenario where read_index is 7 and write_index is 9, this code will evaluate \"7 \u003c 1\" \u003d\u003d false, even though there are 2 entries available to process.  Also, there\u0027s no way to differentiate between 8 available entries (e.g. read_index \u003d 0, write_index \u003d 8) and 0 available entries, since the indices modulo buffer_size will be equal to each other.\n\nYou could fix that problem by removing the modulo operators and just checking read_index \u003c write_index, but that introduces problems too:\n* what happens when the index variables overflow (e.g. read_index \u003d 0xFFFFFFFE, write_index \u003d 2)\n* what happens when the ring buffer itself \"overflows\" (i.e. we get 8 or more writes without any reads occurring, e.g. read_index \u003d 1, write_index \u003d 10)\n\nThere are multiple valid ways to solve for the corner cases, depending on what you want to prioritize.  Would you rather keep a separate count, or only be able to use N-1 of your buffer slots, or drop an entire buffer of entries if writing catches up to reading?  And if the buffer does overflow, would you rather drop the earliest entries (i.e. just keep overwriting the older stuff that was never read) or the latest entries (i.e. stop writing into the buffer as soon as it gets full).",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 64
+      },
+      "revId": "22f6b8f58beadd1dae81d2523a063cd87920ff25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
