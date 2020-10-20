@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "45d2c3d2_5da4c99f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-10-20T00:52:10Z",
+      "side": 1,
+      "message": "can we remove this from sepolicy now:\n\n     r_dir_file(system_server, sysfs_wakeup_reasons)\n\n?",
+      "revId": "956288a715adf5ceda783406ff8109e7756444f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "042cf07f_69fbac33",
         "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
         "patchSetId": 1
