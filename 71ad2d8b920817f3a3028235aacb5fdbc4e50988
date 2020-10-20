@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6603218d_dc028d3d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-20T07:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efaee2bf_16e33f72",
+      "revId": "71ad2d8b920817f3a3028235aacb5fdbc4e50988",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cff71d5c_6a3a0a30",
@@ -31,6 +49,30 @@
       "writtenOn": "2020-10-08T13:12:45Z",
       "side": 1,
       "message": "Is this a good writing in java doc?",
+      "range": {
+        "startLine": 655,
+        "startChar": 13,
+        "endLine": 655,
+        "endChar": 69
+      },
+      "revId": "71ad2d8b920817f3a3028235aacb5fdbc4e50988",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c46b9bb9_11267b3f",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-20T07:34:39Z",
+      "side": 1,
+      "message": "No idea, but removed.\nSee if the newest version works.",
+      "parentUuid": "cff71d5c_6a3a0a30",
       "range": {
         "startLine": 655,
         "startChar": 13,
