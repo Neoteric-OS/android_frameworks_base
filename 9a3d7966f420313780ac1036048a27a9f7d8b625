@@ -22,6 +22,30 @@
       },
       "revId": "9a3d7966f420313780ac1036048a27a9f7d8b625",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02a54f0a_30143f58",
+        "filename": "core/java/android/uwb/RangingReport.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-10-20T16:37:57Z",
+      "side": 1,
+      "message": "Done, please let me know if this conveys the information you\u0027re looking for.",
+      "parentUuid": "afe8b323_0ce83269",
+      "range": {
+        "startLine": 90,
+        "startChar": 28,
+        "endLine": 90,
+        "endChar": 94
+      },
+      "revId": "9a3d7966f420313780ac1036048a27a9f7d8b625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
