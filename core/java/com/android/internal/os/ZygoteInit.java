@@ -684,7 +684,7 @@ public class ZygoteInit {
                             instructionSet, dexoptNeeded, outputPath, dexFlags, compilerFilter,
                             uuid, classLoaderContext, seInfo, false /* downgrade */,
                             targetSdkVersion, /*profileName*/ null, /*dexMetadataPath*/ null,
-                            "server-dexopt");
+                            "server-dexopt", IInstalld.PRIORITY_DEFAULT);
                 } catch (RemoteException | ServiceSpecificException e) {
                     // Ignore (but log), we need this on the classpath for fallback mode.
                     Log.w(TAG, "Failed compiling classpath element for system server: "

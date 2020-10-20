@@ -83,17 +83,22 @@ public final class DexoptOptions {
     // A -1 value denotes an unknown reason.
     private final int mCompilationReason;
 
-    public DexoptOptions(String packageName, String compilerFilter, int flags) {
-        this(packageName, /*compilationReason*/ -1, compilerFilter, /*splitName*/ null, flags);
-    }
+    // The installation hint value that will be used to set the compiler filter and the process
+    // priority of the compiler.
+    private final int mInstallHint;
 
-    public DexoptOptions(String packageName, int compilationReason, int flags) {
-        this(packageName, compilationReason, getCompilerFilterForReason(compilationReason),
+    public DexoptOptions(String packageName, String compilerFilter, int installHint, int flags) {
+        this(packageName, /*compilationReason*/ -1, compilerFilter, installHint,
                 /*splitName*/ null, flags);
     }
 
+    public DexoptOptions(String packageName, int compilationReason, int installHint, int flags) {
+        this(packageName, compilationReason, getCompilerFilterForReason(compilationReason),
+                installHint, /*splitName*/ null, flags);
+    }
+
     public DexoptOptions(String packageName, int compilationReason, String compilerFilter,
-                String splitName, int flags) {
+                int installHint, String splitName, int flags) {
         int validityMask =
                 DEXOPT_CHECK_FOR_PROFILES_UPDATES |
                 DEXOPT_FORCE |
@@ -114,6 +119,7 @@ public final class DexoptOptions {
         mFlags = flags;
         mSplitName = splitName;
         mCompilationReason = compilationReason;
+        mInstallHint = installHint;
     }
 
     public String getPackageName() {
@@ -126,6 +132,10 @@ public final class DexoptOptions {
 
     public String getCompilerFilter() {
         return mCompilerFilter;
+    }
+
+    public int getInstallHint() {
+        return mInstallHint;
     }
 
     public boolean isForce() {
@@ -185,6 +195,7 @@ public final class DexoptOptions {
                 mPackageName,
                 mCompilationReason,
                 newCompilerFilter,
+                mInstallHint,
                 mSplitName,
                 mFlags);
     }

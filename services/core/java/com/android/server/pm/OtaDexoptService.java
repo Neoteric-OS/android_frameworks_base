@@ -23,6 +23,7 @@ import static com.android.server.pm.PackageManagerService.PLATFORM_PACKAGE_NAME;
 import android.annotation.Nullable;
 import android.content.Context;
 import android.content.pm.IOtaDexopt;
+import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
@@ -351,6 +352,7 @@ public class OtaDexoptService extends IOtaDexopt.Stub {
                 mPackageManagerService.getDexManager().getPackageUseInfoOrDefault(
                         pkg.getPackageName()),
                 new DexoptOptions(pkg.getPackageName(), compilationReason,
+                        PackageManager.INSTALL_HINT_NONE,
                         DexoptOptions.DEXOPT_BOOT_COMPLETE));
 
         return commands;

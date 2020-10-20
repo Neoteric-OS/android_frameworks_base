@@ -42,11 +42,14 @@ import static dalvik.system.DexFile.isProfileGuidedCompilerFilter;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.SharedLibraryInfo;
 import android.content.pm.dex.ArtManager;
 import android.content.pm.dex.DexMetadataHelper;
+import android.hardware.display.DisplayManager;
+import android.os.BatteryManager;
 import android.os.FileUtils;
 import android.os.PowerManager;
 import android.os.SystemClock;
@@ -57,6 +60,7 @@ import android.os.storage.StorageManager;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
+import android.view.Display;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.IndentingPrintWriter;
@@ -91,6 +95,10 @@ public class PackageDexOptimizer {
     // One minute over PM WATCHDOG_TIMEOUT
     private static final long WAKELOCK_TIMEOUT_MS = WATCHDOG_TIMEOUT + 1000 * 60;
 
+    // An integer percentage value used to determine when the device is considered to be on low
+    // power for compilation purposes.
+    private static final int BATTERY_CRITICAL_LEVEL = 35;
+
     @GuardedBy("mInstallLock")
     private final Installer mInstaller;
     private final Object mInstallLock;
@@ -99,13 +107,24 @@ public class PackageDexOptimizer {
     private final PowerManager.WakeLock mDexoptWakeLock;
     private volatile boolean mSystemReady;
 
+    private Context mContext;
+
+    private ActivityManager mAm;
+    private BatteryManager mBm;
+    private DisplayManager mDm;
+    private PowerManager mPm;
+
     PackageDexOptimizer(Installer installer, Object installLock, Context context,
             String wakeLockTag) {
         this.mInstaller = installer;
         this.mInstallLock = installLock;
 
-        PowerManager powerManager = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
-        mDexoptWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, wakeLockTag);
+        mAm = context.getSystemService(ActivityManager.class);
+        mDm = context.getSystemService(DisplayManager.class);
+
+        mPm = context.getSystemService(PowerManager.class);
+        mDexoptWakeLock = mPm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, wakeLockTag);
+        mContext = context;
     }
 
     protected PackageDexOptimizer(PackageDexOptimizer from) {
@@ -124,6 +143,61 @@ public class PackageDexOptimizer {
         }
 
         return true;
+    }
+
+    /**
+     * Fetches the battery manager object and caches it if it hasn't been fetched already.
+     */
+    private BatteryManager getBatteryManager() {
+        if (mBm == null) {
+            if ((mBm = mContext.getSystemService(BatteryManager.class)) != null) {
+                mContext = null;
+            }
+        }
+
+        return mBm;
+    }
+
+    /**
+     * Returns true if the battery level, device temperature, or memory usage are considered to be
+     * in a critical state.
+     */
+    boolean batteryThermalOrMemoryIsCritical() {
+        BatteryManager batteryManager = getBatteryManager();
+        if ((batteryManager != null
+                && batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_STATUS)
+                    == BatteryManager.BATTERY_STATUS_DISCHARGING
+                && batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+                    <= BATTERY_CRITICAL_LEVEL)
+                || (mPm != null
+                && mPm.getCurrentThermalStatus() >= PowerManager.THERMAL_STATUS_SEVERE)) {
+
+            return true;
+        } else if (mAm != null) {
+            ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+            mAm.getMemoryInfo(memoryInfo);
+
+            return memoryInfo.lowMemory;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Returns true if any of the screens on the device are on but not in doze mode.
+     */
+    boolean deviceIsActive() {
+        for (Display display : mDm.getDisplays()) {
+            int displayState = display.getState();
+
+            if (displayState == Display.STATE_ON
+                    || displayState == Display.STATE_ON_SUSPEND
+                    || displayState == Display.STATE_VR) {
+
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
