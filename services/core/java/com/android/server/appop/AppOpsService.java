@@ -2332,8 +2332,9 @@ public class AppOpsService extends IAppOpsService.Stub {
                 continue;
             }
 
-            if (packageManager.checkPermission(permissionName, packageName)
-                    != PackageManager.PERMISSION_GRANTED) {
+            if (PermissionManager.checkPackageNamePermission(
+                        permissionName, packageName, UserHandle.getUserId(uid))
+                        != PackageManager.PERMISSION_GRANTED) {
                 continue;
             }
 
@@ -2357,8 +2358,9 @@ public class AppOpsService extends IAppOpsService.Stub {
             UserHandle user = UserHandle.getUserHandleForUid(uid);
             boolean isRevokedCompat;
             if (permissionInfo.backgroundPermission != null) {
-                if (packageManager.checkPermission(permissionInfo.backgroundPermission, packageName)
-                        == PackageManager.PERMISSION_GRANTED) {
+                if (PermissionManager.checkPackageNamePermission(
+                            permissionInfo.backgroundPermission, packageName, UserHandle.getUserId(uid))
+                            == PackageManager.PERMISSION_GRANTED) {
                     boolean isBackgroundRevokedCompat = mode != AppOpsManager.MODE_ALLOWED;
 
                     if (isBackgroundRevokedCompat && supportsRuntimePermissions) {
