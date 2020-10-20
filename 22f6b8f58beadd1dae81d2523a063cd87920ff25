@@ -22,6 +22,30 @@
       },
       "revId": "22f6b8f58beadd1dae81d2523a063cd87920ff25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15908e66_cfe0dccd",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2020-10-20T22:15:12Z",
+      "side": 1,
+      "message": "Alternatively, we could grab a wake lock around the copy to ensure a consistent snapshot of the wakeup reasons. This is the approach used for dumping suspend_stats. It might also be ok here since wakeup reasons is often only a single string. WDYT?",
+      "parentUuid": "638500cc_16e8a72c",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 64
+      },
+      "revId": "22f6b8f58beadd1dae81d2523a063cd87920ff25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
