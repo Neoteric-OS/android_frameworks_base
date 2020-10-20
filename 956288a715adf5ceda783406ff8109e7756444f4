@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a905c29e_1b743cb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1729155
+      },
+      "writtenOn": "2020-10-20T07:56:02Z",
+      "side": 1,
+      "message": "Done.\nCC\u0027ed you in the CL.",
+      "parentUuid": "45d2c3d2_5da4c99f",
+      "revId": "956288a715adf5ceda783406ff8109e7756444f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "042cf07f_69fbac33",
@@ -41,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c47a760_39bece08",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1729155
+      },
+      "writtenOn": "2020-10-20T07:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "042cf07f_69fbac33",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 27
+      },
+      "revId": "956288a715adf5ceda783406ff8109e7756444f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3478fdb5_15ce9240",
@@ -54,6 +96,30 @@
       "writtenOn": "2020-10-19T19:12:03Z",
       "side": 1,
       "message": "Will this produce desired behavior when wakeup_reasons changes in the middle of the for loop due to a second suspend/resume cycle?\n\nThis could partially be addressed by move-assigning wakeup_reasons to a local vector and iterating over that.\n\nBut there would still need to be a mutex around the move assignment _from_ wakeup_reasons to be truly robust, which means the same lock would have to be held around the assignment _to_ wakeup_reasons in notifyWakeup.  Those are both minuscule sections of code for locking, but it would still be preferable if notifyWakeup() didn\u0027t do any blocking at all, if there\u0027s a better solution that accomplishes that.",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 47
+      },
+      "revId": "956288a715adf5ceda783406ff8109e7756444f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f5f7979_a90d16b6",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1729155
+      },
+      "writtenOn": "2020-10-20T07:56:02Z",
+      "side": 1,
+      "message": "Thank you very much for the comments. \nI updated the CL to use a small ring buffer to have notifyWakeup callback always non-blocking. PTAL!",
+      "parentUuid": "3478fdb5_15ce9240",
       "range": {
         "startLine": 180,
         "startChar": 0,
