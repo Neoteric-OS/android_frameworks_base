@@ -85,7 +85,6 @@ import java.util.Objects;
  * <p>Synchronization in IpSecService is done on all entrypoints due to potential race conditions at
  * the kernel/xfrm level. Further, this allows the simplifying assumption to be made that only one
  * thread is ever running at a time.
- *
  * @hide
  */
 public class IpSecService extends IIpSecService.Stub {
