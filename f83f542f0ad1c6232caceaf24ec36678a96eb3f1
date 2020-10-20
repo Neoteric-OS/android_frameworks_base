@@ -1,0 +1,108 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005624981",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1465553?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b1db7f08_42d1d854",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-20T07:16:28Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(ActivityManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 120,
+        "startChar": 14,
+        "endLine": 120,
+        "endChar": 57
+      },
+      "revId": "f83f542f0ad1c6232caceaf24ec36678a96eb3f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005624981",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1465553?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c0cc2ef0_8fe3f843",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-20T07:16:28Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(DisplayManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 121,
+        "startChar": 14,
+        "endLine": 121,
+        "endChar": 56
+      },
+      "revId": "f83f542f0ad1c6232caceaf24ec36678a96eb3f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005624981",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1465553?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "93b996af_586fdd3b",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-20T07:16:28Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(PowerManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 123,
+        "startChar": 14,
+        "endLine": 123,
+        "endChar": 54
+      },
+      "revId": "f83f542f0ad1c6232caceaf24ec36678a96eb3f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005624981",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1465553?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "74319c19_e52ac77a",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-20T07:16:28Z",
+      "side": 1,
+      "message": "Prefer to use mContext.getSystemService(BatteryManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 148,
+        "startChar": 18,
+        "endLine": 148,
+        "endChar": 61
+      },
+      "revId": "f83f542f0ad1c6232caceaf24ec36678a96eb3f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
