@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cd67642_4b05f632",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-10-20T22:47:56Z",
+      "side": 1,
+      "message": "Why is getConfigForSubId able to be called here but removed from the other 2 locations?",
+      "range": {
+        "startLine": 1846,
+        "startChar": 42,
+        "endLine": 1846,
+        "endChar": 59
+      },
+      "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
