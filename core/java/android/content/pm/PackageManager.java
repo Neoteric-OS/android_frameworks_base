@@ -1038,6 +1038,61 @@ public abstract class PackageManager {
     public static final int INSTALL_REASON_ROLLBACK = 5;
 
     /** @hide */
+    @IntDef(prefix = { "INSTALL_SCENARIO_" }, value = {
+            INSTALL_SCENARIO_DEFAULT,
+            INSTALL_SCENARIO_FAST,
+            INSTALL_SCENARIO_BULK_CRITICAL,
+            INSTALL_SCENARIO_BULK_NON_CRITICAL,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface InstallScenario {}
+
+    /**
+     * A value to indicate the lack of CUJ information, disabling all installation scenario logic.
+     *
+     * @hide
+     */
+    public static final int INSTALL_SCENARIO_DEFAULT = 0;
+
+    /**
+     * Installation scenario providing the fastest “install button to launch" experience possible.
+     *
+     * @hide
+     */
+    public static final int INSTALL_SCENARIO_FAST = 1;
+
+    /**
+     * Installation scenario indicating a bulk operation with the desired result of a fully
+     * optimized application.  If the system is busy or resources are scarce the system will
+     * perform less work to avoid impacting system health.
+     *
+     * Examples of bulk installation scenarios might include device restore, background updates of
+     * multiple applications, or user-triggered updates for all applications.
+     *
+     * In the case of installation scenarios, "critical" refers whether or not the application's
+     * performance is considered critical to the user's experience.  The determination of what
+     * constitutes a "critical application" should be made by the application installer.
+     *
+     * Be aware the installations that use the BULK_CRITICAL scenario will usually take longer than
+     * installations that use the BULK_NON_CRITICAL scenario.
+     *
+     * @hide
+     */
+    public static final int INSTALL_SCENARIO_BULK_CRITICAL = 2;
+
+    /**
+     * Installation scenario indicating a bulk operation that prioritizes minimal system health
+     * impact over application optimization.  The application may undergo additional optimization
+     * if the system is idle and system resources are abundant.  The more elements of a bulk
+     * operation that are marked non-critical, the faster the entire bulk operation will be.
+     *
+     * See the comments for INSTALL_SCENARIO_BULK_CRITICAL for more information.
+     *
+     * @hide
+     */
+    public static final int INSTALL_SCENARIO_BULK_NON_CRITICAL = 3;
+
+    /** @hide */
     @IntDef(prefix = { "UNINSTALL_REASON_" }, value = {
             UNINSTALL_REASON_UNKNOWN,
             UNINSTALL_REASON_USER_TYPE,
