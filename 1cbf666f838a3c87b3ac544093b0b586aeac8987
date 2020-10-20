@@ -16,6 +16,24 @@
       "message": "Maybe add check on ConnectivityServiceTest#verifyTcpBufferSizeChange() to verifty that MockableSystemProperties#setTcpInitRwnd() has been called.",
       "revId": "1cbf666f838a3c87b3ac544093b0b586aeac8987",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e30e38cd_1fe5ea24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-20T07:27:33Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "375afebc_eb07774d",
+      "revId": "1cbf666f838a3c87b3ac544093b0b586aeac8987",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
