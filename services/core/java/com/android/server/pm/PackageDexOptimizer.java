@@ -42,11 +42,14 @@ import static dalvik.system.DexFile.isProfileGuidedCompilerFilter;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.SharedLibraryInfo;
 import android.content.pm.dex.ArtManager;
 import android.content.pm.dex.DexMetadataHelper;
+import android.hardware.display.DisplayManager;
+import android.os.BatteryManager;
 import android.os.FileUtils;
 import android.os.PowerManager;
 import android.os.SystemClock;
@@ -57,6 +60,7 @@ import android.os.storage.StorageManager;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
+import android.view.Display;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.IndentingPrintWriter;
@@ -91,6 +95,8 @@ public class PackageDexOptimizer {
     // One minute over PM WATCHDOG_TIMEOUT
     private static final long WAKELOCK_TIMEOUT_MS = WATCHDOG_TIMEOUT + 1000 * 60;
 
+    private static final int BATTERY_CRITICAL_LEVEL = 35;
+
     @GuardedBy("mInstallLock")
     private final Installer mInstaller;
     private final Object mInstallLock;
@@ -99,13 +105,24 @@ public class PackageDexOptimizer {
     private final PowerManager.WakeLock mDexoptWakeLock;
     private volatile boolean mSystemReady;
 
+    private Context mContext;
+
+    private ActivityManager mAm;
+    private BatteryManager mBm;
+    private DisplayManager mDm;
+    private PowerManager mPm;
+
     PackageDexOptimizer(Installer installer, Object installLock, Context context,
             String wakeLockTag) {
         this.mInstaller = installer;
         this.mInstallLock = installLock;
 
-        PowerManager powerManager = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
-        mDexoptWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, wakeLockTag);
+        mAm = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        mDm = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
+
+        mPm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        mDexoptWakeLock = mPm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, wakeLockTag);
+        mContext = context;
     }
 
     protected PackageDexOptimizer(PackageDexOptimizer from) {
@@ -124,6 +141,53 @@ public class PackageDexOptimizer {
         }
 
         return true;
+    }
+
+    private BatteryManager getBatteryManager() {
+        if (mBm == null) {
+            mBm = (BatteryManager) mContext.getSystemService(Context.BATTERY_SERVICE);
+
+            if (mBm != null) {
+                mContext = null;
+            }
+        }
+
+        return mBm;
+    }
+
+    boolean batteryThermalOrMemoryIsCritical() {
+        BatteryManager batteryManager = getBatteryManager();
+        if ((batteryManager != null
+                && batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_STATUS)
+                    == BatteryManager.BATTERY_STATUS_DISCHARGING
+                && batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+                    <= BATTERY_CRITICAL_LEVEL)
+                || (mPm != null
+                && mPm.getCurrentThermalStatus() >= PowerManager.THERMAL_STATUS_SEVERE)) {
+
+            return true;
+        } else if (mAm != null) {
+            ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+            mAm.getMemoryInfo(memoryInfo);
+
+            return memoryInfo.lowMemory;
+        } else {
+            return false;
+        }
+    }
+
+    boolean deviceIsActive() {
+        for (Display display : mDm.getDisplays()) {
+            int displayState = display.getState();
+
+            if (displayState == Display.STATE_ON
+                    || displayState == Display.STATE_ON_SUSPEND
+                    || displayState == Display.STATE_VR) {
+
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

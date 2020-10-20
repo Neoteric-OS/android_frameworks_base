@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackagePartitions;
 import android.os.FileUtils;
 import android.os.RemoteException;
@@ -724,7 +725,7 @@ public class DexManager {
 
         // Try to optimize the package according to the install reason.
         DexoptOptions options = new DexoptOptions(info.packageName,
-                PackageManagerService.REASON_INSTALL, /*flags*/0);
+                PackageManagerService.REASON_INSTALL, PackageManager.INSTALL_HINT_NONE, /*flags*/0);
 
         int result = mPackageDexOptimizer.dexOptSecondaryDexPath(info, dexPath, dexUseInfo,
                 options);

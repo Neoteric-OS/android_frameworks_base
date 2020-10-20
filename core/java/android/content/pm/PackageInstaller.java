@@ -1467,6 +1467,8 @@ public class PackageInstaller {
         /** {@hide} */
         public @InstallReason int installReason = PackageManager.INSTALL_REASON_UNKNOWN;
         /** {@hide} */
+        public int installHint = PackageManager.INSTALL_HINT_DEFAULT;
+        /** {@hide} */
         @UnsupportedAppUsage
         public long sizeBytes = -1;
         /** {@hide} */
@@ -1529,6 +1531,7 @@ public class PackageInstaller {
             installFlags = source.readInt();
             installLocation = source.readInt();
             installReason = source.readInt();
+            installHint = source.readInt();
             sizeBytes = source.readLong();
             appPackageName = source.readString();
             appIcon = source.readParcelable(null);
@@ -1560,6 +1563,7 @@ public class PackageInstaller {
             ret.installFlags = installFlags;
             ret.installLocation = installLocation;
             ret.installReason = installReason;
+            ret.installHint = installHint;
             ret.sizeBytes = sizeBytes;
             ret.appPackageName = appPackageName;
             ret.appIcon = appIcon;  // not a copy.
@@ -1986,6 +1990,8 @@ public class PackageInstaller {
             pw.printPair("mode", mode);
             pw.printHexPair("installFlags", installFlags);
             pw.printPair("installLocation", installLocation);
+            pw.printPair("installReason", installReason);
+            pw.printPair("installHint", installHint);
             pw.printPair("sizeBytes", sizeBytes);
             pw.printPair("appPackageName", appPackageName);
             pw.printPair("appIcon", (appIcon != null));
@@ -2019,6 +2025,7 @@ public class PackageInstaller {
             dest.writeInt(installFlags);
             dest.writeInt(installLocation);
             dest.writeInt(installReason);
+            dest.writeInt(installHint);
             dest.writeLong(sizeBytes);
             dest.writeString(appPackageName);
             dest.writeParcelable(appIcon, flags);
@@ -2128,6 +2135,8 @@ public class PackageInstaller {
         /** {@hide} */
         public @InstallReason int installReason;
         /** {@hide} */
+        public @InstallReason int installHint;
+        /** {@hide} */
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
         public long sizeBytes;
         /** {@hide} */
@@ -2205,6 +2214,7 @@ public class PackageInstaller {
 
             mode = source.readInt();
             installReason = source.readInt();
+            installHint = source.readInt();
             sizeBytes = source.readLong();
             appPackageName = source.readString();
             appIcon = source.readParcelable(null);
@@ -2737,6 +2747,7 @@ public class PackageInstaller {
 
             dest.writeInt(mode);
             dest.writeInt(installReason);
+            dest.writeInt(installHint);
             dest.writeLong(sizeBytes);
             dest.writeString(appPackageName);
             dest.writeParcelable(appIcon, flags);

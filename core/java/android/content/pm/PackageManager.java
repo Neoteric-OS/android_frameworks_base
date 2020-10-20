@@ -1040,6 +1040,50 @@ public abstract class PackageManager {
      */
     public static final int INSTALL_REASON_ROLLBACK = 5;
 
+    /**
+     * A value to indicate the provided compiler filter should be used directly
+     * without any translation.
+     */
+    /** @hide */
+    public static final int INSTALL_HINT_NONE = 0;
+
+    /**
+     * Installation hint for default cases where we wish to verified and
+     * optimize using full system resources.
+     */
+    /** @hide */
+    public static final int INSTALL_HINT_DEFAULT = 1;
+
+    /**
+     * Installation hint for when you want Provide the fastest “install button
+     * to launch” experience possible.
+     */
+    /** @hide */
+    public static final int INSTALL_HINT_IMMEDIATE = 2;
+
+    /**
+     * Installation hint for when you want to remove per-launch overhead
+     * without optimizing the code.
+     */
+    /** @hide */
+    public static final int INSTALL_HINT_FAST = 3;
+
+    /**
+     * Installation hint for bulk operations where we want to optimize the
+     * application if system resources are available and, if they aren't,
+     * perform fast verification to reduce impact on system performance.
+     */
+    /** @hide */
+    public static final int INSTALL_HINT_BULK_CRITICAL = 4;
+
+    /**
+     * Installation hint bulk operations where we want to prioritize installing
+     * the application with as little system performance impact as possible,
+     * but perform more optimizations if the device is idle.
+     */
+    /** @hide */
+    public static final int INSTALL_HINT_BULK_NON_CRITICAL = 5;
+
     /** @hide */
     @IntDef(prefix = { "UNINSTALL_REASON_" }, value = {
             UNINSTALL_REASON_UNKNOWN,

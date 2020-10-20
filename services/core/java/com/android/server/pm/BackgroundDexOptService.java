@@ -29,6 +29,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.BatteryManager;
 import android.os.Environment;
 import android.os.ServiceManager;
@@ -242,6 +243,7 @@ public class BackgroundDexOptService extends JobService {
             int result = pm.performDexOptWithStatus(new DexoptOptions(
                     pkg,
                     PackageManagerService.REASON_BOOT,
+                    PackageManager.INSTALL_HINT_NONE,
                     DexoptOptions.DEXOPT_BOOT_COMPLETE));
             if (result == PackageDexOptimizer.DEX_OPT_PERFORMED)  {
                 updatedPackages.add(pkg);
@@ -501,13 +503,16 @@ public class BackgroundDexOptService extends JobService {
     private boolean performDexOptPrimary(PackageManagerService pm, String pkg, int reason,
             int dexoptFlags) {
         int result = trackPerformDexOpt(pkg, /*isForPrimaryDex=*/ false,
-                () -> pm.performDexOptWithStatus(new DexoptOptions(pkg, reason, dexoptFlags)));
+                () -> pm.performDexOptWithStatus(
+                    new DexoptOptions(pkg, reason,
+                        PackageManager.INSTALL_HINT_NONE, dexoptFlags)));
         return result == PackageDexOptimizer.DEX_OPT_PERFORMED;
     }
 
     private boolean performDexOptSecondary(PackageManagerService pm, String pkg, int reason,
             int dexoptFlags) {
         DexoptOptions dexoptOptions = new DexoptOptions(pkg, reason,
+                PackageManager.INSTALL_HINT_NONE,
                 dexoptFlags | DexoptOptions.DEXOPT_ONLY_SECONDARY_DEX);
         int result = trackPerformDexOpt(pkg, /*isForPrimaryDex=*/ true,
                 () -> pm.performDexOpt(dexoptOptions)

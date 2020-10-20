@@ -665,6 +665,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
 
             info.mode = params.mode;
             info.installReason = params.installReason;
+            info.installHint = params.installHint;
             info.sizeBytes = params.sizeBytes;
             info.appPackageName = params.appPackageName;
             if (includeIcon) {

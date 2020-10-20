@@ -382,7 +382,8 @@ public class Installer extends SystemService {
         try {
             mInstalld.dexopt(apkPath, uid, pkgName, instructionSet, dexoptNeeded, outputPath,
                     dexFlags, compilerFilter, volumeUuid, sharedLibraries, seInfo, downgrade,
-                    targetSdkVersion, profileName, dexMetadataPath, compilationReason);
+                    targetSdkVersion, profileName, dexMetadataPath, compilationReason,
+                    IInstalld.PRIORITY_DEFAULT);
         } catch (Exception e) {
             throw InstallerException.from(e);
         }
