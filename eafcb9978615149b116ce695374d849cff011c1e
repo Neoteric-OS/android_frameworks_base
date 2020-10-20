@@ -16,6 +16,23 @@
       "message": "I\u0027m assuming this is just a cherry-pick with no additional changes",
       "revId": "eafcb9978615149b116ce695374d849cff011c1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "354d8fcf_8bceff8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1488178
+      },
+      "writtenOn": "2020-10-20T08:54:06Z",
+      "side": 1,
+      "message": "Hey Michael/Marin,\n\nYes, this is just a CP. \nAs now I can confirm that this one works reliably and no fixes needed I created this CL.\n\nThanks. ",
+      "revId": "eafcb9978615149b116ce695374d849cff011c1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
