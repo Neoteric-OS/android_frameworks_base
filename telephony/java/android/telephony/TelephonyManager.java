@@ -2800,7 +2800,7 @@ public class TelephonyManager {
     /** Current network is IWLAN */
     public static final int NETWORK_TYPE_IWLAN = TelephonyProtoEnums.NETWORK_TYPE_IWLAN; // = 18.
     /** Current network is LTE_CA {@hide} */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static final int NETWORK_TYPE_LTE_CA = TelephonyProtoEnums.NETWORK_TYPE_LTE_CA; // = 19.
     /** Current network is NR(New Radio) 5G. */
     public static final int NETWORK_TYPE_NR = TelephonyProtoEnums.NETWORK_TYPE_NR; // 20.
@@ -6643,7 +6643,7 @@ public class TelephonyManager {
      *
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public boolean nvResetConfig(int resetType) {
         try {
             ITelephony telephony = getITelephony();
@@ -6912,7 +6912,7 @@ public class TelephonyManager {
      * @return The value at the given index of settings.
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static int getIntAtIndex(android.content.ContentResolver cr,
             String name, int index)
             throws android.provider.Settings.SettingNotFoundException {
@@ -6945,7 +6945,7 @@ public class TelephonyManager {
      * @return true if the value was set, false on database errors
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static boolean putIntAtIndex(android.content.ContentResolver cr,
             String name, int index, int value) {
         String data = "";
@@ -7017,7 +7017,7 @@ public class TelephonyManager {
      *
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static String getTelephonyProperty(String property, String defaultVal) {
         String propVal = SystemProperties.get(property);
         return TextUtils.isEmpty(propVal) ? defaultVal : propVal;
@@ -7316,7 +7316,7 @@ public class TelephonyManager {
      * Corresponds to features defined in ImsFeature.
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public @Nullable IImsRegistration getImsRegistration(int slotIndex, int feature) {
         try {
             ITelephony telephony = getITelephony();
@@ -7336,7 +7336,7 @@ public class TelephonyManager {
      * Corresponds to features defined in ImsFeature.
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public @Nullable IImsConfig getImsConfig(int slotIndex, int feature) {
         try {
             ITelephony telephony = getITelephony();
@@ -7355,7 +7355,7 @@ public class TelephonyManager {
      * @param Registration state
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public void setImsRegistrationState(boolean registered) {
         try {
             ITelephony telephony = getITelephony();
@@ -8022,7 +8022,7 @@ public class TelephonyManager {
      * @deprecated Use {@link #setPreferredNetworkTypeBitmask} instead.
      */
     @Deprecated
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public boolean setPreferredNetworkType(int subId, @PrefNetworkMode int networkType) {
         try {
             ITelephony telephony = getITelephony();
@@ -8396,7 +8396,7 @@ public class TelephonyManager {
      *
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public boolean setRoamingOverride(List<String> gsmRoamingList,
             List<String> gsmNonRoamingList, List<String> cdmaRoamingList,
             List<String> cdmaNonRoamingList) {
@@ -9690,7 +9690,7 @@ public class TelephonyManager {
     *
     * @hide
     */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public void setSimOperatorNumericForPhone(int phoneId, String numeric) {
         if (SubscriptionManager.isValidPhoneId(phoneId)) {
             List<String> newList = updateTelephonyProperty(
@@ -10062,7 +10062,7 @@ public class TelephonyManager {
      * @param name the alphabetic name of current registered operator.
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public void setNetworkOperatorNameForPhone(int phoneId, String name) {
         if (SubscriptionManager.isValidPhoneId(phoneId)) {
             List<String> newList = updateTelephonyProperty(
@@ -10087,7 +10087,7 @@ public class TelephonyManager {
      * @param operator the numeric name (MCC+MNC) of current registered operator
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public void setNetworkOperatorNumericForPhone(int phoneId, String numeric) {
         if (SubscriptionManager.isValidPhoneId(phoneId)) {
             List<String> newList = updateTelephonyProperty(
@@ -10112,7 +10112,7 @@ public class TelephonyManager {
      * @param isRoaming is network in romaing state or not
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public void setNetworkRoamingForPhone(int phoneId, boolean isRoaming) {
         if (SubscriptionManager.isValidPhoneId(phoneId)) {
             List<Boolean> newList = updateTelephonyProperty(
@@ -10141,7 +10141,7 @@ public class TelephonyManager {
      * @param type the network type currently in use on the device for data transmission
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public void setDataNetworkTypeForPhone(int phoneId, int type) {
         if (SubscriptionManager.isValidPhoneId(phoneId)) {
             List<String> newList = updateTelephonyProperty(
