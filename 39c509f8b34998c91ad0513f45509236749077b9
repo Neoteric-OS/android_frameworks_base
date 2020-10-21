@@ -34,6 +34,23 @@
       "parentUuid": "643f8c0b_fdaaae0d",
       "revId": "39c509f8b34998c91ad0513f45509236749077b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c37c17a7_f55c4d1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-21T06:09:27Z",
+      "side": 1,
+      "message": "\u003e Patch Set 6:\n\u003e \n\u003e Maciej Żenczykowski, Kernel Networking Developer @ Google\n\u003e \n\u003e Those don\u0027t feel like good reasons.  Indeed the most likely reason for it not being 60 is a bug/mistake/oversight.\n\u003e \n\u003e There\u0027s a reason the sysctl doesn\u0027t even exist in later kernels.\n\nThe initial idea for this is to update the API usage. I would like to provide a safer way to migrate with existing mechanism(i.e. still read from property first). I open b/171360470 to track your suggestion to see if it works for everyone. I will follow up in the bug and submit change if no other objection.",
+      "revId": "39c509f8b34998c91ad0513f45509236749077b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
