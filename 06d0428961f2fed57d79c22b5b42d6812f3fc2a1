@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005646118",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1468926?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "ee270cb3_fad209a3",
+          "description": "Change to \"packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java\"",
+          "replacements": [
+            {
+              "path": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+              "range": {
+                "startLine": 98,
+                "startChar": 27,
+                "endLine": 98,
+                "endChar": 33
+              },
+              "replacement": "disable"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "cbcee112_e295506c",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-21T03:59:53Z",
+      "side": 1,
+      "message": "Common typo found: \"diable\" -- should it be \"disable\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 98,
+        "startChar": 27,
+        "endLine": 98,
+        "endChar": 33
+      },
+      "revId": "06d0428961f2fed57d79c22b5b42d6812f3fc2a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
