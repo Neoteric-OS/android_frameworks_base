@@ -22,6 +22,30 @@
       },
       "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3280b42a_961ce7a5",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-10-21T07:25:10Z",
+      "side": 1,
+      "message": "This is similar to the commit @ https://android.googlesource.com/platform/frameworks/base/+/146bb336ecb36bfa27529828172ec7593d4fb2f5\n\nThe intention is not to interact with telephony while holding locks ( other 2 locations ) and update the Config related information only when there is an intent received that something has changed.\n\nHope this clarifies your question.",
+      "parentUuid": "9cd67642_4b05f632",
+      "range": {
+        "startLine": 1846,
+        "startChar": 42,
+        "endLine": 1846,
+        "endChar": 59
+      },
+      "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
