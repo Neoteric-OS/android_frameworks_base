@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "624344f7_4bfe6e6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2020-10-21T16:51:38Z",
+      "side": 1,
+      "message": "Some of the UnsupportedAppUsage in the camera APIs are there because we found that native-\u003eJava calls to them from framework JNI code would fail without them. \n\nThis has been confusing to me, since nobody else seems to have run into that behavior, but I\u0027d assume if that continues to be a failure point, this annotation may cause failures for that code if run in an app process targeting S?",
+      "revId": "8d76e8e7544e92b1e441ef5a5a9c0d4ed5d505b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7686dc1_68535e5b",
+        "filename": "core/java/android/hardware/camera2/CameraMetadata.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2020-10-21T16:51:38Z",
+      "side": 1,
+      "message": "nit: line length",
+      "revId": "8d76e8e7544e92b1e441ef5a5a9c0d4ed5d505b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
