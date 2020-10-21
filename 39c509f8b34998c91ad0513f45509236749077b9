@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "643f8c0b_fdaaae0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2020-10-21T01:52:05Z",
+      "side": 1,
+      "message": "why do we even have an rpc for this?\nwe don\u0027t use it on 4.19+ since obviously due to lack of sysctl it can\u0027t do anything...\n\nwhy not get rid of the property, and simply change the initscripts to set it to whatever value the rpc sets it to... (60 or something)\n\nbonito:/ # cat /proc/sys/net/ipv4/tcp_default_init_rwnd\n60\n\ndo we ever actually set this sysctl to different values?\n\nthere certainly is nothing really meaningful that can be done with this, because it\u0027s a global sysctl and not per network...\n\nie. can\u0027t all of this simply be replaced with a\n\necho 60 \u003e /proc/sys/net/ipv4/tcp_default_init_rwnd in the init.rc file?\n\nalso allowing the removal of the java/c++ binder rpc?",
+      "revId": "39c509f8b34998c91ad0513f45509236749077b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
