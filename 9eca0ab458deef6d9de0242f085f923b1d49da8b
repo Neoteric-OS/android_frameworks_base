@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c02622e0_d824e74a",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-21T12:13:46Z",
+      "side": 1,
+      "message": "Nit: why do you remove eq() in some cases like this one but keep eq() in some like l.972?",
+      "range": {
+        "startLine": 950,
+        "startChar": 16,
+        "endLine": 950,
+        "endChar": 17
+      },
+      "revId": "9eca0ab458deef6d9de0242f085f923b1d49da8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
