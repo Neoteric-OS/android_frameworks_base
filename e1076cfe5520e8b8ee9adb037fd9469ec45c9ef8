@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b28b6f3_230a0b67",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-10-21T03:17:53Z",
+      "side": 1,
+      "message": "Use NetworkRegistrationInfo.getNrstate() instead. We should remove this API from ServiceState.",
+      "range": {
+        "startLine": 1440,
+        "startChar": 5,
+        "endLine": 1440,
+        "endChar": 14
+      },
+      "revId": "e1076cfe5520e8b8ee9adb037fd9469ec45c9ef8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
