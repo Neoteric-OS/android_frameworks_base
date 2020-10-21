@@ -42,13 +42,13 @@ public abstract class NetworkStatsProvider {
         }
 
         @Override
-        public void onSetLimit(String iface, long quotaBytes) {
-            NetworkStatsProvider.this.onSetLimit(iface, quotaBytes);
+        public void onSetAlert(long quotaBytes) {
+            NetworkStatsProvider.this.onSetAlert(quotaBytes);
         }
 
         @Override
-        public void onSetAlert(long quotaBytes) {
-            NetworkStatsProvider.this.onSetAlert(quotaBytes);
+        public void onSetWarningAndLimit(String iface, long warningBytes, long limitBytes) {
+            NetworkStatsProvider.this.onSetWarningAndLimit(iface, warningBytes, limitBytes);
         }
     };
 
@@ -145,7 +145,20 @@ public abstract class NetworkStatsProvider {
     }
 
     /**
-     * Notify system that the quota set by {@code onSetLimit} has been reached.
+     * Notify system that the warning set by {@code onSetWarningAndLimit} has been reached.
+     */
+    public void notifyWarningReached() {
+        try {
+            getProviderCallbackBinderOrThrow().notifyWarningReached();
+        } catch (RemoteException e) {
+            e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
+     * Notify system that the quota set by {@code onSetLimit} or limit set by
+     * {@code onSetWarningAndLimit} has been reached. Note the the custom implementation
+     * MUST not respond to both function calls.
      */
     public void notifyLimitReached() {
         try {
@@ -179,8 +192,32 @@ public abstract class NetworkStatsProvider {
      * @param iface the interface requiring the operation.
      * @param quotaBytes the quota defined as the number of bytes, starting from zero and counting
      *                   from now. A value of {@link #QUOTA_UNLIMITED} indicates there is no limit.
+     * @deprecated Use {@link #onSetWarningAndLimit(String, long, long)} instead.
      */
+    @Deprecated
     public abstract void onSetLimit(@NonNull String iface, long quotaBytes);
+
+    /**
+     * Called by {@code NetworkStatsService} when setting the interface quotas for the specified
+     * upstream interface. When this is called, the custom implementation should
+     *   1. Not respond to {@code onSetLimit}.
+     *   2. Block all egress packets on the {@code iface} associated with the provider when
+     *      {@code limitBytes} bytes have been reached, and MUST respond to it by calling
+     *      {@link NetworkStatsProvider#notifyLimitReached()}.
+     *   3. Respond with {@link NetworkStatsProvider@notifyWarningReached()} when
+     *      {@code warningBytes} bytes has been reached.
+     *
+     * @param iface the interface requiring the operation.
+     * @param warningBytes the warning defined as the number of bytes, starting from zero and
+     *                     counting from now. A value of {@link #QUOTA_UNLIMITED} indicates
+     *                     there is no warning.
+     * @param limitBytes the limit defined as the number of bytes, starting from zero and counting
+     *                   from now. A value of {@link #QUOTA_UNLIMITED} indicates there is no limit.
+     */
+    public void onSetWarningAndLimit(@NonNull String iface, long warningBytes, long limitBytes) {
+        // Backward compatibility for those who didn't override this function.
+        onSetLimit(iface, limitBytes);
+    }
 
     /**
      * Called by {@code NetworkStatsService} when setting the alert bytes. Custom implementations

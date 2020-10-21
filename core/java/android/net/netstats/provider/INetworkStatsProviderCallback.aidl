@@ -27,5 +27,6 @@ oneway interface INetworkStatsProviderCallback {
     void notifyStatsUpdated(int token, in NetworkStats ifaceStats, in NetworkStats uidStats);
     void notifyAlertReached();
     void notifyLimitReached();
+    void notifyWarningReached();
     void unregister();
 }
