@@ -138,7 +138,7 @@ public class Typeface {
     /**
      * @deprecated Use {@link android.graphics.fonts.FontFamily} instead.
      */
-    @UnsupportedAppUsage(trackingBug = 123768928)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     @Deprecated
     static final Map<String, android.graphics.FontFamily[]> sSystemFallbackMap =
             Collections.emptyMap();
@@ -1217,7 +1217,7 @@ public class Typeface {
             long native_instance, List<FontVariationAxis> axes);
     @UnsupportedAppUsage
     private static native long nativeCreateWeightAlias(long native_instance, int weight);
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     private static native long nativeCreateFromArray(long[] familyArray, int weight, int italic);
     private static native int[] nativeGetSupportedAxes(long native_instance);
 

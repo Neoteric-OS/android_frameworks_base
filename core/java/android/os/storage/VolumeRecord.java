@@ -59,7 +59,7 @@ public class VolumeRecord implements Parcelable {
         this.fsUuid = Preconditions.checkNotNull(fsUuid);
     }
 
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public VolumeRecord(Parcel parcel) {
         type = parcel.readInt();
         fsUuid = parcel.readString();
@@ -162,7 +162,7 @@ public class VolumeRecord implements Parcelable {
         return fsUuid.hashCode();
     }
 
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static final @android.annotation.NonNull Creator<VolumeRecord> CREATOR = new Creator<VolumeRecord>() {
         @Override
         public VolumeRecord createFromParcel(Parcel in) {

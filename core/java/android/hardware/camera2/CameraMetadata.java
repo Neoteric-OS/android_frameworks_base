@@ -21,6 +21,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.hardware.camera2.impl.CameraMetadataNative;
 import android.hardware.camera2.impl.PublicKey;
 import android.hardware.camera2.impl.SyntheticKey;
+import android.os.Build;
 import android.util.Log;
 
 import java.lang.reflect.Field;
@@ -101,8 +102,7 @@ public abstract class CameraMetadata<TKey> {
      *
      * @hide
      */
-    @UnsupportedAppUsage(publicAlternatives = "This method is exposed for native "
-                        + "{@code ACameraMetadata_fromCameraMetadata} in {@code libcamera2ndk}.")
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, publicAlternatives = "This method is exposed for native {@code ACameraMetadata_fromCameraMetadata} in {@code libcamera2ndk}.", trackingBug = 170729553)
     public long getNativeMetadataPtr() {
         if (mNativeInstance == null) {
             return 0;

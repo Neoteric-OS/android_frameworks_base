@@ -778,7 +778,7 @@ public class AppOpsManager {
     //  - add the op to the appropriate template in AppOpsState.OpsTemplate (settings app)
 
     /** @hide No operation specified. */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static final int OP_NONE = AppProtoEnums.APP_OP_NONE;
     /** @hide Access to coarse location information. */
     @UnsupportedAppUsage
@@ -1112,7 +1112,7 @@ public class AppOpsManager {
     public static final int OP_NO_ISOLATED_STORAGE = AppProtoEnums.APP_OP_NO_ISOLATED_STORAGE;
 
     /** @hide */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static final int _NUM_OP = 100;
 
     /** Access to coarse location information. */
@@ -2482,7 +2482,7 @@ public class AppOpsManager {
      * Retrieve a non-localized name for the operation, for debugging output.
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static String opToName(int op) {
         if (op == OP_NONE) return "NONE";
         return op < sOpNames.length ? sOpNames[op] : ("Unknown(" + op + ")");
@@ -2513,7 +2513,7 @@ public class AppOpsManager {
      * Retrieve the permission associated with an operation, or null if there is not one.
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     @TestApi
     public static String opToPermission(int op) {
         return sOpPerms[op];
@@ -6726,7 +6726,7 @@ public class AppOpsManager {
 
     /** @hide */
     @RequiresPermission(android.Manifest.permission.MANAGE_APP_OPS_MODES)
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public void resetAllModes() {
         try {
             mService.resetAllModes(mContext.getUserId(), null);

@@ -27,6 +27,7 @@ import android.content.res.Resources;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.DisplayManager.DisplayListener;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -308,7 +309,7 @@ public class Presentation extends Dialog {
         return dm.equalsPhysical(getResources().getDisplayMetrics());
     }
 
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     private static Context createPresentationContext(
             Context outerContext, Display display, int theme) {
         if (outerContext == null) {

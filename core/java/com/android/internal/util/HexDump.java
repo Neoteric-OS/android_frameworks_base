@@ -18,6 +18,7 @@ package com.android.internal.util;
 
 import android.annotation.Nullable;
 import android.compat.annotation.UnsupportedAppUsage;
+import android.os.Build;
 
 public class HexDump
 {
@@ -107,7 +108,7 @@ public class HexDump
         return toHexString(array, 0, array.length, true);
     }
 
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static String toHexString(byte[] array, boolean upperCase)
     {
         return toHexString(array, 0, array.length, upperCase);

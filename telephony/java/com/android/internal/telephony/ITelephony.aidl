@@ -95,7 +95,7 @@ interface ITelephony {
     void call(String callingPackage, String number);
 
     /** @deprecated Use {@link #isRadioOnWithFeature(String, String) instead */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
     boolean isRadioOn(String callingPackage);
 
     /**
@@ -109,7 +109,7 @@ interface ITelephony {
     /**
      * @deprecated Use {@link #isRadioOnForSubscriberWithFeature(int, String, String) instead
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
     boolean isRadioOnForSubscriber(int subId, String callingPackage);
 
     /**
@@ -189,7 +189,7 @@ interface ITelephony {
      * @param subId user preferred subId.
      * @return true if MMI command is executed.
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
     boolean handlePinMmiForSubscriber(int subId, String dialString);
 
     /**
@@ -613,7 +613,7 @@ interface ITelephony {
      *            successful iccOpenLogicalChannel.
      * @return true if the channel was closed successfully.
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
     boolean iccCloseLogicalChannel(int subId, int channel);
 
     /**
@@ -655,7 +655,7 @@ interface ITelephony {
      * @return The APDU response from the ICC card with the status appended at
      *            the end.
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
     String iccTransmitApduLogicalChannel(int subId, int channel, int cla, int instruction,
             int p1, int p2, int p3, String data);
 
