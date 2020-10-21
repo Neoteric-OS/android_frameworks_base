@@ -94,6 +94,30 @@
       },
       "revId": "22f6b8f58beadd1dae81d2523a063cd87920ff25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "217829a7_6eca4581",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1729155
+      },
+      "writtenOn": "2020-10-21T17:31:57Z",
+      "side": 1,
+      "message": "Thank you both for the insightful comments. I agreed with you both that we probably do not want a fully synchronization between callback and BatteryStats threads to expose the callback to any blocking/locking hazards.\n\nAdding a wakelock to prevent system from sleeping just for stats seems too aggressive. I agreed with Kalesh here 100 ms should be enough for most cases, and if we occasional hit the suspend while recording senario, it is already the behavior of battery stats.\n\nI also updated my circular buffer to be more robust to help mitigate the scenario above.",
+      "parentUuid": "7ff2a472_b7868d31",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 64
+      },
+      "revId": "22f6b8f58beadd1dae81d2523a063cd87920ff25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
