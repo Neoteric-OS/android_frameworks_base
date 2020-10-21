@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+1: Wenqing Wang <wangwq14@motorola.com>
+Code-Review+2: Gavin Corkery <gavincorkery@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Gavin Corkery <gavincorkery@google.com>
+Submitted-at: Wed, 21 Oct 2020 10:55:21 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1469282
+Project: platform/frameworks/base
+Branch: refs/heads/master
