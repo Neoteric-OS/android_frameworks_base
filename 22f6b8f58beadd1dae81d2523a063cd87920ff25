@@ -70,6 +70,30 @@
       },
       "revId": "22f6b8f58beadd1dae81d2523a063cd87920ff25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ff2a472_b7868d31",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2020-10-21T16:17:56Z",
+      "side": 1,
+      "message": "I see your point. I was suggesting only holding the wakelock for the move assignment in the callback. We would at least then have a consistent snapshot to process. If suspend happens between the copy and processing we will miss some wake up reason, but this is already the behavior of battery stats IIUC. The only way to fully synchronize this is to ensure suspend can\u0027t happen while we are processing the wake up reasons. I\u0027m not inclined to that since batterystats will no longer be the only user of this callback and we don\u0027t want auto suspend to depend on arbitrary stats processing. Since the auto suspend thread will sleep for 100ms before attempting to suspend again, seems these misses would be rare and not worth losing extra suspend opportunities.",
+      "parentUuid": "2abcfe1f_82c2d427",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 64
+      },
+      "revId": "22f6b8f58beadd1dae81d2523a063cd87920ff25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
