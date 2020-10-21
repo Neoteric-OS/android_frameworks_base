@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c742a75_ec0648f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-10-21T23:02:26Z",
+      "side": 1,
+      "message": "Added tgunn@ telephony API review.",
+      "revId": "797356b906ffa6816cfcd5667fe42fa6d49082e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
