@@ -34,6 +34,24 @@
       "parentUuid": "bfde3d5f_3a40c5f1",
       "revId": "98ecceedba1f96f1fe03768b978be68a0b28a367",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7de7bc2b_eeae5d31",
+        "filename": "core/tests/overlaytests/device/src/com/android/overlaytest/LocalOverlayManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2020-10-22T16:16:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "db89f6fb_7ef06f75",
+      "revId": "98ecceedba1f96f1fe03768b978be68a0b28a367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
