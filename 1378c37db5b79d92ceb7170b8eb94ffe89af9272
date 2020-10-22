@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c902b1d_4758a24d",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-10-22T11:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbdeb9c6_e51435d9",
+      "range": {
+        "startLine": 554,
+        "startChar": 25,
+        "endLine": 554,
+        "endChar": 26
+      },
+      "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aaba4200_d085fc72",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-22T01:10:03Z",
       "side": 1,
       "message": "Can\u0027t we replace this with mSubIdToConfig.get(subId)?",
+      "range": {
+        "startLine": 1185,
+        "startChar": 12,
+        "endLine": 1188,
+        "endChar": 13
+      },
+      "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6ff846f_c88b475a",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-10-22T11:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaba4200_d085fc72",
       "range": {
         "startLine": 1185,
         "startChar": 12,
@@ -94,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "818dd4b9_3112a243",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-10-22T11:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3280b42a_961ce7a5",
+      "range": {
+        "startLine": 1846,
+        "startChar": 42,
+        "endLine": 1846,
+        "endChar": 59
+      },
+      "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18284ad0_89f04bae",
@@ -107,6 +179,30 @@
       "writtenOn": "2020-10-22T01:10:03Z",
       "side": 1,
       "message": "Can we use tmSub.getSubscriptionId() to keep it consistent with other cache?",
+      "range": {
+        "startLine": 1848,
+        "startChar": 34,
+        "endLine": 1848,
+        "endChar": 55
+      },
+      "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90f7386b_43e982a1",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1848,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-10-22T11:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18284ad0_89f04bae",
       "range": {
         "startLine": 1848,
         "startChar": 34,
@@ -140,6 +236,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5e0a74b_c4ddffbb",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2190,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-10-22T11:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00f1fd42_c7bff7db",
+      "range": {
+        "startLine": 2187,
+        "startChar": 12,
+        "endLine": 2190,
+        "endChar": 13
+      },
+      "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e153eb69_1d7a362d",
@@ -153,6 +273,30 @@
       "writtenOn": "2020-10-22T01:10:03Z",
       "side": 1,
       "message": "This seems to be a change in current logic. Right now, if mCarrierConfigManager.getConfigForSubId(subId) returns null, getCycleDayFromCarrierConfig() handles this null and returns a fallback value. getWarningBytesFromCarrierConfig() and getLimitBytesFromCarrierConfig() also do the same. Any reason why we are changing the behavior with this CL?",
+      "range": {
+        "startLine": 2192,
+        "startChar": 11,
+        "endLine": 2194,
+        "endChar": 13
+      },
+      "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be896d07_785a6719",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2194,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-10-22T11:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e153eb69_1d7a362d",
       "range": {
         "startLine": 2192,
         "startChar": 11,
