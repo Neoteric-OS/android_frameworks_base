@@ -16,6 +16,46 @@
       "message": "Added tgunn@ telephony API review.",
       "revId": "797356b906ffa6816cfcd5667fe42fa6d49082e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e733cd02_2485f449",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-10-22T15:26:23Z",
+      "side": 1,
+      "message": "Please also add the CTS tests for this change to the topic.",
+      "revId": "797356b906ffa6816cfcd5667fe42fa6d49082e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0cbe164_1f8d3912",
+        "filename": "telephony/java/android/telephony/NetworkRegistrationInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-10-22T15:26:23Z",
+      "side": 1,
+      "message": "This should just be a public API; all the STATE_* constants are public APIs.",
+      "range": {
+        "startLine": 375,
+        "startChar": 4,
+        "endLine": 375,
+        "endChar": 14
+      },
+      "revId": "797356b906ffa6816cfcd5667fe42fa6d49082e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
