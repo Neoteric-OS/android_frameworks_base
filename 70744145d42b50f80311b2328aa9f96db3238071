@@ -22,6 +22,30 @@
       },
       "revId": "70744145d42b50f80311b2328aa9f96db3238071",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "debd29d7_5932d5e8",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1729155
+      },
+      "writtenOn": "2020-10-22T19:44:15Z",
+      "side": 1,
+      "message": "Thank you very much Kelly. I took a different approach this time by using a double buffer. Each buffer holds only one wakeup reason vector and is protected by a mutex. Each thread will try to lock the mutex upon write/read and switch to the other buffer if unavailable. As each thread can at most lock one buffer at a time, we guarantee to have non-blocking read/write protection. However, overflow can still happen if wakeup reasons arrive at a much faster frequency than BatteryStats logging. Wakeup reasons will be dropped with error handling in that case. PTAL!",
+      "parentUuid": "1f9a3787_7b6d31be",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 55
+      },
+      "revId": "70744145d42b50f80311b2328aa9f96db3238071",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
