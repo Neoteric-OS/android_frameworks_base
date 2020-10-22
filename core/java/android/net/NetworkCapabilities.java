@@ -170,6 +170,8 @@ public final class NetworkCapabilities implements Parcelable {
             NET_CAPABILITY_MCX,
             NET_CAPABILITY_PARTIAL_CONNECTIVITY,
             NET_CAPABILITY_TEMPORARILY_NOT_METERED,
+            NET_CAPABILITY_IS_VCN_MANAGED,
+            NET_CAPABILITY_TOP_LEVEL_NETWORK,
     })
     public @interface NetCapability { }
 
@@ -345,8 +347,27 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public static final int NET_CAPABILITY_TEMPORARILY_NOT_METERED = 25;
 
+    /**
+     * Indicates that a network is eligible for use as an underlying network for a VCN
+     *
+     * <p>VCNs must verify that not only are all underlying networks it uses VCN_MANAGED, but also
+     * that the subscription groups match.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int NET_CAPABILITY_IS_VCN_MANAGED = 26;
+
+    /**
+     * Indicates that a network is a top level network, eligible for general-purpose use.
+     *
+     * <p>Networks that are not VCN_MANAGED are TOP_LEVEL_NETWORK(s). The inverse may NOT be true;
+     * a VCN_MANAGED network may also be a TOP_LEVEL_NETWORK in the case of a VCN in safe mode.
+     */
+    public static final int NET_CAPABILITY_TOP_LEVEL_NETWORK = 27;
+
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
-    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_TEMPORARILY_NOT_METERED;
+    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_TOP_LEVEL_NETWORK;
 
     /**
      * Network capabilities that are expected to be mutable, i.e., can change while a particular
@@ -381,7 +402,8 @@ public final class NetworkCapabilities implements Parcelable {
     private static final long DEFAULT_CAPABILITIES =
             (1 << NET_CAPABILITY_NOT_RESTRICTED) |
             (1 << NET_CAPABILITY_TRUSTED) |
-            (1 << NET_CAPABILITY_NOT_VPN);
+            (1 << NET_CAPABILITY_NOT_VPN) |
+            (1 << NET_CAPABILITY_TOP_LEVEL_NETWORK);
 
     /**
      * Capabilities that suggest that a network is restricted.
@@ -439,7 +461,9 @@ public final class NetworkCapabilities implements Parcelable {
             | (1 << NET_CAPABILITY_NOT_VPN)
             | (1 << NET_CAPABILITY_NOT_ROAMING)
             | (1 << NET_CAPABILITY_NOT_CONGESTED)
-            | (1 << NET_CAPABILITY_NOT_SUSPENDED);
+            | (1 << NET_CAPABILITY_NOT_SUSPENDED)
+            | (1 << NET_CAPABILITY_IS_VCN_MANAGED)
+            | (1 << NET_CAPABILITY_TOP_LEVEL_NETWORK);
 
     /**
      * Adds the given capability to this {@code NetworkCapability} instance.
@@ -1910,6 +1934,8 @@ public final class NetworkCapabilities implements Parcelable {
             case NET_CAPABILITY_MCX:                  return "MCX";
             case NET_CAPABILITY_PARTIAL_CONNECTIVITY: return "PARTIAL_CONNECTIVITY";
             case NET_CAPABILITY_TEMPORARILY_NOT_METERED:    return "TEMPORARILY_NOT_METERED";
+            case NET_CAPABILITY_IS_VCN_MANAGED:       return "IS_VCN_MANAGED";
+            case NET_CAPABILITY_TOP_LEVEL_NETWORK:    return "TOP_LEVEL_NETWORK";
             default:                                  return Integer.toString(capability);
         }
     }
