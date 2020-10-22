@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "93e3e4f5_d16e26b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-22T13:26:10Z",
+      "side": 1,
+      "message": "Hmmm, I guess this is JNI code running in an app process? We should probably have a better solution to than than relying on @UnsupportedAppUsage.\n\nBut those calls should show up in our data if that\u0027s the case. I don\u0027t suppose you have a canonical list of such APIs?",
+      "parentUuid": "624344f7_4bfe6e6c",
+      "revId": "8d76e8e7544e92b1e441ef5a5a9c0d4ed5d505b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e7686dc1_68535e5b",
         "filename": "core/java/android/hardware/camera2/CameraMetadata.java",
         "patchSetId": 1
