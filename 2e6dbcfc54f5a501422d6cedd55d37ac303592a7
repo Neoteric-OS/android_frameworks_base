@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19827dd2_aa61a877",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3063,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-22T11:09:06Z",
+      "side": 1,
+      "message": "Refactor out to a helper method?",
+      "range": {
+        "startLine": 3052,
+        "startChar": 0,
+        "endLine": 3063,
+        "endChar": 13
+      },
+      "revId": "2e6dbcfc54f5a501422d6cedd55d37ac303592a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f352099_f647668e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7947,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-22T11:09:06Z",
+      "side": 1,
+      "message": "Is there a need to use the word \"cached\" here? It looks like all connectivity reports are cached. Can you just drop the \"cached\"?",
+      "range": {
+        "startLine": 7947,
+        "startChar": 32,
+        "endLine": 7947,
+        "endChar": 39
+      },
+      "revId": "2e6dbcfc54f5a501422d6cedd55d37ac303592a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1624665a_195dcd87",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 8119,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-22T11:09:06Z",
+      "side": 1,
+      "message": "Why is a duplicate report a problem? An app that assumes that one call to reportNetworkConnectivity will generate exactly one report is making an incorrect assumption. For example, another app might have called reportNetworkConnectivity at around the same time.",
+      "range": {
+        "startLine": 8119,
+        "startChar": 17,
+        "endLine": 8119,
+        "endChar": 48
+      },
+      "revId": "2e6dbcfc54f5a501422d6cedd55d37ac303592a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4d73d0e_6b6f409b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 8121,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-22T11:09:06Z",
+      "side": 1,
+      "message": "It looks like an app with no permission to access connectivity reports can cause this code to run, and prevent apps that do have permission from receiving cached results. That seems incorrect.",
+      "range": {
+        "startLine": 8117,
+        "startChar": 0,
+        "endLine": 8121,
+        "endChar": 91
+      },
+      "revId": "2e6dbcfc54f5a501422d6cedd55d37ac303592a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
