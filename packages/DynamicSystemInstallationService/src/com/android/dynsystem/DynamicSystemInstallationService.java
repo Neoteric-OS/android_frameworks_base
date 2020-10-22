@@ -375,8 +375,12 @@ public class DynamicSystemInstallationService extends Service
             return;
         }
 
-        // Per current design, we don't have disable() API. AOT is disabled on next reboot.
-        // TODO: Use better status query when b/125079548 is done.
+        boolean disabled = mDynSystem.setEnable(/* enable = */ false, /* oneShot = */ false);
+        if (!disabled) {
+            Log.e(TAG, "Failed to disable DynamicSystem.");
+            return;
+        }
+
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
         if (powerManager != null) {
