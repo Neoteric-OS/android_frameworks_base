@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "bfde3d5f_3a40c5f1",
         "filename": "core/tests/overlaytests/device/src/com/android/overlaytest/LocalOverlayManager.java",
@@ -14,8 +15,25 @@
       "side": 1,
       "message": "Shouldn\u0027t these be strictly equal?",
       "revId": "98ecceedba1f96f1fe03768b978be68a0b28a367",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db89f6fb_7ef06f75",
+        "filename": "core/tests/overlaytests/device/src/com/android/overlaytest/LocalOverlayManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-10-22T12:32:25Z",
+      "side": 1,
+      "message": "No, it should be contains: we\u0027re comparing paths\n\n /data/app/~~NtTXYlP-frBKriTkZy8YMQ\u003d\u003d/com.android.overlaytest.framework-gv2dLn7vtyBO3UG2HoVfDw\u003d\u003d/base.apk\n\nand package names\n\n com.android.overlaytest.framework\n\nand relying on the fact/trick/hack that we *know* package names are part of APK paths.\n\nI\u0027ve reworded the methods and parameters slightly in an upcoming CL, but I admit it\u0027s not the cleanest way to express this.",
+      "parentUuid": "bfde3d5f_3a40c5f1",
+      "revId": "98ecceedba1f96f1fe03768b978be68a0b28a367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
