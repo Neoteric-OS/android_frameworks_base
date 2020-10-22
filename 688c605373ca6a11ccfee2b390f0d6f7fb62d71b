@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "180d02f7_4401896d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-10-22T20:22:41Z",
+      "side": 1,
+      "message": "Thanks for writing this CL, but we\u0027re now managing this in a more centralized location in go/ayeaye, where we get the attention of both the author *and* any reviewers of the CL in Gerrit UI.\n\nHere\u0027s an example of this more-robust alternative approach: go/aosp-first-example",
+      "revId": "688c605373ca6a11ccfee2b390f0d6f7fb62d71b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
