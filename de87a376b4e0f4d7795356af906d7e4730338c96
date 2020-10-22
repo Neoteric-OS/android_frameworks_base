@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005686755",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1471163?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "786fadee_81e3fc7a",
+        "filename": "telephony/api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-22T18:19:33Z",
+      "side": 1,
+      "message": "This file contains a set of conflict markers.If this is a false alarm, add IGNORE_MERGE_CONFLICT_CHECK\u003d\u003d\u003creason\u003e to your commit message.",
+      "range": {
+        "startLine": 740,
+        "startChar": 1,
+        "endLine": 740,
+        "endChar": 7
+      },
+      "revId": "de87a376b4e0f4d7795356af906d7e4730338c96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
