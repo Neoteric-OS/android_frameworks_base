@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a125fed6_4e266a70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-22T05:50:14Z",
+      "side": 1,
+      "message": "This commit looks good to me basically, but there is something wrong with aosp/1456115, so the TH will fail if this commit is based on aosp/1456115.",
+      "revId": "67b59c9d5282b0a8367ff7059d67756d4b578505",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
