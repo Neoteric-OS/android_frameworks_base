@@ -8186,6 +8186,7 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         mOwners.removeProfileOwner(userId);
         mOwners.writeProfileOwner(userId);
         deleteTransferOwnershipBundleLocked(userId);
+        toggleBackupServiceActive(userId, true);
     }
 
     @Override
