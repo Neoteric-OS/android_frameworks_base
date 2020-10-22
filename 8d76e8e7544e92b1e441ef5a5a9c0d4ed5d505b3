@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ca59db14_1a03cb37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2020-10-22T18:05:27Z",
+      "side": 1,
+      "message": "No, as it\u0027s unclear if all use of JNI-\u003eJava in framework JNI libs is affected or not.  b/149594233 tracked what we found on the camera side.",
+      "parentUuid": "93e3e4f5_d16e26b6",
+      "revId": "8d76e8e7544e92b1e441ef5a5a9c0d4ed5d505b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e7686dc1_68535e5b",
         "filename": "core/java/android/hardware/camera2/CameraMetadata.java",
         "patchSetId": 1
