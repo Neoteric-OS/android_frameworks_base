@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dbdeb9c6_e51435d9",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2020-10-22T01:10:03Z",
+      "side": 1,
+      "message": "Could you add \"carrier\" here?",
+      "range": {
+        "startLine": 554,
+        "startChar": 25,
+        "endLine": 554,
+        "endChar": 26
+      },
+      "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaba4200_d085fc72",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2020-10-22T01:10:03Z",
+      "side": 1,
+      "message": "Can\u0027t we replace this with mSubIdToConfig.get(subId)?",
+      "range": {
+        "startLine": 1185,
+        "startChar": 12,
+        "endLine": 1188,
+        "endChar": 13
+      },
+      "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9cd67642_4b05f632",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 3
@@ -43,6 +89,75 @@
         "startChar": 42,
         "endLine": 1846,
         "endChar": 59
+      },
+      "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18284ad0_89f04bae",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1848,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2020-10-22T01:10:03Z",
+      "side": 1,
+      "message": "Can we use tmSub.getSubscriptionId() to keep it consistent with other cache?",
+      "range": {
+        "startLine": 1848,
+        "startChar": 34,
+        "endLine": 1848,
+        "endChar": 55
+      },
+      "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00f1fd42_c7bff7db",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2190,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2020-10-22T01:10:03Z",
+      "side": 1,
+      "message": "Same as a previous comment: Can\u0027t we replace this with mSubIdToConfig.get(subId)?",
+      "range": {
+        "startLine": 2187,
+        "startChar": 12,
+        "endLine": 2190,
+        "endChar": 13
+      },
+      "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e153eb69_1d7a362d",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2194,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2020-10-22T01:10:03Z",
+      "side": 1,
+      "message": "This seems to be a change in current logic. Right now, if mCarrierConfigManager.getConfigForSubId(subId) returns null, getCycleDayFromCarrierConfig() handles this null and returns a fallback value. getWarningBytesFromCarrierConfig() and getLimitBytesFromCarrierConfig() also do the same. Any reason why we are changing the behavior with this CL?",
+      "range": {
+        "startLine": 2192,
+        "startChar": 11,
+        "endLine": 2194,
+        "endChar": 13
       },
       "revId": "1378c37db5b79d92ceb7170b8eb94ffe89af9272",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d9a5930_add24f80",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2020-10-22T01:10:03Z",
+      "side": 0,
+      "message": "Why is this log removed?",
+      "range": {
+        "startLine": 1182,
+        "startChar": 16,
+        "endLine": 1182,
+        "endChar": 85
+      },
+      "revId": "33130380175d69480c89049c3d2eab2fc01930e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
