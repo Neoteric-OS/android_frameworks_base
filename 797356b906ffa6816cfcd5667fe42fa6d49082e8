@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3043f78e_55a3c0e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-23T02:52:31Z",
+      "side": 1,
+      "message": "CTS test is added in aosp/1471542",
+      "parentUuid": "f3ebc2f5_498f784d",
+      "revId": "797356b906ffa6816cfcd5667fe42fa6d49082e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0cbe164_1f8d3912",
