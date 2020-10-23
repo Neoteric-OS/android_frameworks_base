@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005697493",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1470099?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "f9a07a5f_82c88232",
+          "description": "Change to \"keystore/java/android/security/keystore2/AndroidKeyStoreCipherSpiBase.java\"",
+          "replacements": [
+            {
+              "path": "keystore/java/android/security/keystore2/AndroidKeyStoreCipherSpiBase.java",
+              "range": {
+                "startLine": 89,
+                "startChar": 26,
+                "endLine": 89,
+                "endChar": 33
+              },
+              "replacement": "the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "08f8dc7b_99c3f3d2",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreCipherSpiBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-23T03:18:31Z",
+      "side": 1,
+      "message": "Common typo found: \"the the\" -- should it be \"the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 89,
+        "startChar": 26,
+        "endLine": 89,
+        "endChar": 33
+      },
+      "revId": "801cb518e0ae2828df3f11f1e025f4cba8233fae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005697493",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1470099?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "e67470c9_d750abbd",
+          "description": "Change to \"keystore/java/android/security/keystore2/AndroidKeyStoreSignatureSpiBase.java\"",
+          "replacements": [
+            {
+              "path": "keystore/java/android/security/keystore2/AndroidKeyStoreSignatureSpiBase.java",
+              "range": {
+                "startLine": 68,
+                "startChar": 26,
+                "endLine": 68,
+                "endChar": 33
+              },
+              "replacement": "the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "c4e12b93_80c83336",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreSignatureSpiBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-23T03:18:31Z",
+      "side": 1,
+      "message": "Common typo found: \"the the\" -- should it be \"the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 68,
+        "startChar": 26,
+        "endLine": 68,
+        "endChar": 33
+      },
+      "revId": "801cb518e0ae2828df3f11f1e025f4cba8233fae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005697493",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1470099?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "7f4df1c5_0f40adf8",
+          "description": "Change to \"keystore/java/android/security/keystore2/AndroidKeyStoreSpi.java\"",
+          "replacements": [
+            {
+              "path": "keystore/java/android/security/keystore2/AndroidKeyStoreSpi.java",
+              "range": {
+                "startLine": 434,
+                "startChar": 69,
+                "endLine": 434,
+                "endChar": 76
+              },
+              "replacement": "the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "39dd8a79_083b75e5",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-23T03:18:31Z",
+      "side": 1,
+      "message": "Common typo found: \"the the\" -- should it be \"the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 434,
+        "startChar": 69,
+        "endLine": 434,
+        "endChar": 76
+      },
+      "revId": "801cb518e0ae2828df3f11f1e025f4cba8233fae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005697493",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1470099?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "d4eff29a_a858f3be",
+          "description": "Change to \"keystore/java/android/security/keystore2/AndroidKeyStoreSpi.java\"",
+          "replacements": [
+            {
+              "path": "keystore/java/android/security/keystore2/AndroidKeyStoreSpi.java",
+              "range": {
+                "startLine": 600,
+                "startChar": 69,
+                "endLine": 600,
+                "endChar": 76
+              },
+              "replacement": "the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "42f82534_8acdcaa1",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-23T03:18:31Z",
+      "side": 1,
+      "message": "Common typo found: \"the the\" -- should it be \"the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 600,
+        "startChar": 69,
+        "endLine": 600,
+        "endChar": 76
+      },
+      "revId": "801cb518e0ae2828df3f11f1e025f4cba8233fae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
