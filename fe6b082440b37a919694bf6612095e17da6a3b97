@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aca261b4_483b321b",
+        "filename": "keystore/java/android/security/Credentials.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2020-10-23T16:10:54Z",
+      "side": 1,
+      "message": "Are these prefixes still in use?",
+      "range": {
+        "startLine": 86,
+        "startChar": 38,
+        "endLine": 92,
+        "endChar": 46
+      },
+      "revId": "fe6b082440b37a919694bf6612095e17da6a3b97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
