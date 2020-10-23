@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3ebc2f5_498f784d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-23T01:31:36Z",
+      "side": 1,
+      "message": "Yes, I will add a CTS.",
+      "parentUuid": "e733cd02_2485f449",
+      "revId": "797356b906ffa6816cfcd5667fe42fa6d49082e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0cbe164_1f8d3912",
@@ -48,6 +66,30 @@
       "writtenOn": "2020-10-22T15:26:23Z",
       "side": 1,
       "message": "This should just be a public API; all the STATE_* constants are public APIs.",
+      "range": {
+        "startLine": 375,
+        "startChar": 4,
+        "endLine": 375,
+        "endChar": 14
+      },
+      "revId": "797356b906ffa6816cfcd5667fe42fa6d49082e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04bddbd2_0eed81ab",
+        "filename": "telephony/java/android/telephony/NetworkRegistrationInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-23T01:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0cbe164_1f8d3912",
       "range": {
         "startLine": 375,
         "startChar": 4,
