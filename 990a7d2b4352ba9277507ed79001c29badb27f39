@@ -33,6 +33,23 @@
       "message": "TH is unhappy because WifiScoreReportTest uses the constructor that we want to remove.",
       "revId": "990a7d2b4352ba9277507ed79001c29badb27f39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca16e9ba_7f5fa8a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-10-23T08:09:42Z",
+      "side": 1,
+      "message": "I found you address the wifi test at aosp/1465322. It looks like this change should be added to the same topic.",
+      "revId": "990a7d2b4352ba9277507ed79001c29badb27f39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
