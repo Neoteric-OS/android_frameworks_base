@@ -1111,9 +1111,30 @@ public class AppOpsManager {
     /** @hide */
     public static final int OP_NO_ISOLATED_STORAGE = AppProtoEnums.APP_OP_NO_ISOLATED_STORAGE;
 
+    /**
+     * Reserved key for 100
+     *
+     * @hide
+     */
+    public static final int OP_RESERVED_100 = 100;
+
+    /**
+     * Reserved key for 101
+     *
+     * @hide
+     */
+    public static final int OP_RESERVED_101 = 101;
+
+    /**
+     * Reserved key for 102
+     *
+     * @hide
+     */
+    public static final int OP_RESERVED_102 = 102;
+
     /** @hide */
     @UnsupportedAppUsage
-    public static final int _NUM_OP = 100;
+    public static final int _NUM_OP = 103;
 
     /** Access to coarse location information. */
     public static final String OPSTR_COARSE_LOCATION = "android:coarse_location";
