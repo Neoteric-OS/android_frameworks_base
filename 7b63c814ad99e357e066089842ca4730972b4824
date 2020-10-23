@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "580d37fe_08565d0b",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-10-23T13:06:18Z",
+      "side": 1,
+      "message": "This needs to be fixed in this CL.",
+      "range": {
+        "startLine": 906,
+        "startChar": 31,
+        "endLine": 906,
+        "endChar": 57
+      },
+      "revId": "7b63c814ad99e357e066089842ca4730972b4824",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
