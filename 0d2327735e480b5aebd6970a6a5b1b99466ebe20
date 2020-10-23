@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd637a5c_e40ffde8",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1241955
+      },
+      "writtenOn": "2020-10-23T23:57:23Z",
+      "side": 1,
+      "message": "This is one of those areas where the Android cppstyle and Google cppstyle differ.  For Android, these names should be push(), pop(), and empty(), and since underscores are only used for extern \"C\" function names, the internal versions would be something like pushImpl()/popImpl() or pushInternal()/popInternal() or whatever else feels best to you, rather than _Push()/_Pop().  (This will also be more consistent with the rest of the file.)\n\nhttps://docs.google.com/document/d/1QivJI_03TcfRAyMGWkTNHEdiQh8h_F-rYGup9soSeLA/edit#heading\u003dh.92cudhmf3aa5",
+      "range": {
+        "startLine": 118,
+        "startChar": 9,
+        "endLine": 118,
+        "endChar": 13
+      },
+      "revId": "0d2327735e480b5aebd6970a6a5b1b99466ebe20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcf88c7d_e55de92a",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1241955
+      },
+      "writtenOn": "2020-10-23T23:57:23Z",
+      "side": 1,
+      "message": "There\u0027s a sync issue around mBufferIndex, since it isn\u0027t protected.  And while I\u0027ll explain that, I have a suggestion a little further down for dealing with it.\n\nLet\u0027s say that mBufferIndex \u003d 0 when we call Pop, and the callback thread is attempting to write into that spot (it has the mutex at index 0) but is about to discover that it is not empty.  Now this code runs on the processing thread, calls _Pop on index 1 and finds it empty.  But the callback thread runs next, and at line 123 it changes the value of mBufferIndex to 1.  This code runs line 135 next and checks index 1 again, finding it empty, and then the callback thread populates it.  So we now have valid data in both entries while Pop failed to return anything.  The block of code at line 294 would try again _if_ we reached it, but we won\u0027t... we\u0027ll error out at line 236.\n\nThere _might_ even be scenarios in which memory coherence issues could arise around mBufferIndex, though that might be coincidentally averted due to the mutexes.\n\n\nWould it be better to take some of the constructs you\u0027ve created here and just bring them back to the original algorithm?  The main concern is avoiding unsafe simultaneous container accesses, not making it less likely to drop reasons (which the new callback mechanism already improves).  So if we just focus on MT safety and not blocking the callback, perhaps something like this would work.  (Please note that this is partial/pseudo code, not complete implementations):\n\nIn WakeupCallback::notifyWakeup() (around lines 175 - 182):\n    bool reasonsCaptured \u003d false;\n    {\n        std::unique_lock\u003cstd::mutex\u003e reasonsLock(mReasonsMutex, std::defer_lock);\n        if (reasonsLock.try_lock() \u0026\u0026 mWakeupReasons.empty()) {\n            mWakeupReasons \u003d std::move(wakeupReasons);\n            reasonsCaptured \u003d true;\n        }\n    }\n\n    if (!reasonsCaptured) {\n        ALOGE(\"Failed to write wakeup reasons. Reasons dropped:\");\n        for (auto wakeupReason : wakeupReasons) {\n            ALOGE(\"\\t%s\", wakeupReason.c_str());\n        }\n    }\n\n    int ret \u003d sem_post(\u0026wakeup_sem);\n        ...\n\n\nIn nativeWaitWakeup (around lines 234-237):\n    std::vector\u003cstd::string\u003e wakeupReasons;\n    {\n        std::unique_lock\u003cstd::mutex\u003e reasonsLock(mReasonsMutex, std::defer_lock);\n        if (reasonsLock.try_lock() \u0026\u0026 !mWakeupReasons.empty()) {\n            wakeupReasons \u003d std::move(mWakeupReasons);\n            mWakeupReasons.clear();\n        }\n    }\n\n    if (wakeupReasons.empty()) {\n        return 0;\n    }\n    ...\n\n(Note that returning -1 would cause the WakeupReasonThread in BatteryStatsService.java to completely stop running, whereas returning 0 will cause it to log the wakeup reason as \"unknown\".)",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 9
+      },
+      "revId": "0d2327735e480b5aebd6970a6a5b1b99466ebe20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
