@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e21b0215_c3c989bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-10-23T16:07:15Z",
+      "side": 1,
+      "message": "This is waiting in internal with approvals, is the plan to put this in through AOSP instead?  ",
+      "revId": "76d1107dc68e9c8e2d54f1be5c7454c63f5e0cd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
