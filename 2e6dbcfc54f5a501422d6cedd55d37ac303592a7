@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5b1961b_13be861b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3063,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-10-23T05:16:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19827dd2_aa61a877",
+      "range": {
+        "startLine": 3052,
+        "startChar": 0,
+        "endLine": 3063,
+        "endChar": 13
+      },
+      "revId": "2e6dbcfc54f5a501422d6cedd55d37ac303592a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f352099_f647668e",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-22T11:09:06Z",
       "side": 1,
       "message": "Is there a need to use the word \"cached\" here? It looks like all connectivity reports are cached. Can you just drop the \"cached\"?",
+      "range": {
+        "startLine": 7947,
+        "startChar": 32,
+        "endLine": 7947,
+        "endChar": 39
+      },
+      "revId": "2e6dbcfc54f5a501422d6cedd55d37ac303592a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96468b54_b93aa231",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7947,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-10-23T05:16:34Z",
+      "side": 1,
+      "message": "\u0027cached\u0027 was included here to differentiate from the EVENT_NETWORK_TESTED message, which sends a newly-created ConnectivityReport to be sent to registrants.\n\nFor maintainability purposes, this distinction will help to avoid confusing the two cases in the future. Thoughts?",
+      "parentUuid": "0f352099_f647668e",
       "range": {
         "startLine": 7947,
         "startChar": 32,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e652da42_f79d1542",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 8119,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-10-23T05:16:34Z",
+      "side": 1,
+      "message": "For the race described here: from a correctness perspective the app reporting connectivity is doing so on the previous-validation of the Network. Once the NETWORK_TESTED message is processed, both the validation results and the cached ConnectivityReport are updated. At this point, any unprocessed SEND_CACHED messages still in the queue would be for the previous ConnectivityReport.",
+      "parentUuid": "1624665a_195dcd87",
+      "range": {
+        "startLine": 8119,
+        "startChar": 17,
+        "endLine": 8119,
+        "endChar": 48
+      },
+      "revId": "2e6dbcfc54f5a501422d6cedd55d37ac303592a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a4d73d0e_6b6f409b",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 11
@@ -83,6 +155,30 @@
       "writtenOn": "2020-10-22T11:09:06Z",
       "side": 1,
       "message": "It looks like an app with no permission to access connectivity reports can cause this code to run, and prevent apps that do have permission from receiving cached results. That seems incorrect.",
+      "range": {
+        "startLine": 8117,
+        "startChar": 0,
+        "endLine": 8121,
+        "endChar": 91
+      },
+      "revId": "2e6dbcfc54f5a501422d6cedd55d37ac303592a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12935dd4_766ee4ac",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 8121,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-10-23T05:16:34Z",
+      "side": 1,
+      "message": "Re “unpermissioned app triggering ConnectivityReport”: This is indeed the case, and already occurs. Consider an app that reports connectivity and causes the Network to be re-validated. This will lead to a ConnectivityReport sending to all permissioned callbacks once validation is complete (even if the reporting app does not have permission for this Network).\n\nRe “prevent apps from receiving callbacks”: Any ConnDiags event will send to all callbacks permissioned for that Network. Removing subsequent SEND_CACHED messages still allows the current message to continue processing, which will send to all correct callbacks. If there is no cached report, this will be a no-op until there is a ConnectivityReport available.",
+      "parentUuid": "a4d73d0e_6b6f409b",
       "range": {
         "startLine": 8117,
         "startChar": 0,
