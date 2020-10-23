@@ -1,0 +1,10 @@
+Code-Review+2: Hall Liu <hallliu@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+API-Review+1: Tyler Gunn <tgunn@google.com>
+Submitted-by: Hall Liu <hallliu@google.com>
+Submitted-at: Fri, 23 Oct 2020 18:12:07 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1470085
+Project: platform/frameworks/base
+Branch: refs/heads/master
