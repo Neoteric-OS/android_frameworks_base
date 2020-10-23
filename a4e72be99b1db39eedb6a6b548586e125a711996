@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fe02a25_27894890",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-23T06:29:03Z",
+      "side": 1,
+      "message": "Personally I am happy with this at this point, but please make sure Lorenzo is comfortable with your answers to his comments.",
+      "revId": "a4e72be99b1db39eedb6a6b548586e125a711996",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
