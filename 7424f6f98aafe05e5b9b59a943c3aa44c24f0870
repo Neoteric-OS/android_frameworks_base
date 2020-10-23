@@ -22,6 +22,30 @@
       },
       "revId": "7424f6f98aafe05e5b9b59a943c3aa44c24f0870",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bca488f3_ecedfcf9",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-10-23T18:48:33Z",
+      "side": 1,
+      "message": "Interestingly the upload hook only complained about this method not having javadoc comment.",
+      "parentUuid": "5dff8e3d_ee31f422",
+      "range": {
+        "startLine": 506,
+        "startChar": 10,
+        "endLine": 506,
+        "endChar": 16
+      },
+      "revId": "7424f6f98aafe05e5b9b59a943c3aa44c24f0870",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
