@@ -180,6 +180,8 @@ import com.android.systemui.plugins.PluginManager;
 import com.android.systemui.plugins.qs.QS;
 import com.android.systemui.plugins.statusbar.NotificationSwipeActionHelper.SnoozeOption;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
+import com.android.systemui.pulse.PulseControllerImpl;
+import com.android.systemui.pulse.VisualizerView;
 import com.android.systemui.qs.QSFragment;
 import com.android.systemui.qs.QSPanelController;
 import com.android.systemui.recents.ScreenPinningRequest;
@@ -514,6 +516,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
 
     protected GameSpaceManager mGameSpaceManager;
 
+    private final PulseControllerImpl mPulseController;
+
     // expanded notifications
     // the sliding/resizing panel within the notification window
     protected NotificationPanelViewController mNotificationPanelViewController;
@@ -638,6 +642,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     private final NotificationLockscreenUserManager mLockscreenUserManager;
     private final NotificationRemoteInputManager mRemoteInputManager;
     private boolean mWallpaperSupported;
+
+    private VisualizerView mVisualizerView;
 
     private Runnable mLaunchTransitionEndRunnable;
     private Runnable mLaunchTransitionCancelRunnable;
@@ -885,6 +891,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         mUserTracker = userTracker;
         mFingerprintManager = fingerprintManager;
         mSysUiState = sysUiState;
+        mPulseController = new PulseControllerImpl(mContext, this, mCommandQueue, mUiBgExecutor);
 
         mLockscreenShadeTransitionController = lockscreenShadeTransitionController;
         mStartingSurfaceOptional = startingSurfaceOptional;
@@ -1400,6 +1407,8 @@ mSettingsObserver.initialize();
             });
         }
 
+        mVisualizerView = (VisualizerView) mNotificationShadeWindowView.findViewById(R.id.visualizerview);
+
         mReportRejectedTouch = mNotificationShadeWindowView
                 .findViewById(R.id.report_rejected_touch);
         if (mReportRejectedTouch != null) {
@@ -1670,6 +1679,9 @@ mSettingsObserver.initialize();
                 mCentralSurfacesComponent.getCentralSurfacesCommandQueueCallbacks();
         // Connect in to the status bar manager service
         mCommandQueue.addCallback(mCommandQueueCallbacks);
+
+        // this will initialize Pulse and begin listening for media events
+        mMediaManager.addCallback(mPulseController);
 
         // Perform all other initialization for CentralSurfacesScope
         for (CentralSurfacesComponent.Startable s : mCentralSurfacesComponent.getStartables()) {
@@ -3159,6 +3171,7 @@ mSettingsObserver.initialize();
         // bar.
         mKeyguardStateController.notifyKeyguardGoingAway(true);
         mCommandQueue.appTransitionPending(mDisplayId, true /* forced */);
+        mPulseController.notifyKeyguardGoingAway();
         updateScrimController();
     }
 
@@ -3240,6 +3253,7 @@ mSettingsObserver.initialize();
                 || (mDozing && mDozeParameters.shouldControlScreenOff() && keyguardVisibleOrWillBe);
 
         mNotificationPanelViewController.setDozing(mDozing, animate);
+        mPulseController.setDozing(mDozing);
         updateQsExpansionEnabled();
         Trace.endSection();
     }
@@ -4475,6 +4489,7 @@ mSettingsObserver.initialize();
                     checkBarModes();
                     updateScrimController();
                     mPresenter.updateMediaMetaData(false, mState != StatusBarState.KEYGUARD);
+                    mPulseController.setKeyguardShowing(mState == StatusBarState.KEYGUARD);
                     Trace.endSection();
                 }
 
@@ -4520,6 +4535,10 @@ mSettingsObserver.initialize();
                     maybeUpdateBarMode();
                 }
             };
+
+    public VisualizerView getLsVisualizer() {
+        return mVisualizerView;
+    }
 
     private final BatteryController.BatteryStateChangeCallback mBatteryStateChangeCallback =
             new BatteryController.BatteryStateChangeCallback() {
