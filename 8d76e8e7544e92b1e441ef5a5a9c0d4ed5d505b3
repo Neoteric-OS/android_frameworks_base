@@ -69,6 +69,24 @@
       "message": "nit: line length",
       "revId": "8d76e8e7544e92b1e441ef5a5a9c0d4ed5d505b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df8e5b56_c99aa850",
+        "filename": "core/java/android/hardware/camera2/CameraMetadata.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-26T15:02:53Z",
+      "side": 1,
+      "message": "Leaving this as is for now.",
+      "parentUuid": "e7686dc1_68535e5b",
+      "revId": "8d76e8e7544e92b1e441ef5a5a9c0d4ed5d505b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
