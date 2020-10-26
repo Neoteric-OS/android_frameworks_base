@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1659abf5_085edf37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1497372
+      },
+      "writtenOn": "2020-10-26T01:19:23Z",
+      "side": 1,
+      "message": "Hello, is there any problem blocking this patch?",
+      "revId": "cfde3a4fbb6be3807d2464adc8d7f5f5f81434af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
