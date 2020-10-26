@@ -6708,9 +6708,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         try {
             if (null != newNetwork) {
-                mNMS.setDefaultNetId(newNetwork.network.netId);
+                mNetd.networkSetDefault(newNetwork.network.netId);
             } else {
-                mNMS.clearDefaultNetId();
+                mNetd.networkClearDefault();
             }
         } catch (Exception e) {
             loge("Exception setting default network :" + e);
