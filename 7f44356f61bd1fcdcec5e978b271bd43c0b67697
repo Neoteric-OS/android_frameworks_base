@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50df9e25_ca979bc8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2441,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-26T11:39:27Z",
+      "side": 1,
+      "message": "Nit: Specify the exception like NMS does.",
+      "range": {
+        "startLine": 2441,
+        "startChar": 17,
+        "endLine": 2441,
+        "endChar": 28
+      },
+      "revId": "7f44356f61bd1fcdcec5e978b271bd43c0b67697",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af4d231c_e675f608",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2442,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-26T11:39:27Z",
+      "side": 1,
+      "message": "Update the method to interfaceSetMtu()",
+      "range": {
+        "startLine": 2442,
+        "startChar": 38,
+        "endLine": 2442,
+        "endChar": 46
+      },
+      "revId": "7f44356f61bd1fcdcec5e978b271bd43c0b67697",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
