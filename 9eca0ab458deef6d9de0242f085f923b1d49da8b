@@ -22,6 +22,30 @@
       },
       "revId": "9eca0ab458deef6d9de0242f085f923b1d49da8b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7af6fb5a_f4b4f763",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-26T09:10:17Z",
+      "side": 1,
+      "message": "I remove all eq() from noteOpNoThrow() and keep eq() on setMode() for same style.",
+      "parentUuid": "c02622e0_d824e74a",
+      "range": {
+        "startLine": 950,
+        "startChar": 16,
+        "endLine": 950,
+        "endChar": 17
+      },
+      "revId": "9eca0ab458deef6d9de0242f085f923b1d49da8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
