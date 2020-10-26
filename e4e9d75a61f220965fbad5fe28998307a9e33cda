@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02b5a482_a81f62d4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6715,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-26T11:06:09Z",
+      "side": 1,
+      "message": "Nit: Maybe specify the RemoteException and ServiceSpecificException here like NMS does.",
+      "range": {
+        "startLine": 6715,
+        "startChar": 17,
+        "endLine": 6715,
+        "endChar": 28
+      },
+      "revId": "e4e9d75a61f220965fbad5fe28998307a9e33cda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
