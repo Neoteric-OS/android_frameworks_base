@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e806e017_e31667e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2020-10-26T21:48:58Z",
+      "side": 1,
+      "message": "It would be good to add to the commit message that sending additional entropy is also removed in this CL.",
+      "range": {
+        "startLine": 13,
+        "startChar": 32,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "95dd7659ca2772572656afd99af6bbb0c51bee4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a20dcbc_54b13ca7",
+        "filename": "keystore/java/android/security/keystore2/KeyStoreCryptoOperationChunkedStreamer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2020-10-26T21:48:58Z",
+      "side": 1,
+      "message": "Can you please briefly mention the difference between CHUNK_SIZE_MAX and CHUNK_SIZE_THRESHOLD below? \nThis clarification would help to review the subsequent changes..",
+      "range": {
+        "startLine": 84,
+        "startChar": 37,
+        "endLine": 84,
+        "endChar": 51
+      },
+      "revId": "95dd7659ca2772572656afd99af6bbb0c51bee4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
