@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Tyler Gunn <tgunn@google.com>
+Code-Review+2: Remi NGUYEN VAN <reminv@google.com>
+API-Review+1: Tyler Gunn <tgunn@google.com>
+Submitted-by: Chiachang Wang <chiachangwang@google.com>
+Submitted-at: Tue, 27 Oct 2020 02:53:58 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1467045
+Project: platform/frameworks/base
+Branch: refs/heads/master
