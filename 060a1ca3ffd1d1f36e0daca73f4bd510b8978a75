@@ -16,6 +16,23 @@
       "message": "LGTM, happy to +2 if none of the framework-side folks want to also review.",
       "revId": "060a1ca3ffd1d1f36e0daca73f4bd510b8978a75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21bfea52_34e3c1f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2020-10-27T14:00:35Z",
+      "side": 1,
+      "message": "LGTM I\u0027ll let kelly +2 here since she is more familiar with batterystats",
+      "revId": "060a1ca3ffd1d1f36e0daca73f4bd510b8978a75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
