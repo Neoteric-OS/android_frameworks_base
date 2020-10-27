@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2685b76_8adaad3e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1241955
+      },
+      "writtenOn": "2020-10-27T05:23:49Z",
+      "side": 1,
+      "message": "This is very nearly there, but the management of the lock needs a little more refinement.  Right now, it is held unnecessarily during error handling in the callback and during _success_ handling in the processing, even though the synchronization is only needed across 2 or 3 lines of code in both places.  That widens the window of opportunity for lock contention in both places, increasing the likelihood of dropping reasons.\n\nThe RAII approach to locks in C++ is very powerful, but just because we _can_ let locks be auto-released when they naturally go out of scope doesn\u0027t mean we _should_ let it happen (vs. either manual unlocking or structurally forcing them to go out of scope as soon as they\u0027re no longer needed).",
+      "revId": "42ac3858efffc9b1f11881955847ca4279d9e5c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "220f0b9d_ace1ae4b",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1241955
+      },
+      "writtenOn": "2020-10-27T05:23:49Z",
+      "side": 1,
+      "message": "One of the reasons I structured this a bit differently in my suggestion (if I\u0027m remembering correctly) is that when the code is structured this way, if you get the lock on line 124 and find that mWakeupReasons is not empty, the lock remains held for all of this logging activity, which unnecessarily widens the window for potential lock contention.  There\u0027s nothing wrong with the way the logic is constructed in terms of correctness, but it\u0027s almost always better to give up locks before doing error logging unless the locks actually protect something related to the logging.",
+      "revId": "42ac3858efffc9b1f11881955847ca4279d9e5c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78e9ae04_4fbad0bd",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1241955
+      },
+      "writtenOn": "2020-10-27T05:23:49Z",
+      "side": 1,
+      "message": "Here too, if the lock is successfully acquired on line 188, it is held for the entire remainder of the function.  The lock is only needed across the empty check (188), the move (189), and the clear(190), so you want to ensure that it gets released (either by manual unlocking or implicitly by falling out of a more localized scope) immediately afterward.",
+      "revId": "42ac3858efffc9b1f11881955847ca4279d9e5c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
