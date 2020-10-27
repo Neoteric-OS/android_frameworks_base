@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005771485",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1465553?revision\u003d6",
+      "fixSuggestions": [
+        {
+          "fixId": "e8044cf5_93306ec3",
+          "description": "Change to \"core/java/android/content/pm/PackageInstaller.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/content/pm/PackageInstaller.java",
+              "range": {
+                "startLine": 1475,
+                "startChar": 8,
+                "endLine": 1475,
+                "endChar": 13
+              },
+              "replacement": " */"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "3b81f7d7_e38e7581",
+        "filename": "core/java/android/content/pm/PackageInstaller.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1475,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-27T21:59:55Z",
+      "side": 1,
+      "message": "Common typo found: \" * */\" -- should it be \" */\"?\nMalformatted comment.\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1475,
+        "startChar": 8,
+        "endLine": 1475,
+        "endChar": 13
+      },
+      "revId": "ca83aabb918fcb7732c100fc0e1cf44f43de02a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
