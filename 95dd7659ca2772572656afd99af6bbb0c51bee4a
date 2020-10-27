@@ -45,6 +45,30 @@
       },
       "revId": "95dd7659ca2772572656afd99af6bbb0c51bee4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93736533_1e832a1c",
+        "filename": "keystore/java/android/security/keystore2/KeyStoreCryptoOperationChunkedStreamer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-10-27T18:46:20Z",
+      "side": 1,
+      "message": "I think the comments describe it really well. We only send data to Keystore using `update` if we have more than DEFAULT_CHUNK_SIZE_THRESHOLD bytes of data to send. Otherwise, we defer the rest of the data to `finish`. DEFAULT_CHUNK_SIZE_MAX is the upper bound of data that we can send with one call to `update`.",
+      "parentUuid": "5a20dcbc_54b13ca7",
+      "range": {
+        "startLine": 84,
+        "startChar": 37,
+        "endLine": 84,
+        "endChar": 51
+      },
+      "revId": "95dd7659ca2772572656afd99af6bbb0c51bee4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
