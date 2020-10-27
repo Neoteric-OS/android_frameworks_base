@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a94af61a_bb1554ab",
+        "filename": "core/java/android/net/netstats/provider/INetworkStatsProviderCallback.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-10-27T14:08:50Z",
+      "side": 1,
+      "message": "As fas as I can remember, we cannot insert a method to an existing aidl otherwise it\u0027s out of order for those who is using the old version.",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

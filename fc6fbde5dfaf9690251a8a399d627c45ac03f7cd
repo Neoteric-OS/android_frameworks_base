@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "566b3898_e9955719",
+        "filename": "core/java/android/net/netstats/provider/INetworkStatsProvider.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-10-27T14:08:50Z",
+      "side": 0,
+      "message": "Can we remove this from aidl file? If no, maybe just add a comment to say this is deprecated.",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 51
+      },
+      "revId": "fc6fbde5dfaf9690251a8a399d627c45ac03f7cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
