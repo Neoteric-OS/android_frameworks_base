@@ -33,6 +33,24 @@
       "message": "Will also need API review again from tgunn@",
       "revId": "76d1107dc68e9c8e2d54f1be5c7454c63f5e0cd4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92bfef90_c6b57df5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1732041
+      },
+      "writtenOn": "2020-10-27T15:08:55Z",
+      "side": 1,
+      "message": "I thought the change should also be synced to AOSP if it has merged into the internal master branch.\nHi Amruth, Would you please confirm if we have to merge the change into AOSP?\nThank you.",
+      "parentUuid": "e21b0215_c3c989bf",
+      "revId": "76d1107dc68e9c8e2d54f1be5c7454c63f5e0cd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
