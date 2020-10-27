@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abd8172c_10001107",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-27T15:06:06Z",
+      "side": 1,
+      "message": "I think we should say a bit more here. Something like:\n\n     * Note that the returned values are partial statistics that do not count data from several\n     * sources and do not apply several adjustments that are necessary for correctness, such\n     * as ajusting for VPN apps, IPv6-in-IPv4 translation, etc. These values can be used to \n     * determine whether traffic is being transferred on the specific interface but are not a\n     * substitute for the more accurate statistics provided by the {@link NetworkStatsManager}\n     * APIs.",
+      "range": {
+        "startLine": 604,
+        "startChar": 0,
+        "endLine": 607,
+        "endChar": 12
+      },
+      "revId": "37a559ea48cc67bb85721e2f7acfbd88950ec9df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
