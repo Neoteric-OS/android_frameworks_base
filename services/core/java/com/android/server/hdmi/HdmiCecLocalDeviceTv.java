@@ -1049,12 +1049,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             return;
         }
         HdmiLogger.debug("[A]:Change mute:%b", mute);
-        synchronized (mLock) {
-            if (mSystemAudioMute == mute) {
-                HdmiLogger.debug("No need to change mute.");
-                return;
-            }
-        }
         if (!isSystemAudioActivated()) {
             HdmiLogger.debug("[A]:System audio is not activated.");
             return;

@@ -2174,7 +2174,13 @@ public class AudioService extends IAudioService.Stub
                     state = direction == AudioManager.ADJUST_MUTE;
                 }
                 if (streamTypeAlias == AudioSystem.STREAM_MUSIC) {
-                    setSystemAudioMute(state);
+                    if ((flags & AudioManager.FLAG_HDMI_SYSTEM_AUDIO_VOLUME) != 0){
+                        if (DEBUG_VOL) {
+                            Log.d(TAG, String.format("Ignore setSystemAudioMute"));
+                        }
+                    } else {
+                        setSystemAudioMute(state);
+                    }
                 }
                 for (int stream = 0; stream < mStreamStates.length; stream++) {
                     if (streamTypeAlias == mStreamVolumeAlias[stream]) {

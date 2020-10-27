@@ -1285,17 +1285,17 @@ public class HdmiControlService extends SystemService {
         }
         AudioManager audioManager = getAudioManager();
         boolean muted = audioManager.isStreamMute(AudioManager.STREAM_MUSIC);
+        int flag = AudioManager.FLAG_HDMI_SYSTEM_AUDIO_VOLUME;
         if (mute) {
             if (!muted) {
-                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, flag);
             }
         } else {
             if (muted) {
-                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, flag);
             }
             // FLAG_HDMI_SYSTEM_AUDIO_VOLUME prevents audio manager from announcing
             // volume change notification back to hdmi control service.
-            int flag = AudioManager.FLAG_HDMI_SYSTEM_AUDIO_VOLUME;
             if (0 <= volume && volume <= 100) {
                 Slog.i(TAG, "volume: " + volume);
                 flag |= AudioManager.FLAG_SHOW_UI;
