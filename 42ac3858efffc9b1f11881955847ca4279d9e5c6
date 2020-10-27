@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6f6f1ba_cbb69b81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1729155
+      },
+      "writtenOn": "2020-10-27T05:57:24Z",
+      "side": 1,
+      "message": "Very sorry that caused this actually round. I restudied the unique_lock and its scopes. I modified your proposed change without aware of the bracket was defining the scope. \n\nThank you again for your patient.",
+      "parentUuid": "b2685b76_8adaad3e",
+      "revId": "42ac3858efffc9b1f11881955847ca4279d9e5c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "220f0b9d_ace1ae4b",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e29c395f_182ac1c7",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1729155
+      },
+      "writtenOn": "2020-10-27T05:57:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "220f0b9d_ace1ae4b",
+      "revId": "42ac3858efffc9b1f11881955847ca4279d9e5c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "78e9ae04_4fbad0bd",
@@ -48,6 +84,24 @@
       "writtenOn": "2020-10-27T05:23:49Z",
       "side": 1,
       "message": "Here too, if the lock is successfully acquired on line 188, it is held for the entire remainder of the function.  The lock is only needed across the empty check (188), the move (189), and the clear(190), so you want to ensure that it gets released (either by manual unlocking or implicitly by falling out of a more localized scope) immediately afterward.",
+      "revId": "42ac3858efffc9b1f11881955847ca4279d9e5c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47b8ebea_8f7b4aef",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1729155
+      },
+      "writtenOn": "2020-10-27T05:57:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78e9ae04_4fbad0bd",
       "revId": "42ac3858efffc9b1f11881955847ca4279d9e5c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
