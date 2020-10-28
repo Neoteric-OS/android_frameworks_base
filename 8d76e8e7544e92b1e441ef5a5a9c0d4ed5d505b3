@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27b3e9ad_a5ab69a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-28T16:27:20Z",
+      "side": 1,
+      "message": "Ok. I\u0027m excluding CameraMetadata.getNativeMetadataPtr from this CL for now. Thanks for raising this.",
+      "parentUuid": "ca59db14_1a03cb37",
+      "revId": "8d76e8e7544e92b1e441ef5a5a9c0d4ed5d505b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7686dc1_68535e5b",
