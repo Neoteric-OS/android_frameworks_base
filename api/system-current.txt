@@ -12100,9 +12100,16 @@ package android.telephony.ims {
   }
 
   public final class ImsStreamMediaProfile implements android.os.Parcelable {
+    ctor public ImsStreamMediaProfile(int, int, int, int, int, String, String, String, int, int, int);
     ctor public ImsStreamMediaProfile(int, int, int, int, int);
     method public void copyFrom(android.telephony.ims.ImsStreamMediaProfile);
     method public int describeContents();
+    method public String getAudioCodecBandwidth();
+    method public String getAudioCodecBandwidthLowerBound();
+    method public String getAudioCodecBandwidthUpperBound();
+    method public double getAudioCodecBitrate();
+    method public double getAudioCodecBitrateLowerBound();
+    method public double getAudioCodecBitrateUpperBound();
     method public int getAudioDirection();
     method public int getAudioQuality();
     method public int getRttMode();

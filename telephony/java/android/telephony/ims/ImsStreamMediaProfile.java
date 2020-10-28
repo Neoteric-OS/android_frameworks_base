@@ -89,6 +89,24 @@ public final class ImsStreamMediaProfile implements Parcelable {
     /** @hide */
     @UnsupportedAppUsage
     public int mAudioDirection;
+    /** @hide */
+    @UnsupportedAppUsage
+    public double mAudioCodecBitrate;
+    /** @hide */
+    @UnsupportedAppUsage
+    public double mAudioCodecBitrateLowerBound;
+    /** @hide */
+    @UnsupportedAppUsage
+    public double mAudioCodecBitrateUpperBound;
+    /** @hide */
+    @UnsupportedAppUsage
+    public String mAudioCodecBandwidth;
+    /** @hide */
+    @UnsupportedAppUsage
+    public String mAudioCodecBandwidthLowerBound;
+    /** @hide */
+    @UnsupportedAppUsage
+    public String mAudioCodecBandwidthUpperBound;
     // Video related information
     /** @hide */
     public int mVideoQuality;
@@ -137,6 +155,12 @@ public final class ImsStreamMediaProfile implements Parcelable {
      *                       {@link #DIRECTION_RECEIVE},
      *                       {@link #DIRECTION_SEND},
      *                       {@link #DIRECTION_SEND_RECEIVE},
+     * @param audioCodecBitrate The audio codec bitrate.
+     * @param audioCodecBitrateLowerBound The audio codec bitrate lower bound.
+     * @param audioCodecBitrateUpperBound The audio codec bitrate upper bound.
+     * @param audioCodecBandwidth The audio codec bandwidth.
+     * @param audioCodecBandwidthLowerBound The audio codec bandwidth lower bound.
+     * @param audioCodecBandwidthUpperBound The audio codec bandwidth upper bound.
      * @param videoQuality The video quality. Can be one of the following:
      *                     {@link #VIDEO_QUALITY_NONE},
      *                     {@link #VIDEO_QUALITY_QCIF},
@@ -154,6 +178,24 @@ public final class ImsStreamMediaProfile implements Parcelable {
      *                {@link #RTT_MODE_DISABLED},
      *                {@link #RTT_MODE_FULL}
      */
+    public ImsStreamMediaProfile(int audioQuality, int audioDirection,
+            int audioCodecBitrate, int audioCodecBitrateLowerBound, int audioCodecBitrateUpperBound,
+            String audioCodecBandwidth, String audioCodecBandwidthLowerBound,
+            String audioCodecBandwidthUpperBound, int videoQuality, int videoDirection,
+            int rttMode) {
+        mAudioQuality = audioQuality;
+        mAudioDirection = audioDirection;
+        mAudioCodecBitrate = audioCodecBitrate;
+        mAudioCodecBitrateLowerBound = audioCodecBitrateLowerBound;
+        mAudioCodecBitrateUpperBound = audioCodecBitrateUpperBound;
+        mAudioCodecBandwidth = audioCodecBandwidth;
+        mAudioCodecBandwidthLowerBound = audioCodecBandwidthLowerBound;
+        mAudioCodecBandwidthUpperBound = audioCodecBandwidthUpperBound;
+        mVideoQuality = videoQuality;
+        mVideoDirection = videoDirection;
+        mRttMode = rttMode;
+    }
+
     public ImsStreamMediaProfile(int audioQuality, int audioDirection,
             int videoQuality, int videoDirection, int rttMode) {
         mAudioQuality = audioQuality;
@@ -198,12 +240,18 @@ public final class ImsStreamMediaProfile implements Parcelable {
     @NonNull
     @Override
     public String toString() {
-        return "{ audioQuality=" + mAudioQuality +
-                ", audioDirection=" + mAudioDirection +
-                ", videoQuality=" + mVideoQuality +
-                ", videoDirection=" + mVideoDirection +
-                ", rttMode=" + mRttMode +
-                ", hasRttAudioSpeech=" + mIsReceivingRttAudio + " }";
+        return "{ audioQuality=" + mAudioQuality
+                + ", audioDirection=" + mAudioDirection
+                + ", audioCodecBitrate=" + mAudioCodecBitrate
+                + ", audioCodecBitrateLowerBound=" + mAudioCodecBitrateLowerBound
+                + ", audioCodecBitrateUpperBound=" + mAudioCodecBitrateUpperBound
+                + ", audioCodecBandwidth=" + mAudioCodecBandwidth
+                + ", audioCodecBandwidthLowerBound=" + mAudioCodecBandwidthLowerBound
+                + ", audioCodecBandwidthUpperBound=" + mAudioCodecBandwidthUpperBound
+                + ", videoQuality=" + mVideoQuality
+                + ", videoDirection=" + mVideoDirection
+                + ", rttMode=" + mRttMode
+                + ", hasRttAudioSpeech=" + mIsReceivingRttAudio + " }";
     }
 
     @Override
@@ -215,6 +263,12 @@ public final class ImsStreamMediaProfile implements Parcelable {
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(mAudioQuality);
         out.writeInt(mAudioDirection);
+        out.writeDouble(mAudioCodecBitrate);
+        out.writeDouble(mAudioCodecBitrateLowerBound);
+        out.writeDouble(mAudioCodecBitrateUpperBound);
+        out.writeString(mAudioCodecBandwidth);
+        out.writeString(mAudioCodecBandwidthLowerBound);
+        out.writeString(mAudioCodecBandwidthUpperBound);
         out.writeInt(mVideoQuality);
         out.writeInt(mVideoDirection);
         out.writeInt(mRttMode);
@@ -224,6 +278,12 @@ public final class ImsStreamMediaProfile implements Parcelable {
     private void readFromParcel(Parcel in) {
         mAudioQuality = in.readInt();
         mAudioDirection = in.readInt();
+        mAudioCodecBitrate = in.readDouble();
+        mAudioCodecBitrateLowerBound = in.readDouble();
+        mAudioCodecBitrateUpperBound = in.readDouble();
+        mAudioCodecBandwidth = in.readString();
+        mAudioCodecBandwidthLowerBound = in.readString();
+        mAudioCodecBandwidthUpperBound = in.readString();
         mVideoQuality = in.readInt();
         mVideoDirection = in.readInt();
         mRttMode = in.readInt();
@@ -272,6 +332,30 @@ public final class ImsStreamMediaProfile implements Parcelable {
 
     public int getAudioDirection() {
         return mAudioDirection;
+    }
+
+    public double getAudioCodecBitrate() {
+        return mAudioCodecBitrate;
+    }
+
+    public double getAudioCodecBitrateUpperBound() {
+        return mAudioCodecBitrateUpperBound;
+    }
+
+    public double getAudioCodecBitrateLowerBound() {
+        return mAudioCodecBitrateLowerBound;
+    }
+
+    public String getAudioCodecBandwidth() {
+        return mAudioCodecBandwidth;
+    }
+
+    public String getAudioCodecBandwidthUpperBound() {
+        return mAudioCodecBandwidthUpperBound;
+    }
+
+    public String getAudioCodecBandwidthLowerBound() {
+        return mAudioCodecBandwidthLowerBound;
     }
 
     public int getVideoQuality() {
