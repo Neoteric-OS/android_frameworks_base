@@ -17,6 +17,7 @@
 package android.telephony.ims;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
@@ -89,6 +90,9 @@ public final class ImsStreamMediaProfile implements Parcelable {
     /** @hide */
     @UnsupportedAppUsage
     public int mAudioDirection;
+    // Audio codec attributes
+    private AudioCodecAttributes mAudioCodecAttributes;
+
     // Video related information
     /** @hide */
     public int mVideoQuality;
@@ -137,6 +141,7 @@ public final class ImsStreamMediaProfile implements Parcelable {
      *                       {@link #DIRECTION_RECEIVE},
      *                       {@link #DIRECTION_SEND},
      *                       {@link #DIRECTION_SEND_RECEIVE},
+     * @param audioCodecAttributes The audio codec attributes (@link #AudioCodecAttributes).
      * @param videoQuality The video quality. Can be one of the following:
      *                     {@link #VIDEO_QUALITY_NONE},
      *                     {@link #VIDEO_QUALITY_QCIF},
@@ -154,6 +159,17 @@ public final class ImsStreamMediaProfile implements Parcelable {
      *                {@link #RTT_MODE_DISABLED},
      *                {@link #RTT_MODE_FULL}
      */
+    public ImsStreamMediaProfile(int audioQuality, int audioDirection,
+            @Nullable AudioCodecAttributes audioCodecAttributes, int videoQuality,
+            int videoDirection, int rttMode) {
+        mAudioQuality = audioQuality;
+        mAudioDirection = audioDirection;
+        mAudioCodecAttributes = audioCodecAttributes;
+        mVideoQuality = videoQuality;
+        mVideoDirection = videoDirection;
+        mRttMode = rttMode;
+    }
+
     public ImsStreamMediaProfile(int audioQuality, int audioDirection,
             int videoQuality, int videoDirection, int rttMode) {
         mAudioQuality = audioQuality;
@@ -190,6 +206,7 @@ public final class ImsStreamMediaProfile implements Parcelable {
     public void copyFrom(ImsStreamMediaProfile profile) {
         mAudioQuality = profile.mAudioQuality;
         mAudioDirection = profile.mAudioDirection;
+        mAudioCodecAttributes = profile.mAudioCodecAttributes;
         mVideoQuality = profile.mVideoQuality;
         mVideoDirection = profile.mVideoDirection;
         mRttMode = profile.mRttMode;
@@ -198,12 +215,13 @@ public final class ImsStreamMediaProfile implements Parcelable {
     @NonNull
     @Override
     public String toString() {
-        return "{ audioQuality=" + mAudioQuality +
-                ", audioDirection=" + mAudioDirection +
-                ", videoQuality=" + mVideoQuality +
-                ", videoDirection=" + mVideoDirection +
-                ", rttMode=" + mRttMode +
-                ", hasRttAudioSpeech=" + mIsReceivingRttAudio + " }";
+        return "{ audioQuality=" + mAudioQuality
+                + ", audioDirection=" + mAudioDirection
+                + ", audioCodecAttribute=" + mAudioCodecAttributes
+                + ", videoQuality=" + mVideoQuality
+                + ", videoDirection=" + mVideoDirection
+                + ", rttMode=" + mRttMode
+                + ", hasRttAudioSpeech=" + mIsReceivingRttAudio + " }";
     }
 
     @Override
@@ -215,6 +233,7 @@ public final class ImsStreamMediaProfile implements Parcelable {
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(mAudioQuality);
         out.writeInt(mAudioDirection);
+        out.writeTypedObject(mAudioCodecAttributes, flags);
         out.writeInt(mVideoQuality);
         out.writeInt(mVideoDirection);
         out.writeInt(mRttMode);
@@ -224,6 +243,7 @@ public final class ImsStreamMediaProfile implements Parcelable {
     private void readFromParcel(Parcel in) {
         mAudioQuality = in.readInt();
         mAudioDirection = in.readInt();
+        mAudioCodecAttributes = in.readTypedObject(AudioCodecAttributes.CREATOR);
         mVideoQuality = in.readInt();
         mVideoDirection = in.readInt();
         mRttMode = in.readInt();
@@ -274,6 +294,10 @@ public final class ImsStreamMediaProfile implements Parcelable {
         return mAudioDirection;
     }
 
+    public @Nullable AudioCodecAttributes getAudioCodecAttributes() {
+        return mAudioCodecAttributes;
+    }
+
     public int getVideoQuality() {
         return mVideoQuality;
     }
@@ -291,5 +315,136 @@ public final class ImsStreamMediaProfile implements Parcelable {
      */
     public boolean isReceivingRttAudio() {
         return mIsReceivingRttAudio;
+    }
+
+    /**
+     * Parcelable object to handle audio codec attributes.
+     * It provides the audio codec bitrate, bandwdith and its upper/lower bound.
+     */
+    public static final class AudioCodecAttributes implements Parcelable {
+
+        // The audio codec bitrate with unit kbps.
+        private double mAudioCodecBitrate;
+        // The lower bound of the audio codec bitrate.
+        private double mAudioCodecBitrateLower;
+        // The upper bound of the audio codec bitrate.
+        private double mAudioCodecBitrateUpper;
+        // The audio codec bandwidth with unit kHz.
+        private double mAudioCodecBandwidth;
+        // The lower bound of the audio codec bandwidth.
+        private double mAudioCodecBandwidthLower;
+        // The upper bound of the audio codec bandwidth.
+        private double mAudioCodecBandwidthUpper;
+
+        /**
+         * Constructor.
+         *
+         * @param audioCodecBitrate        The audio codec bitrate with unit kbps.
+         * @param audioCodecBitrateLower   The lower bound of the audio codec bitrate.
+         * @param audioCodecBitrateUpper   The upper bound of the audio codec bitrate.
+         * @param audioCodecBandwidth      The audio codec bandwidth with unit kHz.
+         * @param audioCodecBandwidthLower The lower bound of the audio codec bandwidth.
+         * @param audioCodecBandwidthUpper The upper bound of the audio codec bandwidth.
+         */
+        public AudioCodecAttributes(double audioCodecBitrate, double audioCodecBitrateLower,
+                double audioCodecBitrateUpper, double audioCodecBandwidth,
+                double audioCodecBandwidthLower, double audioCodecBandwidthUpper) {
+            mAudioCodecBitrate = audioCodecBitrate;
+            mAudioCodecBitrateLower = audioCodecBitrateLower;
+            mAudioCodecBitrateUpper = audioCodecBitrateUpper;
+            mAudioCodecBandwidth = audioCodecBandwidth;
+            mAudioCodecBandwidthLower = audioCodecBandwidthLower;
+            mAudioCodecBandwidthUpper = audioCodecBandwidthUpper;
+        }
+
+        private AudioCodecAttributes(Parcel in) {
+            mAudioCodecBitrate = in.readDouble();
+            mAudioCodecBitrateLower = in.readDouble();
+            mAudioCodecBitrateUpper = in.readDouble();
+            mAudioCodecBandwidth = in.readDouble();
+            mAudioCodecBandwidthLower = in.readDouble();
+            mAudioCodecBandwidthUpper = in.readDouble();
+        }
+
+        @Override
+        public void writeToParcel(@NonNull Parcel out, int flags) {
+            out.writeDouble(mAudioCodecBitrate);
+            out.writeDouble(mAudioCodecBitrateLower);
+            out.writeDouble(mAudioCodecBitrateUpper);
+            out.writeDouble(mAudioCodecBandwidth);
+            out.writeDouble(mAudioCodecBandwidthLower);
+            out.writeDouble(mAudioCodecBandwidthUpper);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        public static final @NonNull Creator<AudioCodecAttributes> CREATOR =
+                new Creator<AudioCodecAttributes>() {
+                    @Override
+                    public AudioCodecAttributes createFromParcel(Parcel in) {
+                        return new AudioCodecAttributes(in);
+                    }
+
+                    @Override
+                    public AudioCodecAttributes[] newArray(int size) {
+                        return new AudioCodecAttributes[size];
+                    }
+                };
+
+        /**
+         * @return the exact value of the audio codec bitrate with the unit, kbps.
+         */
+        public double getAudioCodecBitrate() {
+            return mAudioCodecBitrate;
+        }
+
+        /**
+         * @return the lower bound of the audio codec btrate.
+         */
+        public double getAudioCodecBitrateLower() {
+            return mAudioCodecBitrateLower;
+        }
+
+        /**
+         * @return the upper bound of the audio codec btrate.
+         */
+        public double getAudioCodecBitrateUpper() {
+            return mAudioCodecBitrateUpper;
+        }
+
+        /**
+         * @return the exact value of the audio codec bandwidth with the unit, kHz.
+         */
+        public double getAudioCodecBandwidth() {
+            return mAudioCodecBandwidth;
+        }
+
+        /**
+         * @return the lower bound of the audio codec bandwidth.
+         */
+        public double getAudioCodecBandwidthLower() {
+            return mAudioCodecBandwidthLower;
+        }
+
+        /**
+         * @return the upper bound of the audio codec bandwidth.
+         */
+        public double getAudioCodecBandwidthUpper() {
+            return mAudioCodecBandwidthUpper;
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return "{ audioCodecBitrate=" + mAudioCodecBitrate
+                    + ", audioCodecBitrateLower=" + mAudioCodecBitrateLower
+                    + ", audioCodecBitrateUpper=" + mAudioCodecBitrateUpper
+                    + ", audioCodecBandwidth=" + mAudioCodecBandwidth
+                    + ", audioCodecBandwidthLower=" + mAudioCodecBandwidthLower
+                    + ", audioCodecBandwidthUpper=" + mAudioCodecBandwidthUpper + " }";
+        }
     }
 }
