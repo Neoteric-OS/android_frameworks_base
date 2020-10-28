@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afa9f5e3_dda5f342",
+        "filename": "services/core/java/com/android/server/pm/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1536014
+      },
+      "writtenOn": "2020-10-28T00:04:43Z",
+      "side": 1,
+      "message": "should this be expand to whole team? i.e. gnl-eng@google.com",
+      "range": {
+        "startLine": 48,
+        "startChar": 77,
+        "endLine": 48,
+        "endChar": 98
+      },
+      "revId": "af3aef267af7e2959a97f1a16387e2f3fc2c8f4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
