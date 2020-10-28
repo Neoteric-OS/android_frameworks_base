@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df59a01d_9b9a1962",
+        "filename": "core/java/android/hardware/camera2/CameraMetadata.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2020-10-28T16:59:45Z",
+      "side": 1,
+      "message": "this lost its publicAlternatives note",
+      "revId": "e99469feb56424d2abbec5dde055208d47ea169e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
