@@ -12100,9 +12100,11 @@ package android.telephony.ims {
   }
 
   public final class ImsStreamMediaProfile implements android.os.Parcelable {
+    ctor public ImsStreamMediaProfile(int, int, @Nullable android.telephony.ims.ImsStreamMediaProfile.AudioCodecAttributes, int, int, int);
     ctor public ImsStreamMediaProfile(int, int, int, int, int);
     method public void copyFrom(android.telephony.ims.ImsStreamMediaProfile);
     method public int describeContents();
+    method @Nullable public android.telephony.ims.ImsStreamMediaProfile.AudioCodecAttributes getAudioCodecAttributes();
     method public int getAudioDirection();
     method public int getAudioQuality();
     method public int getRttMode();
@@ -12148,6 +12150,19 @@ package android.telephony.ims {
     field public static final int VIDEO_QUALITY_QVGA_PORTRAIT = 4; // 0x4
     field public static final int VIDEO_QUALITY_VGA_LANDSCAPE = 8; // 0x8
     field public static final int VIDEO_QUALITY_VGA_PORTRAIT = 16; // 0x10
+  }
+
+  public static final class ImsStreamMediaProfile.AudioCodecAttributes implements android.os.Parcelable {
+    ctor public ImsStreamMediaProfile.AudioCodecAttributes(double, double, double, double, double, double);
+    method public int describeContents();
+    method public double getAudioCodecBandwidth();
+    method public double getAudioCodecBandwidthLower();
+    method public double getAudioCodecBandwidthUpper();
+    method public double getAudioCodecBitrate();
+    method public double getAudioCodecBitrateLower();
+    method public double getAudioCodecBitrateUpper();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.ims.ImsStreamMediaProfile.AudioCodecAttributes> CREATOR;
   }
 
   public final class ImsSuppServiceNotification implements android.os.Parcelable {
