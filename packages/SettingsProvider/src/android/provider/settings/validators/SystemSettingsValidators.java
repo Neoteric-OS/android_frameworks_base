@@ -290,5 +290,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.QS_BRIGHTNESS_POSITION_BOTTOM, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.POWER_SHARE_THRESHOLD, new InclusiveIntegerRangeValidator(1, 99));
         VALIDATORS.put(System.THREE_FINGER_GESTURE, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.VOLBTN_MUSIC_CONTROLS, BOOLEAN_VALIDATOR);
     }
 }
