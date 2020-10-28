@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "865cac2a_38993981",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-28T13:27:38Z",
+      "side": 1,
+      "message": "I have tried to chnage int[] to String[] but OPSTR_ACTIVATE_PLATFORM_VPN is @hide, that\u0027s why I use AppOpsManager#getOpStrs() to transfer. If you think using OPSTR_* is better, I can make OPSTR_ACTIVATE_PLATFORM_VPN to @SystemApi.",
+      "parentUuid": "804006a3_b9dd6aab",
+      "range": {
+        "startLine": 1032,
+        "startChar": 12,
+        "endLine": 1032,
+        "endChar": 33
+      },
+      "revId": "9eca0ab458deef6d9de0242f085f923b1d49da8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ea6cb65_61c345ea",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-28T06:36:36Z",
       "side": 1,
       "message": "Likewise, this is needlessly expensive. Let\u0027s just take a String instead.",
+      "range": {
+        "startLine": 1083,
+        "startChar": 85,
+        "endLine": 1083,
+        "endChar": 88
+      },
+      "revId": "9eca0ab458deef6d9de0242f085f923b1d49da8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c66f745_e389c32e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-28T13:27:38Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "4ea6cb65_61c345ea",
       "range": {
         "startLine": 1083,
         "startChar": 85,
