@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "593794c1_f4441c37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141048
+      },
+      "writtenOn": "2020-10-28T20:37:23Z",
+      "side": 1,
+      "message": "Snild, the patch here is updating the API, to pass pre-submit you will need to re-build, generate and attach the API modifications text file changes. For example when the build is running you will likely notice a build failure that suggests running:\n\"make test-api-stubs-docs-update-current-api\"\n\nafter this completes you should see the API updates in \"frameworks/base\" that need to be attached along with the patch.  ",
+      "revId": "5d8c8434768c88f91ba7df1e788127e2eab87946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
