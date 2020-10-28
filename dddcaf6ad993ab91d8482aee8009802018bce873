@@ -22,6 +22,30 @@
       },
       "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad004b6e_f0a4c8f3",
+        "filename": "core/java/android/net/netstats/provider/INetworkStatsProviderCallback.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-28T06:06:12Z",
+      "side": 1,
+      "message": "Hmmm, Not sure about it.\nIt seems we are constantly adding/moving things in the middle of aidl. e.g.\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1202604/11/core/java/android/net/IConnectivityManager.aidl",
+      "parentUuid": "a94af61a_bb1554ab",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
