@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c6f6db7_6c56982a",
+        "filename": "services/tests/servicestests/src/com/android/server/hdmi/HdmiCecMessageValidatorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-10-28T23:07:37Z",
+      "side": 1,
+      "message": "In a separate CL.assertWithMessage(\"The validity of cec message %s\",message)",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 25
+      },
+      "revId": "a0da8e5114a0253d014b5bda1a00bfa103a74fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
