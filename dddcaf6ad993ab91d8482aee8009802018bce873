@@ -46,6 +46,30 @@
       },
       "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "447a3165_d6c2b0e1",
+        "filename": "core/java/android/net/netstats/provider/INetworkStatsProviderCallback.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-28T06:40:56Z",
+      "side": 1,
+      "message": "But from generated code yes they are indexed by order.\nhttps://paste.googleplex.com/5899077519671296\nMy explanation is that these mapping is internal to the framework.\nAnd that is a runtime library to a client.\nSo the client could only see the exposed APIs, while the framework loads correct definition of aidl for both client and service side.\nIf so any adding/moving/deleting should be safe as long as the aidl is not exposed and directly compiled into client\u0027s binary.",
+      "parentUuid": "ad004b6e_f0a4c8f3",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
