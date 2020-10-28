@@ -3,6 +3,98 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "804006a3_b9dd6aab",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-28T06:36:36Z",
+      "side": 1,
+      "message": "Instead of creating an int[] in l.1037, then getting strings in 1054, then converting the int into a string in l.1057 just to have appopsmanager convert back to an int, how about having a String[] to start with ?\n\nJust use the OPSTR_ constants instead of the OP_ constants.",
+      "range": {
+        "startLine": 1032,
+        "startChar": 12,
+        "endLine": 1032,
+        "endChar": 33
+      },
+      "revId": "9eca0ab458deef6d9de0242f085f923b1d49da8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ea6cb65_61c345ea",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-28T06:36:36Z",
+      "side": 1,
+      "message": "Likewise, this is needlessly expensive. Let\u0027s just take a String instead.",
+      "range": {
+        "startLine": 1083,
+        "startChar": 85,
+        "endLine": 1083,
+        "endChar": 88
+      },
+      "revId": "9eca0ab458deef6d9de0242f085f923b1d49da8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75963e04_2af44a35",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-28T06:36:36Z",
+      "side": 1,
+      "message": "Just use AppOpsManager.OPSTR_ACTIVATE_PLATFORM_VPN directly",
+      "range": {
+        "startLine": 160,
+        "startChar": 32,
+        "endLine": 160,
+        "endChar": 59
+      },
+      "revId": "9eca0ab458deef6d9de0242f085f923b1d49da8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2649c245_3deb71b6",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-28T06:36:36Z",
+      "side": 1,
+      "message": "Change this and others to String",
+      "range": {
+        "startLine": 738,
+        "startChar": 58,
+        "endLine": 738,
+        "endChar": 61
+      },
+      "revId": "9eca0ab458deef6d9de0242f085f923b1d49da8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c02622e0_d824e74a",
         "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
         "patchSetId": 1
