@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ceb13a74_5d4ae345",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060398
+      },
+      "writtenOn": "2020-10-28T18:19:07Z",
+      "side": 1,
+      "message": "Also can this cl be moved to internal git_master?",
+      "revId": "af3aef267af7e2959a97f1a16387e2f3fc2c8f4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "afa9f5e3_dda5f342",
