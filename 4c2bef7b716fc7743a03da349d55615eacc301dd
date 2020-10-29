@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ead3c3de_9d38f5a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-29T13:46:23Z",
+      "side": 1,
+      "message": "@maco: since you added the call to this method in http://ag/6137266",
+      "revId": "4c2bef7b716fc7743a03da349d55615eacc301dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
