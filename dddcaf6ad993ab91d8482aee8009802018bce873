@@ -70,6 +70,145 @@
       },
       "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86f825b4_04b64ed5",
+        "filename": "core/java/android/net/netstats/provider/INetworkStatsProviderCallback.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:32:58Z",
+      "side": 1,
+      "message": "This is fine in fact. This change is backward-incompatible, but for the same reason that we can  remove the method in INetworkStatsProvider.aidl, we can also add methods in the middle because we don\u0027t need backward compatibility for this file as both sides of the usage will always have the same version.",
+      "parentUuid": "447a3165_d6c2b0e1",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ae3d1de_d6e4048b",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:32:58Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 41
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9973dea_16d81dc2",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:32:58Z",
+      "side": 1,
+      "message": "Update",
+      "range": {
+        "startLine": 159,
+        "startChar": 50,
+        "endLine": 159,
+        "endChar": 60
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fdcabd7_ff96d038",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:32:58Z",
+      "side": 1,
+      "message": "that custom implementations",
+      "range": {
+        "startLine": 160,
+        "startChar": 59,
+        "endLine": 160,
+        "endChar": 84
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad8d8394_f929035e",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:32:58Z",
+      "side": 1,
+      "message": "Do you want to suggest a way to do this, or at least give a little more detail ?",
+      "range": {
+        "startLine": 161,
+        "startChar": 46,
+        "endLine": 161,
+        "endChar": 47
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "921a9c74_8f805e05",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1696,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:32:58Z",
+      "side": 1,
+      "message": "We\u0027ll have to make sure aosp/1470723 is ready to submit before I can give you API+1. I can\u0027t approve the API until the implementation is there.",
+      "range": {
+        "startLine": 1696,
+        "startChar": 12,
+        "endLine": 1696,
+        "endChar": 45
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
