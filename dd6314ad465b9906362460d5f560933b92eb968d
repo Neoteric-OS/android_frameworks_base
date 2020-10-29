@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a867107_da0a1448",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-10-29T06:13:15Z",
+      "side": 1,
+      "message": "Hi Sudheer,\n\nCan you please review this CL. All comments are addressed. Let us know if there are any concerns.",
+      "revId": "dd6314ad465b9906362460d5f560933b92eb968d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
