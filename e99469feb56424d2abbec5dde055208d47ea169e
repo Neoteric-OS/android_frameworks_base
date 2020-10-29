@@ -16,6 +16,24 @@
       "message": "this lost its publicAlternatives note",
       "revId": "e99469feb56424d2abbec5dde055208d47ea169e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e705178_f7035a2d",
+        "filename": "core/java/android/hardware/camera2/CameraMetadata.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-29T15:33:05Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "df59a01d_9b9a1962",
+      "revId": "e99469feb56424d2abbec5dde055208d47ea169e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
