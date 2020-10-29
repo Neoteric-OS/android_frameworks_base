@@ -16,6 +16,23 @@
       "message": "please review this. thanks.\nI am glad if it helps",
       "revId": "e3f4d6d2c556ddfd4bea6f5cba104a513cca5ae5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4fd6d07_c8b5dc0d",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9753,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2020-10-29T06:38:27Z",
+      "side": 1,
+      "message": "I think it was fixed by https://android.googlesource.com/platform/frameworks/base/+/730e044%5E%21/",
+      "revId": "e3f4d6d2c556ddfd4bea6f5cba104a513cca5ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
