@@ -4816,4 +4816,6 @@ public class ConnectivityManager {
             e.rethrowFromSystemServer();
         }
     }
+
+    private void setOemNetworkPreference(@NonNull OemNetworkPreferences policy) { }
 }

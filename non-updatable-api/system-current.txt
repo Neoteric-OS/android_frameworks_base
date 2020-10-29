@@ -6327,6 +6327,25 @@ package android.net {
     ctor public NetworkStats.Entry(@Nullable String, int, int, int, int, int, int, long, long, long, long, long);
   }
 
+  public final class OemNetworkPreferences implements android.os.Parcelable {
+    method public int describeContents();
+    method @NonNull public android.util.SparseArray<java.util.List<java.lang.String>> getNetworkPreferences();
+    method @NonNull public static String oemNetworkPreferenceToString(int);
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.OemNetworkPreferences> CREATOR;
+    field public static final int OEM_NETWORK_PREFERENCE_DEFAULT = 0; // 0x0
+    field public static final int OEM_NETWORK_PREFERENCE_OEM_PAID = 1; // 0x1
+    field public static final int OEM_NETWORK_PREFERENCE_OEM_PAID_ONLY = 2; // 0x2
+    field public static final int OEM_NETWORK_PREFERENCE_OEM_PRIVATE = 3; // 0x3
+    field public static final int OEM_NETWORK_PREFERENCE_OEM_PRIVATE_ONLY = 4; // 0x4
+  }
+
+  public static final class OemNetworkPreferences.Builder {
+    ctor public OemNetworkPreferences.Builder();
+    method @NonNull public android.net.OemNetworkPreferences.Builder addNetworkPreference(int, @NonNull java.util.List<java.lang.String>);
+    method @NonNull public android.net.OemNetworkPreferences build();
+  }
+
   public final class RouteInfo implements android.os.Parcelable {
     ctor public RouteInfo(@Nullable android.net.IpPrefix, @Nullable java.net.InetAddress, @Nullable String, int);
     ctor public RouteInfo(@Nullable android.net.IpPrefix, @Nullable java.net.InetAddress, @Nullable String, int, int);
