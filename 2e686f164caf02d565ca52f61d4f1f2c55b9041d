@@ -16,6 +16,23 @@
       "message": "Lajos, Eddy could you approve +2. I am not part of the owner list.",
       "revId": "2e686f164caf02d565ca52f61d4f1f2c55b9041d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04201c20_c80b558f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2020-10-29T18:55:15Z",
+      "side": 1,
+      "message": "Honestly, we should just make these constructors public; there\u0027s no real reason they need to be hidden, and obviously they\u0027re helpful for testability.",
+      "revId": "2e686f164caf02d565ca52f61d4f1f2c55b9041d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
