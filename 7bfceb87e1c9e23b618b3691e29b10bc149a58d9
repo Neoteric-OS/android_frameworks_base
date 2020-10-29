@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c6dd135_2c49f757",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-10-29T19:07:58Z",
+      "side": 1,
+      "message": "I need to merge these very close to each other or there\u0027ll be pain for AOSP developers",
+      "revId": "7bfceb87e1c9e23b618b3691e29b10bc149a58d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
