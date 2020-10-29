@@ -70,6 +70,30 @@
       },
       "revId": "8be477c317520d0bbc5d3b4a6e2914d18989048a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c769490_eaa52f3b",
+        "filename": "core/java/android/app/backup/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-10-29T20:55:44Z",
+      "side": 1,
+      "message": "That also doesn\u0027t work. I suspect the account needs to be registered with gerrit, which doesn\u0027t seem to be the case for any of the lists. Have taken out those references again.",
+      "parentUuid": "9ecc9758_2dbc7a16",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 17
+      },
+      "revId": "8be477c317520d0bbc5d3b4a6e2914d18989048a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
