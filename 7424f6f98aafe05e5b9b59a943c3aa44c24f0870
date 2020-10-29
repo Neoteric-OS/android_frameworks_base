@@ -46,6 +46,30 @@
       },
       "revId": "7424f6f98aafe05e5b9b59a943c3aa44c24f0870",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "275634ba_f31f4f41",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2020-10-29T17:48:20Z",
+      "side": 1,
+      "message": "It maybe because the other methods have an annotation.\nNit: according to definition of @hide, we only need to add it to the top node and it will be automatically applied to the child nodes. If you happen to rebase this, it is better to remove it.\n\nOn a separate note, do you only need to remove this from documentation? Is it fine if the apps can access them? I am asking because of the addition of the public access modifier.",
+      "parentUuid": "bca488f3_ecedfcf9",
+      "range": {
+        "startLine": 506,
+        "startChar": 10,
+        "endLine": 506,
+        "endChar": 16
+      },
+      "revId": "7424f6f98aafe05e5b9b59a943c3aa44c24f0870",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
