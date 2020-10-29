@@ -16,6 +16,24 @@
       "message": "Snild, the patch here is updating the API, to pass pre-submit you will need to re-build, generate and attach the API modifications text file changes. For example when the build is running you will likely notice a build failure that suggests running:\n\"make test-api-stubs-docs-update-current-api\"\n\nafter this completes you should see the API updates in \"frameworks/base\" that need to be attached along with the patch.  ",
       "revId": "5d8c8434768c88f91ba7df1e788127e2eab87946",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b88dd086_6cb1e56e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2020-10-29T11:04:59Z",
+      "side": 1,
+      "message": "Alright. And I just put it in the same commit here?",
+      "parentUuid": "593794c1_f4441c37",
+      "revId": "5d8c8434768c88f91ba7df1e788127e2eab87946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
