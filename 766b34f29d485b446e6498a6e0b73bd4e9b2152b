@@ -16,6 +16,24 @@
       "message": "Thanks!",
       "revId": "766b34f29d485b446e6498a6e0b73bd4e9b2152b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "827603ee_4c1d30f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-10-29T20:24:28Z",
+      "side": 1,
+      "message": "Sorry, didn\u0027t see that you had just approved when I uploaded a new patchset. PTAL?",
+      "parentUuid": "d9457543_73cf576a",
+      "revId": "766b34f29d485b446e6498a6e0b73bd4e9b2152b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
