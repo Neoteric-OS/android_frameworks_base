@@ -39,6 +39,30 @@
       },
       "revId": "f576dce11ea85625e409b1e685eb2dff44b89bf0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7fb25c9_b08eba86",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-10-29T08:06:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61065b8d_0e6d376a",
+      "range": {
+        "startLine": 380,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 59
+      },
+      "revId": "f576dce11ea85625e409b1e685eb2dff44b89bf0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
