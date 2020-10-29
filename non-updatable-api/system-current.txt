@@ -11370,6 +11370,10 @@ package android.telephony.ims.stub {
     ctor public SipTransportImplBase(@NonNull java.util.concurrent.Executor);
   }
 
+  public class RcsCapabilityExchangeImplBase {
+    ctor public RcsCapabilityExchangeImplBase();
+  }
+
 }
 
 package android.telephony.mbms {
