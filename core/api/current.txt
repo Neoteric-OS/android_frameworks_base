@@ -34270,6 +34270,63 @@ package android.provider {
     field public static final String PATH_SETTING_INTENT = "intent";
   }
 
+  public final class SimPhonebookContract {
+    field public static final String AUTHORITY = "com.android.simphonebook";
+    field @NonNull public static final android.net.Uri AUTHORITY_URI;
+  }
+
+  public static final class SimPhonebookContract.EntityFiles {
+    method @NonNull public static android.net.Uri getItemUri(int, int);
+    field public static final String CONTACT_COUNT = "contact_count";
+    field public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/sim-entity-file";
+    field public static final String CONTENT_TYPE = "vnd.android.cursor.dir/sim-entity-file";
+    field @NonNull public static final android.net.Uri CONTENT_URI;
+    field public static final int EF_ADN = 1; // 0x1
+    field public static final int EF_FDN = 2; // 0x2
+    field public static final int EF_SDN = 3; // 0x3
+    field public static final String EF_TYPE = "ef_type";
+    field public static final int EF_UNKNOWN = 0; // 0x0
+    field public static final String MAX_CONTACTS = "max_contacts";
+    field public static final String NAME_MAX_LENGTH = "name_max_length";
+    field public static final String PHONE_NUMBER_MAX_LENGTH = "phone_number_max_length";
+    field public static final String SLOT_INDEX = "slot_index";
+    field public static final String SUBSCRIPTION_ID = "subscription_id";
+  }
+
+  public static final class SimPhonebookContract.SimContacts {
+    method @NonNull public static android.net.Uri getAdnUri(int);
+    method @NonNull public static android.net.Uri getContentUri(int, int);
+    method @NonNull public static android.net.Uri getFdnUri(int);
+    method @NonNull public static android.net.Uri getItemUri(int, int, int);
+    method @NonNull public static android.net.Uri getSdnUri(int);
+    field public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/sim-contact";
+    field public static final String CONTENT_TYPE = "vnd.android.cursor.dir/sim-contact";
+    field public static final String ENTITY_FILE_TYPE = "entity_file_type";
+    field public static final String NAME = "name";
+    field public static final String PHONE_NUMBER = "number";
+    field public static final String RECORD_EF_INDEX = "record_ef_index";
+    field public static final String SUBSCRIPTION_ID = "subscription_id";
+  }
+
+  public static final class SimPhonebookContract.SimPhonebookException extends android.util.AndroidRuntimeException implements android.os.Parcelable {
+    ctor public SimPhonebookContract.SimPhonebookException(int);
+    ctor public SimPhonebookContract.SimPhonebookException(int, @Nullable String);
+    ctor public SimPhonebookContract.SimPhonebookException(int, @Nullable String, @Nullable Throwable);
+    ctor public SimPhonebookContract.SimPhonebookException(int, @Nullable String, @NonNull android.content.ContentValues);
+    method public int describeContents();
+    method public int getErrorCode();
+    method @NonNull public static String getErrorName(int);
+    method @NonNull public android.content.ContentValues getSanitizedValues();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.provider.SimPhonebookContract.SimPhonebookException> CREATOR;
+    field public static final int ERROR_EF_FULL = 3; // 0x3
+    field public static final int ERROR_INVALID_DATA = 4; // 0x4
+    field public static final int ERROR_MISSING_SIM = 1; // 0x1
+    field public static final int ERROR_TIMEOUT = 5; // 0x5
+    field public static final int ERROR_UNSPECIFIED = 0; // 0x0
+    field public static final int ERROR_UNSUPPORTED_EF = 2; // 0x2
+  }
+
   public class SyncStateContract {
     ctor public SyncStateContract();
   }
