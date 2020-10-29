@@ -8160,6 +8160,10 @@ package android.provider {
     method @RequiresPermission(android.Manifest.permission.MODIFY_SETTINGS_OVERRIDEABLE_BY_RESTORE) public static boolean putString(@NonNull android.content.ContentResolver, @NonNull String, @Nullable String, boolean);
   }
 
+  public static final class SimPhonebookContract.SimRecords {
+    field public static final String QUERY_ARG_PIN2 = "android:query-arg-pin2";
+  }
+
   public static final class Telephony.Carriers implements android.provider.BaseColumns {
     field public static final String APN_SET_ID = "apn_set_id";
     field public static final int CARRIER_EDITED = 4; // 0x4
