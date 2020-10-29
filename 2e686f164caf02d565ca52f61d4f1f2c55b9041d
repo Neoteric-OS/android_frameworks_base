@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d3bb345_2dd6cea1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141048
+      },
+      "writtenOn": "2020-10-29T18:40:29Z",
+      "side": 1,
+      "message": "Lajos, Eddy could you approve +2. I am not part of the owner list.",
+      "revId": "2e686f164caf02d565ca52f61d4f1f2c55b9041d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
