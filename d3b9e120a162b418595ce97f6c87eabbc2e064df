@@ -33,6 +33,24 @@
       "message": "Dorin, Robin: you say this change was made in R. But I don\u0027t recall any bugs in R about this. Is this TV specific? Does it affect phones as well?",
       "revId": "d3b9e120a162b418595ce97f6c87eabbc2e064df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecf52771_1a3271b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2020-10-30T11:47:24Z",
+      "side": 1,
+      "message": "No, it\u0027s across everything. It broke a lot of stuff during R, most things were fixed by the owning teams and  I had to fix a lot of stuff for TV. I\u0027m surprised it didn\u0027t affect you in any way - maybe everything you work on was either silently fixed by someone else or too low down the stack to be affected?\n\nhttps://developer.android.com/about/versions/11/privacy/package-visibility\n\nDorin\u0027s findings were that this probably doesn\u0027t affect most usage of VpnDialogs because Settings manages more of it now, and legacy VPNs are OK because they don\u0027t involve PackageManager queries. But if anything does use VpnDialogs on R for app VPNs then it\u0027s broken on phones too and we\u0027d need to take this to QPR.",
+      "parentUuid": "c228962f_b2deff30",
+      "revId": "d3b9e120a162b418595ce97f6c87eabbc2e064df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
