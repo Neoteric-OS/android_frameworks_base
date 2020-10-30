@@ -1,0 +1,12 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Verified+1: Snild Dolkow <snild@sony.com>
+Code-Review+2: Emilian Peev <epeev@google.com>
+Code-Review+1: Eino-Ville Talvala <etalvala@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+API-Review+1: Eino-Ville Talvala <etalvala@google.com>
+Submitted-by: Emilian Peev <epeev@google.com>
+Submitted-at: Fri, 30 Oct 2020 16:10:28 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1463664
+Project: platform/frameworks/base
+Branch: refs/heads/master
