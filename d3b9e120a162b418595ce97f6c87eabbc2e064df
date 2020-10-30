@@ -51,6 +51,24 @@
       "parentUuid": "c228962f_b2deff30",
       "revId": "d3b9e120a162b418595ce97f6c87eabbc2e064df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb0b2072_46552d82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2020-10-30T13:19:10Z",
+      "side": 1,
+      "message": "Yes, it is generic code as Robin said, but most of it doesn\u0027t go through the path that calls getVpnLabel. I found it while extending how the existing dialogs can be used on TVs even for app managed VPNs (not only legacy ones). I\u0027m planning to use more functionality of the dialogs on VPN TVs and then the critical exception path is easily accessed.",
+      "parentUuid": "ecf52771_1a3271b6",
+      "revId": "d3b9e120a162b418595ce97f6c87eabbc2e064df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
