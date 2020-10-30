@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab4f2c46_730f3d62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021064
+      },
+      "writtenOn": "2020-10-30T14:33:08Z",
+      "side": 1,
+      "message": "This patch is part of the \u0027Recommended and Critical Android R patches\u0027 list, so we are picking it up for our products.  But the 1st line of the commit comment is not getting past our internal patch checks, since it is so long.  We can bypass the checks, but I\u0027d ask that AOSP follows git commit comment style guidelines, and keep this line shorter than 80 chars.  Thanks!",
+      "revId": "57835f979ce3b127159d4a46647dfd78079dc0e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
