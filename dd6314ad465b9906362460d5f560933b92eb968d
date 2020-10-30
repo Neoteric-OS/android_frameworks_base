@@ -33,6 +33,24 @@
       "message": "Hey sorry, I realized there is one more CL in flight https://r.android.com/1418834 addressing the same issue. Do you mind abandoning this change and let the other one go in.",
       "revId": "dd6314ad465b9906362460d5f560933b92eb968d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c7e6d52_7129f495",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-10-30T17:58:41Z",
+      "side": 1,
+      "message": "Sure Sudheer. But this is a blocker for our internal testing.\n\nWill abandon this change once your CL gets merged. Can you please prioritize merging your change",
+      "parentUuid": "f527ef24_d027eeb5",
+      "revId": "dd6314ad465b9906362460d5f560933b92eb968d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
