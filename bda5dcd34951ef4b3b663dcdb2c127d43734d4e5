@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1555d2e6_45a52056",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2020-10-30T16:33:28Z",
+      "side": 1,
+      "message": "Nit: \"intended\" is misspelled in the commit message.",
+      "revId": "bda5dcd34951ef4b3b663dcdb2c127d43734d4e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
