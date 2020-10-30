@@ -23,12 +23,16 @@ import static com.android.server.pm.dex.PackageDexUsage.PackageUseInfo;
 
 import static java.util.function.Function.identity;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackagePartitions;
+import android.os.BatteryManager;
 import android.os.FileUtils;
+import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.os.UserHandle;
@@ -83,6 +87,10 @@ public class DexManager {
     // However it can load verification data - thus we pick the "verify" compiler filter.
     private static final String SYSTEM_SERVER_COMPILER_FILTER = "verify";
 
+    // An integer percentage value used to determine when the device is considered to be on low
+    // power for compilation purposes.
+    private static final int BATTERY_CRITICAL_LEVEL = 35;
+
     private final Context mContext;
 
     // Maps package name to code locations.
@@ -107,6 +115,10 @@ public class DexManager {
     @GuardedBy("mInstallLock")
     private final Installer mInstaller;
 
+    private ActivityManager mActivityManager;
+    private BatteryManager mBatteryManager;
+    private PowerManager mPowerManager;
+
     // Possible outcomes of a dex search.
     private static int DEX_SEARCH_NOT_FOUND = 0;  // dex file not found
     private static int DEX_SEARCH_FOUND_PRIMARY = 1;  // dex file is the primary/base apk
@@ -123,6 +135,8 @@ public class DexManager {
         mInstaller = installer;
         mInstallLock = installLock;
         mDynamicCodeLogger = new DynamicCodeLogger(pms, installer);
+        mActivityManager = mContext.getSystemService(ActivityManager.class);
+        mPowerManager = mContext.getSystemService(PowerManager.class);
     }
 
     public DynamicCodeLogger getDynamicCodeLogger() {
@@ -902,6 +916,77 @@ public class DexManager {
                     jarFile.close();
                 }
             } catch (IOException ignore) {}
+        }
+    }
+
+    /**
+     * Translates install scenarios into compilation reasons.  This process can be influenced
+     * by the state of the device.
+     */
+    public int getCompilationReasonForInstallScenario(int installScenario) {
+        // Compute the compilation reason from the installation scenario.
+
+        boolean resourcesAreCritical = areBatteryThermalOrMemoryCritical();
+        switch (installScenario) {
+            case PackageManager.INSTALL_SCENARIO_DEFAULT: {
+                return PackageManagerService.REASON_INSTALL;
+            }
+            case PackageManager.INSTALL_SCENARIO_FAST: {
+                return PackageManagerService.REASON_INSTALL_FAST;
+            }
+            case PackageManager.INSTALL_SCENARIO_BULK_CRITICAL: {
+                if (resourcesAreCritical) {
+                    return PackageManagerService.REASON_INSTALL_BULK_CRITICAL_DOWNGRADED;
+                } else {
+                    return PackageManagerService.REASON_INSTALL_BULK_CRITICAL;
+                }
+            }
+            case PackageManager.INSTALL_SCENARIO_BULK_NON_CRITICAL: {
+                if (resourcesAreCritical) {
+                    return PackageManagerService.REASON_INSTALL_BULK_NON_CRITICAL_DOWNGRADED;
+                } else {
+                    return PackageManagerService.REASON_INSTALL_BULK_NON_CRITICAL;
+                }
+            }
+            default: {
+                throw new IllegalArgumentException("Invalid installation scenario");
+            }
+        }
+    }
+
+    /**
+     * Fetches the battery manager object and caches it if it hasn't been fetched already.
+     */
+    private BatteryManager getBatteryManager() {
+        if (mBatteryManager == null) {
+            mBatteryManager = mContext.getSystemService(BatteryManager.class);
+        }
+
+        return mBatteryManager;
+    }
+
+    /**
+     * Returns true if the battery level, device temperature, or memory usage are considered to be
+     * in a critical state.
+     */
+    private boolean areBatteryThermalOrMemoryCritical() {
+        BatteryManager batteryManager = getBatteryManager();
+        if ((batteryManager != null
+                && batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_STATUS)
+                    == BatteryManager.BATTERY_STATUS_DISCHARGING
+                && batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+                    <= BATTERY_CRITICAL_LEVEL)
+                || (mPowerManager != null
+                && mPowerManager.getCurrentThermalStatus() >= PowerManager.THERMAL_STATUS_SEVERE)) {
+
+            return true;
+        } else if (mActivityManager != null) {
+            ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+            mActivityManager.getMemoryInfo(memoryInfo);
+
+            return memoryInfo.lowMemory;
+        } else {
+            return false;
         }
     }
 

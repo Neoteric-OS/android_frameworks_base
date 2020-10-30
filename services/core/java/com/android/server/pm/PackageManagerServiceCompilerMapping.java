@@ -26,10 +26,22 @@ import dalvik.system.DexFile;
 public class PackageManagerServiceCompilerMapping {
     // Names for compilation reasons.
     public static final String REASON_STRINGS[] = {
-            "first-boot", "boot", "install", "bg-dexopt", "ab-ota", "inactive", "shared"
+        "first-boot",
+        "boot",
+        "install",
+        "install-fast",
+        "install-bulk-critical",
+        "install-bulk-non-critical",
+        "install-bulk-critical-downgraded",
+        "install-bulk-non-critical-downgraded",
+        "bg-dexopt",
+        "ab-ota",
+        "inactive",
+        // "shared" must be the last entry
+        "shared"
     };
 
-    static final int REASON_SHARED_INDEX = 6;
+    static final int REASON_SHARED_INDEX = REASON_STRINGS.length - 1;
 
     // Static block to ensure the strings array is of the right length.
     static {
