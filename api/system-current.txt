@@ -11735,6 +11735,19 @@ package android.telephony.euicc {
 
 package android.telephony.ims {
 
+  public final class AudioCodecAttributes implements android.os.Parcelable {
+    ctor public AudioCodecAttributes(double, double, double, double, double, double);
+    method public int describeContents();
+    method public double getAudioCodecBandwidth();
+    method public double getAudioCodecBandwidthLower();
+    method public double getAudioCodecBandwidthUpper();
+    method public double getAudioCodecBitrate();
+    method public double getAudioCodecBitrateLower();
+    method public double getAudioCodecBitrateUpper();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.ims.AudioCodecAttributes> CREATOR;
+  }
+
   public final class ImsCallForwardInfo implements android.os.Parcelable {
     ctor public ImsCallForwardInfo(int, int, int, int, @NonNull String, int);
     method public int describeContents();
@@ -12103,6 +12116,7 @@ package android.telephony.ims {
     ctor public ImsStreamMediaProfile(int, int, int, int, int);
     method public void copyFrom(android.telephony.ims.ImsStreamMediaProfile);
     method public int describeContents();
+    method @Nullable public android.telephony.ims.AudioCodecAttributes getAudioCodecAttributes();
     method public int getAudioDirection();
     method public int getAudioQuality();
     method public int getRttMode();
@@ -12110,6 +12124,7 @@ package android.telephony.ims {
     method public int getVideoQuality();
     method public boolean isReceivingRttAudio();
     method public boolean isRttCall();
+    method public void setAudioCodecAttributes(@NonNull android.telephony.ims.AudioCodecAttributes);
     method public void setReceivingRttAudio(boolean);
     method public void setRttMode(int);
     method public void writeToParcel(android.os.Parcel, int);
