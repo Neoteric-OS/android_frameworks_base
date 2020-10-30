@@ -41,7 +41,6 @@ import android.widget.Toast;
 import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
-import com.android.internal.notification.SystemNotificationChannels;
 
 public class NetworkNotificationManager {
 
@@ -72,7 +71,11 @@ public class NetworkNotificationManager {
 
     private static final String TAG = NetworkNotificationManager.class.getSimpleName();
     private static final boolean DBG = true;
-    private static final boolean VDBG = false;
+
+    // Notification channels used by ConnectivityService mainline module.
+    public static final String NETWORK_STATUS = "NETWORK_STATUS";
+    public static final String NETWORK_ALERTS = "NETWORK_ALERTS";
+    public static final String VPN = "VPN";
 
     // The context is for the current user (system server)
     private final Context mContext;
@@ -255,8 +258,7 @@ public class NetworkNotificationManager {
         // the tag.
         final boolean hasPreviousNotification = previousNotifyType != null;
         final String channelId = (highPriority && !hasPreviousNotification)
-                ? SystemNotificationChannels.NETWORK_ALERTS
-                : SystemNotificationChannels.NETWORK_STATUS;
+                ? NETWORK_ALERTS : NETWORK_STATUS;
         Notification.Builder builder = new Notification.Builder(mContext, channelId)
                 .setWhen(System.currentTimeMillis())
                 .setShowWhen(notifyType == NotificationType.NETWORK_SWITCH)
