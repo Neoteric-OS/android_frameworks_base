@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65ed08ca_7ee27b2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-30T11:42:45Z",
+      "side": 1,
+      "message": "Dorin, Robin: you say this change was made in R. But I don\u0027t recall any bugs in R about this. Is this TV specific? Does it affect phones as well?",
+      "revId": "d3b9e120a162b418595ce97f6c87eabbc2e064df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
