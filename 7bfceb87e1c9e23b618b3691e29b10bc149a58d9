@@ -16,6 +16,23 @@
       "message": "I need to merge these very close to each other or there\u0027ll be pain for AOSP developers",
       "revId": "7bfceb87e1c9e23b618b3691e29b10bc149a58d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c8dd9a2_07e80358",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-10-30T11:04:31Z",
+      "side": 1,
+      "message": "Nikita, could you API-review this CP? It\u0027s going to be painful for AOSP developers until this is in",
+      "revId": "7bfceb87e1c9e23b618b3691e29b10bc149a58d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
