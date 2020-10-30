@@ -592,6 +592,11 @@ public class ArtManagerService extends android.content.pm.dex.IArtManager.Stub {
     private static final int TRON_COMPILATION_REASON_INACTIVE = 7;
     private static final int TRON_COMPILATION_REASON_SHARED = 8;
     private static final int TRON_COMPILATION_REASON_INSTALL_WITH_DEX_METADATA = 9;
+    private static final int TRON_COMPILATION_REASON_INSTALL_FAST = 10;
+    private static final int TRON_COMPILATION_REASON_INSTALL_BULK_CRITICAL = 11;
+    private static final int TRON_COMPILATION_REASON_INSTALL_BULK_NON_CRITICAL = 12;
+    private static final int TRON_COMPILATION_REASON_INSTALL_BULK_CRITICAL_DOWNGRADED = 13;
+    private static final int TRON_COMPILATION_REASON_INSTALL_BULK_NON_CRITICAL_DOWNGRADED = 14;
 
     // The annotation to add as a suffix to the compilation reason when dexopt was
     // performed with dex metadata.
@@ -611,6 +616,16 @@ public class ArtManagerService extends android.content.pm.dex.IArtManager.Stub {
             case "ab-ota" : return TRON_COMPILATION_REASON_AB_OTA;
             case "inactive" : return TRON_COMPILATION_REASON_INACTIVE;
             case "shared" : return TRON_COMPILATION_REASON_SHARED;
+            case "install-fast" :
+                return TRON_COMPILATION_REASON_INSTALL_FAST;
+            case "install-bulk-critical" :
+                return TRON_COMPILATION_REASON_INSTALL_BULK_CRITICAL;
+            case "install-bulk-non-critical" :
+                return TRON_COMPILATION_REASON_INSTALL_BULK_NON_CRITICAL;
+            case "install-bulk-critical-downgraded" :
+                return TRON_COMPILATION_REASON_INSTALL_BULK_CRITICAL_DOWNGRADED;
+            case "install-bulk-non-critical-downgraded" :
+                return TRON_COMPILATION_REASON_INSTALL_BULK_NON_CRITICAL_DOWNGRADED;
             // This is a special marker for dex metadata installation that does not
             // have an equivalent as a system property.
             case "install" + DEXOPT_REASON_WITH_DEX_METADATA_ANNOTATION :
