@@ -22,6 +22,30 @@
       },
       "revId": "034f034e36edace7392a10621804aeeedc545443",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "396b07ac_ad2df795",
+        "filename": "packages/VpnDialogs/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2020-10-30T11:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b44bb209_a71f6bae",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 6
+      },
+      "revId": "034f034e36edace7392a10621804aeeedc545443",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
