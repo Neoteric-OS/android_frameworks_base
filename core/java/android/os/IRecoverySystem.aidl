@@ -27,7 +27,8 @@ interface IRecoverySystem {
     boolean setupBcb(in String command);
     boolean clearBcb();
     void rebootRecoveryWithCommand(in String command);
-    boolean requestLskf(in String updateToken, in IntentSender sender);
-    boolean clearLskf();
-    boolean rebootWithLskf(in String updateToken, in String reason);
+    boolean requestLskf(in String callerId, in IntentSender sender);
+    boolean clearLskf(in String callerId);
+    boolean isLskfCaptured(in String callerId);
+    boolean rebootWithLskf(in String callerId, in String reason, in boolean slotSwitch);
 }
