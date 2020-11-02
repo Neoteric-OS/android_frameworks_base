@@ -2053,6 +2053,13 @@ package android.bluetooth {
     field public static final int METADATA_UNTETHERED_RIGHT_LOW_BATTERY_THRESHOLD = 22; // 0x16
   }
 
+  public final class BluetoothHapPresetInfo implements android.os.Parcelable {
+    ctor public BluetoothHapPresetInfo(int, @NonNull String, boolean, boolean);
+    method public int describeContents();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.bluetooth.BluetoothHapPresetInfo> CREATOR;
+  }
+
   public final class BluetoothHeadset implements android.bluetooth.BluetoothProfile {
     method @RequiresPermission(allOf={android.Manifest.permission.BLUETOOTH_CONNECT, android.Manifest.permission.MODIFY_PHONE_STATE}) public boolean connect(android.bluetooth.BluetoothDevice);
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT) public boolean disconnect(android.bluetooth.BluetoothDevice);
