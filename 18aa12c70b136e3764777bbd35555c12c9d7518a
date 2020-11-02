@@ -16,6 +16,24 @@
       "message": "Thanks!",
       "revId": "18aa12c70b136e3764777bbd35555c12c9d7518a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a64c2aad_261070bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-02T23:54:18Z",
+      "side": 1,
+      "message": "Had to explicitly include presubmit options in the TEST_MAPPING. Could you PTAL again? thanks!",
+      "parentUuid": "a7d01ae2_1513217d",
+      "revId": "18aa12c70b136e3764777bbd35555c12c9d7518a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
