@@ -57,14 +57,14 @@ public class RecoverySystemShellCommand extends ShellCommand {
 
     private int requestLskf() throws RemoteException {
         String updateToken = getNextArgRequired();
-        boolean success = mService.requestLskf(updateToken, null);
+        boolean success = mService.requestLskf("unknown", updateToken, null);
         PrintWriter pw = getOutPrintWriter();
         pw.println("Request LSKF status: " + (success ? "success" : "failure"));
         return 0;
     }
 
     private int clearLskf() throws RemoteException {
-        boolean success = mService.clearLskf();
+        boolean success = mService.clearLskf("unknown");
         PrintWriter pw = getOutPrintWriter();
         pw.println("Clear LSKF: " + (success ? "success" : "failure"));
         return 0;
@@ -73,7 +73,7 @@ public class RecoverySystemShellCommand extends ShellCommand {
     private int rebootAndApply() throws RemoteException {
         String updateToken = getNextArgRequired();
         String rebootReason = getNextArgRequired();
-        boolean success = mService.rebootWithLskf(updateToken, rebootReason);
+        boolean success = mService.rebootWithLskf("unknown", updateToken, rebootReason);
         PrintWriter pw = getOutPrintWriter();
         pw.println("Reboot and apply status: " + (success ? "success" : "failure"));
         return 0;
