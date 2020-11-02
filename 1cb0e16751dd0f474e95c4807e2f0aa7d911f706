@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48f783de_ff7eb6d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-11-02T20:06:58Z",
+      "side": 1,
+      "message": "Could we add a frameworks/base/core/java/android/uwb/TEST_MAPPING similar to frameworks/base/core/java/android/net/TEST_MAPPING?\n\nSo that the test will be triggered during presubmit. ",
+      "revId": "1cb0e16751dd0f474e95c4807e2f0aa7d911f706",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
