@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af6c01a6_21c96a92",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2020-11-02T15:37:51Z",
+      "side": 1,
+      "message": "Hey Michael, seems like I\u0027ve lost the +2 when I updates this cl to have the updated code from the merged-in cl. Could you please review it again? Thanks!",
+      "revId": "6569dc0d64568972580933b3b5525dd92ac00dba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
