@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cfcc2a7_63ce49a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1252012
+      },
+      "writtenOn": "2020-11-02T08:03:17Z",
+      "side": 1,
+      "message": "For TV device which don\u0027t support Telephony, how to setCountryCode if remove the API?",
+      "revId": "d18c85507f4695ca66a93934d7daa22127fb0872",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
