@@ -17,5 +17,5 @@
 
 package android.net;
 
-parcelable ConnectivityDiagnosticsManager.ConnectivityReport;
-parcelable ConnectivityDiagnosticsManager.DataStallReport;
+@JavaOnlyStableParcelable parcelable ConnectivityDiagnosticsManager.ConnectivityReport;
+@JavaOnlyStableParcelable parcelable ConnectivityDiagnosticsManager.DataStallReport;

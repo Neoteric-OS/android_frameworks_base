@@ -16,5 +16,5 @@
 
 package android.net;
 
-parcelable NetworkRequest;
+@JavaOnlyStableParcelable parcelable NetworkRequest;
 

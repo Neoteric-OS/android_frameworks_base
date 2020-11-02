@@ -16,4 +16,4 @@
 
 package android.net;
 
-parcelable NetworkState;
+@JavaOnlyStableParcelable parcelable NetworkState;

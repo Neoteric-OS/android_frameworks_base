@@ -17,4 +17,4 @@
 
 package android.os;
 
-parcelable Messenger;
+@JavaOnlyStableParcelable parcelable Messenger;

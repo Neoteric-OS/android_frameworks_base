@@ -17,4 +17,4 @@
 
 package android.os;
 
-parcelable Bundle;
+@JavaOnlyStableParcelable parcelable Bundle;

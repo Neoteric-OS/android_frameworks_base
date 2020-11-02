@@ -17,4 +17,4 @@
 
 package android.net;
 
-parcelable ConnectionInfo;
+@JavaOnlyStableParcelable parcelable ConnectionInfo;

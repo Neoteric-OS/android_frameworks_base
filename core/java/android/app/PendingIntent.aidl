@@ -17,4 +17,4 @@
 
 package android.app;
 
-parcelable PendingIntent;
+@JavaOnlyStableParcelable parcelable PendingIntent;

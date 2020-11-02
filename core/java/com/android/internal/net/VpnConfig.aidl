@@ -16,4 +16,4 @@
 
 package com.android.internal.net;
 
-parcelable VpnConfig;
+@JavaOnlyStableParcelable parcelable VpnConfig;

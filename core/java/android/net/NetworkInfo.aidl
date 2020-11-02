@@ -16,4 +16,4 @@
 
 package android.net;
 
-parcelable NetworkInfo;
+@JavaOnlyStableParcelable parcelable NetworkInfo;

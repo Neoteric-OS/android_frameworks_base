@@ -16,4 +16,4 @@
 
 package com.android.internal.net;
 
-parcelable VpnInfo;
+@JavaOnlyStableParcelable parcelable VpnInfo;
