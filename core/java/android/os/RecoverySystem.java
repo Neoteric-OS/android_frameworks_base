@@ -151,6 +151,9 @@ public class RecoverySystem {
     // Prevent concurrent execution of requests.
     private static final Object sRequestLock = new Object();
 
+    // The old resume on reboot systemAPI in R doesn't have a caller id, so use a fake one for ota.
+    private static final String LEGACY_ROR_CLIENT = "default_ota_client";
+
     private final IRecoverySystem mService;
 
     /**
@@ -655,7 +658,7 @@ public class RecoverySystem {
             throw new NullPointerException("updateToken == null");
         }
         RecoverySystem rs = (RecoverySystem) context.getSystemService(Context.RECOVERY_SERVICE);
-        if (!rs.requestLskf(updateToken, intentSender)) {
+        if (!rs.requestLskf(LEGACY_ROR_CLIENT, intentSender)) {
             throw new IOException("preparation for update failed");
         }
     }
@@ -673,7 +676,7 @@ public class RecoverySystem {
     public static void clearPrepareForUnattendedUpdate(@NonNull Context context)
             throws IOException {
         RecoverySystem rs = (RecoverySystem) context.getSystemService(Context.RECOVERY_SERVICE);
-        if (!rs.clearLskf()) {
+        if (!rs.clearLskf(LEGACY_ROR_CLIENT)) {
             throw new IOException("could not reset unattended update state");
         }
     }
@@ -699,7 +702,7 @@ public class RecoverySystem {
             throw new NullPointerException("updateToken == null");
         }
         RecoverySystem rs = (RecoverySystem) context.getSystemService(Context.RECOVERY_SERVICE);
-        if (!rs.rebootWithLskf(updateToken, reason)) {
+        if (!rs.rebootWithLskf(LEGACY_ROR_CLIENT, reason, true)) {
             throw new IOException("system not prepared to apply update");
         }
     }
@@ -1283,16 +1286,15 @@ public class RecoverySystem {
     /**
      * Begins the process of asking the user for the Lock Screen Knowledge Factor.
      *
-     * @param updateToken token that will be used in calls to {@link #rebootAndApply} to ensure
-     *                    that the preparation was for the correct update
+     * @param callerId the identifier of the caller who requests resume on reboot
      * @return true if the request was correct
      * @throws IOException if the recovery system service could not be contacted
      */
-    private boolean requestLskf(String updateToken, IntentSender sender) throws IOException {
+    private boolean requestLskf(String callerId, IntentSender sender) throws IOException {
         try {
-            return mService.requestLskf(updateToken, sender);
+            return mService.requestLskf(callerId, sender);
         } catch (RemoteException e) {
-            throw new IOException("could request update");
+            throw new IOException("could request LSKF capture");
         }
     }
 
@@ -1302,22 +1304,37 @@ public class RecoverySystem {
      * @return true if the setup for OTA was cleared
      * @throws IOException if the recovery system service could not be contacted
      */
-    private boolean clearLskf() throws IOException {
+    private boolean clearLskf(String callerId) throws IOException {
         try {
-            return mService.clearLskf();
+            return mService.clearLskf(callerId);
         } catch (RemoteException e) {
             throw new IOException("could not clear LSKF");
         }
     }
 
     /**
+     * Queries if the resume on reboot has been prepared for a given caller.
+     *
+     * @param callerId the identifier of the caller who requests resume on reboot
+     * @return true if resume on reboot is prepared.
+     * @throws IOException if the recovery system service could not be contacted
+     */
+    private boolean isLskfCaptured(String callerId) throws IOException {
+        try {
+            return mService.isLskfCaptured(callerId);
+        } catch (RemoteException e) {
+            throw new IOException("could not get LSKF capture state");
+        }
+    }
+
+    /**
      * Calls the recovery system service to reboot and apply update.
      *
-     * @param updateToken the update token for which the update was prepared
      */
-    private boolean rebootWithLskf(String updateToken, String reason) throws IOException {
+    private boolean rebootWithLskf(String callerId, String reason, boolean slotSwitch)
+            throws IOException {
         try {
-            return mService.rebootWithLskf(updateToken, reason);
+            return mService.rebootWithLskf(callerId, reason, slotSwitch);
         } catch (RemoteException e) {
             throw new IOException("could not reboot for update");
         }

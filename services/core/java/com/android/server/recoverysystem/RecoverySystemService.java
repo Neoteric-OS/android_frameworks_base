@@ -46,6 +46,12 @@ import java.io.FileDescriptor;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The recovery system service is responsible for coordinating recovery related
@@ -76,9 +82,33 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
     private final Injector mInjector;
     private final Context mContext;
 
-    private boolean mPreparedForReboot;
-    private String mUnattendedRebootToken;
-    private IntentSender mPreparedForRebootIntentSender;
+    private final Map<String, IntentSender> mCallerPendingRequest = new HashMap<>();
+    private final Set<String> mCallerPreparedForReboot = new HashSet<>();
+
+    private static class ResumeOnRebootRequestResult {
+        private final boolean mNeedPreparation;
+        private final boolean mSendIntent;
+
+        ResumeOnRebootRequestResult(boolean needPreparation, boolean sendIntent) {
+            if (needPreparation && sendIntent) {
+                throw new IllegalStateException("Reboot escrow preparation should not be requested "
+                        + "together with sending intent.");
+            }
+
+            mNeedPreparation = needPreparation;
+            mSendIntent = sendIntent;
+        }
+    }
+
+    private static class ResumeOnRebootClearResult {
+        private final boolean mRequested;
+        private final boolean mNeedClear;
+
+        ResumeOnRebootClearResult(boolean requested, boolean needClear) {
+            mRequested = requested;
+            mNeedClear = needClear;
+        }
+    }
 
     static class Injector {
         protected final Context mContext;
@@ -287,21 +317,26 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
     }
 
     @Override // Binder call
-    public boolean requestLskf(String updateToken, IntentSender intentSender) {
+    public boolean requestLskf(String callerId, IntentSender intentSender) {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.RECOVERY, null);
 
-        if (updateToken == null) {
+        if (callerId == null) {
+            Slog.w(TAG, "Missing callerId when requesting lskf.");
             return false;
         }
 
-        // No need to prepare again for the same token.
-        if (mPreparedForReboot && updateToken.equals(mUnattendedRebootToken)) {
+        ResumeOnRebootRequestResult requestResult = updateRoRPreparationStateOnNewRequest(
+                callerId, intentSender);
+        // We consider the preparation done if someone else has prepared.
+        if (requestResult.mSendIntent) {
+            sendPreparedForRebootIntentIfNeeded(intentSender);
             return true;
         }
 
-        mPreparedForReboot = false;
-        mUnattendedRebootToken = updateToken;
-        mPreparedForRebootIntentSender = intentSender;
+        // No need to ask lock settings service to prepare again.
+        if (!requestResult.mNeedPreparation) {
+            return true;
+        }
 
         final long origId = Binder.clearCallingIdentity();
         try {
@@ -313,20 +348,63 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
         return true;
     }
 
-    @Override
-    public void onPreparedForReboot(boolean ready) {
-        if (mUnattendedRebootToken == null) {
-            Slog.w(TAG, "onPreparedForReboot called when mUnattendedRebootToken is null");
+    // Checks and updates the resume on reboot preparation state.
+    private synchronized ResumeOnRebootRequestResult updateRoRPreparationStateOnNewRequest(
+            String callerId, IntentSender intentSender) {
+        if (!mCallerPreparedForReboot.isEmpty()) {
+            if (!mCallerPendingRequest.isEmpty()) {
+                String msg = String.format("RoR pending request isn't empty when reboot escrow has"
+                                + " been prepared, prepared callers: %s, pending callers: %s",
+                        String.join(",", mCallerPreparedForReboot),
+                        String.join(",", mCallerPendingRequest.keySet()));
+                throw new IllegalStateException(msg);
+            }
+
+            if (mCallerPreparedForReboot.contains(callerId)) {
+                return new ResumeOnRebootRequestResult(false, false);
+            }
+
+            // Someone else has prepared. Consider the preparation done, and send back the intent.
+            mCallerPreparedForReboot.add(callerId);
+            return new ResumeOnRebootRequestResult(false, true);
         }
 
-        mPreparedForReboot = ready;
-        if (ready) {
-            sendPreparedForRebootIntentIfNeeded();
+        boolean needPreparation = mCallerPendingRequest.isEmpty();
+        if (mCallerPendingRequest.containsKey(callerId)) {
+            Slog.i(TAG, "Duplicate RoR preparation request for " + callerId);
+        }
+        // Update the request with the new intentSender.
+        mCallerPendingRequest.put(callerId, intentSender);
+        return new ResumeOnRebootRequestResult(needPreparation, false);
+    }
+
+    @Override
+    public void onPreparedForReboot(boolean ready) {
+        if (!ready) {
+            return;
+        }
+
+        List<IntentSender> pendingIntentSenders = getIntentSendersOnPreparedForReboot();
+        for (IntentSender intentSender : pendingIntentSenders) {
+            sendPreparedForRebootIntentIfNeeded(intentSender);
         }
     }
 
-    private void sendPreparedForRebootIntentIfNeeded() {
-        final IntentSender intentSender = mPreparedForRebootIntentSender;
+    private synchronized List<IntentSender> getIntentSendersOnPreparedForReboot() {
+        if (!mCallerPreparedForReboot.isEmpty()) {
+            Slog.w(TAG, "onPreparedForReboot called when some clients have prepared.");
+        }
+
+        List<IntentSender> pendingIntentSenders = new ArrayList<>();
+        for (Map.Entry<String, IntentSender> entry : mCallerPendingRequest.entrySet()) {
+            pendingIntentSenders.add(entry.getValue());
+            mCallerPreparedForReboot.add(entry.getKey());
+        }
+        mCallerPendingRequest.clear();
+        return pendingIntentSenders;
+    }
+
+    private void sendPreparedForRebootIntentIfNeeded(IntentSender intentSender) {
         if (intentSender != null) {
             try {
                 intentSender.sendIntent(null, 0, null, null, null);
@@ -337,12 +415,22 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
     }
 
     @Override // Binder call
-    public boolean clearLskf() {
+    public boolean clearLskf(String callerId) {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.RECOVERY, null);
+        if (callerId == null) {
+            Slog.w(TAG, "Missing callerId when clearing lskf.");
+            return false;
+        }
 
-        mPreparedForReboot = false;
-        mUnattendedRebootToken = null;
-        mPreparedForRebootIntentSender = null;
+        ResumeOnRebootClearResult clearResult = updateRoRPreparationStateOnClear(callerId);
+        if (!clearResult.mRequested) {
+            Slog.w(TAG, "RoR clear called before preparation for caller " + callerId);
+            return false;
+        }
+        // Another RoR caller exists, no need to clear reboot escrow.
+        if (!clearResult.mNeedClear) {
+            return true;
+        }
 
         final long origId = Binder.clearCallingIdentity();
         try {
@@ -354,20 +442,34 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
         return true;
     }
 
+    private synchronized ResumeOnRebootClearResult updateRoRPreparationStateOnClear(
+            String callerId) {
+        if (!mCallerPreparedForReboot.contains(callerId) && !mCallerPendingRequest.containsKey(
+                callerId)) {
+            Slog.w(TAG, callerId + " hasn't prepared for resume on reboot");
+            return new ResumeOnRebootClearResult(false, false);
+        }
+        mCallerPendingRequest.remove(callerId);
+        mCallerPreparedForReboot.remove(callerId);
+
+        // Check if others have prepared ROR.
+        boolean needClear = mCallerPendingRequest.isEmpty() && mCallerPreparedForReboot.isEmpty();
+        return new ResumeOnRebootClearResult(true, needClear);
+    }
+
     @Override // Binder call
-    public boolean rebootWithLskf(String updateToken, String reason) {
+    public boolean rebootWithLskf(String callerId, String reason, boolean slotSwitch) {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.RECOVERY, null);
-
-        if (!mPreparedForReboot) {
-            Slog.i(TAG, "Reboot requested before prepare completed");
+        if (callerId == null) {
+            Slog.w(TAG, "Missing callerId when rebooting with lskf.");
+            return false;
+        }
+        if (!isLskfCaptured(callerId)) {
             return false;
         }
 
-        if (updateToken != null && !updateToken.equals(mUnattendedRebootToken)) {
-            Slog.i(TAG, "Reboot requested after preparation, but with mismatching token");
-            return false;
-        }
-
+        // TODO(xunchang) check the slot to boot into, and fail the reboot upon slot mismatch.
+        // TODO(xunchang) write the vbmeta digest along with the escrowKey before reboot.
         if (!mInjector.getLockSettingsService().armRebootEscrow()) {
             Slog.w(TAG, "Failure to escrow key for reboot");
             return false;
@@ -375,6 +477,15 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
 
         PowerManager pm = mInjector.getPowerManager();
         pm.reboot(reason);
+        return true;
+    }
+
+    @Override // Binder call
+    public synchronized boolean isLskfCaptured(String callerId) {
+        if (!mCallerPreparedForReboot.contains(callerId)) {
+            Slog.i(TAG, "Reboot requested before prepare completed for caller " + callerId);
+            return false;
+        }
         return true;
     }
 
@@ -533,6 +644,7 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
 
         /**
          * Reads the status from the uncrypt service which is usually represented as a percentage.
+         *
          * @return an integer representing the percentage completed
          * @throws IOException if there was an error reading the socket
          */
@@ -542,6 +654,7 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
 
         /**
          * Sends a confirmation to the uncrypt service.
+         *
          * @throws IOException if there was an error writing to the socket
          */
         public void sendAck() throws IOException {
