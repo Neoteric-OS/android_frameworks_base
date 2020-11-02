@@ -140,7 +140,7 @@ import android.net.util.LinkPropertiesUtils.CompareOrUpdateResult;
 import android.net.util.LinkPropertiesUtils.CompareResult;
 import android.net.util.MultinetworkPolicyTracker;
 import android.net.util.NetdService;
-import android.os.BasicShellCommandHandler;
+import com.android.modules.utils.BasicShellCommandHandler;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;

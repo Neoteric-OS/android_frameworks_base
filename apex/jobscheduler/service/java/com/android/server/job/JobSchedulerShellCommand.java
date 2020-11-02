@@ -20,7 +20,7 @@ import android.app.ActivityManager;
 import android.app.AppGlobals;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
-import android.os.BasicShellCommandHandler;
+import com.android.modules.utils.BasicShellCommandHandler;
 import android.os.Binder;
 import android.os.UserHandle;
 

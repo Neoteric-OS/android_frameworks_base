@@ -32,6 +32,7 @@ filegroup {
         "core/java/**/*.aidl",
     ],
     path: "core/java",
+    visibility: ["//frameworks/libs/modules-utils"],
 }
 
 // These are subset of framework-core-sources that are needed by the
@@ -127,7 +128,9 @@ filegroup {
         "core/java/com/android/internal/annotations/VisibleForTesting.java",
     ],
     path: "core/java",
-    visibility: ["//frameworks/base/test-mock"],
+    visibility: [
+    "//frameworks/base/test-mock",
+    "//frameworks/libs/modules-utils",],
 }
 
 filegroup {
@@ -319,6 +322,7 @@ filegroup {
         ":PacProcessor-aidl-sources",
         ":ProxyHandler-aidl-sources",
         ":net-utils-framework-common-srcs",
+        ":framework-modules-utils-srcs",
 
         // AIDL from frameworks/base/native/
         ":platform-compat-native-aidl",
@@ -1152,7 +1156,6 @@ aidl_mapping {
 filegroup {
     name: "framework-telephony-common-shared-srcs",
     srcs: [
-        "core/java/android/os/BasicShellCommandHandler.java",
         "core/java/android/os/RegistrantList.java",
         "core/java/android/os/Registrant.java",
         "core/java/android/util/LocalLog.java",
@@ -1169,6 +1172,7 @@ filegroup {
         "core/java/com/android/internal/util/State.java",
         "core/java/com/android/internal/util/StateMachine.java",
         "core/java/com/android/internal/util/UserIcons.java",
+        ":framework-modules-utils-srcs"
     ],
 }
 
@@ -1249,7 +1253,6 @@ filegroup {
     name: "framework-wifi-service-shared-srcs",
     srcs: [
         "core/java/android/net/InterfaceConfiguration.java",
-        "core/java/android/os/BasicShellCommandHandler.java",
         "core/java/android/util/BackupUtils.java",
         "core/java/android/util/Rational.java",
         "core/java/com/android/internal/util/FastXmlSerializer.java",
@@ -1259,6 +1262,7 @@ filegroup {
         "core/java/com/android/internal/util/State.java",
         "core/java/com/android/internal/util/StateMachine.java",
         "core/java/com/android/internal/util/WakeupMessage.java",
+        ":framework-modules-utils-srcs"
     ],
     visibility: ["//frameworks/opt/net/wifi/service"],
 }
