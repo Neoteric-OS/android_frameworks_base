@@ -56,26 +56,30 @@ public class RecoverySystemShellCommand extends ShellCommand {
     }
 
     private int requestLskf() throws RemoteException {
-        String updateToken = getNextArgRequired();
-        boolean success = mService.requestLskf(updateToken, null);
+        String callerId = getNextArgRequired();
+        boolean success = mService.requestLskf(callerId, null);
         PrintWriter pw = getOutPrintWriter();
-        pw.println("Request LSKF status: " + (success ? "success" : "failure"));
+        pw.printf("Request LSKF for callerId: %s, status: %s\n", callerId,
+                success ? "success" : "failure");
         return 0;
     }
 
     private int clearLskf() throws RemoteException {
-        boolean success = mService.clearLskf();
+        String callerId = getNextArgRequired();
+        boolean success = mService.clearLskf(callerId);
         PrintWriter pw = getOutPrintWriter();
-        pw.println("Clear LSKF: " + (success ? "success" : "failure"));
+        pw.printf("Clear LSKF for callerId: %s, status: %s\n", callerId,
+                success ? "success" : "failure");
         return 0;
     }
 
     private int rebootAndApply() throws RemoteException {
-        String updateToken = getNextArgRequired();
+        String callerId = getNextArgRequired();
         String rebootReason = getNextArgRequired();
-        boolean success = mService.rebootWithLskf(updateToken, rebootReason);
+        boolean success = mService.rebootWithLskf(callerId, rebootReason, true);
         PrintWriter pw = getOutPrintWriter();
-        pw.println("Reboot and apply status: " + (success ? "success" : "failure"));
+        pw.printf("Reboot and apply for callerId: %s, status: %s\n", callerId,
+                success ? "success" : "failure");
         return 0;
     }
 
