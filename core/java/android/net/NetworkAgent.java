@@ -29,11 +29,12 @@ import android.os.ConditionVariable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.Messenger;
+import android.os.RemoteException;
 import android.util.Log;
 
+import com.android.connectivity.aidl.INetworkAgent;
+import com.android.connectivity.aidl.INetworkAgentRegistry;
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Protocol;
 
 import java.lang.annotation.Retention;
@@ -94,18 +95,24 @@ public abstract class NetworkAgent {
     @Nullable
     private volatile Network mNetwork;
 
+    @Nullable
+    private volatile INetworkAgentRegistry mRegistry;
+
     // Whether this NetworkAgent is using the legacy (never unhidden) API. The difference is
     // that the legacy API uses NetworkInfo to convey the state, while the current API is
     // exposing methods to manage it and generate it internally instead.
     // TODO : remove this as soon as all agents have been converted.
     private final boolean mIsLegacy;
 
+    private interface RegistryAction {
+        void execute(@NonNull INetworkAgentRegistry registry) throws RemoteException;
+    }
+
     private final Handler mHandler;
-    private volatile AsyncChannel mAsyncChannel;
     private final String LOG_TAG;
     private static final boolean DBG = true;
     private static final boolean VDBG = false;
-    private final ArrayList<Message> mPreConnectedQueue = new ArrayList<Message>();
+    private final ArrayList<RegistryAction> mPreConnectedQueue = new ArrayList<>();
     private volatile long mLastBwRefreshTime = 0;
     private static final long BW_REFRESH_MIN_WIN_MS = 500;
     private boolean mBandwidthUpdateScheduled = false;
@@ -194,7 +201,6 @@ public abstract class NetworkAgent {
      * @hide
      */
     public static final int CMD_REPORT_NETWORK_STATUS = BASE + 7;
-
 
     /**
      * Network validation suceeded.
@@ -337,6 +343,18 @@ public abstract class NetworkAgent {
      */
     public static final int CMD_REMOVE_KEEPALIVE_PACKET_FILTER = BASE + 17;
 
+
+    /**
+     * Sent by ConnectivityService to the NetworkAgent to complete the bidirectional connection.
+     * obj = INetworkAgentRegistry
+     */
+    private static final int EVENT_AGENT_CONNECTED = BASE + 18;
+
+    /**
+     * Sent by ConnectivityService to the NetworkAgent to inform the agent that it was disconnected.
+     */
+    private static final int EVENT_AGENT_DISCONNECTED = BASE + 19;
+
     /** @hide TODO: remove and replace usage with the public constructor. */
     public NetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,
             NetworkCapabilities nc, LinkProperties lp, int score) {
@@ -441,36 +459,33 @@ public abstract class NetworkAgent {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case AsyncChannel.CMD_CHANNEL_FULL_CONNECTION: {
-                    if (mAsyncChannel != null) {
+                case EVENT_AGENT_CONNECTED: {
+                    if (mRegistry != null) {
                         log("Received new connection while already connected!");
                     } else {
                         if (VDBG) log("NetworkAgent fully connected");
-                        AsyncChannel ac = new AsyncChannel();
-                        ac.connected(null, this, msg.replyTo);
-                        ac.replyToMessage(msg, AsyncChannel.CMD_CHANNEL_FULLY_CONNECTED,
-                                AsyncChannel.STATUS_SUCCESSFUL);
                         synchronized (mPreConnectedQueue) {
-                            mAsyncChannel = ac;
-                            for (Message m : mPreConnectedQueue) {
-                                ac.sendMessage(m);
+                            final INetworkAgentRegistry registry = (INetworkAgentRegistry) msg.obj;
+                            mRegistry = registry;
+                            for (RegistryAction a : mPreConnectedQueue) {
+                                try {
+                                    a.execute(registry);
+                                } catch (RemoteException e) {
+                                    Log.wtf(LOG_TAG, "Communication error with registry", e);
+                                    // Fall through
+                                }
                             }
                             mPreConnectedQueue.clear();
                         }
                     }
                     break;
                 }
-                case AsyncChannel.CMD_CHANNEL_DISCONNECT: {
-                    if (VDBG) log("CMD_CHANNEL_DISCONNECT");
-                    if (mAsyncChannel != null) mAsyncChannel.disconnect();
-                    break;
-                }
-                case AsyncChannel.CMD_CHANNEL_DISCONNECTED: {
+                case EVENT_AGENT_DISCONNECTED: {
                     if (DBG) log("NetworkAgent channel lost");
                     // let the client know CS is done with us.
                     onNetworkUnwanted();
                     synchronized (mPreConnectedQueue) {
-                        mAsyncChannel = null;
+                        mRegistry = null;
                     }
                     break;
                 }
@@ -533,15 +548,7 @@ public abstract class NetworkAgent {
                 }
 
                 case CMD_SET_SIGNAL_STRENGTH_THRESHOLDS: {
-                    ArrayList<Integer> thresholds =
-                            ((Bundle) msg.obj).getIntegerArrayList("thresholds");
-                    // TODO: Change signal strength thresholds API to use an ArrayList<Integer>
-                    // rather than convert to int[].
-                    int[] intThresholds = new int[(thresholds != null) ? thresholds.size() : 0];
-                    for (int i = 0; i < intThresholds.length; i++) {
-                        intThresholds[i] = thresholds.get(i);
-                    }
-                    onSignalStrengthThresholdsUpdated(intThresholds);
+                    onSignalStrengthThresholdsUpdated((int[]) msg.obj);
                     break;
                 }
                 case CMD_PREVENT_AUTOMATIC_RECONNECT: {
@@ -580,13 +587,102 @@ public abstract class NetworkAgent {
             }
             final ConnectivityManager cm = (ConnectivityManager) mInitialConfiguration.context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
-            mNetwork = cm.registerNetworkAgent(new Messenger(mHandler),
+            mNetwork = cm.registerNetworkAgent(new NetworkAgentBinder(mHandler),
                     new NetworkInfo(mInitialConfiguration.info),
                     mInitialConfiguration.properties, mInitialConfiguration.capabilities,
                     mInitialConfiguration.score, mInitialConfiguration.config, providerId);
             mInitialConfiguration = null; // All this memory can now be GC'd
         }
         return mNetwork;
+    }
+
+    private static class NetworkAgentBinder extends INetworkAgent.Stub {
+        private final Handler mHandler;
+
+        private NetworkAgentBinder(Handler handler) {
+            mHandler = handler;
+        }
+
+        @Override
+        public void onRegistered(@NonNull INetworkAgentRegistry registry) {
+            mHandler.sendMessage(mHandler.obtainMessage(EVENT_AGENT_CONNECTED, registry));
+        }
+
+        @Override
+        public void onDisconnected() {
+            mHandler.sendMessage(mHandler.obtainMessage(EVENT_AGENT_DISCONNECTED));
+        }
+
+        @Override
+        public void onBandwidthUpdateRequested() {
+            mHandler.sendMessage(mHandler.obtainMessage(CMD_REQUEST_BANDWIDTH_UPDATE));
+        }
+
+        @Override
+        public void onValidationStatusChanged(
+                int validationStatus, @Nullable String captivePortalUrl) {
+            // TODO: consider using a parcelable as argument when the interface is structured
+            Bundle redirectUrlBundle = new Bundle();
+            redirectUrlBundle.putString(NetworkAgent.REDIRECT_URL_KEY, captivePortalUrl);
+            mHandler.sendMessage(mHandler.obtainMessage(CMD_REPORT_NETWORK_STATUS,
+                    validationStatus, 0, redirectUrlBundle));
+        }
+
+        @Override
+        public void onSaveAcceptUnvalidated(boolean acceptUnvalidated) {
+            mHandler.sendMessage(mHandler.obtainMessage(CMD_SAVE_ACCEPT_UNVALIDATED,
+                    acceptUnvalidated ? 1 : 0, 0));
+        }
+
+        @Override
+        public void onStartNattSocketKeepalive(int slot, int intervalDurationMs,
+                @Nullable NattKeepalivePacketData packetData) {
+            mHandler.sendMessage(mHandler.obtainMessage(CMD_START_SOCKET_KEEPALIVE,
+                    slot, intervalDurationMs, packetData));
+        }
+
+        @Override
+        public void onStartTcpSocketKeepalive(int slot, int intervalDurationMs,
+                @Nullable TcpKeepalivePacketData packetData) {
+            mHandler.sendMessage(mHandler.obtainMessage(CMD_START_SOCKET_KEEPALIVE,
+                    slot, intervalDurationMs, packetData));
+        }
+
+        @Override
+        public void onStopSocketKeepalive(int slot) {
+            mHandler.sendMessage(mHandler.obtainMessage(CMD_STOP_SOCKET_KEEPALIVE, slot, 0));
+        }
+
+        @Override
+        public void onSignalStrengthThresholdsUpdated(int[] thresholds) {
+            mHandler.sendMessage(mHandler.obtainMessage(
+                    CMD_SET_SIGNAL_STRENGTH_THRESHOLDS, thresholds));
+        }
+
+        @Override
+        public void onPreventAutomaticReconnect() {
+            mHandler.sendMessage(mHandler.obtainMessage(CMD_PREVENT_AUTOMATIC_RECONNECT));
+        }
+
+        @Override
+        public void onAddNattKeepalivePacketFilter(int slot,
+                @Nullable NattKeepalivePacketData packetData) {
+            mHandler.sendMessage(mHandler.obtainMessage(CMD_ADD_KEEPALIVE_PACKET_FILTER,
+                    slot, 0, packetData));
+        }
+
+        @Override
+        public void onAddTcpKeepalivePacketFilter(int slot,
+                @Nullable TcpKeepalivePacketData packetData) {
+            mHandler.sendMessage(mHandler.obtainMessage(CMD_ADD_KEEPALIVE_PACKET_FILTER,
+                    slot, 0, packetData));
+        }
+
+        @Override
+        public void onRemoveKeepalivePacketFilter(int slot) {
+            mHandler.sendMessage(mHandler.obtainMessage(CMD_REMOVE_KEEPALIVE_PACKET_FILTER,
+                    slot, 0));
+        }
     }
 
     /**
@@ -598,13 +694,13 @@ public abstract class NetworkAgent {
      *
      * @hide
      */
-    public Messenger registerForTest(final Network network) {
+    public INetworkAgent registerForTest(final Network network) {
         log("Registering NetworkAgent for test");
         synchronized (mRegisterLock) {
             mNetwork = network;
             mInitialConfiguration = null;
         }
-        return new Messenger(mHandler);
+        return new NetworkAgentBinder(mHandler);
     }
 
     /**
@@ -628,29 +724,17 @@ public abstract class NetworkAgent {
         return mNetwork;
     }
 
-    private void queueOrSendMessage(int what, Object obj) {
-        queueOrSendMessage(what, 0, 0, obj);
-    }
-
-    private void queueOrSendMessage(int what, int arg1, int arg2) {
-        queueOrSendMessage(what, arg1, arg2, null);
-    }
-
-    private void queueOrSendMessage(int what, int arg1, int arg2, Object obj) {
-        Message msg = Message.obtain();
-        msg.what = what;
-        msg.arg1 = arg1;
-        msg.arg2 = arg2;
-        msg.obj = obj;
-        queueOrSendMessage(msg);
-    }
-
-    private void queueOrSendMessage(Message msg) {
+    private void queueOrSendMessage(@NonNull RegistryAction action) {
         synchronized (mPreConnectedQueue) {
-            if (mAsyncChannel != null) {
-                mAsyncChannel.sendMessage(msg);
+            if (mRegistry != null) {
+                try {
+                    action.execute(mRegistry);
+                } catch (RemoteException e) {
+                    Log.wtf(LOG_TAG, "Error executing registry action", e);
+                    // Fall through: the channel is asynchronous and does not report errors back
+                }
             } else {
-                mPreConnectedQueue.add(msg);
+                mPreConnectedQueue.add(action);
             }
         }
     }
@@ -661,7 +745,8 @@ public abstract class NetworkAgent {
      */
     public final void sendLinkProperties(@NonNull LinkProperties linkProperties) {
         Objects.requireNonNull(linkProperties);
-        queueOrSendMessage(EVENT_NETWORK_PROPERTIES_CHANGED, new LinkProperties(linkProperties));
+        final LinkProperties lp = new LinkProperties(linkProperties);
+        queueOrSendMessage(reg -> reg.sendLinkProperties(lp));
     }
 
     /**
@@ -686,10 +771,7 @@ public abstract class NetworkAgent {
     public final void setUnderlyingNetworks(@Nullable List<Network> underlyingNetworks) {
         final ArrayList<Network> underlyingArray = (underlyingNetworks != null)
                 ? new ArrayList<>(underlyingNetworks) : null;
-        final Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(UNDERLYING_NETWORKS_KEY, underlyingArray);
-        // TODO: FIX
-        // queueOrSendMessage(EVENT_UNDERLYING_NETWORKS_CHANGED, bundle);
+        queueOrSendMessage(reg -> reg.sendUnderlyingNetworks(underlyingArray));
     }
 
     /**
@@ -704,7 +786,7 @@ public abstract class NetworkAgent {
         // |reason| cannot be used by the non-legacy agents
         mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.CONNECTED, null /* reason */,
                 mNetworkInfo.getExtraInfo());
-        queueOrSendMessage(EVENT_NETWORK_INFO_CHANGED, mNetworkInfo);
+        queueOrSendNetworkInfo(mNetworkInfo);
     }
 
     /**
@@ -720,7 +802,7 @@ public abstract class NetworkAgent {
         // When unregistering an agent nobody should use the extrainfo (or reason) any more.
         mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.DISCONNECTED, null /* reason */,
                 null /* extraInfo */);
-        queueOrSendMessage(EVENT_NETWORK_INFO_CHANGED, mNetworkInfo);
+        queueOrSendNetworkInfo(mNetworkInfo);
     }
 
     /**
@@ -740,7 +822,7 @@ public abstract class NetworkAgent {
             throw new UnsupportedOperationException("Legacy agents can't call setLegacySubtype.");
         }
         mNetworkInfo.setSubtype(legacySubtype, legacySubtypeName);
-        queueOrSendMessage(EVENT_NETWORK_INFO_CHANGED, mNetworkInfo);
+        queueOrSendNetworkInfo(mNetworkInfo);
     }
 
     /**
@@ -765,7 +847,7 @@ public abstract class NetworkAgent {
             throw new UnsupportedOperationException("Legacy agents can't call setLegacyExtraInfo.");
         }
         mNetworkInfo.setExtraInfo(extraInfo);
-        queueOrSendMessage(EVENT_NETWORK_INFO_CHANGED, mNetworkInfo);
+        queueOrSendNetworkInfo(mNetworkInfo);
     }
 
     /**
@@ -777,7 +859,11 @@ public abstract class NetworkAgent {
         if (!mIsLegacy) {
             throw new UnsupportedOperationException("Only legacy agents can call sendNetworkInfo.");
         }
-        queueOrSendMessage(EVENT_NETWORK_INFO_CHANGED, new NetworkInfo(networkInfo));
+        queueOrSendNetworkInfo(new NetworkInfo(networkInfo));
+    }
+
+    private void queueOrSendNetworkInfo(NetworkInfo networkInfo) {
+        queueOrSendMessage(reg -> reg.sendNetworkInfo(networkInfo));
     }
 
     /**
@@ -788,8 +874,8 @@ public abstract class NetworkAgent {
         Objects.requireNonNull(networkCapabilities);
         mBandwidthUpdatePending.set(false);
         mLastBwRefreshTime = System.currentTimeMillis();
-        queueOrSendMessage(EVENT_NETWORK_CAPABILITIES_CHANGED,
-                new NetworkCapabilities(networkCapabilities));
+        final NetworkCapabilities nc = new NetworkCapabilities(networkCapabilities);
+        queueOrSendMessage(reg -> reg.sendNetworkCapabilities(nc));
     }
 
     /**
@@ -801,7 +887,7 @@ public abstract class NetworkAgent {
         if (score < 0) {
             throw new IllegalArgumentException("Score must be >= 0");
         }
-        queueOrSendMessage(EVENT_NETWORK_SCORE_CHANGED, score, 0);
+        queueOrSendMessage(reg -> reg.sendScore(score));
     }
 
     /**
@@ -841,9 +927,8 @@ public abstract class NetworkAgent {
      * @hide should move to NetworkAgentConfig.
      */
     public void explicitlySelected(boolean explicitlySelected, boolean acceptUnvalidated) {
-        queueOrSendMessage(EVENT_SET_EXPLICITLY_SELECTED,
-                explicitlySelected ? 1 : 0,
-                acceptUnvalidated ? 1 : 0);
+        queueOrSendMessage(reg -> reg.sendExplicitlySelected(
+                explicitlySelected, acceptUnvalidated));
     }
 
     /**
@@ -966,7 +1051,7 @@ public abstract class NetworkAgent {
      */
     public final void sendSocketKeepaliveEvent(int slot,
             @SocketKeepalive.KeepaliveEvent int event) {
-        queueOrSendMessage(EVENT_SOCKET_KEEPALIVE, slot, event);
+        queueOrSendMessage(reg -> reg.sendSocketKeepaliveEvent(slot, event));
     }
     /** @hide TODO delete once callers have moved to sendSocketKeepaliveEvent */
     public void onSocketKeepaliveEvent(int slot, int reason) {
