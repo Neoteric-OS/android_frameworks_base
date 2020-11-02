@@ -18,6 +18,7 @@ package com.android.server.compat;
 
 import android.annotation.Nullable;
 import android.compat.annotation.ChangeId;
+import android.compat.annotation.EnabledAfter;
 import android.compat.annotation.EnabledSince;
 import android.content.pm.ApplicationInfo;
 
@@ -45,6 +46,16 @@ public final class CompatChange extends CompatibilityChangeInfo {
     @ChangeId
     @EnabledSince(targetSdkVersion = 1235) // Needs to be > test APK targetSdkVersion.
     static final long CTS_SYSTEM_API_CHANGEID = 149391281; // This is a bug id.
+
+    /**
+     * This is just a fake changeid that breaks several conditions:
+     * - uses deprecated @EnabledAfter
+     * - is named using _CHANGE_ID as a suffix
+     * - does not use a valid bug id as a value
+     */
+    @ChangeId
+    @EnabledAfter(targetSdkVersion = 30)
+    private static final long FAKE_CHANGE_ID = 12345;
 
     /**
      * Callback listener for when compat changes are updated for a package.
