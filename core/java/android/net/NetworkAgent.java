@@ -93,6 +93,9 @@ public abstract class NetworkAgent {
     @Nullable
     private volatile Network mNetwork;
 
+    @Nullable
+    private volatile NetworkAgentRegistry mRegistry;
+
     // Whether this NetworkAgent is using the legacy (never unhidden) API. The difference is
     // that the legacy API uses NetworkInfo to convey the state, while the current API is
     // exposing methods to manage it and generate it internally instead.
@@ -565,13 +568,13 @@ public abstract class NetworkAgent {
             }
             final ConnectivityManager cm = (ConnectivityManager) mInitialConfiguration.context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
-            mNetwork = cm.registerNetworkAgent(new Messenger(mHandler),
+            mRegistry = cm.registerNetworkAgent(new Messenger(mHandler),
                     new NetworkInfo(mInitialConfiguration.info),
                     mInitialConfiguration.properties, mInitialConfiguration.capabilities,
                     mInitialConfiguration.score, mInitialConfiguration.config, providerId);
             mInitialConfiguration = null; // All this memory can now be GC'd
         }
-        return mNetwork;
+        return mRegistry.network;
     }
 
     /**
