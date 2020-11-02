@@ -1290,7 +1290,7 @@ public class RecoverySystem {
      */
     private boolean requestLskf(String updateToken, IntentSender sender) throws IOException {
         try {
-            return mService.requestLskf(updateToken, sender);
+            return mService.requestLskf("ota_client", sender);
         } catch (RemoteException e) {
             throw new IOException("could request update");
         }
@@ -1304,7 +1304,7 @@ public class RecoverySystem {
      */
     private boolean clearLskf() throws IOException {
         try {
-            return mService.clearLskf();
+            return mService.clearLskf("ota_client");
         } catch (RemoteException e) {
             throw new IOException("could not clear LSKF");
         }
@@ -1317,7 +1317,7 @@ public class RecoverySystem {
      */
     private boolean rebootWithLskf(String updateToken, String reason) throws IOException {
         try {
-            return mService.rebootWithLskf(updateToken, reason);
+            return mService.rebootWithLskf("ota_client", reason, true);
         } catch (RemoteException e) {
             throw new IOException("could not reboot for update");
         }
