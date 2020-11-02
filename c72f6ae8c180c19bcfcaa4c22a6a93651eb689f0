@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7db78e5f_3b2f45c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-11-02T09:14:20Z",
+      "side": 1,
+      "message": "merged-in ?",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 52
+      },
+      "revId": "c72f6ae8c180c19bcfcaa4c22a6a93651eb689f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
