@@ -254,6 +254,38 @@ public class PreferredComponent {
         return numMatch == NS;
     }
 
+    public boolean sameSet(PreferredComponent pc){
+        if (mSetPackages == null) return false;
+        if (pc == null) return false;
+        if (pc.mSetPackages == null) return false;
+        final int NQ = pc.mSetPackages.length;
+        final int NS = mSetPackages.length;
+        int numMatch = 0;
+        for (int i=0; i<NQ; i++) {
+            boolean good = false;
+            for (int j=0; j<NS; j++) {
+                if (mSetPackages[j].equals(pc.mSetPackages[j])
+                        && mSetClasses[j].equals(pc.mSetClasses[j])) {
+                    numMatch++;
+                    good = true;
+                    break;
+                }
+            }
+            if (!good) return false;
+        }
+        return numMatch == NS;
+    }
+
+    public boolean sameSet(ComponentName comp){
+        if (mComponent == null) return false;
+        if (comp == null) return false;
+        if (mComponent.getPackageName().equals(comp.getPackageName())
+                && mComponent.getClassName().equals(comp.getClassName())){
+            return true;
+        }
+        return false;
+    }
+
     public boolean isSuperset(List<ResolveInfo> query, boolean excludeSetupWizardPackage) {
         if (mSetPackages == null) {
             return query == null;

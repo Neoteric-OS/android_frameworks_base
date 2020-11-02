@@ -22,6 +22,7 @@ import android.content.IntentFilter;
 import java.io.PrintWriter;
 
 import com.android.server.IntentResolver;
+import java.util.ArrayList;
 
 public class PreferredIntentResolver
         extends IntentResolver<PreferredActivity, PreferredActivity> {
@@ -44,5 +45,26 @@ public class PreferredIntentResolver
     @Override
     protected IntentFilter getIntentFilter(@NonNull PreferredActivity input) {
         return input;
+    }
+
+    public boolean shouldAddPreferredActivity(PreferredActivity matching) {
+        ArrayList<PreferredActivity> pal = findFilters(matching);
+        if (pal == null || pal.size() == 0){
+            return true;
+        }
+        if (!matching.mPref.mAlways){
+            return false;
+        }
+        final int NQ = pal.size();
+        for (int i=0; i<NQ; i++){
+            PreferredActivity cur = pal.get(i);
+            if (cur.mPref.sameSet(matching.mPref.mComponent)
+                    && cur.mPref.mAlways && cur.mPref.mMatch
+                    == (matching.mPref.mMatch&IntentFilter.MATCH_CATEGORY_MASK)
+                    && cur.mPref.sameSet(matching.mPref)){
+                return false;
+            }
+        }
+        return true;
     }
 }
