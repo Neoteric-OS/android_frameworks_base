@@ -16,6 +16,24 @@
       "message": "Could we add a frameworks/base/core/java/android/uwb/TEST_MAPPING similar to frameworks/base/core/java/android/net/TEST_MAPPING?\n\nSo that the test will be triggered during presubmit. ",
       "revId": "1cb0e16751dd0f474e95c4807e2f0aa7d911f706",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8977e659_f09247b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-02T21:06:21Z",
+      "side": 1,
+      "message": "Good call, done!",
+      "parentUuid": "48f783de_ff7eb6d3",
+      "revId": "1cb0e16751dd0f474e95c4807e2f0aa7d911f706",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
