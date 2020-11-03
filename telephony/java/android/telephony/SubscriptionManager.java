@@ -1365,6 +1365,7 @@ public class SubscriptionManager {
      * include those that were inserted before, maybe empty but not null.
      * @hide
      */
+    @NonNull
     @UnsupportedAppUsage
     public List<SubscriptionInfo> getAllSubscriptionInfoList() {
         if (VDBG) logd("[getAllSubscriptionInfoList]+");
