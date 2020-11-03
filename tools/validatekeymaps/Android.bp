@@ -25,7 +25,12 @@ cc_binary_host {
     // This tool is prebuilt if we're doing an app-only build.
     product_variables: {
         unbundled_build: {
-          enabled: false,
+            enabled: false,
+        },
+    },
+    target: {
+        darwin: {
+            enabled: false,
         },
     },
 }
