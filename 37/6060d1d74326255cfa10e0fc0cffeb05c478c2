@@ -1,0 +1,9 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Fabian Kozynski <kozynski@google.com>
+Verified+1: Håkan Gustavsson <hakan.gustavsson@sony.com>
+Submitted-by: Fabian Kozynski <kozynski@google.com>
+Submitted-at: Tue, 03 Nov 2020 21:21:37 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1299393
+Project: platform/frameworks/base
+Branch: refs/heads/master
