@@ -16,6 +16,24 @@
       "message": "Hi Riddle,\n\nIs this issue fixed by ag/12828115?",
       "revId": "507612fe06b791b9ff7dba31a9b338e135789920",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f688f25_885e0dc6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2020-11-03T16:31:25Z",
+      "side": 1,
+      "message": "I think it\u0027s possible fixed. That CL almost makes the handle immutable.\nOnce the handle is in mFocusedApplicationHandlesByDisplay, \nthat means updateInfo has been called from NativeInputManager::setFocusedApplication \n(com_android_server_input_InputManagerService.cpp) in InputMonitor.\n\nSo the later updateInfo from InputDispatcher thread should only just early return.",
+      "parentUuid": "33968bc6_afd76da4",
+      "revId": "507612fe06b791b9ff7dba31a9b338e135789920",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
