@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33968bc6_afd76da4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-11-03T16:12:24Z",
+      "side": 1,
+      "message": "Hi Riddle,\n\nIs this issue fixed by ag/12828115?",
+      "revId": "507612fe06b791b9ff7dba31a9b338e135789920",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
