@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2b15fa0_0429fb79",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-03T14:34:27Z",
+      "side": 1,
+      "message": "As we discussed in the meeting, I will expose the OPSTR_ACTIVATE_PLATFORM_VPN to system API and use String[] here.",
+      "parentUuid": "865cac2a_38993981",
+      "range": {
+        "startLine": 1032,
+        "startChar": 12,
+        "endLine": 1032,
+        "endChar": 33
+      },
+      "revId": "9eca0ab458deef6d9de0242f085f923b1d49da8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ea6cb65_61c345ea",
@@ -95,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4085bf3b_7d44deaa",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-03T14:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c66f745_e389c32e",
+      "range": {
+        "startLine": 1083,
+        "startChar": 85,
+        "endLine": 1083,
+        "endChar": 88
+      },
+      "revId": "9eca0ab458deef6d9de0242f085f923b1d49da8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75963e04_2af44a35",
@@ -118,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "90d2ee4e_689480e8",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-03T14:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75963e04_2af44a35",
+      "range": {
+        "startLine": 160,
+        "startChar": 32,
+        "endLine": 160,
+        "endChar": 59
+      },
+      "revId": "9eca0ab458deef6d9de0242f085f923b1d49da8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2649c245_3deb71b6",
@@ -131,6 +203,30 @@
       "writtenOn": "2020-10-28T06:36:36Z",
       "side": 1,
       "message": "Change this and others to String",
+      "range": {
+        "startLine": 738,
+        "startChar": 58,
+        "endLine": 738,
+        "endChar": 61
+      },
+      "revId": "9eca0ab458deef6d9de0242f085f923b1d49da8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c7edfe8_d8abe4dd",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-03T14:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2649c245_3deb71b6",
       "range": {
         "startLine": 738,
         "startChar": 58,
