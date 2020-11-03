@@ -34,6 +34,24 @@
       "parentUuid": "33968bc6_afd76da4",
       "revId": "507612fe06b791b9ff7dba31a9b338e135789920",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "048ce9cb_e73d62b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2020-11-03T16:34:21Z",
+      "side": 1,
+      "message": "Correct the statement: there won\u0027t be write operation from other threads after the handle is in mFocusedApplicationHandlesByDisplay, so the read operation such as \"mAwaitedFocusedApplication-\u003egetName().c_str()\" should be safe.",
+      "parentUuid": "1f688f25_885e0dc6",
+      "revId": "507612fe06b791b9ff7dba31a9b338e135789920",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
