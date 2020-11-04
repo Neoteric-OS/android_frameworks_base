@@ -52,6 +52,23 @@
       "parentUuid": "8a35c062_88c11a96",
       "revId": "1a702459c5dca9a70a965dbd24c17d7d336421f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4877fce_0de6a393",
+        "filename": "core/tests/uwbtests/src/android/uwb/RangingParamsTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1418133
+      },
+      "writtenOn": "2020-11-04T02:21:58Z",
+      "side": 1,
+      "message": "Oops... Remove.",
+      "revId": "1a702459c5dca9a70a965dbd24c17d7d336421f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
