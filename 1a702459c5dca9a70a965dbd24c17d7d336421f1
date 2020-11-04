@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f66e2a34_251a299b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-11-04T01:07:06Z",
+      "side": 1,
+      "message": "I saw the presubmit change was reverted back to patchset 3? So we don\u0027t need it after all?",
+      "revId": "1a702459c5dca9a70a965dbd24c17d7d336421f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
