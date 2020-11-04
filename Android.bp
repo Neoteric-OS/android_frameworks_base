@@ -340,6 +340,7 @@ filegroup {
         ":libupdate_engine_aidl",
         ":resourcemanager_aidl",
         ":storaged_aidl",
+        ":security_aidl",
         ":vold_aidl",
 
         // For the generated R.java and Manifest.java
