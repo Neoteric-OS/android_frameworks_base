@@ -704,7 +704,7 @@ public abstract class NetworkAgent {
 
     public final void sendNetworkScore(final int score) {
         // TODO : replace with : throw new IllegalArgumentException("Method is deprecated");
-        sendNetworkScore(new NetworkScore(score));
+        sendNetworkScore(new NetworkScore(score, NetworkScore.DONT_FORCE_KEEPUP));
     }
 
     /**

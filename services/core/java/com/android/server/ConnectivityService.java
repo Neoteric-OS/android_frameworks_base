@@ -3502,15 +3502,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     // Determines whether the network is the best (or could become the best, if it validated), for
-    // none of a particular type of NetworkRequests. The type of NetworkRequests considered depends
+    // one of a particular type of NetworkRequests. The type of NetworkRequests considered depends
     // on the value of reason:
     //
     // - UnneededFor.TEARDOWN: non-listen NetworkRequests. If a network is unneeded for this reason,
-    //   then it should be torn down.
+    //   then it should be torn down, unless its NetworkScore specifies that the factory needs
+    //   it for some reason.
     // - UnneededFor.LINGER: foreground NetworkRequests. If a network is unneeded for this reason,
     //   then it should be lingered.
     private boolean unneeded(NetworkAgentInfo nai, UnneededFor reason) {
         ensureRunningOnConnectivityServiceThread();
+        if (!nai.everConnected || nai.isVPN() || nai.isLingering() ||
+                nai.mScore.getForceKeepupReason() != NetworkScore.DONT_FORCE_KEEPUP) {
+            return false;
+        }
+
         final int numRequests;
         switch (reason) {
             case TEARDOWN:
@@ -3524,7 +3530,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 return true;
         }
 
-        if (!nai.everConnected || nai.isVPN() || nai.isLingering() || numRequests > 0) {
+        if (numRequests > 0) {
             return false;
         }
         for (NetworkRequestInfo nri : mNetworkRequests.values()) {
