@@ -70,6 +70,24 @@
       "parentUuid": "048ce9cb_e73d62b4",
       "revId": "507612fe06b791b9ff7dba31a9b338e135789920",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4929172c_3a61f3a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2020-11-04T14:56:44Z",
+      "side": 1,
+      "message": "Replied to the bug link.",
+      "parentUuid": "fa84b0ef_fe45cc0d",
+      "revId": "507612fe06b791b9ff7dba31a9b338e135789920",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
