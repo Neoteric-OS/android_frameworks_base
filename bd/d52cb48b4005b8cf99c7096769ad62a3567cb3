@@ -1,0 +1,9 @@
+Code-Review+2: Chalard Jean <jchalard@google.com>
+Code-Review+1: Rubin Xu <rubinxu@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Eran Messeri <eranm@google.com>
+Submitted-at: Wed, 04 Nov 2020 11:56:31 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1486196
+Project: platform/frameworks/base
+Branch: refs/heads/master
