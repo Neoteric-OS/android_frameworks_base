@@ -53,6 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@id/input_hour"
+            android:layout_marginLeft="10dp"
             android:layout_alignBaseline="@id/input_hour"
             android:textAppearance="@style/TextAppearance.Material.TimePicker.InputField" />
 
@@ -62,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/input_hour"
             android:layout_toEndOf="@id/input_separator"
+            android:layout_marginLeft="10dp"
             android:inputType="number"
             android:textAppearance="@style/TextAppearance.Material.TimePicker.InputField" />
         <TextView
