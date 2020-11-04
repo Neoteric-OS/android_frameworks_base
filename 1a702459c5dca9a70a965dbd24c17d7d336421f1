@@ -69,6 +69,24 @@
       "message": "Oops... Remove.",
       "revId": "1a702459c5dca9a70a965dbd24c17d7d336421f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31ad3917_3d1d063e",
+        "filename": "core/tests/uwbtests/src/android/uwb/RangingParamsTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-04T04:04:56Z",
+      "side": 1,
+      "message": "Whoops, good call. Patch going up in a second to resolve this.",
+      "parentUuid": "a4877fce_0de6a393",
+      "revId": "1a702459c5dca9a70a965dbd24c17d7d336421f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
