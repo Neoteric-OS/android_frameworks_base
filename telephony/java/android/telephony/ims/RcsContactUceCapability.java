@@ -104,11 +104,16 @@ public final class RcsContactUceCapability implements Parcelable {
     })
     public @interface RequestResult {}
 
+
+    public interface RcsUcsCapabilityBuilder {
+        @NonNull RcsContactUceCapability build();
+    }
+
     /**
      * Builder to help construct {@link RcsContactUceCapability} instances when capabilities were
      * queried through SIP OPTIONS.
      */
-    public static class OptionsBuilder {
+    public static class OptionsBuilder implements RcsUcsCapabilityBuilder {
 
         private final RcsContactUceCapability mCapabilities;
 
@@ -155,6 +160,7 @@ public final class RcsContactUceCapability implements Parcelable {
         /**
          * @return the constructed instance.
          */
+        @Override
         public @NonNull RcsContactUceCapability build() {
             return mCapabilities;
         }
@@ -164,7 +170,7 @@ public final class RcsContactUceCapability implements Parcelable {
      * Builder to help construct {@link RcsContactUceCapability} instances when capabilities were
      * queried through a presence server.
      */
-    public static class PresenceBuilder {
+    public static class PresenceBuilder implements RcsUcsCapabilityBuilder {
 
         private final RcsContactUceCapability mCapabilities;
 
@@ -205,6 +211,7 @@ public final class RcsContactUceCapability implements Parcelable {
         /**
          * @return the RcsContactUceCapability instance.
          */
+        @Override
         public @NonNull RcsContactUceCapability build() {
             return mCapabilities;
         }
