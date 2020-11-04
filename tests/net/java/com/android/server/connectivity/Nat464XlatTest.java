@@ -29,7 +29,8 @@ import static org.mockito.Mockito.when;
 import android.net.ConnectivityManager;
 import android.net.IDnsResolver;
 import android.net.INetd;
-import android.net.InterfaceConfiguration;
+import android.net.InetAddresses;
+import android.net.InterfaceConfigurationParcel;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
@@ -59,7 +60,10 @@ public class Nat464XlatTest {
     static final String BASE_IFACE = "test0";
     static final String STACKED_IFACE = "v4-test0";
     static final LinkAddress V6ADDR = new LinkAddress("2001:db8:1::f00/64");
-    static final LinkAddress ADDR = new LinkAddress("192.0.2.5/29");
+    static final String ADDR_STR = "192.0.2.5";
+    static final int ADDR_PREFIX_LEN = 29;
+    static final LinkAddress ADDR = new LinkAddress(
+            InetAddresses.parseNumericAddress(ADDR_STR), ADDR_PREFIX_LEN);
     static final String NAT64_PREFIX = "64:ff9b::/96";
     static final String OTHER_NAT64_PREFIX = "2001:db8:0:64::/96";
     static final int NETID = 42;
@@ -68,12 +72,12 @@ public class Nat464XlatTest {
     @Mock IDnsResolver mDnsResolver;
     @Mock INetd mNetd;
     @Mock INetworkManagementService mNms;
-    @Mock InterfaceConfiguration mConfig;
     @Mock NetworkAgentInfo mNai;
 
     TestLooper mLooper;
     Handler mHandler;
     NetworkAgentConfig mAgentConfig = new NetworkAgentConfig();
+    InterfaceConfigurationParcel mConfig = new InterfaceConfigurationParcel();
 
     Nat464Xlat makeNat464Xlat() {
         return new Nat464Xlat(mNai, mNetd, mDnsResolver, mNms) {
@@ -107,8 +111,9 @@ public class Nat464XlatTest {
         when(mNai.netAgentConfig()).thenReturn(mAgentConfig);
         when(mNai.handler()).thenReturn(mHandler);
 
-        when(mNms.getInterfaceConfig(eq(STACKED_IFACE))).thenReturn(mConfig);
-        when(mConfig.getLinkAddress()).thenReturn(ADDR);
+        when(mNetd.interfaceGetCfg(eq(STACKED_IFACE))).thenReturn(mConfig);
+        mConfig.ipv4Addr = ADDR_STR;
+        mConfig.prefixLength = ADDR_PREFIX_LEN;
     }
 
     private void assertRequiresClat(boolean expected, NetworkAgentInfo nai) {
@@ -213,7 +218,7 @@ public class Nat464XlatTest {
         nat.interfaceLinkStateChanged(STACKED_IFACE, true);
         mLooper.dispatchNext();
 
-        verify(mNms).getInterfaceConfig(eq(STACKED_IFACE));
+        verify(mNetd).interfaceGetCfg(eq(STACKED_IFACE));
         verify(mConnectivity).handleUpdateLinkProperties(eq(mNai), c.capture());
         assertFalse(c.getValue().getStackedLinks().isEmpty());
         assertTrue(c.getValue().getAllInterfaceNames().contains(STACKED_IFACE));
@@ -353,7 +358,7 @@ public class Nat464XlatTest {
         nat.interfaceLinkStateChanged(STACKED_IFACE, true);
         mLooper.dispatchNext();
 
-        verify(mNms).getInterfaceConfig(eq(STACKED_IFACE));
+        verify(mNetd).interfaceGetCfg(eq(STACKED_IFACE));
         verify(mConnectivity, times(1)).handleUpdateLinkProperties(eq(mNai), c.capture());
         assertFalse(c.getValue().getStackedLinks().isEmpty());
         assertTrue(c.getValue().getAllInterfaceNames().contains(STACKED_IFACE));
