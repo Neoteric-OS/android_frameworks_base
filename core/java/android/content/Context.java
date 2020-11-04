@@ -5162,6 +5162,14 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve an
+     * {@link android.security.AttestationManager}.
+     * @see #getSystemService(String)
+     * @see android.security.AttestationManager
+     */
+    public static final String ATTESTATION_SERVICE = "attestation";
+
+    /**
+     * Use with {@link #getSystemService(String)} to retrieve an
      * {@link android.security.FileIntegrityManager}.
      * @see #getSystemService(String)
      * @see android.security.FileIntegrityManager
