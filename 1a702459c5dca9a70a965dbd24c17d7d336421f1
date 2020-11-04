@@ -16,6 +16,24 @@
       "message": "I saw the presubmit change was reverted back to patchset 3? So we don\u0027t need it after all?",
       "revId": "1a702459c5dca9a70a965dbd24c17d7d336421f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a35c062_88c11a96",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-04T01:10:07Z",
+      "side": 1,
+      "message": "Yea, the test\u0027s Android.bp was just missing a test_suites option. Adding that allows everything to pass and is consistent with other tests in frameworks/base/core",
+      "parentUuid": "f66e2a34_251a299b",
+      "revId": "1a702459c5dca9a70a965dbd24c17d7d336421f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
