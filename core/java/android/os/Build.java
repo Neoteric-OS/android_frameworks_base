@@ -106,10 +106,18 @@ public class Build {
     public static final String HARDWARE = getString("ro.hardware");
 
     /**
-     * The hardware variant (SKU), if available.
-     */
+     * The SKU of the hardware (from the kernel command line). The SKU is reported by the bootloader
+     * to configure system software features.
+     **/
     @NonNull
     public static final String SKU = getString("ro.boot.hardware.sku");
+
+    /**
+     * The SKU of the device as set by the original device manufacturer (ODM). The ODM SKU is a
+     * runtime-initialized property set during startup to configure devie services.
+     **/
+    @NonNull
+    public static final String ODM_SKU = getString("ro.boot.product.hardware.sku");
 
     /**
      * Whether this build was for an emulator device.
