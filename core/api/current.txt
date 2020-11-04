@@ -10159,6 +10159,7 @@ package android.content {
     field public static final String ALARM_SERVICE = "alarm";
     field public static final String APPWIDGET_SERVICE = "appwidget";
     field public static final String APP_OPS_SERVICE = "appops";
+    field public static final String ATTESTATION_SERVICE = "attestation";
     field public static final String AUDIO_SERVICE = "audio";
     field public static final String BATTERY_SERVICE = "batterymanager";
     field public static final int BIND_ABOVE_CLIENT = 8; // 0x8
@@ -40659,6 +40660,13 @@ package android.se.omapi {
 
 package android.security {
 
+  public class AttestationException extends java.lang.Exception {
+  }
+
+  public final class AttestationManager {
+    method @NonNull public java.util.List<java.security.cert.X509Certificate> attestDevice(@NonNull android.security.DeviceAttestationRequest) throws android.security.AttestationException;
+  }
+
   public final class AttestedKeyPair {
     ctor public AttestedKeyPair(@Nullable java.security.KeyPair, @NonNull java.util.List<java.security.cert.Certificate>);
     method @NonNull public java.util.List<java.security.cert.Certificate> getAttestationRecord();
@@ -40694,6 +40702,28 @@ package android.security {
     method public android.security.ConfirmationPrompt build();
     method public android.security.ConfirmationPrompt.Builder setExtraData(byte[]);
     method public android.security.ConfirmationPrompt.Builder setPromptText(CharSequence);
+  }
+
+  public final class DeviceAttestationRequest {
+    method @NonNull public byte[] getAttestationChallenge();
+    method @NonNull public java.util.Set<java.lang.Integer> getIdentifiers();
+    method @NonNull public int getSecurityLevel();
+    method @NonNull public boolean isIndividualAttestation();
+    field public static final int DEVICE_IDENTIFIER_BRAND = 0; // 0x0
+    field public static final int DEVICE_IDENTIFIER_DEVICE = 1; // 0x1
+    field public static final int DEVICE_IDENTIFIER_IMEI = 5; // 0x5
+    field public static final int DEVICE_IDENTIFIER_MANUFACTURER = 3; // 0x3
+    field public static final int DEVICE_IDENTIFIER_MEID = 6; // 0x6
+    field public static final int DEVICE_IDENTIFIER_MODEL = 4; // 0x4
+    field public static final int DEVICE_IDENTIFIER_PRODUCT = 2; // 0x2
+    field public static final int DEVICE_IDENTIFIER_SERIAL = 7; // 0x7
+  }
+
+  public static final class DeviceAttestationRequest.Builder {
+    method @NonNull public android.security.DeviceAttestationRequest.Builder addIdentifier(int);
+    method @NonNull public android.security.DeviceAttestationRequest build();
+    method @NonNull public android.security.DeviceAttestationRequest.Builder setIndividualAttestation(boolean);
+    method @NonNull public android.security.DeviceAttestationRequest.Builder setSecurityLevel(int);
   }
 
   public final class FileIntegrityManager {

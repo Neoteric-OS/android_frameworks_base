@@ -175,7 +175,9 @@ import android.permission.PermissionControllerManager;
 import android.permission.PermissionManager;
 import android.print.IPrintManager;
 import android.print.PrintManager;
+import android.security.AttestationManager;
 import android.security.FileIntegrityManager;
+import android.security.IAttestationManager;
 import android.security.IFileIntegrityService;
 import android.service.oemlock.IOemLockService;
 import android.service.oemlock.OemLockManager;
@@ -250,6 +252,16 @@ public final class SystemServiceRegistry {
             @Override
             public AccessibilityManager createService(ContextImpl ctx) {
                 return AccessibilityManager.getInstance(ctx);
+            }});
+
+        registerService(Context.ATTESTATION_SERVICE, AttestationManager.class,
+                new CachedServiceFetcher<AttestationManager>() {
+            @Override
+            public AttestationManager createService(ContextImpl ctx)
+                    throws ServiceNotFoundException {
+                IBinder binder = ServiceManager.getServiceOrThrow(Context.ATTESTATION_SERVICE);
+                IAttestationManager service = IAttestationManager.Stub.asInterface(binder);
+                return new AttestationManager(ctx, service);
             }});
 
         registerService(Context.CAPTIONING_SERVICE, CaptioningManager.class,
