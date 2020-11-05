@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90f9cc51_0bb10a2d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060062
+      },
+      "writtenOn": "2020-11-05T16:29:29Z",
+      "side": 1,
+      "message": "Looks like this needs to be rebased to merge in new changes?",
+      "revId": "62ec83d003747c19278d4455eed668624ed0a757",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
