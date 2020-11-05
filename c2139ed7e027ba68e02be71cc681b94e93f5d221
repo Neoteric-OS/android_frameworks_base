@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "297bb9b7_62bb48a0",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-05T07:22:36Z",
+      "side": 1,
+      "message": "Note : as Chiachang noted, I think ideally we\u0027d have the same style mostly everywhere, so ideally I\u0027d add eq() in these new places.\n\nBut you didn\u0027t introduce this, so please don\u0027t spend time doing this now that this patch is +2\u0027d though. Just keep it in mind going forward.",
+      "range": {
+        "startLine": 921,
+        "startChar": 38,
+        "endLine": 921,
+        "endChar": 70
+      },
+      "revId": "c2139ed7e027ba68e02be71cc681b94e93f5d221",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
