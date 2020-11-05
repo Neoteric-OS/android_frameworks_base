@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005957016",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1488699?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "224a6a8b_70711d3f",
+          "description": "Change to \"keystore/java/android/security/AttestationManager.java\"",
+          "replacements": [
+            {
+              "path": "keystore/java/android/security/AttestationManager.java",
+              "range": {
+                "startLine": 72,
+                "startChar": 51,
+                "endLine": 72,
+                "endChar": 58
+              },
+              "replacement": "its"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "ee2e7031_02549d07",
+        "filename": "keystore/java/android/security/AttestationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-05T15:05:54Z",
+      "side": 1,
+      "message": "Common typo found: \"the its\" -- should it be \"its\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 72,
+        "startChar": 51,
+        "endLine": 72,
+        "endChar": 58
+      },
+      "revId": "6b5c6974f73968211544d1c79aec30d496f03a8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
