@@ -3602,6 +3602,9 @@ public class ActivityManager {
      * Returns a list of application processes installed on external media
      * that are running on the device.
      *
+     * <p>As of {@link android.os.Build.VERSION_CODES#LOLLIPOP}, this method will only return 
+     * processes from the caller's UID to third party applications.
+     *
      * <p><b>Note: this method is only intended for debugging or building
      * a user-facing process management UI.</b></p>
      *
@@ -3657,7 +3660,10 @@ public class ActivityManager {
     }
 
     /**
-     * Returns a list of application processes that are running on the device.
+     * Returns a list of application processes that are running on the device. 
+     *
+     * <p>As of {@link android.os.Build.VERSION_CODES#LOLLIPOP}, this method will only return 
+     * processes from the caller's UID to third party applications.
      *
      * <p><b>Note: this method is only intended for debugging or building
      * a user-facing process management UI.</b></p>
