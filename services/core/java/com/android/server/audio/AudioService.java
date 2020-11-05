@@ -2701,6 +2701,12 @@ public class AudioService extends IAudioService.Stub
                 && (flags & AudioManager.FLAG_BLUETOOTH_ABS_VOLUME) != 0) {
             return;
         }
+        // skip audio system volume control request when the device
+        // is not an audio system
+        if (!AudioSystem.DEVICE_OUT_ALL_HDMI_SYSTEM_AUDIO_SET.contains(device)
+                && (flags & AudioManager.FLAG_HDMI_SYSTEM_AUDIO_VOLUME) != 0) {
+            return;
+        }
         // If we are being called by the system (e.g. hardware keys) check for current user
         // so we handle user restrictions correctly.
         if (uid == android.os.Process.SYSTEM_UID) {
