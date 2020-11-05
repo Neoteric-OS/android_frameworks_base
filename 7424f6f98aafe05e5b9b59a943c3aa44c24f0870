@@ -70,6 +70,30 @@
       },
       "revId": "7424f6f98aafe05e5b9b59a943c3aa44c24f0870",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90355492_b56c3738",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-05T21:43:42Z",
+      "side": 1,
+      "message": "AFAIK This does not only hide it from the documentation. I know it looks weird, but I really just want to make the presubmit hook happy.",
+      "parentUuid": "275634ba_f31f4f41",
+      "range": {
+        "startLine": 506,
+        "startChar": 10,
+        "endLine": 506,
+        "endChar": 16
+      },
+      "revId": "7424f6f98aafe05e5b9b59a943c3aa44c24f0870",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
