@@ -17,6 +17,7 @@
 package com.android.internal.telephony.cdma;
 
 import android.compat.annotation.UnsupportedAppUsage;
+import android.content.res.Resources;
 import android.os.Build;
 import android.sysprop.TelephonyProperties;
 import android.telephony.PhoneNumberUtils;
@@ -909,6 +910,10 @@ public class SmsMessage extends SmsMessageBase {
      */
     @UnsupportedAppUsage
     public synchronized static int getNextMessageId() {
+        if (!Resources.getSystem().getBoolean(
+                    com.android.internal.R.bool.config_cdma_sms_message_id_generation_support)) {
+            return 0;
+        }
         // Testing and dialog with partners has indicated that
         // msgId==0 is (sometimes?) treated specially by lower levels.
         // Specifically, the ID is not preserved for delivery ACKs.
