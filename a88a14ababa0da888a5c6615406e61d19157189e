@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa22b7a6_fbc271d9",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1367072
+      },
+      "writtenOn": "2020-11-05T02:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd7d69d0_afe2a4cb",
+      "range": {
+        "startLine": 809,
+        "startChar": 0,
+        "endLine": 809,
+        "endChar": 2
+      },
+      "revId": "a88a14ababa0da888a5c6615406e61d19157189e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0a16bee_39819bb3",
@@ -71,6 +95,24 @@
       "writtenOn": "2020-11-04T17:58:40Z",
       "side": 1,
       "message": "nit: Rather than \"if (x) return false else return true\", can we have \"return !x\" please.",
+      "revId": "a88a14ababa0da888a5c6615406e61d19157189e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa04b252_0063792d",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1367072
+      },
+      "writtenOn": "2020-11-05T02:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0a16bee_39819bb3",
       "revId": "a88a14ababa0da888a5c6615406e61d19157189e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -98,6 +140,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0758860_40b0121f",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1367072
+      },
+      "writtenOn": "2020-11-05T02:18:02Z",
+      "side": 1,
+      "message": "Yes, thanks.",
+      "parentUuid": "6e39a408_79605a3f",
+      "range": {
+        "startLine": 1205,
+        "startChar": 7,
+        "endLine": 1205,
+        "endChar": 11
+      },
+      "revId": "a88a14ababa0da888a5c6615406e61d19157189e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac095f3a_a27aae0a",
@@ -112,6 +178,30 @@
       "side": 1,
       "message": "\u003e Common typo found: \"overlayed\" -- should it be \"overlaid\"?\n\u003e Note: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.\n\nPlease fix.",
       "parentUuid": "2230c343_840a4f96",
+      "range": {
+        "startLine": 1221,
+        "startChar": 45,
+        "endLine": 1221,
+        "endChar": 54
+      },
+      "revId": "a88a14ababa0da888a5c6615406e61d19157189e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df04d656_301fd1cb",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1367072
+      },
+      "writtenOn": "2020-11-05T02:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac095f3a_a27aae0a",
       "range": {
         "startLine": 1221,
         "startChar": 45,
