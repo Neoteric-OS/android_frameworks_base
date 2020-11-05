@@ -51,6 +51,24 @@
       "parentUuid": "f527ef24_d027eeb5",
       "revId": "dd6314ad465b9906362460d5f560933b92eb968d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6c97559_c0da5724",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-11-05T12:05:30Z",
+      "side": 1,
+      "message": "@Sudheer, can you please merge the other CL. Its a blocker for our internal testing and is being reported on multiple PLs",
+      "parentUuid": "4c7e6d52_7129f495",
+      "revId": "dd6314ad465b9906362460d5f560933b92eb968d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
