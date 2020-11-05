@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ded95486_ae8071c9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5373,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-05T07:09:37Z",
+      "side": 1,
+      "message": "I don\u0027t think this was the plan. The main point of having a list instead of a linked list with an embedded pointer is to have static guarantee from the compiler that we have dealt with all the places when we remove the original member.\n\nBut this patch is removing the member and using get(0) everywhere instead, left for us to change later. That means we\u0027ll lose that guarantee, to the risk of finding too late that we forgot one place.\n\nI think the idea was rather :\n  private class NetworkRequestInfo implements IBinder.DeathRecipient {\n+   final List\u003cNetworkRequest\u003e mRequests;\n    final NetworkRequest request;\n  ...\n    NetworkRequestInfo(NetworkRequest r, PendingIntent pi) {\n      request \u003d r;\n+      mRequests \u003d initializeRequests(r);\n      ensureNetworkRequestHasType(request);\n\n...as a first patch, and then we can convert places one by one.",
+      "range": {
+        "startLine": 5373,
+        "startChar": 0,
+        "endLine": 5373,
+        "endChar": 45
+      },
+      "revId": "2e74fcbec72d5717320428d299e6ff4eaa7ef893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5362c05_e134bb4f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5417,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-05T07:09:37Z",
+      "side": 1,
+      "message": "final on locals too please",
+      "range": {
+        "startLine": 5417,
+        "startChar": 12,
+        "endLine": 5417,
+        "endChar": 21
+      },
+      "revId": "2e74fcbec72d5717320428d299e6ff4eaa7ef893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
