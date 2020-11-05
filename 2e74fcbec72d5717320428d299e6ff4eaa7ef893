@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "592913ed_858bc8b3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5373,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2020-11-05T18:58:22Z",
+      "side": 1,
+      "message": "I went ahead and updated with this first pass as we discussed. My thinking was that I could get both done in the same pass, mainly because I was able to easily refactor via my IDE\u0027s functionality. That said, let\u0027s go with the original approach we discussed and I\u0027ll just push a commit on top of this with the member removed and changed wherever the compiler breaks.",
+      "parentUuid": "ded95486_ae8071c9",
+      "range": {
+        "startLine": 5373,
+        "startChar": 0,
+        "endLine": 5373,
+        "endChar": 45
+      },
+      "revId": "2e74fcbec72d5717320428d299e6ff4eaa7ef893",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5362c05_e134bb4f",
