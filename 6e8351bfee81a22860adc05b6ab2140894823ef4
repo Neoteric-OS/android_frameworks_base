@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9165d6f1_1e5bafea",
+        "filename": "core/java/android/app/ActivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3606,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2020-11-05T21:26:46Z",
+      "side": 1,
+      "message": "is this \"processes that have the same uid as the caller\"?",
+      "range": {
+        "startLine": 3606,
+        "startChar": 7,
+        "endLine": 3606,
+        "endChar": 66
+      },
+      "revId": "6e8351bfee81a22860adc05b6ab2140894823ef4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
