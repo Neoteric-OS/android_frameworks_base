@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9eb08d10_513c73e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2020-11-05T09:20:37Z",
+      "side": 1,
+      "message": "Can we add tests to HdmiCecLocalDeviceTvTest to cover the added functionality and to emulate the erroneous behavior?",
+      "revId": "c1cb8d380e3c54e12cd113a6cf1b5d2ed99f2845",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
