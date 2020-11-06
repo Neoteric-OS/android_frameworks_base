@@ -1917,8 +1917,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         if (DBG) log("Adding legacy route " + bestRoute +
                 " for UID/PID " + uid + "/" + Binder.getCallingPid());
+
+        final String iface = bestRoute.getInterface();
+        final String dst = bestRoute.getDestinationLinkAddress().toString();
+        final String nextHop = bestRoute.hasGateway()
+                ? bestRoute.getGateway().getHostAddress() : "";
         try {
-            mNMS.addLegacyRouteForNetId(netId, bestRoute, uid);
+            mNetd.networkAddLegacyRoute(netId, iface, dst, nextHop , uid);
         } catch (Exception e) {
             // never crash - catch them all
             if (DBG) loge("Exception trying to add a route: " + e);
