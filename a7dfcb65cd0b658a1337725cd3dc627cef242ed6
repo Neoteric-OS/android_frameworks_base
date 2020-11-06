@@ -22,6 +22,30 @@
       },
       "revId": "a7dfcb65cd0b658a1337725cd3dc627cef242ed6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b493dcb4_4ef23cd5",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2002,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-11-06T21:20:17Z",
+      "side": 1,
+      "message": "Thanks for catching that; I thought I had these all cleaned up.",
+      "parentUuid": "226eb1f4_281986aa",
+      "range": {
+        "startLine": 2002,
+        "startChar": 7,
+        "endLine": 2002,
+        "endChar": 82
+      },
+      "revId": "a7dfcb65cd0b658a1337725cd3dc627cef242ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
