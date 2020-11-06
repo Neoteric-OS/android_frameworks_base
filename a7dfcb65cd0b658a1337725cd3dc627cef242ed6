@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "226eb1f4_281986aa",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2002,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2020-11-06T21:18:19Z",
+      "side": 1,
+      "message": "This seems to need to remove as well",
+      "range": {
+        "startLine": 2002,
+        "startChar": 7,
+        "endLine": 2002,
+        "endChar": 82
+      },
+      "revId": "a7dfcb65cd0b658a1337725cd3dc627cef242ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
