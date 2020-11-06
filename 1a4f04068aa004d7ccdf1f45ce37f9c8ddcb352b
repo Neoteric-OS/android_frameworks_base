@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5431ce3_c669f1f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-11-06T21:22:48Z",
+      "side": 1,
+      "message": "Note: I generated the docs in AOSP and verified that there are \"Requires X\" lines where X is the required permission.",
+      "revId": "1a4f04068aa004d7ccdf1f45ce37f9c8ddcb352b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
