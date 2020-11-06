@@ -223,5 +223,6 @@ java_library {
         "services.core",
         "services.net",
         "unsupportedappusage",
+        "net-utils-device-common",
     ],
 }

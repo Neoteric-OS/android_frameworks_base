@@ -99,6 +99,7 @@ import android.net.ISocketKeepaliveCallback;
 import android.net.InetAddresses;
 import android.net.IpMemoryStore;
 import android.net.IpPrefix;
+import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.MatchAllNetworkSpecifier;
 import android.net.NattSocketKeepalive;
@@ -138,6 +139,7 @@ import android.net.shared.PrivateDnsConfig;
 import android.net.util.LinkPropertiesUtils.CompareOrUpdateResult;
 import android.net.util.LinkPropertiesUtils.CompareResult;
 import android.net.util.MultinetworkPolicyTracker;
+import android.net.util.NetUtils;
 import android.net.util.NetdService;
 import android.os.BasicShellCommandHandler;
 import android.os.Binder;
@@ -1901,24 +1903,32 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private boolean addLegacyRouteToHost(LinkProperties lp, InetAddress addr, int netId, int uid) {
-        RouteInfo bestRoute = RouteInfo.selectBestRoute(lp.getAllRoutes(), addr);
+        final RouteInfo bestRoute = NetUtils.selectBestRoute(lp.getAllRoutes(), addr);
+        final String nextHop;
+        final String iface;
         if (bestRoute == null) {
-            bestRoute = RouteInfo.makeHostRoute(addr, lp.getInterfaceName());
+            nextHop = "";
+            iface = lp.getInterfaceName();
         } else {
-            String iface = bestRoute.getInterface();
+            iface = bestRoute.getInterface();
             if (bestRoute.getGateway().equals(addr)) {
                 // if there is no better route, add the implied hostroute for our gateway
-                bestRoute = RouteInfo.makeHostRoute(addr, iface);
+                nextHop = "";
             } else {
                 // if we will connect to this through another route, add a direct route
                 // to it's gateway
-                bestRoute = RouteInfo.makeHostRoute(addr, bestRoute.getGateway(), iface);
+                nextHop = bestRoute.getGateway().getHostAddress();
             }
         }
-        if (DBG) log("Adding legacy route " + bestRoute +
-                " for UID/PID " + uid + "/" + Binder.getCallingPid());
+        final LinkAddress la = (addr instanceof Inet4Address)
+                ? new LinkAddress(addr, 32) : new LinkAddress(addr, 128);
+        if (DBG) {
+            log("Adding legacy route " + la.toString() + "->" + nextHop + " "
+                    + iface + " for UID/PID " + uid + "/" + Binder.getCallingPid());
+        }
+
         try {
-            mNMS.addLegacyRouteForNetId(netId, bestRoute, uid);
+            mNetd.networkAddLegacyRoute(netId, iface, la.toString(), nextHop , uid);
         } catch (Exception e) {
             // never crash - catch them all
             if (DBG) loge("Exception trying to add a route: " + e);
