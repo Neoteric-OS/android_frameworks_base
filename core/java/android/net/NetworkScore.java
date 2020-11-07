@@ -107,11 +107,21 @@ public final class NetworkScore implements Parcelable {
                 | (isUnmetered ? POLICY_IS_UNMETERED : 0));
     }
 
+    /** @hide */
+    // Internal use to Connectivity only. The maintainers of this code will break compatibility
+    // whenever they feel like it and will not help you if you have used this. use hasPolicy*
+    // instead.
+    public int getEncodedPolicy() {
+        return mPolicy;
+    }
+
     private boolean hasPolicy(final int policy) {
         return (mPolicy & policy) != 0;
     }
 
     // Policies from transport
+    // TODO : this is badly named. This marks a network that should be avoided if there is
+    // bad, but previously validated, wifi. Rename.
     public boolean hasBadWifiAvoidance() {
         return hasPolicy(POLICY_BAD_WIFI_AVOIDANCE);
     }
