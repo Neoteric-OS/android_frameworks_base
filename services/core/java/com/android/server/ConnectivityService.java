@@ -6863,7 +6863,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         for (final NetworkRequestInfo nri : mNetworkRequests.values()) {
             if (nri.request.isListen()) continue;
-            final NetworkAgentInfo bestNetwork = mNetworkRanker.getBestNetwork(nri.request, nais);
+            final NetworkAgentInfo bestNetwork = mNetworkRanker.getBestNetwork(nri.request, nais,
+                    nri.mSatisfier);
             if (bestNetwork != nri.mSatisfier) {
                 // bestNetwork may be null if no network can satisfy this request.
                 changes.addRequestReassignment(new NetworkReassignment.RequestReassignment(
