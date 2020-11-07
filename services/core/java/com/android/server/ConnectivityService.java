@@ -7275,9 +7275,31 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    private boolean isLockdownVpn(final NetworkAgentInfo nai) {
+        if (!LockdownVpnTracker.isEnabled()) return false;
+        synchronized (mVpns) {
+            for (int i = 0; i < mVpns.size(); i++) {
+                final Vpn vpn = mVpns.valueAt(i);
+                if (vpn.getNetId() != nai.network.netId) continue;
+                return vpn.getLockdown();
+            }
+        }
+        // Supposedly impossible
+        return false;
+    }
+
     private void updateNetworkScore(@NonNull final NetworkAgentInfo nai, final NetworkScore score) {
         if (VDBG || DDBG) log("updateNetworkScore for " + nai.toShortString() + " to " + score);
-        nai.setScore(score);
+
+        final boolean isExplicitlySelected = nai.networkAgentConfig.explicitlySelected;
+        final boolean isVpn = nai.isVPN();
+        final boolean isVpnLockdown = isVpn && isLockdownVpn(nai);
+        final boolean isValidated = nai.networkCapabilities.hasCapability(NET_CAPABILITY_VALIDATED);
+        final boolean isUnmetered =
+                nai.networkCapabilities.hasCapability(NET_CAPABILITY_NOT_METERED);
+        final boolean isEverValidated = nai.everValidated;
+        nai.setScore(score.withCSManagedCapabilities(isExplicitlySelected, isVpn, isVpnLockdown,
+                isValidated, isUnmetered));
         rematchAllNetworksAndRequests();
     }
 

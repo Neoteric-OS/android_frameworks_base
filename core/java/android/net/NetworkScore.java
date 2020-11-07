@@ -48,6 +48,13 @@ public final class NetworkScore implements Parcelable {
     public static final int FORCE_KEEPUP_FOR_HANDOVER = 1;
 
     // This network should never be preferred to a wifi that has ever been validated
+    // NOTE : temporarily this policy is managed by ConnectivityService, because of legacy. The
+    // legacy design has this bit global to the system and tacked on WiFi which means it will affect
+    // networks from carriers who don't want it and non-carrier networks, which is bad for users.
+    // The S design has this on mobile networks only, so this can be fixed eventually ; as CS
+    // doesn't know what carriers need this bit, the initial S implementation will continue to
+    // affect other carriers but will at least leave non-mobile networks alone. Eventually Telephony
+    // should set this on networks from carriers that require it.
     public static final int POLICY_BAD_WIFI_AVOIDANCE = 1;
     // This network is part of the default subscription.
     public static final int POLICY_DEFAULT_SUBSCRIPTION = 2;
@@ -85,6 +92,19 @@ public final class NetworkScore implements Parcelable {
         this.legacyInt = legacyInt;
         this.forceKeepupReason = forceKeepupReason;
         this.mPolicy = policy;
+    }
+
+    /** @hide */
+    public NetworkScore withCSManagedCapabilities(final boolean isExplicitlySelected,
+            final boolean isVpn, final boolean isVpnLockdown,
+            final boolean isValidated, final boolean isUnmetered) {
+        return new NetworkScore(legacyInt, forceKeepupReason,
+                mPolicy
+                | (isExplicitlySelected ? POLICY_EXPLICITLY_SELECTED : 0)
+                | (isVpn ? POLICY_IS_VPN : 0)
+                | (isVpnLockdown ? POLICY_IS_VPN_LOCKDOWN : 0)
+                | (isValidated ? POLICY_IS_VALIDATED : 0)
+                | (isUnmetered ? POLICY_IS_UNMETERED : 0));
     }
 
     private boolean hasPolicy(final int policy) {
