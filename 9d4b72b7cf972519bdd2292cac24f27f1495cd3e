@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8690ca5_c3969922",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-07T02:28:02Z",
+      "side": 1,
+      "message": "Is this actually true if a given interface name is deleted and re-added with another interface index? If not, should we say \"since the interface was last created\"? We should try to ensure the documented behaviour matches the actual behaviour because otherwise application developers might use it, find that it doesn\u0027t work as expected, and file bugs.",
+      "range": {
+        "startLine": 646,
+        "startChar": 73,
+        "endLine": 647,
+        "endChar": 18
+      },
+      "revId": "9d4b72b7cf972519bdd2292cac24f27f1495cd3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
