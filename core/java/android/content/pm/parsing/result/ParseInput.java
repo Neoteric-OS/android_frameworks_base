@@ -20,7 +20,7 @@ import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.compat.annotation.ChangeId;
-import android.compat.annotation.EnabledAfter;
+import android.compat.annotation.EnabledSince;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
@@ -49,7 +49,7 @@ public interface ParseInput {
          * Missing an "application" or "instrumentation" tag.
          */
         @ChangeId
-        @EnabledAfter(targetSdkVersion = Build.VERSION_CODES.Q)
+        @EnabledSince(targetSdkVersion = Build.VERSION_CODES.R)
         public static final long MISSING_APP_TAG = 150776642;
 
         /**
@@ -58,7 +58,7 @@ public interface ParseInput {
          * attribute is null/missing, as that has always been a failure.
          */
         @ChangeId
-        @EnabledAfter(targetSdkVersion = Build.VERSION_CODES.Q)
+        @EnabledSince(targetSdkVersion = Build.VERSION_CODES.R)
         public static final long EMPTY_INTENT_ACTION_CATEGORY = 151163173;
 
         /**
@@ -68,7 +68,7 @@ public interface ParseInput {
          * {@link android.content.res.Resources} objects.
          */
         @ChangeId
-        @EnabledAfter(targetSdkVersion = Build.VERSION_CODES.Q)
+        @EnabledSince(targetSdkVersion = Build.VERSION_CODES.R)
         public static final long RESOURCES_ARSC_COMPRESSED = 132742131;
 
         /**
