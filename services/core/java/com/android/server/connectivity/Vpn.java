@@ -21,10 +21,10 @@ import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.RouteInfo.RTN_THROW;
 import static android.net.RouteInfo.RTN_UNREACHABLE;
+import static android.net.VpnManager.NOTIFICATION_CHANNEL_VPN;
 
 import static com.android.internal.util.Preconditions.checkArgument;
 import static com.android.internal.util.Preconditions.checkNotNull;
-import static com.android.server.connectivity.NetworkNotificationManager.NOTIFICATION_CHANNEL_VPN;
 
 import android.Manifest;
 import android.annotation.NonNull;
@@ -1220,7 +1220,8 @@ public class Vpn {
 
         mNetworkAgent = new NetworkAgent(mContext, mLooper, NETWORKTYPE /* logtag */,
                 mNetworkCapabilities, lp,
-                ConnectivityConstants.VPN_DEFAULT_SCORE, networkAgentConfig, mNetworkProvider) {
+                101 /* xxx ConnectivityConstants.VPN_DEFAULT_SCORE */, networkAgentConfig,
+                mNetworkProvider) {
             @Override
             public void unwanted() {
                 // We are user controlled, not driven by NetworkRequest.
