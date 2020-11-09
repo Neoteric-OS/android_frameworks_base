@@ -22,6 +22,30 @@
       },
       "revId": "9d4b72b7cf972519bdd2292cac24f27f1495cd3e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35f38a65_1181205d",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-09T03:55:08Z",
+      "side": 1,
+      "message": "IIUC it is true since we add them up for all interfaces with the same name.\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:system/netd/libnetdbpf/BpfNetworkStats.cpp;l\u003d91;drc\u003dmaster;bpv\u003d1;bpt\u003d1\n\n....But with known issue that:\nhttp://b/153514529 TrafficStats per-interface APIs stop working after 1000 interfaces created\n\nShould we add note somewhere to notify user about the known issue which we are not going to fix in S?",
+      "parentUuid": "f8690ca5_c3969922",
+      "range": {
+        "startLine": 646,
+        "startChar": 73,
+        "endLine": 647,
+        "endChar": 18
+      },
+      "revId": "9d4b72b7cf972519bdd2292cac24f27f1495cd3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
