@@ -22,6 +22,30 @@
       },
       "revId": "4299e79da77d64be36c8f493f7555f1da6b14613",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42ee595d_c0073845",
+        "filename": "core/java/android/text/format/DateFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-11-09T13:24:26Z",
+      "side": 1,
+      "message": "I plan to send a separate CL in internal that switches this to Build.VERSION_CODES.S (since that\u0027s where it is available), as per http://g/android-eng/kuLanS6tFA0 . Once the magic number for S api is decided, it\u0027ll automatically switch to it.",
+      "parentUuid": "39b7cec2_8ce0ddbb",
+      "range": {
+        "startLine": 172,
+        "startChar": 37,
+        "endLine": 172,
+        "endChar": 72
+      },
+      "revId": "4299e79da77d64be36c8f493f7555f1da6b14613",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
