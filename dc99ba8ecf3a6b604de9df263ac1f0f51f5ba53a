@@ -86,6 +86,30 @@
       },
       "revId": "dc99ba8ecf3a6b604de9df263ac1f0f51f5ba53a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62c7f126_10840b8a",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2020-11-09T09:59:26Z",
+      "side": 1,
+      "message": "oh I think I understand now - this code is designed to work even when storage is still locked; it\u0027s just the transition from locked to unlocked (which can only happen once) where this could break. LGTM then (besides line breaks above).",
+      "parentUuid": "8b646c2c_53a1c57e",
+      "range": {
+        "startLine": 1320,
+        "startChar": 4,
+        "endLine": 1320,
+        "endChar": 34
+      },
+      "revId": "dc99ba8ecf3a6b604de9df263ac1f0f51f5ba53a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
