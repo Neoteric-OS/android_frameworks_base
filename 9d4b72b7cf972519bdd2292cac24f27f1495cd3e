@@ -46,6 +46,30 @@
       },
       "revId": "9d4b72b7cf972519bdd2292cac24f27f1495cd3e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47a69125_d6ac519b",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-09T15:02:13Z",
+      "side": 1,
+      "message": "If we just say \"since the interface is created\" it will allow us to support this code better in the future, by just removing old entries from the map, right? If so, I think we should probably do that.",
+      "parentUuid": "35f38a65_1181205d",
+      "range": {
+        "startLine": 646,
+        "startChar": 73,
+        "endLine": 647,
+        "endChar": 18
+      },
+      "revId": "9d4b72b7cf972519bdd2292cac24f27f1495cd3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
