@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "caae434f_9a865956",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-09T19:31:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7625b23f_ff0ce5d7",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 73
+      },
+      "revId": "5fa81f051cdc99369b456c89bced3ad6e100b9f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd7a7b87_9556f497",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ea452f6_e705bdf7",
+        "filename": "keystore/java/android/security/keystore2/KeyStoreCryptoOperationChunkedStreamer.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-09T19:31:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd7a7b87_9556f497",
+      "range": {
+        "startLine": 58,
+        "startChar": 75,
+        "endLine": 58,
+        "endChar": 81
+      },
+      "revId": "5fa81f051cdc99369b456c89bced3ad6e100b9f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80931e73_052f37b4",
@@ -60,6 +108,30 @@
       "writtenOn": "2020-11-09T18:05:30Z",
       "side": 1,
       "message": "Nit: \"signature, some final bit of cipher, or plain text.\"",
+      "range": {
+        "startLine": 74,
+        "startChar": 91,
+        "endLine": 76,
+        "endChar": 10
+      },
+      "revId": "5fa81f051cdc99369b456c89bced3ad6e100b9f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ce7810e_8ecfa391",
+        "filename": "keystore/java/android/security/keystore2/KeyStoreCryptoOperationChunkedStreamer.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-09T19:31:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80931e73_052f37b4",
       "range": {
         "startLine": 74,
         "startChar": 91,
