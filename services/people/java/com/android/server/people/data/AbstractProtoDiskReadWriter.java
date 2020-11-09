@@ -54,7 +54,7 @@ abstract class AbstractProtoDiskReadWriter<T> {
 
     // Common disk write delay that will be appropriate for most scenarios.
     private static final long DEFAULT_DISK_WRITE_DELAY = 2L * DateUtils.MINUTE_IN_MILLIS;
-    private static final long SHUTDOWN_DISK_WRITE_TIMEOUT = 5L * DateUtils.SECOND_IN_MILLIS;
+    private static final long SHUTDOWN_DISK_WRITE_TIMEOUT = 10L * DateUtils.SECOND_IN_MILLIS;
 
     private final File mRootDir;
     private final ScheduledExecutorService mScheduledExecutorService;
@@ -185,22 +185,23 @@ abstract class AbstractProtoDiskReadWriter<T> {
      * is useful for when device is powering off.
      */
     @MainThread
-    synchronized void saveImmediately(@NonNull String fileName, @NonNull T data) {
-        mScheduledFileDataMap.put(fileName, data);
+    void saveImmediately(@NonNull String fileName, @NonNull T data) {
+        synchronized (this) {
+            mScheduledFileDataMap.put(fileName, data);
+        }
         triggerScheduledFlushEarly();
     }
 
     @MainThread
-    private synchronized void triggerScheduledFlushEarly() {
-        if (mScheduledFileDataMap.isEmpty() || mScheduledExecutorService.isShutdown()) {
-            return;
-        }
-        // Cancel existing future.
-        if (mScheduledFuture != null) {
-
-            // We shouldn't need to interrupt as this method and threaded task
-            // #flushScheduledData are both synchronized.
-            mScheduledFuture.cancel(true);
+    private void triggerScheduledFlushEarly() {
+        synchronized (this) {
+            if (mScheduledFileDataMap.isEmpty() || mScheduledExecutorService.isShutdown()) {
+                return;
+            }
+            // Cancel existing future.
+            if (mScheduledFuture != null) {
+                mScheduledFuture.cancel(true);
+            }
         }
 
         // Submit flush and blocks until it completes. Blocking will prevent the device from
@@ -225,6 +226,7 @@ abstract class AbstractProtoDiskReadWriter<T> {
         }
         mScheduledFileDataMap.clear();
         mScheduledFuture = null;
+        Slog.e(TAG, "flushed scheduled data.");
     }
 
     @WorkerThread
