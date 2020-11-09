@@ -79,6 +79,7 @@ public class SystemSensorManager extends SensorManager {
 
     private final ArrayList<Sensor> mFullSensorsList = new ArrayList<>();
     private List<Sensor> mFullDynamicSensorsList = new ArrayList<>();
+    private final Object mFullDynamicSensorsListLock = new Object();
     private boolean mDynamicSensorListDirty = true;
 
     private final HashMap<Integer, Sensor> mHandleToSensor = new HashMap<>();
@@ -368,7 +369,7 @@ public class SystemSensorManager extends SensorManager {
     }
 
     private void updateDynamicSensorList() {
-        synchronized (mFullDynamicSensorsList) {
+        synchronized (mFullDynamicSensorsListLock) {
             if (mDynamicSensorListDirty) {
                 List<Sensor> list = new ArrayList<>();
                 nativeGetDynamicSensors(mNativeInstance, list);
@@ -384,6 +385,7 @@ public class SystemSensorManager extends SensorManager {
                     if (DEBUG_DYNAMIC_SENSOR) {
                         Log.i(TAG, "DYNS dynamic sensor list cached should be updated");
                     }
+
                     mFullDynamicSensorsList = updatedList;
 
                     for (Sensor s: addedList) {
