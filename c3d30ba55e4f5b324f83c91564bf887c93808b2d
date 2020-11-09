@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8421be6_f3fcc3a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2020-11-09T17:51:21Z",
+      "side": 1,
+      "message": "The auth portion of this file was just copy and paste from the auth utils file in keystore, right?",
+      "revId": "c3d30ba55e4f5b324f83c91564bf887c93808b2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

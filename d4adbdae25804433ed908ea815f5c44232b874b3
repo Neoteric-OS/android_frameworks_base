@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84fff37f_4f603645",
+        "filename": "keystore/java/android/security/keystore2/KeyStore2ParameterUtils.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2020-11-09T17:51:21Z",
+      "side": 1,
+      "message": "can this not be simplified to:\nif ((flags \u0026 1) !\u003d 0) {\n    consumer.accept(1 \u003c\u003c offset);\n}\noffset +\u003d 1;\nflags \u003e\u003e\u003e\u003d 1;",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 25
+      },
+      "revId": "d4adbdae25804433ed908ea815f5c44232b874b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
