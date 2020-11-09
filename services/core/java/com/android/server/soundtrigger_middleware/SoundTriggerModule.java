@@ -188,6 +188,8 @@ class SoundTriggerModule implements IHwBinder.DeathRecipient {
         List<ISoundTriggerCallback> callbacks = new ArrayList<>(mActiveSessions.size());
         synchronized (this) {
             for (Session session : mActiveSessions) {
+                //Reset the sound trigger service status to default when service died.
+                session.notifyResetRecognitionAvailability();
                 callbacks.add(session.moduleDied());
             }
             reset();
@@ -416,6 +418,15 @@ class SoundTriggerModule implements IHwBinder.DeathRecipient {
             }
         }
 
+        private void notifyResetRecognitionAvailability() {
+            try {
+                mCallback.onRecognitionAvailabilityChange(true);
+            } catch (RemoteException e) {
+                // Dead client will be handled by binderDied() - no need to handle here.
+                // In any case, client callbacks are considered best effort.
+                Log.e(TAG, "Client callback execption.", e);
+            }
+        }
         /**
          * The underlying module HAL is dead.
          * @return The client callback that needs to be invoked to notify the client.
