@@ -18,7 +18,7 @@ package com.android.server.compat;
 
 import android.annotation.Nullable;
 import android.compat.annotation.ChangeId;
-import android.compat.annotation.EnabledAfter;
+import android.compat.annotation.EnabledSince;
 import android.content.pm.ApplicationInfo;
 
 import com.android.internal.compat.CompatibilityChangeInfo;
@@ -43,7 +43,7 @@ public final class CompatChange extends CompatibilityChangeInfo {
      * A change ID to be used only in the CTS test for this SystemApi
      */
     @ChangeId
-    @EnabledAfter(targetSdkVersion = 1234) // Needs to be > test APK targetSdkVersion.
+    @EnabledSince(targetSdkVersion = 1235) // Needs to be > test APK targetSdkVersion.
     private static final long CTS_SYSTEM_API_CHANGEID = 149391281; // This is a bug id.
 
     /**
@@ -69,7 +69,7 @@ public final class CompatChange extends CompatibilityChangeInfo {
     /**
      * @param changeId Unique ID for the change. See {@link android.compat.Compatibility}.
      * @param name Short descriptive name.
-     * @param enableAfterTargetSdk {@code targetSdkVersion} restriction. See {@link EnabledAfter};
+     * @param enableAfterTargetSdk {@code targetSdkVersion} restriction. See {@link EnabledSince};
      *                             -1 if the change is always enabled.
      * @param enableSinceTargetSdk {@code targetSdkVersion} restriction. See {@link EnabledSince};
      *                             -1 if the change is always enabled.
