@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2fcac04_405c0e69",
+        "filename": "keystore/java/android/security/keystore2/KeyStoreCryptoOperationUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2020-11-09T18:13:11Z",
+      "side": 1,
+      "message": "Can this be simplified to:\n```\nfor (long sid: biometricSids) {\n    if (!keySids.contains(sid)) {\n        return false;\n    }\n}\nreturn true;\n```\n\nAlso, if a fingerprint is removed and the keySids are a larger set than the current biometricSids, is this also grounds for returning false? The biometric SID set is different, although in a way that\u0027s a subset of the agreed upon original set.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 21
+      },
+      "revId": "3a26b4c6601f5ece064039e7fb18001580230880",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
