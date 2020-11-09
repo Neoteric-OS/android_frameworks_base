@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39b7cec2_8ce0ddbb",
+        "filename": "core/java/android/text/format/DateFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2020-11-09T13:19:58Z",
+      "side": 1,
+      "message": "QQ: what happens when next version S is released? Is this line automatically changed to S target SDK version?",
+      "range": {
+        "startLine": 172,
+        "startChar": 37,
+        "endLine": 172,
+        "endChar": 72
+      },
+      "revId": "4299e79da77d64be36c8f493f7555f1da6b14613",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
