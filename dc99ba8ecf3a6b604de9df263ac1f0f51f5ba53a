@@ -62,6 +62,30 @@
       },
       "revId": "dc99ba8ecf3a6b604de9df263ac1f0f51f5ba53a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b646c2c_53a1c57e",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2020-11-09T09:46:34Z",
+      "side": 1,
+      "message": "We believe the failure occurs when CE is unlocked, when the directory name changes from \u003csomething encrypted\u003e to the real one. We look up the name from the inode, the name changes, then when we use the old name it fails.\nHard to hit, which is why the failure seems to be rare.\nBut it\u0027s a one-off event, so one retry should handle it.",
+      "parentUuid": "2547bb06_9a9f3b7a",
+      "range": {
+        "startLine": 1320,
+        "startChar": 4,
+        "endLine": 1320,
+        "endChar": 34
+      },
+      "revId": "dc99ba8ecf3a6b604de9df263ac1f0f51f5ba53a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
