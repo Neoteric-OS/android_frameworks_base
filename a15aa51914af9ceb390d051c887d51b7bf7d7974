@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43d3b1ee_1f2c384a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2020-11-09T19:24:56Z",
+      "side": 1,
+      "message": "Code review is done in ag/12560021\n\nThe major difference is that #fromByteArray and #toByteArray were defined in IPsec module in ag/12560021 because PersistableBundleUtils was in frameworks/libs/net and frameworks/libs/net cannot access HexDump. \n\nIn AOSP, PersistableBundleUtils is put in frameworks/base and can access HexDump. So #fromByteArray and #toByteArray are defined in the PersistableBundleUtils in frameworks/base.",
+      "revId": "a15aa51914af9ceb390d051c887d51b7bf7d7974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
