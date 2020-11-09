@@ -25,7 +25,7 @@ import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.compat.annotation.ChangeId;
-import android.compat.annotation.EnabledAfter;
+import android.compat.annotation.EnabledSince;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.ComponentName;
 import android.content.Context;
@@ -535,12 +535,12 @@ public class AccessibilityServiceInfo implements Parcelable {
     private String mNonLocalizedDescription;
 
     /**
-     * For accessibility services targeting APIs greater than {@link Build.VERSION_CODES#Q API 29},
+     * For accessibility services targeting APIs {@link Build.VERSION_CODES#R API 30} or later,
      * {@link #FLAG_REQUEST_ACCESSIBILITY_BUTTON} must be specified in the accessibility service
      * metadata file. Otherwise, it will be ignored.
      */
     @ChangeId
-    @EnabledAfter(targetSdkVersion = android.os.Build.VERSION_CODES.Q)
+    @EnabledSince(targetSdkVersion = android.os.Build.VERSION_CODES.R)
     private static final long REQUEST_ACCESSIBILITY_BUTTON_CHANGE = 136293963L;
 
     /**
