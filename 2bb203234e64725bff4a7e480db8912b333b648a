@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff5832d7_d0555736",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-11-09T14:09:42Z",
+      "side": 1,
+      "message": "A few issues:\n\n1) This shouldn\u0027t be marked SystemApi.Client.SYSTEM_SERVER since it\u0027s in the boot class path for apps. Only things that are in the system_server BCP but not in the app BCP should be in this API set. In fact, this shouldn\u0027t be @SystemApi at all since all the existing variants are public API.\n\n2) We\u0027re trying to avoid adding new *AsUser APIs, hence the deprecation. Instead, use Context#createPackageContextAsUser to obtain a new Context and then call whatever methods you need to. \n\n3) APIs cannot be new *and* deprecated outside of exceptional circumstances.",
+      "revId": "2bb203234e64725bff4a7e480db8912b333b648a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
