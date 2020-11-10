@@ -32,6 +32,7 @@ public class ZygoteConnectionConstants {
     public static final int CONNECTION_TIMEOUT_MILLIS = 1000;
 
     /** max number of arguments that a connection can specify */
+    // ??? FIX THIS. No longer used. We now bound the buffer size instead.
     public static final int MAX_ZYGOTE_ARGC = 1024;
 
     /**

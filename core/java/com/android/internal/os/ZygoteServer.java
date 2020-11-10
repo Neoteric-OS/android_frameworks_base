@@ -337,7 +337,7 @@ class ZygoteServer {
      * @param sessionSocketRawFDs  Anonymous session sockets that are currently open
      * @return In the Zygote process this function will always return null; in unspecialized app
      *         processes this function will return a Runnable object representing the new
-     *         application that is passed up from usapMain.
+     *         application that is passed up from childMain (the usap's main wait loop).
      */
 
     Runnable fillUsapPool(int[] sessionSocketRawFDs, boolean isPriorityRefill) {
@@ -368,11 +368,15 @@ class ZygoteServer {
         ZygoteHooks.preFork();
 
         while (--numUsapsToSpawn >= 0) {
-            Runnable caller =
-                    Zygote.forkUsap(mUsapPoolSocket, sessionSocketRawFDs, isPriorityRefill);
+            Object forkResult =
+                    Zygote.forkChild(/*argBuffer=*/ null, mUsapPoolSocket,
+                                     sessionSocketRawFDs, isPriorityRefill);
 
-            if (caller != null) {
-                return caller;
+            if (forkResult instanceof Runnable) {
+                return (Runnable) forkResult;
+            } else {
+                Zygote.PidFdPair pair = (Zygote.PidFdPair) forkResult;
+                Zygote.nativeAddUsapTableEntry(pair.mPid, pair.mFd.getInt$());
             }
         }
 
@@ -420,6 +424,7 @@ class ZygoteServer {
      * Runs the zygote process's select loop. Accepts new connections as
      * they happen, and reads commands from connections one spawn-request's
      * worth at a time.
+     * @param abiList list of ABIs supported by this zygote.
      */
     Runnable runSelectLoop(String abiList) {
         ArrayList<FileDescriptor> socketFDs = new ArrayList<>();
@@ -533,22 +538,31 @@ class ZygoteServer {
 
                     if (pollIndex == 0) {
                         // Zygote server socket
-
                         ZygoteConnection newPeer = acceptCommandPeer(abiList);
                         peers.add(newPeer);
                         socketFDs.add(newPeer.getFileDescriptor());
+                        // ???? REMOVE THIS
+                        Log.w("Zygote", "Added file descriptor "
+                                + newPeer.getFileDescriptor().getInt$());
 
                     } else if (pollIndex < usapPoolEventFDIndex) {
                         // Session socket accepted from the Zygote server socket
 
                         try {
+                            // ???? REMOVE THIS
+                            Log.w("Zygote", "Processing command for " + pollIndex
+                                    + " fd = " + pollFDs[pollIndex].fd.getInt$()
+                                    + " events = " + pollFDs[pollIndex].events
+                                    + " revents = " + pollFDs[pollIndex].revents);
                             ZygoteConnection connection = peers.get(pollIndex);
-                            final Runnable command = connection.processOneCommand(this);
+                            // ???? Also don't process multiple if JITZygote is enabled?
+                            final Runnable command =
+                                    connection.processCommand(this, !isUsapPoolEnabled());
 
                             // TODO (chriswailes): Is this extra check necessary?
                             if (mIsForkChild) {
                                 // We're in the child. We should always have a command to run at
-                                // this stage if processOneCommand hasn't called "exec".
+                                // this stage if processCommand hasn't called "exec".
                                 if (command == null) {
                                     throw new IllegalStateException("command == null");
                                 }
@@ -561,7 +575,7 @@ class ZygoteServer {
                                 }
 
                                 // We don't know whether the remote side of the socket was closed or
-                                // not until we attempt to read from it from processOneCommand. This
+                                // not until we attempt to read from it from processCommand. This
                                 // shows up as a regular POLLIN event in our regular processing
                                 // loop.
                                 if (connection.isClosedByPeer()) {
