@@ -116,7 +116,7 @@ class LocalSocketImpl
 
     /**
      * An output stream for local sockets. Needed because we may
-     * need to read ancillary data.
+     * need to write ancillary data.
      */
     class SocketOutputStream extends OutputStream {
         /** {@inheritDoc} */
