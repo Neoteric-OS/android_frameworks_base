@@ -337,7 +337,7 @@ class ZygoteServer {
      * @param sessionSocketRawFDs  Anonymous session sockets that are currently open
      * @return In the Zygote process this function will always return null; in unspecialized app
      *         processes this function will return a Runnable object representing the new
-     *         application that is passed up from usapMain.
+     *         application that is passed up from childMain (the usap's main wait loop).
      */
 
     Runnable fillUsapPool(int[] sessionSocketRawFDs, boolean isPriorityRefill) {
@@ -368,11 +368,16 @@ class ZygoteServer {
         ZygoteHooks.preFork();
 
         while (--numUsapsToSpawn >= 0) {
-            Runnable caller =
-                    Zygote.forkUsap(mUsapPoolSocket, sessionSocketRawFDs, isPriorityRefill);
+            Object forkResult =
+                    Zygote.forkChild(/*argBuffer=*/ null, mUsapPoolSocket,
+                                     /*peerCredentials=*/ null, sessionSocketRawFDs,
+                                     isPriorityRefill);
 
-            if (caller != null) {
-                return caller;
+            if (forkResult instanceof Runnable) {
+                return (Runnable) forkResult;
+            } else {
+                Zygote.PidFdPair pair = (Zygote.PidFdPair) forkResult;
+                Zygote.nativeAddUsapTableEntry(pair.mPid, pair.mFd.getInt$());
             }
         }
 
@@ -533,15 +538,24 @@ class ZygoteServer {
 
                     if (pollIndex == 0) {
                         // Zygote server socket
-
+                        // ???? REMOVE THIS
+                        Log.w("Zygote", "Accepted pollIndex 0 request");
                         ZygoteConnection newPeer = acceptCommandPeer(abiList);
                         peers.add(newPeer);
                         socketFDs.add(newPeer.getFileDescriptor());
+                        // ???? REMOVE THIS
+                        Log.w("Zygote", "Added file descriptor "
+                                + newPeer.getFileDescriptor().getInt$());
 
                     } else if (pollIndex < usapPoolEventFDIndex) {
                         // Session socket accepted from the Zygote server socket
 
                         try {
+                            // ???? REMOVE THIS
+                            Log.w("Zygote", "Processing command for " + pollIndex
+                                    + " fd = " + pollFDs[pollIndex].fd.getInt$()
+                                    + " events = " + pollFDs[pollIndex].events
+                                    + " revents = " + pollFDs[pollIndex].revents);
                             ZygoteConnection connection = peers.get(pollIndex);
                             final Runnable command = connection.processOneCommand(this);
 

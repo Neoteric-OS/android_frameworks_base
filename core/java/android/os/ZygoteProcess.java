@@ -426,7 +426,7 @@ public class ZygoteProcess {
         // avoid writing a partial response to the zygote.
         for (String arg : args) {
             // Making two indexOf calls here is faster than running a manually fused loop due
-            // to the fact that indexOf is a optimized intrinsic.
+            // to the fact that indexOf is an optimized intrinsic.
             if (arg.indexOf('\n') >= 0) {
                 throw new ZygoteStartFailedEx("Embedded newlines not allowed");
             } else if (arg.indexOf('\r') >= 0) {
@@ -463,6 +463,8 @@ public class ZygoteProcess {
     private Process.ProcessStartResult attemptZygoteSendArgsAndGetResult(
             ZygoteState zygoteState, String msgStr) throws ZygoteStartFailedEx {
         try {
+            // ???? REMOVE ME
+            long startTime = System.nanoTime();
             final BufferedWriter zygoteWriter = zygoteState.mZygoteOutputWriter;
             final DataInputStream zygoteInputStream = zygoteState.mZygoteInputStream;
 
@@ -479,6 +481,8 @@ public class ZygoteProcess {
             if (result.pid < 0) {
                 throw new ZygoteStartFailedEx("fork() failed");
             }
+            // ???? REMOVE ME
+            Log.w(LOG_TAG, "Zygote send time: " + (System.nanoTime() - startTime));
 
             return result;
         } catch (IOException ex) {
