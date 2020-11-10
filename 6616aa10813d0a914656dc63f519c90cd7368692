@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2897ad5_cfc66957",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-11-10T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2738ef39_d445db68",
+      "range": {
+        "startLine": 772,
+        "startChar": 31,
+        "endLine": 773,
+        "endChar": 55
+      },
+      "revId": "6616aa10813d0a914656dc63f519c90cd7368692",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87eb64d3_b4e32de1",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Also, please specify unit is float.",
       "parentUuid": "87eb64d3_b4e32de1",
+      "range": {
+        "startLine": 778,
+        "startChar": 31,
+        "endLine": 779,
+        "endChar": 57
+      },
+      "revId": "6616aa10813d0a914656dc63f519c90cd7368692",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9489d0e1_fd67b203",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-11-10T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3c103c6_3d13ad40",
       "range": {
         "startLine": 778,
         "startChar": 31,
