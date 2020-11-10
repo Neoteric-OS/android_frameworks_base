@@ -18,8 +18,6 @@ package com.android.internal.os;
 
 import static android.system.OsConstants.O_CLOEXEC;
 
-import static com.android.internal.os.ZygoteConnectionConstants.MAX_ZYGOTE_ARGC;
-
 import android.content.pm.ApplicationInfo;
 import android.net.Credentials;
 import android.net.LocalServerSocket;
@@ -40,12 +38,11 @@ import dalvik.system.ZygoteHooks;
 
 import libcore.io.IoUtils;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.FileDescriptor;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 /** @hide */
 public final class Zygote {
@@ -654,30 +651,31 @@ public final class Zygote {
                 // Block SIGTERM so we won't be killed if the Zygote flushes the USAP pool.
                 blockSigTerm();
 
-                BufferedReader usapReader =
-                        new BufferedReader(new InputStreamReader(sessionSocket.getInputStream()));
                 usapOutputStream =
                         new DataOutputStream(sessionSocket.getOutputStream());
 
                 peerCredentials = sessionSocket.getPeerCredentials();
 
-                String[] argStrings = readArgumentList(usapReader);
+                ZygoteCommandBuffer argBuffer = ZygoteCommandBuffer.getInstance(sessionSocket);
 
-                if (argStrings != null) {
-                    args = new ZygoteArguments(argStrings);
-
-                    // TODO (chriswailes): Should this only be run for debug builds?
-                    validateUsapCommand(args);
-                    break;
-                } else {
-                    Log.e("USAP", "Truncated command received.");
-                    IoUtils.closeQuietly(sessionSocket);
-
-                    // Re-enable SIGTERM so the USAP can be flushed from the pool if necessary.
-                    unblockSigTerm();
+                try {
+                    args = ZygoteArguments.getInstance(argBuffer);
+                } finally {
+                    argBuffer.close();
                 }
+                if (args == null) {
+                    throw new Exception("Empty command line");
+                }
+
+                // TODO (chriswailes): Should this only be run for debug builds?
+                validateUsapCommand(args);
+                break;
             } catch (Exception ex) {
-                Log.e("USAP", ex.getMessage());
+                if (ex instanceof EOFException) {
+                    Log.e("USAP", "Truncated command received.");
+                } else {
+                    Log.e("USAP", ex.getMessage());
+                }
                 IoUtils.closeQuietly(sessionSocket);
 
                 // Re-enable SIGTERM so the USAP can be flushed from the pool if necessary.
@@ -961,45 +959,6 @@ public final class Zygote {
         if (args.mInvokeWith == null) {
             args.mInvokeWith = getWrapProperty(args.mNiceName);
         }
-    }
-
-    /**
-     * Reads an argument list from the provided socket
-     * @return Argument list or null if EOF is reached
-     * @throws IOException passed straight through
-     */
-    static String[] readArgumentList(BufferedReader socketReader) throws IOException {
-        int argc;
-
-        try {
-            String argc_string = socketReader.readLine();
-
-            if (argc_string == null) {
-                // EOF reached.
-                return null;
-            }
-            argc = Integer.parseInt(argc_string);
-
-        } catch (NumberFormatException ex) {
-            Log.e("Zygote", "Invalid Zygote wire format: non-int at argc");
-            throw new IOException("Invalid wire format");
-        }
-
-        // See bug 1092107: large argc can be used for a DOS attack
-        if (argc > MAX_ZYGOTE_ARGC) {
-            throw new IOException("Max arg count exceeded");
-        }
-
-        String[] args = new String[argc];
-        for (int arg_index = 0; arg_index < argc; arg_index++) {
-            args[arg_index] = socketReader.readLine();
-            if (args[arg_index] == null) {
-                // We got an unexpected EOF.
-                throw new IOException("Truncated request");
-            }
-        }
-
-        return args;
     }
 
     /**

@@ -23,8 +23,7 @@
 #pragma clang optimize off
 #endif
 
-#define LOG_TAG "Zygote"
-#define ATRACE_TAG ATRACE_TAG_DALVIK
+#include "com_android_internal_os_Zygote.h"
 
 #include <async_safe/log.h>
 
@@ -100,19 +99,6 @@
 #include "filesystem_utils.h"
 
 #include "nativebridge/native_bridge.h"
-
-/* Functions in the callchain during the fork shall not be protected with
-   Armv8.3-A Pointer Authentication, otherwise child will not be able to return. */
-#ifdef __ARM_FEATURE_PAC_DEFAULT
-#ifdef __ARM_FEATURE_BTI_DEFAULT
-#define NO_PAC_FUNC __attribute__((target("branch-protection=bti")))
-#else
-#define NO_PAC_FUNC __attribute__((target("branch-protection=none")))
-#endif /* __ARM_FEATURE_BTI_DEFAULT */
-#else /* !__ARM_FEATURE_PAC_DEFAULT */
-#define NO_PAC_FUNC
-#endif /* __ARM_FEATURE_PAC_DEFAULT */
-
 
 namespace {
 
@@ -1115,86 +1101,6 @@ static void PAuthKeyChange(JNIEnv* env) {
 #endif
 }
 
-// Utility routine to fork a process from the zygote.
-NO_PAC_FUNC
-static pid_t ForkCommon(JNIEnv* env, bool is_system_server,
-                        const std::vector<int>& fds_to_close,
-                        const std::vector<int>& fds_to_ignore,
-                        bool is_priority_fork) {
-  SetSignalHandlers();
-
-  // Curry a failure function.
-  auto fail_fn = std::bind(ZygoteFailure, env, is_system_server ? "system_server" : "zygote",
-                           nullptr, _1);
-
-  // Temporarily block SIGCHLD during forks. The SIGCHLD handler might
-  // log, which would result in the logging FDs we close being reopened.
-  // This would cause failures because the FDs are not allowlisted.
-  //
-  // Note that the zygote process is single threaded at this point.
-  BlockSignal(SIGCHLD, fail_fn);
-
-  // Close any logging related FDs before we start evaluating the list of
-  // file descriptors.
-  __android_log_close();
-  AStatsSocket_close();
-
-  // If this is the first fork for this zygote, create the open FD table.  If
-  // it isn't, we just need to check whether the list of open files has changed
-  // (and it shouldn't in the normal case).
-  if (gOpenFdTable == nullptr) {
-    gOpenFdTable = FileDescriptorTable::Create(fds_to_ignore, fail_fn);
-  } else {
-    gOpenFdTable->Restat(fds_to_ignore, fail_fn);
-  }
-
-  android_fdsan_error_level fdsan_error_level = android_fdsan_get_error_level();
-
-  // Purge unused native memory in an attempt to reduce the amount of false
-  // sharing with the child process.  By reducing the size of the libc_malloc
-  // region shared with the child process we reduce the number of pages that
-  // transition to the private-dirty state when malloc adjusts the meta-data
-  // on each of the pages it is managing after the fork.
-  mallopt(M_PURGE, 0);
-
-  pid_t pid = fork();
-
-  if (pid == 0) {
-    if (is_priority_fork) {
-      setpriority(PRIO_PROCESS, 0, PROCESS_PRIORITY_MAX);
-    } else {
-      setpriority(PRIO_PROCESS, 0, PROCESS_PRIORITY_MIN);
-    }
-
-    // The child process.
-    PAuthKeyChange(env);
-    PreApplicationInit();
-
-    // Clean up any descriptors which must be closed immediately
-    DetachDescriptors(env, fds_to_close, fail_fn);
-
-    // Invalidate the entries in the USAP table.
-    ClearUsapTable();
-
-    // Re-open all remaining open file descriptors so that they aren't shared
-    // with the zygote across a fork.
-    gOpenFdTable->ReopenOrDetach(fail_fn);
-
-    // Turn fdsan back on.
-    android_fdsan_set_error_level(fdsan_error_level);
-
-    // Reset the fd to the unsolicited zygote socket
-    gSystemServerSocketFd = -1;
-  } else {
-    ALOGD("Forked child process %d", pid);
-  }
-
-  // We blocked SIGCHLD prior to a fork, we unblock it here.
-  UnblockSignal(SIGCHLD, fail_fn);
-
-  return pid;
-}
-
 // Create an app data directory over tmpfs overlayed CE / DE storage, and bind mount it
 // from the actual app data directory in data mirror.
 static bool createAndMountAppData(std::string_view package_name,
@@ -2098,6 +2004,89 @@ static void UnmountStorageOnInit(JNIEnv* env) {
 
 namespace android {
 
+// Utility routine to fork a process from the zygote.
+NO_PAC_FUNC
+pid_t zygote::ForkCommon(JNIEnv* env, bool is_system_server,
+                         const std::vector<int>& fds_to_close,
+                         const std::vector<int>& fds_to_ignore,
+                         bool is_priority_fork,
+                         bool purge) {
+  SetSignalHandlers();
+
+  // Curry a failure function.
+  auto fail_fn = std::bind(ZygoteFailure, env, is_system_server ? "system_server" : "zygote",
+                           nullptr, _1);
+
+  // Temporarily block SIGCHLD during forks. The SIGCHLD handler might
+  // log, which would result in the logging FDs we close being reopened.
+  // This would cause failures because the FDs are not allowlisted.
+  //
+  // Note that the zygote process is single threaded at this point.
+  BlockSignal(SIGCHLD, fail_fn);
+
+  // Close any logging related FDs before we start evaluating the list of
+  // file descriptors.
+  __android_log_close();
+  AStatsSocket_close();
+
+  // If this is the first fork for this zygote, create the open FD table.  If
+  // it isn't, we just need to check whether the list of open files has changed
+  // (and it shouldn't in the normal case).
+  if (gOpenFdTable == nullptr) {
+    gOpenFdTable = FileDescriptorTable::Create(fds_to_ignore, fail_fn);
+  } else {
+    gOpenFdTable->Restat(fds_to_ignore, fail_fn);
+  }
+
+  android_fdsan_error_level fdsan_error_level = android_fdsan_get_error_level();
+
+  if (purge) {
+    // Purge unused native memory in an attempt to reduce the amount of false
+    // sharing with the child process.  By reducing the size of the libc_malloc
+    // region shared with the child process we reduce the number of pages that
+    // transition to the private-dirty state when malloc adjusts the meta-data
+    // on each of the pages it is managing after the fork.
+    mallopt(M_PURGE, 0);
+  }
+
+  pid_t pid = fork();
+
+  if (pid == 0) {
+    if (is_priority_fork) {
+      setpriority(PRIO_PROCESS, 0, PROCESS_PRIORITY_MAX);
+    } else {
+      setpriority(PRIO_PROCESS, 0, PROCESS_PRIORITY_MIN);
+    }
+
+    // The child process.
+    PAuthKeyChange(env);
+    PreApplicationInit();
+
+    // Clean up any descriptors which must be closed immediately
+    DetachDescriptors(env, fds_to_close, fail_fn);
+
+    // Invalidate the entries in the USAP table.
+    ClearUsapTable();
+
+    // Re-open all remaining open file descriptors so that they aren't shared
+    // with the zygote across a fork.
+    gOpenFdTable->ReopenOrDetach(fail_fn);
+
+    // Turn fdsan back on.
+    android_fdsan_set_error_level(fdsan_error_level);
+
+    // Reset the fd to the unsolicited zygote socket
+    gSystemServerSocketFd = -1;
+  } else {
+    ALOGD("Forked child process %d", pid);
+  }
+
+  // We blocked SIGCHLD prior to a fork, we unblock it here.
+  UnblockSignal(SIGCHLD, fail_fn);
+
+  return pid;
+}
+
 static void com_android_internal_os_Zygote_nativePreApplicationInit(JNIEnv*, jclass) {
   PreApplicationInit();
 }
@@ -2140,7 +2129,7 @@ static jint com_android_internal_os_Zygote_nativeForkAndSpecialize(
         fds_to_ignore.push_back(gSystemServerSocketFd);
     }
 
-    pid_t pid = ForkCommon(env, false, fds_to_close, fds_to_ignore, true);
+    pid_t pid = zygote::ForkCommon(env, false, fds_to_close, fds_to_ignore, true);
 
     if (pid == 0) {
       SpecializeCommon(env, uid, gid, gids, runtime_flags, rlimits,
@@ -2175,10 +2164,10 @@ static jint com_android_internal_os_Zygote_nativeForkSystemServer(
       fds_to_ignore.push_back(gSystemServerSocketFd);
   }
 
-  pid_t pid = ForkCommon(env, true,
-                         fds_to_close,
-                         fds_to_ignore,
-                         true);
+  pid_t pid = zygote::ForkCommon(env, true,
+                                 fds_to_close,
+                                 fds_to_ignore,
+                                 true);
   if (pid == 0) {
       // System server prcoess does not need data isolation so no need to
       // know pkg_data_info_list.
@@ -2261,8 +2250,8 @@ static jint com_android_internal_os_Zygote_nativeForkUsap(JNIEnv* env,
       fds_to_ignore.push_back(gSystemServerSocketFd);
   }
 
-  pid_t usap_pid = ForkCommon(env, /* is_system_server= */ false, fds_to_close, fds_to_ignore,
-                              is_priority_fork == JNI_TRUE);
+  pid_t usap_pid = zygote::ForkCommon(env, /* is_system_server= */ false, fds_to_close,
+                                      fds_to_ignore, is_priority_fork == JNI_TRUE);
 
   if (usap_pid != 0) {
     ++gUsapPoolCount;

@@ -39,13 +39,11 @@ import dalvik.system.VMRuntime;
 
 import libcore.io.IoUtils;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileDescriptor;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.concurrent.TimeUnit;
@@ -67,7 +65,6 @@ class ZygoteConnection {
     private final LocalSocket mSocket;
     @UnsupportedAppUsage
     private final DataOutputStream mSocketOutStream;
-    private final BufferedReader mSocketReader;
     @UnsupportedAppUsage
     private final Credentials peer;
     private final String abiList;
@@ -85,9 +82,6 @@ class ZygoteConnection {
         this.abiList = abiList;
 
         mSocketOutStream = new DataOutputStream(socket.getOutputStream());
-        mSocketReader =
-                new BufferedReader(
-                        new InputStreamReader(socket.getInputStream()), Zygote.SOCKET_BUFFER_SIZE);
 
         mSocket.setSoTimeout(CONNECTION_TIMEOUT_MILLIS);
 
@@ -111,7 +105,7 @@ class ZygoteConnection {
     }
 
     /**
-     * Reads one start command from the command socket. If successful, a child is forked and a
+     * Reads one command from the command socket. If a child is successfully forked, a
      * {@code Runnable} that calls the childs main method (or equivalent) is returned in the child
      * process. {@code null} is always returned in the parent process (the zygote).
      *
@@ -119,17 +113,18 @@ class ZygoteConnection {
      * for by calling {@code ZygoteConnection.isClosedByPeer}.
      */
     Runnable processOneCommand(ZygoteServer zygoteServer) {
-        String[] args;
+        ZygoteArguments parsedArgs;
+
+        ZygoteCommandBuffer argBuffer = ZygoteCommandBuffer.getInstance(mSocket);
 
         try {
-            args = Zygote.readArgumentList(mSocketReader);
+            parsedArgs = ZygoteArguments.getInstance(argBuffer);
         } catch (IOException ex) {
             throw new IllegalStateException("IOException on command socket", ex);
+        } finally {
+            argBuffer.close();
         }
-
-        // readArgumentList returns null only when it has reached EOF with no available
-        // data to read. This will only happen when the remote socket has disconnected.
-        if (args == null) {
+        if (parsedArgs == null) {
             isEof = true;
             return null;
         }
@@ -137,8 +132,6 @@ class ZygoteConnection {
         int pid;
         FileDescriptor childPipeFd = null;
         FileDescriptor serverPipeFd = null;
-
-        ZygoteArguments parsedArgs = new ZygoteArguments(args);
 
         if (parsedArgs.mBootCompleted) {
             handleBootCompleted();
@@ -557,7 +550,7 @@ class ZygoteConnection {
 
                     if (res > 0) {
                         if ((fds[0].revents & POLLIN) != 0) {
-                            // Only read one byte, so as not to block.
+                            // Only read one byte, so as not to block. Really needed?
                             int readBytes = android.system.Os.read(pipeFd, data, dataIndex, 1);
                             if (readBytes < 0) {
                                 throw new RuntimeException("Some error");

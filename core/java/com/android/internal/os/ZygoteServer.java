@@ -533,15 +533,24 @@ class ZygoteServer {
 
                     if (pollIndex == 0) {
                         // Zygote server socket
-
+                        // ???? REMOVE THIS
+                        Log.w("Zygote", "Accepted pollIndex 0 request");
                         ZygoteConnection newPeer = acceptCommandPeer(abiList);
                         peers.add(newPeer);
                         socketFDs.add(newPeer.getFileDescriptor());
+                        // ???? REMOVE THIS
+                        Log.w("Zygote", "Added file descriptor "
+                                + newPeer.getFileDescriptor().getInt$());
 
                     } else if (pollIndex < usapPoolEventFDIndex) {
                         // Session socket accepted from the Zygote server socket
 
                         try {
+                            // ???? REMOVE THIS
+                            Log.w("Zygote", "Processing command for " + pollIndex
+                                    + " fd = " + pollFDs[pollIndex].fd.getInt$()
+                                    + " events = " + pollFDs[pollIndex].events
+                                    + " revents = " + pollFDs[pollIndex].revents);
                             ZygoteConnection connection = peers.get(pollIndex);
                             final Runnable command = connection.processOneCommand(this);
 

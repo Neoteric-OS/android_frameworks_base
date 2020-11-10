@@ -65,6 +65,7 @@ import dalvik.system.ZygoteHooks;
 import libcore.io.IoUtils;
 
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -786,7 +787,13 @@ public class ZygoteInit {
         int pid;
 
         try {
-            parsedArgs = new ZygoteArguments(args);
+            ZygoteCommandBuffer commandBuffer = ZygoteCommandBuffer.getInstance(args);
+            try {
+                parsedArgs = ZygoteArguments.getInstance(commandBuffer);
+            } catch (EOFException e) {
+                throw new AssertionError("Unexpected argument error for forking system server", e);
+            }
+            commandBuffer.close();
             Zygote.applyDebuggerSystemProperty(parsedArgs);
             Zygote.applyInvokeWithSystemProperty(parsedArgs);
 
