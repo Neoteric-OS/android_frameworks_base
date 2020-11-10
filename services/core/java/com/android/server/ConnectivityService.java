@@ -103,6 +103,7 @@ import android.net.LinkProperties;
 import android.net.MatchAllNetworkSpecifier;
 import android.net.NattSocketKeepalive;
 import android.net.Network;
+import android.net.NetworkActivityWrapper;
 import android.net.NetworkAgent;
 import android.net.NetworkAgentConfig;
 import android.net.NetworkCapabilities;
@@ -338,7 +339,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private INetworkStatsService mStatsService;
     private INetworkPolicyManager mPolicyManager;
     private NetworkPolicyManagerInternal mPolicyManagerInternal;
-
+    private final NetworkActivityWrapper mNetworkActivityWrapper;
     /**
      * TestNetworkService (lazily) created upon first usage. Locked to prevent creation of multiple
      * instances.
@@ -947,6 +948,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public IBatteryStats getBatteryStatsService() {
             return BatteryStatsService.getService();
         }
+
+        public NetworkActivityWrapper getNetworkActivityWrapper() {
+            return new NetworkActivityWrapper();
+        }
     }
 
     public ConnectivityService(Context context, INetworkManagementService netManager,
@@ -1002,7 +1007,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 "missing NetworkPolicyManagerInternal");
         mDnsResolver = Objects.requireNonNull(dnsresolver, "missing IDnsResolver");
         mProxyTracker = mDeps.makeProxyTracker(mContext, mHandler);
-
+        mNetworkActivityWrapper = mDeps.getNetworkActivityWrapper();
         mNetd = netd;
         mKeyStore = KeyStore.getInstance();
         mTelephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
@@ -2367,9 +2372,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (timeout > 0 && iface != null) {
             try {
-                mNMS.addIdleTimer(iface, timeout, type);
-            } catch (Exception e) {
-                // You shall not crash!
+                mNetworkActivityWrapper.addIdleTimer(iface, timeout, type);
+            } catch (NullPointerException | IllegalStateException e) {
                 loge("Exception in setupDataActivityTracking " + e);
             }
         }
@@ -2386,8 +2390,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                               caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))) {
             try {
                 // the call fails silently if no idle timer setup for this interface
-                mNMS.removeIdleTimer(iface);
-            } catch (Exception e) {
+                mNetworkActivityWrapper.removeIdleTimer(iface);
+            } catch (NullPointerException | IllegalStateException  e) {
                 loge("Exception in removeDataActivityTracking " + e);
             }
         }
