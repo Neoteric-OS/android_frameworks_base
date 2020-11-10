@@ -22,6 +22,8 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import android.net.util.KeepalivePacketDataUtil;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,7 +63,7 @@ public final class TcpKeepalivePacketDataTest {
         testInfo.tos = tos;
         testInfo.ttl = ttl;
         try {
-            resultData = TcpKeepalivePacketData.tcpKeepalivePacket(testInfo);
+            resultData = KeepalivePacketDataUtil.fromStableParcelable(testInfo);
         } catch (InvalidPacketException e) {
             fail("InvalidPacketException: " + e);
         }
@@ -135,8 +137,8 @@ public final class TcpKeepalivePacketDataTest {
         testInfo.ttl = ttl;
         TcpKeepalivePacketData testData = null;
         TcpKeepalivePacketDataParcelable resultData = null;
-        testData = TcpKeepalivePacketData.tcpKeepalivePacket(testInfo);
-        resultData = testData.toStableParcelable();
+        testData = KeepalivePacketDataUtil.fromStableParcelable(testInfo);
+        resultData = KeepalivePacketDataUtil.toStableParcelable(testData);
         assertArrayEquals(resultData.srcAddress, IPV4_KEEPALIVE_SRC_ADDR);
         assertArrayEquals(resultData.dstAddress, IPV4_KEEPALIVE_DST_ADDR);
         assertEquals(resultData.srcPort, srcPort);
