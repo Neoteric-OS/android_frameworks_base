@@ -115,5 +115,4 @@ public class KeepalivePacketData {
     public byte[] getPacket() {
         return mPacket.clone();
     }
-
 }

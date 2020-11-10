@@ -1237,6 +1237,8 @@ filegroup {
     name: "framework-wifi-service-shared-srcs",
     srcs: [
         "core/java/android/net/InterfaceConfiguration.java",
+        // TODO: use TcpKeepalivePacketData from the API instead of linking statically
+        "core/java/android/net/TcpKeepalivePacketData.java",
         "core/java/android/os/BasicShellCommandHandler.java",
         "core/java/android/util/BackupUtils.java",
         "core/java/android/util/Rational.java",
