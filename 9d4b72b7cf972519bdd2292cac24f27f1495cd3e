@@ -70,6 +70,30 @@
       },
       "revId": "9d4b72b7cf972519bdd2292cac24f27f1495cd3e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ada8b818_5eaaf98e",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-10T02:15:18Z",
+      "side": 1,
+      "message": "Done for these 4 APIs.\nBut how about getTotalTxPackets or getMobileRxBytes.\nFor getTotalTxPackets, it is unclear to me what is since the interface is created.\nHence we need to maintain it\u0027s original meaning (since boot).\nOtherwise, it looks to me getTotalTxPackets would be hard to use if we remove old entries from map, right?",
+      "parentUuid": "47a69125_d6ac519b",
+      "range": {
+        "startLine": 646,
+        "startChar": 73,
+        "endLine": 647,
+        "endChar": 18
+      },
+      "revId": "9d4b72b7cf972519bdd2292cac24f27f1495cd3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
