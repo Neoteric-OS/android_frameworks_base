@@ -115,6 +115,12 @@ public class NetworkRanker {
         if (accepted.size() == 1) return accepted.get(0);
         if (accepted.size() > 0 && rejected.size() > 0) candidates = new ArrayList<>(accepted);
 
+        // If any network is the VCN, don't choose one that isn't.
+        partitionInto(candidates, nai -> nai.networkCapabilities.hasCapability(NET_CAPABILITY_VCN),
+                accepted, rejected);
+        if (accepted.size() == 1) return accepted.get(0);
+        if (accepted.size() > 0 && rejected.size() > 0) candidates = new ArrayList<>(accepted);
+
         // If any network is validated, don't choose one that isn't.
         partitionInto(candidates, nai -> nai.mScore.isValidated(), accepted, rejected);
         if (accepted.size() == 1) return accepted.get(0);
