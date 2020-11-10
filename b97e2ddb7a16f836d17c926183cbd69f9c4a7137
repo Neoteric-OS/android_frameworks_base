@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0b27c68_063d017d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2020-11-10T19:44:37Z",
+      "side": 1,
+      "message": "Package Manager changes look good after addressing Calin\u0027s comment.",
+      "revId": "b97e2ddb7a16f836d17c926183cbd69f9c4a7137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "213349a3_1247a4a6",
