@@ -16,6 +16,24 @@
       "message": "A few issues:\n\n1) This shouldn\u0027t be marked SystemApi.Client.SYSTEM_SERVER since it\u0027s in the boot class path for apps. Only things that are in the system_server BCP but not in the app BCP should be in this API set. In fact, this shouldn\u0027t be @SystemApi at all since all the existing variants are public API.\n\n2) We\u0027re trying to avoid adding new *AsUser APIs, hence the deprecation. Instead, use Context#createPackageContextAsUser to obtain a new Context and then call whatever methods you need to. \n\n3) APIs cannot be new *and* deprecated outside of exceptional circumstances.",
       "revId": "2bb203234e64725bff4a7e480db8912b333b648a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6aa7f8f_0516f75e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-10T09:02:20Z",
+      "side": 1,
+      "message": "Yes, let\u0027s not expose this function. But I fear we\u0027ll need to call one of these exceptional circumstances. Here is the concrete problem we\u0027re having while mainlining ConnectivityService.\n\nConnectivityService is sending the CONNECTIVITY_ACTION broadcast. This is a sticky broadcast that has existed in Android since API 1 and was the only way to learn about a lot of networking things for the longest time. As such, it has a *huge* amount of existing usage.\n\nThis broadcast was used by a lot of apps to wake up often and run code all the time with a manifest receiver, with disastrous effects on battery. So in N, we made this broadcast only available to dynamically registered receivers. But the legacy was huge, and we simply could not afford to break all these legacy apps, so we used BroadcastOptions to limit to targetSDK up to M apps. Relevant code : https://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/ConnectivityService.java;l\u003d2278\n\nThis didn\u0027t exist for sticky broadcasts. So it was added for the occasion, and to this day, ConnectivityService is the sole user of the three-args sendStickyBroadcastAsUser function, and Context has a nice comment saying this is only for CONNECTIVITY_ACTION : https://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/android/content/Context.java;l\u003d2689?q\u003dsendStickyBroadcastAsUser\n\nI can only see one way out of this : creating a new @Deprecated API, sendStickyBroadcast, that takes BroadcastOptions in a bundle like we have the non-sticky one, and that we\u0027d call on a context created as you described. That\u0027s a new @Deprecated system API, but at least it\u0027s not a ...AsUser one.\n• Considering of how much usage CONNECTIVITY_ACTION is seeing, including in new apps, not sending it would break a very large number of apps.\n• For the same reason, making the broadcast non-sticky would break many apps, including recent apps that count on this broadcast containing the current state of networking to be received upon registration.\n• Sending a sticky broadcast without the dynamically registered limitation would bring back an army of apps trying to use this to get woken up all the time.\n\nMaybe there are alternatives.\n• Is the third problem above solvable somehow with background limits ? I don\u0027t really see how, and in any case that would probably take a lot of time to design even if it was possible.\n• We could decide that it\u0027s 2021 and starting from S *all* sticky broadcasts only ever go to dynamically registered callers, which one can argue is a move in the right direction, but I doubt it\u0027s realistic.\n• It\u0027s almost certainly technically workable to create a component in the system image that is in charge of sending these broadcasts, and would be driven by callbacks sent by ConnectivityService from the mainline module. This is a lot more complex, and not really cleaner considering how ad-hoc it is.\n• We could create a flag on Intent to completely prevent manifest receivers to receive a broadcast, and use that. It would break the \u003c N app still relying on the manifest receiver and I suspect that\u0027s an uncomfortably large surface. It also is a parallel API to BroadcastOptions, which makes me hate this option.\n• Or same thing with a \u003c N flag, but that\u0027s super ad-hoc.\n• Anything else I\u0027m not thinking of ?\n\nHappy to discuss more and give more details if that can help.",
+      "parentUuid": "ff5832d7_d0555736",
+      "revId": "2bb203234e64725bff4a7e480db8912b333b648a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
