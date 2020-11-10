@@ -688,7 +688,8 @@ public abstract class NetworkAgent {
                 ? new ArrayList<>(underlyingNetworks) : null;
         final Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(UNDERLYING_NETWORKS_KEY, underlyingArray);
-        queueOrSendMessage(EVENT_UNDERLYING_NETWORKS_CHANGED, bundle);
+        // TODO: FIX
+        // queueOrSendMessage(EVENT_UNDERLYING_NETWORKS_CHANGED, bundle);
     }
 
     /**
