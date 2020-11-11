@@ -51,6 +51,7 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.UserInfo;
 import android.net.ConnectivityManager;
 import android.net.DnsResolver;
+import android.net.INetd;
 import android.net.INetworkManagementEventObserver;
 import android.net.Ikev2VpnProfile;
 import android.net.IpPrefix;
@@ -71,6 +72,7 @@ import android.net.NetworkProvider;
 import android.net.NetworkRequest;
 import android.net.RouteInfo;
 import android.net.UidRange;
+import android.net.UidRangeParcel;
 import android.net.VpnManager;
 import android.net.VpnService;
 import android.net.ipsec.ike.ChildSessionCallback;
@@ -215,7 +217,8 @@ public class Vpn {
 
     private PendingIntent mStatusIntent;
     private volatile boolean mEnableTeardown = true;
-    private final INetworkManagementService mNetd;
+    private final INetworkManagementService mNms;
+    private final INetd mNetd;
     @VisibleForTesting
     protected VpnConfig mConfig;
     @VisibleForTesting
@@ -389,21 +392,22 @@ public class Vpn {
         }
     }
 
-    public Vpn(Looper looper, Context context, INetworkManagementService netService,
+    public Vpn(Looper looper, Context context, INetworkManagementService netService, INetd netd,
             @UserIdInt int userId, @NonNull KeyStore keyStore) {
-        this(looper, context, new Dependencies(), netService, userId, keyStore,
+        this(looper, context, new Dependencies(), netService, netd, userId, keyStore,
                 new SystemServices(context), new Ikev2SessionCreator());
     }
 
     @VisibleForTesting
     protected Vpn(Looper looper, Context context, Dependencies deps,
-            INetworkManagementService netService,
+            INetworkManagementService netService, INetd netd,
             int userId, @NonNull KeyStore keyStore, SystemServices systemServices,
             Ikev2SessionCreator ikev2SessionCreator) {
         mContext = context;
         mUserIdContext = context.createContextAsUser(UserHandle.of(userId), 0 /* flags */);
         mDeps = deps;
-        mNetd = netService;
+        mNms = netService;
+        mNetd = netd;
         mUserId = userId;
         mLooper = looper;
         mSystemServices = systemServices;
@@ -1000,7 +1004,7 @@ public class Vpn {
             }
 
             try {
-                mNetd.denyProtect(mOwnerUID);
+                mNms.denyProtect(mOwnerUID);
             } catch (Exception e) {
                 Log.wtf(TAG, "Failed to disallow UID " + mOwnerUID + " to call protect() " + e);
             }
@@ -1010,7 +1014,7 @@ public class Vpn {
             mOwnerUID = getAppUid(newPackage, mUserId);
             mIsPackageTargetingAtLeastQ = doesPackageTargetAtLeastQ(newPackage);
             try {
-                mNetd.allowProtect(mOwnerUID);
+                mNms.allowProtect(mOwnerUID);
             } catch (Exception e) {
                 Log.wtf(TAG, "Failed to allow UID " + mOwnerUID + " to call protect() " + e);
             }
@@ -1706,9 +1710,14 @@ public class Vpn {
         if (ranges.size() == 0) {
             return true;
         }
-        final UidRange[] rangesArray = ranges.toArray(new UidRange[ranges.size()]);
+        final UidRangeParcel[] stableRanges = new UidRangeParcel[ranges.size()];
+        int index = 0;
+        for (UidRange range : ranges) {
+            stableRanges[index] = new UidRangeParcel(range.start, range.stop);
+            index++;
+        }
         try {
-            mNetd.setAllowOnlyVpnForUids(enforce, rangesArray);
+            mNetd.networkRejectNonSecureVpn(enforce, stableRanges);
         } catch (RemoteException | RuntimeException e) {
             Log.e(TAG, "Updating blocked=" + enforce
                     + " for UIDs " + Arrays.toString(ranges.toArray()) + " failed", e);
@@ -2561,7 +2570,7 @@ public class Vpn {
                                     address /* unused */,
                                     address /* unused */,
                                     network);
-                    mNetd.setInterfaceUp(mTunnelIface.getInterfaceName());
+                    mNms.setInterfaceUp(mTunnelIface.getInterfaceName());
 
                     mSession = mIkev2SessionCreator.createIkeSession(
                             mContext,

@@ -31,12 +31,12 @@ import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.AdditionalMatchers.aryEq;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -49,6 +49,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -66,6 +67,7 @@ import android.content.pm.ServiceInfo;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.net.INetd;
 import android.net.Ikev2VpnProfile;
 import android.net.InetAddresses;
 import android.net.IpPrefix;
@@ -78,6 +80,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo.DetailedState;
 import android.net.RouteInfo;
 import android.net.UidRange;
+import android.net.UidRangeParcel;
 import android.net.VpnManager;
 import android.net.VpnService;
 import android.net.ipsec.ike.IkeSessionCallback;
@@ -110,6 +113,7 @@ import org.junit.runner.RunWith;
 import org.mockito.AdditionalAnswers;
 import org.mockito.Answers;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -179,11 +183,13 @@ public class VpnTest {
             mPackages.put(PKGS[i], PKG_UIDS[i]);
         }
     }
+    private static final UidRange PRI_USER_RANGE = UidRange.createForUser(primaryUser.id);
 
     @Mock(answer = Answers.RETURNS_DEEP_STUBS) private Context mContext;
     @Mock private UserManager mUserManager;
     @Mock private PackageManager mPackageManager;
     @Mock private INetworkManagementService mNetService;
+    @Mock private INetd mNetd;
     @Mock private AppOpsManager mAppOps;
     @Mock private NotificationManager mNotificationManager;
     @Mock private Vpn.SystemServices mSystemServices;
@@ -192,7 +198,7 @@ public class VpnTest {
     @Mock private IpSecService mIpSecService;
     @Mock private KeyStore mKeyStore;
     private final VpnProfile mVpnProfile;
-
+    @Captor ArgumentCaptor<UidRangeParcel[]> mUidRangeParcelcaptor;
     private IpSecManager mIpSecManager;
 
     public VpnTest() throws Exception {
@@ -261,8 +267,7 @@ public class VpnTest {
                 null, null);
 
         assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] {
-            UidRange.createForUser(primaryUser.id),
-            UidRange.createForUser(restrictedProfileA.id)
+                PRI_USER_RANGE, UidRange.createForUser(restrictedProfileA.id)
         })), ranges);
     }
 
@@ -274,9 +279,7 @@ public class VpnTest {
         final Set<UidRange> ranges = vpn.createUserAndRestrictedProfilesRanges(primaryUser.id,
                 null, null);
 
-        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] {
-            UidRange.createForUser(primaryUser.id)
-        })), ranges);
+        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] { PRI_USER_RANGE })), ranges);
     }
 
     @Test
@@ -287,15 +290,13 @@ public class VpnTest {
         final Set<UidRange> ranges = new ArraySet<>();
         vpn.addUserToRanges(ranges, primaryUser.id, null, null);
 
-        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] {
-            UidRange.createForUser(primaryUser.id)
-        })), ranges);
+        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] { PRI_USER_RANGE })), ranges);
     }
 
     @Test
     public void testUidAllowAndDenylist() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
-        final UidRange user = UidRange.createForUser(primaryUser.id);
+        final UidRange user = PRI_USER_RANGE;
         final String[] packages = {PKGS[0], PKGS[1], PKGS[2]};
 
         // Allowed list
@@ -344,89 +345,97 @@ public class VpnTest {
     @Test
     public void testLockdownChangingPackage() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
-        final UidRange user = UidRange.createForUser(primaryUser.id);
+        final UidRange user = PRI_USER_RANGE;
 
         // Default state.
-        assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1], user.start + PKG_UIDS[2], user.start + PKG_UIDS[3]);
+        assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1],
+                user.start + PKG_UIDS[2], user.start + PKG_UIDS[3]);
 
         // Set always-on without lockdown.
         assertTrue(vpn.setAlwaysOnPackage(PKGS[1], false, null, mKeyStore));
-        assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1], user.start + PKG_UIDS[2], user.start + PKG_UIDS[3]);
+        assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1],
+                user.start + PKG_UIDS[2], user.start + PKG_UIDS[3]);
 
         // Set always-on with lockdown.
         assertTrue(vpn.setAlwaysOnPackage(PKGS[1], true, null, mKeyStore));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
-            new UidRange(user.start, user.start + PKG_UIDS[1] - 1),
-            new UidRange(user.start + PKG_UIDS[1] + 1, user.stop)
-        }));
-        assertBlocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[2], user.start + PKG_UIDS[3]);
+        verifyAllowOnlyVpnForUids(true, new UidRangeParcel[] {
+                new UidRangeParcel(user.start, user.start + PKG_UIDS[1] - 1),
+                new UidRangeParcel(user.start + PKG_UIDS[1] + 1, user.stop)
+        });
+        reset(mNetd);
+        assertBlocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[2],
+                user.start + PKG_UIDS[3]);
         assertUnblocked(vpn, user.start + PKG_UIDS[1]);
 
         // Switch to another app.
         assertTrue(vpn.setAlwaysOnPackage(PKGS[3], true, null, mKeyStore));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
-            new UidRange(user.start, user.start + PKG_UIDS[1] - 1),
-            new UidRange(user.start + PKG_UIDS[1] + 1, user.stop)
-        }));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
-            new UidRange(user.start, user.start + PKG_UIDS[3] - 1),
-            new UidRange(user.start + PKG_UIDS[3] + 1, user.stop)
-        }));
-        assertBlocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1], user.start + PKG_UIDS[2]);
+        verifyAllowOnlyVpnForUids(false, new UidRangeParcel[] {
+                new UidRangeParcel(user.start, user.start + PKG_UIDS[1] - 1),
+                new UidRangeParcel(user.start + PKG_UIDS[1] + 1, user.stop)
+        });
+        verifyAllowOnlyVpnForUids(true, new UidRangeParcel[] {
+                new UidRangeParcel(user.start, user.start + PKG_UIDS[3] - 1),
+                new UidRangeParcel(user.start + PKG_UIDS[3] + 1, user.stop)
+        });
+        assertBlocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1],
+                user.start + PKG_UIDS[2]);
         assertUnblocked(vpn, user.start + PKG_UIDS[3]);
     }
 
     @Test
     public void testLockdownAllowlist() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
-        final UidRange user = UidRange.createForUser(primaryUser.id);
+        final UidRange user = PRI_USER_RANGE;
 
         // Set always-on with lockdown and allow app PKGS[2] from lockdown.
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[1], true, Collections.singletonList(PKGS[2]), mKeyStore));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
-                new UidRange(user.start, user.start + PKG_UIDS[1] - 1),
-                new UidRange(user.start + PKG_UIDS[2] + 1, user.stop)
-        }));
+        verifyAllowOnlyVpnForUids(true, new UidRangeParcel[] {
+                new UidRangeParcel(user.start, user.start + PKG_UIDS[1] - 1),
+                new UidRangeParcel(user.start + PKG_UIDS[2] + 1, user.stop)
+        });
         assertBlocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[3]);
         assertUnblocked(vpn, user.start + PKG_UIDS[1], user.start + PKG_UIDS[2]);
-
+        reset(mNetd);
         // Change allowed app list to PKGS[3].
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[1], true, Collections.singletonList(PKGS[3]), mKeyStore));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
-                new UidRange(user.start + PKG_UIDS[2] + 1, user.stop)
-        }));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
-                new UidRange(user.start + PKG_UIDS[1] + 1, user.start + PKG_UIDS[3] - 1),
-                new UidRange(user.start + PKG_UIDS[3] + 1, user.stop)
-        }));
+        verifyAllowOnlyVpnForUids(false, new UidRangeParcel[] {
+                new UidRangeParcel(user.start + PKG_UIDS[2] + 1, user.stop)
+        });
+        verifyAllowOnlyVpnForUids(true, new UidRangeParcel[] {
+                new UidRangeParcel(user.start + PKG_UIDS[1] + 1, user.start + PKG_UIDS[3] - 1),
+                new UidRangeParcel(user.start + PKG_UIDS[3] + 1, user.stop)
+        });
+        reset(mNetd);
         assertBlocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[2]);
         assertUnblocked(vpn, user.start + PKG_UIDS[1], user.start + PKG_UIDS[3]);
 
         // Change the VPN app.
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[0], true, Collections.singletonList(PKGS[3]), mKeyStore));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
-                new UidRange(user.start, user.start + PKG_UIDS[1] - 1),
-                new UidRange(user.start + PKG_UIDS[1] + 1, user.start + PKG_UIDS[3] - 1)
-        }));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
-                new UidRange(user.start, user.start + PKG_UIDS[0] - 1),
-                new UidRange(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[3] - 1)
-        }));
+        verifyAllowOnlyVpnForUids(false, new UidRangeParcel[] {
+                new UidRangeParcel(user.start, user.start + PKG_UIDS[1] - 1),
+                new UidRangeParcel(user.start + PKG_UIDS[1] + 1, user.start + PKG_UIDS[3] - 1)
+        });
+        verifyAllowOnlyVpnForUids(true, new UidRangeParcel[] {
+                new UidRangeParcel(user.start, user.start + PKG_UIDS[0] - 1),
+                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[3] - 1)
+        });
+        reset(mNetd);
         assertBlocked(vpn, user.start + PKG_UIDS[1], user.start + PKG_UIDS[2]);
         assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[3]);
 
         // Remove the list of allowed packages.
         assertTrue(vpn.setAlwaysOnPackage(PKGS[0], true, null, mKeyStore));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
-                new UidRange(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[3] - 1),
-                new UidRange(user.start + PKG_UIDS[3] + 1, user.stop)
-        }));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
-                new UidRange(user.start + PKG_UIDS[0] + 1, user.stop),
-        }));
+        verifyAllowOnlyVpnForUids(false, new UidRangeParcel[] {
+                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[3] - 1),
+                new UidRangeParcel(user.start + PKG_UIDS[3] + 1, user.stop)
+        });
+        verifyAllowOnlyVpnForUids(true, new UidRangeParcel[] {
+                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.stop),
+        });
+        reset(mNetd);
         assertBlocked(vpn, user.start + PKG_UIDS[1], user.start + PKG_UIDS[2],
                 user.start + PKG_UIDS[3]);
         assertUnblocked(vpn, user.start + PKG_UIDS[0]);
@@ -434,13 +443,14 @@ public class VpnTest {
         // Add the list of allowed packages.
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[0], true, Collections.singletonList(PKGS[1]), mKeyStore));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
-                new UidRange(user.start + PKG_UIDS[0] + 1, user.stop)
-        }));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
-                new UidRange(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[1] - 1),
-                new UidRange(user.start + PKG_UIDS[1] + 1, user.stop)
-        }));
+        verifyAllowOnlyVpnForUids(false, new UidRangeParcel[] {
+                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.stop)
+        });
+        verifyAllowOnlyVpnForUids(true, new UidRangeParcel[] {
+                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[1] - 1),
+                new UidRangeParcel(user.start + PKG_UIDS[1] + 1, user.stop)
+        });
+        reset(mNetd);
         assertBlocked(vpn, user.start + PKG_UIDS[2], user.start + PKG_UIDS[3]);
         assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1]);
 
@@ -452,15 +462,16 @@ public class VpnTest {
         // allowed package should change from PGKS[1] to PKGS[2].
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[0], true, Arrays.asList("com.foo.app", PKGS[2], "com.bar.app"), mKeyStore));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[]{
-                new UidRange(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[1] - 1),
-                new UidRange(user.start + PKG_UIDS[1] + 1, user.stop)
-        }));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[]{
-                new UidRange(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[2] - 1),
-                new UidRange(user.start + PKG_UIDS[2] + 1, user.stop)
-        }));
+        verifyAllowOnlyVpnForUids(false, new UidRangeParcel[]{
+                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[1] - 1),
+                new UidRangeParcel(user.start + PKG_UIDS[1] + 1, user.stop)
+        });
+        verifyAllowOnlyVpnForUids(true, new UidRangeParcel[]{
+                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[2] - 1),
+                new UidRangeParcel(user.start + PKG_UIDS[2] + 1, user.stop)
+        });
     }
+
 
     @Test
     public void testLockdownAddingAProfile() throws Exception {
@@ -472,86 +483,115 @@ public class VpnTest {
                 restrictedProfileA.flags);
         tempProfile.restrictedProfileParentId = primaryUser.id;
 
-        final UidRange user = UidRange.createForUser(primaryUser.id);
+        final UidRange user = PRI_USER_RANGE;
         final UidRange profile = UidRange.createForUser(tempProfile.id);
 
         // Set lockdown.
         assertTrue(vpn.setAlwaysOnPackage(PKGS[3], true, null, mKeyStore));
-        verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
-            new UidRange(user.start, user.start + PKG_UIDS[3] - 1),
-            new UidRange(user.start + PKG_UIDS[3] + 1, user.stop)
-        }));
-
+        verifyAllowOnlyVpnForUids(true, new UidRangeParcel[] {
+                new UidRangeParcel(user.start, user.start + PKG_UIDS[3] - 1),
+                new UidRangeParcel(user.start + PKG_UIDS[3] + 1, user.stop)
+        });
+        reset(mNetd);
         // Verify restricted user isn't affected at first.
         assertUnblocked(vpn, profile.start + PKG_UIDS[0]);
 
         // Add the restricted user.
         setMockedUsers(primaryUser, tempProfile);
         vpn.onUserAdded(tempProfile.id);
-        verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(new UidRange[] {
-            new UidRange(profile.start, profile.start + PKG_UIDS[3] - 1),
-            new UidRange(profile.start + PKG_UIDS[3] + 1, profile.stop)
-        }));
+        verifyAllowOnlyVpnForUids(true, new UidRangeParcel[] {
+                new UidRangeParcel(profile.start, profile.start + PKG_UIDS[3] - 1),
+                new UidRangeParcel(profile.start + PKG_UIDS[3] + 1, profile.stop)
+        });
 
         // Remove the restricted user.
         tempProfile.partial = true;
         vpn.onUserRemoved(tempProfile.id);
-        verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(new UidRange[] {
-            new UidRange(profile.start, profile.start + PKG_UIDS[3] - 1),
-            new UidRange(profile.start + PKG_UIDS[3] + 1, profile.stop)
-        }));
+        verifyAllowOnlyVpnForUids(false, new UidRangeParcel[] {
+                new UidRangeParcel(profile.start, profile.start + PKG_UIDS[3] - 1),
+                new UidRangeParcel(profile.start + PKG_UIDS[3] + 1, profile.stop)
+        });
+    }
+
+    private boolean isSameUidRangeParcels(UidRangeParcel[] target, UidRangeParcel[] captured) {
+        if (target.length != captured.length) return false;
+
+        for (int i = 0; i < target.length; i++) {
+            if ((target[i].start != captured[i].start) || (target[i].stop != captured[i].stop)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void verifyAllowOnlyVpnForUids(boolean add, UidRangeParcel[] expect) throws Exception {
+        final ArgumentCaptor<UidRangeParcel[]> captor =
+                ArgumentCaptor.forClass(UidRangeParcel[].class);
+        verify(mNetd, times(1)).networkRejectNonSecureVpn(
+                eq(add), captor.capture());
+        assertTrue(isSameUidRangeParcels(expect, captor.getValue()));
     }
 
     @Test
     public void testLockdownRuleRepeatability() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
-
+        final UidRangeParcel[] primaryUserRangeParcel = new UidRangeParcel[] {
+                new UidRangeParcel(PRI_USER_RANGE.start, PRI_USER_RANGE.stop)};
         // Given legacy lockdown is already enabled,
         vpn.setLockdown(true);
-        verify(mNetService, times(1)).setAllowOnlyVpnForUids(
-                eq(true), aryEq(new UidRange[] {UidRange.createForUser(primaryUser.id)}));
+
+        verifyAllowOnlyVpnForUids(true, primaryUserRangeParcel);
 
         // Enabling legacy lockdown twice should do nothing.
         vpn.setLockdown(true);
-        verify(mNetService, times(1)).setAllowOnlyVpnForUids(anyBoolean(), any(UidRange[].class));
+        verify(mNetd, times(1))
+                .networkRejectNonSecureVpn(anyBoolean(), any(UidRangeParcel[].class));
 
         // And disabling should remove the rules exactly once.
         vpn.setLockdown(false);
-        verify(mNetService, times(1)).setAllowOnlyVpnForUids(
-                eq(false), aryEq(new UidRange[] {UidRange.createForUser(primaryUser.id)}));
+        verifyAllowOnlyVpnForUids(false, primaryUserRangeParcel);
 
         // Removing the lockdown again should have no effect.
         vpn.setLockdown(false);
-        verify(mNetService, times(2)).setAllowOnlyVpnForUids(anyBoolean(), any(UidRange[].class));
+        verify(mNetd, times(2)).networkRejectNonSecureVpn(
+                anyBoolean(), any(UidRangeParcel[].class));
+    }
+
+    private void verifyInOrderAllowOnlyVpnForUids(InOrder order, boolean add,
+            UidRangeParcel[] expect) throws Exception {
+        final ArgumentCaptor<UidRangeParcel[]> captor =
+                ArgumentCaptor.forClass(UidRangeParcel[].class);
+        order.verify(mNetd, times(1)).networkRejectNonSecureVpn(
+                eq(add), captor.capture());
+        assertTrue(isSameUidRangeParcels(expect, captor.getValue()));
     }
 
     @Test
     public void testLockdownRuleReversibility() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
-
-        final UidRange[] entireUser = {
-            UidRange.createForUser(primaryUser.id)
+        final UidRangeParcel[] entireUser = {
+            new UidRangeParcel(PRI_USER_RANGE.start, PRI_USER_RANGE.stop)
         };
-        final UidRange[] exceptPkg0 = {
-            new UidRange(entireUser[0].start, entireUser[0].start + PKG_UIDS[0] - 1),
-            new UidRange(entireUser[0].start + PKG_UIDS[0] + 1, entireUser[0].stop)
+        final UidRangeParcel[] exceptPkg0 = {
+            new UidRangeParcel(entireUser[0].start, entireUser[0].start + PKG_UIDS[0] - 1),
+            new UidRangeParcel(entireUser[0].start + PKG_UIDS[0] + 1, entireUser[0].stop)
         };
 
-        final InOrder order = inOrder(mNetService);
+        final InOrder order = inOrder(mNetd);
 
         // Given lockdown is enabled with no package (legacy VPN),
         vpn.setLockdown(true);
-        order.verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(entireUser));
+        verifyInOrderAllowOnlyVpnForUids(order, true, entireUser);
 
         // When a new VPN package is set the rules should change to cover that package.
         vpn.prepare(null, PKGS[0], VpnManager.TYPE_VPN_SERVICE);
-        order.verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(entireUser));
-        order.verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(exceptPkg0));
+        verifyInOrderAllowOnlyVpnForUids(order, false, entireUser);
+        verifyInOrderAllowOnlyVpnForUids(order, true, exceptPkg0);
 
         // When that VPN package is unset, everything should be undone again in reverse.
         vpn.prepare(null, VpnConfig.LEGACY_VPN, VpnManager.TYPE_VPN_SERVICE);
-        order.verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(exceptPkg0));
-        order.verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(entireUser));
+        verifyInOrderAllowOnlyVpnForUids(order, false, exceptPkg0);
+        verifyInOrderAllowOnlyVpnForUids(order, true, entireUser);
     }
 
     @Test
@@ -1287,7 +1327,7 @@ public class VpnTest {
         doReturn(UserHandle.of(userId)).when(asUserContext).getUser();
         when(mContext.createContextAsUser(eq(UserHandle.of(userId)), anyInt()))
                 .thenReturn(asUserContext);
-        return new Vpn(Looper.myLooper(), mContext, new TestDeps(), mNetService,
+        return new Vpn(Looper.myLooper(), mContext, new TestDeps(), mNetService, mNetd,
                 userId, mKeyStore, mSystemServices, mIkev2SessionCreator);
     }
 

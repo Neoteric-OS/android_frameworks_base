@@ -1044,7 +1044,7 @@ public class ConnectivityServiceTest {
 
         public MockVpn(int userId) {
             super(startHandlerThreadAndReturnLooper(), mServiceContext, mNetworkManagementService,
-                    userId, mock(KeyStore.class));
+                    mMockNetd, userId, mock(KeyStore.class));
         }
 
         public void setNetworkAgent(TestNetworkAgentWrapper agent) {
