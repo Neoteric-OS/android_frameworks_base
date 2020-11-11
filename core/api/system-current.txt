@@ -200,6 +200,7 @@ package android {
     field public static final String RESET_PASSWORD = "android.permission.RESET_PASSWORD";
     field public static final String RESTORE_RUNTIME_PERMISSIONS = "android.permission.RESTORE_RUNTIME_PERMISSIONS";
     field public static final String RESTRICTED_VR_ACCESS = "android.permission.RESTRICTED_VR_ACCESS";
+    field public static final String RESUME_ON_REBOOT = "android.permission.RESUME_ON_REBOOT";
     field public static final String RETRIEVE_WINDOW_CONTENT = "android.permission.RETRIEVE_WINDOW_CONTENT";
     field public static final String REVIEW_ACCESSIBILITY_SERVICES = "android.permission.REVIEW_ACCESSIBILITY_SERVICES";
     field public static final String REVOKE_RUNTIME_PERMISSIONS = "android.permission.REVOKE_RUNTIME_PERMISSIONS";
@@ -7325,13 +7326,17 @@ package android.os {
 
   public class RecoverySystem {
     method @RequiresPermission(android.Manifest.permission.RECOVERY) public static void cancelScheduledUpdate(android.content.Context) throws java.io.IOException;
-    method @RequiresPermission(android.Manifest.permission.RECOVERY) public static void clearPrepareForUnattendedUpdate(@NonNull android.content.Context) throws java.io.IOException;
+    method @RequiresPermission(android.Manifest.permission.RESUME_ON_REBOOT) public static void clearPrepareForResumeOnReboot(@NonNull android.content.Context, @NonNull String) throws java.io.IOException;
+    method @Deprecated @RequiresPermission(android.Manifest.permission.RECOVERY) public static void clearPrepareForUnattendedUpdate(@NonNull android.content.Context) throws java.io.IOException;
     method @RequiresPermission(android.Manifest.permission.RECOVERY) public static void installPackage(android.content.Context, java.io.File, boolean) throws java.io.IOException;
-    method @RequiresPermission(android.Manifest.permission.RECOVERY) public static void prepareForUnattendedUpdate(@NonNull android.content.Context, @NonNull String, @Nullable android.content.IntentSender) throws java.io.IOException;
+    method @RequiresPermission(android.Manifest.permission.RESUME_ON_REBOOT) public static boolean isResumeOnRebootPrepared(@NonNull android.content.Context, @NonNull String) throws java.io.IOException;
+    method @RequiresPermission(android.Manifest.permission.RESUME_ON_REBOOT) public static void prepareForResumeOnReboot(@NonNull android.content.Context, @NonNull String, @Nullable android.content.IntentSender) throws java.io.IOException;
+    method @Deprecated @RequiresPermission(android.Manifest.permission.RECOVERY) public static void prepareForUnattendedUpdate(@NonNull android.content.Context, @NonNull String, @Nullable android.content.IntentSender) throws java.io.IOException;
     method @RequiresPermission(android.Manifest.permission.RECOVERY) public static void processPackage(android.content.Context, java.io.File, android.os.RecoverySystem.ProgressListener, android.os.Handler) throws java.io.IOException;
     method @RequiresPermission(android.Manifest.permission.RECOVERY) public static void processPackage(android.content.Context, java.io.File, android.os.RecoverySystem.ProgressListener) throws java.io.IOException;
-    method @RequiresPermission(android.Manifest.permission.RECOVERY) public static void rebootAndApply(@NonNull android.content.Context, @NonNull String, @NonNull String) throws java.io.IOException;
+    method @Deprecated @RequiresPermission(android.Manifest.permission.RECOVERY) public static void rebootAndApply(@NonNull android.content.Context, @NonNull String, @NonNull String) throws java.io.IOException;
     method @RequiresPermission(allOf={android.Manifest.permission.RECOVERY, android.Manifest.permission.REBOOT}) public static void rebootWipeAb(android.content.Context, java.io.File, String) throws java.io.IOException;
+    method @RequiresPermission(android.Manifest.permission.RESUME_ON_REBOOT) public static void rebootWithResume(@NonNull android.content.Context, @NonNull String, @NonNull String, boolean) throws java.io.IOException;
     method @RequiresPermission(android.Manifest.permission.RECOVERY) public static void scheduleUpdateOnBoot(android.content.Context, java.io.File) throws java.io.IOException;
     method public static boolean verifyPackageCompatibility(java.io.File) throws java.io.IOException;
   }

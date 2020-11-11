@@ -651,6 +651,7 @@ public class RecoverySystem {
      * @hide
      */
     @SystemApi
+    @Deprecated
     @RequiresPermission(android.Manifest.permission.RECOVERY)
     public static void prepareForUnattendedUpdate(@NonNull Context context,
             @NonNull String updateToken, @Nullable IntentSender intentSender) throws IOException {
@@ -672,6 +673,7 @@ public class RecoverySystem {
      * @hide
      */
     @SystemApi
+    @Deprecated
     @RequiresPermission(android.Manifest.permission.RECOVERY)
     public static void clearPrepareForUnattendedUpdate(@NonNull Context context)
             throws IOException {
@@ -695,6 +697,7 @@ public class RecoverySystem {
      * @hide
      */
     @SystemApi
+    @Deprecated
     @RequiresPermission(android.Manifest.permission.RECOVERY)
     public static void rebootAndApply(@NonNull Context context, @NonNull String updateToken,
             @NonNull String reason) throws IOException {
@@ -703,6 +706,84 @@ public class RecoverySystem {
         }
         RecoverySystem rs = (RecoverySystem) context.getSystemService(Context.RECOVERY_SERVICE);
         if (!rs.rebootWithLskf(LEGACY_ROR_CLIENT, reason, true)) {
+            throw new IOException("system not prepared to apply update");
+        }
+    }
+
+    /**
+     * Prepare to apply an unattended update by asking the user for their Lock Screen Knowledge
+     * Factor (LSKF) for a given caller. If supplied, the {@code intentSender} will be called when
+     * the system is setup and ready to apply the OTA.
+     *
+     * @param context the Context to use.
+     * @param callerId the unique identifier for the caller of the request
+     * @param intentSender the intent to call when the update is prepared; may be {@code null}
+     * @throws IOException if there were any errors setting up unattended update
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.RESUME_ON_REBOOT)
+    public static void prepareForResumeOnReboot(@NonNull Context context,
+            @NonNull String callerId, @Nullable IntentSender intentSender) throws IOException {
+        RecoverySystem rs = context.getSystemService(RecoverySystem.class);
+        if (!rs.requestLskf(callerId, intentSender)) {
+            throw new IOException("preparation for resume on reboot failed");
+        }
+    }
+
+    /**
+     * Request to clear the resume on reboot preparation for a given caller. If no other caller has
+     * request for resume on reboot, any previously requested Lock Screen Knowledge Factor (LSKF)
+     * will be cleared and the preparation for unattended update will be reset.
+     *
+     * @param context the Context to use.
+     * @param callerId the unique identifier for the caller of the request
+     * @throws IOException if there were any errors clearing the unattended update state
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.RESUME_ON_REBOOT)
+    public static void clearPrepareForResumeOnReboot(@NonNull Context context,
+            @NonNull String callerId) throws IOException {
+        RecoverySystem rs = context.getSystemService(RecoverySystem.class);
+        if (!rs.clearLskf(callerId)) {
+            throw new IOException("could not reset resume on reboot preparation state");
+        }
+    }
+
+
+    /**
+     * Query if resume on reboot has been prepared for a given caller.
+     *
+     * @param context the Context to use.
+     * @param callerId the unique identifier for the caller of the request
+     * @throws IOException if there were any errors clearing the unattended update state
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.RESUME_ON_REBOOT)
+    public static boolean isResumeOnRebootPrepared(@NonNull Context context,
+            @NonNull String callerId) throws IOException {
+        RecoverySystem rs = context.getSystemService(RecoverySystem.class);
+        return rs.isLskfCaptured(callerId);
+    }
+
+    /**
+     * Request that the device reboot and apply the update that has been prepared.
+     *
+     * @param context the Context to use.
+     * @param reason the reboot reason to give to the {@link PowerManager}
+     * @param slotSwitch true if the caller intends to switch the slot on an A/B device.
+     * @throws IOException if the reboot couldn't proceed because the device wasn't ready for an
+     *               unattended reboot.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.RESUME_ON_REBOOT)
+    public static void rebootWithResume(@NonNull Context context, @NonNull String callerId,
+            @NonNull String reason, boolean slotSwitch) throws IOException {
+        RecoverySystem rs = context.getSystemService(RecoverySystem.class);
+        if (!rs.rebootWithLskf(callerId, reason, slotSwitch)) {
             throw new IOException("system not prepared to apply update");
         }
     }
