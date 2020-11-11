@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d07ccdaf_27646f1b",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-11T21:10:35Z",
+      "side": 1,
+      "message": "This needs to scream loudly that it must be called before the callingUID is cleared. You could even put some kind of a loud crash in this if it happens to get hit from UID \u003d\u003d system server (or network stack) or whatever. A little docstring might help too.",
+      "range": {
+        "startLine": 146,
+        "startChar": 26,
+        "endLine": 146,
+        "endChar": 52
+      },
+      "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19744139_86b68f10",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-11T21:10:35Z",
+      "side": 1,
+      "message": "Unless getCallingUserHandle() for other things, how about a method that just \"assertIsPrimaryUser()\" that can check the handle and throw the security exception?",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 163,
+        "endChar": 61
+      },
+      "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4294122_26f244a1",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-11T21:10:35Z",
+      "side": 1,
+      "message": "this works, but it\u0027s a dangerous pattern. The \"safe\" pattern is to do all the input validation, then clear the calling identity, and then do all the other stuff. It\u0027s hard to predict when something else will rely on you being the system and has been the source of many bugs.",
+      "range": {
+        "startLine": 171,
+        "startChar": 15,
+        "endLine": 171,
+        "endChar": 39
+      },
+      "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f552f215_71c1e740",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-11T21:10:35Z",
+      "side": 1,
+      "message": "I don\u0027t think this does do what you think it does. Unless the subscription is active on a given phone, there will be no phone object, so the carrier privileges check will fail, even if the app is otherwise authorized to do manage it.\n\nI think what you might want to use here is:\n1) SubscriptionManager.canManageSubscription() for each subscription in the group +\n2) TelephonyManager#checkCarrierPrivilegesForPackageAnyPhone\n\nThat will tell you that:\n1) the group is controllable by the caller; and\n2) the caller is currently carrier privileged\n\nIt\u0027s a wonky thing for sure, and honestly, it might be better to factor this check out into something like \"hasCarrierPrivilegesForGroup()\" or something like that.",
+      "range": {
+        "startLine": 178,
+        "startChar": 23,
+        "endLine": 178,
+        "endChar": 43
+      },
+      "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
