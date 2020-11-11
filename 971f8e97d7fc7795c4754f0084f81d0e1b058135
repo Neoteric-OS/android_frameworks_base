@@ -22,6 +22,29 @@
       },
       "revId": "971f8e97d7fc7795c4754f0084f81d0e1b058135",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc2b97e6_90c9311c",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-11T16:11:33Z",
+      "side": 1,
+      "message": "This is not currently true, right? (At the moment, the numbers are since boot.) Might be worth filing a bug to actually make it true. Not a high priority to fix.",
+      "range": {
+        "startLine": 600,
+        "startChar": 75,
+        "endLine": 601,
+        "endChar": 17
+      },
+      "revId": "971f8e97d7fc7795c4754f0084f81d0e1b058135",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
