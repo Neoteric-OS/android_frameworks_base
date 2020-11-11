@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c4abf57_d0c80ce9",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-11T16:10:23Z",
+      "side": 1,
+      "message": "was",
+      "range": {
+        "startLine": 601,
+        "startChar": 7,
+        "endLine": 601,
+        "endChar": 9
+      },
+      "revId": "971f8e97d7fc7795c4754f0084f81d0e1b058135",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
