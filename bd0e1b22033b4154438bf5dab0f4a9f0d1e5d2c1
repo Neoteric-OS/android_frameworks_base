@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006098781",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1470094?revision\u003d14",
+      "fixSuggestions": [
+        {
+          "fixId": "36c04aa5_8a33fb20",
+          "description": "Change to \"keystore/java/android/security/KeyStore2.java\"",
+          "replacements": [
+            {
+              "path": "keystore/java/android/security/KeyStore2.java",
+              "range": {
+                "startLine": 62,
+                "startChar": 85,
+                "endLine": 62,
+                "endChar": 94
+              },
+              "replacement": "if the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "477e0ff9_9d7fd0fc",
+        "filename": "keystore/java/android/security/KeyStore2.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-12T16:09:15Z",
+      "side": 1,
+      "message": "Common typo found: \"if if the\" -- should it be \"if the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 62,
+        "startChar": 85,
+        "endLine": 62,
+        "endChar": 94
+      },
+      "revId": "bd0e1b22033b4154438bf5dab0f4a9f0d1e5d2c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006098781",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1470094?revision\u003d14",
+      "fixSuggestions": [
+        {
+          "fixId": "d158cfc1_97014527",
+          "description": "Change to \"keystore/java/android/security/KeyStore2.java\"",
+          "replacements": [
+            {
+              "path": "keystore/java/android/security/KeyStore2.java",
+              "range": {
+                "startLine": 241,
+                "startChar": 18,
+                "endLine": 241,
+                "endChar": 30
+              },
+              "replacement": "subcomponents"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "95b1d5c0_d96a7cd0",
+        "filename": "keystore/java/android/security/KeyStore2.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-12T16:09:15Z",
+      "side": 1,
+      "message": "Common typo found: \"subcomponets\" -- should it be \"subcomponents\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 241,
+        "startChar": 18,
+        "endLine": 241,
+        "endChar": 30
+      },
+      "revId": "bd0e1b22033b4154438bf5dab0f4a9f0d1e5d2c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
