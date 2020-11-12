@@ -91,6 +91,30 @@
       },
       "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "719e1fc3_3b588c7b",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-11-12T01:37:52Z",
+      "side": 1,
+      "message": "SM#canManageSubscription is primarily intended for \"can this app enable/disable this eSIM profile\"-like checks that have to work when the SIM isn\u0027t actually active. There is some messiness that telephony still needs to get straight between the two checks (or really just get over it and unify them already), but carrier privileges is definitely what you want here.\n\nNathan is right that hasCarrierPrivileges only works when the profile is active - you can tell that by checking SubscriptionInfo.getSimSlotIndex() \u003e\u003d 0 if you want to be extra fastidious.\n\nTM#checkCarrierPrivilegesForPackageAnyPhone is going to be too broad of a check. I\u0027m sure there\u0027s some carrier out there that is trying to set up a VCN without any subscription groups set, or maybe two separate subscription groups, both of which are active.\n\nThere *is* SubscriptionInfo#getGroupOwner, but it\u0027s @hide and probably too restrictive anyhow. I\u0027d guess there are legitimate use cases where app A sets the group (and is therefore the owner), but app B sets up the VCN, right?\n\nIs there a legitimate use case for an app to be setting a VCN config without any active SIM at all? Assuming no, what you have now should do just fine, maybe modulo checking SubInfo#simSlotIndex \u003e\u003d 0.",
+      "parentUuid": "f552f215_71c1e740",
+      "range": {
+        "startLine": 178,
+        "startChar": 23,
+        "endLine": 178,
+        "endChar": 43
+      },
+      "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
