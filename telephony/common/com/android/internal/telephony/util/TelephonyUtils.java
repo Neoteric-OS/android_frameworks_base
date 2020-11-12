@@ -44,6 +44,8 @@ public final class TelephonyUtils {
     public static boolean IS_USER = "user".equals(android.os.Build.TYPE);
     public static boolean IS_DEBUGGABLE = SystemProperties.getInt("ro.debuggable", 0) == 1;
 
+    public static final Executor DIRECT_EXECUTOR = Runnable::run;
+
     /**
      * Verify that caller holds {@link android.Manifest.permission#DUMP}.
      *
