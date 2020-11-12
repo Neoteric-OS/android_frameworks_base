@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20e89779_ce67664e",
+        "filename": "keystore/java/android/security/keystore2/KeyStoreCryptoOperationUtils.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-12T16:05:33Z",
+      "side": 1,
+      "message": "This should yield a transient error otherwise callers will try to replace the key, when all they need to do is wait for Keystore to unlock.\n\nShawn, any ideas?",
+      "range": {
+        "startLine": 122,
+        "startChar": 16,
+        "endLine": 124,
+        "endChar": 58
+      },
+      "revId": "cfefc078f15a07cd3f9aa80bba24cfcc43eb6130",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
