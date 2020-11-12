@@ -56,7 +56,6 @@ import android.net.Uri;
 import android.os.BestClock;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.DebugUtils;
@@ -95,11 +94,7 @@ public class MultipathPolicyTracker {
 
     private static final boolean DBG = false;
 
-    // This context is for the current user.
     private final Context mContext;
-    // This context is for all users, so register a BroadcastReceiver which can receive intents from
-    // all users.
-    private final Context mUserAllContext;
     private final Handler mHandler;
     private final Clock mClock;
     private final Dependencies mDeps;
@@ -136,7 +131,6 @@ public class MultipathPolicyTracker {
 
     public MultipathPolicyTracker(Context ctx, Handler handler, Dependencies deps) {
         mContext = ctx;
-        mUserAllContext = ctx.createContextAsUser(UserHandle.ALL, 0 /* flags */);
         mHandler = handler;
         mClock = deps.getClock();
         mDeps = deps;
@@ -160,7 +154,7 @@ public class MultipathPolicyTracker {
 
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
-        mUserAllContext.registerReceiver(
+        mContext.registerReceiverForAllUsers(
                 mConfigChangeReceiver, intentFilter, null /* broadcastPermission */, mHandler);
     }
 
@@ -172,7 +166,7 @@ public class MultipathPolicyTracker {
         }
         mMultipathTrackers.clear();
         mResolver.unregisterContentObserver(mSettingsObserver);
-        mUserAllContext.unregisterReceiver(mConfigChangeReceiver);
+        mContext.unregisterReceiver(mConfigChangeReceiver);
     }
 
     // Called on an arbitrary binder thread.
