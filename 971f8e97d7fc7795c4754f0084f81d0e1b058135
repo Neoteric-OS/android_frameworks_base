@@ -45,6 +45,54 @@
       },
       "revId": "971f8e97d7fc7795c4754f0084f81d0e1b058135",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fddef56f_7e7f3351",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-12T05:49:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c4abf57_d0c80ce9",
+      "range": {
+        "startLine": 601,
+        "startChar": 7,
+        "endLine": 601,
+        "endChar": 9
+      },
+      "revId": "971f8e97d7fc7795c4754f0084f81d0e1b058135",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7887ebfb_deb75428",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-12T05:49:57Z",
+      "side": 1,
+      "message": "b/173082328 is created to track this.",
+      "parentUuid": "bc2b97e6_90c9311c",
+      "range": {
+        "startLine": 600,
+        "startChar": 75,
+        "endLine": 601,
+        "endChar": 17
+      },
+      "revId": "971f8e97d7fc7795c4754f0084f81d0e1b058135",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

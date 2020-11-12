@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b04ff543_7e233c45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-12T05:49:57Z",
+      "side": 1,
+      "message": "Carry-over +2 from lorenzo since trivial nits has been addressed.",
+      "revId": "b23b926ccb3e9ae04a987e751921ff28a87cac3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
