@@ -244,6 +244,8 @@ public final class StorageUserConnection {
         // reset latches so need to create a new one after one use
         private CountDownLatch mLatch;
 
+        private CountDownLatch mRemoteLatch;
+
         @Override
         public void close() {
             ServiceConnection oldConnection = null;
@@ -289,13 +291,12 @@ public final class StorageUserConnection {
                 return;
             }
 
-            CountDownLatch latch = new CountDownLatch(1);
             try {
                 mRemote.startSession(session.sessionId,
                         FLAG_SESSION_TYPE_FUSE | FLAG_SESSION_ATTRIBUTE_INDEXABLE,
                         fd, session.upperPath, session.lowerPath, new RemoteCallback(result ->
-                                setResultLocked(latch, result)));
-                waitForLatch(latch, "start_session " + session);
+                                setResultLocked(mRemoteLatch, result)));
+                waitForLatch(mRemoteLatch, "start_session " + session);
                 maybeThrowExceptionLocked();
             } catch (Exception e) {
                 throw new ExternalStorageServiceException("Failed to start session: " + session, e);
@@ -314,11 +315,10 @@ public final class StorageUserConnection {
                 return;
             }
 
-            CountDownLatch latch = new CountDownLatch(1);
             try {
                 mRemote.endSession(session.sessionId, new RemoteCallback(result ->
-                        setResultLocked(latch, result)));
-                waitForLatch(latch, "end_session " + session);
+                        setResultLocked(mRemoteLatch, result)));
+                waitForLatch(mRemoteLatch, "end_session " + session);
                 maybeThrowExceptionLocked();
             } catch (Exception e) {
                 throw new ExternalStorageServiceException("Failed to end session: " + session, e);
@@ -327,11 +327,10 @@ public final class StorageUserConnection {
 
         public void notifyVolumeStateChangedLocked(String sessionId, StorageVolume vol) throws
                 ExternalStorageServiceException {
-            CountDownLatch latch = new CountDownLatch(1);
             try {
                 mRemote.notifyVolumeStateChanged(sessionId, vol, new RemoteCallback(
-                        result -> setResultLocked(latch, result)));
-                waitForLatch(latch, "notify_volume_state_changed " + vol);
+                        result -> setResultLocked(mRemoteLatch, result)));
+                waitForLatch(mRemoteLatch, "notify_volume_state_changed " + vol);
                 maybeThrowExceptionLocked();
             } catch (Exception e) {
                 throw new ExternalStorageServiceException("Failed to notify volume state changed "
@@ -374,6 +373,7 @@ public final class StorageUserConnection {
                 } // else neither connected nor connecting
 
                 mLatch = new CountDownLatch(1);
+                mRemoteLatch = new CountDownLatch(1);
                 mIsConnecting = true;
                 mServiceConnection = new ServiceConnection() {
                     @Override
@@ -423,6 +423,7 @@ public final class StorageUserConnection {
                         // StorageManagerService will reset the device mount state and #startSession
                         // will be called for any required mounts.
                         // Notify StorageManagerService so it can restart all necessary sessions
+                        mRemoteLatch.countDown();
                         close();
                         resetUserSessions();
                     }
