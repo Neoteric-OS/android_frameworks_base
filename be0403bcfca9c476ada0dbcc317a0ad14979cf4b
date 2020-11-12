@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "876d9304_b3e3bb4c",
+        "filename": "libs/WindowManager/Shell/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2020-11-12T14:51:04Z",
+      "side": 1,
+      "message": "Please add a follow-up CL to remove mrenouf@",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 18
+      },
+      "revId": "be0403bcfca9c476ada0dbcc317a0ad14979cf4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
