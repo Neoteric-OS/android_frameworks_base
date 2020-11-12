@@ -25,6 +25,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e295b36_071817b7",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKey.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-12T17:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26b1b0df_2ac8e0ac",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "07ea0b21003b7dbb2afb6bd53880c14040baa489",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5354da7d_7df1fc5e",
@@ -39,6 +63,30 @@
       "side": 1,
       "message": "\u003e Common typo found: \"the the\" -- should it be \"the\"?\n\u003e Note: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.\n\nPlease fix.",
       "parentUuid": "553d2cfa_6db50053",
+      "range": {
+        "startLine": 130,
+        "startChar": 40,
+        "endLine": 130,
+        "endChar": 47
+      },
+      "revId": "07ea0b21003b7dbb2afb6bd53880c14040baa489",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af94f8ed_4e1b0e97",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKey.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-12T17:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5354da7d_7df1fc5e",
       "range": {
         "startLine": 130,
         "startChar": 40,
