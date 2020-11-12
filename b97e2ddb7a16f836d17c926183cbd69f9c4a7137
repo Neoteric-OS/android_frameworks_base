@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4712c22d_83eb2fe1",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 17055,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2020-11-12T03:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "213349a3_1247a4a6",
+      "range": {
+        "startLine": 17055,
+        "startChar": 23,
+        "endLine": 17055,
+        "endChar": 24
+      },
+      "revId": "b97e2ddb7a16f836d17c926183cbd69f9c4a7137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1666de8b_9960f252",
@@ -71,6 +95,30 @@
       "writtenOn": "2020-11-10T01:32:04Z",
       "side": 1,
       "message": "you need this because the batteryManager is not up when dexManager starts?",
+      "range": {
+        "startLine": 963,
+        "startChar": 27,
+        "endLine": 963,
+        "endChar": 44
+      },
+      "revId": "b97e2ddb7a16f836d17c926183cbd69f9c4a7137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7bd5fdb_c2669916",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2020-11-12T03:57:45Z",
+      "side": 1,
+      "message": "I believe the DexManager is an object held by the PackageManager, and the root issue is that the BatteryManager starts after the PackageManager.  But yes, that is why this is here.",
+      "parentUuid": "1666de8b_9960f252",
       "range": {
         "startLine": 963,
         "startChar": 27,
@@ -106,6 +154,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ab554766_11181d45",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2020-11-12T03:57:45Z",
+      "side": 1,
+      "message": "This is to guard against any case where the context may return a null battery manager, whether due to boot timing or issues with the system server.  It may be overly defensive programming.",
+      "parentUuid": "1bb6ae41_8c7428b8",
+      "range": {
+        "startLine": 982,
+        "startChar": 20,
+        "endLine": 982,
+        "endChar": 41
+      },
+      "revId": "b97e2ddb7a16f836d17c926183cbd69f9c4a7137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aaf0ae89_d3a046b2",
         "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
         "patchSetId": 3
@@ -117,6 +189,30 @@
       "writtenOn": "2020-11-10T01:32:04Z",
       "side": 1,
       "message": "Because this could have subtle implications on low end devices for which we right now don\u0027t know when lowMemory activates let\u0027s leave it out for now and re-upload as a follow CL if necessary.\n\nThere is no need to block the rest of this CL on the memory considerations.",
+      "range": {
+        "startLine": 986,
+        "startChar": 10,
+        "endLine": 990,
+        "endChar": 40
+      },
+      "revId": "b97e2ddb7a16f836d17c926183cbd69f9c4a7137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8244e944_9b0dee42",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2020-11-12T03:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaf0ae89_d3a046b2",
       "range": {
         "startLine": 986,
         "startChar": 10,
