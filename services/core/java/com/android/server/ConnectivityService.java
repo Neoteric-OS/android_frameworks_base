@@ -5418,6 +5418,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return Collections.unmodifiableList(tempRequests);
         }
 
+        @Nullable
+        NetworkRequest getSatisfierRequest() {
+            if (mSatisfier != null) {
+                for (int i = 0; i < mRequests.size(); i++) {
+                    if (mSatisfier.isSatisfyingRequest(mRequests.get(i).requestId)) {
+                        return mRequests.get(i);
+                    }
+                }
+            }
+
+            return null;
+        }
 
         private void enforceRequestCountLimit() {
             synchronized (mUidToNetworkRequestCount) {
