@@ -139,6 +139,30 @@
       },
       "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2185de9f_b024e5ea",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-11-12T18:53:37Z",
+      "side": 1,
+      "message": "\"Intermittent\" meaning what - platform incorrectly dropping them, or due to a switch triggered by the carrier? The former is a bug, the latter is going to happen whether we like it or not. Carrier apps are smart enough to deal with this already and know when they lose/regain carrier privileges during a switch, so that\u0027s not a big deal.\n\nUsing SM#canManageSubscription is going to create an inequality between pSIM and eSIM profiles, where suddenly a VCN set up on the eSIM can be managed even when the profiles aren\u0027t active, whereas a VCN on a removed pSIM can\u0027t. Not worth the distinction IMO.",
+      "parentUuid": "10fc1ab3_3f0d4db3",
+      "range": {
+        "startLine": 178,
+        "startChar": 23,
+        "endLine": 178,
+        "endChar": 43
+      },
+      "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
