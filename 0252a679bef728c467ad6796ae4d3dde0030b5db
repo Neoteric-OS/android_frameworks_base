@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79a743c2_f5e35dea",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 13858,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-11-13T21:56:12Z",
+      "side": 1,
+      "message": "IsRadioInterfaceCapabilitySupported?\nJust being consistent with first sentence.",
+      "range": {
+        "startLine": 13858,
+        "startChar": 19,
+        "endLine": 13858,
+        "endChar": 54
+      },
+      "revId": "0252a679bef728c467ad6796ae4d3dde0030b5db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
