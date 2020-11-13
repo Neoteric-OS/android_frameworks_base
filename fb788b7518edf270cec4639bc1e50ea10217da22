@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97af54e4_cf757ee7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-11-13T07:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06aa1f20_cc12b649",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 22
+      },
+      "revId": "fb788b7518edf270cec4639bc1e50ea10217da22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12907889_8c205d3e",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "08f3b45e_85eaab0e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2410,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-11-13T07:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12907889_8c205d3e",
+      "range": {
+        "startLine": 2410,
+        "startChar": 19,
+        "endLine": 2410,
+        "endChar": 20
+      },
+      "revId": "fb788b7518edf270cec4639bc1e50ea10217da22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f803dc9_d50df6fe",
@@ -60,6 +108,30 @@
       "writtenOn": "2020-11-13T06:31:35Z",
       "side": 1,
       "message": "If just for this, can\u0027t we just take default request into VPN as a parameter? then it will always sync between CS and VPN.",
+      "range": {
+        "startLine": 2414,
+        "startChar": 16,
+        "endLine": 2416,
+        "endChar": 33
+      },
+      "revId": "fb788b7518edf270cec4639bc1e50ea10217da22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b88a3c2_f78d8957",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-11-13T07:00:33Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s a good idea but Vpn might be outside of ConnectivityService in the near future.\nSo we may need to change the code again once it happens.\nAlso, once the new API has done, we will use the new API instead of the parameter, so to minimize the change in the future, I think the current design is better.",
+      "parentUuid": "7f803dc9_d50df6fe",
       "range": {
         "startLine": 2414,
         "startChar": 16,
