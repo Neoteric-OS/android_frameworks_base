@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06aa1f20_cc12b649",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-11-13T06:31:35Z",
+      "side": 1,
+      "message": "included?",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 22
+      },
+      "revId": "fb788b7518edf270cec4639bc1e50ea10217da22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12907889_8c205d3e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2410,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-11-13T06:31:35Z",
+      "side": 1,
+      "message": "Nit: add a TODO here? since you should have ideal way to do so.",
+      "range": {
+        "startLine": 2410,
+        "startChar": 19,
+        "endLine": 2410,
+        "endChar": 20
+      },
+      "revId": "fb788b7518edf270cec4639bc1e50ea10217da22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f803dc9_d50df6fe",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-11-13T06:31:35Z",
+      "side": 1,
+      "message": "If just for this, can\u0027t we just take default request into VPN as a parameter? then it will always sync between CS and VPN.",
+      "range": {
+        "startLine": 2414,
+        "startChar": 16,
+        "endLine": 2416,
+        "endChar": 33
+      },
+      "revId": "fb788b7518edf270cec4639bc1e50ea10217da22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
