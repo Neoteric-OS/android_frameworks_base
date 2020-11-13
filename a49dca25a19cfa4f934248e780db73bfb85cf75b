@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70324bcc_67936d34",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2020-11-13T19:30:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4f2f8b9c_a9f94334",
+      "range": {
+        "startLine": 926,
+        "startChar": 15,
+        "endLine": 926,
+        "endChar": 53
+      },
+      "revId": "a49dca25a19cfa4f934248e780db73bfb85cf75b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d9074db_357255cc",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc21dfc0_eabd9876",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2020-11-13T19:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d9074db_357255cc",
+      "range": {
+        "startLine": 974,
+        "startChar": 8,
+        "endLine": 974,
+        "endChar": 14
+      },
+      "revId": "a49dca25a19cfa4f934248e780db73bfb85cf75b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22a051fe_d34dfd58",
@@ -60,6 +108,30 @@
       "writtenOn": "2020-11-12T20:18:28Z",
       "side": 1,
       "message": "If the PowerManager starts before the PMS, you can add a log.wtf in the ctor:\n\nif (mPowerManager \u003d\u003d null) {Slog.wtf(....);}\n\nwtf logs are collected and clearly highlighted in the bugs, so if there\u0027s any issue we can discover it more promptly.",
+      "range": {
+        "startLine": 979,
+        "startChar": 20,
+        "endLine": 979,
+        "endChar": 41
+      },
+      "revId": "a49dca25a19cfa4f934248e780db73bfb85cf75b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01ff9734_7a2fc83b",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2020-11-13T19:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22a051fe_d34dfd58",
       "range": {
         "startLine": 979,
         "startChar": 20,
