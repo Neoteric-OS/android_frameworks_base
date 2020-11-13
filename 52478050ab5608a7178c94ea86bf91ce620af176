@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f935b3c8_27c57ae3",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2414,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-11-13T07:14:18Z",
+      "side": 1,
+      "message": "Minor Nit: I saw it\u0027s often written as TODO(b/b/147280869). It means the item is tracked in the bug. Not bother to respin if you do not need to change it.",
+      "range": {
+        "startLine": 2414,
+        "startChar": 19,
+        "endLine": 2414,
+        "endChar": 23
+      },
+      "revId": "52478050ab5608a7178c94ea86bf91ce620af176",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
