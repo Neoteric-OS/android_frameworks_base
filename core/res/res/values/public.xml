@@ -3024,8 +3024,16 @@
 
     <!-- @hide @TestApi -->
     <public type="bool" name="config_assistantOnTopOfDream" id="0x01110005" />
+
+    <!-- ===============================================================
+     Resources added in version S of the platform
+     =============================================================== -->
+    <eat-comment />
+
+    <public type="attr" name="canPauseRecording" id="0x01010617" />
+
   <!-- ===============================================================
-       Resources added in version S of the platform
+       Resources added in version T of the platform
 
        NOTE: add <public> elements within a <public-group> like so:
 
@@ -3040,7 +3048,7 @@
        the id value of 0x01010531.
        =============================================================== -->
 
-  <public-group type="attr" first-id="0x01010617">
+  <public-group type="attr" first-id="0x01010618">
     <!-- attribute definitions go here -->
   </public-group>
 
