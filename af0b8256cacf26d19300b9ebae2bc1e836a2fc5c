@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd4652fb_f8748ded",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1362778
+      },
+      "writtenOn": "2020-11-13T20:37:19Z",
+      "side": 1,
+      "message": "Thanks for update.",
+      "revId": "af0b8256cacf26d19300b9ebae2bc1e836a2fc5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a8ab65d_561f99c2",
+        "filename": "services/core/java/com/android/server/locksettings/recoverablekeystore/PlatformKeyManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1362778
+      },
+      "writtenOn": "2020-11-13T20:37:19Z",
+      "side": 1,
+      "message": "Some unit tests also point to legacy keystore. They probably still work fine. \ncs/recoverablekeystore/PlatformKeyManagerTest.java\natest com.android.server.locksettings.recoverablekeystore",
+      "range": {
+        "startLine": 487,
+        "startChar": 67,
+        "endLine": 487,
+        "endChar": 94
+      },
+      "revId": "af0b8256cacf26d19300b9ebae2bc1e836a2fc5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
