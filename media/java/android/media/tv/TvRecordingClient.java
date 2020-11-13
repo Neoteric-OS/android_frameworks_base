@@ -49,6 +49,7 @@ public class TvRecordingClient {
 
     private boolean mIsRecordingStarted;
     private boolean mIsTuned;
+    private boolean mIsPaused;
     private final Queue<Pair<String, Bundle>> mPendingAppPrivateCommands = new ArrayDeque<>();
 
     /**
@@ -113,7 +114,7 @@ public class TvRecordingClient {
         if (TextUtils.isEmpty(inputId)) {
             throw new IllegalArgumentException("inputId cannot be null or an empty string");
         }
-        if (mIsRecordingStarted) {
+        if (mIsRecordingStarted && !mIsPaused) {
             throw new IllegalStateException("tune failed - recording already started");
         }
         if (mSessionCallback != null && TextUtils.equals(mSessionCallback.mInputId, inputId)) {
@@ -123,7 +124,11 @@ public class TvRecordingClient {
                 mSessionCallback.mChannelUri = channelUri;
                 mSessionCallback.mConnectionParams = params;
             }
+            mIsTuned = false;
         } else {
+            if (mIsPaused) {
+                throw new IllegalStateException("tune failed - inputId is changed during pause");
+            }
             resetInternal();
             mSessionCallback = new MySessionCallback(inputId, channelUri, params);
             if (mTvInputManager != null) {
@@ -148,6 +153,7 @@ public class TvRecordingClient {
             mSession.release();
             mIsTuned = false;
             mIsRecordingStarted = false;
+            mIsPaused = false;
             mSession = null;
         }
     }
@@ -169,7 +175,8 @@ public class TvRecordingClient {
      *
      * @param programUri The URI for the TV program to record, built by
      *            {@link TvContract#buildProgramUri(long)}. Can be {@code null}.
-     * @throws IllegalStateException If {@link #tune} request hasn't been handled yet.
+     * @throws IllegalStateException If {@link #tune} request hasn't been handled yet or during
+     *            pause.
      */
     public void startRecording(@Nullable Uri programUri) {
         startRecording(programUri, Bundle.EMPTY);
@@ -195,11 +202,16 @@ public class TvRecordingClient {
      * @param params Domain-specific data for this request. Keys <em>must</em> be a scoped
      *            name, i.e. prefixed with a package name you own, so that different developers will
      *            not create conflicting keys.
-     * @throws IllegalStateException If {@link #tune} request hasn't been handled yet.
+     * @throws IllegalStateException If {@link #tune} request hasn't been handled yet or during
+     *            pause.
      */
     public void startRecording(@Nullable Uri programUri, @NonNull Bundle params) {
-        if (!mIsTuned) {
-            throw new IllegalStateException("startRecording failed - not yet tuned");
+        if (!mIsTuned || mIsPaused) {
+            throw new IllegalStateException("startRecording failed -"
+                    + "not yet tuned or during pause");
+        }
+        if (mIsRecordingStarted) {
+            Log.w(TAG, "startRecording failed - recording already started");
         }
         if (mSession != null) {
             mSession.startRecording(programUri, params);
@@ -225,6 +237,92 @@ public class TvRecordingClient {
         }
         if (mSession != null) {
             mSession.stopRecording();
+        }
+    }
+
+    /**
+     * Pause TV program recording in the current recording session. Recording is expected to pause
+     * immediately when this method is called. If recording has not yet started in the current
+     * recording session, this method does nothing.
+     *
+     * <p>In pause status, the application can tune during recording. To continue recording,
+     * please call {@link TvRecordingClient#resumeRecording()} to resume instead of
+     * {@link TvRecordingClient#startRecording(Uri)}. Application can stop
+     * the recording with {@link TvRecordingClient#stopRecording()} in recording pause status.
+     *
+     * <p>If the pause request cannot be fulfilled, the recording session will respond by calling
+     * {@link RecordingCallback#onError(int)}.
+     */
+    public void pauseRecording() {
+        pauseRecording(Bundle.EMPTY);
+    }
+
+    /**
+     * Pause TV program recording in the current recording session. Recording is expected to pause
+     * immediately when this method is called. If recording has not yet started in the current
+     * recording session, this method does nothing.
+     *
+     * <p>In pause status, the application can tune during recording. To continue recording,
+     * please call {@link TvRecordingClient#resumeRecording()} to resume instead of
+     * {@link TvRecordingClient#startRecording(Uri)}. Application can stop
+     * the recording with {@link TvRecordingClient#stopRecording()} in recording pause status.
+     *
+     * <p>If the pause request cannot be fulfilled, the recording session will respond by calling
+     * {@link RecordingCallback#onError(int)}.
+     *
+     * @param params Domain-specific data for this request.
+     */
+    public void pauseRecording(@NonNull Bundle params) {
+        if (!mIsRecordingStarted) {
+            throw new IllegalStateException("pauseRecording failed - recording not yet started");
+        }
+        if (mIsPaused) {
+            Log.w(TAG, "pauseRecording failed - recording already paused");
+        }
+        if (mSession != null) {
+            mSession.pauseRecording(params);
+            mIsPaused  = true;
+        }
+    }
+
+    /**
+     * Resume TV program recording only in recording pause status in the current recording session.
+     * Recording is expected to resume immediately when this method is called. If recording has not
+     * yet paused in the current recording session, this method does nothing.
+     *
+     * <p>When record is resumed, the recording is continue and can not re-tune. Application can
+     * stop the recording with {@link TvRecordingClient#stopRecording()} after record resumed.
+     *
+     * <p>If the pause request cannot be fulfilled, the recording session will respond by calling
+     * {@link RecordingCallback#onError(int)}.
+     */
+    public void resumeRecording() {
+        resumeRecording(Bundle.EMPTY);
+    }
+
+    /**
+     * Resume TV program recording only in recording pause status in the current recording session.
+     * Recording is expected to resume immediately when this method is called. If recording has not
+     * yet paused in the current recording session, this method does nothing.
+     *
+     * <p>When record is resumed, the recording is continues and can not re-tune. Application can
+     * stop the recording with {@link TvRecordingClient#stopRecording()} after record resumed.
+     *
+     * <p>If the resume request cannot be fulfilled, the recording session will respond by calling
+     * {@link RecordingCallback#onError(int)}.
+     *
+     * @param params Domain-specific data for this request.
+     */
+    public void resumeRecording(@NonNull Bundle params) {
+        if (!mIsRecordingStarted) {
+            throw new IllegalStateException("resumeRecording failed - recording not yet started");
+        }
+        if (!mIsPaused) {
+            Log.w(TAG, "resumeRecording failed - recording not yet paused");
+        }
+        if (mSession != null) {
+            mSession.resumeRecording(params);
+            mIsPaused  = false;
         }
     }
 
@@ -382,6 +480,7 @@ public class TvRecordingClient {
             }
             mIsTuned = false;
             mIsRecordingStarted = false;
+            mIsPaused = false;
             mSessionCallback = null;
             mSession = null;
             if (mCallback != null) {
@@ -399,6 +498,7 @@ public class TvRecordingClient {
                 return;
             }
             mIsRecordingStarted = false;
+            mIsPaused = false;
             mCallback.onRecordingStopped(recordedProgramUri);
         }
 
