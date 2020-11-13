@@ -13803,4 +13803,38 @@ public class TelephonyManager {
 
         return Collections.emptyList();
     }
+
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = {"RADIO_INTERFACE_CAPABILITY_"},
+            value = {})
+    public @interface RadioInterfaceCapability {}
+
+    /**
+     * Whether the device supports a given capability on the radio interface.
+     *
+     * If the capability is not in the set of @RadioInterfaceCapability, false is returned.
+     *
+     * @param capability the name of the capability to check for
+     * @return the availability of the capability
+     */
+    public boolean isRadioInterfaceCapabilityAvailable(
+            @NonNull @RadioInterfaceCapability String capability) {
+        try {
+            if (capability == null) return false;
+
+            ITelephony telephony = getITelephony();
+            if (telephony != null) {
+                return telephony.isRadioInterfaceCapabilityAvailable(capability);
+            } else {
+                throw new IllegalStateException("telephony service is null.");
+            }
+        } catch (RemoteException ex) {
+            if (!isSystemProcess()) {
+                ex.rethrowAsRuntimeException();
+            }
+        }
+        return false;
+    }
 }

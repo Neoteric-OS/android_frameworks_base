@@ -46517,6 +46517,7 @@ package android.telephony {
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public boolean isModemEnabledForSlot(int);
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public int isMultiSimSupported();
     method public boolean isNetworkRoaming();
+    method public boolean isRadioInterfaceCapabilityAvailable(@NonNull String);
     method public boolean isRttSupported();
     method public boolean isSmsCapable();
     method @Deprecated public boolean isTtyModeSupported();

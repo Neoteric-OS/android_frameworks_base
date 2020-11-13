@@ -2232,4 +2232,12 @@ interface ITelephony {
      * @return true if dual connectivity is enabled else false
      */
     boolean isNrDualConnectivityEnabled(int subId);
+
+    /**
+     * Whether the device supports a given capability on the radio interface.
+     *
+     * @param capability the name of the capability
+     * @return the availability of the capability
+     */
+    boolean isRadioInterfaceCapabilityAvailable(String capability);
 }
