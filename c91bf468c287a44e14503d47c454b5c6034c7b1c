@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e29ad92_f352d643",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-11-13T00:23:05Z",
+      "side": 1,
+      "message": "nit: expands",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "c91bf468c287a44e14503d47c454b5c6034c7b1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac869d41_31c3f808",
+        "filename": "services/core/java/com/android/server/vcn/util/PersistableBundleUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-11-13T00:23:05Z",
+      "side": 1,
+      "message": "Java Map interface uses \u003cK, V\u003e -- may be worth following for consistency\n\nhttps://docs.oracle.com/javase/8/docs/api/java/util/Map.html",
+      "range": {
+        "startLine": 164,
+        "startChar": 18,
+        "endLine": 164,
+        "endChar": 24
+      },
+      "revId": "c91bf468c287a44e14503d47c454b5c6034c7b1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71e8cbec_3f57d3d9",
+        "filename": "services/core/java/com/android/server/vcn/util/PersistableBundleUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-11-13T00:23:05Z",
+      "side": 1,
+      "message": "suggest breaking this out to a separate CL - I don\u0027t see it mentioned in the commit message",
+      "range": {
+        "startLine": 224,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 5
+      },
+      "revId": "c91bf468c287a44e14503d47c454b5c6034c7b1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
