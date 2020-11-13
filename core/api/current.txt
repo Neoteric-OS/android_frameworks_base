@@ -29169,7 +29169,9 @@ package android.media.tv {
     method public void notifyRecordingStopped(android.net.Uri);
     method public void notifyTuned(android.net.Uri);
     method public void onAppPrivateCommand(@NonNull String, android.os.Bundle);
+    method public void onPauseRecording(@NonNull android.os.Bundle);
     method public abstract void onRelease();
+    method public void onResumeRecording(@NonNull android.os.Bundle);
     method public abstract void onStartRecording(@Nullable android.net.Uri);
     method public void onStartRecording(@Nullable android.net.Uri, @NonNull android.os.Bundle);
     method public abstract void onStopRecording();
@@ -29219,7 +29221,11 @@ package android.media.tv {
 
   public class TvRecordingClient {
     ctor public TvRecordingClient(android.content.Context, String, @NonNull android.media.tv.TvRecordingClient.RecordingCallback, android.os.Handler);
+    method public void pauseRecording();
+    method public void pauseRecording(@NonNull android.os.Bundle);
     method public void release();
+    method public void resumeRecording();
+    method public void resumeRecording(@NonNull android.os.Bundle);
     method public void sendAppPrivateCommand(@NonNull String, android.os.Bundle);
     method public void startRecording(@Nullable android.net.Uri);
     method public void startRecording(@Nullable android.net.Uri, @NonNull android.os.Bundle);

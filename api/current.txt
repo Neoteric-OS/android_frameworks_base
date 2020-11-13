@@ -29394,6 +29394,8 @@ package android.media.tv {
     method public abstract void onStartRecording(@Nullable android.net.Uri);
     method public void onStartRecording(@Nullable android.net.Uri, @NonNull android.os.Bundle);
     method public abstract void onStopRecording();
+    method public void onPauseRecording(@NonNull android.os.Bundle);
+    method public void onResumeRecording(@NonNull android.os.Bundle);
     method public abstract void onTune(android.net.Uri);
     method public void onTune(android.net.Uri, android.os.Bundle);
   }
@@ -29445,6 +29447,10 @@ package android.media.tv {
     method public void startRecording(@Nullable android.net.Uri);
     method public void startRecording(@Nullable android.net.Uri, @NonNull android.os.Bundle);
     method public void stopRecording();
+    method public void pauseRecording();
+    method public void pauseRecording(@NonNull android.os.Bundle);
+    method public void resumeRecording();
+    method public void resumeRecording(@NonNull android.os.Bundle);
     method public void tune(String, android.net.Uri);
     method public void tune(String, android.net.Uri, android.os.Bundle);
   }
