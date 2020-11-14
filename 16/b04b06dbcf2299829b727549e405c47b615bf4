@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Sunny Goyal <sunnygoyal@google.com>
+Code-Review+2: Svetoslav Ganov <svetoslavganov@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Mehdi Alizadeh <mett@google.com>
+Submitted-at: Sat, 14 Nov 2020 21:12:50 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1477129
+Project: platform/frameworks/base
+Branch: refs/heads/master
