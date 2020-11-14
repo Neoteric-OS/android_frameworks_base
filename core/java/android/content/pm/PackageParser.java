@@ -1918,6 +1918,7 @@ public class PackageParser {
                 outError[0] = "<manifest> specifies bad sharedUserId name \""
                     + str + "\": " + nameError;
                 mParseError = PackageManager.INSTALL_PARSE_FAILED_BAD_SHARED_USER_ID;
+                sa.recycle();
                 return null;
             }
             pkg.mSharedUserId = str.intern();
@@ -3175,6 +3176,7 @@ public class PackageParser {
             // The platform does not get to specify conflicting permissions
             if ((perm.info.flags & PermissionInfo.FLAG_HARD_RESTRICTED) != 0
                     && (perm.info.flags & PermissionInfo.FLAG_SOFT_RESTRICTED) != 0) {
+                sa.recycle();
                 throw new IllegalStateException("Permission cannot be both soft and hard"
                         + " restricted: " + perm.info.name);
             }
@@ -3883,6 +3885,7 @@ public class PackageParser {
                     ai.privateFlags |= ApplicationInfo.PRIVATE_FLAG_PROFILEABLE_BY_SHELL;
                 }
                 XmlUtils.skipCurrentTag(parser);
+                sa.recycle();
             } else {
                 if (!RIGID_PARSER) {
                     Slog.w(TAG, "Unknown element under <application>: " + tagName
@@ -3981,6 +3984,7 @@ public class PackageParser {
         } else {
             outError[0] = "Invalid class loader name: " + classLoaderName;
             mParseError = PackageManager.INSTALL_PARSE_FAILED_MANIFEST_MALFORMED;
+            sa.recycle();
             return false;
         }
 
@@ -5805,6 +5809,7 @@ public class PackageParser {
                 if (str != null) {
                     if (!allowGlobs) {
                         outError[0] = "sspPattern not allowed here; ssp must be literal";
+                        sa.recycle();
                         return false;
                     }
                     outInfo.addDataSchemeSpecificPart(str, PatternMatcher.PATTERN_SIMPLE_GLOB);
