@@ -35,7 +35,6 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Collection;
 import java.util.Locale;
 import java.util.TreeSet;
 
@@ -230,7 +229,6 @@ public class NetworkUtils {
         return Inet4AddressUtils.netmaskToPrefixLength(netmask);
     }
 
-
     /**
      * Create an InetAddress from a string where the string must be a standard
      * representation of a V4 or V6 address.  Avoids doing a DNS lookup on failure
@@ -330,29 +328,15 @@ public class NetworkUtils {
     public static InetAddress hexToInet6Address(String addrHexString)
             throws IllegalArgumentException {
         try {
-            return numericToInetAddress(String.format(Locale.US, "%s:%s:%s:%s:%s:%s:%s:%s",
-                    addrHexString.substring(0,4),   addrHexString.substring(4,8),
-                    addrHexString.substring(8,12),  addrHexString.substring(12,16),
-                    addrHexString.substring(16,20), addrHexString.substring(20,24),
-                    addrHexString.substring(24,28), addrHexString.substring(28,32)));
+            StringBuilder sb = new StringBuilder(addrHexString);
+            for (int i = 0; i < 7; i++) {
+                sb.insert(4 * (9 - i), ":");
+            }
+            return InetAddresses.parseNumericAddress(String.format(Locale.US, "%s", sb.toString()));
         } catch (Exception e) {
             Log.e("NetworkUtils", "error in hexToInet6Address(" + addrHexString + "): " + e);
             throw new IllegalArgumentException(e);
         }
-    }
-
-    /**
-     * Create a string array of host addresses from a collection of InetAddresses
-     * @param addrs a Collection of InetAddresses
-     * @return an array of Strings containing their host addresses
-     */
-    public static String[] makeStrings(Collection<InetAddress> addrs) {
-        String[] result = new String[addrs.size()];
-        int i = 0;
-        for (InetAddress addr : addrs) {
-            result[i++] = addr.getHostAddress();
-        }
-        return result;
     }
 
     /**

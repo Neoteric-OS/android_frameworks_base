@@ -34,7 +34,6 @@ import android.content.Intent;
 import android.net.IDnsResolver;
 import android.net.LinkProperties;
 import android.net.Network;
-import android.net.NetworkUtils;
 import android.net.ResolverOptionsParcel;
 import android.net.ResolverParamsParcel;
 import android.net.Uri;
@@ -50,6 +49,7 @@ import android.util.Slog;
 
 import java.net.InetAddress;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -58,7 +58,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-
 
 /**
  * Encapsulate the management of DNS settings for networks.
@@ -364,15 +363,14 @@ public class DnsManager {
         paramsParcel.successThreshold = mSuccessThreshold;
         paramsParcel.minSamples = mMinSamples;
         paramsParcel.maxSamples = mMaxSamples;
-        paramsParcel.servers =
-                NetworkUtils.makeStrings(lp.getDnsServers());
+        paramsParcel.servers = makeStrings(lp.getDnsServers());
         paramsParcel.domains = getDomainStrings(lp.getDomains());
         paramsParcel.tlsName = strictMode ? privateDnsCfg.hostname : "";
         paramsParcel.tlsServers =
-                strictMode ? NetworkUtils.makeStrings(
+                strictMode ? makeStrings(
                         Arrays.stream(privateDnsCfg.ips)
-                              .filter((ip) -> lp.isReachable(ip))
-                              .collect(Collectors.toList()))
+                                .filter((ip) -> lp.isReachable(ip))
+                                .collect(Collectors.toList()))
                 : useTls ? paramsParcel.servers  // Opportunistic
                 : new String[0];            // Off
         paramsParcel.resolverOptions = new ResolverOptionsParcel();
@@ -458,6 +456,21 @@ public class DnsManager {
 
     private int getIntSetting(String which, int dflt) {
         return Settings.Global.getInt(mContentResolver, which, dflt);
+    }
+
+    /**
+     * Create a string array of host addresses from a collection of InetAddresses
+     *
+     * @param addrs a Collection of InetAddresses
+     * @return an array of Strings containing their host addresses
+     */
+    private String[] makeStrings(Collection<InetAddress> addrs) {
+        String[] result = new String[addrs.size()];
+        int i = 0;
+        for (InetAddress addr : addrs) {
+            result[i++] = addr.getHostAddress();
+        }
+        return result;
     }
 
     private static String getPrivateDnsMode(ContentResolver cr) {
