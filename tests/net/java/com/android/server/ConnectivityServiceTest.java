@@ -177,7 +177,6 @@ import android.net.NetworkStack;
 import android.net.NetworkStackClient;
 import android.net.NetworkState;
 import android.net.NetworkTestResultParcelable;
-import android.net.NetworkUtils;
 import android.net.ProxyInfo;
 import android.net.ResolverParamsParcel;
 import android.net.RouteInfo;
@@ -4772,9 +4771,7 @@ public class ConnectivityServiceTest {
         lp.setInterfaceName(WIFI_IFNAME);
         LinkAddress myIpv4Address = new LinkAddress("192.168.12.3/24");
         RouteInfo myIpv4DefaultRoute = new RouteInfo((IpPrefix) null,
-                NetworkUtils.numericToInetAddress("192.168.12.1"), lp.getInterfaceName());
-        lp.addLinkAddress(myIpv4Address);
-        lp.addRoute(myIpv4DefaultRoute);
+                InetAddresses.parseNumericAddress("192.168.12.1"), lp.addRoute(myIpv4DefaultRoute));
 
         // Verify direct routes are added when network agent is first registered in
         // ConnectivityService.
