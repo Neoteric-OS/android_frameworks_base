@@ -311,11 +311,15 @@ public final class IpSecTransform implements AutoCloseable {
             mUserKeepaliveCallback = userCallback;
             ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(
                     Context.CONNECTIVITY_SERVICE);
-            mKeepalive = cm.startNattKeepalive(
-                    mConfig.getNetwork(), intervalSeconds, mKeepaliveCallback,
-                    NetworkUtils.numericToInetAddress(mConfig.getSourceAddress()),
-                    4500, // FIXME urgently, we need to get the port number from the Encap socket
-                    NetworkUtils.numericToInetAddress(mConfig.getDestinationAddress()));
+            mKeepalive =
+                    cm.startNattKeepalive(
+                            mConfig.getNetwork(),
+                            intervalSeconds,
+                            mKeepaliveCallback,
+                            InetAddresses.parseNumericAddress(mConfig.getSourceAddress()),
+                            4500, // FIXME urgently, we need to get the port number from the Encap
+                                  // socket
+                            InetAddresses.parseNumericAddress(mConfig.getDestinationAddress()));
             mCallbackHandler = handler;
         }
     }
