@@ -259,7 +259,10 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.stubbing.Answer;
 
+import java.io.FileDescriptor;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.DatagramSocket;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
@@ -7476,5 +7479,14 @@ public class ConnectivityServiceTest {
 
 
         mCm.unregisterNetworkCallback(networkCallback);
+    }
+
+    @Test
+    public void testDumpDoesNotCrash() {
+        StringWriter stringWriter = new StringWriter();
+
+        mService.dump(new FileDescriptor(), new PrintWriter(stringWriter), new String[0]);
+
+        assertFalse(stringWriter.toString().isEmpty());
     }
 }
