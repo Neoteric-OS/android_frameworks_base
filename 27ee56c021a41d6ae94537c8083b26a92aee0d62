@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "195e76f8_3ce863e6",
+        "filename": "keystore/java/android/security/keystore2/KeyStoreCryptoOperationUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2020-11-16T21:50:59Z",
+      "side": 1,
+      "message": "I realize this was just moved around, but I do wonder if the SPI should even bother.  It saves a call into keystore in some cases, sure, but is that worth having the code here?",
+      "range": {
+        "startLine": 53,
+        "startChar": 26,
+        "endLine": 53,
+        "endChar": 53
+      },
+      "revId": "27ee56c021a41d6ae94537c8083b26a92aee0d62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
