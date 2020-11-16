@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef7683e4_1451d3a6",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:22:31Z",
+      "side": 1,
+      "message": "Is setting this to IoThread.getHandler() equivalent to this change?",
+      "range": {
+        "startLine": 258,
+        "startChar": 41,
+        "endLine": 258,
+        "endChar": 45
+      },
+      "revId": "817db670ee22c8afd1266b60cf9b63adcce192c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
