@@ -22,6 +22,30 @@
       },
       "revId": "27ee56c021a41d6ae94537c8083b26a92aee0d62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b46b2997_ae082b4f",
+        "filename": "keystore/java/android/security/keystore2/KeyStoreCryptoOperationUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-16T21:57:59Z",
+      "side": 1,
+      "message": "I filed a followup for this. I did not want to stray to far from the current behavior. Once we have all the CTS tests passing we can look into this again.",
+      "parentUuid": "195e76f8_3ce863e6",
+      "range": {
+        "startLine": 53,
+        "startChar": 26,
+        "endLine": 53,
+        "endChar": 53
+      },
+      "revId": "27ee56c021a41d6ae94537c8083b26a92aee0d62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
