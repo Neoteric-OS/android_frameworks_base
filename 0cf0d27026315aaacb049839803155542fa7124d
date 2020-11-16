@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23244836_91c947e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-11-16T18:55:29Z",
+      "side": 1,
+      "message": "Dan, please direct CR to Marvin Ramin for assignment",
+      "revId": "0cf0d27026315aaacb049839803155542fa7124d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
