@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4637193a_cfaf7857",
+        "filename": "core/java/android/content/om/IOverlayManager.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:33:49Z",
+      "side": 1,
+      "message": "There is no return value.",
+      "range": {
+        "startLine": 178,
+        "startChar": 7,
+        "endLine": 178,
+        "endChar": 85
+      },
+      "revId": "cd222995507f005174cd8e6968d6726f9ee26991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97e0d7a1_74e6a18f",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:33:49Z",
+      "side": 1,
+      "message": "Use @IntDef to create an annotation for request type.",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 54
+      },
+      "revId": "cd222995507f005174cd8e6968d6726f9ee26991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83db7cd0_d66031f7",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:33:49Z",
+      "side": 1,
+      "message": "Use the @IntDef annotation here.",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 30
+      },
+      "revId": "cd222995507f005174cd8e6968d6726f9ee26991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2a4145a_86ced6a8",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:33:49Z",
+      "side": 1,
+      "message": "Use the @IntDef annotation here.",
+      "range": {
+        "startLine": 93,
+        "startChar": 23,
+        "endLine": 93,
+        "endChar": 37
+      },
+      "revId": "cd222995507f005174cd8e6968d6726f9ee26991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "662d832f_85252a4a",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:33:49Z",
+      "side": 1,
+      "message": "WDYT about:\n\n \"Request{type\u003d0x%02x (%s), packageName\u003d%s, userId\u003d%d}\"",
+      "range": {
+        "startLine": 101,
+        "startChar": 33,
+        "endLine": 101,
+        "endChar": 88
+      },
+      "revId": "cd222995507f005174cd8e6968d6726f9ee26991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fe71bf9_50a1d2ef",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:33:49Z",
+      "side": 1,
+      "message": "When we have actors/roles, if the target is missing and OMS is unable to determine if the caller is the actor for the overlay, the overlay will not be automatically enabled at a later point in time. This also means overlays cannot be disabled if we do not know if the caller is the actor.\n\nWe should change this to say something like:\n If the caller has the correct permissions, it is always possible to disable an overlay. Due \n to technical security reasons...\n\nAnd change the example to:\n An example of the latter is when the overlay does not successfully overlay any target \n resources due to overlayable policy restrictions. \n\nAnd also mention the CHANGE_OVERLAY_PACKAGES permissions needed for setEnabled to work.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 55
+      },
+      "revId": "cd222995507f005174cd8e6968d6726f9ee26991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e5e3cc1_85aca646",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:33:49Z",
+      "side": 1,
+      "message": "It is not clear how split window mode relates to overlays. Can you remove this line or elaborate?",
+      "range": {
+        "startLine": 143,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 23
+      },
+      "revId": "cd222995507f005174cd8e6968d6726f9ee26991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f0765a1_8f6ca432",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:33:49Z",
+      "side": 1,
+      "message": "nit: type",
+      "range": {
+        "startLine": 160,
+        "startChar": 22,
+        "endLine": 160,
+        "endChar": 23
+      },
+      "revId": "cd222995507f005174cd8e6968d6726f9ee26991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4180e98a_b57defbb",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:33:49Z",
+      "side": 1,
+      "message": "The request should fail atomically if the caller fails the enforceActor check for any overlay.",
+      "range": {
+        "startLine": 845,
+        "startChar": 67,
+        "endLine": 848,
+        "endChar": 48
+      },
+      "revId": "cd222995507f005174cd8e6968d6726f9ee26991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3ba9642_cf3c48d8",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:33:49Z",
+      "side": 1,
+      "message": "nit: Past the point of no return. No backward glances.\n(I love The Phantom of the Opera).",
+      "range": {
+        "startLine": 879,
+        "startChar": 23,
+        "endLine": 879,
+        "endChar": 41
+      },
+      "revId": "cd222995507f005174cd8e6968d6726f9ee26991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f79f8e36_d92ce19e",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:33:49Z",
+      "side": 1,
+      "message": "Why can\u0027t you reuse updateOverlayPaths? That function already has shared library support.",
+      "range": {
+        "startLine": 883,
+        "startChar": 20,
+        "endLine": 909,
+        "endChar": 21
+      },
+      "revId": "cd222995507f005174cd8e6968d6726f9ee26991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48b3a6f1_ad2dfe94",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:33:49Z",
+      "side": 1,
+      "message": "Extract this into a method and dedupe the code in onOverlaysChanged.",
+      "range": {
+        "startLine": 912,
+        "startChar": 0,
+        "endLine": 927,
+        "endChar": 17
+      },
+      "revId": "cd222995507f005174cd8e6968d6726f9ee26991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c654ee9_a63cdae7",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:33:49Z",
+      "side": 1,
+      "message": "This should be done before sending the ACTION_OVERLAY_CHANGED broadcasts since we do this before sending the broadcast in the non-atomic API. Also, this logic can probably be deduped as well.\n\nAlso, should this be done on FgThread.getHandler()?",
+      "range": {
+        "startLine": 929,
+        "startChar": 0,
+        "endLine": 938,
+        "endChar": 17
+      },
+      "revId": "cd222995507f005174cd8e6968d6726f9ee26991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
