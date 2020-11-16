@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45baf277_72d07f36",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2020-11-16T09:44:25Z",
+      "side": 1,
+      "message": "Do we need to differentiate whether those install reasons come with DEX_METADATA?",
+      "range": {
+        "startLine": 595,
+        "startChar": 0,
+        "endLine": 599,
+        "endChar": 95
+      },
+      "revId": "68e90025525fe22844823957cc995c53c7cfa852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f2841a0_5a1915f9",
+        "filename": "services/core/java/com/android/server/pm/dex/DexoptOptions.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2020-11-16T09:44:25Z",
+      "side": 1,
+      "message": "This reads odd when the class is called DexoptOptions. Does it mean we\u0027ll still go to installd but not call dex2oat?",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 61
+      },
+      "revId": "68e90025525fe22844823957cc995c53c7cfa852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2cc8a94_634e6b54",
+        "filename": "services/core/java/com/android/server/pm/dex/DexoptOptions.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2020-11-16T09:44:25Z",
+      "side": 1,
+      "message": "Is this just a framework developer option (ie, we only get \"skip\" if the sys property is set to it?). Can you add a comment?",
+      "range": {
+        "startLine": 71,
+        "startChar": 55,
+        "endLine": 71,
+        "endChar": 59
+      },
+      "revId": "68e90025525fe22844823957cc995c53c7cfa852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
