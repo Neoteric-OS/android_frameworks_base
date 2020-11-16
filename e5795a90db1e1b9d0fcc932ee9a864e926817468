@@ -22,6 +22,30 @@
       },
       "revId": "e5795a90db1e1b9d0fcc932ee9a864e926817468",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca65cd69_600a7082",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKey.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-16T21:55:35Z",
+      "side": 1,
+      "message": "I don\u0027t know I just did the same as before. I filed a followup bug for this.",
+      "parentUuid": "e288ee4d_4ed44307",
+      "range": {
+        "startLine": 106,
+        "startChar": 7,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "e5795a90db1e1b9d0fcc932ee9a864e926817468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
