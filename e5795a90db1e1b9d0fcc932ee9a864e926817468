@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e288ee4d_4ed44307",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKey.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2020-11-16T21:48:54Z",
+      "side": 1,
+      "message": "Is there not some util that does this?",
+      "range": {
+        "startLine": 106,
+        "startChar": 7,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "e5795a90db1e1b9d0fcc932ee9a864e926817468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
