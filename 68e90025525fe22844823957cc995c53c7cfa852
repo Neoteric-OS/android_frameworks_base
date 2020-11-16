@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f6fe0a1e_6c07ff09",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2020-11-16T21:03:06Z",
+      "side": 1,
+      "message": "Good catch, we actually do. The PackageDexOptimizer will add DEXOPT_REASON_WITH_DEX_METADATA_ANNOTATION everytime it installs a .dm file. So we need matching constants here.",
+      "parentUuid": "45baf277_72d07f36",
+      "range": {
+        "startLine": 595,
+        "startChar": 0,
+        "endLine": 599,
+        "endChar": 95
+      },
+      "revId": "68e90025525fe22844823957cc995c53c7cfa852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8f2841a0_5a1915f9",
         "filename": "services/core/java/com/android/server/pm/dex/DexoptOptions.java",
         "patchSetId": 5
