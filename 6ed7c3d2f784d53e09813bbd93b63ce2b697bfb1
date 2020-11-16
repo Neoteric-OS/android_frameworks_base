@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f23cb28_bb675b2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-16T19:42:57Z",
+      "side": 1,
+      "message": "If we\u0027re allowing apps to use the OMS service, we need to have tests toe ensure that apps without CHANGE_OVERLAY_PACKAGES cannot use enable/disable APIs.",
+      "revId": "6ed7c3d2f784d53e09813bbd93b63ce2b697bfb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
