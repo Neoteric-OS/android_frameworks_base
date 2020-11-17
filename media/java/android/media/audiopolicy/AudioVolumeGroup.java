@@ -49,6 +49,10 @@ public final class AudioVolumeGroup implements Parcelable {
      */
     private int mId;
     /**
+     * Unique identifier of a volume group.
+     */
+    private int mAliasId;
+    /**
      * human-readable name of this volume group.
      */
     private final String mName;
@@ -94,7 +98,7 @@ public final class AudioVolumeGroup implements Parcelable {
      * @param id of the volume group
      * @param legacyStreamTypes of volume group
      */
-    AudioVolumeGroup(@NonNull String name, int id,
+    AudioVolumeGroup(@NonNull String name, int id, int aliasId,
                      @NonNull AudioAttributes[] audioAttributes,
                      @NonNull int[] legacyStreamTypes) {
         Preconditions.checkNotNull(name, "name must not be null");
@@ -102,6 +106,7 @@ public final class AudioVolumeGroup implements Parcelable {
         Preconditions.checkNotNull(legacyStreamTypes, "legacyStreamTypes must not be null");
         mName = name;
         mId = id;
+        mAliasId = aliasId;
         mAudioAttributes = audioAttributes;
         mLegacyStreamTypes = legacyStreamTypes;
     }
@@ -113,7 +118,7 @@ public final class AudioVolumeGroup implements Parcelable {
 
         AudioVolumeGroup thatAvg = (AudioVolumeGroup) o;
 
-        return mName == thatAvg.mName && mId == thatAvg.mId
+        return mName == thatAvg.mName && mId == thatAvg.mId && mAliasId == thatAvg.mAliasId
                 && mAudioAttributes.equals(thatAvg.mAudioAttributes);
     }
 
@@ -145,6 +150,13 @@ public final class AudioVolumeGroup implements Parcelable {
         return mId;
     }
 
+    /**
+     * @hide
+     */
+    public int getAliasId() {
+        return mAliasId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -154,6 +166,7 @@ public final class AudioVolumeGroup implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(mName);
         dest.writeInt(mId);
+        dest.writeInt(mAliasId);
         dest.writeInt(mAudioAttributes.length);
         for (AudioAttributes attributes : mAudioAttributes) {
             attributes.writeToParcel(dest, flags | AudioAttributes.FLATTEN_TAGS/*flags*/);
@@ -171,6 +184,7 @@ public final class AudioVolumeGroup implements Parcelable {
                     Preconditions.checkNotNull(in, "in Parcel must not be null");
                     String name = in.readString();
                     int id = in.readInt();
+                    int aliasId = in.readInt();
                     int nbAttributes = in.readInt();
                     AudioAttributes[] audioAttributes = new AudioAttributes[nbAttributes];
                     for (int index = 0; index < nbAttributes; index++) {
@@ -181,7 +195,7 @@ public final class AudioVolumeGroup implements Parcelable {
                     for (int index = 0; index < nbStreamTypes; index++) {
                         streamTypes[index] = in.readInt();
                     }
-                    return new AudioVolumeGroup(name, id, audioAttributes, streamTypes);
+                    return new AudioVolumeGroup(name, id, aliasId, audioAttributes, streamTypes);
                 }
 
                 @Override
@@ -197,6 +211,8 @@ public final class AudioVolumeGroup implements Parcelable {
         s.append(mName);
         s.append(" Id: ");
         s.append(Integer.toString(mId));
+        s.append(" Alias Id: ");
+        s.append(Integer.toString(mAliasId));
 
         s.append("\n     Supported Audio Attributes:");
         for (AudioAttributes attribute : mAudioAttributes) {
