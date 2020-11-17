@@ -3524,28 +3524,40 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return false;
         }
         for (NetworkRequestInfo nri : mNetworkRequests.values()) {
-            if (reason == UnneededFor.LINGER && nri.request.isBackgroundRequest()) {
+            if (reason == UnneededFor.LINGER
+                    && !nri.isMultilayeredRequest()
+                    && nri.mRequests.get(0).isBackgroundRequest()) {
                 // Background requests don't affect lingering.
                 continue;
             }
 
-            // If this Network is already the highest scoring Network for a request, or if
-            // there is hope for it to become one if it validated, then it is needed.
-            if (nri.request.isRequest() && nai.satisfies(nri.request) &&
-                    (nai.isSatisfyingRequest(nri.request.requestId) ||
-                    // Note that this catches two important cases:
-                    // 1. Unvalidated cellular will not be reaped when unvalidated WiFi
-                    //    is currently satisfying the request.  This is desirable when
-                    //    cellular ends up validating but WiFi does not.
-                    // 2. Unvalidated WiFi will not be reaped when validated cellular
-                    //    is currently satisfying the request.  This is desirable when
-                    //    WiFi ends up validating and out scoring cellular.
-                    nri.mSatisfier.getCurrentScore()
-                            < nai.getCurrentScoreAsValidated())) {
+            if (isNetworkPotentialSatisfier(nai, nri)) {
                 return false;
             }
         }
         return true;
+    }
+
+    private boolean isNetworkPotentialSatisfier(NetworkAgentInfo nai, NetworkRequestInfo nri) {
+        for (NetworkRequest req : nri.mRequests) {
+            // If this Network is already the highest scoring Network for a request, or if
+            // there is hope for it to become one if it validated, then it is needed.
+            if (req.isRequest() && nai.satisfies(req)
+                    && (nai.isSatisfyingRequest(req.requestId)
+                            // Note that this catches two important cases:
+                            // 1. Unvalidated cellular will not be reaped when unvalidated WiFi
+                            //    is currently satisfying the request.  This is desirable when
+                            //    cellular ends up validating but WiFi does not.
+                            // 2. Unvalidated WiFi will not be reaped when validated cellular
+                            //    is currently satisfying the request.  This is desirable when
+                            //    WiFi ends up validating and out scoring cellular.
+                            || nri.mSatisfier.getCurrentScore()
+                                    < nai.getCurrentScoreAsValidated())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private NetworkRequestInfo getNriForAppRequest(
@@ -5392,6 +5404,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             request = r;
             mRequests = initializeRequests(r);
             ensureAllNetworkRequestsHaveType(mRequests);
+            enforceRequestTypeSupport(mRequests);
             mPendingIntent = pi;
             messenger = null;
             mBinder = null;
@@ -5406,6 +5419,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             request = r;
             mRequests = initializeRequests(r);
             ensureAllNetworkRequestsHaveType(mRequests);
+            enforceRequestTypeSupport(mRequests);
             mBinder = binder;
             mPid = getCallingPid();
             mUid = getCallingUid();
@@ -5421,6 +5435,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         NetworkRequestInfo(NetworkRequest r) {
             this(r, null);
+        }
+
+        boolean isMultilayeredRequest() {
+            return mRequests.size() > 1;
         }
 
         private List<NetworkRequest> initializeRequests(NetworkRequest r) {
@@ -5454,6 +5472,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             ConnectivityManager.Errors.TOO_MANY_REQUESTS);
                 }
                 mUidToNetworkRequestCount.put(mUid, networkRequests);
+            }
+        }
+
+        /**
+         * Only allow multilayered requests (when there is more than one request) for
+         * NetworkRequest.Type.REQUEST. Other requests types are not currently supported.
+         * @param requests requests associated with an NRI.
+         */
+        private void enforceRequestTypeSupport(List<NetworkRequest> requests) {
+            if (!isMultilayeredRequest()) {
+                return;
+            }
+
+            for (int i = 0; i < requests.size(); i++) {
+                if (request.type != NetworkRequest.Type.REQUEST) {
+                    throw new IllegalArgumentException(
+                            "Multilayered NetworkRequests in ConnectivityService only support "
+                                    + "NetworkRequest.Type.REQUEST.");
+                }
             }
         }
 
