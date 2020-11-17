@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8feca963_38d00498",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-11-17T09:14:33Z",
+      "side": 1,
+      "message": "Disclaimer: I\u0027m not sure I\u0027m doing this right, especially for this part. I guess the target SDK should be whatever the current SDK is. Let me know if this is not what I\u0027m looking for.",
+      "range": {
+        "startLine": 108,
+        "startChar": 54,
+        "endLine": 108,
+        "endChar": 75
+      },
+      "revId": "49deb37a502861c7471d26d00857709a63b7df26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
