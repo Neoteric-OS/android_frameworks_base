@@ -24178,7 +24178,9 @@ package android.media {
     method @NonNull public java.util.List<android.media.AudioRecordingConfiguration> getActiveRecordingConfigurations();
     method public int getAllowedCapturePolicy();
     method public android.media.AudioDeviceInfo[] getDevices(int);
+    method @IntRange(from=0) public int getMaxVolumeIndexForAttributes(@NonNull android.media.AudioAttributes);
     method public java.util.List<android.media.MicrophoneInfo> getMicrophones() throws java.io.IOException;
+    method @IntRange(from=0) public int getMinVolumeIndexForAttributes(@NonNull android.media.AudioAttributes);
     method public int getMode();
     method public String getParameters(String);
     method public String getProperty(String);
@@ -24189,6 +24191,7 @@ package android.media {
     method public int getStreamVolume(int);
     method public float getStreamVolumeDb(int, int, int);
     method @Deprecated public int getVibrateSetting(int);
+    method @IntRange(from=0) public int getVolumeIndexForAttributes(@NonNull android.media.AudioAttributes);
     method @Deprecated public boolean isBluetoothA2dpOn();
     method public boolean isBluetoothScoAvailableOffCall();
     method public boolean isBluetoothScoOn();
