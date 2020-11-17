@@ -341,7 +341,7 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
         } else if (param instanceof KeyProtection) {
             spec = (KeyProtection) param;
             if (spec.isCriticalToDeviceEncryption()) {
-                // This key is should not be bound to the LSKF even if it is auth bound.
+                // This key should not be bound to the LSKF even if it is auth bound.
                 // This indicates that this key is used in the derivation for of the
                 // master key, that is used for the LSKF binding of other auth bound
                 // keys. This breaks up a circular dependency while retaining logical
