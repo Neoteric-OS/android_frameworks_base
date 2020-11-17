@@ -163,6 +163,30 @@
       },
       "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bedf0f59_385e42c9",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-17T01:43:28Z",
+      "side": 1,
+      "message": "Ok, my ask here is that we understand the problem and follow up with appropriate changes later without blocking now. Please @hknepshield and @benedictwong, let\u0027s come up with a long-term strategy, make sure this isn\u0027t blocking any work now, scope whatever amount of work is necessary in S, and proceed with appropriate TODOs.",
+      "parentUuid": "2185de9f_b024e5ea",
+      "range": {
+        "startLine": 178,
+        "startChar": 23,
+        "endLine": 178,
+        "endChar": 43
+      },
+      "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
