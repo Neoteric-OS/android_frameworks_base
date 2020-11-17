@@ -170,6 +170,7 @@ import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
+import android.sysprop.NetworkProperties;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
@@ -1027,6 +1028,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public IBatteryStats getBatteryStatsService() {
             return BatteryStatsService.getService();
         }
+
+        public boolean getCellular464XlatEnabled() {
+            return NetworkProperties.cellular_464xlat_enabled().orElse(false);
+        }
     }
 
     public ConnectivityService(Context context, INetworkManagementService netManager,
@@ -1225,7 +1230,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 new LinkProperties(), new NetworkCapabilities(), 0, mContext,
                 null, new NetworkAgentConfig(), this, null,
                 null, null, 0, INVALID_UID,
-                mQosCallbackTracker);
+                mQosCallbackTracker, mDeps);
     }
 
     private static NetworkCapabilities createDefaultNetworkCapabilitiesForUid(int uid) {
@@ -5998,7 +6003,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkAgentInfo nai = new NetworkAgentInfo(na,
                 new Network(mNetIdManager.reserveNetId()), new NetworkInfo(networkInfo), lp, nc,
                 currentScore, mContext, mTrackerHandler, new NetworkAgentConfig(networkAgentConfig),
-                this, mNetd, mDnsResolver, mNMS, providerId, uid, mQosCallbackTracker);
+                this, mNetd, mDnsResolver, mNMS, providerId, uid, mQosCallbackTracker, mDeps);
 
         // Make sure the LinkProperties and NetworkCapabilities reflect what the agent info says.
         processCapabilitiesFromAgent(nai, nc);

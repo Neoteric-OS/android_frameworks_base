@@ -1495,6 +1495,7 @@ public class ConnectivityServiceTest {
                     inv.getArgument(0), inv.getArgument(1), inv.getArgument(2));
             return mPolicyTracker;
         }).when(deps).makeMultinetworkPolicyTracker(any(), any(), any());
+        doReturn(true).when(deps).getCellular464XlatEnabled();
 
         return deps;
     }
@@ -8884,7 +8885,7 @@ public class ConnectivityServiceTest {
                 TelephonyManager.getNetworkTypeName(TelephonyManager.NETWORK_TYPE_LTE));
         return new NetworkAgentInfo(null, new Network(NET_ID), info, new LinkProperties(),
                 nc, 0, mServiceContext, null, new NetworkAgentConfig(), mService, null, null, null,
-                0, INVALID_UID, mQosCallbackTracker);
+                0, INVALID_UID, mQosCallbackTracker, new ConnectivityService.Dependencies());
     }
 
     @Test
@@ -9421,5 +9422,38 @@ public class ConnectivityServiceTest {
             }
         }
         fail("TOO_MANY_REQUESTS never thrown");
+    }
+
+    @Test
+    public void testWith464XlatDisable() throws Exception {
+        doReturn(false).when(mDeps).getCellular464XlatEnabled();
+
+        final TestNetworkCallback callback = new TestNetworkCallback();
+        final TestNetworkCallback defaultCallback = new TestNetworkCallback();
+        final NetworkRequest networkRequest = new NetworkRequest.Builder()
+                .addCapability(NET_CAPABILITY_INTERNET)
+                .build();
+        mCm.registerNetworkCallback(networkRequest, callback);
+        mCm.registerDefaultNetworkCallback(defaultCallback);
+
+        // Bring up validated cell.
+        final LinkProperties cellLp = new LinkProperties();
+        cellLp.setInterfaceName(MOBILE_IFNAME);
+        cellLp.addLinkAddress(new LinkAddress("2001:db8:1::1/64"));
+        cellLp.addRoute(new RouteInfo(new IpPrefix("::/0"),  null, MOBILE_IFNAME));
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+
+        mCellNetworkAgent.sendLinkProperties(cellLp);
+        mCellNetworkAgent.connect(true);
+        callback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+        defaultCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+        final int cellNetId = mCellNetworkAgent.getNetwork().netId;
+        waitForIdle();
+
+        verify(mMockDnsResolver, never()).startPrefix64Discovery(cellNetId);
+        // Technically cannot happen because prefix discovery cannot succeed if it is not started.
+        verify(mMockNetd, never()).clatdStart(anyString(), anyString());
+        Nat464Xlat clat = getNat464Xlat(mCellNetworkAgent);
+        assertTrue("Nat464Xlat was not IDLE", !clat.isStarted());
     }
 }
