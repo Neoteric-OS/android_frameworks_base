@@ -304,6 +304,114 @@ public final class BluetoothLeAudio implements BluetoothProfile, AutoCloseable {
 
     private final BluetoothAdapter mAdapter;
     private final AttributionSource mAttributionSource;
+
+    /**
+     * Intent used to report broadcast instance creation.
+     *
+     * <p>This intent will have 2 extras:
+     * <ul>
+     * <li> {@link #EXTRA_LE_AUDIO_BROADCAST_INSTANCE_ID} - Audio Broadcast instance
+     * identifier. </li>
+     * <li> {@link #EXTRA_LE_AUDIO_BROADCAST_INSTANCE_STATUS} - Audio Broadcast instance
+     * creation status. </li>
+     *
+     * </ul>
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_LE_AUDIO_BROADCAST_CREATED =
+            "android.bluetooth.action.LE_AUDIO_BROADCAST_CREATED";
+
+    /**
+     * Intent used to report broadcast instance destruction.
+     *
+     * <p>This intent will have 1 extra:
+     * <ul>
+     * <li> {@link #EXTRA_LE_AUDIO_BROADCAST_INSTANCE_ID} - Audio Broadcast instance
+     * identifier. </li>
+     *
+     * </ul>
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_LE_AUDIO_BROADCAST_DESTROYED =
+            "android.bluetooth.action.LE_AUDIO_BROADCAST_DESTROYED";
+
+    /**
+     * Intent used to report broadcast instance state.
+     *
+     * <p>This intent will have 2 extras:
+     * <ul>
+     * <li> {@link #EXTRA_LE_AUDIO_BROADCAST_INSTANCE_ID} - Audio Broadcast instance
+     * identifier. </li>
+     * <li> {@link #EXTRA_LE_AUDIO_BROADCAST_STATE} - Current broadcasting state. </li>
+     * </ul>
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_LE_AUDIO_BROADCAST_STATE =
+            "android.bluetooth.action.LE_AUDIO_BROADCAST_STATE";
+
+    /**
+     * Intent used to report ongoing broadcast's advertising id. This can be used for
+     * the Broadcast Audio Assistant operations
+     *<p>This intent will have 1 extra:
+     * <ul>
+     * <li> {@link #EXTRA_LE_AUDIO_BROADCAST_ID} - Audio Broadcast Id (3 octects long id in the
+     * announcement)
+     * <li> {@link #EXTRA_LE_AUDIO_BROADCAST_INSTANCE_ID} - Audio Broadcast instance
+     * identifier. </li>
+     *
+     * </ul>
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_LE_AUDIO_BROADCAST_ID =
+            "android.bluetooth.action.LE_AUDIO_BROADCAST_ID";
+
+    /**
+     * Used as an extra field in {@link #ACTION_LE_AUDIO_BROADCAST_CREATED},
+     * {@link #ACTION_LE_AUDIO_BROADCAST_DESTROYED},
+     * {@link #ACTION_LE_AUDIO_BROADCAST_STATE} and
+     * {@link #ACTION_LE_AUDIO_BROADCAST_ID} intents.
+     * @hide
+     */
+    public static final String EXTRA_LE_AUDIO_BROADCAST_INSTANCE_ID =
+            "android.bluetooth.extra.LE_AUDIO_BROADCAST_INSTANCE_ID";
+
+    /**
+     * Used as an extra field in
+     * {@link #ACTION_LE_AUDIO_BROADCAST_ID} intents.
+     * @hide
+     */
+    public static final String EXTRA_LE_AUDIO_BROADCAST_ID =
+            "android.bluetooth.extra.LE_AUDIO_BROADCAST_ID";
+
+    /**
+     * Used as an extra field in {@link #ACTION_LE_AUDIO_BROADCAST_CREATED},
+     * @hide
+     */
+    public static final String EXTRA_LE_AUDIO_BROADCAST_INSTANCE_STATUS =
+            "android.bluetooth.extra.LE_AUDIO_BROADCAST_INSTANCE_STATUS";
+
+    /**
+     * Used as an extra field in {@link #ACTION_LE_AUDIO_BROADCAST_STATE} intent.
+     *
+     * <p>It can be any of
+     * <ul>
+     * <li> {@link #BROADCAST_STATE_STOPPED} </li>
+     * <li> {@link #BROADCAST_STATE_CONFIGURED} </li>
+     * <li> {@link #BROADCAST_STATE_STREAMING} </li>
+     * <ul>
+     * <p>
+     * @hide
+     */
+    public static final String EXTRA_LE_AUDIO_BROADCAST_STATE =
+            "android.bluetooth.extra.LE_AUDIO_BROADCAST_STATE";
+
     /**
      * Indicating that group is Active ( Audio device is available )
      * @hide
@@ -327,6 +435,58 @@ public final class BluetoothLeAudio implements BluetoothProfile, AutoCloseable {
      * @hide
      */
     public static final int GROUP_NODE_REMOVED = IBluetoothLeAudio.GROUP_NODE_REMOVED;
+
+    /**
+     * Used in request for all available Broadcast states or report failed
+     * Broadcast creation event.
+     * @hide
+     */
+    public static final int BROADCAST_INSTANCE_ID_UNDEFINED =
+            IBluetoothLeAudio.BROADCAST_INSTANCE_ID_UNDEFINED;
+
+    /**
+     * Indicates broadcaster is currently stopped.
+     * @hide
+     */
+    public static final int BROADCAST_STATE_STOPPED = IBluetoothLeAudio.BROADCAST_STATE_STOPPED;
+
+    /**
+     * Indicates broadcaster is currently configured and can be resumed.
+     * @hide
+     */
+    public static final int BROADCAST_STATE_CONFIGURED =
+            IBluetoothLeAudio.BROADCAST_STATE_CONFIGURED;
+
+    /**
+     * Indicates broadcaster is currently streaming.
+     * @hide
+     */
+    public static final int BROADCAST_STATE_STREAMING = IBluetoothLeAudio.BROADCAST_STATE_STREAMING;
+
+    /**
+     * Indicates the broadcaster is using public address.
+     * @hide
+     */
+    public static final int BROADCASTER_ADDR_TYPE_PUBLIC = 0x00;
+
+    /**
+     * Indicates the broadcaster is using random address.
+     * @hide
+     */
+    public static final int BROADCASTER_ADDR_TYPE_RANDOM = 0x01;
+
+    /**
+     * Represents the generic sonification/informational broadcast audio profile.
+     * @hide
+     */
+    public static final int BROADCAST_PROFILE_SONIFICATION =
+            IBluetoothLeAudio.BROADCAST_PROFILE_SONIFICATION;
+
+    /**
+     * Represents the media broadcast audio profile.
+     * @hide
+     */
+    public static final int BROADCAST_PROFILE_MEDIA = IBluetoothLeAudio.BROADCAST_PROFILE_MEDIA;
 
     private final BluetoothProfileConnector<IBluetoothLeAudio> mProfileConnector =
             new BluetoothProfileConnector(this, BluetoothProfile.LE_AUDIO, "BluetoothLeAudio",
@@ -675,6 +835,263 @@ public final class BluetoothLeAudio implements BluetoothProfile, AutoCloseable {
             Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
             return false;
         }
+    }
+
+    /**
+     * Create new Broadcast.
+     *
+     * <p>Newly created broadcast informations are returned by the
+     * {@link #ACTION_LE_AUDIO_BROADCAST_CREATED} intent.
+     * .
+     * @param metadata broadcast metadata LTV buffer
+     * @param audio_profile audio profile for the new broadcast
+     * @param broadcast_code broadcast encryption code or null for no encryption
+     * @return true on success, otherwise false
+     * @hide
+     */
+    @RequiresBluetoothConnectPermission
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_PRIVILEGED
+    })
+    public boolean createBroadcast(@Nullable byte[] metadata, int audio_profile,
+            @Nullable byte[] broadcast_code) {
+        if (VDBG) log("createBroadcast()");
+        final IBluetoothLeAudio service = getService();
+        try {
+            if (service != null && mAdapter.isEnabled()) {
+                service.createBroadcast(metadata, audio_profile, broadcast_code,
+                        mAttributionSource);
+            } else {
+                if (service == null) Log.w(TAG, "Proxy not attached to service");
+                return false;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Update Broadcast metadata.
+     *
+     * @param instance_id broadcast instance identifier
+     * @param metadata broadcast metadata LTV buffer
+     * @return true on success, otherwise false
+     * @hide
+     */
+    @RequiresBluetoothConnectPermission
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_PRIVILEGED
+    })
+    public boolean updateMetadata(int instance_id, @Nullable byte[] metadata) {
+        if (VDBG) log("updateMetadata()");
+        final IBluetoothLeAudio service = getService();
+        try {
+            if (service != null && mAdapter.isEnabled()) {
+                service.updateMetadata(instance_id, metadata, mAttributionSource);
+            } else {
+                if (service == null) Log.w(TAG, "Proxy not attached to service");
+                return false;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Start previously created Broadcast.
+     *
+     * <p>Broadcast state changes will be reported back by the
+     * {@link #ACTION_LE_AUDIO_BROADCAST_STATE} intent.
+     *
+     * @param instance_id broadcast instance identifier
+     * @return true on success, otherwise false
+     * @hide
+     */
+    @RequiresBluetoothConnectPermission
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_PRIVILEGED
+    })
+    public boolean startBroadcast(int instance_id) {
+        if (VDBG) log("startBroadcast()");
+        final IBluetoothLeAudio service = getService();
+        try {
+            if (service != null && mAdapter.isEnabled()) {
+                service.startBroadcast(instance_id, mAttributionSource);
+            } else {
+                if (service == null) Log.w(TAG, "Proxy not attached to service");
+                return false;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Stop previously started Broadcast.
+     *
+     * <p>Broadcast state changes will be reported back by the
+     * {@link #ACTION_LE_AUDIO_BROADCAST_STATE} intent.
+     *
+     * @param instance_id broadcast instance identifier
+     * @return true on success, otherwise false
+     * @hide
+     */
+    @RequiresBluetoothConnectPermission
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_PRIVILEGED
+    })
+    public boolean stopBroadcast(int instance_id) {
+        if (VDBG) log("stopBroadcast()");
+        final IBluetoothLeAudio service = getService();
+        try {
+            if (service != null && mAdapter.isEnabled()) {
+                service.stopBroadcast(instance_id, mAttributionSource);
+            } else {
+                if (service == null) Log.w(TAG, "Proxy not attached to service");
+                return false;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Pause previously started Broadcast.
+     *
+     * <p>Broadcast state changes will be reported back by the
+     * {@link #ACTION_LE_AUDIO_BROADCAST_STATE} intent.
+     *
+     * @param instance_id broadcast instance identifier
+     * @return true on success, otherwise false
+     * @hide
+     */
+    @RequiresBluetoothConnectPermission
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_PRIVILEGED
+    })
+    public boolean pauseBroadcast(int instance_id) {
+        if (VDBG) log("pauseBroadcast()");
+        final IBluetoothLeAudio service = getService();
+        try {
+            if (service != null && mAdapter.isEnabled()) {
+                service.pauseBroadcast(instance_id, mAttributionSource);
+            } else {
+                if (service == null) Log.w(TAG, "Proxy not attached to service");
+                return false;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Destroy previously created Broadcast.
+     *
+     * <p>Broadcast state changes will be reported back by the
+     * {@link #ACTION_LE_AUDIO_BROADCAST_STATE} intent.
+     *
+     * @param instance_id broadcast instance identifier
+     * @return true on success, otherwise false
+     * @hide
+     */
+    @RequiresBluetoothConnectPermission
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_PRIVILEGED
+    })
+    public boolean destroyBroadcast(int instance_id) {
+        if (VDBG) log("destroyBroadcast()");
+        final IBluetoothLeAudio service = getService();
+        try {
+            if (service != null && mAdapter.isEnabled()) {
+                service.destroyBroadcast(instance_id, mAttributionSource);
+            } else {
+                if (service == null) Log.w(TAG, "Proxy not attached to service");
+                return false;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Request current advertising address of the previously created Broadcast.
+     *
+     * <p>Broadcasting identifier will be reported back by the
+     * {@link #ACTION_LE_AUDIO_BROADCAST_ID} intent.
+     *
+     * @param instance_id broadcast instance identifier
+     * @return true on success, otherwise false
+     * @hide
+     */
+    @RequiresBluetoothConnectPermission
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_PRIVILEGED
+    })
+    public boolean getBroadcastId(int instance_id) {
+        if (VDBG) log("getBroadcastId()");
+        final IBluetoothLeAudio service = getService();
+        try {
+            if (service != null && mAdapter.isEnabled()) {
+                service.getBroadcastId(instance_id, mAttributionSource);
+            } else {
+                if (service == null) Log.w(TAG, "Proxy not attached to service");
+                return false;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Request states of all the currently existing local Broadcasts.
+     *
+     * <p>Broadcast states will be reported back by the
+     * {@link #ACTION_LE_AUDIO_BROADCAST_STATE} intents.
+     *
+     * @return true on success, otherwise false
+     * @hide
+     */
+    @RequiresBluetoothConnectPermission
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_PRIVILEGED
+    })
+    public boolean getAllBroadcastStates() {
+        if (VDBG) log("getAllBroadcastStates()");
+        final IBluetoothLeAudio service = getService();
+        try {
+            if (service != null && mAdapter.isEnabled()) {
+                service.getAllBroadcastStates(mAttributionSource);
+            } else {
+                if (service == null) Log.w(TAG, "Proxy not attached to service");
+                return false;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
+            return false;
+        }
+        return true;
     }
 
     /**

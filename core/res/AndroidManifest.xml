@@ -206,6 +206,10 @@
     <protected-broadcast android:name="android.bluetooth.action.CSIS_SET_MEMBER_AVAILABLE" />
     <protected-broadcast
         android:name="android.bluetooth.volume-control.profile.action.CONNECTION_STATE_CHANGED" />
+    <protected-broadcast android:name="android.bluetooth.action.LE_AUDIO_BROADCAST_CREATED" />
+    <protected-broadcast android:name="android.bluetooth.action.LE_AUDIO_BROADCAST_DESTROYED" />
+    <protected-broadcast android:name="android.bluetooth.action.LE_AUDIO_BROADCAST_STATE" />
+    <protected-broadcast android:name="android.bluetooth.action.LE_AUDIO_BROADCAST_ID" />
     <protected-broadcast
         android:name="android.bluetooth.a2dp.profile.action.CONNECTION_STATE_CHANGED" />
     <protected-broadcast
