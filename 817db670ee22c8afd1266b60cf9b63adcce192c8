@@ -45,6 +45,30 @@
       },
       "revId": "817db670ee22c8afd1266b60cf9b63adcce192c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a0ca044_a3f1d782",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-11-17T19:39:48Z",
+      "side": 1,
+      "message": "Sure, we can do that.\n\nIs there anyway to gather this type of data from dogfood builds to guesstimate what the load will be on end user devices?",
+      "parentUuid": "b3fb7d80_edb0d629",
+      "range": {
+        "startLine": 335,
+        "startChar": 12,
+        "endLine": 335,
+        "endChar": 86
+      },
+      "revId": "817db670ee22c8afd1266b60cf9b63adcce192c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
