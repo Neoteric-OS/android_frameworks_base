@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ee81a87_a7596da7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6818,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-17T11:01:14Z",
+      "side": 1,
+      "message": "I think here we\u0027ll actually need the list of requestIds. This log is useful to debug any reassignment of networks to requests, so I expect it will come in handy when we implement the ranking of the multilayered requests.",
+      "range": {
+        "startLine": 6818,
+        "startChar": 22,
+        "endLine": 6818,
+        "endChar": 62
+      },
+      "revId": "08415cb1634c28207b1271c25bf988a07e45e66d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
