@@ -64,6 +64,7 @@ static jint convertAudioVolumeGroupsFromNative(
     jint jStatus = (jint)AUDIO_JAVA_SUCCESS;
     jstring jName = NULL;
     jint Id = NULL;
+    jint AliasId = NULL;
 
     jintArray jLegacyStreamTypes = NULL;
     jobjectArray jAudioAttributes = NULL;
@@ -72,6 +73,7 @@ static jint convertAudioVolumeGroupsFromNative(
 
     jName = env->NewStringUTF(group.getName().c_str());
     Id = static_cast<jint>(group.getId());
+    AliasId = static_cast<jint>(group.getAliasId());
 
     // Legacy stream types array
     jLegacyStreamTypes = env->NewIntArray(group.getStreamTypes().size());
@@ -102,7 +104,7 @@ static jint convertAudioVolumeGroupsFromNative(
     }
 
     *jGroup = env->NewObject(gAudioVolumeGroupClass, gAudioVolumeGroupCstor,
-                             jName, Id, jAudioAttributes, jLegacyStreamTypes);
+                             jName, Id, AliasId, jAudioAttributes, jLegacyStreamTypes);
 exit:
     if (jName != NULL) {
         env->DeleteLocalRef(jName);
@@ -170,7 +172,7 @@ int register_android_media_AudioVolumeGroups(JNIEnv *env)
     gAudioVolumeGroupClass = MakeGlobalRefOrDie(env, audioVolumeGroupClass);
     gAudioVolumeGroupCstor = GetMethodIDOrDie(
                 env, audioVolumeGroupClass, "<init>",
-                "(Ljava/lang/String;I[Landroid/media/AudioAttributes;[I)V");
+                "(Ljava/lang/String;II[Landroid/media/AudioAttributes;[I)V");
 
     gAudioVolumeGroupFields.mName = GetFieldIDOrDie(
                 env, audioVolumeGroupClass, "mName", "Ljava/lang/String;");
