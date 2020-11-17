@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea1b3371_f985f93f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-11-17T10:34:58Z",
+      "side": 1,
+      "message": "This LGTM, but I don\u0027t own this area. Makoto and Felipe should take a look.",
+      "revId": "3f1d98ef04c9276642fda6319268952929be2e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
