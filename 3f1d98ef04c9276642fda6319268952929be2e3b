@@ -16,6 +16,23 @@
       "message": "This LGTM, but I don\u0027t own this area. Makoto and Felipe should take a look.",
       "revId": "3f1d98ef04c9276642fda6319268952929be2e3b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7f07a15_e0e9123c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-11-17T16:17:25Z",
+      "side": 1,
+      "message": "I don\u0027t own it either, I just made some changes there recently..",
+      "revId": "3f1d98ef04c9276642fda6319268952929be2e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
