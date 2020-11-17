@@ -30,6 +30,7 @@ import android.net.RouteInfo;
 import android.os.INetworkManagementService;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
+import android.sysprop.NetworkProperties;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -39,6 +40,8 @@ import com.android.server.net.BaseNetworkObserver;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.util.Objects;
+
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 
 /**
  * Class to manage a 464xlat CLAT daemon. Nat464Xlat is not thread safe and should be manipulated
@@ -52,6 +55,9 @@ public class Nat464Xlat extends BaseNetworkObserver {
 
     // This must match the interface prefix in clatd.c.
     private static final String CLAT_PREFIX = "v4-";
+
+    private static final boolean sEnableClatOnCellular =
+            NetworkProperties.cellular_464xlat_enabled().orElse(false);
 
     // The network types on which we will start clatd,
     // allowing clat only on networks for which we can support IPv6-only.
@@ -130,7 +136,9 @@ public class Nat464Xlat extends BaseNetworkObserver {
         final boolean skip464xlat = (nai.netAgentConfig() != null)
                 && nai.netAgentConfig().skip464xlat;
 
-        return supported && connected && isIpv6OnlyNetwork && !skip464xlat;
+        return supported && connected && isIpv6OnlyNetwork && !skip464xlat
+            && (nai.networkCapabilities.hasTransport(TRANSPORT_CELLULAR)
+                ? sEnableClatOnCellular : true);
     }
 
     /**
