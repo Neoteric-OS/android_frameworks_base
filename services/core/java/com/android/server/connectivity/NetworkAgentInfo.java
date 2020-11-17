@@ -342,7 +342,8 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
             @NonNull LinkProperties lp, @NonNull NetworkCapabilities nc, int score, Context context,
             Handler handler, NetworkAgentConfig config, ConnectivityService connService, INetd netd,
             IDnsResolver dnsResolver, INetworkManagementService nms, int factorySerialNumber,
-            int creatorUid, QosCallbackTracker qosCallbackTracker) {
+            int creatorUid, QosCallbackTracker qosCallbackTracker,
+            ConnectivityService.Dependencies deps) {
         Objects.requireNonNull(net);
         Objects.requireNonNull(info);
         Objects.requireNonNull(lp);
@@ -356,7 +357,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         linkProperties = lp;
         networkCapabilities = nc;
         mScore = score;
-        clatd = new Nat464Xlat(this, netd, dnsResolver, nms);
+        clatd = new Nat464Xlat(this, netd, dnsResolver, nms, deps);
         mConnService = connService;
         mContext = context;
         mHandler = handler;
