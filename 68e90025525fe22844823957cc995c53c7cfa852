@@ -92,6 +92,54 @@
       },
       "revId": "68e90025525fe22844823957cc995c53c7cfa852",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58371311_16848927",
+        "filename": "services/core/java/com/android/server/pm/dex/DexoptOptions.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2020-11-18T18:26:09Z",
+      "side": 1,
+      "message": "We won\u0027t make the `dexopt` call to Installd.  If there are other calls to Installd those would still occur.\n\nThis was placed here to re-use the `getCompilerFilterForReason` logic.  If we were to special case this we would have to call the getCompilerFilterForReason function once outside of the class to see if the reason-\u003efilter map contained \"skip\" and then again later when the DexoptOptions is loaded.",
+      "parentUuid": "8f2841a0_5a1915f9",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 61
+      },
+      "revId": "68e90025525fe22844823957cc995c53c7cfa852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b0ac962_fbc135f6",
+        "filename": "services/core/java/com/android/server/pm/dex/DexoptOptions.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2020-11-18T18:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2cc8a94_634e6b54",
+      "range": {
+        "startLine": 71,
+        "startChar": 55,
+        "endLine": 71,
+        "endChar": 59
+      },
+      "revId": "68e90025525fe22844823957cc995c53c7cfa852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
