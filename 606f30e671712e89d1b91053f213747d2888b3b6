@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbc1922f_620d9485",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1802715
+      },
+      "writtenOn": "2020-11-18T14:55:33Z",
+      "side": 1,
+      "message": "Passing results are attached to https://partnerissuetracker.corp.google.com/issues/173577458",
+      "revId": "606f30e671712e89d1b91053f213747d2888b3b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
