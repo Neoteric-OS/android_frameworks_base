@@ -138,6 +138,12 @@ public final class NetworkRegistrationInfo implements Parcelable {
     public static final int NR_STATE_CONNECTED = 3;
 
     /**
+     * Indicates that no reject cause has been provided.
+     * @hide
+     */
+    public static final int REJECT_CAUSE_INVALID = 0;
+
+    /**
      * Supported service type
      * @hide
      */
@@ -199,7 +205,7 @@ public final class NetworkRegistrationInfo implements Parcelable {
     @NRState
     private int mNrState;
 
-    private final int mRejectCause;
+    private int mRejectCause;
 
     private final boolean mEmergencyOnly;
 
@@ -495,6 +501,9 @@ public final class NetworkRegistrationInfo implements Parcelable {
      * @return Reason for denial if the registration state is {@link #REGISTRATION_STATE_DENIED}.
      * Depending on {@code accessNetworkTechnology}, the values are defined in 3GPP TS 24.008
      * 10.5.3.6 for UMTS, 3GPP TS 24.301 9.9.3.9 for LTE, and 3GPP2 A.S0001 6.2.2.44 for CDMA
+     *
+     * A reject cause of 0 indicates that this field is invalid/unknown.
+     *
      * @hide
      */
     @SystemApi
@@ -746,6 +755,40 @@ public final class NetworkRegistrationInfo implements Parcelable {
         NetworkRegistrationInfo result = copy();
         result.mCellIdentity = null;
         return result;
+    }
+
+
+    /**
+     * Returns a copy of self with permission-sensitive info removed.
+     *
+     * @return the copied NetworkRegistrationInfo with info sanitized.
+     * @hide
+     */
+    @NonNull
+    public NetworkRegistrationInfo createSanitizedCopy(boolean hasCoarseLocation,
+            boolean hasFineLocation, boolean hasPhoneState, boolean hasPrivilegedPhoneState) {
+        NetworkRegistrationInfo sanitized = copy();
+
+        // Equivalent to TM#getAllCellInfo()
+        if (!hasFineLocation) {
+            sanitized.mCellIdentity = mCellIdentity.sanitizeLocationInfo();
+        }
+
+        // SystemApi Only
+        if (!hasPrivilegedPhoneState) {
+            sanitized.mRejectCause = REJECT_CAUSE_INVALID;
+            sanitized.mVoiceSpecificInfo = null;
+            sanitized.mDataSpecificInfo = null;
+        }
+
+        // Equivalent to TM#getNetworkType() / TM#get{Data|Voice}NetworkType()
+        if (!hasPhoneState) {
+            sanitized.mNrState = NR_STATE_NONE;
+            sanitized.mAccessNetworkTechnology = TelephonyManager.NETWORK_TYPE_UNKNOWN;
+            sanitized.mIsUsingCarrierAggregation = false;
+        }
+
+        return sanitized;
     }
 
     private NetworkRegistrationInfo copy() {

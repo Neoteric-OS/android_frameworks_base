@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -2011,9 +2012,91 @@ public class ServiceState implements Parcelable {
         }
         if (!removeCoarseLocation) return state;
 
-        state.mOperatorAlphaLong = null;
-        state.mOperatorAlphaShort = null;
-        state.mOperatorNumeric = null;
+        // Equivalent (lack of) permissions to TM#getOperatorName()
+        // state.mOperatorAlphaLong = null;
+        // state.mOperatorAlphaShort = null;
+
+        // Equivalent (lack of) permissions to TM#getOperatorNumeric()
+        // state.mOperatorNumeric = null;
+
+        return state;
+    }
+
+    /**
+     * Returns a copy of self with location-identifying information removed.
+     *
+     * @param permissions a list of permissions for this ServiceState object:
+     *      - READ_PHONE_STATE
+     *      - READ_PRECISE_PHONE_STATE
+     *      - READ_PRIVILEGED_PHONE_STATE
+     *      - ACCESS_COARSE_LOCATION
+     *      - ACCESS_FINE_LOCATION
+     *
+     * @return the copied ServiceState with info sanitized.
+     * @hide
+     */
+    @NonNull
+    public ServiceState createSanitizedCopy(@NonNull Set<String> permissions) {
+        ServiceState state = new ServiceState(this);
+
+        final boolean hasFineLocation = permissions.contains(
+                android.Manifest.permission.ACCESS_FINE_LOCATION);
+        final boolean hasCoarseLocation = hasFineLocation || permissions.contains(
+                android.Manifest.permission.ACCESS_COARSE_LOCATION);
+        final boolean hasPrivilegedPhoneState = permissions.contains(
+                android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE);
+        final boolean hasPrecisePhoneState = hasPrivilegedPhoneState
+                || permissions.contains(android.Manifest.permission.READ_PRECISE_PHONE_STATE);
+        final boolean hasPhoneState = hasPrecisePhoneState
+                || permissions.contains(android.Manifest.permission.READ_PHONE_STATE);
+
+        synchronized (state.mNetworkRegistrationInfos) {
+            List<NetworkRegistrationInfo> networkRegistrationInfos =
+                    state.mNetworkRegistrationInfos.stream()
+                            .map((nri) -> nri
+                                    .createSanitizedCopy(
+                                            hasCoarseLocation,
+                                            hasFineLocation,
+                                            hasPhoneState,
+                                            hasPrivilegedPhoneState))
+                            .collect(Collectors.toList());
+            state.mNetworkRegistrationInfos.clear();
+            state.mNetworkRegistrationInfos.addAll(networkRegistrationInfos);
+        }
+
+        // Equivalent (lack of) permissions to TM#getOperatorName()
+        // state.mOperatorAlphaLong = null;
+        // state.mOperatorAlphaShort = null;
+
+        // Equivalent (lack of) permissions to TM#getOperatorNumeric()
+        // state.mOperatorNumeric = null;
+        // state.mSystemId = UNKNOWN_ID;
+        // state.mNetworkId = UNKNOWN_ID;
+
+        // Equivalent permissions to TM#getAllCellInfo()
+        if (!hasFineLocation) {
+            state.mChannelNumber = -1; //  -1 indicates "unknown"
+        }
+
+        // Equivalent permissions to TM#getNetworkSelectionMode()
+        if (!hasPrecisePhoneState) {
+            state.mIsManualNetworkSelection = false;
+        }
+
+        // @hide API info not for public consumption
+        if (!hasPrivilegedPhoneState) {
+            state.mLteEarfcnRsrpBoost = 0;
+            state.mOperatorAlphaLongRaw = null;
+            state.mOperatorAlphaShortRaw = null;
+            state.mIsDataRoamingFromRegistration = false;
+            state.mIsIwlanPreferred = false;
+        }
+
+
+        // Equivalent permissions to TM#getDataNetworkType()
+        if (!hasPhoneState) {
+            state.mNrFrequencyRange = FREQUENCY_RANGE_UNKNOWN;
+        }
 
         return state;
     }
