@@ -1,0 +1,8 @@
+Bypass-Presubmit+1: Songchun Fan <schfan@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Svetoslav Ganov <svetoslavganov@google.com>
+Submitted-by: Songchun Fan <schfan@google.com>
+Submitted-at: Wed, 18 Nov 2020 23:12:51 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1503393
+Project: platform/frameworks/base
+Branch: refs/heads/master
