@@ -1902,6 +1902,45 @@ public final class NfcAdapter {
     }
 
     /**
+     * Enables or disables field detect
+     * When Field detect mode is enabled, device only detects Field ON/OFF
+     * events in listen mode and propagates these events to application.
+     *
+     *@param enable True for enable false for disable
+     * @return True if Successfully enabled/disabled field detect, false otherwise
+     * @throws UnsupportedOperationException if FEATURE_NFC is unavailable.
+     */
+    public boolean setFieldDetectMode(boolean enable) {
+        if (!sHasNfcFeature) {
+            throw new UnsupportedOperationException();
+        }
+        try {
+            return sService.setFieldDetectMode(enable);
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return false;
+        }
+    }
+
+    /**
+     * Checks if field detect mode is enabled
+     *
+     * @return True if field detect mode is enabled, false otherwise
+     * @throws UnsupportedOperationException if FEATURE_NFC is unavailable.
+     */
+    public boolean isFieldDetectEnabled() {
+        if (!sHasNfcFeature) {
+            throw new UnsupportedOperationException();
+        }
+        try {
+            return sService.isFieldDetectEnabled();
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return false;
+        }
+    }
+
+    /**
      * Enable NDEF Push feature.
      * <p>This API is for the Settings application.
      * @hide
