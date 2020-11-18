@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8456863a_6ef849d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-18T00:42:43Z",
+      "side": 1,
+      "message": "LGTM modulo inline comments. Also, can you add test coverage for this to Nat464XlatTest?\n\nBecause the unit test will need to test both the \"property set\" and \"property unset\" cases we cannot have the code read the property directly; it must instead read the property through a method that we can override in the test. In other places we use Dependencies class for this. Or, we could use MockableSystemProperties. Remi might be able to advise on what we\u0027re doing for other CS property reads.",
+      "revId": "2e08a859b2336f9fe7a084f638a7e2a306d5d79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e14a4d23_7d35964d",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-18T00:42:43Z",
+      "side": 1,
+      "message": "It looks like this property is persistent. If so, it\u0027s better to read it on construction of this class.",
+      "range": {
+        "startLine": 133,
+        "startChar": 54,
+        "endLine": 133,
+        "endChar": 61
+      },
+      "revId": "2e08a859b2336f9fe7a084f638a7e2a306d5d79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d602d28_a3143f3e",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-18T00:42:43Z",
+      "side": 1,
+      "message": "Suggest calling this enableClatOnCellular.",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 133,
+        "endChar": 22
+      },
+      "revId": "2e08a859b2336f9fe7a084f638a7e2a306d5d79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "954566a0_caea7906",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-18T00:42:43Z",
+      "side": 1,
+      "message": "This property name string needs to be tracked as an API. I think Remi knows how that works.",
+      "range": {
+        "startLine": 133,
+        "startChar": 53,
+        "endLine": 133,
+        "endChar": 54
+      },
+      "revId": "2e08a859b2336f9fe7a084f638a7e2a306d5d79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
