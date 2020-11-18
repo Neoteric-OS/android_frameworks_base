@@ -84,7 +84,7 @@ public class AndroidKeyStoreProvider extends Provider {
 
         // java.security.KeyStore
         put("KeyStore.AndroidKeyStore", PACKAGE_NAME + ".AndroidKeyStoreSpi");
-        put("alg.alias.KeyStore.AndroidKeyStoreLegacy", "AndroidKeyStore");
+        put("alg.alias.KeyStore.AndroidKeyStoreLegacy", "KeyStore.AndroidKeyStore");
 
         // java.security.KeyPairGenerator
         put("KeyPairGenerator.EC", PACKAGE_NAME + ".AndroidKeyStoreKeyPairGeneratorSpi$EC");
