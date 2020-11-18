@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecfef86f_e1708213",
+        "filename": "services/core/java/com/android/server/pm/PreferredComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2020-11-18T21:56:40Z",
+      "side": 0,
+      "message": "This whole loop is wrong, `i` is never used inside the loop. Sorry for missing it.",
+      "range": {
+        "startLine": 265,
+        "startChar": 8,
+        "endLine": 278,
+        "endChar": 9
+      },
+      "revId": "da90fd9871ee128a127e32280475279360c61f66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
