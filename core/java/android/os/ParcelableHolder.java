@@ -63,6 +63,7 @@ import android.util.MathUtils;
  * op.y = ...;
  * ap.extension.setParcelable(op);}</pre>
  *
+ * Note that ParcelableHolder class isn't thread-safe during reading/writing value.
  * @hide
  */
 @SystemApi
@@ -120,6 +121,7 @@ public final class ParcelableHolder implements Parcelable {
 
     /**
      * Write a parcelable into ParcelableHolder, the previous parcelable will be removed.
+     * (@link #setParcelable} and (@link #getParcelable} are not thread-safe.
      * @throws BadParcelableException if the parcelable's stability is more unstable
      *         ParcelableHolder.
      */
@@ -137,6 +139,8 @@ public final class ParcelableHolder implements Parcelable {
     }
 
     /**
+     * Read a parcelable from ParcelableHolder.
+     * (@link #setParcelable} and (@link #getParcelable} are not thread-safe.
      * @return the parcelable that was written by {@link #setParcelable} or {@link #readFromParcel},
      *         or {@code null} if the parcelable has not been written.
      * @throws BadParcelableException if T is different from the type written by
