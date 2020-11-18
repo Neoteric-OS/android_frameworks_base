@@ -1184,6 +1184,12 @@ android.bluetooth.IBluetoothMap
 android.bluetooth.IBluetoothMetadataListener$Stub$Proxy
 android.bluetooth.IBluetoothMetadataListener$Stub
 android.bluetooth.IBluetoothMetadataListener
+android.bluetooth.IBluetoothMcs
+android.bluetooth.IBluetoothMcs$Stub
+android.bluetooth.IBluetoothMcsCallbacks
+android.bluetooth.IBluetoothMcsCallbacks$Stub
+android.bluetooth.IBluetoothMcsManager
+android.bluetooth.IBluetoothMcsManager$Stub
 android.bluetooth.IBluetoothPan$Stub$Proxy
 android.bluetooth.IBluetoothPan$Stub
 android.bluetooth.IBluetoothPan
