@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9c973e2e_9cf9387d",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2020-11-18T10:56:37Z",
+      "side": 1,
+      "message": "No, that\u0027s OK - we could say that boot class loader is fine too, but it\u0027d be best to stay with one mode as long as we can.\n\nThe issue comes when new (unknown) class loaders are used as parents. We want to avoid that as it may make dexpreopt complicated.",
+      "parentUuid": "e77469ae_0cddbebc",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 103,
+        "endChar": 91
+      },
+      "revId": "3f1d98ef04c9276642fda6319268952929be2e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "54968b8a_2f7809ea",
         "filename": "services/core/java/com/android/server/SystemServiceManager.java",
         "patchSetId": 2
