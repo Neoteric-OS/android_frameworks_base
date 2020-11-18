@@ -33,6 +33,52 @@
       "message": "I don\u0027t own it either, I just made some changes there recently..",
       "revId": "3f1d98ef04c9276642fda6319268952929be2e3b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "162177e9_b37a35e0",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2020-11-18T00:50:00Z",
+      "side": 1,
+      "message": "Strictly speaking this doesn\u0027t change, but it would be good to understand the reasons for this comment and if this change may affect them. It was added in http://ag/10045445 on request by +ngeoffray.",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 103,
+        "endChar": 91
+      },
+      "revId": "3f1d98ef04c9276642fda6319268952929be2e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54968b8a_2f7809ea",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2020-11-18T00:50:00Z",
+      "side": 1,
+      "message": "This means passing in something like /system/lib(64), doesn\u0027t it? That\u0027d break the namespace isolation between the APEX and platform. Just pass null for both I think should be fine, because you\u0027ll get the necessary links from the classloader namespace to the APEX namespace for the JNI lib(s) anyway.",
+      "range": {
+        "startLine": 106,
+        "startChar": 26,
+        "endLine": 106,
+        "endChar": 43
+      },
+      "revId": "3f1d98ef04c9276642fda6319268952929be2e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
