@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69a4b9a8_3f21f7de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T07:58:50Z",
+      "side": 1,
+      "message": "A lot of nits, but nothing really essential",
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc3d6151_36eefcda",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4798,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T07:58:50Z",
+      "side": 1,
+      "message": "Nit : For small sets like this, ArraySet performs better. Also final.",
+      "range": {
+        "startLine": 4798,
+        "startChar": 8,
+        "endLine": 4798,
+        "endChar": 15
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a2dfc49_88f7cf06",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4801,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T07:58:50Z",
+      "side": 1,
+      "message": "actual",
+      "range": {
+        "startLine": 4801,
+        "startChar": 22,
+        "endLine": 4801,
+        "endChar": 30
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffe8c8ed_94f550a6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4801,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T07:58:50Z",
+      "side": 1,
+      "message": "Not sure you need these two lines, because you know that expected.length \u003d\u003d actual.length and expected doesn\u0027t contain duplicates, so if actual contains any duplicate then assertEquals() below will also fail. The error message will also not be any worse, because it\u0027s going to both be true that actual contains duplicates and actual doesn\u0027t contain the same elements as expected.",
+      "range": {
+        "startLine": 4800,
+        "startChar": 8,
+        "endLine": 4801,
+        "endChar": 86
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c80c6cd3_566fd4ec",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4921,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T07:58:50Z",
+      "side": 1,
+      "message": "I had trouble understanding this, what about a wording like\n\n  and influences the default interface as sent to NetworkStatsService by virtue of being\n  the default network for uid 0, because getActiveLinkProperties just returns the LP for\n  the first underlying network when the default for uid 0 is a VPN.",
+      "range": {
+        "startLine": 4920,
+        "startChar": 85,
+        "endLine": 4921,
+        "endChar": 100
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "440fbc69_170271ec",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4936,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T07:58:50Z",
+      "side": 1,
+      "message": "Wait it doesn\u0027t ? I\u0027m not sure it what sense in fact – sure, as you note below the code will tell NSS to count while the interface is still up, but that doesn\u0027t mean it \"doesn\u0027t work\" (or, suppose we\u0027d call forceUpdateIfaces another time without the disconnected underlying network after the interface disappeared, what wouldn\u0027t change anything).\n\nOr do you mean the network is never removed from the list of underlying networks inside the Vpn object ? That may be true – but it\u0027s unrelated to NSS (hence I can\u0027t make sense of the \"because\" immediately following the phrase) and it is also largely inconsequential.\n\n...or is it ? Do you mean that if a new network comes up on that old interface and the VPN never declares it underlying, then NSS will count the VPN as using that new network as underlying ? e.g.\n• Both cell and wifi are connected, wifi is the default\n• VPN declares cell and wifi underlying\n• cell disconnects, nothing happens\n• cell reconnects on the same interface\n• VPN says nothing\n• ...and then NSS will split the VPN traffic between the 2 interfaces ?\nBut I don\u0027t think this is happening, because any interface coming up or going down will force update the interfaces, and CS will recompute the list of underlying interfaces. The old Network still being in the underlying networks will be of no import as getLinkProperties() for it will return null.",
+      "range": {
+        "startLine": 4936,
+        "startChar": 11,
+        "endLine": 4936,
+        "endChar": 37
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20d51771_e4d7b8ab",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4938,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T07:58:50Z",
+      "side": 1,
+      "message": "in",
+      "range": {
+        "startLine": 4938,
+        "startChar": 16,
+        "endLine": 4938,
+        "endChar": 18
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "befc84e0_436dc7ad",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4952,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T07:58:50Z",
+      "side": 1,
+      "message": "I find this comment a bit confusing because getAllVpnInfo doesn\u0027t call NSS (instead, its return value is passed), because strictly speaking it\u0027s wrong that when \"a\" VPN declares no underlying networks the array is empty (it\u0027s just that VPN that\u0027s not present), and because it\u0027s not as much getAllVpnInfo ignoring the VPN as much as createVpnInfo returning null. But anyway.\n\nI\u0027m not sure whether this is intentional or legacy that went unnoticed happened to work, but ultimately for NSS puproses a VPN with no underlying networks or no VPN should behave the same. The code in createVpnInfo doesn\u0027t really look like this is an overlook as it has specific code to not set the returned array if it\u0027s going to be empty. So while it is certainly a bit baroque I think it\u0027s probably WAI.",
+      "range": {
+        "startLine": 4951,
+        "startChar": 8,
+        "endLine": 4952,
+        "endChar": 89
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
