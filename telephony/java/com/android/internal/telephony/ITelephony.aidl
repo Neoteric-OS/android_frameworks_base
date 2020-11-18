@@ -2146,6 +2146,8 @@ interface ITelephony {
     oneway void setSystemSelectionChannels(in List<RadioAccessSpecifier> specifiers,
             int subId, IBooleanConsumer resultCallback);
 
+    List<RadioAccessSpecifier> getSystemSelectionChannels(int subId);
+
     boolean isMvnoMatched(int subId, int mvnoType, String mvnoMatchData);
 
     /**
