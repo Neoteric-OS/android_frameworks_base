@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcf9c3a3_3ea03d45",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3715,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-11-18T20:05:31Z",
+      "side": 1,
+      "message": "do these logically belong on the A2dpProfile instead? (since it\u0027s about a2dp audio?)",
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "500c5387_8dd8ac3e",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3729,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-11-18T20:05:31Z",
+      "side": 1,
+      "message": "remove debug logs?",
+      "range": {
+        "startLine": 3729,
+        "startChar": 8,
+        "endLine": 3729,
+        "endChar": 59
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e4a481a_28c228eb",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-11-18T20:05:31Z",
+      "side": 1,
+      "message": "would remove Bluetooth from name, since is part of the android.bluetooth namespace.\n\nso DynamicAudioBuffer.\n\nbut since this isn\u0027t actually a buffer, the name might be confusing. Is this more of a capabilities object? maybe DynamicAudioBufferCapabilities?",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 46
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d23bbd4_f2a8052e",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-11-18T20:05:31Z",
+      "side": 1,
+      "message": "shorten to Type, since is inside BluetoothDynamicAudioBuffer class",
+      "range": {
+        "startLine": 45,
+        "startChar": 22,
+        "endLine": 45,
+        "endChar": 39
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "874125d4_29a187e8",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-11-18T20:05:31Z",
+      "side": 1,
+      "message": "are these mutually exclusive?",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 63,
+        "endChar": 81
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8037b5f_1d0d9fa5",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-11-18T20:05:31Z",
+      "side": 1,
+      "message": "should this be a list of an actual class type instead of an array of arrays or list of list?\n\nit looks like we\u0027re relying on integers to index into the inner array (and expect all of them to be there), which feels pretty similar to field access from a class/struct",
+      "range": {
+        "startLine": 87,
+        "startChar": 53,
+        "endLine": 87,
+        "endChar": 66
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff82b155_26c8c6d7",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-11-18T20:05:31Z",
+      "side": 1,
+      "message": "what is the unit of time? is this milliseconds? bytes? (how does it map to the buffer size API?)",
+      "range": {
+        "startLine": 151,
+        "startChar": 15,
+        "endLine": 151,
+        "endChar": 34
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c3630d3_42f6f9c0",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-11-18T20:05:31Z",
+      "side": 1,
+      "message": "instead of requiring folks to index into the capability object to get data, should we instead make the API in BT adapter take the codec you\u0027re interested in getting the capabilities of? (and then the capability object can be getters without a codec parameter)",
+      "range": {
+        "startLine": 155,
+        "startChar": 48,
+        "endLine": 155,
+        "endChar": 57
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6cd331f_524f6001",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-11-18T20:05:31Z",
+      "side": 1,
+      "message": "DynamicAudio feels redundant in the name, since the class already includes it.\n\ngetDefaultBufferTime (and similar for other methods below?)",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 47
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
