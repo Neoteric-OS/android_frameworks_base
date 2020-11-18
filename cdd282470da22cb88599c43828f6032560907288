@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75684248_c58d5f2a",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2020-11-18T01:35:51Z",
+      "side": 1,
+      "message": "If we need to have this commented out code, there seems to be something missing in this word?",
+      "range": {
+        "startLine": 255,
+        "startChar": 33,
+        "endLine": 255,
+        "endChar": 44
+      },
+      "revId": "cdd282470da22cb88599c43828f6032560907288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46af4437_60488aae",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2020-11-18T01:35:51Z",
+      "side": 1,
+      "message": "Do we need to have this commented code?",
+      "range": {
+        "startLine": 255,
+        "startChar": 8,
+        "endLine": 258,
+        "endChar": 63
+      },
+      "revId": "cdd282470da22cb88599c43828f6032560907288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
