@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcba45d1_19e6448a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4798,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-18T11:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc3d6151_36eefcda",
+      "range": {
+        "startLine": 4798,
+        "startChar": 8,
+        "endLine": 4798,
+        "endChar": 15
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a2dfc49_88f7cf06",
@@ -87,6 +111,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "09d7881a_c68f103a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4801,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-18T11:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a2dfc49_88f7cf06",
+      "range": {
+        "startLine": 4801,
+        "startChar": 22,
+        "endLine": 4801,
+        "endChar": 30
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f501d3e5_0c545d30",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4801,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-18T11:53:40Z",
+      "side": 1,
+      "message": "Replaced one of the checks for duplicates with a comment. Left the line that turns the array into a set because otherwise assertEquals wouldn\u0027t work.",
+      "parentUuid": "ffe8c8ed_94f550a6",
+      "range": {
+        "startLine": 4800,
+        "startChar": 8,
+        "endLine": 4801,
+        "endChar": 86
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c80c6cd3_566fd4ec",
@@ -100,6 +172,30 @@
       "writtenOn": "2020-11-18T07:58:50Z",
       "side": 1,
       "message": "I had trouble understanding this, what about a wording like\n\n  and influences the default interface as sent to NetworkStatsService by virtue of being\n  the default network for uid 0, because getActiveLinkProperties just returns the LP for\n  the first underlying network when the default for uid 0 is a VPN.",
+      "range": {
+        "startLine": 4920,
+        "startChar": 85,
+        "endLine": 4921,
+        "endChar": 100
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4be1ac9_3f68cb74",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4921,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-18T11:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c80c6cd3_566fd4ec",
       "range": {
         "startLine": 4920,
         "startChar": 85,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61c62bd0_4d7d3867",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4936,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-18T11:53:40Z",
+      "side": 1,
+      "message": "This comment wasn\u0027t very clear, sorry. Updated and added more test coverage to clarify what is happening.",
+      "parentUuid": "440fbc69_170271ec",
+      "range": {
+        "startLine": 4936,
+        "startChar": 11,
+        "endLine": 4936,
+        "endChar": 37
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20d51771_e4d7b8ab",
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ca742f9_b36ac4ee",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4938,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-18T11:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20d51771_e4d7b8ab",
+      "range": {
+        "startLine": 4938,
+        "startChar": 16,
+        "endLine": 4938,
+        "endChar": 18
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "befc84e0_436dc7ad",
@@ -169,6 +313,30 @@
       "writtenOn": "2020-11-18T07:58:50Z",
       "side": 1,
       "message": "I find this comment a bit confusing because getAllVpnInfo doesn\u0027t call NSS (instead, its return value is passed), because strictly speaking it\u0027s wrong that when \"a\" VPN declares no underlying networks the array is empty (it\u0027s just that VPN that\u0027s not present), and because it\u0027s not as much getAllVpnInfo ignoring the VPN as much as createVpnInfo returning null. But anyway.\n\nI\u0027m not sure whether this is intentional or legacy that went unnoticed happened to work, but ultimately for NSS puproses a VPN with no underlying networks or no VPN should behave the same. The code in createVpnInfo doesn\u0027t really look like this is an overlook as it has specific code to not set the returned array if it\u0027s going to be empty. So while it is certainly a bit baroque I think it\u0027s probably WAI.",
+      "range": {
+        "startLine": 4951,
+        "startChar": 8,
+        "endLine": 4952,
+        "endChar": 89
+      },
+      "revId": "283a1ebb9cc64ff73250f84d46a0291054a90b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cf5d520_a40690f9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4952,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-18T11:53:40Z",
+      "side": 1,
+      "message": "Ack. Updated comment.",
+      "parentUuid": "befc84e0_436dc7ad",
       "range": {
         "startLine": 4951,
         "startChar": 8,
