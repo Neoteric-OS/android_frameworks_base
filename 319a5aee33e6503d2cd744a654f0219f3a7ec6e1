@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40e3c39e_809b98e8",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreSpi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2020-11-18T02:43:37Z",
+      "side": 1,
+      "message": "Nit: creationTime?",
+      "range": {
+        "startLine": 256,
+        "startChar": 33,
+        "endLine": 256,
+        "endChar": 44
+      },
+      "revId": "319a5aee33e6503d2cd744a654f0219f3a7ec6e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
