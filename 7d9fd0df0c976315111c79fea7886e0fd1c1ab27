@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56d59d1f_ccf1ebb5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6818,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T10:38:15Z",
+      "side": 1,
+      "message": "I think this is going to result in a huge reduction in the logs readability. This is printed very often, and it looks like :\n\n16 : 105 → null\n\nWith your change, that same log will look like\n\n[uid/pid:1001/2436 NetworkRequest [ LISTEN id\u003d16, [ Transports: WIFI Capabilities: INTERNET\u0026TRUSTED\u0026NOT_VPN Uid: 1001 AdministratorUids: [] RequestorUid: 1001 RequestorPackageName: com.android.phone] ]] : 105 → null\n\nI think here the best thing to do would be to use the ID of the single request if there is only one, and otherwise use some ID that would let us identify which of the multi-layer requests offered by the API this was. But that is probably more than we want to chew right now, so I think just using the ID of the first request is good in all cases – here, we don\u0027t want the ID of the request being satisfied because we couldn\u0027t relate changes across reassignments (you couldn\u0027t tell that this later reassignment was in fact reassigning the same request as that previous reassignment).",
+      "range": {
+        "startLine": 6818,
+        "startChar": 16,
+        "endLine": 6818,
+        "endChar": 49
+      },
+      "revId": "7d9fd0df0c976315111c79fea7886e0fd1c1ab27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
