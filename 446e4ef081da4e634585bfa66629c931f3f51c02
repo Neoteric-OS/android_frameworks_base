@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1860bd6_814fbf06",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-19T22:02:28Z",
+      "side": 1,
+      "message": "static, why public?",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 14
+      },
+      "revId": "446e4ef081da4e634585bfa66629c931f3f51c02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22ec746e_50cff044",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-19T22:02:28Z",
+      "side": 1,
+      "message": "nit, this logic can be shorter:\n\nif (isValidSlotIndex() \u0026\u0026 hasCarrierPrivileges()) return;",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 13
+      },
+      "revId": "446e4ef081da4e634585bfa66629c931f3f51c02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
