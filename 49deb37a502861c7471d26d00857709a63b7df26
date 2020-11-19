@@ -22,6 +22,30 @@
       },
       "revId": "49deb37a502861c7471d26d00857709a63b7df26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62c16cc4_41f67679",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2020-11-19T22:26:56Z",
+      "side": 1,
+      "message": "Just noticed this still open comment. I can\u0027t vouch for this detail, I hope the other reviewers have a good understanding.",
+      "parentUuid": "8feca963_38d00498",
+      "range": {
+        "startLine": 108,
+        "startChar": 54,
+        "endLine": 108,
+        "endChar": 75
+      },
+      "revId": "49deb37a502861c7471d26d00857709a63b7df26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
