@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "030c0302_586d47ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-11-19T06:03:25Z",
+      "side": 1,
+      "message": "LGTM considering the file is removed in aosp/1503395 in the same topic",
+      "revId": "d5726c1916812ed3846092785abbd53352683502",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
