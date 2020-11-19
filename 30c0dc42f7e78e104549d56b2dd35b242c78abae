@@ -22,6 +22,30 @@
       },
       "revId": "30c0dc42f7e78e104549d56b2dd35b242c78abae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "877aa212_7c8bab80",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4943,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-19T05:58:44Z",
+      "side": 1,
+      "message": "That\u0027s true. I think that if whatever uses the interface doesn\u0027t register an agent for it (e.g., tethering), then this might still go wrong. Updated.",
+      "parentUuid": "6dc44bbe_17409c95",
+      "range": {
+        "startLine": 4942,
+        "startChar": 61,
+        "endLine": 4943,
+        "endChar": 60
+      },
+      "revId": "30c0dc42f7e78e104549d56b2dd35b242c78abae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
