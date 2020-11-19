@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8ef14a1_2fee8305",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5311,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2020-11-19T13:54:17Z",
+      "side": 0,
+      "message": "Refer to https://developer.android.com/about/versions/nougat/android-7.0-changes#screen-zoom\n\u003e\u003e If an app targets API level 23 or lower, the system automatically kills all its background processes. \n\n\u003e\u003e If an app targets Android 7.0, all of its processes (foreground and background) are notified of the configuration change as described in Handling Runtime Changes.",
+      "range": {
+        "startLine": 5311,
+        "startChar": 49,
+        "endLine": 5311,
+        "endChar": 50
+      },
+      "revId": "e191d8d958307ff182e463c1058a0ac25eb78225",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
