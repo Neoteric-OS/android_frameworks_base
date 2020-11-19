@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bc1aa8c_89f16d05",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-11-19T02:24:48Z",
+      "side": 1,
+      "message": "It would be nicer if the stabilities of this and p are shown together.",
+      "range": {
+        "startLine": 130,
+        "startChar": 16,
+        "endLine": 130,
+        "endChar": 85
+      },
+      "revId": "17ad1ce9781a69c18a6668c74e60205ab0a18461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ace12c76_39ddec9d",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-11-19T02:24:48Z",
+      "side": 1,
+      "message": "It would be nicer if the types are explicitly shown in the message.",
+      "range": {
+        "startLine": 150,
+        "startChar": 20,
+        "endLine": 150,
+        "endChar": 93
+      },
+      "revId": "17ad1ce9781a69c18a6668c74e60205ab0a18461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfd64550_cb1a4b15",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-11-19T02:24:48Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 160,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 89
+      },
+      "revId": "17ad1ce9781a69c18a6668c74e60205ab0a18461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
