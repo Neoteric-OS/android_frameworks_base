@@ -16,6 +16,24 @@
       "message": "I added more options to \u0027cmd user list\u0027 (like -all and -v) a few months ago, but not to \u0027pm list\u0027 because the \u0027non-cmd\u0027 binaries (like \u0027pm\u0027 and \u0027am\u0027) are legacy (although technically the replacemet would be \u0027cmd package list users\u0027).\n\nI don\u0027t mind make them consistent, but in that case you should document -v as well; I\u0027d also use the same help description on both places (pm list, cmd users list, cmd package list users). In fact, \u0027users\u0027 is not describing what the optional arguments do.\n\nlist [-v] [-all]\n    Prints all users on the system.\n\nAnyways, that\u0027s up to Todd\u0027s team, so please wait for his feedback before making further changes.\n",
       "revId": "9e6df1a00120855d96377723d7dfb4c74a874de4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9b17f02_3101d9ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2020-11-19T16:39:49Z",
+      "side": 1,
+      "message": "Hello @Felipe, Thank you for the feedback!\n\n\u003e I don\u0027t mind make them consistent, but in that case you should document -v as well\n\nYes, I agree with you. With this CL the `pm list users -v` also works well.\n\n\u003e Anyways, that\u0027s up to Todd\u0027s team, so please wait for his feedback before making further changes.\n\nUnderstood, I\u0027ll wait.",
+      "parentUuid": "fe9f41d4_59ee8090",
+      "revId": "9e6df1a00120855d96377723d7dfb4c74a874de4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
