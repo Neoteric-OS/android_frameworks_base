@@ -16,6 +16,69 @@
       "message": "Dan, please direct CR to Marvin Ramin for assignment",
       "revId": "0cf0d27026315aaacb049839803155542fa7124d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8afffef_6e94d8b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2020-11-19T15:54:15Z",
+      "side": 1,
+      "message": "Would it be possible to split this change into smaller individual changes?",
+      "revId": "0cf0d27026315aaacb049839803155542fa7124d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e777d14_933d5a47",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2020-11-19T15:54:15Z",
+      "side": 1,
+      "message": "This feature has been disabled so far due to incompatibilities with some TVs which report incorrect menu languages and would force the playback device into an unexpected language.\n\nThis can be a language the user does not understand, possibly with other characters than they are used to making it hard for the user to switch back to a more suitable language.",
+      "range": {
+        "startLine": 48,
+        "startChar": 54,
+        "endLine": 48,
+        "endChar": 58
+      },
+      "revId": "0cf0d27026315aaacb049839803155542fa7124d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c827b29e_7ec6d146",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2020-11-19T15:54:15Z",
+      "side": 1,
+      "message": "Can you explain the use-case for this?",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 113,
+        "endChar": 9
+      },
+      "revId": "0cf0d27026315aaacb049839803155542fa7124d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
