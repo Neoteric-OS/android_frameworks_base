@@ -625,10 +625,7 @@ class PackageManagerShellCommand extends ShellCommand {
             case "staged-sessions":
                 return runListStagedSessions();
             case "users":
-                ServiceManager.getService("user").shellCommand(
-                        getInFileDescriptor(), getOutFileDescriptor(), getErrFileDescriptor(),
-                        new String[] { "list" }, getShellCallback(), adoptResultReceiver());
-                return 0;
+                return runListUsers();
         }
         pw.println("Error: unknown list type '" + type + "'");
         return -1;
@@ -1063,6 +1060,18 @@ class PackageManagerShellCommand extends ShellCommand {
                 + "; isFailed = " + session.isStagedSessionFailed()
                 + "; errorMsg = " + session.getStagedSessionErrorMessage()
                 + ";");
+    }
+
+    private int runListUsers() throws RemoteException {
+        ArrayList<String> args = new ArrayList<String>();
+        args.add("list");
+        args.addAll(getRemainingArgs());
+
+        ServiceManager.getService("user").shellCommand(
+                getInFileDescriptor(), getOutFileDescriptor(), getErrFileDescriptor(),
+                args.toArray(new String[0]), getShellCallback(), adoptResultReceiver());
+
+        return 0;
     }
 
     private Intent parseIntentAndUser() throws URISyntaxException {
@@ -3570,8 +3579,9 @@ class PackageManagerShellCommand extends ShellCommand {
         pw.println("      --only-sessionid: show only sessionId of each session");
         pw.println("      --only-parent: hide all children sessions");
         pw.println("");
-        pw.println("  list users");
-        pw.println("    Prints all users.");
+        pw.println("  list users [--all]");
+        pw.println("    Lists the current users.");
+        pw.println("      --all: show all users (include partial, pre-created, etc).");
         pw.println("");
         pw.println("  resolve-activity [--brief] [--components] [--query-flags FLAGS]");
         pw.println("       [--user USER_ID] INTENT");
@@ -3735,9 +3745,6 @@ class PackageManagerShellCommand extends ShellCommand {
         pw.println("");
         pw.println("  trim-caches DESIRED_FREE_SPACE [internal|UUID]");
         pw.println("    Trim cache files to reach the given free space.");
-        pw.println("");
-        pw.println("  list users");
-        pw.println("    Lists the current users.");
         pw.println("");
         pw.println("  create-user [--profileOf USER_ID] [--managed] [--restricted] [--ephemeral]");
         pw.println("      [--guest] [--pre-create-only] [--user-type USER_TYPE] USER_NAME");
