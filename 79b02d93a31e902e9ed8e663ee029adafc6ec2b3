@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3c2cafc_0e2064ba",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-11-19T21:41:13Z",
+      "side": 1,
+      "message": "Done in non-dependency enforcePrimaryUser call",
+      "parentUuid": "d07ccdaf_27646f1b",
+      "range": {
+        "startLine": 146,
+        "startChar": 26,
+        "endLine": 146,
+        "endChar": 52
+      },
+      "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19744139_86b68f10",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd9b3417_09909fa4",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-11-19T21:41:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19744139_86b68f10",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 163,
+        "endChar": 61
+      },
+      "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4294122_26f244a1",
@@ -60,6 +108,30 @@
       "writtenOn": "2020-11-11T21:10:35Z",
       "side": 1,
       "message": "this works, but it\u0027s a dangerous pattern. The \"safe\" pattern is to do all the input validation, then clear the calling identity, and then do all the other stuff. It\u0027s hard to predict when something else will rely on you being the system and has been the source of many bugs.",
+      "range": {
+        "startLine": 171,
+        "startChar": 15,
+        "endLine": 171,
+        "endChar": 39
+      },
+      "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abc06084_b0f080ac",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-11-19T21:41:13Z",
+      "side": 1,
+      "message": "Yep. This is part of the validation step, so I didn\u0027t want the calling identity to change as a side effect of the caller validation.\n\nLater on, the rest of it will be done with a clean calling identity",
+      "parentUuid": "c4294122_26f244a1",
       "range": {
         "startLine": 171,
         "startChar": 15,
@@ -179,6 +251,30 @@
       "side": 1,
       "message": "Ok, my ask here is that we understand the problem and follow up with appropriate changes later without blocking now. Please @hknepshield and @benedictwong, let\u0027s come up with a long-term strategy, make sure this isn\u0027t blocking any work now, scope whatever amount of work is necessary in S, and proceed with appropriate TODOs.",
       "parentUuid": "2185de9f_b024e5ea",
+      "range": {
+        "startLine": 178,
+        "startChar": 23,
+        "endLine": 178,
+        "endChar": 43
+      },
+      "revId": "79b02d93a31e902e9ed8e663ee029adafc6ec2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4464153_2a90690d",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-11-19T21:41:13Z",
+      "side": 1,
+      "message": "Done, todos added with bugs. I believe Hunter is looking at reaching out to telephony next week",
+      "parentUuid": "bedf0f59_385e42c9",
       "range": {
         "startLine": 178,
         "startChar": 23,
