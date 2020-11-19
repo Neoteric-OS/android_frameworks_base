@@ -72,6 +72,13 @@ public class HwParcel {
     }
 
     /**
+     * Parcel data should be zero'd before realloc'd or deleted.
+     * @hide
+     */
+    @FastNative
+    public native final void markSensitive();
+
+    /**
      * Writes an interface token into the parcel used to verify that
      * a transaction has made it to the right type of interface.
      *

@@ -266,6 +266,11 @@ static void JHwParcel_native_setup(
     JHwParcel::SetNativeContext(env, thiz, context);
 }
 
+static void JHwParcel_native_markSensitive(JNIEnv *env, jobject thiz) {
+    hardware::Parcel *parcel = JHwParcel::GetNativeContext(env, thiz)->getParcel();
+    parcel->markSensitive();
+}
+
 static void JHwParcel_native_writeInterfaceToken(
         JNIEnv *env, jobject thiz, jstring interfaceNameObj) {
     if (interfaceNameObj == NULL) {
@@ -1071,6 +1076,8 @@ static void JHwParcel_native_writeBuffer(
 static JNINativeMethod gMethods[] = {
     { "native_init", "()J", (void *)JHwParcel_native_init },
     { "native_setup", "(Z)V", (void *)JHwParcel_native_setup },
+
+    { "markSensitive", "()V", (void *)JHwParcel_native_markSensitive },
 
     { "writeInterfaceToken", "(Ljava/lang/String;)V",
         (void *)JHwParcel_native_writeInterfaceToken },
