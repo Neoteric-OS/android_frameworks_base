@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dc44bbe_17409c95",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4943,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T04:27:24Z",
+      "side": 1,
+      "message": "But that\u0027s supposed to update the interfaces again. So sure there\u0027s a race but it\u0027s the same as for any change",
+      "range": {
+        "startLine": 4942,
+        "startChar": 61,
+        "endLine": 4943,
+        "endChar": 60
+      },
+      "revId": "30c0dc42f7e78e104549d56b2dd35b242c78abae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
