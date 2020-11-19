@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3658e204_5ccb64f5",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3715,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-11-19T09:14:07Z",
+      "side": 1,
+      "message": "These are to get the capability from the controller and adjust buffer in the controller, so we put these in BluetoothAdapter. Could you please suggest if there is any modification needed for this?",
+      "parentUuid": "fcf9c3a3_3ea03d45",
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "500c5387_8dd8ac3e",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 8
