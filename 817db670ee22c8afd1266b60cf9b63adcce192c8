@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b09f4609_54786703",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-11-20T15:56:19Z",
+      "side": 1,
+      "message": "D\u0027oh! Yes it is.",
+      "parentUuid": "ef7683e4_1451d3a6",
+      "range": {
+        "startLine": 258,
+        "startChar": 41,
+        "endLine": 258,
+        "endChar": 45
+      },
+      "revId": "817db670ee22c8afd1266b60cf9b63adcce192c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3fb7d80_edb0d629",
@@ -61,6 +85,30 @@
       "side": 1,
       "message": "Sure, we can do that.\n\nIs there anyway to gather this type of data from dogfood builds to guesstimate what the load will be on end user devices?",
       "parentUuid": "b3fb7d80_edb0d629",
+      "range": {
+        "startLine": 335,
+        "startChar": 12,
+        "endLine": 335,
+        "endChar": 86
+      },
+      "revId": "817db670ee22c8afd1266b60cf9b63adcce192c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54392965_a19213ae",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-11-20T15:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a0ca044_a3f1d782",
       "range": {
         "startLine": 335,
         "startChar": 12,
