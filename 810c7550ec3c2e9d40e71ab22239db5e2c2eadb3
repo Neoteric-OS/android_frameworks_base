@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f2827c8_fdad24a7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5515,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-20T03:11:53Z",
+      "side": 1,
+      "message": "No, UserHandle.getUserHandleForUid() will return non-null object always according to the returning value of UserHandle.of().\nhttps://source.corp.google.com/aosp-master/frameworks/base/core/java/android/os/UserHandle.java;l\u003d258-281",
+      "parentUuid": "aa473db1_1a311b23",
+      "range": {
+        "startLine": 5515,
+        "startChar": 45,
+        "endLine": 5515,
+        "endChar": 49
+      },
+      "revId": "810c7550ec3c2e9d40e71ab22239db5e2c2eadb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81237024_a7dd919c",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c06b42f_509fadca",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-20T03:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81237024_a7dd919c",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 49
+      },
+      "revId": "810c7550ec3c2e9d40e71ab22239db5e2c2eadb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99b3cdc8_b07e98e0",
@@ -60,6 +108,30 @@
       "writtenOn": "2020-11-10T05:20:58Z",
       "side": 1,
       "message": "I don\u0027t like that this is a member with an unwritten contract that someone has to set it before you come here. Can\u0027t you continue to stub this in mPackageManager like before ? We\u0027ll continue to get calls to getPackageUid() so you can simply adjust line 1100.",
+      "range": {
+        "startLine": 1353,
+        "startChar": 52,
+        "endLine": 1353,
+        "endChar": 66
+      },
+      "revId": "810c7550ec3c2e9d40e71ab22239db5e2c2eadb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78276fe5_60516557",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-20T03:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99b3cdc8_b07e98e0",
       "range": {
         "startLine": 1353,
         "startChar": 52,
