@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dba8ad94_8ce30f9e",
+        "filename": "services/tests/servicestests/src/com/android/server/hdmi/HdmiCecLocalDeviceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2020-11-20T12:09:51Z",
+      "side": 1,
+      "message": "Should this group contain the same object twice to verify equals works in the happy case?",
+      "range": {
+        "startLine": 258,
+        "startChar": 24,
+        "endLine": 258,
+        "endChar": 92
+      },
+      "revId": "e1e6be9f09257c62d99b558655d5221a9d40f007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
