@@ -17,6 +17,7 @@
 package com.android.systemui.car.userswitcher;
 
 import com.android.systemui.car.keyguard.CarKeyguardViewController;
+import com.android.systemui.car.window.OverlayViewGlobalStateController;
 import com.android.systemui.car.window.OverlayViewMediator;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.statusbar.StatusBarState;
@@ -35,18 +36,21 @@ public class FullscreenUserSwitcherViewMediator implements OverlayViewMediator {
     private final FullScreenUserSwitcherViewController mFullScreenUserSwitcherViewController;
     private final CarKeyguardViewController mCarKeyguardViewController;
     private final UserSwitchTransitionViewController mUserSwitchTransitionViewController;
+    private final OverlayViewGlobalStateController mOverlayViewGlobalStateController;
 
     @Inject
     public FullscreenUserSwitcherViewMediator(
             StatusBarStateController statusBarStateController,
             CarKeyguardViewController carKeyguardViewController,
             UserSwitchTransitionViewController userSwitchTransitionViewController,
-            FullScreenUserSwitcherViewController fullScreenUserSwitcherViewController) {
+            FullScreenUserSwitcherViewController fullScreenUserSwitcherViewController,
+            OverlayViewGlobalStateController overlayViewGlobalStateController) {
 
         mStatusBarStateController = statusBarStateController;
         mCarKeyguardViewController = carKeyguardViewController;
         mUserSwitchTransitionViewController = userSwitchTransitionViewController;
         mFullScreenUserSwitcherViewController = fullScreenUserSwitcherViewController;
+        mOverlayViewGlobalStateController = overlayViewGlobalStateController;
     }
 
     @Override
@@ -89,6 +93,7 @@ public class FullscreenUserSwitcherViewMediator implements OverlayViewMediator {
 
     private void hide() {
         mFullScreenUserSwitcherViewController.stop();
+        mOverlayViewGlobalStateController.setWindowFocusable(true);
     }
 
     private void show() {
