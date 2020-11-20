@@ -46,6 +46,30 @@
       },
       "revId": "49deb37a502861c7471d26d00857709a63b7df26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e60d6a36_f5f3f17a",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-11-20T06:05:50Z",
+      "side": 1,
+      "message": "Thanks, I think with 4 reviewers and no objection even though I called it out this seems to be fine.",
+      "parentUuid": "62c16cc4_41f67679",
+      "range": {
+        "startLine": 108,
+        "startChar": 54,
+        "endLine": 108,
+        "endChar": 75
+      },
+      "revId": "49deb37a502861c7471d26d00857709a63b7df26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
