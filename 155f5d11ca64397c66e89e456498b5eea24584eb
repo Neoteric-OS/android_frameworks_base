@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "594c9be5_083a22da",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5532,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-20T09:15:43Z",
+      "side": 1,
+      "message": "Is it really possible that the answer varies with the user ? If not, you can just replace all of this with just getApplicationInfo on mContext.\n\nIIUC that would entail a device with two users having installed two different packages with the same name. I don\u0027t know if that\u0027s actually possible.",
+      "range": {
+        "startLine": 5532,
+        "startChar": 22,
+        "endLine": 5532,
+        "endChar": 36
+      },
+      "revId": "155f5d11ca64397c66e89e456498b5eea24584eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73380bdb_b9d87811",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-20T09:15:43Z",
+      "side": 1,
+      "message": "This method is called in a tight loop in getAppsUids(). Can you avoid doing all these useless allocations ? A simple way to do it would be to take a context for the right user.",
+      "range": {
+        "startLine": 1113,
+        "startChar": 8,
+        "endLine": 1114,
+        "endChar": 74
+      },
+      "revId": "155f5d11ca64397c66e89e456498b5eea24584eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1363a4ce_681528a9",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-20T09:15:43Z",
+      "side": 1,
+      "message": "You\u0027ve been doing this in multiple changes lately. Can you please factorize this code somewhere instead of copy-pasting ?",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 227,
+        "endChar": 63
+      },
+      "revId": "155f5d11ca64397c66e89e456498b5eea24584eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fb80670_f9f0b50d",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-20T09:15:43Z",
+      "side": 1,
+      "message": "This userId comes from the package manager. Please fetch it from PM#getUserId instead of passing an argument that may be completely out of sync.",
+      "range": {
+        "startLine": 1350,
+        "startChar": 12,
+        "endLine": 1350,
+        "endChar": 28
+      },
+      "revId": "155f5d11ca64397c66e89e456498b5eea24584eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
