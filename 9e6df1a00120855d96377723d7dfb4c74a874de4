@@ -51,6 +51,23 @@
       "message": "Hello @Felipe,\nWhile this CL is questionable, I prepared a better fix https://android-review.googlesource.com/c/platform/frameworks/base/+/1507501 , that addresses the mistake and doesn\u0027t introduce any additional options. If you support the mentioned CL I\u0027ll abandon this one.\n\nNote that different descriptions were added in the following commits:\n - c1ca4410e1f6 (Lists the current users);\n - bef39e0337b3 (Prints all users).",
       "revId": "9e6df1a00120855d96377723d7dfb4c74a874de4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd92079f_2bfb53f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2020-11-20T21:27:14Z",
+      "side": 1,
+      "message": "Hello, @Felipe, thank you for your extremely prompt reply and contiguous support!",
+      "revId": "9e6df1a00120855d96377723d7dfb4c74a874de4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
