@@ -16,6 +16,24 @@
       "message": "You need a Merged-In: tag above this.\n\nSee go/merged-in",
       "revId": "efcca3928ffdcac513d4b68a24dbb1b20b628b42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5401845_597bb18d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1564745
+      },
+      "writtenOn": "2020-11-21T14:47:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b301f34_7b76f92d",
+      "revId": "efcca3928ffdcac513d4b68a24dbb1b20b628b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
