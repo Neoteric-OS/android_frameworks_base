@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "169a1089_4c0101e2",
         "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
@@ -20,10 +21,10 @@
         "endChar": 86
       },
       "revId": "75fe2775bd0eedffe853dfe38b6b3c7325b903c9",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "42630a2a_9dca4042",
         "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
@@ -44,8 +45,31 @@
         "endChar": 86
       },
       "revId": "75fe2775bd0eedffe853dfe38b6b3c7325b903c9",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77e3e87f_08a48352",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-11-23T13:05:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42630a2a_9dca4042",
+      "range": {
+        "startLine": 327,
+        "startChar": 12,
+        "endLine": 327,
+        "endChar": 86
+      },
+      "revId": "75fe2775bd0eedffe853dfe38b6b3c7325b903c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
