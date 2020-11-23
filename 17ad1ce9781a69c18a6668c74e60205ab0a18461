@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "279dd52b_72376a34",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-11-23T11:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bc1aa8c_89f16d05",
+      "range": {
+        "startLine": 130,
+        "startChar": 16,
+        "endLine": 130,
+        "endChar": 85
+      },
+      "revId": "17ad1ce9781a69c18a6668c74e60205ab0a18461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ace12c76_39ddec9d",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca18ca57_6fba2ceb",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-11-23T11:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ace12c76_39ddec9d",
+      "range": {
+        "startLine": 150,
+        "startChar": 20,
+        "endLine": 150,
+        "endChar": 93
+      },
+      "revId": "17ad1ce9781a69c18a6668c74e60205ab0a18461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bfd64550_cb1a4b15",
@@ -60,6 +108,30 @@
       "writtenOn": "2020-11-19T02:24:48Z",
       "side": 1,
       "message": "Same here.",
+      "range": {
+        "startLine": 160,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 89
+      },
+      "revId": "17ad1ce9781a69c18a6668c74e60205ab0a18461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e92126c_c2516788",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-11-23T11:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfd64550_cb1a4b15",
       "range": {
         "startLine": 160,
         "startChar": 16,
