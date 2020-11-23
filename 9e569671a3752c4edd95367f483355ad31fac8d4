@@ -22,6 +22,30 @@
       },
       "revId": "9e569671a3752c4edd95367f483355ad31fac8d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25a16e65_d2acab01",
+        "filename": "core/proto/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1018026
+      },
+      "writtenOn": "2020-11-23T13:29:00Z",
+      "side": 1,
+      "message": "Being extra cautious to not miss a pattern.\n(*enum\"s\".proto most likely will not catch media_output_enum.proto)",
+      "parentUuid": "69cfa8a2_9d462b59",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "9e569671a3752c4edd95367f483355ad31fac8d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
