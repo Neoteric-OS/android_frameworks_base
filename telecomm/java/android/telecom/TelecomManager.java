@@ -1695,6 +1695,12 @@ public class TelecomManager {
      * <p>
      * Note: this method CANNOT be used to end ongoing emergency calls and will return {@code false}
      * if an attempt is made to end an emergency call.
+     * <p>
+     * Note: this method CANNOT be used to end ongoing self-managed calls and will return
+     * {@code false} if an attempt is made to end a self-managed call.
+     * <p>
+     * Note: as of API 31 this method will ALWAYS return {@code false} and will not end
+     * ongoing calls.  Please refer to the deprecation notice for alternate APIs.
      *
      * @return {@code true} if there is a call which will be rejected or terminated, {@code false}
      * otherwise.
@@ -1721,12 +1727,13 @@ public class TelecomManager {
      * If the incoming call is a video call, the call will be answered with the same video state as
      * the incoming call requests.  This means, for example, that an incoming call requesting
      * {@link VideoProfile#STATE_BIDIRECTIONAL} will be answered, accepting that state.
+     * <p>
+     * Note: as of API 31 this method this method will ALWAYS return {@code false} and will not end
+     * ongoing calls.  Please refer to the deprecation notice for alternate APIs.
      *
      * @deprecated Companion apps for wearable devices should use the {@link InCallService} API
      * instead.
      */
-    //TODO: L-release - need to convert all invocation of ITelecmmService#answerRingingCall to use
-    // this method (clockwork & gearhead).
     @RequiresPermission(anyOf =
             {Manifest.permission.ANSWER_PHONE_CALLS, Manifest.permission.MODIFY_PHONE_STATE})
     @Deprecated
@@ -1743,6 +1750,9 @@ public class TelecomManager {
     /**
      * If there is a ringing incoming call, this method accepts the call on behalf of the user,
      * with the specified video state.
+     * <p>
+     * Note: as of API 31 this method this method will ALWAYS return {@code false} and will not end
+     * ongoing calls.  Please refer to the deprecation notice for alternate APIs.
      *
      * @param videoState The desired video state to answer the call with.
      * @deprecated Companion apps for wearable devices should use the {@link InCallService} API
