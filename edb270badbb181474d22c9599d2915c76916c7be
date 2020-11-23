@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cf20600_e2e79628",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-23T18:49:16Z",
+      "side": 1,
+      "message": "Suggestion: Consider moving this to TimeDetectorStrategyImpl as now there\u0027s nothing to tie it to the interface at all.",
+      "range": {
+        "startLine": 49,
+        "startChar": 14,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "edb270badbb181474d22c9599d2915c76916c7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
