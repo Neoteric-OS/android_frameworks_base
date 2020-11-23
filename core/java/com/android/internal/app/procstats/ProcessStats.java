@@ -1008,10 +1008,10 @@ public final class ProcessStats implements Parcelable {
     }
 
     public void read(InputStream stream) {
+        Parcel in = Parcel.obtain();
         try {
             int[] len = new int[1];
             byte[] raw = readFully(stream, len);
-            Parcel in = Parcel.obtain();
             in.unmarshall(raw, 0, len[0]);
             in.setDataPosition(0);
             stream.close();
@@ -1019,6 +1019,8 @@ public final class ProcessStats implements Parcelable {
             readFromParcel(in);
         } catch (IOException e) {
             mReadError = "caught exception: " + e;
+        } finally {
+            in.recycle();
         }
     }
 
