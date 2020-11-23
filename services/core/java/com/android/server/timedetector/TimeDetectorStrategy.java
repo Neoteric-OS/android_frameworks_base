@@ -74,9 +74,6 @@ public interface TimeDetectorStrategy {
         void releaseWakeLock();
     }
 
-    /** Initialize the strategy. */
-    void initialize(@NonNull Callback callback);
-
     /** Process the suggested time from telephony sources. */
     void suggestTelephonyTime(@NonNull TelephonyTimeSuggestion timeSuggestion);
 

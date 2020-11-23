@@ -99,8 +99,8 @@ public final class TimeDetectorStrategyImpl implements TimeDetectorStrategy {
     @NonNull
     private final LocalLog mTimeChangesLog = new LocalLog(30, false /* useLocalTimestamps */);
 
-    // @NonNull after initialize()
-    private Callback mCallback;
+    @NonNull
+    private final Callback mCallback;
 
     // Used to store the last time the system clock state was set automatically. It is used to
     // detect (and log) issues with the realtime clock or whether the clock is being set without
@@ -122,8 +122,7 @@ public final class TimeDetectorStrategyImpl implements TimeDetectorStrategy {
     private final ReferenceWithHistory<NetworkTimeSuggestion> mLastNetworkSuggestion =
             new ReferenceWithHistory<>(KEEP_SUGGESTION_HISTORY_SIZE);
 
-    @Override
-    public void initialize(@NonNull Callback callback) {
+    TimeDetectorStrategyImpl(@NonNull Callback callback) {
         mCallback = callback;
     }
 

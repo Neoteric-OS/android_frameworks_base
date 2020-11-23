@@ -731,9 +731,7 @@ public class TimeDetectorStrategyImplTest {
 
         Script() {
             mFakeCallback = new FakeCallback();
-            mTimeDetectorStrategy = new TimeDetectorStrategyImpl();
-            mTimeDetectorStrategy.initialize(mFakeCallback);
-
+            mTimeDetectorStrategy = new TimeDetectorStrategyImpl(mFakeCallback);
         }
 
         Script pokeAutoTimeDetectionEnabled(boolean enabled) {
