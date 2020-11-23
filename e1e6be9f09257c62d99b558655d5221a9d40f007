@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad72a0e4_ff717788",
+        "filename": "services/tests/servicestests/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2020-11-23T08:45:47Z",
+      "side": 1,
+      "message": "No, I get an error that this library is missing the variant (os:android, arch:common)",
+      "parentUuid": "4970d08c_c8446ff2",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "e1e6be9f09257c62d99b558655d5221a9d40f007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dba8ad94_8ce30f9e",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-11-20T12:09:51Z",
       "side": 1,
       "message": "Should this group contain the same object twice to verify equals works in the happy case?",
+      "range": {
+        "startLine": 258,
+        "startChar": 24,
+        "endLine": 258,
+        "endChar": 92
+      },
+      "revId": "e1e6be9f09257c62d99b558655d5221a9d40f007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4aa8f9c_3e3a44ee",
+        "filename": "services/tests/servicestests/src/com/android/server/hdmi/HdmiCecLocalDeviceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2020-11-23T08:45:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dba8ad94_8ce30f9e",
       "range": {
         "startLine": 258,
         "startChar": 24,
