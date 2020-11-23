@@ -18,6 +18,7 @@ package com.android.server;
 
 import static android.Manifest.permission.CHANGE_NETWORK_STATE;
 import static android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS;
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
 import static android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ANY_USER;
@@ -2526,7 +2527,8 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testNoMutableNetworkRequests() throws Exception {
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, new Intent("a"), 0);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                mContext, 0 /* requestCode */, new Intent("a"), FLAG_IMMUTABLE);
         NetworkRequest request1 = new NetworkRequest.Builder()
                 .addCapability(NET_CAPABILITY_VALIDATED)
                 .build();
@@ -3188,7 +3190,7 @@ public class ConnectivityServiceTest {
 
         assertThrows(SecurityException.class, () ->
                 mCm.registerNetworkCallback(r, PendingIntent.getService(
-                        mServiceContext, 0, new Intent(), 0)));
+                        mServiceContext, 0 /* requestCode */, new Intent(), FLAG_IMMUTABLE)));
 
         // Requesting a Network with signal strength should get IllegalArgumentException.
         assertThrows(IllegalArgumentException.class, () ->
@@ -3196,7 +3198,7 @@ public class ConnectivityServiceTest {
 
         assertThrows(IllegalArgumentException.class, () ->
                 mCm.requestNetwork(r, PendingIntent.getService(
-                        mServiceContext, 0, new Intent(), 0)));
+                        mServiceContext, 0 /* requestCode */, new Intent(), FLAG_IMMUTABLE)));
     }
 
     @Test
@@ -4660,12 +4662,14 @@ public class ConnectivityServiceTest {
         }
         j = 0;
         while (j++ < INTENTS / 2) {
-            PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, new Intent("a" + j), 0);
+            final PendingIntent pi = PendingIntent.getBroadcast(mContext, 0 /* requestCode */,
+                    new Intent("a" + j), FLAG_IMMUTABLE);
             mCm.requestNetwork(networkRequest, pi);
             registered.add(pi);
         }
         while (j++ < INTENTS) {
-            PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, new Intent("b" + j), 0);
+            final PendingIntent pi = PendingIntent.getBroadcast(mContext, 0 /* requestCode */,
+                    new Intent("b" + j), FLAG_IMMUTABLE);
             mCm.registerNetworkCallback(networkRequest, pi);
             registered.add(pi);
         }
@@ -4679,11 +4683,13 @@ public class ConnectivityServiceTest {
         );
         assertThrows(TooManyRequestsException.class, () ->
                 mCm.requestNetwork(networkRequest,
-                        PendingIntent.getBroadcast(mContext, 0, new Intent("c"), 0))
+                        PendingIntent.getBroadcast(mContext, 0 /* requestCode */,
+                                new Intent("c"), FLAG_IMMUTABLE))
         );
         assertThrows(TooManyRequestsException.class, () ->
                 mCm.registerNetworkCallback(networkRequest,
-                        PendingIntent.getBroadcast(mContext, 0, new Intent("d"), 0))
+                        PendingIntent.getBroadcast(mContext, 0 /* requestCode */,
+                                new Intent("d"), FLAG_IMMUTABLE))
         );
 
         for (Object o : registered) {
@@ -4712,16 +4718,16 @@ public class ConnectivityServiceTest {
         waitForIdle();
 
         for (int i = 0; i < MAX_REQUESTS; i++) {
-            PendingIntent pendingIntent =
-                    PendingIntent.getBroadcast(mContext, 0, new Intent("e" + i), 0);
+            final PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                    mContext, 0 /* requestCode */, new Intent("e" + i), FLAG_IMMUTABLE);
             mCm.requestNetwork(networkRequest, pendingIntent);
             mCm.unregisterNetworkCallback(pendingIntent);
         }
         waitForIdle();
 
         for (int i = 0; i < MAX_REQUESTS; i++) {
-            PendingIntent pendingIntent =
-                    PendingIntent.getBroadcast(mContext, 0, new Intent("f" + i), 0);
+            final PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                    mContext, 0 /* requestCode */, new Intent("f" + i), FLAG_IMMUTABLE);
             mCm.registerNetworkCallback(networkRequest, pendingIntent);
             mCm.unregisterNetworkCallback(pendingIntent);
         }
