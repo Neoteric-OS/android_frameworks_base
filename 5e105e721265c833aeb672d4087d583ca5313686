@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "648157e8_9673d474",
         "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
@@ -14,10 +15,10 @@
       "side": 1,
       "message": "Being able to setHighestPriority doesn\u0027t seem to be correct any more?",
       "revId": "5e105e721265c833aeb672d4087d583ca5313686",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "6222a415_3564dcfe",
         "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
@@ -32,10 +33,28 @@
       "message": "Nice catch.",
       "parentUuid": "648157e8_9673d474",
       "revId": "5e105e721265c833aeb672d4087d583ca5313686",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a01b4060_e9a64745",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-11-23T13:03:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6222a415_3564dcfe",
+      "revId": "5e105e721265c833aeb672d4087d583ca5313686",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "ab07debb_98366fde",
         "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
@@ -49,10 +68,10 @@
       "side": 1,
       "message": "Hm, I see some benefits of changing the loading order, but do they outweigh having explicit setLoadingOrder API?",
       "revId": "5e105e721265c833aeb672d4087d583ca5313686",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "0d153c11_3261dc8d",
         "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
@@ -67,10 +86,28 @@
       "message": "This is the outcome of our discussion on how to rename priority to something that makes sense for a user of the API who may not be intimately familiar with RRO. By only allowing setEnable, setDisable and tying loading order to the last called setEnable we simplify the API, and with the transactional API there\u0027s no real cost to disabling all overlays and enabling them again (but in a different order) in a single transaction.\n\nI don\u0027t feel we need an explicit setLoadingOrder.",
       "parentUuid": "ab07debb_98366fde",
       "revId": "5e105e721265c833aeb672d4087d583ca5313686",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "448a019b_fe00ce5d",
+        "filename": "core/java/android/content/om/OverlayManagerTransaction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-11-23T13:03:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0d153c11_3261dc8d",
+      "revId": "5e105e721265c833aeb672d4087d583ca5313686",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "728f29cd_c9dd78ef",
         "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
@@ -84,10 +121,10 @@
       "side": 1,
       "message": "So priority change through transactional API is executed via ordering of setEnabled calls? Somehow it doesn\u0027t feel right at this level.",
       "revId": "5e105e721265c833aeb672d4087d583ca5313686",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "f4aa5f9f_74dbd5f8",
         "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
@@ -102,10 +139,10 @@
       "message": "When calling into the OverlayManagerSettings, enabling an overlay should also reorder the data structure in settings, but as long as we support the non-transactional API we have no choice but to keep it this way.",
       "parentUuid": "728f29cd_c9dd78ef",
       "revId": "5e105e721265c833aeb672d4087d583ca5313686",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "c0f22469_a169bcac",
         "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
@@ -120,10 +157,10 @@
       "message": "Done",
       "parentUuid": "f4aa5f9f_74dbd5f8",
       "revId": "5e105e721265c833aeb672d4087d583ca5313686",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "e89850e6_1204cb58",
         "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
@@ -137,10 +174,10 @@
       "side": 1,
       "message": "Make this a SparseArray instead since keys are ints (result.userId), to avoid autoboxing (and traversal is comparable to ArrayMap). While gain may seem imperceptible with key being a user ID (i.e. a small set of most common cardinality being exactly 1), it may aggregate over multiple calls.",
       "revId": "5e105e721265c833aeb672d4087d583ca5313686",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "6d59330c_2c6c5b78",
         "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
@@ -155,10 +192,10 @@
       "message": "Done",
       "parentUuid": "e89850e6_1204cb58",
       "revId": "5e105e721265c833aeb672d4087d583ca5313686",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "8db43564_b9eece0c",
         "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
@@ -172,8 +209,25 @@
       "side": 1,
       "message": "Getting entrySet is inefficient as it generates temp objects. Instead, use SparseArray for targetsToUpdate and then iterate over it with ascending indices and get {key,value} with {key,value}At(index).",
       "revId": "5e105e721265c833aeb672d4087d583ca5313686",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3744030f_a8ad7773",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-11-23T13:03:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8db43564_b9eece0c",
+      "revId": "5e105e721265c833aeb672d4087d583ca5313686",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

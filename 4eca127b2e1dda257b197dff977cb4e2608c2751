@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4788f433_2bcf8665",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-11-23T13:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42483de4_a162052f",
+      "range": {
+        "startLine": 250,
+        "startChar": 25,
+        "endLine": 250,
+        "endChar": 33
+      },
+      "revId": "4eca127b2e1dda257b197dff977cb4e2608c2751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b032bc2f_cf97ff89",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a4453ee_878a2f47",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-11-23T13:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b032bc2f_cf97ff89",
+      "range": {
+        "startLine": 880,
+        "startChar": 19,
+        "endLine": 885,
+        "endChar": 21
+      },
+      "revId": "4eca127b2e1dda257b197dff977cb4e2608c2751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d7649f2_fe96dadc",
@@ -77,6 +125,30 @@
       "writtenOn": "2020-11-20T23:34:58Z",
       "side": 1,
       "message": "indexOfKey is not necessary here:\n \n executeRequest(request).ifPresent(target -\u003e {\n     List\u003cString\u003e userTargets \u003d targetsToUpdate.get(target.userId);\n     if (userTargets \u003d\u003d null) {\n         userTargets \u003d new ArraySet\u003cString\u003e();\n         targetsToUpdate.put(target.userId, userTargets);\n     }\n     userTargets.add(target.packageName);\n });",
+      "range": {
+        "startLine": 937,
+        "startChar": 0,
+        "endLine": 942,
+        "endChar": 23
+      },
+      "revId": "4eca127b2e1dda257b197dff977cb4e2608c2751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfb91be5_df1231c6",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-11-23T13:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d7649f2_fe96dadc",
       "range": {
         "startLine": 937,
         "startChar": 0,
