@@ -61,5 +61,19 @@ public abstract class QosFilter {
      */
     @QosCallbackException.ExceptionType
     public abstract Optional<Integer> validate(NetworkCapabilities networkCapabilities);
+
+    /**
+     * Matches the local address and port against the criteria in the filter.
+     *
+     * @param address the local address
+     * @param startPort the start of the port range
+     * @param endPort the end of the port range
+     * @return whether the the filter matches the local address criteria
+     */
+    public boolean matchesLocalAddress(@NonNull final LinkAddress address,
+            final int startPort, final int endPort) {
+        // If not overridden by the derived type then always return true.
+        return true;
+    }
 }
 
