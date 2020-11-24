@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffb5283c_910970cb",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-24T13:43:36Z",
+      "side": 1,
+      "message": "You don\u0027t have to move it, but you\u0027ll notice my code tends to have public declarations at the top, starting with interfaces / classes and constants.\n\nPrivate or otherwise uninteresting implementation details (e.g. equals, hashcode, dump) towards the bottom generally. You generally won\u0027t find interesting / public things at the bottom.\n\nThis is obviously a highly subjective style choice, so I\u0027m just pointing it out in case you wanted to be consistent or were wondering.",
+      "range": {
+        "startLine": 626,
+        "startChar": 21,
+        "endLine": 626,
+        "endChar": 29
+      },
+      "revId": "602675ffdb58fc96a2c927ff165418e8d53a946a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
