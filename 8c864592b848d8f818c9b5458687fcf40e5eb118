@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db4e9d63_c9a6dc86",
+        "filename": "tests/net/common/java/android/net/MatchAllNetworkSpecifierTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-24T02:42:28Z",
+      "side": 1,
+      "message": "Not for this commit, this is a little hard to figure out which android version the test should run with. Maybe we can have a annotation like @OnlyRunWith(Build.VERSION_CODES.R) to specify the test is only running with assigned version.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 39
+      },
+      "revId": "8c864592b848d8f818c9b5458687fcf40e5eb118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
