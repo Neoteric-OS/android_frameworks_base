@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Baligh Uddin <baligh@google.com>
+Presubmit-Ready+1: Treehugger Robot <treehugger-gerrit@google.com>
+Bypass-Presubmit+1: Alex Light <allight@google.com>
+Build-Cop-Override+1: Alex Light <allight@google.com>
+Submitted-by: Alex Light <allight@google.com>
+Submitted-at: Tue, 24 Nov 2020 21:57:15 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1510215
+Project: platform/frameworks/base
+Branch: refs/heads/master
