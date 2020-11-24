@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e56a4f1_93b400ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-11-24T16:52:48Z",
+      "side": 1,
+      "message": "p.s. the services.wifi library looks a little bit pointless now -- it\u0027s only got a single class with 2 tiny methods in there. Maybe merge that into another one?",
+      "revId": "61f015c469335dd0e90645e3c2db4381fd3d6919",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
