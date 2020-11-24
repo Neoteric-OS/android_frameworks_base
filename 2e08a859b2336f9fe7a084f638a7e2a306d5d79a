@@ -133,6 +133,54 @@
       },
       "revId": "2e08a859b2336f9fe7a084f638a7e2a306d5d79a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7206eb41_1e971f59",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-11-24T21:20:29Z",
+      "side": 1,
+      "message": "Since this is a static class I believe that it would be better to leave as is",
+      "parentUuid": "fbe7cb81_4de393d4",
+      "range": {
+        "startLine": 133,
+        "startChar": 54,
+        "endLine": 133,
+        "endChar": 61
+      },
+      "revId": "2e08a859b2336f9fe7a084f638a7e2a306d5d79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dacb0a9d_f6ff7439",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-11-24T21:20:29Z",
+      "side": 1,
+      "message": "@Remi to respond back for this. Is this something that needs to be added to this CL?",
+      "parentUuid": "954566a0_caea7906",
+      "range": {
+        "startLine": 133,
+        "startChar": 53,
+        "endLine": 133,
+        "endChar": 54
+      },
+      "revId": "2e08a859b2336f9fe7a084f638a7e2a306d5d79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
