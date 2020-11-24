@@ -22,6 +22,30 @@
       },
       "revId": "edb270badbb181474d22c9599d2915c76916c7be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8d2d61e_aa986091",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2020-11-24T13:27:51Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "7cf20600_e2e79628",
+      "range": {
+        "startLine": 49,
+        "startChar": 14,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "edb270badbb181474d22c9599d2915c76916c7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
