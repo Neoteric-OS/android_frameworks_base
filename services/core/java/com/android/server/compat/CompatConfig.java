@@ -141,6 +141,10 @@ final class CompatConfig {
                 // we know nothing about this change: default behaviour is enabled.
                 return true;
             }
+            if (c.hasDeferredOverride(app.packageName)) {
+                Slog.d(TAG, "Package " + app.packageName + " still has a deferred override for "
+                        + "change " + changeId + ".");
+            }
             return c.isEnabled(app);
         }
     }
@@ -173,7 +177,17 @@ final class CompatConfig {
                 c = new CompatChange(changeId);
                 addChange(c);
             }
-            c.addPackageOverride(packageName, enabled);
+            switch (allowedState.state) {
+                case OverrideAllowedState.ALLOWED:
+                    c.addPackageOverride(packageName, enabled);
+                    break;
+                case OverrideAllowedState.DEFERRED_VERIFICATION:
+                    c.addPackageDeferredOverride(packageName, enabled);
+                    break;
+                default:
+                    throw new IllegalStateException("Should only be able to override changes that "
+                                                    + "are allowed or can be deferred.");
+            }
             invalidateCache();
         }
         return alreadyKnown;
@@ -502,5 +516,28 @@ final class CompatConfig {
 
     private void invalidateCache() {
         ChangeIdStateCache.invalidate();
+    }
+    /**
+     * Rechecks all the existing overrides for a package.
+     */
+    void recheckOverrides(String packageName) {
+        synchronized (mChanges) {
+            boolean shouldInvalidateCache = false;
+            for (int idx = 0; idx < mChanges.size(); ++idx) {
+                CompatChange c = mChanges.valueAt(idx);
+                try {
+                    OverrideAllowedState allowedState =
+                            mOverrideValidator.getOverrideAllowedState(c.getId(), packageName);
+                    boolean allowedOverride = (allowedState.state == OverrideAllowedState.ALLOWED);
+                    shouldInvalidateCache |= c.recheckOverride(packageName, allowedOverride);
+                } catch (RemoteException e) {
+                    // Should never occur, since validator is in the same process.
+                    throw new RuntimeException("Unable to call override validator!", e);
+                }
+            }
+            if (shouldInvalidateCache) {
+                invalidateCache();
+            }
+        }
     }
 }
