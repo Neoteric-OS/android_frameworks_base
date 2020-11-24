@@ -61,6 +61,7 @@ public final class CompatChange extends CompatibilityChangeInfo {
     ChangeListener mListener = null;
 
     private Map<String, Boolean> mPackageOverrides;
+    private Map<String, Boolean> mDeferredOverrides;
 
     public CompatChange(long changeId) {
         this(changeId, null, -1, -1, false, false, null);
@@ -121,6 +122,67 @@ public final class CompatChange extends CompatibilityChangeInfo {
     }
 
     /**
+     * Tentatively set the state of this change for a given package name.
+     * The override will only take effect after that package is installed, if applicable.
+     *
+     * <p>Note, this method is not thread safe so callers must ensure thread safety.
+     *
+     * @param packageName Package name to tentatively enable the change for.
+     * @param enabled Whether or not to enable the change.
+     */
+    void addPackageDeferredOverride(String packageName, boolean enabled) {
+        if (getLoggingOnly()) {
+            throw new IllegalArgumentException(
+                    "Can't add overrides for a logging only change " + toString());
+        }
+        if (mDeferredOverrides == null) {
+            mDeferredOverrides = new HashMap<>();
+        }
+        mDeferredOverrides.put(packageName, enabled);
+    }
+
+    /**
+     * Rechecks an existing (and possibly deferred) override.
+     *
+     * <p>If an override is act</p>
+     *
+     * @param packageName Package name to apply deferred overrides for.
+     * @param allowed Whether the override is allowed.
+     *
+     * @return {@code true} if the recheck yielded a result that requires invalidating caches
+     *         (a deferred override was consolidated or a regular override was removed).
+     */
+    boolean recheckOverride(String packageName, boolean allowed) {
+        if (hasDeferredOverride(packageName)) {
+            return tryDeferredOverride(packageName, allowed);
+        }
+        return retryOverride(packageName, allowed);
+    }
+
+    private boolean tryDeferredOverride(String packageName, boolean allowed) {
+        if (allowed) {
+            boolean overrideValue = mDeferredOverrides.remove(packageName);
+            addPackageOverride(packageName, overrideValue);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean retryOverride(String packageName, boolean allowed) {
+        if (!hasOverride(packageName)) {
+            return false;
+        }
+        if (allowed) {
+            return true;
+        }
+        boolean overrideValue = mPackageOverrides.remove(packageName);
+        addPackageDeferredOverride(packageName, overrideValue);
+        // Notify because the override was removed.
+        notifyListener(packageName);
+        return true;
+    }
+
+    /**
      * Remove any package override for the given package name, restoring the default behaviour.
      *
      * <p>Note, this method is not thread safe so callers must ensure thread safety.
@@ -132,6 +194,9 @@ public final class CompatChange extends CompatibilityChangeInfo {
             if (mPackageOverrides.remove(pname) != null) {
                 notifyListener(pname);
             }
+        }
+        if (mDeferredOverrides != null) {
+            mDeferredOverrides.remove(pname);
         }
     }
 
@@ -164,6 +229,15 @@ public final class CompatChange extends CompatibilityChangeInfo {
         return mPackageOverrides != null && mPackageOverrides.containsKey(packageName);
     }
 
+    /**
+     * Checks whether a change has a deferred override for a package.
+     * @param packageName name of the package
+     * @return true if there is such a deferred override
+     */
+    boolean hasDeferredOverride(String packageName) {
+        return mDeferredOverrides != null && mDeferredOverrides.containsKey(packageName);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("ChangeId(")
@@ -182,6 +256,9 @@ public final class CompatChange extends CompatibilityChangeInfo {
         }
         if (mPackageOverrides != null && mPackageOverrides.size() > 0) {
             sb.append("; packageOverrides=").append(mPackageOverrides);
+        }
+        if (mPackageOverrides != null && mDeferredOverrides.size() > 0) {
+            sb.append("; deferredOverrides=").append(mDeferredOverrides);
         }
         return sb.append(")").toString();
     }
