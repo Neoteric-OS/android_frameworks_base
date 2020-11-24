@@ -5177,28 +5177,22 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void onUserAdded(int userId) {
         mPermissionMonitor.onUserAdded(userId);
-        Network defaultNetwork = getNetwork(getDefaultNetwork());
         synchronized (mVpns) {
             final int vpnsSize = mVpns.size();
             for (int i = 0; i < vpnsSize; i++) {
                 Vpn vpn = mVpns.valueAt(i);
                 vpn.onUserAdded(userId);
-                NetworkCapabilities nc = vpn.updateCapabilities(defaultNetwork);
-                updateVpnCapabilities(vpn, nc);
             }
         }
     }
 
     private void onUserRemoved(int userId) {
         mPermissionMonitor.onUserRemoved(userId);
-        Network defaultNetwork = getNetwork(getDefaultNetwork());
         synchronized (mVpns) {
             final int vpnsSize = mVpns.size();
             for (int i = 0; i < vpnsSize; i++) {
                 Vpn vpn = mVpns.valueAt(i);
                 vpn.onUserRemoved(userId);
-                NetworkCapabilities nc = vpn.updateCapabilities(defaultNetwork);
-                updateVpnCapabilities(vpn, nc);
             }
         }
     }
