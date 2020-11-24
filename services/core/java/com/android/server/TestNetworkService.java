@@ -29,9 +29,9 @@ import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkAgent;
+import android.net.NetworkAgentConfig;
 import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
-import android.net.NetworkInfo.DetailedState;
+import android.net.NetworkProvider;
 import android.net.RouteInfo;
 import android.net.StringNetworkSpecifier;
 import android.net.TestNetworkInterface;
@@ -63,6 +63,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 class TestNetworkService extends ITestNetworkManager.Stub {
     @NonNull private static final String TAG = TestNetworkService.class.getSimpleName();
     @NonNull private static final String TEST_NETWORK_TYPE = "TEST_NETWORK";
+    @NonNull private static final String TEST_NETWORK_PROVIDER_NAME = "TestNetwork provider";
     @NonNull private static final AtomicInteger sTestTunIndex = new AtomicInteger();
 
     @NonNull private final Context mContext;
@@ -150,9 +151,10 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         private static final int NETWORK_SCORE = 1; // Use a low, non-zero score.
 
         private final int mUid;
-        @NonNull private final NetworkInfo mNi;
         @NonNull private final NetworkCapabilities mNc;
         @NonNull private final LinkProperties mLp;
+        @NonNull private final NetworkProvider mNetworkProvider;
+        @NonNull private final ConnectivityManager mCm;
 
         @GuardedBy("mBinderLock")
         @NonNull
@@ -161,20 +163,24 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         @NonNull private final Object mBinderLock = new Object();
 
         private TestNetworkAgent(
-                @NonNull Looper looper,
                 @NonNull Context context,
-                @NonNull NetworkInfo ni,
+                @NonNull Looper looper,
+                @NonNull NetworkAgentConfig config,
                 @NonNull NetworkCapabilities nc,
                 @NonNull LinkProperties lp,
                 int uid,
-                @NonNull IBinder binder)
+                @NonNull IBinder binder,
+                @NonNull NetworkProvider np)
                 throws RemoteException {
-            super(looper, context, TEST_NETWORK_TYPE, ni, nc, lp, NETWORK_SCORE);
+            super(context, looper, TEST_NETWORK_TYPE, nc, lp, NETWORK_SCORE, config,
+                    np);
 
             mUid = uid;
-            mNi = ni;
             mNc = nc;
             mLp = lp;
+            mCm = mContext.getSystemService(ConnectivityManager.class);
+            mNetworkProvider = np;
+            mCm.registerNetworkProvider(np);
 
             synchronized (mBinderLock) {
                 mBinder = binder; // Binder null-checks in create()
@@ -203,9 +209,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         }
 
         private void teardown() {
-            mNi.setDetailedState(DetailedState.DISCONNECTED, null, null);
-            mNi.setIsAvailable(false);
-            sendNetworkInfo(mNi);
+            unregister();
 
             // Synchronize on mBinderLock to ensure that unlinkToDeath is never called more than
             // once (otherwise it could throw an exception)
@@ -221,6 +225,8 @@ class TestNetworkService extends ITestNetworkManager.Stub {
             synchronized (mTestNetworkTracker) {
                 mTestNetworkTracker.remove(getNetwork().netId);
             }
+
+            mCm.unregisterNetworkProvider(mNetworkProvider);
         }
     }
 
@@ -237,11 +243,6 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         Objects.requireNonNull(looper, "missing Looper");
         Objects.requireNonNull(context, "missing Context");
         // iface and binder validity checked by caller
-
-        // Build network info with special testing type
-        NetworkInfo ni = new NetworkInfo(ConnectivityManager.TYPE_TEST, 0, TEST_NETWORK_TYPE, "");
-        ni.setDetailedState(DetailedState.CONNECTED, null, null);
-        ni.setIsAvailable(true);
 
         // Build narrow set of NetworkCapabilities, useful only for testing
         NetworkCapabilities nc = new NetworkCapabilities();
@@ -290,7 +291,12 @@ class TestNetworkService extends ITestNetworkManager.Stub {
             lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), null, iface));
         }
 
-        return new TestNetworkAgent(looper, context, ni, nc, lp, callingUid, binder);
+        final TestNetworkAgent agent = new TestNetworkAgent(context, looper,
+                new NetworkAgentConfig.Builder().build(), nc, lp, callingUid, binder,
+                new NetworkProvider(mContext, mHandler.getLooper(), TEST_NETWORK_PROVIDER_NAME));
+        agent.register();
+        agent.markConnected();
+        return agent;
     }
 
     /**
