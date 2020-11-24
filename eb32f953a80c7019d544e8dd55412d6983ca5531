@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006372413",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1510591?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "96582d7c_b568b354",
+          "description": "Change to \"core/java/android/net/QosFilter.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/net/QosFilter.java",
+              "range": {
+                "startLine": 71,
+                "startChar": 23,
+                "endLine": 71,
+                "endChar": 30
+              },
+              "replacement": "the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "a879e145_33d99720",
+        "filename": "core/java/android/net/QosFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-24T23:59:13Z",
+      "side": 1,
+      "message": "Common typo found: \"the the\" -- should it be \"the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 71,
+        "startChar": 23,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "eb32f953a80c7019d544e8dd55412d6983ca5531",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
