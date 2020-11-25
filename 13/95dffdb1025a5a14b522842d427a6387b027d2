@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Almaz Mingaleev <mingaleev@google.com>
+Code-Review+2: Neil Fuller <nfuller@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Almaz Mingaleev <mingaleev@google.com>
+Submitted-at: Wed, 25 Nov 2020 11:21:44 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1252169
+Project: platform/frameworks/base
+Branch: refs/heads/master
