@@ -531,11 +531,11 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         synchronized (this) {
             // Network objects are outwardly immutable so there is no point in duplicating.
             // Duplicating also precludes sharing socket factories and connection pools.
-            final String subscriberId = (networkAgentConfig != null)
-                    ? networkAgentConfig.subscriberId : null;
+            final int subscriptionId = (networkAgentConfig != null)
+                    ? networkAgentConfig.subscriptionId : null;
             return new NetworkState(new NetworkInfo(networkInfo),
                     new LinkProperties(linkProperties),
-                    new NetworkCapabilities(networkCapabilities), network, subscriberId, null);
+                    new NetworkCapabilities(networkCapabilities), network, subscriptionId, null);
         }
     }
 

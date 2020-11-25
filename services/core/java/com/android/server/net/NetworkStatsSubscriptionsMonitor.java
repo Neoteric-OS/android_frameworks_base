@@ -142,14 +142,14 @@ public class NetworkStatsSubscriptionsMonitor extends
     }
 
     /**
-     * Get a collapsed RatType for the given subscriberId.
+     * Get a collapsed RatType for the given subscriptionId.
      *
-     * @param subscriberId the target subscriberId
-     * @return collapsed RatType for the given subscriberId
+     * @param subscriptionId the subscription id
+     * @return collapsed RatType for the given subscriptionId
      */
-    public int getRatTypeForSubscriberId(@NonNull String subscriberId) {
+    public int getRatTypeForSubscriptionId(@NonNull int subscriptionId) {
         final RatTypeListener match = CollectionUtils.find(mRatListeners,
-                it -> TextUtils.equals(subscriberId, it.mSubscriberId));
+                it -> subscriptionId == it.getSubId());
         return match != null ? match.mLastCollapsedRatType : TelephonyManager.NETWORK_TYPE_UNKNOWN;
     }
 

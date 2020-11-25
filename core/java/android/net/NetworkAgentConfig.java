@@ -21,6 +21,7 @@ import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.telephony.SubscriptionManager;
 
 import java.util.Objects;
 
@@ -115,19 +116,21 @@ public final class NetworkAgentConfig implements Parcelable {
     }
 
     /**
-     * For mobile networks, this is the subscriber ID (such as IMSI).
+     * The subscription ID of the SIM.
+     * <p>
+     * Use {@link SubscriptionManager#isValidSubscriptionId(int)} to check if the value is valid.
      *
      * @hide
      */
-    public String subscriberId;
+    public int subscriptionId;
 
     /**
-     * @return the subscriber ID, or null if none.
+     * @return The subscription ID of the SIM. Use
+     * {@link SubscriptionManager#isValidSubscriptionId(int)} to check if the value is valid.
      * @hide
      */
-    @Nullable
-    public String getSubscriberId() {
-        return subscriberId;
+    public int getSubscriptionId() {
+        return subscriptionId;
     }
 
     /**
@@ -216,7 +219,7 @@ public final class NetworkAgentConfig implements Parcelable {
             explicitlySelected = nac.explicitlySelected;
             acceptUnvalidated = nac.acceptUnvalidated;
             acceptPartialConnectivity = nac.acceptPartialConnectivity;
-            subscriberId = nac.subscriberId;
+            subscriptionId = nac.subscriptionId;
             provisioningNotificationDisabled = nac.provisioningNotificationDisabled;
             skip464xlat = nac.skip464xlat;
             legacyType = nac.legacyType;
@@ -269,14 +272,16 @@ public final class NetworkAgentConfig implements Parcelable {
         }
 
         /**
-         * Sets the subscriber ID for this network.
+         * Sets the subscription ID for this network.
          *
          * @return this builder, to facilitate chaining.
+         *
          * @hide
          */
+        @SystemApi
         @NonNull
-        public Builder setSubscriberId(@Nullable String subscriberId) {
-            mConfig.subscriberId = subscriberId;
+        public Builder setSubscriptionId(final int subscriptionId) {
+            mConfig.subscriptionId = subscriptionId;
             return this;
         }
 
@@ -362,7 +367,7 @@ public final class NetworkAgentConfig implements Parcelable {
                 && provisioningNotificationDisabled == that.provisioningNotificationDisabled
                 && skip464xlat == that.skip464xlat
                 && legacyType == that.legacyType
-                && Objects.equals(subscriberId, that.subscriberId)
+                && Objects.equals(subscriptionId, that.subscriptionId)
                 && Objects.equals(legacyTypeName, that.legacyTypeName)
                 && Objects.equals(mLegacyExtraInfo, that.mLegacyExtraInfo);
     }
@@ -370,7 +375,7 @@ public final class NetworkAgentConfig implements Parcelable {
     @Override
     public int hashCode() {
         return Objects.hash(allowBypass, explicitlySelected, acceptUnvalidated,
-                acceptPartialConnectivity, provisioningNotificationDisabled, subscriberId,
+                acceptPartialConnectivity, provisioningNotificationDisabled, subscriptionId,
                 skip464xlat, legacyType, legacyTypeName, mLegacyExtraInfo);
     }
 
@@ -382,7 +387,7 @@ public final class NetworkAgentConfig implements Parcelable {
                 + ", acceptUnvalidated = " + acceptUnvalidated
                 + ", acceptPartialConnectivity = " + acceptPartialConnectivity
                 + ", provisioningNotificationDisabled = " + provisioningNotificationDisabled
-                + ", subscriberId = '" + subscriberId + '\''
+                + ", subscriberId = '" + subscriptionId + '\''
                 + ", skip464xlat = " + skip464xlat
                 + ", legacyType = " + legacyType
                 + ", hasShownBroken = " + hasShownBroken
@@ -402,7 +407,7 @@ public final class NetworkAgentConfig implements Parcelable {
         out.writeInt(explicitlySelected ? 1 : 0);
         out.writeInt(acceptUnvalidated ? 1 : 0);
         out.writeInt(acceptPartialConnectivity ? 1 : 0);
-        out.writeString(subscriberId);
+        out.writeInt(subscriptionId);
         out.writeInt(provisioningNotificationDisabled ? 1 : 0);
         out.writeInt(skip464xlat ? 1 : 0);
         out.writeInt(legacyType);
@@ -419,7 +424,7 @@ public final class NetworkAgentConfig implements Parcelable {
             networkAgentConfig.explicitlySelected = in.readInt() != 0;
             networkAgentConfig.acceptUnvalidated = in.readInt() != 0;
             networkAgentConfig.acceptPartialConnectivity = in.readInt() != 0;
-            networkAgentConfig.subscriberId = in.readString();
+            networkAgentConfig.subscriptionId = in.readInt();
             networkAgentConfig.provisioningNotificationDisabled = in.readInt() != 0;
             networkAgentConfig.skip464xlat = in.readInt() != 0;
             networkAgentConfig.legacyType = in.readInt();

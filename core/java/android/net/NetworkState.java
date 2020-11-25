@@ -20,6 +20,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.telephony.SubscriptionManager;
 import android.util.Slog;
 
 /**
@@ -30,24 +31,31 @@ import android.util.Slog;
 public class NetworkState implements Parcelable {
     private static final boolean VALIDATE_ROAMING_STATE = false;
 
-    public static final NetworkState EMPTY = new NetworkState(null, null, null, null, null, null);
+    public static final NetworkState EMPTY = new NetworkState(null, null, null, null, SubscriptionManager.INVALID_SUBSCRIPTION_ID, null);
 
     public final NetworkInfo networkInfo;
     public final LinkProperties linkProperties;
     public final NetworkCapabilities networkCapabilities;
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public final Network network;
-    public final String subscriberId;
+
+    /**
+     * The subscription ID of the associated SIM
+     * <p>
+     * Use {@link SubscriptionManager#isValidSubscriptionId(int)} to check if the value is valid.
+     */
+    public final int subscriptionId;
+
     public final String networkId;
 
     public NetworkState(NetworkInfo networkInfo, LinkProperties linkProperties,
-            NetworkCapabilities networkCapabilities, Network network, String subscriberId,
+            NetworkCapabilities networkCapabilities, Network network, int subscriptionId,
             String networkId) {
         this.networkInfo = networkInfo;
         this.linkProperties = linkProperties;
         this.networkCapabilities = networkCapabilities;
         this.network = network;
-        this.subscriberId = subscriberId;
+        this.subscriptionId = subscriptionId;
         this.networkId = networkId;
 
         // This object is an atomic view of a network, so the various components
@@ -67,7 +75,7 @@ public class NetworkState implements Parcelable {
         linkProperties = in.readParcelable(null);
         networkCapabilities = in.readParcelable(null);
         network = in.readParcelable(null);
-        subscriberId = in.readString();
+        subscriptionId = in.readInt();
         networkId = in.readString();
     }
 
@@ -82,7 +90,7 @@ public class NetworkState implements Parcelable {
         out.writeParcelable(linkProperties, flags);
         out.writeParcelable(networkCapabilities, flags);
         out.writeParcelable(network, flags);
-        out.writeString(subscriberId);
+        out.writeInt(subscriptionId);
         out.writeString(networkId);
     }
 

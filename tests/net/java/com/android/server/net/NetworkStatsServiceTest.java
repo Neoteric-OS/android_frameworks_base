@@ -19,7 +19,6 @@ package com.android.server.net;
 import static android.content.Intent.ACTION_UID_REMOVED;
 import static android.content.Intent.EXTRA_UID;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
-import static android.net.ConnectivityManager.TYPE_VPN;
 import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.net.ConnectivityManager.TYPE_WIMAX;
 import static android.net.NetworkStats.DEFAULT_NETWORK_ALL;
@@ -60,8 +59,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -97,6 +96,7 @@ import android.os.Messenger;
 import android.os.PowerManager;
 import android.os.SimpleClock;
 import android.provider.Settings;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 
 import androidx.test.InstrumentationRegistry;
@@ -143,6 +143,9 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
 
     private static final String IMSI_1 = "310004";
     private static final String IMSI_2 = "310260";
+    private static final int SUBID_1 = 1;
+    private static final int SUBID_2 = 2;
+
     private static final String TEST_SSID = "AndroidAP";
 
     private static NetworkTemplate sTemplateWifi = buildTemplateWifiWildcard();
@@ -151,7 +154,6 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
 
     private static final Network WIFI_NETWORK =  new Network(100);
     private static final Network MOBILE_NETWORK =  new Network(101);
-    private static final Network VPN_NETWORK = new Network(102);
 
     private static final Network[] NETWORKS_WIFI = new Network[]{ WIFI_NETWORK };
     private static final Network[] NETWORKS_MOBILE = new Network[]{ MOBILE_NETWORK };
@@ -169,6 +171,10 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     private @Mock NetworkStatsSettings mSettings;
     private @Mock IBinder mBinder;
     private @Mock AlarmManager mAlarmManager;
+    private @Mock TelephonyManager mTelephonyManager;
+    private @Mock TelephonyManager mTelephonyManager1;
+    private @Mock TelephonyManager mTelephonyManager2;
+
     @Mock
     private NetworkStatsSubscriptionsMonitor mNetworkStatsSubscriptionsMonitor;
     private HandlerThread mHandlerThread;
@@ -196,6 +202,17 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         if (mStatsDir.exists()) {
             IoUtils.deleteContents(mStatsDir);
         }
+
+        when(mTelephonyManager.createForSubscriptionId(eq(SUBID_1)))
+                .thenReturn(mTelephonyManager1);
+        when(mTelephonyManager1.getSubscriberId())
+                .thenReturn(IMSI_1);
+        when(mTelephonyManager.createForSubscriptionId(eq(SUBID_2)))
+                .thenReturn(mTelephonyManager2);
+        when(mTelephonyManager1.getSubscriberId())
+                .thenReturn(IMSI_2);
+        when(mServiceContext.getSystemService(eq(Context.TELEPHONY_SERVICE)))
+                .thenReturn(mTelephonyManager);
 
         PowerManager powerManager = (PowerManager) mServiceContext.getSystemService(
                 Context.POWER_SERVICE);
@@ -437,7 +454,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     public void testUidStatsAcrossNetworks() throws Exception {
         // pretend first mobile network comes online
         expectDefaultSettings();
-        NetworkState[] states = new NetworkState[] {buildMobile3gState(IMSI_1)};
+        NetworkState[] states = new NetworkState[] {buildMobile3gState(SUBID_1)};
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
@@ -467,7 +484,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         // disappearing, to verify we don't count backwards.
         incrementCurrentTime(HOUR_IN_MILLIS);
         expectDefaultSettings();
-        states = new NetworkState[] {buildMobile3gState(IMSI_2)};
+        states = new NetworkState[] {buildMobile3gState(SUBID_2)};
         expectNetworkStatsSummary(new NetworkStats(getElapsedRealtime(), 1)
                 .insertEntry(TEST_IFACE, 2048L, 16L, 512L, 4L));
         expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 3)
@@ -569,7 +586,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     public void testUid3gWimaxCombinedByTemplate() throws Exception {
         // pretend that network comes online
         expectDefaultSettings();
-        NetworkState[] states = new NetworkState[] {buildMobile3gState(IMSI_1)};
+        NetworkState[] states = new NetworkState[] {buildMobile3gState(SUBID_1)};
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
@@ -628,7 +645,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
                 buildTemplateMobileWithRatType(null, TelephonyManager.NETWORK_TYPE_LTE);
         final NetworkTemplate template5g =
                 buildTemplateMobileWithRatType(null, TelephonyManager.NETWORK_TYPE_NR);
-        final NetworkState[] states = new NetworkState[]{buildMobile3gState(IMSI_1)};
+        final NetworkState[] states = new NetworkState[]{buildMobile3gState(SUBID_1)};
 
         // 3G network comes online.
         expectNetworkStatsSummary(buildEmptyStats());
@@ -696,7 +713,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
 
     // TODO: support per IMSI state
     private void setMobileRatTypeAndWaitForIdle(int ratType) {
-        when(mNetworkStatsSubscriptionsMonitor.getRatTypeForSubscriberId(anyString()))
+        when(mNetworkStatsSubscriptionsMonitor.getRatTypeForSubscriptionId(anyInt()))
                 .thenReturn(ratType);
         mService.handleOnCollapsedRatTypeChanged();
         HandlerUtils.waitForIdle(mHandlerThread, WAIT_TIMEOUT);
@@ -956,7 +973,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         // pretend that network comes online
         expectDefaultSettings();
         NetworkState[] states =
-            new NetworkState[] {buildMobile3gState(IMSI_1, true /* isRoaming */)};
+            new NetworkState[] {buildMobile3gState(SUBID_1, true /* isRoaming */)};
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
@@ -993,7 +1010,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     public void testTethering() throws Exception {
         // pretend first mobile network comes online
         expectDefaultSettings();
-        final NetworkState[] states = new NetworkState[]{buildMobile3gState(IMSI_1)};
+        final NetworkState[] states = new NetworkState[]{buildMobile3gState(SUBID_1)};
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
@@ -1248,7 +1265,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
                 buildTemplateMobileWithRatType(null, TelephonyManager.NETWORK_TYPE_UNKNOWN);
         final NetworkTemplate templateAll =
                 buildTemplateMobileWithRatType(null, NETWORK_TYPE_ALL);
-        final NetworkState[] states = new NetworkState[]{buildMobile3gState(IMSI_1)};
+        final NetworkState[] states = new NetworkState[]{buildMobile3gState(SUBID_1)};
 
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
@@ -1458,14 +1475,15 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED, !isMetered);
         capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING, true);
         capabilities.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
-        return new NetworkState(info, prop, capabilities, WIFI_NETWORK, null, TEST_SSID);
+        return new NetworkState(info, prop, capabilities, WIFI_NETWORK,
+                SubscriptionManager.INVALID_SUBSCRIPTION_ID, TEST_SSID);
     }
 
-    private static NetworkState buildMobile3gState(String subscriberId) {
-        return buildMobile3gState(subscriberId, false /* isRoaming */);
+    private static NetworkState buildMobile3gState(int subscriptionId) {
+        return buildMobile3gState(subscriptionId, false /* isRoaming */);
     }
 
-    private static NetworkState buildMobile3gState(String subscriberId, boolean isRoaming) {
+    private static NetworkState buildMobile3gState(int subscriptionId, boolean isRoaming) {
         final NetworkInfo info = new NetworkInfo(
                 TYPE_MOBILE, TelephonyManager.NETWORK_TYPE_UMTS, null, null);
         info.setDetailedState(DetailedState.CONNECTED, null, null);
@@ -1476,7 +1494,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED, false);
         capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING, !isRoaming);
         capabilities.addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
-        return new NetworkState(info, prop, capabilities, MOBILE_NETWORK, subscriberId, null);
+        return new NetworkState(info, prop, capabilities, MOBILE_NETWORK, subscriptionId, null);
     }
 
     private static NetworkState buildWimaxState(@NonNull String iface) {
@@ -1487,19 +1505,12 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         final NetworkCapabilities capabilities = new NetworkCapabilities();
         capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED, false);
         capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING, true);
-        return new NetworkState(info, prop, capabilities, MOBILE_NETWORK, null, null);
+        return new NetworkState(info, prop, capabilities, MOBILE_NETWORK,
+                SubscriptionManager.INVALID_SUBSCRIPTION_ID, null);
     }
 
     private NetworkStats buildEmptyStats() {
         return new NetworkStats(getElapsedRealtime(), 0);
-    }
-
-    private static NetworkState buildVpnState() {
-        final NetworkInfo info = new NetworkInfo(TYPE_VPN, 0, null, null);
-        info.setDetailedState(DetailedState.CONNECTED, null, null);
-        final LinkProperties prop = new LinkProperties();
-        prop.setInterfaceName(TUN_IFACE);
-        return new NetworkState(info, prop, new NetworkCapabilities(), VPN_NETWORK, null, null);
     }
 
     private long getElapsedRealtime() {

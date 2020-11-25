@@ -52,8 +52,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -68,8 +69,10 @@ public final class NetworkStatsSubscriptionsMonitorTest {
     @Mock private Context mContext;
     @Mock private SubscriptionManager mSubscriptionManager;
     @Mock private TelephonyManager mTelephonyManager;
+    @Mock private TelephonyManager mTelephonyManager1;
+    @Mock private TelephonyManager mTelephonyManager2;
     @Mock private NetworkStatsSubscriptionsMonitor.Delegate mDelegate;
-    private final List<Integer> mTestSubList = new ArrayList<>();
+    private final Map<String, Integer> mTestSubscriptionIds = new HashMap<>();
 
     private final Executor mExecutor = Executors.newSingleThreadExecutor();
     private NetworkStatsSubscriptionsMonitor mMonitor;
@@ -79,10 +82,18 @@ public final class NetworkStatsSubscriptionsMonitorTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        when(mTelephonyManager.createForSubscriptionId(anyInt())).thenReturn(mTelephonyManager);
+        when(mTelephonyManager.createForSubscriptionId(eq(TEST_SUBID1)))
+                .thenReturn(mTelephonyManager1);
+        when(mTelephonyManager1.getSubscriberId())
+                .thenReturn(TEST_IMSI1);
+        when(mTelephonyManager.createForSubscriptionId(eq(TEST_SUBID2)))
+                .thenReturn(mTelephonyManager2);
+        when(mTelephonyManager1.getSubscriberId())
+                .thenReturn(TEST_IMSI2);
 
         when(mContext.getSystemService(eq(Context.TELEPHONY_SUBSCRIPTION_SERVICE)))
                 .thenReturn(mSubscriptionManager);
+
         when(mContext.getSystemService(eq(Context.TELEPHONY_SERVICE)))
                 .thenReturn(mTelephonyManager);
 
@@ -105,12 +116,11 @@ public final class NetworkStatsSubscriptionsMonitorTest {
     }
 
     @NonNull
-    private static int[] convertArrayListToIntArray(@NonNull List<Integer> arrayList) {
-        final int[] list = new int[arrayList.size()];
-        for (int i = 0; i < arrayList.size(); i++) {
-            list[i] = arrayList.get(i);
-        }
-        return list;
+    private int[] getSubList() {
+        return mTestSubscriptionIds.values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .toArray();
     }
 
     private void setRatTypeForSub(List<RatTypeListener> listeners,
@@ -127,12 +137,14 @@ public final class NetworkStatsSubscriptionsMonitorTest {
 
     private void addTestSub(int subId, String subscriberId) {
         // add SubId to TestSubList.
-        if (mTestSubList.contains(subId)) fail("The subscriber list already contains this ID");
+        if (mTestSubscriptionIds.containsKey(subscriberId)) {
+            fail("The subscriber list already contains this ID");
+        }
 
-        mTestSubList.add(subId);
+        mTestSubscriptionIds.put(subscriberId, subId);
 
-        final int[] subList = convertArrayListToIntArray(mTestSubList);
-        when(mSubscriptionManager.getCompleteActiveSubscriptionIdList()).thenReturn(subList);
+
+        when(mSubscriptionManager.getCompleteActiveSubscriptionIdList()).thenReturn(getSubList());
         when(mTelephonyManager.getSubscriberId(subId)).thenReturn(subscriberId);
         mMonitor.onSubscriptionsChanged();
     }
@@ -144,14 +156,13 @@ public final class NetworkStatsSubscriptionsMonitorTest {
 
     private void removeTestSub(int subId) {
         // Remove subId from TestSubList.
-        mTestSubList.removeIf(it -> it == subId);
-        final int[] subList = convertArrayListToIntArray(mTestSubList);
-        when(mSubscriptionManager.getCompleteActiveSubscriptionIdList()).thenReturn(subList);
+        mTestSubscriptionIds.remove(subId);
+        when(mSubscriptionManager.getCompleteActiveSubscriptionIdList()).thenReturn(getSubList());
         mMonitor.onSubscriptionsChanged();
     }
 
     private void assertRatTypeChangedForSub(String subscriberId, int ratType) {
-        assertEquals(ratType, mMonitor.getRatTypeForSubscriberId(subscriberId));
+        assertEquals(ratType, mMonitor.getRatTypeForSubscriptionId(getSubscriptionId(subscriberId)));
         final ArgumentCaptor<Integer> typeCaptor = ArgumentCaptor.forClass(Integer.class);
         // Verify callback with the subscriberId and the RAT type should be as expected.
         // It will fail if get a callback with an unexpected RAT type.
@@ -161,9 +172,14 @@ public final class NetworkStatsSubscriptionsMonitorTest {
     }
 
     private void assertRatTypeNotChangedForSub(String subscriberId, int ratType) {
-        assertEquals(mMonitor.getRatTypeForSubscriberId(subscriberId), ratType);
+        assertEquals(mMonitor.getRatTypeForSubscriptionId(getSubscriptionId(subscriberId)), ratType);
         // Should never get callback with any RAT type.
         verify(mDelegate, never()).onCollapsedRatTypeChanged(eq(subscriberId), anyInt());
+    }
+
+    private int getSubscriptionId(String subscriberId) {
+        return mTestSubscriptionIds.getOrDefault(subscriberId,
+                SubscriptionManager.INVALID_SUBSCRIPTION_ID);
     }
 
     @Test

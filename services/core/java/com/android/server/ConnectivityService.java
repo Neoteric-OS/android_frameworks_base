@@ -164,6 +164,7 @@ import android.os.UserManager;
 import android.provider.Settings;
 import android.security.Credentials;
 import android.security.KeyStore;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
@@ -1273,7 +1274,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING,
                         !info.isRoaming());
                 state = new NetworkState(info, new LinkProperties(), capabilities,
-                        null, null, null);
+                        null, SubscriptionManager.INVALID_SUBSCRIPTION_ID, null);
             }
             filterNetworkStateForUid(state, uid, false);
             return state;

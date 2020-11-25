@@ -2047,8 +2047,9 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 final long startOfDay = ZonedDateTime.ofInstant(now, cycle.getLower().getZone())
                         .truncatedTo(ChronoUnit.DAYS)
                         .toInstant().toEpochMilli();
+                final String subscriberId = mSubIdToSubscriberId.get(state.subscriptionId);
                 final long totalBytes = getTotalBytes(
-                        NetworkTemplate.buildTemplateMobileAll(state.subscriberId),
+                        NetworkTemplate.buildTemplateMobileAll(subscriberId),
                         start, startOfDay);
                 final long remainingBytes = limitBytes - totalBytes;
                 // Number of remaining days including current day

@@ -40,7 +40,7 @@ class NetworkAgentConfigTest {
         val config = NetworkAgentConfig.Builder().apply {
             setExplicitlySelected(true)
             setLegacyType(ConnectivityManager.TYPE_ETHERNET)
-            setSubscriberId("MySubId")
+            setSubscriptionId(34)
             setPartialConnectivityAcceptable(false)
             setUnvalidatedConnectivityAcceptable(true)
         }.build()
@@ -52,7 +52,7 @@ class NetworkAgentConfigTest {
         val config = NetworkAgentConfig.Builder().apply {
             setExplicitlySelected(true)
             setLegacyType(ConnectivityManager.TYPE_ETHERNET)
-            setSubscriberId("MySubId")
+            setSubscriptionId(22)
             setPartialConnectivityAcceptable(false)
             setUnvalidatedConnectivityAcceptable(true)
             setLegacyTypeName("TEST_NETWORK")
@@ -62,7 +62,7 @@ class NetworkAgentConfigTest {
 
         assertTrue(config.isExplicitlySelected())
         assertEquals(ConnectivityManager.TYPE_ETHERNET, config.getLegacyType())
-        assertEquals("MySubId", config.getSubscriberId())
+        assertEquals(22, config.getSubscriptionId())
         assertFalse(config.isPartialConnectivityAcceptable())
         assertTrue(config.isUnvalidatedConnectivityAcceptable())
         assertEquals("TEST_NETWORK", config.getLegacyTypeName())

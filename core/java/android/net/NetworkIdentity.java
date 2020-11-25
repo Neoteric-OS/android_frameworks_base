@@ -26,6 +26,8 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.service.NetworkIdentityProto;
 import android.telephony.Annotation.NetworkType;
+import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 import android.util.Slog;
 import android.util.proto.ProtoOutputStream;
 
@@ -195,16 +197,15 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
                 NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
 
         if (isNetworkTypeMobile(type)) {
-            if (state.subscriberId == null) {
+
+            if (!SubscriptionManager.isValidSubscriptionId(state.subscriptionId)) {
                 if (state.networkInfo.getState() != NetworkInfo.State.DISCONNECTED &&
                         state.networkInfo.getState() != NetworkInfo.State.UNKNOWN) {
-                    Slog.w(TAG, "Active mobile network without subscriber! ni = "
+                    Slog.w(TAG, "Active mobile network without valid subscription! ni = "
                             + state.networkInfo);
                 }
             }
-
-            subscriberId = state.subscriberId;
-
+            subscriberId = getSubscriberId(context, state.subscriptionId);
         } else if (type == TYPE_WIFI) {
             if (state.networkId != null) {
                 networkId = state.networkId;
@@ -218,6 +219,16 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
 
         return new NetworkIdentity(type, subType, subscriberId, networkId, roaming, metered,
                 defaultNetwork);
+    }
+
+    private static String getSubscriberId(Context context, int subscriptionId) {
+        final TelephonyManager tmDefault =
+                context.getSystemService(TelephonyManager.class);
+        if (tmDefault != null) {
+            TelephonyManager tm = tmDefault.createForSubscriptionId(subscriptionId);
+            return tm != null ? tm.getSubscriberId() : null;
+        }
+        return null;
     }
 
     @Override
