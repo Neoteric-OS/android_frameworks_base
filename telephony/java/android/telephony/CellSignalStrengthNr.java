@@ -18,6 +18,7 @@ package android.telephony;
 
 import android.annotation.IntDef;
 import android.annotation.IntRange;
+import android.annotation.NonNull;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
@@ -109,6 +110,28 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
     private int mCsiRsrp;
     private int mCsiRsrq;
     private int mCsiSinr;
+    /**
+     * CSI channel quality indicator (CQI) table index. There are multiple CQI tables.
+     * The definition of CQI in each table is different.
+     *
+     * Reference: 3GPP TS 138.214 section 5.2.2.1.
+     *
+     * Range [1, 3].
+     */
+    private int mCsiCqiTableIndex;
+    /**
+     * CSI channel quality indicators (CQI) for all subbands.
+     *
+     * If the CQI report is for the entire wideband, a single CQI index is provided.
+     * If the CQI report is for all subbands, one CQI index is provided for each subband,
+     * in ascending order of subband index.
+     * If CQI is not available, the CQI report is empty.
+     *
+     * Reference: 3GPP TS 138.214 section 5.2.2.1.
+     *
+     * Range [0, 15] for each CQI.
+     */
+    private int[] mCsiCqiReport;
     private int mSsRsrp;
     private int mSsRsrq;
     private int mSsSinr;
@@ -138,6 +161,33 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
      * @param csiRsrp CSI reference signal received power.
      * @param csiRsrq CSI reference signal received quality.
      * @param csiSinr CSI signal-to-noise and interference ratio.
+     * @param csiCqiTableIndex CSI CSI channel quality indicator (CQI) table index.
+     * @param csiCqiReport CSI channel quality indicators (CQI) for all subbands.
+     * @param ssRsrp SS reference signal received power.
+     * @param ssRsrq SS reference signal received quality.
+     * @param ssSinr SS signal-to-noise and interference ratio.
+     * @hide
+     */
+    public CellSignalStrengthNr(int csiRsrp, int csiRsrq, int csiSinr,
+            int csiCqiTableIndex, int[] csiCqiReport, int ssRsrp, int ssRsrq, int ssSinr) {
+        mCsiRsrp = inRangeOrUnavailable(csiRsrp, -140, -44);
+        mCsiRsrq = inRangeOrUnavailable(csiRsrq, -20, -3);
+        mCsiSinr = inRangeOrUnavailable(csiSinr, -23, 23);
+        mCsiCqiTableIndex = inRangeOrUnavailable(csiCqiTableIndex, 1, 3);
+        mCsiCqiReport = csiCqiReport.clone();
+        for (int i = 0; i < mCsiCqiReport.length; i++) {
+            mCsiCqiReport[i] = inRangeOrUnavailable(mCsiCqiReport[i], 1, 3);
+        }
+        mSsRsrp = inRangeOrUnavailable(ssRsrp, -140, -44);
+        mSsRsrq = inRangeOrUnavailable(ssRsrq, -43, 20);
+        mSsSinr = inRangeOrUnavailable(ssSinr, -23, 40);
+        updateLevel(null, null);
+    }
+
+    /**
+     * @param csiRsrp CSI reference signal received power.
+     * @param csiRsrq CSI reference signal received quality.
+     * @param csiSinr CSI signal-to-noise and interference ratio.
      * @param ssRsrp SS reference signal received power.
      * @param ssRsrq SS reference signal received quality.
      * @param ssSinr SS signal-to-noise and interference ratio.
@@ -145,13 +195,7 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
      */
     public CellSignalStrengthNr(
             int csiRsrp, int csiRsrq, int csiSinr, int ssRsrp, int ssRsrq, int ssSinr) {
-        mCsiRsrp = inRangeOrUnavailable(csiRsrp, -140, -44);
-        mCsiRsrq = inRangeOrUnavailable(csiRsrq, -20, -3);
-        mCsiSinr = inRangeOrUnavailable(csiSinr, -23, 23);
-        mSsRsrp = inRangeOrUnavailable(ssRsrp, -140, -44);
-        mSsRsrq = inRangeOrUnavailable(ssRsrq, -43, 20);
-        mSsSinr = inRangeOrUnavailable(ssSinr, -23, 40);
-        updateLevel(null, null);
+        this(csiRsrp, csiRsrq, csiSinr, CellInfo.UNAVAILABLE, new int[0], ssRsrp, ssRsrq, ssSinr);
     }
 
     /**
@@ -161,6 +205,15 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
     public CellSignalStrengthNr(android.hardware.radio.V1_4.NrSignalStrength ss) {
         this(flip(ss.csiRsrp), flip(ss.csiRsrq), ss.csiSinr, flip(ss.ssRsrp), flip(ss.ssRsrq),
                 ss.ssSinr);
+    }
+
+    /**
+     * @hide
+     * @param ss signal strength from modem.
+     */
+    public CellSignalStrengthNr(android.hardware.radio.V1_6.NrSignalStrength ss) {
+        this(flip(ss.csiRsrp), flip(ss.csiRsrq), ss.csiSinr, ss.csiCqiTableIndex, ss.csiCqiReport,
+                flip(ss.ssRsrp), flip(ss.ssRsrq), ss.ssSinr);
     }
 
     /**
@@ -232,6 +285,34 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
         return mCsiSinr;
     }
 
+    /**
+     * Return CSI channel quality indicator (CQI) table index. There are multiple CQI tables.
+     * The definition of CQI in each table is different.
+     *
+     * Reference: 3GPP TS 138.214 section 5.2.2.1.
+     *
+     * Range [1, 3].
+     */
+    public int getCsiCqiTableIndex() {
+        return mCsiCqiTableIndex;
+    }
+    /**
+     * Return a list of CSI channel quality indicators (CQI) for all subbands.
+     *
+     * If the CQI report is for the entire wideband, a single CQI index is provided.
+     * If the CQI report is for all subbands, one CQI index is provided for each subband,
+     * in ascending order of subband index.
+     * If CQI is not available, the CQI report is empty.
+     *
+     * Reference: 3GPP TS 138.214 section 5.2.2.1.
+     *
+     * Range [0, 15] for each CQI.
+     */
+    @NonNull
+    public int[] getCsiCqiReport() {
+        return mCsiCqiReport.clone();
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -243,6 +324,8 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
         dest.writeInt(mCsiRsrp);
         dest.writeInt(mCsiRsrq);
         dest.writeInt(mCsiSinr);
+        dest.writeInt(mCsiCqiTableIndex);
+        dest.writeIntArray(mCsiCqiReport);
         dest.writeInt(mSsRsrp);
         dest.writeInt(mSsRsrq);
         dest.writeInt(mSsSinr);
@@ -253,6 +336,8 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
         mCsiRsrp = in.readInt();
         mCsiRsrq = in.readInt();
         mCsiSinr = in.readInt();
+        mCsiCqiTableIndex = in.readInt();
+        mCsiCqiReport = in.createIntArray();
         mSsRsrp = in.readInt();
         mSsRsrq = in.readInt();
         mSsSinr = in.readInt();
@@ -265,6 +350,8 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
         mCsiRsrp = CellInfo.UNAVAILABLE;
         mCsiRsrq = CellInfo.UNAVAILABLE;
         mCsiSinr = CellInfo.UNAVAILABLE;
+        mCsiCqiTableIndex = CellInfo.UNAVAILABLE;
+        mCsiCqiReport = new int[0];
         mSsRsrp = CellInfo.UNAVAILABLE;
         mSsRsrq = CellInfo.UNAVAILABLE;
         mSsSinr = CellInfo.UNAVAILABLE;
@@ -408,6 +495,8 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
         mCsiRsrp = s.mCsiRsrp;
         mCsiRsrq = s.mCsiRsrq;
         mCsiSinr = s.mCsiSinr;
+        mCsiCqiTableIndex = s.mCsiCqiTableIndex;
+        mCsiCqiReport = s.mCsiCqiReport;
         mSsRsrp = s.mSsRsrp;
         mSsRsrq = s.mSsRsrq;
         mSsSinr = s.mSsSinr;
@@ -423,7 +512,8 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
 
     @Override
     public int hashCode() {
-        return Objects.hash(mCsiRsrp, mCsiRsrq, mCsiSinr, mSsRsrp, mSsRsrq, mSsSinr, mLevel);
+        return Objects.hash(mCsiRsrp, mCsiRsrq, mCsiSinr, mCsiCqiTableIndex,
+                mCsiCqiReport, mSsRsrp, mSsRsrq, mSsSinr, mLevel);
     }
 
     private static final CellSignalStrengthNr sInvalid = new CellSignalStrengthNr();
@@ -439,6 +529,8 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
         if (obj instanceof CellSignalStrengthNr) {
             CellSignalStrengthNr o = (CellSignalStrengthNr) obj;
             return mCsiRsrp == o.mCsiRsrp && mCsiRsrq == o.mCsiRsrq && mCsiSinr == o.mCsiSinr
+                    && mCsiCqiTableIndex == o.mCsiCqiTableIndex
+                    && Arrays.equals(mCsiCqiReport, o.mCsiCqiReport)
                     && mSsRsrp == o.mSsRsrp && mSsRsrq == o.mSsRsrq && mSsSinr == o.mSsSinr
                     && mLevel == o.mLevel;
         }
@@ -451,7 +543,8 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
                 .append(TAG + ":{")
                 .append(" csiRsrp = " + mCsiRsrp)
                 .append(" csiRsrq = " + mCsiRsrq)
-                .append(" csiSinr = " + mCsiSinr)
+                .append(" csiCqiTableIndex = " + mCsiCqiTableIndex)
+                .append(" csiCqiReport = " + Arrays.toString(mCsiCqiReport))
                 .append(" ssRsrp = " + mSsRsrp)
                 .append(" ssRsrq = " + mSsRsrq)
                 .append(" ssSinr = " + mSsSinr)
