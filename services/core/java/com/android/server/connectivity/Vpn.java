@@ -1339,7 +1339,7 @@ public class Vpn {
             }
             final ResolveInfo info = packageManager.resolveService(intent, 0 /* flags */);
             if (info == null) {
-                throw new SecurityException("Cannot find " + config.user);
+                throw new IllegalStateException("Cannot get PackageManager.");
             }
             if (!BIND_VPN_SERVICE.equals(info.serviceInfo.permission)) {
                 throw new SecurityException(config.user + " does not require " + BIND_VPN_SERVICE);
