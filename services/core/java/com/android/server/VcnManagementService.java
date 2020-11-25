@@ -37,11 +37,14 @@ import android.os.UserHandle;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+import android.util.ArrayMap;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
+import com.android.server.vcn.Vcn;
+import com.android.server.vcn.VcnContext;
 import com.android.server.vcn.util.PersistableBundleUtils;
 
 import java.io.IOException;
@@ -124,12 +127,17 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @NonNull private final Looper mLooper;
     @NonNull private final Handler mHandler;
     @NonNull private final VcnNetworkProvider mNetworkProvider;
+    @NonNull private final VcnContext mVcnContext;
 
-    @GuardedBy("mConfigsRwLock")
+    @GuardedBy("mVcnAndConfigRwLock")
     @NonNull
     private final Map<ParcelUuid, VcnConfig> mConfigs = new HashMap<>();
 
-    @NonNull private final ReadWriteLock mConfigsRwLock = new ReentrantReadWriteLock();
+    @GuardedBy("mVcnAndConfigRwLock")
+    @NonNull
+    private final Map<ParcelUuid, Vcn> mVcns = new ArrayMap<>();
+
+    @NonNull private final ReadWriteLock mVcnAndConfigRwLock = new ReentrantReadWriteLock();
 
     @NonNull private final PersistableBundleUtils.LockingReadWriteHelper mConfigDiskRwHelper;
 
@@ -143,6 +151,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         mNetworkProvider = new VcnNetworkProvider(mContext, mLooper);
 
         mConfigDiskRwHelper = mDeps.newPersistableBundleLockingReadWriteHelper(VCN_CONFIG_FILE);
+        mVcnContext = mDeps.newVcnContext(mContext, mLooper, mNetworkProvider);
 
         // Run on handler to ensure I/O does not block system server startup
         mHandler.post(() -> {
@@ -156,15 +165,16 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                                     PersistableBundleUtils::toParcelUuid,
                                     VcnConfig::new);
 
-                    mConfigsRwLock.writeLock().lock();
+                    mVcnAndConfigRwLock.writeLock().lock();
                     try {
                         for (Entry<ParcelUuid, VcnConfig> entry : configs.entrySet()) {
                             mConfigs.put(entry.getKey(), entry.getValue());
+                            // TODO: Start Vcn instance when subscriptions are loaded
                         }
 
                         // TODO: Trigger re-evaluation of active VCNs; start/stop VCNs as needed.
                     } finally {
-                        mConfigsRwLock.writeLock().unlock();
+                        mVcnAndConfigRwLock.writeLock().unlock();
                     }
                 }
             } catch (IOException e) {
@@ -217,6 +227,22 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         public PersistableBundleUtils.LockingReadWriteHelper
                 newPersistableBundleLockingReadWriteHelper(@NonNull String path) {
             return new PersistableBundleUtils.LockingReadWriteHelper(path);
+        }
+
+        /** Creates a new VcnContext */
+        public VcnContext newVcnContext(
+                @NonNull Context context,
+                @NonNull Looper looper,
+                @NonNull VcnNetworkProvider vcnNetworkProvider) {
+            return new VcnContext(context, looper, vcnNetworkProvider);
+        }
+
+        /** Creates a new Vcn instance using the provided configuration */
+        public Vcn newVcn(
+                @NonNull VcnContext vcnContext,
+                @NonNull ParcelUuid subscriptionGroup,
+                @NonNull VcnConfig config) {
+            return new Vcn(vcnContext, subscriptionGroup, config);
         }
     }
 
@@ -271,6 +297,17 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 "Carrier privilege required for subscription group to set VCN Config");
     }
 
+    @GuardedBy("mVcnAndConfigRwLock.writeLock()")
+    private void startOrUpdateVcnWriteLocked(
+            @NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config) {
+        if (mVcns.containsKey(subscriptionGroup)) {
+            mVcns.get(subscriptionGroup).updateConfig(config);
+        } else {
+            final Vcn newInstance = mDeps.newVcn(mVcnContext, subscriptionGroup, config);
+            mVcns.put(subscriptionGroup, newInstance);
+        }
+    }
+
     /**
      * Sets a VCN config for a given subscription group.
      *
@@ -283,25 +320,29 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         enforceCallingUserAndCarrierPrivilege(subscriptionGroup);
 
-        mConfigsRwLock.writeLock().lock();
+        final long token = Binder.clearCallingIdentity();
         try {
-            mConfigs.put(subscriptionGroup, config);
+            mVcnAndConfigRwLock.writeLock().lock();
+            try {
+                mConfigs.put(subscriptionGroup, config);
 
-            // Downgrade lock to reduce critical section to non-IO-bound calls, while ensuring
-            // race-free persistence to disk.
-            mConfigsRwLock.readLock().lock();
+                startOrUpdateVcnWriteLocked(subscriptionGroup, config);
+
+                // Downgrade lock to reduce critical section to non-IO-bound calls, while ensuring
+                // race-free persistence to disk.
+                mVcnAndConfigRwLock.readLock().lock();
+            } finally {
+                mVcnAndConfigRwLock.writeLock().unlock();
+            }
+
+            try {
+                writeConfigsToDiskReadLocked();
+            } finally {
+                mVcnAndConfigRwLock.readLock().unlock();
+            }
         } finally {
-            mConfigsRwLock.writeLock().unlock();
+            Binder.restoreCallingIdentity(token);
         }
-
-        try {
-            writeConfigsToDiskLocked();
-        } finally {
-            mConfigsRwLock.readLock().unlock();
-        }
-
-        // TODO: Clear Binder calling identity
-        // TODO: Trigger startup as necessary
     }
 
     /**
@@ -315,29 +356,35 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         enforceCallingUserAndCarrierPrivilege(subscriptionGroup);
 
-        mConfigsRwLock.writeLock().lock();
+        final long token = Binder.clearCallingIdentity();
         try {
-            mConfigs.remove(subscriptionGroup);
+            mVcnAndConfigRwLock.writeLock().lock();
+            try {
+                mConfigs.remove(subscriptionGroup);
 
-            // Downgrade lock to reduce critical section to non-IO-bound calls, while ensuring
-            // race-free persistence to disk.
-            mConfigsRwLock.readLock().lock();
+                if (mVcns.containsKey(subscriptionGroup)) {
+                    mVcns.remove(subscriptionGroup).teardownAsynchronously();
+                }
+
+                // Downgrade lock to reduce critical section to non-IO-bound calls, while ensuring
+                // race-free persistence to disk.
+                mVcnAndConfigRwLock.readLock().lock();
+            } finally {
+                mVcnAndConfigRwLock.writeLock().unlock();
+            }
+
+            try {
+                writeConfigsToDiskReadLocked();
+            } finally {
+                mVcnAndConfigRwLock.readLock().unlock();
+            }
         } finally {
-            mConfigsRwLock.writeLock().unlock();
+            Binder.restoreCallingIdentity(token);
         }
-
-        try {
-            writeConfigsToDiskLocked();
-        } finally {
-            mConfigsRwLock.readLock().unlock();
-        }
-
-        // TODO: Clear Binder calling identity
-        // TODO: Trigger teardown as necessary
     }
 
-    @GuardedBy("mConfigsRwLock")
-    private void writeConfigsToDiskLocked() {
+    @GuardedBy("mVcnAndConfigRwLock.readLock()")
+    private void writeConfigsToDiskReadLocked() {
         try {
             PersistableBundle bundle =
                     PersistableBundleUtils.fromMap(
@@ -358,7 +405,18 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         try {
             return Collections.unmodifiableMap(mConfigs);
         } finally {
-            mConfigsRwLock.readLock().unlock();
+            mVcnAndConfigRwLock.readLock().unlock();
+        }
+    }
+
+    /** Get current configuration list for testing purposes */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public Map<ParcelUuid, Vcn> getInstances() {
+        mVcnAndConfigRwLock.readLock().lock();
+        try {
+            return Collections.unmodifiableMap(mVcns);
+        } finally {
+            mVcnAndConfigRwLock.readLock().unlock();
         }
     }
 
@@ -374,7 +432,14 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         @Override
         public void onNetworkRequested(@NonNull NetworkRequest request, int score, int providerId) {
-            // TODO: Handle network requests - Ensure VCN started, and start appropriate tunnels.
+            mVcnAndConfigRwLock.readLock().lock();
+            try {
+                for (Vcn instance : mVcns.values()) {
+                    instance.onNetworkRequested(request, score, providerId);
+                }
+            } finally {
+                mVcnAndConfigRwLock.readLock().unlock();
+            }
         }
     }
 }
