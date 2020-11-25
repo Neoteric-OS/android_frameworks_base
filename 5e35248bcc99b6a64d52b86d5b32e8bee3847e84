@@ -16,6 +16,167 @@
       "message": "Lorenzo, who would be the best person to review this?",
       "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f61a3d5_b1e06637",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-25T15:55:20Z",
+      "side": 1,
+      "message": "In other parts of our code we call this type of class Dependencies. Could you rename it for consistency?",
+      "range": {
+        "startLine": 124,
+        "startChar": 17,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7eddb3f4_16cafbd5",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-25T15:55:20Z",
+      "side": 1,
+      "message": "Rename variable to match type (e.g., \"injector\", or \"dependencies\").",
+      "range": {
+        "startLine": 260,
+        "startChar": 38,
+        "endLine": 260,
+        "endChar": 46
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5706b38_97501bd9",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-25T15:55:20Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 282,
+        "startChar": 69,
+        "endLine": 282,
+        "endChar": 77
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d4c6f26_1c82935e",
+        "filename": "tests/net/java/com/android/server/NetworkManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-25T15:55:20Z",
+      "side": 1,
+      "message": "Nit: AFAICT netd is already out of the picture, because it\u0027s a mock. That\u0027s not the problem. The problem is that the mock will return false, and NMS will therefore think that the operation failed. Can you update the comment to clarify?",
+      "range": {
+        "startLine": 234,
+        "startChar": 16,
+        "endLine": 234,
+        "endChar": 40
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05cd2280_42962555",
+        "filename": "tests/net/java/com/android/server/NetworkManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-25T15:55:20Z",
+      "side": 1,
+      "message": "Maybe:\n\n    verify(mNetdService.bandwidthEnableDataSaver(true));\n\n?",
+      "range": {
+        "startLine": 242,
+        "startChar": 48,
+        "endLine": 242,
+        "endChar": 49
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2daebfb6_44ce12d7",
+        "filename": "tests/net/java/com/android/server/NetworkManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-25T15:55:20Z",
+      "side": 1,
+      "message": "Does that match the previous code? That did:\n\n        mInjector.setUidOnMeteredNetworkList(false, TEST_UID, false);\n\nand as far as I can tell, that is equivalent to:\n\n        mNMService.setUidMeteredNetworkAllowlist(TEST_UID, false);",
+      "range": {
+        "startLine": 243,
+        "startChar": 8,
+        "endLine": 243,
+        "endChar": 65
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d203709_a9a28262",
+        "filename": "tests/net/java/com/android/server/NetworkManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-25T15:55:20Z",
+      "side": 1,
+      "message": "Won\u0027t this attempt to talk to the real netd and fail? Should you mock out some netdService methods like you do in line 235?",
+      "range": {
+        "startLine": 293,
+        "startChar": 16,
+        "endLine": 293,
+        "endChar": 45
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
