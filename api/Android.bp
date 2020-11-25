@@ -36,6 +36,7 @@ genrule {
         ":framework-statsd{.public.api.txt}",
         ":framework-tethering{.public.api.txt}",
         ":framework-wifi{.public.api.txt}",
+        ":i18n.module.public.api{.public.api.txt}",
         ":non-updatable-current.txt",
     ],
     out: ["current.txt"],
