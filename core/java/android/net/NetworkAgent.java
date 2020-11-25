@@ -819,11 +819,14 @@ public abstract class NetworkAgent {
     /**
      * Called when ConnectivityService request a bandwidth update. The parent factory
      * shall try to overwrite this method and produce a bandwidth update if capable.
+     *
      * @hide
      */
+    @SystemApi
     public void onBandwidthUpdateRequested() {
         pollLceData();
     }
+
     /** @hide TODO delete once subclasses have moved to onBandwidthUpdateRequested. */
     protected void pollLceData() {
     }

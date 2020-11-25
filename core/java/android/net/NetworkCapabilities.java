@@ -650,13 +650,14 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     /**
-     * Deduces that all the capabilities it provides are typically provided by restricted networks
-     * or not.
+     * Deduces whether or not the related {@link Network} should be restricted based off of
+     * the combination of capabilities.
      *
      * @return {@code true} if the network should be restricted.
      * @hide
      */
-    public boolean deduceRestrictedCapability() {
+    @SystemApi
+    public boolean containsRestrictedCapability() {
         // Check if we have any capability that forces the network to be restricted.
         final boolean forceRestrictedCapability =
                 (mNetworkCapabilities & FORCE_RESTRICTED_CAPABILITIES) != 0;
@@ -680,7 +681,7 @@ public final class NetworkCapabilities implements Parcelable {
      * @hide
      */
     public void maybeMarkCapabilitiesRestricted() {
-        if (deduceRestrictedCapability()) {
+        if (containsRestrictedCapability()) {
             removeCapability(NET_CAPABILITY_NOT_RESTRICTED);
         }
     }

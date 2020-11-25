@@ -6163,6 +6163,7 @@ package android.net {
     method public void markConnected();
     method public void onAddKeepalivePacketFilter(int, @NonNull android.net.KeepalivePacketData);
     method public void onAutomaticReconnectDisabled();
+    method public void onBandwidthUpdateRequested();
     method public void onNetworkUnwanted();
     method public void onRemoveKeepalivePacketFilter(int);
     method public void onSaveAcceptUnvalidated(boolean);
@@ -6194,6 +6195,8 @@ package android.net {
   public static final class NetworkAgentConfig.Builder {
     ctor public NetworkAgentConfig.Builder();
     method @NonNull public android.net.NetworkAgentConfig build();
+    method @NonNull public android.net.NetworkAgentConfig.Builder disableNat64Detection();
+    method @NonNull public android.net.NetworkAgentConfig.Builder disableProvisioningNotification();
     method @NonNull public android.net.NetworkAgentConfig.Builder setExplicitlySelected(boolean);
     method @NonNull public android.net.NetworkAgentConfig.Builder setLegacyType(int);
     method @NonNull public android.net.NetworkAgentConfig.Builder setLegacyTypeName(@NonNull String);
@@ -6202,6 +6205,7 @@ package android.net {
   }
 
   public final class NetworkCapabilities implements android.os.Parcelable {
+    method public boolean containsRestrictedCapability();
     method @NonNull public int[] getAdministratorUids();
     method @Nullable public String getSsid();
     method @NonNull public int[] getTransportTypes();

@@ -287,6 +287,7 @@ public final class NetworkAgentConfig implements Parcelable {
          * @return this builder, to facilitate chaining.
          * @hide
          */
+        @SystemApi
         @NonNull
         public Builder disableNat64Detection() {
             mConfig.skip464xlat = true;
@@ -300,6 +301,7 @@ public final class NetworkAgentConfig implements Parcelable {
          * @return this builder, to facilitate chaining.
          * @hide
          */
+        @SystemApi
         @NonNull
         public Builder disableProvisioningNotification() {
             mConfig.provisioningNotificationDisabled = true;

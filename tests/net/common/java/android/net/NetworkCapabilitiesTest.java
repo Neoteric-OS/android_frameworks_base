@@ -814,23 +814,23 @@ public class NetworkCapabilitiesTest {
     }
 
     @Test @IgnoreUpTo(Build.VERSION_CODES.Q)
-    public void testDeduceRestrictedCapability() {
+    public void testContainsRestrictedCapability() {
         final NetworkCapabilities nc = new NetworkCapabilities();
         // Default capabilities don't have restricted capability.
-        assertFalse(nc.deduceRestrictedCapability());
+        assertFalse(nc.containsRestrictedCapability());
         // If there is a force restricted capability, then the network capabilities is restricted.
         nc.addCapability(NET_CAPABILITY_OEM_PAID);
         nc.addCapability(NET_CAPABILITY_INTERNET);
-        assertTrue(nc.deduceRestrictedCapability());
+        assertTrue(nc.containsRestrictedCapability());
         // Except for the force restricted capability, if there is any unrestricted capability in
         // capabilities, then the network capabilities is not restricted.
         nc.removeCapability(NET_CAPABILITY_OEM_PAID);
         nc.addCapability(NET_CAPABILITY_CBS);
-        assertFalse(nc.deduceRestrictedCapability());
+        assertFalse(nc.containsRestrictedCapability());
         // Except for the force restricted capability, the network capabilities will only be treated
         // as restricted when there is no any unrestricted capability.
         nc.removeCapability(NET_CAPABILITY_INTERNET);
-        assertTrue(nc.deduceRestrictedCapability());
+        assertTrue(nc.containsRestrictedCapability());
     }
 
     private void assertNoTransport(NetworkCapabilities nc) {
