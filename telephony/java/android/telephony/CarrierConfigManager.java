@@ -34,6 +34,8 @@ import android.telecom.TelecomManager;
 import android.telephony.ims.ImsReasonInfo;
 import android.telephony.ims.ImsSsData;
 
+import static android.net.ipsec.ike.SaProposal.DH_GROUP_2048_BIT_MODP;
+
 import com.android.internal.telephony.ICarrierConfigLoader;
 import com.android.telephony.Rlog;
 
@@ -4673,6 +4675,8 @@ public class CarrierConfigManager {
      */
     @Nullable
     public PersistableBundle getConfig() {
+        android.util.Log.e("TEST", "getConfig");
+        android.util.Log.e("TEST", "test access DH_GROUP_2048_BIT_MODP " + DH_GROUP_2048_BIT_MODP);
         return getConfigForSubId(SubscriptionManager.getDefaultSubscriptionId());
     }
 
