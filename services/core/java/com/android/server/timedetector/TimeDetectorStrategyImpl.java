@@ -20,6 +20,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.AlarmManager;
+import android.app.timedetector.GnssTimeSuggestion;
 import android.app.timedetector.ManualTimeSuggestion;
 import android.app.timedetector.NetworkTimeSuggestion;
 import android.app.timedetector.TelephonyTimeSuggestion;
@@ -221,6 +222,11 @@ public final class TimeDetectorStrategyImpl implements TimeDetectorStrategy {
         // clock.
         String reason = "New telephony time suggested. timeSuggestion=" + timeSuggestion;
         doAutoTimeDetection(reason);
+    }
+
+    @Override
+    public void suggestGnssTime(@NonNull GnssTimeSuggestion timeSuggestion) {
+        // TODO(b/157265008) Add actual implementation.
     }
 
     @Override

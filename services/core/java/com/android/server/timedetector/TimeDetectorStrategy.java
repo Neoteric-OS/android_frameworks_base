@@ -18,6 +18,7 @@ package com.android.server.timedetector;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.timedetector.GnssTimeSuggestion;
 import android.app.timedetector.ManualTimeSuggestion;
 import android.app.timedetector.NetworkTimeSuggestion;
 import android.app.timedetector.TelephonyTimeSuggestion;
@@ -50,6 +51,9 @@ public interface TimeDetectorStrategy {
 
     /** Process the suggested time from network sources. */
     void suggestNetworkTime(@NonNull NetworkTimeSuggestion timeSuggestion);
+
+    /** Process the suggested time from GNSS sources. */
+    void suggestGnssTime(@NonNull GnssTimeSuggestion timeSuggestion);
 
     /** Handle the auto-time setting being toggled on or off. */
     void handleAutoTimeDetectionChanged();

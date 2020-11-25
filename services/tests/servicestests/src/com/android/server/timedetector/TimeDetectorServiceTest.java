@@ -28,6 +28,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.app.timedetector.GnssTimeSuggestion;
 import android.app.timedetector.ManualTimeSuggestion;
 import android.app.timedetector.NetworkTimeSuggestion;
 import android.app.timedetector.TelephonyTimeSuggestion;
@@ -222,6 +223,7 @@ public class TimeDetectorServiceTest {
         private TelephonyTimeSuggestion mLastTelephonySuggestion;
         private ManualTimeSuggestion mLastManualSuggestion;
         private NetworkTimeSuggestion mLastNetworkSuggestion;
+        private GnssTimeSuggestion mLastGnssSuggestion;
         private boolean mHandleAutoTimeDetectionChangedCalled;
         private boolean mDumpCalled;
 
@@ -242,6 +244,11 @@ public class TimeDetectorServiceTest {
         }
 
         @Override
+        public void suggestGnssTime(GnssTimeSuggestion timeSuggestion) {
+            mLastGnssSuggestion = timeSuggestion;
+        }
+
+        @Override
         public void handleAutoTimeDetectionChanged() {
             mHandleAutoTimeDetectionChangedCalled = true;
         }
@@ -255,6 +262,7 @@ public class TimeDetectorServiceTest {
             mLastTelephonySuggestion = null;
             mLastManualSuggestion = null;
             mLastNetworkSuggestion = null;
+            mLastGnssSuggestion = null;
             mHandleAutoTimeDetectionChangedCalled = false;
             mDumpCalled = false;
         }

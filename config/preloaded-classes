@@ -994,6 +994,8 @@ android.app.slice.SliceSpec
 android.app.timedetector.ITimeDetectorService$Stub$Proxy
 android.app.timedetector.ITimeDetectorService$Stub
 android.app.timedetector.ITimeDetectorService
+android.app.timedetector.GnssTimeSuggestion$1
+android.app.timedetector.GnssTimeSuggestion
 android.app.timedetector.ManualTimeSuggestion$1
 android.app.timedetector.ManualTimeSuggestion
 android.app.timedetector.NetworkTimeSuggestion$1
