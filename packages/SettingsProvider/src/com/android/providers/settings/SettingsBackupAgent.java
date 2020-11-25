@@ -527,6 +527,7 @@ public class SettingsBackupAgent extends BackupAgentHelper {
             data.close();
             throw new IOException("Invalid file schema");
         }
+        instream.close();
     }
 
     private Set<String> getMovedToSecureSettings() {
@@ -555,8 +556,9 @@ public class SettingsBackupAgent extends BackupAgentHelper {
         } catch (EOFException eof) {
             // With the default 0 checksum we'll wind up forcing a backup of
             // any unhandled data sets, which is appropriate.
+        } finally {
+            dataInput.close();
         }
-        dataInput.close();
         return stateChecksums;
     }
 
@@ -637,6 +639,7 @@ public class SettingsBackupAgent extends BackupAgentHelper {
 
         if (!cursor.moveToFirst()) {
             Slog.i(TAG, "No settings to be preserved in restore");
+            cursor.close();
             return Collections.emptySet();
         }
 
