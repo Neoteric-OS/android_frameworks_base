@@ -8189,8 +8189,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         synchronized (mNetworkForNetId) {
             for (int i = 0; i < mNetworkForNetId.size(); i++) {
                 final NetworkAgentInfo nai = mNetworkForNetId.valueAt(i);
-                if (nai.satisfies(nri.request)) {
-                    matchingNetworks.add(nai);
+                for (NetworkRequest req : nri.mRequests) {
+                    if (nai.satisfies(req)) {
+                        // Return a report for the first NetworkRequest that nai satisfies, which
+                        // in turn would be the nri satisfier.
+                        matchingNetworks.add(nai);
+                        break;
+                    }
                 }
             }
         }
@@ -8315,10 +8320,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mConnectivityDiagnosticsCallbacks.entrySet()) {
             final ConnectivityDiagnosticsCallbackInfo cbInfo = entry.getValue();
             final NetworkRequestInfo nri = cbInfo.mRequestInfo;
-            if (nai.satisfies(nri.request)) {
-                if (checkConnectivityDiagnosticsPermissions(
-                        nri.mPid, nri.mUid, nai, cbInfo.mCallingPackageName)) {
-                    results.add(entry.getValue().mCb);
+            for (NetworkRequest req : nri.mRequests) {
+                if (nai.satisfies(req)) {
+                    if (checkConnectivityDiagnosticsPermissions(
+                            nri.mPid, nri.mUid, nai, cbInfo.mCallingPackageName)) {
+                        // Add a callback for the first NetworkRequest that nai satisfies, which
+                        // in turn would be the nri satisfier.
+                        results.add(entry.getValue().mCb);
+                        break;
+                    }
                 }
             }
         }
