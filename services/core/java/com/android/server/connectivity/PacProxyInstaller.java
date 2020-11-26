@@ -16,6 +16,8 @@
 
 package com.android.server.connectivity;
 
+import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.annotation.WorkerThread;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -53,6 +55,7 @@ import java.net.URLConnection;
 /**
  * @hide
  */
+@SystemApi(client = SystemApi.Client.SYSTEM_SERVER)
 public class PacProxyInstaller {
     private static final String PAC_PACKAGE = "com.android.pacprocessor";
     private static final String PAC_SERVICE = "com.android.pacprocessor.PacService";
@@ -70,10 +73,6 @@ public class PacProxyInstaller {
     private static final int DELAY_4 = 3;
     private static final int DELAY_LONG = 4;
     private static final long MAX_PAC_SIZE = 20 * 1000 * 1000;
-
-    // Return values for #setCurrentProxyScriptUrl
-    public static final boolean DONT_SEND_BROADCAST = false;
-    public static final boolean DO_SEND_BROADCAST = true;
 
     private String mCurrentPac;
     @GuardedBy("mProxyLock")
@@ -100,6 +99,11 @@ public class PacProxyInstaller {
      * Used for locking when setting mProxyService and all references to mCurrentPac.
      */
     private final Object mProxyLock = new Object();
+
+    /**
+     * Used for locking when sending the proxy broadcast.
+     */
+    private final Object mSendProxyLock = new Object();
 
     /**
      * Runnable to download PAC script.
@@ -146,7 +150,7 @@ public class PacProxyInstaller {
         }
     }
 
-    public PacProxyInstaller(Context context, Handler handler, int proxyMessage) {
+    public PacProxyInstaller(@NonNull Context context, @NonNull Handler handler, int proxyMessage) {
         mContext = context;
         mLastPort = -1;
         final HandlerThread netThread = new HandlerThread("android.pacproxyinstaller",
@@ -170,37 +174,32 @@ public class PacProxyInstaller {
     }
 
     /**
-     * Updates the PAC Manager with current Proxy information. This is called by
+     * Updates the PAC Proxy Installer with current Proxy information. This is called by
      * the ProxyTracker directly before a broadcast takes place to allow
-     * the PacManager to indicate that the broadcast should not be sent and the
-     * PacManager will trigger a new broadcast when it is ready.
+     * the PacProxyInstaller to indicate that the broadcast should not be sent and the
+     * PacProxyInstaller will trigger a new broadcast when it is ready.
      *
      * @param proxy Proxy information that is about to be broadcast.
-     * @return Returns whether the broadcast should be sent : either DO_ or DONT_SEND_BROADCAST
      */
-    synchronized boolean setCurrentProxyScriptUrl(ProxyInfo proxy) {
-        if (!Uri.EMPTY.equals(proxy.getPacFileUrl())) {
-            if (proxy.getPacFileUrl().equals(mPacUrl) && (proxy.getPort() > 0)) {
-                // Allow to send broadcast, nothing to do.
-                return DO_SEND_BROADCAST;
-            }
-            mPacUrl = proxy.getPacFileUrl();
-            mCurrentDelay = DELAY_1;
-            mHasSentBroadcast = false;
-            mHasDownloaded = false;
-            getAlarmManager().cancel(mPacRefreshIntent);
-            bind();
-            return DONT_SEND_BROADCAST;
-        } else {
-            getAlarmManager().cancel(mPacRefreshIntent);
-            synchronized (mProxyLock) {
-                mPacUrl = Uri.EMPTY;
-                mCurrentPac = null;
-                if (mProxyService != null) {
-                    unbind();
+    public void setCurrentProxyScriptUrl(@NonNull ProxyInfo proxy) {
+        synchronized (mSendProxyLock) {
+            if (!Uri.EMPTY.equals(proxy.getPacFileUrl())) {
+                mPacUrl = proxy.getPacFileUrl();
+                mCurrentDelay = DELAY_1;
+                mHasSentBroadcast = false;
+                mHasDownloaded = false;
+                getAlarmManager().cancel(mPacRefreshIntent);
+                bind();
+            } else {
+                getAlarmManager().cancel(mPacRefreshIntent);
+                synchronized (mProxyLock) {
+                    mPacUrl = Uri.EMPTY;
+                    mCurrentPac = null;
+                    if (mProxyService != null) {
+                        unbind();
+                    }
                 }
             }
-            return DO_SEND_BROADCAST;
         }
     }
 
@@ -387,12 +386,14 @@ public class PacProxyInstaller {
     }
 
     private synchronized void sendProxyIfNeeded() {
-        if (!mHasDownloaded || (mLastPort == -1)) {
-            return;
-        }
-        if (!mHasSentBroadcast) {
-            sendPacBroadcast(new ProxyInfo(mPacUrl, mLastPort));
-            mHasSentBroadcast = true;
+        synchronized (mSendProxyLock) {
+            if (!mHasDownloaded || (mLastPort == -1)) {
+                return;
+            }
+            if (!mHasSentBroadcast) {
+                sendPacBroadcast(new ProxyInfo(mPacUrl, mLastPort));
+                mHasSentBroadcast = true;
+            }
         }
     }
 }

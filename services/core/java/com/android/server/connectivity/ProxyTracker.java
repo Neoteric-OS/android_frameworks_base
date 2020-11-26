@@ -79,6 +79,14 @@ public class ProxyTracker {
     @NonNull
     private final PacProxyInstaller mPacProxyInstaller;
 
+    // Return values for #shouldSendBroadcast
+    public static final boolean DONT_SEND_BROADCAST = false;
+    public static final boolean DO_SEND_BROADCAST = true;
+
+    // The current pac URL
+    @NonNull
+    private volatile Uri mPacUrl = Uri.EMPTY;
+
     public ProxyTracker(@NonNull final Context context,
             @NonNull final Handler connectivityServiceInternalHandler, final int pacChangedEvent) {
         mContext = context;
@@ -221,8 +229,10 @@ public class ProxyTracker {
     public void sendProxyBroadcast() {
         final ProxyInfo defaultProxy = getDefaultProxy();
         final ProxyInfo proxyInfo = null != defaultProxy ? defaultProxy : new ProxyInfo("", 0, "");
-        if (mPacProxyInstaller.setCurrentProxyScriptUrl(proxyInfo)
-                == PacProxyInstaller.DONT_SEND_BROADCAST) {
+        mPacProxyInstaller.setCurrentProxyScriptUrl(proxyInfo);
+        mPacUrl = proxyInfo.getPacFileUrl();
+
+        if (shouldSendBroadcast(proxyInfo) == DONT_SEND_BROADCAST) {
             return;
         }
         if (DBG) Slog.d(TAG, "sending Proxy Broadcast for " + proxyInfo);
@@ -236,6 +246,16 @@ public class ProxyTracker {
         } finally {
             Binder.restoreCallingIdentity(ident);
         }
+    }
+
+    private boolean shouldSendBroadcast(ProxyInfo proxy) {
+        if (!Uri.EMPTY.equals(proxy.getPacFileUrl())) {
+            if (proxy.getPacFileUrl().equals(mPacUrl) && (proxy.getPort() > 0)) {
+                return DO_SEND_BROADCAST;
+            }
+            return DONT_SEND_BROADCAST;
+        }
+        return DO_SEND_BROADCAST;
     }
 
     /**

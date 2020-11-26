@@ -75,6 +75,15 @@ package com.android.server {
 
 }
 
+package com.android.server.connectivity {
+
+  public class PacProxyInstaller {
+    ctor public PacProxyInstaller(@NonNull android.content.Context, @NonNull android.os.Handler, int);
+    method public void setCurrentProxyScriptUrl(@NonNull android.net.ProxyInfo);
+  }
+
+}
+
 package com.android.server.wifi {
 
   public class SupplicantManager {
