@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f98c2121_0211bf25",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1787007
+      },
+      "writtenOn": "2020-11-26T15:59:11Z",
+      "side": 1,
+      "message": "should these deferred verrides expire? e.g. in order for a deferred override to be applied, maybe it should only be done if the original request was done say in the last 24 hours (or maybe a longer interval, e.g. last 7-30 days?)",
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33ad4672_6d193aec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1787007
+      },
+      "writtenOn": "2020-11-26T15:59:11Z",
+      "side": 1,
+      "message": "I wonder if the expectation is that all overrides would be reset?\n\nI think this could cause people headches when a user falls into a problem, reports a bug, someone asks \"uninstall and reinstall\" hoping this would get a clean slate whereas one of these overrides could a) be causing the bug; b) remain in place after reinstalling the app;\n\nOn top of that, I would also expect the overrides to be reset when you clear the app data but I don\u0027t know if that currently happens.",
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cbf1d497_e8ea373f",
@@ -35,6 +69,40 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7422eb9_81eec30b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1787007
+      },
+      "writtenOn": "2020-11-26T15:59:11Z",
+      "side": 1,
+      "message": "Leaving a few comments (although I realise they might conflict with comments/suggestions in the original bug)",
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4794c003_8a0a9df2",
+        "filename": "core/java/com/android/internal/compat/OverrideAllowedState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1787007
+      },
+      "writtenOn": "2020-11-26T15:59:11Z",
+      "side": 1,
+      "message": "Should we reuse the number or use the next free (6)? There\u0027s a risk that some tools might have a problem when they see the value 4 as they would need to check which version of android is this code running?",
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b06644e0_a23add4d",
@@ -54,6 +122,23 @@
         "endLine": 147,
         "endChar": 31
       },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2da9f56_354a1ceb",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1787007
+      },
+      "writtenOn": "2020-11-26T15:59:11Z",
+      "side": 1,
+      "message": "Did you finish what you wanted to say here?",
       "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -169,6 +254,23 @@
         "endLine": 288,
         "endChar": 54
       },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d25f50d9_8bac9d52",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1787007
+      },
+      "writtenOn": "2020-11-26T15:59:11Z",
+      "side": 1,
+      "message": "I don\u0027t think this line does what the comment says it does\n\ncomment: Pretend the app now is no longer debuggable, but has the same package.\ncode:    `thenThrow(new NameNotFoundException())`",
       "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
