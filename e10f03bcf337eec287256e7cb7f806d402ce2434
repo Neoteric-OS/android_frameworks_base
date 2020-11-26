@@ -145,6 +145,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d2f6d567_a5ca304e",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2020-11-26T23:45:45Z",
+      "side": 1,
+      "message": "you may have not finished the sentence he",
+      "range": {
+        "startLine": 147,
+        "startChar": 28,
+        "endLine": 147,
+        "endChar": 31
+      },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "015f77a9_5f2c30d9",
         "filename": "services/core/java/com/android/server/compat/CompatChange.java",
         "patchSetId": 1
@@ -185,6 +208,29 @@
         "startChar": 12,
         "endLine": 155,
         "endChar": 27
+      },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68bbf328_d1902ba5",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2020-11-26T23:45:45Z",
+      "side": 1,
+      "message": "In what cases do we actually hit this codepath? when updating an apk to non-debuggable?",
+      "range": {
+        "startLine": 178,
+        "startChar": 1,
+        "endLine": 179,
+        "endChar": 63
       },
       "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
