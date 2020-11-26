@@ -168,6 +168,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a59acd72_ebeefb8b",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1787007
+      },
+      "writtenOn": "2020-11-26T16:06:11Z",
+      "side": 1,
+      "message": "I agree that reading Mathew\u0027s pseudo code is a lot easier to undersand this method than the way it is currently written! Maybe the names of the methods could be improved?",
+      "parentUuid": "015f77a9_5f2c30d9",
+      "range": {
+        "startLine": 155,
+        "startChar": 12,
+        "endLine": 155,
+        "endChar": 27
+      },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4746dbb7_15cc2612",
         "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
         "patchSetId": 1
@@ -179,6 +203,30 @@
       "writtenOn": "2020-11-26T15:47:34Z",
       "side": 1,
       "message": "I might make this a warning, and maybe clarify for folks who see it in the log?\n\n  Package X has deferred overrides for change X which is ignored\n\nor something",
+      "range": {
+        "startLine": 145,
+        "startChar": 21,
+        "endLine": 145,
+        "endChar": 22
+      },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c89e578_fd55ebb9",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1787007
+      },
+      "writtenOn": "2020-11-26T16:06:11Z",
+      "side": 1,
+      "message": "Are these logs automatically filtered to be logged once per process+change id? Otherwise I think this could become a bit too noisy (?) \n\nRe warning vs debug, this doesn\u0027t sound like anything unexpected so I\u0027m not sure it should be a warning (but fine if we do that)",
+      "parentUuid": "4746dbb7_15cc2612",
       "range": {
         "startLine": 145,
         "startChar": 21,
