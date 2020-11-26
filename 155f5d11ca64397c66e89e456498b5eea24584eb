@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1c3f5bac_49638a24",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5532,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-26T16:00:33Z",
+      "side": 1,
+      "message": "Agree that ApplicationInfo should be same for all users. But we want the calling package ApplicationInfo not current Context\u0027s ApplicationInfo here, so we can\u0027t replace all of this to Context#getApplicationInfo().",
+      "parentUuid": "594c9be5_083a22da",
+      "range": {
+        "startLine": 5532,
+        "startChar": 22,
+        "endLine": 5532,
+        "endChar": 36
+      },
+      "revId": "155f5d11ca64397c66e89e456498b5eea24584eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73380bdb_b9d87811",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2020-11-20T09:15:43Z",
       "side": 1,
       "message": "This method is called in a tight loop in getAppsUids(). Can you avoid doing all these useless allocations ? A simple way to do it would be to take a context for the right user.",
+      "range": {
+        "startLine": 1113,
+        "startChar": 8,
+        "endLine": 1114,
+        "endChar": 74
+      },
+      "revId": "155f5d11ca64397c66e89e456498b5eea24584eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23a1c2fb_35646a51",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-26T16:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73380bdb_b9d87811",
       "range": {
         "startLine": 1113,
         "startChar": 8,
@@ -60,6 +108,30 @@
       "writtenOn": "2020-11-20T09:15:43Z",
       "side": 1,
       "message": "You\u0027ve been doing this in multiple changes lately. Can you please factorize this code somewhere instead of copy-pasting ?",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 227,
+        "endChar": 63
+      },
+      "revId": "155f5d11ca64397c66e89e456498b5eea24584eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0419815_305e8ce7",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-26T16:00:33Z",
+      "side": 1,
+      "message": "Done. aosp/1511318 and aosp/1511318",
+      "parentUuid": "1363a4ce_681528a9",
       "range": {
         "startLine": 216,
         "startChar": 7,
@@ -107,6 +179,30 @@
       "side": 1,
       "message": "doAnswer(invocation -\u003e {\n  final PackageManager pm \u003d (PackageManager) invocation.getMock();\n  final userId \u003d pm.getUserId();",
       "parentUuid": "9fb80670_f9f0b50d",
+      "range": {
+        "startLine": 1350,
+        "startChar": 12,
+        "endLine": 1350,
+        "endChar": 28
+      },
+      "revId": "155f5d11ca64397c66e89e456498b5eea24584eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8802cf2b_b7e0a3d9",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-26T16:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbfea7a1_dd50febd",
       "range": {
         "startLine": 1350,
         "startChar": 12,
