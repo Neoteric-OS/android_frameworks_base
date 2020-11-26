@@ -16,6 +16,161 @@
       "message": "Missing a CTS test to do an end-to-end check",
       "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bac5fc6a_a53e565e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-11-26T15:47:34Z",
+      "side": 1,
+      "message": "Looks good.\n\nI might suggest getting an expert opinion on your addition to SystemServer.startBootstrapServices, it looks reasonable but I\u0027m not familiar with that. (try Narayan?)\n\nI feel that a e2e test (a la SignedConfigCts we discussed before) might be good too, to catch any integration issues with the package manager (e.g. race conditions etc).\n\nSaving LGTM until the test is fixed as it looks like it\u0027s testing the wrong thing now.",
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b06644e0_a23add4d",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-11-26T15:47:34Z",
+      "side": 1,
+      "message": "unfunished sen",
+      "range": {
+        "startLine": 147,
+        "startChar": 28,
+        "endLine": 147,
+        "endChar": 31
+      },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "015f77a9_5f2c30d9",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-11-26T15:47:34Z",
+      "side": 1,
+      "message": "I find this logic a bit hard to understand the way it\u0027s written. Maybe putting more of the logic in this method would be better?\n\n  if (hasDeferredOverride \u0026\u0026 allowed) \n    // promote to real override\n  }\n  if (hasOverride \u0026\u0026 !allowed) {\n    // demote to deffered\n  }\n\n(I realise I\u0027m glossing over the return value requirement here...)",
+      "range": {
+        "startLine": 155,
+        "startChar": 12,
+        "endLine": 155,
+        "endChar": 27
+      },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4746dbb7_15cc2612",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-11-26T15:47:34Z",
+      "side": 1,
+      "message": "I might make this a warning, and maybe clarify for folks who see it in the log?\n\n  Package X has deferred overrides for change X which is ignored\n\nor something",
+      "range": {
+        "startLine": 145,
+        "startChar": 21,
+        "endLine": 145,
+        "endChar": 22
+      },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ee39bc4_83e9e5cf",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-11-26T15:47:34Z",
+      "side": 1,
+      "message": "make this a switch?",
+      "range": {
+        "startLine": 180,
+        "startChar": 12,
+        "endLine": 180,
+        "endChar": 69
+      },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99ef7809_8958da28",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-11-26T15:47:34Z",
+      "side": 1,
+      "message": "doesn\u0027t look right?",
+      "range": {
+        "startLine": 273,
+        "startChar": 16,
+        "endLine": 273,
+        "endChar": 30
+      },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cea2331b_696239ee",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-11-26T15:47:34Z",
+      "side": 1,
+      "message": ".thenReturn(releaseApp)",
+      "range": {
+        "startLine": 288,
+        "startChar": 16,
+        "endLine": 288,
+        "endChar": 54
+      },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
