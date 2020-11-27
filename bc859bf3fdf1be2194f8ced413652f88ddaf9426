@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75aaa67d_85343fde",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-27T16:58:49Z",
+      "side": 1,
+      "message": "Since this change is present internally already, use Merged-In with the internal Change-Id value to tell the automerger not to bother with it.\n\nYou might find it naturally works out it has nothing to do, or you might see conflicts when treehugger attempts to merge. Either way, it\u0027s good documentation.",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 52
+      },
+      "revId": "bc859bf3fdf1be2194f8ced413652f88ddaf9426",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02f5fe12_52d88560",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-27T16:58:49Z",
+      "side": 1,
+      "message": "I\u0027m assuming you\u0027ll work on future changes in this set in AOSP if you can.",
+      "revId": "bc859bf3fdf1be2194f8ced413652f88ddaf9426",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
