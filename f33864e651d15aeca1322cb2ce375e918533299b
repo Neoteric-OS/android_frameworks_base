@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e35fe6f_435e899b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1808133
+      },
+      "writtenOn": "2020-11-27T23:38:31Z",
+      "side": 1,
+      "message": "Sorry to ask but I think that the function ServiceState#getCellBandwidths() and onLinkDownstreamBandwidthKbps() does not get any indication of nrState. Why that chage? nrState is not accessible at all. I think this is not a correct fix becase now nrState is complitely \"blinded\".",
+      "revId": "f33864e651d15aeca1322cb2ce375e918533299b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
