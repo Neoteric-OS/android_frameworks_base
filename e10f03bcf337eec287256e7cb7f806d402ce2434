@@ -374,6 +374,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31f4dccb_15d0eb2c",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1787007
+      },
+      "writtenOn": "2020-11-27T17:47:05Z",
+      "side": 1,
+      "message": "Yes, that\u0027s better!",
+      "parentUuid": "696e92f5_6ced43bc",
+      "range": {
+        "startLine": 155,
+        "startChar": 12,
+        "endLine": 155,
+        "endChar": 27
+      },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68bbf328_d1902ba5",
