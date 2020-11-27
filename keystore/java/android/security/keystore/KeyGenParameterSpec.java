@@ -274,6 +274,7 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
     private final boolean mUserConfirmationRequired;
     private final boolean mUnlockedDeviceRequired;
     private final boolean mCriticalToDeviceEncryption;
+    private final int mMaxUsageCount;
     /*
      * ***NOTE***: All new fields MUST also be added to the following:
      * ParcelableKeyGenParameterSpec class.
@@ -313,7 +314,8 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
             boolean isStrongBoxBacked,
             boolean userConfirmationRequired,
             boolean unlockedDeviceRequired,
-            boolean criticalToDeviceEncryption) {
+            boolean criticalToDeviceEncryption,
+            int maxUsageCount) {
         if (TextUtils.isEmpty(keyStoreAlias)) {
             throw new IllegalArgumentException("keyStoreAlias must not be empty");
         }
@@ -366,6 +368,7 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
         mUserConfirmationRequired = userConfirmationRequired;
         mUnlockedDeviceRequired = unlockedDeviceRequired;
         mCriticalToDeviceEncryption = criticalToDeviceEncryption;
+        mMaxUsageCount = maxUsageCount;
     }
 
     /**
@@ -782,13 +785,24 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
     }
 
     /**
-     * Return whether this key is critical to the device encryption flow.
+     * Returns whether this key is critical to the device encryption flow.
      *
      * @see android.security.KeyStore#FLAG_CRITICAL_TO_DEVICE_ENCRYPTION
      * @hide
      */
     public boolean isCriticalToDeviceEncryption() {
         return mCriticalToDeviceEncryption;
+    }
+
+    /**
+     * Returns the maximum number of times the limit use key is allowed to be used or
+     * {@code KeyProperties.UNRESTRICTED_USAGE_COUNT} if there’s no restriction on the number of
+     * times the key can be used.
+     *
+     * @see Builder#setMaxUsageCount(int)
+     */
+    public int getMaxUsageCount() {
+        return mMaxUsageCount;
     }
 
     /**
@@ -827,6 +841,7 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
         private boolean mUserConfirmationRequired;
         private boolean mUnlockedDeviceRequired = false;
         private boolean mCriticalToDeviceEncryption = false;
+        private int mMaxUsageCount = KeyProperties.UNRESTRICTED_USAGE_COUNT;
 
         /**
          * Creates a new instance of the {@code Builder}.
@@ -894,6 +909,7 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
             mUserConfirmationRequired = sourceSpec.isUserConfirmationRequired();
             mUnlockedDeviceRequired = sourceSpec.isUnlockedDeviceRequired();
             mCriticalToDeviceEncryption = sourceSpec.isCriticalToDeviceEncryption();
+            mMaxUsageCount = sourceSpec.getMaxUsageCount();
         }
 
         /**
@@ -1553,6 +1569,30 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
         }
 
         /**
+         * Sets the maximum number of times the key is allowed to be used.
+         *
+         * Some secure hardware may not support this feature at all, in which case it will
+         * be enforced in software, some secure hardware may support it but only with
+         * maxUsageCount = 1, and some secure hardware may support it with larger value
+         * of maxUsageCount.
+         *
+         * The PackageManger feature flags: PackageManager.FEATURE_SINGLE_USE_KEY and
+         * PackageManager.FEATURE_LIMITED_USE_KEY can be used to check whether the secure
+         * hardware cannot enforce this feature, can only enforce it with maxUsageCount = 1,
+         * or can enforce it with larger value of maxUsageCount.
+         *
+         * By default, there is no restriction on the usage of key.
+         */
+        @NonNull
+        public Builder setMaxUsageCount(int maxUsageCount) {
+            if (mMaxUsageCount <= 0) {
+                throw new IllegalArgumentException("maxUsageCount <= 0");
+            }
+            mMaxUsageCount = maxUsageCount;
+            return this;
+        }
+
+        /**
          * Builds an instance of {@code KeyGenParameterSpec}.
          */
         @NonNull
@@ -1587,7 +1627,8 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
                     mIsStrongBoxBacked,
                     mUserConfirmationRequired,
                     mUnlockedDeviceRequired,
-                    mCriticalToDeviceEncryption);
+                    mCriticalToDeviceEncryption,
+                    mMaxUsageCount);
         }
     }
 }
