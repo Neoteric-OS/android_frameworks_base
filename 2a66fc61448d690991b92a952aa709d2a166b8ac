@@ -39,6 +39,30 @@
       },
       "revId": "2a66fc61448d690991b92a952aa709d2a166b8ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "642bbc33_e0f26069",
+        "filename": "core/java/android/security/keymaster/KeymasterDefs.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-27T20:16:50Z",
+      "side": 1,
+      "message": "Yes it has value 3 and was renamed in the KeyMint spec.",
+      "parentUuid": "683040de_08bd351d",
+      "range": {
+        "startLine": 167,
+        "startChar": 28,
+        "endLine": 167,
+        "endChar": 67
+      },
+      "revId": "2a66fc61448d690991b92a952aa709d2a166b8ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
