@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09d5ab9d_d1fb403c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-27T18:51:16Z",
+      "side": 1,
+      "message": "I varified locally that this CL does not cause the androidcar test failure.",
+      "revId": "2a66fc61448d690991b92a952aa709d2a166b8ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
