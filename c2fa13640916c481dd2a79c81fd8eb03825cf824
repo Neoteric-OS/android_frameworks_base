@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd51eedf_580ac71d",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-27T08:07:17Z",
+      "side": 1,
+      "message": "Given that we have TcpKeepalivePacketDataParcelable, should this even be Parcelable at all ? If not and you don\u0027t have time to do it now, do you want to add a todo ?",
+      "range": {
+        "startLine": 32,
+        "startChar": 81,
+        "endLine": 32,
+        "endChar": 91
+      },
+      "revId": "c2fa13640916c481dd2a79c81fd8eb03825cf824",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aedb91de_4ed3d1cc",
+        "filename": "services/net/java/android/net/util/KeepalivePacketDataUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-27T08:07:17Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this file in fact belong in frameworks/libs/net ? It sounds like we could have to update the implementation on either side of the barrier.",
+      "revId": "c2fa13640916c481dd2a79c81fd8eb03825cf824",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc8b906f_867c26d9",
+        "filename": "tests/net/common/java/android/net/TcpKeepalivePacketDataTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-27T08:07:17Z",
+      "side": 1,
+      "message": "Do you need to test this both in here and testToString below ?\n\nIt sounds like this should belong in testParcelUnparcel and be using assertParcelSane",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 69
+      },
+      "revId": "c2fa13640916c481dd2a79c81fd8eb03825cf824",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
