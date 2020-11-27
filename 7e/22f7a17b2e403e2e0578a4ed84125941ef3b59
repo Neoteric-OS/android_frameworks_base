@@ -1,0 +1,11 @@
+Presubmit-Ready+1: Nikita Ioffe <ioffe@google.com>
+Code-Review+2: Jin Seok Park <jinpark@google.com>
+Autosubmit+1: Jin Seok Park <jinpark@google.com>
+Bypass-Presubmit+1: Nikita Ioffe <ioffe@google.com>
+Build-Cop-Override+1: Nikita Ioffe <ioffe@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Nikita Ioffe <ioffe@google.com>
+Submitted-at: Fri, 27 Nov 2020 14:30:12 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1512915
+Project: platform/frameworks/base
+Branch: refs/heads/master
