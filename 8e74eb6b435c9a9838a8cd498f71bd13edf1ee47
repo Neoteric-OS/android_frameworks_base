@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "830cf0e8_36bf8a48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-11-27T10:55:47Z",
+      "side": 1,
+      "message": "Err looks like I lost +2s for the cherrypick when rebasing 😞",
+      "revId": "8e74eb6b435c9a9838a8cd498f71bd13edf1ee47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
