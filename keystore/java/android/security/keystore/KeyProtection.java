@@ -235,6 +235,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
     private final boolean mUserConfirmationRequired;
     private final boolean mUnlockedDeviceRequired;
     private final boolean mIsStrongBoxBacked;
+    private final int mMaxUsageCount;
 
     private KeyProtection(
             Date keyValidityStart,
@@ -256,7 +257,8 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
             boolean criticalToDeviceEncryption,
             boolean userConfirmationRequired,
             boolean unlockedDeviceRequired,
-            boolean isStrongBoxBacked) {
+            boolean isStrongBoxBacked,
+            int maxUsageCount) {
         mKeyValidityStart = Utils.cloneIfNotNull(keyValidityStart);
         mKeyValidityForOriginationEnd = Utils.cloneIfNotNull(keyValidityForOriginationEnd);
         mKeyValidityForConsumptionEnd = Utils.cloneIfNotNull(keyValidityForConsumptionEnd);
@@ -279,6 +281,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
         mUserConfirmationRequired = userConfirmationRequired;
         mUnlockedDeviceRequired = unlockedDeviceRequired;
         mIsStrongBoxBacked = isStrongBoxBacked;
+        mMaxUsageCount = maxUsageCount;
     }
 
     /**
@@ -548,6 +551,17 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
     }
 
     /**
+     * Returns the maximum number of times the limit use key is allowed to be used or
+     * {@code KeyProperties.UNRESTRICTED_USAGE_COUNT} if there’s no restriction on the number of
+     * times the key can be used.
+     *
+     * @see Builder#setMaxUsageCount(int)
+     */
+    public int getMaxUsageCount() {
+        return mMaxUsageCount;
+    }
+
+    /**
      * Builder of {@link KeyProtection} instances.
      */
     public final static class Builder {
@@ -574,6 +588,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
         private long mBoundToSecureUserId = GateKeeper.INVALID_SECURE_USER_ID;
         private boolean mCriticalToDeviceEncryption = false;
         private boolean mIsStrongBoxBacked = false;
+        private  int mMaxUsageCount = KeyProperties.UNRESTRICTED_USAGE_COUNT;
 
         /**
          * Creates a new instance of the {@code Builder}.
@@ -1040,6 +1055,20 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
         }
 
         /**
+         * Sets the maximum number of times the key is allowed to be used.
+         *
+         * By default, the key can be used any number of times.
+         */
+        @NonNull
+        public Builder setMaxUsageCount(int maxUsageCount) {
+            if (mMaxUsageCount <= 0) {
+                throw new IllegalArgumentException("maxUsageCount <= 0");
+            }
+            mMaxUsageCount = maxUsageCount;
+            return this;
+        }
+
+        /**
          * Builds an instance of {@link KeyProtection}.
          *
          * @throws IllegalArgumentException if a required field is missing
@@ -1066,7 +1095,8 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
                     mCriticalToDeviceEncryption,
                     mUserConfirmationRequired,
                     mUnlockedDeviceRequired,
-                    mIsStrongBoxBacked);
+                    mIsStrongBoxBacked,
+                    mMaxUsageCount);
         }
     }
 }
