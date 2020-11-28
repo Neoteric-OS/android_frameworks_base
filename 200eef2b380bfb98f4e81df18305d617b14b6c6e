@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006429064",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1513130?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f7558af7_5015191c",
+        "filename": "services/core/java/com/android/server/connectivity/PacProxyInstaller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-28T19:40:41Z",
+      "side": 1,
+      "message": "Prefer to use mContext.getSystemService(AlarmManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 167,
+        "startChar": 28,
+        "endLine": 167,
+        "endChar": 69
+      },
+      "revId": "200eef2b380bfb98f4e81df18305d617b14b6c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
