@@ -1,0 +1,9 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Adrian Roos <roosa@google.com>
+Submitted-by: Chris Li <lihongyu@google.com>
+Submitted-at: Sun, 29 Nov 2020 06:47:42 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1512509
+Project: platform/frameworks/base
+Branch: refs/heads/master
