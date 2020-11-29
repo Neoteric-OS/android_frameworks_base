@@ -93,5 +93,6 @@ public class SystemSettings {
         Settings.System.SMALL_LANDSCAPE_NOTIFICATION,
         Settings.System.HAPTIC_ON_SLIDER,
         Settings.System.STATUS_BAR_BATTERY_STYLE,
+        Settings.System.SHOW_BATTERY_PERCENT_INSIDE,
     };
 }
