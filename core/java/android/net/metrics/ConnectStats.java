@@ -16,12 +16,10 @@
 
 package android.net.metrics;
 
-import android.net.NetworkCapabilities;
 import android.system.OsConstants;
 import android.util.IntArray;
 import android.util.SparseIntArray;
 
-import com.android.internal.util.BitUtils;
 import com.android.internal.util.TokenBucket;
 
 /**
@@ -120,10 +118,8 @@ public class ConnectStats {
     @Override
     public String toString() {
         StringBuilder builder =
-                new StringBuilder("ConnectStats(").append("netId=").append(netId).append(", ");
-        for (int t : BitUtils.unpackBits(transports)) {
-            builder.append(NetworkCapabilities.transportNameOf(t)).append(", ");
-        }
+                new StringBuilder("ConnectStats(").append("netId=").append(netId)
+                        .append(", transports=").append(Long.toHexString(transports)).append(", ");
         builder.append(String.format("%d events, ", eventCount));
         builder.append(String.format("%d success, ", connectCount));
         builder.append(String.format("%d blocking, ", connectBlockingCount));
