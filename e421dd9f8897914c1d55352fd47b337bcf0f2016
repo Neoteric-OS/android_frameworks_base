@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e91934ed_f6ceaf93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-11-30T09:58:14Z",
+      "side": 1,
+      "message": "Merge conflicts... See cherrypick in ag/13143144",
+      "revId": "e421dd9f8897914c1d55352fd47b337bcf0f2016",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
