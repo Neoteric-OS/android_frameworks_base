@@ -34,6 +34,24 @@
       "parentUuid": "2e35fe6f_435e899b",
       "revId": "f33864e651d15aeca1322cb2ce375e918533299b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "552788ab_e435ef37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-30T20:50:43Z",
+      "side": 1,
+      "message": "Briefly, three reasons:\n1) Google was made aware through partner channels that applications are using this as a way to access RAT information, which should be protected by READ_PHONE_STATE. More changes are coming to make the permissions model consistent, but this is low-hanging fruit.\n2) Google wants applications to break the habit of using RAT to infer network speed, which is the predominant use case for applications that are getting rat-specific information. Making inferences like RAT -\u003e link speed are dangerous and increasingly wrong. Android provides APIs to directly get link speed information (that take RAT into account), which developers should use.\n3) Any time applications are using things like toString() as a way to access information programmatically, it\u0027s brittle and likely to cause problems down the road. The sooner we can move apps off of these kinds of use cases, the less pain the ecosystem will endure later.",
+      "parentUuid": "d93b0ad3_82a898b0",
+      "revId": "f33864e651d15aeca1322cb2ce375e918533299b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
