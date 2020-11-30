@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Ready+1: Treehugger Robot <treehugger-gerrit@google.com>
+Presubmit-Ready+1: Louis Chang <louischang@google.com>
+Code-Review+2: Janis Danisevskis <jdanis@google.com>
+Autosubmit+1: Louis Chang <louischang@google.com>
+Build-Cop-Override+1: Gavin Corkery <gavincorkery@google.com>
+Submitted-by: Louis Chang <louischang@google.com>
+Submitted-at: Mon, 30 Nov 2020 14:14:33 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1512878
+Project: platform/frameworks/base
+Branch: refs/heads/master
