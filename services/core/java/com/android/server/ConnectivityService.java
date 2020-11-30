@@ -1344,11 +1344,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (ignoreBlocked) {
             return false;
         }
-        synchronized (mVpns) {
-            final Vpn vpn = mVpns.get(UserHandle.getUserId(uid));
-            if (vpn != null && vpn.getLockdown() && vpn.isBlockingUid(uid)) {
-                return true;
-            }
+        synchronized (mVpnBlockedUidRanges) {
+            if (isUidBlockedByVpnLocked(uid)) return true;
         }
         final String iface = (lp == null ? "" : lp.getInterfaceName());
         return mPolicyManagerInternal.isUidNetworkingBlocked(uid, iface);
@@ -2022,20 +2019,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mRestrictBackground = restrictBackground;
     }
 
-    private boolean isUidNetworkingWithVpnBlocked(int uid, int uidRules, boolean isNetworkMetered,
+    private boolean isUidNetworkingBlocked(int uid, int uidRules, boolean isNetworkMetered,
             boolean isBackgroundRestricted) {
-        synchronized (mVpns) {
-            final Vpn vpn = mVpns.get(UserHandle.getUserId(uid));
-            // Because the return value of this function depends on the list of UIDs the
-            // always-on VPN blocks when in lockdown mode, when the always-on VPN changes that
-            // list all state depending on the return value of this function has to be recomputed.
-            // TODO: add a trigger when the always-on VPN sets its blocked UIDs to reevaluate and
-            // send the necessary onBlockedStatusChanged callbacks.
-            if (vpn != null && vpn.getLockdown() && vpn.isBlockingUid(uid)) {
-                return true;
-            }
-        }
-
         return NetworkPolicyManagerInternal.isUidNetworkingBlocked(uid, uidRules,
                 isNetworkMetered, isBackgroundRestricted);
     }
@@ -4824,6 +4809,37 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    @GuardedBy("mVpnBlockedUidRanges")
+    private boolean isUidBlockedByVpnLocked(int uid) {
+        for (UidRange range : mVpnBlockedUidRanges) {
+            if (range.contains(uid)) return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void setRequireVpnForUids(boolean requireVpn, UidRange[] ranges) {
+        NetworkStack.checkNetworkStackPermission(mContext);
+        mHandler.post(() -> {
+            synchronized (mVpnBlockedUidRanges) {
+                for (int i = 0; i < ranges.length; i++) {
+                    if (requireVpn) {
+                        mVpnBlockedUidRanges.add(ranges[i]);
+                        // TODO: add range to netd
+                    } else {
+                        mVpnBlockedUidRanges.remove(ranges[i]);
+                        // TODO: remove range from netd
+                    }
+                }
+            }
+            for (final NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
+                final boolean curMetered = nai.networkCapabilities.isMetered();
+                maybeNotifyNetworkBlocked(nai, curMetered, curMetered, mRestrictBackground,
+                        mRestrictBackground);
+            }
+        });
+    }
+
     @Override
     public boolean updateLockdownVpn() {
         if (Binder.getCallingUid() != Process.SYSTEM_UID) {
@@ -5902,6 +5918,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @GuardedBy("mVpnForUserId")
     private final SparseArray<NetworkAgentInfo> mVpnForUserId = new SparseArray<>();
+
+    // The set of UID ranges for users that are currently blocked by VPNs. Only modified on the
+    // handler thread, but accessed on multiple threads. All accesses must be synchronized to
+    // protect against concurrent iteration/modification, but code running on the handler thread
+    // does not need to worry about it changing.
+    @GuardedBy("mVpnBlockedUidRanges")
+    private final Set<UidRange> mVpnBlockedUidRanges = new HashSet<>();
 
     @GuardedBy("mBlockedAppUids")
     private final HashSet<Integer> mBlockedAppUids = new HashSet<>();
@@ -7450,7 +7473,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         final boolean metered = nai.networkCapabilities.isMetered();
-        final boolean blocked = isUidNetworkingWithVpnBlocked(nri.mUid, mUidRules.get(nri.mUid),
+        boolean blocked;
+        synchronized (mVpnBlockedUidRanges) {
+            blocked = isUidBlockedByVpnLocked(nri.mUid);
+        }
+        blocked |= isUidNetworkingBlocked(nri.mUid, mUidRules.get(nri.mUid),
                 metered, mRestrictBackground);
         callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_AVAILABLE, blocked ? 1 : 0);
     }
@@ -7474,22 +7501,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void maybeNotifyNetworkBlocked(NetworkAgentInfo nai, boolean oldMetered,
             boolean newMetered, boolean oldRestrictBackground, boolean newRestrictBackground) {
 
-        for (int i = 0; i < nai.numNetworkRequests(); i++) {
-            NetworkRequest nr = nai.requestAt(i);
-            NetworkRequestInfo nri = mNetworkRequests.get(nr);
-            final int uidRules = mUidRules.get(nri.mUid);
-            final boolean oldBlocked, newBlocked;
-            // mVpns lock needs to be hold here to ensure that the active VPN cannot be changed
-            // between these two calls.
-            synchronized (mVpns) {
-                oldBlocked = isUidNetworkingWithVpnBlocked(nri.mUid, uidRules, oldMetered,
-                        oldRestrictBackground);
-                newBlocked = isUidNetworkingWithVpnBlocked(nri.mUid, uidRules, newMetered,
-                        newRestrictBackground);
-            }
-            if (oldBlocked != newBlocked) {
-                callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_BLK_CHANGED,
-                        encodeBool(newBlocked));
+        synchronized (mVpnBlockedUidRanges) {
+            for (int i = 0; i < nai.numNetworkRequests(); i++) {
+                NetworkRequest nr = nai.requestAt(i);
+                NetworkRequestInfo nri = mNetworkRequests.get(nr);
+                final int uidRules = mUidRules.get(nri.mUid);
+                final boolean oldBlocked, newBlocked, vpnBlocked;
+                vpnBlocked = isUidBlockedByVpnLocked(nri.mUid);
+                oldBlocked = vpnBlocked || isUidNetworkingBlocked(nri.mUid, uidRules,
+                        oldMetered, oldRestrictBackground);
+                newBlocked = vpnBlocked || isUidNetworkingBlocked(nri.mUid, uidRules,
+                        newMetered, newRestrictBackground);
+                if (oldBlocked != newBlocked) {
+                    callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_BLK_CHANGED,
+                            encodeBool(newBlocked));
+                }
             }
         }
     }
@@ -7500,19 +7526,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * @param newRules The new rules to apply.
      */
     private void maybeNotifyNetworkBlockedForNewUidRules(int uid, int newRules) {
+        final boolean vpnBlocked;
+        synchronized (mVpnBlockedUidRanges) {
+            vpnBlocked = isUidBlockedByVpnLocked(uid);
+        }
         for (final NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
             final boolean metered = nai.networkCapabilities.isMetered();
             final boolean oldBlocked, newBlocked;
-            // TODO: Consider that doze mode or turn on/off battery saver would deliver lots of uid
-            // rules changed event. And this function actually loop through all connected nai and
-            // its requests. It seems that mVpns lock will be grabbed frequently in this case.
-            // Reduce the number of locking or optimize the use of lock are likely needed in future.
-            synchronized (mVpns) {
-                oldBlocked = isUidNetworkingWithVpnBlocked(
-                        uid, mUidRules.get(uid), metered, mRestrictBackground);
-                newBlocked = isUidNetworkingWithVpnBlocked(
-                        uid, newRules, metered, mRestrictBackground);
-            }
+            oldBlocked = vpnBlocked || isUidNetworkingBlocked(
+                    uid, mUidRules.get(uid), metered, mRestrictBackground);
+            newBlocked = vpnBlocked || isUidNetworkingBlocked(
+                    uid, newRules, metered, mRestrictBackground);
             if (oldBlocked == newBlocked) {
                 continue;
             }
@@ -7521,7 +7545,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 NetworkRequest nr = nai.requestAt(i);
                 NetworkRequestInfo nri = mNetworkRequests.get(nr);
                 if (nri != null && nri.mUid == uid) {
-                    callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_BLK_CHANGED, arg);
+                    callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_BLK_CHANGED,
+                            arg);
                 }
             }
         }
