@@ -16,6 +16,23 @@
       "message": "So this increases the time from adding a user to the time when UIDs are in fact set by a turn of the handler loop. I believe this is okay because the system is not waiting for components to process the user added broadcast to start apps, which means this is only widening this existing race by a mostly negligible amount.",
       "revId": "17b88d8b064eb72b062a3e29f7929d7d65d3310c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a01cca8a_1178e515",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-30T08:02:22Z",
+      "side": 1,
+      "message": "Nice",
+      "revId": "17b88d8b064eb72b062a3e29f7929d7d65d3310c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
