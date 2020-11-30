@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8a66f9b_fdcb6eed",
+        "filename": "core/java/android/net/Proxy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-11-30T05:24:20Z",
+      "side": 1,
+      "message": "Not completely sure about this one, not it also sets the ProxySelector depending on the pac URL, so maybe it should be \"setHttpProxyConfiguration\" ?\n\nAlso could be moved to ProxyInfo itself (\".applyToSystem\" ?) but I would find it a bit strange.\n\nIf it was just setting system properties it could be moved to a shared lib like libs/net, but it\u0027s also setting the proxy selector to classes inside the connectivity module boundary, so that\u0027s really an API telling the connectivity code that it should behave as specified by this ProxyInfo.",
+      "range": {
+        "startLine": 252,
+        "startChar": 23,
+        "endLine": 252,
+        "endChar": 49
+      },
+      "revId": "b30a9026789be743459e3443fe457cd2929ee965",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
