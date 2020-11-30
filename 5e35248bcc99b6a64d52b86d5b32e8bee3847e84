@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "beecf017_099b5292",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2020-11-30T17:37:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f61a3d5_b1e06637",
+      "range": {
+        "startLine": 124,
+        "startChar": 17,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7eddb3f4_16cafbd5",
@@ -54,6 +78,30 @@
       "writtenOn": "2020-11-25T15:55:20Z",
       "side": 1,
       "message": "Rename variable to match type (e.g., \"injector\", or \"dependencies\").",
+      "range": {
+        "startLine": 260,
+        "startChar": 38,
+        "endLine": 260,
+        "endChar": 46
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e70f1310_d83d79d6",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2020-11-30T17:37:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eddb3f4_16cafbd5",
       "range": {
         "startLine": 260,
         "startChar": 38,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d82a293a_e8facb81",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2020-11-30T17:37:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5706b38_97501bd9",
+      "range": {
+        "startLine": 282,
+        "startChar": 69,
+        "endLine": 282,
+        "endChar": 77
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d4c6f26_1c82935e",
@@ -110,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19b66354_bebf6c73",
+        "filename": "tests/net/java/com/android/server/NetworkManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2020-11-30T17:37:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d4c6f26_1c82935e",
+      "range": {
+        "startLine": 234,
+        "startChar": 16,
+        "endLine": 234,
+        "endChar": 40
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05cd2280_42962555",
@@ -123,6 +219,30 @@
       "writtenOn": "2020-11-25T15:55:20Z",
       "side": 1,
       "message": "Maybe:\n\n    verify(mNetdService.bandwidthEnableDataSaver(true));\n\n?",
+      "range": {
+        "startLine": 242,
+        "startChar": 48,
+        "endLine": 242,
+        "endChar": 49
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87a34c20_8d18d723",
+        "filename": "tests/net/java/com/android/server/NetworkManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2020-11-30T17:37:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05cd2280_42962555",
       "range": {
         "startLine": 242,
         "startChar": 48,
@@ -158,6 +278,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c31fa8fa_24ad7e11",
+        "filename": "tests/net/java/com/android/server/NetworkManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2020-11-30T17:37:57Z",
+      "side": 1,
+      "message": "In a way. The previous code calls mInjector.reset(), so I call setUidMeteredNetworkDenylist to remove TEST_UID from the denylist after it was added on line 238. You are right that the original test also calls mNMService.setUidMeteredNetworkAllowlist(TEST_UID, false), but I removed this since this is always a noop when the uid hasn\u0027t been allowlisted before.\n\nShould I add it back?",
+      "parentUuid": "2daebfb6_44ce12d7",
+      "range": {
+        "startLine": 243,
+        "startChar": 8,
+        "endLine": 243,
+        "endChar": 65
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5d203709_a9a28262",
         "filename": "tests/net/java/com/android/server/NetworkManagementServiceTest.java",
         "patchSetId": 1
@@ -169,6 +313,30 @@
       "writtenOn": "2020-11-25T15:55:20Z",
       "side": 1,
       "message": "Won\u0027t this attempt to talk to the real netd and fail? Should you mock out some netdService methods like you do in line 235?",
+      "range": {
+        "startLine": 293,
+        "startChar": 16,
+        "endLine": 293,
+        "endChar": 45
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3db535c_2e60fdb4",
+        "filename": "tests/net/java/com/android/server/NetworkManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2020-11-30T17:37:57Z",
+      "side": 1,
+      "message": "It does, but I can use the default noop implementation since mNetdService.firewallSetUidRule(...) returns void.",
+      "parentUuid": "5d203709_a9a28262",
       "range": {
         "startLine": 293,
         "startChar": 16,
