@@ -16,6 +16,98 @@
       "message": "Only comment changes, carrying forward +2.",
       "revId": "76c727c3b1316583bcd06edf745e020b6480764c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4f104c8_e1432005",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4795,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-30T06:21:41Z",
+      "side": 1,
+      "message": "nit: It looks to me you mean this function has the same functionality with assertSameElements.\nIf so why don\u0027t we refactor them to a common util class, e.g. MiscAsserts.kt?\nOr I missed something since the function name is also different?",
+      "range": {
+        "startLine": 4794,
+        "startChar": 8,
+        "endLine": 4795,
+        "endChar": 27
+      },
+      "revId": "76c727c3b1316583bcd06edf745e020b6480764c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bc47aa2_57c1bd1c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4806,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-30T06:21:41Z",
+      "side": 1,
+      "message": "question: Quite confused why limit this function to take 1 or 0 vpn while we could have multiple VpnInfos?\nMaybe add todo to support multiple vpns if now is just for convenience of testing?\n\nAlternatively, maybe make an object similar to VpnInfo, pass array into this function and use it to compare?",
+      "range": {
+        "startLine": 4806,
+        "startChar": 12,
+        "endLine": 4806,
+        "endChar": 44
+      },
+      "revId": "76c727c3b1316583bcd06edf745e020b6480764c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "075655e8_b82a6e44",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4807,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-30T06:21:41Z",
+      "side": 1,
+      "message": "nit: final for these variables?",
+      "range": {
+        "startLine": 4807,
+        "startChar": 8,
+        "endLine": 4807,
+        "endChar": 22
+      },
+      "revId": "76c727c3b1316583bcd06edf745e020b6480764c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f7903ff_bf53a610",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4891,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-30T06:21:41Z",
+      "side": 1,
+      "message": "nit: only 1 VPN, right?",
+      "range": {
+        "startLine": 4891,
+        "startChar": 19,
+        "endLine": 4891,
+        "endChar": 20
+      },
+      "revId": "76c727c3b1316583bcd06edf745e020b6480764c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
