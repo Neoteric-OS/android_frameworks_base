@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9a63781a_18880c86",
+        "filename": "core/java/android/security/keymaster/KeymasterDefs.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2020-11-30T13:10:43Z",
+      "side": 1,
+      "message": "Is it possible that this should have been Tag.ROLLBACK_RESISTANT instead?\n\nThere seems to be a difference between ROLLBACK_RESISTANCE (tag 303, https://cs.android.com/android/platform/superproject/+/master:hardware/libhardware/include/hardware/keymaster_defs.h;drc\u003dd7dcd78f0157d48b6770571c9270d4b76b42bba4;l\u003d78) and ROLLBACK_RESISTANT (tag 703, https://cs.android.com/android/platform/superproject/+/master:hardware/libhardware/include/hardware/keymaster_defs.h;l\u003d141?q\u003dkeymaster_defs.h).",
+      "revId": "2a66fc61448d690991b92a952aa709d2a166b8ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "683040de_08bd351d",
         "filename": "core/java/android/security/keymaster/KeymasterDefs.java",
         "patchSetId": 31
