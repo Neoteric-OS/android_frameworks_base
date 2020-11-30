@@ -224,7 +224,6 @@ public class VpnTest {
                         R.string.config_customVpnAlwaysOnDisconnectedDialogComponent));
         when(mPackageManager.hasSystemFeature(PackageManager.FEATURE_IPSEC_TUNNELS))
                 .thenReturn(true);
-        when(mSystemServices.isCallerSystem()).thenReturn(true);
 
         // Used by {@link Notification.Builder}
         ApplicationInfo applicationInfo = new ApplicationInfo();
@@ -1095,6 +1094,11 @@ public class VpnTest {
             } catch (final IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+
+        @Override
+        public boolean isCallerSystem() {
+            return true;
         }
 
         @Override
