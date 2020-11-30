@@ -52,6 +52,24 @@
       "parentUuid": "d93b0ad3_82a898b0",
       "revId": "f33864e651d15aeca1322cb2ce375e918533299b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e29e5cd5_1f3e3516",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1808133
+      },
+      "writtenOn": "2020-11-30T22:50:01Z",
+      "side": 1,
+      "message": "I understand your intention but application that use this information to map network type (with user conset. This app are made only for this purposes) are unable to read this values. They are important to record good NR NSA data.\n\nOn NR SA there aren\u0027t any issue because NR is primary carrier so is directly detected. If will be an NR_LTE network type this issue can occur again with secondary LTE Carrier on main NR (but only time can tell if this schema will be used).",
+      "parentUuid": "552788ab_e435ef37",
+      "revId": "f33864e651d15aeca1322cb2ce375e918533299b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
