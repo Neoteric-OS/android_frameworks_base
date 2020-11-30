@@ -99,6 +99,7 @@ import android.security.KeyStore;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
+import android.util.Range;
 
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
@@ -234,7 +235,7 @@ public class Vpn {
      * @see mLockdown
      */
     @GuardedBy("this")
-    private final Set<UidRange> mBlockedUidsAsToldToNetd = new ArraySet<>();
+    private final Set<UidRange> mBlockedUidsAsToldToConnectivity = new ArraySet<>();
 
     // The user id of initiating VPN.
     private final int mUserId;
@@ -1568,7 +1569,7 @@ public class Vpn {
      *                {@link Vpn} goes through a VPN connection or is blocked until one is
      *                available, {@code false} to lift the requirement.
      *
-     * @see #mBlockedUidsAsToldToNetd
+     * @see #mBlockedUidsAsToldToConnectivity
      */
     @GuardedBy("this")
     private void setVpnForcedLocked(boolean enforce) {
@@ -1579,7 +1580,8 @@ public class Vpn {
             exemptedPackages = new ArrayList<>(mLockdownAllowlist);
             exemptedPackages.add(mPackage);
         }
-        final Set<UidRange> rangesToTellNetdToRemove = new ArraySet<>(mBlockedUidsAsToldToNetd);
+        final Set<UidRange> rangesToTellNetdToRemove = new ArraySet<>(
+                mBlockedUidsAsToldToConnectivity);
 
         final Set<UidRange> rangesToTellNetdToAdd;
         if (enforce) {
@@ -1606,7 +1608,7 @@ public class Vpn {
             // ones it already knows to block. Note that this will change the contents of
             // rangesThatShouldBeBlocked, but the list of ranges that should be blocked is
             // not used after this so it's fine to destroy it.
-            rangesToTellNetdToAdd.removeAll(mBlockedUidsAsToldToNetd);
+            rangesToTellNetdToAdd.removeAll(mBlockedUidsAsToldToConnectivity);
         } else {
             rangesToTellNetdToAdd = Collections.emptySet();
         }
@@ -1632,18 +1634,22 @@ public class Vpn {
         if (ranges.size() == 0) {
             return true;
         }
-        final UidRange[] rangesArray = ranges.toArray(new UidRange[ranges.size()]);
+        // Convert to Collection<Range> which is what the ConnectivityManager API takes.
+        ArrayList<Range<Integer>> integerRanges = new ArrayList<>(ranges.size());
+        for (UidRange uidRange : ranges) {
+            integerRanges.add(new Range<>(uidRange.start, uidRange.stop));
+        }
         try {
-            mNetd.setAllowOnlyVpnForUids(enforce, rangesArray);
-        } catch (RemoteException | RuntimeException e) {
+            ConnectivityManager.from(mContext).setRequireVpnForUids(enforce, integerRanges);
+        } catch (RuntimeException e) {
             Log.e(TAG, "Updating blocked=" + enforce
                     + " for UIDs " + Arrays.toString(ranges.toArray()) + " failed", e);
             return false;
         }
         if (enforce) {
-            mBlockedUidsAsToldToNetd.addAll(ranges);
+            mBlockedUidsAsToldToConnectivity.addAll(ranges);
         } else {
-            mBlockedUidsAsToldToNetd.removeAll(ranges);
+            mBlockedUidsAsToldToConnectivity.removeAll(ranges);
         }
         return true;
     }
@@ -1836,13 +1842,13 @@ public class Vpn {
      * the {@code uid}.
      *
      * @apiNote This method don't check VPN lockdown status.
-     * @see #mBlockedUidsAsToldToNetd
+     * @see #mBlockedUidsAsToldToConnectivity
      */
     public synchronized boolean isBlockingUid(int uid) {
         if (mNetworkInfo.isConnected()) {
             return !appliesToUid(uid);
         } else {
-            return UidRange.containsUid(mBlockedUidsAsToldToNetd, uid);
+            return UidRange.containsUid(mBlockedUidsAsToldToConnectivity, uid);
         }
     }
 
