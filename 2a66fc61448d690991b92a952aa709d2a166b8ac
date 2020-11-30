@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a1b33196_5b5a4878",
+        "filename": "core/java/android/security/keymaster/KeymasterDefs.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2020-11-30T13:56:20Z",
+      "side": 1,
+      "message": "On closer inspection, it looks like ROLLBACK_RESISTANT is not available in the new Keymint AIDL (https://cs.android.com/android/platform/superproject/+/master:hardware/interfaces/keymint/aidl/aidl_api/android.hardware.keymint/current/android/hardware/keymint/Tag.aidl). However, both seem to be included in CTS tests:\nhttps://cs.android.com/android/platform/superproject/+/master:cts/tests/security/src/android/keystore/cts/AuthorizationList.java;l\u003d108?q\u003drollback_resist*",
+      "parentUuid": "9a63781a_18880c86",
+      "revId": "2a66fc61448d690991b92a952aa709d2a166b8ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "683040de_08bd351d",
         "filename": "core/java/android/security/keymaster/KeymasterDefs.java",
         "patchSetId": 31
