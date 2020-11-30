@@ -6120,7 +6120,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void updateInterfaces(final @Nullable LinkProperties newLp,
             final @Nullable LinkProperties oldLp, final int netId,
-            final @Nullable NetworkCapabilities caps, final int legacyType) {
+            final @NonNull NetworkCapabilities caps, final int legacyType) {
         final CompareResult<String> interfaceDiff = new CompareResult<>(
                 oldLp != null ? oldLp.getAllInterfaceNames() : null,
                 newLp != null ? newLp.getAllInterfaceNames() : null);
@@ -6131,7 +6131,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     if (DBG) log("Adding iface " + iface + " to network " + netId);
                     mNetd.networkAddInterface(netId, iface);
                     wakeupModifyInterface(iface, caps, true);
-                    bs.noteNetworkInterfaceType(iface, legacyType);
+                    bs.noteNetworkInterfaceTransports(iface, caps.getTransportTypes());
                 } catch (Exception e) {
                     loge("Exception adding interface: " + e);
                 }

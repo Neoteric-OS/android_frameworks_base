@@ -127,9 +127,11 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // enclosed socket factory and connection pool.  Avoid creating other Network objects.
     // This Network object is always valid.
     public final Network network;
+    @NonNull
     public LinkProperties linkProperties;
     // This should only be modified by ConnectivityService, via setNetworkCapabilities().
     // TODO: make this private with a getter.
+    @NonNull
     public NetworkCapabilities networkCapabilities;
     public final NetworkAgentConfig networkAgentConfig;
     // Indicates if netd has been told to create this Network. From this point on the appropriate
@@ -269,7 +271,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     private final Handler mHandler;
 
     public NetworkAgentInfo(Messenger messenger, AsyncChannel ac, Network net, NetworkInfo info,
-            LinkProperties lp, NetworkCapabilities nc, int score, Context context,
+            @NonNull LinkProperties lp, @NonNull NetworkCapabilities nc, int score, Context context,
             Handler handler, NetworkAgentConfig config, ConnectivityService connService, INetd netd,
             IDnsResolver dnsResolver, INetworkManagementService nms, int factorySerialNumber,
             int creatorUid) {
