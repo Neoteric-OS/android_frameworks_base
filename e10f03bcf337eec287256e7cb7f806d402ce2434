@@ -89,6 +89,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd537088_47acf8cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1787007
+      },
+      "writtenOn": "2020-11-30T10:19:08Z",
+      "side": 1,
+      "message": "I could find [1] but that link only mentions the adb command to disable hidden API checks. I also found [2] (and a similar link for Android 10) but given that page is dedicated to that release alone, doesn\u0027t sound like the right place for it to be. \n\nMaybe we could add a new section to [1] (or create a sibling page)?\n\n1: https://developer.android.com/distribute/best-practices/develop/restrictions-non-sdk-interfaces\n2: https://developer.android.com/about/versions/11/non-sdk-11",
+      "parentUuid": "e231ac2b_b0b8b1d5",
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cbf1d497_e8ea373f",
