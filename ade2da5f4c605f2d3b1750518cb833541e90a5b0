@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "845f1f72_dc7ef1da",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 18313,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-11-30T10:35:39Z",
+      "side": 0,
+      "message": "Need to add icu to api/Android.bp too, for the merged current.txt",
+      "revId": "ade2da5f4c605f2d3b1750518cb833541e90a5b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
