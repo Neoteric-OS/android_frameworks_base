@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b22a271_d2e6226c",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1530043
+      },
+      "writtenOn": "2020-11-30T17:39:44Z",
+      "side": 1,
+      "message": "Can you please explain how this check helps?\n\nIf this check fails, we will return -1 here. Will that fix the issue?",
+      "range": {
+        "startLine": 530,
+        "startChar": 67,
+        "endLine": 530,
+        "endChar": 96
+      },
+      "revId": "bac240148026cf685557a60180a01c1d6d9fb859",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
