@@ -88,7 +88,6 @@ import android.graphics.ImageDecoder;
 import android.hardware.display.DisplayManagerGlobal;
 import android.inputmethodservice.InputMethodService;
 import android.net.ConnectivityManager;
-import android.net.IConnectivityManager;
 import android.net.Proxy;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -6547,20 +6546,19 @@ public final class ActivityThread extends ClientTransactionHandler {
          * Initialize the default http proxy in this process for the reasons we set the time zone.
          */
         Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "Setup proxies");
-        final IBinder b = ServiceManager.getService(Context.CONNECTIVITY_SERVICE);
-        if (b != null) {
-            // In pre-boot mode (doing initial launch to collect password), not
-            // all system is up.  This includes the connectivity service, so don't
-            // crash if we can't get it.
-            final IConnectivityManager service = IConnectivityManager.Stub.asInterface(b);
-            try {
-                Proxy.setHttpProxySystemProperty(service.getProxyForNetwork(null));
-            } catch (RemoteException e) {
-                Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
-                throw e.rethrowFromSystemServer();
+        try {
+            final IBinder b = ServiceManager.getService(Context.CONNECTIVITY_SERVICE);
+            if (b != null) {
+                // In pre-boot mode (doing initial launch to collect password), not
+                // all system is up.  This includes the connectivity service, so don't
+                // crash if we can't get it.
+                final ConnectivityManager cm = (ConnectivityManager) getSystemContext()
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
+                Proxy.setHttpProxySystemProperty(cm.getProxyForNetwork(null));
             }
+        } finally {
+            Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
         }
-        Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
 
         // Instrumentation info affects the class loader, so load it before
         // setting up the app context.
@@ -7425,7 +7423,8 @@ public final class ActivityThread extends ClientTransactionHandler {
     }
 
     public static void updateHttpProxy(@NonNull Context context) {
-        final ConnectivityManager cm = ConnectivityManager.from(context);
+        final ConnectivityManager cm = (ConnectivityManager) context.getSystemService(
+                Context.CONNECTIVITY_SERVICE);
         Proxy.setHttpProxySystemProperty(cm.getDefaultProxy());
     }
 

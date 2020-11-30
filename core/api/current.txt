@@ -29661,6 +29661,7 @@ package android.net {
     method @Deprecated @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) public int getNetworkPreference();
     method @Nullable public byte[] getNetworkWatchlistConfigHash();
     method @Deprecated @Nullable public static android.net.Network getProcessDefaultNetwork();
+    method @Nullable public android.net.ProxyInfo getProxyForNetwork(@Nullable android.net.Network);
     method public int getRestrictBackgroundStatus();
     method @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) public boolean isActiveNetworkMetered();
     method public boolean isDefaultNetworkActive();

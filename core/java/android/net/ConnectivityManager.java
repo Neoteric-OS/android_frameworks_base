@@ -3044,9 +3044,9 @@ public class ConnectivityManager {
      *         the {@code ProxyInfo} for the default active network.  Returns
      *         {@code null} when no proxy applies or the caller doesn't have
      *         permission to use {@code network}.
-     * @hide
      */
-    public ProxyInfo getProxyForNetwork(Network network) {
+    @Nullable
+    public ProxyInfo getProxyForNetwork(@Nullable Network network) {
         try {
             return mService.getProxyForNetwork(network);
         } catch (RemoteException e) {
