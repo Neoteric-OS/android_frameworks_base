@@ -71,6 +71,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e231ac2b_b0b8b1d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-11-30T09:23:25Z",
+      "side": 1,
+      "message": "I think removing overrides on uninstall probably makes sense (but leave them in place on upgrade). There\u0027s a meta point here: we need to make sure the semantics are documented somewhere public (where are the public docs for this?)\n\nre: clear data, that also probably makes sense, but sounds like a new feature request. I think there\u0027s a broadcast for that too: ACTION_PACKAGE_DATA_CLEARED",
+      "parentUuid": "ef6fa288_868697c3",
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cbf1d497_e8ea373f",
@@ -303,6 +321,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84b6aa16_bd9b0c01",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-11-30T09:23:25Z",
+      "side": 1,
+      "message": "Good to see we all nice original ideas 🤦",
+      "parentUuid": "58315c5e_c8ab434c",
+      "range": {
+        "startLine": 147,
+        "startChar": 28,
+        "endLine": 147,
+        "endChar": 31
+      },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "015f77a9_5f2c30d9",
@@ -506,6 +548,30 @@
       "side": 1,
       "message": "In theory, this shouldn\u0027t be spammy, as users of the compat framework should use CompatChanges.isChangeEnable* instead, which will cache the value.\n\nIf they don\u0027t (because they\u0027re already in the system server), it could be an issue during the runtime of the app.",
       "parentUuid": "8c89e578_fd55ebb9",
+      "range": {
+        "startLine": 145,
+        "startChar": 21,
+        "endLine": 145,
+        "endChar": 22
+      },
+      "revId": "e10f03bcf337eec287256e7cb7f806d402ce2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7a4862c_46f27f2a",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-11-30T09:23:25Z",
+      "side": 1,
+      "message": "Probably ok as is. Let\u0027s be on the look out for excessive logging in bugreports so we can revisit if necessary.",
+      "parentUuid": "1cc4cf0b_f4c7f8e8",
       "range": {
         "startLine": 145,
         "startChar": 21,
