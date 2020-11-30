@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "591fde79_aeab896d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-30T05:27:24Z",
+      "side": 1,
+      "message": "Will this not fit on the same line ?",
+      "range": {
+        "startLine": 1131,
+        "startChar": 20,
+        "endLine": 1131,
+        "endChar": 68
+      },
+      "revId": "2859d7b03669c1ffee3710bb10991b26d19f9d83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91eeee32_5fce48da",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-30T05:27:24Z",
+      "side": 1,
+      "message": "Please get the package manager from the invocation, not from a captured argument.",
+      "range": {
+        "startLine": 1354,
+        "startChar": 35,
+        "endLine": 1354,
+        "endChar": 37
+      },
+      "revId": "2859d7b03669c1ffee3710bb10991b26d19f9d83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d30ffb1_9f7e8726",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-30T05:27:24Z",
+      "side": 1,
+      "message": "This looks like a hack. IIUC the problem is that in some cases the code will look up the UID in a as-user package manager, but the call to mock is made on mPackageManager.\n\nInstead of doing this, can you implement either of the following strategies :\n• Have the test that sets up the answer set it up in the right package manager. You can obtain it by calling getPackageManager on the right context :)\n• Have the code in l.1355 look up the package in the delegate (I don\u0027t know if there is a way to get to the delegate though)",
+      "range": {
+        "startLine": 1359,
+        "startChar": 19,
+        "endLine": 1359,
+        "endChar": 100
+      },
+      "revId": "2859d7b03669c1ffee3710bb10991b26d19f9d83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

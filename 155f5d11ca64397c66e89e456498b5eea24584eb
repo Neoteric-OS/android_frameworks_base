@@ -166,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e73d8a2_d9e6b5cc",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-30T05:27:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f0419815_305e8ce7",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 227,
+        "endChar": 63
+      },
+      "revId": "155f5d11ca64397c66e89e456498b5eea24584eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9fb80670_f9f0b50d",
