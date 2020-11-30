@@ -16,11 +16,12 @@
 
 package android.net;
 
+import android.annotation.Nullable;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -241,9 +242,14 @@ public final class Proxy {
         return PROXY_VALID;
     }
 
-    /** @hide */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
-    public static final void setHttpProxySystemProperty(ProxyInfo p) {
+    /**
+     * Set HTTP system proxy properties to match the provided ProxyInfo.
+     *
+     * If the provided ProxyInfo is null, the properties will be cleared.
+     * @hide
+     */
+    @SystemApi
+    public static void setHttpProxySystemProperty(@Nullable ProxyInfo p) {
         String host = null;
         String port = null;
         String exclList = null;
