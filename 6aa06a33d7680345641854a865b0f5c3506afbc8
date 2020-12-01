@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6546465b_0f7573e1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6354,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-01T09:36:48Z",
+      "side": 1,
+      "message": "Maybe not for this CL.\nFrom the description this is very similar to mixInCapabilities.\nDo we want to refactor them?",
+      "range": {
+        "startLine": 6354,
+        "startChar": 17,
+        "endLine": 6354,
+        "endChar": 45
+      },
+      "revId": "6aa06a33d7680345641854a865b0f5c3506afbc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2a74813e_f7a77a6a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
