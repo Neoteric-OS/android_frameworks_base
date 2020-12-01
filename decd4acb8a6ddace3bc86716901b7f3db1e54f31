@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79630ef7_18bafd90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2020-12-01T01:15:24Z",
+      "side": 1,
+      "message": "OOC, what causes current.api to show \"carrier privileges\" instead of the constant variable name like it does for READ_PHONE_STATE and other manifest permissions? That seems slightly cleaner, but not a huge deal.\n\nOn the other hand, one of the things we\u0027ve been talking about for S has been the possibility of defining a new permission that is required for carrier apps to declare in order to access carrier-privileged APIs. It\u0027s functionally no different but allows for auditing / clearer use of the permission model for carrier privileged APIs. This feels like a step in the right direction either way, but we might end up just adding a regular permission anyway, so we should be cautious about doing substantially more work than this.",
+      "revId": "decd4acb8a6ddace3bc86716901b7f3db1e54f31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
