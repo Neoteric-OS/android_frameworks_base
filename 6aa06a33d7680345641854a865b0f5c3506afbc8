@@ -47,6 +47,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fe8dce0_fd8a398e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6354,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-01T16:20:25Z",
+      "side": 1,
+      "message": "The name is intentional actually. processXyzFromAgent is intended to be called only on information coming directly from the agent. Think of it as preprocessing the information it sends us. We have one for LinkProperties and one for NetworkCapabilities.\n\nmixInCapabilities, on the other hand, is called in a lot more places:\n\n - applyBackgroundChangeForRematch\n - registerNetworkAgentInternal\n - updateCapabilities\n   - handleLingerComplete\n   - EVENT_NETWORK_CAPABILITIES_CHANGED\n   - EVENT_UNDERLYING_NETWORKS_CHANGED\n   - EVENT_PROBE_STATUS_CHANGED\n   - EVENT_PROVISIONING_NOTIFICATION\n   - handleNetworkTested\n   - handleRemoveNetworkRequest\n   - propagateUnderlyingNetworkCapabilities\n\nI think this is because mixInCapabilities mixes the agent capabilities with the ConnectivityService/NetworkMonitor/...-derived capabilities, and thus needs to be called whenever the latter change (e.g., network validated, network goes into the background, etc.). I\u0027m not 100% sure these are all needed, but in any case, the two methods have different purposes.\n\nI do think the docstrings try to explain the difference: the docstring of processCapabilitiesFromAgent says \"stores into |nai|...\" and the docstring of mixInCapabilities says \"augments the NetworkCapabilities...\", so if someone is really paying attention, they\u0027ll notice that one modifies nai and one modifies NetworkCapabilities.\n\nBut I agree this is very difficult to understand. Suggestions on how to improve things welcome. One thing I can think of might be to move the check for losing immutable capabilities from mixInCapabilities to processCapabilitiesFromAgent, but that doesn\u0027t really make much things easier to understand.\n\nThoughts?",
+      "parentUuid": "6546465b_0f7573e1",
+      "range": {
+        "startLine": 6354,
+        "startChar": 17,
+        "endLine": 6354,
+        "endChar": 45
+      },
+      "revId": "6aa06a33d7680345641854a865b0f5c3506afbc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2a74813e_f7a77a6a",
@@ -60,6 +84,30 @@
       "writtenOn": "2020-12-01T06:20:01Z",
       "side": 1,
       "message": "nit: maybe saying the output is delivered by altering the caps parameter?\nno strong opinion.",
+      "range": {
+        "startLine": 6358,
+        "startChar": 90,
+        "endLine": 6358,
+        "endChar": 92
+      },
+      "revId": "6aa06a33d7680345641854a865b0f5c3506afbc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "260166dd_0ac89997",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6358,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-01T16:20:25Z",
+      "side": 1,
+      "message": "Reworded to make it clear that nc is modified.",
+      "parentUuid": "2a74813e_f7a77a6a",
       "range": {
         "startLine": 6358,
         "startChar": 90,
@@ -93,6 +141,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ea4124d_503f469c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6361,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-01T16:20:25Z",
+      "side": 1,
+      "message": "Done. Personally I\u0027m not a fan of nullability annotations in private, non-API methods such at this one because there is nothing that ensures that they are correct, and if they are incorrect it is much more confusing than if they are simply not present.",
+      "parentUuid": "451af61d_2de15416",
+      "range": {
+        "startLine": 6360,
+        "startChar": 37,
+        "endLine": 6361,
+        "endChar": 62
+      },
+      "revId": "6aa06a33d7680345641854a865b0f5c3506afbc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1c6c8f7c_f1213d90",
@@ -116,6 +188,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5179d22_5d898d14",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6362,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-01T16:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c6c8f7c_f1213d90",
+      "range": {
+        "startLine": 6362,
+        "startChar": 8,
+        "endLine": 6362,
+        "endChar": 15
+      },
+      "revId": "6aa06a33d7680345641854a865b0f5c3506afbc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20553f8f_7dd9aad9",
@@ -129,6 +225,30 @@
       "writtenOn": "2020-12-01T06:20:01Z",
       "side": 1,
       "message": "IIUC applyUnderlyingCapabilities is for the networks that supportsUnderlyingNetworks,\nwhich is not necessary a VPN in future, right?\nIf yes, we might want to move this out of this function, delete this if we are expecting this is included in caps before calling this function, or add condition for addinig it?",
+      "range": {
+        "startLine": 6367,
+        "startChar": 43,
+        "endLine": 6367,
+        "endChar": 76
+      },
+      "revId": "6aa06a33d7680345641854a865b0f5c3506afbc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fdcde4d_7a550666",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6367,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-01T16:20:25Z",
+      "side": 1,
+      "message": "Good question. At the moment, unfortunately, this information doesn\u0027t exist. To make this correct I think we\u0027d have to store the transports in the nai, like we do for nai.declaredMetered.\n\nTaking that argument further and generalizing the concept, we might want to actually store the complete capabilities sent to us by the agent in the nai (originalCapabilities, maybe?) and then always use that as the basis for calculating the capabilities.\n\nAttempted in aosp/1513052 . PTAL.",
+      "parentUuid": "20553f8f_7dd9aad9",
       "range": {
         "startLine": 6367,
         "startChar": 43,
