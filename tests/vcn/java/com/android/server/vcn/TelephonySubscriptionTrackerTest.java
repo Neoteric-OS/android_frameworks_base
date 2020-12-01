@@ -30,12 +30,18 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+
+import static java.util.Collections.emptyMap;
+import static java.util.Collections.emptySet;
+import static java.util.Collections.singleton;
+import static java.util.Collections.singletonMap;
 
 import android.annotation.NonNull;
 import android.content.Context;
@@ -49,6 +55,8 @@ import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.SubscriptionManager.OnSubscriptionsChangedListener;
+import android.telephony.TelephonyManager;
+import android.util.ArraySet;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -62,6 +70,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -70,6 +79,8 @@ import java.util.UUID;
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class TelephonySubscriptionTrackerTest {
+    private static final String PACKAGE_NAME =
+            TelephonySubscriptionTrackerTest.class.getPackage().getName();
     private static final ParcelUuid TEST_PARCEL_UUID = new ParcelUuid(UUID.randomUUID());
     private static final int TEST_SIM_SLOT_INDEX = 1;
     private static final int TEST_SUBSCRIPTION_ID_1 = 2;
@@ -90,6 +101,7 @@ public class TelephonySubscriptionTrackerTest {
     @NonNull private final Handler mHandler;
     @NonNull private final TelephonySubscriptionTracker.Dependencies mDeps;
 
+    @NonNull private final TelephonyManager mTelephonyManager;
     @NonNull private final SubscriptionManager mSubscriptionManager;
     @NonNull private final CarrierConfigManager mCarrierConfigManager;
 
@@ -102,8 +114,14 @@ public class TelephonySubscriptionTrackerTest {
         mHandler = new Handler(mTestLooper.getLooper());
         mDeps = mock(TelephonySubscriptionTracker.Dependencies.class);
 
+        mTelephonyManager = mock(TelephonyManager.class);
         mSubscriptionManager = mock(SubscriptionManager.class);
         mCarrierConfigManager = mock(CarrierConfigManager.class);
+
+        doReturn(Context.TELEPHONY_SERVICE)
+                .when(mContext)
+                .getSystemServiceName(TelephonyManager.class);
+        doReturn(mTelephonyManager).when(mContext).getSystemService(Context.TELEPHONY_SERVICE);
 
         doReturn(Context.TELEPHONY_SUBSCRIPTION_SERVICE)
                 .when(mContext)
@@ -139,6 +157,9 @@ public class TelephonySubscriptionTrackerTest {
         doReturn(Arrays.asList(TEST_SUBINFO_1, TEST_SUBINFO_2))
                 .when(mSubscriptionManager)
                 .getAllSubscriptionInfoList();
+
+        doReturn(mTelephonyManager).when(mTelephonyManager).createForSubscriptionId(anyInt());
+        setPrivilegedPackagesForMock(Collections.singletonList(PACKAGE_NAME));
     }
 
     private IntentFilter getIntentFilter() {
@@ -166,8 +187,9 @@ public class TelephonySubscriptionTrackerTest {
         return intent;
     }
 
-    private TelephonySubscriptionSnapshot buildExpectedSnapshot(Set<ParcelUuid> activeSubGroups) {
-        return new TelephonySubscriptionSnapshot(TEST_SUBID_TO_GROUP_MAP, activeSubGroups);
+    private TelephonySubscriptionSnapshot buildExpectedSnapshot(
+            Map<ParcelUuid, Set<String>> privilegedPackages) {
+        return new TelephonySubscriptionSnapshot(TEST_SUBID_TO_GROUP_MAP, privilegedPackages);
     }
 
     private void verifyNoActiveSubscriptions() {
@@ -179,6 +201,10 @@ public class TelephonySubscriptionTrackerTest {
         mTelephonySubscriptionTracker
                 .getReadySubIdsBySlotId()
                 .put(TEST_SIM_SLOT_INDEX, TEST_SUBSCRIPTION_ID_1);
+    }
+
+    private void setPrivilegedPackagesForMock(@NonNull List<String> privilegedPackages) {
+        doReturn(privilegedPackages).when(mTelephonyManager).getPackagesWithCarrierPrivileges();
     }
 
     @Test
@@ -218,15 +244,32 @@ public class TelephonySubscriptionTrackerTest {
     }
 
     @Test
-    public void testOnSubscriptionsChangedFired_WithReadySubIds() throws Exception {
+    public void testOnSubscriptionsChangedFired_WithReadySubidsNoPrivilegedPackages()
+            throws Exception {
+        setupReadySubIds();
+        setPrivilegedPackagesForMock(Collections.emptyList());
+
+        final OnSubscriptionsChangedListener listener = getOnSubscriptionsChangedListener();
+        listener.onSubscriptionsChanged();
+        mTestLooper.dispatchAll();
+
+        final Map<ParcelUuid, Set<String>> privilegedPackages =
+                Collections.singletonMap(TEST_PARCEL_UUID, new ArraySet<>());
+        verify(mCallback).onNewSnapshot(eq(buildExpectedSnapshot(privilegedPackages)));
+    }
+
+    @Test
+    public void testOnSubscriptionsChangedFired_WithReadySubidsAndPrivilegedPackages()
+            throws Exception {
         setupReadySubIds();
 
         final OnSubscriptionsChangedListener listener = getOnSubscriptionsChangedListener();
         listener.onSubscriptionsChanged();
         mTestLooper.dispatchAll();
 
-        final Set<ParcelUuid> activeSubGroups = Collections.singleton(TEST_PARCEL_UUID);
-        verify(mCallback).onNewSnapshot(eq(buildExpectedSnapshot(activeSubGroups)));
+        final Map<ParcelUuid, Set<String>> privilegedPackages =
+                Collections.singletonMap(TEST_PARCEL_UUID, Collections.singleton(PACKAGE_NAME));
+        verify(mCallback).onNewSnapshot(eq(buildExpectedSnapshot(privilegedPackages)));
     }
 
     @Test
@@ -234,8 +277,9 @@ public class TelephonySubscriptionTrackerTest {
         mTelephonySubscriptionTracker.onReceive(mContext, buildTestBroadcastIntent(true));
         mTestLooper.dispatchAll();
 
-        final Set<ParcelUuid> activeSubGroups = Collections.singleton(TEST_PARCEL_UUID);
-        verify(mCallback).onNewSnapshot(eq(buildExpectedSnapshot(activeSubGroups)));
+        final Map<ParcelUuid, Set<String>> privilegedPackages =
+                Collections.singletonMap(TEST_PARCEL_UUID, Collections.singleton(PACKAGE_NAME));
+        verify(mCallback).onNewSnapshot(eq(buildExpectedSnapshot(privilegedPackages)));
     }
 
     @Test
@@ -275,24 +319,48 @@ public class TelephonySubscriptionTrackerTest {
 
     @Test
     public void testSlotClearedAfterValidTriggersCallbacks() throws Exception {
-        final Set<ParcelUuid> activeSubGroups = Collections.singleton(TEST_PARCEL_UUID);
+        final Map<ParcelUuid, Set<String>> privilegedPackages =
+                Collections.singletonMap(TEST_PARCEL_UUID, Collections.singleton(PACKAGE_NAME));
 
         mTelephonySubscriptionTracker.onReceive(mContext, buildTestBroadcastIntent(true));
         mTestLooper.dispatchAll();
-        verify(mCallback).onNewSnapshot(eq(buildExpectedSnapshot(activeSubGroups)));
+        verify(mCallback).onNewSnapshot(eq(buildExpectedSnapshot(privilegedPackages)));
         assertNotNull(
                 mTelephonySubscriptionTracker.getReadySubIdsBySlotId().get(TEST_SIM_SLOT_INDEX));
 
         mTelephonySubscriptionTracker.onReceive(mContext, buildTestBroadcastIntent(false));
         mTestLooper.dispatchAll();
-        verify(mCallback).onNewSnapshot(eq(buildExpectedSnapshot(Collections.emptySet())));
+        verify(mCallback).onNewSnapshot(eq(buildExpectedSnapshot(emptyMap())));
         assertNull(mTelephonySubscriptionTracker.getReadySubIdsBySlotId().get(TEST_SIM_SLOT_INDEX));
+    }
+
+    @Test
+    public void testChangingPrivilegedPackagesAfterValidTriggersCallbacks() throws Exception {
+        setupReadySubIds();
+
+        // Setup initial "valid" state
+        final OnSubscriptionsChangedListener listener = getOnSubscriptionsChangedListener();
+        listener.onSubscriptionsChanged();
+        mTestLooper.dispatchAll();
+
+        final Map<ParcelUuid, Set<String>> privilegedPackages =
+                singletonMap(TEST_PARCEL_UUID, singleton(PACKAGE_NAME));
+        verify(mCallback).onNewSnapshot(eq(buildExpectedSnapshot(privilegedPackages)));
+
+        // Simulate a loss of carrier privileges
+        setPrivilegedPackagesForMock(Collections.emptyList());
+        listener.onSubscriptionsChanged();
+        mTestLooper.dispatchAll();
+
+        verify(mCallback)
+                .onNewSnapshot(
+                        eq(buildExpectedSnapshot(singletonMap(TEST_PARCEL_UUID, emptySet()))));
     }
 
     @Test
     public void testTelephonySubscriptionSnapshotGetGroupForSubId() throws Exception {
         final TelephonySubscriptionSnapshot snapshot =
-                new TelephonySubscriptionSnapshot(TEST_SUBID_TO_GROUP_MAP, Collections.emptySet());
+                new TelephonySubscriptionSnapshot(TEST_SUBID_TO_GROUP_MAP, emptyMap());
 
         assertEquals(TEST_PARCEL_UUID, snapshot.getGroupForSubId(TEST_SUBSCRIPTION_ID_1));
         assertEquals(TEST_PARCEL_UUID, snapshot.getGroupForSubId(TEST_SUBSCRIPTION_ID_2));
@@ -301,7 +369,7 @@ public class TelephonySubscriptionTrackerTest {
     @Test
     public void testTelephonySubscriptionSnapshotGetAllSubIdsInGroup() throws Exception {
         final TelephonySubscriptionSnapshot snapshot =
-                new TelephonySubscriptionSnapshot(TEST_SUBID_TO_GROUP_MAP, Collections.emptySet());
+                new TelephonySubscriptionSnapshot(TEST_SUBID_TO_GROUP_MAP, Collections.emptyMap());
 
         assertEquals(
                 Arrays.asList(TEST_SUBSCRIPTION_ID_1, TEST_SUBSCRIPTION_ID_2),
