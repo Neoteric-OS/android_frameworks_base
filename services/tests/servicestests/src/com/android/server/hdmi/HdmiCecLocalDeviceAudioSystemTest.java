@@ -825,4 +825,13 @@ public class HdmiCecLocalDeviceAudioSystemTest {
 
         assertThat(mNativeWrapper.getResultMessages()).doesNotContain(unexpected);
     }
+
+    @Test
+    public void setArcStatus() {
+        mHdmiCecLocalDeviceAudioSystem.setArcStatus(true);
+        assertThat(mHdmiCecLocalDeviceAudioSystem.isArcEnabled()).isTrue();
+
+        mHdmiCecLocalDeviceAudioSystem.setArcStatus(false);
+        assertThat(mHdmiCecLocalDeviceAudioSystem.isArcEnabled()).isFalse();
+    }
 }
