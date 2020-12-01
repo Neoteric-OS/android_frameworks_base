@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "581ca0e1_3713c260",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-01T07:31:04Z",
+      "side": 1,
+      "message": "Just took a quick look",
+      "revId": "9598b7be9f66968b4e9afbc933213fc01f78e55b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c12ca1ab_726fc901",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-01T07:31:04Z",
+      "side": 1,
+      "message": "1. question: which VPN? IIUC it is any VPN established by the vpnPackage set through setAlwaysOnVpnPackageForUser, right?\n\n2. question: If lockdown vpn is not set, are the apps with requireVpn still restricted?\n\n3. question: What about the lockdownAllowlist in setAlwaysOnVpnPackageForUser, IIUC the list passed to this function is very similar to that one.",
+      "range": {
+        "startLine": 1174,
+        "startChar": 64,
+        "endLine": 1174,
+        "endChar": 73
+      },
+      "revId": "9598b7be9f66968b4e9afbc933213fc01f78e55b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5db6753_206bd0a8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4839,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-01T07:31:04Z",
+      "side": 1,
+      "message": "IIUC this is not correct since you will need to pass the old/new value of isUidBlockedByVpnLocked(uid) to maybeNotifyNetworkBlocked* to calculate if the notification is needed.\nIn other words, the maybeNotifyNetworkBlocked* function need to see the block status changed between oldBlocked/newBlocked in order to trigger the notification.\nOr I missed something?",
+      "range": {
+        "startLine": 4835,
+        "startChar": 12,
+        "endLine": 4839,
+        "endChar": 13
+      },
+      "revId": "9598b7be9f66968b4e9afbc933213fc01f78e55b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab078ac4_2b4797e5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7510,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-01T07:31:04Z",
+      "side": 1,
+      "message": "question: IIUC we can reduce the lock scope to these line, right?\nWhy we want to put all lines into synchronized block?",
+      "range": {
+        "startLine": 7506,
+        "startChar": 0,
+        "endLine": 7510,
+        "endChar": 59
+      },
+      "revId": "9598b7be9f66968b4e9afbc933213fc01f78e55b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
