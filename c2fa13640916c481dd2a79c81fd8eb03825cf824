@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c502de5e_dd0d2510",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-01T10:51:14Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer to use TcpKeepalivePacketData as much as possible in binder calls, rather than TcpKeepalivePacketDataParcelable; it\u0027s easier to use without having to do conversions.\nTo do that, it needs to be Parcelable. Unless you\u0027d prefer to always use TcpKeepalivePacketDataParcelable in binder calls with the conversion ?",
+      "parentUuid": "bd51eedf_580ac71d",
+      "range": {
+        "startLine": 32,
+        "startChar": 81,
+        "endLine": 32,
+        "endChar": 91
+      },
+      "revId": "c2fa13640916c481dd2a79c81fd8eb03825cf824",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aedb91de_4ed3d1cc",
         "filename": "services/net/java/android/net/util/KeepalivePacketDataUtil.java",
         "patchSetId": 5
@@ -43,6 +67,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d3bd1034_714f852c",
+        "filename": "services/net/java/android/net/util/KeepalivePacketDataUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-01T10:51:14Z",
+      "side": 1,
+      "message": "I just tried doing that, but actually this util depends on the AIDL interface for the parcelable, and I can\u0027t have this as a dependency of the shared lib... So kept it here. (pretty sure I tried this before, hit the same error, and forgot about it...)\nI think the right place is the networkstack-client lib, but it\u0027s not in libs/net yet. Added a TODO.",
+      "parentUuid": "aedb91de_4ed3d1cc",
+      "revId": "c2fa13640916c481dd2a79c81fd8eb03825cf824",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fc8b906f_867c26d9",
         "filename": "tests/net/common/java/android/net/TcpKeepalivePacketDataTest.kt",
         "patchSetId": 5
@@ -54,6 +96,30 @@
       "writtenOn": "2020-11-27T08:07:17Z",
       "side": 1,
       "message": "Do you need to test this both in here and testToString below ?\n\nIt sounds like this should belong in testParcelUnparcel and be using assertParcelSane",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 69
+      },
+      "revId": "c2fa13640916c481dd2a79c81fd8eb03825cf824",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "258e3ee5_b2891715",
+        "filename": "tests/net/common/java/android/net/TcpKeepalivePacketDataTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-01T10:51:14Z",
+      "side": 1,
+      "message": "Hmm to me the purpose of this check is to draw the attention of developers around it when it fails, so they update tests that are supposed to cover all fields.\nThat\u0027s why I have it both here and in testToString, as I\u0027m afraid otherwise someone could forget to update either. I could have it just once and a comment detailing what should be updated, but I don\u0027t find it as obvious / effective.\n\nSimilarly I didn\u0027t have it in testParcelUnparcel because it doesn\u0027t need to be updated when fields are added (the correctness on the test depends on .equals, which is tested here). But changed to use assertParcelSane.",
+      "parentUuid": "fc8b906f_867c26d9",
       "range": {
         "startLine": 72,
         "startChar": 0,
