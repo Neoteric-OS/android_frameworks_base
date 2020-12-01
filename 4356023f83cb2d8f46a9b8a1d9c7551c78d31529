@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006459282",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1510593?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3fedf0ba_6a7dcf39",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-01T02:37:08Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 4
+      },
+      "revId": "4356023f83cb2d8f46a9b8a1d9c7551c78d31529",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
