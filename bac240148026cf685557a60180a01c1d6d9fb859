@@ -22,6 +22,30 @@
       },
       "revId": "bac240148026cf685557a60180a01c1d6d9fb859",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4d17b18_70035a58",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1247389
+      },
+      "writtenOn": "2020-12-01T09:08:06Z",
+      "side": 1,
+      "message": "\u003e\u003eHow this check helps?\nExplained in detailed in comment#1:\nWhen the internal.db and external.db both have a ringtone at same _id(for eg 19), the ringtone Manager would return the position of  one of internal db even though the chosen ringtone is of external volume.\nSo the list displays wrong checked item in the list\nThis check would make sure that the position of correct ringtone is returned.\n\n\u003e\u003ecan returning -1 fix?\":\nNo returning -1 wont affect the issue, issue here is not of _id being found/or not found, it is matching with wrong _id firstly(_id of internal db) \u0026 directly returning it",
+      "parentUuid": "1b22a271_d2e6226c",
+      "range": {
+        "startLine": 530,
+        "startChar": 67,
+        "endLine": 530,
+        "endChar": 96
+      },
+      "revId": "bac240148026cf685557a60180a01c1d6d9fb859",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
