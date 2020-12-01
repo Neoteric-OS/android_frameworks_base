@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3b73057_13bb896a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1612418
+      },
+      "writtenOn": "2020-12-01T22:23:51Z",
+      "side": 1,
+      "message": "Hi Tyler, \n\nCan you have API review on this CL?\n\nThanks",
+      "revId": "228a54773e00d062607a19604700fc1917537ed8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
