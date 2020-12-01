@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bff5abed_1cffc40c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2020-12-01T00:32:45Z",
+      "side": 1,
+      "message": "Hmmm, it\u0027s not in many other similar places (for instance check in the two methods above, but I\u0027m not saying that\u0027s correct either ;-), and we\u0027re trying to reduce lock contention on AudioService. Have you run into a particular issue that would make you modify only this method?",
+      "revId": "1bc6830bca28d5031abdf8b1081582fc8196546f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
