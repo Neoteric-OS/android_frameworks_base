@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf51ce74_e972f4ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-01T06:20:01Z",
+      "side": 1,
+      "message": "Personally I think yes because it allows you to extend tests more easily like what you are doing in this CL.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "6aa06a33d7680345641854a865b0f5c3506afbc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a74813e_f7a77a6a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6358,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-01T06:20:01Z",
+      "side": 1,
+      "message": "nit: maybe saying the output is delivered by altering the caps parameter?\nno strong opinion.",
+      "range": {
+        "startLine": 6358,
+        "startChar": 90,
+        "endLine": 6358,
+        "endChar": 92
+      },
+      "revId": "6aa06a33d7680345641854a865b0f5c3506afbc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "451af61d_2de15416",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6361,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-01T06:20:01Z",
+      "side": 1,
+      "message": "nit: maybe add nullability notation?",
+      "range": {
+        "startLine": 6360,
+        "startChar": 37,
+        "endLine": 6361,
+        "endChar": 62
+      },
+      "revId": "6aa06a33d7680345641854a865b0f5c3506afbc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c6c8f7c_f1213d90",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6362,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-01T06:20:01Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 6362,
+        "startChar": 8,
+        "endLine": 6362,
+        "endChar": 15
+      },
+      "revId": "6aa06a33d7680345641854a865b0f5c3506afbc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20553f8f_7dd9aad9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6367,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-01T06:20:01Z",
+      "side": 1,
+      "message": "IIUC applyUnderlyingCapabilities is for the networks that supportsUnderlyingNetworks,\nwhich is not necessary a VPN in future, right?\nIf yes, we might want to move this out of this function, delete this if we are expecting this is included in caps before calling this function, or add condition for addinig it?",
+      "range": {
+        "startLine": 6367,
+        "startChar": 43,
+        "endLine": 6367,
+        "endChar": 76
+      },
+      "revId": "6aa06a33d7680345641854a865b0f5c3506afbc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
