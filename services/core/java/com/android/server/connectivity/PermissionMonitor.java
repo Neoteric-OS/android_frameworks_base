@@ -51,12 +51,13 @@ import android.util.SparseIntArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.IndentingPrintWriter;
+import com.android.net.module.util.CollectionUtils;
 import com.android.server.LocalServices;
 import com.android.server.SystemConfig;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -211,7 +212,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         if (app.requestedPermissions == null || app.requestedPermissionsFlags == null) {
             return false;
         }
-        final int index = ArrayUtils.indexOf(app.requestedPermissions, permission);
+        final int index = Arrays.asList(app.requestedPermissions).indexOf(permission);
         if (index < 0 || index >= app.requestedPermissionsFlags.length) return false;
         return (app.requestedPermissionsFlags[index] & REQUESTED_PERMISSION_GRANTED) != 0;
     }
@@ -672,23 +673,23 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
             if (allPermissionAppIds.size() != 0) {
                 mNetd.trafficSetNetPermForUids(
                         INetd.PERMISSION_INTERNET | INetd.PERMISSION_UPDATE_DEVICE_STATS,
-                        ArrayUtils.convertToIntArray(allPermissionAppIds));
+                        CollectionUtils.convertToIntArray(allPermissionAppIds));
             }
             if (internetPermissionAppIds.size() != 0) {
                 mNetd.trafficSetNetPermForUids(INetd.PERMISSION_INTERNET,
-                        ArrayUtils.convertToIntArray(internetPermissionAppIds));
+                        CollectionUtils.convertToIntArray(internetPermissionAppIds));
             }
             if (updateStatsPermissionAppIds.size() != 0) {
                 mNetd.trafficSetNetPermForUids(INetd.PERMISSION_UPDATE_DEVICE_STATS,
-                        ArrayUtils.convertToIntArray(updateStatsPermissionAppIds));
+                        CollectionUtils.convertToIntArray(updateStatsPermissionAppIds));
             }
             if (noPermissionAppIds.size() != 0) {
                 mNetd.trafficSetNetPermForUids(INetd.PERMISSION_NONE,
-                        ArrayUtils.convertToIntArray(noPermissionAppIds));
+                        CollectionUtils.convertToIntArray(noPermissionAppIds));
             }
             if (uninstalledAppIds.size() != 0) {
                 mNetd.trafficSetNetPermForUids(INetd.PERMISSION_UNINSTALLED,
-                        ArrayUtils.convertToIntArray(uninstalledAppIds));
+                        CollectionUtils.convertToIntArray(uninstalledAppIds));
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Pass appId list of special permission failed." + e);

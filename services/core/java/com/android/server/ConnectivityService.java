@@ -185,7 +185,6 @@ import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
-import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
@@ -193,6 +192,7 @@ import com.android.internal.util.LocationPermissionChecker;
 import com.android.internal.util.MessageUtils;
 import com.android.internal.util.XmlUtils;
 import com.android.modules.utils.BasicShellCommandHandler;
+import com.android.net.module.util.CollectionUtils;
 import com.android.server.am.BatteryStatsService;
 import com.android.server.connectivity.AutodestructReference;
 import com.android.server.connectivity.DataConnectionStats;
@@ -2531,13 +2531,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!DumpUtils.checkDumpPermission(mContext, TAG, pw)) return;
         if (asProto) return;
 
-        if (ArrayUtils.contains(args, DIAG_ARG)) {
+        if (CollectionUtils.contains(args, DIAG_ARG)) {
             dumpNetworkDiagnostics(pw);
             return;
-        } else if (ArrayUtils.contains(args, NETWORK_ARG)) {
+        } else if (CollectionUtils.contains(args, NETWORK_ARG)) {
             dumpNetworks(pw);
             return;
-        } else if (ArrayUtils.contains(args, REQUEST_ARG)) {
+        } else if (CollectionUtils.contains(args, REQUEST_ARG)) {
             dumpNetworkRequests(pw);
             return;
         }
@@ -2603,7 +2603,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         pw.println();
         mMultipathPolicyTracker.dump(pw);
 
-        if (ArrayUtils.contains(args, SHORT_ARG) == false) {
+        if (!CollectionUtils.contains(args, SHORT_ARG)) {
             pw.println();
             pw.println("mNetworkRequestInfoLogs (most recent first):");
             pw.increaseIndent();
@@ -5529,8 +5529,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
             }
         }
-        // TODO: use NetworkStackUtils.convertToIntArray after moving it
-        return ArrayUtils.convertToIntArray(new ArrayList<>(thresholds));
+        return CollectionUtils.convertToIntArray(new ArrayList<>(thresholds));
     }
 
     private void updateSignalStrengthThresholds(
@@ -8329,7 +8328,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         // Administrator UIDs also contains the Owner UID
         final int[] administratorUids = nai.networkCapabilities.getAdministratorUids();
-        return ArrayUtils.contains(administratorUids, callbackUid);
+        return CollectionUtils.contains(administratorUids, callbackUid);
     }
 
     @Override
