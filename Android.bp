@@ -676,6 +676,9 @@ gensrcs {
         "libs/incident/**/*.proto",
     ],
     output_extension: "srcjar",
+    // Reduce the shard size from the default 100 due to the long command
+    // line per source file.
+    shard_size: 50,
 }
 
 gensrcs {
