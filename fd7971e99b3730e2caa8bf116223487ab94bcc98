@@ -16,6 +16,23 @@
       "message": "I moved the i18n references to maintain alphabetical order and to hopefully prevent conflicts with downstream changes.",
       "revId": "fd7971e99b3730e2caa8bf116223487ab94bcc98",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f4bd2a6_f26085b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-12-01T16:23:26Z",
+      "side": 1,
+      "message": "Forgot to upload external/icu change to update visibility. Trying again.",
+      "revId": "fd7971e99b3730e2caa8bf116223487ab94bcc98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
