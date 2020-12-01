@@ -484,6 +484,7 @@ public final class UserHandle implements Parcelable {
 
     /** @hide */
     @UnsupportedAppUsage
+    @TestApi
     public UserHandle(@UserIdInt int userId) {
         mHandle = userId;
     }
