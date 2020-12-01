@@ -16,6 +16,24 @@
       "message": "OOC, what causes current.api to show \"carrier privileges\" instead of the constant variable name like it does for READ_PHONE_STATE and other manifest permissions? That seems slightly cleaner, but not a huge deal.\n\nOn the other hand, one of the things we\u0027ve been talking about for S has been the possibility of defining a new permission that is required for carrier apps to declare in order to access carrier-privileged APIs. It\u0027s functionally no different but allows for auditing / clearer use of the permission model for carrier privileged APIs. This feels like a step in the right direction either way, but we might end up just adding a regular permission anyway, so we should be cautious about doing substantially more work than this.",
       "revId": "decd4acb8a6ddace3bc86716901b7f3db1e54f31",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bea16816_0d6dae62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-12-01T05:04:44Z",
+      "side": 1,
+      "message": "\u003e OOC, what causes current.api to show \"carrier privileges\" instead of the constant variable name like it does for READ_PHONE_STATE and other manifest permissions? That seems slightly cleaner, but not a huge deal.\n\nIt\u0027s due to the fact that TelephonyManager#CARRIER_PRIVILEGES itself doesn\u0027t show up in the public API (I made it @hide). Any constant that can\u0027t be resolved to a Java symbol within the same api/*.txt file (or a broader one) just gets its literal copied into the text file. Same thing happens for public APIs with privileged permissions.\n\nExample from TM#getDeviceId:\n    method @Deprecated @RequiresPermission(\"android.permission.READ_PRIVILEGED_PHONE_STATE\") public String getDeviceId();\n\nOf course I could make this part of the SDK, but I didn\u0027t think there would be a significant need for it.\n \n\u003e On the other hand, one of the things we\u0027ve been talking about for S has been the possibility of defining a new permission that is required for carrier apps to declare in order to access carrier-privileged APIs. It\u0027s functionally no different but allows for auditing / clearer use of the permission model for carrier privileged APIs. This feels like a step in the right direction either way, but we might end up just adding a regular permission anyway, so we should be cautious about doing substantially more work than this.\n\nYeah, I was pretty much planning on just going through and removing all the @SuppressAutoDocs that were present due to lack of support for carrier privileges and update the signatures as needed.",
+      "parentUuid": "79630ef7_18bafd90",
+      "revId": "decd4acb8a6ddace3bc86716901b7f3db1e54f31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
