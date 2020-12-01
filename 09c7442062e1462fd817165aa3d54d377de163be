@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e513096_406e0101",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2020-12-01T20:05:33Z",
+      "side": 1,
+      "message": "nit: Move this to the documentation for getCqiTableIndex instead",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 7
+      },
+      "revId": "09c7442062e1462fd817165aa3d54d377de163be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00c033e7_456295b9",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthNr.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2020-12-01T20:05:33Z",
+      "side": 1,
+      "message": "This javadoc and the one below it can probably be removed since it\u0027s already in the getter methods.",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 7
+      },
+      "revId": "09c7442062e1462fd817165aa3d54d377de163be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "153fe79a_25233f0f",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthNr.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2020-12-01T20:05:33Z",
+      "side": 1,
+      "message": "nit: new line here",
+      "revId": "09c7442062e1462fd817165aa3d54d377de163be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
