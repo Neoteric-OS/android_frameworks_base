@@ -31,6 +31,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import android.app.AppOpsManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.vcn.VcnConfig;
@@ -67,9 +68,19 @@ import java.util.UUID;
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class VcnManagementServiceTest {
+    private static final String TEST_PACKAGE_NAME =
+            VcnManagementServiceTest.class.getPackage().getName();
     private static final ParcelUuid TEST_UUID_1 = new ParcelUuid(new UUID(0, 0));
     private static final ParcelUuid TEST_UUID_2 = new ParcelUuid(new UUID(1, 1));
-    private static final VcnConfig TEST_VCN_CONFIG = VcnConfigTest.buildTestConfig();
+    private static final VcnConfig TEST_VCN_CONFIG;
+
+    static {
+        final Context mockConfigContext = mock(Context.class);
+        doReturn(TEST_PACKAGE_NAME).when(mockConfigContext).getOpPackageName();
+
+        TEST_VCN_CONFIG = VcnConfigTest.buildTestConfig(mockConfigContext);
+    }
+
     private static final Map<ParcelUuid, VcnConfig> TEST_VCN_CONFIG_MAP =
             Collections.unmodifiableMap(Collections.singletonMap(TEST_UUID_1, TEST_VCN_CONFIG));
 
@@ -104,6 +115,7 @@ public class VcnManagementServiceTest {
     private final ConnectivityManager mConnMgr = mock(ConnectivityManager.class);
     private final TelephonyManager mTelMgr = mock(TelephonyManager.class);
     private final SubscriptionManager mSubMgr = mock(SubscriptionManager.class);
+    private final AppOpsManager mAppOpsMgr = mock(AppOpsManager.class);
     private final VcnContext mVcnContext = mock(VcnContext.class);
     private final PersistableBundleUtils.LockingReadWriteHelper mConfigReadWriteHelper =
             mock(PersistableBundleUtils.LockingReadWriteHelper.class);
@@ -117,6 +129,9 @@ public class VcnManagementServiceTest {
         setupSystemService(mTelMgr, Context.TELEPHONY_SERVICE, TelephonyManager.class);
         setupSystemService(
                 mSubMgr, Context.TELEPHONY_SUBSCRIPTION_SERVICE, SubscriptionManager.class);
+        setupSystemService(mAppOpsMgr, Context.APP_OPS_SERVICE, AppOpsManager.class);
+
+        doReturn(TEST_PACKAGE_NAME).when(mMockContext).getOpPackageName();
 
         doReturn(mTestLooper.getLooper()).when(mMockDeps).getLooper();
         doReturn(Process.FIRST_APPLICATION_UID).when(mMockDeps).getBinderCallingUid();
@@ -213,6 +228,14 @@ public class VcnManagementServiceTest {
         final TelephonySubscriptionSnapshot snapshot = mock(TelephonySubscriptionSnapshot.class);
         doReturn(activeSubscriptionGroups).when(snapshot).getActiveSubscriptionGroups();
 
+        final Set<String> privilegedPackages =
+                (activeSubscriptionGroups == null || activeSubscriptionGroups.isEmpty())
+                        ? Collections.emptySet()
+                        : Collections.singleton(TEST_PACKAGE_NAME);
+        doReturn(privilegedPackages)
+                .when(snapshot)
+                .getPrivilegedPackagesForSubscriptionGroup(any());
+
         final TelephonySubscriptionTrackerCallback cb = getTelephonySubscriptionTrackerCallback();
         cb.onNewSnapshot(snapshot);
     }
@@ -227,7 +250,7 @@ public class VcnManagementServiceTest {
     }
 
     private Vcn startAndGetVcnInstance(ParcelUuid uuid) {
-        mVcnMgmtSvc.setVcnConfig(uuid, TEST_VCN_CONFIG);
+        mVcnMgmtSvc.setVcnConfig(uuid, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
         return mVcnMgmtSvc.getInstances().get(uuid);
     }
 
@@ -304,7 +327,7 @@ public class VcnManagementServiceTest {
                 .getBinderCallingUid();
 
         try {
-            mVcnMgmtSvc.setVcnConfig(TEST_UUID_1, VcnConfigTest.buildTestConfig());
+            mVcnMgmtSvc.setVcnConfig(TEST_UUID_1, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
             fail("Expected security exception for non system user");
         } catch (SecurityException expected) {
         }
@@ -315,16 +338,25 @@ public class VcnManagementServiceTest {
         setupMockedCarrierPrivilege(false);
 
         try {
-            mVcnMgmtSvc.setVcnConfig(TEST_UUID_1, VcnConfigTest.buildTestConfig());
+            mVcnMgmtSvc.setVcnConfig(TEST_UUID_1, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
             fail("Expected security exception for missing carrier privileges");
         } catch (SecurityException expected) {
         }
     }
 
     @Test
+    public void testSetVcnConfigMismatchedPackages() throws Exception {
+        try {
+            mVcnMgmtSvc.setVcnConfig(TEST_UUID_1, TEST_VCN_CONFIG, "IncorrectPackage");
+            fail("Expected security exception for missing carrier privileges");
+        } catch (IllegalArgumentException expected) {
+        }
+    }
+
+    @Test
     public void testSetVcnConfig() throws Exception {
         // Use a different UUID to simulate a new VCN config.
-        mVcnMgmtSvc.setVcnConfig(TEST_UUID_2, TEST_VCN_CONFIG);
+        mVcnMgmtSvc.setVcnConfig(TEST_UUID_2, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
         assertEquals(TEST_VCN_CONFIG, mVcnMgmtSvc.getConfigs().get(TEST_UUID_2));
         verify(mConfigReadWriteHelper).writeToDisk(any(PersistableBundle.class));
     }
@@ -362,7 +394,7 @@ public class VcnManagementServiceTest {
 
     public void testSetVcnConfigClearVcnConfigStartsUpdatesAndTeardsDownVcns() throws Exception {
         // Use a different UUID to simulate a new VCN config.
-        mVcnMgmtSvc.setVcnConfig(TEST_UUID_2, TEST_VCN_CONFIG);
+        mVcnMgmtSvc.setVcnConfig(TEST_UUID_2, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
         final Map<ParcelUuid, Vcn> vcnInstances = mVcnMgmtSvc.getInstances();
         assertEquals(1, vcnInstances.size());
         assertEquals(TEST_VCN_CONFIG, mVcnMgmtSvc.getConfigs().get(TEST_UUID_2));
@@ -372,7 +404,7 @@ public class VcnManagementServiceTest {
         verify(mMockDeps).newVcn(eq(mVcnContext), eq(TEST_UUID_2), eq(TEST_VCN_CONFIG));
 
         // Verify Vcn is updated if it was previously started
-        mVcnMgmtSvc.setVcnConfig(TEST_UUID_2, TEST_VCN_CONFIG);
+        mVcnMgmtSvc.setVcnConfig(TEST_UUID_2, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
         verify(vcnInstances.get(TEST_UUID_2)).updateConfig(TEST_VCN_CONFIG);
 
         // Verify Vcn is stopped if it was already started
