@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1576078_50bc79f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-12-01T15:12:06Z",
+      "side": 1,
+      "message": "I moved the i18n references to maintain alphabetical order and to hopefully prevent conflicts with downstream changes.",
+      "revId": "fd7971e99b3730e2caa8bf116223487ab94bcc98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
