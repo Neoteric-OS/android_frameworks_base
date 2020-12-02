@@ -8933,6 +8933,18 @@ package android.service.resolver {
 
 }
 
+package android.service.resumeonreboot {
+
+  public abstract class ResumeOnRebootService extends android.app.Service {
+    ctor public ResumeOnRebootService();
+    method @Nullable public android.os.IBinder onBind(@Nullable android.content.Intent);
+    method @Nullable public abstract byte[] onUnwrap(@NonNull byte[]);
+    method @Nullable public abstract byte[] onWrap(@NonNull byte[], long);
+    field public static final String SERVICE_INTERFACE = "android.service.resumeonreboot.ResumeOnRebootService";
+  }
+
+}
+
 package android.service.settings.suggestions {
 
   public final class Suggestion implements android.os.Parcelable {
