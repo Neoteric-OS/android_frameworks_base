@@ -26,8 +26,6 @@ import android.annotation.Nullable;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.NetworkProvider;
-import android.net.NetworkRequest;
 import android.net.vcn.IVcnManagementService;
 import android.net.vcn.VcnConfig;
 import android.os.Binder;
@@ -51,6 +49,7 @@ import com.android.internal.annotations.VisibleForTesting.Visibility;
 import com.android.server.vcn.TelephonySubscriptionTracker;
 import com.android.server.vcn.Vcn;
 import com.android.server.vcn.VcnContext;
+import com.android.server.vcn.VcnNetworkProvider;
 import com.android.server.vcn.util.PersistableBundleUtils;
 
 import java.io.IOException;
@@ -506,26 +505,6 @@ public class VcnManagementService extends IVcnManagementService.Stub
     public Map<ParcelUuid, Vcn> getVcns() {
         synchronized (mLock) {
             return Collections.unmodifiableMap(mVcns);
-        }
-    }
-
-    /**
-     * Network provider for VCN networks.
-     *
-     * @hide
-     */
-    public class VcnNetworkProvider extends NetworkProvider {
-        VcnNetworkProvider(Context context, Looper looper) {
-            super(context, looper, VcnNetworkProvider.class.getSimpleName());
-        }
-
-        @Override
-        public void onNetworkRequested(@NonNull NetworkRequest request, int score, int providerId) {
-            synchronized (mLock) {
-                for (Vcn instance : mVcns.values()) {
-                    instance.onNetworkRequested(request, score, providerId);
-                }
-            }
         }
     }
 }
