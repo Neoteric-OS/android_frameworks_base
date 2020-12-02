@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d9c424c8_323e9647",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-02T21:01:25Z",
+      "side": 1,
+      "message": "Must be non-static so we can mock the dependencies object, and public so that mockito can mock it.",
+      "parentUuid": "b1860bd6_814fbf06",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 14
+      },
+      "revId": "446e4ef081da4e634585bfa66629c931f3f51c02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "22ec746e_50cff044",
         "filename": "services/core/java/com/android/server/VcnManagementService.java",
         "patchSetId": 13
@@ -37,6 +61,30 @@
       "writtenOn": "2020-11-19T22:02:28Z",
       "side": 1,
       "message": "nit, this logic can be shorter:\n\nif (isValidSlotIndex() \u0026\u0026 hasCarrierPrivileges()) return;",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 13
+      },
+      "revId": "446e4ef081da4e634585bfa66629c931f3f51c02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e56b7b1_b7c36a0e",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-02T21:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22ec746e_50cff044",
       "range": {
         "startLine": 192,
         "startChar": 0,
