@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: nchalko <nchalko@google.com>
+Code-Review+1: Dan Zhang <danielzhang@google.com>
+Autosubmit+1: Dan Zhang <danielzhang@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 02 Dec 2020 22:00:25 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1512821
+Project: platform/frameworks/base
+Branch: refs/heads/master
