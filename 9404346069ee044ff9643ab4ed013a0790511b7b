@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f888701a_36c84a44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-02T06:16:59Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37857619_04b0cdd9",
@@ -36,6 +53,29 @@
         "startChar": 17,
         "endLine": 2,
         "endChar": 21
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94d2f772_4bb796ac",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-02T06:16:59Z",
+      "side": 1,
+      "message": "tcpWindowScale? I think the ones above (tcpSeq, tcpAck in particular, maybe even tcpWnd) might be OK for public API because SEQ, ACK and WND are terms used directly in the RFC.",
+      "range": {
+        "startLine": 45,
+        "startChar": 21,
+        "endLine": 45,
+        "endChar": 32
       },
       "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
