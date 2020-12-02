@@ -1,0 +1,10 @@
+Autosubmit+1: Songchun Fan <schfan@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Patrick Baumann <patb@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 02 Dec 2020 00:05:58 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1504108
+Project: platform/frameworks/base
+Branch: refs/heads/master
