@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1af0b56b_9bd8b778",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-02T07:35:29Z",
+      "side": 1,
+      "message": "LGTM, but I think we should fix VcnService to either a) start after CS or b) explicitly deal with CM being null.",
+      "revId": "a1bef5bbc2ffc66a12793a74e286ab2692467300",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
