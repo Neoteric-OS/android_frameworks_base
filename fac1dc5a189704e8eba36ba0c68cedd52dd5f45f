@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81b990ae_62658c38",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-02T21:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0699b428_bdb929fe",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 96
+      },
+      "revId": "fac1dc5a189704e8eba36ba0c68cedd52dd5f45f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df429d52_7d34cfbf",
@@ -54,6 +78,30 @@
       "writtenOn": "2020-11-17T03:33:10Z",
       "side": 1,
       "message": "Do we also want one more short-term retry here? I feel like immediately going to 5s on failure is going to create an unnecessarily janky user experience if something hiccups.",
+      "range": {
+        "startLine": 53,
+        "startChar": 42,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "fac1dc5a189704e8eba36ba0c68cedd52dd5f45f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9813f953_393496d7",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-02T21:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df429d52_7d34cfbf",
       "range": {
         "startLine": 53,
         "startChar": 42,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ac8ad03_38eeb8c7",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-02T21:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89dc79f8_5a210d12",
+      "range": {
+        "startLine": 64,
+        "startChar": 27,
+        "endLine": 64,
+        "endChar": 31
+      },
+      "revId": "fac1dc5a189704e8eba36ba0c68cedd52dd5f45f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35c87f72_2de45f00",
@@ -100,6 +172,30 @@
       "writtenOn": "2020-11-17T03:33:10Z",
       "side": 1,
       "message": "Set the retry interval between VCN establishment attempts upon successive failures.\n\n\nOr something like that?",
+      "range": {
+        "startLine": 196,
+        "startChar": 11,
+        "endLine": 196,
+        "endChar": 77
+      },
+      "revId": "fac1dc5a189704e8eba36ba0c68cedd52dd5f45f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91cc5ba4_2d1bf96f",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-02T21:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35c87f72_2de45f00",
       "range": {
         "startLine": 196,
         "startChar": 11,
