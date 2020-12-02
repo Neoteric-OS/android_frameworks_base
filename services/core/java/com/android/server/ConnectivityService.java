@@ -1377,9 +1377,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return;
         }
         final String action = blocked ? "BLOCKED" : "UNBLOCKED";
-        final NetworkRequest satisfierRequest = nri.getSatisfiedRequest();
-        final int requestId = satisfierRequest != null
-                ? satisfierRequest.requestId : nri.mRequests.get(0).requestId;
+        final int requestId = nri.mActiveRequest != null
+                ? nri.mActiveRequest.requestId : nri.mRequests.get(0).requestId;
         mNetworkInfoBlockingLogs.log(String.format(
                 "%s %d(%d) on netId %d", action, nri.mUid, requestId, net.netId));
     }
@@ -3411,6 +3410,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             final NetworkAgentInfo currentNetwork = nri.mSatisfier;
             if (currentNetwork != null && currentNetwork.network.netId == nai.network.netId) {
                 nri.mSatisfier = null;
+                nri.mActiveRequest = null;
                 sendUpdatedScoreToFactories(request, null);
             }
         }
@@ -3655,58 +3655,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mNetworkRequestInfoLogs.log("RELEASE " + nri);
         if (nri.request.isRequest()) {
-            boolean wasKept = false;
-            final NetworkAgentInfo nai = nri.mSatisfier;
-            if (nai != null) {
-                boolean wasBackgroundNetwork = nai.isBackgroundNetwork();
-                nai.removeRequest(nri.request.requestId);
-                if (VDBG || DDBG) {
-                    log(" Removing from current network " + nai.toShortString()
-                            + ", leaving " + nai.numNetworkRequests() + " requests.");
-                }
-                // If there are still lingered requests on this network, don't tear it down,
-                // but resume lingering instead.
-                final long now = SystemClock.elapsedRealtime();
-                if (updateLingerState(nai, now)) {
-                    notifyNetworkLosing(nai, now);
-                }
-                if (unneeded(nai, UnneededFor.TEARDOWN)) {
-                    if (DBG) log("no live requests for " + nai.toShortString() + "; disconnecting");
-                    teardownUnneededNetwork(nai);
-                } else {
-                    wasKept = true;
-                }
-                nri.mSatisfier = null;
-                if (!wasBackgroundNetwork && nai.isBackgroundNetwork()) {
-                    // Went from foreground to background.
-                    updateCapabilities(nai.getCurrentScore(), nai, nai.networkCapabilities);
-                }
-            }
-
-            // Maintain the illusion.  When this request arrived, we might have pretended
-            // that a network connected to serve it, even though the network was already
-            // connected.  Now that this request has gone away, we might have to pretend
-            // that the network disconnected.  LegacyTypeTracker will generate that
-            // phantom disconnect for this type.
-            if (nri.request.legacyType != TYPE_NONE && nai != null) {
-                boolean doRemove = true;
-                if (wasKept) {
-                    // check if any of the remaining requests for this network are for the
-                    // same legacy type - if so, don't remove the nai
-                    for (int i = 0; i < nai.numNetworkRequests(); i++) {
-                        NetworkRequest otherRequest = nai.requestAt(i);
-                        if (otherRequest.legacyType == nri.request.legacyType &&
-                                otherRequest.isRequest()) {
-                            if (DBG) log(" still have other legacy request - leaving");
-                            doRemove = false;
-                        }
-                    }
-                }
-
-                if (doRemove) {
-                    mLegacyTypeTracker.remove(nri.request.legacyType, nai, false);
-                }
-            }
+            removeSatisfiedNetworkRequestFromNetwork(nri);
 
             for (NetworkProviderInfo npi : mNetworkProviderInfos.values()) {
                 npi.cancelRequest(nri.request);
@@ -3716,9 +3665,71 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // if this listen request applies and remove it.
             for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
                 nai.removeRequest(nri.request.requestId);
-                if (nri.request.networkCapabilities.hasSignalStrength() &&
-                        nai.satisfiesImmutableCapabilitiesOf(nri.request)) {
+                if (nri.request.networkCapabilities.hasSignalStrength()
+                        && nai.satisfiesImmutableCapabilitiesOf(nri.request)) {
                     updateSignalStrengthThresholds(nai, "RELEASE", nri.request);
+                }
+            }
+        }
+    }
+
+    /**
+     * Remove a NetworkRequestInfo's satisfied request from its 'satisfier' (NetworkAgentInfo) and
+     * manage the necessary upkeep (linger, teardown networks, etc.) when doing so.
+     * @param nri the NetworkRequestInfo to disassociate from its current NetworkAgentInfo
+     */
+    private void removeSatisfiedNetworkRequestFromNetwork(NetworkRequestInfo nri) {
+        boolean wasKept = false;
+        final NetworkAgentInfo nai = nri.mSatisfier;
+        if (nai != null) {
+            final int requestLegacyType = nri.mActiveRequest.legacyType;
+            final boolean wasBackgroundNetwork = nai.isBackgroundNetwork();
+            nai.removeRequest(nri.mActiveRequest.requestId);
+            if (VDBG || DDBG) {
+                log(" Removing from current network " + nai.toShortString()
+                        + ", leaving " + nai.numNetworkRequests() + " requests.");
+            }
+            // If there are still lingered requests on this network, don't tear it down,
+            // but resume lingering instead.
+            final long now = SystemClock.elapsedRealtime();
+            if (updateLingerState(nai, now)) {
+                notifyNetworkLosing(nai, now);
+            }
+            if (unneeded(nai, UnneededFor.TEARDOWN)) {
+                if (DBG) log("no live requests for " + nai.toShortString() + "; disconnecting");
+                teardownUnneededNetwork(nai);
+            } else {
+                wasKept = true;
+            }
+            nri.mSatisfier = null;
+            nri.mActiveRequest = null;
+            if (!wasBackgroundNetwork && nai.isBackgroundNetwork()) {
+                // Went from foreground to background.
+                updateCapabilities(nai.getCurrentScore(), nai, nai.networkCapabilities);
+            }
+
+            // Maintain the illusion.  When this request arrived, we might have pretended
+            // that a network connected to serve it, even though the network was already
+            // connected.  Now that this request has gone away, we might have to pretend
+            // that the network disconnected.  LegacyTypeTracker will generate that
+            // phantom disconnect for this type.
+            if (requestLegacyType != TYPE_NONE) {
+                boolean doRemove = true;
+                if (wasKept) {
+                    // check if any of the remaining requests for this network are for the
+                    // same legacy type - if so, don't remove the nai
+                    for (int i = 0; i < nai.numNetworkRequests(); i++) {
+                        NetworkRequest otherRequest = nai.requestAt(i);
+                        if (otherRequest.legacyType == requestLegacyType
+                                && otherRequest.isRequest()) {
+                            if (DBG) log(" still have other legacy request - leaving");
+                            doRemove = false;
+                        }
+                    }
+                }
+
+                if (doRemove) {
+                    mLegacyTypeTracker.remove(requestLegacyType, nai, false);
                 }
             }
         }
@@ -5422,6 +5433,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // as defined by NetworkRequest#isRequest(). For listens, this is always null.
         @Nullable
         NetworkAgentInfo mSatisfier;
+        // The currently active request in mRequests. This is null if none of them can be satisfied.
+        @Nullable
+        NetworkRequest mActiveRequest;
         final PendingIntent mPendingIntent;
         boolean mPendingIntentSent;
         private final IBinder mBinder;
@@ -6921,23 +6935,48 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void processNewlyLostListenRequests(@NonNull final NetworkAgentInfo nai) {
-        for (NetworkRequestInfo nri : mNetworkRequests.values()) {
-            NetworkRequest nr = nri.request;
-            if (!nr.isListen()) continue;
-            if (nai.isSatisfyingRequest(nr.requestId) && !nai.satisfies(nr)) {
-                nai.removeRequest(nri.request.requestId);
-                callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_LOST, 0);
+        for (final NetworkRequestInfo nri : mNetworkRequests.values()) {
+            for (final NetworkRequest nr : nri.mRequests) {
+                if (!nr.isListen()) {
+                    continue;
+                }
+                if (nai.isSatisfyingRequest(nr.requestId) && !nai.satisfies(nr)) {
+                    nai.removeRequest(nr.requestId);
+                    callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_LOST, 0);
+                    nri.mActiveRequest = null;
+                    if (nri.isMultilayerRequest()) {
+                        // Match the other network requests in the Multilayer request if possible
+                        // now that its listen request is no longer being satisfied.
+                        rematchNetworksAndRequests(Collections.singleton(nri));
+                    }
+                    break;
+                }
             }
         }
     }
 
     private void processNewlySatisfiedListenRequests(@NonNull final NetworkAgentInfo nai) {
-        for (NetworkRequestInfo nri : mNetworkRequests.values()) {
-            NetworkRequest nr = nri.request;
-            if (!nr.isListen()) continue;
-            if (nai.satisfies(nr) && !nai.isSatisfyingRequest(nr.requestId)) {
-                nai.addRequest(nr);
-                notifyNetworkAvailable(nai, nri);
+        for (final NetworkRequestInfo nri : mNetworkRequests.values()) {
+            for (final NetworkRequest nr : nri.mRequests) {
+                if (nri.isMultilayerRequest() && nr == nri.mActiveRequest) {
+                    // This multilayer request is already being satisfied by a higher priority
+                    // request therefore there is no need to evaluate lower priority requests.
+                    break;
+                }
+                if (!nr.isListen()) {
+                    continue;
+                }
+                if (nai.satisfies(nr) && !nai.isSatisfyingRequest(nr.requestId)) {
+                    if (nri.isMultilayerRequest() && nri.mSatisfier != null) {
+                        // Disassociate the nri from its current network as a higher priority
+                        // request has now been satisfied.
+                        removeSatisfiedNetworkRequestFromNetwork(nri);
+                    }
+                    nai.addRequest(nr);
+                    nri.mActiveRequest = nr;
+                    notifyNetworkAvailable(nai, nri);
+                    break;
+                }
             }
         }
     }
@@ -6946,12 +6985,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static class NetworkReassignment {
         static class RequestReassignment {
             @NonNull public final NetworkRequestInfo mRequest;
+            @NonNull public final NetworkRequest mNetworkRequest;
             @Nullable public final NetworkAgentInfo mOldNetwork;
             @Nullable public final NetworkAgentInfo mNewNetwork;
             RequestReassignment(@NonNull final NetworkRequestInfo request,
+                    @NonNull final NetworkRequest networkRequest,
                     @Nullable final NetworkAgentInfo oldNetwork,
                     @Nullable final NetworkAgentInfo newNetwork) {
                 mRequest = request;
+                mNetworkRequest = networkRequest;
                 mOldNetwork = oldNetwork;
                 mNewNetwork = newNetwork;
             }
@@ -7017,6 +7059,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void updateSatisfiersForRematchRequest(@NonNull final NetworkRequestInfo nri,
+            @NonNull final NetworkRequest request,
             @Nullable final NetworkAgentInfo previousSatisfier,
             @Nullable final NetworkAgentInfo newSatisfier,
             final long now) {
@@ -7026,28 +7069,36 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 if (VDBG || DDBG) {
                     log("   accepting network in place of " + previousSatisfier.toShortString());
                 }
-                previousSatisfier.removeRequest(nri.request.requestId);
-                previousSatisfier.lingerRequest(nri.request, now, mLingerDelayMs);
+                previousSatisfier.removeRequest(request.requestId);
+                previousSatisfier.lingerRequest(request, now, mLingerDelayMs);
             } else {
                 if (VDBG || DDBG) log("   accepting network in place of null");
             }
-            newSatisfier.unlingerRequest(nri.request);
-            if (!newSatisfier.addRequest(nri.request)) {
+            newSatisfier.unlingerRequest(request);
+            if (!newSatisfier.addRequest(request)) {
                 Log.wtf(TAG, "BUG: " + newSatisfier.toShortString() + " already has "
-                        + nri.request);
+                        + request);
             }
         } else {
             if (DBG) {
                 log("Network " + previousSatisfier.toShortString() + " stopped satisfying"
-                        + " request " + nri.request.requestId);
+                        + " request " + request.requestId);
             }
-            previousSatisfier.removeRequest(nri.request.requestId);
+            previousSatisfier.removeRequest(request.requestId);
         }
         nri.mSatisfier = newSatisfier;
+        nri.mActiveRequest = request;
     }
 
+    /**
+     * Determine whether a given collection of NetworkRequestInfo (nri) objects should have a new
+     * NetworkAgentInfo (nai) assigned to it.
+     * @param networkRequests the nri objects to evaluate for possible network reassignment
+     * @return NetworkReassignment listing proposed network assignment changes
+     */
     @NonNull
-    private NetworkReassignment computeNetworkReassignment() {
+    private NetworkReassignment computeNetworkReassignment(
+            Collection<NetworkRequestInfo> networkRequests) {
         ensureRunningOnConnectivityServiceThread();
         final NetworkReassignment changes = new NetworkReassignment();
 
@@ -7058,26 +7109,52 @@ public class ConnectivityService extends IConnectivityManager.Stub
             nais.add(nai);
         }
 
-        for (final NetworkRequestInfo nri : mNetworkRequests.values()) {
-            if (nri.request.isListen()) continue;
-            final NetworkAgentInfo bestNetwork = mNetworkRanker.getBestNetwork(nri.request, nais);
-            if (bestNetwork != nri.mSatisfier) {
-                // bestNetwork may be null if no network can satisfy this request.
-                changes.addRequestReassignment(new NetworkReassignment.RequestReassignment(
-                        nri, nri.mSatisfier, bestNetwork));
+        for (final NetworkRequestInfo nri : networkRequests) {
+            for (final NetworkRequest req : nri.mRequests) {
+                // Listen requests are processed elsewhere. We can stop right here in that case for
+                // non-multilayer requests. For multilayer requests, we need to process each
+                // NetworkRequest, in order and only request a reassignment if there isn't a network
+                // agent available for a higher priority listen request.
+                if (req.isListen() && !nri.isMultilayerRequest()) {
+                    break;
+                }
+                final NetworkAgentInfo bestNetwork = mNetworkRanker.getBestNetwork(req, nais);
+                if (req.isListen()) {
+                    // If there is no network agent available for this listen request, continue to
+                    // the next request for this multilayer request. If there is a network agent
+                    // available, we can process the listen request later to keep the existing
+                    // ordering of events and exit out of this loop without reassignment.
+                    if (bestNetwork == null) {
+                        continue;
+                    }
+                    break;
+                }
+                if (bestNetwork != nri.mSatisfier) {
+                    // bestNetwork may be null if no network can satisfy this request.
+                    changes.addRequestReassignment(new NetworkReassignment.RequestReassignment(
+                            nri, req, nri.mSatisfier, bestNetwork));
+                }
             }
         }
         return changes;
     }
 
     /**
-     * Attempt to rematch all Networks with NetworkRequests.  This may result in Networks
+     * Attempt to rematch all Networks with all NetworkRequests.  This may result in Networks
      * being disconnected.
      */
     private void rematchAllNetworksAndRequests() {
+        rematchNetworksAndRequests(mNetworkRequests.values());
+    }
+
+    /**
+     * Attempt to rematch all Networks with given NetworkRequests.  This may result in Networks
+     * being disconnected.
+     */
+    private void rematchNetworksAndRequests(Collection<NetworkRequestInfo> networkRequests) {
         // TODO: This may be slow, and should be optimized.
         final long now = SystemClock.elapsedRealtime();
-        final NetworkReassignment changes = computeNetworkReassignment();
+        final NetworkReassignment changes = computeNetworkReassignment(networkRequests);
         if (VDBG || DDBG) {
             log(changes.debugString());
         } else if (DBG) {
@@ -7102,8 +7179,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // the linger status.
         for (final NetworkReassignment.RequestReassignment event :
                 changes.getRequestReassignments()) {
-            updateSatisfiersForRematchRequest(event.mRequest, event.mOldNetwork,
-                    event.mNewNetwork, now);
+            updateSatisfiersForRematchRequest(event.mRequest, event.mNetworkRequest,
+                    event.mOldNetwork, event.mNewNetwork, now);
         }
 
         final NetworkAgentInfo oldDefaultNetwork = getDefaultNetwork();
@@ -7133,9 +7210,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 changes.getRequestReassignments()) {
             // Tell NetworkProviders about the new score, so they can stop
             // trying to connect if they know they cannot match it.
+            // Events only exist for requests with a satisfier, i.e. not listen requests.
             // TODO - this could get expensive if there are a lot of outstanding requests for this
             // network. Think of a way to reduce this. Push netid->request mapping to each factory?
-            sendUpdatedScoreToFactories(event.mRequest.request, event.mNewNetwork);
+            sendUpdatedScoreToFactories(event.mNetworkRequest, event.mNewNetwork);
 
             if (null != event.mNewNetwork) {
                 notifyNetworkAvailable(event.mNewNetwork, event.mRequest);
