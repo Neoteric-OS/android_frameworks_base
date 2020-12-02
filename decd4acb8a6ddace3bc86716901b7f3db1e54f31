@@ -57,6 +57,30 @@
       },
       "revId": "decd4acb8a6ddace3bc86716901b7f3db1e54f31",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c931e9c8_9cfe7e96",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-12-02T21:23:14Z",
+      "side": 1,
+      "message": "The @RequiresPermission annotation itself is not actually part of the SDK and doesn\u0027t show up anywhere consequential.\n\nIt\u0027s used to signal the documentation generator tool that it needs to include some pre-formatted text. In the case of @RequiresPermission(\"carrier privileges\"), it auto-generates documentation that looks like this: `Requires {@link android.telephony.TelephonyManager#hasCarrierPrivileges carrier privileges}`\n\nSee ag/906597 for some other more complete examples.\n\nSDK documentation is not translated either fwiw.",
+      "parentUuid": "4d8ec02e_93531c67",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 73
+      },
+      "revId": "decd4acb8a6ddace3bc86716901b7f3db1e54f31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
