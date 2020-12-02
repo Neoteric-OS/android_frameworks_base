@@ -7093,7 +7093,7 @@ public class NotificationManagerService extends SystemService {
                     // so need to check the notification still valide for vibrate.
                     synchronized (mNotificationLock) {
                         if (mNotificationsByKey.get(record.getKey()) != null) {
-                            mVibrator.vibrate(record.getSbn().getUid(), record.getSbn().getOpPkg(),
+                            mVibrator.vibrate(record.getSbn().getUid(), record.getSbn().getPackageName(),
                                     effect, "Notification (delayed)", record.getAudioAttributes());
                         } else {
                             Slog.e(TAG, "No vibration for canceled notification : "
