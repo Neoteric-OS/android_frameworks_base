@@ -81,6 +81,30 @@
       },
       "revId": "decd4acb8a6ddace3bc86716901b7f3db1e54f31",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c81acbda_b5ee4878",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-12-02T21:27:16Z",
+      "side": 1,
+      "message": "An existing example: TM#getCellLocation\n\nhttp://cs/android/frameworks/base/telephony/java/android/telephony/TelephonyManager.java?l\u003d2301\u0026rcl\u003d36a2a5f25295264aa8039195a420408d02d9b77c\n\nhttps://developer.android.com/reference/android/telephony/TelephonyManager#getCellLocation()\n\n\n@RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION) in Java gets translated to \"Requires Manifest.permission.ACCESS_FINE_LOCATION\" (with a link to the permission declaration) in the SDK docs.",
+      "parentUuid": "c931e9c8_9cfe7e96",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 73
+      },
+      "revId": "decd4acb8a6ddace3bc86716901b7f3db1e54f31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
