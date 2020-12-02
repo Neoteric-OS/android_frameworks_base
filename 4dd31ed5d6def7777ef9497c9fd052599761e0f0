@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3aa1d021_f5364fc5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1435838
+      },
+      "writtenOn": "2020-12-02T14:59:21Z",
+      "side": 1,
+      "message": "notification delegate feature commit:\n\nhttps://android.googlesource.com/platform/frameworks/base/+/a7ba45acb1e18e654d9861ee57c0ae1e6ebfbef9%5E%21/services/core/java/com/android/server/notification/NotificationManagerService.java",
+      "revId": "4dd31ed5d6def7777ef9497c9fd052599761e0f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
