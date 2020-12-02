@@ -50,6 +50,24 @@
       "message": "Mathew, I am a little confused as to why lint is reporting the following error:\nLint Non-SDK API - Moved a field from the unsupported list to the blocked list: \u0027Landroid/icu/util/JapaneseCalendar;-\u003eCURRENT_ERA:I\u0027\n\nThis is obviously caused by switching from the implementation source which includes JapaneseCalendar.CURRENT_ERA to the stubs which do not. That has obviously removed the field from some hiddenapi list but I don\u0027t know what list or how to go about fixing this.\n\nThe implementation source is processed into stubs in external/icu/android_icu4j/Android.bp by the i18n.module.public.api java_sdk_library module so presumably that needs to be wired into hiddenapi somehow. Would you be able to help me with that?\n\nFTR the lint report added directly to gerrit is really confusing because it gives an empty list of files that need fixing and it is only by following a link in that report that you see the above error. Not sure if there is anything you can do about that.\n",
       "revId": "fd7971e99b3730e2caa8bf116223487ab94bcc98",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10503da3_53a5670e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-12-02T11:30:49Z",
+      "side": 1,
+      "message": "It\u0027ll be fixed when my other comment is resolved",
+      "parentUuid": "3741aa10_a2761a3f",
+      "revId": "fd7971e99b3730e2caa8bf116223487ab94bcc98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

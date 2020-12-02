@@ -16,6 +16,24 @@
       "message": "Many more lists down here that I think needs the ICU stubs as well.\n\nBTW, my plan remain to replace this file with some custom soong .go code here that generates all the relevant genrules etc given a list of modules.",
       "revId": "854bb5b5eb64fc2743d1e0b479539d626763a969",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03128236_ea4e9109",
+        "filename": "api/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-12-02T11:30:49Z",
+      "side": 0,
+      "message": "this one ^",
+      "parentUuid": "889f0ef9_a55d5306",
+      "revId": "854bb5b5eb64fc2743d1e0b479539d626763a969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
