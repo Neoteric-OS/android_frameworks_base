@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3afa2db8_3c8d2220",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-02T05:47:16Z",
+      "side": 1,
+      "message": "Generally LGTM but see comments.\n\nThat said - have we considered just have APF just parse the packet elements from the array that can be fetched by calling getPacket() on the base class of this class? I think all the information is there (APF doesn\u0027t seem to use the window scale which is the only thing that doesn\u0027t appear on the wire).\n\nWe could parse the IP and TCP headers with Struct subclasses for IPv4 and IPv6 and TCP headers, which we should probably have anyway",
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37857619_04b0cdd9",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-02T05:47:16Z",
+      "side": 1,
+      "message": "2020",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a7679c5_2dabd9f4",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-02T05:47:16Z",
+      "side": 1,
+      "message": "Do we actually use these? If not, do we at least populate them?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 27
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56abe617_dcc23652",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-02T05:47:16Z",
+      "side": 1,
+      "message": "@Override?",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 10
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5010c1f6_a89f4546",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-02T05:47:16Z",
+      "side": 1,
+      "message": "@Override?",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 10
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bee7a28_d5db47a3",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-02T05:47:16Z",
+      "side": 1,
+      "message": "TCP",
+      "range": {
+        "startLine": 139,
+        "startChar": 41,
+        "endLine": 139,
+        "endChar": 46
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43100aef_ba751691",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-02T05:47:16Z",
+      "side": 1,
+      "message": "Suggest re-using (or copying) NetworkStackUtils.addressAndPortToString and:\n\n    public String toString() {\n        return addressAndPortToString(getSrcAddress(), getSrcPort())\n                + \" -\u003e \"\n                + addressAndPortToString(getDstAddress(), getDstPort())\n                + ...",
+      "range": {
+        "startLine": 150,
+        "startChar": 15,
+        "endLine": 153,
+        "endChar": 43
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
