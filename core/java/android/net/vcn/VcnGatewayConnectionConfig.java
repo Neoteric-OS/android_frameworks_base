@@ -213,7 +213,7 @@ public final class VcnGatewayConnectionConfig {
     }
 
     @NonNull
-    private List<Integer> getAllTunnelCapabilities() {
+    public List<Integer> getAllTunnelCapabilities() {
         List<Integer> tunnelCapsList = new ArrayList<>();
         for (int cap = mTunnelCapabilities.nextSetBit(0);
                 cap != -1;
