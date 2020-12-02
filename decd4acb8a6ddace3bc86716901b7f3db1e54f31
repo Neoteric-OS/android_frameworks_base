@@ -34,6 +34,29 @@
       "parentUuid": "79630ef7_18bafd90",
       "revId": "decd4acb8a6ddace3bc86716901b7f3db1e54f31",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d8ec02e_93531c67",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-12-02T20:00:42Z",
+      "side": 1,
+      "message": "I\u0027m not clear on how this works?  Does it just get put into the API docs as-is?  It seems like this would not be likely to get translated?",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 73
+      },
+      "revId": "decd4acb8a6ddace3bc86716901b7f3db1e54f31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
