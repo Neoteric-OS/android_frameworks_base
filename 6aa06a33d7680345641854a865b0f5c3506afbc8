@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "487219dc_23f729d5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6354,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-02T03:12:20Z",
+      "side": 1,
+      "message": "Yeah I missed the \"stores into |nai|\", thanks for explain, now it is more clear for me.\n\nHowever it looks to me that this imply someone might mistakenly add something to nc here instead of mixInCapabilities, and cause the newNc lose some capabilities in other cases like applyBackgroundChangeForRematch.\n\nIf so, if you think it is helpful, maybe add some comment here to warn people that don\u0027t alter nc here, do that in mixInCapabilities instead.\nOtherwise, we can leave it as is and revisit it when we have good idea.\nNo strong opinion.",
+      "parentUuid": "9fe8dce0_fd8a398e",
+      "range": {
+        "startLine": 6354,
+        "startChar": 17,
+        "endLine": 6354,
+        "endChar": 45
+      },
+      "revId": "6aa06a33d7680345641854a865b0f5c3506afbc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2a74813e_f7a77a6a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
