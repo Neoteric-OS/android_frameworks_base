@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f8b0745_28dca3a1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6354,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-02T04:57:33Z",
+      "side": 1,
+      "message": "Ack. I have added comments into my local tree tree and they will be part of a future CL.",
+      "parentUuid": "487219dc_23f729d5",
+      "range": {
+        "startLine": 6354,
+        "startChar": 17,
+        "endLine": 6354,
+        "endChar": 45
+      },
+      "revId": "6aa06a33d7680345641854a865b0f5c3506afbc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2a74813e_f7a77a6a",
