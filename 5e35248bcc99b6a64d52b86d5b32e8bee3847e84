@@ -300,6 +300,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d19ed3b_3b901423",
+        "filename": "tests/net/java/com/android/server/NetworkManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-03T09:27:41Z",
+      "side": 1,
+      "message": "Ah, had missed that. This looks fine.",
+      "parentUuid": "c31fa8fa_24ad7e11",
+      "range": {
+        "startLine": 243,
+        "startChar": 8,
+        "endLine": 243,
+        "endChar": 65
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d203709_a9a28262",
@@ -337,6 +361,30 @@
       "side": 1,
       "message": "It does, but I can use the default noop implementation since mNetdService.firewallSetUidRule(...) returns void.",
       "parentUuid": "5d203709_a9a28262",
+      "range": {
+        "startLine": 293,
+        "startChar": 16,
+        "endLine": 293,
+        "endChar": 45
+      },
+      "revId": "5e35248bcc99b6a64d52b86d5b32e8bee3847e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85810bc8_017dc8a6",
+        "filename": "tests/net/java/com/android/server/NetworkManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-03T09:27:41Z",
+      "side": 1,
+      "message": "Actually, it won\u0027t talk to the real netd. mNmService will have called getNetd and that will have returned mNetdService which is a mock.",
+      "parentUuid": "c3db535c_2e60fdb4",
       "range": {
         "startLine": 293,
         "startChar": 16,
