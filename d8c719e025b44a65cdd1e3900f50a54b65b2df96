@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b80eec33_ba993126",
+        "filename": "services/core/java/com/android/server/AlarmManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3373,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2020-12-03T19:52:49Z",
+      "side": 1,
+      "message": "Is this being modified outside a `synchronized (mLock) {..}` section?",
+      "range": {
+        "startLine": 3373,
+        "startChar": 47,
+        "endLine": 3373,
+        "endChar": 70
+      },
+      "revId": "d8c719e025b44a65cdd1e3900f50a54b65b2df96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
