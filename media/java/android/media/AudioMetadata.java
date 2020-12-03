@@ -195,6 +195,61 @@ public final class AudioMetadata {
         @NonNull public static final Key<Integer> KEY_AUDIO_ENCODING =
                 createKey("audio-encoding", Integer.class);
 
+
+        /**
+         * A key representing the audio presentation id being decoded by a next generation
+         * audio decoder.
+         *
+         * A Integer value representing presentation id.
+         *
+         * @see AudioPresentation#getPresentationId()
+         */
+        @NonNull public static final Key<Integer> KEY_AUDIO_PRESENTATION_ID =
+                createKey("audio-presentation-id", Integer.class);
+
+         /**
+         * A key representing the audio program id being decoded by a next generation
+         * audio decoder.
+         *
+         * A Integer value representing program id.
+         *
+         * @see AudioPresentation#getProgramId()
+         */
+        @NonNull public static final Key<Integer> KEY_AUDIO_PROGRAM_ID =
+                createKey("audio-program-id", Integer.class);
+
+
+         /**
+         * A key representing the audio presentation content classifier being rendered
+         * by a next generation audio decoder.
+         *
+         * A Integer value representing presentation content classifier.
+         *
+         * @see AudioPresentation#ContentClassifier
+         * One of {@link AudioPresentation#CONTENT_UNKNOWN},
+         *     {@link AudioPresentation#CONTENT_MAIN},
+         *     {@link AudioPresentation#CONTENT_MUSIC_AND_EFFECTS},
+         *     {@link AudioPresentation#CONTENT_VISUALLY_IMPAIRED},
+         *     {@link AudioPresentation#CONTENT_HEARING_IMPAIRED},
+         *     {@link AudioPresentation#CONTENT_DIALOG},
+         *     {@link AudioPresentation#CONTENT_COMMENTARY},
+         *     {@link AudioPresentation#CONTENT_EMERGENCY},
+         *     {@link AudioPresentation#CONTENT_VOICEOVER}.
+         */
+        @NonNull public static final Key<Integer> KEY_AUDIO_PRESENTATION_CONTENT_CLASSIFIER =
+                createKey("audio-presentation-content-classifier", Integer.class);
+
+        /**
+         * A key representing the audio presentation language being rendered by a next
+         * generation audio decoder.
+         *
+         * A String value representing ISO 639-2 (three letter code).
+         *
+         * @see AudioPresentation#getLocale()
+         */
+        @NonNull public static final Key<String> KEY_AUDIO_PRESENTATION_LANGUAGE =
+                createKey("audio-presentation-language", String.class);
+
         private Format() {} // delete constructor
     }
 
