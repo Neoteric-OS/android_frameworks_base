@@ -33,6 +33,23 @@
       "message": "Adrian, this CL requires API-Review, can you take a look at it?",
       "revId": "eaf5d14c1e907660b68d96d4744ece2b3b91e206",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "205d5f5d_8b0cabb2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2020-12-03T17:11:14Z",
+      "side": 1,
+      "message": "API LGTM",
+      "revId": "eaf5d14c1e907660b68d96d4744ece2b3b91e206",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
