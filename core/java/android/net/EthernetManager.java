@@ -25,8 +25,11 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
+
+import com.android.internal.annotations.GuardedBy;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -43,28 +46,39 @@ public class EthernetManager {
     private static final String TAG = "EthernetManager";
     private static final int MSG_AVAILABILITY_CHANGED = 1000;
 
-    private final Context mContext;
     private final IEthernetManager mService;
-    private final Handler mHandler = new Handler(ConnectivityThread.getInstanceLooper()) {
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == MSG_AVAILABILITY_CHANGED) {
-                boolean isAvailable = (msg.arg1 == 1);
-                for (Listener listener : mListeners) {
-                    listener.onAvailabilityChanged((String) msg.obj, isAvailable);
-                }
-            }
-        }
-    };
-    private final ArrayList<Listener> mListeners = new ArrayList<>();
+    @GuardedBy("mListeners")
+    private final ArrayList<ListenerHandler> mListeners = new ArrayList<>();
     private final IEthernetServiceListener.Stub mServiceListener =
             new IEthernetServiceListener.Stub() {
                 @Override
                 public void onAvailabilityChanged(String iface, boolean isAvailable) {
-                    mHandler.obtainMessage(
-                            MSG_AVAILABILITY_CHANGED, isAvailable ? 1 : 0, 0, iface).sendToTarget();
+                    synchronized (mListeners) {
+                        for (ListenerHandler handler : mListeners) {
+                            final int available = isAvailable ? 1 : 0;
+                            handler.obtainMessage(MSG_AVAILABILITY_CHANGED, available, 0, iface)
+                                    .sendToTarget();
+                        }
+                    }
                 }
             };
+
+    private static class ListenerHandler extends Handler {
+        @NonNull
+        private final Listener mListener;
+        private ListenerHandler(@NonNull Looper looper, @NonNull Listener listener) {
+            super(looper);
+            mListener = listener;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == MSG_AVAILABILITY_CHANGED) {
+                boolean isAvailable = (msg.arg1 == 1);
+                mListener.onAvailabilityChanged((String) msg.obj, isAvailable);
+            }
+        }
+    }
 
     /**
      * A listener interface to receive notification on changes in Ethernet.
@@ -89,7 +103,6 @@ public class EthernetManager {
      * @hide
      */
     public EthernetManager(Context context, IEthernetManager service) {
-        mContext = context;
         mService = service;
     }
 
@@ -148,19 +161,36 @@ public class EthernetManager {
      * Adds a listener.
      * @param listener A {@link Listener} to add.
      * @throws IllegalArgumentException If the listener is null.
+     * @deprecated Use {@link #addListener(Listener, Looper)} instead. This method requires the
+     *             calling thread to have a prepared looper.
      * @hide
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
-    public void addListener(Listener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("listener must not be null");
+    @Deprecated
+    public void addListener(@NonNull Listener listener) {
+        addListener(listener, Looper.myLooper());
+    }
+
+    /**
+     * Adds a listener.
+     * @param listener A {@link Listener} to add.
+     * @param looper Looper to run callbacks on.
+     * @throws IllegalArgumentException If the listener or looper is null.
+     * @hide
+     */
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
+    public void addListener(@NonNull Listener listener, @NonNull Looper looper) {
+        if (listener == null || looper == null) {
+            throw new IllegalArgumentException("listener and looper must not be null");
         }
-        mListeners.add(listener);
-        if (mListeners.size() == 1) {
-            try {
-                mService.addListener(mServiceListener);
-            } catch (RemoteException e) {
-                throw e.rethrowFromSystemServer();
+        synchronized (mListeners) {
+            mListeners.add(new ListenerHandler(looper, listener));
+            if (mListeners.size() == 1) {
+                try {
+                    mService.addListener(mServiceListener);
+                } catch (RemoteException e) {
+                    throw e.rethrowFromSystemServer();
+                }
             }
         }
     }
@@ -189,12 +219,14 @@ public class EthernetManager {
         if (listener == null) {
             throw new IllegalArgumentException("listener must not be null");
         }
-        mListeners.remove(listener);
-        if (mListeners.isEmpty()) {
-            try {
-                mService.removeListener(mServiceListener);
-            } catch (RemoteException e) {
-                throw e.rethrowFromSystemServer();
+        synchronized (mListeners) {
+            mListeners.removeIf(l -> Objects.equals(l.mListener, listener));
+            if (mListeners.isEmpty()) {
+                try {
+                    mService.removeListener(mServiceListener);
+                } catch (RemoteException e) {
+                    throw e.rethrowFromSystemServer();
+                }
             }
         }
     }
