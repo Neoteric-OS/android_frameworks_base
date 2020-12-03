@@ -285,6 +285,15 @@ public final class CameraManager {
     }
 
     /**
+     * @hide
+     * Checks if any logical camera device is currently unavailable, which means it's in use.
+     * @return true if any camera device is opened by any camera API client, false otherwise.
+     */
+    public boolean isCameraOpen() {
+        return CameraManagerGlobal.get().isCameraOpen();
+    }
+
+    /**
      * Register a callback to be notified about torch mode status.
      *
      * <p>Registering the same callback again will replace the handler with the
@@ -1885,6 +1894,22 @@ public final class CameraManager {
         public void unregisterAvailabilityCallback(AvailabilityCallback callback) {
             synchronized (mLock) {
                 mCallbackMap.remove(callback);
+            }
+        }
+
+        /**
+         * Checks if any logical camera device is currently unavailable, which means it's in use.
+         * @return true if any camera device is opened by any camera API client, false otherwise.
+         */
+        public boolean isCameraOpen() {
+            synchronized (mLock) {
+                connectCameraServiceLocked();
+                for (int i = 0; i < mDeviceStatus.size(); i++) {
+                    if (!isAvailable(mDeviceStatus.valueAt(i))) {
+                        return true;
+                    }
+                }
+                return false;
             }
         }
 
