@@ -17,7 +17,6 @@
 package android.telephony.ims;
 
 import android.annotation.NonNull;
-import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.ims.stub.SipDelegate;
@@ -32,7 +31,6 @@ import java.util.Set;
  * SipDelegateConnection given back to the requesting application.
  * @hide
  */
-@SystemApi
 public final class DelegateRequest implements Parcelable {
 
     private final ArrayList<String> mFeatureTags;
@@ -54,7 +52,7 @@ public final class DelegateRequest implements Parcelable {
      * @return the list of IMS feature tag associated with this DelegateRequest in the format
      * defined in RCC.07 section 2.6.1.3.
      */
-    public @NonNull Set<String> getFeatureTags() {
+    public Set<String> getFeatureTags() {
         return new ArraySet<>(mFeatureTags);
     }
 
@@ -72,7 +70,7 @@ public final class DelegateRequest implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeList(mFeatureTags);
     }
 

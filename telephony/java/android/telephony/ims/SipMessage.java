@@ -17,13 +17,9 @@
 package android.telephony.ims;
 
 import android.annotation.NonNull;
-import android.annotation.SystemApi;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Represents a partially encoded SIP message. See RFC 3261 for more information on how SIP
@@ -33,7 +29,6 @@ import java.util.Objects;
  * verification and should not be used as a generic SIP message container.
  * @hide
  */
-@SystemApi
 public final class SipMessage implements Parcelable {
     // Should not be set to true for production!
     private static final boolean IS_DEBUGGING = Build.IS_ENG;
@@ -100,14 +95,14 @@ public final class SipMessage implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mStartLine);
         dest.writeString(mHeaderSection);
         dest.writeInt(mContent.length);
         dest.writeByteArray(mContent);
     }
 
-    public static final @NonNull Creator<SipMessage> CREATOR = new Creator<SipMessage>() {
+    public static final Creator<SipMessage> CREATOR = new Creator<SipMessage>() {
         @Override
         public SipMessage createFromParcel(Parcel source) {
             return new SipMessage(source);
@@ -156,22 +151,5 @@ public final class SipMessage implements Parcelable {
             }
         }
         return startLine;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SipMessage that = (SipMessage) o;
-        return mStartLine.equals(that.mStartLine)
-                && mHeaderSection.equals(that.mHeaderSection)
-                && Arrays.equals(mContent, that.mContent);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(mStartLine, mHeaderSection);
-        result = 31 * result + Arrays.hashCode(mContent);
-        return result;
     }
 }

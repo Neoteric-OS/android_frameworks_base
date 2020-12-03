@@ -17,7 +17,6 @@
 package android.telephony.ims;
 
 import android.annotation.NonNull;
-import android.annotation.SystemApi;
 import android.telephony.ims.stub.SipDelegate;
 
 /**
@@ -31,7 +30,6 @@ import android.telephony.ims.stub.SipDelegate;
  * </ul>
  * @hide
  */
-@SystemApi
 public interface DelegateMessageCallback {
 
     /**

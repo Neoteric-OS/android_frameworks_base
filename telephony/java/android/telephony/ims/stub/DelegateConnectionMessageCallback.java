@@ -17,7 +17,6 @@
 package android.telephony.ims.stub;
 
 import android.annotation.NonNull;
-import android.annotation.SystemApi;
 import android.telephony.ims.SipDelegateConnection;
 import android.telephony.ims.SipDelegateManager;
 import android.telephony.ims.SipMessage;
@@ -27,7 +26,6 @@ import android.telephony.ims.SipMessage;
  * messages as well as the result of sending a SIP message.
  * @hide
  */
-@SystemApi
 public interface DelegateConnectionMessageCallback {
 
     /**
@@ -51,6 +49,6 @@ public interface DelegateConnectionMessageCallback {
      *                         previously sent {@link SipMessage}.
      * @param reason The reason for the failure.
      */
-    void onMessageSendFailure(@NonNull String viaTransactionId,
+    void onMessageSendFailure(String viaTransactionId,
             @SipDelegateManager.MessageFailureReason int reason);
 }

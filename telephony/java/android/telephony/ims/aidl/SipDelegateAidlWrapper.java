@@ -29,13 +29,12 @@ import android.telephony.ims.SipDelegateManager;
 import android.telephony.ims.SipMessage;
 import android.telephony.ims.stub.SipDelegate;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 /**
  * Implementation of callbacks by wrapping the internal AIDL from telephony. Also implements
- * ISipDelegate internally when {@link DelegateStateCallback#onCreated(SipDelegate, Set)} is called
+ * ISipDelegate internally when {@link DelegateStateCallback#onCreated(SipDelegate, List)} is called
  * in order to trampoline events back to telephony.
  * @hide
  */
@@ -43,7 +42,7 @@ public class SipDelegateAidlWrapper implements DelegateStateCallback, DelegateMe
 
     private final ISipDelegate.Stub mDelegateBinder = new ISipDelegate.Stub() {
         @Override
-        public void sendMessage(SipMessage sipMessage, long configVersion) {
+        public void sendMessage(SipMessage sipMessage, int configVersion) {
             SipDelegate d = mDelegate;
             final long token = Binder.clearCallingIdentity();
             try {
@@ -137,10 +136,10 @@ public class SipDelegateAidlWrapper implements DelegateStateCallback, DelegateMe
 
     @Override
     public void onCreated(@NonNull SipDelegate delegate,
-            @Nullable Set<FeatureTagState> deniedTags) {
+            @Nullable List<FeatureTagState> deniedTags) {
         mDelegate = delegate;
         try {
-            mStateBinder.onCreated(mDelegateBinder, new ArrayList<>(deniedTags));
+            mStateBinder.onCreated(mDelegateBinder, deniedTags);
         } catch (RemoteException e) {
             // BinderDied will trigger destroySipDelegate, so just ignore this locally.
         }
