@@ -138,12 +138,14 @@ public final class BluetoothLeAdvertiser {
             parameters.setLegacyMode(true);
             parameters.setConnectable(isConnectable);
             parameters.setScannable(true); // legacy advertisements we support are always scannable
+
+            // The interval values are the ones specified by Apple. See go/wear-ble-adv-param
             if (settings.getMode() == AdvertiseSettings.ADVERTISE_MODE_LOW_POWER) {
-                parameters.setInterval(1600); // 1s
+                parameters.setInterval(2056); // 1258ms
             } else if (settings.getMode() == AdvertiseSettings.ADVERTISE_MODE_BALANCED) {
-                parameters.setInterval(400); // 250ms
+                parameters.setInterval(510); // 318.75ms
             } else if (settings.getMode() == AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY) {
-                parameters.setInterval(160); // 100ms
+                parameters.setInterval(244); // 152.5ms
             }
 
             if (settings.getTxPowerLevel() == AdvertiseSettings.ADVERTISE_TX_POWER_ULTRA_LOW) {
