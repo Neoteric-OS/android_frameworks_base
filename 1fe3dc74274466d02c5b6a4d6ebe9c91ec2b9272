@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35e03aa1_a961a02e",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-03T20:14:06Z",
+      "side": 1,
+      "message": "How about an explosive check like:\n\nif (Binder.getCallingUid() \u003d\u003d Process.myUid()) throw new FacepalmException();",
+      "range": {
+        "startLine": 153,
+        "startChar": 26,
+        "endLine": 153,
+        "endChar": 39
+      },
+      "revId": "1fe3dc74274466d02c5b6a4d6ebe9c91ec2b9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d227a82_e4d2a74c",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-03T20:14:06Z",
+      "side": 1,
+      "message": "How does this make Context.getSystemService(Class\u003c?\u003e clazz) work? I feel like there\u0027s a missing piece of the puzzle.",
+      "range": {
+        "startLine": 98,
+        "startChar": 45,
+        "endLine": 98,
+        "endChar": 61
+      },
+      "revId": "1fe3dc74274466d02c5b6a4d6ebe9c91ec2b9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cfccd04_155d95a6",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-03T20:14:06Z",
+      "side": 1,
+      "message": "cute",
+      "range": {
+        "startLine": 102,
+        "startChar": 29,
+        "endLine": 102,
+        "endChar": 42
+      },
+      "revId": "1fe3dc74274466d02c5b6a4d6ebe9c91ec2b9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75a8bd48_f332c0b8",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-03T20:14:06Z",
+      "side": 1,
+      "message": "ISTM that this should return isPrivileged for a particular subId, no? A couple un-privileged SubInfos an a single privileged one would make that happen, no?",
+      "range": {
+        "startLine": 105,
+        "startChar": 66,
+        "endLine": 105,
+        "endChar": 72
+      },
+      "revId": "1fe3dc74274466d02c5b6a4d6ebe9c91ec2b9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
