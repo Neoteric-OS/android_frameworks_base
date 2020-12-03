@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fab38907_cdded9a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1222074
+      },
+      "writtenOn": "2020-12-03T23:29:38Z",
+      "side": 1,
+      "message": "Please set Autosubmit vote +1 for this CL",
+      "revId": "0ef54fcd2c9cd89419cd81ff797aa0e08b712d5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
