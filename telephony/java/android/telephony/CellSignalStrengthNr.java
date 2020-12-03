@@ -296,7 +296,6 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
      *
      * Range [1, 3].
      */
-    /** @hide */
     public int getCsiCqiTableIndex() {
         return mCsiCqiTableIndex;
     }
@@ -312,7 +311,6 @@ public final class CellSignalStrengthNr extends CellSignalStrength implements Pa
      *
      * Range [0, 15] for each CQI.
      */
-    /** @hide */
     @NonNull
     public List<Integer> getCsiCqiReport() {
         return mCsiCqiReport;

@@ -446,7 +446,6 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
      * @return the CQI table index if available or
      *         {@link android.telephony.CellInfo#UNAVAILABLE UNAVAILABLE} if unavailable.
      */
-    /** @hide */
     public int getCqiTableIndex() {
         return mCqiTableIndex;
     }
