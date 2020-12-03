@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b61579a_51293d8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1612418
+      },
+      "writtenOn": "2020-12-03T01:21:30Z",
+      "side": 1,
+      "message": "Hide added public APIs to decouple submission and API reivew.",
+      "revId": "f4753f637345729e4da6d4264129a0a140c55bec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
