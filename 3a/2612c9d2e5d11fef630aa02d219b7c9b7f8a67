@@ -1,0 +1,10 @@
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Nikita Ioffe <ioffe@google.com>
+Autosubmit+1: Mohammad Islam <samiul@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 03 Dec 2020 14:58:44 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1487756
+Project: platform/frameworks/base
+Branch: refs/heads/master
