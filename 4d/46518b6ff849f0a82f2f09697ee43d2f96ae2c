@@ -1,0 +1,12 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Verified+1: Dan Shi <dshi@google.com>
+Autosubmit+1: Dan Shi <dshi@google.com>
+Presubmit-Ready+1: Dan Shi <dshi@google.com>
+Code-Review+2: Gavin Corkery <gavincorkery@google.com>
+Bypass-Presubmit+1: Dan Shi <dshi@google.com>
+Build-Cop-Override+1: Dan Shi <dshi@google.com>
+Submitted-by: Dan Shi <dshi@google.com>
+Submitted-at: Fri, 04 Dec 2020 23:27:15 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1516543
+Project: platform/frameworks/base
+Branch: refs/heads/master
