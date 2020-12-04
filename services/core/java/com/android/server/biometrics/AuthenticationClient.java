@@ -22,7 +22,10 @@ import android.hardware.biometrics.BiometricConstants;
 import android.hardware.biometrics.BiometricsProtoEnums;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.security.AuthTokenUtils;
+import android.security.Authorization;
 import android.security.KeyStore;
+import android.security.keystore.AndroidKeyStoreProvider;
 import android.util.Slog;
 
 import java.util.ArrayList;
@@ -170,7 +173,15 @@ public abstract class AuthenticationClient extends ClientMonitor {
                             isStrongBiometric());
                 } else if (!isBiometricPrompt() && listener != null) {
                     if (isStrongBiometric()) {
-                        KeyStore.getInstance().addAuthToken(byteToken);
+                        if (AndroidKeyStoreProvider.isKeystore2Enabled()) {
+                            // TODO: clarify if we need to handle the error code returned by the
+                            // addAuthToken method. It is not handled as of now, similar to the case
+                            // of legacy keystore.
+                            Authorization.getService().addAuthToken(
+                                    AuthTokenUtils.toHardwareAuthToken(byteToken));
+                        } else {
+                            KeyStore.getInstance().addAuthToken(byteToken);
+                        }
                     } else {
                         Slog.d(getLogTag(), "Skipping addAuthToken");
                     }
