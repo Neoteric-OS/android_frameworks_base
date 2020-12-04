@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b689e73_b4929762",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2020-12-04T13:04:09Z",
+      "side": 1,
+      "message": "HdmiClient#sendVendorCommand doesn\u0027t take this argument. Should we leave it out here as well?",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 75
+      },
+      "revId": "b98287224b34260791febed9b2065beeb8dcf873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d15786f_f7fe3ae0",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2020-12-04T13:04:09Z",
+      "side": 1,
+      "message": "\u003cvendor specific arguments\u003e?",
+      "range": {
+        "startLine": 66,
+        "startChar": 44,
+        "endLine": 66,
+        "endChar": 53
+      },
+      "revId": "b98287224b34260791febed9b2065beeb8dcf873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
