@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e7c68a5_850087c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1749734
+      },
+      "writtenOn": "2020-12-04T10:51:38Z",
+      "side": 1,
+      "message": "When I tried to submit this to internal master, the presubmit told me aosp is the source of truth for this file.  Yet I have merge conflicts...\n\nShould I submit to internal, or just try to move my change up a few lines?",
+      "revId": "06ba6986f91ce082b48ea6babab1ec92914e8bc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
