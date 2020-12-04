@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006553652",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1517742?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5f6cc0be_7c4d2645",
+        "filename": "packages/SystemUI/src/com/android/systemui/screenshot/GlobalScreenshot.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-04T12:48:48Z",
+      "side": 1,
+      "message": "Prefer to use mContext.getSystemService(AudioManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 299,
+        "startChar": 24,
+        "endLine": 299,
+        "endChar": 65
+      },
+      "revId": "08aee6002367033959522f57895519d42931838c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006553652",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1517742?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ba2b6fd8_d6c4b079",
+        "filename": "packages/SystemUI/src/com/android/systemui/screenshot/GlobalScreenshot.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-04T12:48:48Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(CameraManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 300,
+        "startChar": 25,
+        "endLine": 300,
+        "endChar": 66
+      },
+      "revId": "08aee6002367033959522f57895519d42931838c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
