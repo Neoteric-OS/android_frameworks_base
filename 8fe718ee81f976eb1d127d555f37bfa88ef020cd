@@ -16,6 +16,24 @@
       "message": "This code can never have been run by apps, because the hidden API blacklist would prevent it, right? If so, LGTM.",
       "revId": "8fe718ee81f976eb1d127d555f37bfa88ef020cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2076d70b_2e1ce113",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-04T02:07:45Z",
+      "side": 1,
+      "message": "Right, this was not @UnsupportedAppUsage either",
+      "parentUuid": "70de37d0_3d4b792f",
+      "revId": "8fe718ee81f976eb1d127d555f37bfa88ef020cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
