@@ -48,7 +48,9 @@ import android.content.pm.SharedLibraryInfo;
 import android.content.pm.dex.ArtManager;
 import android.content.pm.dex.DexMetadataHelper;
 import android.os.FileUtils;
+import android.os.IThermalService;
 import android.os.PowerManager;
+import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
@@ -106,6 +108,10 @@ public class PackageDexOptimizer {
     private final ArtStatsLogger mArtStatsLogger = new ArtStatsLogger();
 
     private static final Random sRandom = new Random();
+
+    private final IThermalService mThermalService =
+            IThermalService.Stub.asInterface(
+                ServiceManager.getService(Context.THERMAL_SERVICE));
 
     PackageDexOptimizer(Installer installer, Object installLock, Context context,
             String wakeLockTag) {
@@ -593,6 +599,10 @@ public class PackageDexOptimizer {
             }
             pw.decreaseIndent();
         }
+
+        try {
+            pw.println("thermal status: " + mThermalService.getCurrentThermalStatus());
+        } catch (Exception e) { }
     }
 
     /**
