@@ -25,6 +25,7 @@ import static com.android.server.wm.WindowManagerDebugConfig.TAG_WM;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.ActivityManager.TaskSnapshot;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.GraphicBuffer;
@@ -34,6 +35,7 @@ import android.graphics.Point;
 import android.graphics.RecordingCanvas;
 import android.graphics.Rect;
 import android.graphics.RenderNode;
+import android.hardware.camera2.CameraManager;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.ArraySet;
@@ -455,9 +457,12 @@ class TaskSnapshotController {
     @VisibleForTesting
     int getSnapshotMode(Task task) {
         final ActivityRecord topChild = task.getTopMostActivity();
+        final CameraManager cameraManager = mService.mContext.
+                getSystemService(CameraManager.class);
         if (!task.isActivityTypeStandardOrUndefined() && !task.isActivityTypeAssistant()) {
             return SNAPSHOT_MODE_NONE;
-        } else if (topChild != null && topChild.shouldUseAppThemeSnapshot()) {
+        } else if (topChild != null && topChild.shouldUseAppThemeSnapshot()
+                    || cameraManager.isCameraOpen()) {
             return SNAPSHOT_MODE_APP_THEME;
         } else {
             return SNAPSHOT_MODE_REAL;
