@@ -26,6 +26,7 @@ import android.annotation.SystemService;
 import android.content.Context;
 import android.os.connectivity.CellularBatteryStats;
 import android.os.connectivity.WifiBatteryStats;
+import android.telephony.DataConnectionRealTimeInfo;
 
 import com.android.internal.app.IBatteryStats;
 
@@ -375,5 +376,44 @@ public final class BatteryStatsManager {
         } catch (RemoteException e) {
             e.rethrowFromSystemServer();
         }
+    }
+
+    /**
+     * Indicates that the radio power state has changed.
+     *
+     * @param isActive Boolean indicate if the radio power state of mobile network is active or not.
+     * @param uid Uid of this event, -1 for no uid. It represents the uid that was responsible for
+     *            waking the radio.
+     */
+    @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS)
+    public void reportMobileRadioPowerState(boolean isActive, int uid) {
+        try {
+            mBatteryStats.noteMobileRadioPowerState(getPowerState(isActive),
+                    SystemClock.elapsedRealtimeNanos(), uid);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Indicates that the wifi power state has changed.
+     *
+     * @param isActive Boolean indicate if the radio power state of wifi network is active or not.
+     * @param uid Uid of this event, -1 for no uid. It represents the uid that was responsible for
+     *            waking the radio.
+     */
+    @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS)
+    public void reportWifiRadioPowerState(boolean isActive, int uid) {
+        try {
+            mBatteryStats.noteWifiRadioPowerState(getPowerState(isActive),
+                    SystemClock.elapsedRealtimeNanos(), uid);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    private static int getPowerState(boolean isActive) {
+        return isActive ? DataConnectionRealTimeInfo.DC_POWER_STATE_HIGH
+                : DataConnectionRealTimeInfo.DC_POWER_STATE_LOW;
     }
 }
