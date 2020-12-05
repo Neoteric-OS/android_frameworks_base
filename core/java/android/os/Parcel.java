@@ -3550,7 +3550,6 @@ public final class Parcel {
                 Log.w(TAG, "Client did not call Parcel.recycle()", mStack);
             }
         }
-        destroy();
     }
 
     /* package */ void readMapInternal(@NonNull Map outVal, int N,
