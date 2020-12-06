@@ -1,1 +1,3 @@
+include /core/java/android/security/OWNERS
+
 per-file *.java,*.aidl = eranm@google.com,pgrafov@google.com,rubinxu@google.com

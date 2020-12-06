@@ -1,3 +1,5 @@
+include /core/java/android/media/tv/OWNERS
+
 amyjojo@google.com
 nchalko@google.com
 shubang@google.com
@@ -6,4 +8,3 @@ quxiangfang@google.com
 # For android remote service
 per-file ITvRemoteServiceInput.aidl = file:/media/lib/tvremote/OWNERS
 per-file ITvRemoteProvider.aidl = file:/media/lib/tvremote/OWNERS
-

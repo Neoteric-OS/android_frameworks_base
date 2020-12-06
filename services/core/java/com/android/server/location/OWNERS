@@ -1,3 +1,5 @@
+include /core/java/android/location/OWNERS
+
 aadmal@google.com
 arthuri@google.com
 bduddie@google.com

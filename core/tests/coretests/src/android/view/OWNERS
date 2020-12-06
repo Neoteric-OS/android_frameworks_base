@@ -1,3 +1,5 @@
+include /core/java/android/view/OWNERS
+
 # Input
 per-file *MotionEventTest.* = michaelwr@google.com, svv@google.com
 per-file *KeyEventTest.* = michaelwr@google.com, svv@google.com

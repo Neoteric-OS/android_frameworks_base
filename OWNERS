@@ -1,2 +1,13 @@
 # Support bulk translation updates
 per-file */res*/values*/*.xml = byi@google.com
+
+per-file Android.bp = file:/FRAMEWORK_OWNERS
+per-file Android.bp = file:platform/build/soong:/OWNERS
+per-file Android.mk = file:/FRAMEWORK_OWNERS
+per-file Android.mk = file:platform/build/soong:/OWNERS
+per-file ApiDocs.bp = file:/FRAMEWORK_OWNERS
+per-file ApiDocs.bp = file:platform/build/soong:/OWNERS
+per-file CleanSpec.mk = file:/FRAMEWORK_OWNERS
+per-file CleanSpec.mk = file:platform/build/soong:/OWNERS
+per-file StubLibraries.bp = file:/FRAMEWORK_OWNERS
+per-file StubLibraries.bp = file:platform/build/soong:/OWNERS
