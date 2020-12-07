@@ -34,6 +34,23 @@
       "parentUuid": "ff5832d7_d0555736",
       "revId": "2bb203234e64725bff4a7e480db8912b333b648a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46a7010f_a05ebc20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-12-07T16:55:17Z",
+      "side": 1,
+      "message": "Hi Michael\n\nCould I have your comment on Jean\u0027s reply? Thanks.",
+      "revId": "2bb203234e64725bff4a7e480db8912b333b648a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
