@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d60c313_fcdf2897",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2020-12-07T14:55:34Z",
+      "side": 1,
+      "message": "HdmiClient automatically populates the device_type field when passing it to HdmiControlService. HdmiControlService requires this argument.",
+      "parentUuid": "7b689e73_b4929762",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 75
+      },
+      "revId": "b98287224b34260791febed9b2065beeb8dcf873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d15786f_f7fe3ae0",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-04T13:04:09Z",
       "side": 1,
       "message": "\u003cvendor specific arguments\u003e?",
+      "range": {
+        "startLine": 66,
+        "startChar": 44,
+        "endLine": 66,
+        "endChar": 53
+      },
+      "revId": "b98287224b34260791febed9b2065beeb8dcf873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6874e893_ed7b2b89",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2020-12-07T14:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d15786f_f7fe3ae0",
       "range": {
         "startLine": 66,
         "startChar": 44,
