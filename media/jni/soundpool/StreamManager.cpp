@@ -373,12 +373,12 @@ void StreamManager::run(int32_t id)
             }
             mRestartStreams.erase(it);
             mProcessingStreams.emplace(stream);
-            lock.unlock();
+            //lock.unlock();
             stream->stop();
             ALOGV("%s(%d) stopping streamID:%d", __func__, id, stream->getStreamID());
             if (Stream* nextStream = stream->playPairStream()) {
                 ALOGV("%s(%d) starting streamID:%d", __func__, id, nextStream->getStreamID());
-                lock.lock();
+                //lock.lock();
                 if (nextStream->getStopTimeNs() > 0) {
                     // the next stream was stopped before we can move it to the active queue.
                     ALOGV("%s(%d) stopping started streamID:%d",
@@ -388,7 +388,7 @@ void StreamManager::run(int32_t id)
                     addToActiveQueue_l(nextStream);
                 }
             } else {
-                lock.lock();
+                //lock.lock();
                 mAvailableStreams.insert(stream);
             }
             mProcessingStreams.erase(stream);
