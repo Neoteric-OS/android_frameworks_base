@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e091a08_82a0576e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-07T06:51:55Z",
+      "side": 1,
+      "message": "typo: caller",
+      "range": {
+        "startLine": 10,
+        "startChar": 27,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "2fdcc80bcda25d6f277f91969726704d556785dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbc0c47c_c3d8c818",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-07T06:51:55Z",
+      "side": 1,
+      "message": "Commit looks good to me, but let Lorenzo to +2 if he doesn\u0027t have any objection.",
+      "revId": "2fdcc80bcda25d6f277f91969726704d556785dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
