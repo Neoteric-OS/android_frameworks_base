@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "152fa1ad_a9459f9f",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-07T08:36:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37857619_04b0cdd9",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "94d2f772_4bb796ac",
@@ -71,6 +95,30 @@
       "writtenOn": "2020-12-02T06:16:59Z",
       "side": 1,
       "message": "tcpWindowScale? I think the ones above (tcpSeq, tcpAck in particular, maybe even tcpWnd) might be OK for public API because SEQ, ACK and WND are terms used directly in the RFC.",
+      "range": {
+        "startLine": 45,
+        "startChar": 21,
+        "endLine": 45,
+        "endChar": 32
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1361ea66_28b47e9b",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-07T08:36:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94d2f772_4bb796ac",
       "range": {
         "startLine": 45,
         "startChar": 21,
@@ -106,6 +154,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "894ebb5a_2474cf1e",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-07T08:36:35Z",
+      "side": 1,
+      "message": "We do populate it to TcpKeepalivePacketDataParcelable in TcpKeepaliveController: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/connectivity/TcpKeepaliveController.java;drc\u003d08d9ade8e21845de693893ff7d6a57024bf74a9a;l\u003d201\n\nThen the parcelable ends up converted to TcpKeepalivePacketData, and the packet data is generated.",
+      "parentUuid": "6a7679c5_2dabd9f4",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 27
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "56abe617_dcc23652",
         "filename": "core/java/android/net/TcpKeepalivePacketData.java",
         "patchSetId": 7
@@ -117,6 +189,30 @@
       "writtenOn": "2020-12-02T05:47:16Z",
       "side": 1,
       "message": "@Override?",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 10
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d18fbbf_b00efc36",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-07T08:36:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56abe617_dcc23652",
       "range": {
         "startLine": 96,
         "startChar": 4,
@@ -150,6 +246,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79470227_1d28c89b",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-07T08:36:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5010c1f6_a89f4546",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 10
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2bee7a28_d5db47a3",
@@ -173,6 +293,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2321d613_c0c406f3",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-07T08:36:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bee7a28_d5db47a3",
+      "range": {
+        "startLine": 139,
+        "startChar": 41,
+        "endLine": 139,
+        "endChar": 46
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43100aef_ba751691",
@@ -186,6 +330,30 @@
       "writtenOn": "2020-12-02T05:47:16Z",
       "side": 1,
       "message": "Suggest re-using (or copying) NetworkStackUtils.addressAndPortToString and:\n\n    public String toString() {\n        return addressAndPortToString(getSrcAddress(), getSrcPort())\n                + \" -\u003e \"\n                + addressAndPortToString(getDstAddress(), getDstPort())\n                + ...",
+      "range": {
+        "startLine": 150,
+        "startChar": 15,
+        "endLine": 153,
+        "endChar": 43
+      },
+      "revId": "9404346069ee044ff9643ab4ed013a0790511b7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e15731f6_0993d111",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-07T08:36:35Z",
+      "side": 1,
+      "message": "Done in aosp/1519557 after moving the util",
+      "parentUuid": "43100aef_ba751691",
       "range": {
         "startLine": 150,
         "startChar": 15,
