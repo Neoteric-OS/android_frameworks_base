@@ -15,6 +15,8 @@
  */
 package android.net;
 
+import static com.android.net.module.util.ConnectivityUtils.addressAndPortToString;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
@@ -149,10 +151,8 @@ public final class TcpKeepalivePacketData extends KeepalivePacketData implements
 
     @Override
     public String toString() {
-        return "saddr: " + getSrcAddress()
-                + " daddr: " + getDstAddress()
-                + " sport: " + getSrcPort()
-                + " dport: " + getDstPort()
+        return "saddr/port: " + addressAndPortToString(getSrcAddress(), getSrcPort())
+                + " daddr/port: " + addressAndPortToString(getDstAddress(), getDstPort())
                 + " seq: " + tcpSeq
                 + " ack: " + tcpAck
                 + " window: " + tcpWindow
