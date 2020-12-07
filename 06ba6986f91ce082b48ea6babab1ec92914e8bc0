@@ -33,6 +33,29 @@
       "message": "You can submit in internal master first, and then in AOSP using the \"Merged-in\" tag in the commit message.",
       "revId": "06ba6986f91ce082b48ea6babab1ec92914e8bc0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0af4210e_fc6ddf15",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1381966
+      },
+      "writtenOn": "2020-12-07T04:01:46Z",
+      "side": 1,
+      "message": "IIRC this permission is introdcued in S. We can submit in internal master only. The internal master will push to AOSP finally.",
+      "range": {
+        "startLine": 331,
+        "startChar": 54,
+        "endLine": 331,
+        "endChar": 78
+      },
+      "revId": "06ba6986f91ce082b48ea6babab1ec92914e8bc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
