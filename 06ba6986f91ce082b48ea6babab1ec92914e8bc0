@@ -56,6 +56,30 @@
       },
       "revId": "06ba6986f91ce082b48ea6babab1ec92914e8bc0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1311c4f_e510c44c",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1749734
+      },
+      "writtenOn": "2020-12-07T16:14:31Z",
+      "side": 1,
+      "message": "Discussed offline. internal master warns:\n\n\"The source of truth for \u0027packages/Shell/AndroidManifest.xml\u0027 is in AOSP.\"\n\nSo it\u0027s best to submit this here. Presubmit is now passing so doesn\u0027t seem like there\u0027s an issue with using a permission that doesn\u0027t yet exist in aosp.",
+      "parentUuid": "0af4210e_fc6ddf15",
+      "range": {
+        "startLine": 331,
+        "startChar": 54,
+        "endLine": 331,
+        "endChar": 78
+      },
+      "revId": "06ba6986f91ce082b48ea6babab1ec92914e8bc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
