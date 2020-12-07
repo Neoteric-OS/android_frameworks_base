@@ -50,6 +50,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "5bd387f5_bc51ebb3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-07T08:03:26Z",
+      "side": 1,
+      "message": "Ah~I see!\nThanks for your correction. 😊",
+      "parentUuid": "c2d8e58a_ae0ed45a",
+      "range": {
+        "startLine": 10,
+        "startChar": 27,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "2fdcc80bcda25d6f277f91969726704d556785dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "bbc0c47c_c3d8c818",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
