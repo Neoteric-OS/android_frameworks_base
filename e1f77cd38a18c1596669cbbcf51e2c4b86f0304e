@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "653e1b6e_c0e7a7e5",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-12-08T21:21:48Z",
+      "side": 1,
+      "message": "append \"section 8.1.2.2\"",
+      "range": {
+        "startLine": 919,
+        "startChar": 62,
+        "endLine": 919,
+        "endChar": 68
+      },
+      "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "334ed11a_c4bdf658",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-12-08T21:21:48Z",
+      "side": 1,
+      "message": "There are 4 more from 8241 ~ 8245 defined in 8.1.2.2, please add.",
+      "range": {
+        "startLine": 922,
+        "startChar": 61,
+        "endLine": 922,
+        "endChar": 68
+      },
+      "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0eb36f26_3db0370a",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-12-08T21:21:48Z",
+      "side": 1,
+      "message": "Capitalize the first letter. Same for below.",
+      "range": {
+        "startLine": 929,
+        "startChar": 7,
+        "endLine": 929,
+        "endChar": 8
+      },
+      "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98b47c68_d33de5aa",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-12-08T21:21:48Z",
+      "side": 1,
+      "message": "IMEI_NOT_ACCEPTED should be added below",
+      "range": {
+        "startLine": 950,
+        "startChar": 28,
+        "endLine": 950,
+        "endChar": 54
+      },
+      "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e1f1f5d_62060cbc",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-12-08T21:21:48Z",
+      "side": 1,
+      "message": "UNAUTHENTICATED_EMERGENCY_NOT_SUPPORTED should be added.",
+      "range": {
+        "startLine": 956,
+        "startChar": 28,
+        "endLine": 956,
+        "endChar": 50
+      },
+      "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "179aa864_3be67c95",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-12-08T21:21:48Z",
+      "side": 1,
+      "message": "Where is the spec for this?",
+      "range": {
+        "startLine": 961,
+        "startChar": 0,
+        "endLine": 975,
+        "endChar": 66
+      },
+      "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
