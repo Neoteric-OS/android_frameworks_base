@@ -28,7 +28,7 @@ enum CloseReason {
 
   /**
    * A local API call triggered the close, such as a call to
-   * IUwbAdapter.stopRanging.
+   * IUwbAdapter.closeRanging.
    */
   LOCAL_API,
 
