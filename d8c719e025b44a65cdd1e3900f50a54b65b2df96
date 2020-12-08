@@ -22,6 +22,30 @@
       },
       "revId": "d8c719e025b44a65cdd1e3900f50a54b65b2df96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c769ed3b_1cee3d25",
+        "filename": "services/core/java/com/android/server/AlarmManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3373,
+      "author": {
+        "id": 1514133
+      },
+      "writtenOn": "2020-12-08T02:33:10Z",
+      "side": 1,
+      "message": "During deliver alarm removeImpl is called.\nAfter appling RESTRICT AUTOMERGE Remove alarms from mPendingNonWakeupAlarms, remove api can remove alarms from mPendingNonWakeupAlarms.",
+      "parentUuid": "b80eec33_ba993126",
+      "range": {
+        "startLine": 3373,
+        "startChar": 47,
+        "endLine": 3373,
+        "endChar": 70
+      },
+      "revId": "d8c719e025b44a65cdd1e3900f50a54b65b2df96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
