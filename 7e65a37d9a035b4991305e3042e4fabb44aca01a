@@ -16,6 +16,24 @@
       "message": "Can you please add \n*.bp \u003d hansson, and maybe ccross ?\n\n(or at least bp files here in the root + api directories).\n\nThis would be fairly disruptive to my work otherwise.\n\nBTW, could you please share some information around this with chatty-eng / android-eng before submitting? I kind of stumbled upon this CL.",
       "revId": "7e65a37d9a035b4991305e3042e4fabb44aca01a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2deb86ec_ed148cf3",
+        "filename": "OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-12-08T11:10:28Z",
+      "side": 1,
+      "message": "Some sort of feedback phase like Michael did in his initial attempt would be nice: https://groups.google.com/a/google.com/g/android-eng/c/6oTYz_aDBjY/",
+      "parentUuid": "6d093bb9_8baef762",
+      "revId": "7e65a37d9a035b4991305e3042e4fabb44aca01a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
