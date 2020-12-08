@@ -106,6 +106,24 @@
       "parentUuid": "e98c6443_f887d86d",
       "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb9a7741_3b5d05b6",
+        "filename": "packages/StatementService/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2020-12-08T16:42:18Z",
+      "side": 1,
+      "message": "Currently we add _all_ compatibility libraries to dependencies, so we pass a superset of what is need to build/soong/scripts/construct_context.py, and it trims it dow to what is actually needed.",
+      "parentUuid": "1f38d3c4_0096430c",
+      "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
