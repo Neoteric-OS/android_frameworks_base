@@ -87,6 +87,46 @@
       "message": "Commit looks good to me, but let Lorenzo to +2 if he doesn\u0027t have any objection.",
       "revId": "2fdcc80bcda25d6f277f91969726704d556785dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1731112_5d64b62c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-08T02:09:02Z",
+      "side": 1,
+      "message": "LGTM but I think we should remove the space from the string.",
+      "revId": "2fdcc80bcda25d6f277f91969726704d556785dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d32ca48_157eadd0",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-08T02:09:02Z",
+      "side": 1,
+      "message": "Can we avoid having spaces in these strings? If find it\u0027s easier to grep for things if they don\u0027t have spaces.",
+      "range": {
+        "startLine": 65,
+        "startChar": 71,
+        "endLine": 65,
+        "endChar": 91
+      },
+      "revId": "2fdcc80bcda25d6f277f91969726704d556785dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
