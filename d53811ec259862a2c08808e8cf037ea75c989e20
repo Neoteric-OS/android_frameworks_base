@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e77412c_51aa539f",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-12-08T16:58:11Z",
+      "side": 1,
+      "message": "Nit: getUserHandles() will return non-null list always, should we remove this redudant null check?\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/os/UserManager.java;l\u003d3252",
+      "range": {
+        "startLine": 177,
+        "startChar": 8,
+        "endLine": 177,
+        "endChar": 28
+      },
+      "revId": "d53811ec259862a2c08808e8cf037ea75c989e20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
