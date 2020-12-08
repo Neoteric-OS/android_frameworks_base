@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5ca8af6_2434ee1e",
+        "filename": "keystore/java/android/security/AuthTokenUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1208973
+      },
+      "writtenOn": "2020-12-08T16:40:38Z",
+      "side": 1,
+      "message": "ag/12790205, I assume you mean?",
+      "range": {
+        "startLine": 29,
+        "startChar": 43,
+        "endLine": 29,
+        "endChar": 51
+      },
+      "revId": "371c5194c2215543a3dd8975fef2391da08e4257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bd57b7f_a8b65266",
+        "filename": "keystore/java/android/security/AuthTokenUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1208973
+      },
+      "writtenOn": "2020-12-08T16:40:38Z",
+      "side": 1,
+      "message": "I assume you only want one of these.",
+      "range": {
+        "startLine": 44,
+        "startChar": 40,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "371c5194c2215543a3dd8975fef2391da08e4257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3256dcd0_cf799267",
+        "filename": "keystore/java/android/security/Authorization.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1208973
+      },
+      "writtenOn": "2020-12-08T16:40:38Z",
+      "side": 1,
+      "message": "Document the @return?",
+      "revId": "371c5194c2215543a3dd8975fef2391da08e4257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da3a82c0_b20b557d",
+        "filename": "keystore/java/android/security/Authorization.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1208973
+      },
+      "writtenOn": "2020-12-08T16:40:38Z",
+      "side": 1,
+      "message": "It looks like it can also return service specific errors as well.",
+      "range": {
+        "startLine": 57,
+        "startChar": 34,
+        "endLine": 57,
+        "endChar": 67
+      },
+      "revId": "371c5194c2215543a3dd8975fef2391da08e4257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
