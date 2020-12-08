@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b644df3e_95f84669",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2020-12-08T00:21:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6fe0a1e_6c07ff09",
+      "range": {
+        "startLine": 595,
+        "startChar": 0,
+        "endLine": 599,
+        "endChar": 95
+      },
+      "revId": "68e90025525fe22844823957cc995c53c7cfa852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f2841a0_5a1915f9",
