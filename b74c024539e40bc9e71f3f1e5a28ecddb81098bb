@@ -16,6 +16,24 @@
       "message": "Can you add OWNERS_POWER_STATS with the same 3 owners?",
       "revId": "b74c024539e40bc9e71f3f1e5a28ecddb81098bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe087cfb_ed62f7f1",
+        "filename": "OWNERS_BATTERY_STATS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2020-12-08T22:10:15Z",
+      "side": 1,
+      "message": "Why not just use this file?  Is there a reason to keep them as two separate lists of OWNERs?",
+      "parentUuid": "f3aa16ac_26f03302",
+      "revId": "b74c024539e40bc9e71f3f1e5a28ecddb81098bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
