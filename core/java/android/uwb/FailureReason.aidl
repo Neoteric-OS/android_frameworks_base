@@ -20,32 +20,31 @@ package android.uwb;
  * @hide
  */
 @Backing(type="int")
-enum StartFailureReason {
+enum FailureReason {
   /**
-   * Unknown start failure reason
+   * Unknown reason
    */
   UNKNOWN,
 
   /**
-   * The provided parameters were invalid and ranging could not start
+   * The provided parameters were invalid
    */
   BAD_PARAMETERS,
 
   /**
-   * The maximum number of sessions has been reached. This error may be generated
-   * for an active session if a higher priority session begins.
+   * The maximum number of sessions has been reached preventing the requested
+   * action from completing.
    */
   MAX_SESSIONS_REACHED,
 
   /**
-   * The system state has changed resulting in the session ending (e.g. the user
-   * disables UWB, or the user's locale changes and an active channel is no longer
-   * permitted to be used).
+   * The system state prevents the action from completing
    */
   SYSTEM_POLICY,
 
   /**
-   * The session could not start because of a protocol specific reason.
+   * A protocol specific failure reason has occurred. Consult the associated
+   * PeristableBundle for more details.
    */
   PROTOCOL_SPECIFIC,
 }

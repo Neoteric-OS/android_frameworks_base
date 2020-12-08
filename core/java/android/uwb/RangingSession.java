@@ -36,9 +36,9 @@ import java.util.concurrent.Executor;
  * <p>To get an instance of {@link RangingSession}, first use
  * {@link UwbManager#openRangingSession(PersistableBundle, Executor, Callback)} to request to open a
  * session. Once the session is opened, a {@link RangingSession} object is provided through
- * {@link RangingSession.Callback#onOpenSuccess(RangingSession, PersistableBundle)}. If opening a
- * session fails, the failure is reported through
- * {@link RangingSession.Callback#onClosed(int, PersistableBundle)} with the failure reason.
+ * {@link RangingSession.Callback#onOpened(RangingSession)}. If opening a session fails, the failure
+ * is reported through {@link RangingSession.Callback#onOpenFailed(int, PersistableBundle)} with the
+ * failure reason.
  *
  * @hide
  */
@@ -50,25 +50,129 @@ public final class RangingSession implements AutoCloseable {
     private final Callback mCallback;
 
     private enum State {
+        /**
+         * The state of the {@link RangingSession} until
+         * {@link RangingSession.Callback#onOpened(RangingSession)} is invoked
+         */
         INIT,
-        OPEN,
-        CLOSED,
+
+        /**
+         * The {@link RangingSession} is initialized and ready to begin ranging
+         */
+        IDLE,
+
+        /**
+         * The {@link RangingSession} is actively ranging
+         */
+        ACTIVE,
+
+        /**
+         * The {@link RangingSession} is closed and may not be used for ranging.
+         */
+        CLOSED
     }
 
-    private State mState;
+    private State mState = State.INIT;
 
     /**
      * Interface for receiving {@link RangingSession} events
      */
     public interface Callback {
         /**
+         * @hide
+         */
+        @Retention(RetentionPolicy.SOURCE)
+        @IntDef(value = {
+                FAILURE_REASON_UNKNOWN,
+                FAILURE_REASON_BAD_PARAMETERS,
+                FAILURE_REASON_MAX_SESSIONS_REACHED,
+                FAILURE_REASON_SYSTEM_POLICY,
+                FAILURE_REASON_PROTOCOL_SPECIFIC})
+        @interface FailureReason {};
+
+        /**
+         * Failed due to an unknown reason
+         */
+        int FAILURE_REASON_UNKNOWN = 0;
+
+        /**
+         * Failed due invalid parameters
+         */
+        int FAILURE_REASON_BAD_PARAMETERS = 1;
+
+        /**
+         * Failed due to too many sessions being open
+         */
+        int FAILURE_REASON_MAX_SESSIONS_REACHED = 2;
+
+        /**
+         * Failed due to the current system policy preventing the action from occurring
+         */
+        int FAILURE_REASON_SYSTEM_POLICY = 3;
+
+        /**
+         * Failed due to a protocol specific reason
+         */
+        int FAILURE_REASON_PROTOCOL_SPECIFIC = 4;
+
+        /**
          * Invoked when {@link UwbManager#openRangingSession(PersistableBundle, Executor, Callback)}
          * is successful
          *
          * @param session the newly opened {@link RangingSession}
-         * @param sessionInfo session specific parameters from lower layers
          */
-        void onOpenSuccess(@NonNull RangingSession session, @NonNull PersistableBundle sessionInfo);
+        void onOpened(@NonNull RangingSession session);
+
+        /**
+         * Invoked if {@link UwbManager#openRangingSession(PersistableBundle, Executor, Callback)}}
+         * fails
+         *
+         * @param reason the failure reason
+         * @param params protocol specific parameters
+         */
+        void onOpenFailed(@FailureReason int reason, @NonNull PersistableBundle params);
+
+        /**
+         * Invoked when {@link RangingSession#start()} is successful
+         * @param sessionInfo session specific parameters from the lower layers
+         */
+        void onStarted(@NonNull PersistableBundle sessionInfo);
+
+        /**
+         * Invoked when {@link RangingSession#start()} fails
+         *
+         * @param reason the failure reason
+         * @param params protocol specific parameters
+         */
+        void onStartFailed(@FailureReason int reason, @NonNull PersistableBundle params);
+
+        /**
+         * Invoked when a request to reconfigure the session succeeds
+         *
+         * @param params the updated ranging configuration
+         */
+        void onReconfigured(@NonNull PersistableBundle params);
+
+        /**
+         * Invoked when a request to reconfigure the session fails
+         *
+         * @param reason reason the session failed to be reconfigured
+         * @param params protocol specific failure reasons
+         */
+        void onReconfigureFailed(@FailureReason int reason, @NonNull PersistableBundle params);
+
+        /**
+         * Invoked when a request to stop the session succeeds
+         */
+        void onStopped();
+
+        /**
+         * Invoked when a request to stop the session fails
+         *
+         * @param reason reason the session failed to be stopped
+         * @param params protocol specific failure reasons
+         */
+        void onStopFailed(@FailureReason int reason, @NonNull PersistableBundle params);
 
         /**
          * @hide
@@ -140,8 +244,7 @@ public final class RangingSession implements AutoCloseable {
 
         /**
          * Invoked when session is either closed spontaneously, or per user request via
-         * {@link RangingSession#close()} or {@link AutoCloseable#close()}, or when session failed
-         * to open.
+         * {@link RangingSession#close()} or {@link AutoCloseable#close()}.
          *
          * @param reason reason for the session closure
          * @param parameters protocol specific parameters related to the close reason
@@ -172,12 +275,95 @@ public final class RangingSession implements AutoCloseable {
      * @hide
      */
     public boolean isOpen() {
-        return mState == State.OPEN;
+        return mState == State.IDLE || mState == State.ACTIVE;
+    }
+
+    /**
+     * Begins ranging for the session.
+     *
+     * <p>On successfully starting a ranging session,
+     * {@link RangingSession.Callback#onStarted(PersistableBundle)} is invoked.
+     *
+     * <p>On failure to start the session,
+     * {@link RangingSession.Callback#onStartFailed(int, PersistableBundle)} is invoked.
+     *
+     * @param params configuration parameters for starting the session
+     */
+    public void start(PersistableBundle params) {
+        if (mState != State.IDLE) {
+            throw new IllegalStateException();
+        }
+
+        try {
+            mAdapter.startRanging(mSessionHandle, params);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Attempts to reconfigure the session with the given parameters
+     * <p>This call may be made when the session is open.
+     *
+     * <p>On successfully reconfiguring the session
+     * {@link RangingSession.Callback#onReconfigured(PersistableBundle)} is invoked.
+     *
+     * <p>On failure to reconfigure the session,
+     * {@link RangingSession.Callback#onReconfigureFailed(int, PersistableBundle)} is invoked.
+     *
+     * @param params the parameters to reconfigure and their new values
+     */
+    public void reconfigure(@NonNull PersistableBundle params) {
+        if (mState != State.ACTIVE && mState != State.IDLE) {
+            throw new IllegalStateException();
+        }
+
+        try {
+            mAdapter.reconfigureRanging(mSessionHandle, params);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Stops actively ranging
+     *
+     * <p>A session that has been stopped may be resumed by calling {@link RangingSession#start()}
+     * without the need to open a new session.
+     *
+     * <p>Stopping a {@link RangingSession} is useful when the lower layers should not discard
+     * the parameters of the session, or when a session needs to be able to be resumed quickly.
+     *
+     * <p>If the {@link RangingSession} is no longer needed, use {@link RangingSession#close()} to
+     * completely close the session and allow lower layers of the stack to perform necessarily
+     * cleanup.
+     *
+     * <p>Stopped sessions may be closed by the system at any time. In such a case,
+     * {@link RangingSession.Callback#onClosed(int, PersistableBundle)} is invoked.
+     *
+     * <p>On failure to stop the session,
+     * {@link RangingSession.Callback#onStopFailed(int, PersistableBundle)} is invoked.
+     */
+    public void stop() {
+        if (mState != State.ACTIVE) {
+            throw new IllegalStateException();
+        }
+
+        try {
+            mAdapter.stopRanging(mSessionHandle);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /**
      * Close the ranging session
-     * <p>If this session is currently open, it will close and stop the session.
+     *
+     * <p>After calling this function, in order resume ranging, a new {@link RangingSession} must
+     * be opened by calling
+     * {@link UwbManager#openRangingSession(PersistableBundle, Executor, Callback)}.
+     *
+     * <p>If this session is currently ranging, it will stop and close the session.
      * <p>If the session is in the process of being opened, it will attempt to stop the session from
      * being opened.
      * <p>If the session is already closed, the registered
@@ -206,32 +392,114 @@ public final class RangingSession implements AutoCloseable {
     /**
      * @hide
      */
+    public void onRangingOpened() {
+        if (mState == State.CLOSED) {
+            Log.w(TAG, "onRangingOpened invoked for a closed session");
+            return;
+        }
+
+        mState = State.IDLE;
+        executeCallback(() -> mCallback.onOpened(this));
+    }
+
+    /**
+     * @hide
+     */
+    public void onRangingOpenFailed(@Callback.FailureReason int reason,
+            @NonNull PersistableBundle params) {
+        if (mState == State.CLOSED) {
+            Log.w(TAG, "onRangingOpenFailed invoked for a closed session");
+            return;
+        }
+
+        mState = State.CLOSED;
+        executeCallback(() -> mCallback.onOpenFailed(reason, params));
+    }
+
+    /**
+     * @hide
+     */
     public void onRangingStarted(@NonNull PersistableBundle parameters) {
         if (mState == State.CLOSED) {
             Log.w(TAG, "onRangingStarted invoked for a closed session");
             return;
         }
 
-        mState = State.OPEN;
-        final long identity = Binder.clearCallingIdentity();
-        try {
-            mExecutor.execute(() -> mCallback.onOpenSuccess(this, parameters));
-        } finally {
-            Binder.restoreCallingIdentity(identity);
-        }
+        mState = State.ACTIVE;
+        executeCallback(() -> mCallback.onStarted(parameters));
     }
 
     /**
      * @hide
      */
-    public void onRangingClosed(@Callback.CloseReason int reason, PersistableBundle parameters) {
-        mState = State.CLOSED;
-        final long identity = Binder.clearCallingIdentity();
-        try {
-            mExecutor.execute(() -> mCallback.onClosed(reason, parameters));
-        } finally {
-            Binder.restoreCallingIdentity(identity);
+    public void onRangingStartFailed(@Callback.FailureReason int reason,
+            @NonNull PersistableBundle params) {
+        if (mState == State.CLOSED) {
+            Log.w(TAG, "onRangingStartFailed invoked for a closed session");
+            return;
         }
+
+        executeCallback(() -> mCallback.onStartFailed(reason, params));
+    }
+
+    /**
+     * @hide
+     */
+    public void onRangingReconfigured(@NonNull PersistableBundle params) {
+        if (mState == State.CLOSED) {
+            Log.w(TAG, "onRangingReconfigured invoked for a closed session");
+            return;
+        }
+
+        executeCallback(() -> mCallback.onReconfigured(params));
+    }
+
+    /**
+     * @hide
+     */
+    public void onRangingReconfigureFailed(@Callback.FailureReason int reason,
+            @NonNull PersistableBundle params) {
+        if (mState == State.CLOSED) {
+            Log.w(TAG, "onRangingReconfigureFailed invoked for a closed session");
+            return;
+        }
+
+        executeCallback(() -> mCallback.onReconfigureFailed(reason, params));
+    }
+
+    /**
+     * @hide
+     */
+    public void onRangingStopped() {
+        if (mState == State.CLOSED) {
+            Log.w(TAG, "onRangingStopped invoked for a closed session");
+            return;
+        }
+
+        mState = State.IDLE;
+        executeCallback(() -> mCallback.onStopped());
+    }
+
+    /**
+     * @hide
+     */
+    public void onRangingStopFailed(@Callback.FailureReason int reason,
+            @NonNull PersistableBundle params) {
+        if (mState == State.CLOSED) {
+            Log.w(TAG, "onRangingStopFailed invoked for a closed session");
+            return;
+        }
+
+        executeCallback(() -> mCallback.onStopFailed(reason, params));
+    }
+
+    /**
+     * @hide
+     */
+    public void onRangingClosed(@Callback.CloseReason int reason,
+            @NonNull PersistableBundle parameters) {
+        mState = State.CLOSED;
+        executeCallback(() -> mCallback.onClosed(reason, parameters));
     }
 
     /**
@@ -243,9 +511,16 @@ public final class RangingSession implements AutoCloseable {
             return;
         }
 
+        executeCallback(() -> mCallback.onReportReceived(report));
+    }
+
+    /**
+     * @hide
+     */
+    private void executeCallback(@NonNull Runnable runnable) {
         final long identity = Binder.clearCallingIdentity();
         try {
-            mExecutor.execute(() -> mCallback.onReportReceived(report));
+            mExecutor.execute(runnable);
         } finally {
             Binder.restoreCallingIdentity(identity);
         }
