@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6101a9f1_b0536be1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-08T11:01:06Z",
+      "side": 1,
+      "message": "Please remove setNetId() ; no other objections to this patch.",
+      "revId": "8790a416ba08a57d835ebe0ee0a408e64579aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76987249_db13e377",
@@ -36,6 +53,53 @@
         "startChar": 0,
         "endLine": 189,
         "endChar": 5
+      },
+      "revId": "8790a416ba08a57d835ebe0ee0a408e64579aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b51334c_703715c2",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-08T11:01:06Z",
+      "side": 1,
+      "message": "+1 and besides the netId is final, so I don\u0027t think this builds. I also think there is no usage of this method.",
+      "parentUuid": "76987249_db13e377",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 5
+      },
+      "revId": "8790a416ba08a57d835ebe0ee0a408e64579aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e0ae3cb_10bf4697",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-08T11:01:06Z",
+      "side": 1,
+      "message": "This is not particularly a bad change but it\u0027s also unnecessary considering both the caller and the callee are in the mainline module. (don\u0027t bother reverting this hunk, it\u0027s fine)\n\nBut if you did eliminate all references to the member, then you can make it private, which is probably a good move.",
+      "range": {
+        "startLine": 531,
+        "startChar": 32,
+        "endLine": 531,
+        "endChar": 40
       },
       "revId": "8790a416ba08a57d835ebe0ee0a408e64579aa85",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
