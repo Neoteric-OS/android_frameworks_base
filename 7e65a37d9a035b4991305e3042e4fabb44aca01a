@@ -34,6 +34,24 @@
       "parentUuid": "6d093bb9_8baef762",
       "revId": "7e65a37d9a035b4991305e3042e4fabb44aca01a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2c0d6e0_5cfab4cd",
+        "filename": "OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2020-12-08T12:01:08Z",
+      "side": 1,
+      "message": "Jeff - thanks for the heads up yesterday. Looks like a wider heads up would be useful. Would it be possible to send a note to eng team to see if there are similar usecases like Anton\u0027s that are not covered in the current CLs?",
+      "parentUuid": "2deb86ec_ed148cf3",
+      "revId": "7e65a37d9a035b4991305e3042e4fabb44aca01a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
