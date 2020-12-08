@@ -16,6 +16,70 @@
       "message": "Please help me identify which unit-tests are required.",
       "revId": "7c0a647cb8d12207c3ef9dc584864e4e66ebaf38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "317dccac_59a7b74f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-08T02:23:28Z",
+      "side": 1,
+      "message": "You can have a look at ConnectivityServiceTest#testCaptivePortalApi: it uses pretty much all the methods you\u0027ll need.\n\nThings to try:\n - Call mWifi.sendLinkProperties with the passpoint info, check the callback with expectLinkPropertiesThat(LPs have the right data)\n - Try sending passpoint info via sendLinkProperties and notifyCaptivePortalDataChanged. Check that you get merged CaptivePortalData in the callback.\n - Try sending null capport data in sendLinkProperties but not notifyCaptivePortalDataChanged, and vice-versa. Check that even if sending null from one after the other was non-null, the callback is the non-null value.\n - Any other test you might find useful",
+      "parentUuid": "269a2bb1_0a99927e",
+      "revId": "7c0a647cb8d12207c3ef9dc584864e4e66ebaf38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0741082_68e17049",
+        "filename": "core/java/android/net/CaptivePortalData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-08T02:23:28Z",
+      "side": 1,
+      "message": "Objects.equals(mVenueFriendlyName, other.mVenueFriendlyName)\nsince they\u0027re strings",
+      "range": {
+        "startLine": 289,
+        "startChar": 19,
+        "endLine": 289,
+        "endChar": 65
+      },
+      "revId": "7c0a647cb8d12207c3ef9dc584864e4e66ebaf38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d3c87c5_11639a9e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6105,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-08T02:23:28Z",
+      "side": 1,
+      "message": "This needs to support the case where newLp.getCaptivePortalData() is non-null, but gets updated with new data (happens often if the portal goes from open to closed, or the remaining bytes change for example).\n\nIt should also support the case where the captive portal data sent by NetworkMonitor becomes null after being non-null.\n\nI think processLinkPropertiesFromAgent would be a good place to do that: you can add a \"networkAgentPortalData\" member to NetworkAgentInfo, set it in processLinkPropertiesFromAgent, and rename captivePortalData to capportApiData.\nThen in this method, you just merge the two, by taking all non-empty fields from either (*technically* it\u0027s possible for both to be used).",
+      "range": {
+        "startLine": 6103,
+        "startChar": 8,
+        "endLine": 6105,
+        "endChar": 9
+      },
+      "revId": "7c0a647cb8d12207c3ef9dc584864e4e66ebaf38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
