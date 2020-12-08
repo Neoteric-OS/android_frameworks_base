@@ -142,6 +142,24 @@
       "parentUuid": "bb9a7741_3b5d05b6",
       "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a72492bf_640c6932",
+        "filename": "packages/StatementService/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2020-12-08T22:16:38Z",
+      "side": 1,
+      "message": "It gets it from a command that runs immediately before the script is invoked. Soong generates both commands and pipes the output of the first command into the second command. Soong-generated Ninja command looks like this:\n\n  target_sdk_version\u003d\"$(manifest_check --extract-target-sdk-version $MANIFEST)\" \\\n    \u0026\u0026 eval \"$(construct_context --target-sdk-version ${target_sdk_version} ...)\" \n\nThis approach only works because we can afford to let Soong assume that _all_ compatibility libraries are dependencies of the dexpreopt rule. It wouldn\u0027t work for \u003cuses-libraries\u003e because that would make all Java libraries dependencies of every dexpreopt rule.",
+      "parentUuid": "1139c505_85cbc217",
+      "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
