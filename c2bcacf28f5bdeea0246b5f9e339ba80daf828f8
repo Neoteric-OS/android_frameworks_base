@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "3ff062d5_f7116dc0",
         "filename": "packages/StatementService/Android.bp",
@@ -14,10 +15,10 @@
       "side": 1,
       "message": "This should not be necessary because the library is already in libs and it is a java_sdk_library so should be tracked automatically.",
       "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "479a33ef_293c375a",
         "filename": "packages/StatementService/Android.bp",
@@ -32,10 +33,10 @@
       "message": "This is necessary for org.apache.http.legacy because it is treated by Soong as optional since aosp/1424793.",
       "parentUuid": "3ff062d5_f7116dc0",
       "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "77bc3a8e_9d8849a2",
         "filename": "packages/StatementService/Android.bp",
@@ -50,10 +51,10 @@
       "message": "Ah. I think there has been a misunderstanding. The rules for handling org.apache.http.legacy (and android.test.base) should be:\n\n1) If the App has a targetSdkVersion \u003c X (where X is the version in which org.apache.http.legacy was introduced) then it must be optional as setting required\u003dtrue would break the App on ver\n\n2) If the App has a targetSdkVersion \u003e\u003d X the required flag should honour what the developer has specified.\n\nIt is probably an error if an App has a minSdkVersion \u003c X and \"org.apache.http.legacy\" is required as it would break on any version from minSdkVersion (inclusive) to X (exclusive).\n\nSimilar rules apply to android.test.base but where X is different.",
       "parentUuid": "479a33ef_293c375a",
       "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "7b952fc0_aadb84ca",
         "filename": "packages/StatementService/Android.bp",
@@ -68,8 +69,25 @@
       "message": "In the case of StatementService there is no mention of the target SDK version in the manifest, so I assume that it targets the current SDK version (higher than 28). Then the only way to honour what the developer has specified is to add that information to .bp file via `uses_libs`, otherwise Soong has no way to know what was in the original manifest (as you noted in the comment at line #9).\n\nI don\u0027t recall seeing violations of 1), assuming that no target SDK version in the manifest means the current version.",
       "parentUuid": "77bc3a8e_9d8849a2",
       "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e98c6443_f887d86d",
+        "filename": "packages/StatementService/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2020-12-08T14:21:41Z",
+      "side": 1,
+      "message": "Don\u0027t we know the target SDK for an app in soong? It looks to me we need to always know to decide which uses-libs to implicitly add, such as or.apache.http.legacy.",
+      "parentUuid": "7b952fc0_aadb84ca",
+      "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
