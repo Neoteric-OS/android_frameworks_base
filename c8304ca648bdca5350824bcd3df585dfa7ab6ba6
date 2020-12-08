@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "811ef257_efba0ffe",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-08T14:02:27Z",
+      "side": 1,
+      "message": "Nit: /* flags */",
+      "range": {
+        "startLine": 634,
+        "startChar": 59,
+        "endLine": 634,
+        "endChar": 68
+      },
+      "revId": "c8304ca648bdca5350824bcd3df585dfa7ab6ba6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2240781_93f0838c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-08T14:02:27Z",
+      "side": 1,
+      "message": "Nit: couldn\u0027t this fit into one line?",
+      "range": {
+        "startLine": 644,
+        "startChar": 8,
+        "endLine": 645,
+        "endChar": 77
+      },
+      "revId": "c8304ca648bdca5350824bcd3df585dfa7ab6ba6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0f34215_23150e00",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-08T14:02:27Z",
+      "side": 1,
+      "message": "Nit: /* flags */",
+      "range": {
+        "startLine": 1138,
+        "startChar": 81,
+        "endLine": 1138,
+        "endChar": 90
+      },
+      "revId": "c8304ca648bdca5350824bcd3df585dfa7ab6ba6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
