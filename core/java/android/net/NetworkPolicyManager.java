@@ -430,6 +430,17 @@ public class NetworkPolicyManager {
         }
     }
 
+    /**
+     *
+     */
+    public int getMultipathPreference(Network network) {
+        try {
+            return mService.getMultipathPreference(network);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     /** {@hide} */
     @Deprecated
     public static Iterator<Pair<ZonedDateTime, ZonedDateTime>> cycleIterator(NetworkPolicy policy) {
