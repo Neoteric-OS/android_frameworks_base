@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2691c86b_b9b82978",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1352498
+      },
+      "writtenOn": "2020-12-08T12:32:18Z",
+      "side": 1,
+      "message": "Hi Sahana, could you PTAL the comment left by MTK? thanks.",
+      "revId": "bac240148026cf685557a60180a01c1d6d9fb859",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b22a271_d2e6226c",
