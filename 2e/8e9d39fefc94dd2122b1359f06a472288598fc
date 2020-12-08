@@ -1,0 +1,10 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Kenny Guy <kennyguy@google.com>
+Code-Review+2: Michael Wright <michaelwr@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Fiona Campbell <flc@google.com>
+Submitted-at: Tue, 08 Dec 2020 10:07:27 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1517740
+Project: platform/frameworks/base
+Branch: refs/heads/master
