@@ -2071,6 +2071,9 @@ public class AppTransition implements Dump {
             case TRANSIT_SHOW_SINGLE_TASK_DISPLAY: {
                 return "TRANSIT_SHOW_SINGLE_TASK_DISPLAY";
             }
+            case TRANSIT_TASK_CHANGE_WINDOWING_MODE: {
+                return "TRANSIT_TASK_CHANGE_WINDOWING_MODE";
+            }
             default: {
                 return "<UNKNOWN: " + transition + ">";
             }
