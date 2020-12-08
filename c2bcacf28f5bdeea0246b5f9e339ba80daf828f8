@@ -124,6 +124,24 @@
       "parentUuid": "1f38d3c4_0096430c",
       "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1139c505_85cbc217",
+        "filename": "packages/StatementService/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2020-12-08T21:04:53Z",
+      "side": 1,
+      "message": "I\u0027m confused: construct_context.py takes the target SDK, so where do we get it from?",
+      "parentUuid": "bb9a7741_3b5d05b6",
+      "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
