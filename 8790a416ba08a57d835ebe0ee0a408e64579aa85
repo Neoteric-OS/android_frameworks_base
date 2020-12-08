@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2c91396_13f1d0f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-08T06:55:35Z",
+      "side": 1,
+      "message": "While switching to getNetId() in all classes is fine, note it\u0027s only important in Vpn and DefaultNetworkMetrics, as other classes are moving together with Network to the module, so should be able to depend on the field.",
+      "revId": "8790a416ba08a57d835ebe0ee0a408e64579aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76987249_db13e377",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-08T06:55:35Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s something we can support: Networks should not be able to change net ID.\nInstead, users can create a new Network object, if they refer to another network that has another netid",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 5
+      },
+      "revId": "8790a416ba08a57d835ebe0ee0a408e64579aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
