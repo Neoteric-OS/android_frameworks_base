@@ -17,6 +17,7 @@
 package android.uwb;
 
 import android.annotation.IntDef;
+import android.annotation.NonNull;
 import android.os.PersistableBundle;
 
 import java.lang.annotation.Retention;
@@ -32,13 +33,38 @@ import java.util.concurrent.Executor;
  * <p>To get an instance of {@link RangingSession}, first use
  * {@link UwbManager#openRangingSession(PersistableBundle, Executor, Callback)} to request to open a
  * session. Once the session is opened, a {@link RangingSession} object is provided through
- * {@link RangingSession.Callback#onOpenSuccess(RangingSession, PersistableBundle)}. If opening a
+ * {@link RangingSession.Callback#onOpenSuccess(RangingSession)}. If opening a
  * session fails, the failure is reported through {@link RangingSession.Callback#onClosed(int)} with
  * the failure reason.
  *
  * @hide
  */
 public final class RangingSession implements AutoCloseable {
+    private enum State {
+        /**
+         * The state of the {@link RangingSession} until
+         * {@link RangingSession.Callback#onOpenSuccess(RangingSession)} is invoked
+         */
+        INIT,
+
+        /**
+         * The {@link RangingSession} is initialized and ready to begin ranging
+         */
+        IDLE,
+
+        /**
+         * The {@link RangingSession} is actively ranging
+         */
+        ACTIVE,
+
+        /**
+         * The {@link RangingSession} is closed and may not be used for ranging.
+         */
+        CLOSED
+    }
+
+    private State mState = State.INIT;
+
     /**
      * Interface for receiving {@link RangingSession} events
      */
@@ -48,9 +74,61 @@ public final class RangingSession implements AutoCloseable {
          * is successful
          *
          * @param session the newly opened {@link RangingSession}
-         * @param sessionInfo session specific parameters from lower layers
          */
-        void onOpenSuccess(RangingSession session, PersistableBundle sessionInfo);
+        void onOpenSuccess(RangingSession session);
+
+        /**
+         * Invoked when {@link RangingSession#start()} is successful
+         * @param sessionInfo session specific parameters from the lower layers
+         */
+        void onStarted(PersistableBundle sessionInfo);
+
+        // TODO: define these reasons
+        @interface StartFailureReason {}
+
+        /**
+         * Invoked when {@link RangingSession#start()} fails
+         *
+         * @param reason the failure reason
+         * @param params protocol specific parameters
+         */
+        void onStartFailed(@StartFailureReason int reason, PersistableBundle params);
+
+        /**
+         * Invoked when a request to reconfigure the session succeeds
+         *
+         * @param params the updated ranging configuration
+         */
+        void onReconfigured(@NonNull PersistableBundle params);
+
+        // TODO: define these reasons
+        @interface ReconfigureFailureReason {};
+
+        /**
+         * Invoked when a request to reconfigure the session fails
+         *
+         * @param reason reason the session failed to be reconfigured
+         * @param params protocol specific failure reasons
+         */
+        void onReconfigureFailed(@ReconfigureFailureReason int reason,
+                @NonNull PersistableBundle params);
+
+        /**
+         * Invoked when a request to suspend the session succeeds
+         */
+        void onSuspended();
+
+        // TODO: define these reasons
+        @interface SuspendFailureReason {};
+
+        /**
+         * Invoked when a request to suspend the session fails
+         *
+         * @param reason reason the session failed to be suspended
+         * @param params protocol specific failure reasons
+         */
+        void onSuspendFailed(@SuspendFailureReason int reason,
+                @NonNull PersistableBundle params);
 
         @Retention(RetentionPolicy.SOURCE)
         @IntDef(value = {
@@ -126,6 +204,64 @@ public final class RangingSession implements AutoCloseable {
          * @param rangingReport ranging report for this interval's measurements
          */
         void onReportReceived(RangingReport rangingReport);
+    }
+
+    /**
+     * Begins ranging for the session.
+     *
+     * <p>May only be invoked when the session is idle.
+     *
+     * <p>On successfully starting a ranging session,
+     * {@link RangingSession.Callback#onStarted(PersistableBundle)} is invoked.
+     *
+     * <p>On failure to start the session,
+     * {@link RangingSession.Callback#onStartFailed(int, PersistableBundle)} is invoked.
+     */
+    public void start() {
+        if (mState != State.IDLE) {
+            throw new IllegalStateException();
+        }
+
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Attempts to reconfigure the session with the given parameters
+     * <p>This call may be made when the session is open.
+     *
+     * <p>On successfully reconfiguring the session
+     * {@link RangingSession.Callback#onReconfigured(PersistableBundle)} is invoked.
+     *
+     * <p>On failure to reconfigure the session,
+     * {@link RangingSession.Callback#onReconfigureFailed(int, PersistableBundle)} is invoked.
+     *
+     * @param params the parameters to reconfigure and their new values
+     */
+    public void reconfigure(PersistableBundle params) {
+        if (mState != State.ACTIVE || mState != State.IDLE) {
+            throw new IllegalStateException();
+        }
+
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Suspends ranging without closing the session
+     *
+     * <p>Suspending a {@link RangingSession} is useful when the lower layers should not discard
+     * the parameters of the session, or when a session needs to be able to be resumed quickly.
+     *
+     * <p>On successfully suspending the session {@link Callback#onSuspended()} is invoked.
+     *
+     * <p>On failure to suspend the session,
+     * {@link RangingSession.Callback#onSuspendFailed(int, PersistableBundle)} is invoked.
+     */
+    public void suspend() {
+        if (mState != State.ACTIVE) {
+            throw new IllegalStateException();
+        }
+
+        throw new UnsupportedOperationException();
     }
 
     /**

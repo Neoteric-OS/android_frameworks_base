@@ -361,8 +361,7 @@ public final class UwbManager {
 
     /**
      * Open a {@link RangingSession} with the given parameters
-     * <p>This function is asynchronous and will return before ranging begins. The
-     * {@link RangingSession.Callback#onOpenSuccess(RangingSession, PersistableBundle)} function is
+     * <p>The {@link RangingSession.Callback#onOpenSuccess(RangingSession)} function is
      * called with a {@link RangingSession} object used to control ranging when the session is
      * successfully opened.
      *
