@@ -25,6 +25,8 @@ import static android.system.OsConstants.SOCK_STREAM;
 
 import static junit.framework.Assert.assertEquals;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import android.system.ErrnoException;
@@ -85,5 +87,17 @@ public class NetworkUtilsInternalTest {
         expectNoNetworking();
         NetworkUtilsInternal.setAllowNetworkingForProcess(true);
         expectHasNetworking();
+    }
+
+    @Test
+    public void testIsWeaklyValidatedHostname() {
+        assertTrue(NetworkUtilsInternal.isWeaklyValidatedHostname("example"));
+        assertTrue(NetworkUtilsInternal.isWeaklyValidatedHostname("test.example.com"));
+        assertTrue(NetworkUtilsInternal.isWeaklyValidatedHostname("test.ex-ample.com"));
+        assertTrue(NetworkUtilsInternal.isWeaklyValidatedHostname("Test.ex-Ample.com"));
+
+        assertFalse(NetworkUtilsInternal.isWeaklyValidatedHostname("192.168.1.2"));
+        assertFalse(NetworkUtilsInternal.isWeaklyValidatedHostname("1.1.1.1"));
+        assertFalse(NetworkUtilsInternal.isWeaklyValidatedHostname("12%4"));
     }
 }
