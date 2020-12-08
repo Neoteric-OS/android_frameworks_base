@@ -88,6 +88,24 @@
       "parentUuid": "7b952fc0_aadb84ca",
       "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f38d3c4_0096430c",
+        "filename": "packages/StatementService/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2020-12-08T16:37:32Z",
+      "side": 1,
+      "message": "No, we don\u0027t. This information is in the manifest (like \u003cuses-library\u003e tags). We cannot parse manifests at the time when Soong generates build rules. I have a bug fir this: https://b.corp.google.com/issues/174355777 (but not much hope fixing it in the near future).",
+      "parentUuid": "e98c6443_f887d86d",
+      "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
