@@ -178,6 +178,24 @@
       "parentUuid": "a72492bf_640c6932",
       "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d587f3f3_7aa3c8f3",
+        "filename": "packages/StatementService/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2020-12-09T10:06:35Z",
+      "side": 1,
+      "message": "Yes, construct_context handles the implicit case (when a library is not in the manifest). In the explicit case (when a library is in the manifest) there are two options: either Soong can pick it automatically (if it\u0027s an SDK library in `libs` or transitive dependencies), or else it can be added manually in `uses_libs`/`optional_uses_libs`. Here the first option cannot be used because the optional status is different from Soong assumption, so it adds the library as optional while it should be required.",
+      "parentUuid": "0a7d27a8_a428de58",
+      "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
