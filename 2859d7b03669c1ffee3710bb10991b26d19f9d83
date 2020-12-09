@@ -140,6 +140,30 @@
       },
       "revId": "2859d7b03669c1ffee3710bb10991b26d19f9d83",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8494428_78575a85",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T11:37:10Z",
+      "side": 1,
+      "message": "In createVpnAndSetupUidChecks immediately after setMockedUsers(), you should be able to write :\n\n  final Context userContext \u003d mContext.createContextAsUser(user.getUserHandle(), 0 /* flags */);\n  final PackageManager userPackageManager \u003d userContext.getPackageManager();\n  when(userPackageManager.getPackageUidAsUser(eq(TEST_VPN_PKG), ...",
+      "parentUuid": "92d89364_331be123",
+      "range": {
+        "startLine": 1359,
+        "startChar": 19,
+        "endLine": 1359,
+        "endChar": 100
+      },
+      "revId": "2859d7b03669c1ffee3710bb10991b26d19f9d83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
