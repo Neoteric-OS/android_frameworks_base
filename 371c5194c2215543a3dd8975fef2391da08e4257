@@ -49,6 +49,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "77a1133f_71eb9657",
+        "filename": "keystore/java/android/security/AuthTokenUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-12-09T23:12:24Z",
+      "side": 1,
+      "message": "Please use ByteBuffer instead.\nE.g.:\n\n ByteBuffer.wrap(array, 1, 8).order(ByteOrder.nativeOrder()).getLong()\n\nor\n\n ByteBuffer.wrap(array, 25, 4).order(ByteOrder.BIG_ENDIAN).getInt()\n\nwhere the message is in network byte order.\n\nMaybe also make constants for the offsets.",
+      "range": {
+        "startLine": 46,
+        "startChar": 38,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "371c5194c2215543a3dd8975fef2391da08e4257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3256dcd0_cf799267",
         "filename": "keystore/java/android/security/Authorization.java",
         "patchSetId": 2
