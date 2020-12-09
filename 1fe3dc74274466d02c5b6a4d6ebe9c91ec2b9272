@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f7e8aa83_f0d137bc",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-09T23:57:06Z",
+      "side": 1,
+      "message": "I\u0027d actually like to keep it this way, and have most of the checking logic in the non-mocked piece, so that as I mock this dependency, I can test the explosive check as well.\n\nThis is checked in enforcePrimaryUser(); is that sufficient?",
+      "parentUuid": "35e03aa1_a961a02e",
+      "range": {
+        "startLine": 153,
+        "startChar": 26,
+        "endLine": 153,
+        "endChar": 39
+      },
+      "revId": "1fe3dc74274466d02c5b6a4d6ebe9c91ec2b9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5d227a82_e4d2a74c",
         "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
         "patchSetId": 14
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-03T20:14:06Z",
       "side": 1,
       "message": "How does this make Context.getSystemService(Class\u003c?\u003e clazz) work? I feel like there\u0027s a missing piece of the puzzle.",
+      "range": {
+        "startLine": 98,
+        "startChar": 45,
+        "endLine": 98,
+        "endChar": 61
+      },
+      "revId": "1fe3dc74274466d02c5b6a4d6ebe9c91ec2b9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d33cedc5_a6f60c05",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-09T23:57:06Z",
+      "side": 1,
+      "message": "Internally, Context.getSystemService(Class\u003c?\u003e clazz) calls getSystemServiceName() to translate the class to the service name, and then internally calls getServiceName(String serviceName)\n\nUnfortunately, the Class\u003c?\u003e version is final, so we can\u0027t mock it directly, but we can mock the getSystemServiceName(), and the getSystemService(Class\u003c?\u003e clazz), indirectly mocking getSystemService(name).\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/android/content/Context.java;l\u003d3720;bpv\u003d0;bpt\u003d1",
+      "parentUuid": "5d227a82_e4d2a74c",
       "range": {
         "startLine": 98,
         "startChar": 45,
@@ -83,6 +131,30 @@
       "writtenOn": "2020-12-03T20:14:06Z",
       "side": 1,
       "message": "ISTM that this should return isPrivileged for a particular subId, no? A couple un-privileged SubInfos an a single privileged one would make that happen, no?",
+      "range": {
+        "startLine": 105,
+        "startChar": 66,
+        "endLine": 105,
+        "endChar": 72
+      },
+      "revId": "1fe3dc74274466d02c5b6a4d6ebe9c91ec2b9272",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be7f5232_9cad7321",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-09T23:57:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75a8bd48_f332c0b8",
       "range": {
         "startLine": 105,
         "startChar": 66,
