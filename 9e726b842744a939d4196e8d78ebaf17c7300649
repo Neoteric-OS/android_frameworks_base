@@ -16,6 +16,23 @@
       "message": "Bypassing presubmit for the following reason: cf_x86_auto-userdebug tests have been broken before this change.",
       "revId": "9e726b842744a939d4196e8d78ebaf17c7300649",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6fa4d21_7fad32e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-12-09T13:09:43Z",
+      "side": 1,
+      "message": "Will the build fail with these omitted going forward?",
+      "revId": "9e726b842744a939d4196e8d78ebaf17c7300649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
