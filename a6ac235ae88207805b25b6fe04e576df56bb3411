@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ac89db9_ccb6c734",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-12-09T12:06:39Z",
+      "side": 1,
+      "message": "I\u0027ll defer this to Amith :) ",
+      "revId": "a6ac235ae88207805b25b6fe04e576df56bb3411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b27d644b_9055ad0d",
+        "filename": "core/java/android/app/admin/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-12-09T12:06:39Z",
+      "side": 1,
+      "message": "you might want to add Makoto as well?",
+      "revId": "a6ac235ae88207805b25b6fe04e576df56bb3411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
