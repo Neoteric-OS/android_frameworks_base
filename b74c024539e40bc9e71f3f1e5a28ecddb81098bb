@@ -34,6 +34,24 @@
       "parentUuid": "f3aa16ac_26f03302",
       "revId": "b74c024539e40bc9e71f3f1e5a28ecddb81098bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "166072ef_e3a97306",
+        "filename": "OWNERS_BATTERY_STATS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2020-12-09T00:27:27Z",
+      "side": 1,
+      "message": "\"powerstats\" does not exist in AOSP yet.  I suggest that we submit this with just the batterystats file and then add an OWNERS file to powerstats, referencing this file.",
+      "parentUuid": "fe087cfb_ed62f7f1",
+      "revId": "b74c024539e40bc9e71f3f1e5a28ecddb81098bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
