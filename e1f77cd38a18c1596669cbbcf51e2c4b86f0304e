@@ -305,6 +305,30 @@
       },
       "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7837cfcc_419902ce",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-12-09T22:49:42Z",
+      "side": 1,
+      "message": "Agree. Per IANA, private IKE NOTIFY error types can range from 8192-16383. So i will use codes from 16384 (0x4000) and onwards",
+      "parentUuid": "6dbf5c44_98b550f3",
+      "range": {
+        "startLine": 961,
+        "startChar": 0,
+        "endLine": 975,
+        "endChar": 66
+      },
+      "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
