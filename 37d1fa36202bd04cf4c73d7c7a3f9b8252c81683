@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c58fab0a_bb9ed4ea",
+        "filename": "core/java/android/net/CaptivePortalData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-09T06:05:06Z",
+      "side": 1,
+      "message": "You\u0027ll need to update CaptivePortalDataTest too: it should test parcel/unparcel, equals and getters for the new field (right now the test is likely failing because it has a check for the number of fields, to remember to update it when fields are added).",
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22432467_09cf4531",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3272,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-09T06:05:06Z",
+      "side": 1,
+      "message": "Nit: rename to CapportApi to disambiguate",
+      "range": {
+        "startLine": 3272,
+        "startChar": 23,
+        "endLine": 3272,
+        "endChar": 36
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c85d6c2d_445b9d16",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6101,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-09T06:05:06Z",
+      "side": 1,
+      "message": "Technically ConnectivityService doesn\u0027t really care whether it\u0027s passpoint or some other system; since wifi is an updatable module, it\u0027s also possible that the wifi agent decides to send capport data from other sources in the future, or that we update a network agent (telephony, bluetooth...) to support sending other capport data.\n\nConsidering this, I think it would be better to merge all fields, not just friendly name / venue URL for the network agent data.\nI think for Passpoint you also need UserPortalUrl for the ToS ?",
+      "range": {
+        "startLine": 6100,
+        "startChar": 74,
+        "endLine": 6101,
+        "endChar": 35
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17797386_66bbfdfb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6102,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-09T06:05:06Z",
+      "side": 1,
+      "message": "Can you move this logic to a separate method ? It\u0027s a bit large for updateLinkProperties",
+      "range": {
+        "startLine": 6102,
+        "startChar": 34,
+        "endLine": 6102,
+        "endChar": 54
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b637eceb_6bccbf89",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6117,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-09T06:05:06Z",
+      "side": 1,
+      "message": "But what if the capport API has a venue info URL, but the networkAgent has capport data with a null venue info URL (and just the friendly name or user portal URL) ?\n\nI think the merging needs to be something like:\n\n  /**\n   * @param naData captive portal data from NetworkAgent\n   * @param apiData captive portal data from capport API\n   */\n  @Nullable\n  private CaptivePortalData mergeCaptivePortalData(@Nullable naData, @Nullable apiData) {\n    if (naData \u003d\u003d null || apiData \u003d\u003d null) {\n        return naData \u003d\u003d null ? apiData : naData;\n    }\n    final CaptivePortalData.Builder builder \u003d new CaptivePortalData.Builder(naData);\n    if (apiData.isCaptive()) builder.setCaptive(true);\n    if (apiData.getByteLimit() \u003e\u003d 0) builder.setBytesRemaining(na.getByteLimit());\n    [...]\n    if (apiData.getVenueInfoUrl() !\u003d null) builder.setVenueInfoUrl(na.getVenueInfoUrl());\n    [...]\n  }\n\nNote that the NetworkAgent also needs to send isCaptive. One way to do this for Passpoint can be to have Wifi always say true at first, then send false when it receives CMD_REPORT_NETWORK_STATUS that says the network validated.",
+      "range": {
+        "startLine": 6117,
+        "startChar": 45,
+        "endLine": 6117,
+        "endChar": 60
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be93d365_86b38fee",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6121,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-09T06:05:06Z",
+      "side": 1,
+      "message": "This should be null if the network has no captive portal data at all",
+      "range": {
+        "startLine": 6121,
+        "startChar": 14,
+        "endLine": 6121,
+        "endChar": 34
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05b2dca0_7c574ed5",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-09T06:05:06Z",
+      "side": 1,
+      "message": "Nit: add \"from RFC8908,\"",
+      "range": {
+        "startLine": 177,
+        "startChar": 42,
+        "endLine": 177,
+        "endChar": 43
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8101630b_96ed9177",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2946,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-09T06:05:06Z",
+      "side": 1,
+      "message": "Nit: add comment to explain why it is needed",
+      "range": {
+        "startLine": 2946,
+        "startChar": 24,
+        "endLine": 2946,
+        "endChar": 37
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6974631b_a1be45ca",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2960,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-09T06:05:06Z",
+      "side": 1,
+      "message": "Nit: capport",
+      "range": {
+        "startLine": 2960,
+        "startChar": 20,
+        "endLine": 2960,
+        "endChar": 26
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "474ec705_0aea2651",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2966,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-09T06:05:06Z",
+      "side": 1,
+      "message": "Nit: rename to notifyCapportApiDataChanged to disambiguate",
+      "range": {
+        "startLine": 2966,
+        "startChar": 26,
+        "endLine": 2966,
+        "endChar": 56
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe70298a_266eaf95",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2981,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-09T06:05:06Z",
+      "side": 1,
+      "message": "It would be interesting to remove this member, so that the end-result has fields only in the API data (portal URL), only in network agent data (friendly name), and in both (bytes remaining)",
+      "range": {
+        "startLine": 2981,
+        "startChar": 17,
+        "endLine": 2981,
+        "endChar": 33
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8ba9561_ddbd8c12",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2982,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-09T06:05:06Z",
+      "side": 1,
+      "message": "Set to something else (12346L ?) to test how merging works here: does API data or passpoint take precedence ?\nI think saying that the API takes precedence may be better, unless passpoint has a good way to send updated info (like bytes remaining) after the initial connection ?",
+      "range": {
+        "startLine": 2982,
+        "startChar": 35,
+        "endLine": 2982,
+        "endChar": 41
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ac8aba6_a852e958",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2986,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-09T06:05:06Z",
+      "side": 1,
+      "message": "Nit: capport",
+      "range": {
+        "startLine": 2986,
+        "startChar": 30,
+        "endLine": 2986,
+        "endChar": 36
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
