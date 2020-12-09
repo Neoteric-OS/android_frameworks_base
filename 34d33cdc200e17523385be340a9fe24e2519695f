@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b278a04d_3cc88e55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-12-09T14:46:01Z",
+      "side": 1,
+      "message": "Michael, could you ARV+1 please? The items removed from the api/ directory are duplicates of items that exist in external/icu/android_icu4j/api/public which are checked and reviewed in exactly the same way as these files.",
+      "revId": "34d33cdc200e17523385be340a9fe24e2519695f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
