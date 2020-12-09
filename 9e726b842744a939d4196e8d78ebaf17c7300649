@@ -33,6 +33,41 @@
       "message": "Will the build fail with these omitted going forward?",
       "revId": "9e726b842744a939d4196e8d78ebaf17c7300649",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1de3226_ac0dd93b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2020-12-09T14:00:33Z",
+      "side": 1,
+      "message": "Yes in the following sense:\n\n1) There are build-time checks that will fail if the info in Android.bp isn\u0027t coherent with the manifest. These checks are turned off by default, but automatically turned on if `uses_libs`/`optional_uses_libs` is non-empty. So this CL enables them for the modified apps, but if I drop `uses_libs`/`optional_uses_libs`, the checks will be dropped as well.\n\n2) There is a global switch that I will turn on after I merge fixes in all projects, and it will enable the checks for all Soong apps whether they have `uses_libs`/`optional_uses_libs` or not.",
+      "parentUuid": "d6fa4d21_7fad32e8",
+      "revId": "9e726b842744a939d4196e8d78ebaf17c7300649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1999e7cc_2e8f3a4e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2020-12-09T14:00:33Z",
+      "side": 1,
+      "message": "Thanks Anton.",
+      "revId": "9e726b842744a939d4196e8d78ebaf17c7300649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
