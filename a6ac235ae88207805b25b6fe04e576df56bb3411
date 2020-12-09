@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb9276fc_f57a1819",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2020-12-09T17:20:23Z",
+      "side": 1,
+      "message": "Acknowledged 😊\nMy understanding of the emeritus concept from google3 OWNERS is that it\u0027s someone who can approve CLs but is not generally available for day-to-day reviews.\nLet\u0027s see what Amith wants 😊",
+      "parentUuid": "2ac89db9_ccb6c734",
+      "revId": "a6ac235ae88207805b25b6fe04e576df56bb3411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b27d644b_9055ad0d",
@@ -31,6 +49,24 @@
       "writtenOn": "2020-12-09T12:06:39Z",
       "side": 1,
       "message": "you might want to add Makoto as well?",
+      "revId": "a6ac235ae88207805b25b6fe04e576df56bb3411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5085cdfb_99294fe9",
+        "filename": "core/java/android/app/admin/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2020-12-09T17:20:23Z",
+      "side": 1,
+      "message": "Also deferring to Amith.",
+      "parentUuid": "b27d644b_9055ad0d",
       "revId": "a6ac235ae88207805b25b6fe04e576df56bb3411",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
