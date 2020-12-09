@@ -59,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "155a5f72_02bd9a8a",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3729,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-12-09T09:33:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "500c5387_8dd8ac3e",
+      "range": {
+        "startLine": 3729,
+        "startChar": 8,
+        "endLine": 3729,
+        "endChar": 59
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e4a481a_28c228eb",
@@ -82,6 +106,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "214ea16c_cf2c3d12",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-12-09T09:33:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e4a481a_28c228eb",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 46
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d23bbd4_f2a8052e",
@@ -95,6 +143,30 @@
       "writtenOn": "2020-11-18T20:05:31Z",
       "side": 1,
       "message": "shorten to Type, since is inside BluetoothDynamicAudioBuffer class",
+      "range": {
+        "startLine": 45,
+        "startChar": 22,
+        "endLine": 45,
+        "endChar": 39
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23ec5af1_894892bf",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-12-09T09:33:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d23bbd4_f2a8052e",
       "range": {
         "startLine": 45,
         "startChar": 22,
@@ -130,6 +202,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4d60054d_b483af39",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-12-09T09:33:06Z",
+      "side": 1,
+      "message": "These are mutually exclusive now. But we consider to support at the same time in the future.",
+      "parentUuid": "874125d4_29a187e8",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 63,
+        "endChar": 81
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d8037b5f_1d0d9fa5",
         "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
         "patchSetId": 8
@@ -141,6 +237,30 @@
       "writtenOn": "2020-11-18T20:05:31Z",
       "side": 1,
       "message": "should this be a list of an actual class type instead of an array of arrays or list of list?\n\nit looks like we\u0027re relying on integers to index into the inner array (and expect all of them to be there), which feels pretty similar to field access from a class/struct",
+      "range": {
+        "startLine": 87,
+        "startChar": 53,
+        "endLine": 87,
+        "endChar": 66
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e8a09d4_e0fab768",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-12-09T09:33:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8037b5f_1d0d9fa5",
       "range": {
         "startLine": 87,
         "startChar": 53,
@@ -164,6 +284,30 @@
       "writtenOn": "2020-11-18T20:05:31Z",
       "side": 1,
       "message": "what is the unit of time? is this milliseconds? bytes? (how does it map to the buffer size API?)",
+      "range": {
+        "startLine": 151,
+        "startChar": 15,
+        "endLine": 151,
+        "endChar": 34
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fdbbef4_35fda139",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-12-09T09:33:06Z",
+      "side": 1,
+      "message": "The unit of time is the milliseconds. The buffer size API also uses milliseconds as unit.",
+      "parentUuid": "ff82b155_26c8c6d7",
       "range": {
         "startLine": 151,
         "startChar": 15,
@@ -210,6 +354,54 @@
       "writtenOn": "2020-11-18T20:05:31Z",
       "side": 1,
       "message": "DynamicAudio feels redundant in the name, since the class already includes it.\n\ngetDefaultBufferTime (and similar for other methods below?)",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 47
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f95b597_efc388fe",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-12-09T09:33:06Z",
+      "side": 1,
+      "message": "DynamicAudioBufferCapabilities object will be returned by getDynamicAudioBuffer() in BluetoothAdapter, the caller can get all the default/max/min buffer time of each codec within one call. So, the caller doesn\u0027t need to call it again if the codec is changed.",
+      "parentUuid": "6c3630d3_42f6f9c0",
+      "range": {
+        "startLine": 155,
+        "startChar": 48,
+        "endLine": 155,
+        "endChar": 57
+      },
+      "revId": "7ed8409aa35c2929fbc2e2a74415675e7fe94b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc044946_b90fb984",
+        "filename": "core/java/android/bluetooth/BluetoothDynamicAudioBuffer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2020-12-09T09:33:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6cd331f_524f6001",
       "range": {
         "startLine": 155,
         "startChar": 15,
