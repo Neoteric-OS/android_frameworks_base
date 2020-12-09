@@ -69,6 +69,24 @@
       "parentUuid": "fe087cfb_ed62f7f1",
       "revId": "b74c024539e40bc9e71f3f1e5a28ecddb81098bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3822f01_192215a7",
+        "filename": "OWNERS_BATTERY_STATS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1623038
+      },
+      "writtenOn": "2020-12-09T01:02:23Z",
+      "side": 1,
+      "message": "Sounds good.  Whatever you think is best is fine with me.",
+      "parentUuid": "166072ef_e3a97306",
+      "revId": "b74c024539e40bc9e71f3f1e5a28ecddb81098bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
