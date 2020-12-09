@@ -16,6 +16,9 @@ per-file DisplayInfo.java = michaelwr@google.com, santoscordon@google.com
 # Haptics
 per-file HapticFeedbackConstants.java = michaelwr@google.com, santoscordon@google.com
 
+# Ime
+per-file Ime*.java = file:platform/frameworks/base/services/core/java/com/android/server/inputmethod/OWNERS
+
 # Input
 per-file IInputMonitorHost.aidl = michaelwr@google.com, svv@google.com
 per-file Input*.java = michaelwr@google.com, svv@google.com
@@ -24,3 +27,26 @@ per-file KeyEvent.java = michaelwr@google.com, svv@google.com
 per-file MotionEvent.java = michaelwr@google.com, svv@google.com
 per-file PointerIcon.java = michaelwr@google.com, svv@google.com
 per-file SimulatedDpad.java = michaelwr@google.com, svv@google.com
+
+# WindowManager
+per-file IDisplay*.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file InputWindowHandle.java  = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file Inset*.java = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file Inset*.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file IPinnedStackListener.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file IRecents*.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file IRemote*.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file IWindow*.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file RemoteAnimation*.java = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file RemoteAnimation*.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file SurfaceControl*.java = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file SurfaceControl*.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file SurfaceView.java = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file SyncRtSurfaceTransactionApplier.java = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file ViewRoot*.java = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file Window*.java = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file Window*.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+
+
+# TODO(b/174932174): determine the ownership of Surface.java and View.java
+

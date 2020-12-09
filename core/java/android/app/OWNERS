@@ -1,1 +1,24 @@
+#Wallpaper
+per-file Wallpaper*.java = file:platform/frameworks/base/core/java/android/service/wallpaper/OWNERS
+per-file IWallpaper*.aidl = file:platform/frameworks/base/core/java/android/service/wallpaper/OWNERS
+
+# WindowManager
+per-file Activity*.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file Activity*.java = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+# Remain no owner because multiple modules may touch this file.
+per-file ActivityThread.java = *
+per-file ClientTransactionHandler.java = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file ContextImpl.java = *
+per-file Fragment.java = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file IActivity*.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file IAppTask.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file ITaskStackListener.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file LocalActivityManager.java = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file Task*.java = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file Window*.aidl = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+per-file Window*.java = file:platform/frameworks/base/services/core/java/com/android/server/wm/OWNERS
+
+# TODO(b/174932174): determine the ownership of KeyguardManager.java and View.java
+
+# Zygote
 per-file *Zygote* = file:/ZYGOTE_OWNERS
