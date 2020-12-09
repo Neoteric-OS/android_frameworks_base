@@ -160,6 +160,24 @@
       "parentUuid": "1139c505_85cbc217",
       "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a7d27a8_a428de58",
+        "filename": "packages/StatementService/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2020-12-09T09:50:38Z",
+      "side": 1,
+      "message": "OK - given the library is mentioned in the app\u0027s manifest, we should also add it to the .bp file. I suppose construct_context.py handles the case when it needs to add the library implicitly, but it actually already is mentioned eplicitly?",
+      "parentUuid": "a72492bf_640c6932",
+      "revId": "c2bcacf28f5bdeea0246b5f9e339ba80daf828f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
