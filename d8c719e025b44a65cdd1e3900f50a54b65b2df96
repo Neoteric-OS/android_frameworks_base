@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "104e03a8_9fb4be76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1514133
+      },
+      "writtenOn": "2020-12-09T12:53:07Z",
+      "side": 1,
+      "message": "Please check my replaies.",
+      "revId": "d8c719e025b44a65cdd1e3900f50a54b65b2df96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b80eec33_ba993126",
@@ -62,6 +79,30 @@
       "side": 1,
       "message": "When TIME_TICK is delivered from interactiveStateChangedLocked, TIME_TICK alarm is rescheduled at doAlarm.\nremoveLocked is called from setImplLocked.\nIn this case, already inside \u0027synchronized (mLock)\u0027 section.",
       "parentUuid": "c769ed3b_1cee3d25",
+      "range": {
+        "startLine": 3373,
+        "startChar": 47,
+        "endLine": 3373,
+        "endChar": 70
+      },
+      "revId": "d8c719e025b44a65cdd1e3900f50a54b65b2df96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fb4fbfd_13c326fb",
+        "filename": "services/core/java/com/android/server/AlarmManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3373,
+      "author": {
+        "id": 1514133
+      },
+      "writtenOn": "2020-12-09T12:53:07Z",
+      "side": 1,
+      "message": "@Suprabh Shukla\nI have some question about your commit on AlarmManager. That is not directly related with this review but I hope you to check it.\nI have reset issues at Android 10 devices that is occured by maximum limit of concurrent alarms.\nJobScheduler set alarms many times and make an exception on system server.\nAs I know JobScheduler use only one listener object so it can not set multiple alarms on AlarmManagerService.\nAt first I guess the issues are same with bug 167595061, but alarms from JobScheduler are wakup type. And then I found your commit (7d40780e398a38a69a2325c3f091a61b04dc6206).\nI want to know how JobScheduler can set multiple alarms via one listener.\nAnd I want to get your opnion if my issues can be fixed by your commit.",
+      "parentUuid": "00e1fc79_97f2f458",
       "range": {
         "startLine": 3373,
         "startChar": 47,
