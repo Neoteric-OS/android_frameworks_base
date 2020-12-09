@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "def2c20e_1c2b0711",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-12-09T02:04:18Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "653e1b6e_c0e7a7e5",
+      "range": {
+        "startLine": 919,
+        "startChar": 62,
+        "endLine": 919,
+        "endChar": 68
+      },
+      "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "334ed11a_c4bdf658",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-08T21:21:48Z",
       "side": 1,
       "message": "There are 4 more from 8241 ~ 8245 defined in 8.1.2.2, please add.",
+      "range": {
+        "startLine": 922,
+        "startChar": 61,
+        "endLine": 922,
+        "endChar": 68
+      },
+      "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a75c3949_61e3ff6a",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-12-09T02:04:18Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "334ed11a_c4bdf658",
       "range": {
         "startLine": 922,
         "startChar": 61,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44475d0a_c76f6d91",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-12-09T02:04:18Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "0eb36f26_3db0370a",
+      "range": {
+        "startLine": 929,
+        "startChar": 7,
+        "endLine": 929,
+        "endChar": 8
+      },
+      "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98b47c68_d33de5aa",
@@ -83,6 +155,30 @@
       "writtenOn": "2020-12-08T21:21:48Z",
       "side": 1,
       "message": "IMEI_NOT_ACCEPTED should be added below",
+      "range": {
+        "startLine": 950,
+        "startChar": 28,
+        "endLine": 950,
+        "endChar": 54
+      },
+      "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa0b7a84_6d2cfb6b",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-12-09T02:04:18Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "98b47c68_d33de5aa",
       "range": {
         "startLine": 950,
         "startChar": 28,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4a7621d_916b1268",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-12-09T02:04:18Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "7e1f1f5d_62060cbc",
+      "range": {
+        "startLine": 956,
+        "startChar": 28,
+        "endLine": 956,
+        "endChar": 50
+      },
+      "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "179aa864_3be67c95",
@@ -129,6 +249,30 @@
       "writtenOn": "2020-12-08T21:21:48Z",
       "side": 1,
       "message": "Where is the spec for this?",
+      "range": {
+        "startLine": 961,
+        "startChar": 0,
+        "endLine": 975,
+        "endChar": 66
+      },
+      "revId": "e1f77cd38a18c1596669cbbcf51e2c4b86f0304e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b005a4f_e7b8f13b",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2020-12-09T02:04:18Z",
+      "side": 1,
+      "message": "These are not sent by n/w (except for authentication_failure which is part of base IKEv2 RFC 5996).But these do occur as part of normal operation. They are generic enough so as not to be implementation specific",
+      "parentUuid": "179aa864_3be67c95",
       "range": {
         "startLine": 961,
         "startChar": 0,
