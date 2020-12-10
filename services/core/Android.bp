@@ -191,7 +191,6 @@ filegroup {
         "java/com/android/server/connectivity/DataConnectionStats.java",
         "java/com/android/server/connectivity/DefaultNetworkMetrics.java",
         "java/com/android/server/connectivity/DnsManager.java",
-        "java/com/android/server/connectivity/IpConnectivityEventBuilder.java",
         "java/com/android/server/connectivity/IpConnectivityMetrics.java",
         "java/com/android/server/connectivity/KeepaliveTracker.java",
         "java/com/android/server/connectivity/LingerMonitor.java",

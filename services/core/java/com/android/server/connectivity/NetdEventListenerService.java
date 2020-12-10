@@ -24,8 +24,6 @@ import android.net.INetdEventCallback;
 import android.net.MacAddress;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.net.metrics.ConnectStats;
-import android.net.metrics.DnsEvent;
 import android.net.metrics.INetdEventListener;
 import android.net.metrics.NetworkMetrics;
 import android.net.metrics.WakeupEvent;
@@ -42,7 +40,6 @@ import com.android.internal.util.BitUtils;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.RingBuffer;
 import com.android.internal.util.TokenBucket;
-import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityEvent;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -326,28 +323,6 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
         stats.countEvent(event);
     }
 
-    public synchronized void flushStatistics(List<IpConnectivityEvent> events) {
-        for (int i = 0; i < mNetworkMetrics.size(); i++) {
-            ConnectStats stats = mNetworkMetrics.valueAt(i).connectMetrics;
-            if (stats.eventCount == 0) {
-                continue;
-            }
-            events.add(IpConnectivityEventBuilder.toProto(stats));
-        }
-        for (int i = 0; i < mNetworkMetrics.size(); i++) {
-            DnsEvent ev = mNetworkMetrics.valueAt(i).dnsMetrics;
-            if (ev.eventCount == 0) {
-                continue;
-            }
-            events.add(IpConnectivityEventBuilder.toProto(ev));
-        }
-        for (int i = 0; i < mWakeupStats.size(); i++) {
-            events.add(IpConnectivityEventBuilder.toProto(mWakeupStats.valueAt(i)));
-        }
-        mNetworkMetrics.clear();
-        mWakeupStats.clear();
-    }
-
     public synchronized void list(PrintWriter pw) {
         pw.println("dns/connect events:");
         for (int i = 0; i < mNetworkMetrics.size(); i++) {
@@ -369,23 +344,6 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
         for (WakeupEvent wakeup : mWakeupEvents.toArray()) {
             pw.println(wakeup);
         }
-    }
-
-    /**
-     * Convert events in the buffer to a list of IpConnectivityEvent protos
-     */
-    public synchronized List<IpConnectivityEvent> listAsProtos() {
-        List<IpConnectivityEvent> list = new ArrayList<>();
-        for (int i = 0; i < mNetworkMetrics.size(); i++) {
-            list.add(IpConnectivityEventBuilder.toProto(mNetworkMetrics.valueAt(i).connectMetrics));
-        }
-        for (int i = 0; i < mNetworkMetrics.size(); i++) {
-            list.add(IpConnectivityEventBuilder.toProto(mNetworkMetrics.valueAt(i).dnsMetrics));
-        }
-        for (int i = 0; i < mWakeupStats.size(); i++) {
-            list.add(IpConnectivityEventBuilder.toProto(mWakeupStats.valueAt(i)));
-        }
-        return list;
     }
 
     private long getTransports(int netId) {

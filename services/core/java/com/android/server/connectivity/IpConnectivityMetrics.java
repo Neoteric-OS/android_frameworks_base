@@ -29,7 +29,6 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.ArrayMap;
-import android.util.Base64;
 import android.util.Log;
 
 import com.android.internal.annotations.GuardedBy;
@@ -38,12 +37,8 @@ import com.android.internal.util.RingBuffer;
 import com.android.internal.util.TokenBucket;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
-import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityEvent;
 
 import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -187,42 +182,6 @@ final public class IpConnectivityMetrics extends SystemService {
         return (tb != null) && !tb.get();
     }
 
-    private String flushEncodedOutput() {
-        final ArrayList<ConnectivityMetricsEvent> events;
-        final int dropped;
-        synchronized (mLock) {
-            events = mBuffer;
-            dropped = mDropped;
-            initBuffer();
-        }
-
-        final List<IpConnectivityEvent> protoEvents = IpConnectivityEventBuilder.toProto(events);
-
-        mDefaultNetworkMetrics.flushEvents(protoEvents);
-
-        if (mNetdListener != null) {
-            mNetdListener.flushStatistics(protoEvents);
-        }
-
-        final byte[] data;
-        try {
-            data = IpConnectivityEventBuilder.serialize(dropped, protoEvents);
-        } catch (IOException e) {
-            Log.e(TAG, "could not serialize events", e);
-            return "";
-        }
-
-        return Base64.encodeToString(data, Base64.DEFAULT);
-    }
-
-    /**
-     * Clear the event buffer and prints its content as a protobuf serialized byte array
-     * inside a base64 encoded string.
-     */
-    private void cmdFlush(PrintWriter pw) {
-        pw.print(flushEncodedOutput());
-    }
-
     /**
      * Print the content of the rolling event buffer in human readable format.
      * Also print network dns/connect statistics and recent default network events.
@@ -239,39 +198,6 @@ final public class IpConnectivityMetrics extends SystemService {
         }
         pw.println("");
         mDefaultNetworkMetrics.listEvents(pw);
-    }
-
-    private List<IpConnectivityEvent> listEventsAsProtos() {
-        final List<IpConnectivityEvent> events = IpConnectivityEventBuilder.toProto(getEvents());
-        if (mNetdListener != null) {
-            events.addAll(mNetdListener.listAsProtos());
-        }
-        events.addAll(mDefaultNetworkMetrics.listEventsAsProto());
-        return events;
-    }
-
-    /*
-     * Print the content of the rolling event buffer in text proto format.
-     */
-    private void cmdListAsTextProto(PrintWriter pw) {
-        listEventsAsProtos().forEach(e -> pw.print(e.toString()));
-    }
-
-    /*
-     * Write the content of the rolling event buffer in proto wire format to the given OutputStream.
-     */
-    private void cmdListAsBinaryProto(OutputStream out) {
-        final int dropped;
-        synchronized (mLock) {
-            dropped = mDropped;
-        }
-        try {
-            byte[] data = IpConnectivityEventBuilder.serialize(dropped, listEventsAsProtos());
-            out.write(data);
-            out.flush();
-        } catch (IOException e) {
-            Log.e(TAG, "could not serialize events", e);
-        }
     }
 
     /*
@@ -312,13 +238,10 @@ final public class IpConnectivityMetrics extends SystemService {
             final String cmd = (args.length > 0) ? args[0] : CMD_DEFAULT;
             switch (cmd) {
                 case CMD_FLUSH:
-                    cmdFlush(pw);
                     return;
                 case CMD_PROTO:
-                    cmdListAsTextProto(pw);
                     return;
                 case CMD_PROTO_BIN:
-                    cmdListAsBinaryProto(new FileOutputStream(fd));
                     return;
                 case CMD_LIST:
                 default:
