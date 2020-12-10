@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65e95acd_ac05e85e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132849
+      },
+      "writtenOn": "2020-12-10T03:18:49Z",
+      "side": 1,
+      "message": "Note: aosp/1522027 is intended to be merged before this CL because there are still old test scheduling depending on the classes being deleted in this CL. Also, the internal version of this CL ag/12805496 should also be merged first because of a few code in vendor/ project has dependency on the classes being deleted in this CL.",
+      "revId": "3e610192b719ec74fa60db1c9966e18298e6d34b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
