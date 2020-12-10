@@ -45,15 +45,16 @@ static void print_usage() {
     fprintf(stderr, "  --javaPackage PACKAGE             the package for the java file.\n");
     fprintf(stderr, "                                    required for java with module\n");
     fprintf(stderr, "  --javaClass CLASS    the class name of the java class.\n");
-    fprintf(stderr, "                       Optional for Java with module.\n");
-    fprintf(stderr, "                       Default is \"StatsLogInternal\"\n");
-    fprintf(stderr, "  --supportQ           Include runtime support for Android Q.\n");
+    fprintf(stderr, "  --minApiLevel API_LEVEL           lowest API level to support.\n");
+    fprintf(stderr, "                                    Default is \"current\".\n");
     fprintf(stderr,
             "  --worksource         Include support for logging WorkSource "
             "objects.\n");
     fprintf(stderr,
-            "  --compileQ           Include compile-time support for Android Q "
-            "(Java only).\n");
+            "  --compileApiLevel API_LEVEL           specify which API level generated code is "
+            "compiled against. (Java only).\n");
+    fprintf(stderr,
+            "                                        Default is \"current\".\n");
 }
 
 /**
@@ -69,9 +70,9 @@ static int run(int argc, char const* const* argv) {
     string moduleName = DEFAULT_MODULE_NAME;
     string cppNamespace = DEFAULT_CPP_NAMESPACE;
     string cppHeaderImport = DEFAULT_CPP_HEADER_IMPORT;
-    bool supportQ = false;
     bool supportWorkSource = false;
-    bool compileQ = false;
+    int minApiLevel = API_LEVEL_CURRENT;
+    int compileApiLevel = API_LEVEL_CURRENT;
 
     int index = 1;
     while (index < argc) {
@@ -134,12 +135,26 @@ static int run(int argc, char const* const* argv) {
                 return 1;
             }
             javaClass = argv[index];
-        } else if (0 == strcmp("--supportQ", argv[index])) {
-            supportQ = true;
         } else if (0 == strcmp("--worksource", argv[index])) {
             supportWorkSource = true;
-        } else if (0 == strcmp("--compileQ", argv[index])) {
-            compileQ = true;
+        } else if (0 == strcmp("--minApiLevel", argv[index])) {
+            index++;
+            if (index >= argc) {
+                print_usage();
+                return 1;
+            }
+            if (0 != strcmp("current", argv[index])) {
+                minApiLevel = atoi(argv[index]);
+            }
+        } else if (0 == strcmp("--compileApiLevel", argv[index])) {
+            index++;
+            if (index >= argc) {
+                print_usage();
+                return 1;
+            }
+            if (0 != strcmp("current", argv[index])) {
+                compileApiLevel = atoi(argv[index]);
+            }
         }
 
         index++;
@@ -149,17 +164,36 @@ static int run(int argc, char const* const* argv) {
         print_usage();
         return 1;
     }
-
-    if (DEFAULT_MODULE_NAME == moduleName && (supportQ || compileQ)) {
-        // Support for Q schema is not needed for default module.
-        fprintf(stderr, "%s cannot support Q schema\n", moduleName.c_str());
+    if (DEFAULT_MODULE_NAME == moduleName &&
+            (minApiLevel != API_LEVEL_CURRENT || compileApiLevel != API_LEVEL_CURRENT)) {
+        // Default module only supports current API level.
+        fprintf(stderr, "%s cannot support older API levels\n", moduleName.c_str());
         return 1;
     }
 
-    if (supportQ && compileQ) {
-        // Runtime Q support is redundant if compile-time Q support is required.
-        fprintf(stderr, "Cannot specify compileQ and supportQ simultaneously.\n");
-        return 1;
+    if (compileApiLevel < API_R) {
+        // Cannot compile against pre-R.
+        fprintf(stderr, "compileApiLevel must be %d or higher.\n", API_R);
+    }
+
+    if (minApiLevel < API_Q) {
+        // Cannot support pre-Q.
+        fprintf(stderr, "minApiLevel must be %d or higher.\n", API_Q);
+    }
+
+    if (minApiLevel == API_LEVEL_CURRENT) {
+        if (minApiLevel > compileApiLevel) {
+            // If minApiLevel is not specified, assume it is the same as compileApiLevel.
+            minApiLevel = compileApiLevel;
+        }
+    } else {
+        if (minApiLevel > compileApiLevel) {
+            // If specified, minApiLevel should always be lower than compileApiLevel.
+            fprintf(stderr, "Invalid minApiLevel or compileApiLevel. If minApiLevel and"
+                    " compileApiLevel are specified, minApiLevel should not be higher"
+                    " than compileApiLevel.\n");
+            return 1;
+        }
     }
 
     // Collate the parameters
@@ -193,7 +227,7 @@ static int run(int argc, char const* const* argv) {
             return 1;
         }
         errorCount = android::stats_log_api_gen::write_stats_log_cpp(
-                out, atoms, attributionDecl, cppNamespace, cppHeaderImport, supportQ);
+                out, atoms, attributionDecl, cppNamespace, cppHeaderImport, minApiLevel);
         fclose(out);
     }
 
@@ -236,14 +270,9 @@ static int run(int argc, char const* const* argv) {
             return 1;
         }
 
-        if (compileQ) {
-            errorCount = android::stats_log_api_gen::write_stats_log_java_q_for_module(
-                    out, atoms, attributionDecl, javaClass, javaPackage, supportWorkSource);
-        } else {
-            errorCount = android::stats_log_api_gen::write_stats_log_java(
-                    out, atoms, attributionDecl, javaClass, javaPackage, supportQ,
-                    supportWorkSource);
-        }
+        errorCount = android::stats_log_api_gen::write_stats_log_java(
+                out, atoms, attributionDecl, javaClass, javaPackage, minApiLevel,
+                supportWorkSource);
 
         fclose(out);
     }
