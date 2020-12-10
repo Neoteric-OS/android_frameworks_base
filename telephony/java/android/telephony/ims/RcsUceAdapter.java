@@ -251,12 +251,14 @@ public class RcsUceAdapter {
      * UCE.
      * @hide
      */
+    @SystemApi
     public static final int PUBLISH_STATE_OK = 1;
 
     /**
      * The hasn't published its capabilities since boot or hasn't gotten any publish response yet.
      * @hide
      */
+    @SystemApi
     public static final int PUBLISH_STATE_NOT_PUBLISHED = 2;
 
     /**
@@ -264,6 +266,7 @@ public class RcsUceAdapter {
      * is related to the fact that the device is not VoLTE provisioned.
      * @hide
      */
+    @SystemApi
     public static final int PUBLISH_STATE_VOLTE_PROVISION_ERROR = 3;
 
     /**
@@ -271,12 +274,14 @@ public class RcsUceAdapter {
      * is related to the fact that the device is not RCS or UCE provisioned.
      * @hide
      */
+    @SystemApi
     public static final int PUBLISH_STATE_RCS_PROVISION_ERROR = 4;
 
     /**
      * The last publish resulted in a "408 Request Timeout" response.
      * @hide
      */
+    @SystemApi
     public static final int PUBLISH_STATE_REQUEST_TIMEOUT = 5;
 
     /**
@@ -286,6 +291,7 @@ public class RcsUceAdapter {
      * Device shall retry with exponential back-off.
      * @hide
      */
+    @SystemApi
     public static final int PUBLISH_STATE_OTHER_ERROR = 6;
 
     /**@hide*/
@@ -306,6 +312,7 @@ public class RcsUceAdapter {
      * network changes.
      * @hide
      */
+    @SystemApi
     public static class PublishStateCallback {
 
         private static class PublishStateBinder extends IRcsUcePublishStateCallback.Stub {
@@ -626,6 +633,7 @@ public class RcsUceAdapter {
      * reason.
      * @hide
      */
+    @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public void registerPublishStateCallback(@NonNull @CallbackExecutor Executor executor,
             @NonNull PublishStateCallback c) throws ImsException {
@@ -669,6 +677,7 @@ public class RcsUceAdapter {
      * reason.
      * @hide
      */
+    @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public void unregisterPublishStateCallback(@NonNull PublishStateCallback c)
             throws ImsException {

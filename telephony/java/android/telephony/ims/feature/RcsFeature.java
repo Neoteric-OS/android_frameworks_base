@@ -24,6 +24,7 @@ import android.annotation.SystemApi;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.telephony.ims.RcsUceAdapter;
+import android.telephony.ims.aidl.CapabilityExchangeAidlWrapper;
 import android.telephony.ims.aidl.ICapabilityExchangeEventListener;
 import android.telephony.ims.aidl.IImsCapabilityCallback;
 import android.telephony.ims.aidl.IImsRcsFeature;
@@ -33,6 +34,7 @@ import android.telephony.ims.aidl.ISubscribeResponseCallback;
 import android.telephony.ims.aidl.RcsOptionsResponseAidlWrapper;
 import android.telephony.ims.aidl.RcsPublishResponseAidlWrapper;
 import android.telephony.ims.aidl.RcsSubscribeResponseAidlWrapper;
+import android.telephony.ims.stub.CapabilityExchangeEventListener;
 import android.telephony.ims.stub.ImsRegistrationImplBase;
 import android.telephony.ims.stub.RcsCapabilityExchangeImplBase;
 import android.telephony.ims.stub.RcsCapabilityExchangeImplBase.OptionsResponseCallback;
@@ -114,15 +116,17 @@ public class RcsFeature extends ImsFeature {
         @Override
         public void setCapabilityExchangeEventListener(
                 @Nullable ICapabilityExchangeEventListener listener) throws RemoteException {
-            executeMethodAsync(() -> mReference.setCapabilityExchangeEventListener(listener),
-                    "setCapabilityExchangeEventListener");
+            CapabilityExchangeEventListener listenerWrapper =
+                    new CapabilityExchangeAidlWrapper(listener);
+            executeMethodAsync(() -> mReference.setCapabilityExchangeEventListener(
+                    mExecutor, listenerWrapper), "setCapabilityExchangeEventListener");
         }
 
         @Override
         public void publishCapabilities(@NonNull String pidfXml,
                 @NonNull IPublishResponseCallback callback) throws RemoteException {
             PublishResponseCallback callbackWrapper = new RcsPublishResponseAidlWrapper(callback);
-            executeMethodAsync(() -> mReference.getCapabilityExchangeImplBaseInternal()
+            executeMethodAsync(() -> mReference.getCapabilityExchangeImplBaseInternal(mExecutor)
                     .publishCapabilities(pidfXml, callbackWrapper), "publishCapabilities");
         }
 
@@ -130,7 +134,7 @@ public class RcsFeature extends ImsFeature {
         public void subscribeForCapabilities(@NonNull List<Uri> uris,
                 @NonNull ISubscribeResponseCallback callback) throws RemoteException {
             SubscribeResponseCallback wrapper = new RcsSubscribeResponseAidlWrapper(callback);
-            executeMethodAsync(() -> mReference.getCapabilityExchangeImplBaseInternal()
+            executeMethodAsync(() -> mReference.getCapabilityExchangeImplBaseInternal(mExecutor)
                     .subscribeForCapabilities(uris, wrapper), "subscribeForCapabilities");
         }
 
@@ -139,7 +143,7 @@ public class RcsFeature extends ImsFeature {
                 @NonNull List<String> myCapabilities, @NonNull IOptionsResponseCallback callback)
                 throws RemoteException {
             OptionsResponseCallback callbackWrapper = new RcsOptionsResponseAidlWrapper(callback);
-            executeMethodAsync(() -> mReference.getCapabilityExchangeImplBaseInternal()
+            executeMethodAsync(() -> mReference.getCapabilityExchangeImplBaseInternal(mExecutor)
                     .sendOptionsCapabilityRequest(contactUri, myCapabilities, callbackWrapper),
                     "sendOptionsCapabilityRequest");
         }
@@ -247,7 +251,7 @@ public class RcsFeature extends ImsFeature {
 
     private final RcsFeatureBinder mImsRcsBinder;
     private RcsCapabilityExchangeImplBase mCapabilityExchangeImpl;
-    private ICapabilityExchangeEventListener mCapExchangeEventListener;
+    private CapabilityExchangeEventListener mCapExchangeEventListener;
 
     /**
      * Create a new RcsFeature.
@@ -352,9 +356,9 @@ public class RcsFeature extends ImsFeature {
      * exchange if it is supported by the device.
      * @hide
      */
-    public @NonNull RcsCapabilityExchangeImplBase createCapabilityExchangeImpl() {
+    public @NonNull RcsCapabilityExchangeImplBase createCapabilityExchangeImpl(Executor executor) {
         // Base Implementation, override to implement functionality
-        return new RcsCapabilityExchangeImplBase();
+        return new RcsCapabilityExchangeImplBase(executor);
     }
 
     /**{@inheritDoc}*/
@@ -377,20 +381,35 @@ public class RcsFeature extends ImsFeature {
         return mImsRcsBinder;
     }
 
-    private void setCapabilityExchangeEventListener(ICapabilityExchangeEventListener listener) {
+    private void setCapabilityExchangeEventListener(@NonNull Executor executor,
+            @Nullable CapabilityExchangeEventListener listener) {
+        // Create the RcsCapabilityExchangeImplBase instance and set the listener to this instance.
+        initRcsCapabilityExchangeImplBase(executor, listener);
+
+        // Check and call the onFeatureReady
         mCapExchangeEventListener = listener;
         if (mCapExchangeEventListener != null) {
             onFeatureReady();
         }
     }
 
-    private RcsCapabilityExchangeImplBase getCapabilityExchangeImplBaseInternal() {
+    private @NonNull RcsCapabilityExchangeImplBase getCapabilityExchangeImplBaseInternal(
+            @NonNull Executor executor) {
         synchronized (mLock) {
             if (mCapabilityExchangeImpl == null) {
-                mCapabilityExchangeImpl = createCapabilityExchangeImpl();
-                mCapabilityExchangeImpl.setEventListener(mCapExchangeEventListener);
+                initRcsCapabilityExchangeImplBase(executor, mCapExchangeEventListener);
             }
             return mCapabilityExchangeImpl;
+        }
+    }
+
+    private void initRcsCapabilityExchangeImplBase(@NonNull Executor executor,
+            @Nullable CapabilityExchangeEventListener listener) {
+        synchronized (mLock) {
+            if (mCapabilityExchangeImpl == null) {
+                mCapabilityExchangeImpl = createCapabilityExchangeImpl(executor);
+            }
+            mCapabilityExchangeImpl.setEventListener(listener);
         }
     }
 }
