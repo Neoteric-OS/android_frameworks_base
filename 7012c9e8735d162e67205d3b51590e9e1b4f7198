@@ -16,6 +16,29 @@
       "message": "Updated to use the include directive instead.",
       "revId": "7012c9e8735d162e67205d3b51590e9e1b4f7198",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d99ace28_eb298229",
+        "filename": "core/java/android/net/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-12-10T13:57:34Z",
+      "side": 1,
+      "message": "LGTM but note for the future that this can be safely omitted when within the same repo.",
+      "range": {
+        "startLine": 3,
+        "startChar": 8,
+        "endLine": 3,
+        "endChar": 32
+      },
+      "revId": "7012c9e8735d162e67205d3b51590e9e1b4f7198",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
