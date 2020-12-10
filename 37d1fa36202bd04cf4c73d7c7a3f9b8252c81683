@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d1d5f3c_9754b040",
+        "filename": "core/java/android/net/CaptivePortalData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-10T02:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c58fab0a_bb9ed4ea",
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22432467_09cf4531",
@@ -31,6 +49,30 @@
       "writtenOn": "2020-12-09T06:05:06Z",
       "side": 1,
       "message": "Nit: rename to CapportApi to disambiguate",
+      "range": {
+        "startLine": 3272,
+        "startChar": 23,
+        "endLine": 3272,
+        "endChar": 36
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c01be04_df6aa27f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3272,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-10T02:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22432467_09cf4531",
       "range": {
         "startLine": 3272,
         "startChar": 23,
@@ -64,6 +106,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2973091_14c68d3f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6101,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-10T02:06:44Z",
+      "side": 1,
+      "message": "Done. Note that for T\u0026C I will create a separate CL.",
+      "parentUuid": "c85d6c2d_445b9d16",
+      "range": {
+        "startLine": 6100,
+        "startChar": 74,
+        "endLine": 6101,
+        "endChar": 35
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "17797386_66bbfdfb",
@@ -77,6 +143,30 @@
       "writtenOn": "2020-12-09T06:05:06Z",
       "side": 1,
       "message": "Can you move this logic to a separate method ? It\u0027s a bit large for updateLinkProperties",
+      "range": {
+        "startLine": 6102,
+        "startChar": 34,
+        "endLine": 6102,
+        "endChar": 54
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dde64c36_64d33851",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6102,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-10T02:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17797386_66bbfdfb",
       "range": {
         "startLine": 6102,
         "startChar": 34,
@@ -110,6 +200,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2ee9284_f34c43e8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6117,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-10T02:06:44Z",
+      "side": 1,
+      "message": "Done. I will make changes for T\u0026C in a separate CL, currently venue information does not captivate the user (it is not allowed to do it according to the spec).",
+      "parentUuid": "b637eceb_6bccbf89",
+      "range": {
+        "startLine": 6117,
+        "startChar": 45,
+        "endLine": 6117,
+        "endChar": 60
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be93d365_86b38fee",
@@ -123,6 +237,30 @@
       "writtenOn": "2020-12-09T06:05:06Z",
       "side": 1,
       "message": "This should be null if the network has no captive portal data at all",
+      "range": {
+        "startLine": 6121,
+        "startChar": 14,
+        "endLine": 6121,
+        "endChar": 34
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eeb359c_9d0a89d5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6121,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-10T02:06:44Z",
+      "side": 1,
+      "message": "Taken care of with the new changes.",
+      "parentUuid": "be93d365_86b38fee",
       "range": {
         "startLine": 6121,
         "startChar": 14,
@@ -156,6 +294,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "284e7a5d_31d56514",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-10T02:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05b2dca0_7c574ed5",
+      "range": {
+        "startLine": 177,
+        "startChar": 42,
+        "endLine": 177,
+        "endChar": 43
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8101630b_96ed9177",
@@ -169,6 +331,30 @@
       "writtenOn": "2020-12-09T06:05:06Z",
       "side": 1,
       "message": "Nit: add comment to explain why it is needed",
+      "range": {
+        "startLine": 2946,
+        "startChar": 24,
+        "endLine": 2946,
+        "endChar": 37
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "649ef10c_ad8187ed",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2946,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-10T02:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8101630b_96ed9177",
       "range": {
         "startLine": 2946,
         "startChar": 24,
@@ -202,6 +388,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7a8fb6d_b6f587d4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2960,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-10T02:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6974631b_a1be45ca",
+      "range": {
+        "startLine": 2960,
+        "startChar": 20,
+        "endLine": 2960,
+        "endChar": 26
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "474ec705_0aea2651",
@@ -215,6 +425,30 @@
       "writtenOn": "2020-12-09T06:05:06Z",
       "side": 1,
       "message": "Nit: rename to notifyCapportApiDataChanged to disambiguate",
+      "range": {
+        "startLine": 2966,
+        "startChar": 26,
+        "endLine": 2966,
+        "endChar": 56
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11b3285b_27644e98",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2966,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-10T02:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "474ec705_0aea2651",
       "range": {
         "startLine": 2966,
         "startChar": 26,
@@ -248,6 +482,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78fe70c1_1627757a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2981,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-10T02:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe70298a_266eaf95",
+      "range": {
+        "startLine": 2981,
+        "startChar": 17,
+        "endLine": 2981,
+        "endChar": 33
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8ba9561_ddbd8c12",
@@ -271,6 +529,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a6753e8_5d4057d7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2982,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-10T02:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8ba9561_ddbd8c12",
+      "range": {
+        "startLine": 2982,
+        "startChar": 35,
+        "endLine": 2982,
+        "endChar": 41
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ac8aba6_a852e958",
@@ -284,6 +566,30 @@
       "writtenOn": "2020-12-09T06:05:06Z",
       "side": 1,
       "message": "Nit: capport",
+      "range": {
+        "startLine": 2986,
+        "startChar": 30,
+        "endLine": 2986,
+        "endChar": 36
+      },
+      "revId": "37d1fa36202bd04cf4c73d7c7a3f9b8252c81683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12934753_715bf3dd",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2986,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-10T02:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ac8aba6_a852e958",
       "range": {
         "startLine": 2986,
         "startChar": 30,
