@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a8fabda_b4d5667b",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2020-12-10T20:29:35Z",
+      "side": 1,
+      "message": "instanceToTeardown?",
+      "range": {
+        "startLine": 374,
+        "startChar": 23,
+        "endLine": 374,
+        "endChar": 39
+      },
+      "revId": "9e90a6b3235a9bb1721cacd4b6c3c1537b2637c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
