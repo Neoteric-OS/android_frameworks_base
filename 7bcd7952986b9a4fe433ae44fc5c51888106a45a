@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3223b291_e67945ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2020-12-10T10:13:47Z",
+      "side": 1,
+      "message": "Please add a \u0027Merged-In\u0027 line denoting the commit in which it was merged in android 11.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 52
+      },
+      "revId": "7bcd7952986b9a4fe433ae44fc5c51888106a45a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
