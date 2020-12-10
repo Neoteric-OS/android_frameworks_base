@@ -112,6 +112,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1fd9566_193d35b7",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-10T00:02:18Z",
+      "side": 1,
+      "message": "Also, moved to GatewayConnectionConfig; it seemed to make sense to have it there, so each VcnGatewayConnection instance has everything it needs in the GatewayConnectionConfig",
+      "parentUuid": "9813f953_393496d7",
+      "range": {
+        "startLine": 53,
+        "startChar": 42,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "fac1dc5a189704e8eba36ba0c68cedd52dd5f45f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "89dc79f8_5a210d12",
