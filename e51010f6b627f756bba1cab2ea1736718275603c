@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0bdf0a1_23c2b9c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132849
+      },
+      "writtenOn": "2020-12-10T19:12:35Z",
+      "side": 1,
+      "message": "Note: This CL in intended to be merged before aosp/1522028 which delete this file.\nThis CL unblocks some of our current work, while aosp/1522028 should be merged later after our test scheduling migration work.",
+      "revId": "e51010f6b627f756bba1cab2ea1736718275603c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
