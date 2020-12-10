@@ -171,61 +171,84 @@ public class RcsUceAdapter {
      * A capability update has been requested due to the Entity Tag (ETag) expiring.
      * @hide
      */
+    @SystemApi
     public static final int CAPABILITY_UPDATE_TRIGGER_ETAG_EXPIRED = 0;
+
     /**
      * A capability update has been requested due to moving to LTE with VoPS disabled.
      * @hide
      */
+    @SystemApi
     public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_LTE_VOPS_DISABLED = 1;
+
     /**
      * A capability update has been requested due to moving to LTE with VoPS enabled.
      * @hide
      */
+    @SystemApi
     public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_LTE_VOPS_ENABLED = 2;
+
     /**
      * A capability update has been requested due to moving to eHRPD.
      * @hide
      */
+    @SystemApi
     public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_EHRPD = 3;
+
     /**
      * A capability update has been requested due to moving to HSPA+.
      * @hide
      */
+    @SystemApi
     public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_HSPAPLUS = 4;
+
     /**
      * A capability update has been requested due to moving to 3G.
      * @hide
      */
+    @SystemApi
     public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_3G = 5;
+
     /**
      * A capability update has been requested due to moving to 2G.
      * @hide
      */
+    @SystemApi
     public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_2G = 6;
+
     /**
      * A capability update has been requested due to moving to WLAN
      * @hide
      */
+    @SystemApi
     public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_WLAN = 7;
+
     /**
      * A capability update has been requested due to moving to IWLAN
      * @hide
      */
+    @SystemApi
     public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_IWLAN = 8;
+
     /**
      * A capability update has been requested but the reason is unknown.
      * @hide
      */
+    @SystemApi
     public static final int CAPABILITY_UPDATE_TRIGGER_UNKNOWN = 9;
+
     /**
      * A capability update has been requested due to moving to 5G NR with VoPS disabled.
      * @hide
      */
+    @SystemApi
     public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_NR5G_VOPS_DISABLED = 10;
+
     /**
      * A capability update has been requested due to moving to 5G NR with VoPS enabled.
      * @hide
      */
+    @SystemApi
     public static final int CAPABILITY_UPDATE_TRIGGER_MOVE_TO_NR5G_VOPS_ENABLED = 11;
 
     /**@hide*/
@@ -251,12 +274,14 @@ public class RcsUceAdapter {
      * UCE.
      * @hide
      */
+    @SystemApi
     public static final int PUBLISH_STATE_OK = 1;
 
     /**
      * The hasn't published its capabilities since boot or hasn't gotten any publish response yet.
      * @hide
      */
+    @SystemApi
     public static final int PUBLISH_STATE_NOT_PUBLISHED = 2;
 
     /**
@@ -264,6 +289,7 @@ public class RcsUceAdapter {
      * is related to the fact that the device is not VoLTE provisioned.
      * @hide
      */
+    @SystemApi
     public static final int PUBLISH_STATE_VOLTE_PROVISION_ERROR = 3;
 
     /**
@@ -271,12 +297,14 @@ public class RcsUceAdapter {
      * is related to the fact that the device is not RCS or UCE provisioned.
      * @hide
      */
+    @SystemApi
     public static final int PUBLISH_STATE_RCS_PROVISION_ERROR = 4;
 
     /**
      * The last publish resulted in a "408 Request Timeout" response.
      * @hide
      */
+    @SystemApi
     public static final int PUBLISH_STATE_REQUEST_TIMEOUT = 5;
 
     /**
@@ -286,6 +314,7 @@ public class RcsUceAdapter {
      * Device shall retry with exponential back-off.
      * @hide
      */
+    @SystemApi
     public static final int PUBLISH_STATE_OTHER_ERROR = 6;
 
     /**@hide*/
@@ -306,6 +335,7 @@ public class RcsUceAdapter {
      * network changes.
      * @hide
      */
+    @SystemApi
     public static class PublishStateCallback {
 
         private static class PublishStateBinder extends IRcsUcePublishStateCallback.Stub {
@@ -588,6 +618,7 @@ public class RcsUceAdapter {
      * becomes inactive. See {@link ImsException#getCode()} for more information on the error codes.
      * @hide
      */
+    @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public @PublishState int getUcePublishState() throws ImsException {
         IImsRcsController imsRcsController = getIImsRcsController();
@@ -626,6 +657,7 @@ public class RcsUceAdapter {
      * reason.
      * @hide
      */
+    @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public void registerPublishStateCallback(@NonNull @CallbackExecutor Executor executor,
             @NonNull PublishStateCallback c) throws ImsException {
@@ -669,6 +701,7 @@ public class RcsUceAdapter {
      * reason.
      * @hide
      */
+    @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public void unregisterPublishStateCallback(@NonNull PublishStateCallback c)
             throws ImsException {
