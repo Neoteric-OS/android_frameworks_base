@@ -166,13 +166,13 @@ public class NetworkManagementServiceTest {
          * Interface class activity.
          */
         unsolListener.onInterfaceClassActivityChanged(true, 1, 1234, 0);
-        expectSoon(observer).interfaceClassDataActivityChanged("1", true, 1234);
+        expectSoon(observer).interfaceClassDataActivityChanged("1", true, 1234, 0);
 
         unsolListener.onInterfaceClassActivityChanged(false, 9, 5678, 0);
-        expectSoon(observer).interfaceClassDataActivityChanged("9", false, 5678);
+        expectSoon(observer).interfaceClassDataActivityChanged("9", false, 5678, 0);
 
         unsolListener.onInterfaceClassActivityChanged(false, 9, 4321, 0);
-        expectSoon(observer).interfaceClassDataActivityChanged("9", false, 4321);
+        expectSoon(observer).interfaceClassDataActivityChanged("9", false, 4321, 0);
 
         /**
          * IP address changes.

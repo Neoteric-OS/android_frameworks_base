@@ -88,8 +88,10 @@ oneway interface INetworkManagementEventObserver {
      * @param iface The interface.
      * @param active  True if the interface is actively transmitting data, false if it is idle.
      * @param tsNanos Elapsed realtime in nanos when the state of the network interface changed.
+     * @param uid Uid of this event, -1 for no uid. It represents the uid that was responsible
+     *            for waking the radio.
      */
-    void interfaceClassDataActivityChanged(String label, boolean active, long tsNanos);
+    void interfaceClassDataActivityChanged(String label, boolean active, long tsNanos, int uid);
 
     /**
      * Information about available DNS servers has been received.
