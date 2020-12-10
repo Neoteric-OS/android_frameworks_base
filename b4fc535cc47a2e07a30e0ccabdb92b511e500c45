@@ -16,6 +16,24 @@
       "message": "I added https://android-review.googlesource.com/c/platform/frameworks/base/+/1507500 to this topic so that this test will run during presubmit. I think without the selinux change, this test will fail since the test app will not be able to connect to the OMS. setenfoce may have to be disabled or the test will have to be moved to OverlayRemountedTest which can preinstall the test app/reboot the device to make the test app a system app.",
       "revId": "b4fc535cc47a2e07a30e0ccabdb92b511e500c45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "418a27d9_595dcb36",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-12-10T13:18:12Z",
+      "side": 1,
+      "message": "D\u0027oh.\n\nI can do the migration to OverlayRemountedTest if you feel that\u0027s the best way forward. Let me know how we should proceed.",
+      "parentUuid": "c4f12278_c3afb9ed",
+      "revId": "b4fc535cc47a2e07a30e0ccabdb92b511e500c45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
