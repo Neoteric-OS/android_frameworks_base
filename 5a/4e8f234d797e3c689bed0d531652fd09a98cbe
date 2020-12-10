@@ -1,0 +1,12 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Nikita Ioffe <ioffe@google.com>
+Code-Review+2: Anton Hansson <hansson@google.com>
+API-Review+1: Nikita Ioffe <ioffe@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Verified+1: Paul Duffin <paulduffin@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Paul Duffin <paulduffin@google.com>
+Submitted-at: Thu, 10 Dec 2020 15:19:13 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1513291
+Project: platform/frameworks/base
+Branch: refs/heads/master
