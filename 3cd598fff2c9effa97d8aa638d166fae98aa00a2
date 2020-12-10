@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "366cd8a4_f93ef96c",
+        "filename": "core/java/android/content/pm/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-12-10T01:42:49Z",
+      "side": 1,
+      "message": "Could you mirror the list used in services/?  Also, potentially simplify and future-proof by globbing:\n\n  per-file *Shortcut* \u003d omakoto@google.com, yamasani@google.com, sunnygoyal@google.com, mett@google.com, pinyaoting@google.com",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 90
+      },
+      "revId": "3cd598fff2c9effa97d8aa638d166fae98aa00a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
