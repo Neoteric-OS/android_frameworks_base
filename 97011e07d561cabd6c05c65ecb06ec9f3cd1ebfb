@@ -50,6 +50,29 @@
       "message": "Hi Vivi,\n\nLooks like it\u0027s breaking something.\n\nHere\u0027s the log from treehugger.\n\n```\nWanted but not invoked:\ntaskChangeNotificationController.notifyActivityRestartAttempt(\n    \u003cany\u003e,\n    \u003cany boolean\u003e,\n    \u003cany boolean\u003e,\n    false\n);\n-\u003e at com.android.server.wm.TaskChangeNotificationController.notifyActivityRestartAttempt(Unknown Source:67)\n\nHowever, there were exactly 2 interactions with this mock:\ntaskChangeNotificationController.notifyActivityRestartAttempt(\n    TaskInfo{userId\u003d0 stackId\u003d3 taskId\u003d3 displayId\u003d0 isRunning\u003dtrue baseIntent\u003dIntent { cmp\u003dcom.foo/.BarActivity1 } baseActivity\u003dComponentInfo{com.foo/com.foo.BarActivity1} topActivity\u003dComponentInfo{com.foo/com.foo.BarActivity1} origActivity\u003dnull realActivity\u003dComponentInfo{com.foo/com.foo.BarActivity1} numActivities\u003d1 lastActiveTime\u003d696451 supportsSplitScreenMultiWindow\u003dtrue resizeMode\u003d2 isResizeable\u003dtrue token\u003dWCT{RemoteToken{e77117c Task{91a606f #3 visible\u003dtrue type\u003dstandard mode\u003dfullscreen translucent\u003dtrue I\u003dcom.foo/.BarActivity1 U\u003d0 StackId\u003d3 sz\u003d1}}} topActivityType\u003d1 pictureInPictureParams\u003dnull topActivityInfo\u003dActivityInfo{6233f57 com.foo.BarActivity1} launchCookies\u003d[] letterboxActivityBounds\u003dnull positionInParent\u003dPoint(0, 0) parentTaskId\u003d-1 parentBounds\u003dRect(0, 0 - 720, 1280) isFocused\u003dfalse isVisible\u003dtrue},\n    true,\n    false,\n    true\n);\n-\u003e at com.android.server.wm.TaskChangeNotificationController.notifyActivityRestartAttempt(Unknown Source:67)\n\ntaskChangeNotificationController.notifyActivityRestartAttempt(\n    TaskInfo{userId\u003d0 stackId\u003d2 taskId\u003d2 displayId\u003d0 isRunning\u003dtrue baseIntent\u003dIntent { cmp\u003dcom.foo/.BarActivity0 } baseActivity\u003dComponentInfo{com.foo/com.foo.BarActivity0} topActivity\u003dComponentInfo{com.foo/com.foo.BarActivity0} origActivity\u003dnull realActivity\u003dComponentInfo{com.foo/com.foo.BarActivity0} numActivities\u003d1 lastActiveTime\u003d696036 supportsSplitScreenMultiWindow\u003dtrue resizeMode\u003d2 isResizeable\u003dtrue token\u003dWCT{RemoteToken{3d117d8 Task{9f156bb #2 visible\u003dtrue type\u003dstandard mode\u003dfullscreen translucent\u003dtrue I\u003dcom.foo/.BarActivity0 U\u003d0 StackId\u003d2 sz\u003d1}}} topActivityType\u003d1 pictureInPictureParams\u003dnull topActivityInfo\u003dActivityInfo{f79672d com.foo.BarActivity0} launchCookies\u003d[] letterboxActivityBounds\u003dnull positionInParent\u003dPoint(0, 0) parentTaskId\u003d-1 parentBounds\u003dRect(0, 0 - 720, 1280) isFocused\u003dfalse isVisible\u003dfalse},\n    true,\n    false,\n    true\n);\n-\u003e at com.android.server.wm.TaskChangeNotificationController.notifyActivityRestartAttempt(Unknown Source:67)\n\n\n\tat com.android.server.wm.TaskChangeNotificationController.notifyActivityRestartAttempt(Unknown Source:67)\n\tat com.android.server.wm.ActivityStarterTests.testWasVisibleInRestartAttempt(ActivityStarterTests.java:910)\n\tat org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)\n\tat org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)\n\tat org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:52)\n\tat org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)\n\tat com.android.server.wm.WindowManagerGlobalLockRule$StatementWrapper.evaluate(WindowManagerGlobalLockRule.java:134)\n\tat org.junit.internal.runners.statements.FailOnTimeout$CallableStatement.call(FailOnTimeout.java:148)\n\tat org.junit.internal.runners.statements.FailOnTimeout$CallableStatement.call(FailOnTimeout.java:142)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.lang.Thread.run(Thread.java:920)\n```",
       "revId": "97011e07d561cabd6c05c65ecb06ec9f3cd1ebfb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cce962c_8c666fe2",
+        "filename": "services/core/java/com/android/server/wm/ActivityStarter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2020-12-10T10:41:58Z",
+      "side": 1,
+      "message": "Can this be \"top !\u003d null \u0026\u0026 top.isVisibleRequested()\"?",
+      "range": {
+        "startLine": 1485,
+        "startChar": 36,
+        "endLine": 1485,
+        "endChar": 67
+      },
+      "revId": "97011e07d561cabd6c05c65ecb06ec9f3cd1ebfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
