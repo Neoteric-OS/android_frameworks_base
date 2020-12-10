@@ -51,6 +51,23 @@
       "parentUuid": "b278a04d_3cc88e55",
       "revId": "34d33cdc200e17523385be340a9fe24e2519695f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c764214_f2ea239d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-12-10T11:09:06Z",
+      "side": 1,
+      "message": "Ping Nikita for ARV+1",
+      "revId": "34d33cdc200e17523385be340a9fe24e2519695f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
