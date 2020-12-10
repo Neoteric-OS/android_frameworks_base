@@ -20,20 +20,23 @@ import android.annotation.IntDef;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
+import android.annotation.SystemApi;
 import android.net.Uri;
 import android.telephony.ims.ImsException;
-import android.telephony.ims.aidl.ICapabilityExchangeEventListener;
 import android.util.Log;
 import android.util.Pair;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 /**
  * Base class for different types of Capability exchange.
  * @hide
  */
+@SystemApi
 public class RcsCapabilityExchangeImplBase {
 
     private static final String LOG_TAG = "RcsCapExchangeImplBase";
@@ -70,13 +73,11 @@ public class RcsCapabilityExchangeImplBase {
 
     /**
      * Network connection is lost.
-     * @hide
      */
     public static final int COMMAND_CODE_LOST_NETWORK_CONNECTION = 6;
 
     /**
      * Requested feature/resource is not supported.
-     * @hide
      */
     public static final int COMMAND_CODE_NOT_SUPPORTED = 7;
 
@@ -127,7 +128,6 @@ public class RcsCapabilityExchangeImplBase {
          * when the Telephony stack has crashed.
          */
         void onCommandError(@CommandCode int code) throws ImsException;
-
 
         /**
          * Provide the framework with a subsequent network response update to
@@ -224,12 +224,11 @@ public class RcsCapabilityExchangeImplBase {
          * information.
          *
          * @throws ImsException If this {@link RcsCapabilityExchangeImplBase} instance is
-         * not currently
-         * connected to the framework. This can happen if the {@link RcsFeature} is not
-         * {@link ImsFeature#STATE_READY} and the {@link RcsFeature} has not received
-         * the {@link ImsFeature#onFeatureReady()} callback. This may also happen in
-         * rare cases when the
-         * Telephony stack has crashed.
+         * not currently connected to the framework.
+         * This can happen if the {@link RcsFeature} is not {@link ImsFeature#STATE_READY} and the
+         * {@link RcsFeature} {@link ImsFeature#STATE_READY} and the {@link RcsFeature} has not
+         * received the {@link ImsFeature#onFeatureReady()} callback. This may also happen in
+         * rare cases when the Telephony stack has crashed.
          */
         void onNotifyCapabilitiesUpdate(@NonNull List<String> pidfXmls) throws ImsException;
 
@@ -250,23 +249,37 @@ public class RcsCapabilityExchangeImplBase {
          * This allows the framework to know that there will no longer be any
          * capability updates for the requested operationToken.
          */
-        void onTerminated(String reason, long retryAfterMilliseconds) throws ImsException;
+        void onTerminated(@NonNull String reason, long retryAfterMilliseconds) throws ImsException;
     }
 
+    private final Executor mBinderExecutor;
+    private CapabilityExchangeEventListener mListener;
 
-    private ICapabilityExchangeEventListener mListener;
+    /**
+     * Create a new RcsCapabilityExchangeImplBase instance.
+     *
+     * @param executor The executor that remote calls from the framework will be called on.
+     */
+    public RcsCapabilityExchangeImplBase(@NonNull Executor executor) {
+        if (executor == null) {
+            throw new IllegalArgumentException("executor must not be null");
+        }
+        mBinderExecutor = executor;
+    }
 
     /**
      * Set the event listener to send the request to Framework.
      */
-    public void setEventListener(ICapabilityExchangeEventListener listener) {
-        mListener = listener;
+    // executor used is defined in the constructor.
+    @SuppressLint("ExecutorRegistration")
+    public void setEventListener(@Nullable CapabilityExchangeEventListener listener) {
+        mBinderExecutor.execute(() -> mListener = listener);
     }
 
     /**
-     * Get the event listener.
+     * Get the capability exchange event listener.
      */
-    public ICapabilityExchangeEventListener getEventListener() {
+    public @Nullable CapabilityExchangeEventListener getEventListener() {
         return mListener;
     }
 
@@ -285,6 +298,8 @@ public class RcsCapabilityExchangeImplBase {
      * capabilities for.
      * @param cb The callback of the subscribe request.
      */
+    // executor used is defined in the constructor.
+    @SuppressLint("ExecutorRegistration")
     public void subscribeForCapabilities(@NonNull List<Uri> uris,
             @NonNull SubscribeResponseCallback cb) {
         // Stub - to be implemented by service
@@ -305,6 +320,8 @@ public class RcsCapabilityExchangeImplBase {
      * to the carrier’s presence server.
      * @param cb The callback of the publish request
      */
+    // executor used is defined in the constructor.
+    @SuppressLint("ExecutorRegistration")
     public void publishCapabilities(@NonNull String pidfXml, @NonNull PublishResponseCallback cb) {
         // Stub - to be implemented by service
         Log.w(LOG_TAG, "publishCapabilities called with no implementation.");
@@ -325,6 +342,8 @@ public class RcsCapabilityExchangeImplBase {
      * @param myCapabilities The capabilities of this device to send to the remote user.
      * @param callback The callback of this request which is sent from the remote user.
      */
+    // executor used is defined in the constructor.
+    @SuppressLint("ExecutorRegistration")
     public void sendOptionsCapabilityRequest(@NonNull Uri contactUri,
             @NonNull List<String> myCapabilities, @NonNull OptionsResponseCallback callback) {
         // Stub - to be implemented by service
