@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f83618a_93cdc0f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-10T08:11:16Z",
+      "side": 1,
+      "message": "The car tests failing due to the device not booting is b/175202655.",
+      "revId": "e4e9d1f97e1d1ba7424eaef94623970e6600d8c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
