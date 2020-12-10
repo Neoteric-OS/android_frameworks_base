@@ -19,6 +19,8 @@ package android.telephony.ims;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
+import android.annotation.SystemApi;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -33,6 +35,7 @@ import java.util.List;
  * Contains the User Capability Exchange capabilities corresponding to a contact's URI.
  * @hide
  */
+@SystemApi
 public final class RcsContactUceCapability implements Parcelable {
 
     /** Contains presence information associated with the contact */
@@ -107,6 +110,7 @@ public final class RcsContactUceCapability implements Parcelable {
     /**
      * The base class of {@link OptionsBuilder} and {@link PresenceBuilder}
      */
+    @SuppressLint("StaticFinalBuilder")
     public static abstract class RcsUcsCapabilityBuilder {
         public abstract @NonNull RcsContactUceCapability build();
     }
@@ -144,7 +148,7 @@ public final class RcsContactUceCapability implements Parcelable {
          * @param tag the supported feature tag
          * @return this OptionBuilder
          */
-        public @NonNull OptionsBuilder addFeatureTag(String tag) {
+        public @NonNull OptionsBuilder addFeatureTag(@NonNull String tag) {
             mCapabilities.mFeatureTags.add(tag);
             return this;
         }
@@ -154,7 +158,7 @@ public final class RcsContactUceCapability implements Parcelable {
          * @param tags the list of the supported feature tags
          * @return this OptionBuilder
          */
-        public @NonNull OptionsBuilder addFeatureTags(List<String> tags) {
+        public @NonNull OptionsBuilder addFeatureTags(@NonNull List<String> tags) {
             mCapabilities.mFeatureTags.addAll(tags);
             return this;
         }
@@ -195,7 +199,7 @@ public final class RcsContactUceCapability implements Parcelable {
          * @param tuple The {@link RcsContactPresenceTuple} to be added into.
          * @return this PresenceBuilder
          */
-        public @NonNull PresenceBuilder addCapabilityTuple(RcsContactPresenceTuple tuple) {
+        public @NonNull PresenceBuilder addCapabilityTuple(@NonNull RcsContactPresenceTuple tuple) {
             mCapabilities.mPresenceTuples.add(tuple);
             return this;
         }
@@ -205,7 +209,8 @@ public final class RcsContactUceCapability implements Parcelable {
          * @param tuples The list of the {@link RcsContactPresenceTuple} to be added into.
          * @return this PresenceBuilder
          */
-        public @NonNull PresenceBuilder addCapabilityTuples(List<RcsContactPresenceTuple> tuples) {
+        public @NonNull PresenceBuilder addCapabilityTuples(
+                @NonNull List<RcsContactPresenceTuple> tuples) {
             mCapabilities.mPresenceTuples.addAll(tuples);
             return this;
         }
@@ -314,7 +319,7 @@ public final class RcsContactUceCapability implements Parcelable {
      * Note: this is only populated if {@link #getCapabilityMechanism} is
      * {@link CAPABILITY_MECHANISM_PRESENCE}
      */
-    public @Nullable RcsContactPresenceTuple getPresenceTuple(String serviceId) {
+    public @Nullable RcsContactPresenceTuple getPresenceTuple(@NonNull String serviceId) {
         if (mCapabilityMechanism != CAPABILITY_MECHANISM_PRESENCE) {
             return null;
         }
