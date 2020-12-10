@@ -33,6 +33,10 @@ using namespace std;
 const string DEFAULT_CPP_NAMESPACE = "android,util";
 const string DEFAULT_CPP_HEADER_IMPORT = "statslog.h";
 
+const int API_LEVEL_CURRENT = 10000;
+const int API_Q = 29;
+const int API_R = 30;
+
 const int JAVA_MODULE_REQUIRES_FLOAT = 0x01;
 const int JAVA_MODULE_REQUIRES_ATTRIBUTION = 0x02;
 const int JAVA_MODULE_REQUIRES_KEY_VALUE_PAIRS = 0x04;
