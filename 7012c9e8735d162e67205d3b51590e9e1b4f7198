@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa42bae8_dce3b41e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2020-12-10T08:22:05Z",
+      "side": 1,
+      "message": "Updated to use the include directive instead.",
+      "revId": "7012c9e8735d162e67205d3b51590e9e1b4f7198",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
