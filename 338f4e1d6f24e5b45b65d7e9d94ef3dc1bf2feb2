@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "587448da_47ffa420",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3553,
+      "author": {
+        "id": 1377660
+      },
+      "writtenOn": "2020-12-11T15:14:07Z",
+      "side": 0,
+      "message": "or, we can also improve this to : destroy the native object except for sending the command \"BC_FREE_BUFFER\". But, is it worth all the trouble?",
+      "range": {
+        "startLine": 3553,
+        "startChar": 8,
+        "endLine": 3553,
+        "endChar": 15
+      },
+      "revId": "338f4e1d6f24e5b45b65d7e9d94ef3dc1bf2feb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
