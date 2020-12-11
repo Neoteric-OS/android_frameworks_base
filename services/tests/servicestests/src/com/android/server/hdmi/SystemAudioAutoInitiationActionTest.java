@@ -276,7 +276,6 @@ public class SystemAudioAutoInitiationActionTest {
         mHdmiControlService.handleCecCommand(reportSystemAudioMode);
         mTestLooper.dispatchAll();
 
-        assertThat(mHdmiCecLocalDeviceTv.getActions(SystemAudioActionFromTv.class)).isEmpty();
         assertThat(mHdmiControlService.isSystemAudioActivated()).isFalse();
     }
 
