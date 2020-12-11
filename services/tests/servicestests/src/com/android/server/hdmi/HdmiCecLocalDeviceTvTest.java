@@ -197,6 +197,7 @@ public class HdmiCecLocalDeviceTvTest {
         mNativeWrapper.clearResultMessages();
     }
 
+
     @Test
     public void initialPowerStateIsStandby() {
         assertThat(mHdmiCecLocalDeviceTv.getPowerStatus()).isEqualTo(
@@ -591,6 +592,9 @@ public class HdmiCecLocalDeviceTvTest {
 
     @Test
     public void handleReportAudioStatus_SamOnArcOff_setStreamVolumeNotCalled() {
+        mHdmiControlService.getHdmiCecConfig().setIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_SYSTEM_AUDIO_CONTROL,
+                HdmiControlManager.SYSTEM_AUDIO_CONTROL_ENABLED);
         // Emulate Audio device on port 0x1000 (does not support ARC)
         mNativeWrapper.setPortConnectionStatus(1, true);
         HdmiCecMessage hdmiCecMessage = HdmiCecMessageBuilder.buildReportPhysicalAddressCommand(

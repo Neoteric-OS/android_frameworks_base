@@ -90,15 +90,9 @@ final class SystemAudioAutoInitiationAction extends HdmiCecFeatureAction {
         // If System Audio Control feature is enabled, turn on system audio mode when new AVR is
         // detected. Otherwise, turn off system audio mode.
         boolean targetSystemAudioMode = tv().isSystemAudioControlFeatureEnabled();
-        if (currentSystemAudioMode != targetSystemAudioMode) {
-            // Start System Audio Control feature actions only if necessary.
-            addAndStartAction(
-                    new SystemAudioActionFromTv(tv(), mAvrAddress, targetSystemAudioMode, null));
-        } else {
-            // If AVR already has correct system audio mode, update target system audio mode
-            // immediately rather than starting feature action.
-            tv().setSystemAudioMode(targetSystemAudioMode);
-        }
+        // Update AVR's system audio mode regardless of AVR's status.
+        addAndStartAction(
+                new SystemAudioActionFromTv(tv(), mAvrAddress, targetSystemAudioMode, null));
         finish();
     }
 
