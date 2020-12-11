@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89a6c901_320ab3cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-12-11T02:59:31Z",
+      "side": 1,
+      "message": "Separe the ConnectiivtyService change to aosp/1523340 because we are still not clear for VpnTest part but vpn should be outside of module now.",
+      "revId": "c8304ca648bdca5350824bcd3df585dfa7ab6ba6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "811ef257_efba0ffe",
