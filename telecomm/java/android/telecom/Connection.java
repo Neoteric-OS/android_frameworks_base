@@ -527,9 +527,15 @@ public abstract class Connection extends Conferenceable {
      */
     public static final int PROPERTY_IS_ADHOC_CONFERENCE = 1 << 12;
 
+    /**
+     * Set by the framework to indicate that a call is a self-managed call and want to expose itself
+     * to all {@code InCallService} that declares {@code
+     * TelecomManager#EXTRA_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE}
+     */
+    public static final int PROPERTY_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE = 1 << 13;
 
     //**********************************************************************************************
-    // Next PROPERTY value: 1<<13
+    // Next PROPERTY value: 1<<14
     //**********************************************************************************************
 
     /**
@@ -1097,6 +1103,12 @@ public abstract class Connection extends Conferenceable {
 
         if ((properties & PROPERTY_IS_ADHOC_CONFERENCE) == PROPERTY_IS_ADHOC_CONFERENCE) {
             builder.append(isLong ? " PROPERTY_IS_ADHOC_CONFERENCE" : " adhoc_conf");
+        }
+
+        if ((properties & PROPERTY_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE)
+                == PROPERTY_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE) {
+            builder.append(isLong ? " PROPERTY_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE" :
+                    "add_self");
         }
 
         builder.append("]");
@@ -2989,6 +3001,20 @@ public abstract class Connection extends Conferenceable {
      * @param state The new connection audio state.
      */
     public void onCallAudioStateChanged(CallAudioState state) {}
+
+    /**
+     * Inform this Connection when it will or will not be tracked by an {@link InCallService}
+     * associated with the current default dialer app.
+     * This is primarily intended for use by Connections reported by self-managed
+     * {@link ConnectionService} which typically maintain their own UI.
+     *
+     * @param isTracked Indicates whether an InCallService is currently tracking the self-managed
+     *                  call.
+     * @param isAlternativeUiShowing Indicates whether an {@link InCallService} which provide a UI
+     *                               is currently aware of the call.
+     */
+    public void onInCallServiceTrackingChanged(boolean isTracked,
+            boolean isAlternativeUiShowing) {}
 
     /**
      * Notifies this Connection of an internal state change. This method is called after the

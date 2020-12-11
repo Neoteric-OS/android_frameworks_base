@@ -38945,6 +38945,7 @@ package android.telecom {
     field public static final int DIRECTION_INCOMING = 0; // 0x0
     field public static final int DIRECTION_OUTGOING = 1; // 0x1
     field public static final int DIRECTION_UNKNOWN = -1; // 0xffffffff
+    field public static final int PROPERTY_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE = 16384; // 0x4000
     field public static final int PROPERTY_ASSISTED_DIALING = 512; // 0x200
     field public static final int PROPERTY_CONFERENCE = 1; // 0x1
     field public static final int PROPERTY_EMERGENCY_CALLBACK_MODE = 4; // 0x4
@@ -39126,6 +39127,7 @@ package android.telecom {
     method public void onExtrasChanged(android.os.Bundle);
     method public void onHandoverComplete();
     method public void onHold();
+    method public void onInCallServiceTrackingChanged(boolean, boolean);
     method public void onPlayDtmfTone(char);
     method public void onPostDialContinue(boolean);
     method public void onPullExternalCall();
@@ -39239,6 +39241,7 @@ package android.telecom {
     field public static final String EXTRA_IS_RTT_AUDIO_PRESENT = "android.telecom.extra.IS_RTT_AUDIO_PRESENT";
     field public static final String EXTRA_LAST_FORWARDED_NUMBER = "android.telecom.extra.LAST_FORWARDED_NUMBER";
     field public static final String EXTRA_SIP_INVITE = "android.telecom.extra.SIP_INVITE";
+    field public static final int PROPERTY_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE = 8192; // 0x2000
     field public static final int PROPERTY_ASSISTED_DIALING = 512; // 0x200
     field public static final int PROPERTY_HAS_CDMA_VOICE_PRIVACY = 32; // 0x20
     field public static final int PROPERTY_HIGH_DEF_AUDIO = 4; // 0x4
@@ -39476,6 +39479,7 @@ package android.telecom {
     field public static final int CAPABILITY_VIDEO_CALLING = 8; // 0x8
     field public static final int CAPABILITY_VIDEO_CALLING_RELIES_ON_PRESENCE = 256; // 0x100
     field @NonNull public static final android.os.Parcelable.Creator<android.telecom.PhoneAccount> CREATOR;
+    field public static final String EXTRA_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE = "android.telecom.extra.ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE";
     field public static final String EXTRA_ALWAYS_USE_VOIP_AUDIO_MODE = "android.telecom.extra.ALWAYS_USE_VOIP_AUDIO_MODE";
     field public static final String EXTRA_CALL_SUBJECT_CHARACTER_ENCODING = "android.telecom.extra.CALL_SUBJECT_CHARACTER_ENCODING";
     field public static final String EXTRA_CALL_SUBJECT_MAX_LENGTH = "android.telecom.extra.CALL_SUBJECT_MAX_LENGTH";

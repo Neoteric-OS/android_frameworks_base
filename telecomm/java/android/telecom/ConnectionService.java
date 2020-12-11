@@ -137,6 +137,7 @@ public abstract class ConnectionService extends Service {
     private static final String SESSION_HOLD = "CS.h";
     private static final String SESSION_UNHOLD = "CS.u";
     private static final String SESSION_CALL_AUDIO_SC = "CS.cASC";
+    private static final String SESSION_IN_CALL_SERVICE_TRACKING_CHANGED = "CS.iCSTC";
     private static final String SESSION_PLAY_DTMF = "CS.pDT";
     private static final String SESSION_STOP_DTMF = "CS.sDT";
     private static final String SESSION_CONFERENCE = "CS.c";
@@ -200,6 +201,7 @@ public abstract class ConnectionService extends Service {
     private static final int MSG_ADD_PARTICIPANT = 39;
     private static final int MSG_EXPLICIT_CALL_TRANSFER = 40;
     private static final int MSG_EXPLICIT_CALL_TRANSFER_CONSULTATIVE = 41;
+    private static final int MSG_ON_IN_CALL_SERVICE_TRACKING_CHANGED = 42;
 
     private static Connection sNullConnection;
 
@@ -578,6 +580,23 @@ public abstract class ConnectionService extends Service {
                 args.arg2 = callAudioState;
                 args.arg3 = Log.createSubsession();
                 mHandler.obtainMessage(MSG_ON_CALL_AUDIO_STATE_CHANGED, args).sendToTarget();
+            } finally {
+                Log.endSession();
+            }
+        }
+
+        @Override
+        public void onInCallServiceTrackingChanged(String callId, boolean isTracked,
+                boolean isAlternativeUiShowing, Session.Info sessionInfo) {
+            Log.startSession(sessionInfo, SESSION_IN_CALL_SERVICE_TRACKING_CHANGED);
+            try {
+                SomeArgs args = SomeArgs.obtain();
+                args.arg1 = callId;
+                args.arg2 = isTracked;
+                args.arg3 = isAlternativeUiShowing;
+                args.arg4 = Log.createSubsession();
+                mHandler.obtainMessage(MSG_ON_IN_CALL_SERVICE_TRACKING_CHANGED, args)
+                        .sendToTarget();
             } finally {
                 Log.endSession();
             }
@@ -1220,6 +1239,21 @@ public abstract class ConnectionService extends Service {
                         String callId = (String) args.arg1;
                         CallAudioState audioState = (CallAudioState) args.arg2;
                         onCallAudioStateChanged(callId, new CallAudioState(audioState));
+                    } finally {
+                        args.recycle();
+                        Log.endSession();
+                    }
+                    break;
+                }
+                case MSG_ON_IN_CALL_SERVICE_TRACKING_CHANGED : {
+                    SomeArgs args = (SomeArgs) msg.obj;
+                    Log.continueSession((Session) args.arg4,
+                            SESSION_HANDLER + SESSION_IN_CALL_SERVICE_TRACKING_CHANGED);
+                    try {
+                        String callId = (String) args.arg1;
+                        boolean isTracked = (boolean) args.arg2;
+                        boolean isAlternativeUiShowing = (boolean) args.arg3;
+                        onInCallServiceTrackingChanged(callId, isTracked, isAlternativeUiShowing);
                     } finally {
                         args.recycle();
                         Log.endSession();
@@ -1928,10 +1962,12 @@ public abstract class ConnectionService extends Service {
                 request.getExtras().getBoolean(TelecomManager.EXTRA_IS_HANDOVER, false);
         boolean isHandover = request.getExtras() != null && request.getExtras().getBoolean(
                 TelecomManager.EXTRA_IS_HANDOVER_CONNECTION, false);
-        Log.d(this, "createConnection, callManagerAccount: %s, callId: %s, request: %s, " +
-                        "isIncoming: %b, isUnknown: %b, isLegacyHandover: %b, isHandover: %b",
-                callManagerAccount, callId, request, isIncoming, isUnknown, isLegacyHandover,
-                isHandover);
+        boolean addSelfManaged = request.getExtras() != null && request.getExtras().getBoolean(
+                        PhoneAccount.EXTRA_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE, false);
+        Log.i(this, "createConnection, callManagerAccount: %s, callId: %s, request: %s, "
+                        + "isIncoming: %b, isUnknown: %b, isLegacyHandover: %b, isHandover: %b, "
+                        + " addSelfManaged: %b", callManagerAccount, callId, request, isIncoming,
+                isUnknown, isLegacyHandover, isHandover, addSelfManaged);
 
         Connection connection = null;
         if (isHandover) {
@@ -1986,6 +2022,10 @@ public abstract class ConnectionService extends Service {
         // local state within the ConnectionService matches the default we assume in Telecom.
         if (isSelfManaged) {
             connection.setAudioModeIsVoip(true);
+            if (addSelfManaged) {
+                connection.setConnectionProperties(connection.getConnectionProperties()
+                        | Connection.PROPERTY_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE);
+            }
         }
         connection.setTelecomCallId(callId);
         PhoneAccountHandle phoneAccountHandle = connection.getPhoneAccountHandle() == null
@@ -2203,6 +2243,16 @@ public abstract class ConnectionService extends Service {
         } else {
             findConferenceForAction(callId, "onCallAudioStateChanged").setCallAudioState(
                     callAudioState);
+        }
+    }
+
+    private void onInCallServiceTrackingChanged(String callId, boolean isTracked,
+            boolean isAlternativeUiShowing) {
+        Log.i(this, "onInCallServiceTrackingChanged %s %s %s", callId, isTracked,
+                isAlternativeUiShowing);
+        if (mConnectionById.containsKey(callId)) {
+            findConnectionForAction(callId, "onInCallServiceTrackingChanged")
+                    .onInCallServiceTrackingChanged(isTracked, isAlternativeUiShowing);
         }
     }
 

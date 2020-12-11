@@ -136,4 +136,7 @@ oneway interface IConnectionService {
             int error, in Session.Info sessionInfo);
 
     void handoverComplete(String callId, in Session.Info sessionInfo);
+
+    void onInCallServiceTrackingChanged(String callId, boolean isTracked,
+     boolean isAlternativeUiShowing, in Session.Info sessionInfo);
 }

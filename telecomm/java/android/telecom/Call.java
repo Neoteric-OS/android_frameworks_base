@@ -607,8 +607,15 @@ public final class Call {
          */
         public static final int PROPERTY_IS_ADHOC_CONFERENCE = 0x00002000;
 
+        /**
+         * Indicates that the call is a self-managed call and want to expose itself to all
+         * {@link InCallService} that declares
+         * {@link TelecomManager#METADATA_INCLUDE_SELF_MANAGED_CALLS}
+         */
+        public static final int PROPERTY_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE = 0x00004000;
+
         //******************************************************************************************
-        // Next PROPERTY value: 0x00004000
+        // Next PROPERTY value: 0x00008000
         //******************************************************************************************
 
         private final String mTelecomCallId;
@@ -797,6 +804,9 @@ public final class Call {
             }
             if (hasProperty(properties, PROPERTY_IS_ADHOC_CONFERENCE)) {
                 builder.append(" PROPERTY_IS_ADHOC_CONFERENCE");
+            }
+            if (hasProperty(properties, PROPERTY_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE)) {
+                builder.append(" PROPERTY_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE");
             }
             builder.append("]");
             return builder.toString();
