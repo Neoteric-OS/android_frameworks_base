@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f97e76d_b1da1a1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-11T06:40:53Z",
+      "side": 1,
+      "message": "Generally looks good to me, with a few remaining comments to look at.\nAdding Jean to review the API changes for CaptivePortalData as a next step.",
+      "revId": "c3c57b39e8f603ead980c9da97d1fd8b553a3ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63b5a1bc_1d669272",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6148,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-11T06:40:53Z",
+      "side": 1,
+      "message": "This one is tricky: it could be always the capport API refresh time if available, but the max of both refresh times would also make sense (\"last time at which any attribute was updated\").\n\nProblem is: this field is used to document the time at which the ByteLimit and the expiryTime was computed. So if capport data says there\u0027s X bytes available at T1, and the network agent gives a venue URL refreshed at T2, we should not output \"X bytes available at T2\", or vice-versa.\n\nI think one way to fix this would be to say that NetworkAgent \"bytes remaining\" and \"expiry time\" will be ignored if either of these is present in the capport API. So:\n\n  if (apiData.getExpiryTimeMillis() \u003e\u003d 0 || apiData.getBytesRemaining() \u003e\u003d 0) {\n      // Expiry time, bytes remaining, refresh time all need to come from the same source,\n      // otherwise data would be inconsistent. Prefer the capport API info if present,\n      // as it can generally be refreshed more often.\n      builder.setExpiryTimeMillis(apiData.getExpiryTimeMillis());\n      builder.setBytesRemaining(apiData.getByteLimit());\n      builder.setRefreshTime(apiData.getRefreshTimeMillis());\n  } else if (naData.getExpiryTimeMillis() \u003c 0 \u0026\u0026 naData.getBytesRemaining \u003c 0) {\n      // No source has time / bytes remaining information: surface the newest refresh time\n      // for other fields\n      builder.setRefreshTime(\n          Math.max(naData.getRefreshTimeMillis(), apiData.getRefreshTimeMillis()));\n  }",
+      "range": {
+        "startLine": 6148,
+        "startChar": 20,
+        "endLine": 6148,
+        "endChar": 40
+      },
+      "revId": "c3c57b39e8f603ead980c9da97d1fd8b553a3ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8071265_28890b90",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6154,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-11T06:40:53Z",
+      "side": 1,
+      "message": "Why ? If we do that, I think we should do the same with the portal URL and isCaptive, but passpoint doesn\u0027t seem to have a way to update them over time.\nI think in the most common case we don\u0027t expect both to be set or different anyway; is it a problem to keep this consistent with other attributes ?",
+      "range": {
+        "startLine": 6154,
+        "startChar": 11,
+        "endLine": 6154,
+        "endChar": 70
+      },
+      "revId": "c3c57b39e8f603ead980c9da97d1fd8b553a3ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd2a461d_72e280fe",
+        "filename": "tests/net/common/java/android/net/CaptivePortalDataTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-11T06:40:53Z",
+      "side": 1,
+      "message": "Nit: also try:\nassertNotEqualsAfterChange { it.setVenueFriendlyName(null) }\n\nThis could theoretically catch NPEs",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 87
+      },
+      "revId": "c3c57b39e8f603ead980c9da97d1fd8b553a3ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbe8edfd_e50124c7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2946,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-11T06:40:53Z",
+      "side": 1,
+      "message": "Nit: add \"with sensitive (captive portal) data\"\n\nNetworkCallbacks don\u0027t require privileged permissions; they\u0027re just needed for getting CaptivePortalData in the LinkProperties, because they are privacy sensitive (contains the portal URL and venue URL, which can help identify user location)",
+      "range": {
+        "startLine": 2946,
+        "startChar": 97,
+        "endLine": 2946,
+        "endChar": 98
+      },
+      "revId": "c3c57b39e8f603ead980c9da97d1fd8b553a3ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
