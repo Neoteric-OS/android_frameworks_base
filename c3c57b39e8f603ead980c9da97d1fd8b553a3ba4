@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6853e4e_e42650a0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6148,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-12T02:54:52Z",
+      "side": 1,
+      "message": "Done - although it is targeting a very generic implementation. Passpoint does not send this information.",
+      "parentUuid": "63b5a1bc_1d669272",
+      "range": {
+        "startLine": 6148,
+        "startChar": 20,
+        "endLine": 6148,
+        "endChar": 40
+      },
+      "revId": "c3c57b39e8f603ead980c9da97d1fd8b553a3ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8071265_28890b90",
@@ -54,6 +78,30 @@
       "writtenOn": "2020-12-11T06:40:53Z",
       "side": 1,
       "message": "Why ? If we do that, I think we should do the same with the portal URL and isCaptive, but passpoint doesn\u0027t seem to have a way to update them over time.\nI think in the most common case we don\u0027t expect both to be set or different anyway; is it a problem to keep this consistent with other attributes ?",
+      "range": {
+        "startLine": 6154,
+        "startChar": 11,
+        "endLine": 6154,
+        "endChar": 70
+      },
+      "revId": "c3c57b39e8f603ead980c9da97d1fd8b553a3ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a355d25_61e698fa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6154,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-12T02:54:52Z",
+      "side": 1,
+      "message": "- Passpoint will only indicate the Venue URL once. This info is pulled by the phone via ANQP, and it is done only once when connection is established.\n- The idea is that Passpoint replaces/upgrades Captive portals. Passpoint are secure connections and we receive the URL via a trusted channel which cannot be spoofed. Therefore, the Passpoint URL is always preferred.\n- I updated the portal URL to take precedence on any Capport information. T\u0026C are pushed to the phone by the network only once right after association completion, and will not be updated/changed once T\u0026Cs were accepted.\n- isCpative is overwritten only if it is true. Once T\u0026C is required, Passpoint will set it to true. Once T\u0026C\u0027s are accepted, this will be set to false, and I expect that probes will go through so captive will be false from both sources.",
+      "parentUuid": "c8071265_28890b90",
       "range": {
         "startLine": 6154,
         "startChar": 11,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e5a0c28_fc5a96c4",
+        "filename": "tests/net/common/java/android/net/CaptivePortalDataTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-12T02:54:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd2a461d_72e280fe",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 87
+      },
+      "revId": "c3c57b39e8f603ead980c9da97d1fd8b553a3ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fbe8edfd_e50124c7",
@@ -100,6 +172,30 @@
       "writtenOn": "2020-12-11T06:40:53Z",
       "side": 1,
       "message": "Nit: add \"with sensitive (captive portal) data\"\n\nNetworkCallbacks don\u0027t require privileged permissions; they\u0027re just needed for getting CaptivePortalData in the LinkProperties, because they are privacy sensitive (contains the portal URL and venue URL, which can help identify user location)",
+      "range": {
+        "startLine": 2946,
+        "startChar": 97,
+        "endLine": 2946,
+        "endChar": 98
+      },
+      "revId": "c3c57b39e8f603ead980c9da97d1fd8b553a3ba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "632dcbd4_54f407ae",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2946,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-12T02:54:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbe8edfd_e50124c7",
       "range": {
         "startLine": 2946,
         "startChar": 97,
