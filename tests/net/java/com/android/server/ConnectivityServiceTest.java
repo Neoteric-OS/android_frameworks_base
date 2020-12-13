@@ -249,10 +249,12 @@ import com.android.testutils.ExceptionUtils;
 import com.android.testutils.HandlerUtils;
 import com.android.testutils.RecorderCallback.CallbackEntry;
 import com.android.testutils.TestableNetworkCallback;
+import com.android.testutils.WtfGuard;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.AdditionalAnswers;
@@ -291,6 +293,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.regex.Pattern;
 
 import kotlin.reflect.KClass;
 
@@ -370,6 +373,11 @@ public class ConnectivityServiceTest {
     @Mock TelephonyManager mTelephonyManager;
     @Mock MockableSystemProperties mSystemProperties;
     @Mock EthernetManager mEthernetManager;
+
+    @Rule public final WtfGuard mWtfGuard = new WtfGuard(
+            // List of ignored Wtfs. TODO : solve them instead of ignoring them
+            Pattern.compile("SystemConfig is being accessed by a process other than system_server.")
+    );
 
     private ArgumentCaptor<ResolverParamsParcel> mResolverParamsParcelCaptor =
             ArgumentCaptor.forClass(ResolverParamsParcel.class);
@@ -1358,7 +1366,9 @@ public class ConnectivityServiceTest {
             mEthernetNetworkAgent.disconnect();
             mEthernetNetworkAgent = null;
         }
-        mMockVpn.disconnect();
+        if (null != mMockVpn) {
+            mMockVpn.disconnect();
+        }
         waitForIdle();
 
         FakeSettingsProvider.clearSettingsProvider();
@@ -3034,6 +3044,8 @@ public class ConnectivityServiceTest {
         LocalStringNetworkSpecifier nsFoo = new LocalStringNetworkSpecifier("foo");
         LocalStringNetworkSpecifier nsBar = new LocalStringNetworkSpecifier("bar");
 
+        final Pattern wtfPattern = Pattern.compile("lost immutable capabilities:");
+
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
         mWiFiNetworkAgent.connect(false);
         cEmpty1.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
@@ -3043,6 +3055,7 @@ public class ConnectivityServiceTest {
         assertNoCallbacks(cFoo, cBar);
 
         mWiFiNetworkAgent.setNetworkSpecifier(nsFoo);
+        mWtfGuard.expectWtf(wtfPattern);
         cFoo.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         for (TestNetworkCallback c: emptyCallbacks) {
             c.expectCapabilitiesThat(mWiFiNetworkAgent,
@@ -3055,6 +3068,7 @@ public class ConnectivityServiceTest {
         cFoo.assertNoCallback();
 
         mWiFiNetworkAgent.setNetworkSpecifier(nsBar);
+        mWtfGuard.expectWtf(wtfPattern);
         cFoo.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
         cBar.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         for (TestNetworkCallback c: emptyCallbacks) {

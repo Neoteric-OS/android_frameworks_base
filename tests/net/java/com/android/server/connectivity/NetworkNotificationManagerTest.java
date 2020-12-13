@@ -45,8 +45,10 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.android.internal.R;
 import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
+import com.android.testutils.WtfGuard;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.AdditionalAnswers;
@@ -58,6 +60,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -92,6 +95,9 @@ public class NetworkNotificationManagerTest {
     ArgumentCaptor<Notification> mCaptor;
 
     NetworkNotificationManager mManager;
+
+    @Rule
+    public final WtfGuard mWtfGuard = new WtfGuard();
 
     @Before
     public void setUp() {
@@ -181,6 +187,8 @@ public class NetworkNotificationManagerTest {
     public void testNoInternetNotificationsNotShownForCellular() {
         mManager.showNotification(100, NO_INTERNET, mCellNai, mWifiNai, null, false);
         mManager.showNotification(101, LOST_INTERNET, mCellNai, mWifiNai, null, false);
+        mWtfGuard.expectWtf(Pattern.compile(
+                "Unknown notification type LOST_INTERNET on network transport mobile data"));
 
         verify(mNotificationManager, never()).notify(any(), anyInt(), any());
 
