@@ -682,6 +682,49 @@ public final class BluetoothHeadset implements BluetoothProfile {
     }
 
     /**
+     * Checks whether the headset supports echo cancellation and/or noise reduction via the AT+BRSF
+     * bitmask
+     *
+     * @param device Bluetooth device
+     * @return true if echo cancellation and/or noise reduction is supported, false otherwise
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public boolean isNoiseReductionSupported(@NonNull BluetoothDevice device) {
+        if (DBG) log("isEchoCancellationOrNoiseReductionSupported()");
+        final IBluetoothHeadset service = mService;
+        if (service != null && isEnabled() && isValidDevice(device)) {
+            try {
+                return service.isEchoCancellationOrNoiseReductionSupported(device);
+            } catch (RemoteException e) {
+                Log.e(TAG, Log.getStackTraceString(new Throwable()));
+            }
+        }
+        if (service == null) Log.w(TAG, "Proxy not attached to service");
+        return false;
+    }
+
+    /**
+     * Checks whether the headset supports voice recognition via the AT+BRSF bitmask
+     *
+     * @param device Bluetooth device
+     * @return true if echo cancellation and/or noise reduction is supported, false otherwise
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public boolean isVoiceRecognitionSupported(@NonNull BluetoothDevice device) {
+        if (DBG) log("isVoiceRecognitionSupported()");
+        final IBluetoothHeadset service = mService;
+        if (service != null && isEnabled() && isValidDevice(device)) {
+            try {
+                return service.isVoiceRecognitionSupported(device);
+            } catch (RemoteException e) {
+                Log.e(TAG, Log.getStackTraceString(new Throwable()));
+            }
+        }
+        if (service == null) Log.w(TAG, "Proxy not attached to service");
+        return false;
+    }
+
+    /**
      * Start Bluetooth voice recognition. This methods sends the voice
      * recognition AT command to the headset and establishes the
      * audio connection.
