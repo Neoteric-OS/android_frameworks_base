@@ -3078,6 +3078,14 @@ class AlarmManagerService extends SystemService {
             return;
         }
 
+        if (directReceiver != null) {
+            try {
+                directReceiver.asBinder().unlinkToDeath(mListenerDeathRecipient, 0);
+            } catch (Exception e) {
+                Slog.d(TAG, "Failed to unlink death recipient on " + directReceiver, e);
+            }
+        }
+
         boolean didRemove = false;
         final Predicate<Alarm> whichAlarms = (Alarm a) -> a.matches(operation, directReceiver);
         for (int i = mAlarmBatches.size() - 1; i >= 0; i--) {
