@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a36bd94e_6b0cb536",
+        "filename": "core/java/android/os/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-12-14T23:56:58Z",
+      "side": 1,
+      "message": "Could you write like this to improve maintainability in the future?\n\n  per-file *Recovery* \u003d file:/services/core/java/com/android/server/recoverysystem/OWNERS",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "221cad235da7ad10d170d9e2a089ac2b8a3962d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
