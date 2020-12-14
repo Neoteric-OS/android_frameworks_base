@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "a1783bca_ef5838f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "Feel free to ignore the nits.",
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "49fe84fa_3237d502",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 3
@@ -19,6 +36,98 @@
         "startChar": 20,
         "endLine": 386,
         "endChar": 34
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49991e2f_48bb1303",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "If makeLinkProperties() is called before setting mInterface(i.e. Calling registerAgent), then the interface of linkproperties will be null, right?\nSince there is no one using mInterface before this change, I\u0027d suggest setting VPN_IFNAME here directly.",
+      "range": {
+        "startLine": 1116,
+        "startChar": 12,
+        "endLine": 1116,
+        "endChar": 44
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28f5ea03_7be5d379",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1409,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "I don\u0027t have an opinion on changing this, but grantUsingBackgroundNetworksPermissionForUid() is also using testPackageName, do you want to change it as well?",
+      "range": {
+        "startLine": 1409,
+        "startChar": 21,
+        "endLine": 1409,
+        "endChar": 34
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f973e41e_c19114eb",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "I think it\u0027s better to add a comment to describe why we need to set targetSdkVersion. e.g. App can support VPN always-on mode after Android N.",
+      "range": {
+        "startLine": 1427,
+        "startChar": 8,
+        "endLine": 1427,
+        "endChar": 65
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1b66762_dc8a9348",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6440,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "Hmm...I don\u0027t get it here.\nsetAllowOnlyVpnForUids is a method of Vpn but not a method of NMS, why can we verify it like this?\nDo I misunderstand something?",
+      "range": {
+        "startLine": 6440,
+        "startChar": 16,
+        "endLine": 6440,
+        "endChar": 72
       },
       "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
@@ -49,6 +158,167 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fb689d20_28107218",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6466,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "nit: Maybe vpnCallback?",
+      "range": {
+        "startLine": 6466,
+        "startChar": 34,
+        "endLine": 6466,
+        "endChar": 42
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e5a0474_fe0e09bb",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6478,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "nit: Add \"true /* lockdownEnabled */\" is better to review.",
+      "range": {
+        "startLine": 6478,
+        "startChar": 70,
+        "endLine": 6478,
+        "endChar": 74
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2adcf0d1_59796a7d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6480,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 6480,
+        "startChar": 8,
+        "endLine": 6480,
+        "endChar": 9
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc68e70b_ff58e251",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6481,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 6481,
+        "startChar": 8,
+        "endLine": 6481,
+        "endChar": 9
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea7c0fb0_7febb204",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6482,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 6482,
+        "startChar": 8,
+        "endLine": 6482,
+        "endChar": 9
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14cca846_44e7c5c7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6495,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "If you want to disable lockdown, I think the correct way is to set \"lockdownEnabled\" to false but not clear the VPN package, right?\ne.g. mService.setAlwaysOnVpnPackage(userId, ALWAYS_ON_VPN_PACKAGE, false /* lockdownEnabled */, allowList);",
+      "range": {
+        "startLine": 6495,
+        "startChar": 8,
+        "endLine": 6495,
+        "endChar": 70
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "561d44b2_b607079c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6504,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 6504,
+        "startChar": 8,
+        "endLine": 6504,
+        "endChar": 9
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "864a55d8_09c4715f",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
@@ -65,6 +335,52 @@
         "startChar": 52,
         "endLine": 6505,
         "endChar": 55
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "259037b0_6a71df9d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6505,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 6505,
+        "startChar": 8,
+        "endLine": 6505,
+        "endChar": 9
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a574440_b5cacd28",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6506,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 6506,
+        "startChar": 8,
+        "endLine": 6506,
+        "endChar": 9
       },
       "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
@@ -93,6 +409,29 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "64f02332_6fdd0f13",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6521,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "Same as the comment left on line#6495.",
+      "range": {
+        "startLine": 6521,
+        "startChar": 8,
+        "endLine": 6521,
+        "endChar": 70
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "834998ef_56821d7b",
@@ -111,6 +450,52 @@
         "startChar": 0,
         "endLine": 6527,
         "endChar": 63
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3af5c53e_bf03dbef",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6530,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "Same as the comment left on line#6495.",
+      "range": {
+        "startLine": 6530,
+        "startChar": 8,
+        "endLine": 6530,
+        "endChar": 70
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef86d7df_4e71322d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6562,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-14T08:43:52Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 6562,
+        "startChar": 8,
+        "endLine": 6562,
+        "endChar": 9
       },
       "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
