@@ -87,6 +87,24 @@
       "parentUuid": "5085cdfb_99294fe9",
       "revId": "a6ac235ae88207805b25b6fe04e576df56bb3411",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c84e9327_222e4400",
+        "filename": "core/java/android/app/admin/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2020-12-14T16:22:51Z",
+      "side": 1,
+      "message": "Makoto isn\u0027t as involved in this right now. I think this is fine. Thanks!",
+      "parentUuid": "5a7296df_4c58459c",
+      "revId": "a6ac235ae88207805b25b6fe04e576df56bb3411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
