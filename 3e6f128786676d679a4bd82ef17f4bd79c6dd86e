@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e44fd8dc_50631bf5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-14T14:44:55Z",
+      "side": 1,
+      "message": "I didn\u0027t think I could use the constructor below in CS because I don\u0027t think I could pass in a useful Ikev2SessionCreator. For now I could pass in a mock, I suppose.\n\nI could also use the one above if I moved the method to fetch the DeviceIdleInternal to SystemServices. This doesn\u0027t seem to fit well with what is in SystemServices already, but it would work.\n\nThoughts?",
+      "parentUuid": "49fe84fa_3237d502",
+      "range": {
+        "startLine": 386,
+        "startChar": 20,
+        "endLine": 386,
+        "endChar": 34
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "49991e2f_48bb1303",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
