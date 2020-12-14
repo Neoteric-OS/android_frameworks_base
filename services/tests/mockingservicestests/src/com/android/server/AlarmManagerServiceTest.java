@@ -1037,6 +1037,7 @@ public class AlarmManagerServiceTest {
     @Test
     public void alarmCountOnListenerBinderDied() {
         final int numAlarms = 10;
+        final int receiversCount = mService.mDirectReceivers.size() + numAlarms;
         final IAlarmListener[] listeners = new IAlarmListener[numAlarms];
         for (int i = 0; i < numAlarms; i++) {
             listeners[i] = new IAlarmListener.Stub() {
@@ -1045,11 +1046,14 @@ public class AlarmManagerServiceTest {
                 }
             };
             setTestAlarmWithListener(ELAPSED_REALTIME_WAKEUP, mNowElapsedTest + i, listeners[i]);
+            setTestAlarmWithListener(ELAPSED_REALTIME_WAKEUP, mNowElapsedTest + i, listeners[i]);
         }
         assertEquals(numAlarms, mService.mAlarmsPerUid.get(TEST_CALLING_UID));
+        assertEquals(receiversCount, mService.mDirectReceivers.size());
         for (int i = 0; i < numAlarms; i++) {
             mService.mListenerDeathRecipient.binderDied(listeners[i].asBinder());
             assertEquals(numAlarms - i - 1, mService.mAlarmsPerUid.get(TEST_CALLING_UID));
+            assertEquals(receiversCount - i - 1, mService.mDirectReceivers.size());
         }
     }
 

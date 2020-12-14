@@ -214,6 +214,7 @@ class AlarmManagerService extends SystemService {
     ClockReceiver mClockReceiver;
     final DeliveryTracker mDeliveryTracker = new DeliveryTracker();
     IBinder.DeathRecipient mListenerDeathRecipient;
+    final ArrayList<IBinder> mDirectReceivers = new ArrayList<>();
     Intent mTimeTickIntent;
     IAlarmListener mTimeTickTrigger;
     PendingIntent mDateChangeSender;
@@ -1683,6 +1684,9 @@ class AlarmManagerService extends SystemService {
 
     void removeImpl(PendingIntent operation, IAlarmListener listener) {
         synchronized (mLock) {
+            if (listener != null) {
+                mDirectReceivers.remove(listener.asBinder());
+            }
             removeLocked(operation, listener);
         }
     }
@@ -1698,15 +1702,6 @@ class AlarmManagerService extends SystemService {
             // NB: previous releases failed silently here, so we are continuing to do the same
             // rather than throw an IllegalArgumentException.
             return;
-        }
-
-        if (directReceiver != null) {
-            try {
-                directReceiver.asBinder().linkToDeath(mListenerDeathRecipient, 0);
-            } catch (RemoteException e) {
-                Slog.w(TAG, "Dropping unreachable alarm listener " + listenerTag);
-                return;
-            }
         }
 
         // Sanity check the window length.  This will catch people mistakenly
@@ -1761,6 +1756,22 @@ class AlarmManagerService extends SystemService {
             maxElapsed = triggerElapsed + windowLength;
         }
         synchronized (mLock) {
+            if (directReceiver != null) {
+                try {
+                    // Only register the death recipient if we haven't done it before, or we can't
+                    // stop malicious callers from overflowing the ART internal global reference table
+                    if (!mDirectReceivers.contains(directReceiver.asBinder())) {
+                        directReceiver.asBinder().linkToDeath(mListenerDeathRecipient, 0);
+                        mDirectReceivers.add(directReceiver.asBinder());
+                    } else if (!directReceiver.asBinder().pingBinder()) {
+                        Slog.w(TAG, "Dropping unreachable alarm listener " + listenerTag);
+                        return;
+                    }
+                } catch (RemoteException e) {
+                    Slog.w(TAG, "Dropping unreachable alarm listener " + listenerTag);
+                    return;
+                }
+            }
             if (DEBUG_BATCH) {
                 Slog.v(TAG, "set(" + operation + ") : type=" + type
                         + " triggerAtTime=" + triggerAtTime + " win=" + windowLength
