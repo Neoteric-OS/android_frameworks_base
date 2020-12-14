@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9aaaeb58_238c383d",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-12-14T16:05:28Z",
+      "side": 0,
+      "message": "ping for remi to do this\n\n(I consider having all your sources in a separate repository as a blocker to creating a new mainline module)",
+      "revId": "854bb5b5eb64fc2743d1e0b479539d626763a969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
