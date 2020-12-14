@@ -16,6 +16,23 @@
       "message": "Just hit an OWNERS issue, so let\u0027s get all the time / time zone related OWNERS in shape.",
       "revId": "2b5f56c8c8abacd7e763c36b734aa6633ec4b1f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "669f4cb6_57220e0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-12-14T13:35:48Z",
+      "side": 1,
+      "message": "There are some TH failures for goog/master which claim to be conflicts, but since there are some passing for goog/master, I\u0027m going to assume they are infra errors.",
+      "revId": "2b5f56c8c8abacd7e763c36b734aa6633ec4b1f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
