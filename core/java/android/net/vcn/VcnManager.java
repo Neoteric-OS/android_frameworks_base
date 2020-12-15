@@ -24,6 +24,10 @@ import android.content.Context;
 import android.os.ParcelUuid;
 import android.os.RemoteException;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
+
 /**
  * VcnManager publishes APIs for applications to configure and manage Virtual Carrier Networks.
  *
@@ -32,6 +36,10 @@ import android.os.RemoteException;
 @SystemService(Context.VCN_MANAGEMENT_SERVICE)
 public final class VcnManager {
     @NonNull private static final String TAG = VcnManager.class.getSimpleName();
+
+    private static final Map<
+                    VcnUnderlyingNetworkPolicyListener, VcnUnderlyingNetworkPolicyListenerBinder>
+            REGISTERED_POLICY_LISTENERS = new ConcurrentHashMap<>();
 
     @NonNull private final Context mContext;
     @NonNull private final IVcnManagementService mService;
@@ -98,6 +106,96 @@ public final class VcnManager {
             mService.clearVcnConfig(subscriptionGroup);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
+        }
+    }
+
+    // TOOD: make VcnUnderlyingNetworkPolicyListener @SystemApi
+    /**
+     * VcnUnderlyingNetworkPolicyListener is the interface through which System apps can register to
+     * receive updates for underlying Network policies from the System Server.
+     *
+     * @hide
+     */
+    public interface VcnUnderlyingNetworkPolicyListener {
+        /** @param policy */
+        void onPolicyChanged(@NonNull VcnUnderlyingNetworkPolicy policy);
+    }
+
+    /**
+     * Register the specified VcnUnderlyingNetworkPolicyListener with VcnManager to receive policy
+     * updates for VCN-underlying Networks.
+     *
+     * @param executor the Executor that will be used for invoking all calls to the specified
+     *     Listener
+     * @param listener the VcnUnderlyingNetworkPolicyListener to be registered
+     * @throws SecurityException if the caller does not have permission NETWORK_FACTORY
+     * @throws IllegalArgumentException if the specified VcnUnderlyingNetworkPolicyListener is
+     *     already registered
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
+    public void registerVcnUnderlyingNetworkPolicyListener(
+            @NonNull Executor executor, @NonNull VcnUnderlyingNetworkPolicyListener listener) {
+        requireNonNull(executor, "executor must not be null");
+        requireNonNull(listener, "listener must not be null");
+
+        VcnUnderlyingNetworkPolicyListenerBinder binder =
+                new VcnUnderlyingNetworkPolicyListenerBinder(executor, listener);
+        if (REGISTERED_POLICY_LISTENERS.putIfAbsent(listener, binder) != null) {
+            throw new IllegalArgumentException(
+                    "Attempting to register a listener that is already in use");
+        }
+
+        try {
+            mService.registerVcnUnderlyingNetworkPolicyListener(binder);
+        } catch (RemoteException e) {
+            REGISTERED_POLICY_LISTENERS.remove(listener);
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Unregister the specified VcnUnderlyingNetworkPolicyListener from VcnManager.
+     *
+     * <p>If the specified listener is not currently registered, this is a no-op.
+     *
+     * @param listener the VcnUnderlyingNetworkPolicyListener that will be unregistered
+     * @hide
+     */
+    public void unregisterVcnUnderlyingNetworkPolicyListener(
+            @NonNull VcnUnderlyingNetworkPolicyListener listener) {
+        requireNonNull(listener, "listener must not be null");
+
+        VcnUnderlyingNetworkPolicyListenerBinder binder = REGISTERED_POLICY_LISTENERS.get(listener);
+        if (binder == null) return;
+
+        try {
+            mService.unregisterVcnUnderlyingNetworkPolicyListener(binder);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Binder wrapper for registered VcnUnderlyingNetworkPolicyListeners to receive signals from
+     * System Server.
+     *
+     * @hide
+     */
+    private static class VcnUnderlyingNetworkPolicyListenerBinder
+            extends IVcnUnderlyingNetworkPolicyListener.Stub {
+        @NonNull private final Executor mExecutor;
+        @NonNull private final VcnUnderlyingNetworkPolicyListener mListener;
+
+        private VcnUnderlyingNetworkPolicyListenerBinder(
+                Executor executor, VcnUnderlyingNetworkPolicyListener listener) {
+            mExecutor = executor;
+            mListener = listener;
+        }
+
+        @Override
+        public void onPolicyChanged(VcnUnderlyingNetworkPolicy policy) {
+            mExecutor.execute(() -> mListener.onPolicyChanged(policy));
         }
     }
 }
