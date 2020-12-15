@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c64d3832_e7b218a8",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-12-15T19:21:47Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this property; the InCallServices which are able to see Self Managed calls will see them with PROPERTY_SELF_MANAGED set, so I think this is probably redundant.",
+      "range": {
+        "startLine": 610,
+        "startChar": 9,
+        "endLine": 615,
+        "endChar": 94
+      },
+      "revId": "487524e3e9e27df6d82132305e35a2f695005f3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3381d4da_652a3bd0",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-12-15T19:21:47Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this property; the InCallServices which are able to see Self Managed calls will see them with PROPERTY_SELF_MANAGED set, so I think this is probably redundant.",
+      "range": {
+        "startLine": 530,
+        "startChar": 4,
+        "endLine": 535,
+        "endChar": 87
+      },
+      "revId": "487524e3e9e27df6d82132305e35a2f695005f3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
