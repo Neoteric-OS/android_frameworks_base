@@ -34,6 +34,24 @@
       "parentUuid": "9aaaeb58_238c383d",
       "revId": "854bb5b5eb64fc2743d1e0b479539d626763a969",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "374911ae_6dadf10a",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-12-15T13:44:53Z",
+      "side": 0,
+      "message": "Hmm not sure this would require moving service-connectivity into the tethering apex? I think we should treat these as separate things",
+      "parentUuid": "b8cf3b6a_a6880fb4",
+      "revId": "854bb5b5eb64fc2743d1e0b479539d626763a969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
