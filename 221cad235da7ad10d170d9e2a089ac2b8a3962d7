@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a5a44d1_03baf1d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-12-15T00:19:38Z",
+      "side": 1,
+      "message": "Doh, you\u0027re right sorry about that bug; sure a follow-up CL LGTM.",
+      "revId": "221cad235da7ad10d170d9e2a089ac2b8a3962d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a36bd94e_6b0cb536",
