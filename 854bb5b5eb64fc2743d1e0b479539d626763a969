@@ -16,6 +16,24 @@
       "message": "ping for remi to do this\n\n(I consider having all your sources in a separate repository as a blocker to creating a new mainline module)",
       "revId": "854bb5b5eb64fc2743d1e0b479539d626763a969",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8cf3b6a_a6880fb4",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-15T08:35:10Z",
+      "side": 0,
+      "message": "Just uploaded aosp/1529104 to do this: sent it your way for review.\nIt also depends on aosp/1478000 that splits out the service JAR build rule to put it in the APEX: I\u0027ll need reviews for that too.",
+      "parentUuid": "9aaaeb58_238c383d",
+      "revId": "854bb5b5eb64fc2743d1e0b479539d626763a969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
