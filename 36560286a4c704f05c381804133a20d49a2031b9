@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b243d91_a5fc7591",
+        "filename": "test-mock/src/android/test/mock/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1099348
+      },
+      "writtenOn": "2020-12-15T17:06:02Z",
+      "side": 1,
+      "message": "if this is \n\nset noparent\nand has * set, what do you think about dropping noparent and setting this to * ?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "36560286a4c704f05c381804133a20d49a2031b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
