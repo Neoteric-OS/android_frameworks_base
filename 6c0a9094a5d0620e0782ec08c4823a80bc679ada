@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78098045_63be868e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-15T21:39:08Z",
+      "side": 1,
+      "message": "Now for the UWB tests since you can\u0027t include another OWNERS file until it that OWNERs file is fully merged.",
+      "revId": "6c0a9094a5d0620e0782ec08c4823a80bc679ada",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
