@@ -17,6 +17,7 @@
 package android.net.vcn;
 
 import android.net.vcn.VcnConfig;
+import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.os.ParcelUuid;
 
 /**
@@ -25,4 +26,7 @@ import android.os.ParcelUuid;
 interface IVcnManagementService {
     void setVcnConfig(in ParcelUuid subscriptionGroup, in VcnConfig config);
     void clearVcnConfig(in ParcelUuid subscriptionGroup);
+
+    void registerVcnUnderlyingNetworkPolicyListener(in IVcnUnderlyingNetworkPolicyListener listener);
+    void unregisterVcnUnderlyingNetworkPolicyListener(in IVcnUnderlyingNetworkPolicyListener listener);
 }
