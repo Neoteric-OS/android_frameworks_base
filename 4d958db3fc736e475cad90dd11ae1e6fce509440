@@ -49,6 +49,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "0188069b_01ef9cc8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6600,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-15T11:45:05Z",
+      "side": 1,
+      "message": "Ah, yes. In some prior version of the code there was expectAvailableCallbacksUnvalidated then  a blocked callback, then a validated callback, so I couldn\u0027t use expectAvailableThenValidatedCallbacks. In hindsight I\u0027m actually not sure how that can ever happened. Anyway, done.",
+      "parentUuid": "fa44a46d_5917b488",
+      "range": {
+        "startLine": 6599,
+        "startChar": 26,
+        "endLine": 6600,
+        "endChar": 34
+      },
+      "revId": "4d958db3fc736e475cad90dd11ae1e6fce509440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "320d831f_0cf36133",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 5
@@ -60,6 +84,30 @@
       "writtenOn": "2020-12-15T11:07:49Z",
       "side": 1,
       "message": "LOL\n\nYes. If I\u0027m reading this correctly, in getActiveNetworkForUidInternal no VPN applies to VPN_UID, so we\u0027re calling getDefaultNetwork and checking isNetworkWithLinkPropertiesBlocked. There is a VPN applying to this user, and it\u0027s lockdown, so we evaluate isBlockingUid. Of course, the VPN is connected, so we return !appliesToUid, and it doesn\u0027t, so this VPN is evidently blocking itself from accessing itself which means we should obviously not return a default network for it.\n\nThis is awesome\n\nNo but seriously that means the VPN app will not be able to download something through DownloadManager. Filed b/175670887",
+      "range": {
+        "startLine": 6603,
+        "startChar": 69,
+        "endLine": 6603,
+        "endChar": 72
+      },
+      "revId": "4d958db3fc736e475cad90dd11ae1e6fce509440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7617b4e_f1b2054d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6603,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-15T11:45:05Z",
+      "side": 1,
+      "message": "That\u0027s actually fixed a few CLs up the stack, here:\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1527379/9/tests/net/java/com/android/server/ConnectivityServiceTest.java#6693\n\n\nI\u0027m not sure if it will actually block downloadmanager, that might ignore blocked status. So it might actually work.\n\nUnless you want to spend more time thinking about this or testing it, I\u0027ll just add Fix: 175670887 to aosp/1527379.",
+      "parentUuid": "320d831f_0cf36133",
       "range": {
         "startLine": 6603,
         "startChar": 69,
