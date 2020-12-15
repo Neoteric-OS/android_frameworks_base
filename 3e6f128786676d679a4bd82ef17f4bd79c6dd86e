@@ -723,6 +723,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4ef73d5_8f17c4fa",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6505,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-15T11:07:49Z",
+      "side": 1,
+      "message": "Fair enough.",
+      "parentUuid": "c27e0bc9_06df9797",
+      "range": {
+        "startLine": 6505,
+        "startChar": 52,
+        "endLine": 6505,
+        "endChar": 55
+      },
+      "revId": "3e6f128786676d679a4bd82ef17f4bd79c6dd86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a574440_b5cacd28",

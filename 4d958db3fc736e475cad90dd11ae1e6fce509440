@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d58e465d_fc74838d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6457,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-15T11:07:49Z",
+      "side": 1,
+      "message": "I love how this would fail with \"failed: MOBILE\"\n\nIt\u0027s fine though, together with the line number it\u0027s exactly what one\u0027d need to debug.",
+      "range": {
+        "startLine": 6457,
+        "startChar": 21,
+        "endLine": 6457,
+        "endChar": 64
+      },
+      "revId": "4d958db3fc736e475cad90dd11ae1e6fce509440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa44a46d_5917b488",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6600,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-15T11:07:49Z",
+      "side": 1,
+      "message": "this is expectAvailableThenValidatedCallbacks",
+      "range": {
+        "startLine": 6599,
+        "startChar": 26,
+        "endLine": 6600,
+        "endChar": 34
+      },
+      "revId": "4d958db3fc736e475cad90dd11ae1e6fce509440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "320d831f_0cf36133",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6603,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-15T11:07:49Z",
+      "side": 1,
+      "message": "LOL\n\nYes. If I\u0027m reading this correctly, in getActiveNetworkForUidInternal no VPN applies to VPN_UID, so we\u0027re calling getDefaultNetwork and checking isNetworkWithLinkPropertiesBlocked. There is a VPN applying to this user, and it\u0027s lockdown, so we evaluate isBlockingUid. Of course, the VPN is connected, so we return !appliesToUid, and it doesn\u0027t, so this VPN is evidently blocking itself from accessing itself which means we should obviously not return a default network for it.\n\nThis is awesome\n\nNo but seriously that means the VPN app will not be able to download something through DownloadManager. Filed b/175670887",
+      "range": {
+        "startLine": 6603,
+        "startChar": 69,
+        "endLine": 6603,
+        "endChar": 72
+      },
+      "revId": "4d958db3fc736e475cad90dd11ae1e6fce509440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
