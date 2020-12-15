@@ -73,6 +73,30 @@
       },
       "revId": "97011e07d561cabd6c05c65ecb06ec9f3cd1ebfb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9900693e_ad414f66",
+        "filename": "services/core/java/com/android/server/wm/ActivityStarter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1439080
+      },
+      "writtenOn": "2020-12-15T03:05:41Z",
+      "side": 1,
+      "message": "The \"isVisibleRequested\" in activityRecord will be changed too like \"isVisible\" in this issue.\nI think that only the \"Task.shouldBeVisible\" can apply this scens.",
+      "parentUuid": "7cce962c_8c666fe2",
+      "range": {
+        "startLine": 1485,
+        "startChar": 36,
+        "endLine": 1485,
+        "endChar": 67
+      },
+      "revId": "97011e07d561cabd6c05c65ecb06ec9f3cd1ebfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
