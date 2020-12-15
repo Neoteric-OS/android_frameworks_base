@@ -24,6 +24,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkProvider;
 import android.net.NetworkRequest;
 import android.net.vcn.IVcnManagementService;
+import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
 import android.os.Binder;
 import android.os.Handler;
@@ -343,6 +344,22 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         synchronized (mLock) {
             return Collections.unmodifiableMap(mConfigs);
         }
+    }
+
+    /** Registers the provided listener for receiving VcnUnderlyingNetworkPolicy updates. */
+    @Override
+    public void registerVcnUnderlyingNetworkPolicyListener(
+            IVcnUnderlyingNetworkPolicyListener listener) {
+        // TODO(b/175739863): implement policy listener registration
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    /** Unregisters the provided listener from receiving VcnUnderlyingNetworkPolicy updates. */
+    @Override
+    public void unregisterVcnUnderlyingNetworkPolicyListener(
+            IVcnUnderlyingNetworkPolicyListener listener) {
+        // TODO(b/175739863): implement policy listener unregistration
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /**
