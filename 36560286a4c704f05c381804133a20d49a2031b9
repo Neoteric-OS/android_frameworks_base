@@ -22,6 +22,30 @@
       },
       "revId": "36560286a4c704f05c381804133a20d49a2031b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfd7ee93_8a65d7a5",
+        "filename": "test-mock/src/android/test/mock/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2020-12-16T04:58:50Z",
+      "side": 1,
+      "message": "Makes sense",
+      "parentUuid": "4b243d91_a5fc7591",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "36560286a4c704f05c381804133a20d49a2031b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
