@@ -1,0 +1,11 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Selim Gurun <sgurun@google.com>
+Code-Review+1: Tomasz Wasilczyk <twasilczyk@google.com>
+Code-Review+2: James Mattis <jmattis@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Serik Beketayev <serikb@google.com>
+Submitted-at: Wed, 16 Dec 2020 18:46:22 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1519808
+Project: platform/frameworks/base
+Branch: refs/heads/master
