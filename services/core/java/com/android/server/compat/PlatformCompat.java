@@ -364,7 +364,8 @@ public class PlatformCompat extends IPlatformCompat.Stub {
             return false;
         }
         if (change.getEnableSinceTargetSdk() > 0) {
-            return change.getEnableSinceTargetSdk() >= Build.VERSION_CODES.Q;
+            return change.getEnableSinceTargetSdk() >= Build.VERSION_CODES.Q
+                && change.getEnableSinceTargetSdk() <= Build.VERSION.SDK_INT;
         }
         return true;
     }
