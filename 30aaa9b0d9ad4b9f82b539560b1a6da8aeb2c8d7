@@ -22,6 +22,30 @@
       },
       "revId": "30aaa9b0d9ad4b9f82b539560b1a6da8aeb2c8d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "082af5cf_a2e111fa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2360,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-16T11:43:52Z",
+      "side": 1,
+      "message": "Sorry, I missed this one. It should return the status of default network. That\u0027s my typo in the doc. Updated.",
+      "parentUuid": "1722c5ad_eaef03eb",
+      "range": {
+        "startLine": 2357,
+        "startChar": 4,
+        "endLine": 2360,
+        "endChar": 45
+      },
+      "revId": "30aaa9b0d9ad4b9f82b539560b1a6da8aeb2c8d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
