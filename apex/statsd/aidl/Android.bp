@@ -46,6 +46,7 @@ aidl_interface {
                 "com.android.os.statsd",
                 "test_com.android.os.statsd",
             ],
+            gen_trace: false,
         },
     }
 }
