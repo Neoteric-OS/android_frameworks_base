@@ -22,12 +22,14 @@ import static com.android.internal.compat.OverrideAllowedState.DISABLED_NON_TARG
 import static com.android.internal.compat.OverrideAllowedState.DISABLED_NOT_DEBUGGABLE;
 import static com.android.internal.compat.OverrideAllowedState.DISABLED_TARGET_SDK_TOO_HIGH;
 import static com.android.internal.compat.OverrideAllowedState.LOGGING_ONLY_CHANGE;
+import static com.android.internal.compat.OverrideAllowedState.PLATFORM_TOO_OLD;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.ContentObserver;
+import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
 
@@ -84,6 +86,9 @@ public class OverrideValidatorImpl extends IOverrideValidator.Stub {
         // Allow any override for userdebug or eng builds.
         if (debuggableBuild) {
             return new OverrideAllowedState(ALLOWED, -1, -1);
+        }
+        if (maxTargetSdk > Build.VERSION.SDK_INT) {
+            return new OverrideAllowedState(PLATFORM_TOO_OLD, -1, maxTargetSdk);
         }
         PackageManager packageManager = mContext.getPackageManager();
         if (packageManager == null) {

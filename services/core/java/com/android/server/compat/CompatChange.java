@@ -27,6 +27,7 @@ import android.compat.annotation.EnabledSince;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 
 import com.android.internal.compat.CompatibilityChangeInfo;
 import com.android.internal.compat.OverrideAllowedState;
@@ -55,7 +56,7 @@ public final class CompatChange extends CompatibilityChangeInfo {
      * A change ID to be used only in the CTS test for this SystemApi
      */
     @ChangeId
-    @EnabledSince(targetSdkVersion = 1235) // Needs to be > test APK targetSdkVersion.
+    @EnabledSince(targetSdkVersion = 31) // Needs to be > test APK targetSdkVersion.
     static final long CTS_SYSTEM_API_CHANGEID = 149391281; // This is a bug id.
 
     /**
@@ -248,7 +249,10 @@ public final class CompatChange extends CompatibilityChangeInfo {
             return false;
         }
         if (getEnableSinceTargetSdk() != -1) {
-            return app.targetSdkVersion >= getEnableSinceTargetSdk();
+            // If the change is gated by a platform version newer than the one currently installed
+            // on the device, disregard the app's target sdk version.
+            int compareSdk = Math.min(app.targetSdkVersion, Build.VERSION.SDK_INT);
+            return compareSdk >= getEnableSinceTargetSdk();
         }
         return true;
     }
