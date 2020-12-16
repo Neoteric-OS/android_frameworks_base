@@ -20,16 +20,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
 import android.net.vcn.VcnConfigTest;
+import android.os.IBinder;
 import android.os.ParcelUuid;
 import android.os.PersistableBundle;
 import android.os.Process;
@@ -96,6 +103,10 @@ public class VcnManagementServiceTest {
     private final PersistableBundleUtils.LockingReadWriteHelper mConfigReadWriteHelper =
             mock(PersistableBundleUtils.LockingReadWriteHelper.class);
 
+    private final IVcnUnderlyingNetworkPolicyListener mMockPolicyListener =
+            mock(IVcnUnderlyingNetworkPolicyListener.class);
+    private final IBinder mMockIBinder = mock(IBinder.class);
+
     public VcnManagementServiceTest() throws Exception {
         setupSystemService(mConnMgr, Context.CONNECTIVITY_SERVICE, ConnectivityManager.class);
         setupSystemService(mTelMgr, Context.TELEPHONY_SERVICE, TelephonyManager.class);
@@ -117,6 +128,8 @@ public class VcnManagementServiceTest {
 
         setupMockedCarrierPrivilege(true);
         mVcnMgmtSvc = new VcnManagementService(mMockContext, mMockDeps);
+
+        doReturn(mMockIBinder).when(mMockPolicyListener).asBinder();
     }
 
     private void setupSystemService(Object service, String name, Class<?> serviceClass) {
@@ -254,5 +267,46 @@ public class VcnManagementServiceTest {
         mVcnMgmtSvc.clearVcnConfig(TEST_UUID_1);
         assertTrue(mVcnMgmtSvc.getConfigs().isEmpty());
         verify(mConfigReadWriteHelper).writeToDisk(any(PersistableBundle.class));
+    }
+
+    @Test
+    public void testRegisterVcnUnderlyingNetworkPolicyListener() throws Exception {
+        doNothing()
+                .when(mMockContext)
+                .enforceCallingPermission(eq(android.Manifest.permission.NETWORK_FACTORY), any());
+
+        mVcnMgmtSvc.registerVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+
+        assertTrue(mVcnMgmtSvc.mRegisteredPolicyListeners.containsKey(mMockIBinder));
+        verify(mMockIBinder).linkToDeath(any(), anyInt());
+    }
+
+    @Test(expected = SecurityException.class)
+    public void testRegisterVcnUnderlyingNetworkPolicyListenerInvalidPermission() {
+        doThrow(new SecurityException())
+                .when(mMockContext)
+                .enforceCallingPermission(eq(android.Manifest.permission.NETWORK_FACTORY), any());
+
+        mVcnMgmtSvc.registerVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+    }
+
+    @Test
+    public void testUnregisterVcnUnderlyingNetworkPolicyListener() {
+        // verify listener registered
+        doNothing()
+                .when(mMockContext)
+                .enforceCallingPermission(eq(android.Manifest.permission.NETWORK_FACTORY), any());
+        mVcnMgmtSvc.registerVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+        assertTrue(mVcnMgmtSvc.mRegisteredPolicyListeners.containsKey(mMockIBinder));
+
+        mVcnMgmtSvc.unregisterVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+
+        assertTrue(mVcnMgmtSvc.mRegisteredPolicyListeners.isEmpty());
+    }
+
+    @Test
+    public void testUnregisterVcnUnderlyingNetworkPolicyListenerNeverRegistered() {
+        mVcnMgmtSvc.unregisterVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+        assertTrue(mVcnMgmtSvc.mRegisteredPolicyListeners.isEmpty());
     }
 }
