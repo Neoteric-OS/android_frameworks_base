@@ -18,8 +18,11 @@ package android.telephony;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.android.internal.util.ArrayUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -28,9 +31,8 @@ import java.util.Objects;
 
 /**
  * Defines the threshold value of the signal strength.
- * @hide
  */
-public class SignalThresholdInfo implements Parcelable {
+public final class SignalThresholdInfo implements Parcelable {
     /**
      * Received Signal Strength Indication.
      * Range: -113 dBm and -51 dBm
@@ -57,7 +59,7 @@ public class SignalThresholdInfo implements Parcelable {
 
     /**
      * Reference Signal Received Quality
-     * Range: -20 dB to -3 dB;
+     * Range: -34 dB to 3 dB;
      * Used RAN: EUTRAN
      * Reference: 3GPP TS 36.133 9.1.7
      */
@@ -80,9 +82,9 @@ public class SignalThresholdInfo implements Parcelable {
 
     /**
      * 5G SS reference signal received quality.
-     * Range: -20 dB to -3 dB.
+     * Range: -43 dB to 20 dB.
      * Used RAN: NGRAN
-     * Reference: 3GPP TS 38.215.
+     * Reference: 3GPP TS 38.133 section 10.1.11.1.
      */
     public static final int SIGNAL_SSRSRQ = 7;
 
@@ -140,13 +142,153 @@ public class SignalThresholdInfo implements Parcelable {
 
     /**
      * Indicates the hysteresisMs is disabled.
+     *
+     * @hide
      */
     public static final int HYSTERESIS_MS_DISABLED = 0;
 
     /**
+     * Default value when set by application, indicating the hysteresisMs is not used.
+     *
+     * @hide
+     */
+    public static final int HYSTERESIS_MS_UNUSED = -1;
+
+    /**
      * Indicates the hysteresisDb is disabled.
+     *
+     * @hide
      */
     public static final int HYSTERESIS_DB_DISABLED = 0;
+
+    /**
+     * Default value when set by application, indicating the hysteresisDb is not used.
+     *
+     * @hide
+     */
+    public static final int HYSTERESIS_DB_UNUSED = -1;
+
+    /**
+     * Default value when set by application. The default false value indicates the isEnabled is not
+     * used, instead of asking system to disable the thresholds.
+     *
+     * @hide
+     */
+    public static final boolean IS_ENABLED_UNUSED = false;
+
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_RSSI}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSSI_MIN_VALUE = -113;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_RSSI}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSSI_MAX_VALUE = -51;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_RSCP}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSCP_MIN_VALUE = -120;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_RSCP}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSCP_MAX_VALUE = -25;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_RSRP}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSRP_MIN_VALUE = -140;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_RSRP}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSRP_MAX_VALUE = -44;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_RSRQ}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSRQ_MIN_VALUE = -34;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_RSRQ}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSRQ_MAX_VALUE = 3;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_RSSNR}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSSNR_MIN_VALUE = -20;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_RSSNR}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSSNR_MAX_VALUE = 30;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_SSRSRP}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_SSRSRP_MIN_VALUE = -140;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_SSRSRP}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_SSRSRP_MAX_VALUE = -44;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_SSRSRQ}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_SSRSRQ_MIN_VALUE = -43;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_SSRSRQ}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_SSRSRQ_MAX_VALUE = 20;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_SSSINR}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_SSSINR_MIN_VALUE = -23;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_SSSINR}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_SSSINR_MAX_VALUE = 40;
+
 
     /**
      * Constructor
@@ -156,6 +298,8 @@ public class SignalThresholdInfo implements Parcelable {
      * @param hysteresisDb hysteresisDb
      * @param thresholds threshold value
      * @param isEnabled isEnabled
+     *
+     * @hide
      */
     public SignalThresholdInfo(@SignalMeasurementType int signalMeasurement,
             int hysteresisMs, int hysteresisDb, @NonNull int [] thresholds, boolean isEnabled) {
@@ -166,22 +310,70 @@ public class SignalThresholdInfo implements Parcelable {
         mIsEnabled = isEnabled;
     }
 
+    /**
+     * Construct SignalThresholdInfo from signal measurement type and the corresponding thresholds.
+     *
+     * @param signalMeasurement signal measurement type defines in {@link SignalMeasurementType}
+     * @param thresholds threshold values of the corresponding signal measurement type. Range and
+     *                  unit must reference specific SignalMeasurementType.
+     *
+     * @throws IllegalArgumentException if the signal measurement type is invalid, the thresholds
+     * array is null or empty, or any value in the thresholds is out of range.
+     *
+     * @see {@link SignalMeasurementType} for the valid range.
+     */
+    public SignalThresholdInfo(@SignalMeasurementType int signalMeasurement,
+            @NonNull int[] thresholds) {
+        // Applications are not allowed to set empty thresholds which is used by system to disable
+        // the use of thresholds for reporting.
+        if (ArrayUtils.isEmpty(thresholds)) {
+            throw new IllegalArgumentException("thresholds array is null or empty");
+        }
+
+        for (int threshold : thresholds) {
+            if (!isValidThreshold(signalMeasurement, threshold)) {
+                throw new IllegalArgumentException(
+                        "invalid signal measurement type or thresholds");
+            }
+        }
+
+        mSignalMeasurement = signalMeasurement;
+        mHysteresisMs = HYSTERESIS_MS_UNUSED;
+        mHysteresisDb = HYSTERESIS_DB_UNUSED;
+        mThresholds = thresholds.clone();
+        mIsEnabled = IS_ENABLED_UNUSED;
+    }
+
+    /**
+     * Get the signal measurement type.
+     *
+     * @return the {@link SignalMeasurementType}.
+     */
     public @SignalMeasurementType int getSignalMeasurement() {
         return mSignalMeasurement;
     }
 
+    /** @hide */
     public int getHysteresisMs() {
         return mHysteresisMs;
     }
 
+    /** @hide */
     public int getHysteresisDb() {
         return mHysteresisDb;
     }
 
+    /** @hide */
     public boolean isEnabled() {
         return mIsEnabled;
     }
 
+    /**
+     * Get the signal threshold values.
+     *
+     * @return array of integer of the signal thresholds
+     */
+    @Nullable
     public int[] getThresholds() {
         return mThresholds == null ? null : mThresholds.clone();
     }
@@ -192,7 +384,7 @@ public class SignalThresholdInfo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel out, int flags) {
+    public void writeToParcel(@NonNull Parcel out, int flags) {
         out.writeInt(mSignalMeasurement);
         out.writeInt(mHysteresisMs);
         out.writeInt(mHysteresisDb);
@@ -252,5 +444,31 @@ public class SignalThresholdInfo implements Parcelable {
             .append("mThresholds=").append(Arrays.toString(mThresholds))
             .append("mIsEnabled=").append(mIsEnabled)
             .append("}").toString();
+    }
+
+    /**
+     * Return true if signal measurement type is valid and the threshold value is in range.
+     */
+    private boolean isValidThreshold(@SignalMeasurementType int type, int threshold) {
+        switch (type) {
+            case SIGNAL_RSSI:
+                return threshold >= SIGNAL_RSSI_MIN_VALUE && threshold <= SIGNAL_RSSI_MAX_VALUE;
+            case SIGNAL_RSCP:
+                return threshold >= SIGNAL_RSCP_MIN_VALUE && threshold <= SIGNAL_RSCP_MAX_VALUE;
+            case SIGNAL_RSRP:
+                return threshold >= SIGNAL_RSRP_MIN_VALUE && threshold <= SIGNAL_RSRP_MAX_VALUE;
+            case SIGNAL_RSRQ:
+                return threshold >= SIGNAL_RSRQ_MIN_VALUE && threshold <= SIGNAL_RSRQ_MAX_VALUE;
+            case SIGNAL_RSSNR:
+                return threshold >= SIGNAL_RSSNR_MIN_VALUE && threshold <= SIGNAL_RSSNR_MAX_VALUE;
+            case SIGNAL_SSRSRP:
+                return threshold >= SIGNAL_SSRSRP_MIN_VALUE && threshold <= SIGNAL_SSRSRP_MAX_VALUE;
+            case SIGNAL_SSRSRQ:
+                return threshold >= SIGNAL_SSRSRQ_MIN_VALUE && threshold <= SIGNAL_SSRSRQ_MAX_VALUE;
+            case SIGNAL_SSSINR:
+                return threshold >= SIGNAL_SSSINR_MIN_VALUE && threshold <= SIGNAL_SSSINR_MAX_VALUE;
+            default:
+                return false;
+        }
     }
 }

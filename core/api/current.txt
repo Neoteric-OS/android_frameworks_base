@@ -40659,6 +40659,23 @@ package android.telephony {
     field public static final int INVALID = 2147483647; // 0x7fffffff
   }
 
+  public final class SignalThresholdInfo implements android.os.Parcelable {
+    ctor public SignalThresholdInfo(int, @NonNull int[]);
+    method public int describeContents();
+    method public int getSignalMeasurement();
+    method @Nullable public int[] getThresholds();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.SignalThresholdInfo> CREATOR;
+    field public static final int SIGNAL_RSCP = 2; // 0x2
+    field public static final int SIGNAL_RSRP = 3; // 0x3
+    field public static final int SIGNAL_RSRQ = 4; // 0x4
+    field public static final int SIGNAL_RSSI = 1; // 0x1
+    field public static final int SIGNAL_RSSNR = 5; // 0x5
+    field public static final int SIGNAL_SSRSRP = 6; // 0x6
+    field public static final int SIGNAL_SSRSRQ = 7; // 0x7
+    field public static final int SIGNAL_SSSINR = 8; // 0x8
+  }
+
   public final class SmsManager {
     method public String createAppSpecificSmsToken(android.app.PendingIntent);
     method @Nullable public String createAppSpecificSmsTokenWithPackageInfo(@Nullable String, @NonNull android.app.PendingIntent);
