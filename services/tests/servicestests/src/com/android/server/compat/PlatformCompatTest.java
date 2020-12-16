@@ -125,6 +125,7 @@ public class PlatformCompatTest {
                 .addEnableSinceSdkChangeWithId(Build.VERSION_CODES.Q, 5L)
                 .addEnableSinceSdkChangeWithId(Build.VERSION_CODES.R, 6L)
                 .addLoggingOnlyChangeWithId(7L)
+                .addEnableSinceSdkChangeWithId(Build.VERSION_CODES.SDK_INT + 1, 8L)
                 .build();
         mPlatformCompat = new PlatformCompat(mContext, mCompatConfig);
         assertThat(mPlatformCompat.listUIChanges()).asList().containsExactly(

@@ -22,6 +22,7 @@ import static com.android.internal.compat.OverrideAllowedState.DISABLED_NON_TARG
 import static com.android.internal.compat.OverrideAllowedState.DISABLED_NOT_DEBUGGABLE;
 import static com.android.internal.compat.OverrideAllowedState.DISABLED_TARGET_SDK_TOO_HIGH;
 import static com.android.internal.compat.OverrideAllowedState.LOGGING_ONLY_CHANGE;
+import static com.android.internal.compat.OverrideAllowedState.PLATFORM_TOO_OLD;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -33,6 +34,7 @@ import static org.mockito.Mockito.when;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Build;
 
 import androidx.test.runner.AndroidJUnit4;
 
@@ -330,6 +332,26 @@ public class OverrideValidatorImplTest {
         assertThat(stateTargetSdkLessChange).isEqualTo(
                 new OverrideAllowedState(DISABLED_TARGET_SDK_TOO_HIGH, TARGET_SDK,
                                          TARGET_SDK_BEFORE));
+    }
+
+    @Test
+    public void getOverrideAllowedState_targetSdkChangeGreaterThanOsVersion_rejectOverride()
+            throws Exception {
+        CompatConfig config = CompatConfigBuilder.create(finalBuild(), mContext)
+                        .addEnableAfterSdkChangeWithId(Build.VERSION.SDK_INT + 1, 1).build();
+        IOverrideValidator overrideValidator = config.getOverrideValidator();
+        when(mPackageManager.getApplicationInfo(eq(PACKAGE_NAME), anyInt()))
+                .thenReturn(ApplicationInfoBuilder.create()
+                        .withPackageName(PACKAGE_NAME)
+                        .debuggable()
+                        .build());
+
+        OverrideAllowedState stateTargetSdkLessChange =
+                overrideValidator.getOverrideAllowedState(1, PACKAGE_NAME);
+
+        assertThat(stateTargetSdkLessChange).isEqualTo(
+                new OverrideAllowedState(PLATFORM_TOO_OLD, -1,
+                                         Build.VERSION.SDK_INT + 1));
     }
 
     @Test
