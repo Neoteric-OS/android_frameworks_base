@@ -782,6 +782,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "364ce5a1_bbdd7cb2",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-16T23:12:21Z",
+      "side": 1,
+      "message": "Bug requested.",
+      "parentUuid": "736281eb_df31901f",
+      "range": {
+        "startLine": 455,
+        "startChar": 23,
+        "endLine": 455,
+        "endChar": 54
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "40a1acc1_cf4b5e81",
         "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
         "patchSetId": 15

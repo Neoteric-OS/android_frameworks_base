@@ -16,6 +16,29 @@
       "message": "Mostly small stuff (a few that just aren\u0027t worth continuing discussion on). The roaming stuff has the potential to be a problem though. We should probably have some more thought/discussion on that.",
       "revId": "2aee33190f690ffa8ca98b37f24808e6ec230ec4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a573c22_1a917e0e",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-16T23:12:21Z",
+      "side": 1,
+      "message": "Please add a bug.",
+      "range": {
+        "startLine": 358,
+        "startChar": 11,
+        "endLine": 358,
+        "endChar": 15
+      },
+      "revId": "2aee33190f690ffa8ca98b37f24808e6ec230ec4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
