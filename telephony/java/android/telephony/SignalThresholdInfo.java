@@ -18,6 +18,7 @@ package android.telephony;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -28,9 +29,8 @@ import java.util.Objects;
 
 /**
  * Defines the threshold value of the signal strength.
- * @hide
  */
-public class SignalThresholdInfo implements Parcelable {
+public final class SignalThresholdInfo implements Parcelable {
     /**
      * Received Signal Strength Indication.
      * Range: -113 dBm and -51 dBm
@@ -140,13 +140,36 @@ public class SignalThresholdInfo implements Parcelable {
 
     /**
      * Indicates the hysteresisMs is disabled.
+     *
+     * @hide
      */
     public static final int HYSTERESIS_MS_DISABLED = 0;
 
     /**
+     * Indicates the hysteresisMs is unused by application.
+     */
+    public static final int HYSTERESIS_MS_UNUSED = -1;
+
+    /**
      * Indicates the hysteresisDb is disabled.
+     *
+     * @hide
      */
     public static final int HYSTERESIS_DB_DISABLED = 0;
+
+    /**
+     * Indicates the hysteresisDb is unused by application.
+     *
+     * @hide
+     */
+    public static final int HYSTERESIS_DB_UNUSED = -1;
+
+    /**
+     * Indicates the isEnabled is unused by application.
+     *
+     * @hide
+     */
+    public static final boolean IS_ENABLED_UNUSED = true;
 
     /**
      * Constructor
@@ -156,6 +179,8 @@ public class SignalThresholdInfo implements Parcelable {
      * @param hysteresisDb hysteresisDb
      * @param thresholds threshold value
      * @param isEnabled isEnabled
+     *
+     * @hide
      */
     public SignalThresholdInfo(@SignalMeasurementType int signalMeasurement,
             int hysteresisMs, int hysteresisDb, @NonNull int [] thresholds, boolean isEnabled) {
@@ -166,22 +191,46 @@ public class SignalThresholdInfo implements Parcelable {
         mIsEnabled = isEnabled;
     }
 
+    public SignalThresholdInfo(@SignalMeasurementType int signalMeasurement,
+            @NonNull int [] thresholds) {
+        mSignalMeasurement = signalMeasurement;
+        mHysteresisMs = HYSTERESIS_MS_UNUSED;
+        mHysteresisDb = HYSTERESIS_DB_UNUSED;
+        mThresholds = thresholds == null ? null : thresholds.clone();
+        mIsEnabled = IS_ENABLED_UNUSED;
+    }
+
+    /*
+     * @return the {@link SignalMeasurementType}.
+     */
     public @SignalMeasurementType int getSignalMeasurement() {
         return mSignalMeasurement;
     }
 
+    /** @hide */
     public int getHysteresisMs() {
         return mHysteresisMs;
     }
 
+    /** @hide */
     public int getHysteresisDb() {
         return mHysteresisDb;
     }
 
+    /** @hide */
     public boolean isEnabled() {
         return mIsEnabled;
     }
 
+    /**
+     * Return the list of threshold values.
+     * Range and unit must reference specific SignalMeasurementType
+     * The threshold values for which to apply criteria.
+     * A vector size of 0 disables the use of thresholds for reporting.
+     *
+     * @return Array of threshold values
+     */
+    @Nullable
     public int[] getThresholds() {
         return mThresholds == null ? null : mThresholds.clone();
     }
@@ -192,7 +241,7 @@ public class SignalThresholdInfo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel out, int flags) {
+    public void writeToParcel(@NonNull Parcel out, int flags) {
         out.writeInt(mSignalMeasurement);
         out.writeInt(mHysteresisMs);
         out.writeInt(mHysteresisDb);
