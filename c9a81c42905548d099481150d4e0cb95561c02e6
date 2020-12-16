@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "187c41b4_218417a6",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-12-16T18:39:57Z",
+      "side": 1,
+      "message": "is throwing the right call here, since only System apps will be calling? Should we Log.wtf() and return instead?",
+      "range": {
+        "startLine": 145,
+        "startChar": 12,
+        "endLine": 146,
+        "endChar": 80
+      },
+      "revId": "c9a81c42905548d099481150d4e0cb95561c02e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbb8b323_a2b9df8a",
+        "filename": "tests/net/java/android/net/vcn/VcnManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-12-16T18:39:57Z",
+      "side": 1,
+      "message": "this felt cleaner than exposing fields in VcnManager.VcnUnderlyingNetworkPolicyListenerBinder -- Thoughts?",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 69
+      },
+      "revId": "c9a81c42905548d099481150d4e0cb95561c02e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
