@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7c74a80_0fe4035f",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-16T21:20:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af42d8d4_d5c5c097",
+      "range": {
+        "startLine": 85,
+        "startChar": 8,
+        "endLine": 85,
+        "endChar": 19
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c86356e5_e78251a8",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "I haven\u0027t been able to actually find this value anywhere as a default MTU; the closest is \"ETHER_MTU\", but that\u0027s also too specific.",
       "parentUuid": "c86356e5_e78251a8",
+      "range": {
+        "startLine": 101,
+        "startChar": 29,
+        "endLine": 101,
+        "endChar": 44
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4c7b571_71c0d0b1",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-16T21:20:14Z",
+      "side": 1,
+      "message": "File bug (to core networking)?",
+      "parentUuid": "b7ec3012_72e85500",
       "range": {
         "startLine": 101,
         "startChar": 29,
@@ -189,6 +237,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a92193d_26561959",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-16T21:20:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f881e22b_ba5861d3",
+      "range": {
+        "startLine": 116,
+        "startChar": 60,
+        "endLine": 116,
+        "endChar": 80
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa4d240e_c6122c70",
@@ -236,6 +308,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd560b5f_628a9155",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-16T21:20:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c860ee1a_f841a435",
+      "range": {
+        "startLine": 163,
+        "startChar": 16,
+        "endLine": 163,
+        "endChar": 86
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6f0f5b5_38a8094e",
@@ -273,6 +369,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "f6f0f5b5_38a8094e",
+      "range": {
+        "startLine": 218,
+        "startChar": 12,
+        "endLine": 218,
+        "endChar": 25
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8b4cb50_2f8dc16b",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-16T21:20:14Z",
+      "side": 1,
+      "message": "Wasn\u0027t done, but ok?",
+      "parentUuid": "61e1a555_4e479be8",
       "range": {
         "startLine": 218,
         "startChar": 12,
@@ -614,6 +734,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "02dca866_cc0c976d",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-16T21:20:14Z",
+      "side": 1,
+      "message": "I don\u0027t see the TODO...",
+      "parentUuid": "fc954c7d_981acd94",
+      "range": {
+        "startLine": 455,
+        "startChar": 23,
+        "endLine": 455,
+        "endChar": 54
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "40a1acc1_cf4b5e81",
         "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
         "patchSetId": 15
@@ -696,6 +840,30 @@
       "side": 1,
       "message": "Not particularly, this was meant to be permissive, so that if we choose setExact* vs setInexact* due to system power/battery implications, we have the flexibility to do so.\n\nI\u0027ve added some discussion on this.",
       "parentUuid": "79e24139_d03024f6",
+      "range": {
+        "startLine": 506,
+        "startChar": 9,
+        "endLine": 508,
+        "endChar": 43
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ac675c6_4e2f81be",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-16T21:20:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0b90f70_2349b905",
       "range": {
         "startLine": 506,
         "startChar": 9,
@@ -847,6 +1015,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fea34d5_22095289",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-16T21:20:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7d74282_c74b7a59",
+      "range": {
+        "startLine": 532,
+        "startChar": 42,
+        "endLine": 532,
+        "endChar": 87
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "078cc92f_6928eec9",
@@ -894,6 +1086,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bac5c987_f285e085",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-16T21:20:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a194f4f_1096e80e",
+      "range": {
+        "startLine": 539,
+        "startChar": 50,
+        "endLine": 539,
+        "endChar": 60
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2af073d_bed90301",
@@ -931,6 +1147,30 @@
       "side": 1,
       "message": "From a functional perspective, this seems identical; a carrier using the VCN controls all the underlying networks anyways, so I would like not to incur the complexity of merging capabilities with the underlying network",
       "parentUuid": "c2af073d_bed90301",
+      "range": {
+        "startLine": 572,
+        "startChar": 23,
+        "endLine": 572,
+        "endChar": 33
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69d63aee_8eb23b79",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-16T21:20:14Z",
+      "side": 1,
+      "message": "While this doesn\u0027t impact Fi, for the general case, a VCN could be roaming or not-roaming and that\u0027s a valuable signal to higher-level callers about (mostly) cost. So think of it as a modifier on the metered bit to say \"not only metered, but unusually expensive\". Given that the VCN, like a cell network, will subsume both types of networks based on whatever the underlying connection is using... we have to find a way to do that.",
+      "parentUuid": "dc87247e_3e2533df",
       "range": {
         "startLine": 572,
         "startChar": 23,
