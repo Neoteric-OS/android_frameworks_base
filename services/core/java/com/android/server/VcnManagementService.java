@@ -170,14 +170,19 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @Override
     public void registerVcnUnderlyingNetworkPolicyListener(
             IVcnUnderlyingNetworkPolicyListener listener) {
-        // TODO(b/175739863): implement policy listener registration
-        throw new UnsupportedOperationException("Not yet implemented");
+        requireNonNull(listener, "listener was null");
+
+        mContext.enforceCallingPermission(
+                android.Manifest.permission.NETWORK_FACTORY,
+                "Must have permission NETWORK_FACTORY to register a policy listener");
     }
 
     /** Unregisters the provided listener from receiving VcnUnderlyingNetworkPolicy updates. */
     @Override
     public void unregisterVcnUnderlyingNetworkPolicyListener(
             IVcnUnderlyingNetworkPolicyListener listener) {
+        requireNonNull(listener, "listener was null");
+
         // TODO(b/175739863): implement policy listener unregistration
         throw new UnsupportedOperationException("Not yet implemented");
     }
