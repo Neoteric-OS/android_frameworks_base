@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11001783_e138ac81",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-16T03:09:33Z",
+      "side": 1,
+      "message": "Binder.withCleanCallingIdentity() has a ThrowingSupplier version so you can just return the subscriptionInfos directly. getSubscriptionsInGroup is NonNull.",
+      "range": {
+        "startLine": 186,
+        "startChar": 8,
+        "endLine": 186,
+        "endChar": 39
+      },
+      "revId": "ad3271875a1e1c083bf390d2f8cf960f5b8f297c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
