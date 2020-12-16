@@ -26,12 +26,20 @@ import android.net.NetworkRequest;
 import android.net.vcn.IVcnManagementService;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
+import android.os.Binder;
 import android.os.HandlerThread;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.ParcelUuid;
+import android.os.RemoteException;
+import android.util.ArrayMap;
+import android.util.Log;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
+
+import java.util.Map;
 
 /**
  * VcnManagementService manages Virtual Carrier Network profiles and lifecycles.
@@ -101,6 +109,10 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @NonNull private final VcnNetworkProvider mNetworkProvider;
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
+    @GuardedBy("mRegisteredPolicyListeners")
+    final Map<IBinder, PolicyListenerBinderDeath> mRegisteredPolicyListeners = new ArrayMap<>();
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
     VcnManagementService(@NonNull Context context, @NonNull Dependencies deps) {
         mContext = requireNonNull(context, "Missing context");
         mDeps = requireNonNull(deps, "Missing dependencies");
@@ -166,20 +178,55 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         // TODO: Clear VCN configuration, trigger teardown as necessary
     }
 
+    /** Binder death recipient used to unregister */
+    private class PolicyListenerBinderDeath implements Binder.DeathRecipient {
+        @NonNull private final IVcnUnderlyingNetworkPolicyListener mListener;
+
+        PolicyListenerBinderDeath(IVcnUnderlyingNetworkPolicyListener listener) {
+            mListener = listener;
+        }
+
+        @Override
+        public void binderDied() {
+            Log.e(TAG, "app died without unregistering VcnUnderlyingNetworkPolicyListener");
+            unregisterVcnUnderlyingNetworkPolicyListener(mListener);
+        }
+    }
+
     /** Registers the provided listener for receiving VcnUnderlyingNetworkPolicy updates. */
+    @GuardedBy("mRegisteredPolicyListeners")
     @Override
     public void registerVcnUnderlyingNetworkPolicyListener(
             IVcnUnderlyingNetworkPolicyListener listener) {
-        // TODO(b/175739863): implement policy listener registration
-        throw new UnsupportedOperationException("Not yet implemented");
+        requireNonNull(listener, "listener was null");
+
+        mContext.enforceCallingPermission(
+                android.Manifest.permission.NETWORK_FACTORY,
+                "Must have permission NETWORK_FACTORY to register a policy listener");
+
+        PolicyListenerBinderDeath listenerBinderDeath = new PolicyListenerBinderDeath(listener);
+
+        synchronized (mRegisteredPolicyListeners) {
+            mRegisteredPolicyListeners.put(listener.asBinder(), listenerBinderDeath);
+        }
+
+        try {
+            listener.asBinder().linkToDeath(listenerBinderDeath, 0 /* flags */);
+        } catch (RemoteException e) {
+            listenerBinderDeath.binderDied();
+        }
     }
 
     /** Unregisters the provided listener from receiving VcnUnderlyingNetworkPolicy updates. */
+    @GuardedBy("mRegisteredPolicyListeners")
     @Override
     public void unregisterVcnUnderlyingNetworkPolicyListener(
             IVcnUnderlyingNetworkPolicyListener listener) {
-        // TODO(b/175739863): implement policy listener unregistration
-        throw new UnsupportedOperationException("Not yet implemented");
+        requireNonNull(listener, "listener was null");
+
+        synchronized (mRegisteredPolicyListeners) {
+            mRegisteredPolicyListeners.remove(listener.asBinder());
+        }
     }
 
     /**

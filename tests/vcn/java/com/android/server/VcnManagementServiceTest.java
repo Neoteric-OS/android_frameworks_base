@@ -16,13 +16,21 @@
 
 package com.android.server;
 
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
+import android.os.IBinder;
 import android.os.test.TestLooper;
 
 import androidx.test.filters.SmallTest;
@@ -42,6 +50,10 @@ public class VcnManagementServiceTest {
     private final ConnectivityManager mConnMgr = mock(ConnectivityManager.class);
     private final VcnManagementService mVcnMgmtSvc;
 
+    private final IVcnUnderlyingNetworkPolicyListener mMockPolicyListener =
+            mock(IVcnUnderlyingNetworkPolicyListener.class);
+    private final IBinder mMockIBinder = mock(IBinder.class);
+
     public VcnManagementServiceTest() {
         doReturn(Context.CONNECTIVITY_SERVICE)
                 .when(mMockContext)
@@ -50,6 +62,8 @@ public class VcnManagementServiceTest {
 
         doReturn(mTestLooper.getLooper()).when(mMockDeps).getLooper();
         mVcnMgmtSvc = new VcnManagementService(mMockContext, mMockDeps);
+
+        doReturn(mMockIBinder).when(mMockPolicyListener).asBinder();
     }
 
     @Test
@@ -58,5 +72,46 @@ public class VcnManagementServiceTest {
 
         verify(mConnMgr)
                 .registerNetworkProvider(any(VcnManagementService.VcnNetworkProvider.class));
+    }
+
+    @Test
+    public void testRegisterVcnUnderlyingNetworkPolicyListener() throws Exception {
+        doNothing()
+                .when(mMockContext)
+                .enforceCallingPermission(eq(android.Manifest.permission.NETWORK_FACTORY), any());
+
+        mVcnMgmtSvc.registerVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+
+        assertTrue(mVcnMgmtSvc.mRegisteredPolicyListeners.containsKey(mMockIBinder));
+        verify(mMockIBinder).linkToDeath(any(), anyInt());
+    }
+
+    @Test(expected = SecurityException.class)
+    public void testRegisterVcnUnderlyingNetworkPolicyListenerInvalidPermission() {
+        doThrow(new SecurityException())
+                .when(mMockContext)
+                .enforceCallingPermission(eq(android.Manifest.permission.NETWORK_FACTORY), any());
+
+        mVcnMgmtSvc.registerVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+    }
+
+    @Test
+    public void testUnregisterVcnUnderlyingNetworkPolicyListener() {
+        // verify listener registered
+        doNothing()
+                .when(mMockContext)
+                .enforceCallingPermission(eq(android.Manifest.permission.NETWORK_FACTORY), any());
+        mVcnMgmtSvc.registerVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+        assertTrue(mVcnMgmtSvc.mRegisteredPolicyListeners.containsKey(mMockIBinder));
+
+        mVcnMgmtSvc.unregisterVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+
+        assertTrue(mVcnMgmtSvc.mRegisteredPolicyListeners.isEmpty());
+    }
+
+    @Test
+    public void testUnregisterVcnUnderlyingNetworkPolicyListenerNeverRegistered() {
+        mVcnMgmtSvc.unregisterVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+        assertTrue(mVcnMgmtSvc.mRegisteredPolicyListeners.isEmpty());
     }
 }
