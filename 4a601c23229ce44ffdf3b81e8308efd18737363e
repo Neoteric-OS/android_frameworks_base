@@ -16,6 +16,75 @@
       "message": "the cl is ready for review",
       "revId": "4a601c23229ce44ffdf3b81e8308efd18737363e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23eb7f9c_92e62bbe",
+        "filename": "services/core/java/com/android/server/locksettings/AesEncryptedBlob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-12-17T22:35:05Z",
+      "side": 1,
+      "message": "this API is a little strange: the result of a decryption operation is an encrypted blob? How about:\n class AESEncryptedBlob {\n     public static AESEncryptedBlob fromCiphertext(byte[] ciphertext);\n     public static AESEncryptedBlob fromPlaintext(byte[] plaintext, SecretKey key);\n     public byte[] decrypt(SecretKey key) {..}\n }",
+      "range": {
+        "startLine": 68,
+        "startChar": 11,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "revId": "4a601c23229ce44ffdf3b81e8308efd18737363e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d731a205_195c687e",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-12-17T22:35:05Z",
+      "side": 1,
+      "message": "This seems error-prune, why not keep using the constructed DataInputStream?",
+      "range": {
+        "startLine": 83,
+        "startChar": 41,
+        "endLine": 83,
+        "endChar": 42
+      },
+      "revId": "4a601c23229ce44ffdf3b81e8308efd18737363e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5794253_e766952a",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-12-17T22:35:05Z",
+      "side": 1,
+      "message": "Why do you need to keep holding onto the key, given you just decrypted SP?",
+      "range": {
+        "startLine": 89,
+        "startChar": 72,
+        "endLine": 89,
+        "endChar": 74
+      },
+      "revId": "4a601c23229ce44ffdf3b81e8308efd18737363e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
