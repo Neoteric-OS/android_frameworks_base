@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12b38313_d92bf7b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1569254
+      },
+      "writtenOn": "2020-12-17T12:59:46Z",
+      "side": 1,
+      "message": "Hi Todd and Michael - this is a cherry pick of an API change that recently landed in git-master for a new feature flag.  It turns out we cannot equip cuttlefish with the new feature flag in aosp unless we also land the package manager change there.",
+      "revId": "8b2f25bbd98c9b35ca6f04819a8b3e38ddf7dcd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
