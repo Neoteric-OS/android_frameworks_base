@@ -8188,8 +8188,10 @@ public class TelephonyManager {
     }
 
     /** @hide */
-    @IntDef({
-            ALLOWED_NETWORK_TYPES_REASON_POWER
+    @IntDef(prefix = { "ALLOWED_NETWORK_TYPES_REASON_"}, value = {
+            ALLOWED_NETWORK_TYPES_REASON_POWER,
+            ALLOWED_NETWORK_TYPES_REASON_CARRIER_CONFIGURATION,
+            ALLOWED_NETWORK_TYPES_REASON_USER_SELECTION,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface AllowedNetworkTypesReason{}
@@ -8202,6 +8204,33 @@ public class TelephonyManager {
      * @hide
      */
     public static final int ALLOWED_NETWORK_TYPES_REASON_POWER = 0;
+
+    /**
+     * To indicated allowed network type change is requested by the carrier application or carrier
+     * configuration.
+     */
+    public static final int ALLOWED_NETWORK_TYPES_REASON_CARRIER_CONFIGURATION = 1;
+
+    /**
+     * To indicated allowed network type change is requested by the end user.
+     *
+     */
+    public static final int ALLOWED_NETWORK_TYPES_REASON_USER_SELECTION = 2;
+
+    /**
+     * Verifies that the reason provided is valid.
+     *
+     * @hide
+     */
+    public static boolean isValidAllowedNetworkTypesReason(@AllowedNetworkTypesReason int reason) {
+        switch(reason) {
+            case TelephonyManager.ALLOWED_NETWORK_TYPES_REASON_POWER:
+            case TelephonyManager.ALLOWED_NETWORK_TYPES_REASON_CARRIER_CONFIGURATION:
+            case TelephonyManager.ALLOWED_NETWORK_TYPES_REASON_USER_SELECTION:
+                return true;
+        }
+        return false;
+    }
 
     /**
      * Set the allowed network types of the device and
@@ -8228,7 +8257,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     public void setAllowedNetworkTypesForReason(@AllowedNetworkTypesReason int reason,
             @NetworkTypeBitMask long allowedNetworkTypes) {
-        if (reason != ALLOWED_NETWORK_TYPES_REASON_POWER) {
+        if (!isValidAllowedNetworkTypesReason(reason)) {
             throw new IllegalArgumentException("invalid AllowedNetworkTypesReason.");
         }
         try {
@@ -8265,7 +8294,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public @NetworkTypeBitMask long getAllowedNetworkTypesForReason(
             @AllowedNetworkTypesReason int reason) {
-        if (reason != ALLOWED_NETWORK_TYPES_REASON_POWER) {
+        if (!isValidAllowedNetworkTypesReason(reason)) {
             throw new IllegalArgumentException("invalid AllowedNetworkTypesReason.");
         }
         try {
