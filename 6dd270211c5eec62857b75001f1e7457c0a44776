@@ -1299,6 +1299,30 @@
       },
       "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7154a909_b6f97774",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-17T21:51:13Z",
+      "side": 1,
+      "message": "Varun is ok with METEREDNESS and ROAMING being merged from underlying networks.",
+      "parentUuid": "2de70172_4293977a",
+      "range": {
+        "startLine": 572,
+        "startChar": 23,
+        "endLine": 572,
+        "endChar": 33
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
