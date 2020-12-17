@@ -1,0 +1,11 @@
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Makoto Onuki <omakoto@google.com>
+Code-Review+1: Ahmed ElArabawy <arabawy@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Bypass-Presubmit+1: Quang Luong <qal@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Quang Luong <qal@google.com>
+Submitted-at: Thu, 17 Dec 2020 22:03:46 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1529258
+Project: platform/frameworks/base
+Branch: refs/heads/master
