@@ -20,6 +20,8 @@ import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubsc
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionTrackerCallback;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -40,9 +42,12 @@ import static org.mockito.Mockito.verify;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.LinkProperties;
+import android.net.NetworkCapabilities;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
 import android.net.vcn.VcnConfigTest;
+import android.net.vcn.VcnUnderlyingNetworkPolicy;
 import android.os.IBinder;
 import android.os.ParcelUuid;
 import android.os.PersistableBundle;
@@ -490,5 +495,28 @@ public class VcnManagementServiceTest {
     public void testRemoveVcnUnderlyingNetworkPolicyListenerNeverRegistered() {
         mVcnMgmtSvc.removeVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
         assertTrue(mVcnMgmtSvc.mRegisteredPolicyListeners.isEmpty());
+    }
+
+    @Test
+    public void testGetUnderlyingNetworkPolicy() throws Exception {
+        doNothing()
+                .when(mMockContext)
+                .enforceCallingPermission(eq(android.Manifest.permission.NETWORK_FACTORY), any());
+
+        VcnUnderlyingNetworkPolicy policy =
+                mVcnMgmtSvc.getUnderlyingNetworkPolicy(
+                        new NetworkCapabilities(), new LinkProperties());
+
+        assertFalse(policy.isTeardownRequested());
+        assertNotNull(policy.getMergedNetworkCapabilities());
+    }
+
+    @Test(expected = SecurityException.class)
+    public void testGetUnderlyingNetworkPolicyInvalidPermission() {
+        doThrow(new SecurityException())
+                .when(mMockContext)
+                .enforceCallingPermission(eq(android.Manifest.permission.NETWORK_FACTORY), any());
+
+        mVcnMgmtSvc.getUnderlyingNetworkPolicy(new NetworkCapabilities(), new LinkProperties());
     }
 }
