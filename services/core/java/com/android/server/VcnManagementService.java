@@ -21,11 +21,14 @@ import static java.util.Objects.requireNonNull;
 import android.annotation.NonNull;
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.LinkProperties;
+import android.net.NetworkCapabilities;
 import android.net.NetworkProvider;
 import android.net.NetworkRequest;
 import android.net.vcn.IVcnManagementService;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
+import android.net.vcn.VcnUnderlyingNetworkPolicy;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -402,6 +405,28 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         synchronized (mRegisteredPolicyListeners) {
             mRegisteredPolicyListeners.remove(listener.asBinder());
         }
+    }
+
+    /**
+     * Gets the UnderlyingNetworkPolicy as determined by the provided NetworkCapabilities and
+     * LinkProperties.
+     */
+    @NonNull
+    @Override
+    public VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(
+            @NonNull NetworkCapabilities networkCapabilities,
+            @NonNull LinkProperties linkProperties) {
+        requireNonNull(networkCapabilities, "networkCapabilities was null");
+        requireNonNull(linkProperties, "linkProperties was null");
+
+        mContext.enforceCallingPermission(
+                android.Manifest.permission.NETWORK_FACTORY,
+                "Must have permission NETWORK_FACTORY to get underlying Network policies");
+
+        // TODO(b/175914059): implement policy generation once VcnManagementService is able to
+        // determine policies
+
+        return new VcnUnderlyingNetworkPolicy(false /* isTearDownRequested */, networkCapabilities);
     }
 
     /**
