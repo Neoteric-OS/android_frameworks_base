@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3869b8a_909cadc6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-17T13:51:10Z",
+      "side": 1,
+      "message": "generally LGTM",
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3f22ca5_47dcb6db",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-17T13:51:10Z",
+      "side": 1,
+      "message": "1. question: Does this require @systemApi?\n2. IIUC only VPN should call this, maybe described in javadoc?",
+      "range": {
+        "startLine": 1193,
+        "startChar": 4,
+        "endLine": 1193,
+        "endChar": 10
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6d3d573_f0a020a5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-17T13:51:10Z",
+      "side": 1,
+      "message": "IIUC this is not really returning an object of Vpn, right?\nMaybe getVpnNetworkAgentInfoForUid would be more clear?",
+      "range": {
+        "startLine": 1302,
+        "startChar": 29,
+        "endLine": 1302,
+        "endChar": 41
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e82674d0_5b127271",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1317,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-17T13:51:10Z",
+      "side": 1,
+      "message": "IIUC this is not on handler thread so it might not be guaranteed to see the modification that made by processing EVENT_UNDERLYING_NETWORKS_CHANGED?\nNot sure if I missed something or this is not a real problem.",
+      "range": {
+        "startLine": 1317,
+        "startChar": 32,
+        "endLine": 1317,
+        "endChar": 62
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "682fd2da_fe3dc537",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4839,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-17T13:51:10Z",
+      "side": 1,
+      "message": "I read Locked suffix as \"the function is protected by a lock\".\nIIUC you want to say ByVpnLockdown?",
+      "range": {
+        "startLine": 4839,
+        "startChar": 37,
+        "endLine": 4839,
+        "endChar": 43
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa1c3a85_b7156375",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5964,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-17T13:51:10Z",
+      "side": 1,
+      "message": "nit:\nmaybe say the reference is never mutated?\nNot sure if someone will expect the content is never be mutated if saying this.\nNo strong opinion.",
+      "range": {
+        "startLine": 5964,
+        "startChar": 75,
+        "endLine": 5964,
+        "endChar": 88
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc57ec18_43064250",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5967,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-17T13:51:10Z",
+      "side": 1,
+      "message": "Can this be final if the reference is not going to be mutated?",
+      "range": {
+        "startLine": 5967,
+        "startChar": 11,
+        "endLine": 5967,
+        "endChar": 12
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "993b2343_01ebbc2c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 6689,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-17T13:51:10Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 6689,
+        "startChar": 7,
+        "endLine": 6689,
+        "endChar": 8
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e498b19f_8525c35d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 7560,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-17T13:51:10Z",
+      "side": 1,
+      "message": "nice",
+      "range": {
+        "startLine": 7557,
+        "startChar": 12,
+        "endLine": 7560,
+        "endChar": 36
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e0f8649_48beec23",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1627,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-17T13:51:10Z",
+      "side": 1,
+      "message": "nit: Need to change this?\nNo strong opinion since eventually this goes to netd.",
+      "range": {
+        "startLine": 1627,
+        "startChar": 29,
+        "endLine": 1627,
+        "endChar": 38
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6b65a79_81a49487",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-17T13:51:10Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1643,
+        "startChar": 6,
+        "endLine": 1643,
+        "endChar": 16
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a5753f9_3fd6f4ff",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-17T13:51:10Z",
+      "side": 1,
+      "message": "For mNetd API IIUC it is done synchronously.\nBut IIUC this is async call.\nI think this might be fine but do we want to add -Async prefix or some explanation for the readers to not expect it is done synchronously?",
+      "range": {
+        "startLine": 1663,
+        "startChar": 33,
+        "endLine": 1663,
+        "endChar": 53
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f08f7f5_0af93aec",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 6520,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-17T13:51:10Z",
+      "side": 1,
+      "message": "Since expectCallback* could return CallbackEntry.\nCan we generalize it by taking TestNetworkAgentWrapper ... a,\nand do something like:\n\nint count \u003d a.size;\nfor(i \u003d count; i \u003e 0; i--) {\n    CallbackEntry e \u003d callback.expectCallback(CallbackEntry.BlockedStatus);\n    if (!a.contains(e.getNetwork()) fail();\n    a.remove(e.getNetwork());\n}\nassertTrue(a.size \u003d\u003d 0);\n\n\nNot sure if I missed something.",
+      "range": {
+        "startLine": 6520,
+        "startChar": 12,
+        "endLine": 6520,
+        "endChar": 66
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
