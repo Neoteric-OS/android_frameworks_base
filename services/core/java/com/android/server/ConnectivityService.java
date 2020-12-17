@@ -973,7 +973,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mMetricsLog = logger;
         mDefaultRequest = createDefaultInternetRequestForTransport(-1, NetworkRequest.Type.REQUEST);
         mNetworkRanker = new NetworkRanker();
-        NetworkRequestInfo defaultNRI = new NetworkRequestInfo(null, mDefaultRequest, new Binder());
+        NetworkRequestInfo defaultNRI =
+                new NetworkRequestInfo(null, mDefaultRequest, new Binder(), null);
         mNetworkRequests.put(mDefaultRequest, defaultNRI);
         mNetworkRequestInfoLogs.log("REGISTER " + defaultNRI);
 
@@ -1220,7 +1221,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (enable) {
             handleRegisterNetworkRequest(new NetworkRequestInfo(
-                    null, networkRequest, new Binder()));
+                    null, networkRequest, new Binder(), null));
         } else {
             handleReleaseNetworkRequest(networkRequest, Process.SYSTEM_UID,
                     /* callOnUnavailable */ false);
@@ -1549,7 +1550,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public NetworkCapabilities[] getDefaultNetworkCapabilitiesForUser(
-                int userId, String callingPackageName) {
+                int userId, String callingPackageName, @Nullable String callingAttributionTag) {
         // The basic principle is: if an app's traffic could possibly go over a
         // network, without the app doing anything multinetwork-specific,
         // (hence, by "default"), then include that network's capabilities in
@@ -1574,7 +1575,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             result.put(
                     nai.network,
                     createWithLocationInfoSanitizedIfNecessaryWhenParceled(
-                            nc, mDeps.getCallingUid(), callingPackageName));
+                            nc, mDeps.getCallingUid(), callingPackageName, callingAttributionTag));
         }
 
         synchronized (mVpns) {
@@ -1589,7 +1590,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                                 result.put(
                                         network,
                                         createWithLocationInfoSanitizedIfNecessaryWhenParceled(
-                                                nc, mDeps.getCallingUid(), callingPackageName));
+                                                nc, mDeps.getCallingUid(), callingPackageName,
+                                                callingAttributionTag));
                             }
                         }
                     }
@@ -1670,12 +1672,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public NetworkCapabilities getNetworkCapabilities(Network network, String callingPackageName) {
+    public NetworkCapabilities getNetworkCapabilities(Network network, String callingPackageName,
+            @Nullable String callingAttributionFlag) {
         mAppOpsManager.checkPackage(mDeps.getCallingUid(), callingPackageName);
         enforceAccessPermission();
         return createWithLocationInfoSanitizedIfNecessaryWhenParceled(
                 getNetworkCapabilitiesInternal(network),
-                mDeps.getCallingUid(), callingPackageName);
+                mDeps.getCallingUid(), callingPackageName, callingAttributionFlag);
     }
 
     @VisibleForTesting
@@ -1697,7 +1700,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @VisibleForTesting
     @Nullable
     NetworkCapabilities createWithLocationInfoSanitizedIfNecessaryWhenParceled(
-            @Nullable NetworkCapabilities nc, int callerUid, @NonNull String callerPkgName) {
+            @Nullable NetworkCapabilities nc, int callerUid, @NonNull String callerPkgName,
+            @Nullable String callingAttributionTag) {
         if (nc == null) {
             return null;
         }
@@ -1708,7 +1712,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nc.getTransportInfo() != null && nc.getTransportInfo().hasLocationSensitiveFields()) {
             hasLocationPermission = Binder.withCleanCallingIdentity(
                     () -> mLocationPermissionChecker.checkLocationPermission(
-                            callerPkgName, null /* featureId */, callerUid, null /* message */));
+                            callerPkgName, callingAttributionTag, callerUid, null /* message */));
             newNc = new NetworkCapabilities(nc, hasLocationPermission);
         } else {
             newNc = new NetworkCapabilities(nc, false /* parcelLocationSensitiveFields */);
@@ -1727,7 +1731,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Location permission not checked yet, check now for masking owner UID.
             hasLocationPermission = Binder.withCleanCallingIdentity(
                     () -> mLocationPermissionChecker.checkLocationPermission(
-                            callerPkgName, null /* featureId */, callerUid, null /* message */));
+                            callerPkgName, callingAttributionTag, callerUid, null /* message */));
         }
         // Reset owner uid the app has no location permission.
         if (!hasLocationPermission) {
@@ -5498,6 +5502,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final int mPid;
         final int mUid;
         final Messenger messenger;
+        final String mCallingAttributionTag;
 
         NetworkRequestInfo(NetworkRequest r, PendingIntent pi) {
             request = r;
@@ -5508,10 +5513,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mBinder = null;
             mPid = getCallingPid();
             mUid = mDeps.getCallingUid();
+            mCallingAttributionTag = "";
             enforceRequestCountLimit();
         }
 
-        NetworkRequestInfo(Messenger m, NetworkRequest r, IBinder binder) {
+        NetworkRequestInfo(Messenger m, NetworkRequest r, IBinder binder,
+                @Nullable String callingAttributionTag) {
             super();
             messenger = m;
             request = r;
@@ -5521,6 +5528,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mPid = getCallingPid();
             mUid = mDeps.getCallingUid();
             mPendingIntent = null;
+            mCallingAttributionTag = callingAttributionTag;
             enforceRequestCountLimit();
 
             try {
@@ -5725,7 +5733,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         NetworkRequest networkRequest = new NetworkRequest(networkCapabilities, legacyType,
                 nextNetworkRequestId(), type);
-        NetworkRequestInfo nri = new NetworkRequestInfo(messenger, networkRequest, binder);
+        NetworkRequestInfo nri =
+                new NetworkRequestInfo(messenger, networkRequest, binder, callingAttributionTag);
         if (DBG) log("requestNetwork for " + nri);
 
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_REQUEST, nri));
@@ -5853,7 +5862,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public NetworkRequest listenForNetwork(NetworkCapabilities networkCapabilities,
-            Messenger messenger, IBinder binder, @NonNull String callingPackageName) {
+            Messenger messenger, IBinder binder, @NonNull String callingPackageName,
+            @Nullable String callingAttributionTag) {
         final int callingUid = mDeps.getCallingUid();
         if (!hasWifiNetworkListenPermission(networkCapabilities)) {
             enforceAccessPermission();
@@ -5873,7 +5883,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         NetworkRequest networkRequest = new NetworkRequest(nc, TYPE_NONE, nextNetworkRequestId(),
                 NetworkRequest.Type.LISTEN);
-        NetworkRequestInfo nri = new NetworkRequestInfo(messenger, networkRequest, binder);
+        NetworkRequestInfo nri =
+                new NetworkRequestInfo(messenger, networkRequest, binder, callingAttributionTag);
         if (VDBG) log("listenForNetwork for " + nri);
 
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_LISTENER, nri));
@@ -6893,7 +6904,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 putParcelable(
                         bundle,
                         createWithLocationInfoSanitizedIfNecessaryWhenParceled(
-                                nc, nri.mUid, nri.request.getRequestorPackageName()));
+                                nc, nri.mUid, nri.request.getRequestorPackageName(),
+                                nri.mCallingAttributionTag));
                 putParcelable(bundle, linkPropertiesRestrictedForCallerPermissions(
                         networkAgent.linkProperties, nri.mPid, nri.mUid));
                 // For this notification, arg1 contains the blocked status.
@@ -6912,7 +6924,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 putParcelable(
                         bundle,
                         createWithLocationInfoSanitizedIfNecessaryWhenParceled(
-                                netCap, nri.mUid, nri.request.getRequestorPackageName()));
+                                netCap, nri.mUid, nri.request.getRequestorPackageName(),
+                                nri.mCallingAttributionTag));
                 break;
             }
             case ConnectivityManager.CALLBACK_IP_CHANGED: {
