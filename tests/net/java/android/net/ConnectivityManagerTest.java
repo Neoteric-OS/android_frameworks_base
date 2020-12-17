@@ -360,7 +360,7 @@ public class ConnectivityManagerTest {
         verify(mService, never()).requestNetwork(any(), anyInt(), any(), anyInt(), any(),
                 anyInt(), any(), any());
         verify(mService).listenForNetwork(eq(request.networkCapabilities), any(), any(),
-                eq(testPkgName));
+                eq(testPkgName), any());
         reset(mService);
 
         manager.registerDefaultNetworkCallback(callback);
