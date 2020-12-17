@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b93c9c8f_3a7d5e30",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-17T22:01:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2055625b_a6f8c5e5",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 12
+      },
+      "revId": "4a723b3ee3dc9d76ec8eeadd906e395daf5cfe06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "168fe9d3_13cbb6b6",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-16T01:30:15Z",
       "side": 1,
       "message": "Should we be using Android\u0027s ArrayMap?",
+      "range": {
+        "startLine": 130,
+        "startChar": 60,
+        "endLine": 130,
+        "endChar": 67
+      },
+      "revId": "4a723b3ee3dc9d76ec8eeadd906e395daf5cfe06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f05f28c_8b3198ef",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-17T22:01:56Z",
+      "side": 1,
+      "message": "Done. Switched in a subsequent CL, but forgot to cheery pick back.",
+      "parentUuid": "168fe9d3_13cbb6b6",
       "range": {
         "startLine": 130,
         "startChar": 60,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3b84dffe_98f37b4b",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-17T22:01:56Z",
+      "side": 1,
+      "message": "If it\u0027s null, no configs exist, as would be the case with a device upgrading to S (or for a new device). That\u0027s actually the expected common case.",
+      "parentUuid": "6ea9af52_2c1de637",
+      "range": {
+        "startLine": 152,
+        "startChar": 20,
+        "endLine": 152,
+        "endChar": 40
+      },
+      "revId": "4a723b3ee3dc9d76ec8eeadd906e395daf5cfe06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4d748ce5_65a38e3f",
         "filename": "services/core/java/com/android/server/VcnManagementService.java",
         "patchSetId": 15
@@ -83,6 +155,30 @@
       "writtenOn": "2020-12-16T01:30:15Z",
       "side": 1,
       "message": "Map.putAll?",
+      "range": {
+        "startLine": 161,
+        "startChar": 28,
+        "endLine": 163,
+        "endChar": 25
+      },
+      "revId": "4a723b3ee3dc9d76ec8eeadd906e395daf5cfe06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc43f8e0_e4c5ca8d",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-17T22:01:56Z",
+      "side": 1,
+      "message": "Added handling to make sure we don\u0027t overwrite an existing config based on one we read from disk (due to retry)",
+      "parentUuid": "4d748ce5_65a38e3f",
       "range": {
         "startLine": 161,
         "startChar": 28,
@@ -118,6 +214,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2a463c50_eb8e75a9",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-17T22:01:56Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need to re-initialize any data structures, since the only place the IOException could happen is as part of the readFromDisk() call. I\u0027ve moved the code to make that more obvious.\n\nAdded an immediate retry; I\u0027d prefer to not add the complexity of retrying after a delay, and it should handle most transients (disk read failure, etc).",
+      "parentUuid": "16bc6719_80bd235b",
+      "range": {
+        "startLine": 171,
+        "startChar": 16,
+        "endLine": 171,
+        "endChar": 69
+      },
+      "revId": "4a723b3ee3dc9d76ec8eeadd906e395daf5cfe06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7a3e3ab0_cf2cd94a",
         "filename": "services/core/java/com/android/server/VcnManagementService.java",
         "patchSetId": 15
@@ -129,6 +249,30 @@
       "writtenOn": "2020-12-16T01:30:15Z",
       "side": 1,
       "message": "At first glance, it looks to me like we should be blocking systemReady() on the initial load from disk of the configs. No?",
+      "range": {
+        "startLine": 225,
+        "startChar": 8,
+        "endLine": 225,
+        "endChar": 57
+      },
+      "revId": "4a723b3ee3dc9d76ec8eeadd906e395daf5cfe06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "557432f0_175a23ac",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-17T22:01:56Z",
+      "side": 1,
+      "message": "Not particularly necessary. I\u0027m trying to avoid making changes that may significantly affect system boot time, to minimize impact on system health. In the worst case, we\u0027ll trigger the VCN startup after underlying networks come up, but that\u0027s trivial with a mutable capability.\n\nProbably a legacy of a rebase, but this is already addressed in the startup-read in the constructor.",
+      "parentUuid": "7a3e3ab0_cf2cd94a",
       "range": {
         "startLine": 225,
         "startChar": 8,
@@ -152,6 +296,30 @@
       "writtenOn": "2020-12-16T01:30:15Z",
       "side": 1,
       "message": "1) How does downgrading to a read lock to write work?\n\n2) Premature optimization is always a mistake. I\u0027d much rather spend our time making this correct than making VCN config writing in a hot loop work well (since it doesn\u0027t need to).\n\nI strongly recommend the simplest possible (technically sound) locking strategy for your first pass. I see a ton of code and complexity spent on these locks, and cleaner simpler code is more valuable than hyper-optimized locking. Even with all this locking already written, I would favor reworking it with a simpler approach. From the ReadWriteLock documentation:\n\n\"...In theory, the increase in concurrency permitted by the use of a read-write lock will lead to performance improvements over the use of a mutual exclusion lock. In practice this increase in concurrency will only be fully realized on a multi-processor, and then only if the access patterns for the shared data are suitable.\"",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 44
+      },
+      "revId": "4a723b3ee3dc9d76ec8eeadd906e395daf5cfe06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06435822_cd03abd9",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-17T22:01:56Z",
+      "side": 1,
+      "message": "Ack, as per discussed offline, changed to a synchronized block. I\u0027m still of the opinion that r/w locks are more readable, since they convey the intent of what happens within them, but that could be just me.",
+      "parentUuid": "a11f26be_7221d7e1",
       "range": {
         "startLine": 291,
         "startChar": 0,
