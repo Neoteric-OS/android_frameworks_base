@@ -64,6 +64,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53a5ca3b_cecea163",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2020-12-17T22:45:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d731a205_195c687e",
+      "range": {
+        "startLine": 83,
+        "startChar": 41,
+        "endLine": 83,
+        "endChar": 42
+      },
+      "revId": "4a601c23229ce44ffdf3b81e8308efd18737363e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5794253_e766952a",
@@ -77,6 +101,30 @@
       "writtenOn": "2020-12-17T22:35:05Z",
       "side": 1,
       "message": "Why do you need to keep holding onto the key, given you just decrypted SP?",
+      "range": {
+        "startLine": 89,
+        "startChar": 72,
+        "endLine": 89,
+        "endChar": 74
+      },
+      "revId": "4a601c23229ce44ffdf3b81e8308efd18737363e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68f55fa5_633bc267",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2020-12-17T22:45:25Z",
+      "side": 1,
+      "message": "This is the old logic. yeah the ks isn\u0027t useful after decryption, I guess it just makes test easier.\n\nThough it should be okay to use empty key bytes here if preferred.",
+      "parentUuid": "d5794253_e766952a",
       "range": {
         "startLine": 89,
         "startChar": 72,
