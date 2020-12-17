@@ -3477,9 +3477,9 @@ public class ActivityManager {
 
         /**
          * Constant for {@link #importanceReasonCode}: one of the application's
-         * content providers is being used by another process.  The pid of
+         * services is bound by another process.  The pid of
          * the client process is in {@link #importanceReasonPid} and the
-         * target provider in this process is in
+         * target service in this process is in
          * {@link #importanceReasonComponent}.
          */
         public static final int REASON_SERVICE_IN_USE = 2;
