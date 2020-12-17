@@ -16,6 +16,8 @@
 
 package com.android.server;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -29,7 +31,10 @@ import static org.mockito.Mockito.verify;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.LinkProperties;
+import android.net.NetworkCapabilities;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
+import android.net.vcn.VcnUnderlyingNetworkPolicy;
 import android.os.IBinder;
 import android.os.test.TestLooper;
 
@@ -113,5 +118,28 @@ public class VcnManagementServiceTest {
     public void testUnregisterVcnUnderlyingNetworkPolicyListenerNeverRegistered() {
         mVcnMgmtSvc.unregisterVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
         assertTrue(mVcnMgmtSvc.mRegisteredPolicyListeners.isEmpty());
+    }
+
+    @Test
+    public void testgetUnderlyingNetworkPolicy() throws Exception {
+        NetworkCapabilities nc = new NetworkCapabilities();
+        LinkProperties lp = new LinkProperties();
+        doNothing()
+                .when(mMockContext)
+                .enforceCallingPermission(eq(android.Manifest.permission.NETWORK_FACTORY), any());
+
+        VcnUnderlyingNetworkPolicy policy = mVcnMgmtSvc.getUnderlyingNetworkPolicy(nc, lp);
+
+        assertFalse(policy.isTeardownRequested());
+        assertEquals(nc, policy.getMergedNetworkCapabilities());
+    }
+
+    @Test(expected = SecurityException.class)
+    public void testGetUnderlyingNetworkPolicyInvalidPermission() {
+        doThrow(new SecurityException())
+                .when(mMockContext)
+                .enforceCallingPermission(eq(android.Manifest.permission.NETWORK_FACTORY), any());
+
+        mVcnMgmtSvc.getUnderlyingNetworkPolicy(new NetworkCapabilities(), new LinkProperties());
     }
 }
