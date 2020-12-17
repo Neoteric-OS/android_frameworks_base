@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Todd Kennedy <toddke@google.com>
+API-Review+1: Todd Kennedy <toddke@google.com>
+API-Review+1: Chalard Jean <jchalard@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Paul Hu <paulhu@google.com>
+Submitted-at: Thu, 17 Dec 2020 01:40:50 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1502511
+Project: platform/frameworks/base
+Branch: refs/heads/master
