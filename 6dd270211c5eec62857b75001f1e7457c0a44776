@@ -143,6 +143,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "938f29db_46c1ba0a",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-17T21:39:21Z",
+      "side": 1,
+      "message": "Done (b/175830307)",
+      "parentUuid": "d4c7b571_71c0d0b1",
+      "range": {
+        "startLine": 101,
+        "startChar": 29,
+        "endLine": 101,
+        "endChar": 44
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "257c18e9_84d74533",
@@ -804,6 +828,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72744ff6_eb28bd90",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-17T21:39:21Z",
+      "side": 1,
+      "message": "Done (b/175829816)",
+      "parentUuid": "364ce5a1_bbdd7cb2",
+      "range": {
+        "startLine": 455,
+        "startChar": 23,
+        "endLine": 455,
+        "endChar": 54
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "40a1acc1_cf4b5e81",
@@ -1219,6 +1267,30 @@
       "side": 1,
       "message": "While this doesn\u0027t impact Fi, for the general case, a VCN could be roaming or not-roaming and that\u0027s a valuable signal to higher-level callers about (mostly) cost. So think of it as a modifier on the metered bit to say \"not only metered, but unusually expensive\". Given that the VCN, like a cell network, will subsume both types of networks based on whatever the underlying connection is using... we have to find a way to do that.",
       "parentUuid": "dc87247e_3e2533df",
+      "range": {
+        "startLine": 572,
+        "startChar": 23,
+        "endLine": 572,
+        "endChar": 33
+      },
+      "revId": "6dd270211c5eec62857b75001f1e7457c0a44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2de70172_4293977a",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-17T21:39:21Z",
+      "side": 1,
+      "message": "Done; will check with Varun if they care about this, but until then removing it and tracking underlying Network\u0027s meteredness/roaming state",
+      "parentUuid": "69d63aee_8eb23b79",
       "range": {
         "startLine": 572,
         "startChar": 23,

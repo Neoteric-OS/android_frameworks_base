@@ -39,6 +39,30 @@
       },
       "revId": "2aee33190f690ffa8ca98b37f24808e6ec230ec4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "faa868f5_ed26bab2",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-12-17T21:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a573c22_1a917e0e",
+      "range": {
+        "startLine": 358,
+        "startChar": 11,
+        "endLine": 358,
+        "endChar": 15
+      },
+      "revId": "2aee33190f690ffa8ca98b37f24808e6ec230ec4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
