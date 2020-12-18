@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8eb0e34_ee5191cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-18T01:44:22Z",
+      "side": 1,
+      "message": "No objection to this in principle considering we\u0027ll go there eventually but is now the best time to add the API before it\u0027s even implemented ?\n\nIf this was public API, adding the API without an implementation is forbidden. This doesn\u0027t apply here because this is not public, but I am a bit uneasy adding the methods this early when you still have refactoring changes like IT04 lined up before this can be implemented.",
+      "revId": "8543091c1fbcfb0fa9e9d0d232a3eff73d974187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0444dcd_56969038",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2352,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-18T01:44:22Z",
+      "side": 1,
+      "message": "You need @Override on these methods if they implement IConnectivityManager stubs.",
+      "range": {
+        "startLine": 2352,
+        "startChar": 4,
+        "endLine": 2352,
+        "endChar": 10
+      },
+      "revId": "8543091c1fbcfb0fa9e9d0d232a3eff73d974187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
