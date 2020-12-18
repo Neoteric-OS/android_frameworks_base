@@ -664,8 +664,7 @@ public class UserManagerService extends IUserManager.Stub {
             final int userSize = mUsers.size();
             for (int i = 0; i < userSize; i++) {
                 UserInfo ui = mUsers.valueAt(i).info;
-                if ((ui.partial || ui.guestToRemove || (ui.isEphemeral() && !ui.preCreated))
-                        && i != 0) {
+                if (isUserToBeRemovedAtBoot(ui)) {
                     partials.add(ui);
                     addRemovingUserIdLocked(ui.id);
                     ui.partial = true;
@@ -679,6 +678,11 @@ public class UserManagerService extends IUserManager.Stub {
                     + " (name=" + ui.name + ")");
             removeUserState(ui.id);
         }
+    }
+
+    public static boolean isUserToBeRemovedAtBoot(UserInfo userInfo) {
+        return (userInfo.partial || userInfo.guestToRemove || (userInfo.isEphemeral()
+                && !userInfo.preCreated)) && userInfo.id != UserHandle.USER_SYSTEM;
     }
 
     /**
