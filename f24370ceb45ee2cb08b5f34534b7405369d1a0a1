@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cf882f6_3916a91f",
+        "filename": "core/java/android/net/INetworkManagementEventObserver.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-18T04:20:08Z",
+      "side": 1,
+      "message": "udpated",
+      "parentUuid": "1410869e_5698963c",
+      "range": {
+        "startLine": 88,
+        "startChar": 14,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "f24370ceb45ee2cb08b5f34534b7405369d1a0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9c77ade_dc8e5a07",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-18T01:59:07Z",
       "side": 1,
       "message": "Now that this test is checking this, do you want to change this to a constant that is unlikely to be happening by chance, to strengthen the test a bit ?",
+      "range": {
+        "startLine": 168,
+        "startChar": 69,
+        "endLine": 168,
+        "endChar": 70
+      },
+      "revId": "f24370ceb45ee2cb08b5f34534b7405369d1a0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d00ff90_304efc10",
+        "filename": "tests/net/java/com/android/server/NetworkManagementServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-18T04:20:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9c77ade_dc8e5a07",
       "range": {
         "startLine": 168,
         "startChar": 69,
