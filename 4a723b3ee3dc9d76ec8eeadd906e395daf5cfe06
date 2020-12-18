@@ -142,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a1e2337_94a562f1",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-18T00:34:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3b84dffe_98f37b4b",
+      "range": {
+        "startLine": 152,
+        "startChar": 20,
+        "endLine": 152,
+        "endChar": 40
+      },
+      "revId": "4a723b3ee3dc9d76ec8eeadd906e395daf5cfe06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d748ce5_65a38e3f",
@@ -236,6 +260,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbc95b41_4850e269",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-18T00:34:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2a463c50_eb8e75a9",
+      "range": {
+        "startLine": 171,
+        "startChar": 16,
+        "endLine": 171,
+        "endChar": 69
+      },
+      "revId": "4a723b3ee3dc9d76ec8eeadd906e395daf5cfe06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a3e3ab0_cf2cd94a",
@@ -283,6 +331,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c141dc9d_69870d47",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-18T00:34:49Z",
+      "side": 1,
+      "message": "I didn\u0027t realize this would impact system health. I was just thinking that we need to be sure that the read from disk happens before the pull from keystore (not implemented) and the network provider registration, no? But since the disk load isn\u0027t on the thread that\u0027s initializing services... not likely to block is it?\n\nOr, alternatively, should systemReady register the provider on the HandlerThread?",
+      "parentUuid": "557432f0_175a23ac",
+      "range": {
+        "startLine": 225,
+        "startChar": 8,
+        "endLine": 225,
+        "endChar": 57
+      },
+      "revId": "4a723b3ee3dc9d76ec8eeadd906e395daf5cfe06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a11f26be_7221d7e1",
@@ -320,6 +392,30 @@
       "side": 1,
       "message": "Ack, as per discussed offline, changed to a synchronized block. I\u0027m still of the opinion that r/w locks are more readable, since they convey the intent of what happens within them, but that could be just me.",
       "parentUuid": "a11f26be_7221d7e1",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 44
+      },
+      "revId": "4a723b3ee3dc9d76ec8eeadd906e395daf5cfe06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b902433_09d8e207",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-18T00:34:49Z",
+      "side": 1,
+      "message": "I know you\u0027re not happy about this, but man... going from 9-\u003e2 vertical lines for a lock (not including comments/whitespace) is a huge improvement in SNR. If the fancier locks become warranted, we can add them back.",
+      "parentUuid": "06435822_cd03abd9",
       "range": {
         "startLine": 291,
         "startChar": 0,
