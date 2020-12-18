@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1410869e_5698963c",
+        "filename": "core/java/android/net/INetworkManagementEventObserver.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-18T01:59:07Z",
+      "side": 1,
+      "message": "There is no such argument. Looking at NMS.java, this is actually passing Integer.toString(type), so emphatically not an interface. Can you please fix this comment ?",
+      "range": {
+        "startLine": 88,
+        "startChar": 14,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "f24370ceb45ee2cb08b5f34534b7405369d1a0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9c77ade_dc8e5a07",
+        "filename": "tests/net/java/com/android/server/NetworkManagementServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-18T01:59:07Z",
+      "side": 1,
+      "message": "Now that this test is checking this, do you want to change this to a constant that is unlikely to be happening by chance, to strengthen the test a bit ?",
+      "range": {
+        "startLine": 168,
+        "startChar": 69,
+        "endLine": 168,
+        "endChar": 70
+      },
+      "revId": "f24370ceb45ee2cb08b5f34534b7405369d1a0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
