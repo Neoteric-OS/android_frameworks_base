@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "737a434f_0afc93fb",
+        "filename": "services/core/java/com/android/server/locksettings/AesEncryptedBlob.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2020-12-18T00:04:56Z",
+      "side": 1,
+      "message": "Ack. I made it a util class, does it look better now",
+      "parentUuid": "23eb7f9c_92e62bbe",
+      "range": {
+        "startLine": 68,
+        "startChar": 11,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "revId": "4a601c23229ce44ffdf3b81e8308efd18737363e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d731a205_195c687e",
