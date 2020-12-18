@@ -83,6 +83,7 @@ import android.content.pm.PackageParser;
 import android.content.pm.ParceledListSlice;
 import android.content.pm.PermissionGroupInfo;
 import android.content.pm.PermissionInfo;
+import android.content.pm.UserInfo;
 import android.content.pm.parsing.component.ParsedPermission;
 import android.content.pm.parsing.component.ParsedPermissionGroup;
 import android.content.pm.permission.SplitPermissionInfoParcelable;
@@ -4651,8 +4652,16 @@ public class PermissionManagerService extends IPermissionManager.Stub {
         mPermissionControllerManager = mContext.getSystemService(PermissionControllerManager.class);
         mPermissionPolicyInternal = LocalServices.getService(PermissionPolicyInternal.class);
 
+        UserManagerService userManagerService = UserManagerService.getInstance();
         int[] grantPermissionsUserIds = EMPTY_INT_ARRAY;
-        for (int userId : UserManagerService.getInstance().getUserIds()) {
+        for (int userId : userManagerService.getUserIds()) {
+            UserInfo ui = userManagerService.getUserInfo(userId);
+            boolean isUserToBeRemoved =
+                    ui.partial || ui.guestToRemove || (ui.isEphemeral() && !ui.preCreated);
+            if (isUserToBeRemoved && userId != UserHandle.USER_SYSTEM) {
+                // User is about to be removed.
+                continue;
+            }
             if (mPackageManagerInt.isPermissionUpgradeNeeded(userId)) {
                 grantPermissionsUserIds = ArrayUtils.appendInt(
                         grantPermissionsUserIds, userId);
