@@ -193,11 +193,18 @@ import com.google.android.startop.iorap.IorapForwardingService;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
+import java.util.stream.Stream;
 
 public final class SystemServer {
 
@@ -411,6 +418,42 @@ public final class SystemServer {
     private static native void fdtrackAbort();
 
     /**
+     * Dump system_server's heap.
+     *
+     * For privacy reasons, these aren't automatically pulled into bugreports:
+     * they must be manually pulled by the user.
+     */
+    private static void dumpHprof() {
+        // hprof dumps are rather large, so ensure we don't fill the disk by generating
+        // hundreds of these that will live forever.
+        try (Stream<Path> files = Files.walk(Paths.get("/data/system/heapdump/"))) {
+            files.filter(file -> file.getFileName().toString().startsWith("fdtrack-"))
+                    .filter(Files::isRegularFile)
+                    .sorted(Comparator.reverseOrder())
+                    .skip(2)
+                    .forEach(file -> {
+                        try {
+                            Files.delete(file);
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
+        } catch (IOException ex) {
+            Slog.e("System", "failed to clean up fdtrack hprofs:");
+            ex.printStackTrace();
+        }
+
+        try {
+            String date = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
+            String filename = "/data/system/heapdump/fdtrack-" + date + ".hprof";
+            Debug.dumpHprofData(filename);
+        } catch (IOException ex) {
+            Slog.e("System", "Failed to dump fdtrack hprof:");
+            ex.printStackTrace();
+        }
+    }
+
+    /**
      * Spawn a thread that monitors for fd leaks.
      */
     private static void spawnFdLeakCheckThread() {
@@ -434,6 +477,7 @@ public final class SystemServer {
                     enabled = true;
                 } else if (maxFd > abortThreshold) {
                     Slog.i("System", "fdtrack abort threshold reached, dumping and aborting");
+                    dumpHprof();
                     fdtrackAbort();
                 }
 
