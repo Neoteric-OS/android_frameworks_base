@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "396bc030_f3255493",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-18T02:45:06Z",
+      "side": 1,
+      "message": "This commit does not make it public, so that\u0027s why I think it\u0027s ok to put the API first here. It does not break anything currently. We could always remove it if we think we should remove it in the follow up patches.",
+      "parentUuid": "c8eb0e34_ee5191cf",
+      "revId": "8543091c1fbcfb0fa9e9d0d232a3eff73d974187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0444dcd_56969038",
@@ -31,6 +49,30 @@
       "writtenOn": "2020-12-18T01:44:22Z",
       "side": 1,
       "message": "You need @Override on these methods if they implement IConnectivityManager stubs.",
+      "range": {
+        "startLine": 2352,
+        "startChar": 4,
+        "endLine": 2352,
+        "endChar": 10
+      },
+      "revId": "8543091c1fbcfb0fa9e9d0d232a3eff73d974187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8480776f_ab0511b7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2352,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-18T02:45:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0444dcd_56969038",
       "range": {
         "startLine": 2352,
         "startChar": 4,
