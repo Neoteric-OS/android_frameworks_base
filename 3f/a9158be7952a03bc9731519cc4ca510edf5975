@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Ray Essick <essick@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Wonsik Kim <wonsik@google.com>
+Submitted-at: Fri, 18 Dec 2020 00:09:32 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1532514
+Project: platform/frameworks/base
+Branch: refs/heads/master
