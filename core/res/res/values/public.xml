@@ -3026,6 +3026,7 @@
     <public type="bool" name="config_assistantOnTopOfDream" id="0x01110005" />
     <!-- @hide @TestApi -->
     <public type="bool" name="config_remoteInsetsControllerControlsSystemBars" id="0x01110006" />
+
   <!-- ===============================================================
        Resources added in version S of the platform
 
@@ -3043,7 +3044,7 @@
        =============================================================== -->
 
   <public-group type="attr" first-id="0x01010617">
-    <!-- attribute definitions go here -->
+    <public type="attr" name="canPauseRecording" />
   </public-group>
 
   <public-group type="drawable" first-id="0x010800b5">
