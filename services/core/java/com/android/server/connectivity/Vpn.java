@@ -116,6 +116,7 @@ import com.android.server.net.BaseNetworkObserver;
 
 import libcore.io.IoUtils;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -126,6 +127,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -2044,6 +2048,18 @@ public class Vpn {
         }
         if (!profile.ipsecCaCert.isEmpty()) {
             byte[] value = keyStore.get(Credentials.CA_CERTIFICATE + profile.ipsecCaCert);
+
+            // "value" may be DER encoded or Base64 encoded. The following block of code can make
+            // sure "value" is Base64 encoded before converting "value" to a String.
+            try {
+                CertificateFactory certFactory = CertificateFactory.getInstance("X509");
+                InputStream in = new ByteArrayInputStream(value);
+                X509Certificate cert = (X509Certificate) certFactory.generateCertificate(in);
+                value = Credentials.convertToPem(cert);
+            } catch (CertificateException | IOException e) {
+                throw new IllegalStateException("Cannot load CA certificates", e);
+            }
+
             caCert = (value == null) ? null : new String(value, StandardCharsets.UTF_8);
         }
         if (!profile.ipsecServerCert.isEmpty()) {
