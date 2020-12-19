@@ -21,10 +21,12 @@ import static android.content.pm.UserInfo.FLAG_MANAGED_PROFILE;
 import static android.content.pm.UserInfo.FLAG_PRIMARY;
 import static android.content.pm.UserInfo.FLAG_RESTRICTED;
 import static android.net.ConnectivityManager.NetworkCallback;
+import static android.net.PlatformVpnProfile.TYPE_IKEV2_IPSEC_USER_PASS;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.AdditionalMatchers.aryEq;
@@ -75,6 +77,8 @@ import android.net.UidRangeParcel;
 import android.net.VpnManager;
 import android.net.VpnService;
 import android.net.ipsec.ike.IkeSessionCallback;
+import android.net.ipsec.ike.IkeSessionParams;
+import android.net.ipsec.ike.IkeSessionParams.IkeAuthDigitalSignRemoteConfig;
 import android.net.ipsec.ike.exceptions.IkeProtocolException;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -97,6 +101,7 @@ import com.android.internal.R;
 import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnProfile;
+import com.android.internal.util.HexDump;
 import com.android.server.IpSecService;
 
 import org.junit.Before;
@@ -115,6 +120,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -153,6 +159,62 @@ public class VpnTest {
     private static final String TEST_VPN_SERVER = "1.2.3.4";
     private static final String TEST_VPN_IDENTITY = "identity";
     private static final byte[] TEST_VPN_PSK = "psk".getBytes();
+    private static final String TEST_VPN_USERNAME = "testUsername";
+    private static final String TEST_VPN_PASSWORD = "testPassword";
+    private static final String TEST_VPN_CA_CERT_NAME = "testCaCertificate";
+
+    private static final byte[] TEST_CA_CERT_PEM =
+            ("-----BEGIN CERTIFICATE-----\n"
+                            + "MIIDSDCCAjCgAwIBAgIITJQJ6HC1rjwwDQYJKoZIhvcNAQELBQAwQjELMAkGA1UE\n"
+                            + "BhMCVVMxEDAOBgNVBAoTB0FuZHJvaWQxITAfBgNVBAMTGHJvb3QuY2EudGVzdC5h\n"
+                            + "bmRyb2lkLm5ldDAeFw0xOTA5MzAxNzU1NTJaFw0yOTA5MjcxNzU1NTJaMEIxCzAJ\n"
+                            + "BgNVBAYTAlVTMRAwDgYDVQQKEwdBbmRyb2lkMSEwHwYDVQQDExhyb290LmNhLnRl\n"
+                            + "c3QuYW5kcm9pZC5uZXQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCT\n"
+                            + "q3hGF+JvLaB1xW7KGKmaxiQ7BxX2Sn7cbp7ggoVYXsFlBUuPPv3+Vg5PfPCPhsJ8\n"
+                            + "/7w4HyKo3uc/vHs5HpQ7rSd9blhAkfmJci2ULLq73FB8Mix4CzPwMx29RrN1X9bU\n"
+                            + "z4G0vJMczIBGxbZ0uw7n8bKcXBV7AIeax+J8lseEZ3k8iSuBkUJqGIpPFKTqByFZ\n"
+                            + "A1Lvt47xkON5SZh6c/Oe+o6291wXaCOJUSAKv6PAWZkq9HeD2fqKA/ck9dBaz1M3\n"
+                            + "YvzQ9V/7so3/dECjAfKia388h1I6XSGNUM+d5hpxMXpAFgG42eUXHpJ10OjDvSwd\n"
+                            + "7ZSC91/kRQewUomEKBK1AgMBAAGjQjBAMA8GA1UdEwEB/wQFMAMBAf8wDgYDVR0P\n"
+                            + "AQH/BAQDAgEGMB0GA1UdDgQWBBRJn6hHhdeDY/dXpCKUfrFYQhKAGjANBgkqhkiG\n"
+                            + "9w0BAQsFAAOCAQEAig/94aGfHBhZuvbbhwAK4rUNpizmR567u0ZJ+QUEKyAlo9lT\n"
+                            + "ZWYHSm7qTAZYvPEjzTQIptnAlxCHePXh3Cfwgo+r82lhG2rcdI03iRyvHWjM8gyk\n"
+                            + "BXCJTi0Q08JHHpTP6GnAqpz58qEIFkk8P766zNXdhYrGPOydF+p7MFcb1Zv1gum3\n"
+                            + "zmRLt0XUAMfjPUv1Bl8kTKFxH5lkMBLR1E0jnoJoTTfgRPrf9CuFSoh48n7YhoBT\n"
+                            + "KV75xZY8b8+SuB0v6BvQmkpKZGoxBjuVsShyG7q1+4JTAtwhiP7BlkDvVkaBEi7t\n"
+                            + "WIMFp2r2ZDisHgastNaeYFyzHYz9g1FCCrHQ4w==\n"
+                            + "-----END CERTIFICATE-----")
+                    .getBytes(StandardCharsets.US_ASCII);
+
+    private static final byte[] TEST_CA_CERT_DER =
+            HexDump.hexStringToByteArray(
+                    "3082034830820230a00302010202084c9409e870b5ae3c300d06092a864886f7"
+                            + "0d01010b05003042310b30090603550406130255533110300e060355040a1307"
+                            + "416e64726f69643121301f06035504031318726f6f742e63612e746573742e61"
+                            + "6e64726f69642e6e6574301e170d3139303933303137353535325a170d323930"
+                            + "3932373137353535325a3042310b30090603550406130255533110300e060355"
+                            + "040a1307416e64726f69643121301f06035504031318726f6f742e63612e7465"
+                            + "73742e616e64726f69642e6e657430820122300d06092a864886f70d01010105"
+                            + "000382010f003082010a028201010093ab784617e26f2da075c56eca18a99ac6"
+                            + "243b0715f64a7edc6e9ee08285585ec165054b8f3efdfe560e4f7cf08f86c27c"
+                            + "ffbc381f22a8dee73fbc7b391e943bad277d6e584091f989722d942cbabbdc50"
+                            + "7c322c780b33f0331dbd46b3755fd6d4cf81b4bc931ccc8046c5b674bb0ee7f1"
+                            + "b29c5c157b00879ac7e27c96c78467793c892b8191426a188a4f14a4ea072159"
+                            + "0352efb78ef190e37949987a73f39efa8eb6f75c1768238951200abfa3c05999"
+                            + "2af47783d9fa8a03f724f5d05acf533762fcd0f55ffbb28dff7440a301f2a26b"
+                            + "7f3c87523a5d218d50cf9de61a71317a401601b8d9e5171e9275d0e8c3bd2c1d"
+                            + "ed9482f75fe44507b05289842812b50203010001a3423040300f0603551d1301"
+                            + "01ff040530030101ff300e0603551d0f0101ff040403020106301d0603551d0e"
+                            + "04160414499fa84785d78363f757a422947eb1584212801a300d06092a864886"
+                            + "f70d01010b050003820101008a0ffde1a19f1c1859baf6db87000ae2b50da62c"
+                            + "e6479ebbbb4649f905042b2025a3d9536566074a6eea4c0658bcf123cd3408a6"
+                            + "d9c097108778f5e1dc27f0828fabf369611b6adc748d37891caf1d68ccf20ca4"
+                            + "0570894e2d10d3c2471e94cfe869c0aa9cf9f2a10816493c3fbebaccd5dd858a"
+                            + "c63cec9d17ea7b30571bd59bf582e9b7ce644bb745d400c7e33d4bf5065f244c"
+                            + "a1711f99643012d1d44d239e82684d37e044fadff42b854a8878f27ed8868053"
+                            + "295ef9c5963c6fcf92b81d2fe81bd09a4a4a646a31063b95b128721bbab5fb82"
+                            + "5302dc2188fec19640ef564681122eed588305a76af66438ac1e06acb4d69e60"
+                            + "5cb31d8cfd8351420ab1d0e3");
 
     private static final Network TEST_NETWORK = new Network(Integer.MAX_VALUE);
     private static final String TEST_IFACE_NAME = "TEST_IFACE";
@@ -199,6 +261,31 @@ public class VpnTest {
                 new Ikev2VpnProfile.Builder(TEST_VPN_SERVER, TEST_VPN_IDENTITY);
         builder.setAuthPsk(TEST_VPN_PSK);
         mVpnProfile = builder.build().toVpnProfile();
+    }
+
+    /**
+     * Build Ikev2VpnProfile with username and password that has the same configurations with
+     * mVpnProfile except the authentication method.
+     */
+    private VpnProfile buildVpnProfileUsernamePass() throws Exception {
+        final VpnProfile profile = new VpnProfile("" /* Key; value unused by IKEv2VpnProfile(s) */);
+
+        profile.server = mVpnProfile.server;
+        profile.ipsecIdentifier = mVpnProfile.ipsecIdentifier;
+        profile.proxy = mVpnProfile.proxy;
+        profile.setAllowedAlgorithms(mVpnProfile.getAllowedAlgorithms());
+        profile.isBypassable = mVpnProfile.isBypassable;
+        profile.isMetered = mVpnProfile.isMetered;
+        profile.maxMtu = mVpnProfile.maxMtu;
+        profile.areAuthParamsInline = mVpnProfile.areAuthParamsInline;
+        profile.saveLogin = mVpnProfile.saveLogin;
+
+        profile.type = TYPE_IKEV2_IPSEC_USER_PASS;
+        profile.username = TEST_VPN_USERNAME;
+        profile.password = TEST_VPN_PASSWORD;
+        profile.ipsecCaCert = TEST_VPN_CA_CERT_NAME;
+
+        return profile;
     }
 
     @Before
@@ -1021,6 +1108,35 @@ public class VpnTest {
         startLegacyVpn(createVpn(primaryUser.id), mVpnProfile);
         // TODO: Test the Ikev2VpnRunner started up properly. Relies on utility methods added in
         // a subsequent patch.
+    }
+
+    private void checkStartPlatformVpnUserPass(byte[] caCert) throws Exception {
+        when(mKeyStore.get(Credentials.CA_CERTIFICATE + TEST_VPN_CA_CERT_NAME)).thenReturn(caCert);
+        startLegacyVpn(createVpn(primaryUser.id), buildVpnProfileUsernamePass());
+        final NetworkCallback cb = triggerOnAvailableAndGetCallback();
+
+        ArgumentCaptor<IkeSessionParams> ikeSessionParamsCaptor =
+                ArgumentCaptor.forClass(IkeSessionParams.class);
+
+        // Wait for createIkeSession() to be called before proceeding in order to capture the
+        // constructed IkeSessionParams.
+        verify(mIkev2SessionCreator, timeout(TEST_TIMEOUT_MS))
+                .createIkeSession(
+                        any(), ikeSessionParamsCaptor.capture(), any(), any(), any(), any());
+        IkeAuthDigitalSignRemoteConfig authConfig =
+                (IkeAuthDigitalSignRemoteConfig)
+                        ikeSessionParamsCaptor.getValue().getRemoteAuthConfig();
+        assertNotNull(authConfig.getRemoteCaCert());
+    }
+
+    @Test
+    public void testStartPlatformVpnUserPassWithPemCaCert() throws Exception {
+        checkStartPlatformVpnUserPass(TEST_CA_CERT_PEM);
+    }
+
+    @Test
+    public void testStartPlatformVpnUserPassWithDerCaCert() throws Exception {
+        checkStartPlatformVpnUserPass(TEST_CA_CERT_DER);
     }
 
     @Test
