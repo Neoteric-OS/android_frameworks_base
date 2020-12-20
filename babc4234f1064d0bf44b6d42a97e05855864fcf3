@@ -136,6 +136,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0d35b7a_58cc3863",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-12-20T23:24:08Z",
+      "side": 1,
+      "message": "The suggested text is both overly-narrow and misleading. Can we not try to check in the description text unless that\u0027s a burning issue (it isn\u0027t). If it gets checked in (over my and Ben\u0027s objections) it really limits our options for a collaboration.\n\nHow about a one-sentence description and a TODO?",
+      "parentUuid": "91d3c53d_73a447aa",
+      "range": {
+        "startLine": 366,
+        "startChar": 5,
+        "endLine": 366,
+        "endChar": 79
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7393361a_0acfc6b3",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 3
