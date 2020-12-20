@@ -112,6 +112,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "91d3c53d_73a447aa",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-20T08:33:34Z",
+      "side": 1,
+      "message": "s/never set this flag in their requests/never manually set this flag in their requests/",
+      "parentUuid": "402ed6f7_d0e748b8",
+      "range": {
+        "startLine": 366,
+        "startChar": 5,
+        "endLine": 366,
+        "endChar": 79
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7393361a_0acfc6b3",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 3
