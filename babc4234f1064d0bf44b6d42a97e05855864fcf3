@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f74b5146_14600993",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-20T08:32:22Z",
+      "side": 1,
+      "message": "s/that whether/whether/",
+      "range": {
+        "startLine": 9,
+        "startChar": 31,
+        "endLine": 9,
+        "endChar": 43
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d5ca115_ae0bff55",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-20T08:32:22Z",
+      "side": 1,
+      "message": "Networks managed by VCN are not invisible to users, they are just excluded from callbacks by default.",
+      "range": {
+        "startLine": 11,
+        "startChar": 29,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1d19f8f_98ebd9e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-20T08:32:22Z",
+      "side": 1,
+      "message": "Did I miss the new tests for this capability ?",
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82fc5730_4eec747d",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-20T08:32:22Z",
+      "side": 1,
+      "message": "Likewise",
+      "range": {
+        "startLine": 362,
+        "startChar": 17,
+        "endLine": 362,
+        "endChar": 21
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "402ed6f7_d0e748b8",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-20T08:32:22Z",
+      "side": 1,
+      "message": "This capability has the irregularity that it will be forcefully removed by the system in some requests, which is not how others work. I think we need to expand a bit the documentation to explain it. We could replace this sentence with the following :\n\nThis capability is provided for backward compatibility of existing applications that don\u0027t know about the VCN, which confers it special behavior. To keep this backward compatibility, this capability is set by default in requests, but the system will remove it at its discretion, which means that as opposed to all other capabilities, apps can never add it and expect the system to honor it.\n\u003cli\u003eThis capability is not always honored in requests, at the system\u0027s discretion, so apps should never set this flag in their requests.\n\u003cli\u003eThis capability is correctly set on NetworkCapabilities for all networks, letting interested apps query for any network whether it is VCN-managed.\n\nApps that understand multinetworking (including virtual networks), and in particular multipath-capable apps, should remove this capability from their {@link NetworkRequest}s to avoid underlying networks being hidden from them. They can then look up the capability when receiving a call to {@link ConnectivityManager.NetworkCallback#onCapabilitiesUpdated} for any logic that should be different for networks underlying a VCN.",
+      "range": {
+        "startLine": 366,
+        "startChar": 5,
+        "endLine": 366,
+        "endChar": 79
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7393361a_0acfc6b3",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-20T08:32:22Z",
+      "side": 1,
+      "message": "Maybe add a small comment about TRUSTED and NOT_VCN_MANAGED (not javadoc, so that it\u0027s not included in the public doc)",
+      "range": {
+        "startLine": 399,
+        "startChar": 5,
+        "endLine": 399,
+        "endChar": 7
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
