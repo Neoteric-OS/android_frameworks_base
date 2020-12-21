@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d804cf49_5350f5c8",
+        "filename": "core/java/android/uwb/IUwbAdapter.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1418133
+      },
+      "writtenOn": "2020-12-21T06:37:35Z",
+      "side": 1,
+      "message": "Some parameters need to be passed on with \u0027start\u0027 (e.g. the scheduled start time).",
+      "revId": "27db481ea20df9266928c3f15a4271d6a4bef06a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3d539a1_0ffb4658",
+        "filename": "core/java/android/uwb/IUwbAdapter.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1418133
+      },
+      "writtenOn": "2020-12-21T06:37:35Z",
+      "side": 1,
+      "message": "This should still be START, since this is used to schedule a start.",
+      "revId": "27db481ea20df9266928c3f15a4271d6a4bef06a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
