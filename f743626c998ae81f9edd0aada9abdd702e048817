@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006891458",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1534433?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5544b358_3e515480",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-21T21:21:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027complex\u0027, \u0027unexpected\u0027, or \u0027placeholder\u0027; see https://developers.google.com/style/inclusive-documentation#ableist-language for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 1670,
+        "startChar": 67,
+        "endLine": 1670,
+        "endChar": 72
+      },
+      "revId": "f743626c998ae81f9edd0aada9abdd702e048817",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
