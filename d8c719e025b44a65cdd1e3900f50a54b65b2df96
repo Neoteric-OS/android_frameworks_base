@@ -111,6 +111,30 @@
       },
       "revId": "d8c719e025b44a65cdd1e3900f50a54b65b2df96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34cc9ede_36e74d60",
+        "filename": "services/core/java/com/android/server/AlarmManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3373,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2020-12-22T16:55:53Z",
+      "side": 1,
+      "message": "Yes. Listeners were prone to a race while removing in client side code (AlarmManager.java). My commit should fix that problem. Let me know if you see otherwise in testing.\n\nAs for this change, I think this will only happen if there is a non-wakeup alarm whose PendingIntent got canceled, as that is the only code path which calls into `removeImpl` from `deliverLocked`. Is my understanding correct? Are there other cases where it can happen?",
+      "parentUuid": "5fb4fbfd_13c326fb",
+      "range": {
+        "startLine": 3373,
+        "startChar": 47,
+        "endLine": 3373,
+        "endChar": 70
+      },
+      "revId": "d8c719e025b44a65cdd1e3900f50a54b65b2df96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
