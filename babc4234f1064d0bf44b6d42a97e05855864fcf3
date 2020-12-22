@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfe6ed49_3b6037b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-22T11:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f74b5146_14600993",
+      "range": {
+        "startLine": 9,
+        "startChar": 31,
+        "endLine": 9,
+        "endChar": 43
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d5ca115_ae0bff55",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-20T08:32:22Z",
       "side": 1,
       "message": "Networks managed by VCN are not invisible to users, they are just excluded from callbacks by default.",
+      "range": {
+        "startLine": 11,
+        "startChar": 29,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bd514c1_df214d7b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-22T11:10:19Z",
+      "side": 1,
+      "message": "Done.\nSee if it works for you.",
+      "parentUuid": "5d5ca115_ae0bff55",
       "range": {
         "startLine": 11,
         "startChar": 29,
@@ -64,6 +112,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b923e6e_104cd469",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-22T11:10:19Z",
+      "side": 1,
+      "message": "Ah, No you didn\u0027t miss anything.\nI slightly enhanced testLoseTrusted, see if it works for you.",
+      "parentUuid": "f1d19f8f_98ebd9e9",
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82fc5730_4eec747d",
@@ -77,6 +143,30 @@
       "writtenOn": "2020-12-20T08:32:22Z",
       "side": 1,
       "message": "Likewise",
+      "range": {
+        "startLine": 362,
+        "startChar": 17,
+        "endLine": 362,
+        "endChar": 21
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31280188_58b99842",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-22T11:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82fc5730_4eec747d",
       "range": {
         "startLine": 362,
         "startChar": 17,
@@ -160,6 +250,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6302ff61_a02f9a7b",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-22T11:10:19Z",
+      "side": 1,
+      "message": "Sorry for lack of context.\nWould you help to specify which parts are overly-narrow and/or misleading?\nMaybe we can come out with something with good trade off?",
+      "parentUuid": "d0d35b7a_58cc3863",
+      "range": {
+        "startLine": 366,
+        "startChar": 5,
+        "endLine": 366,
+        "endChar": 79
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7393361a_0acfc6b3",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 3
@@ -171,6 +285,30 @@
       "writtenOn": "2020-12-20T08:32:22Z",
       "side": 1,
       "message": "Maybe add a small comment about TRUSTED and NOT_VCN_MANAGED (not javadoc, so that it\u0027s not included in the public doc)",
+      "range": {
+        "startLine": 399,
+        "startChar": 5,
+        "endLine": 399,
+        "endChar": 7
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a98eb08e_5c797d12",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-22T11:10:19Z",
+      "side": 1,
+      "message": "Hmm not sure what we want to say at here.\nFrom what I know they have similar behavior, which includes:\n 1. mutable\n 2. requestable\n 3. set by default\nBut they are already said in the commit cover.\nWould you mind share your thoughts?",
+      "parentUuid": "7393361a_0acfc6b3",
       "range": {
         "startLine": 399,
         "startChar": 5,
