@@ -97,6 +97,30 @@
       },
       "revId": "97011e07d561cabd6c05c65ecb06ec9f3cd1ebfb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a62a0f7_3206717a",
+        "filename": "services/core/java/com/android/server/wm/ActivityStarter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2020-12-22T04:03:52Z",
+      "side": 1,
+      "message": "According to #notifyActivityRestartAttempt(), the fourth params is `wasVisible`, which should be the visible state before the activity launches. Perhaps you should make changes in Divider.java where listens to the events instead.",
+      "parentUuid": "9900693e_ad414f66",
+      "range": {
+        "startLine": 1485,
+        "startChar": 36,
+        "endLine": 1485,
+        "endChar": 67
+      },
+      "revId": "97011e07d561cabd6c05c65ecb06ec9f3cd1ebfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
