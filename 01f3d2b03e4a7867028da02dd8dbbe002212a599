@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a1f67bc_8e6fb1bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-22T03:24:49Z",
+      "side": 1,
+      "message": "LGTM but deferring to Jean for API",
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e663b1af_a55012aa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6164,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-22T03:24:49Z",
+      "side": 1,
+      "message": "Nit: connection",
+      "range": {
+        "startLine": 6164,
+        "startChar": 45,
+        "endLine": 6164,
+        "endChar": 54
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
