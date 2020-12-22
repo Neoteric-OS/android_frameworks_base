@@ -16,6 +16,24 @@
       "message": "Assuming I\u0027ve been added for OWNERS +1 so I\u0027m rubber stamping. Do any of thee OWNERS files for media/ and services/.../audio need to be updated ?",
       "revId": "cc665b75a6034331cef9db30b1c738347b0f7b24",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4ec19eb_65e843a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-12-22T14:18:27Z",
+      "side": 1,
+      "message": "definitely  ./core/jni/android_media_AudioSystem.cpp and services/tests/servicestests/src/com/android/server/audio/NoOpAudioSystemAdapter.java must have Jean-Michel as owner.",
+      "parentUuid": "2bd27b03_aa1b5a48",
+      "revId": "cc665b75a6034331cef9db30b1c738347b0f7b24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
