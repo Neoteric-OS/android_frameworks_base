@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Narayan Kamath <narayan@google.com>
+Autosubmit+1: Eric Laurent <elaurent@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Bypass-Presubmit+1: Eric Laurent <elaurent@google.com>
+Submitted-by: Eric Laurent <elaurent@google.com>
+Submitted-at: Tue, 22 Dec 2020 16:29:46 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1535141
+Project: platform/frameworks/base
+Branch: refs/heads/master
