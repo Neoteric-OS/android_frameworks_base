@@ -24964,6 +24964,7 @@ package android.net {
 
   public static class ConnectivityManager.NetworkCallback {
     ctor public ConnectivityManager.NetworkCallback();
+    ctor public ConnectivityManager.NetworkCallback(int);
     method public void onAvailable(@NonNull android.net.Network);
     method public void onBlockedStatusChanged(@NonNull android.net.Network, boolean);
     method public void onCapabilitiesChanged(@NonNull android.net.Network, @NonNull android.net.NetworkCapabilities);
@@ -24971,6 +24972,8 @@ package android.net {
     method public void onLosing(@NonNull android.net.Network, int);
     method public void onLost(@NonNull android.net.Network);
     method public void onUnavailable();
+    field public static final int FLAG_INCLUDE_LOCATION_INFO_IN_NETWORK_CAPABILITIES = 1; // 0x1
+    field public static final int FLAG_NONE = 0; // 0x0
   }
 
   public static interface ConnectivityManager.OnNetworkActiveListener {

@@ -1037,6 +1037,13 @@ public final class NetworkCapabilities implements Parcelable {
      *
      * Instances of NetworkCapabilities sent to apps without the appropriate permissions will have
      * this field cleared out.
+     *
+     * <p>
+     * Note: This field is not populated unless,
+     * <li> App targets SDK lesser than {@link android.os.Build.VERSION_CODES#S}.</li>
+     * <li> {@link NetworkCapabilities} instance is retrieved via {@link NetworkCallback} with
+     * {@link NetworkCallback#FLAG_INCLUDE_LOCATION_INFO_IN_NETWORK_CAPABILITIES} flag.</li>
+     * </p>
      */
     public int getOwnerUid() {
         return mOwnerUid;
