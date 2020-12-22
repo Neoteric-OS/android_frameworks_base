@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Ready+1: Greg Kaiser <gkaiser@google.com>
+Build-Cop-Override+1: Colin Cross <ccross@android.com>
+Build-Cop-Override+1: Daniel Norman <danielnorman@google.com>
+Autosubmit+1: Greg Kaiser <gkaiser@google.com>
+Bypass-Presubmit+1: Greg Kaiser <gkaiser@google.com>
+Submitted-by: Greg Kaiser <gkaiser@google.com>
+Submitted-at: Tue, 22 Dec 2020 19:36:48 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1534329
+Project: platform/frameworks/base
+Branch: refs/heads/master
