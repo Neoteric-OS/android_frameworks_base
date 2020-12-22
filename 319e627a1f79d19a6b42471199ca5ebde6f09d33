@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8d03218_808603fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2020-12-22T13:53:05Z",
+      "side": 1,
+      "message": "LGTM, modulo enh\u0027s comments.",
+      "revId": "319e627a1f79d19a6b42471199ca5ebde6f09d33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f50208b_b40f9811",
