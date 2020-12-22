@@ -1,0 +1,10 @@
+Code-Review+2: Jeff Sharkey <jsharkey@google.com>
+Bypass-Presubmit+1: Jeff Sharkey <jsharkey@google.com>
+Presubmit-Ready+1: Treehugger Robot <treehugger-gerrit@google.com>
+Build-Cop-Override+1: Daniel Norman <danielnorman@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Daniel Norman <danielnorman@google.com>
+Submitted-at: Tue, 22 Dec 2020 22:27:10 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1535381
+Project: platform/frameworks/base
+Branch: refs/heads/master
