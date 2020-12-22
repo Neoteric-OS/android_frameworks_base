@@ -252,12 +252,14 @@ public class VpnTest {
 
     @Test
     public void testRestrictedProfilesAreAddedToVpn() {
-        if (true) return; // TODO(b/175883995): Test disabled until updated for new UserManager API.
         setMockedUsers(primaryUser, secondaryUser, restrictedProfileA, restrictedProfileB);
 
         final Vpn vpn = createVpn(primaryUser.id);
-        final Set<UidRange> ranges = vpn.createUserAndRestrictedProfilesRanges(primaryUser.id,
-                null, null);
+
+        // Assume the user can have restricted profiles.
+        doReturn(true).when(mUserManager).canHaveRestrictedProfile();
+        final Set<UidRange> ranges =
+                vpn.createUserAndRestrictedProfilesRanges(primaryUser.id, null, null);
 
         assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] {
                 PRI_USER_RANGE, UidRange.createForUser(restrictedProfileA.id)
@@ -266,7 +268,6 @@ public class VpnTest {
 
     @Test
     public void testManagedProfilesAreNotAddedToVpn() {
-        if (true) return; // TODO(b/175883995): Test disabled until updated for new UserManager API.
         setMockedUsers(primaryUser, managedProfileA);
 
         final Vpn vpn = createVpn(primaryUser.id);
@@ -289,7 +290,6 @@ public class VpnTest {
 
     @Test
     public void testUidAllowAndDenylist() throws Exception {
-        if (true) return; // TODO(b/175883995): Test disabled until updated for new UserManager API.
         final Vpn vpn = createVpn(primaryUser.id);
         final UidRange user = PRI_USER_RANGE;
         final String[] packages = {PKGS[0], PKGS[1], PKGS[2]};
@@ -315,7 +315,6 @@ public class VpnTest {
 
     @Test
     public void testGetAlwaysAndOnGetLockDown() throws Exception {
-        if (true) return; // TODO(b/175883995): Test disabled until updated for new UserManager API.
         final Vpn vpn = createVpn(primaryUser.id);
 
         // Default state.
@@ -340,7 +339,6 @@ public class VpnTest {
 
     @Test
     public void testLockdownChangingPackage() throws Exception {
-        if (true) return; // TODO(b/175883995): Test disabled until updated for new UserManager API.
         final Vpn vpn = createVpn(primaryUser.id);
         final UidRange user = PRI_USER_RANGE;
 
@@ -368,7 +366,6 @@ public class VpnTest {
 
     @Test
     public void testLockdownAllowlist() throws Exception {
-        if (true) return; // TODO(b/175883995): Test disabled until updated for new UserManager API.
         final Vpn vpn = createVpn(primaryUser.id);
         final UidRange user = PRI_USER_RANGE;
 
@@ -443,7 +440,6 @@ public class VpnTest {
 
     @Test
     public void testLockdownRuleRepeatability() throws Exception {
-        if (true) return; // TODO(b/175883995): Test disabled until updated for new UserManager API.
         final Vpn vpn = createVpn(primaryUser.id);
         final UidRangeParcel[] primaryUserRangeParcel = new UidRangeParcel[] {
                 new UidRangeParcel(PRI_USER_RANGE.start, PRI_USER_RANGE.stop)};
@@ -476,7 +472,6 @@ public class VpnTest {
 
     @Test
     public void testLockdownRuleReversibility() throws Exception {
-        if (true) return; // TODO(b/175883995): Test disabled until updated for new UserManager API.
         final Vpn vpn = createVpn(primaryUser.id);
         final UidRangeParcel[] entireUser = {
             new UidRangeParcel(PRI_USER_RANGE.start, PRI_USER_RANGE.stop)
@@ -1143,6 +1138,10 @@ public class VpnTest {
         doReturn(UserHandle.of(userId)).when(asUserContext).getUser();
         when(mContext.createContextAsUser(eq(UserHandle.of(userId)), anyInt()))
                 .thenReturn(asUserContext);
+        when(asUserContext.getSystemServiceName(UserManager.class))
+                .thenReturn(Context.USER_SERVICE);
+        when(asUserContext.getSystemService(UserManager.class))
+                .thenReturn(mUserManager);
         final TestLooper testLooper = new TestLooper();
         final Vpn vpn = new Vpn(testLooper.getLooper(), mContext, new TestDeps(), mNetService,
                 mNetd, userId, mKeyStore, mSystemServices, mIkev2SessionCreator);
@@ -1178,11 +1177,6 @@ public class VpnTest {
             final int id = (int) invocation.getArguments()[0];
             return userMap.get(id);
         }).when(mUserManager).getUserInfo(anyInt());
-
-        doAnswer(invocation -> {
-            final int id = (int) invocation.getArguments()[0];
-            return (userMap.get(id).flags & UserInfo.FLAG_ADMIN) != 0;
-        }).when(mUserManager).canHaveRestrictedProfile();
     }
 
     /**
