@@ -18,6 +18,115 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "744de08c_e7febd7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-22T12:05:07Z",
+      "side": 1,
+      "message": "The API is fine. Some questions inline on the implementation.",
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c55bbe6_bfc18d06",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6142,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-22T12:05:07Z",
+      "side": 1,
+      "message": "Is it possible at all that only the refresh time is set ? If so, this logic will simply ignore it if, e.g. the NA info is completely absent, and the Capport info only has refresh time.",
+      "range": {
+        "startLine": 6142,
+        "startChar": 20,
+        "endLine": 6142,
+        "endChar": 39
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb30e5f6_d231737c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6158,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-22T12:05:07Z",
+      "side": 1,
+      "message": "ISTM that if Passpoint supplies a URL, then either the AP should not be Capport-enabled or the Capport API should return the same URL.\n\nGenerally I think we want to encourage vendors to use Capport rather than Passpoint because of its improved generality and openness, so if the URLs are both non-null and different I think we should probably in fact prefer the Capport URL. Even if the Capport API is present but has a null URL I think we may not want to display the Passpoint URL to encourage vendors to correctly fill their Capport API fields (of course if the Capport API is not present at all we should use Passpoint).\n\nThoughts ?",
+      "range": {
+        "startLine": 6156,
+        "startChar": 66,
+        "endLine": 6158,
+        "endChar": 51
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f552bf37_08f2e5fc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6159,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-22T12:05:07Z",
+      "side": 1,
+      "message": "This clause is not harmful but unnecessary",
+      "range": {
+        "startLine": 6159,
+        "startChar": 12,
+        "endLine": 6159,
+        "endChar": 50
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f83ce831_4d3c7013",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6163,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-22T12:05:07Z",
+      "side": 1,
+      "message": "Is there any way to identify that the NA info is indeed coming from such an authenticated source ? I\u0027m a bit worried that future uses from NetworkAgents might not share this property but will still be prioritized.",
+      "range": {
+        "startLine": 6163,
+        "startChar": 11,
+        "endLine": 6163,
+        "endChar": 52
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e663b1af_a55012aa",
@@ -36,6 +145,98 @@
         "startChar": 45,
         "endLine": 6164,
         "endChar": 54
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ff31a45_36e30667",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6165,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-22T12:05:07Z",
+      "side": 1,
+      "message": "Likewise",
+      "range": {
+        "startLine": 6165,
+        "startChar": 12,
+        "endLine": 6165,
+        "endChar": 45
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37f464a8_cc7582e9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6168,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-22T12:05:07Z",
+      "side": 1,
+      "message": "...because there is no such support in Capport\n(I guess ?)",
+      "range": {
+        "startLine": 6168,
+        "startChar": 72,
+        "endLine": 6168,
+        "endChar": 77
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b12a38dd_24db2097",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-22T12:05:07Z",
+      "side": 1,
+      "message": "Can you please elaborate a little bit in the following dimensions :\n• The differente with capportApiData\n• At least one example of use case",
+      "range": {
+        "startLine": 184,
+        "startChar": 4,
+        "endLine": 184,
+        "endChar": 56
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "978507d6_20c77928",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3023,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-22T12:05:07Z",
+      "side": 1,
+      "message": "I know it\u0027s annoying but ideally we\u0027d have coverage for all possible combinations of orders. E.g. this test currently is not testing for receiving the data from the NA first then from Capport, nor does it test for the NA setting its properties back to null where only the Capport data should remain.",
+      "range": {
+        "startLine": 3023,
+        "startChar": 4,
+        "endLine": 3023,
+        "endChar": 5
       },
       "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
