@@ -295,6 +295,7 @@ filegroup {
     srcs: [
         // Java/AIDL sources under frameworks/base
         ":framework-blobstore-sources",
+        ":framework-connectivity-sources", // TODO : move to updatable sources in connectivity APEX
         ":framework-core-sources",
         ":framework-drm-sources",
         ":framework-graphics-sources",
