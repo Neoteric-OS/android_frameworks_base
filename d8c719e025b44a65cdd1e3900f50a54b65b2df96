@@ -135,6 +135,30 @@
       },
       "revId": "d8c719e025b44a65cdd1e3900f50a54b65b2df96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3845f5f1_6db8ae67",
+        "filename": "services/core/java/com/android/server/AlarmManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3373,
+      "author": {
+        "id": 1514133
+      },
+      "writtenOn": "2020-12-23T04:06:32Z",
+      "side": 1,
+      "message": "Your understanding is correct. I just found one case with TIME_TICK that is non-wakeup alarm and call \u0027removeImpl\u0027 from \u0027deliverLocked\u0027. Below call stack is that case.\ncom.android.server.AlarmManagerService.removeLocked(AlarmManagerService.java:3538)\ncom.android.server.AlarmManagerService.setImplLocked(AlarmManagerService.java:2089)\ncom.android.server.AlarmManagerService.setImpl(AlarmManagerService.java:2023)\ncom.android.server.AlarmManagerService$ClockReceiver.scheduleTimeTickEvent(AlarmManagerService.java:4970)\ncom.android.server.AlarmManagerService$3.doAlarm(AlarmManagerService.java:1742)\ncom.android.server.AlarmManagerService$DeliveryTracker.deliverLocked(AlarmManagerService.java:5420)\ncom.android.server.AlarmManagerService.deliverAlarmsLocked(AlarmManagerService.java:4446)\ncom.android.server.AlarmManagerService.interactiveStateChangedLocked(AlarmManagerService.java:3874)\ncom.android.server.AlarmManagerService$InteractiveStateReceiver.onReceive(AlarmManagerService.java:5008)",
+      "parentUuid": "34cc9ede_36e74d60",
+      "range": {
+        "startLine": 3373,
+        "startChar": 47,
+        "endLine": 3373,
+        "endChar": 70
+      },
+      "revId": "d8c719e025b44a65cdd1e3900f50a54b65b2df96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
