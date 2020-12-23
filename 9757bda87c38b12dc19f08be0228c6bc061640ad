@@ -22,6 +22,30 @@
       },
       "revId": "9757bda87c38b12dc19f08be0228c6bc061640ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acb9ed7c_59f17269",
+        "filename": "wifi/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1018026
+      },
+      "writtenOn": "2020-12-23T04:32:09Z",
+      "side": 1,
+      "message": "Based on migration paths, \nframeworks/opt/net/wifi/tests → packages/modules/Wifi/service/tests/com/android/server/wifi\n\nso may be \n//packages/modules/Wifi/service/tests:__subpackages__ instead ?",
+      "parentUuid": "a66a5c6b_29747c27",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 92
+      },
+      "revId": "9757bda87c38b12dc19f08be0228c6bc061640ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
