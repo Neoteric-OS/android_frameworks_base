@@ -950,7 +950,7 @@ class TvInputHardwareManager implements TvInputHal.Callback {
             AudioPortConfig sourceConfig = mAudioSource.activeConfig();
             List<AudioPortConfig> sinkConfigs = new ArrayList<>();
             AudioPatch[] audioPatchArray = new AudioPatch[] { mAudioPatch };
-            boolean shouldRecreateAudioPatch = sourceUpdated || sinkUpdated;
+            boolean shouldRecreateAudioPatch = sourceUpdated || sinkUpdated || mAudioPatch == null;
 
             for (AudioDevicePort audioSink : mAudioSink) {
                 AudioPortConfig sinkConfig = audioSink.activeConfig();
@@ -1022,12 +1022,21 @@ class TvInputHardwareManager implements TvInputHal.Callback {
             if (shouldRecreateAudioPatch) {
                 mCommittedVolume = volume;
                 if (mAudioPatch != null) {
-                    mAudioManager.releaseAudioPatch(mAudioPatch);
+                    int ret = mAudioManager.releaseAudioPatch(mAudioPatch);
+                    if (ret != AudioManager.SUCCESS) {
+                        Slog.w(TAG, "patch release failed, status " + ret);
+                    } else {
+                        mAudioPatch = null;
+                    }
                 }
-                mAudioManager.createAudioPatch(
+                int ret = mAudioManager.createAudioPatch(
                         audioPatchArray,
                         new AudioPortConfig[] { sourceConfig },
                         sinkConfigs.toArray(new AudioPortConfig[sinkConfigs.size()]));
+                if (ret != AudioManager.SUCCESS) {
+                    Slog.e(TAG, "patch create failed, status " + ret);
+                    return;
+                }
                 mAudioPatch = audioPatchArray[0];
                 if (sourceGainConfig != null) {
                     mAudioManager.setAudioPortGain(mAudioSource, sourceGainConfig);
