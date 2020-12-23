@@ -159,6 +159,30 @@
       },
       "revId": "d8c719e025b44a65cdd1e3900f50a54b65b2df96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fa4b5ac_32fb3d0e",
+        "filename": "services/core/java/com/android/server/AlarmManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3373,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2020-12-23T15:45:19Z",
+      "side": 1,
+      "message": "Yes, understood. Thanks for the patch.\nWe have hit this issue internally as well. I will add \"RESTRICT AUTOMERGE\" before trying to merge this.",
+      "parentUuid": "3845f5f1_6db8ae67",
+      "range": {
+        "startLine": 3373,
+        "startChar": 47,
+        "endLine": 3373,
+        "endChar": 70
+      },
+      "revId": "d8c719e025b44a65cdd1e3900f50a54b65b2df96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
