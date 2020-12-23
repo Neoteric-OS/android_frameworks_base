@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a66a5c6b_29747c27",
+        "filename": "wifi/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-12-23T04:24:43Z",
+      "side": 1,
+      "message": "I think this should be \"//packages/modules/Wifi/service/tests/wifitests:__subpackages__\"",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 92
+      },
+      "revId": "9757bda87c38b12dc19f08be0228c6bc061640ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
