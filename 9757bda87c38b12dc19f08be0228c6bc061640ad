@@ -46,6 +46,30 @@
       },
       "revId": "9757bda87c38b12dc19f08be0228c6bc061640ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92e8adca_adcf4311",
+        "filename": "wifi/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-12-23T04:40:01Z",
+      "side": 1,
+      "message": "Either works, but it may be more precise to have \"//packages/modules/Wifi/service/tests/wifitests:__subpackages__\" since that is what the previous rule \"//frameworks/opt/net/wifi/tests/wifitests:__subpackages__\" corresponds to.",
+      "parentUuid": "acb9ed7c_59f17269",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 92
+      },
+      "revId": "9757bda87c38b12dc19f08be0228c6bc061640ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
