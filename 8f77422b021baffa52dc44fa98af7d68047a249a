@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94c5b32c_e16691e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-12-24T18:01:24Z",
+      "side": 1,
+      "message": "Had to add an extra null pointer check due to a change from a newer CL",
+      "revId": "8f77422b021baffa52dc44fa98af7d68047a249a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
