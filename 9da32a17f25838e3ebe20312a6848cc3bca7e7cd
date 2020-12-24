@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "570167d6_80a46e24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-12-24T13:37:35Z",
+      "side": 1,
+      "message": "mingaleev@ and I will be trying to iterate quickly in the new year so this should help with that.",
+      "revId": "9da32a17f25838e3ebe20312a6848cc3bca7e7cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
