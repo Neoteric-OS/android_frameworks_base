@@ -5500,6 +5500,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final int mUid;
         final Messenger messenger;
 
+        /**
+         * Get the list of UIDs this nri applies to.
+         */
+        @NonNull Set<UidRange> getUids() {
+            // networkCapabilities.getUids() returns a defensive copy.
+            // multilayer requests will all have the same uids so return the first one.
+            final Set<UidRange> uids = null == mRequests.get(0).networkCapabilities.getUids()
+                    ? new ArraySet<>() : mRequests.get(0).networkCapabilities.getUids();
+            return uids;
+        }
+
         NetworkRequestInfo(NetworkRequest r, PendingIntent pi) {
             mRequests = initializeRequests(r);
             ensureAllNetworkRequestsHaveType(mRequests);
@@ -6022,6 +6033,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // The device wide default network request info.
     private NetworkRequestInfo getDeviceDefaultNri() {
         return mNetworkRequests.get(mDeviceDefaultRequest);
+    }
+
+    // Return whether the given nri is the nri used for the device default network.
+    private boolean isDeviceDefaultNri(NetworkRequestInfo nri) {
+        return getDeviceDefaultNri() == nri;
     }
 
     @Nullable
@@ -7045,20 +7061,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkAgentInfo oldDefaultNetwork = mDefaultNetworkAgents.get(nri);
         mDefaultNetworkAgents.put(nri, newDefaultNetwork);
 
-        try {
-            // TODO http://b/176191930 update netd calls in follow-up CL for multinetwork changes.
-            if (getDeviceDefaultNri() != nri) {
-                return;
-            }
-
-            if (null != newDefaultNetwork) {
-                mNetd.networkSetDefault(newDefaultNetwork.network.getNetId());
-            } else {
-                mNetd.networkClearDefault();
-            }
-        } catch (RemoteException | ServiceSpecificException e) {
-            loge("Exception setting default network :" + e);
+        // Set an OEM network preference default and return since further processing only applies to
+        // the device default network.
+        if (!isDeviceDefaultNri(nri)) {
+            makeOemNetworkPreferenceDefault(nri, newDefaultNetwork, oldDefaultNetwork);
+            return;
         }
+
+        makeDeviceDefault(newDefaultNetwork);
 
         if (oldDefaultNetwork != null) {
             mLingerMonitor.noteLingerDefaultNetwork(oldDefaultNetwork, newDefaultNetwork);
@@ -7078,6 +7088,40 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // Log 0 -> X and Y -> X default network transitions, where X is the new default.
         mDeps.getMetricsLogger().defaultNetworkMetrics().logDefaultNetworkEvent(
                 now, newDefaultNetwork, oldDefaultNetwork);
+    }
+
+    private void makeOemNetworkPreferenceDefault(@NonNull final NetworkRequestInfo nri,
+            @Nullable final NetworkAgentInfo newDefaultNetwork,
+            @Nullable final NetworkAgentInfo oldDefaultNetwork) {
+        try {
+            if (nri.getUids().isEmpty()) {
+                return;
+            }
+            if (null != newDefaultNetwork) {
+                mNetd.networkAddUidRanges(
+                        newDefaultNetwork.network.getNetId(),
+                        toUidRangeStableParcels(nri.getUids()));
+            }
+            if (null != oldDefaultNetwork) {
+                mNetd.networkRemoveUidRanges(
+                        oldDefaultNetwork.network.getNetId(),
+                        toUidRangeStableParcels(nri.getUids()));
+            }
+        } catch (RemoteException | ServiceSpecificException e) {
+            loge("Exception setting OEM network preference default network :" + e);
+        }
+    }
+
+    private void makeDeviceDefault(@Nullable final NetworkAgentInfo newDefaultNetwork) {
+        try {
+            if (null != newDefaultNetwork) {
+                mNetd.networkSetDefault(newDefaultNetwork.network.getNetId());
+            } else {
+                mNetd.networkClearDefault();
+            }
+        } catch (RemoteException | ServiceSpecificException e) {
+            loge("Exception setting default network :" + e);
+        }
     }
 
     private void processListenRequests(@NonNull final NetworkAgentInfo nai) {
