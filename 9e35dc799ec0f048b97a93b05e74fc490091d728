@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "072de53c_e51fec79",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3142,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-24T01:56:43Z",
+      "side": 1,
+      "message": "This is a relatively large amount of copy-pasting ; can you please make some helpers to reduce some of the duplication ?",
+      "range": {
+        "startLine": 3142,
+        "startChar": 16,
+        "endLine": 3142,
+        "endChar": 74
+      },
+      "revId": "9e35dc799ec0f048b97a93b05e74fc490091d728",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

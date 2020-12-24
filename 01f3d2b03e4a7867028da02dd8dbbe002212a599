@@ -129,6 +129,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "935f6e44_33c2fe10",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6158,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-24T01:56:43Z",
+      "side": 1,
+      "message": "Okay. I think there may be room for more discussion, but code review is not the place for that discussion, so I\u0027m happy with what you have.",
+      "parentUuid": "4d8a685e_0f22da23",
+      "range": {
+        "startLine": 6156,
+        "startChar": 66,
+        "endLine": 6158,
+        "endChar": 51
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f552bf37_08f2e5fc",
@@ -176,6 +200,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ef28f68_6ba8164f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6159,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-24T01:56:43Z",
+      "side": 1,
+      "message": "...which is unnecessary, because it prevents a no-op :) (and in fact, it\u0027s likely slower because of branch prediction)\n\nBut no strong opinion.",
+      "parentUuid": "cf8ebde5_8fabd7ad",
+      "range": {
+        "startLine": 6159,
+        "startChar": 12,
+        "endLine": 6159,
+        "endChar": 50
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f83ce831_4d3c7013",
@@ -213,6 +261,30 @@
       "side": 1,
       "message": "I\u0027m not sure what the AI is here for me. My Passpoint implementation will retrieve the venue URL through PMF enabled ANQP exchange (PMF \u003d Protected Management Frames). So it is guaranteed by the link layer that this are trusted comparing to capport that is transmitted in the clear without any protection in the link layer, which can probably be spoofed by an attacker.",
       "parentUuid": "f83ce831_4d3c7013",
+      "range": {
+        "startLine": 6163,
+        "startChar": 11,
+        "endLine": 6163,
+        "endChar": 52
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "981efdb5_e819d9dc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6163,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-24T01:56:43Z",
+      "side": 1,
+      "message": "This is a general API with comments assuming only one caller deep in the stack, and deriving security assumptions from them, and this is historically a dangerous thing to do. So I was hinting at some way for the code in CS to know whether the venue URL from the NA has indeed been retrieved from such a secure source. Passpoint is such a source, but here you\u0027re building a general API, and the comments just assume this info is coming from Passpoint and has the security guarantees.\n\nBut any NA can call this API, and as soon as a non-Passpoint NA calls this API, the comments you left suddenly become incorrect. Whether that new non-Passpoint NA also provides similar guarantees is anybody\u0027s guess, and so I was wondering whether we needed to tell CS that this information is indeed subject to the security guarantees you describe in comments.\n\nThis is especially relevant as while this code becomes Mainline, NetworkAgent isn\u0027t. The code here means that, e.g., an OEM where WiFi is optional can trivially send whatever venue info URL they want and have it override the Capport one, including by mistake. Or they could do this on CBRS. I am concerned about this.\n\nDoes this clarify my comment ?",
+      "parentUuid": "a61d9b38_7f55d0d4",
       "range": {
         "startLine": 6163,
         "startChar": 11,
@@ -307,6 +379,30 @@
       "side": 1,
       "message": "See above.",
       "parentUuid": "2ff31a45_36e30667",
+      "range": {
+        "startLine": 6165,
+        "startChar": 12,
+        "endLine": 6165,
+        "endChar": 45
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bebcc40_5950f763",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6165,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-24T01:56:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "77895400_9fc2cdf9",
       "range": {
         "startLine": 6165,
         "startChar": 12,
