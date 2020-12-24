@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f7884a2_f6b54861",
+        "filename": "media/java/android/media/MediaRouter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1379942
+      },
+      "writtenOn": "2020-12-24T07:09:31Z",
+      "side": 1,
+      "message": "How about using SparseArray?",
+      "range": {
+        "startLine": 113,
+        "startChar": 50,
+        "endLine": 113,
+        "endChar": 58
+      },
+      "revId": "e6981a857594fa9c0aa0d6c17bce2d99304c1832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
