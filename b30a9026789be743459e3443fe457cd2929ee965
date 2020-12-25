@@ -46,6 +46,30 @@
       },
       "revId": "b30a9026789be743459e3443fe457cd2929ee965",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b9b8c32_adb6612c",
+        "filename": "core/java/android/net/Proxy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-25T10:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a7efa8e_a6172602",
+      "range": {
+        "startLine": 252,
+        "startChar": 23,
+        "endLine": 252,
+        "endChar": 49
+      },
+      "revId": "b30a9026789be743459e3443fe457cd2929ee965",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
