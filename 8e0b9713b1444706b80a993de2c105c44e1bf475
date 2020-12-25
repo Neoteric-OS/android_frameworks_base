@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d1c1978_e4add0a0",
+        "filename": "core/java/android/net/Proxy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-25T11:00:42Z",
+      "side": 1,
+      "message": "Curious : why remove final from these two methods ? Sure it\u0027s not useful but does the linter complain or something ?",
+      "range": {
+        "startLine": 267,
+        "startChar": 18,
+        "endLine": 267,
+        "endChar": 22
+      },
+      "revId": "8e0b9713b1444706b80a993de2c105c44e1bf475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
