@@ -13746,12 +13746,25 @@ public class ActivityManagerService extends IActivityManager.Stub
                 kernelUsed += ionHeap;
             }
             final long gpuUsage = Debug.getGpuTotalUsageKb();
+            long gpuPrivateUsage = 0;
             if (gpuUsage >= 0) {
-                pw.print("      GPU: "); pw.println(stringifyKBSize(gpuUsage));
+                final long gpuDmaBufUsage = Debug.getGpuDmaBufUsageKb();
+                if (gpuDmaBufUsage >= 0) {
+                    gpuPrivateUsage = gpuUsage - gpuDmaBufUsage;
+                    pw.print("      GPU: ");
+                    pw.print(stringifyKBSize(gpuUsage));
+                    pw.print(" (");
+                    pw.print(stringifyKBSize(gpuDmaBufUsage));
+                    pw.print(" dmabuf + ");
+                    pw.print(stringifyKBSize(gpuPrivateUsage));
+                    pw.println(" private)");
+                } else {
+                    pw.print("      GPU: "); pw.println(stringifyKBSize(gpuUsage));
+                }
             }
             final long lostRAM = memInfo.getTotalSizeKb() - (totalPss - totalSwapPss)
                     - memInfo.getFreeSizeKb() - memInfo.getCachedSizeKb()
-                    - kernelUsed - memInfo.getZramTotalSizeKb();
+                    - kernelUsed - memInfo.getZramTotalSizeKb() - gpuPrivateUsage;
             if (!opts.isCompact) {
                 pw.print(" Used RAM: "); pw.print(stringifyKBSize(totalPss - cachedPss
                         + kernelUsed)); pw.print(" (");
@@ -14558,10 +14571,24 @@ public class ActivityManagerService extends IActivityManager.Stub
             kernelUsed += ionHeap;
         }
         final long gpuUsage = Debug.getGpuTotalUsageKb();
+        long gpuPrivateUsage = 0;
         if (gpuUsage >= 0) {
-            memInfoBuilder.append("       GPU: ");
-            memInfoBuilder.append(stringifyKBSize(gpuUsage));
-            memInfoBuilder.append("\n");
+            final long gpuDmaBufUsage = Debug.getGpuDmaBufUsageKb();
+            if (gpuDmaBufUsage >= 0) {
+                gpuPrivateUsage = gpuUsage - gpuDmaBufUsage;
+                memInfoBuilder.append("      GPU: ");
+                memInfoBuilder.append(stringifyKBSize(gpuUsage));
+                memInfoBuilder.append(" (");
+                memInfoBuilder.append(stringifyKBSize(gpuDmaBufUsage));
+                memInfoBuilder.append(" dmabuf + ");
+                memInfoBuilder.append(stringifyKBSize(gpuPrivateUsage));
+                memInfoBuilder.append(" private)\n");
+            } else {
+                memInfoBuilder.append("       GPU: ");
+                memInfoBuilder.append(stringifyKBSize(gpuUsage));
+                memInfoBuilder.append("\n");
+            }
+
         }
         memInfoBuilder.append("  Used RAM: ");
         memInfoBuilder.append(stringifyKBSize(
@@ -14570,7 +14597,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         memInfoBuilder.append("  Lost RAM: ");
         memInfoBuilder.append(stringifyKBSize(memInfo.getTotalSizeKb()
                 - (totalPss - totalSwapPss) - memInfo.getFreeSizeKb() - memInfo.getCachedSizeKb()
-                - kernelUsed - memInfo.getZramTotalSizeKb()));
+                - kernelUsed - memInfo.getZramTotalSizeKb() - gpuPrivateUsage));
         memInfoBuilder.append("\n");
         Slog.i(TAG, "Low on memory:");
         Slog.i(TAG, shortNativeBuilder.toString());
