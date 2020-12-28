@@ -18,6 +18,46 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a923398_6443848f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "I think the architecture is fine and works. A lot of nits, but nothing large.",
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8642f904_0a6c7129",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "...or MAINLINE_NETWORK_STACK (as it is what the system server will check)",
+      "range": {
+        "startLine": 1192,
+        "startChar": 52,
+        "endLine": 1192,
+        "endChar": 65
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3f22ca5_47dcb6db",
@@ -66,6 +106,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3cc730f6_b5a0cfea",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "This is going to work iff only one VPN applies to any given UID ; granted, it\u0027s not clear what \nit would mean for 2 VPNs to apply to one UID, but are we sure all OEM devices comply with this ?",
+      "range": {
+        "startLine": 1306,
+        "startChar": 56,
+        "endLine": 1306,
+        "endChar": 97
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c32def21_c2c5b9c4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "mLockdownEnabled is @GuardedBy mVpns",
+      "range": {
+        "startLine": 1315,
+        "startChar": 12,
+        "endLine": 1315,
+        "endChar": 28
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e82674d0_5b127271",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 12
@@ -82,6 +168,99 @@
         "startChar": 32,
         "endLine": 1317,
         "endChar": 62
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e0f5c0c_ee08ca4d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1317,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "+1 to what Junyu writes.\n\nAlso, using declaredUnderlyingNetworks outside the lock can be questionable, as well as using the array contents itself ; AFAICT here this will mean, respectively, that the declared networks can be from before or after any given change (Junyu\u0027s remark nonwithstanding), which I think is fine in all call sites, and that any use of the contents of the array means it must never be modified lest there be possible tearing – but AFAICT they are never modified.",
+      "parentUuid": "e82674d0_5b127271",
+      "range": {
+        "startLine": 1317,
+        "startChar": 32,
+        "endLine": 1317,
+        "endChar": 62
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f660d55e_fd16152d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "Should this code be holding a lock ?",
+      "range": {
+        "startLine": 1354,
+        "startChar": 29,
+        "endLine": 1354,
+        "endChar": 35
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be4a781f_63aa3b0b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "Let\u0027s put this in a local to avoid paying twice the read barrier.",
+      "range": {
+        "startLine": 2020,
+        "startChar": 40,
+        "endLine": 2020,
+        "endChar": 60
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7977604b_89b3b81f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2026,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "Generally speaking an unqualified method sounds to me like it take everything into account, so \"isUidNetworkingBlocked\" sounds to me like it will return true if a lockdown VPN is blocking this UID. It may also be useful to keep a method that will actually return the full thing. It would be useful at least in l.7524, and if we\u0027re willing to give up the optimizations, it would be useful in other places below too.\n\nBarring that, I think we should rename it to something that makes clear it doesn\u0027t account for VPN. Or, we could replace this method with a static import of NPMI.isUidNetworkingBlocked, or inline it, but NPMI will have to go soon for mainline so that\u0027s a less attractive option.\n\nA last option would be to have an optimized method returning both booleans (say in an int) for both old and new versions to avoid copying the code in l.7562 and 7584.",
+      "range": {
+        "startLine": 2026,
+        "startChar": 20,
+        "endLine": 2026,
+        "endChar": 42
       },
       "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
@@ -112,6 +291,75 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c5376994_72f47132",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4854,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "We don\u0027t tend to post big runnables on the handler ; instead we usually make a message that ends up calling a handle* function. Small runnables in small numbers are manageable but this may not scale too far.",
+      "range": {
+        "startLine": 4854,
+        "startChar": 17,
+        "endLine": 4854,
+        "endChar": 21
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58b1bab7_869f4b8e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4855,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "if (DBG) ?",
+      "range": {
+        "startLine": 4855,
+        "startChar": 12,
+        "endLine": 4855,
+        "endChar": 15
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2039ee03_d40379ce",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4871,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "　\n  mNetd.networkRejectNonSecureVpn(requireVpn, toUidRangeStableParcels(ranges));\n\n?",
+      "range": {
+        "startLine": 4867,
+        "startChar": 16,
+        "endLine": 4871,
+        "endChar": 17
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa1c3a85_b7156375",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 12
@@ -123,6 +371,30 @@
       "writtenOn": "2020-12-17T13:51:10Z",
       "side": 1,
       "message": "nit:\nmaybe say the reference is never mutated?\nNot sure if someone will expect the content is never be mutated if saying this.\nNo strong opinion.",
+      "range": {
+        "startLine": 5964,
+        "startChar": 75,
+        "endLine": 5964,
+        "endChar": 88
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cbfc7fd_bfba21cb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5964,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "The ref IS mutated in l.4883 (otherwise there would be no point in making it volatile). It\u0027s the contents of any ref that is never mutated.\nI personally don\u0027t mind the current comment, but as Junyu found this confusing maybe we should clarify.",
+      "parentUuid": "aa1c3a85_b7156375",
       "range": {
         "startLine": 5964,
         "startChar": 75,
@@ -151,6 +423,52 @@
         "startChar": 11,
         "endLine": 5967,
         "endChar": 12
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95f2fefa_f35712b9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5967,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "Supernit : ArraySet like the other assignments of this member ?",
+      "range": {
+        "startLine": 5967,
+        "startChar": 62,
+        "endLine": 5967,
+        "endChar": 69
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86f62e56_b3bcf430",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5967,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "Should this in fact be a list ?\nRationale : multiple VPNs for different users in lockdown mode are handled in different VPN objects and each handling their list of UIDs. Hopefully there should be no overlap, but if two of them happen to have the same UID range somewhere, the first to remove this range will unblock the range, while the other VPN still expects it blocked.\n\nHow does netd behave if the same range is added twice ? Will it add an identical set of rules, or deduplicate ? If the former, then a list is surely the right thing to do, seeing as we never diff and simply pass on to netd exactly what was sent to setRequireVpnForUids. If not then the set is better as it will correctly represent what netd really has.\n\nAlternatively we could imagine some way to forbid overlaps, but that would require some concept of ownership of range per-VPN which is pretty annoying to implement.",
+      "range": {
+        "startLine": 5967,
+        "startChar": 21,
+        "endLine": 5967,
+        "endChar": 24
       },
       "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
@@ -197,6 +515,52 @@
         "startChar": 12,
         "endLine": 7560,
         "endChar": 36
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ac40a92_249de5e8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "connectivity (likewise below)",
+      "range": {
+        "startLine": 227,
+        "startChar": 45,
+        "endLine": 227,
+        "endChar": 49
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aab47319_10e5ff72",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1603,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:40:36Z",
+      "side": 1,
+      "message": "here too ?",
+      "range": {
+        "startLine": 1603,
+        "startChar": 46,
+        "endLine": 1603,
+        "endChar": 50
       },
       "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
