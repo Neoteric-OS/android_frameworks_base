@@ -297,6 +297,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9b2117e8_750b4a35",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6163,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2020-12-28T21:48:57Z",
+      "side": 1,
+      "message": "Understood, but not clear to me how to resolve it in a way that satisfies your requirements.\nOne one hand - Passpoint is more secure that Capport and should be given prioritization. It is the preferred solution to replace the insecure captive portals and provides venue URL and T\u0026C support in-band.\nOn the other hand - what you mentioned.\n\nIs there a permission mechanism that can be used here?",
+      "parentUuid": "981efdb5_e819d9dc",
+      "range": {
+        "startLine": 6163,
+        "startChar": 11,
+        "endLine": 6163,
+        "endChar": 52
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e663b1af_a55012aa",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4
