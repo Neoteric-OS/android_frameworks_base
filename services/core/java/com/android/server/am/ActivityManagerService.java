@@ -13749,9 +13749,15 @@ public class ActivityManagerService extends IActivityManager.Stub
             if (gpuUsage >= 0) {
                 pw.print("      GPU: "); pw.println(stringifyKBSize(gpuUsage));
             }
+            final long gpuDmaBufUsage = Debug.getGpuDmaBufUsageKb();
+            long gpuPrivateUsage = 0;
+            if (gpuUsage >= 0 && gpuDmaBufUsage >= 0) {
+                gpuPrivateUsage = gpuUsage - gpuDmaBufUsage;
+            }
+
             final long lostRAM = memInfo.getTotalSizeKb() - (totalPss - totalSwapPss)
                     - memInfo.getFreeSizeKb() - memInfo.getCachedSizeKb()
-                    - kernelUsed - memInfo.getZramTotalSizeKb();
+                    - kernelUsed - memInfo.getZramTotalSizeKb() - gpuPrivateUsage;
             if (!opts.isCompact) {
                 pw.print(" Used RAM: "); pw.print(stringifyKBSize(totalPss - cachedPss
                         + kernelUsed)); pw.print(" (");
@@ -14563,6 +14569,12 @@ public class ActivityManagerService extends IActivityManager.Stub
             memInfoBuilder.append(stringifyKBSize(gpuUsage));
             memInfoBuilder.append("\n");
         }
+        final long gpuDmaBufUsage = Debug.getGpuDmaBufUsageKb();
+        long gpuPrivateUsage = 0;
+        if (gpuUsage >= 0 && gpuDmaBufUsage >= 0) {
+            gpuPrivateUsage = gpuUsage - gpuDmaBufUsage;
+        }
+
         memInfoBuilder.append("  Used RAM: ");
         memInfoBuilder.append(stringifyKBSize(
                                   totalPss - cachedPss + kernelUsed));
@@ -14570,7 +14582,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         memInfoBuilder.append("  Lost RAM: ");
         memInfoBuilder.append(stringifyKBSize(memInfo.getTotalSizeKb()
                 - (totalPss - totalSwapPss) - memInfo.getFreeSizeKb() - memInfo.getCachedSizeKb()
-                - kernelUsed - memInfo.getZramTotalSizeKb()));
+                - kernelUsed - memInfo.getZramTotalSizeKb() - gpuPrivateUsage));
         memInfoBuilder.append("\n");
         Slog.i(TAG, "Low on memory:");
         Slog.i(TAG, shortNativeBuilder.toString());

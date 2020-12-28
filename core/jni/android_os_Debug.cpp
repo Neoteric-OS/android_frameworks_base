@@ -33,6 +33,7 @@
 #include <string>
 #include <vector>
 
+#include <aidl/android/hardware/memtrack/DeviceInfo.h>
 #include <android-base/logging.h>
 #include <bionic/malloc.h>
 #include <debuggerd/client.h>
@@ -44,6 +45,7 @@
 #include <nativehelper/ScopedUtfChars.h>
 #include "jni.h"
 #include <dmabufinfo/dmabufinfo.h>
+#include <dmabufinfo/dmabuf_sysfs_stats.h>
 #include <meminfo/procmeminfo.h>
 #include <meminfo/sysmeminfo.h>
 #include <memtrack/memtrack.h>
@@ -813,6 +815,31 @@ static jlong android_os_Debug_getIonPoolsSizeKb(JNIEnv* env, jobject clazz) {
     return poolsSizeKb;
 }
 
+static jlong android_os_Debug_getGpuDmaBufUsageKb(JNIEnv* env, jobject clazz) {
+    std::vector<aidl::android::hardware::memtrack::DeviceInfo> gpu_device_info;
+    if (!memtrack_gpu_device_info(&gpu_device_info)) {
+        return -1;
+    }
+
+    dmabufinfo::DmabufSysfsStats stats;
+    if (!GetDmabufSysfsStats(&stats)) {
+        return -1;
+    }
+
+    jlong sizeKb = 0;
+    auto importer_stats = stats.importer_info();
+    for (auto dev_info : gpu_device_info) {
+        auto importer_info = importer_stats.find(dev_info.name);
+        if (importer_info == importer_stats.end()) {
+            continue;
+        }
+
+        sizeKb += importer_info->second.size;
+    }
+
+    return sizeKb;
+}
+
 static jlong android_os_Debug_getIonMappedSizeKb(JNIEnv* env, jobject clazz) {
     jlong ionPss = 0;
     std::vector<dmabufinfo::DmaBuffer> dmabufs;
@@ -919,6 +946,8 @@ static const JNINativeMethod gMethods[] = {
             (void*)android_os_Debug_getFreeZramKb },
     { "getIonHeapsSizeKb", "()J",
             (void*)android_os_Debug_getIonHeapsSizeKb },
+    { "getGpuDmaBufUsageKb", "()J",
+            (void*)android_os_Debug_getGpuDmaBufUsageKb },
     { "getIonPoolsSizeKb", "()J",
             (void*)android_os_Debug_getIonPoolsSizeKb },
     { "getIonMappedSizeKb", "()J",
