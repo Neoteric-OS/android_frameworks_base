@@ -16,6 +16,24 @@
       "message": "Question: should we pick a more limited set of SystemUI people, since this is in core?",
       "revId": "f633a568bccd0f1fce97cf02797ecca67b34344b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1ae406a_c2aa3f68",
+        "filename": "core/java/android/view/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2020-12-29T14:31:01Z",
+      "side": 1,
+      "message": "use /services/core/java/com/android/server/notification/OWNERS",
+      "parentUuid": "30b7dd2b_f0d6eb92",
+      "revId": "f633a568bccd0f1fce97cf02797ecca67b34344b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
