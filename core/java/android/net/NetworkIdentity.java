@@ -26,11 +26,13 @@ import android.service.NetworkIdentityProto;
 import android.telephony.Annotation.NetworkType;
 import android.util.proto.ProtoOutputStream;
 
+import com.android.net.module.util.NetworkCapabilitiesUtils;
+
 import java.util.Objects;
 
 /**
  * Network definition that includes strong identity. Analogous to combining
- * {@link NetworkInfo} and an IMSI.
+ * {@link NetworkCapabilities} and an IMSI.
  *
  * @hide
  */
@@ -182,7 +184,10 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
      */
     public static NetworkIdentity buildNetworkIdentity(Context context, NetworkState state,
             boolean defaultNetwork, @NetworkType int subType) {
-        final int type = state.networkInfo.getType();
+        final int displayTransportType = NetworkCapabilitiesUtils.getDisplayTransport(
+                state.networkCapabilities.getTransportTypes());
+        final int legacyType = NetworkCapabilitiesUtils
+                .getLegacyNetworkTypeForDisplayTransport(displayTransportType);
 
         String subscriberId = null;
         String networkId = null;
@@ -193,7 +198,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
 
         subscriberId = state.subscriberId;
 
-        if (type == TYPE_WIFI) {
+        if (legacyType == TYPE_WIFI) {
             if (state.networkId != null) {
                 networkId = state.networkId;
             } else {
@@ -204,7 +209,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
             }
         }
 
-        return new NetworkIdentity(type, subType, subscriberId, networkId, roaming, metered,
+        return new NetworkIdentity(legacyType, subType, subscriberId, networkId, roaming, metered,
                 defaultNetwork);
     }
 

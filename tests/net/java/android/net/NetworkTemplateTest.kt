@@ -19,6 +19,8 @@ package android.net
 import android.content.Context
 import android.net.ConnectivityManager.TYPE_MOBILE
 import android.net.ConnectivityManager.TYPE_WIFI
+import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
+import android.net.NetworkCapabilities.TRANSPORT_WIFI
 import android.net.NetworkIdentity.SUBTYPE_COMBINED
 import android.net.NetworkIdentity.buildNetworkIdentity
 import android.net.NetworkStats.DEFAULT_NETWORK_ALL
@@ -30,6 +32,7 @@ import android.net.NetworkTemplate.NETWORK_TYPE_5G_NSA
 import android.net.NetworkTemplate.NETWORK_TYPE_ALL
 import android.net.NetworkTemplate.buildTemplateMobileWithRatType
 import android.telephony.TelephonyManager
+import com.android.net.module.util.NetworkCapabilitiesUtils.getLegacyNetworkTypeForDisplayTransport
 import com.android.testutils.assertParcelSane
 import org.junit.Before
 import org.junit.Test
@@ -51,22 +54,23 @@ class NetworkTemplateTest {
     private val mockContext = mock(Context::class.java)
 
     private fun buildMobileNetworkState(subscriberId: String): NetworkState =
-            buildNetworkState(TYPE_MOBILE, subscriberId = subscriberId)
+            buildNetworkState(TRANSPORT_CELLULAR, subscriberId = subscriberId)
     private fun buildWifiNetworkState(ssid: String): NetworkState =
-            buildNetworkState(TYPE_WIFI, ssid = ssid)
+            buildNetworkState(TRANSPORT_WIFI, ssid = ssid)
 
     private fun buildNetworkState(
-        type: Int,
-        subscriberId: String? = null,
-        ssid: String? = null
+            displayTransportType: Int,
+            subscriberId: String? = null,
+            ssid: String? = null
     ): NetworkState {
         val info = mock(NetworkInfo::class.java)
-        doReturn(type).`when`(info).type
+        doReturn(getLegacyNetworkTypeForDisplayTransport(displayTransportType)).`when`(info).type
         doReturn(NetworkInfo.State.CONNECTED).`when`(info).state
         val lp = LinkProperties()
         val caps = NetworkCapabilities().apply {
             setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED, false)
             setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING, true)
+            addTransportType(displayTransportType)
         }
         return NetworkState(info, lp, caps, mock(Network::class.java), subscriberId, ssid)
     }
