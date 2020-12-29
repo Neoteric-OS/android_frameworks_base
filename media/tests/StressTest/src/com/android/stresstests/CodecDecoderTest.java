@@ -33,6 +33,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Callable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -360,5 +361,33 @@ public class CodecDecoderTest extends CodecDecoderTestBase {
                 else throw e;
             }
         } while (true);
+    }
+}
+
+class DecodeParallel implements Callable<Void> {
+    private final long mSeed = 0x12b9b0a1;  // random seed
+    private final Random rand = new Random(mSeed);
+    CodecDecoderTest mCdt;
+    private final String mDecoder;
+    CodecDecoderTest.Menu mSelector;
+
+    public DecodeParallel(CodecDecoderTest cdt, String decoder, CodecDecoderTest.Menu selector) {
+        mCdt = cdt;
+        mDecoder = decoder;
+        mSelector = selector;
+    }
+
+    @Override
+    public Void call() throws IOException, InterruptedException {
+        final boolean isAsync = ((rand.nextInt() & 1) == 0);
+        final boolean eosType = ((rand.nextInt() & 1) == 0);
+        final boolean verify = true;
+        final boolean surfaceMode = false;
+        final int frames = Integer.MAX_VALUE;
+        mCdt.mCodec = MediaCodec.createByCodecName(mDecoder);
+        CodecDecoderTest.isDecoderRunPass(mCdt, mDecoder, isAsync, eosType, verify, surfaceMode,
+                frames, mSelector);
+        mCdt.mCodec.release();
+        return null;
     }
 }
