@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b2e5b43_2f4d0593",
+        "filename": "media/tests/StressTest/src/com/android/stresstests/MultiInstanceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2020-12-29T18:01:37Z",
+      "side": 1,
+      "message": "file permission to 644\nfix line endings using dos2unix\nformat the code to be under 100 chars in each line",
+      "revId": "51e02f9c8f0dc79cad33527b29bd9fb35eb6bb1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
