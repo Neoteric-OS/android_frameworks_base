@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55453ad8_6cf7a6c4",
+        "filename": "core/java/android/net/QosFilter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:40:58Z",
+      "side": 1,
+      "message": "This is fine now, but keep in mind that once this API is released you no longer can add methods without a default implementation to an abstract class, because it becomes an incompatible change.",
+      "range": {
+        "startLine": 73,
+        "startChar": 39,
+        "endLine": 73,
+        "endChar": 40
+      },
+      "revId": "025cfa882f3b52d8bd2008e818753fb835d01d51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
