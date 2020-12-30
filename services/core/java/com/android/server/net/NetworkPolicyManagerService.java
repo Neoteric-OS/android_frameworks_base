@@ -107,16 +107,8 @@ import static com.android.internal.util.XmlUtils.writeIntArrayXml;
 import static com.android.internal.util.XmlUtils.writeIntAttribute;
 import static com.android.internal.util.XmlUtils.writeLongAttribute;
 import static com.android.internal.util.XmlUtils.writeStringAttribute;
+import static com.android.net.module.util.NetworkPolicyUtils.hasRule;
 import static com.android.server.NetworkManagementService.LIMIT_GLOBAL_ALERT;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_ALLOWED_ALLOWLIST;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_ALLOWED_DEFAULT;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_ALLOWED_NON_METERED;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_ALLOWED_SYSTEM;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_ALLOWED_TMP_ALLOWLIST;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_BLOCKED_BG_RESTRICT;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_BLOCKED_DENYLIST;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_BLOCKED_POWER;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_BLOCKED_RESTRICTED_MODE;
 import static com.android.server.net.NetworkStatsService.ACTION_NETWORK_STATS_UPDATED;
 
 import static org.xmlpull.v1.XmlPullParser.END_DOCUMENT;
@@ -239,6 +231,7 @@ import com.android.internal.util.FastXmlSerializer;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.StatLogger;
 import com.android.internal.util.XmlUtils;
+import com.android.net.module.util.NetworkPolicyUtils;
 import com.android.server.EventLogTags;
 import com.android.server.LocalServices;
 import com.android.server.ServiceThread;
@@ -5385,7 +5378,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             uidRules = mUidRules.get(uid, RULE_ALLOW_ALL);
             isBackgroundRestricted = mRestrictBackground;
         }
-        //TODO(b/177490332): The logic here might not be correct because it doesn't consider
+        // TODO(b/177490332): The logic here might not be correct because it doesn't consider
         // RULE_REJECT_METERED condition. And it could be replaced by
         // isUidNetworkingBlockedInternal().
         return isBackgroundRestricted
@@ -5393,56 +5386,14 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 && !hasRule(uidRules, RULE_TEMPORARY_ALLOW_METERED);
     }
 
-    private static boolean isSystem(int uid) {
-        return uid < Process.FIRST_APPLICATION_UID;
-    }
-
     static boolean isUidNetworkingBlockedInternal(int uid, int uidRules, boolean isNetworkMetered,
             boolean isBackgroundRestricted, @Nullable NetworkPolicyLogger logger) {
-        final int reason;
-        // Networks are never blocked for system components
-        if (isSystem(uid)) {
-            reason = NTWK_ALLOWED_SYSTEM;
-        } else if (hasRule(uidRules, RULE_REJECT_RESTRICTED_MODE)) {
-            reason = NTWK_BLOCKED_RESTRICTED_MODE;
-        } else if (hasRule(uidRules, RULE_REJECT_ALL)) {
-            reason = NTWK_BLOCKED_POWER;
-        } else if (!isNetworkMetered) {
-            reason = NTWK_ALLOWED_NON_METERED;
-        } else if (hasRule(uidRules, RULE_REJECT_METERED)) {
-            reason = NTWK_BLOCKED_DENYLIST;
-        } else if (hasRule(uidRules, RULE_ALLOW_METERED)) {
-            reason = NTWK_ALLOWED_ALLOWLIST;
-        } else if (hasRule(uidRules, RULE_TEMPORARY_ALLOW_METERED)) {
-            reason = NTWK_ALLOWED_TMP_ALLOWLIST;
-        } else if (isBackgroundRestricted) {
-            reason = NTWK_BLOCKED_BG_RESTRICT;
-        } else {
-            reason = NTWK_ALLOWED_DEFAULT;
-        }
-
-        final boolean blocked;
-        switch(reason) {
-            case NTWK_ALLOWED_DEFAULT:
-            case NTWK_ALLOWED_NON_METERED:
-            case NTWK_ALLOWED_TMP_ALLOWLIST:
-            case NTWK_ALLOWED_ALLOWLIST:
-            case NTWK_ALLOWED_SYSTEM:
-                blocked = false;
-                break;
-            case NTWK_BLOCKED_RESTRICTED_MODE:
-            case NTWK_BLOCKED_POWER:
-            case NTWK_BLOCKED_DENYLIST:
-            case NTWK_BLOCKED_BG_RESTRICT:
-                blocked = true;
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+        final int reason = NetworkPolicyUtils.getUidBlockedReasonForRules(uid, uidRules,
+                isNetworkMetered, isBackgroundRestricted);
+        final boolean blocked = NetworkPolicyUtils.isNetworkingBlockedByReason(reason);
         if (logger != null) {
             logger.networkBlocked(uid, reason);
         }
-
         return blocked;
     }
 
@@ -5643,10 +5594,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         final Set<Integer> restrictedUids = mMeteredRestrictedUids.get(
                 UserHandle.getUserId(uid));
         return restrictedUids != null && restrictedUids.contains(uid);
-    }
-
-    private static boolean hasRule(int uidRules, int rule) {
-        return (uidRules & rule) != 0;
     }
 
     private static @NonNull NetworkState[] defeatNullable(@Nullable NetworkState[] val) {
