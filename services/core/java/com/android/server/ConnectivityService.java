@@ -117,7 +117,7 @@ import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.NetworkStack;
 import android.net.NetworkStackClient;
-import android.net.NetworkState;
+import android.net.NetworkStateSnapshot;
 import android.net.NetworkTestResultParcelable;
 import android.net.NetworkUtils;
 import android.net.NetworkWatchlistManager;
@@ -1250,12 +1250,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return mNextNetworkRequestId++;
     }
 
-    private NetworkState getFilteredNetworkState(int networkType, int uid) {
+    private NetworkStateSnapshot getFilteredNetworkStateSnapshot(int networkType, int uid) {
         if (mLegacyTypeTracker.isTypeSupported(networkType)) {
             final NetworkAgentInfo nai = mLegacyTypeTracker.getNetworkForType(networkType);
-            final NetworkState state;
+            final NetworkStateSnapshot state;
             if (nai != null) {
-                state = nai.getNetworkState();
+                state = nai.getNetworkStateSnapshot();
                 state.networkInfo.setType(networkType);
             } else {
                 final NetworkInfo info = new NetworkInfo(networkType, 0,
@@ -1265,13 +1265,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 final NetworkCapabilities capabilities = new NetworkCapabilities();
                 capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING,
                         !info.isRoaming());
-                state = new NetworkState(info, new LinkProperties(), capabilities,
+                state = new NetworkStateSnapshot(info, new LinkProperties(), capabilities,
                         null, null, null);
             }
-            filterNetworkStateForUid(state, uid, false);
+            filterNetworkStateSnapshotForUid(state, uid, false);
             return state;
         } else {
-            return NetworkState.EMPTY;
+            return NetworkStateSnapshot.EMPTY;
         }
     }
 
@@ -1302,7 +1302,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return null;
     }
 
-    private NetworkState getUnfilteredActiveNetworkState(int uid) {
+    private NetworkStateSnapshot getUnfilteredActiveNetworkStateSnapshot(int uid) {
         NetworkAgentInfo nai = getDefaultNetwork();
 
         final Network[] networks = getVpnUnderlyingNetworks(uid);
@@ -1320,9 +1320,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         if (nai != null) {
-            return nai.getNetworkState();
+            return nai.getNetworkStateSnapshot();
         } else {
-            return NetworkState.EMPTY;
+            return NetworkStateSnapshot.EMPTY;
         }
     }
 
@@ -1378,11 +1378,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     /**
-     * Apply any relevant filters to {@link NetworkState} for the given UID. For
+     * Apply any relevant filters to {@link NetworkStateSnapshot} for the given UID. For
      * example, this may mark the network as {@link DetailedState#BLOCKED} based
      * on {@link #isNetworkWithLinkPropertiesBlocked}.
      */
-    private void filterNetworkStateForUid(NetworkState state, int uid, boolean ignoreBlocked) {
+    private void filterNetworkStateSnapshotForUid(
+            NetworkStateSnapshot state, int uid, boolean ignoreBlocked) {
         if (state == null || state.networkInfo == null || state.linkProperties == null) return;
 
         if (isNetworkWithLinkPropertiesBlocked(state.linkProperties, uid, ignoreBlocked)) {
@@ -1406,8 +1407,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public NetworkInfo getActiveNetworkInfo() {
         enforceAccessPermission();
         final int uid = mDeps.getCallingUid();
-        final NetworkState state = getUnfilteredActiveNetworkState(uid);
-        filterNetworkStateForUid(state, uid, false);
+        final NetworkStateSnapshot state = getUnfilteredActiveNetworkStateSnapshot(uid);
+        filterNetworkStateSnapshotForUid(state, uid, false);
         maybeLogBlockedNetworkInfo(state.networkInfo, uid);
         return state.networkInfo;
     }
@@ -1456,15 +1457,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public NetworkInfo getActiveNetworkInfoUnfiltered() {
         enforceAccessPermission();
         final int uid = mDeps.getCallingUid();
-        NetworkState state = getUnfilteredActiveNetworkState(uid);
+        NetworkStateSnapshot state = getUnfilteredActiveNetworkStateSnapshot(uid);
         return state.networkInfo;
     }
 
     @Override
     public NetworkInfo getActiveNetworkInfoForUid(int uid, boolean ignoreBlocked) {
         NetworkStack.checkNetworkStackPermission(mContext);
-        final NetworkState state = getUnfilteredActiveNetworkState(uid);
-        filterNetworkStateForUid(state, uid, ignoreBlocked);
+        final NetworkStateSnapshot state = getUnfilteredActiveNetworkStateSnapshot(uid);
+        filterNetworkStateSnapshotForUid(state, uid, ignoreBlocked);
         return state.networkInfo;
     }
 
@@ -1476,13 +1477,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // A VPN is active, so we may need to return one of its underlying networks. This
             // information is not available in LegacyTypeTracker, so we have to get it from
             // getUnfilteredActiveNetworkState.
-            final NetworkState state = getUnfilteredActiveNetworkState(uid);
+            final NetworkStateSnapshot state = getUnfilteredActiveNetworkStateSnapshot(uid);
             if (state.networkInfo != null && state.networkInfo.getType() == networkType) {
-                filterNetworkStateForUid(state, uid, false);
+                filterNetworkStateSnapshotForUid(state, uid, false);
                 return state.networkInfo;
             }
         }
-        final NetworkState state = getFilteredNetworkState(networkType, uid);
+        final NetworkStateSnapshot state = getFilteredNetworkStateSnapshot(networkType, uid);
         return state.networkInfo;
     }
 
@@ -1491,8 +1492,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         enforceAccessPermission();
         final NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(network);
         if (nai != null) {
-            final NetworkState state = nai.getNetworkState();
-            filterNetworkStateForUid(state, uid, ignoreBlocked);
+            final NetworkStateSnapshot state = nai.getNetworkStateSnapshot();
+            filterNetworkStateSnapshotForUid(state, uid, ignoreBlocked);
             return state.networkInfo;
         } else {
             return null;
@@ -1517,7 +1518,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public Network getNetworkForType(int networkType) {
         enforceAccessPermission();
         final int uid = mDeps.getCallingUid();
-        NetworkState state = getFilteredNetworkState(networkType, uid);
+        NetworkStateSnapshot state = getFilteredNetworkStateSnapshot(networkType, uid);
         if (!isNetworkWithLinkPropertiesBlocked(state.linkProperties, uid, false)) {
             return state.network;
         }
@@ -1609,7 +1610,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public LinkProperties getActiveLinkProperties() {
         enforceAccessPermission();
         final int uid = mDeps.getCallingUid();
-        NetworkState state = getUnfilteredActiveNetworkState(uid);
+        NetworkStateSnapshot state = getUnfilteredActiveNetworkStateSnapshot(uid);
         if (state.linkProperties == null) return null;
         return linkPropertiesRestrictedForCallerPermissions(state.linkProperties,
                 Binder.getCallingPid(), uid);
@@ -1759,11 +1760,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public NetworkState[] getAllNetworkState() {
+    public NetworkStateSnapshot[] getAllNetworkState() {
         // This contains IMSI details, so make sure the caller is privileged.
         NetworkStack.checkNetworkStackPermission(mContext);
 
-        final ArrayList<NetworkState> result = Lists.newArrayList();
+        final ArrayList<NetworkStateSnapshot> result = Lists.newArrayList();
         for (Network network : getAllNetworks()) {
             final NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(network);
             if (nai != null && nai.everConnected) {
@@ -1771,10 +1772,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 // NetworkCapabilities, which may contain UIDs of apps to which the
                 // network applies. Should the UIDs be cleared so as not to leak or
                 // interfere ?
-                result.add(nai.getNetworkState());
+                result.add(nai.getNetworkStateSnapshot());
             }
         }
-        return result.toArray(new NetworkState[result.size()]);
+        return result.toArray(new NetworkStateSnapshot[result.size()]);
     }
 
     @Override

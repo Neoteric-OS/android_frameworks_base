@@ -20,7 +20,7 @@ import android.net.INetworkPolicyListener;
 import android.net.Network;
 import android.net.NetworkPolicy;
 import android.net.NetworkQuotaInfo;
-import android.net.NetworkState;
+import android.net.NetworkStateSnapshot;
 import android.net.NetworkTemplate;
 import android.telephony.SubscriptionPlan;
 
@@ -71,7 +71,7 @@ interface INetworkPolicyManager {
     int getMultipathPreference(in Network network);
 
     @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
-    NetworkQuotaInfo getNetworkQuotaInfo(in NetworkState state);
+    NetworkQuotaInfo getNetworkQuotaInfo(in NetworkStateSnapshot state);
 
     SubscriptionPlan[] getSubscriptionPlans(int subId, String callingPackage);
     void setSubscriptionPlans(int subId, in SubscriptionPlan[] plans, String callingPackage);
