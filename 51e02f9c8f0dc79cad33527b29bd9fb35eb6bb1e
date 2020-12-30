@@ -16,6 +16,29 @@
       "message": "file permission to 644\nfix line endings using dos2unix\nformat the code to be under 100 chars in each line",
       "revId": "51e02f9c8f0dc79cad33527b29bd9fb35eb6bb1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "523e9623_78a6cab9",
+        "filename": "media/tests/StressTest/src/com/android/stresstests/MultiInstanceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1150374
+      },
+      "writtenOn": "2020-12-30T18:59:54Z",
+      "side": 1,
+      "message": "add a todo statement that we are capping the maximum number of software instances to 4. Default value is 32. As per documentation while running 32 instances in parallel for video components it could be possible that we encounter media codec exception with transient flag set. This transient flag indicates that component encountered an internal error due to limited resources and can be tried at a later time. \n\nBut currently we are receiving an exception but transient flag is not set. It is unclear if the error is due to unavailable resources or some other internal issue. The DecodeParallel/EncodeParallel class which runs the multi instance test waits for predefined time when it sees transient error and retries. But as none of this is happening, we are limiting the number of parallel instances to 4.",
+      "range": {
+        "startLine": 54,
+        "startChar": 9,
+        "endLine": 54,
+        "endChar": 23
+      },
+      "revId": "51e02f9c8f0dc79cad33527b29bd9fb35eb6bb1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
