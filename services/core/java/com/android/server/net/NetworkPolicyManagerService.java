@@ -103,15 +103,17 @@ import static com.android.internal.util.XmlUtils.writeIntArrayXml;
 import static com.android.internal.util.XmlUtils.writeIntAttribute;
 import static com.android.internal.util.XmlUtils.writeLongAttribute;
 import static com.android.internal.util.XmlUtils.writeStringAttribute;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_ALLOWLIST;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_DEFAULT;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_NON_METERED;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_SYSTEM;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_TMP_ALLOWLIST;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_BLOCKED_BG_RESTRICT;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_BLOCKED_DENYLIST;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_BLOCKED_POWER;
+import static com.android.net.module.util.NetworkPolicyUtils.hasRule;
+import static com.android.net.module.util.NetworkPolicyUtils.isSystem;
 import static com.android.server.NetworkManagementService.LIMIT_GLOBAL_ALERT;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_ALLOWED_ALLOWLIST;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_ALLOWED_DEFAULT;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_ALLOWED_NON_METERED;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_ALLOWED_SYSTEM;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_ALLOWED_TMP_ALLOWLIST;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_BLOCKED_BG_RESTRICT;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_BLOCKED_DENYLIST;
-import static com.android.server.net.NetworkPolicyLogger.NTWK_BLOCKED_POWER;
 import static com.android.server.net.NetworkStatsService.ACTION_NETWORK_STATS_UPDATED;
 
 import static org.xmlpull.v1.XmlPullParser.END_DOCUMENT;
@@ -5254,10 +5256,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 && !hasRule(uidRules, RULE_TEMPORARY_ALLOW_METERED);
     }
 
-    private static boolean isSystem(int uid) {
-        return uid < Process.FIRST_APPLICATION_UID;
-    }
-
     static boolean isUidNetworkingBlockedInternal(int uid, int uidRules, boolean isNetworkMetered,
             boolean isBackgroundRestricted, @Nullable NetworkPolicyLogger logger) {
         final int reason;
@@ -5508,10 +5506,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         final Set<Integer> restrictedUids = mMeteredRestrictedUids.get(
                 UserHandle.getUserId(uid));
         return restrictedUids != null && restrictedUids.contains(uid);
-    }
-
-    private static boolean hasRule(int uidRules, int rule) {
-        return (uidRules & rule) != 0;
     }
 
     private static @NonNull NetworkState[] defeatNullable(@Nullable NetworkState[] val) {
