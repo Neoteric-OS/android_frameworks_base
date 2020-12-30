@@ -28,6 +28,15 @@ import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_STANDBY;
 import static android.net.NetworkPolicyManager.FIREWALL_RULE_DEFAULT;
 import static android.os.Process.INVALID_UID;
 
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_ALLOWLIST;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_DEFAULT;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_NON_METERED;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_TMP_ALLOWLIST;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_BLOCKED_BG_RESTRICT;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_BLOCKED_DENYLIST;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_BLOCKED_POWER;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_BLOCKED_RESTRICTED_MODE;
+
 import android.app.ActivityManager;
 import android.net.NetworkPolicyManager;
 import android.os.UserHandle;
@@ -69,16 +78,6 @@ public class NetworkPolicyLogger {
     private static final int EVENT_FIREWALL_CHAIN_ENABLED = 12;
     private static final int EVENT_UPDATE_METERED_RESTRICTED_PKGS = 13;
     private static final int EVENT_APP_IDLE_WL_CHANGED = 14;
-
-    static final int NTWK_BLOCKED_POWER = 0;
-    static final int NTWK_ALLOWED_NON_METERED = 1;
-    static final int NTWK_BLOCKED_DENYLIST = 2;
-    static final int NTWK_ALLOWED_ALLOWLIST = 3;
-    static final int NTWK_ALLOWED_TMP_ALLOWLIST = 4;
-    static final int NTWK_BLOCKED_BG_RESTRICT = 5;
-    static final int NTWK_ALLOWED_DEFAULT = 6;
-    static final int NTWK_ALLOWED_SYSTEM = 7;
-    static final int NTWK_BLOCKED_RESTRICTED_MODE = 8;
 
     private final LogBuffer mNetworkBlockedBuffer = new LogBuffer(MAX_NETWORK_BLOCKED_LOG_SIZE);
     private final LogBuffer mUidStateChangeBuffer = new LogBuffer(MAX_LOG_SIZE);
