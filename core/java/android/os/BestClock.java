@@ -14,45 +14,45 @@
  * limitations under the License.
  */
 
-package android.os;
+// package android.os;
 
-import android.util.Log;
+// import android.util.Log;
 
-import java.time.Clock;
-import java.time.DateTimeException;
-import java.time.ZoneId;
-import java.util.Arrays;
+// import java.time.Clock;
+// import java.time.DateTimeException;
+// import java.time.ZoneId;
+// import java.util.Arrays;
 
-/**
- * Single {@link Clock} that will return the best available time from a set of
- * prioritized {@link Clock} instances.
- * <p>
- * For example, when {@link SystemClock#currentNetworkTimeClock()} isn't able to
- * provide the time, this class could use {@link Clock#systemUTC()} instead.
- *
- * @hide
- */
-public class BestClock extends SimpleClock {
-    private static final String TAG = "BestClock";
+// /**
+//  * Single {@link Clock} that will return the best available time from a set of
+//  * prioritized {@link Clock} instances.
+//  * <p>
+//  * For example, when {@link SystemClock#currentNetworkTimeClock()} isn't able to
+//  * provide the time, this class could use {@link Clock#systemUTC()} instead.
+//  *
+//  * @hide
+//  */
+// public class BestClock extends SimpleClock {
+//     private static final String TAG = "BestClock";
 
-    private final Clock[] clocks;
+//     private final Clock[] clocks;
 
-    public BestClock(ZoneId zone, Clock... clocks) {
-        super(zone);
-        this.clocks = clocks;
-    }
+//     public BestClock(ZoneId zone, Clock... clocks) {
+//         super(zone);
+//         this.clocks = clocks;
+//     }
 
-    @Override
-    public long millis() {
-        for (Clock clock : clocks) {
-            try {
-                return clock.millis();
-            } catch (DateTimeException e) {
-                // Ignore and attempt the next clock
-                Log.w(TAG, e.toString());
-            }
-        }
-        throw new DateTimeException(
-                "No clocks in " + Arrays.toString(clocks) + " were able to provide time");
-    }
-}
+//     @Override
+//     public long millis() {
+//         for (Clock clock : clocks) {
+//             try {
+//                 return clock.millis();
+//             } catch (DateTimeException e) {
+//                 // Ignore and attempt the next clock
+//                 Log.w(TAG, e.toString());
+//             }
+//         }
+//         throw new DateTimeException(
+//                 "No clocks in " + Arrays.toString(clocks) + " were able to provide time");
+//     }
+// }
