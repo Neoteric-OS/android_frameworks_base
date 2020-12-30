@@ -232,8 +232,8 @@ public final class UserHandle implements Parcelable {
      * Returns the user id for a given uid.
      * @hide
      */
-    @UnsupportedAppUsage
     @TestApi
+    @SystemApi
     public static @UserIdInt int getUserId(int uid) {
         if (MU_ENABLED) {
             return uid / PER_USER_RANGE;
@@ -284,8 +284,8 @@ public final class UserHandle implements Parcelable {
      * Returns the uid that is composed from the userId and the appId.
      * @hide
      */
-    @UnsupportedAppUsage
     @TestApi
+    @SystemApi
     public static int getUid(@UserIdInt int userId, @AppIdInt int appId) {
         if (MU_ENABLED) {
             return userId * PER_USER_RANGE + (appId % PER_USER_RANGE);
