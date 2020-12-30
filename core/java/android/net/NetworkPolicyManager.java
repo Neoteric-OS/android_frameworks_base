@@ -32,6 +32,7 @@ import android.content.pm.Signature;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.os.Build;
+import android.os.Process;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.telephony.SubscriptionPlan;
@@ -454,6 +455,15 @@ public class NetworkPolicyManager {
         };
     }
 
+    private static boolean isApp(int uid) {
+        if (uid > 0) {
+            final int appId = UserHandle.getAppId(uid);
+            return appId >= Process.FIRST_APPLICATION_UID && appId <= Process.LAST_APPLICATION_UID;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Check if given UID can have a {@link #setUidPolicy(int, int)} defined,
      * usually to protect critical system services.
@@ -462,7 +472,7 @@ public class NetworkPolicyManager {
     @Deprecated
     public static boolean isUidValidForPolicy(Context context, int uid) {
         // first, quick-reject non-applications
-        if (!UserHandle.isApp(uid)) {
+        if (!isApp(uid)) {
             return false;
         }
 
