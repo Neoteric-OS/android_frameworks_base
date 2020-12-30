@@ -16,6 +16,52 @@
       "message": "Had to add an extra null pointer check due to a change from a newer CL",
       "revId": "8f77422b021baffa52dc44fa98af7d68047a249a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ca877bd_6809e0d6",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2020-12-30T10:54:57Z",
+      "side": 1,
+      "message": "This sort of thing is kinda pointless. Nobody is going to look at these logs to debug issues. If this really is an invariant, please throw IllegalStateException or fail in a much more visible manner.",
+      "range": {
+        "startLine": 144,
+        "startChar": 12,
+        "endLine": 147,
+        "endChar": 13
+      },
+      "revId": "8f77422b021baffa52dc44fa98af7d68047a249a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0807c2d8_848a93ea",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2020-12-30T10:54:57Z",
+      "side": 1,
+      "message": "throw new AssertionError for things that \"should not happen\".",
+      "range": {
+        "startLine": 529,
+        "startChar": 20,
+        "endLine": 529,
+        "endChar": 88
+      },
+      "revId": "8f77422b021baffa52dc44fa98af7d68047a249a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
