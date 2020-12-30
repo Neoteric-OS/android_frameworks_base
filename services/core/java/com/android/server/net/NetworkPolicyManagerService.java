@@ -160,7 +160,7 @@ import android.net.NetworkQuotaInfo;
 import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.NetworkStack;
-import android.net.NetworkState;
+import android.net.NetworkStateSnapshot;
 import android.net.NetworkStats;
 import android.net.NetworkTemplate;
 import android.net.TelephonyNetworkSpecifier;
@@ -1805,9 +1805,9 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     }
 
     /**
-     * Collect all ifaces from a {@link NetworkState} into the given set.
+     * Collect all ifaces from a {@link NetworkStateSnapshot} into the given set.
      */
-    private static void collectIfaces(ArraySet<String> ifaces, NetworkState state) {
+    private static void collectIfaces(ArraySet<String> ifaces, NetworkStateSnapshot state) {
         final String baseIface = state.linkProperties.getInterfaceName();
         if (baseIface != null) {
             ifaces.add(baseIface);
@@ -1882,7 +1882,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     }
 
     /**
-     * Examine all connected {@link NetworkState}, looking for
+     * Examine all connected {@link NetworkStateSnapshot}, looking for
      * {@link NetworkPolicy} that need to be enforced. When matches found, set
      * remaining quota based on usage cycle and historical stats.
      */
@@ -1891,7 +1891,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         if (LOGV) Slog.v(TAG, "updateNetworkRulesNL()");
         Trace.traceBegin(TRACE_TAG_NETWORK, "updateNetworkRulesNL");
 
-        final NetworkState[] states;
+        final NetworkStateSnapshot[] states;
         try {
             states = defeatNullable(mConnManager.getAllNetworkState());
         } catch (RemoteException e) {
@@ -1902,8 +1902,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         // First, generate identities of all connected networks so we can
         // quickly compare them against all defined policies below.
         mNetIdToSubId.clear();
-        final ArrayMap<NetworkState, NetworkIdentity> identified = new ArrayMap<>();
-        for (NetworkState state : states) {
+        final ArrayMap<NetworkStateSnapshot, NetworkIdentity> identified = new ArrayMap<>();
+        for (NetworkStateSnapshot state : states) {
             if (state.network != null) {
                 mNetIdToSubId.put(state.network.netId, parseSubId(state));
             }
@@ -1987,7 +1987,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
         // One final pass to catch any metered ifaces that don't have explicitly
         // defined policies; typically Wi-Fi networks.
-        for (NetworkState state : states) {
+        for (NetworkStateSnapshot state : states) {
             if (!state.networkCapabilities.hasCapability(NET_CAPABILITY_NOT_METERED)) {
                 matchingIfaces.clear();
                 collectIfaces(matchingIfaces, state);
@@ -2022,7 +2022,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
         // Finally, calculate our opportunistic quotas
         mSubscriptionOpportunisticQuota.clear();
-        for (NetworkState state : states) {
+        for (NetworkStateSnapshot state : states) {
             if (!quotaEnabled) continue;
             if (state.network == null) continue;
             final int subId = getSubIdLocked(state.network);
@@ -3084,7 +3084,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
     @Override
     @Deprecated
-    public NetworkQuotaInfo getNetworkQuotaInfo(NetworkState state) {
+    public NetworkQuotaInfo getNetworkQuotaInfo(NetworkStateSnapshot state) {
         Log.w(TAG, "Shame on UID " + Binder.getCallingUid()
                 + " for calling the hidden API getNetworkQuotaInfo(). Shame!");
         return new NetworkQuotaInfo();
@@ -5458,7 +5458,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         }
     }
 
-    private int parseSubId(NetworkState state) {
+    private int parseSubId(NetworkStateSnapshot state) {
         int subId = INVALID_SUBSCRIPTION_ID;
         if (state != null && state.networkCapabilities != null
                 && state.networkCapabilities.hasTransport(TRANSPORT_CELLULAR)) {
@@ -5539,8 +5539,9 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         return (uidRules & rule) != 0;
     }
 
-    private static @NonNull NetworkState[] defeatNullable(@Nullable NetworkState[] val) {
-        return (val != null) ? val : new NetworkState[0];
+    @NonNull
+    private static NetworkStateSnapshot[] defeatNullable(@Nullable NetworkStateSnapshot[] val) {
+        return (val != null) ? val : new NetworkStateSnapshot[0];
     }
 
     private static boolean getBooleanDefeatingNullable(@Nullable PersistableBundle bundle,

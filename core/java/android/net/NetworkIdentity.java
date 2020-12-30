@@ -177,12 +177,12 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
     }
 
     /**
-     * Build a {@link NetworkIdentity} from the given {@link NetworkState} and {@code subType},
-     * assuming that any mobile networks are using the current IMSI. The subType if applicable,
-     * should be set as one of the TelephonyManager.NETWORK_TYPE_* constants, or
+     * Build a {@link NetworkIdentity} from the given {@link NetworkStateSnapshot} and
+     * {@code subType}, assuming that any mobile networks are using the current IMSI. The subType
+     * if applicable, should be set as one of the TelephonyManager.NETWORK_TYPE_* constants, or
      * {@link android.telephony.TelephonyManager#NETWORK_TYPE_UNKNOWN} if not.
      */
-    public static NetworkIdentity buildNetworkIdentity(Context context, NetworkState state,
+    public static NetworkIdentity buildNetworkIdentity(Context context, NetworkStateSnapshot state,
             boolean defaultNetwork, @NetworkType int subType) {
         final int displayTransportType = NetworkCapabilitiesUtils.getDisplayTransport(
                 state.networkCapabilities.getTransportTypes());

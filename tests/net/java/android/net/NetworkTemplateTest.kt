@@ -51,16 +51,16 @@ private const val TEST_SSID1 = "ssid1"
 class NetworkTemplateTest {
     private val mockContext = mock(Context::class.java)
 
-    private fun buildMobileNetworkState(subscriberId: String): NetworkState =
+    private fun buildMobileNetworkState(subscriberId: String): NetworkStateSnapshot =
             buildNetworkState(TRANSPORT_CELLULAR, subscriberId = subscriberId)
-    private fun buildWifiNetworkState(ssid: String): NetworkState =
+    private fun buildWifiNetworkState(ssid: String): NetworkStateSnapshot =
             buildNetworkState(TRANSPORT_WIFI, ssid = ssid)
 
     private fun buildNetworkState(
         displayTransportType: Int,
         subscriberId: String? = null,
         ssid: String? = null
-    ): NetworkState {
+    ): NetworkStateSnapshot {
         val info = mock(NetworkInfo::class.java)
         doReturn(getLegacyNetworkTypeForDisplayTransport(displayTransportType)).`when`(info).type
         doReturn(NetworkInfo.State.CONNECTED).`when`(info).state
@@ -70,7 +70,7 @@ class NetworkTemplateTest {
             setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING, true)
             addTransportType(displayTransportType)
         }
-        return NetworkState(info, lp, caps, mock(Network::class.java), subscriberId, ssid)
+        return NetworkStateSnapshot(info, lp, caps, mock(Network::class.java), subscriberId, ssid)
     }
 
     private fun NetworkTemplate.assertMatches(ident: NetworkIdentity) =

@@ -16,6 +16,7 @@
 
 package android.net;
 
+import android.annotation.NonNull;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
@@ -27,10 +28,11 @@ import android.util.Slog;
  *
  * @hide
  */
-public class NetworkState implements Parcelable {
+public class NetworkStateSnapshot implements Parcelable {
     private static final boolean VALIDATE_ROAMING_STATE = false;
 
-    public static final NetworkState EMPTY = new NetworkState(null, null, null, null, null, null);
+    public static final NetworkStateSnapshot EMPTY = new NetworkStateSnapshot(null, null, null,
+            null, null, null);
 
     public final NetworkInfo networkInfo;
     public final LinkProperties linkProperties;
@@ -40,7 +42,7 @@ public class NetworkState implements Parcelable {
     public final String subscriberId;
     public final String networkId;
 
-    public NetworkState(NetworkInfo networkInfo, LinkProperties linkProperties,
+    public NetworkStateSnapshot(NetworkInfo networkInfo, LinkProperties linkProperties,
             NetworkCapabilities networkCapabilities, Network network, String subscriberId,
             String networkId) {
         this.networkInfo = networkInfo;
@@ -62,7 +64,7 @@ public class NetworkState implements Parcelable {
     }
 
     @UnsupportedAppUsage
-    public NetworkState(Parcel in) {
+    public NetworkStateSnapshot(Parcel in) {
         networkInfo = in.readParcelable(null);
         linkProperties = in.readParcelable(null);
         networkCapabilities = in.readParcelable(null);
@@ -87,15 +89,17 @@ public class NetworkState implements Parcelable {
     }
 
     @UnsupportedAppUsage
-    public static final @android.annotation.NonNull Creator<NetworkState> CREATOR = new Creator<NetworkState>() {
+    @NonNull
+    public static final Creator<NetworkStateSnapshot> CREATOR =
+            new Creator<NetworkStateSnapshot>() {
         @Override
-        public NetworkState createFromParcel(Parcel in) {
-            return new NetworkState(in);
+        public NetworkStateSnapshot createFromParcel(Parcel in) {
+            return new NetworkStateSnapshot(in);
         }
 
         @Override
-        public NetworkState[] newArray(int size) {
-            return new NetworkState[size];
+        public NetworkStateSnapshot[] newArray(int size) {
+            return new NetworkStateSnapshot[size];
         }
     };
 }
