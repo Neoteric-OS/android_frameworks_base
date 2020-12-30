@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "027a1e75_46560267",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-12-30T15:01:04Z",
+      "side": 1,
+      "message": "Ack. Removed check altogether, as it\u0027s not that useful.",
+      "parentUuid": "1ca877bd_6809e0d6",
+      "range": {
+        "startLine": 144,
+        "startChar": 12,
+        "endLine": 147,
+        "endChar": 13
+      },
+      "revId": "8f77422b021baffa52dc44fa98af7d68047a249a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0807c2d8_848a93ea",
@@ -54,6 +78,30 @@
       "writtenOn": "2020-12-30T10:54:57Z",
       "side": 1,
       "message": "throw new AssertionError for things that \"should not happen\".",
+      "range": {
+        "startLine": 529,
+        "startChar": 20,
+        "endLine": 529,
+        "endChar": 88
+      },
+      "revId": "8f77422b021baffa52dc44fa98af7d68047a249a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "926c86ba_97a7196c",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-12-30T15:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0807c2d8_848a93ea",
       "range": {
         "startLine": 529,
         "startChar": 20,
