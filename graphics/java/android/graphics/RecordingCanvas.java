@@ -21,6 +21,7 @@ import android.annotation.Nullable;
 import android.util.Pools.SynchronizedPool;
 import android.view.DisplayListCanvas;
 import android.view.TextureLayer;
+import android.os.SystemProperties;
 
 import dalvik.annotation.optimization.CriticalNative;
 import dalvik.annotation.optimization.FastNative;
@@ -41,7 +42,23 @@ public final class RecordingCanvas extends DisplayListCanvas {
     private static final int POOL_LIMIT = 25;
 
     /** @hide */
-    public static final int MAX_BITMAP_SIZE = 100 * 1024 * 1024; // 100 MB
+    private static int getPanelFrameSize() {
+        int FrameSize;
+        int BitmapSize = 100 * 1024 * 1024; // 100 MB;
+
+        // Default 100 * 1024 * 1024
+        FrameSize = SystemProperties.getInt("ro.hwui.max_texture_allocation_size", 104857600);
+
+        if (FrameSize >= 7680*4320) {
+            BitmapSize = 7680 * 4320 * 4 * 3; // width * height * 4 (bpp) * 3
+        } else {
+            BitmapSize = 100 * 1024 * 1024; // 100 MB
+        }
+        return BitmapSize;
+    }
+
+    /** @hide */
+    public static final int MAX_BITMAP_SIZE = getPanelFrameSize();
 
     private static final SynchronizedPool<RecordingCanvas> sPool =
             new SynchronizedPool<>(POOL_LIMIT);
