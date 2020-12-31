@@ -18,14 +18,15 @@ package android.net;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.SparseArray;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /** @hide */
@@ -60,16 +61,16 @@ public final class OemNetworkPreferences implements Parcelable {
     public static final int OEM_NETWORK_PREFERENCE_OEM_PRIVATE_ONLY = 4;
 
     @NonNull
-    private final SparseArray<List<String>> mNetworkMappings;
+    private final Bundle mNetworkMappings;
 
     @NonNull
-    public SparseArray<List<String>> getNetworkPreferences() {
-        return mNetworkMappings.clone();
+    public Map<String, Integer> getNetworkPreferences() {
+        return convertToUnmodifiableMap(mNetworkMappings);
     }
 
-    private OemNetworkPreferences(@NonNull SparseArray<List<String>> networkMappings) {
+    private OemNetworkPreferences(@NonNull final Bundle networkMappings) {
         Objects.requireNonNull(networkMappings);
-        mNetworkMappings = networkMappings.clone();
+        mNetworkMappings = (Bundle) networkMappings.clone();
     }
 
     @Override
@@ -99,14 +100,15 @@ public final class OemNetworkPreferences implements Parcelable {
      * @hide
      */
     public static final class Builder {
-        private final SparseArray<List<String>> mNetworkMappings;
+        private final Map<String, Integer> mNetworkMappings;
 
         public Builder() {
-            mNetworkMappings = new SparseArray<>();
+            mNetworkMappings = new HashMap<>();
         }
 
         /**
-         * Add a network preference for a list of packages.
+         * Add a network preference for a list of packages. Previously stored values for the given
+         * preference will be overwritten.
          *
          * @param preference the desired network preference to use
          * @param packages   full package names (e.g.: "com.google.apps.contacts") for apps to use
@@ -115,10 +117,15 @@ public final class OemNetworkPreferences implements Parcelable {
          */
         @NonNull
         public Builder addNetworkPreference(@OemNetworkPreference final int preference,
-                @NonNull List<String> packages) {
+                @NonNull final List<String> packages) {
             Objects.requireNonNull(packages);
-            mNetworkMappings.put(preference,
-                    Collections.unmodifiableList(new ArrayList<>(packages)));
+
+            // Clear out previously stored values for this @OemNetworkPreference preference.
+            mNetworkMappings.values().remove(preference);
+
+            for (final String packageName : packages) {
+                mNetworkMappings.put(packageName, preference);
+            }
             return this;
         }
 
@@ -127,8 +134,24 @@ public final class OemNetworkPreferences implements Parcelable {
          */
         @NonNull
         public OemNetworkPreferences build() {
-            return new OemNetworkPreferences(mNetworkMappings);
+            return new OemNetworkPreferences(convertToBundle(mNetworkMappings));
         }
+    }
+
+    private static Bundle convertToBundle(@NonNull final Map<String, Integer> map) {
+        final Bundle b = new Bundle();
+        for (final Map.Entry<String, Integer> entry : map.entrySet()) {
+            b.putInt(entry.getKey(), entry.getValue());
+        }
+        return b;
+    }
+
+    private static Map<String, Integer> convertToUnmodifiableMap(@NonNull final Bundle bundle) {
+        final Map<String, Integer> networkPreferences = new HashMap<>();
+        for (final String key : bundle.keySet()) {
+            networkPreferences.put(key, bundle.getInt(key));
+        }
+        return Collections.unmodifiableMap(networkPreferences);
     }
 
     /** @hide */
@@ -168,7 +191,7 @@ public final class OemNetworkPreferences implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull android.os.Parcel dest, int flags) {
-        dest.writeSparseArray(mNetworkMappings);
+        dest.writeBundle(mNetworkMappings);
     }
 
     @Override
@@ -187,7 +210,7 @@ public final class OemNetworkPreferences implements Parcelable {
                 @Override
                 public OemNetworkPreferences createFromParcel(@NonNull android.os.Parcel in) {
                     return new OemNetworkPreferences(
-                            in.readSparseArray(getClass().getClassLoader()));
+                            in.readBundle(getClass().getClassLoader()));
                 }
             };
 }

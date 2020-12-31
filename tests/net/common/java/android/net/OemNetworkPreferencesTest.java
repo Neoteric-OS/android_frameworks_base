@@ -19,11 +19,12 @@ package android.net;
 import static com.android.testutils.MiscAsserts.assertThrows;
 import static com.android.testutils.ParcelUtils.assertParcelSane;
 
+import static junit.framework.Assert.assertFalse;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import android.os.Build;
-import android.util.SparseArray;
 
 import androidx.test.filters.SmallTest;
 
@@ -36,6 +37,7 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @IgnoreUpTo(Build.VERSION_CODES.R)
 @RunWith(DevSdkIgnoreRunner.class)
@@ -54,41 +56,41 @@ public class OemNetworkPreferencesTest {
     }
 
     @Test
-    public void builderAddNetworkPreferenceRequiresNonNullPackages() {
+    public void testBuilderAddNetworkPreferenceRequiresNonNullPackages() {
         assertThrows(NullPointerException.class,
                 () -> mBuilder.addNetworkPreference(TEST_PREF, null));
     }
 
     @Test
-    public void getNetworkPreferencesReturnsCorrectValue() {
+    public void testGetNetworkPreferencesReturnsCorrectValue() {
         final int expectedNumberOfMappings = 1;
         mBuilder.addNetworkPreference(TEST_PREF, mPackages);
 
-        final SparseArray<List<String>> networkPreferences =
+        final Map<String, Integer> networkPreferences =
                 mBuilder.build().getNetworkPreferences();
 
         assertEquals(expectedNumberOfMappings, networkPreferences.size());
-        assertEquals(mPackages.size(), networkPreferences.get(TEST_PREF).size());
-        assertEquals(mPackages.get(0), networkPreferences.get(TEST_PREF).get(0));
+        assertTrue(networkPreferences.containsKey(mPackages.get(0)));
     }
 
     @Test
-    public void getNetworkPreferencesReturnsUnmodifiableValue() {
+    public void testGetNetworkPreferencesReturnsUnmodifiableValue() {
         final String newPackage = "new.com.google.apps.contacts";
         mBuilder.addNetworkPreference(TEST_PREF, mPackages);
 
-        final SparseArray<List<String>> networkPreferences =
+        final Map<String, Integer> networkPreferences =
                 mBuilder.build().getNetworkPreferences();
 
         assertThrows(UnsupportedOperationException.class,
-                () -> networkPreferences.get(TEST_PREF).set(mPackages.size() - 1, newPackage));
+                () -> networkPreferences.put(newPackage, TEST_PREF));
 
         assertThrows(UnsupportedOperationException.class,
-                () -> networkPreferences.get(TEST_PREF).add(newPackage));
+                () -> networkPreferences.remove(TEST_PACKAGE));
+
     }
 
     @Test
-    public void toStringReturnsCorrectValue() {
+    public void testToStringReturnsCorrectValue() {
         mBuilder.addNetworkPreference(TEST_PREF, mPackages);
 
         final String networkPreferencesString = mBuilder.build().getNetworkPreferences().toString();
@@ -104,5 +106,24 @@ public class OemNetworkPreferencesTest {
         final OemNetworkPreferences prefs = mBuilder.build();
 
         assertParcelSane(prefs, 1 /* fieldCount */);
+    }
+
+    @Test
+    public void testOemNetworkPreferencesOverwritesPriorPreferences() {
+        mBuilder.addNetworkPreference(TEST_PREF, mPackages);
+        Map<String, Integer> networkPreferences =
+                mBuilder.build().getNetworkPreferences();
+
+        assertTrue(networkPreferences.containsKey(TEST_PACKAGE));
+
+        final String newPackage = "new.com.google.apps.contacts";
+        mPackages.clear();
+        mPackages.add(newPackage);
+        mBuilder.addNetworkPreference(TEST_PREF, mPackages);
+        networkPreferences = mBuilder.build().getNetworkPreferences();
+
+        assertTrue(networkPreferences.containsKey(newPackage));
+        assertFalse(networkPreferences.containsKey(TEST_PACKAGE));
+        assertEquals(networkPreferences.size(), mPackages.size());
     }
 }
