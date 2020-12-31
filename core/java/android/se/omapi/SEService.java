@@ -31,6 +31,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.concurrent.Executor;
 
@@ -75,8 +76,8 @@ public final class SEService {
      * SEService could be bound to the backend.
      */
     private class SEListener extends ISecureElementListener.Stub {
-        public OnConnectedListener mListener = null;
-        public Executor mExecutor = null;
+        public WeakReference<OnConnectedListener> mListener = null;
+        public WeakReference<Executor> mExecutor = null;
 
         @Override
         public IBinder asBinder() {
@@ -84,11 +85,12 @@ public final class SEService {
         }
 
         public void onConnected() {
-            if (mListener != null && mExecutor != null) {
-                mExecutor.execute(new Runnable() {
+            if (mListener != null && mListener.get() != null
+                    && mExecutor != null && mExecutor.get() != null) {
+                mExecutor.get().execute(new Runnable() {
                     @Override
                     public void run() {
-                        mListener.onConnected();
+                        mListener.get().onConnected();
                     }
                 });
             }
@@ -103,7 +105,7 @@ public final class SEService {
     private final Object mLock = new Object();
 
     /** The client context (e.g. activity). */
-    private final Context mContext;
+    private final WeakReference<Context> mContext;
 
     /** The backend system. */
     private volatile ISecureElementService mSecureElementService;
@@ -142,9 +144,9 @@ public final class SEService {
             throw new NullPointerException("Arguments must not be null");
         }
 
-        mContext = context;
-        mSEListener.mListener = listener;
-        mSEListener.mExecutor = executor;
+        mContext = new WeakReference<>(context);
+        mSEListener.mListener = new WeakReference<>(listener);
+        mSEListener.mExecutor = new WeakReference<>(executor);
 
         mConnection = new ServiceConnection() {
 
@@ -168,7 +170,7 @@ public final class SEService {
         intent.setClassName("com.android.se",
                             "com.android.se.SecureElementService");
         boolean bindingSuccessful =
-                mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+                mContext.get().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         if (bindingSuccessful) {
             Log.i(TAG, "bindService successful");
         }
@@ -240,7 +242,7 @@ public final class SEService {
                 }
             }
             try {
-                mContext.unbindService(mConnection);
+                mContext.get().unbindService(mConnection);
             } catch (IllegalArgumentException e) {
                 // Do nothing and fail silently since an error here indicates
                 // that binding never succeeded in the first place.
