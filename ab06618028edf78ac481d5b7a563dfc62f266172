@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23f7e308_6e5ff747",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-31T09:03:13Z",
+      "side": 1,
+      "message": "LGTM assuming TH and Jean will be happy.",
+      "revId": "ab06618028edf78ac481d5b7a563dfc62f266172",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad17da8a_352780f8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4888,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-31T09:03:13Z",
+      "side": 1,
+      "message": "stupid question: the API here only sends the update to netd, which implies the status between netd and framework is always synchronized, is that also true for cases such as netd crash or framework crash?",
+      "range": {
+        "startLine": 4888,
+        "startChar": 18,
+        "endLine": 4888,
+        "endChar": 43
+      },
+      "revId": "ab06618028edf78ac481d5b7a563dfc62f266172",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

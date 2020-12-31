@@ -1232,6 +1232,30 @@
       },
       "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53692018_f3740c0d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 6520,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-31T09:03:13Z",
+      "side": 1,
+      "message": "Ah I missed a lot but glad you find a way out.\nBut it\u0027s a pity to me that we have one expectCallback with ANY_NETWORK but cannot use it.",
+      "parentUuid": "8f0944bf_f6a8fc3f",
+      "range": {
+        "startLine": 6520,
+        "startChar": 12,
+        "endLine": 6520,
+        "endChar": 66
+      },
+      "revId": "83789533f8d5f8362922f7f9909779231adcf1e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
