@@ -78,6 +78,7 @@ import static com.android.server.NetworkManagementSocketTagger.setKernelCounterS
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.AlarmManager;
+import android.app.IAlarmManager;
 import android.app.PendingIntent;
 import android.app.usage.NetworkStatsManager;
 import android.content.BroadcastReceiver;
@@ -108,8 +109,8 @@ import android.net.Uri;
 import android.net.netstats.provider.INetworkStatsProvider;
 import android.net.netstats.provider.INetworkStatsProviderCallback;
 import android.net.netstats.provider.NetworkStatsProvider;
-import android.os.BestClock;
 import android.os.Binder;
+import android.os.DeadSystemException;
 import android.os.DropBoxManager;
 import android.os.Environment;
 import android.os.Handler;
@@ -120,8 +121,11 @@ import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
+import android.os.ParcelableException;
 import android.os.PowerManager;
 import android.os.RemoteException;
+import android.os.ServiceManager;
+import android.os.SimpleClock;
 import android.os.SystemClock;
 import android.os.Trace;
 import android.os.UserHandle;
@@ -156,6 +160,8 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -361,8 +367,54 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     private static @NonNull Clock getDefaultClock() {
-        return new BestClock(ZoneOffset.UTC, SystemClock.currentNetworkTimeClock(),
+        return new BestClock(
+                ZoneOffset.UTC,
+                new SimpleClock(ZoneOffset.UTC) {
+                    @Override
+                    public long millis() {
+                        final IAlarmManager mgr =
+                                IAlarmManager.Stub.asInterface(
+                                        ServiceManager.getService(Context.ALARM_SERVICE));
+                        if (mgr != null) {
+                            try {
+                                return mgr.currentNetworkTimeMillis();
+                            } catch (ParcelableException e) {
+                                e.maybeRethrow(DateTimeException.class);
+                                throw new RuntimeException(e);
+                            } catch (RemoteException e) {
+                                throw e.rethrowFromSystemServer();
+                            }
+                        } else {
+                            throw new RuntimeException(new DeadSystemException());
+                        }
+                    }
+                },
                 Clock.systemUTC());
+    }
+
+    private static final class BestClock extends SimpleClock {
+        private static final String TAG = "BestClock";
+
+        private final Clock[] mClock;
+
+        BestClock(ZoneId zone, Clock... clocks) {
+            super(zone);
+            mClock = clocks;
+        }
+
+        @Override
+        public long millis() {
+            for (Clock clock : mClock) {
+                try {
+                    return clock.millis();
+                } catch (DateTimeException e) {
+                    // Ignore and attempt the next clock
+                    Log.w(TAG, e.toString());
+                }
+            }
+            throw new DateTimeException(
+                    "No clocks in " + Arrays.toString(mClock) + " were able to provide time");
+        }
     }
 
     private final class NetworkStatsHandler extends Handler {

@@ -126,6 +126,7 @@ import android.app.ActivityManagerInternal;
 import android.app.AppGlobals;
 import android.app.AppOpsManager;
 import android.app.IActivityManager;
+import android.app.IAlarmManager;
 import android.app.IUidObserver;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -167,8 +168,8 @@ import android.net.TelephonyNetworkSpecifier;
 import android.net.TrafficStats;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
-import android.os.BestClock;
 import android.os.Binder;
+import android.os.DeadSystemException;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerExecutor;
@@ -176,6 +177,7 @@ import android.os.HandlerThread;
 import android.os.INetworkManagementService;
 import android.os.Message;
 import android.os.MessageQueue.IdleHandler;
+import android.os.ParcelableException;
 import android.os.PersistableBundle;
 import android.os.PowerManager;
 import android.os.PowerManager.ServiceType;
@@ -186,7 +188,9 @@ import android.os.Process;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
+import android.os.ServiceManager;
 import android.os.ShellCallback;
+import android.os.SimpleClock;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
@@ -257,6 +261,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.nio.charset.StandardCharsets;
 import java.time.Clock;
+import java.time.DateTimeException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -626,7 +631,28 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     }
 
     private static @NonNull Clock getDefaultClock() {
-        return new BestClock(ZoneOffset.UTC, SystemClock.currentNetworkTimeClock(),
+        return new BestClock(
+                ZoneOffset.UTC,
+                new SimpleClock(ZoneOffset.UTC) {
+                    @Override
+                    public long millis() {
+                        final IAlarmManager mgr =
+                                IAlarmManager.Stub.asInterface(
+                                        ServiceManager.getService(Context.ALARM_SERVICE));
+                        if (mgr != null) {
+                            try {
+                                return mgr.currentNetworkTimeMillis();
+                            } catch (ParcelableException e) {
+                                e.maybeRethrow(DateTimeException.class);
+                                throw new RuntimeException(e);
+                            } catch (RemoteException e) {
+                                throw e.rethrowFromSystemServer();
+                            }
+                        } else {
+                            throw new RuntimeException(new DeadSystemException());
+                        }
+                    }
+                },
                 Clock.systemUTC());
     }
 
@@ -4575,6 +4601,31 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         }
 
         return newUidRules;
+    }
+
+    private static final class BestClock extends SimpleClock {
+        private static final String TAG = "BestClock";
+
+        private final Clock[] mClock;
+
+        BestClock(ZoneId zone, Clock... clocks) {
+            super(zone);
+            mClock = clocks;
+        }
+
+        @Override
+        public long millis() {
+            for (Clock clock : mClock) {
+                try {
+                    return clock.millis();
+                } catch (DateTimeException e) {
+                    // Ignore and attempt the next clock
+                    Log.w(TAG, e.toString());
+                }
+            }
+            throw new DateTimeException(
+                    "No clocks in " + Arrays.toString(mClock) + " were able to provide time");
+        }
     }
 
     private class NetPolicyAppIdleStateChangeListener extends AppIdleStateChangeListener {

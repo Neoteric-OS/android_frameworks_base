@@ -32,6 +32,7 @@ import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 import static com.android.server.net.NetworkPolicyManagerInternal.QUOTA_TYPE_MULTIPATH;
 import static com.android.server.net.NetworkPolicyManagerService.OPPORTUNISTIC_QUOTA_UNKNOWN;
 
+import android.app.IAlarmManager;
 import android.app.usage.NetworkStatsManager;
 import android.app.usage.NetworkStatsManager.UsageCallback;
 import android.content.BroadcastReceiver;
@@ -53,9 +54,12 @@ import android.net.NetworkStats;
 import android.net.NetworkTemplate;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.Uri;
-import android.os.BestClock;
+import android.os.DeadSystemException;
 import android.os.Handler;
-import android.os.SystemClock;
+import android.os.ParcelableException;
+import android.os.RemoteException;
+import android.os.ServiceManager;
+import android.os.SimpleClock;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -71,10 +75,12 @@ import com.android.server.net.NetworkPolicyManagerInternal;
 import com.android.server.net.NetworkStatsManagerInternal;
 
 import java.time.Clock;
+import java.time.DateTimeException;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -125,8 +131,54 @@ public class MultipathPolicyTracker {
 
     public static class Dependencies {
         public Clock getClock() {
-            return new BestClock(ZoneOffset.UTC, SystemClock.currentNetworkTimeClock(),
+            return new BestClock(
+                    ZoneOffset.UTC,
+                    new SimpleClock(ZoneOffset.UTC) {
+                        @Override
+                        public long millis() {
+                            final IAlarmManager mgr =
+                                    IAlarmManager.Stub.asInterface(
+                                            ServiceManager.getService(Context.ALARM_SERVICE));
+                            if (mgr != null) {
+                                try {
+                                    return mgr.currentNetworkTimeMillis();
+                                } catch (ParcelableException e) {
+                                    e.maybeRethrow(DateTimeException.class);
+                                    throw new RuntimeException(e);
+                                } catch (RemoteException e) {
+                                    throw e.rethrowFromSystemServer();
+                                }
+                            } else {
+                                throw new RuntimeException(new DeadSystemException());
+                            }
+                        }
+                    },
                     Clock.systemUTC());
+        }
+
+        private static class BestClock extends SimpleClock {
+            private static final String TAG = "BestClock";
+
+            private final Clock[] mClock;
+
+            BestClock(ZoneId zone, Clock... clocks) {
+                super(zone);
+                mClock = clocks;
+            }
+
+            @Override
+            public long millis() {
+                for (Clock clock : mClock) {
+                    try {
+                        return clock.millis();
+                    } catch (DateTimeException e) {
+                        // Ignore and attempt the next clock
+                        Log.w(TAG, e.toString());
+                    }
+                }
+                throw new DateTimeException(
+                        "No clocks in " + Arrays.toString(mClock) + " were able to provide time");
+            }
         }
     }
 
