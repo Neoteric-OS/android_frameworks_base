@@ -21,7 +21,6 @@ import static android.content.Intent.EXTRA_UID;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_VPN;
 import static android.net.ConnectivityManager.TYPE_WIFI;
-import static android.net.NetworkIdentity.OEM_NONE;
 import static android.net.NetworkIdentity.OEM_PAID;
 import static android.net.NetworkIdentity.OEM_PRIVATE;
 import static android.net.NetworkStats.DEFAULT_NETWORK_ALL;
@@ -47,6 +46,7 @@ import static android.net.NetworkTemplate.MATCH_MOBILE_WILDCARD;
 import static android.net.NetworkTemplate.NETWORK_TYPE_ALL;
 import static android.net.NetworkTemplate.OEM_MANAGED_NO;
 import static android.net.NetworkTemplate.OEM_MANAGED_YES;
+import static android.net.NetworkTemplate.SUBSCRIBER_ID_MATCH_RULE_FULL;
 import static android.net.NetworkTemplate.buildTemplateMobileAll;
 import static android.net.NetworkTemplate.buildTemplateMobileWithRatType;
 import static android.net.NetworkTemplate.buildTemplateWifi;
@@ -653,24 +653,28 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     public void testMobileStatsOemManaged() throws Exception {
         final NetworkTemplate templateOemPaid = new NetworkTemplate(MATCH_MOBILE_WILDCARD,
                 /*subscriberId=*/null, /*matchSubscriberIds=*/null, /*networkId=*/null,
-                METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, OEM_PAID);
+                METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, OEM_PAID,
+                SUBSCRIBER_ID_MATCH_RULE_FULL);
 
         final NetworkTemplate templateOemPrivate = new NetworkTemplate(MATCH_MOBILE_WILDCARD,
                 /*subscriberId=*/null, /*matchSubscriberIds=*/null, /*networkId=*/null,
-                METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, OEM_PRIVATE);
+                METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, OEM_PRIVATE,
+                SUBSCRIBER_ID_MATCH_RULE_FULL);
 
         final NetworkTemplate templateOemAll = new NetworkTemplate(MATCH_MOBILE_WILDCARD,
                 /*subscriberId=*/null, /*matchSubscriberIds=*/null, /*networkId=*/null,
                 METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL,
-                OEM_PAID | OEM_PRIVATE);
+                OEM_PAID | OEM_PRIVATE, SUBSCRIBER_ID_MATCH_RULE_FULL);
 
         final NetworkTemplate templateOemYes = new NetworkTemplate(MATCH_MOBILE_WILDCARD,
                 /*subscriberId=*/null, /*matchSubscriberIds=*/null, /*networkId=*/null,
-                METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, OEM_MANAGED_YES);
+                METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, OEM_MANAGED_YES,
+                SUBSCRIBER_ID_MATCH_RULE_FULL);
 
         final NetworkTemplate templateOemNone = new NetworkTemplate(MATCH_MOBILE_WILDCARD,
                 /*subscriberId=*/null, /*matchSubscriberIds=*/null, /*networkId=*/null,
-                METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, OEM_MANAGED_NO);
+                METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, OEM_MANAGED_NO,
+                SUBSCRIBER_ID_MATCH_RULE_FULL);
 
         // OEM_PAID network comes online.
         NetworkState[] states = new NetworkState[]{buildOemManagedMobileState(IMSI_1, false,
