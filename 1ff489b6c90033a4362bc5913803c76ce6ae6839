@@ -1,0 +1,271 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007011808",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1537926?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3cb2fe36_83e8949f",
+        "filename": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-31T09:12:16Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 107
+      },
+      "revId": "1ff489b6c90033a4362bc5913803c76ce6ae6839",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007011807",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1537926?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "93137ce6_0487ab5c",
+          "description": "Change to \"services/core/java/com/android/server/tv/TvInputHardwareManager.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+              "range": {
+                "startLine": 147,
+                "startChar": 17,
+                "endLine": 147,
+                "endChar": 25
+              },
+              "replacement": "Committed"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "ad3bdd88_c99bf99c",
+        "filename": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-31T09:12:16Z",
+      "side": 1,
+      "message": "Common typo found: \"Commited\" -- should it be \"Committed\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 147,
+        "startChar": 17,
+        "endLine": 147,
+        "endChar": 25
+      },
+      "revId": "1ff489b6c90033a4362bc5913803c76ce6ae6839",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007011807",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1537926?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "81fac205_599db35b",
+          "description": "Change to \"services/core/java/com/android/server/tv/TvInputHardwareManager.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+              "range": {
+                "startLine": 1004,
+                "startChar": 17,
+                "endLine": 1004,
+                "endChar": 25
+              },
+              "replacement": "Committed"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "b352b0ba_698d1892",
+        "filename": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-31T09:12:16Z",
+      "side": 1,
+      "message": "Common typo found: \"Commited\" -- should it be \"Committed\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1004,
+        "startChar": 17,
+        "endLine": 1004,
+        "endChar": 25
+      },
+      "revId": "1ff489b6c90033a4362bc5913803c76ce6ae6839",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007011808",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1537926?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b080cb85_15672bac",
+        "filename": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-31T09:12:16Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1075,
+        "startChar": 0,
+        "endLine": 1075,
+        "endChar": 108
+      },
+      "revId": "1ff489b6c90033a4362bc5913803c76ce6ae6839",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007011807",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1537926?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "c2d526fb_a0394844",
+          "description": "Change to \"services/core/java/com/android/server/tv/TvInputHardwareManager.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+              "range": {
+                "startLine": 1075,
+                "startChar": 62,
+                "endLine": 1075,
+                "endChar": 70
+              },
+              "replacement": "Committed"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "08aec92f_8d6fdeec",
+        "filename": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-31T09:12:16Z",
+      "side": 1,
+      "message": "Common typo found: \"Commited\" -- should it be \"Committed\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1075,
+        "startChar": 62,
+        "endLine": 1075,
+        "endChar": 70
+      },
+      "revId": "1ff489b6c90033a4362bc5913803c76ce6ae6839",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007011807",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1537926?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "e74a8f3d_76207b93",
+          "description": "Change to \"services/core/java/com/android/server/tv/TvInputHardwareManager.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+              "range": {
+                "startLine": 1147,
+                "startChar": 21,
+                "endLine": 1147,
+                "endChar": 29
+              },
+              "replacement": "Committed"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "f9e90bec_acc217ed",
+        "filename": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-31T09:12:16Z",
+      "side": 1,
+      "message": "Common typo found: \"Commited\" -- should it be \"Committed\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1147,
+        "startChar": 21,
+        "endLine": 1147,
+        "endChar": 29
+      },
+      "revId": "1ff489b6c90033a4362bc5913803c76ce6ae6839",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007011807",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1537926?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "6af616a7_1ac938b2",
+          "description": "Change to \"services/core/java/com/android/server/tv/TvInputHardwareManager.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+              "range": {
+                "startLine": 1154,
+                "startChar": 17,
+                "endLine": 1154,
+                "endChar": 25
+              },
+              "replacement": "Committed"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "119d1866_0178e533",
+        "filename": "services/core/java/com/android/server/tv/TvInputHardwareManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-31T09:12:16Z",
+      "side": 1,
+      "message": "Common typo found: \"Commited\" -- should it be \"Committed\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1154,
+        "startChar": 17,
+        "endLine": 1154,
+        "endChar": 25
+      },
+      "revId": "1ff489b6c90033a4362bc5913803c76ce6ae6839",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
