@@ -927,6 +927,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
                     mBluetoothA2dpEnabled ? AudioSystem.FORCE_NONE : AudioSystem.FORCE_NO_BT_A2DP,
                     fromA2dp,
                     eventSource);
+            if(!fromA2dp) {
+                if(on) {
+                    setForceUse_Async(AudioSystem.FOR_COMMUNICATION, AudioSystem.FORCE_NONE, eventSource);
+                } else {
+                    updateSpeakerphoneOn(eventSource);
+                }
+            }
         }
     }
 
