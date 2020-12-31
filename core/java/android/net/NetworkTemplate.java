@@ -80,6 +80,8 @@ public class NetworkTemplate implements Parcelable {
     public static final int MATCH_WIFI_WILDCARD = 7;
     public static final int MATCH_BLUETOOTH = 8;
     public static final int MATCH_PROXY = 9;
+    public static final int MATCH_CARRIER_WIFI = 10;
+    public static final int MATCH_CARRIER_WILDCARD = 11;
 
     /**
      * Include all network types when filtering. This is meant to merge in with the
@@ -107,6 +109,8 @@ public class NetworkTemplate implements Parcelable {
             case MATCH_WIFI_WILDCARD:
             case MATCH_BLUETOOTH:
             case MATCH_PROXY:
+            case MATCH_CARRIER_WIFI:
+            case MATCH_CARRIER_WILDCARD:
                 return true;
 
             default:
@@ -211,6 +215,26 @@ public class NetworkTemplate implements Parcelable {
      */
     public static NetworkTemplate buildTemplateProxy() {
         return new NetworkTemplate(MATCH_PROXY, null, null);
+    }
+
+
+    /**
+     * Template to combine all {@link ConnectivityManager#TYPE_WIFI} networks
+     * with non-null subscriberId. Call with the given IMSI for the filter.
+     */
+    public static NetworkTemplate buildTemplateCarrierWifi(@Nullable String subscriberId) {
+        return new NetworkTemplate(MATCH_CARRIER_WIFI, subscriberId, null);
+    }
+
+
+    /**
+     * Template to combine all carrier networks with the given IMSI.
+     * The current carrier networks includes the network types
+     * {@link ConnectivityManager#TYPE_WIFI} and
+     * {@link ConnectivityManager#TYPE_MOBILE}.
+     */
+    public static NetworkTemplate buildTemplateCarrierWildcard(@NonNull String subscriberId) {
+        return new NetworkTemplate(MATCH_CARRIER_WILDCARD, subscriberId, null);
     }
 
     private final int mMatchRule;
@@ -399,6 +423,10 @@ public class NetworkTemplate implements Parcelable {
                 return matchesBluetooth(ident);
             case MATCH_PROXY:
                 return matchesProxy(ident);
+            case MATCH_CARRIER_WIFI:
+                return matchesCarrierWifi(ident);
+            case MATCH_CARRIER_WILDCARD:
+                return matchesCarrierWildcard(ident);
             default:
                 // We have no idea what kind of network template we are, so we
                 // just claim not to match anything.
@@ -537,6 +565,23 @@ public class NetworkTemplate implements Parcelable {
     }
 
     /**
+     * Check if matches carrier Wi-Fi network template.
+     */
+    private boolean matchesCarrierWifi(NetworkIdentity ident) {
+        switch (ident.mType) {
+            case TYPE_WIFI:
+                if (mSubscriberId != null) {
+                    return ident.mSubscriberId != null
+                            && !ArrayUtils.isEmpty(mMatchSubscriberIds)
+                            && ArrayUtils.contains(mMatchSubscriberIds, ident.mSubscriberId);
+                }
+                return ident.mSubscriberId != null;
+            default:
+                return false;
+        }
+    }
+
+    /**
      * Check if matches Ethernet network template.
      */
     private boolean matchesEthernet(NetworkIdentity ident) {
@@ -544,6 +589,13 @@ public class NetworkTemplate implements Parcelable {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Check if matches carrier MOBILE or matches carrier Wi-Fi network.
+     */
+    private boolean matchesCarrierWildcard(NetworkIdentity ident) {
+        return matchesMobile(ident) || matchesCarrierWifi(ident);
     }
 
     private boolean matchesMobileWildcard(NetworkIdentity ident) {
@@ -598,6 +650,10 @@ public class NetworkTemplate implements Parcelable {
                 return "BLUETOOTH";
             case MATCH_PROXY:
                 return "PROXY";
+            case MATCH_CARRIER_WIFI:
+                return "CARRIER_WIFI";
+            case MATCH_CARRIER_WILDCARD:
+                return "CARRIER_WILDCARD";
             default:
                 return "UNKNOWN(" + matchRule + ")";
         }
