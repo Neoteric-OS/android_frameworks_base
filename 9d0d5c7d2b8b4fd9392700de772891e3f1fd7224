@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b6b18a9_eb857643",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-31T06:31:09Z",
+      "side": 1,
+      "message": "Can you add a comment to describe what\u0027s the purpose of adding this capability here?",
+      "range": {
+        "startLine": 245,
+        "startChar": 8,
+        "endLine": 245,
+        "endChar": 77
+      },
+      "revId": "9d0d5c7d2b8b4fd9392700de772891e3f1fd7224",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d49b7d31_6f0af280",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6696,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-31T06:31:09Z",
+      "side": 1,
+      "message": "Both of NET_CAPABILITY_TRUSTED and NET_CAPABILITY_NOT_VCN_MANAGED are inside the DEFAULT_CAPABILITIES, it seems like you don\u0027t need to add them?\nMaybe \"mCm.requestNetwork(new NetworkRequest.Builder().build(), callbackWithCap);\" is enough?\n\nBut if you want to highlight that this request contains a specific capability, keeping the current design is fine.",
+      "range": {
+        "startLine": 6696,
+        "startChar": 60,
+        "endLine": 6696,
+        "endChar": 82
+      },
+      "revId": "9d0d5c7d2b8b4fd9392700de772891e3f1fd7224",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
