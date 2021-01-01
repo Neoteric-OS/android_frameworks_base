@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b4034b3_c863769b",
+        "filename": "services/core/java/com/android/server/biometrics/AuthenticationClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-01-01T21:41:47Z",
+      "side": 1,
+      "message": "The second half should be unconditional. As long as we have both running the auth token should be sent to both.",
+      "range": {
+        "startLine": 182,
+        "startChar": 24,
+        "endLine": 182,
+        "endChar": 32
+      },
+      "revId": "8822f671b9867011d902fbccea0616d1a794b3bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
