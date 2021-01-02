@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "08a6110a_9db4594f",
+        "filename": "keystore/java/android/security/Authorization.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-01-02T21:15:01Z",
+      "side": 1,
+      "message": "This can never be called because nobody can ever construct this class. I think what you wanted to do is make the Constructor public and getService private.",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 27
+      },
+      "revId": "8822f671b9867011d902fbccea0616d1a794b3bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2b4034b3_c863769b",
         "filename": "services/core/java/com/android/server/biometrics/AuthenticationClient.java",
         "patchSetId": 4
