@@ -175,6 +175,7 @@ import android.content.pm.IPackageDeleteObserver;
 import android.content.pm.IPackageDeleteObserver2;
 import android.content.pm.IPackageInstallObserver2;
 import android.content.pm.IPackageInstaller;
+import android.content.pm.IPackageListUpdateCallback;
 import android.content.pm.IPackageManager;
 import android.content.pm.IPackageManagerNative;
 import android.content.pm.IPackageMoveObserver;
@@ -25676,6 +25677,51 @@ public class PackageManagerService extends IPackageManager.Stub
     @Override
     public List<String> getMimeGroup(String packageName, String mimeGroup) {
         return mSettings.mPackages.get(packageName).getMimeGroup(mimeGroup);
+    }
+
+    private class PackageListObserverCallback implements PackageListObserver {
+        private IPackageListUpdateCallback mCallback;
+
+        PackageListObserverCallback(IPackageListUpdateCallback callback) {
+            mCallback = callback;
+        }
+
+        @Override
+        public void onPackageAdded(String packageName, int appId) {
+            try {
+                mCallback.onPackageAdded(packageName, appId);
+            } catch (RemoteException e) { } //Ignore
+        }
+
+        @Override
+        public void onPackageChanged(String packageName, int appId) {
+            try {
+                mCallback.onPackageChanged(packageName, appId);
+            } catch (RemoteException e) { } //Ignore
+        }
+
+        @Override
+        public void onPackageRemoved(String packageName, int appId) {
+            try {
+                mCallback.onPackageRemoved(packageName, appId);
+            } catch (RemoteException e) { } //Ignore
+        }
+    }
+
+    @Override
+    public void registerPackageListUpdateCallback(IPackageListUpdateCallback callback) {
+        mContext.enforceCallingOrSelfPermission(
+                android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, null);
+        final PackageListObserverCallback observer = new PackageListObserverCallback(callback);
+        mPmInternal.getPackageList(observer);
+    }
+
+    @Override
+    public void unregisterPackageListUpdateCallback(IPackageListUpdateCallback callback) {
+        mContext.enforceCallingOrSelfPermission(
+                android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, null);
+        final PackageListObserverCallback observer = new PackageListObserverCallback(callback);
+        mPmInternal.removePackageListObserver(observer);
     }
 
     static class ActiveInstallSession {

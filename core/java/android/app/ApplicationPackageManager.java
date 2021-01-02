@@ -36,6 +36,7 @@ import android.content.pm.ComponentInfo;
 import android.content.pm.FeatureInfo;
 import android.content.pm.IPackageDataObserver;
 import android.content.pm.IPackageDeleteObserver;
+import android.content.pm.IPackageListUpdateCallback;
 import android.content.pm.IPackageManager;
 import android.content.pm.IPackageMoveObserver;
 import android.content.pm.IPackageStatsObserver;
@@ -68,6 +69,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -116,6 +118,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
 
 /** @hide */
 public class ApplicationPackageManager extends PackageManager {
@@ -157,6 +161,10 @@ public class ApplicationPackageManager extends PackageManager {
 
     @GuardedBy("mLock")
     private String mPermissionsControllerPackageName;
+
+    @GuardedBy("mPackageListUpdateCallbackMap")
+    private final Map<PackageListUpdateCallback, PackageListUpdateCallbackDelegate>
+            mPackageListUpdateCallbackMap = new ConcurrentHashMap<>();
 
     UserManager getUserManager() {
         synchronized (mLock) {
@@ -3393,6 +3401,77 @@ public class ApplicationPackageManager extends PackageManager {
             return new ArraySet<>(mimeGroup);
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /** {@hide} */
+    private class PackageListUpdateCallbackDelegate extends IPackageListUpdateCallback.Stub {
+        private PackageListUpdateCallback mCallback;
+        private Executor mExecutor;
+
+        PackageListUpdateCallbackDelegate(PackageListUpdateCallback callback, Executor executor) {
+            mCallback = callback;
+            mExecutor = executor;
+        }
+
+        @Override
+        public void onPackageAdded(String packageName, int appId) {
+            Binder.withCleanCallingIdentity(() ->
+                    mExecutor.execute(() -> mCallback.onPackageAdded(packageName, appId)));
+        }
+
+        @Override
+        public void onPackageRemoved(String packageName, int appId) {
+            Binder.withCleanCallingIdentity(() ->
+                    mExecutor.execute(() -> mCallback.onPackageRemoved(packageName, appId)));
+        }
+
+        @Override
+        public void onPackageChanged(String packageName, int appId) {
+            Binder.withCleanCallingIdentity(() ->
+                    mExecutor.execute(() -> mCallback.onPackageChanged(packageName, appId)));
+        }
+    }
+
+    @Override
+    public void registerPackageListUpdateCallback(
+            @NonNull PackageListUpdateCallback callback, @NonNull Executor executor) {
+        if (callback == null) {
+            throw new NullPointerException("Callback cannot be null.");
+        }
+
+        synchronized (mPackageListUpdateCallbackMap) {
+            final PackageListUpdateCallbackDelegate delegate =
+                    new PackageListUpdateCallbackDelegate(callback, executor);
+
+            if (null != mPackageListUpdateCallbackMap.putIfAbsent(callback, delegate)) {
+                throw new IllegalArgumentException("Callback is already registered.");
+            }
+
+            try {
+                mPM.registerPackageListUpdateCallback(delegate);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+    }
+
+    @Override
+    public void unregisterPackageListUpdateCallback(@NonNull PackageListUpdateCallback callback) {
+        if (callback == null) {
+            throw new NullPointerException("Callback cannot be null.");
+        }
+
+        synchronized (mPackageListUpdateCallbackMap) {
+            final PackageListUpdateCallbackDelegate delegate =
+                    mPackageListUpdateCallbackMap.remove(callback);
+            if (delegate == null) return;
+
+            try {
+                mPM.unregisterPackageListUpdateCallback(delegate);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         }
     }
 }

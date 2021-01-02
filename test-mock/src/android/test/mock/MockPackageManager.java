@@ -57,6 +57,7 @@ import android.os.storage.VolumeInfo;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Executor;
 
 /**
  * A mock {@link android.content.pm.PackageManager} class.  All methods are non-functional and throw
@@ -1247,6 +1248,23 @@ public class MockPackageManager extends PackageManager {
     @Override
     public boolean hasSigningCertificate(
             int uid, byte[] certificate, @PackageManager.CertificateInputType int type) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @hide
+     */
+    @Override
+    public void registerPackageListUpdateCallback(
+            @NonNull PackageListUpdateCallback callback, @NonNull Executor executor) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @hide
+     */
+    @Override
+    public void unregisterPackageListUpdateCallback(@NonNull PackageListUpdateCallback callback) {
         throw new UnsupportedOperationException();
     }
 }
