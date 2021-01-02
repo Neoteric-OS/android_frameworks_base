@@ -8,6 +8,22 @@ package android.app {
 
 }
 
+package android.content.pm {
+
+  public abstract class PackageManager {
+    method @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public abstract void registerPackageListUpdateCallback(@NonNull android.content.pm.PackageManager.PackageListUpdateCallback, @NonNull java.util.concurrent.Executor);
+    method @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public abstract void unregisterPackageListUpdateCallback(@NonNull android.content.pm.PackageManager.PackageListUpdateCallback);
+  }
+
+  public static class PackageManager.PackageListUpdateCallback {
+    ctor public PackageManager.PackageListUpdateCallback();
+    method public void onPackageAdded(@NonNull String, int);
+    method public void onPackageChanged(@NonNull String, int);
+    method public void onPackageRemoved(@NonNull String, int);
+  }
+
+}
+
 package android.net {
 
   public final class TcpRepairWindow {

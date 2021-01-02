@@ -31,6 +31,7 @@ import android.content.pm.IPackageInstaller;
 import android.content.pm.IPackageDeleteObserver;
 import android.content.pm.IPackageDeleteObserver2;
 import android.content.pm.IPackageDataObserver;
+import android.content.pm.IPackageListUpdateCallback;
 import android.content.pm.IPackageMoveObserver;
 import android.content.pm.IPackageStatsObserver;
 import android.content.pm.IntentFilterVerificationInfo;
@@ -742,6 +743,9 @@ interface IPackageManager {
     void setRuntimePermissionsVersion(int version, int userId);
 
     void notifyPackagesReplacedReceived(in String[] packages);
+
+    void registerPackageListUpdateCallback(in IPackageListUpdateCallback callback);
+    void unregisterPackageListUpdateCallback(in IPackageListUpdateCallback callback);
 
     //------------------------------------------------------------------------
     //
