@@ -37,6 +37,7 @@ import android.os.UserHandle;
 import android.os.storage.VolumeInfo;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 /**
  * Stub for PackageManager to use in tests.
@@ -1015,6 +1016,17 @@ public class PackageManagerStub extends PackageManager {
     @Override
     public void registerDexModule(String dexModulePath,
             DexModuleRegisterCallback callback) {
+
+    }
+
+    @Override
+    public void registerPackageListUpdateCallback(
+            PackageListUpdateCallback callback, Executor executor) {
+
+    }
+
+    @Override
+    public void unregisterPackageListUpdateCallback(PackageListUpdateCallback callback) {
 
     }
 }

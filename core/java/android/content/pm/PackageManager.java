@@ -17,6 +17,7 @@
 package android.content.pm;
 
 import android.Manifest;
+import android.annotation.AppIdInt;
 import android.annotation.CheckResult;
 import android.annotation.DrawableRes;
 import android.annotation.IntDef;
@@ -59,6 +60,7 @@ import android.content.res.XmlResourceParser;
 import android.graphics.Rect;
 import android.graphics.drawable.AdaptiveIconDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.NetworkStack;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -86,6 +88,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Executor;
 
 /**
  * Class for retrieving various kinds of information related to the application
@@ -8381,4 +8384,63 @@ public abstract class PackageManager {
     public static void uncorkPackageInfoCache() {
         PropertyInvalidatedCache.uncorkInvalidations(PermissionManager.CACHE_KEY_PACKAGE_INFO);
     }
+
+    /**
+     * Base class for package list update callbacks. Used for notifying package list update events.
+     *
+     * @hide
+     */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static class PackageListUpdateCallback {
+        /**
+         * Notify that the package was installed to system.
+         *
+         * @param packageName The name of the new package.
+         * @param appId The app id (or base uid) of the new package.
+         */
+        public void onPackageAdded(@NonNull String packageName, @AppIdInt int appId) {}
+
+        /**
+         * Notify that the package was removed from system.
+         *
+         * @param packageName The name of the removed package.
+         * @param appId The app id (or base uid) of the removed package.
+         */
+        public void onPackageRemoved(@NonNull String packageName, @AppIdInt int appId) {}
+
+        /**
+         * Notify that the package was changed(either installed for a specific user or updated).
+         *
+         * @param packageName The name of the changed package.
+         * @param appId The app id (or base uid) of the changed package.
+         */
+        public void onPackageChanged(@NonNull String packageName, @AppIdInt int appId) {}
+    }
+
+    /**
+     * Register package update callback
+     *
+     * @param callback the callback to register
+     * @param executor the executor to be used for running the callback method invocations.
+     *
+     * @hide
+     */
+    @SuppressWarnings("HiddenAbstractMethod")
+    @RequiresPermission(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public abstract void registerPackageListUpdateCallback(
+            @NonNull PackageListUpdateCallback callback, @NonNull Executor executor);
+
+    /**
+     * Unregister package update callback
+     *
+     * @param callback the callback to unregister
+     *
+     * @hide
+     */
+    @SuppressWarnings("HiddenAbstractMethod")
+    @RequiresPermission(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public abstract void unregisterPackageListUpdateCallback(
+            @NonNull PackageListUpdateCallback callback);
 }
