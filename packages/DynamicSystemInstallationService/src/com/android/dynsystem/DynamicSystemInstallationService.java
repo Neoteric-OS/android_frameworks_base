@@ -74,7 +74,7 @@ import java.util.ArrayList;
 public class DynamicSystemInstallationService extends Service
         implements InstallationAsyncTask.ProgressListener {
 
-    private static final String TAG = "DynSystemInstallationService";
+    private static final String TAG = "DynamicSystemInstallationService";
 
     // TODO (b/131866826): This is currently for test only. Will move this to System API.
     static final String KEY_ENABLE_WHEN_COMPLETED = "KEY_ENABLE_WHEN_COMPLETED";
@@ -138,7 +138,6 @@ public class DynamicSystemInstallationService extends Service
     private long mCurrentPartitionSize;
     private long mCurrentPartitionInstalledSize;
 
-    private boolean mJustCancelledByUser;
     private boolean mKeepNotification;
 
     // This is for testing only now
@@ -173,6 +172,12 @@ public class DynamicSystemInstallationService extends Service
         HttpResponseCache cache = HttpResponseCache.getInstalled();
         if (cache != null) {
             cache.flush();
+        }
+
+        if (mInstallTask != null) {
+            // Cancel any pending, running or completed task.
+            mInstallTask.cancel(false);
+            mInstallTask = null;
         }
 
         if (!mKeepNotification) {
@@ -302,15 +307,15 @@ public class DynamicSystemInstallationService extends Service
             return;
         }
 
-        stopForeground(true);
-        mJustCancelledByUser = true;
-
         if (mInstallTask.cancel(false)) {
             // Will stopSelf() in onResult()
             Log.d(TAG, "Cancel request filed successfully");
         } else {
             Log.e(TAG, "Trying to cancel installation while it's already completed.");
         }
+
+        stopForeground(STOP_FOREGROUND_REMOVE);
+        resetTaskAndStop();
     }
 
     private void executeDiscardCommand() {
@@ -566,20 +571,8 @@ public class DynamicSystemInstallationService extends Service
         }
 
         Log.d(TAG, "status=" + statusString + ", cause=" + causeString + ", detail=" + detail);
-
-        boolean notifyOnNotificationBar = true;
-
-        if (status == STATUS_NOT_STARTED
-                && cause == CAUSE_INSTALL_CANCELLED
-                && mJustCancelledByUser) {
-            // if task is cancelled by user, do not notify them
-            notifyOnNotificationBar = false;
-            mJustCancelledByUser = false;
-        }
-
-        if (notifyOnNotificationBar) {
-            mNM.notify(NOTIFICATION_ID, buildNotification(status, cause, detail));
-        }
+        
+        mNM.notify(NOTIFICATION_ID, buildNotification(status, cause, detail));
 
         for (int i = mClients.size() - 1; i >= 0; i--) {
             try {
