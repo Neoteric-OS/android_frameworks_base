@@ -492,6 +492,9 @@ class BackPanelController private constructor(
         backCallback = callback
     }
 
+    override fun setBackArrowVisibility(backArrowVisibility: Boolean) {
+    }
+
     override fun setLayoutParams(layoutParams: WindowManager.LayoutParams) {
         this.layoutParams = layoutParams
         windowManager.addView(mView, layoutParams)
