@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97620097_b2ad57fe",
+        "filename": "media/tests/StressTest/src/com/android/stresstests/MultiInstanceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1237180
+      },
+      "writtenOn": "2021-01-04T12:04:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b2e5b43_2f4d0593",
+      "revId": "51e02f9c8f0dc79cad33527b29bd9fb35eb6bb1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "523e9623_78a6cab9",
@@ -58,6 +76,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3b33d7b_2f9bd199",
+        "filename": "media/tests/StressTest/src/com/android/stresstests/MultiInstanceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1237180
+      },
+      "writtenOn": "2021-01-04T12:04:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "523e9623_78a6cab9",
+      "range": {
+        "startLine": 54,
+        "startChar": 9,
+        "endLine": 54,
+        "endChar": 23
+      },
+      "revId": "51e02f9c8f0dc79cad33527b29bd9fb35eb6bb1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c62cdd1_a525df41",
@@ -71,6 +113,30 @@
       "writtenOn": "2020-12-30T19:03:59Z",
       "side": 1,
       "message": "this is not needed",
+      "range": {
+        "startLine": 152,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 31
+      },
+      "revId": "51e02f9c8f0dc79cad33527b29bd9fb35eb6bb1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "680ee2c3_5f5dd120",
+        "filename": "media/tests/StressTest/src/com/android/stresstests/MultiInstanceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1237180
+      },
+      "writtenOn": "2021-01-04T12:04:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c62cdd1_a525df41",
       "range": {
         "startLine": 152,
         "startChar": 12,
