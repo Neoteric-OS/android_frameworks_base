@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007025964",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1537261?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "cd47a4cc_50d06218",
+        "filename": "media/tests/StressTest/src/com/android/stresstests/MultiInstanceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-04T12:01:38Z",
+      "side": 1,
+      "message": "Wrong casing for \"mSeed\". static final variables should be ALL_UPPERCASE.",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "9c86d59cd2df75d77fe3922c37ca7320e7680b46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007025964",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1537261?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "da8bb6ea_c0814ed8",
+        "filename": "media/tests/StressTest/src/com/android/stresstests/MultiInstanceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-04T12:01:38Z",
+      "side": 1,
+      "message": "Wrong casing for \"rand\". static final variables should be ALL_UPPERCASE.",
+      "range": {
+        "startLine": 50,
+        "startChar": 12,
+        "endLine": 50,
+        "endChar": 36
+      },
+      "revId": "9c86d59cd2df75d77fe3922c37ca7320e7680b46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
