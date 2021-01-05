@@ -16,6 +16,23 @@
       "message": "Please look at this bug for install mulit apex",
       "revId": "661c4698e2177635d0865662b738367e0ffdb429",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e55f158_0762c100",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1566802
+      },
+      "writtenOn": "2021-01-05T04:17:24Z",
+      "side": 1,
+      "message": "Probably already fixed by ag/12372935?",
+      "revId": "661c4698e2177635d0865662b738367e0ffdb429",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
