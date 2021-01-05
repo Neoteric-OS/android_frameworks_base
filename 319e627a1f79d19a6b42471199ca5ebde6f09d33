@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "129d7986_7ba26018",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-01-05T23:02:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f50208b_b40f9811",
+      "range": {
+        "startLine": 402,
+        "startChar": 53,
+        "endLine": 402,
+        "endChar": 61
+      },
+      "revId": "319e627a1f79d19a6b42471199ca5ebde6f09d33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b12002b_4e782e7f",
@@ -54,6 +78,24 @@
       "writtenOn": "2020-12-18T01:02:49Z",
       "side": 1,
       "message": "is this what you want? if open fails, you\u0027ll propagate this exception and kill the leak check thread...",
+      "revId": "319e627a1f79d19a6b42471199ca5ebde6f09d33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a1e867a_dc7a1ced",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-01-05T23:02:42Z",
+      "side": 1,
+      "message": "Which will kill all of system_server, right? I\u0027m assuming that failing to open(\"/dev/null\") is catastrophic enough to justify that...",
+      "parentUuid": "0b12002b_4e782e7f",
       "revId": "319e627a1f79d19a6b42471199ca5ebde6f09d33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
