@@ -1427,6 +1427,10 @@ public class LocationManagerService extends ILocationManager.Stub {
 
     @Override
     public List<String> getAllProviders() {
+        if (!CallerIdentity.checkCallingOrSelfLocationPermission(mContext)) {
+            return Collections.emptyList();
+        }
+        
         ArrayList<String> providers = new ArrayList<>(mProviderManagers.size());
         for (LocationProviderManager manager : mProviderManagers) {
             if (FUSED_PROVIDER.equals(manager.getName())) {
