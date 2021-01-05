@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0444e3bf_93da8b03",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-05T07:42:52Z",
+      "side": 1,
+      "message": "MUST",
+      "range": {
+        "startLine": 123,
+        "startChar": 61,
+        "endLine": 123,
+        "endChar": 67
+      },
+      "revId": "7358189141b9d1fbcf3bd391864fe068297d560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6792ddb1_78f07124",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-05T07:42:52Z",
+      "side": 1,
+      "message": "Nit: single line. Suggest \"Register a listener for VCN-underlying network policy updates.\"",
+      "range": {
+        "startLine": 130,
+        "startChar": 7,
+        "endLine": 131,
+        "endChar": 43
+      },
+      "revId": "7358189141b9d1fbcf3bd391864fe068297d560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e197914_66b06053",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-05T07:42:52Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s use the full brace style:\n\nif () {\n    return;\n}",
+      "range": {
+        "startLine": 175,
+        "startChar": 28,
+        "endLine": 175,
+        "endChar": 34
+      },
+      "revId": "7358189141b9d1fbcf3bd391864fe068297d560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fa4a5dc_c5a236e0",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-05T07:42:52Z",
+      "side": 1,
+      "message": "Do we need to remove the listener? the above call appears to only get, not remove.",
+      "range": {
+        "startLine": 178,
+        "startChar": 73,
+        "endLine": 178,
+        "endChar": 74
+      },
+      "revId": "7358189141b9d1fbcf3bd391864fe068297d560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aab985f_ecbf6e70",
+        "filename": "tests/vcn/java/android/net/vcn/VcnManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-05T07:42:52Z",
+      "side": 1,
+      "message": "Do we have a test for unregister?",
+      "range": {
+        "startLine": 52,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 62
+      },
+      "revId": "7358189141b9d1fbcf3bd391864fe068297d560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
