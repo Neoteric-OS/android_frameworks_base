@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1f49763_195b99a4",
+        "filename": "core/java/android/uwb/IUwbAdapter.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2021-01-05T23:07:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d804cf49_5350f5c8",
+      "revId": "27db481ea20df9266928c3f15a4271d6a4bef06a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3d539a1_0ffb4658",
@@ -31,6 +49,24 @@
       "writtenOn": "2020-12-21T06:37:35Z",
       "side": 1,
       "message": "This should still be START, since this is used to schedule a start.",
+      "revId": "27db481ea20df9266928c3f15a4271d6a4bef06a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fea1def_1e336628",
+        "filename": "core/java/android/uwb/IUwbAdapter.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2021-01-05T23:07:21Z",
+      "side": 1,
+      "message": "True, I think we might want both START and OPEN though since they are two distinct operations now.",
+      "parentUuid": "e3d539a1_0ffb4658",
       "revId": "27db481ea20df9266928c3f15a4271d6a4bef06a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
