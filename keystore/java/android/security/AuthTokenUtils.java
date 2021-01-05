@@ -20,7 +20,7 @@ import static java.nio.ByteOrder.LITTLE_ENDIAN;
 
 import android.annotation.NonNull;
 import android.hardware.security.keymint.HardwareAuthToken;
-import android.hardware.security.keymint.Timestamp;
+import android.hardware.security.secureclock.Timestamp;
 
 import java.nio.ByteOrder;
 
