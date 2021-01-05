@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4ed8cd7_1f933752",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-05T21:22:40Z",
+      "side": 1,
+      "message": "Heh, if Gerrit is happy with the file that you\u0027ve uploaded, then it\u0027s a valid OWNERS file.  😊",
+      "revId": "97dd9f1623c03f9f4507e66a252dfd65edbbe0bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
