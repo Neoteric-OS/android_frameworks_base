@@ -394,6 +394,16 @@ public final class RouteInfo implements Parcelable {
     }
 
     /**
+     * Checks if this route is unicast route.
+     *
+     * @return true if this route is of type {@link #RTN_UNICAST}.
+     * @hide
+     */
+    public boolean isUnicast() {
+        return mType == RTN_UNICAST;
+    }
+
+    /**
      * Retrieves the MTU size for this route.
      *
      * @return The MTU size, or 0 if it has not been set.
@@ -405,9 +415,10 @@ public final class RouteInfo implements Parcelable {
     }
 
     /**
-     * Indicates if this route is a default route (ie, has no destination specified).
+     * Indicates if this route is a unicast default route (ie, has no destination specified).
      *
-     * @return {@code true} if the destination has a prefix length of 0.
+     * @return {@code true} if the route is of {@link #RTN_UNICAST} type and its destination has
+     * a prefix length of 0.
      */
     public boolean isDefaultRoute() {
         return mType == RTN_UNICAST && mDestination.getPrefixLength() == 0;
@@ -424,7 +435,9 @@ public final class RouteInfo implements Parcelable {
     }
 
     /**
-     * Indicates if this route is an IPv4 default route.
+     * Indicates if this route is an IPv4 unicast default route.
+     *
+     * @see #isDefaultRoute()
      * @hide
      */
     public boolean isIPv4Default() {
@@ -440,7 +453,9 @@ public final class RouteInfo implements Parcelable {
     }
 
     /**
-     * Indicates if this route is an IPv6 default route.
+     * Indicates if this route is an IPv6 unicast default route.
+     *
+     * @see #isDefaultRoute()
      * @hide
      */
     public boolean isIPv6Default() {
@@ -488,8 +503,8 @@ public final class RouteInfo implements Parcelable {
     }
 
     /**
-     * Find the route from a Collection of routes that best matches a given address.
-     * May return null if no routes are applicable.
+     * Find the unicast route from a Collection of routes that best matches a given address.
+     * May return null if no routes are applicable, or the best route is not a unicast route.
      * @param routes a Collection of RouteInfos to chose from
      * @param dest the InetAddress your trying to get to
      * @return the RouteInfo from the Collection that best fits the given address
