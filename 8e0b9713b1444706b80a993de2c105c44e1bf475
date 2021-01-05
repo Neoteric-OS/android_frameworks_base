@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e8fa8d9_24904bf8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2021-01-05T17:01:38Z",
+      "side": 1,
+      "message": "See notes inline about nullability on newly proposed APIs.",
+      "revId": "8e0b9713b1444706b80a993de2c105c44e1bf475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f0b6509_efa6b65e",
