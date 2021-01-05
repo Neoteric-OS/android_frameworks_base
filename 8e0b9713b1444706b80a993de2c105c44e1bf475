@@ -1,6 +1,98 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f0b6509_efa6b65e",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6549,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2021-01-05T17:01:10Z",
+      "side": 1,
+      "message": "Hmm, this comment seems confusing or at potentially misleading; the code below doesn\u0027t appear to be related to time zones?",
+      "range": {
+        "startLine": 6549,
+        "startChar": 61,
+        "endLine": 6549,
+        "endChar": 97
+      },
+      "revId": "8e0b9713b1444706b80a993de2c105c44e1bf475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b78145e0_c0166a26",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6558,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2021-01-05T17:01:10Z",
+      "side": 1,
+      "message": "Should this block be wrapped in try/catch so that it delivers on this comment about not crashing?",
+      "range": {
+        "startLine": 6558,
+        "startChar": 19,
+        "endLine": 6558,
+        "endChar": 24
+      },
+      "revId": "8e0b9713b1444706b80a993de2c105c44e1bf475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a78ce877_abf50af0",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6561,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2021-01-05T17:01:10Z",
+      "side": 1,
+      "message": "Interesting, should this be cm.getDefaultProxy(), similar to below?",
+      "range": {
+        "startLine": 6561,
+        "startChar": 48,
+        "endLine": 6561,
+        "endChar": 69
+      },
+      "revId": "8e0b9713b1444706b80a993de2c105c44e1bf475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2140edd3_3060570d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3038,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2021-01-05T17:01:10Z",
+      "side": 1,
+      "message": "If we\u0027re promoting this method to be a public API, I\u0027d recommend improving the contract in the process by making both the in/out values @NonNull.  Specifically, require a non-null Network argument, and potentially create a new ProxyInfo.NONE placeholder object to signal when there is no proxy defined.",
+      "range": {
+        "startLine": 3038,
+        "startChar": 0,
+        "endLine": 3038,
+        "endChar": 68
+      },
+      "revId": "8e0b9713b1444706b80a993de2c105c44e1bf475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "3d1c1978_e4add0a0",

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32cb3978_24b38550",
+        "filename": "core/java/android/net/Proxy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2021-01-05T17:01:10Z",
+      "side": 0,
+      "message": "Hmm, have you confirmed that it\u0027s safe to remove this symbol?  The safest path forward would be to preserve the symbol and introduce your new methods next to it.",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 87
+      },
+      "revId": "ba3f1179a8ac84a04212fbb3cbc48669ae3b850a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
