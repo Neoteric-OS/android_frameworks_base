@@ -16,6 +16,7 @@
 
 package android.net;
 
+import static android.net.RouteInfo.RTN_THROW;
 import static android.net.RouteInfo.RTN_UNREACHABLE;
 
 import static com.android.testutils.MiscAsserts.assertEqualBothWays;
@@ -325,6 +326,26 @@ public class RouteInfoTest {
         if (isAtLeastR()) {
             assertFalse(r.isIPv4UnreachableDefault());
             assertTrue(r.isIPv6UnreachableDefault());
+        }
+
+        r = new RouteInfo(new IpPrefix(Inet4Address.ANY, 0), RTN_THROW);
+        assertFalse(r.isHostRoute());
+        assertFalse(r.isDefaultRoute());
+        assertFalse(r.isIPv4Default());
+        assertFalse(r.isIPv6Default());
+        if (isAtLeastR()) {
+            assertFalse(r.isIPv4UnreachableDefault());
+            assertFalse(r.isIPv6UnreachableDefault());
+        }
+
+        r = new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), RTN_THROW);
+        assertFalse(r.isHostRoute());
+        assertFalse(r.isDefaultRoute());
+        assertFalse(r.isIPv4Default());
+        assertFalse(r.isIPv6Default());
+        if (isAtLeastR()) {
+            assertFalse(r.isIPv4UnreachableDefault());
+            assertFalse(r.isIPv6UnreachableDefault());
         }
     }
 
