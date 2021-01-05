@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2df7201_537a5b17",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2053,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-05T07:08:59Z",
+      "side": 1,
+      "message": "Suggest \"Keystore may store keys in DER or PEM format; ensure formatted as PEM in PlatformVpnProfile\"\n\nAlso, as a side note, IIRC, Keystore used to exclusively store in PEM format, but it sounds like that might also have changed.",
+      "range": {
+        "startLine": 2052,
+        "startChar": 12,
+        "endLine": 2053,
+        "endChar": 84
+      },
+      "revId": "6a26007a3b03ea2ac37fd72cda98d094e8b6e82e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c49cde7b_50a8e518",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-05T07:08:59Z",
+      "side": 1,
+      "message": "Consistent state in what?",
+      "range": {
+        "startLine": 1124,
+        "startChar": 89,
+        "endLine": 1125,
+        "endChar": 16
+      },
+      "revId": "6a26007a3b03ea2ac37fd72cda98d094e8b6e82e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92e47c84_13311dba",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-05T07:08:59Z",
+      "side": 1,
+      "message": "Suggest removing; those patches ended up rotting",
+      "range": {
+        "startLine": 1134,
+        "startChar": 0,
+        "endLine": 1135,
+        "endChar": 30
+      },
+      "revId": "6a26007a3b03ea2ac37fd72cda98d094e8b6e82e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
