@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b846c50f_11d04f2d",
+        "filename": "core/res/CAR_OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-05T23:37:47Z",
+      "side": 1,
+      "message": "Could you move this to the top of the repo?\n\n  frameworks/base/CAR_OWNERS",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 46
+      },
+      "revId": "b6890e897c86fd38c33a6141e3c0926cd402252c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1d8994d_42ac1239",
+        "filename": "core/res/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-05T23:37:47Z",
+      "side": 1,
+      "message": "Could you split this into two separate CLs?  (I\u0027m anticipating that the first CL which defines CAR_OWNERS wouldn\u0027t have a delta in this file.)",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "b6890e897c86fd38c33a6141e3c0926cd402252c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
