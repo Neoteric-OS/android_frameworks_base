@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba54e32d_8403b670",
+        "filename": "graphics/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-05T20:57:23Z",
+      "side": 1,
+      "message": "Sorry about the wrong path; it looks like this is the ideal replacement:\n\ninclude /graphics/java/android/graphics/OWNERS",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 25
+      },
+      "revId": "54cbff18b2050e2dd8a56d260ba7de21a94ed187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7206269b_120d996f",
+        "filename": "native/graphics/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-05T20:57:23Z",
+      "side": 1,
+      "message": "Ditto:\n\ninclude /graphics/java/android/graphics/OWNERS",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 25
+      },
+      "revId": "54cbff18b2050e2dd8a56d260ba7de21a94ed187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
