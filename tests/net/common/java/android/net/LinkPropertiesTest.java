@@ -31,6 +31,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import android.compat.testing.PlatformCompatChangeRule;
 import android.net.LinkProperties.ProvisioningChange;
 import android.os.Build;
 import android.system.OsConstants;
@@ -45,8 +46,12 @@ import com.android.testutils.DevSdkIgnoreRule;
 import com.android.testutils.DevSdkIgnoreRule.IgnoreAfter;
 import com.android.testutils.DevSdkIgnoreRule.IgnoreUpTo;
 
+import libcore.junit.util.compat.CoreCompatChangeRule.DisableCompatChanges;
+import libcore.junit.util.compat.CoreCompatChangeRule.EnableCompatChanges;
+
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import java.net.Inet4Address;
@@ -63,6 +68,9 @@ import java.util.Set;
 public class LinkPropertiesTest {
     @Rule
     public final DevSdkIgnoreRule ignoreRule = new DevSdkIgnoreRule();
+
+    @Rule
+    public final TestRule compatChangeRule = new PlatformCompatChangeRule();
 
     private static final InetAddress ADDRV4 = address("75.208.6.1");
     private static final InetAddress ADDRV6 = address("2001:0db8:85a3:0000:0000:8a2e:0370:7334");
@@ -1012,7 +1020,6 @@ public class LinkPropertiesTest {
     @Test @IgnoreUpTo(Build.VERSION_CODES.Q)
     public void testLinkPropertiesParcelable() throws Exception {
         final LinkProperties source = makeLinkPropertiesForParceling();
-
         source.setWakeOnLanSupported(true);
         source.setCaptivePortalApiUrl(CAPPORT_API_URL);
         source.setCaptivePortalData((CaptivePortalData) getCaptivePortalData());
@@ -1125,6 +1132,38 @@ public class LinkPropertiesTest {
 
         lp.addRoute(new RouteInfo(GATEWAY61));
         assertTrue(lp.hasIPv6DefaultRoute());
+    }
+
+    @Test @IgnoreUpTo(Build.VERSION_CODES.R)
+    @EnableCompatChanges({LinkProperties.EXCLUDED_ROUTES})
+    public void testExcludedRoutesEnabled() {
+        final LinkProperties lp = new LinkProperties();
+        assertEquals(0, lp.getRoutes().size());
+
+        lp.addRoute(new RouteInfo(new IpPrefix(ADDRV4, 0), RTN_UNREACHABLE));
+        assertEquals(1, lp.getRoutes().size());
+
+        lp.addRoute(new RouteInfo(new IpPrefix(ADDRV6, 0), RTN_THROW));
+        assertEquals(2, lp.getRoutes().size());
+
+        lp.addRoute(new RouteInfo(GATEWAY1));
+        assertEquals(3, lp.getRoutes().size());
+    }
+
+    @Test @IgnoreUpTo(Build.VERSION_CODES.R)
+    @DisableCompatChanges({LinkProperties.EXCLUDED_ROUTES})
+    public void testExcludedRoutesDisabled() {
+        final LinkProperties lp = new LinkProperties();
+        assertEquals(0, lp.getRoutes().size());
+
+        lp.addRoute(new RouteInfo(new IpPrefix(ADDRV4, 0), RTN_UNREACHABLE));
+        assertEquals(0, lp.getRoutes().size());
+
+        lp.addRoute(new RouteInfo(new IpPrefix(ADDRV6, 0), RTN_THROW));
+        assertEquals(0, lp.getRoutes().size());
+
+        lp.addRoute(new RouteInfo(GATEWAY1));
+        assertEquals(1, lp.getRoutes().size());
     }
 
     @Test
@@ -1253,7 +1292,21 @@ public class LinkPropertiesTest {
         assertFalse(lp.hasIpv4UnreachableDefaultRoute());
     }
 
-    @Test @IgnoreUpTo(Build.VERSION_CODES.Q)
+    @Test @IgnoreUpTo(Build.VERSION_CODES.Q) @IgnoreAfter(Build.VERSION_CODES.R)
+    public void testRouteAddWithSameKey_R() throws Exception {
+        LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName("wlan0");
+        final IpPrefix v6 = new IpPrefix("64:ff9b::/96");
+        lp.addRoute(new RouteInfo(v6, address("fe80::1"), "wlan0", RTN_UNICAST, 1280));
+        assertEquals(1, lp.getRoutes().size());
+        lp.addRoute(new RouteInfo(v6, address("fe80::1"), "wlan0", RTN_UNICAST, 1500));
+        assertEquals(1, lp.getRoutes().size());
+        final IpPrefix v4 = new IpPrefix("192.0.2.128/25");
+        lp.addRoute(new RouteInfo(v4, address("192.0.2.1"), "wlan0", RTN_UNICAST, 1460));
+        assertEquals(2, lp.getRoutes().size());
+    }
+
+    @Test @IgnoreUpTo(Build.VERSION_CODES.R)
     public void testRouteAddWithSameKey() throws Exception {
         LinkProperties lp = new LinkProperties();
         lp.setInterfaceName("wlan0");
