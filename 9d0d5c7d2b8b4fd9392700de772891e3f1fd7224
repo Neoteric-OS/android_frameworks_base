@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c89748f4_5514ca74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-05T08:10:37Z",
+      "side": 1,
+      "message": "Functionally, this looks good; I think the javadoc might be a longer discussion, and I\u0027d suggest splitting that piece off? I don\u0027t know that we have conclusion on how to word it.",
+      "revId": "9d0d5c7d2b8b4fd9392700de772891e3f1fd7224",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b6b18a9_eb857643",

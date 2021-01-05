@@ -274,6 +274,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f207bf01_1e07e3b3",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-05T08:10:37Z",
+      "side": 1,
+      "message": "I think Nathan\u0027s suggestion (and i\u0027d agree with, so we have something to work with before discussing wording of javadoc, which can be done much much later) is that we just check in the first line, and have a todo to expand the javadoc:\n\n/**\n * Indicates that this network is managed by a Virtual Carrier Network (VCN).\n *\n * TODO(b/xxxxxxxx): Add additional clarifying javadoc.\n */",
+      "parentUuid": "6302ff61_a02f9a7b",
+      "range": {
+        "startLine": 366,
+        "startChar": 5,
+        "endLine": 366,
+        "endChar": 79
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7393361a_0acfc6b3",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 3
