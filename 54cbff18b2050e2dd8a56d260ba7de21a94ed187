@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c4cdd9e8_781d2ea9",
+        "filename": "graphics/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2021-01-05T21:00:32Z",
+      "side": 1,
+      "message": "this is the parent of that path, is that even allowed? Or should graphics/java/android/graphics/OWNERS just be moved here?",
+      "parentUuid": "ba54e32d_8403b670",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 25
+      },
+      "revId": "54cbff18b2050e2dd8a56d260ba7de21a94ed187",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7206269b_120d996f",
         "filename": "native/graphics/OWNERS",
         "patchSetId": 1
