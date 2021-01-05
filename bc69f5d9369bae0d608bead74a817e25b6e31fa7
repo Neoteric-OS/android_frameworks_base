@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0d46ef1_294b8d05",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-05T07:51:54Z",
+      "side": 1,
+      "message": "Optional: Feel free to combine this with testRegisterVcnUnderlyingNetworkPolicyListener; we\u0027re doing the same setup anyways.",
+      "range": {
+        "startLine": 99,
+        "startChar": 16,
+        "endLine": 99,
+        "endChar": 64
+      },
+      "revId": "bc69f5d9369bae0d608bead74a817e25b6e31fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
