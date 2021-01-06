@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c2e93a9b_d009c739",
+        "filename": "keystore/java/android/security/Authorization.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2021-01-06T00:28:32Z",
+      "side": 1,
+      "message": "As I mentioned offline, I meant this to be a singleton. And I have called this method in line 180 of biometrics/AuthenticationClient.java in this CL (https://android-review.googlesource.com/c/platform/frameworks/base/+/1519257/4/services/core/java/com/android/server/biometrics/AuthenticationClient.java#180). Did it give any issues in runtime?",
+      "parentUuid": "08a6110a_9db4594f",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 27
+      },
+      "revId": "8822f671b9867011d902fbccea0616d1a794b3bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2b4034b3_c863769b",
         "filename": "services/core/java/com/android/server/biometrics/AuthenticationClient.java",
         "patchSetId": 4
