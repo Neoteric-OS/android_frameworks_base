@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f068880d_475c1825",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-06T23:34:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b069bd28_adf164f5",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "999ab00a504c4aaea393d4b576654be9bca77847",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "acfeaa49_cc3afa9a",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-01-06T23:30:29Z",
       "side": 1,
       "message": "Could this have package visibility ?",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 11
+      },
+      "revId": "999ab00a504c4aaea393d4b576654be9bca77847",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "641d0701_d956db01",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-06T23:34:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acfeaa49_cc3afa9a",
       "range": {
         "startLine": 24,
         "startChar": 4,
