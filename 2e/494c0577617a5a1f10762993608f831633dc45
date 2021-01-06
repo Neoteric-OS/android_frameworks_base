@@ -1,0 +1,9 @@
+Code-Review+2: Hasini Gunasinghe <hasinitg@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Janis Danisevskis <jdanis@google.com>
+Submitted-at: Wed, 06 Jan 2021 18:44:48 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1538989
+Project: platform/frameworks/base
+Branch: refs/heads/master
