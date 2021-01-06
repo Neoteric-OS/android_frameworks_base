@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de2cf5e8_977d4a89",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-06T00:57:26Z",
+      "side": 1,
+      "message": "I\u0027m not a huge fan of this pattern. https://en.wikipedia.org/wiki/Single-responsibility_principle. Details below.",
+      "range": {
+        "startLine": 119,
+        "startChar": 19,
+        "endLine": 119,
+        "endChar": 55
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d290f2a_bb850777",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-06T00:57:26Z",
+      "side": 1,
+      "message": "It\u0027d be great if we could somehow tie this to the carrier privileges grace period for app binding.",
+      "range": {
+        "startLine": 128,
+        "startChar": 22,
+        "endLine": 128,
+        "endChar": 63
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dea5c720_7e7ec9fa",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-06T00:57:26Z",
+      "side": 1,
+      "message": "Is it allowable for the snapshot to be null after initialization (as in, can TelephonySubscriptionTracker validly make it null)?",
+      "range": {
+        "startLine": 150,
+        "startChar": 58,
+        "endLine": 150,
+        "endChar": 62
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "573ba30f_b25697c3",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-06T00:57:26Z",
+      "side": 1,
+      "message": "It\u0027s a lot easier to read IMO this if there\u0027s an internal class, even if it\u0027s not a static class, that posts on through to the main class (though static would be even better separation).",
+      "range": {
+        "startLine": 165,
+        "startChar": 73,
+        "endLine": 165,
+        "endChar": 77
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5ecf2e1_81a5de4c",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-06T00:57:26Z",
+      "side": 1,
+      "message": "This null check is to handle a race condition where the onSnapshotChanged() callback might have been invoked prior to this (because this gets posted, the initialization does not). One other possible way to handle this is to serialize all of the initialization on the handler thread so that the registration happens synchronously with this... it\u0027s just an unfortunate thing as-is.\n\nNote: if you think it\u0027s better to leave as-is, please add a comment describing the race.",
+      "range": {
+        "startLine": 204,
+        "startChar": 24,
+        "endLine": 204,
+        "endChar": 37
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96959551_8b45e92b",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-06T00:57:26Z",
+      "side": 1,
+      "message": "naming nit. The \"maybe\" pattern isn\u0027t terrible, but I think we have other (better) options here:\n\n1) succinctrly stating the condition, like startVcnIfInactiveLocked()\n2) Or, better, just add the necessary line of code to check and see if there\u0027s a VCN instance. That also avoids a \"maybe\" function and makes it super clear what\u0027s happening.\n\nBoth avoid anybody having to go to the maybe() function to know what conditions will cause this, and then the formerly-maybe function can unconditionally do something. The reason to keep the condition in the maybe() function is if that condition will need to be checked every time the thing needs to happen AND it will be done in multiple places.",
+      "range": {
+        "startLine": 351,
+        "startChar": 20,
+        "endLine": 351,
+        "endChar": 39
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36c19453_51e62e9e",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-06T00:57:26Z",
+      "side": 1,
+      "message": "Is this necessary because of the effectively-final shenanigans?",
+      "range": {
+        "startLine": 362,
+        "startChar": 19,
+        "endLine": 363,
+        "endChar": 68
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "310780c2_767feeb7",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-06T00:57:26Z",
+      "side": 1,
+      "message": "Is it ok (safe) if this operation being delayed longer-term in case the phone goes to sleep? Delayed handler posts will not wake up the system (it\u0027s a feature, not a bug).",
+      "range": {
+        "startLine": 375,
+        "startChar": 43,
+        "endLine": 375,
+        "endChar": 84
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a43cbe56_70e09eef",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-06T00:57:26Z",
+      "side": 1,
+      "message": "ah see, you already know that there\u0027s no maybe() about this invocation...",
+      "range": {
+        "startLine": 400,
+        "startChar": 12,
+        "endLine": 400,
+        "endChar": 31
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
