@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d6668fe_ff75c9e7",
+        "filename": "core/res/CAR_OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2021-01-06T00:04:50Z",
+      "side": 1,
+      "message": "This one is for car resources only (it\u0027s adding folks from the system UI team as well). If we moved to the base, we would have to call it CAR_RESOURCES_OWNERS, which I think would be confusing.\n\nAlso, I think we should have a frameworks/base/owners/ as we\u0027re polluting the root dir with many OWNERS file...",
+      "parentUuid": "b846c50f_11d04f2d",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 46
+      },
+      "revId": "b6890e897c86fd38c33a6141e3c0926cd402252c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1d8994d_42ac1239",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-05T23:37:47Z",
       "side": 1,
       "message": "Could you split this into two separate CLs?  (I\u0027m anticipating that the first CL which defines CAR_OWNERS wouldn\u0027t have a delta in this file.)",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "b6890e897c86fd38c33a6141e3c0926cd402252c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e89ff9f1_15349bdf",
+        "filename": "core/res/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2021-01-06T00:04:50Z",
+      "side": 1,
+      "message": "Splitting is not enough, the CL must be merged, otherwise we get a failure like this:\n\nremote: ERROR: commit 53f78e3: invalid per-file import in \u0027/core/res/OWNERS\u0027: \u0027/core/res/CAR_OWNERS\u0027 does not exist (project \u003d platform/frameworks/base, branch \u003d master)        \nremote: ERROR: commit 53f78e3: invalid per-file import in \u0027/core/res/OWNERS\u0027: \u0027/core/res/CAR_OWNERS\u0027 does not exist (project \u003d platform/frameworks/base, branch \u003d master)        \n\n\nI\u0027d prefer to resolve the TODO in a follow-up CL instead...",
+      "parentUuid": "e1d8994d_42ac1239",
       "range": {
         "startLine": 20,
         "startChar": 0,
