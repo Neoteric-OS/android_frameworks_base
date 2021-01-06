@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c5273ec_02fb4a1e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-06T23:16:01Z",
+      "side": 1,
+      "message": "Setting up some OWNERS files and a flag for app hibernation development. Will pass over to appropriate higher level OWNER if things look good to you Rajeev.",
+      "revId": "999ab00a504c4aaea393d4b576654be9bca77847",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
