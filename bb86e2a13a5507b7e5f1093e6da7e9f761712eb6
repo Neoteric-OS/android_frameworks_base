@@ -16,6 +16,24 @@
       "message": "I\u0027d recommend asking the BT/NFC folks for a review here.  😊",
       "revId": "bb86e2a13a5507b7e5f1093e6da7e9f761712eb6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59a82d8e_64de523b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1824706
+      },
+      "writtenOn": "2021-01-06T10:04:49Z",
+      "side": 1,
+      "message": "Can you help me add the NFC module Owner for a review, thanks~",
+      "parentUuid": "2f947369_09c2b0b0",
+      "revId": "bb86e2a13a5507b7e5f1093e6da7e9f761712eb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
