@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66914f00_a27a51c0",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-06T00:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "187c41b4_218417a6",
+      "range": {
+        "startLine": 145,
+        "startChar": 12,
+        "endLine": 146,
+        "endChar": 80
+      },
+      "revId": "c9a81c42905548d099481150d4e0cb95561c02e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fbb8b323_a2b9df8a",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-16T18:39:57Z",
       "side": 1,
       "message": "this felt cleaner than exposing fields in VcnManager.VcnUnderlyingNetworkPolicyListenerBinder -- Thoughts?",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 69
+      },
+      "revId": "c9a81c42905548d099481150d4e0cb95561c02e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02a4cae8_04879e53",
+        "filename": "tests/net/java/android/net/vcn/VcnManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-06T00:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb8b323_a2b9df8a",
       "range": {
         "startLine": 64,
         "startChar": 8,

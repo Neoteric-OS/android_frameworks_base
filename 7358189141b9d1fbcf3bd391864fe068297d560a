@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eecd0753_1a1ccbe8",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-06T00:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0444e3bf_93da8b03",
+      "range": {
+        "startLine": 123,
+        "startChar": 61,
+        "endLine": 123,
+        "endChar": 67
+      },
+      "revId": "7358189141b9d1fbcf3bd391864fe068297d560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6792ddb1_78f07124",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-05T07:42:52Z",
       "side": 1,
       "message": "Nit: single line. Suggest \"Register a listener for VCN-underlying network policy updates.\"",
+      "range": {
+        "startLine": 130,
+        "startChar": 7,
+        "endLine": 131,
+        "endChar": 43
+      },
+      "revId": "7358189141b9d1fbcf3bd391864fe068297d560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "126b58cd_b488622e",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-06T00:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6792ddb1_78f07124",
       "range": {
         "startLine": 130,
         "startChar": 7,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1409851_03ad2db7",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-06T00:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e197914_66b06053",
+      "range": {
+        "startLine": 175,
+        "startChar": 28,
+        "endLine": 175,
+        "endChar": 34
+      },
+      "revId": "7358189141b9d1fbcf3bd391864fe068297d560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6fa4a5dc_c5a236e0",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfd282de_adf4ba8b",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-06T00:56:30Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6fa4a5dc_c5a236e0",
+      "range": {
+        "startLine": 178,
+        "startChar": 73,
+        "endLine": 178,
+        "endChar": 74
+      },
+      "revId": "7358189141b9d1fbcf3bd391864fe068297d560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6aab985f_ecbf6e70",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-01-05T07:42:52Z",
       "side": 1,
       "message": "Do we have a test for unregister?",
+      "range": {
+        "startLine": 52,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 62
+      },
+      "revId": "7358189141b9d1fbcf3bd391864fe068297d560a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f6ca3a2_e105b353",
+        "filename": "tests/vcn/java/android/net/vcn/VcnManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-06T00:56:30Z",
+      "side": 1,
+      "message": "added testing for unregister and unregister unknown listener.\n\nDone.",
+      "parentUuid": "6aab985f_ecbf6e70",
       "range": {
         "startLine": 52,
         "startChar": 16,
