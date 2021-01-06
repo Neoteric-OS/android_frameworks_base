@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1f602e9_afb46cb0",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-06T20:32:17Z",
+      "side": 1,
+      "message": "for isEchoCancellationOrNoiseReductionSupported, what if someone wanted to figure out if echo cancellation was supported but not noise reduction?\n\nshould we pull these into a getCapabilities(device) which returns an object that you can query on the individual flags of echo cancellation, noise reduction, and voice recognition from?",
+      "range": {
+        "startLine": 684,
+        "startChar": 4,
+        "endLine": 725,
+        "endChar": 5
+      },
+      "revId": "1309103c3ee4eaf72e7317a1b4e3a9a878faece8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
