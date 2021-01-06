@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e206b5a_3e6b737a",
+        "filename": "core/java/android/app/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-01-06T02:19:15Z",
+      "side": 1,
+      "message": "Should we include ProcessStateEnum.aidl as well?",
+      "revId": "8d65c113eb20a147bc11fb9e0713f1d8696368f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
