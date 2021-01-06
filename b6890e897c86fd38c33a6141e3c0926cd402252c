@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47db202a_86c03732",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2021-01-06T16:28:45Z",
+      "side": 1,
+      "message": "FYI, if you want the CAR_RESOURCES_OWNER approach, we\u0027ll need to merge https://android-review.googlesource.com/q/I25268457ac398bd0b7aac66bec6847d7e4f4464e first , then I can change this CL and repo upload a new patchset (repo upload fails when the file doesn\u0027t exist, even if I use the --no-verify option)",
+      "revId": "b6890e897c86fd38c33a6141e3c0926cd402252c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b846c50f_11d04f2d",
