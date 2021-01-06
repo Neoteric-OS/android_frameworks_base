@@ -7066,6 +7066,7 @@ package android.os {
   }
 
   public static class Build.VERSION {
+    field public static final int FIRST_SDK_INT;
     field @NonNull public static final String PREVIEW_SDK_FINGERPRINT;
   }
 
