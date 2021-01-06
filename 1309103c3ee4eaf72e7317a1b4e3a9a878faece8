@@ -22,6 +22,30 @@
       },
       "revId": "1309103c3ee4eaf72e7317a1b4e3a9a878faece8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdf37f4a_322b6e9f",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-06T20:34:02Z",
+      "side": 1,
+      "message": "ah I see in the system/bt change it\u0027s just a single flag for both.\n\nmaybe we shorten isEchoCancellationOrNoiseReductionSupported to isNoiseReductionSupported?",
+      "parentUuid": "d1f602e9_afb46cb0",
+      "range": {
+        "startLine": 684,
+        "startChar": 4,
+        "endLine": 725,
+        "endChar": 5
+      },
+      "revId": "1309103c3ee4eaf72e7317a1b4e3a9a878faece8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
