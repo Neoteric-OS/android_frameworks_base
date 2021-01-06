@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad178a40_6365334b",
+        "filename": "core/res/CAR_OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-06T17:03:13Z",
+      "side": 1,
+      "message": "Hmm, perhaps a larger conversation should be had here about moving all these car-related resources into packages/services/Car directly, instead of keeping them here in the core platform.  :/",
+      "parentUuid": "7d6668fe_ff75c9e7",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 46
+      },
+      "revId": "b6890e897c86fd38c33a6141e3c0926cd402252c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1d8994d_42ac1239",
