@@ -16,6 +16,92 @@
       "message": "Tomasz, these are the changes you suggested regarding flattening from an array of arrays to a map. I agree with your train of thought and have made the updates. Thanks!",
       "revId": "46b94c4eec967f259db4c64586bdf4bbfc86c23b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb9e8672_cdbf66c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2021-01-06T16:30:45Z",
+      "side": 1,
+      "message": "LGTM conditional on addressing some nits (may be in follow-up CLs).",
+      "revId": "46b94c4eec967f259db4c64586bdf4bbfc86c23b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3a56f25_103b29c3",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2021-01-06T16:30:45Z",
+      "side": 1,
+      "message": "nit: it would be useful to initialize builder from existing OemNetworkPreferences object.",
+      "range": {
+        "startLine": 105,
+        "startChar": 15,
+        "endLine": 105,
+        "endChar": 24
+      },
+      "revId": "46b94c4eec967f259db4c64586bdf4bbfc86c23b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "527ff01f_37e783bb",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2021-01-06T16:30:45Z",
+      "side": 1,
+      "message": "nit: why not just initialize it in the definition above?",
+      "range": {
+        "startLine": 106,
+        "startChar": 28,
+        "endLine": 106,
+        "endChar": 47
+      },
+      "revId": "46b94c4eec967f259db4c64586bdf4bbfc86c23b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c928e2a3_e6075ffb",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2021-01-06T16:30:45Z",
+      "side": 1,
+      "message": "Do we want this method? Even if we do, we should also have a straightforward way of building it (add preference for a single package / remove it).",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 9
+      },
+      "revId": "46b94c4eec967f259db4c64586bdf4bbfc86c23b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
