@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c6a6005d_6f792422",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6142,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-06T12:10:15Z",
+      "side": 1,
+      "message": "+reminv@ any comments ?",
+      "parentUuid": "50255611_2181d476",
+      "range": {
+        "startLine": 6142,
+        "startChar": 20,
+        "endLine": 6142,
+        "endChar": 39
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eb30e5f6_d231737c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4
@@ -333,6 +357,30 @@
       "side": 1,
       "message": "I think a first step could be to remove all references to \"passpoint\" in the comments here and make them more generic, since there is no guarantee that the info given by the NetworkAgent comes from Passpoint (the most simple case being another network agent adding a feature to receive captive portal data from another source).\n\nI don\u0027t see much more we could do to ensure OEMs don\u0027t send bad captive portal data by mistake though - apart from prioritizing capport API data when its there instead of network agent data maybe, but I can see that it\u0027s not necessarily the right call for passpoint since the capport API URL is not sent securely.",
       "parentUuid": "9b2117e8_750b4a35",
+      "range": {
+        "startLine": 6163,
+        "startChar": 11,
+        "endLine": 6163,
+        "endChar": 52
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e928cb95_a27135d0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6163,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-06T12:10:15Z",
+      "side": 1,
+      "message": "One thing we could do is to have some metadata saying whether this information is authenticated. Passpoint would say yes, Capport would say no, and we\u0027d prioritize the authenticated one. I\u0027m not sure this is very future-proof though.\n\nWe can do something a little bit more ad-hoc but that will serve us well : have an enum for the source of information, including UNKNOWN or OTHER. So we\u0027d know this information is coming from Capport or from Passpoint, and we\u0027d only prioritize the info from the NA over Capport if it\u0027s coming from Passpoint. It may also prove useful for debugging, and it lets us implement arbitrarily complex logic depending on the source if we\u0027re in a hurry.\n\nWDYT ?",
+      "parentUuid": "c2d2f184_123ec232",
       "range": {
         "startLine": 6163,
         "startChar": 11,

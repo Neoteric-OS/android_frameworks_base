@@ -86,6 +86,30 @@
       },
       "revId": "9e35dc799ec0f048b97a93b05e74fc490091d728",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bcdccf0_e3e001ce",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3142,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-06T12:10:15Z",
+      "side": 1,
+      "message": "I\u0027m not objecting to having these two tests or to the order being different ; I\u0027m objecting to the amount of copy-pasting : having to fix multiple copies of the test code when changing the production code takes time.\n\nYou could have some helper functions to set things up and/or create the CaptivePortalData objects.\n\nOr you could move all the object creations to the top of the functions and have a setup function returning a simple data class :\n  data class CapportTestData(naData, capportData, expectedMergedData)\n  private CapportTestData setupCaptivePortalDataTest() {\n    permissions\n    connect wifi\n    create the three CaptivePortalData objects\n    return new CapportTestData(naData, capportData, expectedMergedData)\n  }\n  public testNAThenCapport() {\n    final CTD ctd \u003d setupCaptivePortalDataTest\n    test in this order\n  }\n  public testCapportThenNA() {\n    final CTD ctd \u003d setupCaptivePortalDataTest\n    test in that order\n  }\n\nOr you could indeed merge the two tests to reuse the locals, disconnecting in between. I don\u0027t think it\u0027s wrong, but I do think it\u0027s easier to maintain.",
+      "parentUuid": "64308a09_0a38a646",
+      "range": {
+        "startLine": 3142,
+        "startChar": 16,
+        "endLine": 3142,
+        "endChar": 74
+      },
+      "revId": "9e35dc799ec0f048b97a93b05e74fc490091d728",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
