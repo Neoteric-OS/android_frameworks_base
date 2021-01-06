@@ -116,6 +116,24 @@
       "parentUuid": "8a1e867a_dc7a1ced",
       "revId": "319e627a1f79d19a6b42471199ca5ebde6f09d33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63d2bac0_8dca2a7d",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-01-06T00:10:56Z",
+      "side": 1,
+      "message": "I suppose we can check for EMFILE, and return INT_MAX or something, but it seems unlikely that we\u0027ll actually be able to get through to the point where we can dump before something else notices and explodes (and I don\u0027t think we actually handle being *actually* out of fds in the fdtrack dumping code either: we don\u0027t do the \"clone a thread with a separate fd table and close a bunch of random fds to clear up space\" trick).\n\nThe thresholds are set to be way lower than the actual maximum, so hopefully we\u0027ll have dumped before then?",
+      "parentUuid": "c1aeaf5d_9a9b5845",
+      "revId": "319e627a1f79d19a6b42471199ca5ebde6f09d33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
