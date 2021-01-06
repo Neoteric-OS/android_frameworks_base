@@ -134,6 +134,24 @@
       "parentUuid": "c1aeaf5d_9a9b5845",
       "revId": "319e627a1f79d19a6b42471199ca5ebde6f09d33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eedc9c92_41551043",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2021-01-06T00:17:03Z",
+      "side": 1,
+      "message": "yeah, i don\u0027t know what the policy about killing system_server is, so i\u0027ll defer to narayan@ for this. (i get your point, but personally i\u0027d rather not have the finger pointed at me and i\u0027d just go back to sleep. i actually think your argument would be stronger if you called fdTrackAbort() if you can\u0027t open /dev/null on the basis of \"the only reason for this to fail is the exact thing we\u0027re looking for, so here are the diagnostics that it\u0027s my whole purpose in life to provide\"...)",
+      "parentUuid": "63d2bac0_8dca2a7d",
+      "revId": "319e627a1f79d19a6b42471199ca5ebde6f09d33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
