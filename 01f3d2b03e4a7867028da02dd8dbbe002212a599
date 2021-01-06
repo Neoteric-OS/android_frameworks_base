@@ -321,6 +321,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c2d2f184_123ec232",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6163,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-06T09:16:49Z",
+      "side": 1,
+      "message": "I think a first step could be to remove all references to \"passpoint\" in the comments here and make them more generic, since there is no guarantee that the info given by the NetworkAgent comes from Passpoint (the most simple case being another network agent adding a feature to receive captive portal data from another source).\n\nI don\u0027t see much more we could do to ensure OEMs don\u0027t send bad captive portal data by mistake though - apart from prioritizing capport API data when its there instead of network agent data maybe, but I can see that it\u0027s not necessarily the right call for passpoint since the capport API URL is not sent securely.",
+      "parentUuid": "9b2117e8_750b4a35",
+      "range": {
+        "startLine": 6163,
+        "startChar": 11,
+        "endLine": 6163,
+        "endChar": 52
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e663b1af_a55012aa",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4

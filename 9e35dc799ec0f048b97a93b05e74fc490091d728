@@ -1,6 +1,46 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d57ed976_e74f1ca3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-06T09:16:49Z",
+      "side": 1,
+      "message": "Still LGTM, Jean said he had concerns though so I think he should +2 if he\u0027s OK with the code.",
+      "revId": "9e35dc799ec0f048b97a93b05e74fc490091d728",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7629f52e_ec2d2f89",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6262,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-06T09:16:49Z",
+      "side": 1,
+      "message": "Considering the comments on the NetworkAgent possibly sending bad data by mistake,\n!TextUtils.isEmpty(apiData.getVenueInfoUrl()) \u0026\u0026 TextUtils.isEmpty(naData.getVenueInfoUrl())\n\nmay be better to avoid an empty string taking precedence.",
+      "range": {
+        "startLine": 6262,
+        "startChar": 12,
+        "endLine": 6262,
+        "endChar": 81
+      },
+      "revId": "9e35dc799ec0f048b97a93b05e74fc490091d728",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "072de53c_e51fec79",
