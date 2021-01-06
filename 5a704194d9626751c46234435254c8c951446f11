@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1e0a4da_ae62b3a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-06T23:47:19Z",
+      "side": 1,
+      "message": "Hey Narayan, Amith\n\nSetting up some OWNERS directories so that we can start building out the platform side of app hibernation. Let me know if this directory organization seems reasonable.",
+      "revId": "5a704194d9626751c46234435254c8c951446f11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
