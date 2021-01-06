@@ -22,6 +22,30 @@
       },
       "revId": "bc69f5d9369bae0d608bead74a817e25b6e31fa7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bed10ab_7ff3f9b8",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-06T00:57:21Z",
+      "side": 1,
+      "message": "If it\u0027s okay, would prefer to keep them separate to help with distinguishing between potential register/unregister test failures.",
+      "parentUuid": "a0d46ef1_294b8d05",
+      "range": {
+        "startLine": 99,
+        "startChar": 16,
+        "endLine": 99,
+        "endChar": 64
+      },
+      "revId": "bc69f5d9369bae0d608bead74a817e25b6e31fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
