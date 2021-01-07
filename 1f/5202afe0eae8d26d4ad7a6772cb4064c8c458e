@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Ready+1: Neil Fuller <nfuller@google.com>
+Code-Review+2: John Reck <jreck@google.com>
+Bypass-Presubmit+1: Neil Fuller <nfuller@google.com>
+Submitted-by: Neil Fuller <nfuller@google.com>
+Submitted-at: Thu, 07 Jan 2021 20:08:04 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1541857
+Project: platform/frameworks/base
+Branch: refs/heads/master
