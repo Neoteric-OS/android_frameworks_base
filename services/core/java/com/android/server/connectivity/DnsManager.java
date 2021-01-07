@@ -19,6 +19,7 @@ package com.android.server.connectivity;
 import static android.net.ConnectivityManager.PRIVATE_DNS_DEFAULT_MODE_FALLBACK;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
+import static android.net.resolv.aidl.IDnsResolverUnsolicitedEventListener.VALIDATION_RESULT_SUCCESS;
 import static android.provider.Settings.Global.DNS_RESOLVER_MAX_SAMPLES;
 import static android.provider.Settings.Global.DNS_RESOLVER_MIN_SAMPLES;
 import static android.provider.Settings.Global.DNS_RESOLVER_SAMPLE_VALIDITY_SECONDS;
@@ -146,17 +147,17 @@ public class DnsManager {
     }
 
     public static class PrivateDnsValidationUpdate {
-        final public int netId;
-        final public InetAddress ipAddress;
-        final public String hostname;
-        final public boolean validated;
+        public final int netId;
+        public final InetAddress ipAddress;
+        public final String hostname;
+        public final int validation;
 
         public PrivateDnsValidationUpdate(int netId, InetAddress ipAddress,
-                String hostname, boolean validated) {
+                String hostname, int validation) {
             this.netId = netId;
             this.ipAddress = ipAddress;
             this.hostname = hostname;
-            this.validated = validated;
+            this.validation = validation;
         }
     }
 
@@ -215,7 +216,7 @@ public class DnsManager {
             if (!mValidationMap.containsKey(p)) {
                 return;
             }
-            if (update.validated) {
+            if (update.validation == VALIDATION_RESULT_SUCCESS) {
                 mValidationMap.put(p, ValidationStatus.SUCCEEDED);
             } else {
                 mValidationMap.put(p, ValidationStatus.FAILED);
