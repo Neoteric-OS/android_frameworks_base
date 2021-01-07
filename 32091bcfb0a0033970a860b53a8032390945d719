@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8081c9d5_5cb4c779",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-07T00:20:23Z",
+      "side": 1,
+      "message": "nit: update",
+      "range": {
+        "startLine": 693,
+        "startChar": 22,
+        "endLine": 693,
+        "endChar": 65
+      },
+      "revId": "32091bcfb0a0033970a860b53a8032390945d719",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "238a7293_0ee836fb",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-07T00:20:23Z",
+      "side": 1,
+      "message": "nit: update",
+      "range": {
+        "startLine": 697,
+        "startChar": 31,
+        "endLine": 697,
+        "endChar": 74
+      },
+      "revId": "32091bcfb0a0033970a860b53a8032390945d719",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
