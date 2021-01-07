@@ -1,0 +1,11 @@
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Jeff Sharkey <jsharkey@google.com>
+Code-Review+2: James Wei <jameswei@google.com>
+Autosubmit+1: James Wei <jameswei@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 07 Jan 2021 15:23:51 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1382396
+Project: platform/frameworks/base
+Branch: refs/heads/master
