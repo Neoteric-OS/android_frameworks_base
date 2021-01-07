@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a58ebb9a_c942d172",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-07T01:30:58Z",
+      "side": 1,
+      "message": "Had to split CL from http://aosp/1542244 due to a downstream merge conflict. \n\nThe DeviceConfig change led to a merge conflict in master, but the Linter complains if you upload an OWNERS file change in master before aosp. So I split the CLs and will wait for the OWNERS change to hit downstream before uploading the flag change to master.",
+      "revId": "c1062a526d0afcae2118e95d777ca3d3871ed6d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
