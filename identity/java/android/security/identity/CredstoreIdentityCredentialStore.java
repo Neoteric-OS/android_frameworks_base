@@ -163,4 +163,44 @@ class CredstoreIdentityCredentialStore extends IdentityCredentialStore {
         }
     }
 
+
+    @Override
+    public IdentityCredentialStoreCapabilities getCapabilities() {
+        try {
+            SecurityHardwareInfoParcel info;
+            info = mStore.getSecurityHardwareInfo();
+
+            boolean isDirectAccess = info.directAccess;
+            String[] supportedDocTypes = info.supportedDocTypes;
+            boolean isDeleteCredentialSupported = false;
+            boolean isUpdateCredentialSupported = false;
+            boolean isProveOwnershipSupported = false;
+            boolean isStaticAuthenticationDataExpirationDateSupported = false;
+
+            // Version 202101 features
+            if (info.featureVersion >= 202101) {
+                isDeleteCredentialSupported = true;
+                isUpdateCredentialSupported = true;
+                isProveOwnershipSupported = true;
+                isStaticAuthenticationDataExpirationDateSupported = true;
+            }
+
+            IdentityCredentialStoreCapabilities capabilities =
+                    new SimpleIdentityCredentialStoreCapabilities(
+                        isDirectAccess,
+                        info.featureVersion,
+                        supportedDocTypes,
+                        isDeleteCredentialSupported,
+                        isUpdateCredentialSupported,
+                        isProveOwnershipSupported,
+                        isStaticAuthenticationDataExpirationDateSupported);
+
+            return capabilities;
+        } catch (android.os.RemoteException e) {
+            throw new RuntimeException("Unexpected RemoteException ", e);
+        } catch (android.os.ServiceSpecificException e) {
+            throw new RuntimeException("Unexpected ServiceSpecificException with code "
+                    + e.errorCode, e);
+        }
+    }
 }

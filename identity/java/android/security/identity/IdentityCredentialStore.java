@@ -72,6 +72,16 @@ import java.lang.annotation.RetentionPolicy;
  * <p>Credentials provisioned to the direct access store should <strong>always</strong> use reader
  * authentication to protect data elements. The reason for this is user authentication or user
  * approval of data release is not possible when the device is off.
+ *
+ * <p>The Identity Credential API is designed to be able to evolve and change over time
+ * but still provide 100% backwards compatibility. This is complicated by the fact that
+ * there may be a version skew between the API used by the application and the version
+ * implemented in secure hardware. To solve this problem, the API provides for a way
+ * for the application to query for hardware capabilities through
+ * {@link IdentityCredentialStoreCapabilities}. Additionally, the system features
+ * {@link android.content.pm#FEATURE_IDENTITY_CREDENTIAL_HARDWARE} and
+ * {@link android.content.pm#FEATURE_IDENTITY_CREDENTIAL_HARDWARE_DIRECT_ACCESS}
+ * indicate which feature version is implemented on a particular device.
  */
 public abstract class IdentityCredentialStore {
     IdentityCredentialStore() {}
@@ -133,7 +143,9 @@ public abstract class IdentityCredentialStore {
      * credentials. The default store always supports any document type.
      *
      * @return The supported document types or the empty array if any document type is supported.
+     * @deprecated Use {@link IdentityCredentialStoreCapabilities#getSupportedDocTypes()} instead.
      */
+    @Deprecated
     public abstract @NonNull String[] getSupportedDocTypes();
 
     /**
@@ -193,7 +205,9 @@ public abstract class IdentityCredentialStore {
      * @param credentialName the name of the credential to delete.
      * @return {@code null} if the credential was not found, the COSE_Sign1 data structure above
      *     if the credential was found and deleted.
+     * @deprecated Use {@link IdentityCredential#delete(byte[])} instead.
      */
+    @Deprecated
     public abstract @Nullable byte[] deleteCredentialByName(@NonNull String credentialName);
 
     /** @hide */
@@ -202,4 +216,13 @@ public abstract class IdentityCredentialStore {
     public @interface Ciphersuite {
     }
 
+    /**
+     * Returns the capabilities of the store.
+     *
+     * @return the capabilities of the store
+     */
+    @NonNull
+    public IdentityCredentialStoreCapabilities getCapabilities() {
+        throw new UnsupportedOperationException();
+    }
 }
