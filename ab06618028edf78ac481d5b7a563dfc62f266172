@@ -39,6 +39,30 @@
       },
       "revId": "ab06618028edf78ac481d5b7a563dfc62f266172",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "250680c0_0551f9ad",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4888,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-07T08:39:52Z",
+      "side": 1,
+      "message": "There should be no state divergence here because netd and the framework have the same lifecycle. When netd crashes, the framework is restarted, and when the framework crashes, netd is restarted.",
+      "parentUuid": "ad17da8a_352780f8",
+      "range": {
+        "startLine": 4888,
+        "startChar": 18,
+        "endLine": 4888,
+        "endChar": 43
+      },
+      "revId": "ab06618028edf78ac481d5b7a563dfc62f266172",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
