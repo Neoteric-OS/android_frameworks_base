@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Autosubmit+1: Pete Bentley <prb@google.com>
+Build-Cop-Override+1: Pete Bentley <prb@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 07 Jan 2021 15:25:01 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1541541
+Project: platform/frameworks/base
+Branch: refs/heads/master
