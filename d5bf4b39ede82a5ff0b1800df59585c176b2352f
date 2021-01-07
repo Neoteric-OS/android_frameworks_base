@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6f908605_152feb78",
+        "filename": "core/java/android/uwb/RangingSession.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-01-07T02:14:31Z",
+      "side": 1,
+      "message": "Sure. That sounds good to me.",
+      "parentUuid": "d4e1e8f6_a681def5",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 52
+      },
+      "revId": "d5bf4b39ede82a5ff0b1800df59585c176b2352f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "44106f9d_2023cd31",
         "filename": "core/java/android/uwb/RangingSession.java",
         "patchSetId": 5
@@ -97,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2fed1815_4229b3f9",
+        "filename": "core/java/android/uwb/RangingSession.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-01-07T02:14:31Z",
+      "side": 1,
+      "message": "We can send an empty Bundle as the sessionInfo when the session is opened, but not started. In the future, some protocols may need to send some sessionInfo before a session is started. Alternatively, we can have some synchronous query like RangingSession.getSessionInfo() -\u003e PersistableBundle, but we need to protect the data with mutex/synchronized blocks to prevent race conditions.",
+      "parentUuid": "6d7d7570_2cd6a7ee",
+      "range": {
+        "startLine": 124,
+        "startChar": 13,
+        "endLine": 124,
+        "endChar": 55
+      },
+      "revId": "d5bf4b39ede82a5ff0b1800df59585c176b2352f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1a2352d7_b20cb601",
         "filename": "core/java/android/uwb/RangingSession.java",
         "patchSetId": 5
@@ -132,6 +180,30 @@
       "side": 1,
       "message": "Thoughts on what those parameter may be? I\u0027m hesitant to add it without a good understanding how how it may be useful.",
       "parentUuid": "1a2352d7_b20cb601",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 25
+      },
+      "revId": "d5bf4b39ede82a5ff0b1800df59585c176b2352f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a45dd04_840331c0",
+        "filename": "core/java/android/uwb/RangingSession.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-01-07T02:14:31Z",
+      "side": 1,
+      "message": "Maybe parameters like session statistics? Since an API change that breaks compilation is hard, I am playing it safe by adding the parameter now just in case we need it in the future. However, I also agree that if we don\u0027t have specific use case, we can leave it out and add a new API when we need it. \n\nSimilar to my last comment, this can be added as a query API such as RangingSession.getSessionStatistics() as well.",
+      "parentUuid": "6ce9096e_4c507016",
       "range": {
         "startLine": 167,
         "startChar": 8,
