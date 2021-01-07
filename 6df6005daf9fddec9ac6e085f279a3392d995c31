@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "128ea5a9_78d14d7b",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-07T18:19:08Z",
+      "side": 1,
+      "message": "Is there another patchset to upload?",
+      "parentUuid": "16898da6_0d5e3fcf",
+      "range": {
+        "startLine": 128,
+        "startChar": 22,
+        "endLine": 128,
+        "endChar": 63
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dea5c720_7e7ec9fa",
         "filename": "services/core/java/com/android/server/VcnManagementService.java",
         "patchSetId": 14
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Changed to an empty snapshot; then we can make this non-null, and remove one conditional statement.",
       "parentUuid": "dea5c720_7e7ec9fa",
+      "range": {
+        "startLine": 150,
+        "startChar": 58,
+        "endLine": 150,
+        "endChar": 62
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26ff83e1_db5ba15e",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-07T18:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd85e15a_765ed270",
       "range": {
         "startLine": 150,
         "startChar": 58,
@@ -236,6 +284,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7001eb6e_850afc51",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-07T18:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ad3ced4_3165a14c",
+      "range": {
+        "startLine": 204,
+        "startChar": 24,
+        "endLine": 204,
+        "endChar": 37
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "96959551_8b45e92b",
@@ -330,6 +402,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4bb6e7e_b93e3839",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-07T18:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85421563_14272c38",
+      "range": {
+        "startLine": 362,
+        "startChar": 19,
+        "endLine": 363,
+        "endChar": 68
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "310780c2_767feeb7",
@@ -367,6 +463,30 @@
       "side": 1,
       "message": "Yeah, that should be safe. It\u0027ll just teardown the next time the phone wakes up. In most cases the underlying networks will have been removed from under it anyways.",
       "parentUuid": "310780c2_767feeb7",
+      "range": {
+        "startLine": 375,
+        "startChar": 43,
+        "endLine": 375,
+        "endChar": 84
+      },
+      "revId": "6df6005daf9fddec9ac6e085f279a3392d995c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d1704f8_44a09dd1",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-07T18:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "337bcd3c_51a914ff",
       "range": {
         "startLine": 375,
         "startChar": 43,
