@@ -439,6 +439,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e651e11d_4d9f4773",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6163,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-07T02:19:04Z",
+      "side": 1,
+      "message": "Done removing all references to Passpoint.\n\n+1 to do it on top, it will allow me to finalize the feature. \nNote that it will not prevent mistakes, or explicit use to overwrite the capport venue URL by OEMs, they will simply use the enum/bitfield value that will work for them. Perhaps the key is to identify the caller and prioritize based on that (i.e. Wifi service, comparing to an app).",
+      "parentUuid": "ff180f72_8314d861",
+      "range": {
+        "startLine": 6163,
+        "startChar": 11,
+        "endLine": 6163,
+        "endChar": 52
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e663b1af_a55012aa",
