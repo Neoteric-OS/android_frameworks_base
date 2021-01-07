@@ -188,6 +188,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "896615c8_ab6d88c4",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-07T20:05:52Z",
+      "side": 1,
+      "message": "https://android.googlesource.com/platform/developers/docs/+/refs/heads/master/api-guidelines/index.md#methods-prefer-collection-over-array\n\nUnless we need the ordering, inputs and outputs should be collection. Internally we can keep an ArrayList since Parcel doesn\u0027t have a method that takes Collection\u003c\u003e",
+      "parentUuid": "6807a42b_6529b932",
+      "range": {
+        "startLine": 180,
+        "startChar": 62,
+        "endLine": 180,
+        "endChar": 69
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "69e592f6_5d38eb44",
         "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
         "patchSetId": 6
