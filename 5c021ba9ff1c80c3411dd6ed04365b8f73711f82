@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cd415b1_661e2bf9",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-07T19:50:55Z",
+      "side": 1,
+      "message": "How about app-specified thresholds when the screen is off?",
+      "range": {
+        "startLine": 69,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 55
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23d1d48c_a4939429",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-07T19:50:55Z",
+      "side": 1,
+      "message": "Since the thresholds are RAN-specific, and we generally only want to let them set MAX(1) per RAN... please consider how that plays into this structure. Some options:\n1) keep the constructor, add the RAN to the ThresholdInfo structure, and validate here.\n2) keep the RAN in the ThresholdInfo hidden, and have a Builder pattern with Builder.setUtranThreshold().setEutranThreshold()... here.",
+      "range": {
+        "startLine": 73,
+        "startChar": 53,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1eb32498_24a31e20",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-07T19:50:55Z",
+      "side": 1,
+      "message": "I think you can use Parcel.readList() and Parcel.writeList()",
+      "range": {
+        "startLine": 104,
+        "startChar": 23,
+        "endLine": 104,
+        "endChar": 37
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69e592f6_5d38eb44",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-07T19:50:55Z",
+      "side": 1,
+      "message": "is this method static?",
+      "range": {
+        "startLine": 186,
+        "startChar": 20,
+        "endLine": 186,
+        "endChar": 27
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
