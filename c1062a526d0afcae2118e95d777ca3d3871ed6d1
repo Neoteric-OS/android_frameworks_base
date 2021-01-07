@@ -16,6 +16,23 @@
       "message": "Had to split CL from http://aosp/1542244 due to a downstream merge conflict. \n\nThe DeviceConfig change led to a merge conflict in master, but the Linter complains if you upload an OWNERS file change in master before aosp. So I split the CLs and will wait for the OWNERS change to hit downstream before uploading the flag change to master.",
       "revId": "c1062a526d0afcae2118e95d777ca3d3871ed6d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2878a17_7c2539ee",
+        "filename": "services/core/java/com/android/server/apphibernation/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2021-01-07T10:09:47Z",
+      "side": 1,
+      "message": "It would be better to refer to the other OWNERS file \"include path/to/OWNERS\" instead of copying its contents.",
+      "revId": "c1062a526d0afcae2118e95d777ca3d3871ed6d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
