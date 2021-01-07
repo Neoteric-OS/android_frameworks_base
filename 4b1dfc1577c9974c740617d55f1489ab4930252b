@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "246c4125_b522f62a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2021-01-07T16:17:48Z",
+      "side": 1,
+      "message": "Hi Paul, I don\u0027t think we can support this kind of API externally. Instead, I suggest you look at the PackageMonitor class. It\u0027s not public [and probably won\u0027t ever be], but you can borrow the implementation details and use within the PermissionMonitor.\n\n",
+      "revId": "4b1dfc1577c9974c740617d55f1489ab4930252b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
