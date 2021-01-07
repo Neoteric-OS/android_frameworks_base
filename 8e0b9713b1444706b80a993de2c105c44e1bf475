@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "09134cda_342cb41a",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6549,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-07T08:01:45Z",
+      "side": 1,
+      "message": "This is pre-existing, but I don\u0027t really understand it either; might be a mistake. Removed to make it clearer.",
+      "parentUuid": "2f0b6509_efa6b65e",
+      "range": {
+        "startLine": 6549,
+        "startChar": 61,
+        "endLine": 6549,
+        "endChar": 97
+      },
+      "revId": "8e0b9713b1444706b80a993de2c105c44e1bf475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b78145e0_c0166a26",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-01-05T17:01:10Z",
       "side": 1,
       "message": "Should this block be wrapped in try/catch so that it delivers on this comment about not crashing?",
+      "range": {
+        "startLine": 6558,
+        "startChar": 19,
+        "endLine": 6558,
+        "endChar": 24
+      },
+      "revId": "8e0b9713b1444706b80a993de2c105c44e1bf475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9e90c8c_f96fc248",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6558,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-07T08:01:45Z",
+      "side": 1,
+      "message": "This comment aims to explain why there\u0027s a null check for the ConnectivityService IBinder before trying to get it through getSystemService, it doesn\u0027t imply that the below code won\u0027t crash; in fact the previous implementation that catched RemoteExceptions actually rethrowed them as RuntimeException.\nRephrased and reformatted the comment to be less ambiguous.",
+      "parentUuid": "b78145e0_c0166a26",
       "range": {
         "startLine": 6558,
         "startChar": 19,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2f1d774_53d5521f",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6561,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-07T08:01:45Z",
+      "side": 1,
+      "message": "Hmm good point, at that early point it should be the same since I guess nothing in the process could have called bindNetworkToProcess yet ?\nChanged to that, meaning that there\u0027s no immediate need to have getProxyForNetwork be an API for this anymore.",
+      "parentUuid": "a78ce877_abf50af0",
+      "range": {
+        "startLine": 6561,
+        "startChar": 48,
+        "endLine": 6561,
+        "endChar": 69
+      },
+      "revId": "8e0b9713b1444706b80a993de2c105c44e1bf475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2140edd3_3060570d",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-01-05T17:01:10Z",
       "side": 1,
       "message": "If we\u0027re promoting this method to be a public API, I\u0027d recommend improving the contract in the process by making both the in/out values @NonNull.  Specifically, require a non-null Network argument, and potentially create a new ProxyInfo.NONE placeholder object to signal when there is no proxy defined.",
+      "range": {
+        "startLine": 3038,
+        "startChar": 0,
+        "endLine": 3038,
+        "endChar": 68
+      },
+      "revId": "8e0b9713b1444706b80a993de2c105c44e1bf475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a701312d_0e089bc1",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3038,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-07T08:01:45Z",
+      "side": 1,
+      "message": "Removed from API in latest patchset",
+      "parentUuid": "2140edd3_3060570d",
       "range": {
         "startLine": 3038,
         "startChar": 0,
