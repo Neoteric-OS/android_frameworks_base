@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007102358",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1541935?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f70a401b_caf63716",
+        "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-07T10:31:58Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 105
+      },
+      "revId": "7d0d819e9c4e8295bb7e1a1780b92a8b79bec1a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007102358",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1541935?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "91a02c6f_e24943a7",
+        "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-07T10:31:58Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 122
+      },
+      "revId": "7d0d819e9c4e8295bb7e1a1780b92a8b79bec1a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
