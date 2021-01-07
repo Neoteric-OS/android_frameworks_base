@@ -5670,6 +5670,60 @@ public class ConnectivityServiceTest {
     }
 
     @Test
+    public void testVpnSwitchFromSuspendedToNonSuspended() throws Exception {
+        final TestNetworkCallback callback = new TestNetworkCallback();
+        final NetworkRequest request = new NetworkRequest.Builder()
+                .removeCapability(NET_CAPABILITY_NOT_VPN).build();
+
+        mCm.registerNetworkCallback(request, callback);
+
+        // Connect a VPN.
+        mMockVpn.establishForMyUid(false, true, false);
+        callback.expectAvailableCallbacksUnvalidated(mMockVpn);
+
+        // Connect cellular data.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(false /* validated */);
+        callback.expectAvailableCallbacksUnvalidated(mCellNetworkAgent);
+        callback.expectCapabilitiesThat(mMockVpn,
+                nc -> nc.hasTransport(TRANSPORT_CELLULAR));
+
+        // Suspend the cellular network and expect the VPN to be suspended.
+        mCellNetworkAgent.suspend();
+        callback.expectCapabilitiesThat(mCellNetworkAgent,
+                nc -> !nc.hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+        callback.expectCallback(CallbackEntry.SUSPENDED, mCellNetworkAgent);
+        callback.expectCapabilitiesThat(mMockVpn,
+                nc -> !nc.hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+        callback.expectCallback(CallbackEntry.SUSPENDED, mMockVpn);
+        assertNetworkInfo(TYPE_MOBILE, DetailedState.SUSPENDED);
+        assertNetworkInfo(TYPE_VPN, DetailedState.SUSPENDED);
+
+        assertNetworkInfo(TYPE_MOBILE, DetailedState.SUSPENDED);
+        assertNetworkInfo(TYPE_VPN, DetailedState.SUSPENDED);
+
+        // Switch to another network and ensure that the VPN is no longer suspended.
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(false /* validated */);
+        callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        callback.expectCapabilitiesThat(mMockVpn,
+                nc -> nc.hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+
+        // BUG: the VPN is no longer suspended, so a RESUMED callback should have been sent.
+        // callback.expectCallback(CallbackEntry.RESUMED, mMockVpn);
+        callback.assertNoCallback();
+        waitForIdle();
+
+        assertNetworkInfo(TYPE_MOBILE, DetailedState.DISCONNECTED);
+        assertNetworkInfo(TYPE_WIFI, DetailedState.CONNECTED);
+        assertNetworkInfo(TYPE_VPN, DetailedState.SUSPENDED);  // BUG
+        assertActiveNetworkInfo(TYPE_WIFI, DetailedState.CONNECTED);
+
+        // BUG: the device has connectivity, so this should return true.
+        assertFalse(mCm.getNetworkInfo(mCm.getActiveNetwork()).isConnected());
+    }
+
+    @Test
     public void testVpnNetworkActive() throws Exception {
         final int uid = Process.myUid();
 
