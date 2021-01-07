@@ -30,6 +30,7 @@ import android.os.Process;
 import android.os.RecoverySystem;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
+import android.os.ServiceManager;
 import android.os.ShellCallback;
 import android.os.SystemProperties;
 import android.util.ArrayMap;
@@ -38,10 +39,12 @@ import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.widget.ILockSettings;
 import com.android.internal.widget.LockSettingsInternal;
 import com.android.internal.widget.RebootEscrowListener;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
+import com.android.internal.widget.ITelephonyAuthTokenKnownCallback;
 
 import libcore.io.IoUtils;
 
@@ -345,9 +348,35 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
         }
     }
 
+    private class telephonyCallback extends ITelephonyAuthTokenKnownCallback.Stub {
+       @Override
+       public void onAuthTokenKnownForPrimaryUser(byte[] telephonyAuthSecret, boolean isRestored) {
+          Slog.w(TAG, "AuthToken known in telephony callback, secret size "
+                  + telephonyAuthSecret.length + ", isRestored " + isRestored);
+       }
+
+    }
+
+    private void registerTelephonyCallback() {
+        ILockSettings service = ILockSettings.Stub.asInterface(
+                ServiceManager.getService("lock_settings"));
+        if (service == null) {
+            Slog.w(TAG, "failed to get lock settings service");
+            return;
+        }
+        try {
+            service.registerTelephonyAuthTokenKnownCallback(new telephonyCallback());
+        } catch (RemoteException e) {
+            Slog.w(TAG, "Failed to register telephony callback");
+        }
+
+    }
+
     @Override // Binder call
     public boolean requestLskf(String packageName, IntentSender intentSender) {
         enforcePermissionForResumeOnReboot();
+
+        registerTelephonyCallback();
 
         if (packageName == null) {
             Slog.w(TAG, "Missing packageName when requesting lskf.");

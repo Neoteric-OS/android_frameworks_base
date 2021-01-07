@@ -116,6 +116,7 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.Preconditions;
 import com.android.internal.widget.ICheckCredentialProgressCallback;
 import com.android.internal.widget.ILockSettings;
+import com.android.internal.widget.ITelephonyAuthTokenKnownCallback;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.LockSettingsInternal;
 import com.android.internal.widget.LockscreenCredential;
@@ -231,6 +232,8 @@ public class LockSettingsService extends ILockSettings.Stub {
     private final RebootEscrowManager mRebootEscrowManager;
 
     private boolean mFirstCallToVold;
+
+    private ITelephonyAuthTokenKnownCallback mTelephonyAuthTokenKnownCallback;
 
     // Current password metric for all users on the device. Updated when user unlocks
     // the device or changes password. Removed when user is stopped.
@@ -2570,6 +2573,7 @@ public class LockSettingsService extends ILockSettings.Stub {
                 auth.getSyntheticPassword());
 
         callToAuthSecretIfNeeded(userId, auth);
+        callToTelephonyIfNeeded(userId, auth, false);
     }
 
     private void callToAuthSecretIfNeeded(@UserIdInt int userId,
@@ -2586,6 +2590,21 @@ public class LockSettingsService extends ILockSettings.Stub {
             } catch (RemoteException e) {
                 Slog.w(TAG, "Failed to pass primary user secret to AuthSecret HAL", e);
             }
+        }
+    }
+
+    private void callToTelephonyIfNeeded(@UserIdInt int userId,
+            AuthenticationToken auth, boolean isRestored) {
+        if (mTelephonyAuthTokenKnownCallback == null ||
+                !mUserManager.getUserInfo(userId).isPrimary()) {
+            return;
+        }
+
+        final byte[] rawSecret = auth.deriveVendorAuthSecret();
+        try {
+            mTelephonyAuthTokenKnownCallback.onAuthTokenKnownForPrimaryUser(rawSecret, isRestored);
+        } catch (RemoteException e) {
+           Slog.w(TAG, "Failed to pass primary user secret to telephony");
         }
     }
 
@@ -3112,6 +3131,12 @@ public class LockSettingsService extends ILockSettings.Stub {
         }
     }
 
+    @Override
+    public void registerTelephonyAuthTokenKnownCallback(ITelephonyAuthTokenKnownCallback callback) {
+        Slog.w(TAG, "Registering telephony callback");
+        mTelephonyAuthTokenKnownCallback = callback;
+    }
+
     private boolean setLockCredentialWithToken(LockscreenCredential credential, long tokenHandle,
             byte[] token, int userId) {
         boolean result;
@@ -3515,6 +3540,8 @@ public class LockSettingsService extends ILockSettings.Stub {
             authToken.recreateDirectly(syntheticPassword);
             onCredentialVerified(authToken, CHALLENGE_NONE, 0, null,
                     loadPasswordMetrics(authToken, userId), userId);
+
+            callToTelephonyIfNeeded(userId, authToken, true);
         }
     }
 }

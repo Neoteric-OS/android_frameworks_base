@@ -26,6 +26,7 @@ import android.security.keystore.recovery.RecoveryCertPath;
 import com.android.internal.widget.ICheckCredentialProgressCallback;
 import com.android.internal.widget.LockscreenCredential;
 import com.android.internal.widget.VerifyCredentialResponse;
+import com.android.internal.widget.ITelephonyAuthTokenKnownCallback;
 
 import java.util.Map;
 
@@ -63,6 +64,7 @@ interface ILockSettings {
     void userPresent(int userId);
     int getStrongAuthForUser(int userId);
     boolean hasPendingEscrowToken(int userId);
+    void registerTelephonyAuthTokenKnownCallback(in ITelephonyAuthTokenKnownCallback callback);
 
     // Keystore RecoveryController methods.
     // {@code ServiceSpecificException} may be thrown to signal an error, which caller can
