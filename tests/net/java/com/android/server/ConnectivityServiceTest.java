@@ -82,6 +82,10 @@ import static android.net.NetworkPolicyManager.RULE_NONE;
 import static android.net.NetworkPolicyManager.RULE_REJECT_ALL;
 import static android.net.NetworkPolicyManager.RULE_REJECT_METERED;
 import static android.net.RouteInfo.RTN_UNREACHABLE;
+import static android.net.resolv.aidl.IDnsResolverUnsolicitedEventListener.PREFIX_OPERATION_ADDED;
+import static android.net.resolv.aidl.IDnsResolverUnsolicitedEventListener.PREFIX_OPERATION_REMOVED;
+import static android.net.resolv.aidl.IDnsResolverUnsolicitedEventListener.VALIDATION_RESULT_FAILURE;
+import static android.net.resolv.aidl.IDnsResolverUnsolicitedEventListener.VALIDATION_RESULT_SUCCESS;
 import static android.os.Process.INVALID_UID;
 import static android.system.OsConstants.IPPROTO_TCP;
 
@@ -203,6 +207,8 @@ import android.net.UidRangeParcel;
 import android.net.Uri;
 import android.net.VpnManager;
 import android.net.metrics.IpConnectivityLog;
+import android.net.resolv.aidl.Nat64PrefixEventParcel;
+import android.net.resolv.aidl.PrivateDnsValidationEventParcel;
 import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
 import android.net.util.MultinetworkPolicyTracker;
@@ -5632,6 +5638,16 @@ public class ConnectivityServiceTest {
         assertEquals("strict.example.com", cbi.getLp().getPrivateDnsServerName());
     }
 
+    private PrivateDnsValidationEventParcel makePrivateDnsValidationEvent(
+            final int netId, final String ipAddress, final String hostname, final int validation) {
+        final PrivateDnsValidationEventParcel event = new PrivateDnsValidationEventParcel();
+        event.netId = netId;
+        event.ipAddress = ipAddress;
+        event.hostname = hostname;
+        event.validation = validation;
+        return event;
+    }
+
     @Test
     public void testLinkPropertiesWithPrivateDnsValidationEvents() throws Exception {
         // The default on Android is opportunistic mode ("Automatic").
@@ -5662,8 +5678,9 @@ public class ConnectivityServiceTest {
 
         // Send a validation event for a server that is not part of the current
         // resolver config. The validation event should be ignored.
-        mService.mNetdEventCallback.onPrivateDnsValidationEvent(
-                mCellNetworkAgent.getNetwork().netId, "", "145.100.185.18", true);
+        mService.mResolverUnsolEventCallback.onPrivateDnsValidationEvent(
+                makePrivateDnsValidationEvent(mCellNetworkAgent.getNetwork().netId, "",
+                        "145.100.185.18", VALIDATION_RESULT_SUCCESS));
         cellNetworkCallback.assertNoCallback();
 
         // Add a dns server to the LinkProperties.
@@ -5680,20 +5697,23 @@ public class ConnectivityServiceTest {
 
         // Send a validation event containing a hostname that is not part of
         // the current resolver config. The validation event should be ignored.
-        mService.mNetdEventCallback.onPrivateDnsValidationEvent(
-                mCellNetworkAgent.getNetwork().netId, "145.100.185.16", "hostname", true);
+        mService.mResolverUnsolEventCallback.onPrivateDnsValidationEvent(
+                makePrivateDnsValidationEvent(mCellNetworkAgent.getNetwork().netId,
+                        "145.100.185.16", "hostname", VALIDATION_RESULT_SUCCESS));
         cellNetworkCallback.assertNoCallback();
 
         // Send a validation event where validation failed.
-        mService.mNetdEventCallback.onPrivateDnsValidationEvent(
-                mCellNetworkAgent.getNetwork().netId, "145.100.185.16", "", false);
+        mService.mResolverUnsolEventCallback.onPrivateDnsValidationEvent(
+                makePrivateDnsValidationEvent(mCellNetworkAgent.getNetwork().netId,
+                        "145.100.185.16", "", VALIDATION_RESULT_FAILURE));
         cellNetworkCallback.assertNoCallback();
 
         // Send a validation event where validation succeeded for a server in
         // the current resolver config. A LinkProperties callback with updated
         // private dns fields should be sent.
-        mService.mNetdEventCallback.onPrivateDnsValidationEvent(
-                mCellNetworkAgent.getNetwork().netId, "145.100.185.16", "", true);
+        mService.mResolverUnsolEventCallback.onPrivateDnsValidationEvent(
+                makePrivateDnsValidationEvent(mCellNetworkAgent.getNetwork().netId,
+                        "145.100.185.16", "", VALIDATION_RESULT_SUCCESS));
         cbi = cellNetworkCallback.expectCallback(CallbackEntry.LINK_PROPERTIES_CHANGED,
                 mCellNetworkAgent);
         cellNetworkCallback.assertNoCallback();
@@ -7424,6 +7444,16 @@ public class ConnectivityServiceTest {
         return stacked;
     }
 
+    private Nat64PrefixEventParcel makeNat64PrefixEvent(final int netId, final int prefixOperation,
+            final String prefixAddress, final int prefixLength) {
+        final Nat64PrefixEventParcel event = new Nat64PrefixEventParcel();
+        event.netId = netId;
+        event.prefixOperation = prefixOperation;
+        event.prefixAddress = prefixAddress;
+        event.prefixLength = prefixLength;
+        return event;
+    }
+
     @Test
     public void testStackedLinkProperties() throws Exception {
         final LinkAddress myIpv4 = new LinkAddress("1.2.3.4/24");
@@ -7509,8 +7539,8 @@ public class ConnectivityServiceTest {
         // When NAT64 prefix discovery succeeds, LinkProperties are updated and clatd is started.
         Nat464Xlat clat = getNat464Xlat(mCellNetworkAgent);
         assertNull(mCm.getLinkProperties(mCellNetworkAgent.getNetwork()).getNat64Prefix());
-        mService.mNetdEventCallback.onNat64PrefixEvent(cellNetId, true /* added */,
-                kNat64PrefixString, 96);
+        mService.mResolverUnsolEventCallback.onNat64PrefixEvent(
+                makeNat64PrefixEvent(cellNetId, PREFIX_OPERATION_ADDED, kNat64PrefixString, 96));
         LinkProperties lpBeforeClat = networkCallback.expectCallback(
                 CallbackEntry.LINK_PROPERTIES_CHANGED, mCellNetworkAgent).getLp();
         assertEquals(0, lpBeforeClat.getStackedLinks().size());
@@ -7550,8 +7580,8 @@ public class ConnectivityServiceTest {
                 .thenReturn(getClatInterfaceConfigParcel(myIpv4));
         // Change the NAT64 prefix without first removing it.
         // Expect clatd to be stopped and started with the new prefix.
-        mService.mNetdEventCallback.onNat64PrefixEvent(cellNetId, true /* added */,
-                kOtherNat64PrefixString, 96);
+        mService.mResolverUnsolEventCallback.onNat64PrefixEvent(makeNat64PrefixEvent(
+                cellNetId, PREFIX_OPERATION_ADDED, kOtherNat64PrefixString, 96));
         networkCallback.expectLinkPropertiesThat(mCellNetworkAgent,
                 (lp) -> lp.getStackedLinks().size() == 0);
         verify(mMockNetd, times(1)).clatdStop(MOBILE_IFNAME);
@@ -7600,8 +7630,8 @@ public class ConnectivityServiceTest {
                 .thenReturn(getClatInterfaceConfigParcel(myIpv4));
 
         // Stopping prefix discovery causes netd to tell us that the NAT64 prefix is gone.
-        mService.mNetdEventCallback.onNat64PrefixEvent(cellNetId, false /* added */,
-                kOtherNat64PrefixString, 96);
+        mService.mResolverUnsolEventCallback.onNat64PrefixEvent(makeNat64PrefixEvent(
+                cellNetId, PREFIX_OPERATION_REMOVED, kOtherNat64PrefixString, 96));
         networkCallback.expectLinkPropertiesThat(mCellNetworkAgent,
                 (lp) -> lp.getNat64Prefix() == null);
 
@@ -7613,8 +7643,8 @@ public class ConnectivityServiceTest {
         networkCallback.expectCallback(CallbackEntry.LINK_PROPERTIES_CHANGED, mCellNetworkAgent);
         assertRoutesRemoved(cellNetId, ipv4Subnet);  // Directly-connected routes auto-added.
         verify(mMockDnsResolver, times(1)).startPrefix64Discovery(cellNetId);
-        mService.mNetdEventCallback.onNat64PrefixEvent(cellNetId, true /* added */,
-                kNat64PrefixString, 96);
+        mService.mResolverUnsolEventCallback.onNat64PrefixEvent(makeNat64PrefixEvent(
+                cellNetId, PREFIX_OPERATION_ADDED, kNat64PrefixString, 96));
         networkCallback.expectCallback(CallbackEntry.LINK_PROPERTIES_CHANGED, mCellNetworkAgent);
         verify(mMockNetd, times(1)).clatdStart(MOBILE_IFNAME, kNat64Prefix.toString());
 
@@ -7626,8 +7656,8 @@ public class ConnectivityServiceTest {
         verify(mMockNetd, times(1)).networkAddInterface(cellNetId, CLAT_PREFIX + MOBILE_IFNAME);
 
         // NAT64 prefix is removed. Expect that clat is stopped.
-        mService.mNetdEventCallback.onNat64PrefixEvent(cellNetId, false /* added */,
-                kNat64PrefixString, 96);
+        mService.mResolverUnsolEventCallback.onNat64PrefixEvent(makeNat64PrefixEvent(
+                cellNetId, PREFIX_OPERATION_REMOVED, kNat64PrefixString, 96));
         networkCallback.expectLinkPropertiesThat(mCellNetworkAgent,
                 (lp) -> lp.getStackedLinks().size() == 0 && lp.getNat64Prefix() == null);
         assertRoutesRemoved(cellNetId, ipv4Subnet, stackedDefault);
@@ -7715,8 +7745,8 @@ public class ConnectivityServiceTest {
         inOrder.verify(mMockDnsResolver).setPrefix64(netId, "");
         inOrder.verify(mMockDnsResolver).startPrefix64Discovery(netId);
 
-        mService.mNetdEventCallback.onNat64PrefixEvent(netId, true /* added */,
-                pref64FromDnsStr, 96);
+        mService.mResolverUnsolEventCallback.onNat64PrefixEvent(
+                makeNat64PrefixEvent(netId, PREFIX_OPERATION_ADDED, pref64FromDnsStr, 96));
         expectNat64PrefixChange(callback, mWiFiNetworkAgent, pref64FromDns);
         inOrder.verify(mMockNetd).clatdStart(iface, pref64FromDns.toString());
 
@@ -7749,8 +7779,8 @@ public class ConnectivityServiceTest {
         inOrder.verify(mMockDnsResolver).stopPrefix64Discovery(netId);
 
         // Stopping prefix discovery results in a prefix removed notification.
-        mService.mNetdEventCallback.onNat64PrefixEvent(netId, false /* added */,
-                pref64FromDnsStr, 96);
+        mService.mResolverUnsolEventCallback.onNat64PrefixEvent(
+                makeNat64PrefixEvent(netId, PREFIX_OPERATION_REMOVED, pref64FromDnsStr, 96));
 
         inOrder.verify(mMockNetd).clatdStart(iface, pref64FromRa.toString());
         inOrder.verify(mMockDnsResolver).setPrefix64(netId, pref64FromRa.toString());
@@ -7788,8 +7818,8 @@ public class ConnectivityServiceTest {
         inOrder.verify(mMockNetd).clatdStop(iface);
         inOrder.verify(mMockDnsResolver).setPrefix64(netId, "");
         inOrder.verify(mMockDnsResolver).startPrefix64Discovery(netId);
-        mService.mNetdEventCallback.onNat64PrefixEvent(netId, true /* added */,
-                pref64FromDnsStr, 96);
+        mService.mResolverUnsolEventCallback.onNat64PrefixEvent(
+                makeNat64PrefixEvent(netId, PREFIX_OPERATION_ADDED, pref64FromDnsStr, 96));
         expectNat64PrefixChange(callback, mWiFiNetworkAgent, pref64FromDns);
         inOrder.verify(mMockNetd).clatdStart(iface, pref64FromDns.toString());
         inOrder.verify(mMockDnsResolver, never()).setPrefix64(eq(netId), any());
