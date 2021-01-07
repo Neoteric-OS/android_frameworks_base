@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b6a04c4_1f4914f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-07T01:32:11Z",
+      "side": 1,
+      "message": "Split OWNERS change to aosp/1542245 due to downstream merge conflict in DeviceConfig and OWNERS changes needing to be done in aosp first.",
+      "revId": "216b3d03ddb4e4e03b8d26b1bc074821cc752c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
