@@ -69,6 +69,30 @@
       },
       "revId": "8822f671b9867011d902fbccea0616d1a794b3bd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa97d02c_fbf72603",
+        "filename": "services/core/java/com/android/server/biometrics/AuthenticationClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2021-01-07T13:31:34Z",
+      "side": 1,
+      "message": "Why do we need two keystores running at the same time? Is it only for testing purposes?",
+      "parentUuid": "2b4034b3_c863769b",
+      "range": {
+        "startLine": 182,
+        "startChar": 24,
+        "endLine": 182,
+        "endChar": 32
+      },
+      "revId": "8822f671b9867011d902fbccea0616d1a794b3bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
