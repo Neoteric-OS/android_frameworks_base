@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "856c0770_017335f3",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-07T02:31:18Z",
+      "side": 1,
+      "message": "Good idea.",
+      "parentUuid": "f3a56f25_103b29c3",
+      "range": {
+        "startLine": 105,
+        "startChar": 15,
+        "endLine": 105,
+        "endChar": 24
+      },
+      "revId": "46b94c4eec967f259db4c64586bdf4bbfc86c23b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "527ff01f_37e783bb",
@@ -81,6 +105,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94c64027_421d47ce",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-07T02:31:18Z",
+      "side": 1,
+      "message": "No longer an issue with the latest patch.",
+      "parentUuid": "527ff01f_37e783bb",
+      "range": {
+        "startLine": 106,
+        "startChar": 28,
+        "endLine": 106,
+        "endChar": 47
+      },
+      "revId": "46b94c4eec967f259db4c64586bdf4bbfc86c23b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c928e2a3_e6075ffb",
@@ -94,6 +142,30 @@
       "writtenOn": "2021-01-06T16:30:45Z",
       "side": 1,
       "message": "Do we want this method? Even if we do, we should also have a straightforward way of building it (add preference for a single package / remove it).",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 9
+      },
+      "revId": "46b94c4eec967f259db4c64586bdf4bbfc86c23b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed460343_27573ed3",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-07T02:31:18Z",
+      "side": 1,
+      "message": "I went ahead and removed this en-lieu of add/remove packages as you suggest. That makes a lot more sense if we add a constructor that we can pass an existing preference object into. We can always add a list in the future if helpful.",
+      "parentUuid": "c928e2a3_e6075ffb",
       "range": {
         "startLine": 109,
         "startChar": 0,
