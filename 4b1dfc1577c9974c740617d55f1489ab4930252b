@@ -16,6 +16,69 @@
       "message": "Hi Paul, I don\u0027t think we can support this kind of API externally. Instead, I suggest you look at the PackageMonitor class. It\u0027s not public [and probably won\u0027t ever be], but you can borrow the implementation details and use within the PermissionMonitor.\n\n",
       "revId": "4b1dfc1577c9974c740617d55f1489ab4930252b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6afcef6b_648ec423",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2021-01-07T16:47:09Z",
+      "side": 1,
+      "message": "Have you considered listening for PACKAGE_ADDED, PACKAGE_REMOVED and PACKAGE_CHANGED broadcasts and calling getChangedPackages after boot instead of exposing this API?",
+      "revId": "4b1dfc1577c9974c740617d55f1489ab4930252b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c9468f1_67549dab",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25708,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2021-01-07T16:47:09Z",
+      "side": 1,
+      "message": "These new cross-process boundary implementations need to check shouldFilterApplication for each appId they encounter, which probably means that the PackageListObserverCallback will need to track the calling uid to reference here.",
+      "range": {
+        "startLine": 25689,
+        "startChar": 8,
+        "endLine": 25708,
+        "endChar": 9
+      },
+      "revId": "4b1dfc1577c9974c740617d55f1489ab4930252b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a250617b_f5083a5b",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25722,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2021-01-07T16:47:09Z",
+      "side": 1,
+      "message": "Is there a more generic mainline permission that could be applied here? I\u0027d rather not have to start enforcing additional permissions if other non-connectivity consumers start using this API in the future.",
+      "range": {
+        "startLine": 25722,
+        "startChar": 16,
+        "endLine": 25722,
+        "endChar": 74
+      },
+      "revId": "4b1dfc1577c9974c740617d55f1489ab4930252b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
