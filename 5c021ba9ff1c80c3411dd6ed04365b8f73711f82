@@ -165,6 +165,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "feef04a8_fbdd168f",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-07T22:03:28Z",
+      "side": 1,
+      "message": "This isn\u0027t what the public API says, though, since it\u0027s using Collection\u003cT\u003e. SSUpdateRequest[RSRP{-110, -80}, RSRQ{-10, -3}] *should* be equal to SSUpdateRequest[RSRQ{-10, -3}, RSRP{-110, -80}].\n\n(There\u0027s a similar potential equality issue in SignalThresholdInfo wrt ordering within the threshold int array)",
+      "range": {
+        "startLine": 150,
+        "startChar": 23,
+        "endLine": 150,
+        "endChar": 81
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6807a42b_6529b932",
         "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
         "patchSetId": 6
