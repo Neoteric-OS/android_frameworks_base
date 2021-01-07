@@ -33,6 +33,24 @@
       "message": "It would be better to refer to the other OWNERS file \"include path/to/OWNERS\" instead of copying its contents.",
       "revId": "c1062a526d0afcae2118e95d777ca3d3871ed6d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f5c722d_f270bb9d",
+        "filename": "services/core/java/com/android/server/apphibernation/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-07T21:15:10Z",
+      "side": 1,
+      "message": "Unfortunately, from what I can tell, the Gerrit OWNERS plugin doesn\u0027t like you doing that if the OWNERS file isn\u0027t already in the tree.\n\nremote: ERROR: commit 8edc083: invalid global import in \u0027/services/core/java/com/android/server/apphibernation/OWNERS\u0027: \u0027/core/java/android/apphibernation/OWNERS\u0027 does not exist (project \u003d platform/frameworks/base, branch \u003d master)        \nTo https://android-review.googlesource.com/platform/frameworks/base\n ! [remote rejected]         app-hibernation-owners -\u003e refs/for/master (commit 8edc083: invalid code owner config files)\n\nThis occurs when uploading with --no-verify as well. Not sure if there\u0027s another way around it. I\u0027ve filed a bug (b/177005153) since this seems like unintended behavior.\n\nAs a workaround, I\u0027m thinking it\u0027d be fine to upload as is currently and in a follow-up CL refer to the other OWNERS file once this CL merges into master.",
+      "parentUuid": "e2878a17_7c2539ee",
+      "revId": "c1062a526d0afcae2118e95d777ca3d3871ed6d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
