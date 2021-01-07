@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d6bfa07_e0929724",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2021-01-07T16:54:39Z",
+      "side": 1,
+      "message": "I just noticed Todd\u0027s reply and agree that PackageMonitor is a good place to start. It\u0027s a broadcast receiver that handles all of the known package broadcasts and has been in use by the framework for some time.",
+      "parentUuid": "6afcef6b_648ec423",
+      "revId": "4b1dfc1577c9974c740617d55f1489ab4930252b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3c9468f1_67549dab",
