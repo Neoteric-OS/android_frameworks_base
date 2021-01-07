@@ -114,4 +114,16 @@ public abstract class WritableIdentityCredential {
      */
     public abstract @NonNull byte[] personalize(
             @NonNull PersonalizationData personalizationData);
+
+    /**
+     * Sets the feature level to use.
+     *
+     * <p>This changes how some of the APIs work. See each API for details on how they're impacted
+     * by different feature levels.</p>
+     *
+     * <p>By default {@code FEATURE_LEVEL_11} is used.</p>
+     */
+    public boolean setFeatureLevel(@IdentityCredentialStore.FeatureLevel int featureLevel) {
+        throw new UnsupportedOperationException();
+    }
 }

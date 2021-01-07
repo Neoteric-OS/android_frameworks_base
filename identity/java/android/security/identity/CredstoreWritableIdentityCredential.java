@@ -36,6 +36,7 @@ class CredstoreWritableIdentityCredential extends WritableIdentityCredential {
     private String mCredentialName;
     private Context mContext;
     private IWritableCredential mBinder;
+    private int mFeatureLevel = IdentityCredentialStore.FEATURE_LEVEL_11;
 
     CredstoreWritableIdentityCredential(Context context,
             @NonNull String credentialName,
@@ -76,7 +77,14 @@ class CredstoreWritableIdentityCredential extends WritableIdentityCredential {
 
     @NonNull @Override
     public byte[] personalize(@NonNull PersonalizationData personalizationData) {
+        return personalize(mBinder, personalizationData);
+    }
 
+    // Used by both personalize() and CredstoreIdentityCredential.update().
+    //
+    @NonNull
+    static byte[] personalize(IWritableCredential binder,
+            @NonNull PersonalizationData personalizationData) {
         Collection<AccessControlProfile> accessControlProfiles =
                 personalizationData.getAccessControlProfiles();
 
@@ -144,7 +152,7 @@ class CredstoreWritableIdentityCredential extends WritableIdentityCredential {
             secureUserId = getRootSid();
         }
         try {
-            byte[] personalizationReceipt = mBinder.personalize(acpParcels, ensParcels,
+            byte[] personalizationReceipt = binder.personalize(acpParcels, ensParcels,
                     secureUserId);
             return personalizationReceipt;
         } catch (android.os.RemoteException e) {
@@ -164,5 +172,22 @@ class CredstoreWritableIdentityCredential extends WritableIdentityCredential {
         return rootSid;
     }
 
+    @Override
+    public boolean setFeatureLevel(@IdentityCredentialStore.FeatureLevel int featureLevel) {
+        try {
+            mBinder.setFeatureLevel(featureLevel);
+            mFeatureLevel = featureLevel;
+            return true;
+        } catch (android.os.RemoteException e) {
+            throw new RuntimeException("Unexpected RemoteException ", e);
+        } catch (android.os.ServiceSpecificException e) {
+            if (e.errorCode == ICredentialStore.ERROR_GENERIC) {
+                return false;
+            } else {
+                throw new RuntimeException("Unexpected ServiceSpecificException with code "
+                        + e.errorCode, e);
+            }
+        }
+    }
 
 }
