@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52a0d8a4_45a56cf7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-08T05:40:34Z",
+      "side": 1,
+      "message": "Hunter, Nathan, thanks for the suggestion. The patch is updated to locate them.",
+      "revId": "0cf897a2d441318e6fef8964409595bd1e2de614",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

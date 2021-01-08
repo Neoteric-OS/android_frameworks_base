@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aff39a6b_5415575e",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-08T05:40:34Z",
+      "side": 1,
+      "message": "Oh, yes, The API surface is recommended with Collection\u003c\u003e, but internally we are able to implement with concrete collection. Switch to ArrayList\u003c\u003e now.",
+      "parentUuid": "4471f6e3_5bda3519",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 22
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2cd415b1_661e2bf9",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-07T19:50:55Z",
       "side": 1,
       "message": "How about app-specified thresholds when the screen is off?",
+      "range": {
+        "startLine": 69,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 55
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "296949f4_5c587e9c",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-08T05:40:34Z",
+      "side": 1,
+      "message": "When mHonorSystemThresholdsWhenScreenOff is true, it works just like screen is on (app-specified thresholds align to system ones).\n\nWhen it is false, system thresholds will be removed, left only app-specified ones.\n\nAs the name indicated, this flag only control if system thresholds are continuing honored when screen turn off.\nAny problem here?",
+      "parentUuid": "2cd415b1_661e2bf9",
       "range": {
         "startLine": 69,
         "startChar": 20,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49fabeee_0dd6e92c",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-08T05:40:34Z",
+      "side": 1,
+      "message": "RAN support in ThresholdInfo is done in parent CL.\n\nThe javadoc and validation are updated to check MAX(1) per RAN (previously check SignalMeasurementType which is not always correct).",
+      "parentUuid": "23d1d48c_a4939429",
+      "range": {
+        "startLine": 73,
+        "startChar": 53,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f107ff7_72ae8881",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d611d8d_a3a132d2",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-08T05:40:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f107ff7_72ae8881",
+      "range": {
+        "startLine": 78,
+        "startChar": 32,
+        "endLine": 79,
+        "endChar": 59
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19cc85d0_59d24b5e",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-01-07T20:01:46Z",
       "side": 1,
       "message": "Nit: false /* honorSystemThresholdsWhenScreenOff */",
+      "range": {
+        "startLine": 96,
+        "startChar": 35,
+        "endLine": 96,
+        "endChar": 40
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f44bcced_57140cb1",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-08T05:40:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19cc85d0_59d24b5e",
       "range": {
         "startLine": 96,
         "startChar": 35,
@@ -163,6 +283,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b905084e_0ab6a0cd",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-08T05:40:34Z",
+      "side": 1,
+      "message": "Nice. The utilities save a lot boilerplate logic.\nThanks",
+      "parentUuid": "a87ed384_94a2f79b",
+      "range": {
+        "startLine": 104,
+        "startChar": 23,
+        "endLine": 104,
+        "endChar": 37
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "feef04a8_fbdd168f",
@@ -200,6 +344,30 @@
       "side": 1,
       "message": "Either we solve this at construction time by forcing a particular order of the internal List\u003cSignalThresholdInfo\u003e, or we do a Map-like comparison within the #equals call.",
       "parentUuid": "feef04a8_fbdd168f",
+      "range": {
+        "startLine": 150,
+        "startChar": 23,
+        "endLine": 150,
+        "endChar": 81
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f5c95b2_cb770503",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-08T05:40:34Z",
+      "side": 1,
+      "message": "Sort the collection in the construction to make ordering not matter. This is much easier than the map-like comparison.\nThanks",
+      "parentUuid": "229f509f_d140acd8",
       "range": {
         "startLine": 150,
         "startChar": 23,
@@ -257,6 +425,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ed4c96c_20aeb429",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-08T05:40:34Z",
+      "side": 1,
+      "message": "Use ArrayList internally while sort the collection in the beginning make the ordering not matter. Directly print with ArrayList.toString which is good enough.",
+      "parentUuid": "896615c8_ab6d88c4",
+      "range": {
+        "startLine": 180,
+        "startChar": 62,
+        "endLine": 180,
+        "endChar": 69
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69e592f6_5d38eb44",
@@ -270,6 +462,30 @@
       "writtenOn": "2021-01-07T19:50:55Z",
       "side": 1,
       "message": "is this method static?",
+      "range": {
+        "startLine": 186,
+        "startChar": 20,
+        "endLine": 186,
+        "endChar": 27
+      },
+      "revId": "5c021ba9ff1c80c3411dd6ed04365b8f73711f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4372db5_f02ce4ce",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-08T05:40:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69e592f6_5d38eb44",
       "range": {
         "startLine": 186,
         "startChar": 20,
