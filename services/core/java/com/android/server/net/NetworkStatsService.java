@@ -1389,7 +1389,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             return 0;
         }
 
-        return mNetworkStatsSubscriptionsMonitor.getRatTypeForSubscriberId(state.subscriberId);
+        return mNetworkStatsSubscriptionsMonitor.getRatTypeForSubscriberId(
+                state.networkCapabilities.getSubscriberId());
     }
 
     private static <K> NetworkIdentitySet findOrCreateNetworkIdentitySet(
