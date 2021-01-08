@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "26df3356_ca86aedb",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-08T20:03:24Z",
+      "side": 1,
+      "message": "Final on both of these",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 11
+      },
+      "revId": "f3fe21f31e8d65da5fc926e16856988753d946dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81d6760c_5aaf7cc0",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-08T20:03:24Z",
+      "side": 1,
+      "message": "Not needed, already private",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "f3fe21f31e8d65da5fc926e16856988753d946dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bd5ce9e7_86dbc989",
         "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
         "patchSetId": 8
