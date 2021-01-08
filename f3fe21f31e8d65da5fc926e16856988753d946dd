@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd5ce9e7_86dbc989",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-08T19:53:17Z",
+      "side": 1,
+      "message": "Can we have multiple measurements per RAN? If so, we\u0027ll need to sort by Comparator.comparingInt(SigThreshInfo::getRANType).thenComparingInt(SigThreshInfo::getSignalMeasurement).\n\nIt\u0027s hard to tell from the docs what the expected support for multiple measurements per RAN is:\n\n1.2 is fairly clear, I read this as \"only one measurement per RAN is allowed if precise dB thresholds are set\":\nNote: As this mechanism generally only constrains reports based on one measured quantity per RAN, if multiple measured quantities must be used to trigger a report for a given RAN, the only valid field may be hysteresisMs: hysteresisDb and thresholdsDbm must be set to zero and length zero respectively.\n\n1.5 is much less clear IMO, but I think it\u0027s trying to say the same thing as 1.2?:\nFor each RAN, if any of reporting criteria of any measure is set enabled, the reporting criteria of the other measures in this RAN are set disabled (see @1.5::SignalThresholdInfo.isEnabled) until they are set enabled.",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 87
+      },
+      "revId": "f3fe21f31e8d65da5fc926e16856988753d946dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bec9cfcb_04fd876b",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-08T19:53:17Z",
+      "side": 1,
+      "message": "Nit: ArrayList should have a usable #equals, I don\u0027t think we need toArray calls here",
+      "range": {
+        "startLine": 151,
+        "startChar": 15,
+        "endLine": 152,
+        "endChar": 48
+      },
+      "revId": "f3fe21f31e8d65da5fc926e16856988753d946dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d06437f5_1f694ba1",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-08T19:53:17Z",
+      "side": 1,
+      "message": "Nit: isEmpty",
+      "range": {
+        "startLine": 192,
+        "startChar": 35,
+        "endLine": 192,
+        "endChar": 46
+      },
+      "revId": "f3fe21f31e8d65da5fc926e16856988753d946dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9868b8e0_289ec63b",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-08T19:53:17Z",
+      "side": 1,
+      "message": "Set#add will tell you if the set changed or not:\n\nif (!uniqueRan.add(ran)) {\n  return false;\n}",
+      "range": {
+        "startLine": 199,
+        "startChar": 16,
+        "endLine": 199,
+        "endChar": 39
+      },
+      "revId": "f3fe21f31e8d65da5fc926e16856988753d946dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
