@@ -88,6 +88,8 @@ public class NetworkCapabilitiesTest {
             ParcelUuid.fromString("0000110B-0000-1000-8000-00805F9B34FB");
     private static final ParcelUuid DIFFERENT_TEST_SUB_GROUP_ID =
             ParcelUuid.fromString("01f16b3a-ea82-4777-8c42-8b6bd8bf1ec2");
+    private static final String TEST_IMSI = "TEST_IMSI";
+    private static final String DIFFERENT_TEST_IMSI = "DIFFERENT_TEST_IMSI";
 
     @Rule
     public DevSdkIgnoreRule mDevSdkIgnoreRule = new DevSdkIgnoreRule();
@@ -313,6 +315,7 @@ public class NetworkCapabilitiesTest {
             .addCapability(NET_CAPABILITY_NOT_METERED);
         if (isAtLeastS()) {
             netCap.setSubscriptionGroupId(TEST_SUB_GROUP_ID);
+            netCap.setSubscriberId(TEST_SSID);
         } else if (isAtLeastR()) {
             netCap.setOwnerUid(123);
             netCap.setAdministratorUids(new int[] {5, 11});
@@ -339,7 +342,7 @@ public class NetworkCapabilitiesTest {
 
     private void testParcelSane(NetworkCapabilities cap) {
         if (isAtLeastS()) {
-            assertParcelSane(cap, 16);
+            assertParcelSane(cap, 17);
         } else if (isAtLeastR()) {
             assertParcelSane(cap, 15);
         } else {
@@ -574,7 +577,8 @@ public class NetworkCapabilitiesTest {
         assertTrue(nc1.appliesToUid(22));
         assertTrue(nc2.appliesToUid(22));
 
-        // Verify the subscription group id can be combined only when they are equal.
+        // Verify the subscription group id and subscriber id can be combined only when they
+        // are equal.
         if (isAtLeastS()) {
             nc1.setSubscriptionGroupId(TEST_SUB_GROUP_ID);
             nc2.setSubscriptionGroupId(DIFFERENT_TEST_SUB_GROUP_ID);
@@ -586,6 +590,17 @@ public class NetworkCapabilitiesTest {
             nc2.setSubscriptionGroupId(TEST_SUB_GROUP_ID);
             nc2.combineCapabilities(nc1);
             assertEquals(TEST_SUB_GROUP_ID, nc2.getSubscriptionGroupId());
+
+            nc1.setSubscriberId(TEST_IMSI);
+            nc2.setSubscriberId(DIFFERENT_TEST_IMSI);
+            assertThrows(IllegalStateException.class, () -> nc2.combineCapabilities(nc1));
+
+            nc2.setSubscriberId(null);
+            assertThrows(IllegalStateException.class, () -> nc2.combineCapabilities(nc1));
+
+            nc2.setSubscriberId(TEST_IMSI);
+            nc2.combineCapabilities(nc1);
+            assertEquals(TEST_IMSI, nc2.getSubscriberId());
         }
     }
 
@@ -746,6 +761,13 @@ public class NetworkCapabilitiesTest {
             nc2.setSubscriptionGroupId(DIFFERENT_TEST_SUB_GROUP_ID);
             nc2.set(nc1);
             assertEquals(nc1, nc2);
+
+            nc1.setSubscriberId(TEST_IMSI);
+            nc2.set(nc1);
+            assertEquals(nc1, nc2);
+            nc2.setSubscriberId(DIFFERENT_TEST_IMSI);
+            nc2.set(nc1);
+            assertEquals(nc1, nc2);
         }
     }
 
@@ -844,6 +866,18 @@ public class NetworkCapabilitiesTest {
         assertTrue(requestWithId.canBeSatisfiedBy(ncWithId));
         assertTrue(requestWithoutId.canBeSatisfiedBy(ncWithoutId));
         assertTrue(requestWithoutId.canBeSatisfiedBy(ncWithId));
+    }
+
+    @Test
+    public void testSubscriberId() throws Exception {
+        final NetworkCapabilities ncWithoutId = new NetworkCapabilities();
+        assertNull(ncWithoutId.getSubscriberId());
+        final NetworkCapabilities ncWithId = new NetworkCapabilities.Builder()
+                .setSubscriberId(TEST_SSID).build();
+        assertEquals(TEST_SSID, ncWithId.getSubscriberId());
+
+        assertFalse(ncWithId.satisfiedByNetworkCapabilities(ncWithoutId));
+        assertTrue(ncWithoutId.satisfiedByNetworkCapabilities(ncWithId));
     }
 
     @Test
@@ -993,6 +1027,7 @@ public class NetworkCapabilitiesTest {
                 .setRequestorUid(requestUid)
                 .setRequestorPackageName(packageName)
                 .setSubscriptionGroupId(TEST_SUB_GROUP_ID)
+                .setSubscriberId(TEST_IMSI)
                 .build();
         assertEquals(1, nc.getTransportTypes().length);
         assertEquals(TRANSPORT_WIFI, nc.getTransportTypes()[0]);
@@ -1012,6 +1047,7 @@ public class NetworkCapabilitiesTest {
         assertEquals(requestUid, nc.getRequestorUid());
         assertEquals(packageName, nc.getRequestorPackageName());
         assertEquals(TEST_SUB_GROUP_ID, nc.getSubscriptionGroupId());
+        assertEquals(TEST_IMSI, nc.getSubscriberId());
         // Cannot assign null into NetworkCapabilities.Builder
         try {
             final NetworkCapabilities.Builder builder = new NetworkCapabilities.Builder(null);
