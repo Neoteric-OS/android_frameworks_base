@@ -4978,7 +4978,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     logw("VPN for user " + user + " not ready yet. Skipping lockdown");
                     return false;
                 }
-                setLockdownTracker(new LockdownVpnTracker(mContext, this, mHandler, vpn, profile));
+                final LockdownVpnTracker newTracker =
+                        new LockdownVpnTracker(mContext, this, mHandler, vpn, profile);
+                if (newTracker != mLockdownTracker) {
+                    setLockdownTracker(newTracker);
+                }
+
             } else {
                 setLockdownTracker(null);
             }
@@ -5172,9 +5177,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             userVpn = new Vpn(mHandler.getLooper(), mContext, mNMS, mNetd, userId, mKeyStore);
             mVpns.put(userId, userVpn);
-            if (mUserManager.getUserInfo(userId).isPrimary() && LockdownVpnTracker.isEnabled()) {
-                updateLockdownVpn();
-            }
+            updateLockdownVpn();
         }
     }
 
