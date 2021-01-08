@@ -799,6 +799,18 @@ filegroup {
     ],
 }
 
+// keep these files in sync with package/Connectivity/jarjar-rules.txt for the connectivity module.
+filegroup {
+    name: "framework-connectivity-shared-srcs",
+    srcs: [
+        "core/java/com/android/internal/util/BitUtils.java",
+        "core/java/com/android/internal/util/HexDump.java",
+        "core/java/com/android/internal/util/IndentingPrintWriter.java",
+        "core/java/com/android/internal/util/MessageUtils.java",
+        "core/java/com/android/internal/util/WakeupMessage.java",
+    ],
+}
+
 // Build ext.jar
 // ============================================================
 java_library {
