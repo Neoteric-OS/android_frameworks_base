@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b610277f_1873357b",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4587,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-01-08T00:58:38Z",
+      "side": 1,
+      "message": "This is probably fine. You could also perhaps think whether using\nUserManager.getUsers(boolean excludePartial, boolean excludeDying, boolean excludePreCreated)\nwould be a useful alternative, since it probably covers some, but probably not all, of your logic.",
+      "range": {
+        "startLine": 4587,
+        "startChar": 12,
+        "endLine": 4587,
+        "endChar": 20
+      },
+      "revId": "54b616eca20d39cf88bcb34b38ceff105cffe3b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "278f3b6e_584da803",
         "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
         "patchSetId": 1
@@ -19,6 +42,29 @@
         "startChar": 16,
         "endLine": 4588,
         "endChar": 24
+      },
+      "revId": "54b616eca20d39cf88bcb34b38ceff105cffe3b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7af69782_b245f921",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4589,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-01-08T00:58:38Z",
+      "side": 1,
+      "message": "Probably should use UserHandle.USER_SYSTEM instead of 0.",
+      "range": {
+        "startLine": 4589,
+        "startChar": 33,
+        "endLine": 4589,
+        "endChar": 34
       },
       "revId": "54b616eca20d39cf88bcb34b38ceff105cffe3b0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
