@@ -1754,7 +1754,7 @@ public class NetworkPolicyManagerServiceTest {
             expectNetworkState(true /* roaming */);
             callback.onCapabilitiesChanged(
                     new Network(TEST_NET_ID),
-                    buildNetworkCapabilities(TEST_SUB_ID, true /* roaming */));
+                    buildNetworkCapabilities(TEST_SUB_ID, TEST_IMSI,  /* roaming */true));
 
             assertEquals(0, internal.getSubscriptionOpportunisticQuota(
                     new Network(TEST_NET_ID), NetworkPolicyManagerInternal.QUOTA_TYPE_MULTIPATH));
@@ -1999,7 +1999,8 @@ public class NetworkPolicyManagerServiceTest {
         return lp;
     }
 
-    private NetworkCapabilities buildNetworkCapabilities(int subId, boolean roaming) {
+    private NetworkCapabilities buildNetworkCapabilities(int subId, String subscriberId,
+            boolean roaming) {
         final NetworkCapabilities nc = new NetworkCapabilities();
         nc.addTransportType(TRANSPORT_CELLULAR);
         if (!roaming) {
@@ -2007,6 +2008,7 @@ public class NetworkPolicyManagerServiceTest {
         }
         nc.setNetworkSpecifier(new TelephonyNetworkSpecifier.Builder()
                 .setSubscriptionId(subId).build());
+        nc.setSubscriberId(subscriberId);
         return nc;
     }
 
@@ -2074,7 +2076,7 @@ public class NetworkPolicyManagerServiceTest {
         when(mConnManager.getAllNetworkState()).thenReturn(new NetworkState[] {
                 new NetworkState(buildNetworkInfo(),
                         buildLinkProperties(TEST_IFACE),
-                        buildNetworkCapabilities(TEST_SUB_ID, roaming),
+                        buildNetworkCapabilities(TEST_SUB_ID, TEST_IMSI, roaming),
                         new Network(TEST_NET_ID), TEST_IMSI, null)
         });
     }
