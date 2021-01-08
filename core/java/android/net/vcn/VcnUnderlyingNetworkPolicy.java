@@ -17,6 +17,7 @@
 package android.net.vcn;
 
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.net.NetworkCapabilities;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -32,6 +33,7 @@ import java.util.Objects;
  *
  * @hide
  */
+@SystemApi
 public final class VcnUnderlyingNetworkPolicy implements Parcelable {
     private final boolean mIsTearDownRequested;
     private final NetworkCapabilities mMergedNetworkCapabilities;
@@ -53,7 +55,10 @@ public final class VcnUnderlyingNetworkPolicy implements Parcelable {
     /**
      * Returns whether this Carrier VCN policy policy indicates that the underlying Network should
      * be torn down.
+     *
+     * @hide
      */
+    @SystemApi
     public boolean isTeardownRequested() {
         return mIsTearDownRequested;
     }
@@ -61,7 +66,10 @@ public final class VcnUnderlyingNetworkPolicy implements Parcelable {
     /**
      * Returns the NetworkCapabilities with Carrier VCN policy bits merged into the provided
      * capabilities.
+     *
+     * @hide
      */
+    @SystemApi
     @NonNull
     public NetworkCapabilities getMergedNetworkCapabilities() {
         return mMergedNetworkCapabilities;
