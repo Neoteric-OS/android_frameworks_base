@@ -1360,8 +1360,8 @@ class CodecEncoderTestBase extends CodecTestBase {
     private static final String LOG_TAG = CodecEncoderTestBase.class.getSimpleName();
 
     // files are in WorkDir.getMediaDirString();
-    private static final String INPUT_AUDIO_FILE = "bbb_2ch_44kHz_s16le.raw";
-    private static final String INPUT_VIDEO_FILE = "bbb_cif_yuv420p_30fps.yuv";
+    static final String INPUT_AUDIO_FILE = "bbb_2ch_44kHz_s16le.raw";
+    static final String INPUT_VIDEO_FILE = "bbb_cif_yuv420p_30fps.yuv";
     private final int INP_FRM_WIDTH = 352;
     private final int INP_FRM_HEIGHT = 288;
 
