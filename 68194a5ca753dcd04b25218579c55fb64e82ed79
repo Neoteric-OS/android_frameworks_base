@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8b9b055_342607e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-01-08T17:23:50Z",
+      "side": 1,
+      "message": "If the appInfo parameter in `CompatConfig.isEnabled` is null, we can\u0027t/don\u0027t know the package name (likely because the query was by UID). If the compat fw user wants to know the state for a package name, it\u0027ll fallthrough to the `CompatConfig.willChangeBeEnabled`",
+      "parentUuid": "17e8f053_98dcb022",
+      "revId": "68194a5ca753dcd04b25218579c55fb64e82ed79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60047771_193eec9b",
