@@ -22,6 +22,30 @@
       },
       "revId": "e6981a857594fa9c0aa0d6c17bce2d99304c1832",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5971b683_744f42d3",
+        "filename": "media/java/android/media/MediaRouter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2021-01-08T09:23:08Z",
+      "side": 1,
+      "message": "SGTM, but let me handle this in another CL to prevent merge conflict.\n\nSparseArray for integer keys.\nArrayMap otherwise.\nIf more than 1000 elements, use HashMap.\n\nhttps://proandroiddev.com/all-you-need-to-know-about-arraymap-sparsearray-49759c2ecbf9",
+      "parentUuid": "6f7884a2_f6b54861",
+      "range": {
+        "startLine": 113,
+        "startChar": 50,
+        "endLine": 113,
+        "endChar": 58
+      },
+      "revId": "e6981a857594fa9c0aa0d6c17bce2d99304c1832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
