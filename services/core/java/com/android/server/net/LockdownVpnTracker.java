@@ -272,4 +272,24 @@ public class LockdownVpnTracker {
     private void hideNotification() {
         mNotificationManager.cancel(null, SystemMessage.NOTE_VPN_STATUS);
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof LockdownVpnTracker)) {
+            return false;
+        }
+        LockdownVpnTracker other = (LockdownVpnTracker) o;
+        if (this.mVpn != other.mVpn) return false;
+        return mProfile.equals(other.mProfile);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mVpn.hashCode();
+        result = 31 * result + mProfile.hashCode();
+        return result;
+    }
+
 }
