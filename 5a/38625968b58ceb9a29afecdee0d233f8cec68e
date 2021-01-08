@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+1: satayev <satayev@google.com>
+Code-Review+2: Pedro Loureiro <pedroql@google.com>
+Autosubmit+1: Andrei-Valentin Onea <andreionea@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 08 Jan 2021 21:19:09 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1543145
+Project: platform/frameworks/base
+Branch: refs/heads/master
