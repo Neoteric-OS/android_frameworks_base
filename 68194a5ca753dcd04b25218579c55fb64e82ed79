@@ -102,6 +102,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0f34775e_c72257bc",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-01-08T17:24:56Z",
+      "side": 1,
+      "message": "Sorry, this was meant to go in conjunction with a CL comment:\n\nIs there use case beyond PackageManager? I feel like this could cause confusion down the road for devs. Would it be better to just return the future value from within isEnabled (regardless if the app is installed or not)?",
+      "parentUuid": "46fc5326_834a1e77",
+      "range": {
+        "startLine": 201,
+        "startChar": 19,
+        "endLine": 201,
+        "endChar": 31
+      },
+      "revId": "68194a5ca753dcd04b25218579c55fb64e82ed79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7868913b_fb6ebc57",
         "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
         "patchSetId": 2
