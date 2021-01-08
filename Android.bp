@@ -799,6 +799,17 @@ filegroup {
     ],
 }
 
+filegroup {
+    name: "framework-connectivity-shared-srcs",
+    srcs: [
+        "core/java/com/android/internal/util/BitUtils.java",
+        "core/java/com/android/internal/util/HexDump.java",
+        "core/java/com/android/internal/util/IndentingPrintWriter.java",
+        "core/java/com/android/internal/util/MessageUtils.java",
+        "core/java/com/android/internal/util/WakeupMessage.java",
+    ],
+}
+
 // Build ext.jar
 // ============================================================
 java_library {

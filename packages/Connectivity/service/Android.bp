@@ -45,6 +45,7 @@ java_library {
     name: "service-connectivity",
     srcs: [
         ":connectivity-service-srcs",
+        ":framework-connectivity-shared-srcs",
     ],
     installable: true,
     jarjar_rules: "jarjar-rules.txt",
