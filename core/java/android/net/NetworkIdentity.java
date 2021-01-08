@@ -191,7 +191,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
         boolean metered = !state.networkCapabilities.hasCapability(
                 NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
 
-        subscriberId = state.subscriberId;
+        subscriberId = state.networkCapabilities.getSubscriberId();
 
         if (type == TYPE_WIFI) {
             if (state.networkId != null) {

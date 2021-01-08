@@ -115,22 +115,6 @@ public final class NetworkAgentConfig implements Parcelable {
     }
 
     /**
-     * For mobile networks, this is the subscriber ID (such as IMSI).
-     *
-     * @hide
-     */
-    public String subscriberId;
-
-    /**
-     * @return the subscriber ID, or null if none.
-     * @hide
-     */
-    @Nullable
-    public String getSubscriberId() {
-        return subscriberId;
-    }
-
-    /**
      * Set to skip 464xlat. This means the device will treat the network as IPv6-only and
      * will not attempt to detect a NAT64 via RFC 7050 DNS lookups.
      *
@@ -216,7 +200,6 @@ public final class NetworkAgentConfig implements Parcelable {
             explicitlySelected = nac.explicitlySelected;
             acceptUnvalidated = nac.acceptUnvalidated;
             acceptPartialConnectivity = nac.acceptPartialConnectivity;
-            subscriberId = nac.subscriberId;
             provisioningNotificationDisabled = nac.provisioningNotificationDisabled;
             skip464xlat = nac.skip464xlat;
             legacyType = nac.legacyType;
@@ -265,18 +248,6 @@ public final class NetworkAgentConfig implements Parcelable {
         public Builder setPartialConnectivityAcceptable(
                 final boolean partialConnectivityAcceptable) {
             mConfig.acceptPartialConnectivity = partialConnectivityAcceptable;
-            return this;
-        }
-
-        /**
-         * Sets the subscriber ID for this network.
-         *
-         * @return this builder, to facilitate chaining.
-         * @hide
-         */
-        @NonNull
-        public Builder setSubscriberId(@Nullable String subscriberId) {
-            mConfig.subscriberId = subscriberId;
             return this;
         }
 
@@ -362,7 +333,6 @@ public final class NetworkAgentConfig implements Parcelable {
                 && provisioningNotificationDisabled == that.provisioningNotificationDisabled
                 && skip464xlat == that.skip464xlat
                 && legacyType == that.legacyType
-                && Objects.equals(subscriberId, that.subscriberId)
                 && Objects.equals(legacyTypeName, that.legacyTypeName)
                 && Objects.equals(mLegacyExtraInfo, that.mLegacyExtraInfo);
     }
@@ -370,7 +340,7 @@ public final class NetworkAgentConfig implements Parcelable {
     @Override
     public int hashCode() {
         return Objects.hash(allowBypass, explicitlySelected, acceptUnvalidated,
-                acceptPartialConnectivity, provisioningNotificationDisabled, subscriberId,
+                acceptPartialConnectivity, provisioningNotificationDisabled,
                 skip464xlat, legacyType, legacyTypeName, mLegacyExtraInfo);
     }
 
@@ -382,7 +352,6 @@ public final class NetworkAgentConfig implements Parcelable {
                 + ", acceptUnvalidated = " + acceptUnvalidated
                 + ", acceptPartialConnectivity = " + acceptPartialConnectivity
                 + ", provisioningNotificationDisabled = " + provisioningNotificationDisabled
-                + ", subscriberId = '" + subscriberId + '\''
                 + ", skip464xlat = " + skip464xlat
                 + ", legacyType = " + legacyType
                 + ", hasShownBroken = " + hasShownBroken
@@ -402,7 +371,6 @@ public final class NetworkAgentConfig implements Parcelable {
         out.writeInt(explicitlySelected ? 1 : 0);
         out.writeInt(acceptUnvalidated ? 1 : 0);
         out.writeInt(acceptPartialConnectivity ? 1 : 0);
-        out.writeString(subscriberId);
         out.writeInt(provisioningNotificationDisabled ? 1 : 0);
         out.writeInt(skip464xlat ? 1 : 0);
         out.writeInt(legacyType);
@@ -419,7 +387,6 @@ public final class NetworkAgentConfig implements Parcelable {
             networkAgentConfig.explicitlySelected = in.readInt() != 0;
             networkAgentConfig.acceptUnvalidated = in.readInt() != 0;
             networkAgentConfig.acceptPartialConnectivity = in.readInt() != 0;
-            networkAgentConfig.subscriberId = in.readString();
             networkAgentConfig.provisioningNotificationDisabled = in.readInt() != 0;
             networkAgentConfig.skip464xlat = in.readInt() != 0;
             networkAgentConfig.legacyType = in.readInt();
