@@ -39,6 +39,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -52,6 +53,8 @@ public class MultiInstanceTest {
     private static final int PER_TEST_TIMEOUT_LARGE_TEST_MS = 1800000;
     private static final long mSeed = 0x12b9b0a1;  // random seed
     private static final Random rand = new Random(mSeed);
+    private static ArrayList<Object[]> mDecoderList = new ArrayList<Object[]>();
+    private static ArrayList<Object[]> mEncoderList = new ArrayList<Object[]>();
 
     private static int getMaxSupportedInstances(String name, String mime) throws IOException {
         MediaCodec codec = MediaCodec.createByCodecName(name);
@@ -61,6 +64,21 @@ public class MultiInstanceTest {
         int instances = info.isHardwareAccelerated() ? cap.getMaxSupportedInstances() : 4;
         codec.release();
         return instances;
+    }
+
+    private static ArrayList<Object[]> getCodecList(boolean isEncoder) {
+        if (mDecoderList.isEmpty()) {
+            mDecoderList.addAll(CodecDecoderTestBase
+                    .prepareParamList(CodecDecoderTest.exhaustiveArgsList, false, true,
+                            true, true));
+        }
+        if (mEncoderList.isEmpty()) {
+            mEncoderList.addAll(CodecEncoderTestBase
+                    .prepareParamList(CodecEncoderTest.exhaustiveArgsList, true, true,
+                            true, true));
+        }
+        if (isEncoder) return mEncoderList;
+        return mDecoderList;
     }
 
     @RunWith(Parameterized.class)
@@ -76,12 +94,7 @@ public class MultiInstanceTest {
 
         @Parameterized.Parameters(name = "{index}({0})")
         public static Collection<Object[]> input() {
-            final boolean isEncoder = false;
-            final boolean needAudio = true;
-            final boolean needVideo = true;
-            return CodecDecoderTestBase
-                    .prepareParamList(CodecDecoderTest.exhaustiveArgsList, isEncoder, needAudio,
-                            needVideo, true);
+            return getCodecList(false);
         }
 
         public DecoderTest(String mime, String testFile, String refFile, String reconfigFile,
@@ -158,12 +171,7 @@ public class MultiInstanceTest {
 
         @Parameterized.Parameters(name = "{index}({0})")
         public static Collection<Object[]> input() {
-            final boolean isEncoder = true;
-            final boolean needAudio = true;
-            final boolean needVideo = true;
-            return CodecEncoderTestBase
-                    .prepareParamList(CodecEncoderTest.exhaustiveArgsList, isEncoder, needAudio,
-                            needVideo, true);
+            return getCodecList(true);
         }
 
         @Before
@@ -208,6 +216,101 @@ public class MultiInstanceTest {
                             CodecEncoderTest.randomChoice(rand), inputData);
                     task.add(ep);
                 }
+            }
+            Collections.shuffle(task, rand);
+            List<Future<Void>> resultList = pool.invokeAll(task);
+            for (int i = 0; i < resultList.size(); i++) {
+                resultList.get(i).get();
+            }
+            task.clear();
+            pool.shutdown();
+        }
+
+        @LargeTest
+        @Test(timeout = PER_TEST_TIMEOUT_LARGE_TEST_MS)
+        public void testCodecMultiInstance()
+                throws IOException, InterruptedException, ExecutionException {
+            ArrayList<Callable<Void>> task = new ArrayList<>();
+            int cores = Runtime.getRuntime().availableProcessors();
+            int ThreadCount = cores * 2;
+            ExecutorService pool = Executors.newFixedThreadPool(ThreadCount);
+            byte[] yuvInput = null;
+            byte[] pcmInput = null;
+            byte[] inputData;
+            byte[] audioInputData =
+                    setUpSource(CodecTestBase.mInpPrefix + CodecEncoderTestBase.mInputAudioFile);
+            byte[] videoInputData =
+                    setUpSource(CodecTestBase.mInpPrefix + CodecEncoderTestBase.mInputVideoFile);
+
+            for (int numInstances = 0; numInstances < cores; ) {
+                if (numInstances == 0) {
+                    CodecEncoderTest cet =
+                            new CodecEncoderTest(mMime, mBitrates, mParamList1, mParamList2);
+                    cet.setUpParams(0);
+                    if (cet.mIsAudio) {
+                        inputData = audioInputData;
+                        pcmInput = inputData;
+                    } else {
+                        inputData = videoInputData;
+                        yuvInput = inputData;
+                    }
+                    ArrayList<String> listOfCodecs =
+                            selectCodecs(cet.mMime, cet.mFormats, null, true);
+                    Assume.assumeTrue("no suitable codecs found for mime: " + mMime,
+                            !listOfCodecs.isEmpty());
+                    int compIndex = rand.nextInt(listOfCodecs.size());
+                    String compName = listOfCodecs.get(compIndex);
+                    EncodeParallel ep =
+                            new EncodeParallel(cet, compName, CodecEncoderTest.randomChoice(rand),
+                                    inputData);
+                    task.add(ep);
+                    numInstances++;
+                } else {
+                    int codecIndex = rand.nextInt(mEncoderList.size());
+                    Object[] args = mEncoderList.get(codecIndex);
+                    if (!mMime.equals(args[0])) {
+                        CodecEncoderTest cet =
+                                new CodecEncoderTest((String) args[0], (int[]) args[1],
+                                        (int[]) args[2], (int[]) args[3]);
+                        cet.setUpParams(0);
+                        ArrayList<String> listOfCodecs =
+                                selectCodecs(cet.mMime, cet.mFormats, null, true);
+                        if (!listOfCodecs.isEmpty()) {
+                            int compIndex = rand.nextInt(listOfCodecs.size());
+                            String compName = listOfCodecs.get(compIndex);
+                            if (cet.mIsAudio && pcmInput == null) {
+                                inputData = audioInputData;
+                                pcmInput = inputData;
+                            } else if (!cet.mIsAudio && yuvInput == null) {
+                                inputData = videoInputData;
+                                yuvInput = inputData;
+                            } else if (cet.mIsAudio) {
+                                inputData = pcmInput;
+                            } else {
+                                inputData = yuvInput;
+                            }
+                            EncodeParallel ep =
+                                    new EncodeParallel(cet, compName,
+                                            CodecEncoderTest.randomChoice(rand), inputData);
+                            task.add(ep);
+                            numInstances++;
+                        }
+                    }
+                }
+                int codecIndex = rand.nextInt(mDecoderList.size()); // add decoder instances
+                Object[] args = mDecoderList.get(codecIndex);
+                CodecDecoderTest cdt =
+                        new CodecDecoderTest((String) args[0], (String) args[1],
+                                (String) args[2], (String) args[3], (float) args[4],
+                                (long) args[5]);
+                ArrayList<String> listOfCodecs = cdt.getCodecsList();
+                if (listOfCodecs.isEmpty()) continue;
+                int compIndex = rand.nextInt(listOfCodecs.size());
+                String compName = listOfCodecs.get(compIndex);
+                DecodeParallel dp =
+                        new DecodeParallel(cdt, compName, CodecDecoderTest.randomChoice(rand));
+                task.add(dp);
+                numInstances++;
             }
             Collections.shuffle(task, rand);
             List<Future<Void>> resultList = pool.invokeAll(task);
