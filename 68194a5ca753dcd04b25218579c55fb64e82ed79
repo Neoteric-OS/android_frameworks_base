@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "46fc5326_834a1e77",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-01-08T17:06:29Z",
+      "side": 1,
+      "message": "I don\u0027t understand the question?",
+      "parentUuid": "60047771_193eec9b",
+      "range": {
+        "startLine": 201,
+        "startChar": 19,
+        "endLine": 201,
+        "endChar": 31
+      },
+      "revId": "68194a5ca753dcd04b25218579c55fb64e82ed79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7868913b_fb6ebc57",
         "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
         "patchSetId": 2
@@ -71,6 +95,30 @@
       "writtenOn": "2021-01-08T16:50:29Z",
       "side": 1,
       "message": "be",
+      "range": {
+        "startLine": 153,
+        "startChar": 47,
+        "endLine": 153,
+        "endChar": 48
+      },
+      "revId": "68194a5ca753dcd04b25218579c55fb64e82ed79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df0fee62_510d07d3",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-01-08T17:06:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7868913b_fb6ebc57",
       "range": {
         "startLine": 153,
         "startChar": 47,
@@ -94,6 +142,30 @@
       "writtenOn": "2021-01-08T16:50:29Z",
       "side": 1,
       "message": "why? would this break mainline use cases?",
+      "range": {
+        "startLine": 160,
+        "startChar": 54,
+        "endLine": 160,
+        "endChar": 83
+      },
+      "revId": "68194a5ca753dcd04b25218579c55fb64e82ed79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5607247e_5be34623",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-01-08T17:06:29Z",
+      "side": 1,
+      "message": "This has always been the default behavior (see above). We assume by default that a change is always enabled, meant only for figuring out if the code path is even hit (like a logging only change that can be toggled).\nWhile mainline module change id\u0027s would likely be target sdk gated (and end up default disabled for older versions), they would also bundle the change id info.",
+      "parentUuid": "213459fc_ad65f1b4",
       "range": {
         "startLine": 160,
         "startChar": 54,
