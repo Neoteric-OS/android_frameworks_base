@@ -52,6 +52,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26764d40_1a265e2f",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-01-08T15:37:33Z",
+      "side": 1,
+      "message": "Was wondering which is better - consistent naming or more accurate grammar; happy to choose grammar over symmetry.",
+      "parentUuid": "bbe6a150_d147ce70",
+      "revId": "2345d72fc5d92700e335dccdade05b9a3c66d69c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "006e8799_7774de20",
@@ -65,6 +83,24 @@
       "writtenOn": "2021-01-08T11:51:11Z",
       "side": 1,
       "message": "wrong method name",
+      "revId": "2345d72fc5d92700e335dccdade05b9a3c66d69c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f4dc3ba_1d5bc36a",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-01-08T15:37:33Z",
+      "side": 1,
+      "message": "Serves me right for renaming without recompiling.",
+      "parentUuid": "006e8799_7774de20",
       "revId": "2345d72fc5d92700e335dccdade05b9a3c66d69c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79e9048d_6c9306aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-01-08T15:37:33Z",
+      "side": 1,
+      "message": "Thanks! I always end up regretting doing an ad-hoc rename without a full rebuild.",
+      "revId": "68194a5ca753dcd04b25218579c55fb64e82ed79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
