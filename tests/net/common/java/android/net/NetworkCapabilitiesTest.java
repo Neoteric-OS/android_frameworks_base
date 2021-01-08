@@ -43,6 +43,8 @@ import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI_AWARE;
 import static android.net.NetworkCapabilities.UNRESTRICTED_CAPABILITIES;
 
+import static com.android.testutils.DevSdkIgnoreRuleKt.isDevSdkInRange;
+import static com.android.testutils.MiscAsserts.assertThrows;
 import static com.android.testutils.ParcelUtils.assertParcelSane;
 import static com.android.testutils.ParcelUtils.assertParcelingIsLossless;
 
@@ -81,6 +83,8 @@ import java.util.Set;
 public class NetworkCapabilitiesTest {
     private static final String TEST_SSID = "TEST_SSID";
     private static final String DIFFERENT_TEST_SSID = "DIFFERENT_TEST_SSID";
+    private static final String TEST_IMSI = "TEST_IMSI";
+    private static final String DIFFERENT_TEST_IMSI = "DIFFERENT_TEST_IMSI";
 
     @Rule
     public DevSdkIgnoreRule mDevSdkIgnoreRule = new DevSdkIgnoreRule();
@@ -93,6 +97,10 @@ public class NetworkCapabilitiesTest {
         // Build.VERSION.SDK_INT > Build.VERSION_CODES.Q is used to check the Android version after
         // releasing Android R.
         return BuildCompat.isAtLeastR() || Build.VERSION.SDK_INT > Build.VERSION_CODES.Q;
+    }
+
+    private boolean isAtLeastS() {
+        return isDevSdkInRange(Build.VERSION_CODES.R, null /*maxInclusive*/);
     }
 
     @Test
@@ -300,7 +308,9 @@ public class NetworkCapabilitiesTest {
             .setUids(uids)
             .addCapability(NET_CAPABILITY_EIMS)
             .addCapability(NET_CAPABILITY_NOT_METERED);
-        if (isAtLeastR()) {
+        if (isAtLeastS()) {
+            netCap.setSubscriberId(TEST_IMSI);
+        } else if (isAtLeastR()) {
             netCap.setOwnerUid(123);
             netCap.setAdministratorUids(new int[] {5, 11});
         }
@@ -325,7 +335,9 @@ public class NetworkCapabilitiesTest {
     }
 
     private void testParcelSane(NetworkCapabilities cap) {
-        if (isAtLeastR()) {
+        if (isAtLeastS()) {
+            assertParcelSane(cap, 16);
+        } else if (isAtLeastR()) {
             assertParcelSane(cap, 15);
         } else {
             assertParcelSane(cap, 11);
@@ -558,6 +570,20 @@ public class NetworkCapabilitiesTest {
         assertFalse(nc2.appliesToUid(12));
         assertTrue(nc1.appliesToUid(22));
         assertTrue(nc2.appliesToUid(22));
+
+        // Verify the subscriber id can be combined only when they are equal.
+        if (isAtLeastS()) {
+            nc1.setSubscriberId(TEST_IMSI);
+            nc2.setSubscriberId(DIFFERENT_TEST_IMSI);
+            assertThrows(IllegalStateException.class, () -> nc2.combineCapabilities(nc1));
+
+            nc2.setSubscriberId(null);
+            assertThrows(IllegalStateException.class, () -> nc2.combineCapabilities(nc1));
+
+            nc2.setSubscriberId(TEST_IMSI);
+            nc2.combineCapabilities(nc1);
+            assertEquals(TEST_IMSI, nc2.getSubscriberId());
+        }
     }
 
     @Test @IgnoreUpTo(Build.VERSION_CODES.Q)
@@ -709,6 +735,16 @@ public class NetworkCapabilitiesTest {
         nc1.setUids(uidRange(10, 13));
         nc2.set(nc1);  // Overwrites, as opposed to combineCapabilities
         assertEquals(nc1, nc2);
+
+        if (isAtLeastS()) {
+            nc1.setSubscriberId(TEST_IMSI);
+            nc2.set(nc1);
+            assertEquals(nc1, nc2);
+            nc2.setSubscriberId(DIFFERENT_TEST_IMSI);
+            nc2.set(nc1);
+            assertEquals(nc1, nc2);
+            assertEquals(TEST_IMSI, nc2.getSubscriberId());
+        }
     }
 
     @Test
@@ -787,6 +823,18 @@ public class NetworkCapabilitiesTest {
                     .build();
             fail("Should not set null into setAdministratorUids");
         } catch (NullPointerException expected) { }
+    }
+
+    @Test
+    public void testSubscriberId() throws Exception {
+        final NetworkCapabilities ncWithoutId = new NetworkCapabilities();
+        assertNull(ncWithoutId.getSubscriberId());
+        final NetworkCapabilities ncWithId = new NetworkCapabilities.Builder()
+                .setSubscriberId(TEST_IMSI).build();
+        assertEquals(TEST_IMSI, ncWithId.getSubscriberId());
+
+        assertFalse(ncWithId.satisfiedByNetworkCapabilities(ncWithoutId));
+        assertTrue(ncWithoutId.satisfiedByNetworkCapabilities(ncWithId));
     }
 
     @Test
@@ -935,6 +983,7 @@ public class NetworkCapabilitiesTest {
                 .setSsid(ssid)
                 .setRequestorUid(requestUid)
                 .setRequestorPackageName(packageName)
+                .setSubscriberId(TEST_IMSI)
                 .build();
         assertEquals(1, nc.getTransportTypes().length);
         assertEquals(TRANSPORT_WIFI, nc.getTransportTypes()[0]);
@@ -953,6 +1002,7 @@ public class NetworkCapabilitiesTest {
         assertEquals(ssid, nc.getSsid());
         assertEquals(requestUid, nc.getRequestorUid());
         assertEquals(packageName, nc.getRequestorPackageName());
+        assertEquals(TEST_IMSI, nc.getSubscriberId());
         // Cannot assign null into NetworkCapabilities.Builder
         try {
             final NetworkCapabilities.Builder builder = new NetworkCapabilities.Builder(null);
