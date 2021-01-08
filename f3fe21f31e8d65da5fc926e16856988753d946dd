@@ -72,6 +72,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9375c7c6_08ca1dfa",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-08T20:59:36Z",
+      "side": 1,
+      "message": "I suggest not allowing multiple SignalThresholdInfos per-RAN-per-requester in the API.",
+      "parentUuid": "bd5ce9e7_86dbc989",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 87
+      },
+      "revId": "f3fe21f31e8d65da5fc926e16856988753d946dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bec9cfcb_04fd876b",
         "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
         "patchSetId": 8
