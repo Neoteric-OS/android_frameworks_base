@@ -463,6 +463,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "809dc820_0b7f44c5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6163,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-08T10:32:47Z",
+      "side": 1,
+      "message": "I agree that for simplicity such a change should implemented separately, but I don\u0027t think we can declare feature complete until it is done, because I am far too scared of this being left just unimplemented.\n\nThe more I think about it the more I think the current implementation that just assumes a given client is falling short of taking appropriate steps to prevent accidental breach of trust, where Android devices might be displaying malicious URLs resulting from this code just assuming authentication guarantees because we happen to only have one client combined with a well-intentioned implementation by an OEM that didn\u0027t know about this particular tenet. I think this is important enough to stopship.\n\nYes, identifying the caller is exactly the kind of thing I mean. I don\u0027t think it should be a bit field ; instead I suggest having an IntDef with Unknown, Mixed, Capport, Passpoint. We can add more later. Mixed would not retain what were the original components. I think it\u0027s much better to call out Passpoint rather than WiFi, as it is easy to imagine WiFi may have other sources than Passpoint in the future.",
+      "parentUuid": "e651e11d_4d9f4773",
+      "range": {
+        "startLine": 6163,
+        "startChar": 11,
+        "endLine": 6163,
+        "endChar": 52
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e663b1af_a55012aa",

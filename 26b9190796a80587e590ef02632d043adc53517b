@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ee9f90c_9fd6dc62",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-08T10:32:47Z",
+      "side": 1,
+      "message": "I thought the specific Passpoint ref here was in fact useful, as it was just an example ; it didn\u0027t say anything about Passpoint being the only possible source outside of RFC8908.\n\n(the removal of the refs in ConnectivityService is good)",
+      "range": {
+        "startLine": 186,
+        "startChar": 74,
+        "endLine": 186,
+        "endChar": 75
+      },
+      "revId": "26b9190796a80587e590ef02632d043adc53517b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
