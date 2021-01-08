@@ -1409,6 +1409,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mLockdownTracker.augmentNetworkInfo(state.networkInfo);
             }
         }
+        state.networkCapabilities.setSubscriberId(null);
     }
 
     /**
@@ -1677,6 +1678,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             newNc.setNetworkSpecifier(newNc.getNetworkSpecifier().redact());
         }
         newNc.setAdministratorUids(new int[0]);
+        newNc.setSubscriberId(null);
         return newNc;
     }
 
