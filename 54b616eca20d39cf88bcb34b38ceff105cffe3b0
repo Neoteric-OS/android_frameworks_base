@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b5b26b5e_43e12f4d",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4587,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2021-01-08T08:16:11Z",
+      "side": 1,
+      "message": "Thank you for the feedback.\n\nIn UserManagerService#cleanupPartialUsers users are marked as partial and dying (added to mRemovingUserIds). This happens when the boot phase PHASE_ACTIVITY_MANAGER_READY is received. Unfortunately, this hasn\u0027t happened yet, so we would still need to do the same checks here.",
+      "parentUuid": "b610277f_1873357b",
+      "range": {
+        "startLine": 4587,
+        "startChar": 12,
+        "endLine": 4587,
+        "endChar": 20
+      },
+      "revId": "54b616eca20d39cf88bcb34b38ceff105cffe3b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "278f3b6e_584da803",
         "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
         "patchSetId": 1
