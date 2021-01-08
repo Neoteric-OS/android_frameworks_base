@@ -87,6 +87,24 @@
       "parentUuid": "af47670d_3e382659",
       "revId": "c1062a526d0afcae2118e95d777ca3d3871ed6d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6b82375_dd0d911c",
+        "filename": "services/core/java/com/android/server/apphibernation/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-08T18:51:08Z",
+      "side": 1,
+      "message": "Resolving comment",
+      "parentUuid": "c4ce67e3_68cde506",
+      "revId": "c1062a526d0afcae2118e95d777ca3d3871ed6d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
