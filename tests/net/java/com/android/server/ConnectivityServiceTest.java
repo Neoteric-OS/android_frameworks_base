@@ -343,6 +343,8 @@ public class ConnectivityServiceTest {
 
     private static final String INTERFACE_NAME = "interface";
 
+    private static final String TEST_IMSI = "TEST_IMSI";
+
     private MockContext mServiceContext;
     private HandlerThread mCsHandlerThread;
     private ConnectivityService.Dependencies mDeps;
@@ -8147,5 +8149,29 @@ public class ConnectivityServiceTest {
                             < nriOutput[i + 1].mRequests.get(0).requestId;
             assertTrue(isRequestIdInOrder);
         }
+    }
+
+    @Test
+    public void testRedactSubscriberId() throws Exception {
+        final TestNetworkCallback callback = new TestNetworkCallback();
+        mCm.requestNetwork(new NetworkRequest.Builder().build(), callback);
+
+        // Connect a cellular network.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+        callback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+
+        // Add subscriber Id to the network, verify no public API can read that.
+        final NetworkCapabilities cellNc = new NetworkCapabilities()
+                .addTransportType(TRANSPORT_CELLULAR)
+                .addCapability(NET_CAPABILITY_INTERNET)
+                .addCapability(NET_CAPABILITY_NOT_SUSPENDED)
+                .setSubscriberId(TEST_IMSI);
+        mCellNetworkAgent.setNetworkCapabilities(cellNc, true /* sendToConnectivityService */);
+        callback.expectCapabilitiesThat(mCellNetworkAgent, (it) -> it.getSubscriberId() == null);
+        callback.assertNoCallback();
+        assertNull(mCm.getNetworkCapabilities(mCellNetworkAgent.getNetwork()).getSubscriberId());
+
+        // TODO: Verify getAllNetworkState() can get subscriberId after aosp/1511314 is merged.
     }
 }
