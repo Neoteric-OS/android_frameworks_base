@@ -18,6 +18,7 @@ package android.uwb;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -28,6 +29,7 @@ import java.util.Objects;
  *
  * @hide
  */
+@SystemApi
 public final class AngleOfArrivalMeasurement implements Parcelable {
     private final AngleMeasurement mAzimuthAngleMeasurement;
     private final AngleMeasurement mAltitudeAngleMeasurement;
