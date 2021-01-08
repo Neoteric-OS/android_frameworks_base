@@ -124,6 +124,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0be86f40_c9eaf9c5",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-01-08T18:24:26Z",
+      "side": 1,
+      "message": "As discussed off-CL, will try to add more documentation (in a separate CL) to reduce cognitive load for all the current use cases.\n\nThis CL covers the new use case of querying the state of a change id for an app that is not installed, but has a deferred override.",
+      "parentUuid": "0f34775e_c72257bc",
+      "range": {
+        "startLine": 201,
+        "startChar": 19,
+        "endLine": 201,
+        "endChar": 31
+      },
+      "revId": "68194a5ca753dcd04b25218579c55fb64e82ed79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7868913b_fb6ebc57",
