@@ -30,6 +30,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Process;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.proto.ProtoOutputStream;
@@ -132,6 +133,7 @@ public final class NetworkCapabilities implements Parcelable {
         mPrivateDnsBroken = false;
         mRequestorUid = Process.INVALID_UID;
         mRequestorPackageName = null;
+        mSubscriberId = null;
     }
 
     /**
@@ -160,6 +162,7 @@ public final class NetworkCapabilities implements Parcelable {
         mPrivateDnsBroken = nc.mPrivateDnsBroken;
         mRequestorUid = nc.mRequestorUid;
         mRequestorPackageName = nc.mRequestorPackageName;
+        mSubscriberId = nc.mSubscriberId;
     }
 
     /**
@@ -1621,6 +1624,7 @@ public final class NetworkCapabilities implements Parcelable {
         combineSSIDs(nc);
         combineRequestor(nc);
         combineAdministratorUids(nc);
+        combineSubscriberId(nc);
     }
 
     /**
@@ -1640,8 +1644,9 @@ public final class NetworkCapabilities implements Parcelable {
                 && satisfiedBySpecifier(nc)
                 && (onlyImmutable || satisfiedBySignalStrength(nc))
                 && (onlyImmutable || satisfiedByUids(nc))
-                && (onlyImmutable || satisfiedBySSID(nc)))
-                && (onlyImmutable || satisfiedByRequestor(nc));
+                && (onlyImmutable || satisfiedBySSID(nc))
+                && (onlyImmutable || satisfiedByRequestor(nc))
+                && (onlyImmutable || satisfiedBySubscriberId(nc)));
     }
 
     /**
@@ -1735,7 +1740,8 @@ public final class NetworkCapabilities implements Parcelable {
                 && equalsOwnerUid(that)
                 && equalsPrivateDnsBroken(that)
                 && equalsRequestor(that)
-                && equalsAdministratorUids(that);
+                && equalsAdministratorUids(that)
+                && equalsSubscriberId(that);
     }
 
     @Override
@@ -1757,7 +1763,8 @@ public final class NetworkCapabilities implements Parcelable {
                 + Objects.hashCode(mPrivateDnsBroken) * 47
                 + Objects.hashCode(mRequestorUid) * 53
                 + Objects.hashCode(mRequestorPackageName) * 59
-                + Arrays.hashCode(mAdministratorUids) * 61;
+                + Arrays.hashCode(mAdministratorUids) * 61
+                + Objects.hashCode(mSubscriberId) * 67;
     }
 
     @Override
@@ -1782,6 +1789,7 @@ public final class NetworkCapabilities implements Parcelable {
         dest.writeInt(mOwnerUid);
         dest.writeInt(mRequestorUid);
         dest.writeString(mRequestorPackageName);
+        dest.writeString(mSubscriberId);
     }
 
     public static final @android.annotation.NonNull Creator<NetworkCapabilities> CREATOR =
@@ -1806,6 +1814,7 @@ public final class NetworkCapabilities implements Parcelable {
                 netCap.mOwnerUid = in.readInt();
                 netCap.mRequestorUid = in.readInt();
                 netCap.mRequestorPackageName = in.readString();
+                netCap.mSubscriberId = in.readString();
                 return netCap;
             }
             @Override
@@ -1878,6 +1887,10 @@ public final class NetworkCapabilities implements Parcelable {
 
         if (mPrivateDnsBroken) {
             sb.append(" PrivateDnsBroken");
+        }
+
+        if (null != mSubscriberId) {
+            sb.append(" SubscriberId: ").append(mSubscriberId);
         }
 
         sb.append("]");
@@ -2190,9 +2203,67 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     /**
+     * The unique subscriber Id for the network, for example, the IMSI for a GSM phone. Null if
+     * it is unavailable or unset. See {@link TelephonyManager#getSubscriberId()} for more details.
+     */
+    @Nullable
+    private String mSubscriberId;
+
+    /**
+     * Sets the subscriber Id that associated to this network or request. Pass null for
+     * clean up.
+     *
+     * @hide
+     */
+    @NonNull
+    @SystemApi
+    public NetworkCapabilities setSubscriberId(@Nullable String subscriberId) {
+        mSubscriberId = subscriberId;
+        return this;
+    }
+
+    /**
+     * Gets the subscriber Id that associated to this network or request.
+     * @hide
+     */
+    @Nullable
+    @SystemApi
+    public String getSubscriberId() {
+        return mSubscriberId;
+    }
+
+    /**
+     * Tests if the subscriber Id of this network is the same as that of the passed one.
+     */
+    private boolean equalsSubscriberId(@NonNull NetworkCapabilities nc) {
+        return Objects.equals(mSubscriberId, nc.mSubscriberId);
+    }
+
+    /**
+     * Check if the subscriber Id requirements of this object are matched by the passed one.
+     */
+    private boolean satisfiedBySubscriberId(@NonNull NetworkCapabilities nc) {
+        return mSubscriberId == null || mSubscriberId.equals(nc.mSubscriberId);
+    }
+
+    /**
+     * Combine subscriber Ids of the capabilities.
+     *
+     * <p>This is only legal if the subscriber Ids are equal.
+     *
+     * <p>If both subscriber Ids are not equal, they belong to different subscription
+     * (or no subscription). In this case, it would not make sense to add them together.
+     */
+    private void combineSubscriberId(@NonNull NetworkCapabilities nc) {
+        if (!Objects.equals(mSubscriberId, nc.mSubscriberId)) {
+            throw new IllegalStateException("Can't combine two subscriber Ids");
+        }
+    }
+
+    /**
      * Builder class for NetworkCapabilities.
      *
-     * This class is mainly for for {@link NetworkAgent} instances to use. Many fields in
+     * This class is mainly for {@link NetworkAgent} instances to use. Many fields in
      * the built class require holding a signature permission to use - mostly
      * {@link android.Manifest.permission.NETWORK_FACTORY}, but refer to the specific
      * description of each setter. As this class lives entirely in app space it does not
@@ -2480,6 +2551,21 @@ public final class NetworkCapabilities implements Parcelable {
         @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
         public Builder setRequestorPackageName(@Nullable final String packageName) {
             mCaps.setRequestorPackageName(packageName);
+            return this;
+        }
+
+        /**
+         * Set the subscriber id.
+         *
+         * @param subscriberId The unique subscriber Id for the network, for example, the
+         *                     IMSI for a GSM phone. Null if it is unavailable. See
+         *                     {@link TelephonyManager#getSubscriberId()} for more details.
+         * @return this builder
+         */
+        @NonNull
+        @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
+        public Builder setSubscriberId(@Nullable final String subscriberId) {
+            mCaps.setSubscriberId(subscriberId);
             return this;
         }
 
