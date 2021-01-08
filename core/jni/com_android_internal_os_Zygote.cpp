@@ -852,7 +852,7 @@ static void MountEmulatedStorage(uid_t uid, jint mount_mode,
              multiuser_get_uid(user_id, AID_EVERYBODY), fail_fn);
 
   bool isFuse = GetBoolProperty(kPropFuse, false);
-  bool isAppDataIsolationEnabled = GetBoolProperty(kVoldAppDataIsolation, false);
+  bool isAppDataIsolationEnabled = GetBoolProperty(kVoldAppDataIsolation, true);
 
   if (isFuse) {
     if (mount_mode == MOUNT_EXTERNAL_PASS_THROUGH) {
