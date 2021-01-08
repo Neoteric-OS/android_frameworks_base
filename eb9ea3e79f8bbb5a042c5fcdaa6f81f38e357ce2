@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09d6cf28_9c79fb8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-08T00:42:25Z",
+      "side": 1,
+      "message": "If settings is no longer using this, I think it does away with the only user, in which case it\u0027s better to just remove the function",
+      "revId": "eb9ea3e79f8bbb5a042c5fcdaa6f81f38e357ce2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
