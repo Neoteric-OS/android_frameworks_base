@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "057be4c9_7717ece6",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-09T03:18:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26df3356_ca86aedb",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 11
+      },
+      "revId": "f3fe21f31e8d65da5fc926e16856988753d946dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81d6760c_5aaf7cc0",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-08T20:03:24Z",
       "side": 1,
       "message": "Not needed, already private",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "f3fe21f31e8d65da5fc926e16856988753d946dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b78d292_1720d468",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-09T03:18:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81d6760c_5aaf7cc0",
       "range": {
         "startLine": 67,
         "startChar": 0,
@@ -94,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8ae567d_5fc9bafb",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-09T03:18:57Z",
+      "side": 1,
+      "message": "RAN must be unique in the collection if STI. This is explicit in javadoc of constructor below and verified/UTed.\n\nRAN is good candidate for ordering (unique and always there).",
+      "parentUuid": "9375c7c6_08ca1dfa",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 87
+      },
+      "revId": "f3fe21f31e8d65da5fc926e16856988753d946dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bec9cfcb_04fd876b",
@@ -107,6 +179,30 @@
       "writtenOn": "2021-01-08T19:53:17Z",
       "side": 1,
       "message": "Nit: ArrayList should have a usable #equals, I don\u0027t think we need toArray calls here",
+      "range": {
+        "startLine": 151,
+        "startChar": 15,
+        "endLine": 152,
+        "endChar": 48
+      },
+      "revId": "f3fe21f31e8d65da5fc926e16856988753d946dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8421f3ee_43aff666",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-09T03:18:57Z",
+      "side": 1,
+      "message": "Right. This is still legacy logic for collection\u003c\u003e. ArrayList#equals works well for our case. Thanks",
+      "parentUuid": "bec9cfcb_04fd876b",
       "range": {
         "startLine": 151,
         "startChar": 15,
@@ -140,6 +236,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4f10b52_4fb441a7",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-09T03:18:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d06437f5_1f694ba1",
+      "range": {
+        "startLine": 192,
+        "startChar": 35,
+        "endLine": 192,
+        "endChar": 46
+      },
+      "revId": "f3fe21f31e8d65da5fc926e16856988753d946dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9868b8e0_289ec63b",
@@ -153,6 +273,30 @@
       "writtenOn": "2021-01-08T19:53:17Z",
       "side": 1,
       "message": "Set#add will tell you if the set changed or not:\n\nif (!uniqueRan.add(ran)) {\n  return false;\n}",
+      "range": {
+        "startLine": 199,
+        "startChar": 16,
+        "endLine": 199,
+        "endChar": 39
+      },
+      "revId": "f3fe21f31e8d65da5fc926e16856988753d946dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff6eef8f_1c15ffb2",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-09T03:18:57Z",
+      "side": 1,
+      "message": "Done. Nice tip. Thanks!",
+      "parentUuid": "9868b8e0_289ec63b",
       "range": {
         "startLine": 199,
         "startChar": 16,
