@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8101c2bb_982dfb43",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6262,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-09T00:39:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7629f52e_ec2d2f89",
+      "range": {
+        "startLine": 6262,
+        "startChar": 12,
+        "endLine": 6262,
+        "endChar": 81
+      },
+      "revId": "9e35dc799ec0f048b97a93b05e74fc490091d728",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "072de53c_e51fec79",
@@ -150,6 +174,30 @@
       "side": 1,
       "message": "The constants for the CaptivePortalData are all identical, and could also be completely grouped at the top of both functions (the constants and orders were the same in PS5, they are different in PS6 but only in a trivial manner that doesn\u0027t affect the test, so they might as well be the same like in PS5). So I also would like to see these factorized ; copying long builder strings like this is something we avoid. I gave three possible examples of how that can be achieved in my previous comment. You\u0027re welcome to come up with a fourth one if you think none of my suggestions are good, but please do not have two different copies of these builders.",
       "parentUuid": "a64c858b_61de5bec",
+      "range": {
+        "startLine": 3142,
+        "startChar": 16,
+        "endLine": 3142,
+        "endChar": 74
+      },
+      "revId": "9e35dc799ec0f048b97a93b05e74fc490091d728",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85e648f4_0d8db875",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3142,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-09T00:39:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3869d8_faedbfce",
       "range": {
         "startLine": 3142,
         "startChar": 16,

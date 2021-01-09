@@ -489,6 +489,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "61242ae4_d151674d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6163,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-09T00:39:09Z",
+      "side": 1,
+      "message": "I\u0027ll set up a meeting to discuss this. I don\u0027t see how an IntDef would make any difference here.\n1. IIUC, it requires a permission to modify the network stack, regular apps don\u0027t have that.\n2. If an OEM who has this permission decides to post a malicious URL, then I don\u0027t see how we can stop them because they are supposed to be trusted. They can also send it with a \"Passpoint\" value of your proposed IntDef.\n3. The Merge method has 2 very distinct sources for the data: Capport and NA. What would it mean to have a Capport or Mixed or Unknown IntDef values from the NA? It is not Capport for sure, and if NA data exists, it is already Mixed.\n\nWhat if we modify the code back to prefer Capport over NA? I don\u0027t think any Passpoint deployments will use Capport anyway, it is supposed to replace/upgrade the insecure captive portal technology.",
+      "parentUuid": "809dc820_0b7f44c5",
+      "range": {
+        "startLine": 6163,
+        "startChar": 11,
+        "endLine": 6163,
+        "endChar": 52
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e663b1af_a55012aa",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4
