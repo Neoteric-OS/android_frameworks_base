@@ -69,12 +69,14 @@ import android.os.ServiceManager;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+import android.os.TelephonyServiceManager;
 import android.os.UserHandle;
 import android.os.storage.IStorageManager;
 import android.provider.DeviceConfig;
 import android.provider.Settings;
 import android.server.ServerProtoEnums;
 import android.sysprop.VoldProperties;
+import android.telephony.TelephonyFrameworkInitializer;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.EventLog;
@@ -2247,6 +2249,8 @@ public final class SystemServer {
         final NetworkTimeUpdateService networkTimeUpdaterF = networkTimeUpdater;
         final InputManagerService inputManagerF = inputManager;
         final TelephonyRegistry telephonyRegistryF = telephonyRegistry;
+        final TelephonyServiceManager telephonyServiceManagerF =
+                TelephonyFrameworkInitializer.getTelephonyServiceManager();
         final MediaRouterService mediaRouterF = mediaRouter;
         final MmsServiceBroker mmsServiceF = mmsService;
         final IpSecService ipSecServiceF = ipSecService;
@@ -2254,6 +2258,7 @@ public final class SystemServer {
         final WindowManagerService windowManagerF = wm;
         final ConnectivityManager connectivityF = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final PackageManager packageManagerF = mPackageManager;
 
         // We now tell the activity manager it is okay to run third party
         // code.  It will call back into us once it has gotten to the state
@@ -2452,6 +2457,15 @@ public final class SystemServer {
                 }
             } catch (Throwable e) {
                 reportWtf("Notifying TelephonyRegistry running", e);
+            }
+            t.traceEnd();
+            t.traceBegin("MakeTelephonyServicesReady");
+            try {
+                if (packageManagerF.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
+                    telephonyServiceManagerF.systemRunning();
+                }
+            } catch (Throwable e) {
+                reportWtf("Notifying TelephonyServices running", e);
             }
             t.traceEnd();
             t.traceBegin("MakeMediaRouterServiceReady");

@@ -194,4 +194,10 @@ public class TelephonyServiceManager {
     public ServiceRegisterer getIccPhoneBookServiceRegisterer() {
         return new ServiceRegisterer("simphonebook");
     }
+
+    public void systemRunning() throws ServiceNotFoundException {
+        getTelephonyServiceRegisterer().getOrThrow();
+        getSubscriptionServiceRegisterer().getOrThrow();
+        getPhoneSubServiceRegisterer().getOrThrow();
+    }
 }
