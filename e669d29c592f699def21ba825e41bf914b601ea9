@@ -1,0 +1,134 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007162401",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1545264?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "90ab466b_7a648e03",
+        "filename": "packages/SystemUI/src/com/android/systemui/bubbles/BubbleStackView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-09T09:04:34Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1684,
+        "startChar": 0,
+        "endLine": 1684,
+        "endChar": 111
+      },
+      "revId": "e669d29c592f699def21ba825e41bf914b601ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007162401",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1545264?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ded63e97_6c9b0070",
+        "filename": "packages/SystemUI/src/com/android/systemui/model/SysUiState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-09T09:04:34Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 134
+      },
+      "revId": "e669d29c592f699def21ba825e41bf914b601ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007162401",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1545264?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "571437c0_36aa3b69",
+        "filename": "packages/SystemUI/src/com/android/systemui/model/SysUiState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-09T09:04:34Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 105
+      },
+      "revId": "e669d29c592f699def21ba825e41bf914b601ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007162401",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1545264?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "65926dcd_f3255d81",
+        "filename": "packages/SystemUI/src/com/android/systemui/model/SysUiState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-09T09:04:34Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 103
+      },
+      "revId": "e669d29c592f699def21ba825e41bf914b601ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007162401",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1545264?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "43db9ba0_9d97f259",
+        "filename": "packages/SystemUI/src/com/android/systemui/recents/OverviewProxyService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-09T09:04:34Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 517,
+        "startChar": 0,
+        "endLine": 517,
+        "endChar": 109
+      },
+      "revId": "e669d29c592f699def21ba825e41bf914b601ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
