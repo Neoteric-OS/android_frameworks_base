@@ -46,6 +46,8 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_OEM_PAID;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_OEM_PRIVATE;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
@@ -94,6 +96,7 @@ import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkStatsService;
+import android.net.IOnSetOemNetworkPreferenceListener;
 import android.net.IQosCallback;
 import android.net.ISocketKeepaliveCallback;
 import android.net.InetAddresses;
@@ -564,6 +567,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static final int EVENT_SET_REQUIRE_VPN_FOR_UIDS = 47;
 
     /**
+     * used internally when setting the default networks for OemNetworkPreferences.
+     * obj = OemNetworkPreferences
+     */
+    private static final int EVENT_SET_OEM_NETWORK_PREFERENCE = 48;
+
+    /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
      * should be shown.
      */
@@ -1022,11 +1031,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mNetworkRequestCounter = new PerUidCounter(MAX_NETWORK_REQUESTS_PER_UID);
 
         mMetricsLog = logger;
-        mDeviceDefaultRequest = createDefaultInternetRequestForTransport(
-                -1, NetworkRequest.Type.REQUEST);
+        mDeviceDefaultRequest = createDeviceDefaultRequest();
         mNetworkRanker = new NetworkRanker();
         final NetworkRequestInfo defaultNRI = new NetworkRequestInfo(
-                null, mDeviceDefaultRequest, new Binder());
+                mDeviceDefaultRequest, null, new Binder());
         mNetworkRequests.put(mDeviceDefaultRequest, defaultNRI);
         mDefaultNetworkAgents.put(defaultNRI, null);
         mNetworkRequestInfoLogs.log("REGISTER " + defaultNRI);
@@ -1229,12 +1237,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return netCap;
     }
 
+    private NetworkRequest createDeviceDefaultRequest() {
+        return createDefaultInternetRequestForTransport(
+                TYPE_NONE, NetworkRequest.Type.REQUEST);
+    }
+
     private NetworkRequest createDefaultInternetRequestForTransport(
-            int transportType, NetworkRequest.Type type) {
-        final NetworkCapabilities netCap = new NetworkCapabilities();
+            final int transportType, final NetworkRequest.Type type) {
+        return createDefaultInternetRequestForTransport(
+                transportType, type, new NetworkCapabilities());
+    }
+
+    private NetworkRequest createDefaultInternetRequestForTransport(
+            final int transportType, final NetworkRequest.Type type,
+            @NonNull final NetworkCapabilities netCap) {
         netCap.addCapability(NET_CAPABILITY_INTERNET);
         netCap.setRequestorUidAndPackageName(Process.myUid(), mContext.getPackageName());
-        if (transportType > -1) {
+        if (transportType > TYPE_NONE) {
             netCap.addTransportType(transportType);
         }
         return new NetworkRequest(netCap, TYPE_NONE, nextNetworkRequestId(), type);
@@ -1286,7 +1305,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (enable) {
             handleRegisterNetworkRequest(new NetworkRequestInfo(
-                    null, networkRequest, new Binder()));
+                    networkRequest, null, new Binder()));
         } else {
             handleReleaseNetworkRequest(networkRequest, Process.SYSTEM_UID,
                     /* callOnUnavailable */ false);
@@ -2589,6 +2608,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         pw.println();
 
+        pw.print("Current OEM default networks: ");
+        pw.increaseIndent();
+        dumpOemNetworkPreferences(pw);
+        pw.decreaseIndent();
+        pw.println();
+
         pw.println("Current Networks:");
         pw.increaseIndent();
         dumpNetworks(pw);
@@ -2704,6 +2729,41 @@ public class ConnectivityService extends IConnectivityManager.Stub
             pw.println("Lingered:");
             pw.increaseIndent();
             nai.dumpLingerTimers(pw);
+            pw.decreaseIndent();
+            pw.decreaseIndent();
+        }
+    }
+
+    private void dumpOemNetworkPreferences(IndentingPrintWriter pw) {
+        pw.println("OEM Network Preference:");
+        pw.increaseIndent();
+        if (0 == mOemNetworkPreferences.getNetworkPreferences().size()) {
+            pw.println("none");
+        } else {
+            pw.println(mOemNetworkPreferences.toString());
+        }
+        pw.decreaseIndent();
+
+        for (final Map.Entry<NetworkRequestInfo, NetworkAgentInfo> entry
+                : mDefaultNetworkAgents.entrySet()) {
+            if (getDeviceDefaultNri() == entry.getKey()) {
+                continue;
+            }
+
+            final boolean isActive = null != entry.getValue();
+            pw.println("Is OEM network active:");
+            pw.increaseIndent();
+            pw.println(isActive);
+            if (isActive) {
+                pw.println("Active network: " + entry.getValue().network.netId);
+            }
+            pw.println("Tracked UIDs:");
+            pw.increaseIndent();
+            if (0 == entry.getKey().mRequests.size()) {
+                pw.println("none, this should never occur.");
+            } else {
+                pw.println(entry.getKey().mRequests.get(0).networkCapabilities.getUids());
+            }
             pw.decreaseIndent();
             pw.decreaseIndent();
         }
@@ -3542,32 +3602,41 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void handleRegisterNetworkRequest(@NonNull final NetworkRequestInfo nri) {
+        handleRegisterNetworkRequest(Collections.singletonList(nri));
+    }
+
+    private void handleRegisterNetworkRequest(@NonNull final List<NetworkRequestInfo> nris) {
         ensureRunningOnConnectivityServiceThread();
-        mNetworkRequestInfoLogs.log("REGISTER " + nri);
-        for (final NetworkRequest req : nri.mRequests) {
-            mNetworkRequests.put(req, nri);
-            if (req.isListen()) {
-                for (final NetworkAgentInfo network : mNetworkAgentInfos) {
-                    if (req.networkCapabilities.hasSignalStrength()
-                            && network.satisfiesImmutableCapabilitiesOf(req)) {
-                        updateSignalStrengthThresholds(network, "REGISTER", req);
+        for (final NetworkRequestInfo nri : nris) {
+            mNetworkRequestInfoLogs.log("REGISTER " + nri);
+            for (final NetworkRequest req : nri.mRequests) {
+                mNetworkRequests.put(req, nri);
+                if (req.isListen()) {
+                    for (final NetworkAgentInfo network : mNetworkAgentInfos) {
+                        if (req.networkCapabilities.hasSignalStrength()
+                                && network.satisfiesImmutableCapabilitiesOf(req)) {
+                            updateSignalStrengthThresholds(network, "REGISTER", req);
+                        }
                     }
                 }
             }
         }
-        rematchAllNetworksAndRequests();
-        // If an active request exists, return as its score has already been sent if needed.
-        if (null != nri.getActiveRequest()) {
-            return;
-        }
 
-        // As this request was not satisfied on rematch and thus never had any scores sent to the
-        // factories, send null now for each request of type REQUEST.
-        for (final NetworkRequest req : nri.mRequests) {
-            if (!req.isRequest()) {
-                continue;
+        rematchAllNetworksAndRequests();
+        for (final NetworkRequestInfo nri : nris) {
+            // If an active request exists, return as its score has already been sent if needed.
+            if (null != nri.getActiveRequest()) {
+                break;
             }
-            sendUpdatedScoreToFactories(req, null);
+
+            // As this request was not satisfied on rematch and thus never had any scores sent to
+            // the factories, send null now for each request of type REQUEST.
+            for (final NetworkRequest req : nri.mRequests) {
+                if (!req.isRequest()) {
+                    continue;
+                }
+                sendUpdatedScoreToFactories(req, null);
+            }
         }
     }
 
@@ -4373,6 +4442,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 case EVENT_SET_REQUIRE_VPN_FOR_UIDS:
                     handleSetRequireVpnForUids(toBool(msg.arg1), (UidRange[]) msg.obj);
+                    break;
+                case EVENT_SET_OEM_NETWORK_PREFERENCE:
+                    final Pair<IOnSetOemNetworkPreferenceListener, OemNetworkPreferences> arg =
+                            (Pair<IOnSetOemNetworkPreferenceListener,
+                                    OemNetworkPreferences>) msg.obj;
+                    try {
+                        handleSetOemNetworkPreference(arg.first, arg.second);
+                    } catch (RemoteException e) {
+                        loge("handleMessage.EVENT_SET_OEM_NETWORK_PREFERENCE failed", e);
+                    }
                     break;
             }
         }
@@ -5528,10 +5607,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         final PendingIntent mPendingIntent;
         boolean mPendingIntentSent;
+        @Nullable
+        final Messenger mMessenger;
+        @Nullable
         private final IBinder mBinder;
         final int mPid;
         final int mUid;
-        final Messenger messenger;
 
         /**
          * Get the list of UIDs this nri applies to.
@@ -5544,21 +5625,32 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return uids;
         }
 
-        NetworkRequestInfo(NetworkRequest r, PendingIntent pi) {
+        NetworkRequestInfo(@NonNull final NetworkRequest r, @Nullable final PendingIntent pi) {
+            this(Collections.singletonList(r), pi);
+        }
+
+        NetworkRequestInfo(@NonNull final List<NetworkRequest> r,
+                @Nullable final PendingIntent pi) {
             mRequests = initializeRequests(r);
             ensureAllNetworkRequestsHaveType(mRequests);
             mPendingIntent = pi;
-            messenger = null;
+            mMessenger = null;
             mBinder = null;
             mPid = getCallingPid();
             mUid = mDeps.getCallingUid();
             mNetworkRequestCounter.incrementCountOrThrow(mUid);
         }
 
-        NetworkRequestInfo(Messenger m, NetworkRequest r, IBinder binder) {
+        NetworkRequestInfo(@NonNull final NetworkRequest r, @Nullable final Messenger m,
+                @Nullable final IBinder binder) {
+            this(Collections.singletonList(r), m, binder);
+        }
+
+        NetworkRequestInfo(@NonNull final List<NetworkRequest> r, @Nullable final Messenger m,
+                @Nullable final IBinder binder) {
             super();
-            messenger = m;
             mRequests = initializeRequests(r);
+            mMessenger = m;
             ensureAllNetworkRequestsHaveType(mRequests);
             mBinder = binder;
             mPid = getCallingPid();
@@ -5573,7 +5665,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        NetworkRequestInfo(NetworkRequest r) {
+        NetworkRequestInfo(@NonNull final NetworkRequest r) {
+            this(Collections.singletonList(r));
+        }
+
+        NetworkRequestInfo(@NonNull final List<NetworkRequest> r) {
             this(r, null);
         }
 
@@ -5581,9 +5677,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return mRequests.size() > 1;
         }
 
-        private List<NetworkRequest> initializeRequests(NetworkRequest r) {
-            final ArrayList<NetworkRequest> tempRequests = new ArrayList<>();
-            tempRequests.add(new NetworkRequest(r));
+        private List<NetworkRequest> initializeRequests(List<NetworkRequest> r) {
+            final List<NetworkRequest> tempRequests = new ArrayList<>();
+            for (final NetworkRequest req : r) {
+                tempRequests.add(new NetworkRequest(req));
+            }
             return Collections.unmodifiableList(tempRequests);
         }
 
@@ -5753,7 +5851,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         NetworkRequest networkRequest = new NetworkRequest(networkCapabilities, legacyType,
                 nextNetworkRequestId(), reqType);
-        NetworkRequestInfo nri = new NetworkRequestInfo(messenger, networkRequest, binder);
+        NetworkRequestInfo nri = new NetworkRequestInfo(networkRequest, messenger, binder);
         if (DBG) log("requestNetwork for " + nri);
 
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_REQUEST, nri));
@@ -5906,7 +6004,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         NetworkRequest networkRequest = new NetworkRequest(nc, TYPE_NONE, nextNetworkRequestId(),
                 NetworkRequest.Type.LISTEN);
-        NetworkRequestInfo nri = new NetworkRequestInfo(messenger, networkRequest, binder);
+        NetworkRequestInfo nri = new NetworkRequestInfo(networkRequest, messenger, binder);
         if (VDBG) log("listenForNetwork for " + nri);
 
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_LISTENER, nri));
@@ -6048,6 +6146,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @GuardedBy("mBlockedAppUids")
     private final HashSet<Integer> mBlockedAppUids = new HashSet<>();
+
+    // Current OEM network preferences.
+    @NonNull
+    private OemNetworkPreferences mOemNetworkPreferences =
+            new OemNetworkPreferences.Builder().build();
 
     // The device wide default network request.
     @NonNull
@@ -7068,7 +7171,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void callCallbackForRequest(@NonNull final NetworkRequestInfo nri,
             @NonNull final NetworkAgentInfo networkAgent, final int notificationType,
             final int arg1) {
-        if (nri.messenger == null) {
+        if (nri.mMessenger == null) {
             // Default request has no msgr. Also prevents callbacks from being invoked for
             // NetworkRequestInfos registered with ConnectivityDiagnostics requests. Those callbacks
             // are Type.LISTEN, but should not have NetworkCallbacks invoked.
@@ -7135,7 +7238,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 String notification = ConnectivityManager.getCallbackName(notificationType);
                 log("sending notification " + notification + " for " + nrForCallback);
             }
-            nri.messenger.send(msg);
+            nri.mMessenger.send(msg);
         } catch (RemoteException e) {
             // may occur naturally in the race of binder death.
             loge("RemoteException caught trying to send a callback msg for " + nrForCallback);
@@ -9012,11 +9115,197 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 removeDataActivityTracking(oldNetwork);
             }
         }
+    }
 
-        @Override
-        public void setOemNetworkPreference(@NonNull final OemNetworkPreferences preference) {
-            // TODO http://b/176495594 track multiple default networks with networkPreferences
-            if (DBG) log("setOemNetworkPreference() called with: " + preference.toString());
+    private void enforceAutomotiveDevice() {
+        final boolean isAutomotiveDevice =
+                mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE);
+        if (!isAutomotiveDevice) {
+            throw new IllegalStateException(
+                    "setOemNetworkPreference() is only available on automotive devices.");
+        }
+    }
+
+    @Override
+    public void setOemNetworkPreference(
+            @NonNull final IOnSetOemNetworkPreferenceListener listener,
+            @NonNull final OemNetworkPreferences preference) {
+        // Not in the try block since we can't notify callers with a null listener.
+        Objects.requireNonNull(listener,
+                "IOnSetOemNetworkPreferenceListener must be non-null");
+        try {
+            enforceAutomotiveDevice();
+            // TODO http://b/176496438 add permission check once permissions are added.
+
+            Objects.requireNonNull(preference, "OemNetworkPreferences must be non-null");
+            mHandler.sendMessage(mHandler.obtainMessage(EVENT_SET_OEM_NETWORK_PREFERENCE,
+                    new Pair<>(listener, preference)));
+        } catch (final IllegalStateException | NullPointerException e) {
+            final String exMessage = "setOemNetworkPreference failed";
+            loge(exMessage, e);
+            try {
+                listener.onComplete(false, exMessage + ": " + e.getMessage());
+            } catch (RemoteException remoteException) {
+                loge("Error invoking onComplete", remoteException);
+            }
+        }
+    }
+
+    private void handleSetOemNetworkPreference(
+            @NonNull final IOnSetOemNetworkPreferenceListener listener,
+            @NonNull final OemNetworkPreferences preference) throws RemoteException {
+        // Not in the try block since we can't notify callers with a null listener.
+        Objects.requireNonNull(listener,
+                "IOnSetOemNetworkPreferenceListener must be non-null");
+        try {
+            ensureRunningOnConnectivityServiceThread();
+            Objects.requireNonNull(preference, "OemNetworkPreferences must be non-null");
+            if (DBG) {
+                log("handleSetOemNetworkPreference() called with: "
+                        + preference.toString());
+            }
+            final List<NetworkRequestInfo> nris =
+                    new OemNetworkRequestFactory().createNrisFromOemNetworkPreferences(preference);
+            updateDefaultNetworksForOemNetworkPreference(nris);
+            mOemNetworkPreferences = preference;
+        } catch (final Exception e) {
+            loge("handleSetOemNetworkPreference failed", e);
+            listener.onComplete(false,
+                    "handleSetOemNetworkPreference failed: " + e.getMessage());
+            throw e;
+        } finally {
+            listener.onComplete(true, "");
+        }
+    }
+
+    private void updateDefaultNetworksForOemNetworkPreference(
+            @NonNull final List<NetworkRequestInfo> nris) {
+        clearNonDeviceDefaultNetworkAgents();
+        updateDefaultNetworkAgents(nris);
+    }
+
+    private void clearNonDeviceDefaultNetworkAgents() {
+        for (final NetworkRequestInfo nri : mDefaultNetworkAgents.keySet()) {
+            if (getDeviceDefaultNri() != nri) {
+                handleRemoveNetworkRequest(nri);
+            }
+        }
+        mDefaultNetworkAgents.entrySet().removeIf(entry -> getDeviceDefaultNri() != entry.getKey());
+    }
+
+    private void updateDefaultNetworkAgents(@NonNull final List<NetworkRequestInfo> nris) {
+        for (final NetworkRequestInfo nri : nris) {
+            mDefaultNetworkAgents.put(nri, null);
+        }
+        handleRegisterNetworkRequest(nris);
+    }
+
+    /**
+     * Class used to generate {@link NetworkRequestInfo} based off of {@link OemNetworkPreferences}.
+     */
+    @VisibleForTesting
+    final class OemNetworkRequestFactory {
+        List<NetworkRequestInfo> createNrisFromOemNetworkPreferences(
+                @NonNull final OemNetworkPreferences preference) {
+            final List<NetworkRequestInfo> nris = new ArrayList<>();
+            final Map<Integer, Set<UidRange>> uids =
+                    createUidsFromOemNetworkPreferences(preference);
+            for (final Map.Entry<Integer, Set<UidRange>> pref : uids.entrySet()) {
+                final NetworkRequestInfo nri = createNriFromOemNetworkPreferences(
+                        pref.getKey(), pref.getValue());
+                // No need to add an nri without any requests.
+                if (0 == nri.mRequests.size()) {
+                    continue;
+                }
+                nris.add(nri);
+            }
+
+            return nris;
+        }
+
+        private Map<Integer, Set<UidRange>> createUidsFromOemNetworkPreferences(
+                @NonNull final OemNetworkPreferences preference) {
+            final Map<Integer, Set<UidRange>> uidRanges = new HashMap<>();
+            final PackageManager pm = mContext.getPackageManager();
+            for (final Map.Entry<String, Integer> entry :
+                    preference.getNetworkPreferences().entrySet()) {
+                @OemNetworkPreferences.OemNetworkPreference final int pref = entry.getValue();
+                try {
+                    final int uid = pm.getApplicationInfo(entry.getKey(), 0).uid;
+                    if (!uidRanges.containsKey(pref)) {
+                        uidRanges.put(pref, new HashSet<>());
+                    }
+                    uidRanges.get(pref).add(new UidRange(uid, uid));
+                } catch (PackageManager.NameNotFoundException e) {
+                    continue;
+                }
+            }
+            return uidRanges;
+        }
+
+        private NetworkRequestInfo createNriFromOemNetworkPreferences(
+                @OemNetworkPreferences.OemNetworkPreference final int preference,
+                @NonNull final Set<UidRange> uids) {
+            final List<NetworkRequest> requests = new ArrayList<>();
+            // Requests will ultimately be evaluated by order of insertion therefore it matters.
+            switch (preference) {
+                case OemNetworkPreferences.OEM_NETWORK_PREFERENCE_DEFAULT:
+                    break;
+                case OemNetworkPreferences.OEM_NETWORK_PREFERENCE_OEM_PAID:
+                    requests.add(createUnmeteredNetworkRequest());
+                    requests.add(createOemPaidNetworkRequest());
+                    requests.add(createDeviceDefaultRequest());
+                    break;
+                case OemNetworkPreferences.OEM_NETWORK_PREFERENCE_OEM_PAID_NO_FALLBACK:
+                    requests.add(createUnmeteredNetworkRequest());
+                    requests.add(createOemPaidNetworkRequest());
+                    break;
+                case OemNetworkPreferences.OEM_NETWORK_PREFERENCE_OEM_PAID_ONLY:
+                    requests.add(createOemPaidNetworkRequest());
+                    break;
+                case OemNetworkPreferences.OEM_NETWORK_PREFERENCE_OEM_PRIVATE_ONLY:
+                    requests.add(createOemPrivateNetworkRequest());
+                    break;
+                default:
+                    // This should never happen.
+                    throw new IllegalArgumentException("createNriFromOemNetworkPreferences()"
+                            + "called with invalid preference of " + preference);
+            }
+
+            setOemNetworkRequestUids(requests, uids);
+            return new NetworkRequestInfo(requests);
+        }
+
+        private NetworkRequest createUnmeteredNetworkRequest() {
+            NetworkCapabilities netcap = new NetworkCapabilities()
+                    .addCapability(NET_CAPABILITY_NOT_METERED);
+            return createDefaultInternetRequestForTransport(
+                    TYPE_NONE, NetworkRequest.Type.LISTEN, netcap);
+        }
+
+        private NetworkRequest createOemPaidNetworkRequest() {
+            // NET_CAPABILITY_OEM_PAID is a restricted capability.
+            NetworkCapabilities netcap = new NetworkCapabilities()
+                    .addCapability(NET_CAPABILITY_OEM_PAID)
+                    .removeCapability(NET_CAPABILITY_NOT_RESTRICTED);
+            return createDefaultInternetRequestForTransport(
+                    TYPE_NONE, NetworkRequest.Type.REQUEST, netcap);
+        }
+
+        private NetworkRequest createOemPrivateNetworkRequest() {
+            // NET_CAPABILITY_OEM_PRIVATE is a restricted capability.
+            NetworkCapabilities netcap = new NetworkCapabilities()
+                    .addCapability(NET_CAPABILITY_OEM_PRIVATE)
+                    .removeCapability(NET_CAPABILITY_NOT_RESTRICTED);
+            return createDefaultInternetRequestForTransport(
+                    TYPE_NONE, NetworkRequest.Type.REQUEST, netcap);
+        }
+
+        private void setOemNetworkRequestUids(@NonNull final List<NetworkRequest> requests,
+                @NonNull final Set<UidRange> uids) {
+            for (NetworkRequest req : requests) {
+                req.networkCapabilities.setUids(uids);
+            }
         }
     }
     /**
