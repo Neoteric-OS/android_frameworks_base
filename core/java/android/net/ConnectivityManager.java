@@ -4839,9 +4839,33 @@ public class ConnectivityManager {
         }
     }
 
-    private void setOemNetworkPreference(@NonNull final OemNetworkPreferences preference) {
+    /**
+     * Listener for {@link #setOemNetworkPreference(Executor, OnSetOemNetworkPreferenceListener,
+     * OemNetworkPreferences)}.
+     */
+    private interface OnSetOemNetworkPreferenceListener {
+        /**
+         * Called when the tethered interface is now unavailable.
+         */
+        void onComplete(@NonNull boolean isSuccessful, @NonNull String response);
+    }
+
+    private void setOemNetworkPreference(@NonNull final Executor executor,
+            @NonNull final OnSetOemNetworkPreferenceListener listener,
+            @NonNull final OemNetworkPreferences preference) {
+        Objects.requireNonNull(executor, "Executor must be non-null");
+        Objects.requireNonNull(listener, "Listener must be non-null");
+        Objects.requireNonNull(preference, "OemNetworkPreferences must be non-null");
+        final IOnSetOemNetworkPreferenceListener listenerInternal =
+                new IOnSetOemNetworkPreferenceListener.Stub() {
+                    @Override
+                    public void onComplete(boolean isSuccessful, String response) {
+                        executor.execute(() -> listener.onComplete(isSuccessful, response));
+                    }
+        };
+
         try {
-            mService.setOemNetworkPreference(preference);
+            mService.setOemNetworkPreference(listenerInternal, preference);
         } catch (RemoteException e) {
             Log.e(TAG, "setOemNetworkPreference() failed for preference: " + preference.toString());
             throw e.rethrowFromSystemServer();
