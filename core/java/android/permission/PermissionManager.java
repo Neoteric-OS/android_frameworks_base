@@ -32,6 +32,7 @@ import android.content.Context;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
 import android.content.pm.permission.SplitPermissionInfoParcelable;
+import android.net.NetworkStack;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -712,4 +713,21 @@ public final class PermissionManager {
         sPackageNamePermissionCache.disableLocal();
     }
 
+    /**
+     * Get uids which contain given permission in system configuration.
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(anyOf = {
+            Manifest.permission.GET_RUNTIME_PERMISSIONS,
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK})
+    @NonNull
+    public int[] getSystemPermissionUids(@NonNull String permissionName) {
+        try {
+            return mPermissionManager.getSystemPermissionUids(permissionName);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }

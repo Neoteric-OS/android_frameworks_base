@@ -116,4 +116,6 @@ interface IPermissionManager {
     boolean setAutoRevokeWhitelisted(String packageName, boolean whitelisted, int userId);
 
     boolean isAutoRevokeWhitelisted(String packageName, int userId);
+
+    int[] getSystemPermissionUids(String permissionName);
 }

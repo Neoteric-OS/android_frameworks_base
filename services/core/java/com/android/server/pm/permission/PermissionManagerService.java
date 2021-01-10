@@ -87,6 +87,7 @@ import android.content.pm.parsing.component.ParsedPermission;
 import android.content.pm.parsing.component.ParsedPermissionGroup;
 import android.content.pm.permission.SplitPermissionInfoParcelable;
 import android.metrics.LogMaker;
+import android.net.NetworkStack;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
@@ -132,6 +133,7 @@ import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IntPair;
 import com.android.internal.util.Preconditions;
 import com.android.internal.util.function.pooled.PooledLambda;
+import com.android.net.module.util.PermissionUtils;
 import com.android.server.FgThread;
 import com.android.server.LocalServices;
 import com.android.server.ServiceThread;
@@ -1011,6 +1013,23 @@ public class PermissionManagerService extends IPermissionManager.Stub {
         synchronized (mLock) {
             ArraySet<String> permissions = mSystemPermissions.get(uid);
             return permissions != null && permissions.contains(permissionName);
+        }
+    }
+
+    @Override
+    public int[] getSystemPermissionUids(@NonNull String permissionName) {
+        PermissionUtils.enforceAnyPermissionOf(mContext,
+                Manifest.permission.GET_RUNTIME_PERMISSIONS,
+                NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK);
+        synchronized (mLock) {
+            final List<Integer> uids = new ArrayList<>();
+            for (int i = 0; i < mSystemPermissions.size(); i++) {
+                ArraySet<String> permissions = mSystemPermissions.valueAt(i);
+                if (permissions != null && permissions.contains(permissionName)) {
+                    uids.add(mSystemPermissions.keyAt(i));
+                }
+            }
+            return ArrayUtils.convertToIntArray(uids);
         }
     }
 
