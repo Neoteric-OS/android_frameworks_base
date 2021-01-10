@@ -40,7 +40,6 @@ import android.net.TcpKeepalivePacketData;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.INetworkManagementService;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.util.Log;
@@ -322,7 +321,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     public NetworkAgentInfo(INetworkAgent na, Network net, NetworkInfo info,
             LinkProperties lp, NetworkCapabilities nc, int score, Context context,
             Handler handler, NetworkAgentConfig config, ConnectivityService connService, INetd netd,
-            IDnsResolver dnsResolver, INetworkManagementService nms, int factorySerialNumber,
+            IDnsResolver dnsResolver, int factorySerialNumber,
             int creatorUid) {
         networkAgent = na;
         network = net;
@@ -330,7 +329,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         linkProperties = lp;
         networkCapabilities = nc;
         mScore = score;
-        clatd = new Nat464Xlat(this, netd, dnsResolver, nms);
+        clatd = new Nat464Xlat(this, netd, dnsResolver);
         mConnService = connService;
         mContext = context;
         mHandler = handler;

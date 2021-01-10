@@ -40,7 +40,6 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
-import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
@@ -67,7 +66,6 @@ class TestNetworkService extends ITestNetworkManager.Stub {
     @NonNull private static final AtomicInteger sTestTunIndex = new AtomicInteger();
 
     @NonNull private final Context mContext;
-    @NonNull private final INetworkManagementService mNMS;
     @NonNull private final INetd mNetd;
 
     @NonNull private final HandlerThread mHandlerThread;
@@ -80,14 +78,12 @@ class TestNetworkService extends ITestNetworkManager.Stub {
     private static native int jniCreateTunTap(boolean isTun, @NonNull String iface);
 
     @VisibleForTesting
-    protected TestNetworkService(
-            @NonNull Context context, @NonNull INetworkManagementService netManager) {
+    protected TestNetworkService(@NonNull Context context) {
         mHandlerThread = new HandlerThread("TestNetworkServiceThread");
         mHandlerThread.start();
         mHandler = new Handler(mHandlerThread.getLooper());
 
         mContext = Objects.requireNonNull(context, "missing Context");
-        mNMS = Objects.requireNonNull(netManager, "missing INetworkManagementService");
         mNetd = Objects.requireNonNull(NetdService.getInstance(), "could not get netd instance");
         mCm = mContext.getSystemService(ConnectivityManager.class);
         mNetworkProvider = new NetworkProvider(mContext, mHandler.getLooper(),

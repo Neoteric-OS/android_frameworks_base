@@ -6046,7 +6046,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkAgentInfo nai = new NetworkAgentInfo(na,
                 new Network(mNetIdManager.reserveNetId()), new NetworkInfo(networkInfo), lp, nc,
                 currentScore, mContext, mTrackerHandler, new NetworkAgentConfig(networkAgentConfig),
-                this, mNetd, mDnsResolver, mNMS, providerId, uid);
+                this, mNetd, mDnsResolver, providerId, uid);
 
         // Make sure the LinkProperties and NetworkCapabilities reflect what the agent info says.
         processCapabilitiesFromAgent(nai, nc);
@@ -8020,7 +8020,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             TestNetworkService.enforceTestNetworkPermissions(mContext);
 
             if (mTNS == null) {
-                mTNS = new TestNetworkService(mContext, mNMS);
+                mTNS = new TestNetworkService(mContext);
             }
 
             return mTNS;
