@@ -63,6 +63,7 @@ import android.net.UidRange;
 import android.os.Build;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.permission.PermissionManager;
 import android.util.SparseIntArray;
 
 import androidx.test.InstrumentationRegistry;
@@ -114,6 +115,7 @@ public class PermissionMonitorTest {
     @Mock private PackageManagerInternal mMockPmi;
     @Mock private UserManager mUserManager;
     @Mock private PermissionMonitor.Dependencies mDeps;
+    @Mock private PermissionManager mPermissionManager;
 
     private PermissionMonitor mPermissionMonitor;
 
@@ -127,6 +129,8 @@ public class PermissionMonitorTest {
                         new UserHandle(MOCK_USER1),
                         new UserHandle(MOCK_USER2),
                 }));
+        when(mContext.getSystemService(PermissionManager.class)).thenReturn(mPermissionManager);
+        when(mPermissionManager.getSystemPermissionUids(anyString())).thenReturn(new int[0]);
 
         mPermissionMonitor = spy(new PermissionMonitor(mContext, mNetdService, mDeps));
 
@@ -746,5 +750,21 @@ public class PermissionMonitorTest {
         final PackageInfo systemInfo = manager.getPackageInfo(REAL_SYSTEM_PACKAGE_NAME,
                 GET_PERMISSIONS | MATCH_ANY_USER);
         assertTrue(monitor.hasPermission(systemInfo, CONNECTIVITY_USE_RESTRICTED_NETWORKS));
+    }
+
+    @Test
+    public void testUpdateUidPermissionsFromSystemConfig() throws Exception {
+        final NetdServiceMonitor mNetdServiceMonitor = new NetdServiceMonitor(mNetdService);
+        when(mPackageManager.getInstalledPackages(anyInt())).thenReturn(new ArrayList<>());
+        when(mPermissionManager.getSystemPermissionUids(eq(INTERNET)))
+                .thenReturn(new int[]{ MOCK_UID1, MOCK_UID2 });
+        when(mPermissionManager.getSystemPermissionUids(eq(UPDATE_DEVICE_STATS)))
+                .thenReturn(new int[]{ MOCK_UID2 });
+
+        mPermissionMonitor.startMonitoring();
+        mNetdServiceMonitor.expectPermission(INetd.PERMISSION_INTERNET, new int[]{ MOCK_UID1 });
+        mNetdServiceMonitor.expectPermission(
+                INetd.PERMISSION_INTERNET | INetd.PERMISSION_UPDATE_DEVICE_STATS,
+                new int[]{ MOCK_UID2 });
     }
 }
