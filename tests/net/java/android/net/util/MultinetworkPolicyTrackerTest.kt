@@ -18,13 +18,9 @@ package android.net.util
 
 import android.content.Context
 import android.content.res.Resources
-import android.net.ConnectivityManager.MULTIPATH_PREFERENCE_HANDOVER
-import android.net.ConnectivityManager.MULTIPATH_PREFERENCE_PERFORMANCE
-import android.net.ConnectivityManager.MULTIPATH_PREFERENCE_RELIABILITY
 import android.net.util.MultinetworkPolicyTracker.ActiveDataSubscriptionIdChangedListener
 import android.provider.Settings
 import android.provider.Settings.Global.NETWORK_AVOID_BAD_WIFI
-import android.provider.Settings.Global.NETWORK_METERED_MULTIPATH_PREFERENCE
 import android.telephony.SubscriptionInfo
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
@@ -33,7 +29,6 @@ import androidx.test.filters.SmallTest
 import androidx.test.runner.AndroidJUnit4
 import com.android.internal.R
 import com.android.internal.util.test.FakeSettingsProvider
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -78,20 +73,6 @@ class MultinetworkPolicyTrackerTest {
     }
     private val tracker = MultinetworkPolicyTracker(context, null /* handler */)
 
-    private fun assertMultipathPreference(preference: Int) {
-        Settings.Global.putString(resolver, NETWORK_METERED_MULTIPATH_PREFERENCE,
-                preference.toString())
-        tracker.updateMeteredMultipathPreference()
-        assertEquals(preference, tracker.meteredMultipathPreference)
-    }
-
-    @Test
-    fun testUpdateMeteredMultipathPreference() {
-        assertMultipathPreference(MULTIPATH_PREFERENCE_HANDOVER)
-        assertMultipathPreference(MULTIPATH_PREFERENCE_RELIABILITY)
-        assertMultipathPreference(MULTIPATH_PREFERENCE_PERFORMANCE)
-    }
-
     @Test
     fun testUpdateAvoidBadWifi() {
         Settings.Global.putString(resolver, NETWORK_AVOID_BAD_WIFI, "0")
@@ -113,11 +94,9 @@ class MultinetworkPolicyTrackerTest {
                 "1"/* cardString */)
         doReturn(subscriptionInfo).`when`(subscriptionManager).getActiveSubscriptionInfo(testSubId)
 
-        // Modify avoidBadWifi and meteredMultipathPreference settings value and local variables in
-        // MultinetworkPolicyTracker should be also updated after subId changed.
+        // Modify avoidBadWifi settings value and local variables in MultinetworkPolicyTracker
+        // should be also updated after subId changed.
         Settings.Global.putString(resolver, NETWORK_AVOID_BAD_WIFI, "0")
-        Settings.Global.putString(resolver, NETWORK_METERED_MULTIPATH_PREFERENCE,
-                MULTIPATH_PREFERENCE_PERFORMANCE.toString())
 
         val listenerCaptor = ArgumentCaptor.forClass(
                 ActiveDataSubscriptionIdChangedListener::class.java)
@@ -130,8 +109,7 @@ class MultinetworkPolicyTrackerTest {
         verify(subscriptionManager, times(1)).getActiveSubscriptionInfo(testSubId)
         verify(context).createConfigurationContext(argThat { it.mcc == 310 && it.mnc == 210 })
 
-        // Check if avoidBadWifi and meteredMultipathPreference values have been updated.
+        // Check if avoidBadWifi values has been updated.
         assertFalse(tracker.avoidBadWifi)
-        assertEquals(MULTIPATH_PREFERENCE_PERFORMANCE, tracker.meteredMultipathPreference)
     }
 }

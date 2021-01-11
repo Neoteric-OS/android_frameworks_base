@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The Android Open Source Project
+ * Copyright (C) 2021 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package android.net.util;
 
-import static android.provider.Settings.Global.NETWORK_AVOID_BAD_WIFI;
+import static android.provider.Settings.Global.NETWORK_METERED_MULTIPATH_PREFERENCE;
 
 import android.annotation.NonNull;
 import android.content.BroadcastReceiver;
@@ -24,7 +24,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
@@ -41,37 +40,21 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
 
 /**
- * A class to encapsulate management of the "Smart Networking" capability of
- * avoiding bad Wi-Fi when, for example upstream connectivity is lost or
- * certain critical link failures occur.
- *
- * This enables the device to switch to another form of connectivity, like
- * mobile, if it's available and working.
- *
- * The Runnable |avoidBadWifiCallback|, if given, is posted to the supplied
- * Handler' whenever the computed "avoid bad wifi" value changes.
- *
- * Disabling this reverts the device to a level of networking sophistication
- * circa 2012-13 by disabling disparate code paths each of which contribute to
- * maintaining continuous, working Internet connectivity.
- *
+ * A class to update metered multipath preference.
  * @hide
  */
-public class MultinetworkPolicyTracker {
-    private static String TAG = MultinetworkPolicyTracker.class.getSimpleName();
+public class MeteredMultipathPreferenceTracker {
+    private static final String TAG = MeteredMultipathPreferenceTracker.class.getSimpleName();
 
     private final Context mContext;
     private final Handler mHandler;
-    private final Runnable mAvoidBadWifiCallback;
-    private final Uri mSettingsUri;
     private final ContentResolver mResolver;
+    private final Uri mSettingsUri;
     private final SettingObserver mSettingObserver;
     private final BroadcastReceiver mBroadcastReceiver;
-
-    private volatile boolean mAvoidBadWifi = true;
+    private volatile int mMeteredMultipathPreference;
     private int mActiveSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
-    // Mainline module can't use internal HandlerExecutor, so add an identical executor here.
     private static class HandlerExecutor implements Executor {
         @NonNull
         private final Handler mHandler;
@@ -93,100 +76,84 @@ public class MultinetworkPolicyTracker {
         @Override
         public void onActiveDataSubscriptionIdChanged(int subId) {
             mActiveSubId = subId;
-            reevaluateInternal();
+            updateMeteredMultipathPreference();
         }
     }
 
-    public MultinetworkPolicyTracker(Context ctx, Handler handler) {
-        this(ctx, handler, null);
-    }
-
-    public MultinetworkPolicyTracker(Context ctx, Handler handler, Runnable avoidBadWifiCallback) {
-        mContext = ctx;
+    public MeteredMultipathPreferenceTracker(Context context, Handler handler) {
+        mContext = context;
         mHandler = handler;
-        mAvoidBadWifiCallback = avoidBadWifiCallback;
-        mSettingsUri = Settings.Global.getUriFor(NETWORK_AVOID_BAD_WIFI);
         mResolver = mContext.getContentResolver();
+        mSettingsUri = Settings.Global.getUriFor(NETWORK_METERED_MULTIPATH_PREFERENCE);
         mSettingObserver = new SettingObserver();
         mBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                reevaluateInternal();
+                updateMeteredMultipathPreference();
             }
         };
 
-        ctx.getSystemService(TelephonyManager.class).registerPhoneStateListener(
+        mContext.getSystemService(TelephonyManager.class).registerPhoneStateListener(
                 new HandlerExecutor(handler), new ActiveDataSubscriptionIdChangedListener());
 
-        updateAvoidBadWifi();
+        updateMeteredMultipathPreference();
     }
 
+    /**
+     * Start listening intent event for config changed.
+     */
     public void start() {
         mResolver.registerContentObserver(mSettingsUri, false, mSettingObserver);
 
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
-        mContext.registerReceiverForAllUsers(mBroadcastReceiver, intentFilter,
-                null /* broadcastPermission */, mHandler);
-
+        mContext.registerReceiverForAllUsers(
+                mBroadcastReceiver, intentFilter, null /* broadcastPermission */, mHandler);
         reevaluate();
     }
 
-    public void shutdown() {
+    /**
+     * Stop listening intent event.
+     */
+    public void stop() {
         mResolver.unregisterContentObserver(mSettingObserver);
         mContext.unregisterReceiver(mBroadcastReceiver);
     }
 
-    public boolean getAvoidBadWifi() {
-        return mAvoidBadWifi;
-    }
-
     /**
-     * Whether the device or carrier configuration disables avoiding bad wifi by default.
+     * Post updateMeteredMultipathPreference to handler thread.
      */
-    public boolean configRestrictsAvoidBadWifi() {
-        return (getResourcesForActiveSubId().getInteger(R.integer.config_networkAvoidBadWifi) == 0);
-    }
-
-    @NonNull
-    private Resources getResourcesForActiveSubId() {
-        return SubscriptionManager.getResourcesForSubId(mContext, mActiveSubId);
-    }
-
-    /**
-     * Whether we should display a notification when wifi becomes unvalidated.
-     */
-    public boolean shouldNotifyWifiUnvalidated() {
-        return configRestrictsAvoidBadWifi() && getAvoidBadWifiSetting() == null;
-    }
-
-    public String getAvoidBadWifiSetting() {
-        return Settings.Global.getString(mResolver, NETWORK_AVOID_BAD_WIFI);
-    }
-
     @VisibleForTesting
     public void reevaluate() {
-        mHandler.post(this::reevaluateInternal);
+        mHandler.post(this::updateMeteredMultipathPreference);
     }
 
     /**
-     * Reevaluate the settings. Must be called on the handler thread.
+     * The default (device and carrier-dependent) value for metered multipath preference.
      */
-    private void reevaluateInternal() {
-        if (updateAvoidBadWifi() && mAvoidBadWifiCallback != null) {
-            mAvoidBadWifiCallback.run();
+    public int configMeteredMultipathPreference() {
+        return mContext.getResources().getInteger(
+                R.integer.config_networkMeteredMultipathPreference);
+    }
+
+    /**
+     * Update metered multipath preference from settings.
+     */
+    public void updateMeteredMultipathPreference() {
+        String setting = Settings.Global.getString(mResolver, NETWORK_METERED_MULTIPATH_PREFERENCE);
+        try {
+            mMeteredMultipathPreference = Integer.parseInt(setting);
+        } catch (NumberFormatException e) {
+            mMeteredMultipathPreference = configMeteredMultipathPreference();
         }
     }
 
-    public boolean updateAvoidBadWifi() {
-        final boolean settingAvoidBadWifi = "1".equals(getAvoidBadWifiSetting());
-        final boolean prev = mAvoidBadWifi;
-        mAvoidBadWifi = settingAvoidBadWifi || !configRestrictsAvoidBadWifi();
-        return mAvoidBadWifi != prev;
+    public int getMeteredMultipathPreference() {
+        return mMeteredMultipathPreference;
     }
 
     private class SettingObserver extends ContentObserver {
-        public SettingObserver() {
+        SettingObserver() {
             super(null);
         }
 
