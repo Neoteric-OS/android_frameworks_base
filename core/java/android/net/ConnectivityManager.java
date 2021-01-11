@@ -4522,12 +4522,15 @@ public class ConnectivityManager {
      * @return a bitwise OR of zero or more of the  {@code MULTIPATH_PREFERENCE_*} constants.
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
-    public @MultipathPreference int getMultipathPreference(@Nullable Network network) {
-        try {
-            return mService.getMultipathPreference(network);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
+    public int getMultipathPreference(@Nullable Network network) {
+        final NetworkCapabilities nc = getNetworkCapabilities(network);
+        if (nc != null && nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)) {
+            return ConnectivityManager.MULTIPATH_PREFERENCE_UNMETERED;
         }
+        final NetworkPolicyManager policyManager = mContext.getSystemService(
+                NetworkPolicyManager.class);
+
+        return policyManager.getMultipathPreference(network);
     }
 
     /**

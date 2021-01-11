@@ -1290,7 +1290,6 @@ public class ConnectivityServiceTest {
 
     private static class WrappedMultinetworkPolicyTracker extends MultinetworkPolicyTracker {
         volatile boolean mConfigRestrictsAvoidBadWifi;
-        volatile int mConfigMeteredMultipathPreference;
 
         WrappedMultinetworkPolicyTracker(Context c, Handler h, Runnable r) {
             super(c, h, r);
@@ -1299,11 +1298,6 @@ public class ConnectivityServiceTest {
         @Override
         public boolean configRestrictsAvoidBadWifi() {
             return mConfigRestrictsAvoidBadWifi;
-        }
-
-        @Override
-        public int configMeteredMultipathPreference() {
-            return mConfigMeteredMultipathPreference;
         }
     }
 
@@ -4067,25 +4061,6 @@ public class ConnectivityServiceTest {
         mCm.unregisterNetworkCallback(cellNetworkCallback);
         mCm.unregisterNetworkCallback(validatedWifiCallback);
         mCm.unregisterNetworkCallback(defaultCallback);
-    }
-
-    @Test
-    public void testMeteredMultipathPreferenceSetting() throws Exception {
-        final ContentResolver cr = mServiceContext.getContentResolver();
-        final String settingName = Settings.Global.NETWORK_METERED_MULTIPATH_PREFERENCE;
-
-        for (int config : Arrays.asList(0, 3, 2)) {
-            for (String setting: Arrays.asList(null, "0", "2", "1")) {
-                mPolicyTracker.mConfigMeteredMultipathPreference = config;
-                Settings.Global.putString(cr, settingName, setting);
-                mPolicyTracker.reevaluate();
-                waitForIdle();
-
-                final int expected = (setting != null) ? Integer.parseInt(setting) : config;
-                String msg = String.format("config=%d, setting=%s", config, setting);
-                assertEquals(msg, expected, mCm.getMultipathPreference(null));
-            }
-        }
     }
 
     /**
