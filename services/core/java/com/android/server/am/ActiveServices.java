@@ -1405,6 +1405,9 @@ public final class ActiveServices {
                 // their services even if they are restricted from doing that while in bg.
                 if (!ignoreForeground
                         && !appIsTopLocked(r.appInfo.uid)
+                        && mAm.getAppStartModeLocked(r.appInfo.uid, r.packageName,
+                        r.appInfo.targetSdkVersion, -1, false, false, false, r.callerPackage)
+                        != ActivityManager.APP_START_MODE_NORMAL
                         && appRestrictedAnyInBackground(r.appInfo.uid, r.packageName)) {
                     Slog.w(TAG,
                             "Service.startForeground() not allowed due to bg restriction: service "
