@@ -225,6 +225,7 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 import android.os.SystemClock;
+import android.os.SystemConfigManager;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
@@ -399,6 +400,7 @@ public class ConnectivityServiceTest {
     @Mock EthernetManager mEthernetManager;
     @Mock NetworkPolicyManager mNetworkPolicyManager;
     @Mock KeyStore mKeyStore;
+    @Mock SystemConfigManager mSystemConfigManager;
 
     private ArgumentCaptor<ResolverParamsParcel> mResolverParamsParcelCaptor =
             ArgumentCaptor.forClass(ResolverParamsParcel.class);
@@ -495,6 +497,7 @@ public class ConnectivityServiceTest {
             if (Context.TELEPHONY_SERVICE.equals(name)) return mTelephonyManager;
             if (Context.ETHERNET_SERVICE.equals(name)) return mEthernetManager;
             if (Context.NETWORK_POLICY_SERVICE.equals(name)) return mNetworkPolicyManager;
+            if (Context.SYSTEM_CONFIG_SERVICE.equals(name)) return mSystemConfigManager;
             return super.getSystemService(name);
         }
 
@@ -1362,6 +1365,7 @@ public class ConnectivityServiceTest {
         applicationInfo.targetSdkVersion = Build.VERSION_CODES.Q;
         when(mPackageManager.getApplicationInfoAsUser(anyString(), anyInt(), any()))
                 .thenReturn(applicationInfo);
+        when(mSystemConfigManager.getSystemPermissionUids(anyString())).thenReturn(new int[0]);
 
         // InstrumentationTestRunner prepares a looper, but AndroidJUnitRunner does not.
         // http://b/25897652 .
