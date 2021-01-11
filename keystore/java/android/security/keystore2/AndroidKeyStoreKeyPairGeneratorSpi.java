@@ -490,6 +490,9 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
                         Log.e(TAG, "Failed to delete newly generated key after "
                                 + "generation failed unexpectedly.", e);
                     }
+                } catch (NullPointerException e) {
+                    Log.e(TAG, "Failed to delete newly generated key after "
+                            + "generation failed unexpectedly.", e);
                 }
             }
         }
