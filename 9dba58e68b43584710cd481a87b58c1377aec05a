@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70236fab_2c24612a",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2021-01-11T21:54:47Z",
+      "side": 1,
+      "message": "just `return fd.getInt$();`?",
+      "revId": "9dba58e68b43584710cd481a87b58c1377aec05a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
