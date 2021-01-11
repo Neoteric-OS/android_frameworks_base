@@ -174,7 +174,6 @@ import android.net.TelephonyNetworkSpecifier;
 import android.net.TrafficStats;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
-import android.os.BestClock;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.Handler;
@@ -266,7 +265,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -669,8 +667,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     }
 
     private static @NonNull Clock getDefaultClock() {
-        return new BestClock(ZoneOffset.UTC, SystemClock.currentNetworkTimeClock(),
-                Clock.systemUTC());
+        return NetworkingClocks.newNetworkingClock();
     }
 
     public NetworkPolicyManagerService(Context context, IActivityManager activityManager,

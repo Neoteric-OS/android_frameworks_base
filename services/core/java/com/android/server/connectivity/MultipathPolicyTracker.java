@@ -53,9 +53,7 @@ import android.net.NetworkStats;
 import android.net.NetworkTemplate;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.Uri;
-import android.os.BestClock;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -69,10 +67,10 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.LocalServices;
 import com.android.server.net.NetworkPolicyManagerInternal;
 import com.android.server.net.NetworkStatsManagerInternal;
+import com.android.server.net.NetworkingClocks;
 
 import java.time.Clock;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.ConcurrentHashMap;
@@ -125,8 +123,7 @@ public class MultipathPolicyTracker {
 
     public static class Dependencies {
         public Clock getClock() {
-            return new BestClock(ZoneOffset.UTC, SystemClock.currentNetworkTimeClock(),
-                    Clock.systemUTC());
+            return NetworkingClocks.newNetworkingClock();
         }
     }
 

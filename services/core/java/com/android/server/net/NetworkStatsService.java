@@ -108,7 +108,6 @@ import android.net.Uri;
 import android.net.netstats.provider.INetworkStatsProvider;
 import android.net.netstats.provider.INetworkStatsProviderCallback;
 import android.net.netstats.provider.NetworkStatsProvider;
-import android.os.BestClock;
 import android.os.Binder;
 import android.os.DropBoxManager;
 import android.os.Environment;
@@ -156,7 +155,6 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.Clock;
-import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -361,8 +359,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     private static @NonNull Clock getDefaultClock() {
-        return new BestClock(ZoneOffset.UTC, SystemClock.currentNetworkTimeClock(),
-                Clock.systemUTC());
+        return NetworkingClocks.newNetworkingClock();
     }
 
     private final class NetworkStatsHandler extends Handler {
