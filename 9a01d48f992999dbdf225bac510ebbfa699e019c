@@ -33,6 +33,24 @@
       "message": "i believe https://android-review.googlesource.com/c/platform/frameworks/base/+/1540573 covers this",
       "revId": "9a01d48f992999dbdf225bac510ebbfa699e019c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52030e9a_856d905f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1301101
+      },
+      "writtenOn": "2021-01-11T23:07:27Z",
+      "side": 1,
+      "message": "Thanks, exactly.",
+      "parentUuid": "3874532d_24a4d183",
+      "revId": "9a01d48f992999dbdf225bac510ebbfa699e019c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
