@@ -124,6 +124,7 @@ import java.io.OutputStream;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.InetAddresses;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
@@ -327,7 +328,7 @@ public class Vpn {
         public InetAddress resolve(final String endpoint)
                 throws ExecutionException, InterruptedException {
             try {
-                return InetAddress.parseNumericAddress(endpoint);
+                return InetAddresses.parseNumericAddress(endpoint);
             } catch (IllegalArgumentException e) {
                 // Endpoint is not numeric : fall through and resolve
             }
@@ -1113,7 +1114,7 @@ public class Vpn {
 
         if (mConfig.dnsServers != null) {
             for (String dnsServer : mConfig.dnsServers) {
-                InetAddress address = InetAddress.parseNumericAddress(dnsServer);
+                InetAddress address = InetAddresses.parseNumericAddress(dnsServer);
                 lp.addDnsServer(address);
                 allowIPv4 |= address instanceof Inet4Address;
                 allowIPv6 |= address instanceof Inet6Address;

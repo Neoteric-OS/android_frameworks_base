@@ -1911,11 +1911,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public void onPrivateDnsValidationEvent(int netId, String ipAddress,
                 String hostname, boolean validated) {
             try {
-                mHandler.sendMessage(mHandler.obtainMessage(
-                        EVENT_PRIVATE_DNS_VALIDATION_UPDATE,
-                        new PrivateDnsValidationUpdate(netId,
-                                InetAddress.parseNumericAddress(ipAddress),
-                                hostname, validated)));
+                mHandler.sendMessage(
+                        mHandler.obtainMessage(
+                                EVENT_PRIVATE_DNS_VALIDATION_UPDATE,
+                                new PrivateDnsValidationUpdate(
+                                        netId,
+                                        InetAddresses.parseNumericAddress(ipAddress),
+                                        hostname,
+                                        validated)));
             } catch (IllegalArgumentException e) {
                 loge("Error parsing ip address in validation event");
             }
