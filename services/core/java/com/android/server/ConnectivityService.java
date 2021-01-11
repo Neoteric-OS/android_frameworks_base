@@ -5636,6 +5636,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 networkCapabilities = createDefaultNetworkCapabilitiesForUid(callingUid);
                 enforceAccessPermission();
                 break;
+            case BACKGROUND_REQUEST:
+                if (!mPermissionMonitor.hasUseBackgroundNetworksPermission(callingUid)) {
+                    throw new SecurityException(
+                            "Calling Uid is not allowed to request background network.");
+                }
+                // Fall-through since other checks are the same with normal requests.
             case REQUEST:
                 networkCapabilities = new NetworkCapabilities(networkCapabilities);
                 enforceNetworkRequestPermissions(networkCapabilities, callingPackageName,

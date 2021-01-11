@@ -16,6 +16,7 @@
 package android.net;
 
 import static android.net.IpSecManager.INVALID_RESOURCE_ID;
+import static android.net.NetworkRequest.Type.BACKGROUND_REQUEST;
 import static android.net.NetworkRequest.Type.LISTEN;
 import static android.net.NetworkRequest.Type.REQUEST;
 import static android.net.NetworkRequest.Type.TRACK_DEFAULT;
@@ -4842,5 +4843,27 @@ public class ConnectivityManager {
     private void setOemNetworkPreference(@NonNull OemNetworkPreferences preference) {
         Log.d(TAG, "setOemNetworkPreference called with preference: "
                 + preference.toString());
+    }
+
+    /**
+     * Request a network to satisfy a set of {@link android.net.NetworkCapabilities}, see
+     * {@link #requestNetwork(NetworkRequest, NetworkCallback)} for more details, but this
+     * does not cause any networks to retain the NET_CAPABILITY_FOREGROUND capability.
+     *
+     * This API is only for use in internal system code that want to hold networks but
+     * doesn't need the networks to be foreground.
+     *
+     * @hide
+     */
+    @SystemApi(client = SystemApi.Client.SYSTEM_SERVER)
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.CHANGE_NETWORK_STATE,
+            android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS
+    })
+    public void requestBackgroundNetwork(@NonNull NetworkRequest request,
+            @NonNull NetworkCallback networkCallback) {
+        final NetworkCapabilities nc = request.networkCapabilities;
+        sendRequestForNetwork(nc, networkCallback, 0, BACKGROUND_REQUEST,
+                TYPE_NONE, getDefaultHandler());
     }
 }
