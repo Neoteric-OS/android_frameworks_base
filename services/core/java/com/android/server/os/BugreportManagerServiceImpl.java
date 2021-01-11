@@ -48,6 +48,7 @@ import java.util.Objects;
 class BugreportManagerServiceImpl extends IDumpstate.Stub {
     private static final String TAG = "BugreportManagerService";
     private static final String BUGREPORT_SERVICE = "bugreportd";
+    private static final String DUMPSTATE_ERROR_PROP = "dumpstate.exited_with_error";
     private static final long DEFAULT_BUGREPORT_SERVICE_TIMEOUT_MILLIS = 30 * 1000;
 
     private final Object mLock = new Object();
@@ -279,6 +280,7 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
         public void onError(int errorCode) throws RemoteException {
             synchronized (mLock) {
                 mDone = true;
+                SystemProperties.set(DUMPSTATE_ERROR_PROP, "");
             }
             mListener.onError(errorCode);
         }
@@ -304,7 +306,9 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
         @Override
         public void binderDied() {
             synchronized (mLock) {
-                if (!mDone) {
+                boolean exitedWithError = SystemProperties.getBoolean(DUMPSTATE_ERROR_PROP, false);
+                SystemProperties.set(DUMPSTATE_ERROR_PROP, "");
+                if (!mDone && !exitedWithError) {
                     // If we have not gotten a "done" callback this must be a crash.
                     Slog.e(TAG, "IDumpstate likely crashed. Notifying listener");
                     try {
