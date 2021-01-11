@@ -243,3 +243,9 @@ SamShouldBeLast: android.view.accessibility.AccessibilityManager#addTouchExplora
     
 SamShouldBeLast: android.webkit.WebChromeClient#onShowFileChooser(android.webkit.WebView, android.webkit.ValueCallback<android.net.Uri[]>, android.webkit.WebChromeClient.FileChooserParams):
     
+
+
+UseParcelFileDescriptor: android.net.util.IoUtilsWrapper#closeQuietly(java.io.FileDescriptor) parameter #0:
+    Must use ParcelFileDescriptor instead of FileDescriptor in parameter fd in android.net.util.IoUtilsWrapper.closeQuietly(java.io.FileDescriptor fd)
+UseParcelFileDescriptor: android.net.util.IoUtilsWrapper#setBlocking(java.io.FileDescriptor, boolean) parameter #0:
+    Must use ParcelFileDescriptor instead of FileDescriptor in parameter fd in android.net.util.IoUtilsWrapper.setBlocking(java.io.FileDescriptor fd, boolean blocking)
