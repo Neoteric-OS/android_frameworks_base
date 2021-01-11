@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b6d15d8_c16574a4",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-11T23:08:12Z",
+      "side": 1,
+      "message": "Do we really need this stored? or is this something where we can just call a build() method in the test method itself?",
+      "range": {
+        "startLine": 254,
+        "startChar": 29,
+        "endLine": 254,
+        "endChar": 48
+      },
+      "revId": "860d462bbf33269cfe40f5154323bc3eebeb3449",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb28c108_86a6f979",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-11T23:08:12Z",
+      "side": 1,
+      "message": "Ditto, do we really need this for the entire lifetime of the class?",
+      "range": {
+        "startLine": 256,
+        "startChar": 45,
+        "endLine": 256,
+        "endChar": 68
+      },
+      "revId": "860d462bbf33269cfe40f5154323bc3eebeb3449",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
