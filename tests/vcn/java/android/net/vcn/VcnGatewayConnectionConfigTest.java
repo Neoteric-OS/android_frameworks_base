@@ -140,4 +140,9 @@ public class VcnGatewayConnectionConfigTest {
 
         assertEquals(config, new VcnGatewayConnectionConfig(config.toPersistableBundle()));
     }
+
+    @Test
+    public void testTryUseIke() {
+        VcnGatewayConnectionConfig.tryUseIke();
+    }
 }

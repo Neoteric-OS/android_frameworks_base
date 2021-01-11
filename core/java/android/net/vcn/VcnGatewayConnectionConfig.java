@@ -25,6 +25,7 @@ import android.annotation.Nullable;
 import android.net.NetworkCapabilities;
 import android.os.PersistableBundle;
 import android.util.ArraySet;
+import android.net.ipsec.ike.IkeSessionParams;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
@@ -173,6 +174,10 @@ public final class VcnGatewayConnectionConfig {
         mMaxMtu = in.getInt(MAX_MTU_KEY);
 
         validate();
+    }
+
+    public static void tryUseIke() {
+        new IkeSessionParams.Builder(null);
     }
 
     private void validate() {
