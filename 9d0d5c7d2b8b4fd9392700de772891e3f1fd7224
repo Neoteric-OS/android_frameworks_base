@@ -62,6 +62,30 @@
       },
       "revId": "9d0d5c7d2b8b4fd9392700de772891e3f1fd7224",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a4fe11f_18b651ed",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6696,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-11T03:39:19Z",
+      "side": 1,
+      "message": "Yes it is intended.\nIn case in future they won\u0027t be inside default capbilities anymore.",
+      "parentUuid": "d49b7d31_6f0af280",
+      "range": {
+        "startLine": 6696,
+        "startChar": 60,
+        "endLine": 6696,
+        "endChar": 82
+      },
+      "revId": "9d0d5c7d2b8b4fd9392700de772891e3f1fd7224",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
