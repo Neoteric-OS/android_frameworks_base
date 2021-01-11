@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e685e066_05888345",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-11T23:39:32Z",
+      "side": 1,
+      "message": "CL safely merged into master and presubmit now passes. Over to Amith for API review",
+      "revId": "f62a11079f3711327781c457fc1fa7a9d1691734",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
