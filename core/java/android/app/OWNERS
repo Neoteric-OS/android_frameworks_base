@@ -21,6 +21,9 @@ per-file ResourcesManager = rtmitchell@google.com, toddke@google.com
 # Wallpaper
 per-file *Wallpaper* = file:/core/java/android/service/wallpaper/OWNERS
 
+# ActivityManager
+per-file *ActivityManager* = file:/services/core/java/com/android/server/am/OWNERS
+
 # WindowManager
 per-file *Activity* = file:/services/core/java/com/android/server/wm/OWNERS
 per-file ClientTransactionHandler.java = file:/services/core/java/com/android/server/wm/OWNERS
