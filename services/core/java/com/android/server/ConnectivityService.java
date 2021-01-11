@@ -3419,6 +3419,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // available until we've told netd to delete it below.
             mNetworkForNetId.remove(nai.network.getNetId());
         }
+        propagateUnderlyingNetworkCapabilities(nai.network);
         // Remove all previously satisfied requests.
         for (int i = 0; i < nai.numNetworkRequests(); i++) {
             NetworkRequest request = nai.requestAt(i);
@@ -3431,7 +3432,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
         nai.clearLingerState();
-        propagateUnderlyingNetworkCapabilities(nai.network);
         if (nai.isSatisfyingRequest(mDefaultRequest.requestId)) {
             mDefaultNetworkNai = null;
             updateDataActivityTracking(null /* newNetwork */, nai);
