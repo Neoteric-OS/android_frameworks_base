@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f55015ca_e392ffd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1301101
+      },
+      "writtenOn": "2021-01-11T21:17:24Z",
+      "side": 1,
+      "message": "It is strange that nobody in yamasani@ team is in the OWNERS list of files such as ActivityManagerInternal.java, ActivityManager.java/aidl. \n\nMaybe other people\u0027s recent commit accidentally removed/overridened us from OWNERS. \n\n",
+      "revId": "9a01d48f992999dbdf225bac510ebbfa699e019c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
