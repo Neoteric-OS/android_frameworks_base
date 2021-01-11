@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007190852",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1372157?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ba2166b1_c68be5ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-11T19:50:27Z",
+      "side": 1,
+      "message": "\"manually verified against device supporting EATT\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 54
+      },
+      "revId": "9bf1c7c57c875fd2e9d816de11db25ab7119073a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007190853",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1372157?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8672ef6e_498a0378",
+        "filename": "core/java/android/bluetooth/BluetoothGattServer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-11T19:50:27Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 481,
+        "startChar": 0,
+        "endLine": 481,
+        "endChar": 106
+      },
+      "revId": "9bf1c7c57c875fd2e9d816de11db25ab7119073a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
