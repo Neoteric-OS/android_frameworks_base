@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Michael Wright <michaelwr@google.com>
+Presubmit-Ready+1: Treehugger Robot <treehugger-gerrit@google.com>
+Presubmit-Ready+1: Dmitri Plotnikov <dplotnikov@google.com>
+Bypass-Presubmit+1: Dmitri Plotnikov <dplotnikov@google.com>
+Submitted-by: Dmitri Plotnikov <dplotnikov@google.com>
+Submitted-at: Mon, 11 Jan 2021 20:43:49 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1546297
+Project: platform/frameworks/base
+Branch: refs/heads/master
