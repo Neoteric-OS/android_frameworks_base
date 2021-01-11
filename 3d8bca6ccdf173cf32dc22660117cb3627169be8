@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adf160a4_5f5a5ac4",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-11T02:42:11Z",
+      "side": 1,
+      "message": "Can we really do this renaming? The lint error is:\n\nRenamed a field on the unsupported list.\n was: \u0027Landroid/net/NetworkState;-\u003eCREATOR:Landroid/os/Parcelable$Creator;\u0027\n now: \u0027Landroid/net/NetworkStateSnapshot;-\u003eCREATOR:Landroid/os/Parcelable$Creator;\u0027\nFor more info, see go/nonsdk-lists\nUsage level is MEDIUM. Check usage at http://nonsdk/usage/Landroid%2Fnet%2FNetworkState%3B-%3ECREATOR%3ALandroid%2Fos%2FParcelable%24Creator%3B\n\nWARNING: Consider keeping @UnsupportedAppUsage on the new signature. See go/nonsdk-policy#keep-annotation-on-trivial-changes",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 33
+      },
+      "revId": "3d8bca6ccdf173cf32dc22660117cb3627169be8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
