@@ -28,6 +28,7 @@ import android.net.RouteInfo;
 import android.net.TrafficStats;
 import android.net.shared.PrivateDnsConfig;
 import android.net.util.NetworkConstants;
+import android.net.util.SocketUtils;
 import android.os.SystemClock;
 import android.system.ErrnoException;
 import android.system.Os;
@@ -37,8 +38,6 @@ import android.util.Pair;
 
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.TrafficStatsConstants;
-
-import libcore.io.IoUtils;
 
 import java.io.Closeable;
 import java.io.DataInputStream;
@@ -478,7 +477,7 @@ public class NetworkDiagnostics {
 
         @Override
         public void close() {
-            IoUtils.closeQuietly(mFileDescriptor);
+            SocketUtils.closeSocket(mFileDescriptor);
         }
     }
 

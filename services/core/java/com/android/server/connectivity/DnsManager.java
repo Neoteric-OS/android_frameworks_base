@@ -48,6 +48,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import java.net.InetAddress;
+import java.net.InetAddresses;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -190,7 +191,7 @@ public class DnsManager {
             for (String ipAddress : ipAddresses) {
                 try {
                     latestDnses.add(new Pair(hostname,
-                            InetAddress.parseNumericAddress(ipAddress)));
+                            InetAddresses.parseNumericAddress(ipAddress)));
                 } catch (IllegalArgumentException e) {}
             }
             // Remove <hostname, ipAddress> pairs that should not be tracked.

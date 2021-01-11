@@ -79,6 +79,7 @@ import android.net.ipsec.ike.IkeSession;
 import android.net.ipsec.ike.IkeSessionCallback;
 import android.net.ipsec.ike.IkeSessionParams;
 import android.net.ipsec.ike.exceptions.IkeProtocolException;
+import android.net.util.SocketUtils;
 import android.os.Binder;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -124,6 +125,7 @@ import java.io.OutputStream;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.InetAddresses;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
@@ -327,7 +329,7 @@ public class Vpn {
         public InetAddress resolve(final String endpoint)
                 throws ExecutionException, InterruptedException {
             try {
-                return InetAddress.parseNumericAddress(endpoint);
+                return InetAddresses.parseNumericAddress(endpoint);
             } catch (IllegalArgumentException e) {
                 // Endpoint is not numeric : fall through and resolve
             }
@@ -1113,7 +1115,7 @@ public class Vpn {
 
         if (mConfig.dnsServers != null) {
             for (String dnsServer : mConfig.dnsServers) {
-                InetAddress address = InetAddress.parseNumericAddress(dnsServer);
+                InetAddress address = InetAddresses.parseNumericAddress(dnsServer);
                 lp.addDnsServer(address);
                 allowIPv4 |= address instanceof Inet4Address;
                 allowIPv6 |= address instanceof Inet6Address;
@@ -1358,7 +1360,7 @@ public class Vpn {
                         "Cannot set tunnel's fd as blocking=" + config.blocking, e);
             }
         } catch (RuntimeException e) {
-            IoUtils.closeQuietly(tun);
+            SocketUtils.closeSocket(tun);
             // If this is not seamless handover, disconnect partially-established network when error
             // occurs.
             if (oldNetworkAgent != mNetworkAgent) {
@@ -2790,7 +2792,7 @@ public class Vpn {
                 } catch (InterruptedException e) {
                 } finally {
                     for (LocalSocket socket : mSockets) {
-                        IoUtils.closeQuietly(socket);
+                        SocketUtils.closeSocket(socket);
                     }
                     // This sleep is necessary for racoon to successfully complete sending delete
                     // message to server.
