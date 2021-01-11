@@ -164,9 +164,9 @@ public class PlatformCompat extends IPlatformCompat.Stub {
      *
      * @param changeId to get updates for
      * @param listener the listener that will be called upon a potential change for package.
-     * @throws IllegalStateException if a listener was already registered for changeId
-     * @returns {@code true} if a change with changeId was already known, or (@code false}
+     * @return {@code true} if a change with changeId was already known, or (@code false}
      * otherwise.
+     * @throws IllegalStateException if a listener was already registered for changeId
      */
     public boolean registerListener(long changeId, CompatChange.ChangeListener listener) {
         return mCompatConfig.registerListener(changeId, listener);
@@ -174,7 +174,7 @@ public class PlatformCompat extends IPlatformCompat.Stub {
 
     @Override
     public void setOverrides(CompatibilityChangeConfig overrides, String packageName)
-            throws RemoteException, SecurityException {
+            throws SecurityException {
         checkCompatChangeOverridePermission();
         mCompatConfig.addOverrides(overrides, packageName);
         killPackage(packageName);
@@ -182,48 +182,46 @@ public class PlatformCompat extends IPlatformCompat.Stub {
 
     @Override
     public void setOverridesForTest(CompatibilityChangeConfig overrides, String packageName)
-            throws RemoteException, SecurityException {
+            throws SecurityException {
         checkCompatChangeOverridePermission();
         mCompatConfig.addOverrides(overrides, packageName);
     }
 
     @Override
     public int enableTargetSdkChanges(String packageName, int targetSdkVersion)
-            throws RemoteException, SecurityException {
+            throws SecurityException {
         checkCompatChangeOverridePermission();
         int numChanges = mCompatConfig.enableTargetSdkChangesForPackage(packageName,
-                                                                        targetSdkVersion);
+                targetSdkVersion);
         killPackage(packageName);
         return numChanges;
     }
 
     @Override
     public int disableTargetSdkChanges(String packageName, int targetSdkVersion)
-            throws RemoteException, SecurityException {
+            throws SecurityException {
         checkCompatChangeOverridePermission();
         int numChanges = mCompatConfig.disableTargetSdkChangesForPackage(packageName,
-                                                                         targetSdkVersion);
+                targetSdkVersion);
         killPackage(packageName);
         return numChanges;
     }
 
     @Override
-    public void clearOverrides(String packageName) throws RemoteException, SecurityException {
+    public void clearOverrides(String packageName) throws SecurityException {
         checkCompatChangeOverridePermission();
         mCompatConfig.removePackageOverrides(packageName);
         killPackage(packageName);
     }
 
     @Override
-    public void clearOverridesForTest(String packageName)
-            throws RemoteException, SecurityException {
+    public void clearOverridesForTest(String packageName) throws SecurityException {
         checkCompatChangeOverridePermission();
         mCompatConfig.removePackageOverrides(packageName);
     }
 
     @Override
-    public boolean clearOverride(long changeId, String packageName)
-            throws RemoteException, SecurityException {
+    public boolean clearOverride(long changeId, String packageName) throws SecurityException {
         checkCompatChangeOverridePermission();
         boolean existed = mCompatConfig.removeOverride(changeId, packageName);
         killPackage(packageName);
@@ -245,7 +243,7 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     @Override
     public CompatibilityChangeInfo[] listUIChanges() {
         return Arrays.stream(listAllChanges()).filter(
-                x -> isShownInUI(x)).toArray(CompatibilityChangeInfo[]::new);
+                this::isShownInUI).toArray(CompatibilityChangeInfo[]::new);
     }
 
     /**
@@ -255,7 +253,6 @@ public class PlatformCompat extends IPlatformCompat.Stub {
      */
     public boolean isKnownChangeId(long changeId) {
         return mCompatConfig.isKnownChangeId(changeId);
-
     }
 
     /**
@@ -314,7 +311,7 @@ public class PlatformCompat extends IPlatformCompat.Stub {
 
     private void killPackage(String packageName) {
         int uid = LocalServices.getService(PackageManagerInternal.class).getPackageUid(packageName,
-                    0, UserHandle.myUserId());
+                0, UserHandle.myUserId());
 
         if (uid < 0) {
             Slog.w(TAG, "Didn't find package " + packageName + " on device.");
@@ -388,15 +385,14 @@ public class PlatformCompat extends IPlatformCompat.Stub {
             return false;
         }
         if (change.getEnableSinceTargetSdk() > 0) {
-            if (change.getEnableSinceTargetSdk() < sMinTargetSdk) {
-                return false;
-            }
+            return change.getEnableSinceTargetSdk() >= sMinTargetSdk;
         }
         return true;
     }
 
     /**
      * Registers a broadcast receiver that listens for package install, replace or remove.
+     *
      * @param context the context where the receiver should be registered.
      */
     public void registerPackageReceiver(Context context) {

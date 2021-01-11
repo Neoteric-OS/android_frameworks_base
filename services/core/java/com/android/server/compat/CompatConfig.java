@@ -21,7 +21,6 @@ import android.compat.Compatibility.ChangeConfig;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Environment;
-import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.LongArray;
 import android.util.LongSparseArray;
@@ -65,11 +64,27 @@ final class CompatConfig {
     @GuardedBy("mChanges")
     private final LongSparseArray<CompatChange> mChanges = new LongSparseArray<>();
 
-    private OverrideValidatorImpl mOverrideValidator;
+    private final OverrideValidatorImpl mOverrideValidator;
 
     @VisibleForTesting
     CompatConfig(AndroidBuildClassifier androidBuildClassifier, Context context) {
         mOverrideValidator = new OverrideValidatorImpl(androidBuildClassifier, context, this);
+    }
+
+    static CompatConfig create(AndroidBuildClassifier androidBuildClassifier, Context context) {
+        CompatConfig config = new CompatConfig(androidBuildClassifier, context);
+        config.initConfigFromLib(Environment.buildPath(
+                Environment.getRootDirectory(), "etc", "compatconfig"));
+        config.initConfigFromLib(Environment.buildPath(
+                Environment.getRootDirectory(), "system_ext", "etc", "compatconfig"));
+
+        List<ApexManager.ActiveApexInfo> apexes = ApexManager.getInstance().getActiveApexInfos();
+        for (ApexManager.ActiveApexInfo apex : apexes) {
+            config.initConfigFromLib(Environment.buildPath(
+                    apex.apexDirectory, "etc", "compatconfig"));
+        }
+        config.invalidateCache();
+        return config;
     }
 
     /**
@@ -182,7 +197,7 @@ final class CompatConfig {
                     break;
                 default:
                     throw new IllegalStateException("Should only be able to override changes that "
-                                                    + "are allowed or can be deferred.");
+                            + "are allowed or can be deferred.");
             }
             invalidateCache();
         }
@@ -286,7 +301,7 @@ final class CompatConfig {
      * @param packageName app for which the overrides will be applied.
      */
     void addOverrides(CompatibilityChangeConfig overrides, String packageName)
-            throws RemoteException, SecurityException {
+            throws SecurityException {
         synchronized (mChanges) {
             for (Long changeId : overrides.enabledChanges()) {
                 addOverride(changeId, packageName, true);
@@ -318,8 +333,7 @@ final class CompatConfig {
     }
 
     private long[] getAllowedChangesSinceTargetSdkForPackage(String packageName,
-                                                             int targetSdkVersion)
-                    throws RemoteException {
+            int targetSdkVersion) {
         LongArray allowed = new LongArray();
         synchronized (mChanges) {
             for (int i = 0; i < mChanges.size(); ++i) {
@@ -329,7 +343,7 @@ final class CompatConfig {
                 }
                 OverrideAllowedState allowedState =
                         mOverrideValidator.getOverrideAllowedState(change.getId(),
-                                                                    packageName);
+                                packageName);
                 if (allowedState.state == OverrideAllowedState.ALLOWED) {
                     allowed.add(change.getId());
                 }
@@ -344,8 +358,7 @@ final class CompatConfig {
      *
      * @return The number of changes that were toggled.
      */
-    int enableTargetSdkChangesForPackage(String packageName, int targetSdkVersion)
-            throws RemoteException {
+    int enableTargetSdkChangesForPackage(String packageName, int targetSdkVersion) {
         long[] changes = getAllowedChangesSinceTargetSdkForPackage(packageName, targetSdkVersion);
         for (long changeId : changes) {
             addOverride(changeId, packageName, true);
@@ -353,15 +366,13 @@ final class CompatConfig {
         return changes.length;
     }
 
-
     /**
      * Disables all changes with enabledSinceTargetSdk == {@param targetSdkVersion} for
      * {@param packageName}.
      *
      * @return The number of changes that were toggled.
      */
-    int disableTargetSdkChangesForPackage(String packageName, int targetSdkVersion)
-            throws RemoteException {
+    int disableTargetSdkChangesForPackage(String packageName, int targetSdkVersion) {
         long[] changes = getAllowedChangesSinceTargetSdkForPackage(packageName, targetSdkVersion);
         for (long changeId : changes) {
             addOverride(changeId, packageName, false);
@@ -461,22 +472,6 @@ final class CompatConfig {
         }
     }
 
-    static CompatConfig create(AndroidBuildClassifier androidBuildClassifier, Context context) {
-        CompatConfig config = new CompatConfig(androidBuildClassifier, context);
-        config.initConfigFromLib(Environment.buildPath(
-                Environment.getRootDirectory(), "etc", "compatconfig"));
-        config.initConfigFromLib(Environment.buildPath(
-                Environment.getRootDirectory(), "system_ext", "etc", "compatconfig"));
-
-        List<ApexManager.ActiveApexInfo> apexes = ApexManager.getInstance().getActiveApexInfos();
-        for (ApexManager.ActiveApexInfo apex : apexes) {
-            config.initConfigFromLib(Environment.buildPath(
-                    apex.apexDirectory, "etc", "compatconfig"));
-        }
-        config.invalidateCache();
-        return config;
-    }
-
     void initConfigFromLib(File libraryDir) {
         if (!libraryDir.exists() || !libraryDir.isDirectory()) {
             Slog.d(TAG, "No directory " + libraryDir + ", skipping");
@@ -507,6 +502,7 @@ final class CompatConfig {
     private void invalidateCache() {
         ChangeIdStateCache.invalidate();
     }
+
     /**
      * Rechecks all the existing overrides for a package.
      */
