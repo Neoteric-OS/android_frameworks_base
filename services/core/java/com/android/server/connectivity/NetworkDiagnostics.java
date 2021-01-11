@@ -38,7 +38,7 @@ import android.util.Pair;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.TrafficStatsConstants;
 
-import libcore.io.IoUtils;
+import libcore.io.IoPublicUtils;
 
 import java.io.Closeable;
 import java.io.DataInputStream;
@@ -478,7 +478,7 @@ public class NetworkDiagnostics {
 
         @Override
         public void close() {
-            IoUtils.closeQuietly(mFileDescriptor);
+            IoPublicUtils.closeQuietly(mFileDescriptor);
         }
     }
 
