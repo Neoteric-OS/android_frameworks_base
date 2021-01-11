@@ -172,6 +172,7 @@ import android.net.NetworkStats;
 import android.net.NetworkTemplate;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.TrafficStats;
+import android.net.util.MeteredMultipathPreferenceTracker;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.BestClock;
@@ -416,6 +417,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private static final String PROP_SUB_PLAN_OWNER = "persist.sys.sub_plan_owner";
 
     private final Context mContext;
+    private final Dependencies mDeps;
     private final IActivityManager mActivityManager;
     private NetworkStatsManagerInternal mNetworkStats;
     private final INetworkManagementService mNetworkManager;
@@ -429,6 +431,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private IConnectivityManager mConnManager;
     private PowerManagerInternal mPowerManagerInternal;
     private PowerWhitelistManager mPowerWhitelistManager;
+    private MeteredMultipathPreferenceTracker mMeteredMultipathPreferenceTracker;
 
     /** Current cached value of the current Battery Saver mode's setting for restrict background. */
     @GuardedBy("mUidRulesFirstLock")
@@ -658,6 +661,19 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             "isUidNetworkingBlocked()",
     });
 
+    /**
+     * Dependencies of NetworkPolicyManagerService, for injection in tests.
+     */
+    public static class Dependencies {
+        /**
+         * Create MeteredMultipathPreferenceTracker
+         */
+        public MeteredMultipathPreferenceTracker makeMeteredMultipathPreferenceTracker(
+                    Context context, Handler handler) {
+            return new MeteredMultipathPreferenceTracker(context, handler);
+        }
+    }
+
     public NetworkPolicyManagerService(Context context, IActivityManager activityManager,
             INetworkManagementService networkManagement) {
         this(context, activityManager, networkManagement, AppGlobals.getPackageManager(),
@@ -676,6 +692,14 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     public NetworkPolicyManagerService(Context context, IActivityManager activityManager,
             INetworkManagementService networkManagement, IPackageManager pm, Clock clock,
             File systemDir, boolean suppressDefaultPolicy) {
+        this(context, activityManager, networkManagement, pm, clock, systemDir,
+                suppressDefaultPolicy, new Dependencies());
+    }
+
+    @VisibleForTesting
+    protected NetworkPolicyManagerService(Context context, IActivityManager activityManager,
+            INetworkManagementService networkManagement, IPackageManager pm, Clock clock,
+            File systemDir, boolean suppressDefaultPolicy, Dependencies deps) {
         mContext = Objects.requireNonNull(context, "missing context");
         mActivityManager = Objects.requireNonNull(activityManager, "missing activityManager");
         mNetworkManager = Objects.requireNonNull(networkManagement, "missing networkManagement");
@@ -684,6 +708,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         mUserManager = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
         mCarrierConfigManager = mContext.getSystemService(CarrierConfigManager.class);
         mIPm = pm;
+        mDeps = Objects.requireNonNull(deps, "missing Dependencies");
 
         HandlerThread thread = new HandlerThread(TAG);
         thread.start();
@@ -701,6 +726,9 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
         mAppOps = context.getSystemService(AppOpsManager.class);
         mMultipathPolicyTracker = new MultipathPolicyTracker(mContext, mHandler);
+        mMeteredMultipathPreferenceTracker =
+            mDeps.makeMeteredMultipathPreferenceTracker(mContext, mHandler);
+        mMeteredMultipathPreferenceTracker.start();
         // Expose private service for system components to use.
         LocalServices.addService(NetworkPolicyManagerInternal.class,
                 new NetworkPolicyManagerInternalImpl());
@@ -3521,7 +3549,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         if (preference != null) {
             return preference;
         }
-        return 0;
+        return mMeteredMultipathPreferenceTracker.getMeteredMultipathPreference();
     }
 
     @Override

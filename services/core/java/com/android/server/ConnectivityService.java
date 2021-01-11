@@ -4156,26 +4156,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public int getMultipathPreference(Network network) {
-        enforceAccessPermission();
-
-        NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(network);
-        if (nai != null && nai.networkCapabilities
-                .hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)) {
-            return ConnectivityManager.MULTIPATH_PREFERENCE_UNMETERED;
-        }
-
-        final NetworkPolicyManager netPolicyManager =
-                 mContext.getSystemService(NetworkPolicyManager.class);
-
-        final int networkPreference = netPolicyManager.getMultipathPreference(network);
-        if (networkPreference != 0) {
-            return networkPreference;
-        }
-        return mMultinetworkPolicyTracker.getMeteredMultipathPreference();
-    }
-
-    @Override
     public NetworkRequest getDefaultRequest() {
         return mDefaultRequest;
     }
