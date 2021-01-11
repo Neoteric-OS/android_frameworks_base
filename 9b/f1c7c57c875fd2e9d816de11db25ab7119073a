@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+1: Jakub Pawlowski <jpawlowski@google.com>
+Code-Review+2: Zach Johnson <zachoverflow@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Jakub Pawlowski <jpawlowski@google.com>
+Submitted-at: Mon, 11 Jan 2021 22:28:47 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1372157
+Project: platform/frameworks/base
+Branch: refs/heads/master
