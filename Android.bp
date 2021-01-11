@@ -363,6 +363,7 @@ filegroup {
         ":framework-tethering-srcs",
         ":framework-wifi-updatable-sources",
         ":updatable-media-srcs",
+        ":ike-srcs"
     ],
     visibility: ["//visibility:private"],
 }
@@ -377,6 +378,7 @@ java_library {
         "framework-statsd.stubs.module_lib",
         "framework-tethering.stubs.module_lib",
         "framework-wifi.stubs.module_lib",
+        "android.net.ipsec.ike.stubs.module_lib",
     ],
     sdk_version: "module_current",
     visibility: ["//visibility:private"],
@@ -394,6 +396,7 @@ java_library {
         "framework-tethering.impl",
         "framework-wifi.impl",
         "updatable-media",
+        "android.net.ipsec.ike.impl",
     ],
     apex_available: ["//apex_available:platform"],
     sdk_version: "core_platform",

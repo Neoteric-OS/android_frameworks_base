@@ -16,12 +16,23 @@
 
 package android.net.vcn;
 
+import static android.net.ipsec.ike.SaProposal.DH_GROUP_2048_BIT_MODP;
+import static android.net.ipsec.ike.SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_12;
+import static android.net.ipsec.ike.SaProposal.PSEUDORANDOM_FUNCTION_AES128_XCBC;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
+import android.net.Network;
 import android.net.NetworkCapabilities;
+import android.net.ipsec.ike.IkeFqdnIdentification;
+import android.net.ipsec.ike.IkeSaProposal;
+import android.net.ipsec.ike.IkeSessionParams;
+import android.net.ipsec.ike.SaProposal;
 
+import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
@@ -139,5 +150,37 @@ public class VcnGatewayConnectionConfigTest {
         final VcnGatewayConnectionConfig config = buildTestConfig();
 
         assertEquals(config, new VcnGatewayConnectionConfig(config.toPersistableBundle()));
+    }
+
+    @Test
+    public void testConstructVcnIkeConfigWithIkeParams() {
+        IkeSaProposal saProposal =
+                new IkeSaProposal.Builder()
+                        .addEncryptionAlgorithm(
+                                ENCRYPTION_ALGORITHM_AES_GCM_12, SaProposal.KEY_LEN_AES_128)
+                        .addDhGroup(DH_GROUP_2048_BIT_MODP)
+                        .addPseudorandomFunction(PSEUDORANDOM_FUNCTION_AES128_XCBC)
+                        .build();
+
+        IkeSessionParams ikeParams =
+                new IkeSessionParams.Builder(InstrumentationRegistry.getContext())
+                        .setNetwork(mock(Network.class))
+                        .setServerHostname("10.10.10.1")
+                        .addSaProposal(saProposal)
+                        .setLocalIdentification(new IkeFqdnIdentification("test.com"))
+                        .setRemoteIdentification(new IkeFqdnIdentification("client.com"))
+                        .setAuthPsk("IKE_PSK".getBytes())
+                        .build();
+
+        new VcnIkeConfig(ikeParams);
+    }
+
+    @Test
+    public void testConstructVcnIkeConfigWithPersistableBundle() {
+        try {
+            new VcnIkeConfig(InstrumentationRegistry.getContext(), null /* bundle */);
+            fail("Expect NullPointerException");
+        } catch (NullPointerException expected) {
+        }
     }
 }
