@@ -97,6 +97,7 @@ import android.app.IUidObserver;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.usage.UsageStatsManagerInternal;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -121,6 +122,7 @@ import android.net.NetworkStats;
 import android.net.NetworkStatsHistory;
 import android.net.NetworkTemplate;
 import android.net.TelephonyNetworkSpecifier;
+import android.net.util.MeteredMultipathPreferenceUpdater;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.INetworkManagementService;
@@ -133,6 +135,7 @@ import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.platform.test.annotations.Presubmit;
+import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
@@ -156,6 +159,7 @@ import com.android.internal.util.test.BroadcastInterceptingContext.FutureIntent;
 import com.android.server.DeviceIdleInternal;
 import com.android.server.LocalServices;
 import com.android.server.usage.AppStandbyInternal;
+import com.android.testutils.HandlerUtils;
 
 import com.google.common.util.concurrent.AbstractFuture;
 
@@ -222,6 +226,8 @@ public class NetworkPolicyManagerServiceTest {
     private static final int TEST_SUB_ID = 42;
     private static final int TEST_NET_ID = 24;
 
+    private static final int TIMEOUT_MS = 500;
+
     private static NetworkTemplate sTemplateWifi = buildTemplateWifi(TEST_SSID);
     private static NetworkTemplate sTemplateMobileAll = buildTemplateMobileAll(TEST_IMSI);
 
@@ -264,6 +270,8 @@ public class NetworkPolicyManagerServiceTest {
 
     private NetworkPolicyListenerAnswer mPolicyListener;
     private NetworkPolicyManagerService mService;
+    private WrappedMeteredMultipathPreferenceUpdater mPreferenceUpdater;
+    private NetworkPolicyManagerService.Dependencies mDeps;
 
     /**
      * In some of the tests while initializing NetworkPolicyManagerService,
@@ -390,8 +398,9 @@ public class NetworkPolicyManagerServiceTest {
                 eq(NetworkPolicyManager.FOREGROUND_THRESHOLD_STATE), any(String.class));
 
         mFutureIntent = newRestrictBackgroundChangedFuture();
+        mDeps = makeDependencies();
         mService = new NetworkPolicyManagerService(mServiceContext, mActivityManager,
-                mNetworkManager, mIpm, mClock, mPolicyDir, true);
+                mNetworkManager, mIpm, mClock, mPolicyDir, true, mDeps);
         mService.bindConnectivityManager(mConnManager);
         mPolicyListener = new NetworkPolicyListenerAnswer(mService);
 
@@ -475,6 +484,31 @@ public class NetworkPolicyManagerServiceTest {
     @After
     public void resetClock() throws Exception {
         RecurrenceRule.sClock = Clock.systemDefaultZone();
+    }
+
+    private NetworkPolicyManagerService.Dependencies makeDependencies() {
+        final NetworkPolicyManagerService.Dependencies deps =
+                mock(NetworkPolicyManagerService.Dependencies.class);
+        doAnswer(inv -> {
+            mPreferenceUpdater = new WrappedMeteredMultipathPreferenceUpdater(
+                    inv.getArgument(0), inv.getArgument(1));
+            return mPreferenceUpdater;
+        }).when(deps).makeMeteredMultipathPreferenceUpdater(any(), any());
+
+        return deps;
+    }
+
+    private static class WrappedMeteredMultipathPreferenceUpdater extends
+            MeteredMultipathPreferenceUpdater {
+        volatile int mConfigMeteredMultipathPreference;
+
+        WrappedMeteredMultipathPreferenceUpdater(Context context, Handler handler) {
+            super(context, handler);
+        }
+
+        public int configMeteredMultipathPreference() {
+            return mConfigMeteredMultipathPreference;
+        }
     }
 
     @Test
@@ -1949,6 +1983,25 @@ public class NetworkPolicyManagerServiceTest {
         verify(mNetworkManager).setFirewallUidRule(FIREWALL_CHAIN_RESTRICTED, UID_E,
                 FIREWALL_RULE_ALLOW);
         assertFalse(mService.isUidNetworkingBlocked(UID_E, false));
+    }
+
+    @Test
+    public void testMeteredMultipathPreferenceSetting() throws Exception {
+        final ContentResolver cr = mServiceContext.getContentResolver();
+        final String settingName = Settings.Global.NETWORK_METERED_MULTIPATH_PREFERENCE;
+
+        for (int config : Arrays.asList(0, 3, 2)) {
+            for (String setting: Arrays.asList(null, "0", "2", "1")) {
+                mPreferenceUpdater.mConfigMeteredMultipathPreference = config;
+                Settings.Global.putString(cr, settingName, setting);
+                mPreferenceUpdater.reevaluate();
+                HandlerUtils.waitForIdle(mService.getHandlerForTesting(), TIMEOUT_MS);
+
+                final int expected = (setting != null) ? Integer.parseInt(setting) : config;
+                String msg = String.format("config=%d, setting=%s", config, setting);
+                assertEquals(msg, expected, mService.getMultipathPreference(null));
+            }
+        }
     }
 
     private String formatBlockedStateError(int uid, int rule, boolean metered,
