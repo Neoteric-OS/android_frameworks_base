@@ -135,6 +135,7 @@ import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.NetworkEvent;
 import android.net.netlink.InetDiagMessage;
 import android.net.shared.PrivateDnsConfig;
+import android.net.util.IoUtilsWrapper;
 import android.net.util.MultinetworkPolicyTracker;
 import android.net.util.NetdService;
 import android.os.Binder;
@@ -213,8 +214,6 @@ import com.android.server.net.NetworkPolicyManagerInternal;
 import com.android.server.utils.PriorityDump;
 
 import com.google.android.collect.Lists;
-
-import libcore.io.IoUtils;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -1911,11 +1910,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public void onPrivateDnsValidationEvent(int netId, String ipAddress,
                 String hostname, boolean validated) {
             try {
-                mHandler.sendMessage(mHandler.obtainMessage(
-                        EVENT_PRIVATE_DNS_VALIDATION_UPDATE,
-                        new PrivateDnsValidationUpdate(netId,
-                                InetAddress.parseNumericAddress(ipAddress),
-                                hostname, validated)));
+                mHandler.sendMessage(
+                        mHandler.obtainMessage(
+                                EVENT_PRIVATE_DNS_VALIDATION_UPDATE,
+                                new PrivateDnsValidationUpdate(
+                                        netId,
+                                        InetAddresses.parseNumericAddress(ipAddress),
+                                        hostname,
+                                        validated)));
             } catch (IllegalArgumentException e) {
                 loge("Error parsing ip address in validation event");
             }
@@ -7750,7 +7752,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // FileDescriptors coming from AIDL calls must be manually closed to prevent leaks.
             // startNattKeepalive calls Os.dup(fd) before returning, so we can close immediately.
             if (fd != null && Binder.getCallingPid() != Process.myPid()) {
-                IoUtils.closeQuietly(fd);
+                IoUtilsWrapper.closeQuietly(fd);
             }
         }
     }
@@ -7766,7 +7768,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // FileDescriptors coming from AIDL calls must be manually closed to prevent leaks.
             // startTcpKeepalive calls Os.dup(fd) before returning, so we can close immediately.
             if (fd != null && Binder.getCallingPid() != Process.myPid()) {
-                IoUtils.closeQuietly(fd);
+                IoUtilsWrapper.closeQuietly(fd);
             }
         }
     }

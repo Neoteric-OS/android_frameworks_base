@@ -29,6 +29,7 @@ import android.system.Os;
 import android.system.PacketSocketAddress;
 
 import libcore.io.IoBridge;
+import libcore.io.IoUtils;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -115,6 +116,14 @@ public final class SocketUtils {
      */
     public static void closeSocket(@Nullable FileDescriptor fd) throws IOException {
         IoBridge.closeAndSignalBlockedThreads(fd);
+    }
+
+    /**
+     * Sets 'fd' to be blocking or non-blocking, according to the state of 'blocking'.
+     */
+    public static void setBlocking(@Nullable FileDescriptor fd, boolean blocking)
+            throws IOException {
+        IoUtils.setBlocking(fd, blocking);
     }
 
     private SocketUtils() {}

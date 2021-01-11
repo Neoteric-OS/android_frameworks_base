@@ -51,6 +51,7 @@ import android.net.DnsResolver;
 import android.net.INetd;
 import android.net.INetworkManagementEventObserver;
 import android.net.Ikev2VpnProfile;
+import android.net.InetAddresses;
 import android.net.IpPrefix;
 import android.net.IpSecManager;
 import android.net.IpSecManager.IpSecTunnelInterface;
@@ -79,6 +80,7 @@ import android.net.ipsec.ike.IkeSession;
 import android.net.ipsec.ike.IkeSessionCallback;
 import android.net.ipsec.ike.IkeSessionParams;
 import android.net.ipsec.ike.exceptions.IkeProtocolException;
+import android.net.util.IoUtilsWrapper;
 import android.os.Binder;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -111,11 +113,10 @@ import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
+import com.android.net.module.util.NetworkStackConstants;
 import com.android.server.DeviceIdleInternal;
 import com.android.server.LocalServices;
 import com.android.server.net.BaseNetworkObserver;
-
-import libcore.io.IoUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -327,7 +328,7 @@ public class Vpn {
         public InetAddress resolve(final String endpoint)
                 throws ExecutionException, InterruptedException {
             try {
-                return InetAddress.parseNumericAddress(endpoint);
+                return InetAddresses.parseNumericAddress(endpoint);
             } catch (IllegalArgumentException e) {
                 // Endpoint is not numeric : fall through and resolve
             }
@@ -1113,7 +1114,7 @@ public class Vpn {
 
         if (mConfig.dnsServers != null) {
             for (String dnsServer : mConfig.dnsServers) {
-                InetAddress address = InetAddress.parseNumericAddress(dnsServer);
+                InetAddress address = InetAddresses.parseNumericAddress(dnsServer);
                 lp.addDnsServer(address);
                 allowIPv4 |= address instanceof Inet4Address;
                 allowIPv6 |= address instanceof Inet6Address;
@@ -1123,10 +1124,12 @@ public class Vpn {
         lp.setHttpProxy(mConfig.proxyInfo);
 
         if (!allowIPv4) {
-            lp.addRoute(new RouteInfo(new IpPrefix(Inet4Address.ANY, 0), RTN_UNREACHABLE));
+            lp.addRoute(new RouteInfo(new IpPrefix(
+                    NetworkStackConstants.IPV4_ADDR_ANY, 0), RTN_UNREACHABLE));
         }
         if (!allowIPv6) {
-            lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), RTN_UNREACHABLE));
+            lp.addRoute(new RouteInfo(new IpPrefix(
+                    NetworkStackConstants.IPV6_ADDR_ANY, 0), RTN_UNREACHABLE));
         }
 
         // Concatenate search domains into a string.
@@ -1352,13 +1355,13 @@ public class Vpn {
             }
 
             try {
-                IoUtils.setBlocking(tun.getFileDescriptor(), config.blocking);
+                IoUtilsWrapper.setBlocking(tun.getFileDescriptor(), config.blocking);
             } catch (IOException e) {
                 throw new IllegalStateException(
                         "Cannot set tunnel's fd as blocking=" + config.blocking, e);
             }
         } catch (RuntimeException e) {
-            IoUtils.closeQuietly(tun);
+            IoUtilsWrapper.closeQuietly(tun);
             // If this is not seamless handover, disconnect partially-established network when error
             // occurs.
             if (oldNetworkAgent != mNetworkAgent) {
@@ -2790,7 +2793,7 @@ public class Vpn {
                 } catch (InterruptedException e) {
                 } finally {
                     for (LocalSocket socket : mSockets) {
-                        IoUtils.closeQuietly(socket);
+                        IoUtilsWrapper.closeQuietly(socket);
                     }
                     // This sleep is necessary for racoon to successfully complete sending delete
                     // message to server.
