@@ -340,7 +340,7 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
             return true;
         }
         boolean setSystemAudioModeOn = HdmiUtils.parseCommandParamSystemAudioStatus(message);
-        if (mService.isSystemAudioActivated() != setSystemAudioModeOn) {
+        if (isSystemAudioActivated() != setSystemAudioModeOn) {
             mService.setSystemAudioActivated(setSystemAudioModeOn);
         }
         return true;
@@ -353,7 +353,7 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
         if (message.getDestination() == mAddress
                 && message.getSource() == Constants.ADDR_AUDIO_SYSTEM) {
             boolean setSystemAudioModeOn = HdmiUtils.parseCommandParamSystemAudioStatus(message);
-            if (mService.isSystemAudioActivated() != setSystemAudioModeOn) {
+            if (isSystemAudioActivated() != setSystemAudioModeOn) {
                 mService.setSystemAudioActivated(setSystemAudioModeOn);
             }
         }
@@ -408,7 +408,7 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
 
     @Override
     protected int findAudioReceiverAddress() {
-        if (mService.isSystemAudioActivated()) {
+        if (isSystemAudioActivated()) {
             return Constants.ADDR_AUDIO_SYSTEM;
         }
         return Constants.ADDR_TV;

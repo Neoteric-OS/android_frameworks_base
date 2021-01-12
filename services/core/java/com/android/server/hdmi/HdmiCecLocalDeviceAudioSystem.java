@@ -1108,10 +1108,6 @@ public class HdmiCecLocalDeviceAudioSystem extends HdmiCecLocalDeviceSource {
         }
     }
 
-    protected boolean isSystemAudioActivated() {
-        return mService.isSystemAudioActivated();
-    }
-
     protected void terminateSystemAudioMode() {
         // remove pending initiation actions
         removeAction(SystemAudioInitiationActionFromAvr.class);

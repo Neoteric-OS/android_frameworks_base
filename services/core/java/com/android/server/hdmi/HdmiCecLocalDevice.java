@@ -433,6 +433,10 @@ abstract class HdmiCecLocalDevice {
         return true;
     }
 
+    protected boolean isSystemAudioActivated() {
+        return mService.isSystemAudioActivated();
+    }
+
     protected void buildAndSendSetOsdName(int dest) {
         HdmiCecMessage cecMessage =
             HdmiCecMessageBuilder.buildSetOsdNameCommand(
