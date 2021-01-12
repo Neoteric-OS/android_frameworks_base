@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88623ada_f7902d9d",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-12T00:03:18Z",
+      "side": 1,
+      "message": "Thinking about this, I believe we should really be more generic, something like:\n\nAlwaysHonorThresholds() or something like that. ScreenOff is an implementation detail, and it\u0027s not even 100% true anymore, since even when the screen is off we might stay in \"high power\" state due to tethering or being plugged in.\n\nSuggestions:\ngetAllowReportingWhileIdle()\ngetAlwaysHonorThreshold()\ngetShouldAlwaysReport()\ngetDisablePowerSavingForRequest()\nisPowerSavingAllowForRequest()\nisReportingRequestedWhileIdle()\nisReportingEnabledWhileIdle()\n\n....",
+      "range": {
+        "startLine": 143,
+        "startChar": 41,
+        "endLine": 143,
+        "endChar": 50
+      },
+      "revId": "70a48383b1ce871130ba16e5140be95ab245be5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
