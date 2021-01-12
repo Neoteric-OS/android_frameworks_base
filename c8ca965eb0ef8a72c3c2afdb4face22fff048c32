@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06d077f8_7fa5a3bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-12T01:03:18Z",
+      "side": 1,
+      "message": "Happy with the code in the tests now, only remaining point to solve is the priority of the URL",
+      "revId": "c8ca965eb0ef8a72c3c2afdb4face22fff048c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3585b407_2fc40ebb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6255,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-12T01:03:18Z",
+      "side": 1,
+      "message": "You don\u0027t need this clause, this pair of braces isn\u0027t evaluated if it null.\n\n  if (a !\u003d null \u0026\u0026 (b \u003d\u003d null || b.isEmpty())",
+      "range": {
+        "startLine": 6255,
+        "startChar": 16,
+        "endLine": 6255,
+        "endChar": 53
+      },
+      "revId": "c8ca965eb0ef8a72c3c2afdb4face22fff048c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

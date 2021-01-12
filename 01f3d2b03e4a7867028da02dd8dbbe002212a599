@@ -513,6 +513,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bdd04de1_5b41536d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6163,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-12T01:03:18Z",
+      "side": 1,
+      "message": "I am happy too if we modify the code to prefer Capport over NA. You say it yourself : as far as this code is concerned this is the data from the agent, so connectivity emphatically doesn\u0027t and shouldn\u0027t know that this data is actually coming from Passpoint. That\u0027s why it\u0027s dangerous to assume here about this data something (namely, that it\u0027s authenticated) that depends on it coming specifically from Passpoint (rather than any other source).\n\nThe point of the intdef would be to prevent accidental mistakes. As you say, we can\u0027t hope to fix malicious uses and that isn\u0027t the idea ; the idea would be that if you have constants for sources like CAPPORT or PASSPOINT or OTHER, then an OEM implementing some source that\u0027s not Passpoint is unlikely to choose PASSPOINT over OTHER by mistake. In contrast, they could optimistically stash any weakly related URL here without anything helping them realizing it would get prioritized.\n\nAs for MIXED it would simply signal that this has already been mixed, but as you say we never store this so we wouldn\u0027t actually have to write code that knows how to merge it (though we could).",
+      "parentUuid": "61242ae4_d151674d",
+      "range": {
+        "startLine": 6163,
+        "startChar": 11,
+        "endLine": 6163,
+        "endChar": 52
+      },
+      "revId": "01f3d2b03e4a7867028da02dd8dbbe002212a599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e663b1af_a55012aa",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 4
