@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aecdb98f_51624f2c",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-12T09:17:15Z",
+      "side": 1,
+      "message": "IIUC this should be needed somewhere in the counter part of this CL?\nCan you kindly point out where it is?",
+      "range": {
+        "startLine": 127,
+        "startChar": 28,
+        "endLine": 127,
+        "endChar": 42
+      },
+      "revId": "b37cfd856175c4061aa2e8ff8f51c04100d270a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
