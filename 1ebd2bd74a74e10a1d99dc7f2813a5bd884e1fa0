@@ -117,6 +117,30 @@
       },
       "revId": "1ebd2bd74a74e10a1d99dc7f2813a5bd884e1fa0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03e6a1dc_48d9f53c",
+        "filename": "core/java/android/net/metrics/IpConnectivityLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-12T06:08:58Z",
+      "side": 1,
+      "message": "Per discussion on chat, left as is.",
+      "parentUuid": "a2fafdb7_7136c283",
+      "range": {
+        "startLine": 204,
+        "startChar": 76,
+        "endLine": 204,
+        "endChar": 79
+      },
+      "revId": "1ebd2bd74a74e10a1d99dc7f2813a5bd884e1fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
