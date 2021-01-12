@@ -22,6 +22,30 @@
       },
       "revId": "70a48383b1ce871130ba16e5140be95ab245be5c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f32a5f1a_7fbb254e",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-12T20:33:19Z",
+      "side": 1,
+      "message": "Asked help from Tyler,  he prefers to isReportingRequestedWhileIdle().\n\nThanks you guys for the suggestion!",
+      "parentUuid": "88623ada_f7902d9d",
+      "range": {
+        "startLine": 143,
+        "startChar": 41,
+        "endLine": 143,
+        "endChar": 50
+      },
+      "revId": "70a48383b1ce871130ba16e5140be95ab245be5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
