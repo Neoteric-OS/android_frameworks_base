@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9618146_64339a87",
+        "filename": "core/java/android/net/metrics/IpConnectivityLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-12T05:45:32Z",
+      "side": 1,
+      "message": "Oops. Done.",
+      "parentUuid": "e31e42be_c99b2e98",
+      "range": {
+        "startLine": 176,
+        "startChar": 12,
+        "endLine": 178,
+        "endChar": 13
+      },
+      "revId": "1ebd2bd74a74e10a1d99dc7f2813a5bd884e1fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c9b304f_3abd634c",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-12T02:53:50Z",
       "side": 1,
       "message": "Is it possible at all to not include this ? It\u0027s going to be one more site for me to update later if network selection is checked in first, if not then OEMs won\u0027t be able to revert the deletion cleanly – can we be satisfied with not logging this ?\nBesides, in practice this can be deduced from the transport if not WiFi, and if WiFi you still know that it went over (resp. below) that of the transport of the other network in the event, which is almost all you care about in practice.",
+      "range": {
+        "startLine": 204,
+        "startChar": 76,
+        "endLine": 204,
+        "endChar": 79
+      },
+      "revId": "1ebd2bd74a74e10a1d99dc7f2813a5bd884e1fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2fafdb7_7136c283",
+        "filename": "core/java/android/net/metrics/IpConnectivityLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-12T05:45:32Z",
+      "side": 1,
+      "message": "Note this CL itself isn\u0027t sufficient to mainline the CS code; this method will also need to become @SystemApi (or the callsite needs to be deleted). So a few options are:\n\n1. Keep this as is and move to another type (NetworkScore?) if we make this @SystemApi. If we don\u0027t make it SystemApi because we delete the callsite, then delete this as well.\n2. Keep this as is and when network scoring lands, have CS pass in whatever value it wants. I don\u0027t think we need to worry about what makes it to the proto because we\u0027re not uploading this data any more.\n3. Remove it here and fill in the proto (which likely doesn\u0027t matter, see above) with whatever value (0?) or even don\u0027t fill it in at all.\n\nWhat would you prefer? I don\u0027t think I feel particularly strongly about any of these options. #3 is more work because the tests will need to be updated.",
+      "parentUuid": "4c9b304f_3abd634c",
       "range": {
         "startLine": 204,
         "startChar": 76,
