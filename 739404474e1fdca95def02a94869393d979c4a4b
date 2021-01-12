@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59891f34_f0c75aca",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-12T23:20:24Z",
+      "side": 1,
+      "message": "If the name changes elsewhere, be sure to change it here.",
+      "range": {
+        "startLine": 712,
+        "startChar": 26,
+        "endLine": 712,
+        "endChar": 32
+      },
+      "revId": "739404474e1fdca95def02a94869393d979c4a4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f21848d_128f919f",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-12T23:20:24Z",
+      "side": 1,
+      "message": "AIUI this name is changing / has changed too?",
+      "range": {
+        "startLine": 731,
+        "startChar": 20,
+        "endLine": 731,
+        "endChar": 41
+      },
+      "revId": "739404474e1fdca95def02a94869393d979c4a4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28cb761a_699a42af",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-12T23:20:24Z",
+      "side": 1,
+      "message": "nit same",
+      "range": {
+        "startLine": 744,
+        "startChar": 26,
+        "endLine": 744,
+        "endChar": 32
+      },
+      "revId": "739404474e1fdca95def02a94869393d979c4a4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fdde4a8_1a638fc4",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-12T23:20:24Z",
+      "side": 1,
+      "message": "nit same",
+      "range": {
+        "startLine": 763,
+        "startChar": 20,
+        "endLine": 763,
+        "endChar": 41
+      },
+      "revId": "739404474e1fdca95def02a94869393d979c4a4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
