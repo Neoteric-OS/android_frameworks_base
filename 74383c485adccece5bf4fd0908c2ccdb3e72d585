@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f4f2772_997323e4",
+        "filename": "services/core/java/com/android/server/locksettings/AesEncryptionUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-01-12T23:59:30Z",
+      "side": 1,
+      "message": "do you need this to be public?",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "74383c485adccece5bf4fd0908c2ccdb3e72d585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dba45acc_42ae23b6",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-01-12T23:59:30Z",
+      "side": 1,
+      "message": "Does the caller handle this exception gracefully? Otherwise you will get bootloop when we bump up the version.",
+      "range": {
+        "startLine": 75,
+        "startChar": 12,
+        "endLine": 75,
+        "endChar": 33
+      },
+      "revId": "74383c485adccece5bf4fd0908c2ccdb3e72d585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
