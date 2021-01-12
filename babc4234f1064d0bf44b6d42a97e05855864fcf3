@@ -344,6 +344,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "491db7e4_6f285399",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-12T10:46:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a71cabf_0edf3249",
+      "range": {
+        "startLine": 366,
+        "startChar": 5,
+        "endLine": 366,
+        "endChar": 79
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7393361a_0acfc6b3",
@@ -405,6 +429,30 @@
       "side": 1,
       "message": "Example wording :\n\n  ...\n  */\n  // Note that as a historical exception, the TRUSTED and NOT_VCN_MANAGED capabilities\n  // are mutable but requestable. Factories are responsible for not getting\n  // in an infinite loop about these.",
       "parentUuid": "a98eb08e_5c797d12",
+      "range": {
+        "startLine": 399,
+        "startChar": 5,
+        "endLine": 399,
+        "endChar": 7
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6c8551f_8c626476",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-12T10:46:06Z",
+      "side": 1,
+      "message": "Done.\nThanks for the writing.",
+      "parentUuid": "153e4513_ff1462c6",
       "range": {
         "startLine": 399,
         "startChar": 5,
