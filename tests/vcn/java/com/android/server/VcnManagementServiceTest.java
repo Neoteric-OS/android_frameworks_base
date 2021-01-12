@@ -47,9 +47,6 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 
-import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
-
 import com.android.server.vcn.TelephonySubscriptionTracker;
 import com.android.server.vcn.Vcn;
 import com.android.server.vcn.VcnContext;
@@ -67,8 +64,6 @@ import java.util.Set;
 import java.util.UUID;
 
 /** Tests for {@link VcnManagementService}. */
-@RunWith(AndroidJUnit4.class)
-@SmallTest
 public class VcnManagementServiceTest {
     private static final String TEST_PACKAGE_NAME =
             VcnManagementServiceTest.class.getPackage().getName();

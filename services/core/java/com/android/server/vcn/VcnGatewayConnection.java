@@ -35,6 +35,7 @@ import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkAgent;
+import android.net.NetworkAgentConfig;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
@@ -55,6 +56,7 @@ import android.os.HandlerExecutor;
 import android.os.Message;
 import android.os.ParcelUuid;
 import android.telephony.TelephonyManager;
+import android.util.ArraySet;
 import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -69,6 +71,7 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -915,6 +918,7 @@ public class VcnGatewayConnection extends StateMachine {
                         break;
                     } else if (oldUnderlying == null) {
                         Slog.wtf(TAG, "Old underlying network was null in ConnectingState");
+                        // continue; this shouldn't happen, but is recoverable. Retry on new network.
                     } else if (mUnderlying.network.equals(oldUnderlying.network)) {
                         // Actual network did not change; skip.
                         break;
@@ -946,7 +950,102 @@ public class VcnGatewayConnection extends StateMachine {
         }
     }
 
-    private abstract class ConnectedStateBase extends ActiveBaseState {}
+    private abstract class ConnectedStateBase extends ActiveBaseState {
+        protected void updateNetworkAgent(
+                @NonNull IpSecTunnelInterface tunnelIface,
+                @NonNull NetworkAgent agent,
+                @NonNull ChildSessionConfiguration childConfig) {
+            final NetworkCapabilities caps = buildNetworkCapabilities(mConnectionConfig);
+            final LinkProperties lp =
+                    buildConnectedLinkProperties(mConnectionConfig, tunnelIface, childConfig);
+
+            agent.sendNetworkCapabilities(caps);
+            agent.sendLinkProperties(lp);
+        }
+
+        protected NetworkAgent buildNetworkAgent(
+                @NonNull IpSecTunnelInterface tunnelIface,
+                @NonNull ChildSessionConfiguration childConfig) {
+            final NetworkCapabilities caps = buildNetworkCapabilities(mConnectionConfig);
+            final LinkProperties lp =
+                    buildConnectedLinkProperties(mConnectionConfig, tunnelIface, childConfig);
+
+            final NetworkInfo ni = buildNetworkInfo(true);
+
+            final NetworkAgent agent =
+                    new NetworkAgent(
+                            mVcnContext.getContext(),
+                            mVcnContext.getLooper(),
+                            TAG,
+                            caps,
+                            lp,
+                            Vcn.getNetworkScore(),
+                            new NetworkAgentConfig(),
+                            mVcnContext.getVcnNetworkProvider()) {
+                        @Override
+                        public void unwanted() {
+                            teardownAsynchronously();
+                        }
+                    };
+
+            agent.register();
+            return agent;
+        }
+
+        protected void applyTransform(
+                int token,
+                @NonNull IpSecTunnelInterface tunnelIface,
+                @NonNull Network underlyingNetwork,
+                @NonNull IpSecTransform transform,
+                int direction) {
+            try {
+                // TODO: Set underlying network of tunnel interface
+
+                // Transforms do not need to be persisted; the IkeSession will keep them alive
+                mIpSecManager.applyTunnelModeTransform(tunnelIface, direction, transform);
+            } catch (IOException e) {
+                Slog.d(TAG, "Transform application failed for network " + token, e);
+                sessionLost(token, e);
+            }
+        }
+
+        protected void setupInterface(
+                int token,
+                @NonNull IpSecTunnelInterface tunnelIface,
+                @NonNull ChildSessionConfiguration childConfig) {
+            setupInterface(token, tunnelIface, childConfig, null);
+        }
+
+        protected void setupInterface(
+                int token,
+                @NonNull IpSecTunnelInterface tunnelIface,
+                @NonNull ChildSessionConfiguration childConfig,
+                @Nullable ChildSessionConfiguration oldChildConfig) {
+            try {
+                Set<LinkAddress> oldAddresses = new ArraySet<>();
+                if (oldChildConfig != null) {
+                    oldAddresses.addAll(oldChildConfig.getInternalAddresses());
+                }
+
+                for (final LinkAddress address : childConfig.getInternalAddresses()) {
+                    if (oldAddresses.remove(address)) {
+                        Slog.e(TAG, "Skipping pre-existing address: " + address);
+
+                        continue;
+                    }
+
+                    tunnelIface.addAddress(address.getAddress(), address.getPrefixLength());
+                }
+
+                for (final LinkAddress address : oldAddresses) {
+                    tunnelIface.removeAddress(address.getAddress(), address.getPrefixLength());
+                }
+            } catch (IOException e) {
+                Slog.d(TAG, "Adding address to tunnel failed for token " + token, e);
+                sessionLost(token, e);
+            }
+        }
+    }
 
     /**
      * Stable state representing a VCN that has a functioning connection to the mobility anchor.
@@ -956,7 +1055,82 @@ public class VcnGatewayConnection extends StateMachine {
      */
     class ConnectedState extends ConnectedStateBase {
         @Override
-        protected void processStateMsg(Message msg) {}
+        protected void enterState() throws Exception {
+            // Successful connection, clear failed attempt counter
+            mFailedAttempts = 0;
+        }
+
+        @Override
+        protected void processStateMsg(Message msg) {
+            switch (msg.what) {
+                case EVENT_UNDERLYING_NETWORK_CHANGED:
+                    handleUnderlyingNetworkChanged(msg);
+                    break;
+                case EVENT_SESSION_CLOSED:
+                case EVENT_SESSION_LOST:
+                    teardownIke();
+                    transitionTo(mDisconnectingState);
+                    break;
+                case EVENT_TRANSFORM_CREATED:
+                    final EventTransformCreatedInfo transformCreatedInfo =
+                            (EventTransformCreatedInfo) msg.obj;
+
+                    applyTransform(
+                            mCurrentToken,
+                            mTunnelIface,
+                            mUnderlying.network,
+                            transformCreatedInfo.transform,
+                            transformCreatedInfo.direction);
+                    break;
+                case EVENT_SETUP_COMPLETED:
+                    mChildConfig = ((EventSetupCompletedInfo) msg.obj).childSessionConfig;
+
+                    setupInterfaceAndNetworkAgent(
+                            mCurrentToken, mTunnelIface, (ChildSessionConfiguration) msg.obj);
+                    break;
+                case EVENT_DISCONNECT_REQUESTED:
+                    handleDisconnectRequested(((EventDisconnectRequestedInfo) msg.obj).reason);
+                    break;
+                default:
+                    logUnhandledMessage(msg);
+                    break;
+            }
+        }
+
+        private void handleUnderlyingNetworkChanged(@NonNull Message msg) {
+            final UnderlyingNetworkRecord oldUnderlying = mUnderlying;
+            mUnderlying = ((EventUnderlyingNetworkChangedInfo) msg.obj).newUnderlying;
+
+            if (mUnderlying == null) {
+                // Ignored for now; a new network may be coming up. If none does, the delayed
+                // NETWORK_LOST disconnect will be fired, and tear down the session + network.
+                return;
+            }
+
+            // mUnderlying assumed non-null, given check above.
+            if (oldUnderlying == null || oldUnderlying.network.equals(mUnderlying.network)
+                    && mNetworkAgent != null
+                    && mChildConfig != null) {
+                // If only network properties changed and network agent is active, update properties
+                updateNetworkAgent(mTunnelIface, mNetworkAgent, mChildConfig);
+            } else {
+                // Else, trigger a migration.
+                mIkeSession.setNetwork(mUnderlying.network);
+            }
+        }
+
+        protected void setupInterfaceAndNetworkAgent(
+                int token,
+                @NonNull IpSecTunnelInterface tunnelIface,
+                @NonNull ChildSessionConfiguration childConfig) {
+            setupInterface(token, tunnelIface, childConfig);
+
+            if (mNetworkAgent == null) {
+                mNetworkAgent = buildNetworkAgent(tunnelIface, childConfig);
+            } else {
+                updateNetworkAgent(tunnelIface, mNetworkAgent, childConfig);
+            }
+        }
     }
 
     /**
