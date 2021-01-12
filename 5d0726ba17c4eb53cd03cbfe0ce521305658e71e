@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ea540e6_b6bca37b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-12T12:08:10Z",
+      "side": 1,
+      "message": "Revised",
+      "parentUuid": "09114ba6_f434de55",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "5d0726ba17c4eb53cd03cbfe0ce521305658e71e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d9cfe5d_a943c36d",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff104323_b46c8be6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-12T12:08:10Z",
+      "side": 1,
+      "message": "Yes, and by getting TH+2 you can assume all presubmit tests are verified.\nThe test listed here are only for future developers to reference the most relevant tests.",
+      "parentUuid": "7d9cfe5d_a943c36d",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 51
+      },
+      "revId": "5d0726ba17c4eb53cd03cbfe0ce521305658e71e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99e6cb94_a37fc89b",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-01-12T10:38:42Z",
       "side": 1,
       "message": "Nit: Update this to TRACK_DEFAULT looks like a different commit from this. You\u0027re updating the code but not only pass the request type into the method. Either you add more context in the commit message to explain this or get the logic out to another commit to create a clean update for this change.",
+      "range": {
+        "startLine": 4264,
+        "startChar": 16,
+        "endLine": 4264,
+        "endChar": 29
+      },
+      "revId": "5d0726ba17c4eb53cd03cbfe0ce521305658e71e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eea77f1a_c4ce3cf5",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4264,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-12T12:08:10Z",
+      "side": 1,
+      "message": "Commit message revised.\nThis is not an actual behavior change since the original REQUEST does not mean NetworkRequest.Type.REQUEST.\nSo this is needed for this CL to make the passed request type correct.",
+      "parentUuid": "99e6cb94_a37fc89b",
       "range": {
         "startLine": 4264,
         "startChar": 16,
