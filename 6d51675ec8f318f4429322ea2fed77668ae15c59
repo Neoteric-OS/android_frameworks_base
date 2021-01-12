@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8c18bab_df025ce2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-12T12:59:53Z",
+      "side": 1,
+      "message": "carrier",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b537137_b47b90af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-12T12:59:53Z",
+      "side": 1,
+      "message": "associated",
+      "range": {
+        "startLine": 12,
+        "startChar": 14,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b2eeb7a_16a92d37",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2293,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-12T12:59:53Z",
+      "side": 1,
+      "message": "duplicate.",
+      "range": {
+        "startLine": 2293,
+        "startChar": 28,
+        "endLine": 2293,
+        "endChar": 31
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc33b5ff_e9d3a4bc",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2609,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-12T12:59:53Z",
+      "side": 1,
+      "message": "Do we need this API? l.2293 mentioned this class is for NetworkAgent instances to use. So do we have any agent will use this API?",
+      "range": {
+        "startLine": 2609,
+        "startChar": 23,
+        "endLine": 2609,
+        "endChar": 38
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b85ba2c_260fef60",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-12T12:59:53Z",
+      "side": 1,
+      "message": "Maybe also test TEST_IMSI.equals(nc2.getSubscriberId())? Just like l.750 did.",
+      "range": {
+        "startLine": 770,
+        "startChar": 34,
+        "endLine": 770,
+        "endChar": 35
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
