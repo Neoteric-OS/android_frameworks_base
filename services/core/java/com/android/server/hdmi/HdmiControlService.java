@@ -1863,12 +1863,13 @@ public class HdmiControlService extends SystemService {
 
         @Override
         public boolean getSystemAudioMode() {
-            // TODO(shubang): handle getSystemAudioMode() for all device types
             enforceAccessPermission();
             HdmiCecLocalDeviceTv tv = tv();
             HdmiCecLocalDeviceAudioSystem audioSystem = audioSystem();
+            HdmiCecLocalDevicePlayback playback = playback();
             return (tv != null && tv.isSystemAudioActivated())
-                    || (audioSystem != null && audioSystem.isSystemAudioActivated());
+                    || (audioSystem != null && audioSystem.isSystemAudioActivated())
+                    || (playback != null && playback.isSystemAudioActivated());
         }
 
         @Override

@@ -851,7 +851,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         HdmiLogger.debug("[A]UpdateSystemAudio mode[on=%b] output=[%X]", on, device);
     }
 
-    boolean isSystemAudioActivated() {
+    @Override
+    protected boolean isSystemAudioActivated() {
         if (!hasSystemAudioDevice()) {
             return false;
         }
