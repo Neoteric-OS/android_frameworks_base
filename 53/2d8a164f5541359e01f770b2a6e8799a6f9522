@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Verified+1: Junyu Lai <junyulai@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Lorenzo Colitti <lorenzo@google.com>
+Autosubmit+1: Junyu Lai <junyulai@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Tue, 12 Jan 2021 08:59:02 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1529109
+Project: platform/frameworks/base
+Branch: refs/heads/master
