@@ -26,7 +26,6 @@ import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
-import android.annotation.TestApi;
 import android.app.PendingIntent;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
@@ -4785,6 +4784,8 @@ public class ConnectivityManager {
     /**
      * Simulates a Data Stall for the specified Network.
      *
+     * <p>This method should only be used for tests.
+     *
      * <p>The caller must be the owner of the specified Network.
      *
      * @param detectionMethod The detection method used to identify the Data Stall.
@@ -4794,7 +4795,7 @@ public class ConnectivityManager {
      * @throws SecurityException if the caller is not the owner of the given network.
      * @hide
      */
-    @TestApi
+    @SystemApi
     @RequiresPermission(anyOf = {android.Manifest.permission.MANAGE_TEST_NETWORKS,
             android.Manifest.permission.NETWORK_STACK})
     public void simulateDataStall(int detectionMethod, long timestampMillis,
