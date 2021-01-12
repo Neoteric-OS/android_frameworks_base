@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07b24ebc_4d56bdb8",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-12T21:27:41Z",
+      "side": 1,
+      "message": "List\u003c\u003e or perhaps even Set\u003c\u003e (in theory, I think it\u0027s a Set\u003c\u003e but IIRC List\u003c\u003e parcels nicely so as long as it\u0027s an implementation detail, it\u0027s NBD).",
+      "range": {
+        "startLine": 55,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fb1de1c_b5300257",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-12T21:27:41Z",
+      "side": 1,
+      "message": "mIsSystemThresholdReportingRequestedWhileIdle OR have a private API to add a flag for system thresholds. It could be:\n1) a boolean like this called something like: mUseSystemThresholds; or\n2) an empty list of thresholds...\n\nYou\u0027ve got options.",
+      "range": {
+        "startLine": 72,
+        "startChar": 26,
+        "endLine": 72,
+        "endChar": 67
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df860c96_2df14da7",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-12T21:27:41Z",
+      "side": 1,
+      "message": "Looks like an argument for using Set\u003c\u003e",
+      "range": {
+        "startLine": 83,
+        "startChar": 30,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31aae836_d027b142",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-12T21:27:41Z",
+      "side": 1,
+      "message": "stuff comes out of parcel in the same order it entered...",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 89
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e45eb6b_013485f3",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-12T21:27:41Z",
+      "side": 1,
+      "message": "return Collections.unmodifiableList() or Collections.unmodifiableSet()",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 36
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1957da20_3e761d14",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-12T21:27:41Z",
+      "side": 1,
+      "message": "I don\u0027t know that this has to be validated here (it should be validated by the SignalThresholdInfo object and not be modifiable), but if it is, then there should be a validate() method on SignalThresholdInfo and it should be invoked here.",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 83
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
