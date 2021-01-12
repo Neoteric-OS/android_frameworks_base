@@ -121,6 +121,30 @@
       },
       "revId": "97011e07d561cabd6c05c65ecb06ec9f3cd1ebfb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39e031c1_ba8113ef",
+        "filename": "services/core/java/com/android/server/wm/ActivityStarter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1439080
+      },
+      "writtenOn": "2021-01-12T09:29:43Z",
+      "side": 1,
+      "message": "Yes,you are right.\nIt\u0027s by the same effect if remove the \"!wasVisible\" in onActivityRestartAttempt method in Divider.java,",
+      "parentUuid": "8a62a0f7_3206717a",
+      "range": {
+        "startLine": 1485,
+        "startChar": 36,
+        "endLine": 1485,
+        "endChar": 67
+      },
+      "revId": "97011e07d561cabd6c05c65ecb06ec9f3cd1ebfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
