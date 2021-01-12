@@ -16,6 +16,23 @@
       "message": "Original change (already +2\u0027d): ag/13221014",
       "revId": "0ede5613bbfce44aa203bc297aaff61479fd4855",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f95aa51_30c80b13",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-01-12T18:04:18Z",
+      "side": 1,
+      "message": "Are all new config values done like this for networking? Generally it should be config_vehicleInternalNetworkAlwaysRequested\n\nsee config_annoy_dianne",
+      "revId": "0ede5613bbfce44aa203bc297aaff61479fd4855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
