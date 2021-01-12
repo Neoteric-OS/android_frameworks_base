@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e31e42be_c99b2e98",
+        "filename": "core/java/android/net/metrics/IpConnectivityLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-12T02:53:50Z",
+      "side": 1,
+      "message": "This is now done by checkLoggerService according to your change in l.72",
+      "range": {
+        "startLine": 176,
+        "startChar": 12,
+        "endLine": 178,
+        "endChar": 13
+      },
+      "revId": "1ebd2bd74a74e10a1d99dc7f2813a5bd884e1fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c9b304f_3abd634c",
+        "filename": "core/java/android/net/metrics/IpConnectivityLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-12T02:53:50Z",
+      "side": 1,
+      "message": "Is it possible at all to not include this ? It\u0027s going to be one more site for me to update later if network selection is checked in first, if not then OEMs won\u0027t be able to revert the deletion cleanly – can we be satisfied with not logging this ?\nBesides, in practice this can be deduced from the transport if not WiFi, and if WiFi you still know that it went over (resp. below) that of the transport of the other network in the event, which is almost all you care about in practice.",
+      "range": {
+        "startLine": 204,
+        "startChar": 76,
+        "endLine": 204,
+        "endChar": 79
+      },
+      "revId": "1ebd2bd74a74e10a1d99dc7f2813a5bd884e1fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
