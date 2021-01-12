@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1efc0bf4_0b1aa7f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-12T07:57:59Z",
+      "side": 1,
+      "message": "Removing +2 to address both outstanding comments about comments.",
+      "revId": "9d0d5c7d2b8b4fd9392700de772891e3f1fd7224",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b6b18a9_eb857643",
