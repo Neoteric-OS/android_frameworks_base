@@ -6445,6 +6445,15 @@ package android.net {
     field public final int tcpWindowScale;
   }
 
+  public final class TestNetworkInterface implements android.os.Parcelable {
+    ctor public TestNetworkInterface(@NonNull android.os.ParcelFileDescriptor, @NonNull String);
+    method public int describeContents();
+    method @NonNull public android.os.ParcelFileDescriptor getFileDescriptor();
+    method @NonNull public String getInterfaceName();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.TestNetworkInterface> CREATOR;
+  }
+
   public class TrafficStats {
     method public static void setThreadStatsTagApp();
     method public static void setThreadStatsTagBackup();
