@@ -628,7 +628,7 @@ public final class IpSecManager {
         }
 
         /** @hide */
-        @VisibleForTesting
+        @SystemApi
         public int getResourceId() {
             return mResourceId;
         }
