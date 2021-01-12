@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e45c59e4_7c53c119",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-01-12T18:37:29Z",
+      "side": 1,
+      "message": "LGTM. +2\u0027ing under the assumption that Jean still approves the rest.",
+      "revId": "ab315c597d4231359f02584c91e0eda11e15d03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
