@@ -93,6 +93,30 @@
       },
       "revId": "1ebd2bd74a74e10a1d99dc7f2813a5bd884e1fa0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f153837e_be846de0",
+        "filename": "core/java/android/net/metrics/IpConnectivityLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-12T06:08:43Z",
+      "side": 1,
+      "message": "Resolved offline : let\u0027s keep PS4 as is. That is, solution 1 if it becomes necessary, and solution 3 in the mean time.",
+      "parentUuid": "a2fafdb7_7136c283",
+      "range": {
+        "startLine": 204,
+        "startChar": 76,
+        "endLine": 204,
+        "endChar": 79
+      },
+      "revId": "1ebd2bd74a74e10a1d99dc7f2813a5bd884e1fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
