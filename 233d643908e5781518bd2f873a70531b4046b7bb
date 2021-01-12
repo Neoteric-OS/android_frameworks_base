@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6351b762_bb295fed",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6258,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-12T06:12:04Z",
+      "side": 0,
+      "message": "nit: do we want to assert this somewhere?\nno strong opinion.",
+      "range": {
+        "startLine": 6258,
+        "startChar": 8,
+        "endLine": 6258,
+        "endChar": 40
+      },
+      "revId": "233d643908e5781518bd2f873a70531b4046b7bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
