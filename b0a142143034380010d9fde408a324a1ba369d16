@@ -22,6 +22,30 @@
       },
       "revId": "b0a142143034380010d9fde408a324a1ba369d16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a98f29bf_032c1618",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-12T00:03:27Z",
+      "side": 1,
+      "message": "Right. A new patch just get uploaded to cover the case that if application would like to continue receive notification over the specified thresholds in the request.\n\nIt turns out that we have to use two different flag to cover two different cases on screen off:\n1. honor application\u0027s thresholds\n2. honor system thresholds\n\nPlease check the new patch.\nthanks",
+      "parentUuid": "97f07e9e_212c3278",
+      "range": {
+        "startLine": 67,
+        "startChar": 26,
+        "endLine": 67,
+        "endChar": 61
+      },
+      "revId": "b0a142143034380010d9fde408a324a1ba369d16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
