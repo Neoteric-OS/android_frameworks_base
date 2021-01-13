@@ -154,6 +154,7 @@ java_library {
     name: "services.core",
     defaults: ["services_defaults"],
     static_libs: ["services.core.priorityboosted"],
+    init_rc: ["vendor-464xlat.rc"],
 }
 
 java_library_host {
