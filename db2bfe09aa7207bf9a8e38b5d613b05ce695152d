@@ -16,6 +16,23 @@
       "message": "follow-up for aosp/1519960.",
       "revId": "db2bfe09aa7207bf9a8e38b5d613b05ce695152d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2817ddce_aff9201a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-13T06:06:02Z",
+      "side": 1,
+      "message": "Need to fix cts failed on ConnectivityManagerTest#testGetMultipathPreference.\n",
+      "revId": "db2bfe09aa7207bf9a8e38b5d613b05ce695152d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
