@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e65120d_7a6eda89",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2021-01-13T08:22:42Z",
+      "side": 1,
+      "message": "@Zoey Chen,\nCould you check description changes in CL:1418832?\nIt seems that this CL still have wrong description regarding of DEFAULT_SUBSCRIPTION_ID and EVENT_CALL_STATE_CHANGED.",
+      "revId": "fe3ebfe1e821802763af2de05f788bf8856551f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
