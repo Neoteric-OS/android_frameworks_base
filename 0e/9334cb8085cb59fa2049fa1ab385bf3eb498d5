@@ -1,0 +1,11 @@
+Code-Review+2: Junyu Lai <junyulai@google.com>
+Code-Review+2: Lorenzo Colitti <lorenzo@google.com>
+Build-Cop-Override+1: satayev <satayev@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Ready+1: Treehugger Robot <treehugger-gerrit@google.com>
+API-Review+1: Lorenzo Colitti <lorenzo@google.com>
+Submitted-by: satayev <satayev@google.com>
+Submitted-at: Wed, 13 Jan 2021 17:40:01 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1549962
+Project: platform/frameworks/base
+Branch: refs/heads/master
