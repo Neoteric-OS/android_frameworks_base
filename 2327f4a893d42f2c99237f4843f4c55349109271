@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1b039ed_7b4c9e0a",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-13T00:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b24ebc_4d56bdb8",
+      "range": {
+        "startLine": 55,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9fb1de1c_b5300257",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-12T21:27:41Z",
       "side": 1,
       "message": "mIsSystemThresholdReportingRequestedWhileIdle OR have a private API to add a flag for system thresholds. It could be:\n1) a boolean like this called something like: mUseSystemThresholds; or\n2) an empty list of thresholds...\n\nYou\u0027ve got options.",
+      "range": {
+        "startLine": 72,
+        "startChar": 26,
+        "endLine": 72,
+        "endChar": 67
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d86b5ce_7c1b52e9",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-13T00:03:54Z",
+      "side": 1,
+      "message": "mIsSystemThresholdReportingRequestedWhileIdle is a good map to mIsReportingRequestedWhileIdle. \n\nI am not sure if Jack prefer to Builder Pattern over the constructor here (only two parameter for the public constructor). But if we do switch to builder, we will have this hidden api to set system thresholds then.",
+      "parentUuid": "9fb1de1c_b5300257",
       "range": {
         "startLine": 72,
         "startChar": 26,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "910ca9d1_410d14cd",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-13T00:03:54Z",
+      "side": 1,
+      "message": "validate method above will make sure RAN is unique. So it is still safe to use List here.",
+      "parentUuid": "df860c96_2df14da7",
+      "range": {
+        "startLine": 83,
+        "startChar": 30,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "31aae836_d027b142",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-12T21:27:41Z",
       "side": 1,
       "message": "stuff comes out of parcel in the same order it entered...",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 89
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b41773a_6abc5752",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-13T00:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31aae836_d027b142",
       "range": {
         "startLine": 116,
         "startChar": 8,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac140eaf_750df950",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-13T00:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e45eb6b_013485f3",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 36
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1957da20_3e761d14",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-01-12T21:27:41Z",
       "side": 1,
       "message": "I don\u0027t know that this has to be validated here (it should be validated by the SignalThresholdInfo object and not be modifiable), but if it is, then there should be a validate() method on SignalThresholdInfo and it should be invoked here.",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 83
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2c671a8_0f3df7c6",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-13T00:03:54Z",
+      "side": 1,
+      "message": "SignalThresholdInfo allows empty thresholds to disable reporting for system caller. While we don\u0027t allow empty thresholds for apps, validating here just make the logic a bit easier.",
+      "parentUuid": "1957da20_3e761d14",
       "range": {
         "startLine": 226,
         "startChar": 0,
