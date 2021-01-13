@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "816b81c5_d6dbda39",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1468646
+      },
+      "writtenOn": "2021-01-13T10:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88f24521_da12e77d",
+      "range": {
+        "startLine": 103,
+        "startChar": 31,
+        "endLine": 103,
+        "endChar": 38
+      },
+      "revId": "8c7f6b1be7920d95a7c4e0bd3c9f509a1c494f01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f5a9b3a_993f4b0a",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eb1fc7e_b05f64bf",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1468646
+      },
+      "writtenOn": "2021-01-13T10:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f5a9b3a_993f4b0a",
+      "range": {
+        "startLine": 167,
+        "startChar": 5,
+        "endLine": 167,
+        "endChar": 13
+      },
+      "revId": "8c7f6b1be7920d95a7c4e0bd3c9f509a1c494f01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f86d354_7d909b28",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-01-13T09:59:16Z",
       "side": 1,
       "message": "ServiceStateTacker still uses getRat() instead.",
+      "range": {
+        "startLine": 174,
+        "startChar": 15,
+        "endLine": 174,
+        "endChar": 31
+      },
+      "revId": "8c7f6b1be7920d95a7c4e0bd3c9f509a1c494f01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8305aec0_47b1875e",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1468646
+      },
+      "writtenOn": "2021-01-13T10:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f86d354_7d909b28",
       "range": {
         "startLine": 174,
         "startChar": 15,
