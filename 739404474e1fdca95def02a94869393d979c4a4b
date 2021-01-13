@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80651563_0c166b73",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-13T23:45:07Z",
+      "side": 1,
+      "message": "ack",
+      "parentUuid": "59891f34_f0c75aca",
+      "range": {
+        "startLine": 712,
+        "startChar": 26,
+        "endLine": 712,
+        "endChar": 32
+      },
+      "revId": "739404474e1fdca95def02a94869393d979c4a4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f21848d_128f919f",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-12T23:20:24Z",
       "side": 1,
       "message": "AIUI this name is changing / has changed too?",
+      "range": {
+        "startLine": 731,
+        "startChar": 20,
+        "endLine": 731,
+        "endChar": 41
+      },
+      "revId": "739404474e1fdca95def02a94869393d979c4a4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "058831b2_0cb0eb47",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-13T23:45:07Z",
+      "side": 1,
+      "message": "It hasn\u0027t changed yet, and this old function must also continue to function.\n\nOnce Yan puts the change in, I can update this.",
+      "parentUuid": "2f21848d_128f919f",
       "range": {
         "startLine": 731,
         "startChar": 20,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d91a524_7e428036",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-13T23:45:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "28cb761a_699a42af",
+      "range": {
+        "startLine": 744,
+        "startChar": 26,
+        "endLine": 744,
+        "endChar": 32
+      },
+      "revId": "739404474e1fdca95def02a94869393d979c4a4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8fdde4a8_1a638fc4",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-12T23:20:24Z",
       "side": 1,
       "message": "nit same",
+      "range": {
+        "startLine": 763,
+        "startChar": 20,
+        "endLine": 763,
+        "endChar": 41
+      },
+      "revId": "739404474e1fdca95def02a94869393d979c4a4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b331fbf_96544f97",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-13T23:45:07Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "8fdde4a8_1a638fc4",
       "range": {
         "startLine": 763,
         "startChar": 20,
