@@ -8689,11 +8689,17 @@ public class TelephonyManager {
      */
     public static final int CALL_COMPOSER_STATUS_ON = 1;
 
+    /**
+     * Call composer status indicating if sending/receiving pictures is disabled.
+     */
+    public static final int CALL_COMPOSER_STATUS_NO_PICTURES = 2;
+
     /** @hide */
     @IntDef(prefix = {"CALL_COMPOSER_STATUS_"},
             value = {
                 CALL_COMPOSER_STATUS_ON,
                 CALL_COMPOSER_STATUS_OFF,
+                CALL_COMPOSER_STATUS_NO_PICTURES,
             })
     public @interface CallComposerStatus {}
 
