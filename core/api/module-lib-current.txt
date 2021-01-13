@@ -6,6 +6,20 @@ package android.app {
     method public void setMaxManifestReceiverApiLevel(int);
   }
 
+package android.content {
+
+  public abstract class Context {
+    method @NonNull public android.os.UserHandle getUser();
+  }
+
+}
+
+package android.content.pm {
+
+  public abstract class PackageManager {
+    method @NonNull public String getPermissionControllerPackageName();
+  }
+
 }
 
 package android.net {
