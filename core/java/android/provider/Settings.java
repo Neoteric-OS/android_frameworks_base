@@ -11256,6 +11256,17 @@ public final class Settings {
         public static final String PRIVATE_DNS_SPECIFIER = "private_dns_specifier";
 
         /**
+         * Setting for storing predefined private DNS provider name, which is a
+         * different setting against previous specifier, hence keeping them
+         * separate is necessary when the mode changes back and forth to
+         * ensure that the both user specified settings won't be losed.
+         *
+         * @hide
+         */
+        public static final String
+                PRIVATE_DNS_PREDEFINED_PROVIDER = "private_dns_predefined_provider";
+
+        /**
           * Forced override of the default mode (hardcoded as "automatic", nee "opportunistic").
           * This allows changing the default mode without effectively disabling other modes,
           * all of which require explicit user action to enable/configure. See also b/79719289.

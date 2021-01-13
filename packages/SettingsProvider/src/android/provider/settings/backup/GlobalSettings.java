@@ -65,6 +65,7 @@ public class GlobalSettings {
         Settings.Global.BLUETOOTH_ON,
         Settings.Global.PRIVATE_DNS_MODE,
         Settings.Global.PRIVATE_DNS_SPECIFIER,
+        Settings.Global.PRIVATE_DNS_PREDEFINED_PROVIDER,
         Settings.Global.SOFT_AP_TIMEOUT_ENABLED,
         Settings.Global.ZEN_DURATION,
         Settings.Global.CHARGING_VIBRATION_ENABLED,

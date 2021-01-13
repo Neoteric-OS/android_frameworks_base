@@ -801,6 +801,7 @@ public class UserRestrictionsUtils {
 
             case android.provider.Settings.Global.PRIVATE_DNS_MODE:
             case android.provider.Settings.Global.PRIVATE_DNS_SPECIFIER:
+            case android.provider.Settings.Global.PRIVATE_DNS_PREDEFINED_PROVIDER:
                 if (callingUid == Process.SYSTEM_UID) {
                     return false;
                 }
