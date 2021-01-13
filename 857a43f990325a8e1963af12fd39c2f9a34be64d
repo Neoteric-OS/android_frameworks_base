@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba3b6c98_b3e7c224",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8696,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-01-13T17:17:32Z",
+      "side": 1,
+      "message": "CALL_COMPOSER_STATUS_ON_NO_PICTURES",
+      "range": {
+        "startLine": 8696,
+        "startChar": 28,
+        "endLine": 8696,
+        "endChar": 60
+      },
+      "revId": "857a43f990325a8e1963af12fd39c2f9a34be64d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
