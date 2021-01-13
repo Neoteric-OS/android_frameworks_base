@@ -281,6 +281,30 @@
       },
       "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45670da0_fccb4076",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-13T01:38:39Z",
+      "side": 1,
+      "message": "I thought the system would be using a SignalStrengthUpdateRequest() object going forward too (to encapsulate the SignalThresholdInfo objects)? In which case, still can\u0027t just be checked here. The instance/use-case specific checking has to be done in the binder call in PhoneInterfaceManager(). That\u0027s where we will have to validate system vs end-user anyway since that\u0027s the security boundary.\n\nSomehow I think it\u0027ll be cleaner in the end if you have something like:\nvalidateForUser() and validateForSystem() based on the Binder.getCallingUid().\n\nThink about it. I know there are more patches coming, so perhaps it\u0027ll be easier for me to see what you\u0027re thinking once I see the PhoneInterfaceManager and ServiceStateTracker code.",
+      "parentUuid": "d2c671a8_0f3df7c6",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 83
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
