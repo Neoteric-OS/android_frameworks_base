@@ -1,0 +1,134 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007274650",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1550434?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f6925321_eaf973a3",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-13T23:32:26Z",
+      "side": 1,
+      "message": "Prefer to use mContext.getSystemService(StatsManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 1117,
+        "startChar": 40,
+        "endLine": 1117,
+        "endChar": 81
+      },
+      "revId": "cd7bdab2daafc6ec7aa0e4dbad1c58e60b4351e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007274650",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1550434?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e35237cd_6adb1923",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-13T23:32:26Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1746,
+        "startChar": 0,
+        "endLine": 1746,
+        "endChar": 104
+      },
+      "revId": "cd7bdab2daafc6ec7aa0e4dbad1c58e60b4351e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007274650",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1550434?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0de41f1a_fbd016a4",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-13T23:32:26Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1748,
+        "startChar": 0,
+        "endLine": 1748,
+        "endChar": 101
+      },
+      "revId": "cd7bdab2daafc6ec7aa0e4dbad1c58e60b4351e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007274650",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1550434?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d1af5e6c_ba56b69b",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1749,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-13T23:32:26Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1749,
+        "startChar": 0,
+        "endLine": 1749,
+        "endChar": 102
+      },
+      "revId": "cd7bdab2daafc6ec7aa0e4dbad1c58e60b4351e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007274650",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1550434?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "29a7a183_c4edde54",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1779,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-13T23:32:26Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1779,
+        "startChar": 0,
+        "endLine": 1779,
+        "endChar": 101
+      },
+      "revId": "cd7bdab2daafc6ec7aa0e4dbad1c58e60b4351e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
