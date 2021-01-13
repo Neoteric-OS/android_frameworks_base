@@ -40,6 +40,10 @@ import java.util.TreeSet;
  */
 public class NetworkUtils {
 
+    static {
+        System.loadLibrary("framework-connectivity");
+    }
+
     private static final String TAG = "NetworkUtils";
 
     /**

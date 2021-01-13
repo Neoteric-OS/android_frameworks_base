@@ -169,6 +169,10 @@ public class Vpn {
      */
     @VisibleForTesting static final int MAX_VPN_PROFILE_SIZE_BYTES = 1 << 17; // 128kB
 
+    static {
+        System.loadLibrary("service-connectivity");
+    }
+
     // TODO: create separate trackers for each unique VPN to support
     // automated reconnection
 

@@ -539,13 +539,15 @@ java_library {
     defaults: ["framework-aidl-export-defaults"],
     srcs: [
         ":framework-non-updatable-sources",
-        ":framework-connectivity-sources",
         "core/java/**/*.logtags",
     ],
     // See comment on framework-atb-backward-compatibility module below
     exclude_srcs: ["core/java/android/content/pm/AndroidTestBaseUpdater.java"],
     aidl: {
         generate_get_transaction_name: true,
+        local_include_dirs: [
+            "packages/Connectivity/framework/src",
+        ]
     },
     dxflags: [
         "--core-library",
@@ -613,6 +615,8 @@ java_library {
     static_libs: [
         "app-compat-annotations",
         "framework-minus-apex",
+        // TODO: remove framework-connectivity from private API once users are migrated
+        "framework-connectivity.impl",
         "framework-updatable-stubs-module_libs_api",
     ],
     sdk_version: "core_platform",

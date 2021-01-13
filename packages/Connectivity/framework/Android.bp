@@ -42,7 +42,7 @@ java_sdk_library {
         include_dirs: [
             "frameworks/base/core/java", // For framework parcelables
             "frameworks/native/aidl/binder", // For PersistableBundle.aidl
-        ],
+        ]
     },
     impl_only_libs: [
         "framework",
@@ -88,4 +88,36 @@ java_library {
     apex_available: ["com.android.tethering"],
     installable: true,
     permitted_packages: ["android.net"],
+}
+
+cc_library_shared {
+    name: "libframework-connectivity-jni",
+    // TODO: build against the NDK (sdk_version: "30" for example)
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "-Wthread-safety",
+    ],
+    srcs: [
+        "jni/android_net_NetUtils.cpp",
+        "jni/onload.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "liblog",
+        "libnativehelper",
+        // TODO: consider moving ifc_[add/del]_address, to a static lib in frameworks/libs/net,
+        // or if the dependency on libnetutils is kept, it needs to build against the NDK and be
+        // linked statically.
+        // "libnetutils",
+        "libnetd_client",
+    ],
+    header_libs: [
+        "dnsproxyd_protocol_headers",
+    ],
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.tethering",
+    ],
 }
