@@ -1011,9 +1011,9 @@ public final class BatteryStatsService extends IBatteryStats.Stub
     }
 
     @Override
-    public void noteNetworkInterfaceType(String iface, int networkType) {
+    public void noteNetworkInterfaceTransports(final String iface, int[] transportTypes) {
         enforceCallingPermission();
-        mStats.noteNetworkInterfaceType(iface, networkType);
+        mStats.noteNetworkInterfaceTransports(iface, transportTypes);
     }
 
     @Override
