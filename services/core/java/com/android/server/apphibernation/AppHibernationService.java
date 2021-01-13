@@ -25,6 +25,7 @@ import static android.content.pm.PackageManager.MATCH_ALL;
 import static android.provider.DeviceConfig.NAMESPACE_APP_HIBERNATION;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.app.IActivityManager;
 import android.apphibernation.IAppHibernationService;
@@ -38,7 +39,9 @@ import android.content.pm.UserInfo;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.RemoteException;
+import android.os.ResultReceiver;
 import android.os.ServiceManager;
+import android.os.ShellCallback;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.DeviceConfig;
@@ -49,6 +52,7 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.server.SystemService;
 
+import java.io.FileDescriptor;
 import java.util.List;
 import java.util.Map;
 
@@ -272,6 +276,14 @@ public final class AppHibernationService extends SystemService {
         @Override
         public void setHibernating(String packageName, int userId, boolean isHibernating) {
             mService.setHibernating(packageName, userId, isHibernating);
+        }
+
+        @Override
+        public void onShellCommand(@Nullable FileDescriptor in, @Nullable FileDescriptor out,
+                @Nullable FileDescriptor err, @NonNull String[] args,
+                @Nullable ShellCallback callback, @NonNull ResultReceiver resultReceiver) {
+            new AppHibernationShellCommand(mService).exec(this, in, out, err, args, callback,
+                    resultReceiver);
         }
     }
 
