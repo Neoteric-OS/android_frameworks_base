@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81368da5_cf61170c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2021-01-13T11:28:57Z",
+      "side": 1,
+      "message": "Thanks. Btw I meant that this CL have wrong description as well in registerPhoneStateListener() and others.",
+      "parentUuid": "1a63b890_5549a76e",
+      "revId": "fe3ebfe1e821802763af2de05f788bf8856551f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f56f70d3_f6ec49c1",
