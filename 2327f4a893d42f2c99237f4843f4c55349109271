@@ -305,6 +305,30 @@
       },
       "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f56af044_25ef3775",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-13T23:34:52Z",
+      "side": 1,
+      "message": "The app-specific request validation is moved to PhoneInterfaceManager (aosp/1545044) which has context to distinguish system caller vs. app caller. The UID/PID based security check will make sure:\n1. App caller will have more restriction on what request can send.\n2. Even an app call the hidden API (eg. through reflection), it will not also be restricted.\nThanks for the comments.",
+      "parentUuid": "45670da0_fccb4076",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 83
+      },
+      "revId": "2327f4a893d42f2c99237f4843f4c55349109271",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
