@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd5e264a_5a507521",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2021-01-13T05:52:33Z",
+      "side": 1,
+      "message": "PTAL http://b/177376544#comment3 findings before proceeding with revert.",
+      "revId": "ec0d92d3c214917487a41a83f8e022fee36eba44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
