@@ -16,6 +16,24 @@
       "message": "Wait I am confused. MultipathPolicyTracker, NetworkPolicyManagerService, NetworkStatsService : all these three files are staying in the platform. We are also not moving BestClock or SystemClock.\nSo I don\u0027t understand the need to remove usage of these classes ; in fact I don\u0027t understand why we need this patch at all.\n\nIf I am missing something and we do need this patch then : please don\u0027t copy-paste this code three times.\nInstead, create a small utility encapsulating the classes you need. I would suggest something along the lines of :\nclass NetworkingClocks {\n  public static Clock newNetworkingClock() {\n    return new BestClock(UTC, new NetworkingClock(), Clock.systemUTC());\n  }\n  private static final NetworkingClock extends SimpleClock {\n    private final IAlarmManager mAlarmManager;\n    public NetworkingClock() {\n      mAlarmManager \u003d getService\n    }\n    public long millis() {\n      try {\n        return mAlarmManager.currentNetworkTimeMillis();\n      } catch { ... }\n    }\n  }\n  private static final BestClock extends SimpleClock { /* the current impl */ }\n}\n\nThen in all three call sites you can simply say :\n\n  NetworkingClocks.newNetworkingClock();\n\nThis is simpler, more robust and even more performant because it won\u0027t get the alarm manager every time.\n(if you run into the issue that the alarm manager is not available yet the first time you need to use it, then you can initialize it lazily, but I don\u0027t think you\u0027ll have this problem)\n",
       "revId": "9458d16e5808977bb1895202264322595f295a48",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00d3bc3d_13cd969c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2021-01-13T22:41:18Z",
+      "side": 1,
+      "message": "Hmm, on the 2nd line of https://docs.google.com/spreadsheets/d/1kFAF1YML988SWLKIuKXK2ehv_1nQIhSrsqcXppTL2rE/edit#gid\u003d826795137\n\nIt explicitly says stop using android.os.BestClock in:\n```\nLcom/android/server/connectivity/MultipathPolicyTracker$Dependencies;-\u003egetClock()Ljava/time/Clock;\n```\n\nOther two - NetworkPolicyManagerService, NetworkStatsService - I found via CodeSearch, which also seems to be using BestClock.\n\nOn The line 11 of the doc, it says find alternative clock for android.os.SystemClock, which again is being used at:\n```\nLcom/android/server/connectivity/MultipathPolicyTracker$Dependencies;-\u003egetClock()Ljava/time/Clock;\n```\n\nI will address another comment, the only reason I did not do that is because there was an issues with imports (depends on where we put NetworkingClocks). Let me try again.",
+      "parentUuid": "3d9bf7bd_b1a44dce",
+      "revId": "9458d16e5808977bb1895202264322595f295a48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
