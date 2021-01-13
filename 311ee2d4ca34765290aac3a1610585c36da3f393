@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c55798c_2f8138c6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 6920,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2021-01-13T22:20:21Z",
+      "side": 1,
+      "message": "I would move ternary operator inside NetworkRequest constructor argument.\n\nThe TODO above refers to that new operator (defensive copy). It\u0027s for the same reason in both branches.",
+      "range": {
+        "startLine": 6920,
+        "startChar": 18,
+        "endLine": 6920,
+        "endChar": 37
+      },
+      "revId": "311ee2d4ca34765290aac3a1610585c36da3f393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
