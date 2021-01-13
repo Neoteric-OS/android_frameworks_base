@@ -152,6 +152,24 @@
       "parentUuid": "63d2bac0_8dca2a7d",
       "revId": "319e627a1f79d19a6b42471199ca5ebde6f09d33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24cecbc0_340ad7bf",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2021-01-13T09:05:14Z",
+      "side": 1,
+      "message": "It\u0027s acceptable to kill the system_server under these circumstances (odds are, it would\u0027ve died soon after anyway...). Maybe it makes sense to check for EMFILE and call fdTrackAbort() if that\u0027s the case, and bring down the system server for all other errors ?\n\nThe only other error i can think of is an EBADF from a close because some other thread accidentally closed your FD (we\u0027ve had that sort of thing happen in the past with double closes)",
+      "parentUuid": "eedc9c92_41551043",
+      "revId": "319e627a1f79d19a6b42471199ca5ebde6f09d33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
