@@ -1,0 +1,5 @@
+on property persist.vendor.net.doxlat=true
+   setprop net.464xlat.cellular.enable true
+
+on property persist.vendor.net.doxlat=false
+    setprop net.464xlat.cellular.enable false
