@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25992a0c_e94484e4",
+        "filename": "media/java/android/media/tv/TvInputHardwareInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2021-01-13T23:47:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffc71c61_105355d9",
+      "range": {
+        "startLine": 147,
+        "startChar": 16,
+        "endLine": 147,
+        "endChar": 40
+      },
+      "revId": "d2f57708f5dcb1277d075bbcdff2451a7ebed6f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f81f5ec8_624a86d0",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-13T20:21:01Z",
       "side": 1,
       "message": "Why add this here instead of in a new method?",
+      "range": {
+        "startLine": 55,
+        "startChar": 20,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "revId": "d2f57708f5dcb1277d075bbcdff2451a7ebed6f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "802c1229_13d1bede",
+        "filename": "services/core/java/com/android/server/tv/TvInputHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2021-01-13T23:47:20Z",
+      "side": 1,
+      "message": "It\u0027s internal interface, we can change it.\nMoreover, we need keep previous behavior actually same as before.\nAdditional parameter provide a hint for caller to decide whether previous behavior or new behavior.",
+      "parentUuid": "f81f5ec8_624a86d0",
       "range": {
         "startLine": 55,
         "startChar": 20,
