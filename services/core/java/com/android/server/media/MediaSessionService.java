@@ -24,10 +24,12 @@ import static com.android.server.media.MediaKeyDispatcher.isLongPressOverridden;
 import static com.android.server.media.MediaKeyDispatcher.isSingleTapOverridden;
 import static com.android.server.media.MediaKeyDispatcher.isTripleTapOverridden;
 
+import android.annotation.NonNull;
 import android.app.ActivityManager;
 import android.app.INotificationManager;
 import android.app.KeyguardManager;
 import android.app.PendingIntent;
+import android.app.StatsManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -78,12 +80,14 @@ import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
+import android.util.StatsEvent;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
 
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.DumpUtils;
+import com.android.internal.util.FrameworkStatsLog;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
 import com.android.server.Watchdog;
@@ -96,6 +100,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 /**
  * System implementation of MediaSessionManager
@@ -1108,6 +1113,15 @@ public class MediaSessionService extends SystemService implements Monitor {
         private KeyEventHandler mVolumeKeyEventHandler =
                 new KeyEventHandler(KeyEventHandler.KEY_TYPE_VOLUME);
 
+        public SessionManagerImpl() {
+            StatsManager statsManager = (StatsManager) mContext.getSystemService(
+                    Context.STATS_MANAGER);
+            if (statsManager != null) {
+                statsManager.setPullAtomCallback(PULL_ATOM_TAG, null,
+                        Executors.newSingleThreadExecutor(), new StatsPullAtomCallbackHandler());
+            }
+        }
+
         @Override
         public void onShellCommand(FileDescriptor in, FileDescriptor out, FileDescriptor err,
                 String[] args, ShellCallback callback, ResultReceiver resultReceiver) {
@@ -1722,6 +1736,27 @@ public class MediaSessionService extends SystemService implements Monitor {
             }
         }
 
+        private static final int PULL_ATOM_TAG = 10095;
+        private List<StatsEvent> sPullData;
+
+        /**
+         * Callback interface for pulling atoms requested by the stats service.
+         *
+         */
+        private final class StatsPullAtomCallbackHandler implements StatsManager.StatsPullAtomCallback {
+            /**
+             * Pull data for the specified atom tag, filling in the provided list of StatsEvent data.
+             * @return {@link #PULL_SUCCESS} if the pull was successful, or {@link #PULL_SKIP} if not.
+             */
+            public int onPullAtom(int atomTag, List<StatsEvent> data) {
+                for (StatsEvent event : sPullData) {
+                    data.add(event);
+                }
+                sPullData.clear();
+                return StatsManager.PULL_SUCCESS;
+            }
+        }
+
         private void dispatchVolumeKeyEventLocked(String packageName, String opPackageName, int pid,
                 int uid, boolean asSystemService, KeyEvent keyEvent, int stream,
                 boolean musicOnly) {
@@ -1739,6 +1774,15 @@ public class MediaSessionService extends SystemService implements Monitor {
                 case KeyEvent.KEYCODE_VOLUME_MUTE:
                     isMute = true;
                     break;
+            }
+            if (down) {
+                FrameworkStatsLog.write(FrameworkStatsLog.MEDIA_SESSION_MANAGER_VOLUME_LEVEL_CHANGED,
+                        packageName, direction);
+                sPullData.add(StatsEvent.newBuilder()
+                        .setAtomId(PULL_ATOM_TAG)
+                        .writeString(packageName)
+                        .writeInt(direction)
+                        .build());
             }
             if (down || up) {
                 int flags = AudioManager.FLAG_FROM_KEY;
