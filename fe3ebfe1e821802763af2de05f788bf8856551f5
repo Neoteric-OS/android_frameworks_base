@@ -16,6 +16,29 @@
       "message": "@Zoey Chen,\nCould you check description changes in CL:1418832?\nIt seems that this CL still have wrong description regarding of DEFAULT_SUBSCRIPTION_ID and EVENT_CALL_STATE_CHANGED.",
       "revId": "fe3ebfe1e821802763af2de05f788bf8856551f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f56f70d3_f6ec49c1",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 5608,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2021-01-13T09:03:40Z",
+      "side": 1,
+      "message": "Missing @Deprecated?",
+      "range": {
+        "startLine": 5608,
+        "startChar": 4,
+        "endLine": 5608,
+        "endChar": 15
+      },
+      "revId": "fe3ebfe1e821802763af2de05f788bf8856551f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
