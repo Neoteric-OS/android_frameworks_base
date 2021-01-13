@@ -708,6 +708,8 @@
     <string name="private_dns_mode_provider">Customize private DNS with a URL or a hostname</string>
     <string name="private_dns_mode_provider_hostname_hint">Enter a URL or a hostname to customize private DNS</string>
     <string name="private_dns_mode_provider_failure">Couldn\'t connect</string>
+    <!-- The text for the private DNS predefined provider option. [CHAR LIMIT=NONE] -->
+    <string name="private_dns_mode_predefined_provider">Private DNS Provider</string>
 
     <!-- setting Checkbox summary whether to show options for wireless display certification  -->
     <string name="wifi_display_certification_summary">Show options for wireless display certification</string>
