@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffc71c61_105355d9",
+        "filename": "media/java/android/media/tv/TvInputHardwareInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2021-01-13T20:21:01Z",
+      "side": 1,
+      "message": "Use a builder to create a new object instead.",
+      "range": {
+        "startLine": 147,
+        "startChar": 16,
+        "endLine": 147,
+        "endChar": 40
+      },
+      "revId": "d2f57708f5dcb1277d075bbcdff2451a7ebed6f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f81f5ec8_624a86d0",
+        "filename": "services/core/java/com/android/server/tv/TvInputHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2021-01-13T20:21:01Z",
+      "side": 1,
+      "message": "Why add this here instead of in a new method?",
+      "range": {
+        "startLine": 55,
+        "startChar": 20,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "revId": "d2f57708f5dcb1277d075bbcdff2451a7ebed6f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
