@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76cac8bc_34d2db6a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1585,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-13T04:55:11Z",
+      "side": 1,
+      "message": "Is this related to this commit?\nI don\u0027t see anyone call this function.\nMaybe it should be inside aosp/1539752?",
+      "range": {
+        "startLine": 1582,
+        "startChar": 8,
+        "endLine": 1585,
+        "endChar": 9
+      },
+      "revId": "61d7d924571022f15c81728aa5827e51e2d9ca01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3236a0ec_0916e1a4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6855,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-13T04:55:11Z",
+      "side": 1,
+      "message": "I think it\u0027s better to add a comment to describe why calling clearCapabilities(). e.g. For listening all networks.",
+      "range": {
+        "startLine": 6855,
+        "startChar": 68,
+        "endLine": 6855,
+        "endChar": 85
+      },
+      "revId": "61d7d924571022f15c81728aa5827e51e2d9ca01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eee7efcf_aaed3117",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6883,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-13T04:55:11Z",
+      "side": 1,
+      "message": "Could you add more comment to explain why nothing happen without IPv4 default route?",
+      "range": {
+        "startLine": 6883,
+        "startChar": 36,
+        "endLine": 6883,
+        "endChar": 92
+      },
+      "revId": "61d7d924571022f15c81728aa5827e51e2d9ca01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dcb1d7e_58f8e428",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6931,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-13T04:55:11Z",
+      "side": 1,
+      "message": "A redundant \"what\"?",
+      "range": {
+        "startLine": 6931,
+        "startChar": 14,
+        "endLine": 6931,
+        "endChar": 18
+      },
+      "revId": "61d7d924571022f15c81728aa5827e51e2d9ca01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
