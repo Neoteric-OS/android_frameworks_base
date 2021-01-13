@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "164c22a9_3acfc280",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-13T10:22:17Z",
+      "side": 1,
+      "message": "Sorry we can\u0027t put this in with this architecture. Nat464XLat objects are created for every new network, and then removed later. The object can enter the starting state multiple times over its lifetime (though in many cases it never does).\n\nBut your patch can\u0027t unregister the unsolicited event listener, which means this will leak the listener every time. On phones that often connect to v6-only networks, that means you\u0027ll leak a listener for at least each time you connect, and eventually netd will die trying to send hundreds of callbacks to these dead objects.\n\n+huangluke to advise on whether there is a way to unregister an unsolicited event listener.\n\nIf there isn\u0027t, then I\u0027m afraid we need to change the architecture. For example, you could have ConnectivityService register a single unsolicited event listener, which it never needs to unregister, and make sure that every event it receives is sent to all active instances of Nat464xlat.\n",
+      "revId": "055fe40290bcddb1dbe1eaad027b0cb0cb9ccf96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
