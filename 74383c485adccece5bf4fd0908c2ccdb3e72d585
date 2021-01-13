@@ -45,6 +45,30 @@
       },
       "revId": "74383c485adccece5bf4fd0908c2ccdb3e72d585",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57698b93_3e4c5391",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-01-13T00:02:17Z",
+      "side": 1,
+      "message": "Yes, it will be caught by the caller: https://source.corp.google.com/aosp-master/frameworks/base/services/core/java/com/android/server/locksettings/RebootEscrowManager.java;l\u003d246",
+      "parentUuid": "dba45acc_42ae23b6",
+      "range": {
+        "startLine": 75,
+        "startChar": 12,
+        "endLine": 75,
+        "endChar": 33
+      },
+      "revId": "74383c485adccece5bf4fd0908c2ccdb3e72d585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
