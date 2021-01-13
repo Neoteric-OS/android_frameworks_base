@@ -370,6 +370,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "471c8d26_e044b946",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-13T13:01:51Z",
+      "side": 1,
+      "message": "Just like it\u0027s not OK to check in an API without an implementation, it\u0027s not OK to check in an API with a TODO in the documentation like this.\n\nAPI council will likely file a bug about this and may well ask how this passed API review.\n\nUntil we have documentation on this constant, it should be @hide. That won\u0027t block any progress since connectivity still is not building from system APIs only.",
+      "parentUuid": "491db7e4_6f285399",
+      "range": {
+        "startLine": 366,
+        "startChar": 5,
+        "endLine": 366,
+        "endChar": 79
+      },
+      "revId": "babc4234f1064d0bf44b6d42a97e05855864fcf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7393361a_0acfc6b3",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 3
