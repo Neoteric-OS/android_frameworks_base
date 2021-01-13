@@ -41,6 +41,10 @@ import java.util.TreeSet;
  */
 public class NetworkUtils {
 
+    static {
+        System.loadLibrary("framework-connectivity-jni");
+    }
+
     private static final String TAG = "NetworkUtils";
 
     /**

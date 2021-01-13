@@ -77,10 +77,79 @@ java_sdk_library {
             // the module builds against API (the parcelable declarations exist in framework.aidl)
             "frameworks/base/core/java", // For framework parcelables
             "frameworks/native/aidl/binder", // For PersistableBundle.aidl
-        ],
+        ]
     },
+    impl_only_libs: [
+        "framework",
+    ],
     libs: [
         "unsupportedappusage",
     ],
-    permitted_packages: ["android.net", "com.android.connectivity.aidl"],
+    permitted_packages: ["android.net"],
+    optimize: {
+        enabled: true,
+        shrink: true,
+    },
+}
+
+java_library {
+    name: "framework-connectivity.impl",
+    // Instead of building against private API (framework.jar),
+    // build against core_platform + framework-minus-apex + module
+    // stub libs. This allows framework.jar to depend on this library,
+    // so this library is still part of the private API until all
+    // clients have been migrated.
+    // TODO: just build against module_api, and remove this jar from
+    // the private API.
+    sdk_version: "core_platform",
+    srcs: [
+        ":framework-connectivity-sources",
+    ],
+    aidl: {
+        include_dirs: [
+            "frameworks/base/core/java", // For framework parcelables
+            "frameworks/native/aidl/binder", // For PersistableBundle.aidl
+        ],
+    },
+    libs: [
+        "framework-minus-apex",
+	"framework-tethering.stubs.module_lib",
+	"framework-wifi.stubs.module_lib",
+        "unsupportedappusage",
+    ],
+    apex_available: ["com.android.tethering"],
+    installable: true,
+    permitted_packages: ["android.net"],
+}
+
+cc_library_shared {
+    name: "libframework-connectivity-jni",
+    // TODO: build against the NDK (sdk_version: "30" for example)
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "-Wthread-safety",
+    ],
+    srcs: [
+        "jni/android_net_NetworkUtils.cpp",
+        "jni/onload.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "liblog",
+        "libnativehelper",
+        // TODO: consider moving ifc_[add/del]_address, to a static lib in frameworks/libs/net,
+        // or if the dependency on libnetutils is kept, it needs to build against the NDK and be
+        // linked statically.
+        // "libnetutils",
+        "libnetd_client",
+    ],
+    header_libs: [
+        "dnsproxyd_protocol_headers",
+    ],
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.tethering",
+    ],
 }

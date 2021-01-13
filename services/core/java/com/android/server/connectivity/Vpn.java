@@ -191,6 +191,10 @@ public class Vpn {
      */
     private static final int VPN_DEFAULT_SCORE = 101;
 
+    static {
+        System.loadLibrary("service-connectivity");
+    }
+
     // TODO: create separate trackers for each unique VPN to support
     // automated reconnection
 

@@ -411,6 +411,7 @@ java_library {
     name: "framework-updatable-stubs-module_libs_api",
     static_libs: [
         "android.net.ipsec.ike.stubs.module_lib",
+	"framework-connectivity.stubs.module_lib",
         "framework-media.stubs.module_lib",
         "framework-mediaprovider.stubs.module_lib",
         "framework-permission.stubs.module_lib",
@@ -429,6 +430,7 @@ java_library {
     static_libs: [
         "android.net.ipsec.ike.impl",
         "framework-minus-apex",
+	"framework-connectivity.impl",
         "framework-mediaprovider.impl",
         "framework-permission.impl",
         "framework-sdkextensions.impl",
@@ -581,13 +583,15 @@ java_library {
     defaults: ["framework-aidl-export-defaults"],
     srcs: [
         ":framework-non-updatable-sources",
-        ":framework-connectivity-sources",
         "core/java/**/*.logtags",
     ],
     // See comment on framework-atb-backward-compatibility module below
     exclude_srcs: ["core/java/android/content/pm/AndroidTestBaseUpdater.java"],
     aidl: {
         generate_get_transaction_name: true,
+        local_include_dirs: [
+            "packages/Connectivity/framework/aidl-export",
+        ]
     },
     dxflags: [
         "--core-library",
