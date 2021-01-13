@@ -8689,11 +8689,18 @@ public class TelephonyManager {
      */
     public static final int CALL_COMPOSER_STATUS_ON = 1;
 
+    /**
+     * Call composer status indicating that sending/receiving pictures is disabled.
+     * All other attachments are still enabled in this state.
+     */
+    public static final int CALL_COMPOSER_STATUS_NO_PICTURES = 2;
+
     /** @hide */
     @IntDef(prefix = {"CALL_COMPOSER_STATUS_"},
             value = {
                 CALL_COMPOSER_STATUS_ON,
                 CALL_COMPOSER_STATUS_OFF,
+                CALL_COMPOSER_STATUS_NO_PICTURES,
             })
     public @interface CallComposerStatus {}
 
@@ -8712,7 +8719,8 @@ public class TelephonyManager {
      */
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     public void setCallComposerStatus(@CallComposerStatus int status) {
-        if (status != CALL_COMPOSER_STATUS_ON && status != CALL_COMPOSER_STATUS_OFF) {
+        if (status < CALL_COMPOSER_STATUS_ON
+                || status > CALL_COMPOSER_STATUS_NO_PICTURES) {
             throw new IllegalArgumentException("requested status is invalid");
         }
         try {
