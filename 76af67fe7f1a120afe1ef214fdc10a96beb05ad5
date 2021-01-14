@@ -22,6 +22,30 @@
       },
       "revId": "76af67fe7f1a120afe1ef214fdc10a96beb05ad5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d96ef949_aadb83c5",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-14T20:46:10Z",
+      "side": 1,
+      "message": "Right. For the BT stack case when it just want to set mIsSystemThresholdReportingRequestedWhileIdle to continue updating signal bar, it has no dedicated SignalThresholdInfo to customize. \n\nThe empty Collection for apps caller will check in PIM.\nThanks",
+      "parentUuid": "6d3bead5_35a6963f",
+      "range": {
+        "startLine": 212,
+        "startChar": 35,
+        "endLine": 212,
+        "endChar": 42
+      },
+      "revId": "76af67fe7f1a120afe1ef214fdc10a96beb05ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
