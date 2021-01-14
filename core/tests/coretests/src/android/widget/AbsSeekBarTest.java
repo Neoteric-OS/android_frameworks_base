@@ -110,6 +110,29 @@ public class AbsSeekBarTest {
         assertThat(mBar.getSystemGestureExclusionRects(), hasSize(2));
     }
 
+    @Test
+    public void testGrowRectTo_evenInitialDifference() {
+        doGrowRectTest(new Rect(0, 0, 0, 0), 10, new Rect(-5, -5, 5, 5));
+    }
+
+    @Test
+    public void testGrowRectTo_unevenInitialDifference() {
+        doGrowRectTest(new Rect(0, 0, 1, 1), 10, new Rect(-5, -5, 5, 5));
+    }
+
+    @Test
+    public void testGrowRectTo_unevenInitialDifference_unevenSize() {
+        doGrowRectTest(new Rect(0, 0, 0, 0), 9, new Rect(-5, -5, 4, 4));
+    }
+
+    public void doGrowRectTest(Rect in, int minimumSize, Rect expected) {
+        Rect result = new Rect(in);
+        mBar.growRectTo(result, minimumSize);
+
+        assertEquals("grown rect", expected, result);
+        assertEquals("grown rect center point", center(expected), center(result));
+    }
+
     private Point center(Rect rect) {
         return new Point(rect.centerX(), rect.centerY());
     }
