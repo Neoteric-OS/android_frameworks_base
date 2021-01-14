@@ -22,6 +22,16 @@ package android.net {
 
 }
 
+package android.net.vcn {
+
+  public abstract class VcnControlPlaneConfig {
+    ctor public VcnControlPlaneConfig(int);
+    method @NonNull public android.os.PersistableBundle toPersistableBundle();
+    field public static final int CONFIG_TYPE_IKE = 1; // 0x1
+  }
+
+}
+
 package android.os {
 
   public class Binder implements android.os.IBinder {

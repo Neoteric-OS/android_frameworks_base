@@ -26086,6 +26086,13 @@ package android.net.sip {
 
 }
 
+package android.net.vcn {
+
+  public abstract class VcnControlPlaneConfig {
+  }
+
+}
+
 package android.nfc {
 
   public class FormatException extends java.lang.Exception {
