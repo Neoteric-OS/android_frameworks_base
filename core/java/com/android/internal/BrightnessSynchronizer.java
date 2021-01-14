@@ -210,6 +210,7 @@ public class BrightnessSynchronizer {
                 return;
             }
             float newBrightnessFloat = brightnessIntToFloat(mContext, value);
+            mWriteHistory.poll();
             mWriteHistory.offer(newBrightnessFloat);
             mPreferredSettingValue = newBrightnessFloat;
             Settings.System.putFloatForUser(mContext.getContentResolver(),
@@ -233,6 +234,10 @@ public class BrightnessSynchronizer {
         if (topOfQueue != null && topOfQueue.equals(value)) {
             mWriteHistory.poll();
         } else {
+            if (mPreferredSettingValue == value) {
+                return;
+            }
+            mWriteHistory.poll();
             mWriteHistory.offer(newBrightnessInt);
             mPreferredSettingValue = value;
             Settings.System.putIntForUser(mContext.getContentResolver(),
