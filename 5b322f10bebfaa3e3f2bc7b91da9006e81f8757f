@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "568c11b4_77ff6a41",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5626,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T05:19:01Z",
+      "side": 0,
+      "message": "Super glad to see this code gone. I still feel bad for adding it years ago.",
+      "range": {
+        "startLine": 5624,
+        "startChar": 34,
+        "endLine": 5626,
+        "endChar": 46
+      },
+      "revId": "5b322f10bebfaa3e3f2bc7b91da9006e81f8757f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "342e0003_537c1eaf",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3737,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T05:19:01Z",
+      "side": 1,
+      "message": "Thank you for doing this! I\u0027ve wanted to do it for a long time...",
+      "range": {
+        "startLine": 3737,
+        "startChar": 27,
+        "endLine": 3737,
+        "endChar": 54
+      },
+      "revId": "11fb36ea132cc0f12656187342446488ee235dfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a8f8b28_29378e53",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T05:19:01Z",
+      "side": 1,
+      "message": "Do you want to check that if you pass in an invalid ordinal, an exception is thrown? Doesn\u0027t need to be in this CL.",
+      "range": {
+        "startLine": 371,
+        "startChar": 4,
+        "endLine": 371,
+        "endChar": 5
+      },
+      "revId": "11fb36ea132cc0f12656187342446488ee235dfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
