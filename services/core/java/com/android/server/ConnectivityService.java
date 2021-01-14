@@ -4987,6 +4987,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mVpnBlockedUidRanges = newVpnBlockedUidRanges;
     }
 
+    @Override
+    public void setLegacyLockdownVpnEnabled(boolean enabled) {
+        // TODO: should this take a handler thread loop, and thus be ordered with most/all VPN APIs,
+        // including setRequireVpnForUids, or should it take effect immediately?
+        // TODO: enable this once the VPN code is moved to VpnManagerService.
+        // mHandler.post(() -> mLockdownEnabled = enabled);
+    }
+
     private boolean isLockdownVpnEnabled() {
         return mKeyStore.contains(Credentials.LOCKDOWN_VPN);
     }
