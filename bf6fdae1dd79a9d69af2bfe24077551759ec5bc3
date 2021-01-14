@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "617066d1_db1cb4b5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-14T10:25:50Z",
+      "side": 1,
+      "message": "By codesearching I didn\u0027t find the function without parameter, did I missed something?\nhttps://osscs.corp.google.com/search?q\u003dcanHaveRestrictedProfile\u0026sq\u003d\u0026ss\u003dandroid\nBut as long as TH is happy it LGTM anyway.",
+      "range": {
+        "startLine": 1340,
+        "startChar": 26,
+        "endLine": 1340,
+        "endChar": 52
+      },
+      "revId": "bf6fdae1dd79a9d69af2bfe24077551759ec5bc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
