@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Jack Yu <jackyu@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Rambo Wang <rambowang@google.com>
+Submitted-at: Thu, 14 Jan 2021 14:50:47 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1532541
+Project: platform/frameworks/base
+Branch: refs/heads/master
