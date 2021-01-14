@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dbb8a93_521fe1d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T14:19:14Z",
+      "side": 1,
+      "message": "Build failures seem spurious.\n\nBadManifestErrorInSync: Found non-SHA1 revision for project: {u\u0027path\u0027: u\u0027frameworks/base\u0027, u\u0027remote\u0027: {u\u0027review\u0027: u\u0027http://googleplex-android/\u0027, u\u0027name\u0027: u\u0027goog\u0027, u\u0027fetch\u0027: u\u0027https://googleplex-android.googlesource.com/\u0027}, u\u0027name\u0027: u\u0027platform/frameworks/base\u0027, u\u0027groups\u0027: [u\u0027pdk-cw-fs\u0027, u\u0027pdk-fs\u0027], u\u0027revision\u0027: u\u0027sc-dev-plus-aosp\u0027}\n\nTest failures are unrelated (CtsScopedStorageDeviceOnlyTest).\n\nTrying again.",
+      "revId": "d516f9e003858db670f0b85e9ff7690168b202d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
