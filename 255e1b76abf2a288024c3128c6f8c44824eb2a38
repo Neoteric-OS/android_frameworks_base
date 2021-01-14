@@ -22,6 +22,30 @@
       },
       "revId": "255e1b76abf2a288024c3128c6f8c44824eb2a38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "831bfaca_b0087b23",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-14T03:35:49Z",
+      "side": 1,
+      "message": "Exactly, Jack. This is by design (go/signalstrength-s-dd):\n\"SignalStrengthUpdateRequest is a wrapper class of the parameters for registration. Being a wrapper class instead of a list of method parameters can make the API more flexible\"\n\nPlease let me know if this is a concern.\nThanks",
+      "parentUuid": "7fbb7a09_c14c2616",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 46
+      },
+      "revId": "255e1b76abf2a288024c3128c6f8c44824eb2a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
