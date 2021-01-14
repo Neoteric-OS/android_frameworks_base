@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6029ef71_650420b9",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1964,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-14T01:48:52Z",
+      "side": 1,
+      "message": "Is there any test verifying the SSID you set?",
+      "range": {
+        "startLine": 1964,
+        "startChar": 8,
+        "endLine": 1964,
+        "endChar": 47
+      },
+      "revId": "223b24c163ec06428f4d08da819a66a5f775dfc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
