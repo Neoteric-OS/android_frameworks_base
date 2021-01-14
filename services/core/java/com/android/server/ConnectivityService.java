@@ -7520,6 +7520,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void notifyLockdownVpn(NetworkAgentInfo nai) {
+        if (true) return;
         synchronized (mVpns) {
             if (mLockdownTracker != null) {
                 if (nai != null && nai.isVPN()) {
