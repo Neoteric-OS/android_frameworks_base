@@ -22,6 +22,20 @@ package android.net {
 
 }
 
+package android.net.vcn {
+
+  public abstract class VcnGatewayConnectionConfig {
+    ctor public VcnGatewayConnectionConfig(@NonNull java.util.Set<java.lang.Integer>, @NonNull java.util.Set<java.lang.Integer>, @NonNull long[], @IntRange(from=android.net.vcn.VcnGatewayConnectionConfig.MIN_MTU_V6) int);
+    method public static void checkValidCapability(int);
+    method public static int getDefaultMaxMtu();
+    method @NonNull public static long[] getDefaultRetryIntervalsMs();
+    method @NonNull public android.os.PersistableBundle toPersistableBundle();
+    method public static void validateMaxMtu(@IntRange(from=android.net.vcn.VcnGatewayConnectionConfig.MIN_MTU_V6) int);
+    method public static void validateRetryInterval(@Nullable long[]);
+  }
+
+}
+
 package android.os {
 
   public class Binder implements android.os.IBinder {

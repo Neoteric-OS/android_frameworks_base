@@ -23,5 +23,6 @@ android_test {
         "android.test.runner",
         "android.test.base",
         "android.test.mock",
+        "android.net.ipsec.ike.stubs.module_lib",
     ],
 }
