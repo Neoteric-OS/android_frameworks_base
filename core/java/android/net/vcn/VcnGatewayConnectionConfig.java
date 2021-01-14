@@ -20,6 +20,8 @@ import static com.android.internal.annotations.VisibleForTesting.Visibility;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
+import android.annotation.SystemApi.Client;
 import android.net.NetworkCapabilities;
 import android.os.PersistableBundle;
 import android.util.ArraySet;
@@ -70,9 +72,10 @@ import java.util.concurrent.TimeUnit;
  * <p>The meteredness and roaming of the VCN {@link Network} will be determined by that of the
  * underlying Network(s).
  *
- * @hide
+ * <p>This class is the base class that contains common information of a VCN gateway connection
+ * configuration. Please see android.net.ipsec.ike.vcn.VcnGatewayConnectionConfig for subclass.
  */
-public final class VcnGatewayConnectionConfig {
+public abstract class VcnGatewayConnectionConfig {
     // TODO: Use MIN_MTU_V6 once it is public, @hide
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static final int MIN_MTU_V6 = 1280;
@@ -98,6 +101,12 @@ public final class VcnGatewayConnectionConfig {
     }
 
     private static final int DEFAULT_MAX_MTU = 1500;
+
+    /** @hide */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
+    public static int getDefaultMaxMtu() {
+        return DEFAULT_MAX_MTU;
+    }
 
     /**
      * The maximum number of retry intervals that may be specified.
@@ -127,6 +136,13 @@ public final class VcnGatewayConnectionConfig {
                 TimeUnit.MINUTES.toMillis(15)
             };
 
+    /** @hide */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
+    @NonNull
+    public static long[] getDefaultRetryIntervalsMs() {
+        return DEFAULT_RETRY_INTERVALS_MS;
+    }
+
     private static final String EXPOSED_CAPABILITIES_KEY = "mExposedCapabilities";
     @NonNull private final Set<Integer> mExposedCapabilities;
 
@@ -141,7 +157,8 @@ public final class VcnGatewayConnectionConfig {
     private static final String RETRY_INTERVAL_MS_KEY = "mRetryIntervalsMs";
     @NonNull private final long[] mRetryIntervalsMs;
 
-    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    /** @hide */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
     public VcnGatewayConnectionConfig(
             @NonNull Set<Integer> exposedCapabilities,
             @NonNull Set<Integer> underlyingCapabilities,
@@ -157,20 +174,9 @@ public final class VcnGatewayConnectionConfig {
 
     /** @hide */
     @VisibleForTesting(visibility = Visibility.PRIVATE)
-    public VcnGatewayConnectionConfig(@NonNull PersistableBundle in) {
-        final PersistableBundle exposedCapsBundle =
-                in.getPersistableBundle(EXPOSED_CAPABILITIES_KEY);
-        final PersistableBundle underlyingCapsBundle =
-                in.getPersistableBundle(UNDERLYING_CAPABILITIES_KEY);
-
-        mExposedCapabilities = new ArraySet<>(PersistableBundleUtils.toList(
-                exposedCapsBundle, PersistableBundleUtils.INTEGER_DESERIALIZER));
-        mUnderlyingCapabilities = new ArraySet<>(PersistableBundleUtils.toList(
-                underlyingCapsBundle, PersistableBundleUtils.INTEGER_DESERIALIZER));
-        mRetryIntervalsMs = in.getLongArray(RETRY_INTERVAL_MS_KEY);
-        mMaxMtu = in.getInt(MAX_MTU_KEY);
-
-        validate();
+    public static VcnGatewayConnectionConfig fromPersistableBundle(@NonNull PersistableBundle in) {
+        // TODO: build VcnIkeGatewayConnectionConfig from PersistableBundle
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     private void validate() {
@@ -191,17 +197,20 @@ public final class VcnGatewayConnectionConfig {
         Objects.requireNonNull(mRetryIntervalsMs, "retryIntervalsMs was null");
         validateRetryInterval(mRetryIntervalsMs);
 
-        Preconditions.checkArgument(
-                mMaxMtu >= MIN_MTU_V6, "maxMtu must be at least IPv6 min MTU (1280)");
+        validateMaxMtu(mMaxMtu);
     }
 
-    private static void checkValidCapability(int capability) {
+    /** @hide */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
+    public static void checkValidCapability(int capability) {
         Preconditions.checkArgument(
                 ALLOWED_CAPABILITIES.contains(capability),
                 "NetworkCapability " + capability + "out of range");
     }
 
-    private static void validateRetryInterval(@Nullable long[] retryIntervalsMs) {
+    /** @hide */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
+    public static void validateRetryInterval(@Nullable long[] retryIntervalsMs) {
         Preconditions.checkArgument(
                 retryIntervalsMs != null
                         && retryIntervalsMs.length > 0
@@ -214,6 +223,13 @@ public final class VcnGatewayConnectionConfig {
                     "Repeating retry interval was too short, must be a minimum of 15 minutes: "
                             + repeatingInterval);
         }
+    }
+
+    /** @hide */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
+    public static void validateMaxMtu(@IntRange(from = MIN_MTU_V6) int maxMtu) {
+        Preconditions.checkArgument(
+                maxMtu >= MIN_MTU_V6, "maxMtu must be at least IPv6 min MTU (1280)");
     }
 
     /**
@@ -230,6 +246,7 @@ public final class VcnGatewayConnectionConfig {
      * Checks if this config is configured to support/expose a specific capability.
      *
      * @param capability the capability to check for
+     * @hide
      */
     public boolean hasExposedCapability(int capability) {
         checkValidCapability(capability);
@@ -251,6 +268,7 @@ public final class VcnGatewayConnectionConfig {
      * Checks if this config requires an underlying network to have the specified capability.
      *
      * @param capability the capability to check for
+     * @hide
      */
     public boolean requiresUnderlyingCapability(int capability) {
         checkValidCapability(capability);
@@ -258,13 +276,17 @@ public final class VcnGatewayConnectionConfig {
         return mUnderlyingCapabilities.contains(capability);
     }
 
-    /** Retrieves the configured retry intervals. */
+    /**
+     * Retrieves the configured retry intervals.
+     *
+     * @hide
+     */
     @NonNull
     public long[] getRetryIntervalsMs() {
         return Arrays.copyOf(mRetryIntervalsMs, mRetryIntervalsMs.length);
     }
 
-    /** Retrieves the maximum MTU allowed for this Gateway Connection. */
+    /** Retrieves the maximum MTU allowed for this Gateway Connection. @hide */
     @IntRange(from = MIN_MTU_V6)
     public int getMaxMtu() {
         return mMaxMtu;
@@ -277,6 +299,7 @@ public final class VcnGatewayConnectionConfig {
      */
     @NonNull
     @VisibleForTesting(visibility = Visibility.PROTECTED)
+    @SystemApi(client = Client.MODULE_LIBRARIES)
     public PersistableBundle toPersistableBundle() {
         final PersistableBundle result = new PersistableBundle();
 
@@ -317,149 +340,5 @@ public final class VcnGatewayConnectionConfig {
                 && mUnderlyingCapabilities.equals(rhs.mUnderlyingCapabilities)
                 && Arrays.equals(mRetryIntervalsMs, rhs.mRetryIntervalsMs)
                 && mMaxMtu == rhs.mMaxMtu;
-    }
-
-    /** This class is used to incrementally build {@link VcnGatewayConnectionConfig} objects. */
-    public static class Builder {
-        @NonNull private final Set<Integer> mExposedCapabilities = new ArraySet();
-        @NonNull private final Set<Integer> mUnderlyingCapabilities = new ArraySet();
-        @NonNull private long[] mRetryIntervalsMs = DEFAULT_RETRY_INTERVALS_MS;
-        private int mMaxMtu = DEFAULT_MAX_MTU;
-
-        // TODO: (b/175829816) Consider VCN-exposed capabilities that may be transport dependent.
-        //       Consider the case where the VCN might only expose MMS on WiFi, but defer to MMS
-        //       when on Cell.
-
-        /**
-         * Add a capability that this VCN Gateway Connection will support.
-         *
-         * @param exposedCapability the app-facing capability to be exposed by this VCN Gateway
-         *     Connection (i.e., the capabilities that this VCN Gateway Connection will support).
-         * @return this {@link Builder} instance, for chaining
-         * @see VcnGatewayConnectionConfig for a list of capabilities may be exposed by a Gateway
-         *     Connection
-         */
-        public Builder addExposedCapability(int exposedCapability) {
-            checkValidCapability(exposedCapability);
-
-            mExposedCapabilities.add(exposedCapability);
-            return this;
-        }
-
-        /**
-         * Remove a capability that this VCN Gateway Connection will support.
-         *
-         * @param exposedCapability the app-facing capability to not be exposed by this VCN Gateway
-         *     Connection (i.e., the capabilities that this VCN Gateway Connection will support)
-         * @return this {@link Builder} instance, for chaining
-         * @see VcnGatewayConnectionConfig for a list of capabilities may be exposed by a Gateway
-         *     Connection
-         */
-        public Builder removeExposedCapability(int exposedCapability) {
-            checkValidCapability(exposedCapability);
-
-            mExposedCapabilities.remove(exposedCapability);
-            return this;
-        }
-
-        /**
-         * Require a capability for Networks underlying this VCN Gateway Connection.
-         *
-         * @param underlyingCapability the capability that a network MUST have in order to be an
-         *     underlying network for this VCN Gateway Connection.
-         * @return this {@link Builder} instance, for chaining
-         * @see VcnGatewayConnectionConfig for a list of capabilities may be required of underlying
-         *     networks
-         */
-        public Builder addRequiredUnderlyingCapability(int underlyingCapability) {
-            checkValidCapability(underlyingCapability);
-
-            mUnderlyingCapabilities.add(underlyingCapability);
-            return this;
-        }
-
-        /**
-         * Remove a requirement of a capability for Networks underlying this VCN Gateway Connection.
-         *
-         * <p>Calling this method will allow Networks that do NOT have this capability to be
-         * selected as an underlying network for this VCN Gateway Connection. However, underlying
-         * networks MAY still have the removed capability.
-         *
-         * @param underlyingCapability the capability that a network DOES NOT need to have in order
-         *     to be an underlying network for this VCN Gateway Connection.
-         * @return this {@link Builder} instance, for chaining
-         * @see VcnGatewayConnectionConfig for a list of capabilities may be required of underlying
-         *     networks
-         */
-        public Builder removeRequiredUnderlyingCapability(int underlyingCapability) {
-            checkValidCapability(underlyingCapability);
-
-            mUnderlyingCapabilities.remove(underlyingCapability);
-            return this;
-        }
-
-        /**
-         * Set the retry interval between VCN establishment attempts upon successive failures.
-         *
-         * <p>The last retry interval will be repeated until safe mode is entered, or a connection
-         * is successfully established, at which point the retry timers will be reset. For power
-         * reasons, the last (repeated) retry interval MUST be at least 15 minutes.
-         *
-         * <p>Retry intervals MAY be subject to system power saving modes. That is to say that if
-         * the system enters a power saving mode, the retry may not occur until the device leaves
-         * the specified power saving mode. Intervals are sequential, and intervals will NOT be
-         * skipped if system power saving results in delaying retries (even if it exceed multiple
-         * retry intervals).
-         *
-         * <p>Each Gateway Connection will retry according to the retry intervals configured, but if
-         * safe mode is enabled, all Gateway Connection(s) will be disabled.
-         *
-         * @param retryIntervalsMs an array of between 1 and 10 millisecond intervals after which
-         *     the VCN will attempt to retry a session initiation. The last (repeating) retry
-         *     interval must be at least 15 minutes. Defaults to: {@code [1s, 2s, 5s, 30s, 1m, 5m,
-         *     15m]}
-         * @return this {@link Builder} instance, for chaining
-         * @see VcnManager for additional discussion on fail-safe mode
-         */
-        @NonNull
-        public Builder setRetryInterval(@NonNull long[] retryIntervalsMs) {
-            validateRetryInterval(retryIntervalsMs);
-
-            mRetryIntervalsMs = retryIntervalsMs;
-            return this;
-        }
-
-        /**
-         * Sets the maximum MTU allowed for this VCN Gateway Connection.
-         *
-         * <p>This MTU is applied to the VCN Gateway Connection exposed Networks, and represents the
-         * MTU of the virtualized network.
-         *
-         * <p>The system may reduce the MTU below the maximum specified based on signals such as the
-         * MTU of the underlying networks (and adjusted for Gateway Connection overhead).
-         *
-         * @param maxMtu the maximum MTU allowed for this Gateway Connection. Must be greater than
-         *     the IPv6 minimum MTU of 1280. Defaults to 1500.
-         * @return this {@link Builder} instance, for chaining
-         */
-        @NonNull
-        public Builder setMaxMtu(@IntRange(from = MIN_MTU_V6) int maxMtu) {
-            Preconditions.checkArgument(
-                    maxMtu >= MIN_MTU_V6, "maxMtu must be at least IPv6 min MTU (1280)");
-
-            mMaxMtu = maxMtu;
-            return this;
-        }
-
-        /**
-         * Builds and validates the VcnGatewayConnectionConfig.
-         *
-         * @return an immutable VcnGatewayConnectionConfig instance
-         */
-        @NonNull
-        public VcnGatewayConnectionConfig build() {
-            return new VcnGatewayConnectionConfig(
-                    mExposedCapabilities, mUnderlyingCapabilities, mRetryIntervalsMs, mMaxMtu);
-        }
     }
 }

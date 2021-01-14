@@ -75,7 +75,8 @@ public final class VcnConfig implements Parcelable {
         mGatewayConnectionConfigs =
                 new ArraySet<>(
                         PersistableBundleUtils.toList(
-                                gatewayConnectionConfigsBundle, VcnGatewayConnectionConfig::new));
+                                gatewayConnectionConfigsBundle,
+                                VcnGatewayConnectionConfig::fromPersistableBundle));
 
         validate();
     }
