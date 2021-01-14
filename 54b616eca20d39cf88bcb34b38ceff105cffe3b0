@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f114bd5c_71917271",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4587,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-01-14T22:55:27Z",
+      "side": 1,
+      "message": "If the goal is to replicate the *exact* logic from UMS.cleanupPartialUsers() then it is probably dangerous duplicating the code here, since in the future more conditions might get added to cleanupPartialUsers() without your code getting updated too.\n\nIt may be better to add a static method in UMS like:\npublic static boolean isUserToBeRemovedAtBoot(UserInfo user) {\n  return ui.partial || ui.guestToRemove || (ui.isEphemeral() \u0026\u0026 !ui.preCreated) \u0026\u0026 ui.id !\u003d UserHandle.USER_SYSTEM;\n}\n\nand then call that method from both places.",
+      "parentUuid": "644c041a_7746bd16",
+      "range": {
+        "startLine": 4587,
+        "startChar": 12,
+        "endLine": 4587,
+        "endChar": 20
+      },
+      "revId": "54b616eca20d39cf88bcb34b38ceff105cffe3b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "278f3b6e_584da803",
         "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
         "patchSetId": 1
