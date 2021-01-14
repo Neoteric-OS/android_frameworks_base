@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f157affc_75b41b08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T11:24:49Z",
+      "side": 1,
+      "message": "Why did we decide that it should be outside the module? Are there are a lot of APIs to expose? Do we believe that OEMs have made lots of changes?",
+      "revId": "ce0a53ea6cb6b58656ab5c473e1b59bc4cbf8ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
