@@ -45,6 +45,30 @@
       },
       "revId": "11fb36ea132cc0f12656187342446488ee235dfd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e104f590_2999343d",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-14T06:52:37Z",
+      "side": 1,
+      "message": "Will address in follow-up patch to unblock the progress first.",
+      "parentUuid": "7a8f8b28_29378e53",
+      "range": {
+        "startLine": 371,
+        "startChar": 4,
+        "endLine": 371,
+        "endChar": 5
+      },
+      "revId": "11fb36ea132cc0f12656187342446488ee235dfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
