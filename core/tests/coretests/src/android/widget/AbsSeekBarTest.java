@@ -30,7 +30,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.platform.test.annotations.Presubmit;
-import android.view.View;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -69,7 +68,7 @@ public class AbsSeekBarTest {
 
         assertEquals("exclusions should be size 1, but was " + exclusions, 1, exclusions.size());
         assertEquals("exclusion should be centered on thumb",
-                center(mBar), center(exclusions.get(0)));
+                center(mBar.getThumb().getBounds()), center(exclusions.get(0)));
         assertEquals("exclusion should be 48dp high", dpToPxSize(48), exclusions.get(0).height());
         assertEquals("exclusion should be 48dp wide", dpToPxSize(48), exclusions.get(0).width());
     }
@@ -86,7 +85,7 @@ public class AbsSeekBarTest {
 
         assertEquals("exclusions should be size 1, but was " + exclusions, 1, exclusions.size());
         assertEquals("exclusion should be centered on thumb",
-                center(mBar), center(exclusions.get(0)));
+                center(mBar.getThumb().getBounds()), center(exclusions.get(0)));
         assertEquals("exclusion should be 32dp high", dpToPxSize(32), exclusions.get(0).height());
         assertEquals("exclusion should be 32dp wide", dpToPxSize(32), exclusions.get(0).width());
     }
@@ -110,12 +109,31 @@ public class AbsSeekBarTest {
         assertThat(mBar.getSystemGestureExclusionRects(), hasSize(2));
     }
 
-    private Point center(Rect rect) {
-        return new Point(rect.centerX(), rect.centerY());
+    @Test
+    public void testGrowRectTo_evenInitialDifference() {
+        doGrowRectTest(new Rect(0, 0, 0, 0), 10, new Rect(-5, -5, 5, 5));
     }
 
-    private Point center(View view) {
-        return center(new Rect(view.getLeft(), view.getTop(), view.getRight(), view.getBottom()));
+    @Test
+    public void testGrowRectTo_unevenInitialDifference() {
+        doGrowRectTest(new Rect(0, 0, 1, 1), 10, new Rect(-5, -5, 5, 5));
+    }
+
+    @Test
+    public void testGrowRectTo_unevenInitialDifference_unevenSize() {
+        doGrowRectTest(new Rect(0, 0, 0, 0), 9, new Rect(-5, -5, 4, 4));
+    }
+
+    public void doGrowRectTest(Rect in, int minimumSize, Rect expected) {
+        Rect result = new Rect(in);
+        mBar.growRectTo(result, minimumSize);
+
+        assertEquals("grown rect", expected, result);
+        assertEquals("grown rect center point", center(expected), center(result));
+    }
+
+    private Point center(Rect rect) {
+        return new Point(rect.centerX(), rect.centerY());
     }
 
     private ShapeDrawable newThumb(int size) {
