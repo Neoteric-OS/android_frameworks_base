@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6027dbc0_43d8c9ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-01-14T00:13:19Z",
+      "side": 1,
+      "message": "Lorenzo requested that I cp this to aosp.",
+      "revId": "4e20b8fbf5b47a12eb4f89f45bbb0d321adaf261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
