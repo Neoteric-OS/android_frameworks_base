@@ -94,6 +94,30 @@
       },
       "revId": "255e1b76abf2a288024c3128c6f8c44824eb2a38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70aadaaa_590d3135",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-14T20:24:55Z",
+      "side": 1,
+      "message": "We can\u0027t send the \"inner\" parameters directly via TelephonyManager method though (at least with the current shape). We need place for the caller to hold onto a reference that can later be used to unregister the request. Having a wrapper object gives us a way to do that. The alternative shape would still require an object, but if could be \"returned\"... that still doesn\u0027t save us the object though.\n\nSignalStrengthToken token \u003d TM#registerRequest(SignalStrengthThresholdInfos, shouldReport...)\n\nTM#unregisterRequest(token)\n\nHence, a builder here would be nice.",
+      "parentUuid": "dbc93184_b2249cd9",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 46
+      },
+      "revId": "255e1b76abf2a288024c3128c6f8c44824eb2a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
