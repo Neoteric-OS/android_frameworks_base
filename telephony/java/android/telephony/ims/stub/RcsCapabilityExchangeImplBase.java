@@ -192,7 +192,6 @@ public class RcsCapabilityExchangeImplBase {
 
     /**
      * Interface used by the framework to receive the response of the subscribe request.
-     * @hide
      */
     public interface SubscribeResponseCallback {
         /**
@@ -289,7 +288,6 @@ public class RcsCapabilityExchangeImplBase {
      * @param uris A {@link List} of the {@link Uri}s that the framework is requesting the UCE
      * capabilities for.
      * @param cb The callback of the subscribe request.
-     * @hide
      */
     // executor used is defined in the constructor.
     @SuppressLint("ExecutorRegistration")
