@@ -118,6 +118,30 @@
       },
       "revId": "255e1b76abf2a288024c3128c6f8c44824eb2a38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e611c4c7_f028f1e6",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-14T20:49:09Z",
+      "side": 1,
+      "message": "Thanks for the suggestions. The builder is not created to replace the constructor.\n\nIndeed, The wrapper class with public constructor can only tolerate @hide fields change. If we have public fields change request, it is not flexible enough.",
+      "parentUuid": "70aadaaa_590d3135",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 46
+      },
+      "revId": "255e1b76abf2a288024c3128c6f8c44824eb2a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
