@@ -51,6 +51,23 @@
       "parentUuid": "06059a3a_810cf890",
       "revId": "17de88981f57fd6d323a1b17da5008e53f053309",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "376d160b_e22b99c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-14T17:38:01Z",
+      "side": 1,
+      "message": "Hmm, if you\u0027re making changes to Zygote, I would hope you already have someone help review your designs and general feature sponsorship?  (They\u0027d likely be the best contact for your code review.)",
+      "revId": "17de88981f57fd6d323a1b17da5008e53f053309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
