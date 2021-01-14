@@ -2367,4 +2367,9 @@ interface ITelephony {
      *  their mobile plan.
      */
     String getMobileProvisioningUrl();
+
+    /**
+     * Remove the EAB contacts from the EAB database.
+     */
+    int removeContactFromEab(int subId, String contacts);
 }

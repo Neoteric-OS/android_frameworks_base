@@ -19,6 +19,8 @@ package android.telephony.ims;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.StringDef;
+import android.annotation.SuppressLint;
+import android.annotation.SystemApi;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -34,12 +36,16 @@ import java.util.List;
  * network during a SUBSCRIBE request. See RFC3863 for more information.
  * @hide
  */
+@SystemApi
 public final class RcsContactPresenceTuple implements Parcelable {
 
     /** The service id of the MMTEL */
     public static final String SERVICE_ID_MMTEL = "org.3gpp.urn:urn-7:3gpp-service.ims.icsi.mmtel";
 
-    /** The service id of the Call Composer */
+    /**
+     * The service id of the Call Composer
+     * @hide
+     */
     public static final String SERVICE_ID_CALL_COMPOSER =
             "org.3gpp.urn:urn-7:3gppservice.ims.icsi.gsma.callcomposer";
 
@@ -149,6 +155,7 @@ public final class RcsContactPresenceTuple implements Parcelable {
             in.readStringList(mSupportedDuplexModeList);
             in.readStringList(mUnsupportedDuplexModeList);
         }
+
         @Override
         public void writeToParcel(@NonNull Parcel out, int flags) {
             out.writeBoolean(mIsAudioCapable);
@@ -230,6 +237,7 @@ public final class RcsContactPresenceTuple implements Parcelable {
         /**
          * The optional SIP Contact URI associated with the PIDF tuple element.
          */
+        @SuppressLint("MissingGetterMatchingBuilder")
         public @NonNull Builder addContactUri(@NonNull Uri contactUri) {
             mPresenceTuple.mContactUri = contactUri;
             return this;
@@ -239,6 +247,7 @@ public final class RcsContactPresenceTuple implements Parcelable {
          * The optional timestamp indicating the data and time of the status change of this tuple.
          * See RFC3863, section 4.1.7 for more information on the expected format.
          */
+        @SuppressLint("MissingGetterMatchingBuilder")
         public @NonNull Builder addTimeStamp(@NonNull String timestamp) {
             mPresenceTuple.mTimestamp = timestamp;
             return this;
@@ -248,6 +257,7 @@ public final class RcsContactPresenceTuple implements Parcelable {
          * An optional parameter containing the description element of the service-description. See
          * OMA Presence SIMPLE specification v1.1
          */
+        @SuppressLint("MissingGetterMatchingBuilder")
         public @NonNull Builder addDescription(@NonNull String description) {
             mPresenceTuple.mServiceDescription = description;
             return this;
@@ -257,6 +267,7 @@ public final class RcsContactPresenceTuple implements Parcelable {
          * An optional parameter containing the service capabilities of the presence tuple if they
          * are present in the servcaps element.
          */
+        @SuppressLint("MissingGetterMatchingBuilder")
         public @NonNull Builder addServiceCapabilities(@NonNull ServiceCapabilities caps) {
             mPresenceTuple.mServiceCapabilities = caps;
             return this;
