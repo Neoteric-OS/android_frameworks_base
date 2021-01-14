@@ -46,6 +46,30 @@
       },
       "revId": "255e1b76abf2a288024c3128c6f8c44824eb2a38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5182f9a6_c693faec",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-14T03:49:11Z",
+      "side": 1,
+      "message": "One little more context.\n\nThe following CL (aosp/1532512) will add interface in TelephonyManager which has one parameter SignalStrengthUpdateRequest.\n\nAnd the wrapper class make the API extensible. For example, in the same CL, we add a new field mLiveToken into SignalStrengthUpdateRequest (for client liveness monitoring). The API surface does not need to change.",
+      "parentUuid": "831bfaca_b0087b23",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 46
+      },
+      "revId": "255e1b76abf2a288024c3128c6f8c44824eb2a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
