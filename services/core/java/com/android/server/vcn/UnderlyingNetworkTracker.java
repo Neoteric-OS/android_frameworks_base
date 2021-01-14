@@ -73,8 +73,8 @@ public class UnderlyingNetworkTracker extends Handler {
     @Nullable private Network mSelectedNetwork;
     @Nullable private NetworkCapabilities mSelectedCapabilities;
     @Nullable private LinkProperties mSelectedProperties;
-    private boolean mSelectedIsBlocked = false;
-    private boolean mWasIsBlockedSet = false;
+    private boolean mSelectedIsBlocked;
+    private boolean mWasIsBlockedSet;
 
     public UnderlyingNetworkTracker(
             @NonNull VcnContext vcnContext,
@@ -300,6 +300,8 @@ public class UnderlyingNetworkTracker extends Handler {
             return;
         }
 
+        mSelectedProperties = linkProperties;
+
         maybeNotifyCallback();
     }
 
@@ -317,6 +319,7 @@ public class UnderlyingNetworkTracker extends Handler {
         }
 
         mWasIsBlockedSet = true;
+        mSelectedIsBlocked = isBlocked;
 
         maybeNotifyCallback();
     }
