@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d3bead5_35a6963f",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-14T19:22:10Z",
+      "side": 1,
+      "message": "If it\u0027s the system caller, it can be empty, no?",
+      "range": {
+        "startLine": 212,
+        "startChar": 35,
+        "endLine": 212,
+        "endChar": 42
+      },
+      "revId": "76af67fe7f1a120afe1ef214fdc10a96beb05ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
