@@ -69,7 +69,7 @@ public class AbsSeekBarTest {
 
         assertEquals("exclusions should be size 1, but was " + exclusions, 1, exclusions.size());
         assertEquals("exclusion should be centered on thumb",
-                center(mBar), center(exclusions.get(0)));
+                center(mBar.getThumb().getBounds()), center(exclusions.get(0)));
         assertEquals("exclusion should be 48dp high", dpToPx(48), exclusions.get(0).height());
         assertEquals("exclusion should be 48dp wide", dpToPx(48), exclusions.get(0).width());
     }
@@ -86,7 +86,7 @@ public class AbsSeekBarTest {
 
         assertEquals("exclusions should be size 1, but was " + exclusions, 1, exclusions.size());
         assertEquals("exclusion should be centered on thumb",
-                center(mBar), center(exclusions.get(0)));
+                center(mBar.getThumb().getBounds()), center(exclusions.get(0)));
         assertEquals("exclusion should be 32dp high", dpToPx(32), exclusions.get(0).height());
         assertEquals("exclusion should be 32dp wide", dpToPx(32), exclusions.get(0).width());
     }
@@ -108,6 +108,29 @@ public class AbsSeekBarTest {
         mBar.setSystemGestureExclusionRects(Arrays.asList(new Rect(3, 4, 5, 6)));
         assertThat(mBar.getSystemGestureExclusionRects(), hasItem(new Rect(3, 4, 5, 6)));
         assertThat(mBar.getSystemGestureExclusionRects(), hasSize(2));
+    }
+
+    @Test
+    public void testGrowRectTo_evenInitialDifference() {
+        doGrowRectTest(new Rect(0, 0, 0, 0), 10, new Rect(-5, -5, 5, 5));
+    }
+
+    @Test
+    public void testGrowRectTo_unevenInitialDifference() {
+        doGrowRectTest(new Rect(0, 0, 1, 1), 10, new Rect(-5, -5, 5, 5));
+    }
+
+    @Test
+    public void testGrowRectTo_unevenInitialDifference_unevenSize() {
+        doGrowRectTest(new Rect(0, 0, 0, 0), 9, new Rect(-5, -5, 4, 4));
+    }
+
+    public void doGrowRectTest(Rect in, int minimumSize, Rect expected) {
+        Rect result = new Rect(in);
+        mBar.growRectTo(result, minimumSize);
+
+        assertEquals("grown rect", expected, result);
+        assertEquals("grown rect center point", center(expected), center(result));
     }
 
     private Point center(Rect rect) {
