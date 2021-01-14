@@ -7530,6 +7530,7 @@ if (nri.request.requestId == mDefaultRequest.requestId) Log.d(TAG, "New best for
     }
 
     private void notifyLockdownVpn(NetworkAgentInfo nai) {
+        if (true) return;
         synchronized (mVpns) {
             if (mLockdownTracker != null) {
                 if (nai != null && nai.isVPN()) {
