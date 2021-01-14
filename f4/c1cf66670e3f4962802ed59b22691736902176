@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Rubin Xu <rubinxu@google.com>
+Submitted-by: Tianjie Xu <xunchang@google.com>
+Submitted-at: Thu, 14 Jan 2021 00:52:36 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1531240
+Project: platform/frameworks/base
+Branch: refs/heads/master
