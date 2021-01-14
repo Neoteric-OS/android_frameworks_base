@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db3aea62_d79a9815",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1256579
+      },
+      "writtenOn": "2021-01-14T13:58:21Z",
+      "side": 1,
+      "message": "This is the alternative for https://android-review.googlesource.com/c/platform/system/vold/+/1536564",
+      "revId": "c8674cfcd5c898267540dd8c7d0a104087f24598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
