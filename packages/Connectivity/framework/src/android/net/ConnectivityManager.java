@@ -1221,6 +1221,40 @@ public class ConnectivityManager {
     }
 
     /**
+     * Informs ConnectivityService of whether the legacy lockdown VPN, as implemented by
+     * LockdownVpnTracker, is in use. This is deprecated for new devices starting from Android 12
+     * but must still be supported by ConnectivityService.
+     * <p>
+     * After this method is called with {@code true}, this method enables legacy behaviour,
+     * specifically:
+     * <ul>
+     *     <li>Any VPN that applies to the entire range of userId 0 behaves specially with respect
+     *     to deprecated {@link #CONNECTIVITY_ACTION} broadcasts. Any such broadcasts for the
+     *     network type that is underlying the VPN will have the state in the
+     *     {@link #EXTRA_NETWORK_INFO} replaced by state of the VPN network. Also, any time the VPN
+     *     connects, a {@link #CONNECTIVITY_ACTION} broadcast will be sent for the network
+     *     underlying the VPN.</li>
+     *     <li>Deprecated APIs that return {@link NetworkInfo} objects will have their state
+     *     similarly replaced by the VPN network state.</li>
+     *     <li>Information on current network interfaces passed to NetworkStatsService will not
+     *     include any VPN interfaces.</li>
+     *     <li>The VPN for userId 0 will be treated as if it has no underlying networks.</li>
+     * </ul>
+     *
+     * @param enabled whether legacy lockdown VPN is enabled or disabled
+     *
+     * TODO: expose as @SystemApi
+     * @hide
+     */
+    public void setLegacyLockdownVpnEnabled(boolean enabled) {
+        try {
+            mService.setLegacyLockdownVpnEnabled(enabled);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Returns details about the currently active default data network
      * for a given uid.  This is for internal use only to avoid spying
      * other apps.
