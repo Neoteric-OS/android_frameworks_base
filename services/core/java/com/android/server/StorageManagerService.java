@@ -1373,11 +1373,14 @@ class StorageManagerService extends IStorageManager.Stub
 
         @Override
         public void onVolumeCreated(String volId, int type, String diskId, String partGuid,
-                int userId) {
+                int userId, boolean visible) {
             synchronized (mLock) {
                 final DiskInfo disk = mDisks.get(diskId);
                 final VolumeInfo vol = new VolumeInfo(volId, type, disk, partGuid);
                 vol.mountUserId = userId;
+                if (visible) {
+                    vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
+                }
                 mVolumes.put(volId, vol);
                 onVolumeCreatedLocked(vol);
             }
