@@ -19,6 +19,8 @@ package android.telephony.ims;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
+import android.annotation.SystemApi;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -33,6 +35,7 @@ import java.util.List;
  * Contains the User Capability Exchange capabilities corresponding to a contact's URI.
  * @hide
  */
+@SystemApi
 public final class RcsContactUceCapability implements Parcelable {
 
     /** Contains presence information associated with the contact */
@@ -107,6 +110,7 @@ public final class RcsContactUceCapability implements Parcelable {
     /**
      * The base class of {@link OptionsBuilder} and {@link PresenceBuilder}
      */
+    @SuppressLint("StaticFinalBuilder")
     public static abstract class RcsUcsCapabilityBuilder {
         public abstract @NonNull RcsContactUceCapability build();
     }
@@ -114,6 +118,7 @@ public final class RcsContactUceCapability implements Parcelable {
     /**
      * Builder to help construct {@link RcsContactUceCapability} instances when capabilities were
      * queried through SIP OPTIONS.
+     * @hide
      */
     public static class OptionsBuilder extends RcsUcsCapabilityBuilder {
 
@@ -284,6 +289,7 @@ public final class RcsContactUceCapability implements Parcelable {
      * <p>
      * Note: this is only populated if {@link #getCapabilityMechanism} is
      * {@link RcsContactUceCapability#CAPABILITY_MECHANISM_OPTIONS}
+     * @hide
      */
     public @NonNull List<String> getOptionsFeatureTags() {
         if (mCapabilityMechanism != CAPABILITY_MECHANISM_OPTIONS) {
