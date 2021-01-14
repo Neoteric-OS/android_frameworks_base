@@ -49,6 +49,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6e07b698_35c31a04",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2247,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-14T01:48:07Z",
+      "side": 1,
+      "message": "This line should be at previous line.",
+      "range": {
+        "startLine": 2247,
+        "startChar": 12,
+        "endLine": 2247,
+        "endChar": 44
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4b2eeb7a_16a92d37",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 3
@@ -95,6 +118,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1eff4e13_a61c46b9",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-14T01:48:07Z",
+      "side": 1,
+      "message": "Why TEST_SSID but not TEST_IMSI?",
+      "range": {
+        "startLine": 318,
+        "startChar": 35,
+        "endLine": 318,
+        "endChar": 44
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8b85ba2c_260fef60",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 3
@@ -111,6 +157,29 @@
         "startChar": 34,
         "endLine": 770,
         "endChar": 35
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b5ae0fb_02bdf1f4",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-14T01:48:07Z",
+      "side": 1,
+      "message": "Same question as I left at line#318.",
+      "range": {
+        "startLine": 876,
+        "startChar": 33,
+        "endLine": 876,
+        "endChar": 42
       },
       "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
