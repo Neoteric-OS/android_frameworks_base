@@ -16,6 +16,52 @@
       "message": "Hi Tyler,\n\nThis is the 2rd CL that need API review.\n\nWould you please take a look?\n\nThanks",
       "revId": "8fe8729fe01a38379bd0a48b38c3ba1be5fe6c49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "642ce375_50fd14cf",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-01-15T18:51:09Z",
+      "side": 1,
+      "message": "Using a constant like this precludes ever changing the minimum and maximum number of thresholds.  These should be static getters so that it is possible to potentially change these in future API revisions.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 61
+      },
+      "revId": "8fe8729fe01a38379bd0a48b38c3ba1be5fe6c49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27ed2bdc_72a13d63",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-01-15T18:51:09Z",
+      "side": 1,
+      "message": "SignalThresholdInfo should be where the threshold min/max resides, and it should be enforced in that class so you just can\u0027t create invalid SignalThresholdInfo instances.",
+      "range": {
+        "startLine": 154,
+        "startChar": 70,
+        "endLine": 156,
+        "endChar": 53
+      },
+      "revId": "8fe8729fe01a38379bd0a48b38c3ba1be5fe6c49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
