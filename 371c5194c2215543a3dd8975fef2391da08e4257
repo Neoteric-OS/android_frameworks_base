@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f8f07bb_2395a4f8",
+        "filename": "keystore/java/android/security/AuthTokenUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-01-15T01:09:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5ca8af6_2434ee1e",
+      "range": {
+        "startLine": 29,
+        "startChar": 43,
+        "endLine": 29,
+        "endChar": 51
+      },
+      "revId": "371c5194c2215543a3dd8975fef2391da08e4257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1bd57b7f_a8b65266",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-08T16:40:38Z",
       "side": 1,
       "message": "I assume you only want one of these.",
+      "range": {
+        "startLine": 44,
+        "startChar": 40,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "371c5194c2215543a3dd8975fef2391da08e4257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43c2eebf_4ca9241a",
+        "filename": "keystore/java/android/security/AuthTokenUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-01-15T01:09:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bd57b7f_a8b65266",
       "range": {
         "startLine": 44,
         "startChar": 40,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ba417ec_0246fd8a",
+        "filename": "keystore/java/android/security/AuthTokenUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-01-15T01:09:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77a1133f_71eb9657",
+      "range": {
+        "startLine": 46,
+        "startChar": 38,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "371c5194c2215543a3dd8975fef2391da08e4257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3256dcd0_cf799267",
@@ -87,6 +159,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2739cbb3_d0c31f52",
+        "filename": "keystore/java/android/security/Authorization.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-01-15T01:09:52Z",
+      "side": 1,
+      "message": "This is private now.",
+      "parentUuid": "3256dcd0_cf799267",
+      "revId": "371c5194c2215543a3dd8975fef2391da08e4257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da3a82c0_b20b557d",
@@ -100,6 +190,30 @@
       "writtenOn": "2020-12-08T16:40:38Z",
       "side": 1,
       "message": "It looks like it can also return service specific errors as well.",
+      "range": {
+        "startLine": 57,
+        "startChar": 34,
+        "endLine": 57,
+        "endChar": 67
+      },
+      "revId": "371c5194c2215543a3dd8975fef2391da08e4257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0f9f44b_5c50876e",
+        "filename": "keystore/java/android/security/Authorization.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-01-15T01:09:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da3a82c0_b20b557d",
       "range": {
         "startLine": 57,
         "startChar": 34,

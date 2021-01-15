@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66c56c7b_1cc99cfe",
+        "filename": "keystore/java/android/security/Authorization.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-01-15T01:09:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c2e93a9b_d009c739",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 27
+      },
+      "revId": "8822f671b9867011d902fbccea0616d1a794b3bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b4034b3_c863769b",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Why do we need two keystores running at the same time? Is it only for testing purposes?",
       "parentUuid": "2b4034b3_c863769b",
+      "range": {
+        "startLine": 182,
+        "startChar": 24,
+        "endLine": 182,
+        "endChar": 32
+      },
+      "revId": "8822f671b9867011d902fbccea0616d1a794b3bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efaff9c5_571dcb94",
+        "filename": "services/core/java/com/android/server/biometrics/AuthenticationClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-01-15T01:09:52Z",
+      "side": 1,
+      "message": "Its only during the migration. We have to remove keystore 1 eventually.",
+      "parentUuid": "aa97d02c_fbf72603",
       "range": {
         "startLine": 182,
         "startChar": 24,
