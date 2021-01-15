@@ -1,0 +1,82 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007334910",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552657?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c1d9baed_120109a2",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityServicesRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-15T16:19:38Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(ConnectivityManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 46,
+        "startChar": 51,
+        "endLine": 46,
+        "endChar": 98
+      },
+      "revId": "851e3e1b2f6b4b77fc082905a68fcf01e8c5f488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007334910",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552657?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b7f6fade_688ed24c",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityServicesRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-15T16:19:38Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(ConnectivityManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 56,
+        "startChar": 51,
+        "endLine": 56,
+        "endChar": 98
+      },
+      "revId": "851e3e1b2f6b4b77fc082905a68fcf01e8c5f488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007334910",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552657?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d6e20023_e3617342",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityServicesRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-15T16:19:38Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(ConnectivityManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 66,
+        "startChar": 51,
+        "endLine": 66,
+        "endChar": 98
+      },
+      "revId": "851e3e1b2f6b4b77fc082905a68fcf01e8c5f488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
