@@ -16,6 +16,24 @@
       "message": "Why did we decide that it should be outside the module? Are there are a lot of APIs to expose? Do we believe that OEMs have made lots of changes?",
       "revId": "ce0a53ea6cb6b58656ab5c473e1b59bc4cbf8ad5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fdffb0e_8bf3301a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-01-15T01:41:16Z",
+      "side": 1,
+      "message": "Previously, the idea is to keep the module boundary smaller assuming it would make the work easier. Another reason is that the file is mainly maintained by other team so it may be better to not to release it ourselves. It looks like the only need to put this outside is exposing this. It\u0027s what I got.\n\nThe other reason I can think of is that it\u0027s more related to VPN. If we would like to put VPN outside, may be it\u0027s reasonable to put IpSecManager outside the module.",
+      "parentUuid": "f157affc_75b41b08",
+      "revId": "ce0a53ea6cb6b58656ab5c473e1b59bc4cbf8ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
