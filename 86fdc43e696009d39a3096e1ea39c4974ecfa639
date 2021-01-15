@@ -45,6 +45,30 @@
       },
       "revId": "86fdc43e696009d39a3096e1ea39c4974ecfa639",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89810b7c_f729b14e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 6978,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-15T01:18:34Z",
+      "side": 1,
+      "message": "That is a good point about ConnectivityManager\u0027s management of its own map, yeah, that will not allow this to work as implemented without some major refactoring but as you point out, probably acceptable given the requirements.\n\nI\u0027ll implement what you suggest and will create an associated bug and assign to you (feel free to reassign obviously) and we can go from there. Thanks!",
+      "parentUuid": "e2876af1_d48ac9a3",
+      "range": {
+        "startLine": 6978,
+        "startChar": 20,
+        "endLine": 6978,
+        "endChar": 34
+      },
+      "revId": "86fdc43e696009d39a3096e1ea39c4974ecfa639",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
