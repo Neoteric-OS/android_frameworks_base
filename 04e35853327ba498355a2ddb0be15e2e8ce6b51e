@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f98eef68_65929ea6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112679
+      },
+      "writtenOn": "2021-01-15T10:33:13Z",
+      "side": 1,
+      "message": "Q) Why is this needed to be cherry picked to aosp-master?",
+      "revId": "04e35853327ba498355a2ddb0be15e2e8ce6b51e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
