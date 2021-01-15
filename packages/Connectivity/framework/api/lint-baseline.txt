@@ -1,0 +1,337 @@
+// Baseline format: 1.0
+ActionValue: android.net.ConnectivityManager#ACTION_CAPTIVE_PORTAL_SIGN_IN:
+    Inconsistent action value; expected `android.net.action.CAPTIVE_PORTAL_SIGN_IN`, was `android.net.conn.CAPTIVE_PORTAL`
+ActionValue: android.net.ConnectivityManager#ACTION_RESTRICT_BACKGROUND_CHANGED:
+    Inconsistent action value; expected `android.net.action.RESTRICT_BACKGROUND_CHANGED`, was `android.net.conn.RESTRICT_BACKGROUND_CHANGED`
+ActionValue: android.net.ConnectivityManager#EXTRA_NO_CONNECTIVITY:
+    Inconsistent extra value; expected `android.net.extra.NO_CONNECTIVITY`, was `noConnectivity`
+ActionValue: android.net.ConnectivityManager#EXTRA_REASON:
+    Inconsistent extra value; expected `android.net.extra.REASON`, was `reason`
+
+
+AndroidUri: android.net.Network#openConnection(java.net.URL):
+    Use android.net.Uri instead of java.net.URL (method android.net.Network.openConnection(java.net.URL))
+AndroidUri: android.net.Network#openConnection(java.net.URL) parameter #0:
+    Use android.net.Uri instead of java.net.URL (parameter url in android.net.Network.openConnection(java.net.URL url))
+AndroidUri: android.net.Network#openConnection(java.net.URL, java.net.Proxy):
+    Use android.net.Uri instead of java.net.URL (method android.net.Network.openConnection(java.net.URL,java.net.Proxy))
+AndroidUri: android.net.Network#openConnection(java.net.URL, java.net.Proxy) parameter #0:
+    Use android.net.Uri instead of java.net.URL (parameter url in android.net.Network.openConnection(java.net.URL url, java.net.Proxy proxy))
+
+
+ArrayReturn: android.net.ConnectivityManager#getAllNetworks():
+    Method should return Collection<Network> (or subclass) instead of raw array; was `android.net.Network[]`
+ArrayReturn: android.net.Network#getAllByName(String):
+    Method should return Collection<InetAddress> (or subclass) instead of raw array; was `java.net.InetAddress[]`
+ArrayReturn: android.net.VpnService#setUnderlyingNetworks(android.net.Network[]) parameter #0:
+    Method parameter should be Collection<Network> (or subclass) instead of raw array; was `android.net.Network[]`
+ArrayReturn: android.net.VpnService.Builder#setUnderlyingNetworks(android.net.Network[]) parameter #0:
+    Method parameter should be Collection<Network> (or subclass) instead of raw array; was `android.net.Network[]`
+
+
+BuilderSetStyle: android.net.NetworkCapabilities.Builder#removeCapability(int):
+    
+BuilderSetStyle: android.net.NetworkCapabilities.Builder#removeTransportType(int):
+    
+BuilderSetStyle: android.net.NetworkRequest.Builder#removeCapability(int):
+    Builder methods names should use setFoo() / addFoo() / clearFoo() style: method android.net.NetworkRequest.Builder.removeCapability(int)
+BuilderSetStyle: android.net.NetworkRequest.Builder#removeTransportType(int):
+    Builder methods names should use setFoo() / addFoo() / clearFoo() style: method android.net.NetworkRequest.Builder.removeTransportType(int)
+BuilderSetStyle: android.net.VpnService.Builder#allowBypass():
+    Builder methods names should use setFoo() / addFoo() / clearFoo() style: method android.net.VpnService.Builder.allowBypass()
+BuilderSetStyle: android.net.VpnService.Builder#allowFamily(int):
+    Builder methods names should use setFoo() / addFoo() / clearFoo() style: method android.net.VpnService.Builder.allowFamily(int)
+BuilderSetStyle: android.net.VpnService.Builder#establish():
+    Builder methods names should use setFoo() / addFoo() / clearFoo() style: method android.net.VpnService.Builder.establish()
+
+
+CallbackInterface: android.net.DnsResolver.Callback:
+    Callbacks must be abstract class instead of interface to enable extension in future API levels: Callback
+
+
+CompileTimeConstant: android.net.ConnectivityManager#TETHERING_BLUETOOTH:
+    
+CompileTimeConstant: android.net.ConnectivityManager#TETHERING_USB:
+    
+CompileTimeConstant: android.net.ConnectivityManager#TETHERING_WIFI:
+    
+
+
+EqualsAndHashCode: android.net.apf.ApfCapabilities#equals(Object):
+    
+
+
+ExecutorRegistration: android.net.ConnectivityManager#addDefaultNetworkActiveListener(android.net.ConnectivityManager.OnNetworkActiveListener):
+    Registration methods should have overload that accepts delivery Executor: `addDefaultNetworkActiveListener`
+ExecutorRegistration: android.net.ConnectivityManager#registerDefaultNetworkCallback(android.net.ConnectivityManager.NetworkCallback, android.os.Handler):
+    Registration methods should have overload that accepts delivery Executor: `registerDefaultNetworkCallback`
+ExecutorRegistration: android.net.ConnectivityManager#registerNetworkCallback(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback, android.os.Handler):
+    Registration methods should have overload that accepts delivery Executor: `registerNetworkCallback`
+ExecutorRegistration: android.net.ConnectivityManager#requestNetwork(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback, android.os.Handler, int):
+    Registration methods should have overload that accepts delivery Executor: `requestNetwork`
+
+
+IntentBuilderName: android.net.VpnManager#provisionVpnProfile(android.net.PlatformVpnProfile):
+    Methods creating an Intent should be named `create<Foo>Intent()`, was `provisionVpnProfile`
+IntentBuilderName: android.net.VpnService#prepare(android.content.Context):
+    Methods creating an Intent should be named `create<Foo>Intent()`, was `prepare`
+
+
+IntentName: android.net.Proxy#PROXY_CHANGE_ACTION:
+    Intent action constant name must be ACTION_FOO: PROXY_CHANGE_ACTION
+
+
+KotlinOperator: android.net.IpPrefix#contains(java.net.InetAddress):
+    Method can be invoked as a "in" operator from Kotlin: `contains` (this is usually desirable; just make sure it makes sense for this type of object)
+
+
+ListenerLast: android.net.ConnectivityManager#requestNetwork(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback, android.os.Handler) parameter #2:
+    Listeners should always be at end of argument list (method `requestNetwork`)
+ListenerLast: android.net.ConnectivityManager#requestNetwork(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback, android.os.Handler, int) parameter #2:
+    Listeners should always be at end of argument list (method `requestNetwork`)
+ListenerLast: android.net.ConnectivityManager#requestNetwork(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback, android.os.Handler, int) parameter #3:
+    Listeners should always be at end of argument list (method `requestNetwork`)
+ListenerLast: android.net.ConnectivityManager#requestNetwork(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback, int) parameter #2:
+    Listeners should always be at end of argument list (method `requestNetwork`)
+ListenerLast: android.net.ConnectivityManager#startTethering(int, boolean, android.net.ConnectivityManager.OnStartTetheringCallback, android.os.Handler) parameter #3:
+    
+
+
+MissingBuildMethod: android.net.VpnService.Builder:
+    android.net.VpnService.Builder does not declare a `build()` method, but builder classes are expected to
+
+
+MissingGetterMatchingBuilder: android.net.CaptivePortalData.Builder#setBytesRemaining(long):
+    
+MissingGetterMatchingBuilder: android.net.CaptivePortalData.Builder#setExpiryTime(long):
+    
+MissingGetterMatchingBuilder: android.net.CaptivePortalData.Builder#setRefreshTime(long):
+    
+MissingGetterMatchingBuilder: android.net.Ikev2VpnProfile.Builder#setAuthDigitalSignature(java.security.cert.X509Certificate, java.security.PrivateKey, java.security.cert.X509Certificate):
+    android.net.Ikev2VpnProfile does not declare a `getAuthDigitalSignature()` method matching method android.net.Ikev2VpnProfile.Builder.setAuthDigitalSignature(java.security.cert.X509Certificate,java.security.PrivateKey,java.security.cert.X509Certificate)
+MissingGetterMatchingBuilder: android.net.Ikev2VpnProfile.Builder#setAuthPsk(byte[]):
+    android.net.Ikev2VpnProfile does not declare a `getAuthPsk()` method matching method android.net.Ikev2VpnProfile.Builder.setAuthPsk(byte[])
+MissingGetterMatchingBuilder: android.net.Ikev2VpnProfile.Builder#setAuthUsernamePassword(String, String, java.security.cert.X509Certificate):
+    android.net.Ikev2VpnProfile does not declare a `getAuthUsernamePassword()` method matching method android.net.Ikev2VpnProfile.Builder.setAuthUsernamePassword(String,String,java.security.cert.X509Certificate)
+MissingGetterMatchingBuilder: android.net.Ikev2VpnProfile.Builder#setProxy(android.net.ProxyInfo):
+    android.net.Ikev2VpnProfile does not declare a `getProxy()` method matching method android.net.Ikev2VpnProfile.Builder.setProxy(android.net.ProxyInfo)
+MissingGetterMatchingBuilder: android.net.NetworkCapabilities.Builder#addCapability(int):
+    
+MissingGetterMatchingBuilder: android.net.NetworkCapabilities.Builder#setRequestorPackageName(String):
+    
+MissingGetterMatchingBuilder: android.net.NetworkCapabilities.Builder#setRequestorUid(int):
+    
+MissingGetterMatchingBuilder: android.net.NetworkRequest.Builder#addCapability(int):
+    android.net.NetworkRequest does not declare a `getCapabilities()` method matching method android.net.NetworkRequest.Builder.addCapability(int)
+MissingGetterMatchingBuilder: android.net.NetworkRequest.Builder#addTransportType(int):
+    android.net.NetworkRequest does not declare a `getTransportTypes()` method matching method android.net.NetworkRequest.Builder.addTransportType(int)
+MissingGetterMatchingBuilder: android.net.NetworkRequest.Builder#setSignalStrength(int):
+    
+
+
+MissingNullability: android.net.CaptivePortal#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `out` in method `writeToParcel`
+MissingNullability: android.net.ConnectivityManager#addDefaultNetworkActiveListener(android.net.ConnectivityManager.OnNetworkActiveListener) parameter #0:
+    Missing nullability on parameter `l` in method `addDefaultNetworkActiveListener`
+MissingNullability: android.net.ConnectivityManager#startTethering(int, boolean, android.net.ConnectivityManager.OnStartTetheringCallback) parameter #2:
+    
+MissingNullability: android.net.ConnectivityManager#startTethering(int, boolean, android.net.ConnectivityManager.OnStartTetheringCallback, android.os.Handler) parameter #2:
+    
+MissingNullability: android.net.ConnectivityManager#startTethering(int, boolean, android.net.ConnectivityManager.OnStartTetheringCallback, android.os.Handler) parameter #3:
+    
+MissingNullability: android.net.DhcpInfo#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `dest` in method `writeToParcel`
+MissingNullability: android.net.IpPrefix#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `dest` in method `writeToParcel`
+MissingNullability: android.net.LinkAddress#getAddress():
+    Missing nullability on method `getAddress` return
+MissingNullability: android.net.LinkAddress#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `dest` in method `writeToParcel`
+MissingNullability: android.net.LinkProperties#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `dest` in method `writeToParcel`
+MissingNullability: android.net.MacAddress#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `out` in method `writeToParcel`
+MissingNullability: android.net.Network#bindSocket(java.io.FileDescriptor) parameter #0:
+    Missing nullability on parameter `fd` in method `bindSocket`
+MissingNullability: android.net.Network#bindSocket(java.net.DatagramSocket) parameter #0:
+    Missing nullability on parameter `socket` in method `bindSocket`
+MissingNullability: android.net.Network#bindSocket(java.net.Socket) parameter #0:
+    Missing nullability on parameter `socket` in method `bindSocket`
+MissingNullability: android.net.Network#fromNetworkHandle(long):
+    Missing nullability on method `fromNetworkHandle` return
+MissingNullability: android.net.Network#getAllByName(String):
+    Missing nullability on method `getAllByName` return
+MissingNullability: android.net.Network#getAllByName(String) parameter #0:
+    Missing nullability on parameter `host` in method `getAllByName`
+MissingNullability: android.net.Network#getByName(String):
+    Missing nullability on method `getByName` return
+MissingNullability: android.net.Network#getByName(String) parameter #0:
+    Missing nullability on parameter `host` in method `getByName`
+MissingNullability: android.net.Network#getSocketFactory():
+    Missing nullability on method `getSocketFactory` return
+MissingNullability: android.net.Network#openConnection(java.net.URL):
+    Missing nullability on method `openConnection` return
+MissingNullability: android.net.Network#openConnection(java.net.URL) parameter #0:
+    Missing nullability on parameter `url` in method `openConnection`
+MissingNullability: android.net.Network#openConnection(java.net.URL, java.net.Proxy):
+    Missing nullability on method `openConnection` return
+MissingNullability: android.net.Network#openConnection(java.net.URL, java.net.Proxy) parameter #0:
+    Missing nullability on parameter `url` in method `openConnection`
+MissingNullability: android.net.Network#openConnection(java.net.URL, java.net.Proxy) parameter #1:
+    Missing nullability on parameter `proxy` in method `openConnection`
+MissingNullability: android.net.Network#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `dest` in method `writeToParcel`
+MissingNullability: android.net.NetworkCapabilities#NetworkCapabilities(android.net.NetworkCapabilities) parameter #0:
+    Missing nullability on parameter `nc` in method `NetworkCapabilities`
+MissingNullability: android.net.NetworkCapabilities#getCapabilities():
+    
+MissingNullability: android.net.NetworkCapabilities#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `dest` in method `writeToParcel`
+MissingNullability: android.net.NetworkInfo#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `dest` in method `writeToParcel`
+MissingNullability: android.net.NetworkRequest#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `dest` in method `writeToParcel`
+MissingNullability: android.net.NetworkRequest.Builder#addCapability(int):
+    Missing nullability on method `addCapability` return
+MissingNullability: android.net.NetworkRequest.Builder#addTransportType(int):
+    Missing nullability on method `addTransportType` return
+MissingNullability: android.net.NetworkRequest.Builder#build():
+    Missing nullability on method `build` return
+MissingNullability: android.net.NetworkRequest.Builder#removeCapability(int):
+    Missing nullability on method `removeCapability` return
+MissingNullability: android.net.NetworkRequest.Builder#removeTransportType(int):
+    Missing nullability on method `removeTransportType` return
+MissingNullability: android.net.NetworkRequest.Builder#setNetworkSpecifier(String) parameter #0:
+    Missing nullability on parameter `networkSpecifier` in method `setNetworkSpecifier`
+MissingNullability: android.net.NetworkRequest.Builder#setNetworkSpecifier(android.net.NetworkSpecifier):
+    Missing nullability on method `setNetworkSpecifier` return
+MissingNullability: android.net.NetworkRequest.Builder#setNetworkSpecifier(android.net.NetworkSpecifier) parameter #0:
+    Missing nullability on parameter `networkSpecifier` in method `setNetworkSpecifier`
+MissingNullability: android.net.Proxy#getHost(android.content.Context) parameter #0:
+    Missing nullability on parameter `ctx` in method `getHost`
+MissingNullability: android.net.Proxy#getPort(android.content.Context) parameter #0:
+    Missing nullability on parameter `ctx` in method `getPort`
+MissingNullability: android.net.ProxyInfo#buildDirectProxy(String, int):
+    Missing nullability on method `buildDirectProxy` return
+MissingNullability: android.net.ProxyInfo#buildDirectProxy(String, int) parameter #0:
+    Missing nullability on parameter `host` in method `buildDirectProxy`
+MissingNullability: android.net.ProxyInfo#buildDirectProxy(String, int, java.util.List<java.lang.String>):
+    Missing nullability on method `buildDirectProxy` return
+MissingNullability: android.net.ProxyInfo#buildDirectProxy(String, int, java.util.List<java.lang.String>) parameter #0:
+    Missing nullability on parameter `host` in method `buildDirectProxy`
+MissingNullability: android.net.ProxyInfo#buildDirectProxy(String, int, java.util.List<java.lang.String>) parameter #2:
+    Missing nullability on parameter `exclList` in method `buildDirectProxy`
+MissingNullability: android.net.ProxyInfo#buildPacProxy(android.net.Uri):
+    Missing nullability on method `buildPacProxy` return
+MissingNullability: android.net.ProxyInfo#buildPacProxy(android.net.Uri) parameter #0:
+    Missing nullability on parameter `pacUri` in method `buildPacProxy`
+MissingNullability: android.net.ProxyInfo#getExclusionList():
+    Missing nullability on method `getExclusionList` return
+MissingNullability: android.net.ProxyInfo#getHost():
+    Missing nullability on method `getHost` return
+MissingNullability: android.net.ProxyInfo#getPacFileUrl():
+    Missing nullability on method `getPacFileUrl` return
+MissingNullability: android.net.RouteInfo#matches(java.net.InetAddress) parameter #0:
+    Missing nullability on parameter `destination` in method `matches`
+MissingNullability: android.net.RouteInfo#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `dest` in method `writeToParcel`
+MissingNullability: android.net.StaticIpConfiguration#writeToParcel(android.os.Parcel, int) parameter #0:
+    
+MissingNullability: android.net.VpnService#onBind(android.content.Intent):
+    Missing nullability on method `onBind` return
+MissingNullability: android.net.VpnService#onBind(android.content.Intent) parameter #0:
+    Missing nullability on parameter `intent` in method `onBind`
+MissingNullability: android.net.VpnService#prepare(android.content.Context):
+    Missing nullability on method `prepare` return
+MissingNullability: android.net.VpnService#prepare(android.content.Context) parameter #0:
+    Missing nullability on parameter `context` in method `prepare`
+MissingNullability: android.net.VpnService#prepareAndAuthorize(android.content.Context) parameter #0:
+    
+MissingNullability: android.net.VpnService#protect(java.net.DatagramSocket) parameter #0:
+    Missing nullability on parameter `socket` in method `protect`
+MissingNullability: android.net.VpnService#protect(java.net.Socket) parameter #0:
+    Missing nullability on parameter `socket` in method `protect`
+MissingNullability: android.net.VpnService#setUnderlyingNetworks(android.net.Network[]) parameter #0:
+    Missing nullability on parameter `networks` in method `setUnderlyingNetworks`
+MissingNullability: android.net.apf.ApfCapabilities#CREATOR:
+    
+MissingNullability: android.net.apf.ApfCapabilities#writeToParcel(android.os.Parcel, int) parameter #0:
+    
+
+
+MutableBareField: android.net.DhcpInfo#dns1:
+    Bare field dns1 must be marked final, or moved behind accessors if mutable
+MutableBareField: android.net.DhcpInfo#dns2:
+    Bare field dns2 must be marked final, or moved behind accessors if mutable
+MutableBareField: android.net.DhcpInfo#gateway:
+    Bare field gateway must be marked final, or moved behind accessors if mutable
+MutableBareField: android.net.DhcpInfo#ipAddress:
+    Bare field ipAddress must be marked final, or moved behind accessors if mutable
+MutableBareField: android.net.DhcpInfo#leaseDuration:
+    Bare field leaseDuration must be marked final, or moved behind accessors if mutable
+MutableBareField: android.net.DhcpInfo#netmask:
+    Bare field netmask must be marked final, or moved behind accessors if mutable
+MutableBareField: android.net.DhcpInfo#serverAddress:
+    Bare field serverAddress must be marked final, or moved behind accessors if mutable
+
+
+NotCloseable: android.net.EthernetManager.TetheredInterfaceRequest:
+    
+
+
+OnNameExpected: android.net.VpnService#protect(int):
+    If implemented by developer, should follow the on<Something> style; otherwise consider marking final
+OnNameExpected: android.net.VpnService#protect(java.net.DatagramSocket):
+    If implemented by developer, should follow the on<Something> style; otherwise consider marking final
+OnNameExpected: android.net.VpnService#protect(java.net.Socket):
+    If implemented by developer, should follow the on<Something> style; otherwise consider marking final
+OnNameExpected: android.net.VpnService#setUnderlyingNetworks(android.net.Network[]):
+    If implemented by developer, should follow the on<Something> style; otherwise consider marking final
+
+
+OptionalBuilderConstructorArgument: android.net.CaptivePortalData.Builder#Builder(android.net.CaptivePortalData) parameter #0:
+    
+
+
+PairedRegistration: android.net.ConnectivityManager#registerDefaultNetworkCallback(android.net.ConnectivityManager.NetworkCallback):
+    Found registerDefaultNetworkCallback but not unregisterDefaultNetworkCallback in android.net.ConnectivityManager
+PairedRegistration: android.net.ConnectivityManager#registerDefaultNetworkCallback(android.net.ConnectivityManager.NetworkCallback, android.os.Handler):
+    Found registerDefaultNetworkCallback but not unregisterDefaultNetworkCallback in android.net.ConnectivityManager
+
+
+ParcelNotFinal: android.net.CaptivePortal:
+    Parcelable classes must be final: android.net.CaptivePortal is not final
+ParcelNotFinal: android.net.DhcpInfo:
+    Parcelable classes must be final: android.net.DhcpInfo is not final
+ParcelNotFinal: android.net.LinkAddress:
+    Parcelable classes must be final: android.net.LinkAddress is not final
+ParcelNotFinal: android.net.Network:
+    Parcelable classes must be final: android.net.Network is not final
+ParcelNotFinal: android.net.NetworkRequest:
+    Parcelable classes must be final: android.net.NetworkRequest is not final
+ParcelNotFinal: android.net.ProxyInfo:
+    Parcelable classes must be final: android.net.ProxyInfo is not final
+
+
+StaticFinalBuilder: android.net.CaptivePortalData.Builder:
+    
+StaticFinalBuilder: android.net.NetworkRequest.Builder:
+    Builder must be final: android.net.NetworkRequest.Builder
+StaticFinalBuilder: android.net.VpnService.Builder:
+    Builder must be final: android.net.VpnService.Builder
+
+
+StaticUtils: android.net.Proxy:
+    Fully-static utility classes must not have constructor
+
+
+UseParcelFileDescriptor: android.net.Network#bindSocket(java.io.FileDescriptor) parameter #0:
+    Must use ParcelFileDescriptor instead of FileDescriptor in parameter fd in android.net.Network.bindSocket(java.io.FileDescriptor fd)
+
+
+VisiblySynchronized: PsiThisExpression:this:
+    Internal locks must not be exposed (synchronizing on this or class is still externally observable): method android.net.NetworkInfo.toString()
+VisiblySynchronized: android.net.NetworkInfo#toString():
+    Internal locks must not be exposed (synchronizing on this or class is still externally observable): method android.net.NetworkInfo.toString()
+VisiblySynchronized: android.net.NetworkInfo#writeToParcel(android.os.Parcel, int):
+    Internal locks must not be exposed (synchronizing on this or class is still externally observable): method android.net.NetworkInfo.writeToParcel(android.os.Parcel,int)

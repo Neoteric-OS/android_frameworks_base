@@ -43,6 +43,7 @@ java_library {
     libs: [
         "unsupportedappusage",
         "framework-wifi-util-lib",
+        "framework-connectivity.stubs.module_lib"
     ],
     static_libs: [
         // All the classes in netd_aidl_interface must be jarjar so they do not conflict with the
