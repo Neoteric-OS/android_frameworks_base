@@ -30,6 +30,7 @@ genrule {
     srcs: [
         ":art.module.public.api{.public.api.txt}",
         ":conscrypt.module.public.api{.public.api.txt}",
+        ":framework-connectivity{.public.api.txt}",
         ":framework-media{.public.api.txt}",
         ":framework-mediaprovider{.public.api.txt}",
         ":framework-permission{.public.api.txt}",
@@ -67,6 +68,7 @@ genrule {
         ":api-stubs-docs-non-updatable",
         ":art.module.public.api{.public.stubs.source}",
         ":conscrypt.module.public.api{.public.stubs.source}",
+        ":framework-connectivity{.public.stubs.source}",
         ":framework-media{.public.stubs.source}",
         ":framework-mediaprovider{.public.stubs.source}",
         ":framework-permission{.public.stubs.source}",
@@ -87,6 +89,7 @@ genrule {
     srcs: [
         ":art.module.public.api{.public.removed-api.txt}",
         ":conscrypt.module.public.api{.public.removed-api.txt}",
+        ":framework-connectivity{.public.removed-api.txt}",
         ":framework-media{.public.removed-api.txt}",
         ":framework-mediaprovider{.public.removed-api.txt}",
         ":framework-permission{.public.removed-api.txt}",
@@ -112,6 +115,7 @@ genrule {
 genrule {
     name: "frameworks-base-api-system-current.txt",
     srcs: [
+        ":framework-connectivity{.system.api.txt}",
         ":framework-media{.system.api.txt}",
         ":framework-mediaprovider{.system.api.txt}",
         ":framework-permission{.system.api.txt}",
@@ -145,6 +149,7 @@ genrule {
 genrule {
     name: "frameworks-base-api-system-removed.txt",
     srcs: [
+        ":framework-connectivity{.system.removed-api.txt}",
         ":framework-media{.system.removed-api.txt}",
         ":framework-mediaprovider{.system.removed-api.txt}",
         ":framework-permission{.system.removed-api.txt}",
@@ -170,6 +175,7 @@ genrule {
 genrule {
     name: "frameworks-base-api-module-lib-current.txt",
     srcs: [
+        ":framework-connectivity{.module-lib.api.txt}",
         ":framework-media{.module-lib.api.txt}",
         ":framework-mediaprovider{.module-lib.api.txt}",
         ":framework-permission{.module-lib.api.txt}",
@@ -202,6 +208,7 @@ genrule {
 genrule {
     name: "frameworks-base-api-module-lib-removed.txt",
     srcs: [
+        ":framework-connectivity{.module-lib.removed-api.txt}",
         ":framework-media{.module-lib.removed-api.txt}",
         ":framework-mediaprovider{.module-lib.removed-api.txt}",
         ":framework-permission{.module-lib.removed-api.txt}",

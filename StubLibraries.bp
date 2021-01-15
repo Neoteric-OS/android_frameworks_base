@@ -57,6 +57,7 @@ stubs_defaults {
     aidl: {
         local_include_dirs: [
             "apex/media/aidl/stable",
+            "packages/Connectivity/framework/src",
             "telephony/java",
         ],
     },
@@ -241,6 +242,7 @@ java_library_static {
     static_libs: [
         "art.module.public.api.stubs",
         "conscrypt.module.public.api.stubs",
+        "framework-connectivity.stubs",
         "framework-media.stubs",
         "framework-mediaprovider.stubs",
         "framework-permission.stubs",
@@ -260,6 +262,7 @@ java_library_static {
     static_libs: [
         "art.module.public.api.stubs",
         "conscrypt.module.public.api.stubs",
+        "framework-connectivity.stubs.system",
         "framework-media.stubs.system",
         "framework-mediaprovider.stubs.system",
         "framework-permission.stubs.system",
@@ -295,6 +298,7 @@ java_library_static {
         // the SystemApi of framework-non-updatable-sources.
         "art.module.public.api.stubs",
         "conscrypt.module.public.api.stubs",
+        "framework-connectivity.stubs.system",
         "framework-media.stubs.system",
         "framework-mediaprovider.stubs.system",
         "framework-permission.stubs.system",
