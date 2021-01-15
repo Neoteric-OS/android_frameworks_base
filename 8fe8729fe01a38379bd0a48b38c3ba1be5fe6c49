@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e41c0ed4_0f2ea467",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-15T21:08:38Z",
+      "side": 1,
+      "message": "Thanks for suggestion.  Now the const value becomes hide member of SignalThresholdInfo and the static method return the value of them.",
+      "parentUuid": "642ce375_50fd14cf",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 61
+      },
+      "revId": "8fe8729fe01a38379bd0a48b38c3ba1be5fe6c49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27ed2bdc_72a13d63",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-01-15T18:51:09Z",
       "side": 1,
       "message": "SignalThresholdInfo should be where the threshold min/max resides, and it should be enforced in that class so you just can\u0027t create invalid SignalThresholdInfo instances.",
+      "range": {
+        "startLine": 154,
+        "startChar": 70,
+        "endLine": 156,
+        "endChar": 53
+      },
+      "revId": "8fe8729fe01a38379bd0a48b38c3ba1be5fe6c49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2398dcf7_d49024d6",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-15T21:08:38Z",
+      "side": 1,
+      "message": "Done. Now the min/max check is performed when building the SignalThresholdInfo object.\nIf the it is too short/long, SignalThresholdInfo object will not be able to constructed at all.\n\nAnd hide method Build#setThresholdsUnlimited is used for system caller to bypass this limitation check. This feature depends on system setting consolidated thresholds which is very likely longer than max here.",
+      "parentUuid": "27ed2bdc_72a13d63",
       "range": {
         "startLine": 154,
         "startChar": 70,
