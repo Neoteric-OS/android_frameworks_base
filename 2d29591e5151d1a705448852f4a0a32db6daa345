@@ -22,6 +22,30 @@
       },
       "revId": "2d29591e5151d1a705448852f4a0a32db6daa345",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc68be96_cda14415",
+        "filename": "keystore/java/android/security/AuthTokenUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-01-15T18:35:09Z",
+      "side": 1,
+      "message": "Not in AOSP.",
+      "parentUuid": "79f2d497_c2c6ad47",
+      "range": {
+        "startLine": 39,
+        "startChar": 45,
+        "endLine": 39,
+        "endChar": 64
+      },
+      "revId": "2d29591e5151d1a705448852f4a0a32db6daa345",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
