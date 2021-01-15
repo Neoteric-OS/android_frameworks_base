@@ -63,7 +63,7 @@ public final class AppHibernationManager {
     }
 
     /**
-     * Set whether the package is hibernating.
+     * Set whether the package is hibernating for this context's user.
      *
      * @hide
      */
@@ -72,6 +72,22 @@ public final class AppHibernationManager {
         try {
             mIAppHibernationService.setHibernating(packageName, mContext.getUserId(),
                     isHibernating);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Set whether a package should be globally hibernating. This hibernates the package at a
+     * package level. User-level hibernation (e.g.. {@link #isHibernating} is independent from
+     * global hibernation.
+     *
+     * @hide
+     */
+    @SystemApi
+    public void setHibernatingGlobally(@NonNull String packageName, boolean isHibernating) {
+        try {
+            mIAppHibernationService.setHibernatingGlobally(packageName, isHibernating);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

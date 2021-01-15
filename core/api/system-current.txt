@@ -1416,6 +1416,7 @@ package android.apphibernation {
   public final class AppHibernationManager {
     method public boolean isHibernating(@NonNull String);
     method public void setHibernating(@NonNull String, boolean);
+    method public void setHibernatingGlobally(@NonNull String, boolean);
   }
 
 }
