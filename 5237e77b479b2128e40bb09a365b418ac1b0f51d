@@ -16,6 +16,24 @@
       "message": "Hey, Timi! Thank you for composing this change.\n\nI\u0027m not at all surprised to hear that there are cases where the Global Actions Items don\u0027t display correctly in certain configurations. Could you provide some reference images for before/after this change, so that I can better understand why it\u0027s necessary, and how you tested it?",
       "revId": "5237e77b479b2128e40bb09a365b418ac1b0f51d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44226c5d_7d908aa4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1815899
+      },
+      "writtenOn": "2021-01-15T22:20:32Z",
+      "side": 1,
+      "message": "Hi,\nhere are screenshots:\n* before: http://imgur.com/a/rQovNfE\n* after: http://imgur.com/a/dNK2esd\n\nI tested the change with different dpi\u0027s, and in all multi-line cases the icons were aligned properly with the single line icons.",
+      "parentUuid": "456fd42c_1cda5ec5",
+      "revId": "5237e77b479b2128e40bb09a365b418ac1b0f51d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
