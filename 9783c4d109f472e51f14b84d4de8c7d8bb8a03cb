@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "143a2889_20bd3324",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-15T07:58:59Z",
+      "side": 1,
+      "message": "Suggest locking on mLock instead, just to avoid the possibility of deadlocks (unless there is a major performance concern)",
+      "range": {
+        "startLine": 162,
+        "startChar": 16,
+        "endLine": 162,
+        "endChar": 42
+      },
+      "revId": "9783c4d109f472e51f14b84d4de8c7d8bb8a03cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a598258_64534cdd",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-15T07:58:59Z",
+      "side": 1,
+      "message": "Suggest annotating with nonnull if we\u0027re already doing the checks below. \n\nJust an easy way to tell from signatures what the guarantees are",
+      "range": {
+        "startLine": 526,
+        "startChar": 12,
+        "endLine": 526,
+        "endChar": 13
+      },
+      "revId": "9783c4d109f472e51f14b84d4de8c7d8bb8a03cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "795408f5_4e219f6f",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-15T07:58:59Z",
+      "side": 1,
+      "message": "Nit: Suggest adding a comment of why this is valid:\n\n// Remote binder already died; cleanup.",
+      "range": {
+        "startLine": 542,
+        "startChar": 12,
+        "endLine": 542,
+        "endChar": 45
+      },
+      "revId": "9783c4d109f472e51f14b84d4de8c7d8bb8a03cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
