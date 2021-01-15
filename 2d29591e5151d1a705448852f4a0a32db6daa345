@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79f2d497_c2c6ad47",
+        "filename": "keystore/java/android/security/AuthTokenUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2021-01-15T18:26:46Z",
+      "side": 1,
+      "message": "Doesn\u0027t this already exist in Java, somewhere?",
+      "range": {
+        "startLine": 39,
+        "startChar": 45,
+        "endLine": 39,
+        "endChar": 64
+      },
+      "revId": "2d29591e5151d1a705448852f4a0a32db6daa345",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
