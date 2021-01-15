@@ -1,6 +1,69 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d301f675_683dfb40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-15T13:45:41Z",
+      "side": 1,
+      "message": "LGTM, except echoing Lucas\u0027s comment: are there any tests for this code?",
+      "revId": "223b24c163ec06428f4d08da819a66a5f775dfc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1acc1235_2b186f3f",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-15T13:45:41Z",
+      "side": 1,
+      "message": "Nit: suggest:\n\n    networkId \u003d state.networkCapabilities.getSsid();\n    if (networkId \u003d\u003d null) {\n        final WifiManager wifi \u003d ...\n        ...",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 64
+      },
+      "revId": "223b24c163ec06428f4d08da819a66a5f775dfc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "067f6500_1468aa2a",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-15T13:45:41Z",
+      "side": 1,
+      "message": "I wonder, can this code ever run? If the NetworkState object being passed in comes from ConnectivityService, then I don\u0027t think it can.\n\nPerhaps we can try to remove it in a separate patch.",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 63
+      },
+      "revId": "223b24c163ec06428f4d08da819a66a5f775dfc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6029ef71_650420b9",
