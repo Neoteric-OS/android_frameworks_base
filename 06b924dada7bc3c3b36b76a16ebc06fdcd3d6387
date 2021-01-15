@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "347a49ba_a97791c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-01-15T16:01:33Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "44d9f8e3_1937c239",
+      "revId": "06b924dada7bc3c3b36b76a16ebc06fdcd3d6387",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0a4d1f2_bf38ff94",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-01-15T15:44:57Z",
       "side": 1,
       "message": "I\u0027d also be okay if you want to relax these to be wildcards, like:\n\n*LockPattern*\n*LockScreen*\n*Lockscreen*\n*LockSettings*",
+      "range": {
+        "startLine": 4,
+        "startChar": 9,
+        "endLine": 4,
+        "endChar": 27
+      },
+      "revId": "06b924dada7bc3c3b36b76a16ebc06fdcd3d6387",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "606d6179_e5457d56",
+        "filename": "core/java/com/android/internal/widget/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-01-15T16:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0a4d1f2_bf38ff94",
       "range": {
         "startLine": 4,
         "startChar": 9,
