@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Samuel Fufa <sfufa@google.com>
+Code-Review+2: Dan Sandler <dsandler@android.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Hyunyoung Song <hyunyoungs@google.com>
+Submitted-at: Fri, 15 Jan 2021 20:26:52 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1552394
+Project: platform/frameworks/base
+Branch: refs/heads/master
